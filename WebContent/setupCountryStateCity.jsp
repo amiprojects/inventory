@@ -384,9 +384,9 @@
 		}
 		function deleteState(id,s){
 			//alert(a+b);
-			/* y = confirm("Do you want to delete State : " + s);
+			y = confirm("Do you want to delete State : " + s);
 			if (y == true) {
-				$.ajax({
+				/* $.ajax({
 					url:"deleteState",
 					type:"post",
 					data:{id:id},
@@ -395,7 +395,7 @@
 						window.location = "setupCountryStateCity.jsp";						
 					}
 				}); */
-				//window.location = "deleteState?id=" + id;
+				window.location = "deleteState?id=" + id;
 			}
 		}
 		

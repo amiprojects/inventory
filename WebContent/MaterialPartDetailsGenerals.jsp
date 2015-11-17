@@ -138,16 +138,17 @@
 								<div class="widget-area" style="width: 34%;">
 									<form role="form" class="sec">
 										<div class="form-group">
-											<label for="" class="">Part Number : </label> <input
-												type="text" placeholder="Enter Part Number" id="" class="">
+											<label for="" class="">Products Number : </label> <input
+												type="text" placeholder="Enter Products Number" id=""
+												class="">
 										</div>
 										<div class="form-group">
 											<label for="" class="">Description : </label> <input
 												type="text" placeholder="Enter Description" id="" class="">
 										</div>
 										<div class="form-group">
-											<label for="" class="">Part Type : </label>&nbsp &nbsp <input
-												type="text" placeholder="Enter part type" id="" class="">
+											<label for="" class="">Products Type : </label>&nbsp &nbsp <input
+												type="text" placeholder="Enter Products type" id="" class="">
 										</div>
 
 										<button class="btn green btn-default" type="submit">Search
@@ -201,7 +202,7 @@
 								<div class="widget-area" style="width: 66%">
 									<div class="breadcrumbs">
 										<ul>
-											<li><a title="">Part Details : </a></li>
+											<li><a title="">Products Details : </a></li>
 											<li><a href="#" title=""><button type="button"
 														class="btn btn-info btn-sm" data-toggle="modal"
 														data-target="#newMP">New</button></a></li>
@@ -224,7 +225,7 @@
 										<div id="general" class="tab-pane fade active in">
 											<div class="row">
 												<div class="col-md-2">
-													<label>Part No:</label>
+													<label>Products No:</label>
 												</div>
 												<div class="col-md-4">
 													<input type="text" readonly="readonly" class="form-control">
@@ -784,77 +785,9 @@
 								<legend>Products:</legend>
 
 								<p style="font-size: 14px; margin-left: 342px;">
-									&nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp<input
-										type="checkbox" name="salepart" value="salep" id="salepart"
-										onclick="salesPart();">This Part is for sale:
+									<input type="checkbox" name="salepart" value="salep" id="salepart">This
+									Products is for sale:
 								</p>
-								<div id="divshow">
-									<div class="col-md-6">
-										<div>
-											<label for="exampleInputEmail1">Product Code:</label> <input
-												type="text" name="pcode" placeholder="Enter Product code"
-												required class="form-control"><br>
-										</div>
-									</div>
-									<div class="col-md-6"></div>
-									<div class="col-md-6">
-										<div>
-											<label for="exampleInputPassword1">Description:</label> <input
-												type="text" name="Description"
-												placeholder="product Description" required
-												class="form-control"><br>
-										</div>
-
-									</div>
-
-
-									<div class="col-md-6">
-										<label for="exampleInputEmail1">Universal Product
-											Code:</label> <input type="text" name="Universal Product Code"
-											placeholder="" class="form-control"><br>
-									</div>
-									<div class="col-md-6">
-										<div>
-											<label for="exampleInputPassword1">Price:</label> <input
-												type="text" name="price" required class="form-control"><br>
-										</div>
-									</div>
-								</div>
-
-								<div id="divhide">
-									<div class="col-md-6">
-										<div>
-											<label for="exampleInputEmail1">Product Code:</label> <input
-												type="text" name="pcode" placeholder="Enter Product code"
-												required class="form-control" readonly="readonly"><br>
-										</div>
-									</div>
-									<div class="col-md-6"></div>
-									<div class="col-md-6">
-										<div>
-											<label for="exampleInputPassword1">Description:</label> <input
-												type="text" name="Description"
-												placeholder="product Description" required
-												class="form-control" readonly="readonly"><br>
-										</div>
-
-									</div>
-
-
-									<div class="col-md-6">
-										<label for="exampleInputEmail1">Universal Product
-											Code:</label> <input type="text" name="Universal Product Code"
-											placeholder="" class="form-control" readonly="readonly"><br>
-									</div>
-									<div class="col-md-6">
-										<div>
-											<label for="exampleInputPassword1">Price:</label> <input
-												type="text" name="price" required class="form-control"
-												readonly="readonly"><br>
-										</div>
-									</div>
-								</div>
-
 							</fieldset>
 
 						</div>
@@ -924,7 +857,7 @@
 						<fieldset>
 							<legend> Add Initial Inventory </legend>
 
-							<p style="font-size: 14px">(Enter the part's initial
+							<p style="font-size: 14px">(Enter the Products's initial
 								inventory.)</p>
 							<br> <br> <br> <input type="radio" name="do"
 								value="doNotAdd">Do not add initial inventory <br>
@@ -1383,7 +1316,7 @@
 							<form>
 
 								<h4>
-									<u>Part:</u>
+									<u>Products:</u>
 								</h4>
 								<b>Code:</b><br> <b>Description:</b><br> <b>Universal
 									Product Code:</b><br> <b>UOM:</b><br> <br>
@@ -1415,7 +1348,7 @@
 								<hr width="100%">
 
 								<h4>
-									<u>Part Custom Field:</u>
+									<u>Products Custom Field:</u>
 								</h4>
 								<b>Custom1:</b><br> <b>Custom2:</b><br> <b>Custom3:</b><br>
 								<b>Custom4:</b>
@@ -1452,7 +1385,7 @@
 						<div class="breadcrumbs">
 							<ul>
 
-								<li><a title=""><h4>Create a new Part</h4></a></li>
+								<li><a title=""><h4>Create a new Products</h4></a></li>
 							</ul>
 						</div>
 						<!-- breadcrumbs -->
@@ -1462,7 +1395,7 @@
 						<ul>
 							<li><a href="dashboard.html" title=""><i
 									class="fa fa-home"></i></a>/</li>
-							<li><a title="">Create a new Part</a></li>
+							<li><a title="">Create a new Products</a></li>
 						</ul>
 					</div>
 
@@ -1502,15 +1435,6 @@
 			$("#divshow").hide();
 			$("#divhide").show();
 		});
-		function salesPart() {
-			if ($("#salepart").is(":checked")) {
-				$("#divshow").show();
-				$("#divhide").hide();
-			} else {
-				$("#divshow").hide();
-				$("#divhide").show();
-			}
-		}
 	</script>
 
 	<script type="text/javascript" src="js/modernizr.js"></script>
