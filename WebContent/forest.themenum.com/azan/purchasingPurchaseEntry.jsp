@@ -31,6 +31,17 @@
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
 <!-- Responsive -->
 
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script>
+	$(function() {
+		$("#datepicker").datepicker();
+	});
+</script>
+
 </head>
 <body>
 
@@ -40,15 +51,22 @@
 			<%@include file="includeSidebar.html"%>
 			<div class="content-sec">
 				<div class="container">
-					<div class="widget-area" style="width: 300px;">
+					<!-- <div class="widget-area" style="width: 300px;">
 						<form role="form" class="sec">
 							<div class="form-group">
-								<label for="" class="">Name : </label> <input type="text"
+								<label for="" class="">Number : </label> <input type="text"
 									placeholder="" id="" class="">
 							</div>
 							<div class="form-group">
-								<label for="" class="">Abbrev : </label> <input type="text"
-									placeholder="" id="" class="">
+								<label for="" class="">Status : </label> <select>
+									<option value="all">All Open</option>
+									<option value="bid">Bid Request</option>
+									<option value="issued">Issued</option>
+									<option value="pic">Picking</option>
+									<option value="partial">Partial</option>
+									<option value="picked">Picked</option>
+									<option value="shipped">Shipped</option>
+								</select>
 							</div>
 
 							<button class="btn green btn-default" type="submit">Search
@@ -62,7 +80,7 @@
 								<tr>
 									<th>#</th>
 									<th>Name</th>
-									<th>Abbrev</th>
+									<th>Vendor Name</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -98,58 +116,90 @@
 								</tr>
 							</tbody>
 						</table>
-					</div>
+					</div> -->
 
-					<div class="widget-area" style="width: 600px">
+					<div class="widget-area">
 						<div class="breadcrumbs">
 							<ul>
 								<li><a href="#" title=""><i class="fa fa-home"></i></a>/</li>
-								<li><a title="">Unit of Measurements : </a></li>
-								<li><a title=""><button type="submit">New</button></a></li>
-								<li><a title=""><button type="submit">Edit</button></a></li>
-								<li><a title=""><button type="submit">Delete</button></a></li>
+								<li><a title="">Purchase Entry : </a></li>
+								<li><a title=""><button type="submit">New</button> </a></li>
 							</ul>
 						</div>
-
-						<ul class="nav nav-tabs">
-							<li class="active"><a data-toggle="tab" href="#general">General</a></li>
-							<li><a data-toggle="tab" href="#con">Conversions</a></li>
-						</ul>
 						<br>
-						<div class="tab-content">
-							<div id="general" class="tab-pane fade ">
+						<form action="">
+							<div id="wizard" class="swMain">
+								<div class="col-md-6">
+									<div class="inline-form">
+										<label class="c-label">Vendor</label><input
+											class="input-style" type="text" placeholder="" />
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="inline-form">
+										<label class="c-label">PO no.</label><input
+											class="input-style" type="text" placeholder="" />
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="inline-form">
+										<label class="c-label">Purchase Date</label><input
+											class="input-style" type="text" id="datepicker"
+											placeholder="" />
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="inline-form">
+										<label class="c-label">Vendor SO</label><input type="text"
+											placeholder="" />
+									</div>
+								</div>
+								<table border="1" bordercolor="gray" align="center">
+									<thead>
+										<tr>
+											<th>Vendor</th>
+											<th align="right"><button type="submit"
+													class="btn green btn-default">Add</button></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td colspan="2"><textarea rows="" cols="100%"
+													readonly="readonly"></textarea></td>
+										</tr>
+									</tbody>
+								</table>
 								<table>
 									<tr>
-										<th>Abreve :</th>
-										<td><input type="text" readonly="readonly"></td>
+										<td width="900px"><select class="form-control">
+												<option>pcode</option>
+												<option>pcode</option>
+												<option>pcode</option>
+												<option>pcode</option>
+												<option>pcode</option>
+										</select></td>
+										<td>
+											<button type="submit">Add</button>
+										</td>
+									</tr>
+								</table>
+								<table border="1" bordercolor="gray" width="900px"
+									align="center">
+									<tr>
+										<th>Qty</th>
+										<th>Cost</th>
+										<th>WSP</th>
+										<th>MRP</th>
 									</tr>
 									<tr>
-										<th>Name :</th>
-										<td><input type="text" readonly="readonly"></td>
-									</tr>
-									<tr>
-										<th>Description :</th>
-										<td><textarea rows="" cols=""></textarea></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
 									</tr>
 								</table>
 							</div>
-							<div id="con" class="tab-pane fade ">
-								<div class="breadcrumbs">
-									<ul>
-										<li><a title="">Conversions </a></li>
-									</ul>
-								</div>
-								<br> <br>
-								<table border="1" bordercolor="gray" align="center">
-									<tr>
-										<th>Description</th>
-									</tr>
-									<tr>
-										<td><textarea rows="" cols=""></textarea></td>
-									</tr>
-								</table>
-							</div>
-						</div>
+						</form>
 					</div>
 				</div>
 			</div>
