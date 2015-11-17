@@ -27,6 +27,8 @@
 <!-- Responsive -->
 <link rel="stylesheet" href="css/toast.css" type="text/css" />
 
+
+
 </head>
 <body>
 	<c:if test="${sessionScope['user']==null}">
@@ -133,7 +135,7 @@
 										</div>
 										<div id="con" class="tab-pane fade ">
 
-											<div class="col-md-12">
+											<div class="col-md-10">
 												<div class="breadcrumbs">
 													<ul>
 														<li><a title="">Description </a></li>
@@ -143,6 +145,148 @@
 													readonly="readonly"></textarea>
 
 											</div>
+											<div class="col-md-2">
+												<button type="button" class="btn btn-default"
+													data-toggle="modal" data-target="#addCon">Add</button>
+
+												<button type="button" class="btn btn-default"
+													data-toggle="modal" data-target="#editCon">Edit</button>
+
+												<button type="button" class="btn btn-default">Delete</button>
+											</div>
+
+											<div id="addCon" class="modal fade" role="dialog"
+												style="top: 25px;">
+
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<div class="modal-header">
+															<button type="button" class="close" data-dismiss="modal">&times;</button>
+															<h4 class="modal-title">Select UOM to which UOM is
+																related</h4>
+														</div>
+														<div class="modal-body">
+
+
+															<form>
+																<div class="col-md-12">
+																	Select Target UOM for this conversion: <select
+																		id="contype">
+																		<option value="0">Name</option>
+																		<option value="1">Foot(ft)</option>
+																		<option value="2">Pound(lbs)</option>
+																		<option value="3">Hour(hr)</option>
+																		<option value="4">Gallon(gal)</option>
+																		<option value="5">Foot(ft)</option>
+																	</select>
+																</div>
+																<br> <br> <br>
+																<div class="col-md-12">Defining the relationship
+																	between units:</div>
+																<br>
+																<div class="col-md-12">
+																	<input type="radio" name="name1">1 each is
+																	greater than 1 pound
+																</div>
+																<br>
+																<div class="col-md-12">
+																	<input type="radio" name="name1">1 pound is
+																	greater then 1 each
+
+																</div>
+																<br> <br> <br>
+																<div class="col-md-12">Defining ratio between the
+																	units:</div>
+																<br>
+																<div class="col-md-12">Fill in the blank with
+																	correct number</div>
+																<br>
+																<div class="col-md-12">
+																	1 Each is<input type="text">in Pound
+																</div>
+																<br>
+															</form>
+														</div>
+
+														<div class="modal-footer">
+                                                            <button type="button" class="btn btn-default">Save</button>
+															<button type="button" class="btn btn-default"
+																data-dismiss="modal">Close</button>
+															
+														</div>
+
+													</div>
+
+												</div>
+
+											</div>
+
+											<div id="editCon" class="modal fade" role="dialog"
+												style="top: 25px;">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<div class="modal-header">
+															<button type="button" class="close" data-dismiss="modal">&times;</button>
+															<h4 class="modal-title">Edit UOM to which UOM is
+																related</h4>
+														</div>
+														
+														<div class="col-md-12">
+															<form>
+																<div class="col-md-12">
+																	Select Target UOM for this conversion: <select
+																		id="contype">
+																		<option value="0">Name</option>
+																		<option value="1">Foot(ft)</option>
+																		<option value="2">Pound(lbs)</option>
+																		<option value="3">Hour(hr)</option>
+																		<option value="4">Gallon(gal)</option>
+																		<option value="5">Foot(ft)</option>
+																	</select>
+																</div>
+																<br> 
+																<br> 
+																<br>
+																<div class="col-md-12">Defining the relationship
+																	between units:</div>
+																<br>
+																<div class="col-md-12">
+																	<input type="radio" name="name1">1 each is
+																	greater than 1 pound
+																</div>
+																<br>
+																<div class="col-md-12">
+																	<input type="radio" name="name1">1 pound is
+																	greater then 1 each
+
+																</div>
+																<br> 
+																<br> 
+																<br>
+																<div class="col-md-12">Defining ratio between the
+																	units:</div>
+																<br>
+																<div class="col-md-12">Fill in the blank with
+																	correct number</div>
+																<br>
+																<div class="col-md-12">
+																	1 Each is<input type="text">in Pound
+																</div>
+																<br>
+															</form>
+														</div>
+
+														<div class="modal-footer">
+                                                            <button type="button" class="btn btn-default">Update</button>
+															<button type="button" class="btn btn-default"
+																data-dismiss="modal">Close</button>
+															
+
+														</div>
+													</div>
+												</div>
+
+											</div>
 										</div>
 									</div>
 								</div>
@@ -150,11 +294,12 @@
 						</div>
 					</div>
 				</div>
-				<!-- Content Sec -->
 			</div>
-			<!-- Page Container -->
+			<!-- Content Sec -->
 		</div>
+		<!-- Page Container -->
 	</div>
+
 	<!-- main -->
 
 	<div id="newUOM" class="modal fade" role="dialog" style="top: 25px;">
