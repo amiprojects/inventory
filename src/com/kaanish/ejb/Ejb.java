@@ -11,8 +11,10 @@ import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpSession;
 
 import com.kaanish.model.AccountDetails;
+import com.kaanish.model.Bill_setup;
 import com.kaanish.model.Category;
 import com.kaanish.model.City;
+import com.kaanish.model.CompanyInfo;
 import com.kaanish.model.Country;
 import com.kaanish.model.Department;
 import com.kaanish.model.ProductDetail;
@@ -80,20 +82,21 @@ public class Ejb {
 
 	public List<QtyUnit> getAllOthersQtyUnitForConversion(int id) {
 		QtyUnit qu = new QtyUnit();
-		qu=this.getQtyUnitById(id);
+		qu = this.getQtyUnitById(id);
 		TypedQuery<QtyUnit> q = em.createQuery("select c from QtyUnit c where c.qtyUnitType.id=:id AND c.id<>:oid",
 				QtyUnit.class);
 		q.setParameter("id", qu.getQtyUnitType().getId());
 		q.setParameter("oid", id);
-		
-		TypedQuery<QtyUnitConversion> q1=em.createQuery("select s from QtyUnitConversion s where s.qtyUnitId1.id=:id1", QtyUnitConversion.class);
+
+		TypedQuery<QtyUnitConversion> q1 = em
+				.createQuery("select s from QtyUnitConversion s where s.qtyUnitId1.id=:id1", QtyUnitConversion.class);
 		q1.setParameter("id1", id);
-		
+
 		List<QtyUnit> lst1 = new ArrayList<>();
-		for(QtyUnitConversion quc:q1.getResultList()){
+		for (QtyUnitConversion quc : q1.getResultList()) {
 			lst1.add(quc.getQtyUnitId2());
-		}		
-		
+		}
+
 		List<QtyUnit> lst = new ArrayList<>();
 		for (QtyUnit qtyu : q.getResultList()) {
 			if (!lst1.contains(qtyu)) {
@@ -107,13 +110,14 @@ public class Ejb {
 	public void setQtyUnitConversion(QtyUnitConversion quc) {
 		em.merge(quc);
 	}
-	
-	public QtyUnitConversion getQtyUnitConversionById(int id){
+
+	public QtyUnitConversion getQtyUnitConversionById(int id) {
 		return em.find(QtyUnitConversion.class, id);
 	}
-	
-	public List<QtyUnitConversion> getAllQtyUnitConversionByQtyUnitId(int id){
-		TypedQuery<QtyUnitConversion> q=em.createQuery("select c from QtyUnitConversion c where c.qtyUnitId1.id=:id",QtyUnitConversion.class);
+
+	public List<QtyUnitConversion> getAllQtyUnitConversionByQtyUnitId(int id) {
+		TypedQuery<QtyUnitConversion> q = em.createQuery("select c from QtyUnitConversion c where c.qtyUnitId1.id=:id",
+				QtyUnitConversion.class);
 		q.setParameter("id", id);
 		return q.getResultList();
 	}
@@ -472,7 +476,36 @@ public class Ejb {
 		q.setParameter("Id", id);
 		return q.getResultList();
 	}
-	/*******************for bill setup**************************/
-	
+
+	/******************* for bill setup **************************/
+
+	public void setBillSetup(Bill_setup billSetup) {
+		em.persist(billSetup);
+
+	}
+
+	/*********************** for company info *********************/
+
+	public void setCompanyInfo(CompanyInfo companyInfo) {
+		em.persist(companyInfo);
+	}
+
+	public void updateCompanyInfo(CompanyInfo companyInfo) {
+		em.merge(companyInfo);
+
+	}
+
+	public CompanyInfo getCompanyInfo() {
+		TypedQuery<CompanyInfo> q = em.createQuery("Select c from CompanyInfo c", CompanyInfo.class);	
+		if(q.getResultList().size()>0){
+			return q.getResultList().get(0);
+		}else{
+			return null;
+		}
+		
+	}
+	public CompanyInfo getCompanyInfoById(int id){
+		return em.find(CompanyInfo.class, id);
+	}
 
 }
