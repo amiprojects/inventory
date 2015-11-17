@@ -100,7 +100,7 @@
 																<h4 class="modal-title">Select UOM to which UOM is
 																	related</h4>
 															</div>
-															<form action="addNewConversion" method="post">
+															<form action="addNewConversion" method="post" id="addNewConversion">
 																<div class="modal-body">
 																	<div class="col-md-12">
 																		<input type="hidden" value="${unit.id}"
@@ -120,7 +120,7 @@
 																		between units:</div>
 																	<br>
 																	<div class="col-md-12">
-																		<input type="radio" name="name1" value="1"
+																		<input type="radio" name="name1" checked="checked" value="1"
 																			onclick="relSelect();">1 <span
 																			id="selectUnit1${unit.id}"></span> is greater than 1
 																		<span>${unit.name}</span>
@@ -141,7 +141,7 @@
 																	<br>
 																	<div class="col-md-12">
 																		1 <span id="selectUnit3${unit.id}"></span> is<input
-																			type="number" name="convValue">in <span
+																			type="number" name="convValue" required="required">in <span
 																			id="selectUnit4${unit.id}"></span>
 																	</div>
 																	<br>
@@ -213,12 +213,11 @@
 											<div class="col-md-10">
 												<div class="breadcrumbs">
 													<ul>
-														<li><a title="" id="conversionDetails"></a></li>
+														<li><span id="conversionDetails">Unit conversion for</span></li>
 													</ul>
 												</div>
-
-												<textarea rows="" cols="" class="form-control"
-													readonly="readonly" id="unitConversionDetails"></textarea>
+												<hr>
+												<div id="unitConversionDetails"></div>
 
 											</div>
 											<div class="col-md-2">
@@ -330,10 +329,10 @@
 									</c:forEach>
 								</select>
 							</div>
-							<div class="col-md-2">
+							<!-- <div class="col-md-2">
 								<button type="button" class="btn btn-info btn-sm"
 									data-toggle="modal" data-target="#nameUOM">Add</button>
-							</div>
+							</div> -->
 						</div>
 						<div class="row">
 							<div class="col-md-3">Abbreviation :</div>
@@ -465,17 +464,27 @@
 										},
 										dataType : "json",
 										success : function(data1) {
-											var txt = "";
+											var i=0;
+											var txt = "<table>";
 											$.map(data1, function(item) {
-
-												txt = txt + "1 "
-														+ item.qtyUnit1Name
-														+ " = "
-														+ item.conversion + " "
-														+ item.qtyUnit2Name
-														+ "\n";
+											if(i%2==0){
+												txt = txt + "<tr><td style='background-color:#989898;' width='500px'><span >1 "
+												+ item.qtyUnit1Name
+												+ " = "
+												+ item.conversion + " "
+												+ item.qtyUnit2Name
+												+ "</span><a href=\"#\"></td><td><img src=\"img/edit.png\" height=\"20\"></a></span></td></tr>";
+											}else{
+												txt = txt + "<tr><td style='background-color:#C0C0C0;'><span>1 "
+												+ item.qtyUnit1Name
+												+ " = "
+												+ item.conversion + " "
+												+ item.qtyUnit2Name
+												+ "<a href=\"#\"></td><td><img src=\"img/edit.png\" height=\"20\"></a></span></td></tr>";
+											}
+											i++;	
 											});
-											$("#unitConversionDetails").val(txt);
+											$("#unitConversionDetails").html(txt+"</table>");
 										}
 									});
 						}

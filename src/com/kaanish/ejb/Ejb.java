@@ -18,10 +18,14 @@ import com.kaanish.model.CompanyInfo;
 import com.kaanish.model.Country;
 import com.kaanish.model.Department;
 import com.kaanish.model.ProductDetail;
+import com.kaanish.model.Purchase_Entry;
+import com.kaanish.model.Purchase_Product_Details;
 import com.kaanish.model.QtyUnit;
 import com.kaanish.model.QtyUnitConversion;
 import com.kaanish.model.QtyUnitConversionPK;
 import com.kaanish.model.QtyUnitType;
+import com.kaanish.model.RawMaterialsStock;
+import com.kaanish.model.ReadyGoodsStock;
 import com.kaanish.model.State;
 import com.kaanish.model.SubDepartment;
 import com.kaanish.model.Tax;
@@ -226,6 +230,14 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<Vendor> getVendorsByVendorTypeIdByName(int id, String nm) {
+		TypedQuery<Vendor> q = em.createQuery(
+				"select c from Vendor c where c.vendorType.id=:Id AND UPPER(c.name) LIKE :name", Vendor.class);
+		q.setParameter("Id", id);
+		q.setParameter("name", "%" + nm.toUpperCase() + "%");
+		return q.getResultList();
+	}
+
 	/******************** for vendor type *******************************/
 	public void setVendorType(VendorType vendorType) {
 		em.persist(vendorType);
@@ -251,6 +263,22 @@ public class Ejb {
 	/******************* foe account details ***************************/
 	public void setAccountDetails(AccountDetails accountDetails) {
 		em.persist(accountDetails);
+	}
+
+	/******************* for purchase entry ***************************/
+	public void setPurchaseEntry(Purchase_Entry purchaseEntry) {
+		em.persist(purchaseEntry);
+	}
+
+	public Purchase_Entry getPurchaseEntryById(int id) {
+		return em.find(Purchase_Entry.class, id);
+	}
+
+	/*******************
+	 * for purchase product details
+	 ***************************/
+	public void setPurchaseProductDetails(Purchase_Product_Details purchaseProductDetails) {
+		em.persist(purchaseProductDetails);
 	}
 
 	/******************** for City *******************************/
@@ -496,16 +524,63 @@ public class Ejb {
 	}
 
 	public CompanyInfo getCompanyInfo() {
-		TypedQuery<CompanyInfo> q = em.createQuery("Select c from CompanyInfo c", CompanyInfo.class);	
-		if(q.getResultList().size()>0){
+		TypedQuery<CompanyInfo> q = em.createQuery("Select c from CompanyInfo c", CompanyInfo.class);
+		if (q.getResultList().size() > 0) {
 			return q.getResultList().get(0);
-		}else{
+		} else {
 			return null;
 		}
-		
+
 	}
+
 	public CompanyInfo getCompanyInfoById(int id){
 		return em.find(CompanyInfo.class, id);
+	}
+
+	/********************* for RawMaterial Stock ************************/
+
+	public void setRawMaterialsStocktDetail(RawMaterialsStock rawMaterialsStock) {
+		em.persist(rawMaterialsStock);
+	}
+
+	public RawMaterialsStock getRawMaterialStocktDetailById(int id) {
+		return em.find(RawMaterialsStock.class, id);
+	}
+
+	public void deleteRawMaterialStockDetailById(int id) {
+		em.remove(getProductDetailById(id));
+	}
+
+	public void updateRawMaterialStockDetail(ProductDetail rawMaterialsStock) {
+		em.merge(rawMaterialsStock);
+	}
+
+	public List<RawMaterialsStock> getAllRawMaterialStockDetail() {
+		TypedQuery<RawMaterialsStock> q = em.createQuery("select c from RawMaterialsStock c", RawMaterialsStock.class);
+		return q.getResultList();
+	}
+
+	/********************* for ReadyGood Stock ************************/
+
+	public void setReadyGoodsStockDetail(ReadyGoodsStock readyGoodsStock) {
+		em.persist(readyGoodsStock);
+	}
+
+	public ReadyGoodsStock getReadyGoodsStocktDetailById(int id) {
+		return em.find(ReadyGoodsStock.class, id);
+	}
+
+	public void deleteReadyGoodsStockDetailById(int id) {
+		em.remove(getReadyGoodsStocktDetailById(id));
+	}
+
+	public void updateRawMaterialStockDetail(ReadyGoodsStock readyGoodsStock) {
+		em.merge(readyGoodsStock);
+	}
+
+	public List<ReadyGoodsStock> getAllRawMaterialsStockDetail() {
+		TypedQuery<ReadyGoodsStock> q = em.createQuery("select c from ReadyGoodsStock c", ReadyGoodsStock.class);
+		return q.getResultList();
 	}
 
 }
