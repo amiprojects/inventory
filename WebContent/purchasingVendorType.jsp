@@ -47,7 +47,7 @@
 						<div class="masonary-grids">
 							<div class="col-md-8">
 								<div class="widget-area">
-									<form action="newVendorType">
+									<form action="newVendorType" method="get">
 										<div class="col-md-10">
 											<div class="form-group">
 												<label for="" class="font">Vendor type :</label> <input

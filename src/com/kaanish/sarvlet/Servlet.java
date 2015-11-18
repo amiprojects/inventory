@@ -1,7 +1,6 @@
 package com.kaanish.sarvlet;
 
 import java.io.IOException;
-import java.security.AccessControlContext;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,9 +28,10 @@ import com.kaanish.model.Vendor;
 import com.kaanish.model.VendorType;
 import com.kaanish.util.DateConverter;
 
-@WebServlet({ "/login","/logout","/addTax", "/addTaxGroup", "/createDept", "/deleteDept", "/createSubDept", "/deleteSubDept",
-		"/createCategory", "/deleteCategory", "/newVendorType", "/addCountry", "/addState", "/createProduct",
-		"/deleteCountry", "/addVendor" })
+@WebServlet({ "/login", "/logout", "/addTax", "/addTaxGroup", "/createDept",
+		"/deleteDept", "/createSubDept", "/deleteSubDept", "/createCategory",
+		"/deleteCategory", "/newVendorType", "/addCountry", "/addState",
+		"/createProduct", "/deleteCountry", "/addVendor" })
 public class Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -56,28 +56,29 @@ public class Servlet extends HttpServlet {
 	private AccountDetails accountDetails;
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 		url = req.getRequestURL().toString();
 		url = url.substring(url.lastIndexOf('/') + 1);
-		httpSession=req.getSession();
+		httpSession = req.getSession();
 		try {
 			switch (url) {
 
 			case "login":
-				page="index.jsp";
-				String user=req.getParameter("usrName");
-				if(ejb.getCheckLogin(user, req.getParameter("password"))){
+				page = "index.jsp";
+				String user = req.getParameter("usrName");
+				if (ejb.getCheckLogin(user, req.getParameter("password"))) {
 					httpSession.setAttribute("user", user);
-					page="dashboard.jsp";
-					msg="Login Successful.";
-				}else{
-					msg="Invalid username/Password.";
-					httpSession.removeAttribute("user");					
+					page = "dashboard.jsp";
+					msg = "Login Successful.";
+				} else {
+					msg = "Invalid username/Password.";
+					httpSession.removeAttribute("user");
 				}
 				break;
 			case "logout":
-				page="index.jsp";
-				msg="Logout Successful.";
+				page = "index.jsp";
+				msg = "Logout Successful.";
 				break;
 			case "createProduct":
 				page = "setupDepartment.jsp";
@@ -85,13 +86,14 @@ public class Servlet extends HttpServlet {
 				productDetail.setProductType(req.getParameter("name"));
 				productDetail.setName(req.getParameter("productName"));
 				productDetail.setCode(req.getParameter("productCode"));
-				productDetail.setCategory(ejb.getCategoryById(Integer.parseInt(req.getParameter("catId"))));
+				productDetail.setCategory(ejb.getCategoryById(Integer
+						.parseInt(req.getParameter("catId"))));
 				ejb.setProductDetail(productDetail);
 				msg = "Product detail added successfully.";
 				break;
 
 			case "newVendorType":
-				page = "setupVendorType.jsp";
+				page = "purchasingVendorType.jsp";
 				vendorType = new VendorType();
 				List<VendorType> lst = new ArrayList<VendorType>();
 				lst = ejb.getAllVendorType();
@@ -127,16 +129,22 @@ public class Servlet extends HttpServlet {
 				tax_type_group.setName(req.getParameter("name"));
 
 				String[] taxes = req.getParameterValues("tax");
+				
+				if(taxes!=null){
+				
 				List<Tax> taxlst = new ArrayList<Tax>();
 
 				for (String taxName : taxes) {
 					taxlst.add(ejb.getTaxById(taxName));
-
 				}
+				
 				tax_type_group.setTaxes(taxlst);
 
 				ejb.setTaxTYpeGroup(tax_type_group);
 				msg = "Tax group added succesfully.";
+				}else{
+					msg = "please select tax.";
+				}
 				break;
 			case "createDept":
 				page = "setupDepartment.jsp";
@@ -147,20 +155,23 @@ public class Servlet extends HttpServlet {
 				break;
 			case "deleteDept":
 				page = "setupDepartment.jsp";
-				ejb.deleteDepartmentById(Integer.parseInt(req.getParameter("id")));
+				ejb.deleteDepartmentById(Integer.parseInt(req
+						.getParameter("id")));
 				msg = "Department deleted.";
 				break;
 			case "createSubDept":
 				page = "setupDepartment.jsp";
 				subDepartment = new SubDepartment();
 				subDepartment.setName(req.getParameter("name"));
-				subDepartment.setDepartment(ejb.getDepartmentById(Integer.parseInt(req.getParameter("deptId"))));
+				subDepartment.setDepartment(ejb.getDepartmentById(Integer
+						.parseInt(req.getParameter("deptId"))));
 				ejb.setSubDepartment(subDepartment);
 				msg = "SubDepartment added.";
 				break;
 			case "deleteSubDept":
 				page = "setupDepartment.jsp";
-				ejb.deleteSubDepartmentById(Integer.parseInt(req.getParameter("id")));
+				ejb.deleteSubDepartmentById(Integer.parseInt(req
+						.getParameter("id")));
 				msg = "Department deleted.";
 				break;
 			case "createCategory":
@@ -173,7 +184,8 @@ public class Servlet extends HttpServlet {
 				category.setAttrNmae4(req.getParameter("attr4"));
 				category.setAttrNmae5(req.getParameter("attr5"));
 				category.setAttrNmae6(req.getParameter("attr6"));
-				category.setSubDepartment(ejb.getSubDepartmentById(Integer.parseInt(req.getParameter("subDeptId"))));
+				category.setSubDepartment(ejb.getSubDepartmentById(Integer
+						.parseInt(req.getParameter("subDeptId"))));
 				ejb.setCategory(category);
 				msg = "Category added.";
 				break;
@@ -198,51 +210,71 @@ public class Servlet extends HttpServlet {
 				page = "setupCity.jsp";
 				state = new State();
 				state.setStateName(req.getParameter("name"));
-				state.setCountry(ejb.getCountryById(Integer.parseInt(req.getParameter("id"))));
+				state.setCountry(ejb.getCountryById(Integer.parseInt(req
+						.getParameter("id"))));
 				ejb.setState(state);
 				msg = "State added successfully.";
 				break;
 			case "addVendor":
-				page="purchasingVendor.jsp";
-				vendor=new Vendor();
-				accountDetails=new AccountDetails();
-				dt=new Date();
-				
-				vendor.setName(req.getParameter(""));
+				page = "purchasingVendor.jsp";
+				vendor = new Vendor();
+				accountDetails = new AccountDetails();
+				dt = new Date();
+
+				vendor.setName(req.getParameter("vendorName"));
 				vendor.setLastModifiedDate(dt);
-				vendor.setAddress(req.getParameter(""));
-				vendor.setAliseName(req.getParameter(""));
-				vendor.setCity(ejb.getCityById(Integer.parseInt(req.getParameter(""))));
-				vendor.setCompanyName(req.getParameter(""));
-				vendor.setEmail(req.getParameter(""));
-				vendor.setPh1(req.getParameter(""));
-				vendor.setPh2(req.getParameter(""));
-				vendor.setPinCode(req.getParameter(""));
-				vendor.setVendorType(ejb.getVendorTypeById(Integer.parseInt(req.getParameter(""))));
-				//vendor.setUsers();
-				
-				
-				accountDetails.setBankAccountNumber(req.getParameter(""));
-				accountDetails.setBankChequeLable(req.getParameter(""));
-				accountDetails.setBankIFSCnumber(req.getParameter(""));
-				accountDetails.setBankMICRnumber(req.getParameter(""));
-				accountDetails.setBankName(req.getParameter(""));
-				accountDetails.setBankRTGCnumber(req.getParameter(""));
-				accountDetails.setBranch(req.getParameter(""));
-				accountDetails.setCity(ejb.getCityById(Integer.parseInt(req.getParameter(""))));
-				accountDetails.setCstNumber(req.getParameter(""));
-				accountDetails.setCstRegistrationDate(DateConverter.getDate(req.getParameter("")));
-				accountDetails.setExciseRegistrationDate(DateConverter.getDate(req.getParameter("")));
-				accountDetails.setExciseRegistrationNumber(req.getParameter(""));
-				accountDetails.setPanNumber(req.getParameter(""));
-				accountDetails.setServiceTaxRegistrationDate(DateConverter.getDate(req.getParameter("")));
-				accountDetails.setServiceTaxRegistrationNumber(req.getParameter(""));
-				accountDetails.setVatNumber(req.getParameter(""));
-				accountDetails.setVatRegistrationDate(DateConverter.getDate(req.getParameter("")));
-				
+				vendor.setAddress(req.getParameter("vendorAddress"));
+				vendor.setAliseName(req.getParameter("vendorAlias"));
+				/*
+				 * vendor.setCity(ejb.getCityById(Integer.parseInt(req
+				 * .getParameter("vendorCity"))));
+				 */
+				vendor.setCompanyName(req.getParameter("vendorCompanyName"));
+				vendor.setEmail(req.getParameter("vendorMail"));
+				vendor.setPh1(req.getParameter("vendorPh1"));
+				vendor.setPh2(req.getParameter("vendorPh2"));
+				vendor.setPinCode(req.getParameter("vendorPin"));
+				vendor.setVendorType(ejb.getVendorTypeById(Integer.parseInt(req
+						.getParameter("vendorType"))));
+				// vendor.setUsers();
+
+				accountDetails.setBankAccountNumber(req
+						.getParameter("bankAccNo"));
+				accountDetails.setBankChequeLable(req
+						.getParameter("bankCheckLebel"));
+				accountDetails.setBankIFSCnumber(req.getParameter("bankIFSC"));
+				accountDetails.setBankMICRnumber(req.getParameter("bankMICR"));
+				accountDetails.setBankName(req.getParameter("bankName"));
+				accountDetails.setBankRTGCnumber(req.getParameter("bankRTGS"));
+				accountDetails.setBranch(req.getParameter("bankBranch"));
+				/*
+				 * accountDetails.setCity(ejb.getCityById(Integer.parseInt(req
+				 * .getParameter("bankCity"))));
+				 */
+				accountDetails.setCstNumber(req.getParameter("vendorCSTno"));
+				accountDetails.setCstRegistrationDate(DateConverter.getDate(req
+						.getParameter("vendorCSTregDate")));
+				accountDetails.setExciseRegistrationDate(DateConverter
+						.getDate(req.getParameter("vendorExciseRegDate")));
+				accountDetails.setExciseRegistrationNumber(req
+						.getParameter("vendorExciseRegNo"));
+				accountDetails.setPanNumber(req.getParameter("vendorPANno"));
+				accountDetails.setServiceTaxRegistrationDate(DateConverter
+						.getDate(req.getParameter("vendorServiceTaxRegDate")));
+				accountDetails.setServiceTaxRegistrationNumber(req
+						.getParameter("vendorServiceTaxRegNo"));
+				accountDetails.setVatNumber(req.getParameter("vendorVATno"));
+				accountDetails.setVatRegistrationDate(DateConverter.getDate(req
+						.getParameter("vendorVATregDate")));
+				accountDetails.setTax_Type_Group(ejb.getTax_Type_GroupById(req
+						.getParameter("taxTypeGroupId")));
+
 				accountDetails.setVendor(vendor);
 				
-				msg="vendor added successful;";
+				ejb.setVendor(vendor);
+				ejb.setAccountDetails(accountDetails);
+
+				msg = "vendor added successful;";
 				break;
 
 			default:
@@ -257,7 +289,8 @@ public class Servlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 		doGet(req, resp);
 	}
 }

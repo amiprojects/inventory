@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpSession;
 
+import com.kaanish.model.AccountDetails;
 import com.kaanish.model.Category;
 import com.kaanish.model.City;
 import com.kaanish.model.Country;
@@ -126,6 +127,10 @@ public class Ejb {
 	public List<VendorType> getAllVendorType() {
 		TypedQuery<VendorType> q = em.createQuery("select c from VendorType c", VendorType.class);
 		return q.getResultList();
+	}
+	/******************* foe account details***************************/
+	public void setAccountDetails(AccountDetails accountDetails){
+		em.persist(accountDetails);
 	}
 
 	/******************** for City *******************************/
