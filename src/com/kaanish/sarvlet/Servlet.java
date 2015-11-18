@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +38,7 @@ import com.kaanish.model.Tax_Type_Group;
 import com.kaanish.model.Vendor;
 import com.kaanish.model.VendorType;
 import com.kaanish.util.DateConverter;
-
+@MultipartConfig
 @WebServlet({ "/login", "/logout", "/addTax", "/addTaxGroup", "/editTax",
 		"/deleteTax", "/editTaxGroup", "/deleteTaxGroup", "/createDept",
 		"/deleteDept", "/createSubDept", "/deleteSubDept", "/createCategory",
@@ -131,11 +132,24 @@ public class Servlet extends HttpServlet {
 			case "updateCompanyInfo":
 				 page="setupCompanyInfo.jsp";
 				 companyInfo=new CompanyInfo();
-				 companyInfo.setCompname("");
-				 companyInfo.setEmail("");
-				 companyInfo.setMobile("");
-				 companyInfo.setPhone("");
+				 companyInfo.setCompname(req.getParameter("name"));
+				 companyInfo.setEmail(req.getParameter("email"));
+				 companyInfo.setMobile(req.getParameter("mono"));
+				 companyInfo.setPhone(req.getParameter("phno"));
+				 companyInfo.setAddr(req.getParameter("adress"));
+				 companyInfo.setCity(req.getParameter("city"));
+				 companyInfo.setState(req.getParameter("state"));
+				 companyInfo.setVatno(req.getParameter("vatno"));
+				 companyInfo.setCstno(req.getParameter("cstno"));
+				 companyInfo.setTinno(req.getParameter("tinno"));
+				 companyInfo.setServicetaxno(req.getParameter("servicet"));
+				 companyInfo.setVatdate(req.getParameter("vatDate"));
+				 companyInfo.setCstdate(req.getParameter("cstdate"));
+				 companyInfo.setTindate(req.getParameter("tinDate"));
+				 companyInfo.setServtaxdate(req.getParameter("serviceDate"));
 				 
+				 ejb.setCompanyInfo(companyInfo);
+				 msg = "Company info updated successfully.";
 				 
 			
 				 break;
@@ -156,7 +170,10 @@ public class Servlet extends HttpServlet {
 				 billSetup.setCompanyInitial(req.getParameter("comname"));
 				 billSetup.setBillType(req.getParameter("type"));
 				 billSetup.setSufix(req.getParameter("suffix"));
+				 
+				 
 				 ejb.setBillSetup(billSetup);
+				 
 				 msg = "Bill created successfully.";
 				 break;
 

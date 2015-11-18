@@ -511,6 +511,8 @@ public class Ejb {
 		em.persist(billSetup);
 
 	}
+	
+	
 
 	/*********************** for company info *********************/
 
