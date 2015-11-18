@@ -6,17 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Panel</title>
 
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<link rel="stylesheet" href="/resources/demos/style.css">
-<script>
-	$(function() {
-		$("#datepicker").datepicker();
-	});
-</script>
-
 <link
 	href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700,900'
 	rel='stylesheet' type='text/css' />
@@ -33,16 +22,7 @@
 <!-- Style -->
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
 <!-- Responsive -->
-<style>
-.purchase-div {
-	color: #777777;
-	float: left;
-	font-family: Roboto;
-	font-size: 12px;
-	letter-spacing: 0.3px;
-	padding-right: 20px;
-}
-</style>
+
 </head>
 <body>
 
@@ -59,85 +39,70 @@
 								<div class="breadcrumbs">
 									<ul>
 										<li><a href="#" title=""><i class="fa fa-home"></i></a>/</li>
-										<li><a title="">Purchase Entry : </a></li>
+										<li><a title="">Purchase Search</a></li>
 									</ul>
 								</div>
-								<br>
-								<form role="form" class="sec">
-									<div class="col-md-6">
-										&nbsp; &nbsp; &nbsp; <b class="purchase-div">Vendor Name :</b>
-										<div class="col-md-10">
-											<div class="sec">
-												<select class="form-control">
-													<option>SLC</option>
-													<option>SLC</option>
-													<option>SLC</option>
-													<option>SLC</option>
-													<option>SLC</option>
-												</select>
+								<div class="widget-area">
+									<form role="form" class="sec">
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group">
+													<label for="">Purchase Entry Number :</label> <input
+														type="" placeholder="Enter Purchase Entry Number" id=""
+														class="form-control">
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label for="">Vendor SO :</label> <input type=""
+														placeholder="Enter Vendor SO :" id="" class="form-control">
+												</div>
 											</div>
 										</div>
-										<div class="col-md-2">
-											<button type="submit" class="btn green pull-right">Add</button>
-										</div>
-										<div class="col-md-12" style="height: 125px;">
-											<div class="breadcrumbs">
-												<ul>
-													<li><a title="" class="purchase-div">Vendor
-															Details :</a></li>
-												</ul>
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group">
+													<label for="">Search between two dates : (Start
+														Date)</label> <input type="date" placeholder="Enter First Date"
+														id="" class="form-control">
+												</div>
 											</div>
-											<textarea rows="" cols="" id="" class="form-control"
-												readonly="readonly"></textarea>
 
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group">
-											<label for="" class="purchase-div">Purchase Date :</label> <input
-												type="date" placeholder="" id="" class="form-control">
-										</div>
-										<div class="form-group">
-											<label for="" class="purchase-div">PO no. :</label> <input
-												type="number" placeholder="" id="" class="form-control">
-										</div>
-										<div class="form-group">
-											<label for="" class="purchase-div">Vendor SO :</label> <input
-												type="number" placeholder="" id="" class="form-control">
-										</div>
-									</div>
-									&nbsp; &nbsp; <b class="purchase-div">Product Code :</b>
-									<div class="row">
-										<div class="col-md-11">
-											<div class="sec">
-												<select class="form-control">
-													<option>SLC</option>
-													<option>SLC</option>
-													<option>SLC</option>
-													<option>SLC</option>
-													<option>SLC</option>
-												</select>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label for="">(End Date)</label> <input type="date"
+														placeholder="Enter last date" id="" class="form-control">
+												</div>
 											</div>
 										</div>
-										<div class="col-md-1">
-											<button type="submit" class="btn green pull-right">Add</button>
+										<div class="row">
+
+											<div class="col-md-6">
+												<div class="form-group">
+													<label for="">Product code :</label> <input type=""
+														placeholder="Enter Product code" id=""
+														class="form-control">
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label for="">Vendor Name:</label> <input type=""
+														placeholder="Enter Vendor Name" id="" class="form-control">
+												</div>
+											</div>
 										</div>
-									</div>
-									<table id="stream_table"
-										class="table table-striped table-bordered">
+										<button class="btn green pull-right" type="submit">Search</button>
+									</form>
+									<br> <br>
+									<table class="table">
 										<thead>
 											<tr>
 												<th>#</th>
-												<th>Product code</th>
-												<th>Product Name</th>
-												<th>Product Description</th>
-												<th>Qty</th>
-												<th>Rate</th>
-												<th>Total</th>
-												<th>WSP</th>
-												<th>MRP</th>
-												<th>Lot no.</th>
-												<th>EXp. Date</th>
+												<th>PO no.</th>
+												<th>Vendor Name</th>
+												<th>Vendor SO</th>
+												<th>Purchase Date</th>
+												<th>Cost</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -148,14 +113,10 @@
 												<td>---</td>
 												<td>---</td>
 												<td>---</td>
-												<td>---</td>
-												<td>---</td>
-												<td>---</td>
-												<td>---</td>
 											</tr>
 										</tbody>
 									</table>
-								</form>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -377,6 +338,7 @@
 
 						});
 	</script>
+
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
