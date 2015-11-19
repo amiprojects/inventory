@@ -33,7 +33,16 @@
 <!-- Style -->
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
 <!-- Responsive -->
-
+<style>
+.font {
+	color: #777777;
+	float: left;
+	font-family: Roboto;
+	font-size: 12px;
+	letter-spacing: 0.3px;
+	padding-right: 20px;
+}
+</style>
 </head>
 <body>
 
@@ -47,99 +56,165 @@
 					<div class="row">
 						<div class="masonary-grids">
 							<div class="col-md-12">
-								<div class="widget-area">
-									<div class="breadcrumbs">
-										<ul>
-											<li><a href="#" title=""><i class="fa fa-home"></i></a>/</li>
-											<li><a title="">Purchase Entry : </a></li>
-										</ul>
+								<div class="breadcrumbs">
+									<ul>
+										<li><a href="#" title=""><i class="fa fa-home"></i></a>/</li>
+										<li><a title="">Purchase Entry : </a></li>
+									</ul>
+								</div>
+								<br>
+								<form role="form" class="sec">
+									<div class="col-md-6">
+										&nbsp; &nbsp; &nbsp; <b class="font">Vendor Name :</b>
+										<div class="col-md-10">
+											<div class="sec">
+												<select class="form-control">
+													<option>SLC</option>
+													<option>SLC</option>
+													<option>SLC</option>
+													<option>SLC</option>
+													<option>SLC</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-md-2">
+											<button type="submit" class="btn green pull-right">Add</button>
+										</div>
+										<div class="col-md-12">
+											<div class="breadcrumbs">
+												<ul>
+													<li><a title="" class="font">Vendor Details :</a></li>
+												</ul>
+											</div>
+											<textarea rows="" cols="" id="" class="form-control"
+												readonly="readonly"></textarea>
+
+										</div>
 									</div>
-									<br>
-									<form role="form" class="sec">
-										<div id="wizard" class="swMain">
-											<div class="col-md-6">
-												<div class="inline-form">
-													<label class="c-label">Vendor</label><input
-														class="input-style" type="text" placeholder="" />
-												</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="" class="font">Purchase Date :</label> <input
+												type="date" placeholder="" id="" class="form-control">
+										</div>
+										<div class="form-group">
+											<label for="" class="font">PO no. :</label> <input
+												type="number" placeholder="" id="" class="form-control">
+										</div>
+										<div class="form-group">
+											<label for="" class="font">Vendor SO :</label> <input
+												type="number" placeholder="" id="" class="form-control">
+										</div>
+									</div>
+									&nbsp; &nbsp; <b class="font">Product Code :</b>
+									<div class="row">
+										<div class="col-md-11">
+											<div class="sec">
+												<select class="form-control">
+													<option>SLC</option>
+													<option>SLC</option>
+													<option>SLC</option>
+													<option>SLC</option>
+													<option>SLC</option>
+												</select>
 											</div>
-											<div class="col-md-6">
-												<div class="inline-form">
-													<label class="c-label">PO no.</label><input
-														class="input-style" type="text" placeholder="" />
-												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="inline-form">
-													<label class="c-label">Purchase Date</label><input
-														class="input-style" type="text" id="datepicker"
-														placeholder="" />
-												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="inline-form">
-													<label class="c-label">Vendor SO</label><input type="text"
-														placeholder="" />
-												</div>
-											</div>
-											<div class="col-md-6">
-												<table>
-													<tr>
-														<th>Vendor</th>
-													</tr>
-													<tr>
-														<td><textarea rows="" cols="75%"></textarea></td>
-													</tr>
-												</table>
-												<button type="submit">Add</button>
-											</div>
-											<!-- <table border="1" bordercolor="gray" align="center"
-												width="100%">
+										</div>
+										<div class="col-md-1">
+											<button type="submit" class="btn green pull-right">Add</button>
+										</div>
+									</div>
+									<table id="stream_table"
+										class="table table-striped table-bordered">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>Product code</th>
+												<th>Product Name</th>
+												<th>Product Description</th>
+												<th>Qty</th>
+												<th>Rate</th>
+												<th>Total</th>
+												<th>WSP</th>
+												<th>MRP</th>
+												<th>Lot no.</th>
+												<th>EXp. Date</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>1</td>
+												<td>---</td>
+												<td>---</td>
+												<td>---</td>
+												<td>---</td>
+												<td>---</td>
+												<td>---</td>
+												<td>---</td>
+												<td>---</td>
+												<td>---</td>
+											</tr>
+										</tbody>
+									</table>
+									<div style="width: 40%; float: right;">
+										<table id="stream_table"
+											class="table table-striped table-bordered">
+											<thead>
 												<tr>
-													<th>Vendor</th>
-													<th><button type="submit">Add</button></th>
+													<td colspan="2">Sub Total :</td>
+													<td><input type="number" class="form-control"
+														placeholder="0.0" readonly="readonly"></td>
 												</tr>
+											</thead>
+											<tbody>
 												<tr>
-													<td colspan="2"><textarea rows="" cols="100%"
-															readonly="readonly"></textarea></td>
+													<td colspan="3">Select TAX type :</td>
 												</tr>
-											</table> -->
-											<table width="100%" align="center">
+											</tbody>
+											<tbody>
 												<tr>
 													<td><select class="form-control">
-															<option>pcode</option>
-															<option>pcode</option>
-															<option>pcode</option>
-															<option>pcode</option>
-															<option>pcode</option>
+															<option>TAX type</option>
+															<option>TAX type</option>
+															<option>TAX type</option>
+															<option>TAX type</option>
+															<option>TAX type</option>
 													</select></td>
-													<td>
-														<button type="submit">Add</button>
-													</td>
+													<td>%</td>
+													<td><input type="number" class="form-control"></td>
 												</tr>
-											</table>
-											<table border="1" bordercolor="gray" width="100%"
-												align="center">
+											</tbody>
+											<tbody>
 												<tr>
-													<th>Qty</th>
-													<th>Cost</th>
-													<th>WSP</th>
-													<th>MRP</th>
+													<td colspan="2">VAT Amount :</td>
+													<td><input type="number" class="form-control"
+														readonly="readonly"></td>
 												</tr>
+											</tbody>
+											<tbody>
 												<tr>
-													<td><input type="number"></td>
-													<td><input type="number"></td>
-													<td><input type="number"></td>
-													<td><input type="number"></td>
+													<td colspan="2">Surcharge :</td>
+													<td><input type="number" class="form-control"></td>
 												</tr>
-											</table>
-											<br>
-											<center>
-												<button type="submit" class="btn green btn-default">Submit</button>
-											</center>
+											</tbody>
+											<tbody>
+												<tr>
+													<td colspan="2">Transport charge :</td>
+													<td><input type="number" class="form-control"></td>
+												</tr>
+											</tbody>
+											<thead>
+												<tr>
+													<td colspan="2">Grand Total :</td>
+													<td><input type="number" class="form-control"
+														placeholder="0.0" readonly="readonly"></td>
+												</tr>
+											</thead>
+										</table>
+										<div style="float: right;">
+											<button type="submit">Save</button>
+											<button type="submit">Cancel</button>
 										</div>
-									</form>
-								</div>
+									</div>
+								</form>
 							</div>
 						</div>
 					</div>
@@ -157,211 +232,7 @@
 	<script type="text/javascript" src="js/script.js"></script>
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="js/enscroll.js"></script>
-	<script type="text/javascript" src="js/daterangepicker.js"></script>
-	<script type="text/javascript" src="js/moment.js"></script>
 	<script type="text/javascript" src="js/grid-filter.js"></script>
-	<script type="text/javascript" src="js/jquery-jvectormap.js"></script>
-	<script type="text/javascript" src="js/jquery-jvectormap-world-en.js"></script>
-	<script type="text/javascript" src="js/gdp-data.js"></script>
-	<script type="text/javascript" src="js/chart-line-and-graph.js"></script>
-	<script type="text/javascript" src="js/jquery.flot.min.js"></script>
-	<script type="text/javascript" src="js/jquery.sparkline.min.js"></script>
-	<script type="text/javascript" src="js/owl.carousel.min.js"></script>
-	<script type="text/javascript" src="js/html5lightbox.js"></script>
-
-	<script type="text/javascript">
-		function random_num(field, interval, range) {
-
-			setInterval(function() {
-				var chars = "0123456789";
-				var string_length = range;
-				var randomstring = '';
-				for (var i = 0; i < string_length; i++) {
-					var rnum = Math.floor(Math.random() * chars.length);
-					randomstring += chars.substring(rnum, rnum + 1);
-				}
-				var a = jQuery("#" + field).html(randomstring);
-				console.log(a);
-			}, interval);
-		};
-	</script>
-	<script>
-		jQuery(document).ready(function() {
-			random_num('random', 3000, 3);
-		});
-	</script>
-
-	<script type="text/javascript">
-		$(document)
-				.ready(
-						function() {
-
-							$(".carousal-sec").owlCarousel({
-								autoPlay : true,
-								stopOnHover : true,
-								goToFirstSpeed : 500,
-								slideSpeed : 500,
-								singleItem : true,
-								autoHeight : true,
-								transitionStyle : "backSlide",
-								navigation : true
-							});
-
-							$("#pie").sparkline(
-									[ 1, 1, 2 ],
-									{
-										type : 'pie',
-										width : '40',
-										height : '40',
-										sliceColors : [ '#2dcb73', '#fd6a59',
-												'#17c3e5', '#109618',
-												'#66aa00', '#dd4477',
-												'#0099c6', '#990099 ' ]
-									});
-
-							$(function() {
-								$("#new-orders").sparkline(
-										[ 4, 5, 6, 7, 6, 5, 4, 3, 2, 2, 3, 4 ],
-										{
-											type : 'bar',
-											height : '40px',
-											barSpacing : 3,
-											barWidth : 6,
-											barColor : '#2dcb73',
-											negBarColor : '#D6A838'
-										});
-							});
-
-							$(function() {
-								$("#new-sales").sparkline(
-										[ 2, 3, 4, 5, 2, 5, 6, 2, 8, 5, 1, 5 ],
-										{
-											type : 'bar',
-											height : '40px',
-											barSpacing : 3,
-											barWidth : 6,
-											barColor : '#ff604f',
-											negBarColor : '#D6A838'
-										});
-							});
-
-							$(function() {
-								$("#new-visitors").sparkline(
-										[ 6, 5, 3, 1, 4, 5, 6, 7, 3, 2, 3, 8 ],
-										{
-											type : 'bar',
-											height : '40px',
-											barSpacing : 3,
-											barWidth : 6,
-											barColor : '#17c3e5',
-											negBarColor : '#D6A838'
-										});
-							});
-
-							$('#reportrange')
-									.daterangepicker(
-											{
-												startDate : moment().subtract(
-														'days', 29),
-												endDate : moment(),
-												minDate : '01/01/2012',
-												maxDate : '12/31/2014',
-												dateLimit : {
-													days : 60
-												},
-												showDropdowns : true,
-												showWeekNumbers : true,
-												timePicker : false,
-												timePickerIncrement : 1,
-												timePicker12Hour : true,
-												ranges : {
-													'Today' : [ moment(),
-															moment() ],
-													'Yesterday' : [
-															moment().subtract(
-																	'days', 1),
-															moment().subtract(
-																	'days', 1) ],
-													'Last 7 Days' : [
-															moment().subtract(
-																	'days', 6),
-															moment() ],
-													'Last 30 Days' : [
-															moment().subtract(
-																	'days', 29),
-															moment() ],
-													'This Month' : [
-															moment().startOf(
-																	'month'),
-															moment().endOf(
-																	'month') ],
-													'Last Month' : [
-															moment()
-																	.subtract(
-																			'month',
-																			1)
-																	.startOf(
-																			'month'),
-															moment()
-																	.subtract(
-																			'month',
-																			1)
-																	.endOf(
-																			'month') ]
-												},
-												opens : 'left',
-												buttonClasses : [ 'btn btn-default' ],
-												applyClass : 'btn-small btn-primary',
-												cancelClass : 'btn-small',
-												format : 'MM/DD/YYYY',
-												separator : ' to ',
-												locale : {
-													applyLabel : 'Submit',
-													fromLabel : 'From',
-													toLabel : 'To',
-													customRangeLabel : 'Custom Range',
-													daysOfWeek : [ 'Su', 'Mo',
-															'Tu', 'We', 'Th',
-															'Fr', 'Sa' ],
-													monthNames : [ 'January',
-															'February',
-															'March', 'April',
-															'May', 'June',
-															'July', 'August',
-															'September',
-															'October',
-															'November',
-															'December' ],
-													firstDay : 1
-												}
-											},
-											function(start, end) {
-												console
-														.log("Callback has been called!");
-												$('#reportrange span')
-														.html(
-																start
-																		.format('MMMM D, YYYY')
-																		+ ' - '
-																		+ end
-																				.format('MMMM D, YYYY'));
-											});
-							//Set the initial state of the picker label
-							$('#reportrange span').html(
-									moment().subtract('days', 29).format(
-											'MMMM D, YYYY')
-											+ ' - '
-											+ moment().format('MMMM D, YYYY'));
-
-							$(function() {
-								$('#map').vectorMap({
-									map : 'world_en'
-								});
-							})
-
-						});
-	</script>
-
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
