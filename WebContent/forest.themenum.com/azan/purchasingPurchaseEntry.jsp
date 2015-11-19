@@ -1,22 +1,12 @@
-<!DOCTYPE html>
-
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Panel</title>
-
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<link rel="stylesheet" href="/resources/demos/style.css">
-<script>
-	$(function() {
-		$("#datepicker").datepicker();
-	});
-</script>
-
 <link
 	href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700,900'
 	rel='stylesheet' type='text/css' />
@@ -43,14 +33,13 @@
 	padding-right: 20px;
 }
 </style>
+<link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
 </head>
 <body>
-
 	<div class="main">
 		<%@include file="includeHeader.html"%>
 		<div class="page-container menu-left">
 			<%@include file="includeSidebar.html"%>
-
 			<div class="content-sec">
 				<div class="container">
 					<div class="row">
@@ -94,7 +83,7 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="" class="font">Purchase Date :</label> <input
-												type="date" placeholder="" id="" class="form-control">
+												type="text" id="datepicker" class="form-control">
 										</div>
 										<div class="form-group">
 											<label for="" class="font">PO no. :</label> <input
@@ -233,6 +222,13 @@
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="js/enscroll.js"></script>
 	<script type="text/javascript" src="js/grid-filter.js"></script>
+
+	<script src="js/jquery-ui/jquery-ui.js"></script>
+	<script>
+		$(function() {
+			$("#datepicker").datepicker();
+		});
+	</script>
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
