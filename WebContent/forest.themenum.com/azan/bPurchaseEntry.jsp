@@ -54,24 +54,32 @@
 			$("#notpaid").hide();
 			$("#semipaid").hide();
 			$("#fullpaid").hide();
+			$("#bank").hide();
+			$("#cheque").hide();
 		} else if (val == 'npaid') {
 			$("#notpaid").show();
 			$("#fullpaid").hide();
 			$("#semipaid").hide();
+			$("#bank").hide();
+			$("#cheque").hide();
 		} else if (val == 'fpaid') {
 			$("#fullpaid").show();
 			$("#notpaid").hide();
 			$("#semipaid").hide();
+			$("#bank").hide();
+			$("#cheque").hide();
 		} else if (val == 'spaid') {
 			$("#semipaid").show();
 			$("#notpaid").hide();
 			$("#fullpaid").hide();
+			$("#bank").hide();
+			$("#cheque").hide();
 		}
 	}
 	function fptype() {
 		var val = $('[name="fptype"]').val();
 		if (val == '-') {
-			alert('Please select Payment status...');
+			alert('Please select Payment type...');
 			$("#cash").hide();
 			$("#bank").hide();
 			$("#cheque").hide();
@@ -92,7 +100,7 @@
 	function sptype() {
 		var val = $('[name="sptype"]').val();
 		if (val == '-') {
-			alert('Please select Payment status...');
+			alert('Please select Payment type...');
 			$("#scash").hide();
 			$("#bank").hide();
 			$("#cheque").hide();
@@ -135,7 +143,7 @@
 											<div class="sec">
 												<select class="form-control" name="pstatus"
 													onchange="pstatus()">
-													<option value="-">---</option>
+													<option value="-" selected="selected">---</option>
 													<option value="fpaid">Full paid</option>
 													<option value="spaid">Semi paid</option>
 													<option value="npaid">not paid</option>
@@ -156,7 +164,7 @@
 												<div class="sec">
 													<select class="form-control" name="fptype"
 														onchange="fptype()">
-														<option value="-">---</option>
+														<option value="-" selected="selected">---</option>
 														<option value="cash">Cash</option>
 														<option value="cheq">Cheque</option>
 														<option value="btra">Bank transfer</option>
@@ -191,7 +199,7 @@
 												<div class="sec">
 													<select class="form-control" name="sptype"
 														onchange="sptype()">
-														<option value="-">---</option>
+														<option value="-" selected="selected">---</option>
 														<option value="cash">Cash</option>
 														<option value="cheq">Cheque</option>
 														<option value="btra">Bank transfer</option>
