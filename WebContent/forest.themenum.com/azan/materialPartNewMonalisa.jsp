@@ -73,7 +73,7 @@
 
 								$("#step" + i).show();
 								$("#menu" + i).attr("style",
-										"color: red; font-weight: bolder;");
+										"color: red; font-weight: bolder; background-color: #A3DEDE; box-shadow: 1px 1px 1px 1px #507B8A");
 								i = i + 1;
 							}
 						});
@@ -86,7 +86,7 @@
 
 								$("#step" + (i - 2)).show();
 								$("#menu" + (i - 2)).attr("style",
-										"color: red; font-weight: bolder;");
+										"color: red; font-weight: bolder; background-color: #A3DEDE; box-shadow: 1px 1px 1px 1px #507B8A");
 								i = i - 1;
 							}
 
@@ -121,7 +121,7 @@
 										</thead>
 										<tbody>
 											<tr>
-												<td style="color: red; font-weight: bolder;" id="menu1">step1</td>
+												<td style="color: red; font-weight: bolder; background-color: #A3DEDE; box-shadow: 1px 1px 1px 1px #507B8A;" id="menu1">step1</td>
 											</tr>
 											<tr>
 												<td id="menu2">step2</td>
