@@ -173,7 +173,7 @@
 											</div>
 											<div class="col-md-4">Payment Date :</div>
 											<div class="col-md-8">
-												<input type="text" id="datepicker" class="form-control">
+												<input type="text" id="datepicker1" class="form-control">
 											</div>
 											<div class="col-md-4">Amount :</div>
 											<div class="col-md-8">
@@ -326,6 +326,11 @@
 	<script>
 		$(function() {
 			$("#datepicker").datepicker();
+		});
+	</script>
+	<script>
+		$(function() {
+			$("#datepicker1").datepicker();
 		});
 	</script>
 </body>
