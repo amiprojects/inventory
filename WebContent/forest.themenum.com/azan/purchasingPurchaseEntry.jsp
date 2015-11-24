@@ -33,7 +33,95 @@
 	padding-right: 20px;
 }
 </style>
+
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
+
+<link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#notpaid").hide();
+		$("#semipaid").hide();
+		$("#fullpaid").hide();
+		$("#cash").hide();
+		$("#bank").hide();
+		$("#cheque").hide();
+		$("#scash").hide();
+
+	});
+	function pstatus() {
+		var val = $('[name="pstatus"]').val();
+		//alert(val);
+		if (val == '-') {
+			alert('Please select Payment status...');
+			$("#notpaid").hide();
+			$("#semipaid").hide();
+			$("#fullpaid").hide();
+			$("#bank").hide();
+			$("#cheque").hide();
+		} else if (val == 'npaid') {
+			$("#notpaid").show();
+			$("#fullpaid").hide();
+			$("#semipaid").hide();
+			$("#bank").hide();
+			$("#cheque").hide();
+		} else if (val == 'fpaid') {
+			$("#fullpaid").show();
+			$("#notpaid").hide();
+			$("#semipaid").hide();
+			$("#bank").hide();
+			$("#cheque").hide();
+		} else if (val == 'spaid') {
+			$("#semipaid").show();
+			$("#notpaid").hide();
+			$("#fullpaid").hide();
+			$("#bank").hide();
+			$("#cheque").hide();
+		}
+	}
+	function fptype() {
+		var val = $('[name="fptype"]').val();
+		if (val == '-') {
+			alert('Please select Payment type...');
+			$("#cash").hide();
+			$("#bank").hide();
+			$("#cheque").hide();
+		} else if (val == 'cash') {
+			$("#cash").show();
+			$("#cheque").hide();
+			$("#bank").hide();
+		} else if (val == 'cheq') {
+			$("#cheque").show();
+			$("#cash").hide();
+			$("#bank").hide();
+		} else if (val == 'btra') {
+			$("#bank").show();
+			$("#cheque").hide();
+			$("#cash").hide();
+		}
+	}
+	function sptype() {
+		var val = $('[name="sptype"]').val();
+		if (val == '-') {
+			alert('Please select Payment type...');
+			$("#scash").hide();
+			$("#bank").hide();
+			$("#cheque").hide();
+		} else if (val == 'cash') {
+			$("#scash").show();
+			$("#cheque").hide();
+			$("#bank").hide();
+		} else if (val == 'cheq') {
+			$("#cheque").show();
+			$("#scash").hide();
+			$("#bank").hide();
+		} else if (val == 'btra') {
+			$("#bank").show();
+			$("#cheque").hide();
+			$("#scash").hide();
+		}
+	}
+</script>
 </head>
 <body>
 	<div class="main">
@@ -199,8 +287,8 @@
 											</thead>
 										</table>
 										<div style="float: right;">
-											<button type="submit">Save</button>
-											<button type="submit">Cancel</button>
+											<button type="button" class="btn btn-info btn-lg"
+												data-toggle="modal" data-target="#savePurchase">Save</button>
 										</div>
 									</div>
 								</form>
@@ -214,6 +302,192 @@
 		<!-- Page Container -->
 	</div>
 	<!-- main -->
+
+	<div id="savePurchase" class="modal fade" role="dialog"
+		style="top: 25px;">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Payment Details</h4>
+				</div>
+				<div class="modal-body">
+					<div class="col-md-6">
+						<div class="widget-area">
+							<div class="breadcrumbs">
+								<ul>
+									<li><a title="">Select Payment status : </a></li>
+								</ul>
+							</div>
+							<br> <br> <br>
+							<div class="row">
+								<div class="col-md-5">Payment status :</div>
+								<div class="col-md-7">
+									<div class="sec">
+										<select class="form-control" name="pstatus"
+											onchange="pstatus()">
+											<option value="-" selected="selected">---</option>
+											<option value="fpaid">Full paid</option>
+											<option value="spaid">Semi paid</option>
+											<option value="npaid">not paid</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="widget-area" id="fullpaid">
+								<div class="breadcrumbs">
+									<ul>
+										<li><a title="">Select Payment type : </a></li>
+									</ul>
+								</div>
+								<br> <br> <br>
+								<div class="row">
+									<div class="col-md-5">Payment type :</div>
+									<div class="col-md-7">
+										<div class="sec">
+											<select class="form-control" name="fptype"
+												onchange="fptype()">
+												<option value="-" selected="selected">---</option>
+												<option value="cash">Cash</option>
+												<option value="cheq">Cheque</option>
+												<option value="btra">Bank transfer</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-md-5">Payment Date :</div>
+									<div class="col-md-7">
+										<input type="text" id="datepicker1" class="form-control">
+									</div>
+									<div class="col-md-5">Amount :</div>
+									<div class="col-md-7">
+										<input type="text" class="form-control" readonly="readonly">
+									</div>
+								</div>
+								<br>
+								<div class="breadcrumbs" id="cash">
+									<button type="submit" class="btn green pull-right">Save</button>
+								</div>
+							</div>
+
+							<div id="semipaid">
+								<div class="breadcrumbs">
+									<ul>
+										<li><a title="">Select Payment type : </a></li>
+									</ul>
+								</div>
+								<br> <br> <br>
+								<div class="row">
+									<div class="col-md-5">Payment type :</div>
+									<div class="col-md-7">
+										<div class="sec">
+											<select class="form-control" name="sptype"
+												onchange="sptype()">
+												<option value="-" selected="selected">---</option>
+												<option value="cash">Cash</option>
+												<option value="cheq">Cheque</option>
+												<option value="btra">Bank transfer</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-md-5">Payment Date :</div>
+									<div class="col-md-7">
+										<input type="text" id="datepicker" class="form-control">
+									</div>
+									<div class="col-md-5">Full Amount :</div>
+									<div class="col-md-7">
+										<input type="text" class="form-control" readonly="readonly">
+									</div>
+									<div class="col-md-5">Payment Amount :</div>
+									<div class="col-md-7">
+										<input type="text" class="form-control">
+									</div>
+									<div class="col-md-5">Due Amount :</div>
+									<div class="col-md-7">
+										<input type="text" class="form-control" readonly="readonly">
+									</div>
+								</div>
+								<br>
+								<div class="breadcrumbs" id="scash">
+									<button type="submit" class="btn green pull-right">Save</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6" style="float: right;" id="notpaid">
+						<div class="widget-area">
+							<div class="breadcrumbs">
+								<ul>
+									<li><a title="">Not Paid : </a></li>
+								</ul>
+							</div>
+							<br> <br> <br>
+							<div class="row">
+								<div class="col-md-4">Due Amount :</div>
+								<div class="col-md-8">
+									<input type="text" class="form-control" readonly="readonly">
+								</div>
+							</div>
+							<br>
+							<div class="breadcrumbs">
+								<button type="submit" class="btn green pull-right">Save</button>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6" style="float: right;" id="cheque">
+						<div class="widget-area">
+							<div class="breadcrumbs">
+								<ul>
+									<li><a title="">Provide Cheque details : </a></li>
+								</ul>
+							</div>
+							<br> <br> <br>
+							<div class="row">
+								<div class="col-md-5">Cheque No. :</div>
+								<div class="col-md-7">
+									<input type="text" class="form-control">
+								</div>
+								<div class="col-md-5">Description(if any):</div>
+								<div class="col-md-7">
+									<textarea rows="" cols="" class="form-control"></textarea>
+								</div>
+							</div>
+							<br>
+							<div class="breadcrumbs">
+								<button type="submit" class="btn green pull-right">Save</button>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6" style="float: right;" id="bank">
+						<div class="widget-area">
+							<div class="breadcrumbs">
+								<ul>
+									<li><a title="">Provide Bank transfer details : </a></li>
+								</ul>
+							</div>
+							<br> <br> <br>
+							<div class="row">
+								<div class="col-md-5">Transaction ID :</div>
+								<div class="col-md-7">
+									<input type="text" class="form-control">
+								</div>
+								<div class="col-md-5">Description(if any):</div>
+								<div class="col-md-7">
+									<textarea rows="" cols="" class="form-control"></textarea>
+								</div>
+							</div>
+							<br>
+							<div class="breadcrumbs">
+								<button type="submit" class="btn green pull-right">Save</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>

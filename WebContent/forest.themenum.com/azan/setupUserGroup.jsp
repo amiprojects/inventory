@@ -25,6 +25,9 @@
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
 <!-- Responsive -->
 
+<link rel="stylesheet" href="bootstrapcdn.css">
+<script src="maxcdn.bootstrapcdn.js"></script>
+
 </head>
 <body>
 	<div class="main">
@@ -85,7 +88,6 @@
 								<div class="widget-area" style="width: 70%">
 									<div class="breadcrumbs">
 										<ul>
-											<li><a href="#" title=""><i class="fa fa-home"></i></a>/</li>
 											<li><a title="">User Group : </a></li>
 											<li><a title=""><button type="submit">New</button></a></li>
 											<li><a title=""><button type="submit">Edit</button></a></li>
@@ -100,7 +102,7 @@
 									</ul>
 									<br>
 									<div class="tab-content">
-										<div id="general" class="tab-pane fade ">
+										<div id="general" class="tab-pane fade active in">
 											<div class="row">
 												<div class="col-md-2">GroupName:</div>
 												<div class="col-md-10">

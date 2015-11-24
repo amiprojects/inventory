@@ -25,6 +25,9 @@
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
 <!-- Responsive -->
 
+<link rel="stylesheet" href="bootstrapcdn.css">
+<script src="maxcdn.bootstrapcdn.js"></script>
+
 </head>
 <body>
 
@@ -100,9 +103,11 @@
 								<div class="widget-area" style="width: 70%">
 									<div class="breadcrumbs">
 										<ul>
-											<li><a href="#" title=""><i class="fa fa-home"></i></a>/</li>
-											<li><a title="">Unit of Measurements : </a></li>
-											<li><a title=""><button type="submit">New</button></a></li>
+											<li><a title="" class="active">Unit of Measurements
+													: </a></li>
+											<li><a title=""><button type="button"
+														class="btn btn-info btn-lg" data-toggle="modal"
+														data-target="#newUOM">New</button></a></li>
 											<li><a title=""><button type="submit">Edit</button></a></li>
 											<li><a title=""><button type="submit">Delete</button></a></li>
 										</ul>
@@ -114,7 +119,7 @@
 									</ul>
 									<br>
 									<div class="tab-content">
-										<div id="general" class="tab-pane fade ">
+										<div id="general" class="tab-pane fade active in">
 											<div class="row">
 												<div class="col-md-2">Abreve :</div>
 												<div class="col-md-10">
@@ -159,6 +164,56 @@
 			<!-- Page Container -->
 		</div>
 		<!-- main -->
+
+		<div id="newUOM" class="modal fade" role="dialog" style="top: 25px;">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">New Unit of Measurements :</h4>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-4">Select a UOM type :</div>
+							<div class="col-md-8">
+								<select class="form-control">
+									<option value="none">---</option>
+									<option value="cou">Count</option>
+									<option value="wei">Weight</option>
+									<option value="len">Length</option>
+									<option value="are">Area</option>
+									<option value="vol">Volume</option>
+									<option value="tim">Time</option>
+								</select>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3">Abbreviation :</div>
+							<div class="col-md-9">
+								<input type="text" class="form-control">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3">Name UOM :</div>
+							<div class="col-md-9">
+								<input type="text" class="form-control">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3">UOM Description :</div>
+							<div class="col-md-9">
+								<textarea rows="" cols="" class="form-control"></textarea>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default">Submit</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
 
 		<!-- Script -->
 		<script type="text/javascript" src="js/modernizr.js"></script>

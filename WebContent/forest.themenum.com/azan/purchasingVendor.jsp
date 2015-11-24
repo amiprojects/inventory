@@ -117,14 +117,14 @@
 									</div>
 									<form role="form" class="sec">
 										<ul class="nav nav-tabs">
-											<li><a data-toggle="tab" href="#account">Account
+											<li class="active"><a data-toggle="tab" href="#account">Account
 													info</a></li>
 											<li><a data-toggle="tab" href="#detail">Details</a></li>
 											<li><a data-toggle="tab" href="#address">Address</a></li>
 											<li><a data-toggle="tab" href="#part">Parts</a></li>
 										</ul>
 										<div class="tab-content">
-											<div id="account" class="tab-pane fade ">
+											<div id="account" class="tab-pane fade active in">
 												<br>
 												<div class="col-md-2">Name :</div>
 												<div class="col-md-10">

@@ -34,6 +34,10 @@
 }
 </style>
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
+
+<link rel="stylesheet" href="bootstrapcdn.css">
+<script src="maxcdn.bootstrapcdn.js"></script>
+
 </head>
 <body>
 	<div class="main">
@@ -58,7 +62,7 @@
 											<li><a data-toggle="tab" href="#tax">Tax details</a></li>
 										</ul>
 										<div class="tab-content">
-											<div id="comp" class="tab-pane fade ">
+											<div id="comp" class="tab-pane fade active in">
 												<div class="widget-area">
 
 													<div class="wizard-form-h">

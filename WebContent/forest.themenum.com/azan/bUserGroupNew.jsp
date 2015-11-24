@@ -25,6 +25,9 @@
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
 <!-- Responsive -->
 
+<link rel="stylesheet" href="bootstrapcdn.css">
+<script src="maxcdn.bootstrapcdn.js"></script>
+
 </head>
 <body>
 
@@ -83,7 +86,6 @@
 					<div class="widget-area" style="width: 70%">
 						<div class="breadcrumbs">
 							<ul>
-								<li><a href="#" title=""><i class="fa fa-home"></i></a>/</li>
 								<li><a title="">New User Group : </a></li>
 							</ul>
 						</div>
@@ -95,7 +97,7 @@
 							</ul>
 							<br>
 							<div class="tab-content">
-								<div id="general" class="tab-pane fade ">
+								<div id="general" class="tab-pane fade active in">
 									<div class="row">
 										<div class="col-md-2">GroupName:</div>
 										<div class="col-md-10">
