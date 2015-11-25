@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
 <html>
@@ -45,22 +46,28 @@
 					<div class="row">
 						<div class="masonary-grids">
 							<div class="widget-area">
-								<div class="col-md-6">
-									<div class="form-group">
-										<label for="" class="font">Tax Name :</label> <input
-											type="text" placeholder="" id="" class="form-control">
+								<form action="addTax">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="" class="font">Tax Name :</label> <input
+												type="text" placeholder="Enter tax name" id="" name="name"
+												class="form-control">
+										</div>
 									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="form-group">
-										<label for="" class="font">Value :</label> <input type="text"
-											placeholder="" id="" class="form-control">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="" class="font">Value :</label> <input type="text"
+												placeholder="" id="" name="value" class="form-control">
+										</div>
 									</div>
-								</div>
-								<button class="btn green pull-right" type="button">Add</button>
+
+									<input class="btn green pull-right" type="submit" value="Add">
+								</form>
+								<p>${requestScope['msg']}</p>
 								<div class="widget-area">
-									<input type="checkbox"><br> <input type="checkbox"><br>
-									<input type="checkbox">
+								<c:forEach items="${sessionScope['ejb'].getAllTax()}" var="tax">
+									<input type="checkbox" value="${tax.name}" name="tax" >${tax.name}<br>
+								</c:forEach>
 								</div>
 							</div>
 						</div>
