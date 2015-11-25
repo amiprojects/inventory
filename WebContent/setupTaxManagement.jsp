@@ -44,7 +44,25 @@
 				<div class="container">
 					<div class="row">
 						<div class="masonary-grids">
-							<div class="col-md-12">...</div>
+							<div class="widget-area">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="" class="font">Tax Name :</label> <input
+											type="text" placeholder="" id="" class="form-control">
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="" class="font">Value :</label> <input type="text"
+											placeholder="" id="" class="form-control">
+									</div>
+								</div>
+								<button class="btn green pull-right" type="button">Add</button>
+								<div class="widget-area">
+									<input type="checkbox"><br> <input type="checkbox"><br>
+									<input type="checkbox">
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -53,7 +71,6 @@
 		<!-- Content Sec -->
 	</div>
 	<!-- Page Container -->
-	</div>
 	<!-- main -->
 
 	<!-- Script -->

@@ -259,9 +259,9 @@
 								</div>
 
 								<div id="rightsN" class="tab-pane fade ">
+									<!-- <button type="submit">Expand All</button>
 									<button type="submit">Expand All</button>
-									<button type="submit">Expand All</button>
-									<br>
+									<br> -->
 									<table border="1" bordercolor="gray" class="table">
 										<tr>
 											<th>Access right</th>
@@ -269,9 +269,9 @@
 										</tr>
 										<tr>
 											<td><div class="widget-area">
-													<h2 class="widget-title">
+													<!-- <h2 class="widget-title">
 														<strong>Tree</strong> List
-													</h2>
+													</h2> -->
 													<div class="tree-list">
 														<p>
 															<a href="#" id="tree-expand-all">Expand all</a> | <a
@@ -465,9 +465,9 @@
 									</div>
 								</div>
 								<div id="reportN" class="tab-pane fade ">
+									<!-- <button type="submit">Expand All</button>
 									<button type="submit">Expand All</button>
-									<button type="submit">Expand All</button>
-									<br>
+									<br> -->
 									<table border="1" bordercolor="gray" class="table">
 										<tr>
 											<th>Report</th>
@@ -475,9 +475,9 @@
 										</tr>
 										<tr>
 											<td><div class="widget-area">
-													<h2 class="widget-title">
+													<!-- <h2 class="widget-title">
 														<strong>Tree</strong> List
-													</h2>
+													</h2> -->
 													<div class="tree-list">
 														<p>
 															<a href="#" id="tree-expand-all">Expand all</a> | <a
