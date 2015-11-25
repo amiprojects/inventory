@@ -7,5 +7,5 @@ import javax.persistence.Id;
 public class Tax {
 	@Id
 	private String name;
-	private int value;
+	private float value;
 }
