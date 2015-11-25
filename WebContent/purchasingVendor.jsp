@@ -169,7 +169,7 @@
 
 											<div id="detail" class="tab-pane fade">
 												<div class="widget-area">
-													<div class="col-md-3">Transaction ID :</div>
+													<div class="col-md-3">Account No. :</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control">
 													</div>

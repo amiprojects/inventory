@@ -36,9 +36,6 @@
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
 <!-- Responsive -->
 
-<link rel="stylesheet" href="bootstrapcdn.css">
-<script src="maxcdn.bootstrapcdn.js"></script>
-
 </head>
 <body>
 
@@ -115,7 +112,9 @@
 									<div class="breadcrumbs">
 										<ul>
 											<li><a title="">User Details : </a></li>
-											<li><a title=""><button type="submit">New</button></a></li>
+											<li><a title=""><button type="button"
+														class="btn btn-info btn-lg" data-toggle="modal"
+														data-target="#newUser">New</button></a></li>
 											<li><a title=""><button type="submit">Edit</button></a></li>
 											<li><a title=""><button type="submit">Delete</button></a></li>
 										</ul>
@@ -239,7 +238,148 @@
 		<!-- Page Container -->
 	</div>
 	<!-- main -->
+	<div id="newUser" class="modal fade" role="dialog" style="top: 25px;">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">New User :</h4>
+				</div>
+				<div class="modal-body">
+					<div class="widget-area">
+						<!-- <div class="breadcrumbs">
+							<ul>
+								<li><a title="">New User : </a></li>
+							</ul>
+						</div> -->
+						<form role="form" class="sec">
+							<ul class="nav nav-tabs">
+								<li class="active"><a data-toggle="tab" href="#generalN">General</a></li>
+								<li><a data-toggle="tab" href="#locGroupsN">Location
+										Groups</a></li>
+							</ul>
+							<div class="tab-content">
+								<div id="generalN" class="tab-pane fade active in">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="" class="font">First Name :</label> <input
+												type="text" placeholder="" id="" class="form-control">
+										</div>
+										<div class="form-group">
+											<label for="" class="font">Username :</label> <input
+												type="text" placeholder="" id="" class="form-control">
+										</div>
+										<div class="form-group">
+											<label for="" class="font">Ph :</label> <input type="tel"
+												placeholder="" id="" class="form-control">
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="" class="font">Last Name :</label> <input
+												type="text" placeholder="" id="" class="form-control">
+										</div>
+										<div class="form-group">
+											<label for="" class="font">Email :</label> <input
+												type="email" placeholder="" id="" class="form-control">
+										</div>
+										<button class="btn green pull-right" type="submit">Set
+											password</button>
+									</div>
+									<div class="col-md-12">
+										<div class="breadcrumbs">
+											<ul>
+												<li><a title="">User Groups : </a></li>
+											</ul>
+										</div>
+										<hr>
+										<div class="row">
+											<div class="col-md-6">
+												<div class="breadcrumbs">
+													<ul>
+														<li><a title="" class="font">Available Groups</a></li>
+													</ul>
+												</div>
+												<textarea rows="" cols="" id="" class="form-control"></textarea>
+											</div>
+											<div class="col-md-1">
+												<a href="#"><img src="images/forward.png"></a> <a
+													href="#"><img src="images/backward.png"></a> <br>
+												<a href="#"><img src="images/allForwaRD.png"></a> <a
+													href="#"><img src="images/allbACKWARD.png"></a>
+											</div>
+											<div class="col-md-5">
+												<div class="breadcrumbs">
+													<ul>
+														<li><a title="" class="font">User belongs to</a></li>
+													</ul>
+												</div>
+												<textarea rows="" cols="" id="" class="form-control"></textarea>
+											</div>
+										</div>
+									</div>
+									<br>
+									<button class="btn green pull-right" type="submit">Next</button>
+								</div>
 
+								<div id="locGroupsN" class="tab-pane fade ">
+									Default location groups :
+									<div class="sec">
+										<select class="form-control">
+											<option>SLC</option>
+											<option>SLC</option>
+											<option>SLC</option>
+											<option>SLC</option>
+											<option>SLC</option>
+										</select>
+									</div>
+									<div class="col-md-12">
+										<div class="breadcrumbs">
+											<ul>
+												<li><a title="">Location Groups : </a></li>
+											</ul>
+										</div>
+										<hr>
+										<div class="row">
+											<div class="col-md-6">
+												<div class="breadcrumbs">
+													<ul>
+														<li><a title="" class="font">Available</a></li>
+													</ul>
+												</div>
+												<textarea rows="" cols="" id="" class="form-control"></textarea>
+											</div>
+											<div class="col-md-1">
+												<a href="#"><img src="images/forward.png"></a> <a
+													href="#"><img src="images/backward.png"></a> <br>
+												<a href="#"><img src="images/allForwaRD.png"></a> <a
+													href="#"><img src="images/allbACKWARD.png"></a>
+											</div>
+											<div class="col-md-5">
+												<div class="breadcrumbs">
+													<ul>
+														<li><a title="" class="font">Member of</a></li>
+													</ul>
+												</div>
+												<textarea rows="" cols="" id="" class="form-control"></textarea>
+											</div>
+										</div>
+									</div>
+									<br>
+									<div class="col-md-12">
+										<button class="btn green pull-left" type="submit">Previous</button>
+										<button class="btn green pull-right" type="submit">Submit</button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="modal-footer"></div>
+			</div>
+
+		</div>
+	</div>
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
 	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>

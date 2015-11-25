@@ -40,11 +40,7 @@
 							<div class="col-md-12">
 								<div class="breadcrumbs">
 									<ul>
-										<li><a href="#" title=""><i class="fa fa-home"></i></a>/</li>
 										<li><a title="">Purchase Search</a></li>
-										<li><a title=""><button type="submit">New</button></a></li>
-										<li><a title=""><button type="submit">Edit</button></a></li>
-										<li><a title=""><button type="submit">Delete</button></a></li>
 									</ul>
 								</div>
 								<div class="widget-area">
