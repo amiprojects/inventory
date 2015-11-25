@@ -13,15 +13,11 @@ public class Supplier {
 	@Id
 	@GeneratedValue
 	private int id;
-
 	private String name;
 	private String ph;
 	private String address;
 	private String email;
-
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date entry_date;
-	
-	private int user_id;
 	private int account_no;
 }
