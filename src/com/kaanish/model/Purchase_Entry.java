@@ -15,14 +15,14 @@ public class Purchase_Entry {
 	private int id;
 
 	private int challan_no;
-	private int supplier_bill_no;
+	private int vendor_bill_no;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date purchase_date;
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date purchase_entry_date;
+	private Date entry_date;
 
-	private String tax_group;
+	
 	private int transport_cost;
-	private int payment_status_id;
+	private int sur_charge;
 }

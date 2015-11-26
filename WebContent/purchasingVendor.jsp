@@ -130,6 +130,8 @@
 												<div class="col-md-10">
 													<input type="text" class="form-control">
 												</div>
+												<br>
+												
 
 												<div class="col-md-6">
 													<div class="widget-area">
@@ -169,10 +171,27 @@
 
 											<div id="detail" class="tab-pane fade">
 												<div class="widget-area">
-													<div class="col-md-3">Account No. :</div>
-													<div class="col-md-9">
-														<input type="text" class="form-control">
-													</div>
+													
+													<div class="col-md-3"><b>Name:</b></div>
+												<div class="col-md-9">
+													<input type="text" class="form-control">
+												</div><br> 
+												<div class="col-md-3"><b>Company Name:</b></div>
+												<div class="col-md-9">
+													<input type="text" class="form-control">
+												</div>
+												
+												<div class="col-md-3"><b>Ph No1:</b></div>
+												<div class="col-md-9">
+													<input type="text" class="form-control">
+												</div>
+												
+												<div class="col-md-3">Ph No2:</div>
+												<div class="col-md-9">
+													<input type="text" class="form-control">
+												</div>
+												
+													
 												</div>
 												<br>
 												<div class="col-md-12">

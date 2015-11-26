@@ -9,15 +9,21 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class Supplier {
+public class Vendor {
 	@Id
 	@GeneratedValue
 	private int id;
 	private String name;
-	private String ph;
+	private String companyName;
+	private String ph1;
+	private String ph2;
 	private String address;
+	private String pinCode;
 	private String email;
+	
+	private String aliseName;
+	 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date entry_date;
-	private int account_no;
+	private Date lastModifiedDate;
+	
 }

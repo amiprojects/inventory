@@ -38,12 +38,12 @@
 		}
 	}
 </script>
-<script type="text/javascript" src="js/modernizr.js"></script>
-<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
-<script type="text/javascript" src="js/script.js"></script>
-<script type="text/javascript" src="js/bootstrap.js"></script>
+
+
+
+
 <script type="text/javascript" src="js/enscroll.js"></script>
-<script type="text/javascript" src="js/daterangepicker.js"></script>
+
 <script type="text/javascript" src="js/moment.js"></script>
 <script type="text/javascript" src="js/grid-filter.js"></script>
 <script type="text/javascript" src="js/jquery-jvectormap.js"></script>
@@ -68,7 +68,7 @@
 						$("#next")
 								.click(
 										function() {
-											if (i < 7) {
+											if (i < 9) {
 												$("#step" + (i - 1)).hide();
 												$("#menu" + (i - 1)).attr(
 														"style", "");
@@ -104,6 +104,10 @@
 					});
 </script>
 
+
+
+ <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 </head>
 <body>
 
@@ -185,10 +189,10 @@
 										<ul>
 											<li><a title="">Part Details : </a></li>
 											<li><a href="#" title=""><button type="button"
-														class="btn btn-info btn-lg" data-toggle="modal"
+														class="btn btn-info btn-sm" data-toggle="modal"
 														data-target="#newMP">New</button></a></li>
-											<li><a title=""><button type="submit">Edit</button></a></li>
-											<li><a title=""><button type="submit">Delete</button></a></li>
+											<li><a title=""><button   class="btn btn-info btn-sm" type="submit">Edit</button></a></li>
+											<li><a title=""><button class="btn btn-info btn-sm" type="submit">Delete</button></a></li>
 										</ul>
 									</div>
 
@@ -710,7 +714,7 @@
 								</tr>
 
 								<tr>
-									<td>summary</td>
+									<td id="menu8">summary</td>
 								</tr>
 
 							</tbody>
@@ -956,7 +960,7 @@
 							<div class="col-md-6">
 								<div>
 									<label for="exampleInputEmail1">Date:</label> <input
-										type="text" name="date" required class="form-control"><br>
+										type="text" name="date" id="datepicker1" required class="form-control"><br>
 								</div>
 							</div>
 
@@ -987,7 +991,7 @@
 							<div class="col-md-6">
 								<div>
 									<label for="exampleInputEmail1">Expiration Date:</label> <input
-										type="text" name="location" required class="form-control"><br>
+										type="text" id="datepicker" name="location" required class="form-control"><br>
 								</div>
 							</div>
 							<div class="col-md-6">
@@ -1134,6 +1138,205 @@
 
 
 
+						<div class="masonary-grids">
+							<div class="col-md-6">
+								<div class="widget-area">
+									<h2 class="widget-title">
+										<strong>Tree</strong> List
+									</h2>
+									<div class="tree-list">
+										<p>
+											<a href="#" id="tree-expand-all">Expand all</a> | <a href="#"
+												id="tree-collapse-all">Collapse all</a>
+										</p>
+										<!-- Listing directory ZendX from ZendFramework library -->
+										<ul id="tree" class="abix-tree-list">
+											<li class="collapsed"><span
+												class="icon glyphicon glyphicon-plus"></span>Application
+												<ul>
+													<li class="collapsed" style="display: none;"><span
+														class="icon glyphicon glyphicon-plus"></span>Resource
+														<ul>
+															<li style="display: none;">Jquery.php</li>
+														</ul></li>
+												</ul></li>
+
+											<li class="collapsed"><span
+												class="icon glyphicon glyphicon-plus"></span>Console
+												<ul>
+													<li class="collapsed" style="display: none;"><span
+														class="icon glyphicon glyphicon-plus"></span>Process
+														<ul>
+															<li style="display: none;">Exception.php</li>
+															<li style="display: none;">Unix.php</li>
+														</ul></li>
+													<li style="display: none;">Exception.php</li>
+												</ul></li>
+
+											<li class="collapsed"><span
+												class="icon glyphicon glyphicon-plus"></span>JQuery
+												<ul>
+													<li class="collapsed" style="display: none;"><span
+														class="icon glyphicon glyphicon-plus"></span>Controller
+														<ul>
+															<li class="collapsed" style="display: none;"><span
+																class="icon glyphicon glyphicon-plus"></span>Action
+																<ul>
+																	<li class="collapsed" style="display: none;"><span
+																		class="icon glyphicon glyphicon-plus"></span>Helper
+																		<ul>
+																			<li style="display: none;">AutoComplete.php</li>
+																		</ul></li>
+																</ul></li>
+														</ul></li>
+													<li class="collapsed" style="display: none;"><span
+														class="icon glyphicon glyphicon-plus"></span>View
+														<ul>
+															<li class="collapsed" style="display: none;"><span
+																class="icon glyphicon glyphicon-plus"></span>Helper
+																<ul>
+																	<li class="collapsed" style="display: none;"><span
+																		class="icon glyphicon glyphicon-plus"></span>JQuery
+																		<ul>
+																			<li style="display: none;">Container.php</li>
+																		</ul></li>
+																	<li style="display: none;">UiWidgetPane.php</li>
+																	<li style="display: none;">UiWidget.php</li>
+																	<li style="display: none;">TabPane.php</li>
+																	<li style="display: none;">TabContainer.php</li>
+																	<li style="display: none;">Spinner.php</li>
+																	<li style="display: none;">Slider.php</li>
+																	<li style="display: none;">JQuery.php</li>
+																	<li style="display: none;">AutoComplete.php</li>
+																	<li style="display: none;">DialogContainer.php</li>
+																	<li style="display: none;">DatePicker.php</li>
+																	<li style="display: none;">ColorPicker.php</li>
+																	<li style="display: none;">AccordionPane.php</li>
+																	<li style="display: none;">AjaxLink.php</li>
+																	<li style="display: none;">AccordionContainer.php</li>
+																</ul></li>
+															<li style="display: none;">Exception.php</li>
+														</ul></li>
+													<li class="collapsed" style="display: none;"><span
+														class="icon glyphicon glyphicon-plus"></span>Form
+														<ul>
+															<li class="collapsed" style="display: none;"><span
+																class="icon glyphicon glyphicon-plus"></span>Decorator
+																<ul>
+																	<li style="display: none;">AccordionContainer.php</li>
+																	<li style="display: none;">UiWidgetPane.php</li>
+																	<li style="display: none;">UiWidgetElementMarker.php</li>
+																	<li style="display: none;">UiWidgetElement.php</li>
+																	<li style="display: none;">UiWidgetContainer.php</li>
+																	<li style="display: none;">TabPane.php</li>
+																	<li style="display: none;">TabContainer.php</li>
+																	<li style="display: none;">DialogContainer.php</li>
+																	<li style="display: none;">AccordionPane.php</li>
+																</ul></li>
+															<li class="collapsed" style="display: none;"><span
+																class="icon glyphicon glyphicon-plus"></span>Element
+																<ul>
+																	<li style="display: none;">AutoComplete.php</li>
+																	<li style="display: none;">UiWidget.php</li>
+																	<li style="display: none;">Spinner.php</li>
+																	<li style="display: none;">Slider.php</li>
+																	<li style="display: none;">DatePicker.php</li>
+																	<li style="display: none;">ColorPicker.php</li>
+																</ul></li>
+															<li style="display: none;">Exception.php</li>
+														</ul></li>
+													<li style="display: none;">Form.php</li>
+													<li style="display: none;">Exception.php</li>
+												</ul></li>
+
+											<li class="collapsed"><span
+												class="icon glyphicon glyphicon-plus"></span>Db
+												<ul>
+													<li class="collapsed" style="display: none;"><span
+														class="icon glyphicon glyphicon-plus"></span>Adapter
+														<ul>
+															<li class="collapsed" style="display: none;"><span
+																class="icon glyphicon glyphicon-plus"></span>Firebird
+																<ul>
+																	<li style="display: none;">Exception.php</li>
+																</ul></li>
+															<li style="display: none;">Firebird.php</li>
+														</ul></li>
+													<li class="collapsed" style="display: none;"><span
+														class="icon glyphicon glyphicon-plus"></span>Statement
+														<ul>
+															<li class="collapsed" style="display: none;"><span
+																class="icon glyphicon glyphicon-plus"></span>Firebird
+																<ul>
+																	<li style="display: none;">Exception.php</li>
+																</ul></li>
+															<li style="display: none;">Firebird.php</li>
+														</ul></li>
+												</ul></li>
+											<li class="collapsed"><span
+												class="icon glyphicon glyphicon-plus"></span>Form
+												<ul>
+													<li class="collapsed" style="display: none;"><span
+														class="icon glyphicon glyphicon-plus"></span>Decorator
+														<ul>
+															<li style="display: none;">AccordionContainer.php</li>
+															<li style="display: none;">UiWidgetPane.php</li>
+															<li style="display: none;">UiWidgetElementMarker.php</li>
+															<li style="display: none;">UiWidgetElement.php</li>
+															<li style="display: none;">UiWidgetContainer.php</li>
+															<li style="display: none;">TabPane.php</li>
+															<li style="display: none;">TabContainer.php</li>
+															<li style="display: none;">DialogContainer.php</li>
+															<li style="display: none;">AccordionPane.php</li>
+														</ul></li>
+													<li class="collapsed" style="display: none;"><span
+														class="icon glyphicon glyphicon-plus"></span>Element
+														<ul>
+															<li style="display: none;">AutoComplete.php</li>
+															<li style="display: none;">UiWidget.php</li>
+															<li style="display: none;">Spinner.php</li>
+															<li style="display: none;">Slider.php</li>
+															<li style="display: none;">DatePicker.php</li>
+															<li style="display: none;">ColorPicker.php</li>
+														</ul></li>
+													<li style="display: none;">Exception.php</li>
+												</ul></li>
+											<li class="collapsed"><span
+												class="icon glyphicon glyphicon-plus"></span>Helper
+												<ul>
+													<li class="collapsed" style="display: none;"><span
+														class="icon glyphicon glyphicon-plus"></span>JQuery
+														<ul>
+															<li style="display: none;">Container.php</li>
+														</ul></li>
+													<li style="display: none;">UiWidgetPane.php</li>
+													<li style="display: none;">UiWidget.php</li>
+													<li style="display: none;">TabPane.php</li>
+													<li style="display: none;">TabContainer.php</li>
+													<li style="display: none;">Spinner.php</li>
+													<li style="display: none;">Slider.php</li>
+													<li style="display: none;">JQuery.php</li>
+													<li style="display: none;">AutoComplete.php</li>
+													<li style="display: none;">DialogContainer.php</li>
+													<li style="display: none;">DatePicker.php</li>
+													<li style="display: none;">ColorPicker.php</li>
+													<li style="display: none;">AccordionPane.php</li>
+													<li style="display: none;">AjaxLink.php</li>
+													<li style="display: none;">AccordionContainer.php</li>
+												</ul></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div id="step7"
+						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial;">
+
+
+
+
 						<fieldset>
 							<legend> Product category fields </legend>
 
@@ -1168,7 +1371,72 @@
 						</fieldset>
 
 					</div>
+					<div id="step8"
+						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial; overflow: auto;">
+						<fieldset>
+							<legend> Summary </legend>
+							<form>
 
+								<h4>
+									<u>Part:</u>
+								</h4>
+								<b>Code:</b><br> <b>Description:</b><br> <b>Universal
+									Product Code:</b><br> <b>UOM:</b><br> <br>
+								<h4>
+									<u>Product:</u>
+								</h4>
+								<b>Code:</b><br> <b>Description:</b><br> <b>Universal
+									Product Code:</b><br> <b>UOM:</b><br>
+								<hr width="100%">
+
+								<h4>
+									<u>Tracking Options:</u>
+								</h4>
+								<b>Lot Number:</b><br>
+								<hr width="100%">
+
+								<h4>
+									<u>Add initial inventory:</u>
+								</h4>
+								<b>Location:</b><br> <b>Quantity:</b><br> <b>UOM:</b><br>
+								<b>Unit Cost:</b><br> <b>Date:</b>
+								<hr width="100%">
+
+								<h4>
+									<u>Initial inventory tracking:</u>
+								</h4>
+								<b>Lot Number:</b><br> <b>Expiration Date:</b><br> <b>Serial
+									Number:</b><br>
+								<hr width="100%">
+
+								<h4>
+									<u>Part Custom Field:</u>
+								</h4>
+								<b>Custom1:</b><br> <b>Custom2:</b><br> <b>Custom3:</b><br>
+								<b>Custom4:</b>
+								<hr width="100%">
+
+								<h4>
+									<u>Product Tree:</u>
+								</h4>
+								<b>product was not added to any categories:</b>
+								<hr width="100%">
+								
+								<h4>
+									<u>Product Custom Fields:</u>
+								</h4>
+								<b>Custom1:</b><br> <b>Custom2:</b><br> <b>Custom3:</b><br>
+								<b>Custom4:</b>
+								<hr width="100%">
+								
+
+
+							</form>
+
+
+						</fieldset>
+
+					</div>
 
 
 
@@ -1194,7 +1462,7 @@
 					</div>
 
 					<div id="boxdown"
-						style="position: absolute; bottom: -12px; left: -1px; width: 751px; height: 49px; padding: 0;">
+						style="position: absolute; bottom: -12px; left: 0px; width: 751px; height: 49px; padding: 0;">
 
 						<div class="breadcrumbs" style="height: 49px;">
 
@@ -1209,11 +1477,7 @@
 								style="position: absolute; right: 240px; top: 3px;" id="prev">
 								Back</button>
 						</div>
-
-
 					</div>
-
-
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -1222,7 +1486,7 @@
 		</div>
 
 	</div>
-	</div>
+	
 
 	<!-- Script -->
 
@@ -1243,15 +1507,21 @@
 	</script>
 
 	<script type="text/javascript" src="js/modernizr.js"></script>
-	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+	
 	<script type="text/javascript" src="js/script.js"></script>
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="js/enscroll.js"></script>
 	<script type="text/javascript" src="js/grid-filter.js"></script>
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 	<script>
+	
 		$(function() {
 			$("#datepicker").datepicker();
+		});
+		
+		
+		$(function() {
+			$("#datepicker1").datepicker();
 		});
 	</script>
 
