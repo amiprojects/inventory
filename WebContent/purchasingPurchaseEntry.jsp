@@ -35,8 +35,6 @@
 </style>
 
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
-
-<link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -135,7 +133,6 @@
 							<div class="col-md-12">
 								<div class="breadcrumbs">
 									<ul>
-										<li><a href="#" title=""><i class="fa fa-home"></i></a>/</li>
 										<li><a title="">Purchase Entry : </a></li>
 									</ul>
 								</div>
