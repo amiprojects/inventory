@@ -103,10 +103,10 @@
 											<li><a title="" class="active">Unit of Measurements
 													: </a></li>
 											<li><a title=""><button type="button"
-														class="btn btn-info btn-lg" data-toggle="modal"
+														class="btn btn-info btn-sm" data-toggle="modal"
 														data-target="#newUOM">New</button></a></li>
-											<li><a title=""><button type="submit">Edit</button></a></li>
-											<li><a title=""><button type="submit">Delete</button></a></li>
+											<li><a title=""><button type="submit"class="btn btn-info btn-sm">Edit</button></a></li>
+											<li><a title=""><button type="submit" class="btn btn-info btn-sm">Delete</button></a></li>
 										</ul>
 									</div>
 

@@ -12,7 +12,6 @@ import javax.persistence.ManyToOne;
 public class Tax_Type_Group {
 	@Id
 	private String name;
-	private String list_of_tax;
 
 	@ManyToMany(mappedBy = "tax_type_groups")
 	private List<Tax> taxes;
@@ -28,13 +27,7 @@ public class Tax_Type_Group {
 		this.name = name;
 	}
 
-	public String getList_of_tax() {
-		return list_of_tax;
-	}
 
-	public void setList_of_tax(String list_of_tax) {
-		this.list_of_tax = list_of_tax;
-	}
 
 	public List<Tax> getTaxes() {
 		return taxes;
