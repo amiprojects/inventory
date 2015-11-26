@@ -35,11 +35,18 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	public void removeTax(Tax tax) {
-		em.remove(tax);
+	public void removeTax(String taxName) {
+		em.remove(getTaxById(taxName));
 	}
 
 	public void removeTaxTYpeGroup(Tax_Type_Group tax_Type_Group) {
 		em.remove(tax_Type_Group);
 	}
+	public Tax getTaxById(String nm){
+		return em.find(Tax.class, nm);
+	}
+	public Tax_Type_Group getTax_Type_GroupById(String name){
+		return em.find(Tax_Type_Group.class, name);
+	}
+	
 }

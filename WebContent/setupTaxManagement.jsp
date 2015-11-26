@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
 <html>
@@ -63,22 +63,99 @@
 
 									<input class="btn green pull-right" type="submit" value="Add">
 								</form>
-								<p>${requestScope['msg']}</p>
-								<div class="widget-area">
-								<c:forEach items="${sessionScope['ejb'].getAllTax()}" var="tax">
-									<input type="checkbox" value="${tax.name}" name="tax" >${tax.name}<br>
-								</c:forEach>
+								<%-- <p>${requestScope['msg']}</p> --%>
+								<div class="col-md-6">
+									<div class="widget-area">
+										<form action="addTaxGroup">
+											<div style="height: 310px; overflow: auto;">
+												<c:forEach items="${sessionScope['ejb'].getAllTax()}"
+													var="tax">
+													<input type="checkbox" value="${tax.name}" name="tax">${tax.name}<br>
+												</c:forEach>
+											</div>
+											<div id="newTaxGroup" class="modal fade" role="dialog"
+												style="top: 25px;">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<div class="modal-header">
+															<button type="button" class="close" data-dismiss="modal">&times;</button>
+															<h4 class="modal-title">Create Tax Group</h4>
+														</div>
+														<div class="modal-body">
+															<div class="widget-area">
+
+																<div class="form-group">
+																	<label for="" class="font">Tax Group Name :</label> <input
+																		type="text" placeholder="Enter tax group name" id=""
+																		name="name" class="form-control">
+																</div>
+																<input class="btn green pull-right" type="submit"
+																	value="Create">
+															</div>
+														</div>
+														<div class="modal-footer">
+															<!-- <button type="button" class="btn btn-default"
+													data-dismiss="modal">Close</button> -->
+														</div>
+													</div>
+
+												</div>
+											</div>
+										</form>
+									</div>
 								</div>
+								<div class="col-md-6">
+									<div class="widget-area">
+										<button type="button" class="btn btn-info btn-lg"
+											data-toggle="modal" data-target="#newTaxGroup">Create
+											Tax Group</button>
+										<div class="widget-area"
+											style="height: 200px; overflow: auto;">
+											<c:forEach
+												items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
+												var="taxGroup">
+												<br>
+												<span onclick="showTaxes('${taxGroup.name}');">
+													${taxGroup.name}</span>
+												<div id="taxList${taxGroup.name}" class="modal fade"
+													role="dialog" style="top: 25px;">
+													<div class="modal-dialog">
+														<div class="modal-content">
+															<div class="modal-header">
+																<button type="button" class="close" data-dismiss="modal">&times;</button>
+																<h4 class="modal-title">Tax list</h4>
+															</div>
+															<div class="modal-body">
+																<c:forEach
+																	items="${sessionScope['ejb'].getTax_Type_GroupById(taxGroup.name).taxes}"
+																	var="tax">
+																	<br>${tax.name} 
+						</c:forEach>
+															</div>
+															<div class="modal-footer">
+																<!-- <button type="button" class="btn btn-default"
+													data-dismiss="modal">Close</button> -->
+															</div>
+														</div>
+
+													</div>
+												</div>
+											</c:forEach>
+										</div>
+									</div>
+								</div>
+
+								<p>${requestScope['msg']}</p>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<!-- Content Sec -->
 	</div>
-	<!-- Page Container -->
 	<!-- main -->
+
+
 
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
@@ -93,6 +170,11 @@
 		$(function() {
 			$("#datepicker").datepicker();
 		});
+		function showTaxes(tg) {
+
+			/* alert(tg); */
+			$("#taxList" + tg).modal('show');
+		}
 	</script>
 </body>
 
