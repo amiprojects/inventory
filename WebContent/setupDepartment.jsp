@@ -152,7 +152,45 @@
 																							href="deleteCategory?id=${cat.id}"><span
 																								style="color: red;">X</span></a>
 																							<ul>
-																								<c:forEach var="cat" items="${sessionScope['ejb'].getAllProductDetailByCategoryId(cat.id)}">
+																								<li onclick="createProduct('${cat.id}');">Create
+																									Product
+
+																									<div id="createProduct${cat.id}"
+																										class="modal fade" role="dialog"
+																										style="top: 25px;">
+																										<div class="modal-dialog">
+																											<div class="modal-content">
+																												<div class="modal-header">
+																													<button type="button" class="close"
+																														data-dismiss="modal">&times;</button>
+																													<h4 class="modal-title">Tax list</h4>
+																												</div>
+																												<div class="modal-body">
+																													<form action="">
+																														<span>Product type : </span><select
+																															class="form-control">
+																															<option>Raw</option>
+																															<option>Ready</option>
+																														</select> <span>Product name : </span><input
+																															type="text" class="form-control">
+																														<span>Product code : </span><input
+																															type="text" class="form-control">
+																														<input type="hidden" name="catId"
+																															value="${cat.id}"> <input
+																															type="submit" value="Save"
+																															class="btn green pull-right">
+																													</form>
+																												</div>
+																												<div class="modal-footer"></div>
+																											</div>
+
+																										</div>
+																									</div>
+
+																								</li>
+
+																								<c:forEach var="cat"
+																									items="${sessionScope['ejb'].getAllProductDetailByCategoryId(cat.id)}">
 																									<li>${cat.name}</li>
 																								</c:forEach>
 																							</ul>
@@ -222,6 +260,9 @@
 		}
 		function createCategory(id) {
 			$("#createCategory" + id).modal('show');
+		}
+		function createProduct(id) {
+			$("#createProduct" + id).modal('show');
 		}
 	</script>
 

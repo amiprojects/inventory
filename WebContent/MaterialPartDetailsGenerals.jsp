@@ -65,6 +65,8 @@
 						$("#step4").hide();
 						$("#step5").hide();
 						$("#step6").hide();
+						$("#step7").hide();
+						$("#step8").hide();
 						$("#next")
 								.click(
 										function() {
