@@ -13,6 +13,7 @@ import com.kaanish.model.ProductDetail;
 import com.kaanish.model.SubDepartment;
 import com.kaanish.model.Tax;
 import com.kaanish.model.Tax_Type_Group;
+import com.kaanish.model.Vendor;
 
 @Stateless
 public class Ejb {
@@ -53,10 +54,25 @@ public class Ejb {
 	public Tax_Type_Group getTax_Type_GroupById(String name) {
 		return em.find(Tax_Type_Group.class, name);
 	}
+	/********************for vendor*******************************/
+	public void setVendor(Vendor vendor){
+		em.persist(vendor);
+	}
+	public Vendor getVendorById(int id){
+		return em.find(Vendor.class, id);
+	}
+	public void deleteVendorById(int id){
+		em.remove(getVendorById(id));
+	}
+	public void updateVendor(Vendor vendor){
+		em.merge(vendor);
+	}
+	public List<Vendor> getAllVendors(){
+		TypedQuery<Vendor> q=em.createQuery("", Vendor.class);
+		return q.getResultList();
+	}
 
-	/******************************
-	 * for Department
-	 *********************************/
+	/******************************for Department*********************************/
 	public void setDepartment(Department department) {
 		em.persist(department);
 	}
@@ -149,4 +165,5 @@ public class Ejb {
 		q.setParameter("Id", id);
 		return q.getResultList();
 	}
+
 }

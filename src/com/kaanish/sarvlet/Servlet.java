@@ -20,7 +20,7 @@ import com.kaanish.model.Tax_Type_Group;
 import com.sun.mail.handlers.text_html;
 
 @WebServlet({ "/addTax", "/addTaxGroup", "/createDept", "/deleteDept", "/createSubDept", "/deleteSubDept",
-		"/createCategory","/deleteCategory" })
+		"/createCategory","/deleteCategory", })
 public class Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
