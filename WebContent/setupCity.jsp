@@ -46,90 +46,52 @@
 					<div class="row">
 						<div class="masonary-grids">
 							<div class="widget-area">
-								<form action="addTax">
-									<div class="col-md-6">
-										<div class="form-group">
-											<label for="" class="font">City Name :</label> <input
-												type="text" placeholder="Enter tax name" id="" name="name"
-												class="form-control">
+								<div class="row">
+									<form action="addTax">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label for="" class="font">City Name :</label> <input
+													type="text" placeholder="Enter city name" id="" name="name"
+													class="form-control">
+											</div>
 										</div>
-									</div>
-									<!-- <div class="col-md-6">
+										<!-- <div class="col-md-6">
 										<div class="form-group">
 											<label for="" class="font">Value :</label> <input type="text"
 												placeholder="" id="" name="value" class="form-control">
 										</div>
 									</div> -->
-
-									<input class="btn green pull-right" type="submit" value="Add">
-								</form>
-								<%-- <p>${requestScope['msg']}</p> --%>
-								<div class="col-md-6">
-									<div class="widget-area">
-										<form action="addTaxGroup">
-											<div style="height: 310px; overflow: auto;">
-												City1<br>
-												City1<br>
-												City1<br>
-											</div>
-											<div id="newTaxGroup" class="modal fade" role="dialog"
-												style="top: 25px;">
-												<div class="modal-dialog">
-													<div class="modal-content">
-														<div class="modal-header">
-															<button type="button" class="close" data-dismiss="modal">&times;</button>
-															<h4 class="modal-title">State</h4>
-														</div>
-														<div class="modal-body">
-															<div class="widget-area">
-
-																<div class="form-group">
-																	<label for="" class="font">State Name :</label> <input
-																		type="text" placeholder="Enter tax group name" id=""
-																		name="name" class="form-control">
-																</div>
-																<input class="btn green pull-right" type="submit"
-																	value="Create">
-															</div>
-														</div>
-														<div class="modal-footer">
-															<!-- <button type="button" class="btn btn-default"
-													data-dismiss="modal">Close</button> -->
-														</div>
-													</div>
-
-												</div>
-											</div>
-										</form>
-									</div>
+										<br> <input class="btn green pull-left" type="submit"
+											value="Add">
+									</form>
 								</div>
-								<div class="col-md-6">
-									<div class="widget-area">
-										<button type="button" class="btn btn-info btn-lg"
-											data-toggle="modal" data-target="#newTaxGroup">Create
-											Tax Group</button>
-										<div class="widget-area"
-											style="height: 200px; overflow: auto;">
-											<c:forEach
-												items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
-												var="taxGroup">
-												<br>
-												<span onclick="showTaxes('${taxGroup.name}');">
-													${taxGroup.name}</span>
-												<div id="taxList${taxGroup.name}" class="modal fade"
-													role="dialog" style="top: 25px;">
+								<%-- <p>${requestScope['msg']}</p> --%>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="widget-area">
+											<form action="addTaxGroup">
+												<div style="height: 310px; overflow: auto;">
+													City1<br> City1<br>
+												</div>
+												<div id="newTaxGroup" class="modal fade" role="dialog"
+													style="top: 25px;">
 													<div class="modal-dialog">
 														<div class="modal-content">
 															<div class="modal-header">
 																<button type="button" class="close" data-dismiss="modal">&times;</button>
-																<h4 class="modal-title">City list</h4>
+																<h4 class="modal-title">State</h4>
 															</div>
 															<div class="modal-body">
-																<c:forEach
-																	items="${sessionScope['ejb'].getTax_Type_GroupById(taxGroup.name).taxes}"
-																	var="tax">
-																	<br>${tax.name} 
-						</c:forEach>
+																<div class="widget-area">
+
+																	<div class="form-group">
+																		<label for="" class="font">State Name :</label> <input
+																			type="text" placeholder="Enter state name" id=""
+																			name="name" class="form-control">
+																	</div>
+																	<input class="btn green pull-right" type="submit"
+																		value="Create">
+																</div>
 															</div>
 															<div class="modal-footer">
 																<!-- <button type="button" class="btn btn-default"
@@ -139,11 +101,50 @@
 
 													</div>
 												</div>
-											</c:forEach>
+											</form>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="widget-area">
+											<button type="button" class="btn btn-info btn-lg"
+												data-toggle="modal" data-target="#newTaxGroup">State</button>
+											<div class="widget-area"
+												style="height: 200px; overflow: auto;">
+												<c:forEach
+													items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
+													var="taxGroup">
+													<br>
+													<span onclick="showTaxes('${taxGroup.name}');">
+														${taxGroup.name}</span>
+													<div id="taxList${taxGroup.name}" class="modal fade"
+														role="dialog" style="top: 25px;">
+														<div class="modal-dialog">
+															<div class="modal-content">
+																<div class="modal-header">
+																	<button type="button" class="close"
+																		data-dismiss="modal">&times;</button>
+																	<h4 class="modal-title">City list</h4>
+																</div>
+																<div class="modal-body">
+																	<c:forEach
+																		items="${sessionScope['ejb'].getTax_Type_GroupById(taxGroup.name).taxes}"
+																		var="tax">
+																		<br>${tax.name} 
+						</c:forEach>
+																</div>
+																<div class="modal-footer">
+																	<!-- <button type="button" class="btn btn-default"
+													data-dismiss="modal">Close</button> -->
+																</div>
+															</div>
+
+														</div>
+													</div>
+												</c:forEach>
+											</div>
 										</div>
 									</div>
 								</div>
-
 								<p>${requestScope['msg']}</p>
 							</div>
 						</div>
