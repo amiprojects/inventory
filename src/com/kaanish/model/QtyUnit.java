@@ -5,11 +5,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class city {
-
+public class QtyUnit {
 	@Id
 	@GeneratedValue
 	private int id;
-	private String cityName;
-	
+	private String name;
+	private String type;
 }

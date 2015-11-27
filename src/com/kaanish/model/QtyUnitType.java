@@ -5,7 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Qty_unit_type {
+public class QtyUnitType {
 	@Id
 	@GeneratedValue
 	private int id;
