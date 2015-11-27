@@ -128,6 +128,13 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<City> getCityByName(String name) {
+		TypedQuery<City> q = em.createQuery(
+				"select c from City c where c.cityName like :nm", City.class);
+		q.setParameter("nm", "%" + name + "%");
+		return q.getResultList();
+	}
+
 	/******************** for State *******************************/
 	public void setState(State state) {
 		em.persist(state);
@@ -151,6 +158,16 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<State> getStateByName(String name) {
+		TypedQuery<State> q = em
+				.createQuery(
+						"select c from State c where c.stateName like :nm",
+						State.class);
+		q.setParameter("nm", "%" + name + "%");
+		return q.getResultList();
+
+	}
+
 	/******************** for Country *******************************/
 	public void setCountry(Country country) {
 		em.persist(country);
@@ -171,6 +188,14 @@ public class Ejb {
 	public List<Country> getAllCountry() {
 		TypedQuery<Country> q = em.createQuery("select c from Country c",
 				Country.class);
+		return q.getResultList();
+	}
+
+	public List<Country> getCountryByName(String name) {
+		TypedQuery<Country> q = em.createQuery(
+				"select c from Country c where c.countryName like :nm",
+				Country.class);
+		q.setParameter("nm", "%" + name + "%");
 		return q.getResultList();
 	}
 
