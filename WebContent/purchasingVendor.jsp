@@ -125,73 +125,215 @@
 										</ul>
 										<div class="tab-content">
 											<div id="account" class="tab-pane fade active in">
-												<br>
-												<div class="col-md-2">Name :</div>
-												<div class="col-md-10">
-													<input type="text" class="form-control">
-												</div>
-												<br>
-												
-
-												<div class="col-md-6">
-													<div class="widget-area">
-														<div class="breadcrumbs">
-															<ul>
-																<li><a title="" class="font">Address</a></li>
-															</ul>
-														</div>
-														<textarea rows="" cols="" id="" class="form-control"></textarea>
+												<div class="widget-area">
+													<div class="col-md-3">
+														<b>Bank Name:</b>
 													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="widget-area">
-														<div class="breadcrumbs">
-															<ul>
-																<li><a title="" class="font">Change History</a></li>
-															</ul>
-															<hr>
-														</div>
-
-														<div class="row">Date Entered :</div>
-														<div class="row">Date Last changed :</div>
-														<div class="row">User id :</div>
+													<div class="col-md-9">
+														<input type="text" class="form-control">
+													</div>
+													<br>
+													<div class="col-md-3">
+														<b>A/C no.:</b>
+													</div>
+													<div class="col-md-9">
+														<input type="text" class="form-control">
+													</div>
+													<br>
+													<div class="col-md-3">
+														<b>Branch:</b>
+													</div>
+													<div class="col-md-9">
+														<input type="text" class="form-control">
+													</div>
+													<br>
+													<div class="col-md-3">
+														<b>City:</b>
+													</div>
+													<div class="col-md-9">
+														<input type="text" class="form-control">
+													</div>
+													<br>
+													<div class="col-md-3">
+														<b>IFSC no.:</b>
+													</div>
+													<div class="col-md-9">
+														<input type="text" class="form-control">
+													</div>
+													<br>
+													<div class="col-md-3">
+														<b>MICR no.:</b>
+													</div>
+													<div class="col-md-9">
+														<input type="text" class="form-control">
+													</div>
+													<br>
+													<div class="col-md-3">
+														<b>RTGS code:</b>
+													</div>
+													<div class="col-md-9">
+														<input type="text" class="form-control">
+													</div>
+													<br>
+													<div class="col-md-3">
+														<b>Check lebel:</b>
+													</div>
+													<div class="col-md-9">
+														<input type="text" class="form-control">
 													</div>
 												</div>
 												<div class="widget-area">
-													<div class="breadcrumbs">
-														<ul>
-															<li><a title="" class="font"><h6>Address
-																		Info</h6></a></li>
-														</ul>
+													<div class="row">
+														<div class="col-md-4">
+															<b>VAT no.:</b>
+														</div>
+														<div class="col-md-8">
+															<input type="text" class="form-control">
+														</div>
 													</div>
-													<textarea rows="" cols="" id="" class="form-control"></textarea>
-													<button class="btn green pull-right" type="submit">Next</button>
+													<br>
+													<div class="row">
+														<div class="col-md-4">
+															<b>VAT registration date:</b>
+														</div>
+														<div class="col-md-8">
+															<input type="text" class="form-control">
+														</div>
+													</div>
+													<br>
+													<div class="row">
+														<div class="col-md-4">
+															<b>CST registration date:</b>
+														</div>
+														<div class="col-md-8">
+															<input type="text" class="form-control">
+														</div>
+													</div>
+													<br>
+													<div class="row">
+														<div class="col-md-4">
+															<b>PAN no.:</b>
+														</div>
+														<div class="col-md-8">
+															<input type="text" class="form-control">
+														</div>
+													</div>
+													<br>
+													<div class="row">
+														<div class="col-md-4">
+															<b>Excise registration no.:</b>
+														</div>
+														<div class="col-md-8">
+															<input type="text" class="form-control">
+														</div>
+													</div>
+													<br>
+													<div class="row">
+														<div class="col-md-4">
+															<b>Excise registration date:</b>
+														</div>
+														<div class="col-md-8">
+															<input type="text" class="form-control">
+														</div>
+													</div>
+													<br>
+													<div class="row">
+														<div class="col-md-4">
+															<b>Service tax registration no.:</b>
+														</div>
+														<div class="col-md-8">
+															<input type="text" class="form-control">
+														</div>
+													</div>
+													<br>
+													<div class="row">
+														<div class="col-md-4">
+															<b>Service tax registration date:</b>
+														</div>
+														<div class="col-md-8">
+															<input type="text" class="form-control">
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-4">
+															<b>Tax group id:</b>
+														</div>
+														<div class="col-md-8">
+															<select class="form-control">
+																<option>---</option>
+																<option>---</option>
+																<option>---</option>
+															</select>
+														</div>
+													</div>
 												</div>
 											</div>
 
 											<div id="detail" class="tab-pane fade">
 												<div class="widget-area">
-													
-													<div class="col-md-3"><b>Name:</b></div>
-												<div class="col-md-9">
-													<input type="text" class="form-control">
-												</div><br> 
-												<div class="col-md-3"><b>Company Name:</b></div>
-												<div class="col-md-9">
-													<input type="text" class="form-control">
-												</div>
-												
-												<div class="col-md-3"><b>Ph No1:</b></div>
-												<div class="col-md-9">
-													<input type="text" class="form-control">
-												</div>
-												
-												<div class="col-md-3">Ph No2:</div>
-												<div class="col-md-9">
-													<input type="text" class="form-control">
-												</div>
-												
-													
+
+													<div class="col-md-3">
+														<b>Name:</b>
+													</div>
+													<div class="col-md-9">
+														<input type="text" class="form-control">
+													</div>
+													<br>
+													<div class="col-md-3">
+														<b>Company Name:</b>
+													</div>
+													<div class="col-md-9">
+														<input type="text" class="form-control">
+													</div>
+
+													<div class="col-md-3">
+														<b>Ph No1:</b>
+													</div>
+													<div class="col-md-9">
+														<input type="text" class="form-control">
+													</div>
+
+													<div class="col-md-3">
+														<b>Ph No2:</b>
+													</div>
+													<div class="col-md-9">
+														<input type="text" class="form-control">
+													</div>
+
+													<div class="col-md-3">
+														<b>Email :</b>
+													</div>
+													<div class="col-md-9">
+														<input type="text" class="form-control">
+													</div>
+
+													<div class="col-md-3">
+														<b>Alias name :</b>
+													</div>
+													<div class="col-md-9">
+														<input type="text" class="form-control">
+													</div>
+
+													<div class="col-md-3">
+														<b>Vendor type :</b>
+													</div>
+													<div class="col-md-9">
+														<select class="form-control">
+															<option>Supplier</option>
+															<option>Agent</option>
+															<option>Jobber</option>
+															<option>Transporter</option>
+														</select>
+													</div>
+
+													<div class="breadcrumbs">
+														<ul>
+															<li><a title="" class="font">Change History</a></li>
+														</ul>
+														<hr>
+													</div>
+
+													<div class="row">Last modified date :</div>
 												</div>
 												<br>
 												<div class="col-md-12">
@@ -206,65 +348,19 @@
 															<li><a title="" class="font"><h6>Address</h6></a></li>
 														</ul>
 													</div>
-													<div class="row">
-														<div class="col-md-3">Address Name :</div>
-														<div class="col-md-9">
-															<input type="text" class="form-control">
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-md-3">Name :</div>
-														<div class="col-md-9">
-															<input type="text" class="form-control">
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-md-3">Street :</div>
-														<div class="col-md-9">
-															<input type="text" class="form-control">
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-md-3">City/State/Zip :</div>
-														<div class="col-md-3">
-															<input type="text" class="form-control">
-														</div>
-														<div class="col-md-3">
-															<input type="text" class="form-control">
-														</div>
-														<div class="col-md-3">
-															<input type="text" class="form-control">
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-md-3">Country :</div>
-														<div class="col-md-9">
-															<select class="form-control">
-																<option>---</option>
-																<option>---</option>
-																<option>---</option>
-															</select>
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-md-3">Location group :</div>
-														<div class="col-md-9">
-															<select class="form-control">
-																<option>---</option>
-																<option>---</option>
-																<option>---</option>
-															</select> <input type="checkbox">Residential address
-														</div>
-													</div>
-												</div>
-												<div class="widget-area">
-													<div class="breadcrumbs">
-														<ul>
-															<li><a title="" class="font"><h6>Address
-																		Info</h6></a></li>
-														</ul>
-													</div>
 													<textarea rows="" cols="" class="form-control"></textarea>
+													<div class="row">
+														<div class="col-md-3">City :</div>
+														<div class="col-md-9">
+															<input type="text" class="form-control">
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-3">Pin code :</div>
+														<div class="col-md-9">
+															<input type="text" class="form-control">
+														</div>
+													</div>
 												</div>
 												<br>
 												<div class="col-md-12">
