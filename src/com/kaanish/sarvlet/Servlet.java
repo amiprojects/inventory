@@ -12,11 +12,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kaanish.ejb.Ejb;
+import com.kaanish.model.Category;
+import com.kaanish.model.Department;
+import com.kaanish.model.SubDepartment;
 import com.kaanish.model.Tax;
 import com.kaanish.model.Tax_Type_Group;
 import com.sun.mail.handlers.text_html;
 
-@WebServlet({ "/addTax", "/addTaxGroup" })
+@WebServlet({ "/addTax", "/addTaxGroup", "/createDept", "/deleteDept", "/createSubDept", "/deleteSubDept",
+		"/createCategory","/deleteCategory" })
 public class Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -27,10 +31,12 @@ public class Servlet extends HttpServlet {
 	private String url;
 	private Tax tax;
 	private Tax_Type_Group tax_type_group;
+	private Department department;
+	private SubDepartment subDepartment;
+	private Category category;
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		url = req.getRequestURL().toString();
 		url = url.substring(url.lastIndexOf('/') + 1);
 
@@ -50,18 +56,63 @@ public class Servlet extends HttpServlet {
 				page = "setupTaxManagement.jsp";
 				tax_type_group = new Tax_Type_Group();
 				tax_type_group.setName(req.getParameter("name"));
-				
-				String[] taxes=req.getParameterValues("tax");
-				List<Tax> taxlst=new ArrayList<Tax>();
-				
-				for(String taxName: taxes){
+
+				String[] taxes = req.getParameterValues("tax");
+				List<Tax> taxlst = new ArrayList<Tax>();
+
+				for (String taxName : taxes) {
 					taxlst.add(ejb.getTaxById(taxName));
-					
+
 				}
 				tax_type_group.setTaxes(taxlst);
 
 				ejb.setTaxTYpeGroup(tax_type_group);
 				msg = "Tax group added succesfully.";
+				break;
+			case "createDept":
+				page = "setupDepartment.jsp";
+				department = new Department();
+				department.setName(req.getParameter("name"));
+				ejb.setDepartment(department);
+				msg = "Department added.";
+				break;
+			case "deleteDept":
+				page = "setupDepartment.jsp";
+				ejb.deleteDepartmentById(Integer.parseInt(req.getParameter("id")));
+				msg = "Department deleted.";
+				break;
+			case "createSubDept":
+				page = "setupDepartment.jsp";
+				subDepartment = new SubDepartment();
+				subDepartment.setName(req.getParameter("name"));
+				subDepartment.setDepartment(ejb.getDepartmentById(Integer.parseInt(req.getParameter("deptId"))));
+				ejb.setSubDepartment(subDepartment);
+				msg = "SubDepartment added.";
+				break;
+			case "deleteSubDept":
+				page = "setupDepartment.jsp";
+				ejb.deleteSubDepartmentById(Integer.parseInt(req.getParameter("id")));
+				msg = "Department deleted.";
+				break;
+			case "createCategory":
+				page = "setupDepartment.jsp";
+				category =new Category();
+				category.setName(req.getParameter("name"));
+				category.setAttrNmae1(req.getParameter("attr1"));
+				category.setAttrNmae2(req.getParameter("attr2"));
+				category.setAttrNmae3(req.getParameter("attr3"));
+				category.setAttrNmae4(req.getParameter("attr4"));
+				category.setAttrNmae5(req.getParameter("attr5"));
+				category.setAttrNmae6(req.getParameter("attr6"));
+				category.setSubDepartment(ejb.getSubDepartmentById(Integer.parseInt(req.getParameter("subDeptId"))));
+				ejb.setCategory(category);
+				msg = "Category added.";
+				break;
+			case "deleteCategory":
+				page = "setupDepartment.jsp";
+				ejb.deleteCategoryById(Integer.parseInt(req.getParameter("id")));
+				msg = "Category deleted.";
+				break;
 
 			default:
 				break;
@@ -75,8 +126,7 @@ public class Servlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doGet(req, resp);
 	}
 }

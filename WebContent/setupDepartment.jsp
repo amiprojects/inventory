@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
 <html>
@@ -53,9 +54,9 @@
 										</tr>
 										<tr>
 											<td><div class="widget-area">
-													<!-- <h2 class="widget-title">
+													<h2 class="widget-title">
 														<strong>Tree</strong> List
-													</h2> -->
+													</h2>
 													<div class="tree-list">
 														<p>
 															<a href="#" id="tree-expand-all">Expand all</a> | <a
@@ -63,179 +64,106 @@
 														</p>
 														<!-- Listing directory ZendX from ZendFramework library -->
 														<ul id="tree">
-															<li>Application
-																<ul>
-																	<li>Resource
-																		<ul>
-																			<li>Jquery.php</li>
-																		</ul>
-																	</li>
-																</ul>
-															</li>
+															<li onclick="addDept();">create Department</li>
+															<c:forEach
+																items="${sessionScope['ejb'].getAllDepartments()}"
+																var="dept">
+																<li>${dept.name}<a href="deleteDept?id=${dept.id}"><span
+																		style="color: red;">X</span></a>
+																	<ul>
+																		<li onclick="createSubDept('${dept.id}');">Create
+																			Sub-Department
 
-															<li>Console
-																<ul>
-																	<li>Process
-																		<ul>
-																			<li>Exception.php</li>
-																			<li>Unix.php</li>
-																		</ul>
-																	</li>
-																	<li>Exception.php</li>
-																</ul>
-															</li>
+																			<div id="createSubDept${dept.id}" class="modal fade"
+																				role="dialog" style="top: 25px;">
+																				<div class="modal-dialog">
+																					<div class="modal-content">
+																						<div class="modal-header">
+																							<button type="button" class="close"
+																								data-dismiss="modal">&times;</button>
+																							<h4 class="modal-title">Tax list</h4>
+																						</div>
+																						<div class="modal-body">
+																							<form action="createSubDept">
+																								<input type="hidden" name="deptId"
+																									value="${dept.id}"> <input type="text"
+																									name="name"> <input type="submit"
+																									value="add">
+																							</form>
+																						</div>
+																						<div class="modal-footer"></div>
+																					</div>
 
-															<li>JQuery
-																<ul>
-																	<li>Controller
-																		<ul>
-																			<li>Action
+																				</div>
+																			</div>
+
+																		</li>
+																		<c:forEach
+																			items="${sessionScope['ejb'].getAllSubDepartmentsByDepartmentId(dept.id)}"
+																			var="subDept">
+																			<li>${subDept.name}<a
+																				href="deleteSubDept?id=${subDept.id}"><span
+																					style="color: red;">X</span></a>
 																				<ul>
-																					<li>Helper
-																						<ul>
-																							<li>AutoComplete.php</li>
-																						</ul>
+																					<li onclick="createCategory('${subDept.id}');">Create
+																						Category
+
+																						<div id="createCategory${subDept.id}"
+																							class="modal fade" role="dialog"
+																							style="top: 25px;">
+																							<div class="modal-dialog">
+																								<div class="modal-content">
+																									<div class="modal-header">
+																										<button type="button" class="close"
+																											data-dismiss="modal">&times;</button>
+																										<h4 class="modal-title">Create Category</h4>
+																									</div>
+																									<div class="modal-body">
+																										<form action="createCategory">
+																											<input type="hidden" name="subDeptId"
+																												value="${subDept.id}"> <label
+																												for="name">Category name</label> <input
+																												type="text" name="name"> <label
+																												for="attr1">Attribute name1</label> <input
+																												type="text" name="attr1"> <label
+																												for="attr2">Attribute name2</label> <input
+																												type="text" name="attr2"> <label
+																												for="attr3">Attribute name3</label> <input
+																												type="text" name="attr3"> <label
+																												for="attr4">Attribute name4</label> <input
+																												type="text" name="attr4"> <label
+																												for="attr5">Attribute name5</label> <input
+																												type="text" name="attr5"> <label
+																												for="attr6">Attribute name6</label> <input
+																												type="text" name="attr6"> <input
+																												type="submit" value="add">
+																										</form>
+																									</div>
+																									<div class="modal-footer"></div>
+																								</div>
+
+																							</div>
+																						</div>
+
 																					</li>
+																					<c:forEach var="cat"
+																						items="${sessionScope['ejb'].getAllCategoryBySubDepartmentId(subDept.id)}">
+																						<li>${cat.name}<a
+																							href="deleteCategory?id=${cat.id}"><span
+																								style="color: red;">X</span></a>
+																							<ul>
+																								<c:forEach var="cat" items="${sessionScope['ejb'].getAllProductDetailByCategoryId(cat.id)}">
+																									<li>${cat.name}</li>
+																								</c:forEach>
+																							</ul>
+																						</li>
+																					</c:forEach>
 																				</ul>
 																			</li>
-																		</ul>
-																	</li>
-																	<li>View
-																		<ul>
-																			<li>Helper
-																				<ul>
-																					<li>JQuery
-																						<ul>
-																							<li>Container.php</li>
-																						</ul>
-																					</li>
-																					<li>UiWidgetPane.php</li>
-																					<li>UiWidget.php</li>
-																					<li>TabPane.php</li>
-																					<li>TabContainer.php</li>
-																					<li>Spinner.php</li>
-																					<li>Slider.php</li>
-																					<li>JQuery.php</li>
-																					<li>AutoComplete.php</li>
-																					<li>DialogContainer.php</li>
-																					<li>DatePicker.php</li>
-																					<li>ColorPicker.php</li>
-																					<li>AccordionPane.php</li>
-																					<li>AjaxLink.php</li>
-																					<li>AccordionContainer.php</li>
-																				</ul>
-																			</li>
-																			<li>Exception.php</li>
-																		</ul>
-																	</li>
-																	<li>Form
-																		<ul>
-																			<li>Decorator
-																				<ul>
-																					<li>AccordionContainer.php</li>
-																					<li>UiWidgetPane.php</li>
-																					<li>UiWidgetElementMarker.php</li>
-																					<li>UiWidgetElement.php</li>
-																					<li>UiWidgetContainer.php</li>
-																					<li>TabPane.php</li>
-																					<li>TabContainer.php</li>
-																					<li>DialogContainer.php</li>
-																					<li>AccordionPane.php</li>
-																				</ul>
-																			</li>
-																			<li>Element
-																				<ul>
-																					<li>AutoComplete.php</li>
-																					<li>UiWidget.php</li>
-																					<li>Spinner.php</li>
-																					<li>Slider.php</li>
-																					<li>DatePicker.php</li>
-																					<li>ColorPicker.php</li>
-																				</ul>
-																			</li>
-																			<li>Exception.php</li>
-																		</ul>
-																	</li>
-																	<li>Form.php</li>
-																	<li>Exception.php</li>
-																</ul>
-															</li>
-
-															<li>Db
-																<ul>
-																	<li>Adapter
-																		<ul>
-																			<li>Firebird
-																				<ul>
-																					<li>Exception.php</li>
-																				</ul>
-																			</li>
-																			<li>Firebird.php</li>
-																		</ul>
-																	</li>
-																	<li>Statement
-																		<ul>
-																			<li>Firebird
-																				<ul>
-																					<li>Exception.php</li>
-																				</ul>
-																			</li>
-																			<li>Firebird.php</li>
-																		</ul>
-																	</li>
-																</ul>
-															</li>
-															<li>Form
-																<ul>
-																	<li>Decorator
-																		<ul>
-																			<li>AccordionContainer.php</li>
-																			<li>UiWidgetPane.php</li>
-																			<li>UiWidgetElementMarker.php</li>
-																			<li>UiWidgetElement.php</li>
-																			<li>UiWidgetContainer.php</li>
-																			<li>TabPane.php</li>
-																			<li>TabContainer.php</li>
-																			<li>DialogContainer.php</li>
-																			<li>AccordionPane.php</li>
-																		</ul>
-																	</li>
-																	<li>Element
-																		<ul>
-																			<li>AutoComplete.php</li>
-																			<li>UiWidget.php</li>
-																			<li>Spinner.php</li>
-																			<li>Slider.php</li>
-																			<li>DatePicker.php</li>
-																			<li>ColorPicker.php</li>
-																		</ul>
-																	</li>
-																	<li>Exception.php</li>
-																</ul>
-															</li>
-															<li>Helper
-																<ul>
-																	<li>JQuery
-																		<ul>
-																			<li>Container.php</li>
-																		</ul>
-																	</li>
-																	<li>UiWidgetPane.php</li>
-																	<li>UiWidget.php</li>
-																	<li>TabPane.php</li>
-																	<li>TabContainer.php</li>
-																	<li>Spinner.php</li>
-																	<li>Slider.php</li>
-																	<li>JQuery.php</li>
-																	<li>AutoComplete.php</li>
-																	<li>DialogContainer.php</li>
-																	<li>DatePicker.php</li>
-																	<li>ColorPicker.php</li>
-																	<li>AccordionPane.php</li>
-																	<li>AjaxLink.php</li>
-																	<li>AccordionContainer.php</li>
-																</ul>
-															</li>
+																		</c:forEach>
+																	</ul>
+																</li>
+															</c:forEach>
 														</ul>
 													</div>
 												</div></td>
@@ -252,9 +180,27 @@
 		<!-- Content Sec -->
 	</div>
 	<!-- Page Container -->
-	</div>
-	<!-- main -->
 
+	<!-- main -->
+	<div id="createDept" class="modal fade" role="dialog"
+		style="top: 25px;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Tax list</h4>
+				</div>
+				<div class="modal-body">
+					<form action="createDept">
+						<input type="text" name="name"> <input type="submit"
+							value="add">
+					</form>
+				</div>
+				<div class="modal-footer"></div>
+			</div>
+
+		</div>
+	</div>
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
 	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
@@ -268,6 +214,15 @@
 		$(function() {
 			$("#datepicker").datepicker();
 		});
+		function addDept() {
+			$("#createDept").modal('show');
+		}
+		function createSubDept(id) {
+			$("#createSubDept" + id).modal('show');
+		}
+		function createCategory(id) {
+			$("#createCategory" + id).modal('show');
+		}
 	</script>
 
 	<script type="text/javascript" src="js/abixTreeList.min.js"></script>

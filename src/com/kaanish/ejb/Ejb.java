@@ -9,6 +9,7 @@ import javax.persistence.TypedQuery;
 
 import com.kaanish.model.Category;
 import com.kaanish.model.Department;
+import com.kaanish.model.ProductDetail;
 import com.kaanish.model.SubDepartment;
 import com.kaanish.model.Tax;
 import com.kaanish.model.Tax_Type_Group;
@@ -33,8 +34,7 @@ public class Ejb {
 	}
 
 	public List<Tax_Type_Group> getAllTax_Type_Groups() {
-		TypedQuery<Tax_Type_Group> q = em.createQuery(
-				"select s from Tax_Type_Group s", Tax_Type_Group.class);
+		TypedQuery<Tax_Type_Group> q = em.createQuery("select s from Tax_Type_Group s", Tax_Type_Group.class);
 		return q.getResultList();
 	}
 
@@ -45,63 +45,108 @@ public class Ejb {
 	public void removeTaxTYpeGroup(Tax_Type_Group tax_Type_Group) {
 		em.remove(tax_Type_Group);
 	}
-	public Tax getTaxById(String nm){
+
+	public Tax getTaxById(String nm) {
 		return em.find(Tax.class, nm);
 	}
-	public Tax_Type_Group getTax_Type_GroupById(String name){
+
+	public Tax_Type_Group getTax_Type_GroupById(String name) {
 		return em.find(Tax_Type_Group.class, name);
 	}
-	
-	/******************************for Department*********************************/
-	public void setDepartment(Department department){
+
+	/******************************
+	 * for Department
+	 *********************************/
+	public void setDepartment(Department department) {
 		em.persist(department);
 	}
-	public Department getDepartmentById(int id){
+
+	public Department getDepartmentById(int id) {
 		return em.find(Department.class, id);
 	}
-	public void deleteDepartmentById(int id){
+
+	public void deleteDepartmentById(int id) {
 		em.remove(getDepartmentById(id));
 	}
-	public void updateDepartment(Department department){
+
+	public void updateDepartment(Department department) {
 		em.merge(department);
 	}
-	public List<Department> getAllDepartment() {
-		TypedQuery<Department> q=em.createQuery("select s from Department s", Department.class);
+
+	public List<Department> getAllDepartments() {
+		TypedQuery<Department> q = em.createQuery("select s from Department s", Department.class);
 		return q.getResultList();
 	}
-	/******************************for Department*********************************/
-	public void setSubDepartment(SubDepartment subDepartment){
+
+	/******************************
+	 * for Sub Department
+	 *********************************/
+	public void setSubDepartment(SubDepartment subDepartment) {
 		em.persist(subDepartment);
 	}
-	public SubDepartment getSubDepartmentById(int id){
+
+	public SubDepartment getSubDepartmentById(int id) {
 		return em.find(SubDepartment.class, id);
 	}
-	public void deleteSubDepartmentById(int id){
+
+	public void deleteSubDepartmentById(int id) {
 		em.remove(getSubDepartmentById(id));
 	}
-	public void updateSubDepartment(SubDepartment subDepartment){
+
+	public void updateSubDepartment(SubDepartment subDepartment) {
 		em.merge(subDepartment);
 	}
-	public List<SubDepartment> getAllSubDepartment() {
-		TypedQuery<SubDepartment> q=em.createQuery("select s from SubDepartment s", SubDepartment.class);
+
+	public List<SubDepartment> getAllSubDepartments() {
+		TypedQuery<SubDepartment> q = em.createQuery("select s from SubDepartment s", SubDepartment.class);
 		return q.getResultList();
 	}
-	/******************************for Department*********************************/
-	public void setCategory(Category category){
+
+	public List<SubDepartment> getAllSubDepartmentsByDepartmentId(int id) {
+		TypedQuery<SubDepartment> q = em.createQuery("select s from SubDepartment s where s.department.id=:Id",
+				SubDepartment.class);
+		q.setParameter("Id", id);
+		return q.getResultList();
+	}
+
+	/******************************
+	 * for Category
+	 *********************************/
+	public void setCategory(Category category) {
 		em.persist(category);
 	}
-	public Category getCategoryById(int id){
+
+	public Category getCategoryById(int id) {
 		return em.find(Category.class, id);
 	}
-	public void deleteCategoryById(int id){
+
+	public void deleteCategoryById(int id) {
 		em.remove(getCategoryById(id));
 	}
-	public void updateCategory(Category category){
+
+	public void updateCategory(Category category) {
 		em.merge(category);
 	}
+
 	public List<Category> getAllCategory() {
-		TypedQuery<Category> q=em.createQuery("select s from Category s", Category.class);
+		TypedQuery<Category> q = em.createQuery("select s from Category s", Category.class);
 		return q.getResultList();
 	}
-	
+
+	public List<Category> getAllCategoryBySubDepartmentId(int id) {
+		TypedQuery<Category> q = em.createQuery("select s from Category s where s.subDepartment.id=:Id",
+				Category.class);
+		q.setParameter("Id", id);
+		return q.getResultList();
+	}
+
+	/******************************
+	 * for Product
+	 *********************************/
+	public List<ProductDetail> getAllProductDetailByCategoryId(int id) {
+		TypedQuery<ProductDetail> q = em.createQuery("select s from ProductDetail s where s.category.id=:Id",
+				ProductDetail.class);
+		q.setParameter("Id", id);
+		return q.getResultList();
+	}
 }
