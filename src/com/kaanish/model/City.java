@@ -24,6 +24,9 @@ public class City {
 	@OneToMany(mappedBy = "city")
 	private List<Vendor> vendors;
 
+	@OneToMany(mappedBy="city")
+	private List<AccountDetails> accountDetails;
+	
 	public int getId() {
 		return id;
 	}
@@ -54,6 +57,14 @@ public class City {
 
 	public void setVendors(List<Vendor> vendors) {
 		this.vendors = vendors;
+	}
+
+	public List<AccountDetails> getAccountDetails() {
+		return accountDetails;
+	}
+
+	public void setAccountDetails(List<AccountDetails> accountDetails) {
+		this.accountDetails = accountDetails;
 	}
 
 }

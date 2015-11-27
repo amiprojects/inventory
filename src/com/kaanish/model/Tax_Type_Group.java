@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Tax_Type_Group {
@@ -17,7 +18,8 @@ public class Tax_Type_Group {
 	private List<Tax> taxes;
 	@ManyToOne@JoinColumn(name="userId")
 	private Users users;
-	
+	@OneToMany(mappedBy="tax_Type_Group")
+	private List<AccountDetails> accountDetails;
 
 	public String getName() {
 		return name;
@@ -43,6 +45,14 @@ public class Tax_Type_Group {
 
 	public void setUsers(Users users) {
 		this.users = users;
+	}
+
+	public List<AccountDetails> getAccountDetails() {
+		return accountDetails;
+	}
+
+	public void setAccountDetails(List<AccountDetails> accountDetails) {
+		this.accountDetails = accountDetails;
 	}
 
 }
