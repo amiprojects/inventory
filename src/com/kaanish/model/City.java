@@ -20,8 +20,8 @@ public class City {
 	@ManyToOne
 	@JoinColumn(name = "stateId")
 	private State state;
-	
-	@OneToMany(mappedBy="city")
+
+	@OneToMany(mappedBy = "city")
 	private List<Vendor> vendors;
 
 	public int getId() {
