@@ -8,12 +8,16 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import com.kaanish.model.Category;
+import com.kaanish.model.City;
+import com.kaanish.model.Country;
 import com.kaanish.model.Department;
 import com.kaanish.model.ProductDetail;
+import com.kaanish.model.State;
 import com.kaanish.model.SubDepartment;
 import com.kaanish.model.Tax;
 import com.kaanish.model.Tax_Type_Group;
 import com.kaanish.model.Vendor;
+import com.kaanish.model.VendorType;
 
 @Stateless
 public class Ejb {
@@ -35,7 +39,8 @@ public class Ejb {
 	}
 
 	public List<Tax_Type_Group> getAllTax_Type_Groups() {
-		TypedQuery<Tax_Type_Group> q = em.createQuery("select s from Tax_Type_Group s", Tax_Type_Group.class);
+		TypedQuery<Tax_Type_Group> q = em.createQuery(
+				"select s from Tax_Type_Group s", Tax_Type_Group.class);
 		return q.getResultList();
 	}
 
@@ -54,25 +59,122 @@ public class Ejb {
 	public Tax_Type_Group getTax_Type_GroupById(String name) {
 		return em.find(Tax_Type_Group.class, name);
 	}
-	/********************for vendor*******************************/
-	public void setVendor(Vendor vendor){
+
+	/******************** for vendor *******************************/
+	public void setVendor(Vendor vendor) {
 		em.persist(vendor);
 	}
-	public Vendor getVendorById(int id){
+
+	public Vendor getVendorById(int id) {
 		return em.find(Vendor.class, id);
 	}
-	public void deleteVendorById(int id){
+
+	public void deleteVendorById(int id) {
 		em.remove(getVendorById(id));
 	}
-	public void updateVendor(Vendor vendor){
+
+	public void updateVendor(Vendor vendor) {
 		em.merge(vendor);
 	}
-	public List<Vendor> getAllVendors(){
-		TypedQuery<Vendor> q=em.createQuery("", Vendor.class);
+
+	public List<Vendor> getAllVendors() {
+		TypedQuery<Vendor> q = em.createQuery("select c from Vendor c",
+				Vendor.class);
 		return q.getResultList();
 	}
 
-	/******************************for Department*********************************/
+	/******************** for vendor type *******************************/
+	public void setVendorType(VendorType vendorType) {
+		em.persist(vendorType);
+	}
+
+	public VendorType getVendorTypeById(int id) {
+		return em.find(VendorType.class, id);
+	}
+
+	public void deleteVendorTypeById(int id) {
+		em.remove(getVendorTypeById(id));
+	}
+
+	public void updateVendorType(VendorType vendorType) {
+		em.merge(vendorType);
+	}
+
+	public List<VendorType> getAlVendorType() {
+		TypedQuery<VendorType> q = em.createQuery("select c from VendorType c",
+				VendorType.class);
+		return q.getResultList();
+	}
+
+	/******************** for City *******************************/
+	public void setCity(City city) {
+		em.persist(city);
+	}
+
+	public City getCityById(int id) {
+		return em.find(City.class, id);
+	}
+
+	public void deleteCityById(int id) {
+		em.remove(getCityById(id));
+	}
+
+	public void updateCity(City city) {
+		em.merge(city);
+	}
+
+	public List<City> getAllCity() {
+		TypedQuery<City> q = em.createQuery("select c from City c", City.class);
+		return q.getResultList();
+	}
+
+	/******************** for State *******************************/
+	public void setState(State state) {
+		em.persist(state);
+	}
+
+	public State getStateById(int id) {
+		return em.find(State.class, id);
+	}
+
+	public void deleteCityStateById(int id) {
+		em.remove(getStateById(id));
+	}
+
+	public void updateState(State state) {
+		em.merge(state);
+	}
+
+	public List<State> getAllState() {
+		TypedQuery<State> q = em.createQuery("select c from State c",
+				State.class);
+		return q.getResultList();
+	}
+
+	/******************** for Country *******************************/
+	public void setCountry(Country country) {
+		em.persist(country);
+	}
+
+	public Country getCountryById(int id) {
+		return em.find(Country.class, id);
+	}
+
+	public void deleteCountryById(int id) {
+		em.remove(getCountryById(id));
+	}
+
+	public void updateCountry(Country country) {
+		em.merge(country);
+	}
+
+	public List<Country> getAllCountry() {
+		TypedQuery<Country> q = em.createQuery("select c from Country c",
+				Country.class);
+		return q.getResultList();
+	}
+
+	/****************************** for Department *********************************/
 	public void setDepartment(Department department) {
 		em.persist(department);
 	}
@@ -90,7 +192,8 @@ public class Ejb {
 	}
 
 	public List<Department> getAllDepartments() {
-		TypedQuery<Department> q = em.createQuery("select s from Department s", Department.class);
+		TypedQuery<Department> q = em.createQuery("select s from Department s",
+				Department.class);
 		return q.getResultList();
 	}
 
@@ -114,12 +217,14 @@ public class Ejb {
 	}
 
 	public List<SubDepartment> getAllSubDepartments() {
-		TypedQuery<SubDepartment> q = em.createQuery("select s from SubDepartment s", SubDepartment.class);
+		TypedQuery<SubDepartment> q = em.createQuery(
+				"select s from SubDepartment s", SubDepartment.class);
 		return q.getResultList();
 	}
 
 	public List<SubDepartment> getAllSubDepartmentsByDepartmentId(int id) {
-		TypedQuery<SubDepartment> q = em.createQuery("select s from SubDepartment s where s.department.id=:Id",
+		TypedQuery<SubDepartment> q = em.createQuery(
+				"select s from SubDepartment s where s.department.id=:Id",
 				SubDepartment.class);
 		q.setParameter("Id", id);
 		return q.getResultList();
@@ -145,12 +250,14 @@ public class Ejb {
 	}
 
 	public List<Category> getAllCategory() {
-		TypedQuery<Category> q = em.createQuery("select s from Category s", Category.class);
+		TypedQuery<Category> q = em.createQuery("select s from Category s",
+				Category.class);
 		return q.getResultList();
 	}
 
 	public List<Category> getAllCategoryBySubDepartmentId(int id) {
-		TypedQuery<Category> q = em.createQuery("select s from Category s where s.subDepartment.id=:Id",
+		TypedQuery<Category> q = em.createQuery(
+				"select s from Category s where s.subDepartment.id=:Id",
 				Category.class);
 		q.setParameter("Id", id);
 		return q.getResultList();
@@ -160,7 +267,8 @@ public class Ejb {
 	 * for Product
 	 *********************************/
 	public List<ProductDetail> getAllProductDetailByCategoryId(int id) {
-		TypedQuery<ProductDetail> q = em.createQuery("select s from ProductDetail s where s.category.id=:Id",
+		TypedQuery<ProductDetail> q = em.createQuery(
+				"select s from ProductDetail s where s.category.id=:Id",
 				ProductDetail.class);
 		q.setParameter("Id", id);
 		return q.getResultList();
