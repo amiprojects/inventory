@@ -100,7 +100,7 @@ public class Ejb {
 		em.merge(vendorType);
 	}
 
-	public List<VendorType> getAlVendorType() {
+	public List<VendorType> getAllVendorType() {
 		TypedQuery<VendorType> q = em.createQuery("select c from VendorType c",
 				VendorType.class);
 		return q.getResultList();

@@ -50,10 +50,23 @@ public class Servlet extends HttpServlet {
 			case "newVendorType":
 				page = "setupVendorType.jsp";
 				vendorType = new VendorType();
-				vendorType.setType(req.getParameter("name"));
+				List<VendorType> lst=new ArrayList<VendorType>();
+				lst=ejb.getAllVendorType();
+				int i=0;
+				for(VendorType vt:lst){
+					if(vt.getType().equals(req.getParameter("name"))){
+						i=1;
+						break;
+					}
+				}
+				if (i==0) {
+					vendorType.setType(req.getParameter("name"));
 
-				ejb.setVendorType(vendorType);
-				msg = "Vendor type added successfully.";
+					ejb.setVendorType(vendorType);
+					msg = "Vendor type added successfully.";
+				}
+				else
+					msg = "Vendor type already exist.";
 				break;
 
 			case "addTax":

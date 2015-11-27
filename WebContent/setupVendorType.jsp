@@ -59,12 +59,11 @@
 											value="Add">
 									</form>
 									<div class="widget-area" style="height: 300px; overflow: auto;">
-										Vendor type 1<br> Vendor type 1<br> Vendor type 1<br>Vendor
-										type 1<br> Vendor type 1<br> Vendor type 1<br>Vendor
-										type 1<br> Vendor type 1<br> Vendor type 1<br>Vendor
-										type 1<br> Vendor type 1<br> Vendor type 1<br>Vendor
-										type 1<br> Vendor type 1<br> Vendor type 1<br>Vendor
-										type 1<br> Vendor type 1<br> Vendor type 1<br>
+										<c:forEach items="${sessionScope['ejb'].getAllVendorType()}"
+											var="vendorType">
+											${vendorType.type}<br>
+										</c:forEach>
+										<!-- Vendor type 1<br> Vendor type 1<br> Vendor type 1<br> -->
 									</div>
 									<p>${requestScope['msg']}</p>
 								</div>
