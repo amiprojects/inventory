@@ -24,6 +24,9 @@
 <!-- Style -->
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
 <!-- Responsive -->
+
+<link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
+
 <style>
 .font {
 	color: #777777;
@@ -47,58 +50,62 @@
 						<div class="masonary-grids">
 							<div class="widget-area">
 								<div class="row">
-									<form action="addTax">
-										<div class="col-md-6">
-											<div class="form-group">
-												<label for="" class="font">City Name :</label> <input
-													type="text" placeholder="Enter city name" id="" name="name"
-													class="form-control">
-											</div>
-										</div>
-										<!-- <div class="col-md-6">
-										<div class="form-group">
-											<label for="" class="font">Value :</label> <input type="text"
-												placeholder="" id="" name="value" class="form-control">
-										</div>
-									</div> -->
-										<br> <input class="btn green pull-left" type="submit"
-											value="Add">
-									</form>
-								</div>
-								<%-- <p>${requestScope['msg']}</p> --%>
-								<div class="row">
 									<div class="col-md-6">
 										<div class="widget-area">
-											<form action="addTaxGroup">
-												<div style="height: 310px; overflow: auto;">
-													City1<br> City1<br>
+											<form action="#">
+												<div class="row">
+													<div class="col-md-4">City name :</div>
+													<div class="col-md-6">
+														<input type="text" class="form-control">
+													</div>
+													<div class="col-md-2">
+														<input class="btn green pull-left" type="submit"
+															value="Add">
+													</div>
 												</div>
-												<div id="newTaxGroup" class="modal fade" role="dialog"
-													style="top: 25px;">
-													<div class="modal-dialog">
+											</form>
+											<br>
+											<form action="#">
+												<div class="row">
+													<div class="col-md-4">State name :</div>
+													<div class="col-md-6">
+														<input type="text" class="form-control">
+													</div>
+													<div class="col-md-2">
+														<input class="btn green pull-left" type="button"
+															onclick="statePopup();" value="Add">
+													</div>
+												</div>
+												<div id="createState" style="top: 25px;">
+													<div class="modal-dialog" style="z-index: 1">
 														<div class="modal-content">
 															<div class="modal-header">
-																<button type="button" class="close" data-dismiss="modal">&times;</button>
-																<h4 class="modal-title">State</h4>
+																<button type="button" class="close" onclick="closed();">&times;</button>
+																<h4 class="modal-title">State Ctreation</h4>
 															</div>
 															<div class="modal-body">
-																<div class="widget-area">
 
-																	<div class="form-group">
-																		<label for="" class="font">State Name :</label> <input
-																			type="text" placeholder="Enter state name" id=""
-																			name="name" class="form-control">
-																	</div>
-																	<input class="btn green pull-right" type="submit"
-																		value="Create">
-																</div>
+																<span>The state belongs to:</span><input id="country"
+																	type="text" name="name"> <input type="submit"
+																	value="create">
+
 															</div>
-															<div class="modal-footer">
-																<!-- <button type="button" class="btn btn-default"
-													data-dismiss="modal">Close</button> -->
-															</div>
+															<div class="modal-footer"></div>
 														</div>
 
+													</div>
+												</div>
+											</form>
+											<br>
+											<form action="addCountry">
+												<div class="row">
+													<div class="col-md-4">Country name :</div>
+													<div class="col-md-6">
+														<input type="text" class="form-control" name="name">
+													</div>
+													<div class="col-md-2">
+														<input class="btn green pull-left" type="submit"
+															value="Add">
 													</div>
 												</div>
 											</form>
@@ -106,41 +113,25 @@
 									</div>
 									<div class="col-md-6">
 										<div class="widget-area">
-											<button type="button" class="btn btn-info btn-lg"
-												data-toggle="modal" data-target="#newTaxGroup">State</button>
-											<div class="widget-area"
-												style="height: 200px; overflow: auto;">
-												<c:forEach
-													items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
-													var="taxGroup">
-													<br>
-													<span onclick="showTaxes('${taxGroup.name}');">
-														${taxGroup.name}</span>
-													<div id="taxList${taxGroup.name}" class="modal fade"
-														role="dialog" style="top: 25px;">
-														<div class="modal-dialog">
-															<div class="modal-content">
-																<div class="modal-header">
-																	<button type="button" class="close"
-																		data-dismiss="modal">&times;</button>
-																	<h4 class="modal-title">City list</h4>
-																</div>
-																<div class="modal-body">
-																	<c:forEach
-																		items="${sessionScope['ejb'].getTax_Type_GroupById(taxGroup.name).taxes}"
-																		var="tax">
-																		<br>${tax.name} 
-						</c:forEach>
-																</div>
-																<div class="modal-footer">
-																	<!-- <button type="button" class="btn btn-default"
-													data-dismiss="modal">Close</button> -->
-																</div>
-															</div>
-
-														</div>
-													</div>
-												</c:forEach>
+											<div class="tree-list">
+												<p>
+													<a href="#" id="tree-expand-all">Expand all</a> | <a
+														href="#" id="tree-collapse-all">Collapse all</a>
+												</p>
+												<!-- Listing directory ZendX from ZendFramework library -->
+												<ul id="tree">
+													<c:forEach items="${sessionScope['ejb'].getAllCountry()}" var="contry">
+														<li>${contry.countryName}
+															<ul>
+																<li>Resource
+																	<ul>
+																		<li>Jquery.php</li>
+																	</ul>
+																</li>
+															</ul>
+														</li>
+													</c:forEach>
+												</ul>
 											</div>
 										</div>
 									</div>
@@ -164,16 +155,39 @@
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="js/enscroll.js"></script>
 	<script type="text/javascript" src="js/grid-filter.js"></script>
-
+	<script type="text/javascript" src="js/abixTreeList.min.js"></script>
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 	<script>
-		$(function() {
-			$("#datepicker").datepicker();
+		$(document).ready(function() {
+			$('#tree').abixTreeList();
+			$("#createState").hide();
 		});
-		function showTaxes(tg) {
 
-			/* alert(tg); */
-			$("#taxList" + tg).modal('show');
+		$(function() {
+			$("#country").autocomplete({
+				source : function(request, response) {
+					$.ajax({
+						url : "getcountry",
+						dataType : "json",
+						data : {
+							term : request.term
+						},
+						success : function(data) {
+							response($.map(data, function(item) {
+								return {
+									value : item.name
+								}
+							}));
+						}
+					});
+				}
+			});
+		});
+		function statePopup() {
+			$("#createState").show();
+		}
+		function closed() {
+			$("#createState").hide();
 		}
 	</script>
 </body>

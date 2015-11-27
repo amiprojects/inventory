@@ -13,7 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.kaanish.ejb.Ejb;
 import com.kaanish.model.Category;
+import com.kaanish.model.City;
+import com.kaanish.model.Country;
 import com.kaanish.model.Department;
+import com.kaanish.model.State;
 import com.kaanish.model.SubDepartment;
 import com.kaanish.model.Tax;
 import com.kaanish.model.Tax_Type_Group;
@@ -22,7 +25,7 @@ import com.sun.mail.handlers.text_html;
 
 @WebServlet({ "/addTax", "/addTaxGroup", "/createDept", "/deleteDept",
 		"/createSubDept", "/deleteSubDept", "/createCategory",
-		"/deleteCategory", "/newVendorType" })
+		"/deleteCategory", "/newVendorType", "/addCountry" })
 public class Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -37,6 +40,9 @@ public class Servlet extends HttpServlet {
 	private SubDepartment subDepartment;
 	private Category category;
 	private VendorType vendorType;
+	private Country country;
+	private State state;
+	private City city;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -143,6 +149,13 @@ public class Servlet extends HttpServlet {
 				page = "setupDepartment.jsp";
 				ejb.deleteCategoryById(Integer.parseInt(req.getParameter("id")));
 				msg = "Category deleted.";
+				break;
+			case "addCountry":
+				page="setupCity.jsp";
+				country =new Country();
+				country.setCountryName(req.getParameter("name"));
+				ejb.setCountry(country);
+				msg="country added successfully.";
 				break;
 
 			default:
