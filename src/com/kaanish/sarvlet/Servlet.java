@@ -25,7 +25,7 @@ import com.sun.mail.handlers.text_html;
 
 @WebServlet({ "/addTax", "/addTaxGroup", "/createDept", "/deleteDept",
 		"/createSubDept", "/deleteSubDept", "/createCategory",
-		"/deleteCategory", "/newVendorType", "/addCountry" })
+		"/deleteCategory", "/newVendorType", "/addCountry","/addState" })
 public class Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -156,6 +156,14 @@ public class Servlet extends HttpServlet {
 				country.setCountryName(req.getParameter("name"));
 				ejb.setCountry(country);
 				msg="country added successfully.";
+				break;
+			case "addState":
+				page="setupCity.jsp";
+				state=new State();
+				state.setStateName(req.getParameter("name"));
+				state.setCountry(ejb.getCountryById(Integer.parseInt(req.getParameter("id"))));
+				
+				msg="State added successfully.";
 				break;
 
 			default:

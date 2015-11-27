@@ -65,11 +65,11 @@
 												</div>
 											</form>
 											<br>
-											<form action="#">
+											<form action="addState">
 												<div class="row">
 													<div class="col-md-4">State name :</div>
 													<div class="col-md-6">
-														<input type="text" class="form-control">
+														<input type="text" class="form-control" name="name">
 													</div>
 													<div class="col-md-2">
 														<input class="btn green pull-left" type="button"
@@ -175,11 +175,17 @@
 						success : function(data) {
 							response($.map(data, function(item) {
 								return {
-									value : item.name
+									value : item.countryName,
+									id:item.id
 								}
 							}));
 						}
 					});
+				},
+				change: function (event, ui) {
+					if (ui.item == null){ 
+						$(this).val((ui.item ? ui.item.id : ""));						
+					}
 				}
 			});
 		});

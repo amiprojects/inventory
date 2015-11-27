@@ -193,9 +193,9 @@ public class Ejb {
 
 	public List<Country> getCountryByName(String name) {
 		TypedQuery<Country> q = em.createQuery(
-				"select c from Country c where c.countryName like :nm",
+				"select c from Country c where UPPER(c.countryName) like :nm",
 				Country.class);
-		q.setParameter("nm", "%" + name + "%");
+		q.setParameter("nm", "%" + name.toUpperCase() + "%");
 		return q.getResultList();
 	}
 
