@@ -16,16 +16,17 @@ import com.kaanish.model.Category;
 import com.kaanish.model.City;
 import com.kaanish.model.Country;
 import com.kaanish.model.Department;
+import com.kaanish.model.ProductDetail;
 import com.kaanish.model.State;
 import com.kaanish.model.SubDepartment;
 import com.kaanish.model.Tax;
 import com.kaanish.model.Tax_Type_Group;
 import com.kaanish.model.VendorType;
-import com.sun.mail.handlers.text_html;
 
 @WebServlet({ "/addTax", "/addTaxGroup", "/createDept", "/deleteDept",
 		"/createSubDept", "/deleteSubDept", "/createCategory",
-		"/deleteCategory", "/newVendorType", "/addCountry","/addState" })
+		"/deleteCategory", "/newVendorType", "/addCountry", "/addState",
+		"/createProduct" })
 public class Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -43,6 +44,7 @@ public class Servlet extends HttpServlet {
 	private Country country;
 	private State state;
 	private City city;
+	private ProductDetail productDetail;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -53,25 +55,36 @@ public class Servlet extends HttpServlet {
 		try {
 			switch (url) {
 
+			case "createProduct":
+				page = "setupDepartment.jsp";
+				productDetail = new ProductDetail();
+				productDetail.setProductType(req.getParameter("name"));
+				productDetail.setName(req.getParameter("productName"));
+				productDetail.setCode(req.getParameter("productCode"));
+				productDetail.setCategory(ejb.getCategoryById(Integer
+						.parseInt(req.getParameter("catId"))));
+				ejb.setProductDetail(productDetail);
+				msg = "Product detail added successfully.";
+				break;
+
 			case "newVendorType":
 				page = "setupVendorType.jsp";
 				vendorType = new VendorType();
-				List<VendorType> lst=new ArrayList<VendorType>();
-				lst=ejb.getAllVendorType();
-				int i=0;
-				for(VendorType vt:lst){
-					if(vt.getType().equals(req.getParameter("name"))){
-						i=1;
+				List<VendorType> lst = new ArrayList<VendorType>();
+				lst = ejb.getAllVendorType();
+				int i = 0;
+				for (VendorType vt : lst) {
+					if (vt.getType().equals(req.getParameter("name"))) {
+						i = 1;
 						break;
 					}
 				}
-				if (i==0) {
+				if (i == 0) {
 					vendorType.setType(req.getParameter("name"));
 
 					ejb.setVendorType(vendorType);
 					msg = "Vendor type added successfully.";
-				}
-				else
+				} else
 					msg = "Vendor type already exist.";
 				break;
 
@@ -151,19 +164,20 @@ public class Servlet extends HttpServlet {
 				msg = "Category deleted.";
 				break;
 			case "addCountry":
-				page="setupCity.jsp";
-				country =new Country();
+				page = "setupCity.jsp";
+				country = new Country();
 				country.setCountryName(req.getParameter("name"));
 				ejb.setCountry(country);
-				msg="country added successfully.";
+				msg = "country added successfully.";
 				break;
 			case "addState":
-				page="setupCity.jsp";
-				state=new State();
+				page = "setupCity.jsp";
+				state = new State();
 				state.setStateName(req.getParameter("name"));
-				state.setCountry(ejb.getCountryById(Integer.parseInt(req.getParameter("id"))));
-				
-				msg="State added successfully.";
+				state.setCountry(ejb.getCountryById(Integer.parseInt(req
+						.getParameter("id"))));
+
+				msg = "State added successfully.";
 				break;
 
 			default:

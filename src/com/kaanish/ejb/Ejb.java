@@ -291,6 +291,24 @@ public class Ejb {
 	/******************************
 	 * for Product
 	 *********************************/
+	public void setProductDetail(ProductDetail productDetail) {
+		em.persist(productDetail);
+	}
+
+	public ProductDetail getProductDetailById(int id) {
+		return em.find(ProductDetail.class, id);		
+	}
+	public void deleteProductDetailById(int id){
+		em.remove(getProductDetailById(id));
+	}
+	public void updateProductDetail(ProductDetail productDetail){
+		em.merge(productDetail);
+	}
+	public List<ProductDetail> getAllProductDetail(){
+		TypedQuery<ProductDetail> q=em.createQuery("select c from ProductDetail c", ProductDetail.class);
+		return q.getResultList();
+	}
+
 	public List<ProductDetail> getAllProductDetailByCategoryId(int id) {
 		TypedQuery<ProductDetail> q = em.createQuery(
 				"select s from ProductDetail s where s.category.id=:Id",

@@ -166,27 +166,27 @@
 																													<h4 class="modal-title">Tax list</h4>
 																												</div>
 																												<div class="modal-body">
-																													<form action="">
+																													<form action="createProduct">
 																														<span>Product type : </span><select
-																															class="form-control">
-																															<option>Raw</option>
-																															<option>Ready</option>
+																															class="form-control" name="name">
+																															<option value="raw">Raw</option>
+																															<option value="ready">Ready</option>
 																														</select> <span>Product name : </span><input
-																															type="text" class="form-control">
-																														<span>Product code : </span><input
-																															type="text" class="form-control">
+																															type="text" class="form-control"
+																															name="productName"> <span>Product
+																															code : </span><input type="text"
+																															class="form-control" name="productCode">
 																														<input type="hidden" name="catId"
 																															value="${cat.id}"> <input
 																															type="submit" value="Save"
-																															class="btn green pull-right">
+																															class="btn green pull-right" name="catId">
 																													</form>
 																												</div>
 																												<div class="modal-footer"></div>
 																											</div>
 
 																										</div>
-																									</div>
-
+																									</div> 
 																								</li>
 
 																								<c:forEach var="cat"
