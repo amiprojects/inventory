@@ -176,7 +176,7 @@ public class Servlet extends HttpServlet {
 				state.setStateName(req.getParameter("name"));
 				state.setCountry(ejb.getCountryById(Integer.parseInt(req
 						.getParameter("id"))));
-
+				ejb.setState(state);
 				msg = "State added successfully.";
 				break;
 
