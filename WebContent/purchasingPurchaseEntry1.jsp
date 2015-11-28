@@ -138,30 +138,64 @@
 								</div>
 								<br>
 								<form role="form" class="sec">
-									<br>
-									<div class="row">
-										<div class="col-md-6">
-											&nbsp; &nbsp; &nbsp; <b class="font">Vendor Name :</b> <input
-												type="text" class="form-control">
+									<div class="col-md-6">
+										&nbsp; &nbsp; &nbsp; <b class="font">Vendor Name :</b>
+										<div class="col-md-10">
+											<div class="sec">
+												<select class="form-control">
+													<option>SLC</option>
+													<option>SLC</option>
+													<option>SLC</option>
+													<option>SLC</option>
+													<option>SLC</option>
+												</select>
+											</div>
 										</div>
-										<div class="col-md-6">
-											&nbsp; &nbsp; &nbsp; <b class="font">Vendor Bill no. :</b> <input
-												type="text" class="form-control">
-										</div>
-									</div>
-									<br>
-									<div class="row">
 										<div class="col-md-2">
-											<b>Challan no. :</b>
+											<button type="submit" class="btn green pull-right">Add</button>
 										</div>
-										<div class="col-md-7">
-											<input type="text" class="form-control" readonly="readonly">
-										</div>
-										<div class="col-md-3">
-											<input type="text" class="form-control">
+										<div class="col-md-12">
+											<div class="breadcrumbs">
+												<ul>
+													<li><a title="" class="font">Vendor Details :</a></li>
+												</ul>
+											</div>
+											<textarea rows="" cols="" id="" class="form-control"
+												readonly="readonly"></textarea>
+
 										</div>
 									</div>
-									<br>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="" class="font">Purchase Date :</label> <input
+												type="text" id="datepicker" class="form-control">
+										</div>
+										<div class="form-group">
+											<label for="" class="font">PO no. :</label> <input
+												type="number" placeholder="" id="" class="form-control">
+										</div>
+										<div class="form-group">
+											<label for="" class="font">Vendor SO :</label> <input
+												type="number" placeholder="" id="" class="form-control">
+										</div>
+									</div>
+									&nbsp; &nbsp; <b class="font">Product Code :</b>
+									<div class="row">
+										<div class="col-md-11">
+											<div class="sec">
+												<select class="form-control">
+													<option>SLC</option>
+													<option>SLC</option>
+													<option>SLC</option>
+													<option>SLC</option>
+													<option>SLC</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-md-1">
+											<button type="submit" class="btn green pull-right">Add</button>
+										</div>
+									</div>
 									<table id="stream_table"
 										class="table table-striped table-bordered">
 										<thead>
@@ -171,17 +205,12 @@
 												<th>Product Name</th>
 												<th>Product Description</th>
 												<th>Qty</th>
-												<th>Qty unit</th>
 												<th>Rate</th>
+												<th>Total</th>
 												<th>WSP</th>
 												<th>MRP</th>
-												<th>Attr1</th>
-												<th>Attr2</th>
-												<th>Attr3</th>
-												<th>Attr4</th>
-												<th>Attr5</th>
-												<th>Attr6</th>
-												<th>Is saleable</th>
+												<th>Lot no.</th>
+												<th>EXp. Date</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -197,11 +226,6 @@
 												<td>---</td>
 												<td>---</td>
 												<td>---</td>
-												<td>---</td>
-												<td>---</td>
-												<td>---</td>
-												<td>---</td>
-												<td><input type="checkbox"></td>
 											</tr>
 										</tbody>
 									</table>
