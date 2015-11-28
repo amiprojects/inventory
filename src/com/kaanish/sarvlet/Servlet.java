@@ -23,10 +23,9 @@ import com.kaanish.model.Tax;
 import com.kaanish.model.Tax_Type_Group;
 import com.kaanish.model.VendorType;
 
-@WebServlet({ "/addTax", "/addTaxGroup", "/createDept", "/deleteDept",
-		"/createSubDept", "/deleteSubDept", "/createCategory",
-		"/deleteCategory", "/newVendorType", "/addCountry", "/addState",
-		"/createProduct" })
+@WebServlet({ "/addTax", "/addTaxGroup", "/createDept", "/deleteDept", "/createSubDept", "/deleteSubDept",
+		"/createCategory", "/deleteCategory", "/newVendorType", "/addCountry", "/addState", "/createProduct",
+		"/deleteCountry" })
 public class Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -47,8 +46,7 @@ public class Servlet extends HttpServlet {
 	private ProductDetail productDetail;
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		url = req.getRequestURL().toString();
 		url = url.substring(url.lastIndexOf('/') + 1);
 
@@ -61,8 +59,7 @@ public class Servlet extends HttpServlet {
 				productDetail.setProductType(req.getParameter("name"));
 				productDetail.setName(req.getParameter("productName"));
 				productDetail.setCode(req.getParameter("productCode"));
-				productDetail.setCategory(ejb.getCategoryById(Integer
-						.parseInt(req.getParameter("catId"))));
+				productDetail.setCategory(ejb.getCategoryById(Integer.parseInt(req.getParameter("catId"))));
 				ejb.setProductDetail(productDetail);
 				msg = "Product detail added successfully.";
 				break;
@@ -124,23 +121,20 @@ public class Servlet extends HttpServlet {
 				break;
 			case "deleteDept":
 				page = "setupDepartment.jsp";
-				ejb.deleteDepartmentById(Integer.parseInt(req
-						.getParameter("id")));
+				ejb.deleteDepartmentById(Integer.parseInt(req.getParameter("id")));
 				msg = "Department deleted.";
 				break;
 			case "createSubDept":
 				page = "setupDepartment.jsp";
 				subDepartment = new SubDepartment();
 				subDepartment.setName(req.getParameter("name"));
-				subDepartment.setDepartment(ejb.getDepartmentById(Integer
-						.parseInt(req.getParameter("deptId"))));
+				subDepartment.setDepartment(ejb.getDepartmentById(Integer.parseInt(req.getParameter("deptId"))));
 				ejb.setSubDepartment(subDepartment);
 				msg = "SubDepartment added.";
 				break;
 			case "deleteSubDept":
 				page = "setupDepartment.jsp";
-				ejb.deleteSubDepartmentById(Integer.parseInt(req
-						.getParameter("id")));
+				ejb.deleteSubDepartmentById(Integer.parseInt(req.getParameter("id")));
 				msg = "Department deleted.";
 				break;
 			case "createCategory":
@@ -153,8 +147,7 @@ public class Servlet extends HttpServlet {
 				category.setAttrNmae4(req.getParameter("attr4"));
 				category.setAttrNmae5(req.getParameter("attr5"));
 				category.setAttrNmae6(req.getParameter("attr6"));
-				category.setSubDepartment(ejb.getSubDepartmentById(Integer
-						.parseInt(req.getParameter("subDeptId"))));
+				category.setSubDepartment(ejb.getSubDepartmentById(Integer.parseInt(req.getParameter("subDeptId"))));
 				ejb.setCategory(category);
 				msg = "Category added.";
 				break;
@@ -170,12 +163,16 @@ public class Servlet extends HttpServlet {
 				ejb.setCountry(country);
 				msg = "country added successfully.";
 				break;
+			case "deleteCountry":
+				page = "setupCity.jsp";
+				ejb.deleteCountryById(Integer.parseInt(req.getParameter("id")));
+				msg = "country deleted successfully.";
+				break;
 			case "addState":
 				page = "setupCity.jsp";
 				state = new State();
 				state.setStateName(req.getParameter("name"));
-				state.setCountry(ejb.getCountryById(Integer.parseInt(req
-						.getParameter("id"))));
+				state.setCountry(ejb.getCountryById(Integer.parseInt(req.getParameter("id"))));
 				ejb.setState(state);
 				msg = "State added successfully.";
 				break;
@@ -192,8 +189,7 @@ public class Servlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doGet(req, resp);
 	}
 }

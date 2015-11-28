@@ -127,7 +127,7 @@
 												<ul id="tree">
 													<c:forEach items="${sessionScope['ejb'].getAllCountry()}"
 														var="contry">
-														<li>${contry.countryName}
+														<li>${contry.countryName}<a href="#" onclick="deleteCountry(${contry.id},'${contry.countryName}')"><span style="color: red;">X</span></a>
 															<ul>
 																<c:forEach var="state" items="${sessionScope['ejb'].getAllStatesByCountryId(contry.id)}">
 																	<li>${state.stateName}
@@ -229,6 +229,12 @@
 		}
 		function closed() {
 			$("#createState").hide();
+		}
+		function deleteCountry(id,c){
+			y=confirm("Do you want to delete country: "+c);
+			if(y==true){
+				window.location="deleteCountry?id="+id;
+			}
 		}
 	</script>
 </body>
