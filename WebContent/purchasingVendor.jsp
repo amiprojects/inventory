@@ -117,14 +117,16 @@
 									</div>
 									<form role="form" class="sec">
 										<ul class="nav nav-tabs">
-											<li class="active"><a data-toggle="tab" href="#account">Account
-													info</a></li>
+											<li class="active"><a data-toggle="tab"
+												href="#bankAccount">Bank Account info</a></li>
+											<li><a data-toggle="tab" href="#vendorAccount">Vendor
+													Account Info</a></li>
 											<li><a data-toggle="tab" href="#detail">Details</a></li>
 											<li><a data-toggle="tab" href="#address">Address</a></li>
 											<li><a data-toggle="tab" href="#part">Parts</a></li>
 										</ul>
 										<div class="tab-content">
-											<div id="account" class="tab-pane fade active in">
+											<div id="bankAccount" class="tab-pane fade active in">
 												<div class="widget-area">
 													<div class="col-md-3">
 														<b>Bank Name:</b>
@@ -182,83 +184,89 @@
 														<input type="text" class="form-control">
 													</div>
 												</div>
+												<br>
+												<div class="col-md-12">
+													<button class="btn green pull-right" type="submit">Next</button>
+												</div>
+											</div>
+											<div id="vendorAccount" class="tab-pane fade">
 												<div class="widget-area">
 													<div class="row">
-														<div class="col-md-4">
+														<div class="col-md-5">
 															<b>VAT no.:</b>
 														</div>
-														<div class="col-md-8">
+														<div class="col-md-7">
 															<input type="text" class="form-control">
 														</div>
 													</div>
-													<br>
+
 													<div class="row">
-														<div class="col-md-4">
+														<div class="col-md-5">
 															<b>VAT registration date:</b>
 														</div>
-														<div class="col-md-8">
+														<div class="col-md-7">
 															<input type="text" class="form-control">
 														</div>
 													</div>
-													<br>
+
 													<div class="row">
-														<div class="col-md-4">
+														<div class="col-md-5">
 															<b>CST registration date:</b>
 														</div>
-														<div class="col-md-8">
+														<div class="col-md-7">
 															<input type="text" class="form-control">
 														</div>
 													</div>
-													<br>
+
 													<div class="row">
-														<div class="col-md-4">
+														<div class="col-md-5">
 															<b>PAN no.:</b>
 														</div>
-														<div class="col-md-8">
+														<div class="col-md-7">
 															<input type="text" class="form-control">
 														</div>
 													</div>
-													<br>
+
 													<div class="row">
-														<div class="col-md-4">
+														<div class="col-md-5">
 															<b>Excise registration no.:</b>
 														</div>
-														<div class="col-md-8">
+														<div class="col-md-7">
 															<input type="text" class="form-control">
 														</div>
 													</div>
-													<br>
+
 													<div class="row">
-														<div class="col-md-4">
+														<div class="col-md-5">
 															<b>Excise registration date:</b>
 														</div>
-														<div class="col-md-8">
+														<div class="col-md-7">
 															<input type="text" class="form-control">
 														</div>
 													</div>
-													<br>
+
 													<div class="row">
-														<div class="col-md-4">
+														<div class="col-md-5">
 															<b>Service tax registration no.:</b>
 														</div>
-														<div class="col-md-8">
+														<div class="col-md-7">
 															<input type="text" class="form-control">
 														</div>
 													</div>
-													<br>
+
 													<div class="row">
-														<div class="col-md-4">
+														<div class="col-md-5">
 															<b>Service tax registration date:</b>
 														</div>
-														<div class="col-md-8">
+														<div class="col-md-7">
 															<input type="text" class="form-control">
 														</div>
 													</div>
 													<div class="row">
-														<div class="col-md-4">
+														<div class="col-md-5">
 															<b>Tax group id:</b>
 														</div>
-														<div class="col-md-8">
+														<div class="col-md-7">
 															<select class="form-control">
 																<option>---</option>
 																<option>---</option>
@@ -266,6 +274,11 @@
 															</select>
 														</div>
 													</div>
+												</div>
+												<br>
+												<div class="col-md-12">
+													<button class="btn green pull-left" type="submit">Previous</button>
+													<button class="btn green pull-right" type="submit">Next</button>
 												</div>
 											</div>
 
@@ -333,7 +346,9 @@
 														<hr>
 													</div>
 
-													<div class="row">Last modified date :</div>
+													<div class="row">
+														<b>Last modified date :</b>
+													</div>
 												</div>
 												<br>
 												<div class="col-md-12">
