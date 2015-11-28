@@ -167,6 +167,13 @@ public class Ejb {
 		return q.getResultList();
 
 	}
+	
+	public List<State> getAllStatesByCountryId(int id) {
+		TypedQuery<State> q = em.createQuery("select c from State c where c.country.id=:Id",
+				State.class);
+		q.setParameter("Id", id);
+		return q.getResultList();
+	}
 
 	/******************** for Country *******************************/
 	public void setCountry(Country country) {

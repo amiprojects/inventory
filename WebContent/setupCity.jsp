@@ -129,11 +129,13 @@
 														var="contry">
 														<li>${contry.countryName}
 															<ul>
-																<li>Resource
-																	<ul>
-																		<li>Jquery.php</li>
-																	</ul>
-																</li>
+																<c:forEach var="state" items="${sessionScope['ejb'].getAllStatesByCountryId(contry.id)}">
+																	<li>${state.stateName}
+																		<ul>
+																			<li>Jquery.php</li>
+																		</ul>
+																	</li>
+																</c:forEach>
 															</ul>
 														</li>
 													</c:forEach>
