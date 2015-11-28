@@ -69,11 +69,13 @@
 												<div class="row">
 													<div class="col-md-4">State name :</div>
 													<div class="col-md-6">
-														<input type="text" class="form-control" name="name">
+														<input type="text" class="form-control" name="name"
+															id="stateName" onkeyup="stateNameKeyUp();">
 													</div>
 													<div class="col-md-2">
-														<input class="btn green pull-left" type="button"
-															onclick="statePopup();" value="Add">
+														<input id="stateNameBtn" class="btn green pull-left"
+															type="button" onclick="statePopup();" value="Add"
+															disabled="disabled">
 													</div>
 												</div>
 												<div id="createState" style="top: 25px;">
@@ -86,8 +88,10 @@
 															<div class="modal-body">
 
 																<span>The state belongs to:</span><input id="country"
-																	type="text" name="name"> <input type="submit"
-																	value="create">
+																	type="text" name="name"> <input id="countryId"
+																	type="hidden" name="id"> <input
+																	id="countryForStatebtn" type="submit" value="create"
+																	disabled="disabled" class="btn green pull-right">
 
 															</div>
 															<div class="modal-footer"></div>
@@ -101,11 +105,12 @@
 												<div class="row">
 													<div class="col-md-4">Country name :</div>
 													<div class="col-md-6">
-														<input type="text" class="form-control" name="name">
+														<input id="creConName" type="text" class="form-control"
+															name="name" onkeyup="crecontxt();">
 													</div>
 													<div class="col-md-2">
-														<input class="btn green pull-left" type="submit"
-															value="Add">
+														<input id="creConbtn" class="btn green pull-left"
+															type="submit" value="Add" disabled="disabled">
 													</div>
 												</div>
 											</form>
@@ -120,7 +125,8 @@
 												</p>
 												<!-- Listing directory ZendX from ZendFramework library -->
 												<ul id="tree">
-													<c:forEach items="${sessionScope['ejb'].getAllCountry()}" var="contry">
+													<c:forEach items="${sessionScope['ejb'].getAllCountry()}"
+														var="contry">
 														<li>${contry.countryName}
 															<ul>
 																<li>Resource
@@ -163,6 +169,20 @@
 			$("#createState").hide();
 		});
 
+		function crecontxt() {
+			if ($('#creConName').val() != "") {
+				$('#creConbtn').prop("disabled", false);
+			} else {
+				$('#creConbtn').prop("disabled", true);
+			}
+		}
+		function stateNameKeyUp() {
+			if ($('#stateName').val() != "") {
+				$('#stateNameBtn').prop("disabled", false);
+			} else {
+				$('#stateNameBtn').prop("disabled", true);
+			}
+		}
 		$(function() {
 			$("#country").autocomplete({
 				source : function(request, response) {
@@ -176,15 +196,28 @@
 							response($.map(data, function(item) {
 								return {
 									value : item.countryName,
-									id:item.id
+									id : item.id
 								}
 							}));
 						}
 					});
 				},
-				change: function (event, ui) {
-					if (ui.item == null){ 
-						$(this).val((ui.item ? ui.item.id : ""));						
+				change : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$('#countryForStatebtn').prop("disabled", true);
+					} else {
+						$("#countryId").val(ui.item.id);
+						$('#countryForStatebtn').prop("disabled", false);
+					}
+				},
+				select : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$('#countryForStatebtn').prop("disabled", true);
+					} else {
+						$("#countryId").val(ui.item.id);
+						$('#countryForStatebtn').prop("disabled", false);
 					}
 				}
 			});
