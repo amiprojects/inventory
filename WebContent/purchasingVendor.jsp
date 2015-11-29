@@ -26,6 +26,13 @@
 	padding-right: 20px;
 }
 </style>
+<!-- Script -->
+<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+<script type="text/javascript" src="js/modernizr.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
+<script type="text/javascript" src="js/bootstrap.js"></script>
+<script type="text/javascript" src="js/enscroll.js"></script>
+<script type="text/javascript" src="js/grid-filter.js"></script>
 
 <!-- Styles -->
 <link rel="stylesheet" href="font-awesome-4.2.0/css/font-awesome.css"
@@ -37,6 +44,8 @@
 <!-- Style -->
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
 <!-- Responsive -->
+
+
 
 </head>
 <body>
@@ -473,14 +482,6 @@
 		<!-- Page Container -->
 	</div>
 	<!-- main -->
-
-	<!-- Script -->
-	<script type="text/javascript" src="js/modernizr.js"></script>
-	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
-	<script type="text/javascript" src="js/script.js"></script>
-	<script type="text/javascript" src="js/bootstrap.js"></script>
-	<script type="text/javascript" src="js/enscroll.js"></script>
-	<script type="text/javascript" src="js/grid-filter.js"></script>
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->

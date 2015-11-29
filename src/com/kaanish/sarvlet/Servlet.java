@@ -2,6 +2,7 @@ package com.kaanish.sarvlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kaanish.ejb.Ejb;
+import com.kaanish.model.AccountDetails;
 import com.kaanish.model.Category;
 import com.kaanish.model.City;
 import com.kaanish.model.Country;
@@ -21,16 +23,18 @@ import com.kaanish.model.State;
 import com.kaanish.model.SubDepartment;
 import com.kaanish.model.Tax;
 import com.kaanish.model.Tax_Type_Group;
+import com.kaanish.model.Vendor;
 import com.kaanish.model.VendorType;
 
 @WebServlet({ "/addTax", "/addTaxGroup", "/createDept", "/deleteDept", "/createSubDept", "/deleteSubDept",
 		"/createCategory", "/deleteCategory", "/newVendorType", "/addCountry", "/addState", "/createProduct",
-		"/deleteCountry" })
+		"/deleteCountry", "/addVendor" })
 public class Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@EJB
 	Ejb ejb;
+	private Date dt;
 	private String page;
 	private String msg;
 	private String url;
@@ -44,6 +48,8 @@ public class Servlet extends HttpServlet {
 	private State state;
 	private City city;
 	private ProductDetail productDetail;
+	private Vendor vendor;
+	private AccountDetails accountDetails;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -175,6 +181,28 @@ public class Servlet extends HttpServlet {
 				state.setCountry(ejb.getCountryById(Integer.parseInt(req.getParameter("id"))));
 				ejb.setState(state);
 				msg = "State added successfully.";
+				break;
+			case "addVendor":
+				page="purchasingVendor.jsp";
+				vendor=new Vendor();
+				accountDetails=new AccountDetails();
+				dt=new Date();
+				
+				vendor.setName(req.getParameter(""));
+				vendor.setLastModifiedDate(dt);
+				vendor.setAddress(req.getParameter(""));
+				vendor.setAliseName(req.getParameter(""));
+				vendor.setCity(ejb.getCityById(Integer.parseInt(req.getParameter(""))));
+				vendor.setCompanyName(req.getParameter(""));
+				vendor.setEmail(req.getParameter(""));
+				vendor.setPh1(req.getParameter(""));
+				vendor.setPh2(req.getParameter(""));
+				vendor.setPinCode(req.getParameter(""));
+				vendor.setVendorType(ejb.getVendorTypeById(Integer.parseInt(req.getParameter(""))));
+				//vendor.setUsers();
+				
+				
+				msg="vendor added successful;";
 				break;
 
 			default:
