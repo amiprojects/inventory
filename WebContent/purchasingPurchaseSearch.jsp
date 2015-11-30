@@ -38,9 +38,12 @@
 					<div class="row">
 						<div class="masonary-grids">
 							<div class="col-md-12">
-								<div class="breadcrumbs">
+								<div class="breadcrumbs" style="height:39px">
 									<ul>
-										<li><a title="">Purchase Search</a></li>
+										<li><p
+												style="right: -422px; font-size: 20px; position: absolute;">
+												<b>Purchase Search</b>
+											</p></li>
 									</ul>
 								</div>
 								<div class="widget-area">

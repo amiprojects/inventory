@@ -44,14 +44,26 @@
 				<div class="container">
 					<div class="row">
 						<div class="masonary-grids">
-							<div class="widget-area">
-								<div class="breadcrumbs">
+						
+						<div class="breadcrumbs" style="height:39px">
 									<ul>
-										<li><a title="" class="font"><h4>Discount</h4></a></li>
-										<li><a title=""><button type="button"
-													class="btn btn-info btn-lg" data-toggle="modal"
-													data-target="#newDiscount">New</button> </a></li>
+										<li><p	style="right: -747px; font-size: 20px; position: absolute;">
+												<b>Discount</b>
+											</p></li>
 									</ul>
+								</div><br><br>
+							
+							<div class="widget-area">
+							<div class="col-md-12">
+							
+				
+								<div class="row">
+										<div class="col-md-6">
+									
+										
+										<a title=""><button type="button"
+													class="btn btn-info btn-lg" data-toggle="modal"
+													data-target="#newDiscount">New</button> </a>									
 								</div>
 								<table id="stream_table"
 									class="table table-striped table-bordered">
@@ -85,7 +97,7 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div></div>
 			</div>
 			<!-- Content Sec -->
 		</div>

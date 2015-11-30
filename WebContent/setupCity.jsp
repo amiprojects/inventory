@@ -48,6 +48,14 @@
 				<div class="container">
 					<div class="row">
 						<div class="masonary-grids">
+						<div class="breadcrumbs" style="height:39px">
+									<ul>
+										<li><p
+												style="right: -704px; font-size: 20px; position: absolute;">
+												<b>City/State/Country</b>
+											</p></li>
+									</ul>
+								</div>
 							<div class="widget-area">
 								<div class="row">
 									<div class="col-md-6">
