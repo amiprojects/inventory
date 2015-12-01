@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
 <html>
@@ -66,7 +67,7 @@
 									<button style="left: 173px; position: absolute;"
 										class="btn btn-info mini" type="button">Add</button>
 
-									<br> <br> 
+									<br> <br>
 									<textarea style="overflow-y: scroll;" rows="16" cols="24"></textarea>
 
 
@@ -82,7 +83,7 @@
 									<button style="left: 173px; position: absolute;"
 										class="btn btn-info mini" type="button">Add</button>
 
-									<br>  <span><b>Country:</b></span><select
+									<br> <span><b>Country:</b></span><select
 										style="width: 185px; height: 30px;"><option>india</option></select>
 									<br> <br>
 									<textarea style="overflow-y: scroll;" rows="13" cols="24"></textarea>
@@ -99,7 +100,7 @@
 									<button style="left: 173px; position: absolute;"
 										class="btn btn-info mini" type="button">Add</button>
 
-									<br>  <span><b>Country:</b></span><br> <select
+									<br> <span><b>Country:</b></span><br> <select
 										style="width: 185px; height: 30px;"><option>India</option></select>
 									<br> <br> <span><b>State:</b></span><select
 										style="width: 185px; height: 30px;"><option>West
@@ -111,195 +112,32 @@
 
 								</div>
 								<div class="widget-area" style="width: 25%">
-									<h3>Tree</h3>
-									<div class="widget-area">
-										<h2 class="widget-title">
-											<strong>Tree</strong> List
-										</h2>
-										<div class="tree-list">
-											<p>
-												<a href="#" id="tree-expand-all">Expand all</a> | <a
-													href="#" id="tree-collapse-all">Collapse all</a>
-											</p>
-											<!-- Listing directory ZendX from ZendFramework library -->
-											<ul id="tree">
-												<li>Application
+									<div class="tree-list">
+										<p>
+											<a href="#" id="tree-expand-all">Expand all</a> | <a href="#"
+												id="tree-collapse-all">Collapse all</a>
+										</p>
+										<!-- Listing directory ZendX from ZendFramework library -->
+										<ul id="tree">
+											<c:forEach items="${sessionScope['ejb'].getAllCountry()}"
+												var="contry">
+												<li>${contry.countryName}<a href="#"
+													onclick="deleteCountry(${contry.id},'${contry.countryName}')"><span
+														style="color: red;">X</span></a>
 													<ul>
-														<li>Resource
-															<ul>
-																<li>Jquery.php</li>
-															</ul>
-														</li>
+														<c:forEach var="state"
+															items="${sessionScope['ejb'].getAllStatesByCountryId(contry.id)}">
+															<li>${state.stateName}
+																<ul>
+																	<li>Jquery.php</li>
+																</ul>
+															</li>
+														</c:forEach>
 													</ul>
 												</li>
-
-												<li>Console
-													<ul>
-														<li>Process
-															<ul>
-																<li>Exception.php</li>
-																<li>Unix.php</li>
-															</ul>
-														</li>
-														<li>Exception.php</li>
-													</ul>
-												</li>
-
-												<li>JQuery
-													<ul>
-														<li>Controller
-															<ul>
-																<li>Action
-																	<ul>
-																		<li>Helper
-																			<ul>
-																				<li>AutoComplete.php</li>
-																			</ul>
-																		</li>
-																	</ul>
-																</li>
-															</ul>
-														</li>
-														<li>View
-															<ul>
-																<li>Helper
-																	<ul>
-																		<li>JQuery
-																			<ul>
-																				<li>Container.php</li>
-																			</ul>
-																		</li>
-																		<li>UiWidgetPane.php</li>
-																		<li>UiWidget.php</li>
-																		<li>TabPane.php</li>
-																		<li>TabContainer.php</li>
-																		<li>Spinner.php</li>
-																		<li>Slider.php</li>
-																		<li>JQuery.php</li>
-																		<li>AutoComplete.php</li>
-																		<li>DialogContainer.php</li>
-																		<li>DatePicker.php</li>
-																		<li>ColorPicker.php</li>
-																		<li>AccordionPane.php</li>
-																		<li>AjaxLink.php</li>
-																		<li>AccordionContainer.php</li>
-																	</ul>
-																</li>
-																<li>Exception.php</li>
-															</ul>
-														</li>
-														<li>Form
-															<ul>
-																<li>Decorator
-																	<ul>
-																		<li>AccordionContainer.php</li>
-																		<li>UiWidgetPane.php</li>
-																		<li>UiWidgetElementMarker.php</li>
-																		<li>UiWidgetElement.php</li>
-																		<li>UiWidgetContainer.php</li>
-																		<li>TabPane.php</li>
-																		<li>TabContainer.php</li>
-																		<li>DialogContainer.php</li>
-																		<li>AccordionPane.php</li>
-																	</ul>
-																</li>
-																<li>Element
-																	<ul>
-																		<li>AutoComplete.php</li>
-																		<li>UiWidget.php</li>
-																		<li>Spinner.php</li>
-																		<li>Slider.php</li>
-																		<li>DatePicker.php</li>
-																		<li>ColorPicker.php</li>
-																	</ul>
-																</li>
-																<li>Exception.php</li>
-															</ul>
-														</li>
-														<li>Form.php</li>
-														<li>Exception.php</li>
-													</ul>
-												</li>
-
-												<li>Db
-													<ul>
-														<li>Adapter
-															<ul>
-																<li>Firebird
-																	<ul>
-																		<li>Exception.php</li>
-																	</ul>
-																</li>
-																<li>Firebird.php</li>
-															</ul>
-														</li>
-														<li>Statement
-															<ul>
-																<li>Firebird
-																	<ul>
-																		<li>Exception.php</li>
-																	</ul>
-																</li>
-																<li>Firebird.php</li>
-															</ul>
-														</li>
-													</ul>
-												</li>
-												<li>Form
-													<ul>
-														<li>Decorator
-															<ul>
-																<li>AccordionContainer.php</li>
-																<li>UiWidgetPane.php</li>
-																<li>UiWidgetElementMarker.php</li>
-																<li>UiWidgetElement.php</li>
-																<li>UiWidgetContainer.php</li>
-																<li>TabPane.php</li>
-																<li>TabContainer.php</li>
-																<li>DialogContainer.php</li>
-																<li>AccordionPane.php</li>
-															</ul>
-														</li>
-														<li>Element
-															<ul>
-																<li>AutoComplete.php</li>
-																<li>UiWidget.php</li>
-																<li>Spinner.php</li>
-																<li>Slider.php</li>
-																<li>DatePicker.php</li>
-																<li>ColorPicker.php</li>
-															</ul>
-														</li>
-														<li>Exception.php</li>
-													</ul>
-												</li>
-												<li>Helper
-													<ul>
-														<li>JQuery
-															<ul>
-																<li>Container.php</li>
-															</ul>
-														</li>
-														<li>UiWidgetPane.php</li>
-														<li>UiWidget.php</li>
-														<li>TabPane.php</li>
-														<li>TabContainer.php</li>
-														<li>Spinner.php</li>
-														<li>Slider.php</li>
-														<li>JQuery.php</li>
-														<li>AutoComplete.php</li>
-														<li>DialogContainer.php</li>
-														<li>DatePicker.php</li>
-														<li>ColorPicker.php</li>
-														<li>AccordionPane.php</li>
-														<li>AjaxLink.php</li>
-														<li>AccordionContainer.php</li>
-													</ul>
-												</li>
-											</ul>
-										</div>
+											</c:forEach>
+										</ul>
 									</div>
-
 								</div>
 							</div>
 						</div>
