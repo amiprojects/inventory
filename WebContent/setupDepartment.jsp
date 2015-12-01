@@ -35,6 +35,36 @@
 }
 </style>
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#dept").hide();
+		$("#sDept").hide();
+		$("#cat").hide();
+	});
+	function choose() {
+		var val = $('[name="choose"]').val();
+		//alert(val);
+		if (val == '-') {
+			alert('Please select any one...');
+			$("#dept").hide();
+			$("#sDept").hide();
+			$("#cat").hide();
+		} else if (val == 'dept') {
+			$("#dept").show();
+			$("#sDept").hide();
+			$("#cat").hide();
+		} else if (val == 'sDept') {
+			$("#sDept").show();
+			$("#dept").hide();
+			$("#cat").hide();
+		} else if (val == 'cat') {
+			$("#sDept").hide();
+			$("#dept").hide();
+			$("#cat").show();
+		}
+	}
+</script>
 </head>
 <body>
 	<div class="main" style="height: 664px;">
@@ -63,14 +93,71 @@
 												<li>Add Department/Sub-Department/Category</li>
 											</ul>
 										</div>
-										<select class="form-control">
-											<option>Select One</option>
-											<option>Department</option>
-											<option>Sub-Department</option>
-											<option>Category</option>
+										<select class="form-control" name="choose" onchange="choose()">
+											<option value="-">Select One</option>
+											<option value="dept">Department</option>
+											<option value="sDept">Sub-Department</option>
+											<option value="cat">Category</option>
 										</select>
-										<span>Name</span>
-										<input type="text" class="form-control">
+										<div id="dept">
+											<input type="text" class="form-control"
+												placeholder="Enter Department Name">
+											<button type="submit" class="btn green pull-right">Add</button>
+										</div>
+										<div id="sDept">
+											<input type="text" class="form-control"
+												placeholder="Enter Sub-Department Name">
+											<button type="submit" class="btn green pull-right"
+												data-toggle="modal" data-target="#chooseDept">Add</button>
+											<div id="chooseDept" class="modal fade" role="dialog"
+												style="top: 25px;">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<!-- <div class="modal-header">
+															<button type="button" class="close" data-dismiss="modal">&times;</button>
+															<h4 class="modal-title">Modal Header</h4>
+														</div> -->
+														<div class="modal-body">
+															<span>Department name :</span> <input type="text"
+																class="form-control">
+														</div>
+														<div class="modal-footer">
+															<button type="button" class="btn btn-default">Save</button>
+															<button type="button" class="btn btn-default"
+																data-dismiss="modal">Close</button>
+														</div>
+													</div>
+
+												</div>
+											</div>
+										</div>
+										<div id="cat">
+											<input type="text" class="form-control"
+												placeholder="Enter Category Name">
+											<button type="submit" class="btn green pull-right"
+												data-toggle="modal" data-target="#chooseDeptS">Add</button>
+											<div id="chooseDeptS" class="modal fade" role="dialog"
+												style="top: 25px;">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<!-- <div class="modal-header">
+															<button type="button" class="close" data-dismiss="modal">&times;</button>
+															<h4 class="modal-title">Modal Header</h4>
+														</div> -->
+														<div class="modal-body">
+															<span>Sub-Department name :</span> <input type="text"
+																class="form-control">
+														</div>
+														<div class="modal-footer">
+															<button type="button" class="btn btn-default">Save</button>
+															<button type="button" class="btn btn-default"
+																data-dismiss="modal">Close</button>
+														</div>
+													</div>
+
+												</div>
+											</div>
+										</div>
 									</div>
 									<div class="widget-area" style="width: 50%">
 										<h2 class="widget-title">
