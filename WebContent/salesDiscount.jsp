@@ -36,76 +36,75 @@
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
 </head>
 <body>
-	<div class="main">
+	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.html"%>
-		<div class="page-container menu-left">
+		<div class="page-container menu-left" style="height: 100%;">
 			<%@include file="includeSidebar.html"%>
-			<div class="content-sec">
-				<div class="container">
-					<div class="row">
-						<div class="masonary-grids">
+			<div class="content-sec" style="height: 100%; overflow-y: scroll;">
+				<div class="row">
+					<div class="masonary-grids">
 
-							<div class="breadcrumbs" style="height: 39px">
-								<ul>
-									<li><p
-											style="right: -747px; font-size: 20px; position: absolute;">
-											<b>Discount</b>
-										</p></li>
-								</ul>
-							</div>
-							<br> <br>
+						<div class="breadcrumbs" style="height: 39px">
+							<ul>
+								<li><p
+										style="right: -747px; font-size: 20px; position: absolute;">
+										<b>Discount</b>
+									</p></li>
+							</ul>
+						</div>
+						<br> <br>
 
-							<div class="widget-area">
-								<div class="col-md-12">
-
-
-									<div class="row">
-										<div class="col-md-6">
+						<div class="widget-area">
+							<div class="col-md-12">
 
 
-											<a title=""><button type="button"
-													class="btn btn-info btn-lg" data-toggle="modal"
-													data-target="#newDiscount">New</button> </a>
-										</div>
-										<table id="stream_table"
-											class="table table-striped table-bordered">
-											<thead>
-												<tr>
-													<th>#</th>
-													<th>Name</th>
-													<th>Description</th>
-													<th>Type</th>
-													<th>Value</th>
-													<th>Taxable</th>
-													<th>Income Account</th>
-													<th>Expense Account</th>
-													<th>Active</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>1</td>
-													<td>---</td>
-													<td>---</td>
-													<td>---</td>
-													<td><input type="checkbox"></td>
-													<td>---</td>
-													<td>---</td>
-													<td>---</td>
-													<td><input type="checkbox"></td>
-												</tr>
-											</tbody>
-										</table>
+								<div class="row">
+									<div class="col-md-6">
+
+
+										<a title=""><button type="button"
+												class="btn btn-info btn-lg" data-toggle="modal"
+												data-target="#newDiscount">New</button> </a>
 									</div>
+									<table id="stream_table"
+										class="table table-striped table-bordered">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>Name</th>
+												<th>Description</th>
+												<th>Type</th>
+												<th>Value</th>
+												<th>Taxable</th>
+												<th>Income Account</th>
+												<th>Expense Account</th>
+												<th>Active</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>1</td>
+												<td>---</td>
+												<td>---</td>
+												<td>---</td>
+												<td><input type="checkbox"></td>
+												<td>---</td>
+												<td>---</td>
+												<td>---</td>
+												<td><input type="checkbox"></td>
+											</tr>
+										</tbody>
+									</table>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<!-- Content Sec -->
 			</div>
-			<!-- Page Container -->
+			<!-- Content Sec -->
 		</div>
+		<!-- Page Container -->
+	</div>
 	</div>
 	<!-- main -->
 	<div class="modal fade" role="dialog" class="modal fade" role="dialog"

@@ -28,17 +28,16 @@
 </head>
 <body>
 
-	<div class="main">
+	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.html"%>
-		<div class="page-container menu-left">
+		<div class="page-container menu-left" style="height: 100%;">
 			<%@include file="includeSidebar.html"%>
-
-			<div class="content-sec">
+			<div class="content-sec" style="height: 100%; overflow-y: scroll;">
 				<div class="container">
 					<div class="row">
 						<div class="masonary-grids">
 							<div class="col-md-12">
-								<div class="breadcrumbs" style="height:39px">
+								<div class="breadcrumbs" style="height: 39px">
 									<ul>
 										<li><p
 												style="right: -422px; font-size: 20px; position: absolute;">
