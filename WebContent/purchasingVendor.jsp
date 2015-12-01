@@ -45,7 +45,14 @@
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
 <!-- Responsive -->
 
-
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#dashSing').removeAttr("class");
+	$('#dashSub').removeAttr("style","display: none;");
+	$('#purSing').attr("class","active");
+	$('#purSub').attr("style","display: block !important;");
+});
+</script>
 
 </head>
 <body>

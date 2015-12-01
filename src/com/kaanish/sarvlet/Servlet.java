@@ -1,6 +1,7 @@
 package com.kaanish.sarvlet;
 
 import java.io.IOException;
+import java.security.AccessControlContext;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,6 +27,7 @@ import com.kaanish.model.Tax;
 import com.kaanish.model.Tax_Type_Group;
 import com.kaanish.model.Vendor;
 import com.kaanish.model.VendorType;
+import com.kaanish.util.DateConverter;
 
 @WebServlet({ "/login","/logout","/addTax", "/addTaxGroup", "/createDept", "/deleteDept", "/createSubDept", "/deleteSubDept",
 		"/createCategory", "/deleteCategory", "/newVendorType", "/addCountry", "/addState", "/createProduct",
@@ -219,6 +221,26 @@ public class Servlet extends HttpServlet {
 				vendor.setVendorType(ejb.getVendorTypeById(Integer.parseInt(req.getParameter(""))));
 				//vendor.setUsers();
 				
+				
+				accountDetails.setBankAccountNumber(req.getParameter(""));
+				accountDetails.setBankChequeLable(req.getParameter(""));
+				accountDetails.setBankIFSCnumber(req.getParameter(""));
+				accountDetails.setBankMICRnumber(req.getParameter(""));
+				accountDetails.setBankName(req.getParameter(""));
+				accountDetails.setBankRTGCnumber(req.getParameter(""));
+				accountDetails.setBranch(req.getParameter(""));
+				accountDetails.setCity(ejb.getCityById(Integer.parseInt(req.getParameter(""))));
+				accountDetails.setCstNumber(req.getParameter(""));
+				accountDetails.setCstRegistrationDate(DateConverter.getDate(req.getParameter("")));
+				accountDetails.setExciseRegistrationDate(DateConverter.getDate(req.getParameter("")));
+				accountDetails.setExciseRegistrationNumber(req.getParameter(""));
+				accountDetails.setPanNumber(req.getParameter(""));
+				accountDetails.setServiceTaxRegistrationDate(DateConverter.getDate(req.getParameter("")));
+				accountDetails.setServiceTaxRegistrationNumber(req.getParameter(""));
+				accountDetails.setVatNumber(req.getParameter(""));
+				accountDetails.setVatRegistrationDate(DateConverter.getDate(req.getParameter("")));
+				
+				accountDetails.setVendor(vendor);
 				
 				msg="vendor added successful;";
 				break;
