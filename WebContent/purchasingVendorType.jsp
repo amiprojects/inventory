@@ -37,9 +37,9 @@
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
 </head>
 <body>
-	<div class="main">
+	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.html"%>
-		<div class="page-container menu-left">
+		<div class="page-container menu-left" style="height: 100%;">
 			<%@include file="includeSidebar.html"%>
 			<div class="content-sec">
 				<div class="container">

@@ -60,6 +60,16 @@
 					<div class="row">
 						<div class="masonary-grids">
 							<div class="col-md-12">
+							
+							<div class="breadcrumbs" style="height:39px">
+									<ul>
+										<li><p
+												style="right: -422px; font-size: 20px; position: absolute;">
+												<b>Vendor Details</b>
+											</p></li>
+									</ul>
+								</div>
+							
 								<div class="widget-area" style="width: 28%;">
 									<form role="form" class="sec">
 										<div class="form-group">
@@ -119,11 +129,7 @@
 									</table>
 								</div>
 								<div class="widget-area" style="width: 72%">
-									<div class="breadcrumbs">
-										<ul>
-											<li><a title="">Vendor Details : </a></li>
-										</ul>
-									</div>
+									
 									<form role="form" class="sec">
 										<ul class="nav nav-tabs">
 											<li class="active"><a data-toggle="tab"

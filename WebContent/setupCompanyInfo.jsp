@@ -45,12 +45,17 @@
 				<div class="container">
 					<div class="row">
 						<div class="masonary-grids">
-							<div class="widget-area">
-								<div class="breadcrumbs">
+						
+						<div class="breadcrumbs" style="height:39px">
 									<ul>
-										<li><a title="">Company Details :</a></li>
+										<li><p
+												style="right: -741px; font-size: 20px; position: absolute;">
+												<b>Company Details</b>
+											</p></li>
 									</ul>
 								</div>
+							<div class="widget-area">
+								
 								<ul class="nav nav-tabs">
 									<li class="active"><a data-toggle="tab" href="#comp">Company
 											details</a></li>
