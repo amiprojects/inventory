@@ -35,36 +35,6 @@
 }
 </style>
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
-<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
-<script type="text/javascript">
-	$(document).ready(function() {
-		$("#dept").hide();
-		$("#sDept").hide();
-		$("#cat").hide();
-	});
-	function choose() {
-		var val = $('[name="choose"]').val();
-		//alert(val);
-		if (val == '-') {
-			alert('Please select any one...');
-			$("#dept").hide();
-			$("#sDept").hide();
-			$("#cat").hide();
-		} else if (val == 'dept') {
-			$("#dept").show();
-			$("#sDept").hide();
-			$("#cat").hide();
-		} else if (val == 'sDept') {
-			$("#sDept").show();
-			$("#dept").hide();
-			$("#cat").hide();
-		} else if (val == 'cat') {
-			$("#sDept").hide();
-			$("#dept").hide();
-			$("#cat").show();
-		}
-	}
-</script>
 </head>
 <body>
 	<div class="main" style="height: 664px;">
@@ -87,82 +57,36 @@
 									</ul>
 								</div>
 								<div class="widget-area">
-									<div class="widget-area" style="width: 50%">
-										<div class="breadcrumbs">
-											<ul>
-												<li>Add Department/Sub-Department/Category</li>
-											</ul>
-										</div>
-										<select class="form-control" name="choose" onchange="choose()">
-											<option value="-">Select One</option>
-											<option value="dept">Department</option>
-											<option value="sDept">Sub-Department</option>
-											<option value="cat">Category</option>
-										</select>
-										<div id="dept">
-											<input type="text" class="form-control"
-												placeholder="Enter Department Name">
-											<button type="submit" class="btn green pull-right">Add</button>
-										</div>
-										<div id="sDept">
-											<input type="text" class="form-control"
-												placeholder="Enter Sub-Department Name">
-											<button type="submit" class="btn green pull-right"
-												data-toggle="modal" data-target="#chooseDept">Add</button>
-											<div id="chooseDept" class="modal fade" role="dialog"
-												style="top: 25px;">
-												<div class="modal-dialog">
-													<div class="modal-content">
-														<!-- <div class="modal-header">
-															<button type="button" class="close" data-dismiss="modal">&times;</button>
-															<h4 class="modal-title">Modal Header</h4>
-														</div> -->
-														<div class="modal-body">
-															<span>Department name :</span> <input type="text"
-																class="form-control">
-														</div>
-														<div class="modal-footer">
-															<button type="button" class="btn btn-default">Save</button>
-															<button type="button" class="btn btn-default"
-																data-dismiss="modal">Close</button>
-														</div>
-													</div>
-
-												</div>
+									<div class="widget-area" style="width: 70%">
+										<div class="widget-area" style="width: 60%">
+											<div class="breadcrumbs">
+												<ul>
+													<li>Add Department</li>
+												</ul>
 											</div>
+											<span>Department name: </span> <input type="text"
+												class="form-control"> <span>Parent</span>&nbsp; <input
+												type="radio" name="parent" value="y">&nbsp;Y &nbsp;<input
+												type="radio" name="parent" value="n">&nbsp;N <br>
+											<span>Parent name: </span> <input type="text"
+												class="form-control" id="prnt" disabled="disabled">
 										</div>
-										<div id="cat">
+										<div class="widget-area" style="width: 40%">
 											<input type="text" class="form-control"
-												placeholder="Enter Category Name">
-											<button type="submit" class="btn green pull-right"
-												data-toggle="modal" data-target="#chooseDeptS">Add</button>
-											<div id="chooseDeptS" class="modal fade" role="dialog"
-												style="top: 25px;">
-												<div class="modal-dialog">
-													<div class="modal-content">
-														<!-- <div class="modal-header">
-															<button type="button" class="close" data-dismiss="modal">&times;</button>
-															<h4 class="modal-title">Modal Header</h4>
-														</div> -->
-														<div class="modal-body">
-															<span>Sub-Department name :</span> <input type="text"
-																class="form-control">
-														</div>
-														<div class="modal-footer">
-															<button type="button" class="btn btn-default">Save</button>
-															<button type="button" class="btn btn-default"
-																data-dismiss="modal">Close</button>
-														</div>
-													</div>
-
-												</div>
-											</div>
+												placeholder="Attribute name 1" disabled="disabled"><input type="text"
+												class="form-control" placeholder="Attribute name 2" disabled="disabled"><input
+												type="text" class="form-control"
+												placeholder="Attribute name 3" disabled="disabled"><input type="text"
+												class="form-control" placeholder="Attribute name 4" disabled="disabled"><input
+												type="text" class="form-control"
+												placeholder="Attribute name 5" disabled="disabled"><input type="text"
+												class="form-control" placeholder="Attribute name 6" disabled="disabled">
 										</div>
 									</div>
-									<div class="widget-area" style="width: 50%">
-										<h2 class="widget-title">
+									<div class="widget-area" style="width: 30%">
+										<!-- <h2 class="widget-title">
 											<strong>Tree</strong> List
-										</h2>
+										</h2> -->
 										<div class="tree-list">
 											<p>
 												<a href="#" id="tree-expand-all">Expand all</a> | <a
@@ -350,7 +274,18 @@
 	<script type="text/javascript" src="js/grid-filter.js"></script>
 
 	<script src="js/jquery-ui/jquery-ui.js"></script>
+
 	<script>
+		$("input:radio[name=parent]").click(function() {
+			var value = $(this).val();
+			//alert(value);
+			if (value == "y") {
+				$("#prnt").prop("disabled", false);
+			} else {
+				$("#prnt").prop("disabled", true);
+			}
+		});
+
 		$(function() {
 			$("#datepicker").datepicker();
 		});

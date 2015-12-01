@@ -37,57 +37,59 @@
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
 </head>
 <body>
-	<div class="main">
+	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.html"%>
-		<div class="page-container menu-left">
+		<div class="page-container menu-left" style="height: 100%;">
 			<%@include file="includeSidebar.html"%>
-			<div class="content-sec">
+			<div class="content-sec"
+				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
 				<div class="container">
 					<div class="row">
 						<div class="masonary-grids">
 							<div class="col-md-12">
 								<div class="widget-area">
 									<div class="row">
-												<div class="col-md-3">
-													<label>Challan Suffix:</label>
-												</div>
-												<div class="col-md-9">
+										<div class="col-md-3">
+											<label>Challan Suffix:</label>
+										</div>
+										<div class="col-md-9">
 
-													<input type="text" class="form-control">
-												</div>
+											<input type="text" class="form-control">
+										</div>
 
-											</div><br>
-											<div class="row">
-												<div class="col-md-3">
-													<label>Financial year:</label>
-												</div>
-												<div class="col-md-9">
+									</div>
+									<br>
+									<div class="row">
+										<div class="col-md-3">
+											<label>Financial year:</label>
+										</div>
+										<div class="col-md-9">
 
-													<input type="text" class="form-control">
-												</div>
+											<input type="text" class="form-control">
+										</div>
 
-											</div>
-											<br>
-											<div class="row">
-												<div class="col-md-3">
-													<label>Company Initial</label>
-												</div>
-												<div class="col-md-9">
+									</div>
+									<br>
+									<div class="row">
+										<div class="col-md-3">
+											<label>Company Initial</label>
+										</div>
+										<div class="col-md-9">
 
-													<input type="text" class="form-control">
-												</div>
+											<input type="text" class="form-control">
+										</div>
 
-											</div>
-																					
-											<br>
-											<div class="row">
-												<div class="col-md-3">
-																<button type="button" class="c-btn medium gray">save</button>
-								
-												</div>
-																							</div>
-											
-									
+									</div>
+
+									<br>
+									<div class="row">
+										<div class="col-md-3">
+											<button type="button" class="c-btn medium gray">save</button>
+
+										</div>
+									</div>
+
+
 								</div>
 							</div>
 						</div>

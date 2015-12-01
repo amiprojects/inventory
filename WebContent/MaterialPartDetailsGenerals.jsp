@@ -117,7 +117,8 @@
 		<%@include file="includeHeader.html"%>
 		<div class="page-container menu-left" style="height: 100%;">
 			<%@include file="includeSidebar.html"%>
-			<div class="content-sec" style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
+			<div class="content-sec"
+				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
 				<div class="container">
 					<div class="row">
 						<div class="masonary-grids">
@@ -737,19 +738,11 @@
 
 					<div id="step1"
 						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial;">
-
-
-
 						<div id="bU"
 							style="position: position: absolute; top: 3px; right: 2px; width: 560px; height: 187px; font-family: arial; padding: 3px;">
 							<fieldset>
 								<legend>Parts:</legend>
-
-
-
-
 								<form action="#" method="get">
-
 									<div class="col-md-6">
 										<div>
 											<label for="exampleInputEmail1">Product Code:</label> <input
