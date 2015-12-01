@@ -16,10 +16,21 @@
 <!-- Style -->
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
 <!-- Responsive -->
+<link rel="stylesheet" href="css/toast.css" type="text/css" />
+
+<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		if ($('#msg').html() != "") {
+			$('.toast').fadeIn(400).delay(3000).fadeOut(400);
+		}
+	});
+</script>
 
 </head>
 
 <body style="background-image: url('images/resource/login-bg.jpg')">
+
 
 	<div class="login-sec">
 		<div class="login">
@@ -27,15 +38,16 @@
 				<h5>
 					<strong>Identify</strong> Yourself
 				</h5>
-				<form action="#" method="post">
+				<form action="login" method="post">
 					<fieldset>
-						<input type="text" placeholder="Username" /><i class="fa fa-user"></i>
+						<input type="text" placeholder="Username" name="usrName" /><i
+							class="fa fa-user"></i>
 					</fieldset>
 					<fieldset>
-						<input type="password" placeholder="Password" /><i
+						<input type="password" placeholder="Password" name="password" /><i
 							class="fa fa-unlock-alt"></i>
 					</fieldset>
-					<label><input type="checkbox" />Remember me</label>
+					<!-- <label><input type="checkbox" />Remember me</label> -->
 					<button type="submit" class="blue">LOG IN</button>
 				</form>
 				<a href="#" title="">Forgot Password?</a>
@@ -44,7 +56,9 @@
 		</div>
 	</div>
 	<!-- Log in Sec -->
-
+	<div class='toast' style='display: none'>
+		<h3 id="msg">${requestScope['msg']}</h3>
+	</div>
 </body>
 
 </html>

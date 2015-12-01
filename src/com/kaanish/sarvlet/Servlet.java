@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.kaanish.ejb.Ejb;
 import com.kaanish.model.AccountDetails;
@@ -26,14 +27,15 @@ import com.kaanish.model.Tax_Type_Group;
 import com.kaanish.model.Vendor;
 import com.kaanish.model.VendorType;
 
-@WebServlet({ "/addTax", "/addTaxGroup", "/createDept", "/deleteDept", "/createSubDept", "/deleteSubDept",
+@WebServlet({ "/login","/logout","/addTax", "/addTaxGroup", "/createDept", "/deleteDept", "/createSubDept", "/deleteSubDept",
 		"/createCategory", "/deleteCategory", "/newVendorType", "/addCountry", "/addState", "/createProduct",
 		"/deleteCountry", "/addVendor" })
 public class Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@EJB
-	Ejb ejb;
+	private Ejb ejb;
+	private HttpSession httpSession;
 	private Date dt;
 	private String page;
 	private String msg;
@@ -55,10 +57,26 @@ public class Servlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		url = req.getRequestURL().toString();
 		url = url.substring(url.lastIndexOf('/') + 1);
-
+		httpSession=req.getSession();
 		try {
 			switch (url) {
 
+			case "login":
+				page="index.jsp";
+				String user=req.getParameter("usrName");
+				if(ejb.getCheckLogin(user, req.getParameter("password"))){
+					httpSession.setAttribute("user", user);
+					page="dashboard.jsp";
+					msg="Login Successful.";
+				}else{
+					msg="Invalid username/Password.";
+					httpSession.removeAttribute("user");					
+				}
+				break;
+			case "logout":
+				page="index.jsp";
+				msg="Logout Successful.";
+				break;
 			case "createProduct":
 				page = "setupDepartment.jsp";
 				productDetail = new ProductDetail();

@@ -11,10 +11,13 @@ import javax.persistence.OneToMany;
 public class Users {
 	@Id
 	@GeneratedValue
-	private int user_id;
+	private int id;
 
 	private String name;
 	private String ph;
+	private String userId;
+
+	private String password;
 
 	@OneToMany(mappedBy = "users")
 	List<Tax> taxes;
@@ -23,12 +26,12 @@ public class Users {
 	@OneToMany(mappedBy = "users")
 	private List<Vendor> vendors;
 
-	public int getUser_id() {
-		return user_id;
+	public int getId() {
+		return id;
 	}
 
-	public void setUser_id(int user_id) {
-		this.user_id = user_id;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -45,6 +48,14 @@ public class Users {
 
 	public void setPh(String ph) {
 		this.ph = ph;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public List<Tax> getTaxes() {
@@ -69,6 +80,14 @@ public class Users {
 
 	public void setVendors(List<Vendor> vendors) {
 		this.vendors = vendors;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 }
