@@ -28,17 +28,16 @@
 </head>
 <body>
 
-	<div class="main">
+	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.html"%>
-		<div class="page-container menu-left">
+		<div class="page-container menu-left" style="height: 100%;">
 			<%@include file="includeSidebar.html"%>
-
-			<div class="content-sec">
+			<div class="content-sec" style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
 				<div class="container">
 					<div class="row">
 						<div class="masonary-grids">
 							<div class="col-md-12">
-							<div class="breadcrumbs" style="height:39px">
+								<div class="breadcrumbs" style="height: 39px">
 									<ul>
 										<li><p
 												style="right: -422px; font-size: 20px; position: absolute;">
@@ -113,8 +112,10 @@
 											<li><a title=""><button type="button"
 														class="btn btn-info btn-sm" data-toggle="modal"
 														data-target="#newUOM">New</button></a></li>
-											<li><a title=""><button type="submit"class="btn btn-info btn-sm">Edit</button></a></li>
-											<li><a title=""><button type="submit" class="btn btn-info btn-sm">Delete</button></a></li>
+											<li><a title=""><button type="submit"
+														class="btn btn-info btn-sm">Edit</button></a></li>
+											<li><a title=""><button type="submit"
+														class="btn btn-info btn-sm">Delete</button></a></li>
 										</ul>
 									</div>
 
@@ -168,65 +169,66 @@
 			</div>
 			<!-- Page Container -->
 		</div>
-		<!-- main -->
+	</div>
+	<!-- main -->
 
-		<div id="newUOM" class="modal fade" role="dialog" style="top: 25px;">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">New Unit of Measurements :</h4>
-					</div>
-					<div class="modal-body">
-						<div class="row">
-							<div class="col-md-4">Select a UOM type :</div>
-							<div class="col-md-8">
-								<select class="form-control">
-									<option value="none">---</option>
-									<option value="cou">Count</option>
-									<option value="wei">Weight</option>
-									<option value="len">Length</option>
-									<option value="are">Area</option>
-									<option value="vol">Volume</option>
-									<option value="tim">Time</option>
-								</select>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-3">Abbreviation :</div>
-							<div class="col-md-9">
-								<input type="text" class="form-control">
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-3">Name UOM :</div>
-							<div class="col-md-9">
-								<input type="text" class="form-control">
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-3">UOM Description :</div>
-							<div class="col-md-9">
-								<textarea rows="" cols="" class="form-control"></textarea>
-							</div>
+	<div id="newUOM" class="modal fade" role="dialog" style="top: 25px;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">New Unit of Measurements :</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-4">Select a UOM type :</div>
+						<div class="col-md-8">
+							<select class="form-control">
+								<option value="none">---</option>
+								<option value="cou">Count</option>
+								<option value="wei">Weight</option>
+								<option value="len">Length</option>
+								<option value="are">Area</option>
+								<option value="vol">Volume</option>
+								<option value="tim">Time</option>
+							</select>
 						</div>
 					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default">Submit</button>
-						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<div class="row">
+						<div class="col-md-3">Abbreviation :</div>
+						<div class="col-md-9">
+							<input type="text" class="form-control">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-3">Name UOM :</div>
+						<div class="col-md-9">
+							<input type="text" class="form-control">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-3">UOM Description :</div>
+						<div class="col-md-9">
+							<textarea rows="" cols="" class="form-control"></textarea>
+						</div>
 					</div>
 				</div>
-
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default">Submit</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+				</div>
 			</div>
-		</div>
 
-		<!-- Script -->
-		<script type="text/javascript" src="js/modernizr.js"></script>
-		<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
-		<script type="text/javascript" src="js/script.js"></script>
-		<script type="text/javascript" src="js/bootstrap.js"></script>
-		<script type="text/javascript" src="js/enscroll.js"></script>
-		<script type="text/javascript" src="js/grid-filter.js"></script>
+		</div>
+	</div>
+
+	<!-- Script -->
+	<script type="text/javascript" src="js/modernizr.js"></script>
+	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+	<script type="text/javascript" src="js/script.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+	<script type="text/javascript" src="js/enscroll.js"></script>
+	<script type="text/javascript" src="js/grid-filter.js"></script>
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->

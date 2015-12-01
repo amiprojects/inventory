@@ -108,22 +108,22 @@
 
 
 
- <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
+<link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 </head>
 <body>
 
-	<div class="main">
+	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.html"%>
-		<div class="page-container menu-left">
+		<div class="page-container menu-left" style="height: 100%;">
 			<%@include file="includeSidebar.html"%>
-
-			<div class="content-sec">
+			<div class="content-sec"
+				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
 				<div class="container">
 					<div class="row">
 						<div class="masonary-grids">
 							<div class="col-md-12">
-							<div class="breadcrumbs" style="height:39px">
+								<div class="breadcrumbs" style="height: 39px">
 									<ul>
 										<li><p
 												style="right: -422px; font-size: 20px; position: absolute;">
@@ -131,7 +131,7 @@
 											</p></li>
 									</ul>
 								</div>
-							
+
 								<div class="widget-area" style="width: 34%;">
 									<form role="form" class="sec">
 										<div class="form-group">
@@ -202,8 +202,10 @@
 											<li><a href="#" title=""><button type="button"
 														class="btn btn-info btn-sm" data-toggle="modal"
 														data-target="#newMP">New</button></a></li>
-											<li><a title=""><button   class="btn btn-info btn-sm" type="submit">Edit</button></a></li>
-											<li><a title=""><button class="btn btn-info btn-sm" type="submit">Delete</button></a></li>
+											<li><a title=""><button class="btn btn-info btn-sm"
+														type="submit">Edit</button></a></li>
+											<li><a title=""><button class="btn btn-info btn-sm"
+														type="submit">Delete</button></a></li>
 										</ul>
 									</div>
 
@@ -736,19 +738,11 @@
 
 					<div id="step1"
 						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial;">
-
-
-
 						<div id="bU"
 							style="position: position: absolute; top: 3px; right: 2px; width: 560px; height: 187px; font-family: arial; padding: 3px;">
 							<fieldset>
 								<legend>Parts:</legend>
-
-
-
-
 								<form action="#" method="get">
-
 									<div class="col-md-6">
 										<div>
 											<label for="exampleInputEmail1">Product Code:</label> <input
@@ -971,7 +965,8 @@
 							<div class="col-md-6">
 								<div>
 									<label for="exampleInputEmail1">Date:</label> <input
-										type="text" name="date" id="datepicker1" required class="form-control"><br>
+										type="text" name="date" id="datepicker1" required
+										class="form-control"><br>
 								</div>
 							</div>
 
@@ -1002,7 +997,8 @@
 							<div class="col-md-6">
 								<div>
 									<label for="exampleInputEmail1">Expiration Date:</label> <input
-										type="text" id="datepicker" name="location" required class="form-control"><br>
+										type="text" id="datepicker" name="location" required
+										class="form-control"><br>
 								</div>
 							</div>
 							<div class="col-md-6">
@@ -1432,14 +1428,14 @@
 								</h4>
 								<b>product was not added to any categories:</b>
 								<hr width="100%">
-								
+
 								<h4>
 									<u>Product Custom Fields:</u>
 								</h4>
 								<b>Custom1:</b><br> <b>Custom2:</b><br> <b>Custom3:</b><br>
 								<b>Custom4:</b>
 								<hr width="100%">
-								
+
 
 
 							</form>
@@ -1497,7 +1493,7 @@
 		</div>
 
 	</div>
-	
+
 
 	<!-- Script -->
 
@@ -1518,19 +1514,17 @@
 	</script>
 
 	<script type="text/javascript" src="js/modernizr.js"></script>
-	
+
 	<script type="text/javascript" src="js/script.js"></script>
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="js/enscroll.js"></script>
 	<script type="text/javascript" src="js/grid-filter.js"></script>
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 	<script>
-	
 		$(function() {
 			$("#datepicker").datepicker();
 		});
-		
-		
+
 		$(function() {
 			$("#datepicker1").datepicker();
 		});

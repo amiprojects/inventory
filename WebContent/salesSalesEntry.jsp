@@ -124,193 +124,193 @@
 </script>
 </head>
 <body>
-	<div class="main">
+	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.html"%>
-		<div class="page-container menu-left">
+		<div class="page-container menu-left" style="height: 100%;">
 			<%@include file="includeSidebar.html"%>
-			<div class="content-sec">
-				<div class="container">
-					<div class="row">
-						<div class="masonary-grids">
-							<div class="col-md-12">
-								<div class="breadcrumbs" style="height:39px">
-									<ul>
-										<li><p
-												style="right: -422px; font-size: 20px; position: absolute;">
-												<b>Sales Entry</b>
-											</p></li>
-									</ul>
-								</div>
-
-								<br><br>
-								<form role="form" class="sec">
-									<div class="col-md-12">
-										<div class="col-md-6">
-											&nbsp; &nbsp; &nbsp; <b class="font">Customer Name :</b>
-											<div class="col-md-10">
-												<div class="sec">
-													<select class="form-control">
-														<option>SLC</option>
-														<option>SLC</option>
-														<option>SLC</option>
-														<option>SLC</option>
-														<option>SLC</option>
-													</select>
-												</div>
-											</div>
-											<div class="col-md-2">
-												<button type="submit" class="btn green pull-right">Add</button>
-											</div>
-											<div class="col-md-12">
-												<div class="breadcrumbs">
-													<ul>
-														<li><a title="" class="font">Customer Address :</a></li>
-													</ul>
-												</div>
-												<textarea rows="" cols="" id="" class="form-control"
-													readonly="readonly"></textarea>
-
-											</div>
-											<div class="form-group">
-												<label for="" class="font">Buyer's VAT TIN :</label> <input
-													type="text" placeholder="" id="" class="form-control">
-											</div>
-											<div class="form-group">
-												<label for="" class="font">Buyer's CST No. :</label> <input
-													type="text" placeholder="" id="" class="form-control">
-											</div>
-										</div>
-										<div class="col-md-6">
-											<div class="form-group">
-												<label for="" class="font">Invoice Info. :</label> <input
-													type="text" placeholder="" id="" class="form-control">
-											</div>
-											<div class="form-group">
-												<label for="" class="font">Sales Date :</label> <input
-													type="text" id="datepicker" class="form-control">
-											</div>
-											<div class="form-group">
-												<label for="" class="font">Entry Date :</label> <input
-													type="text" id="datepicker" class="form-control">
-											</div>
-											<div class="form-group">
-												<label for="" class="font">Vendor SO :</label> <input
-													type="number" placeholder="" id="" class="form-control">
-											</div>
-										</div>
-									</div>
-									<div class="widget-area">
-										<div class="col-md-2">Product Barcode :</div>
-										<div class="col-md-4">
-											<input type="text" class="form-control">
-										</div>
-										<div class="col-md-1">or</div>
-										<div class="col-md-2">Product code :</div>
-										<div class="col-md-2">
-											<input type="text" class="form-control">
-										</div>
-									</div>
-									<div class="widget-area">
-										<h5>Product Details :</h5>
-										<input type="radio" name="prod" value="mrp">MRP <input
-											type="radio" name="prod" value="wsp">WSP
-										<table id="stream_table"
-											class="table table-striped table-bordered">
-											<thead>
-												<tr>
-													<th>#</th>
-													<th>Product no.</th>
-													<th>Product code</th>
-													<th>Product catagory</th>
-													<th>Product Barcode</th>
-													<th>MRP.</th>
-													<th>Qty</th>
-													<th>Total Amount</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>1</td>
-													<td>---</td>
-													<td>---</td>
-													<td>---</td>
-													<td>---</td>
-													<td>---</td>
-													<td>---</td>
-													<td>---</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-									<div style="width: 40%; float: right;">
-										<table id="stream_table"
-											class="table table-striped table-bordered">
-											<thead>
-												<tr>
-													<td colspan="2">Sub Total :</td>
-													<td><input type="number" class="form-control"
-														placeholder="0.0" readonly="readonly"></td>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td colspan="3">Select TAX type :</td>
-												</tr>
-											</tbody>
-											<tbody>
-												<tr>
-													<td><select class="form-control">
-															<option>TAX type</option>
-															<option>TAX type</option>
-															<option>TAX type</option>
-															<option>TAX type</option>
-															<option>TAX type</option>
-													</select></td>
-													<td>%</td>
-													<td><input type="number" class="form-control"></td>
-												</tr>
-											</tbody>
-											<tbody>
-												<tr>
-													<td colspan="2">VAT Amount :</td>
-													<td><input type="number" class="form-control"
-														readonly="readonly"></td>
-												</tr>
-											</tbody>
-											<tbody>
-												<tr>
-													<td colspan="2">Surcharge :</td>
-													<td><input type="number" class="form-control"></td>
-												</tr>
-											</tbody>
-											<tbody>
-												<tr>
-													<td colspan="2">Transport charge :</td>
-													<td><input type="number" class="form-control"></td>
-												</tr>
-											</tbody>
-											<thead>
-												<tr>
-													<td colspan="2">Grand Total :</td>
-													<td><input type="number" class="form-control"
-														placeholder="0.0" readonly="readonly"></td>
-												</tr>
-											</thead>
-										</table>
-										<div style="float: right;">
-											<button type="button" class="btn btn-info btn-lg"
-												data-toggle="modal" data-target="#savePurchase">Save</button>
-										</div>
-									</div>
-								</form>
+			<div class="content-sec" style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
+				<div class="row">
+					<div class="masonary-grids">
+						<div class="col-md-12">
+							<div class="breadcrumbs" style="height: 39px">
+								<ul>
+									<li><p
+											style="right: -422px; font-size: 20px; position: absolute;">
+											<b>Sales Entry</b>
+										</p></li>
+								</ul>
 							</div>
+
+							<br>
+							<br>
+							<form role="form" class="sec">
+								<div class="col-md-12">
+									<div class="col-md-6">
+										&nbsp; &nbsp; &nbsp; <b class="font">Customer Name :</b>
+										<div class="col-md-10">
+											<div class="sec">
+												<select class="form-control">
+													<option>SLC</option>
+													<option>SLC</option>
+													<option>SLC</option>
+													<option>SLC</option>
+													<option>SLC</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-md-2">
+											<button type="submit" class="btn green pull-right">Add</button>
+										</div>
+										<div class="col-md-12">
+											<div class="breadcrumbs">
+												<ul>
+													<li><a title="" class="font">Customer Address :</a></li>
+												</ul>
+											</div>
+											<textarea rows="" cols="" id="" class="form-control"
+												readonly="readonly"></textarea>
+
+										</div>
+										<div class="form-group">
+											<label for="" class="font">Buyer's VAT TIN :</label> <input
+												type="text" placeholder="" id="" class="form-control">
+										</div>
+										<div class="form-group">
+											<label for="" class="font">Buyer's CST No. :</label> <input
+												type="text" placeholder="" id="" class="form-control">
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="" class="font">Invoice Info. :</label> <input
+												type="text" placeholder="" id="" class="form-control">
+										</div>
+										<div class="form-group">
+											<label for="" class="font">Sales Date :</label> <input
+												type="text" id="datepicker" class="form-control">
+										</div>
+										<div class="form-group">
+											<label for="" class="font">Entry Date :</label> <input
+												type="text" id="datepicker" class="form-control">
+										</div>
+										<div class="form-group">
+											<label for="" class="font">Vendor SO :</label> <input
+												type="number" placeholder="" id="" class="form-control">
+										</div>
+									</div>
+								</div>
+								<div class="widget-area">
+									<div class="col-md-2">Product Barcode :</div>
+									<div class="col-md-4">
+										<input type="text" class="form-control">
+									</div>
+									<div class="col-md-1">or</div>
+									<div class="col-md-2">Product code :</div>
+									<div class="col-md-2">
+										<input type="text" class="form-control">
+									</div>
+								</div>
+								<div class="widget-area">
+									<h5>Product Details :</h5>
+									<input type="radio" name="prod" value="mrp">MRP <input
+										type="radio" name="prod" value="wsp">WSP
+									<table id="stream_table"
+										class="table table-striped table-bordered">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>Product no.</th>
+												<th>Product code</th>
+												<th>Product catagory</th>
+												<th>Product Barcode</th>
+												<th>MRP.</th>
+												<th>Qty</th>
+												<th>Total Amount</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>1</td>
+												<td>---</td>
+												<td>---</td>
+												<td>---</td>
+												<td>---</td>
+												<td>---</td>
+												<td>---</td>
+												<td>---</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<div style="width: 40%; float: right;">
+									<table id="stream_table"
+										class="table table-striped table-bordered">
+										<thead>
+											<tr>
+												<td colspan="2">Sub Total :</td>
+												<td><input type="number" class="form-control"
+													placeholder="0.0" readonly="readonly"></td>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td colspan="3">Select TAX type :</td>
+											</tr>
+										</tbody>
+										<tbody>
+											<tr>
+												<td><select class="form-control">
+														<option>TAX type</option>
+														<option>TAX type</option>
+														<option>TAX type</option>
+														<option>TAX type</option>
+														<option>TAX type</option>
+												</select></td>
+												<td>%</td>
+												<td><input type="number" class="form-control"></td>
+											</tr>
+										</tbody>
+										<tbody>
+											<tr>
+												<td colspan="2">VAT Amount :</td>
+												<td><input type="number" class="form-control"
+													readonly="readonly"></td>
+											</tr>
+										</tbody>
+										<tbody>
+											<tr>
+												<td colspan="2">Surcharge :</td>
+												<td><input type="number" class="form-control"></td>
+											</tr>
+										</tbody>
+										<tbody>
+											<tr>
+												<td colspan="2">Transport charge :</td>
+												<td><input type="number" class="form-control"></td>
+											</tr>
+										</tbody>
+										<thead>
+											<tr>
+												<td colspan="2">Grand Total :</td>
+												<td><input type="number" class="form-control"
+													placeholder="0.0" readonly="readonly"></td>
+											</tr>
+										</thead>
+									</table>
+									<div style="float: right;">
+										<button type="button" class="btn btn-info btn-lg"
+											data-toggle="modal" data-target="#savePurchase">Save</button>
+									</div>
+								</div>
+							</form>
 						</div>
 					</div>
 				</div>
 			</div>
-			<!-- Content Sec -->
 		</div>
-		<!-- Page Container -->
+		<!-- Content Sec -->
+	</div>
+	<!-- Page Container -->
 	</div>
 	<!-- main -->
 
