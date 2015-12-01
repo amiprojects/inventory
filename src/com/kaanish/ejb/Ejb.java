@@ -3,9 +3,11 @@ package com.kaanish.ejb;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.servlet.http.HttpSession;
 
 import com.kaanish.model.Category;
 import com.kaanish.model.City;
@@ -24,12 +26,24 @@ import com.kaanish.model.VendorType;
 public class Ejb {
 	@PersistenceContext
 	private EntityManager em;
+	@Inject
+	private HttpSession httpSession;
 
 	/*************************** for login purpose *****************/
 	public boolean getCheckLogin(String usr, String pwd) {
 
 		TypedQuery<Users> q = em.createQuery("select c from Users c where (c.userId=:user AND c.password=:pwd)",
 				Users.class);
+		q.setParameter("user", usr);
+		q.setParameter("pwd", pwd);
+		return q.getResultList().size() > 0;
+	}
+	
+	public boolean getCheckPassword(String pwd){
+		String usr;
+		TypedQuery<Users> q = em.createQuery("select c from Users c where (c.userId=:user AND c.password=:pwd)",
+				Users.class);
+		usr=httpSession.getAttribute("user").toString();
 		q.setParameter("user", usr);
 		q.setParameter("pwd", pwd);
 		return q.getResultList().size() > 0;
