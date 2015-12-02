@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
 <html>
@@ -24,6 +25,7 @@
 <!-- Style -->
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
 <!-- Responsive -->
+<link rel="stylesheet" href="css/toast.css" type="text/css" />
 
 </head>
 <body>
@@ -72,36 +74,15 @@
 											</tr>
 										</thead>
 										<tbody>
+										<c:set var="count" value="${1}"/>
+										<c:forEach items="${sessionScope['ejb'].getAllQtyUnit()}" var="unit">
 											<tr>
-												<td>1</td>
-												<td>Mark</td>
-												<td>Otto</td>
+												<td>${count}</td>
+												<td>${unit.name}</td>
+												<td>${unit.abbreviation}</td>
 											</tr>
-											<tr>
-												<td>2</td>
-												<td>Jacob</td>
-												<td>Thornton</td>
-											</tr>
-											<tr>
-												<td>3</td>
-												<td>Larry</td>
-												<td>the Bird</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>Mark</td>
-												<td>Otto</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>Mark</td>
-												<td>Otto</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>Mark</td>
-												<td>Otto</td>
-											</tr>
+											<c:set var="count" value="${count+1}"/>
+										</c:forEach>
 										</tbody>
 									</table>
 								</div>
@@ -174,78 +155,76 @@
 	<!-- main -->
 
 	<div id="newUOM" class="modal fade" role="dialog" style="top: 25px;">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">New Unit of Measurements :</h4>
-				</div>
-				<div class="modal-body">
-					<div class="row">
-						<div class="col-md-3">Select UOM type :</div>
-						<div class="col-md-7">
-							<select class="form-control">
-								<option value="none">---</option>
-								<option value="cou">Count</option>
-								<option value="wei">Weight</option>
-								<option value="len">Length</option>
-								<option value="are">Area</option>
-								<option value="vol">Volume</option>
-								<option value="tim">Time</option>
-							</select>
+		<form action="addUOM" method="post">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">New Unit of Measurements :</h4>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-3">Select UOM type :</div>
+							<div class="col-md-7">
+								<select class="form-control" id="qtyUnitTypeId"
+									name="qtyUnitTypeId">
+									<c:forEach items="${sessionScope['ejb'].getAllQtyUnitTypes()}"
+										var="qtyUnitType">
+										<option value="${qtyUnitType.id}">${qtyUnitType.name}</option>
+									</c:forEach>
+								</select>
+							</div>
+							<div class="col-md-2">
+								<button type="button" class="btn btn-info btn-sm"
+									data-toggle="modal" data-target="#nameUOM">Add</button>
+							</div>
 						</div>
-						<div class="col-md-2">
-							<button type="button" class="btn btn-info btn-sm"
-								data-toggle="modal" data-target="#nameUOM">Add</button>
+						<div class="row">
+							<div class="col-md-3">Abbreviation :</div>
+							<div class="col-md-9">
+								<input type="text" name="abbreviation" class="form-control">
+							</div>
 						</div>
-						<div id="nameUOM" class="modal fade" role="dialog"
-							style="top: 25px;">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<button type="button" id="close1" class="close">&times;</button>
-										<h4 class="modal-title">Add new UOM type :</h4>
-									</div>
-									<div class="modal-body">
-										<span>Name :</span> <input type="text" class="form-control">
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-default">Save</button>
-										<button type="button" class="btn btn-default" id="close">Close</button>
-									</div>
-								</div>
-
+						<div class="row">
+							<div class="col-md-3">Name UOM :</div>
+							<div class="col-md-9">
+								<input type="text" name="name" class="form-control">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3">UOM Description :</div>
+							<div class="col-md-9">
+								<textarea rows="" cols="" name="description" class="form-control"></textarea>
 							</div>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-md-3">Abbreviation :</div>
-						<div class="col-md-9">
-							<input type="text" class="form-control">
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-3">Name UOM :</div>
-						<div class="col-md-9">
-							<input type="text" class="form-control">
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-3">UOM Description :</div>
-						<div class="col-md-9">
-							<textarea rows="" cols="" class="form-control"></textarea>
-						</div>
+					<div class="modal-footer">
+						<input type="submit" class="btn btn-default" value="Submit">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 					</div>
 				</div>
+			</div>
+		</form>
+	</div>
+	<div id="nameUOM" class="modal fade" role="dialog" style="top: 25px;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" id="close1" class="close">&times;</button>
+					<h4 class="modal-title">Add new UOM type :</h4>
+				</div>
+				<div class="modal-body">
+					<span>Name :</span> <input type="text" id="UOMname"
+						class="form-control">
+				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default">Submit</button>
-					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-default" id="UOMnameSave">Save</button>
+					<button type="button" class="btn btn-default" id="close">Close</button>
 				</div>
 			</div>
 
 		</div>
 	</div>
-
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
 	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
@@ -255,13 +234,88 @@
 	<script type="text/javascript" src="js/grid-filter.js"></script>
 
 	<script type="text/javascript">
+		$(document).ready(function() {
+			if ($('#msg').html() != "") {
+				$('.toast').fadeIn(400).delay(3000).fadeOut(400);
+			}
+		});
+
 		$("#close").click(function() {
 			$("#nameUOM").modal("hide");
 		});
 		$("#close1").click(function() {
 			$("#nameUOM").modal("hide");
 		});
+		var qtyUnitTypes = "";
+
+		$("#UOMnameSave")
+				.click(
+						function() {
+							var name = $('#UOMname').val();
+							if (name != "") {
+								$
+										.ajax({
+											url : 'addNewUOMtype',
+											dataType : 'json',
+											data : {
+												typeName : name
+											},
+											success : function(data) {
+
+												if (data.response == "success") {
+													$('#msg')
+															.html(
+																	"UOM added successfully");
+													$('.toast').fadeIn(400)
+															.delay(3000)
+															.fadeOut(400);
+													$
+															.ajax({
+																url : 'getUOMtype',
+																dataType : 'json',
+																success : function(
+																		data) {
+																	$
+																			.each(
+																					data,
+																					function(
+																							index,
+																							value) {
+																						qtyUnitTypes = qtyUnitTypes
+																								+ '<option value="'+value.id+'">'
+																								+ value.name
+																								+ '</option>';
+																					});
+																	document
+																			.getElementById("qtyUnitTypeId").innerHTML = qtyUnitTypes;
+																	qtyUnitTypes = "";
+																	$(
+																			"#nameUOM")
+																			.modal(
+																					"hide");
+																}
+															});
+												} else if (data.response == 'already exist') {
+													$('#msg')
+															.html(
+																	"UOM name already exists");
+													$('.toast').fadeIn(400)
+															.delay(3000)
+															.fadeOut(400);
+												}
+
+											}
+										});
+							} else {
+								$('#msg').html("please enter a name");
+								$('.toast').fadeIn(400).delay(3000)
+										.fadeOut(400);
+							}
+						});
 	</script>
+	<div class='toast' style='display: none'>
+		<h3 id="msg">${requestScope['msg']}</h3>
+	</div>
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->

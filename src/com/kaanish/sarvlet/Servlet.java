@@ -21,6 +21,8 @@ import com.kaanish.model.City;
 import com.kaanish.model.Country;
 import com.kaanish.model.Department;
 import com.kaanish.model.ProductDetail;
+import com.kaanish.model.QtyUnit;
+import com.kaanish.model.QtyUnitType;
 import com.kaanish.model.State;
 import com.kaanish.model.SubDepartment;
 import com.kaanish.model.Tax;
@@ -29,9 +31,9 @@ import com.kaanish.model.Vendor;
 import com.kaanish.model.VendorType;
 import com.kaanish.util.DateConverter;
 
-@WebServlet({ "/login","/logout","/addTax", "/addTaxGroup", "/createDept", "/deleteDept", "/createSubDept", "/deleteSubDept",
-		"/createCategory", "/deleteCategory", "/newVendorType", "/addCountry", "/addState", "/createProduct",
-		"/deleteCountry", "/addVendor" })
+@WebServlet({ "/login", "/logout", "/addTax", "/addTaxGroup", "/createDept", "/deleteDept", "/createSubDept",
+		"/deleteSubDept", "/createCategory", "/deleteCategory", "/newVendorType", "/addCountry", "/addState",
+		"/createProduct", "/deleteCountry", "/addVendor", "/addUOM" })
 public class Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -54,30 +56,31 @@ public class Servlet extends HttpServlet {
 	private ProductDetail productDetail;
 	private Vendor vendor;
 	private AccountDetails accountDetails;
+	private QtyUnit qtyUnit;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		url = req.getRequestURL().toString();
 		url = url.substring(url.lastIndexOf('/') + 1);
-		httpSession=req.getSession();
+		httpSession = req.getSession();
 		try {
 			switch (url) {
 
 			case "login":
-				page="index.jsp";
-				String user=req.getParameter("usrName");
-				if(ejb.getCheckLogin(user, req.getParameter("password"))){
+				page = "index.jsp";
+				String user = req.getParameter("usrName");
+				if (ejb.getCheckLogin(user, req.getParameter("password"))) {
 					httpSession.setAttribute("user", user);
-					page="dashboard.jsp";
-					msg="Login Successful.";
-				}else{
-					msg="Invalid username/Password.";
-					httpSession.removeAttribute("user");					
+					page = "dashboard.jsp";
+					msg = "Login Successful.";
+				} else {
+					msg = "Invalid username/Password.";
+					httpSession.removeAttribute("user");
 				}
 				break;
 			case "logout":
-				page="index.jsp";
-				msg="Logout Successful.";
+				page = "index.jsp";
+				msg = "Logout Successful.";
 				break;
 			case "createProduct":
 				page = "setupDepartment.jsp";
@@ -203,11 +206,11 @@ public class Servlet extends HttpServlet {
 				msg = "State added successfully.";
 				break;
 			case "addVendor":
-				page="purchasingVendor.jsp";
-				vendor=new Vendor();
-				accountDetails=new AccountDetails();
-				dt=new Date();
-				
+				page = "purchasingVendor.jsp";
+				vendor = new Vendor();
+				accountDetails = new AccountDetails();
+				dt = new Date();
+
 				vendor.setName(req.getParameter(""));
 				vendor.setLastModifiedDate(dt);
 				vendor.setAddress(req.getParameter(""));
@@ -219,9 +222,8 @@ public class Servlet extends HttpServlet {
 				vendor.setPh2(req.getParameter(""));
 				vendor.setPinCode(req.getParameter(""));
 				vendor.setVendorType(ejb.getVendorTypeById(Integer.parseInt(req.getParameter(""))));
-				//vendor.setUsers();
-				
-				
+				// vendor.setUsers();
+
 				accountDetails.setBankAccountNumber(req.getParameter(""));
 				accountDetails.setBankChequeLable(req.getParameter(""));
 				accountDetails.setBankIFSCnumber(req.getParameter(""));
@@ -239,10 +241,32 @@ public class Servlet extends HttpServlet {
 				accountDetails.setServiceTaxRegistrationNumber(req.getParameter(""));
 				accountDetails.setVatNumber(req.getParameter(""));
 				accountDetails.setVatRegistrationDate(DateConverter.getDate(req.getParameter("")));
-				
+
 				accountDetails.setVendor(vendor);
-				
-				msg="vendor added successful;";
+
+				msg = "vendor added successful;";
+				break;
+
+			case "addUOM":
+				page = "setupUnitOfMeasure.jsp";
+				int flag = 0;
+				for (QtyUnit qut : ejb.getAllQtyUnit()) {
+					if ((qut.getName().equalsIgnoreCase(req.getParameter("name"))||(qut.getAbbreviation().equalsIgnoreCase(req.getParameter("abbreviation"))))) {
+						flag = 1;
+						break;
+					}
+				}
+				if (flag == 0) {
+					qtyUnit = new QtyUnit();
+					qtyUnit.setName(req.getParameter("name"));
+					qtyUnit.setAbbreviation(req.getParameter("abbreviation"));
+					qtyUnit.setDescription(req.getParameter("description"));
+					qtyUnit.setQtyUnitType(ejb.getQtyUnitTypeById(Integer.parseInt(req.getParameter("qtyUnitTypeId"))));
+					ejb.setQtyUnit(qtyUnit);
+					msg = "new UOM added successfully";
+				}else{
+					msg = "UOM name already exists";
+				}
 				break;
 
 			default:

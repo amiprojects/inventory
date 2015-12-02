@@ -26,6 +26,7 @@
 <!-- Responsive -->
 
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
+	<link rel="stylesheet" href="css/toast.css" type="text/css" />
 
 <style>
 .font {
@@ -176,6 +177,7 @@
 	<script type="text/javascript" src="js/grid-filter.js"></script>
 	<script type="text/javascript" src="js/abixTreeList.min.js"></script>
 	<script src="js/jquery-ui/jquery-ui.js"></script>
+
 	<script>
 		$(document).ready(function() {
 			$('#tree').abixTreeList();
