@@ -25,6 +25,8 @@ public class Users {
 	List<Tax_Type_Group> tax_Type_Groups;
 	@OneToMany(mappedBy = "users")
 	private List<Vendor> vendors;
+	@OneToMany(mappedBy = "users")
+	private List<AccountDetails> accountDetails;
 
 	public int getId() {
 		return id;
