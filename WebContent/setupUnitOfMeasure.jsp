@@ -32,7 +32,8 @@
 		<%@include file="includeHeader.html"%>
 		<div class="page-container menu-left" style="height: 100%;">
 			<%@include file="includeSidebar.html"%>
-			<div class="content-sec" style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
+			<div class="content-sec"
+				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
 				<div class="container">
 					<div class="row">
 						<div class="masonary-grids">
@@ -181,8 +182,8 @@
 				</div>
 				<div class="modal-body">
 					<div class="row">
-						<div class="col-md-4">Select a UOM type :</div>
-						<div class="col-md-8">
+						<div class="col-md-3">Select UOM type :</div>
+						<div class="col-md-7">
 							<select class="form-control">
 								<option value="none">---</option>
 								<option value="cou">Count</option>
@@ -192,6 +193,29 @@
 								<option value="vol">Volume</option>
 								<option value="tim">Time</option>
 							</select>
+						</div>
+						<div class="col-md-2">
+							<button type="button" class="btn btn-info btn-sm"
+								data-toggle="modal" data-target="#nameUOM">Add</button>
+						</div>
+						<div id="nameUOM" class="modal fade" role="dialog"
+							style="top: 25px;">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" id="close1" class="close">&times;</button>
+										<h4 class="modal-title">Add new UOM type :</h4>
+									</div>
+									<div class="modal-body">
+										<span>Name :</span> <input type="text" class="form-control">
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default">Save</button>
+										<button type="button" class="btn btn-default" id="close">Close</button>
+									</div>
+								</div>
+
+							</div>
 						</div>
 					</div>
 					<div class="row">
@@ -229,6 +253,15 @@
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="js/enscroll.js"></script>
 	<script type="text/javascript" src="js/grid-filter.js"></script>
+
+	<script type="text/javascript">
+		$("#close").click(function() {
+			$("#nameUOM").modal("hide");
+		});
+		$("#close1").click(function() {
+			$("#nameUOM").modal("hide");
+		});
+	</script>
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
