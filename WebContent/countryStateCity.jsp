@@ -60,38 +60,75 @@
 									</ul>
 								</div>
 								<div class="widget-area" style="width: 25%;">
-									<h3>Country</h3>
-									<br> <label for="exampleInputEmail1">Name:</label> <input
-										class="form-control" type="text" name="country"
-										style="text-transform: uppercase;">
-									<button style="left: 173px; position: absolute;"
-										class="btn btn-info mini" type="button">Add</button>
+									<form action="addCountry">
+										<h3>Country</h3>
+										<br> <label for="exampleInputEmail1">Name:</label> <input
+											id="creConName" type="text" class="form-control" name="name"
+											onkeyup="crecontxt();"> <input id="creConbtn"
+											class="btn btn-info mini"
+											style="left: 173px; position: absolute;" type="submit"
+											value="Add" disabled="disabled"> <br> <br>
+										<div
+											style="overflow-y: scroll; width: 193px; height: 317px; border: 1px solid rgba(119, 119, 119, 0.73);">
 
-									<br> <br>
-									<textarea style="overflow-y: scroll;" rows="16" cols="24"></textarea>
+
+											<ul>
+												<c:forEach items="${sessionScope['ejb'].getAllCountry()}"
+													var="contry">
+													<li>${contry.countryName}</li>
+												</c:forEach>
+											</ul>
 
 
+
+
+										</div>
+
+									</form>
 
 								</div>
 
 
 								<div class="widget-area" style="width: 25%;">
-									<h3>State</h3>
-									<br> <label for="exampleInputEmail1">Name:</label> <input
-										class="form-control" type="text" name="country"
-										style="text-transform: uppercase;">
-									<button style="left: 173px; position: absolute;"
-										class="btn btn-info mini" type="button">Add</button>
-
-									<br> <span><b>Country:</b></span><select
-										style="width: 185px; height: 30px;"><option>india</option></select>
-									<br> <br>
-									<textarea style="overflow-y: scroll;" rows="13" cols="24"></textarea>
+									<form action="addState">
+										<h3>State</h3>
+										<br> <label for="exampleInputEmail1">Name:</label> <input
+											id="creConName" type="text" class="form-control" name="name"
+											onkeyup="crecontxt();">
 
 
+										<input style="left: 173px; position: absolute;"
+											class="btn btn-info mini" type="submit" value="Add">
+
+										<br> <span><b>Country:</b></span><select name="countryid"
+											style="width: 185px; height: 30px;">
+											<c:forEach items="${sessionScope['ejb'].getAllCountry()}"
+												var="contry">
+												<option value="${contry.id}">${contry.countryName}</option>
+											</c:forEach>
+										</select> <br> <br>
+										<div
+											style="overflow-y: scroll; width: 193px; height: 267px; border: 1px solid rgba(119, 119, 119, 0.73);">
 
 
+											<ul>
+												<c:forEach items="${sessionScope['ejb'].getAllState()}"
+													var="stst">
+													<li>${stst.stateName}</li>
+												</c:forEach>
+											</ul>
+
+
+
+
+										</div>
+
+
+
+									</form>
 								</div>
+								
+								
 								<div class="widget-area" style="width: 25%;">
 									<h3>City</h3>
 									<br> <label for="exampleInputEmail1">Name:</label> <input
@@ -112,7 +149,7 @@
 
 								</div>
 								<div class="widget-area" style="width: 25%">
-									<div class="tree-list">
+									<div class="tree-list"><h3>Tree List</h3>
 										<p>
 											<a href="#" id="tree-expand-all">Expand all</a> | <a href="#"
 												id="tree-collapse-all">Collapse all</a>
@@ -139,6 +176,7 @@
 										</ul>
 									</div>
 								</div>
+								<p>${requestScope['msg']}</p>
 							</div>
 						</div>
 					</div>
@@ -166,10 +204,75 @@
 	<script>
 		$(document).ready(function() {
 			$('#tree').abixTreeList();
+			$("#createState").hide();
 		});
+
+		function crecontxt() {
+			if ($('#creConName').val() != "") {
+				$('#creConbtn').prop("disabled", false);
+			} else {
+				$('#creConbtn').prop("disabled", true);
+			}
+		}
+		function stateNameKeyUp() {
+			if ($('#stateName').val() != "") {
+				$('#stateNameBtn').prop("disabled", false);
+			} else {
+				$('#stateNameBtn').prop("disabled", true);
+			}
+		}
+		$(function() {
+			$("#country").autocomplete({
+				source : function(request, response) {
+					$.ajax({
+						url : "getcountry",
+						dataType : "json",
+						data : {
+							term : request.term
+						},
+						success : function(data) {
+							response($.map(data, function(item) {
+								return {
+									value : item.countryName,
+									id : item.id
+								}
+							}));
+						}
+					});
+				},
+				change : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$('#countryForStatebtn').prop("disabled", true);
+					} else {
+						$("#countryId").val(ui.item.id);
+						$('#countryForStatebtn').prop("disabled", false);
+					}
+				},
+				select : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$('#countryForStatebtn').prop("disabled", true);
+					} else {
+						$("#countryId").val(ui.item.id);
+						$('#countryForStatebtn').prop("disabled", false);
+					}
+				}
+			});
+		});
+		function statePopup() {
+			$("#createState").show();
+		}
+		function closed() {
+			$("#createState").hide();
+		}
+		function deleteCountry(id,c){
+			y=confirm("Do you want to delete country: "+c);
+			if(y==true){
+				window.location="deleteCountry?id="+id;
+			}
+		}
 	</script>
-
-
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->

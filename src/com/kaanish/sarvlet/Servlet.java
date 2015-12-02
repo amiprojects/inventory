@@ -183,19 +183,36 @@ public class Servlet extends HttpServlet {
 				msg = "Category deleted.";
 				break;
 			case "addCountry":
-				page = "setupCity.jsp";
+				page = "countryStateCity.jsp";
+				
+				
+				int flagg1 = 0;
+				List<Country> cuty = ejb
+						.getAllCountry();
+				for (Country coty : cuty) {
+					if (coty.getCountryName().equals(req.getParameter("name"))) {
+						flagg1 = 1;
+						break;
+					}
+
+				}
+				if (flagg1 == 0) {
 				country = new Country();
 				country.setCountryName(req.getParameter("name"));
 				ejb.setCountry(country);
 				msg = "country added successfully.";
+				} else {
+					msg = "Duplicate entry";
+
+				}
 				break;
 			case "deleteCountry":
-				page = "setupCity.jsp";
+				page = "countryStateCity.jsp";
 				ejb.deleteCountryById(Integer.parseInt(req.getParameter("id")));
 				msg = "country deleted successfully.";
 				break;
 			case "addState":
-				page = "setupCity.jsp";
+				page = "countryStateCity.jsp";
 				state = new State();
 				state.setStateName(req.getParameter("name"));
 				state.setCountry(ejb.getCountryById(Integer.parseInt(req.getParameter("id"))));
