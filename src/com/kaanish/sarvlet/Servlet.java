@@ -80,6 +80,7 @@ public class Servlet extends HttpServlet {
 				break;
 			case "logout":
 				page = "index.jsp";
+				httpSession.removeAttribute("user");
 				msg = "Logout Successfull.";
 				break;
 			case "createProduct":
