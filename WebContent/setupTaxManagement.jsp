@@ -91,7 +91,7 @@
 												<c:forEach items="${sessionScope['ejb'].getAllTax()}"
 													var="tax">
 													<input type="checkbox" value="${tax.name}" name="tax">${tax.name}&nbsp;<a
-														href="#"> <img src="img/edit.png" height="16px"
+														href="tax.jsp?id=${tax.name}"> <img src="img/edit.png" height="16px"
 														width="16px"></a>&nbsp;<a href="#"> <img
 														src="img/cross.png" height="16px" width="16px"></a>
 													<br>
