@@ -118,6 +118,14 @@ public class Ejb {
 	public Tax_Type_Group getTax_Type_GroupById(String name) {
 		return em.find(Tax_Type_Group.class, name);
 	}
+	
+	public void updateTax(Tax tax){
+		em.merge(tax);
+	}
+	
+	public void updateTaxTypeGroup(Tax_Type_Group tax_Type_Group){
+		em.merge(tax_Type_Group);
+	}
 
 	/******************** for vendor *******************************/
 	public void setVendor(Vendor vendor) {

@@ -29,7 +29,7 @@ import com.kaanish.model.Vendor;
 import com.kaanish.model.VendorType;
 import com.kaanish.util.DateConverter;
 
-@WebServlet({ "/login", "/logout", "/addTax", "/addTaxGroup", "/createDept",
+@WebServlet({ "/login", "/logout", "/addTax", "/addTaxGroup","/editTax","/deleteTax", "/createDept",
 		"/deleteDept", "/createSubDept", "/deleteSubDept", "/createCategory",
 		"/deleteCategory", "/newVendorType", "/addCountry", "/addState",
 		"/createProduct", "/deleteCountry", "/addVendor", "/addUOM" })
@@ -149,6 +149,17 @@ public class Servlet extends HttpServlet {
 					msg = "please select tax.";
 				}
 				break;
+				
+			case "editTax":
+				page = "setupTaxManagement.jsp";
+				tax = new Tax();
+				tax.setName(req.getParameter("name"));
+				tax.setValue(Float.parseFloat(req.getParameter("value")));
+
+				ejb.updateTax(tax);
+				msg = "Tax updated successfully.";
+				break;				
+				
 			case "createDept":
 				page = "setupDepartment.jsp";
 				department = new Department();
