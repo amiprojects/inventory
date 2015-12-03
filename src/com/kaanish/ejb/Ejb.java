@@ -1,5 +1,6 @@
 package com.kaanish.ejb;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -96,6 +97,22 @@ public class Ejb {
 	public List<Tax> getAllTax() {
 		TypedQuery<Tax> q = em.createQuery("select c from Tax c", Tax.class);
 		return q.getResultList();
+	}
+	
+	public List<Tax> getAllTaxByTaxTypeGroupId(String name) {
+		Tax_Type_Group tg=getTax_Type_GroupById(name);
+		List<Tax> taxLst=new ArrayList<>();
+		for(Tax tax:getAllTax()){
+			if(tg.getTaxes().contains(tax)){
+				tax.setAvailable(true);
+			}else{
+				tax.setAvailable(false);
+			}
+			taxLst.add(tax);
+		}
+		
+		
+		return taxLst;
 	}
 
 	public List<Tax_Type_Group> getAllTax_Type_Groups() {

@@ -14,9 +14,10 @@ public class Tax_Type_Group {
 	@Id
 	private String name;
 
-	@ManyToMany(mappedBy = "tax_type_groups")
+	@ManyToMany
 	private List<Tax> taxes;
-	@ManyToOne@JoinColumn(name="userId")
+	@ManyToOne
+	@JoinColumn(name = "userId")
 	private Users users;
 	@OneToMany(mappedBy="tax_Type_Group")
 	private List<AccountDetails> accountDetails;
@@ -28,8 +29,6 @@ public class Tax_Type_Group {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-
 
 	public List<Tax> getTaxes() {
 		return taxes;

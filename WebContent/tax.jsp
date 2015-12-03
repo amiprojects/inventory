@@ -7,11 +7,14 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="editTax" method="post">
-		<c:set var="tax" value="${sessionScope['ejb'].getTaxById(param.id)}" />
-		<input type="text" name="name" value="${tax.name}"> <input
-			type="number" name="value" value="${tax.value}"> <input
-			type="submit" value="Update">
-	</form>
+
+<form action="editTax" method="post">
+<c:set var="tax" value="${sessionScope['ejb'].getTaxById(param.id)}"/>
+<input type="hidden" name="id" value="${tax.name}">
+<input type="text" name="name" value="${tax.name}">
+<input type="number" name="value" value="${tax.value}">
+<input type="submit" value="Update">
+</form>
+
 </body>
 </html>

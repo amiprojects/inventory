@@ -140,10 +140,13 @@
 												var="taxGroup">
 												<ul>
 													<li><span onclick="showTaxes('${taxGroup.name}');">
-															<a href="#"> ${taxGroup.name}</a>
-													</span>&nbsp;<a href="#"> <img src="img/edit.png"
-															height="16px" width="16px"></a>&nbsp;<a href="#"> <img
-															src="img/cross.png" height="16px" width="16px"></a></li>
+
+															${taxGroup.name}</span>&nbsp;<a
+														href="tax1.jsp?id=${taxGroup.name}"> <img
+															src="img/edit.png" height="16px" width="16px"></a>&nbsp;<a
+														href="#"> <img src="img/cross.png" height="16px"
+															width="16px"></a></li>
+
 												</ul>
 												<div id="taxList${taxGroup.name}" class="modal fade"
 													role="dialog" style="top: 25px;">
