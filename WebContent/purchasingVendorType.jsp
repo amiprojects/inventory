@@ -74,7 +74,8 @@
 										<c:forEach items="${sessionScope['ejb'].getAllVendorType()}"
 											var="vendorType">
 											<ul>
-												<li>${vendorType.type}&nbsp;<a href="#"> <img
+												<li>${vendorType.type}&nbsp;<a href="#"
+													onclick="editVendorType('${vendorType.id}','${vendorType.type}')"> <img
 														src="img/edit.png" height="16px" width="16px"></a>&nbsp;<a
 													href="#"> <img src="img/cross.png" height="16px"
 														width="16px"></a>
@@ -98,7 +99,29 @@
 	</div>
 	<!-- main -->
 
+	<div id="editVendorTypeDialog" class="modal fade" role="dialog"
+		style="top: 25px;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Modal Header</h4>
+				</div>
+				<div class="modal-body">
+					<form role="form" class="sec" action="editVendorType" method="post">
+						<input type="hidden" name="id" value="" id="id1"> <span>Vendor
+							type : </span> <input type="text" class="form-control" name="name"
+							value="" id="type1"> <input type="submit"
+							class="btn btn-default" value="Update">
+					</form>
+				</div>
+				<div class="modal-footer">
+					<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+				</div>
+			</div>
 
+		</div>
+	</div>
 
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
@@ -113,6 +136,13 @@
 		$(function() {
 			$("#datepicker").datepicker();
 		});
+
+		function editVendorType(vId, vType) {
+
+			$('#id1').val(vId);
+			$('#type1').val(vType);
+			$("#editVendorTypeDialog").modal('show');
+		}
 	</script>
 </body>
 
