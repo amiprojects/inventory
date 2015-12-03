@@ -75,10 +75,10 @@
 											var="vendorType">
 											<ul>
 												<li>${vendorType.type}&nbsp;<a href="#"
-													onclick="editVendorType('${vendorType.id}','${vendorType.type}')"> <img
-														src="img/edit.png" height="16px" width="16px"></a>&nbsp;<a
-													href="#"> <img src="img/cross.png" height="16px"
-														width="16px"></a>
+													onclick="editVendorType('${vendorType.id}','${vendorType.type}')">
+														<img src="img/edit.png" height="16px" width="16px">
+												</a>&nbsp;<a href="deleteVendorType?id=${vendorType.id}"> <img
+														src="img/cross.png" height="16px" width="16px"></a>
 												</li>
 											</ul>
 										</c:forEach>

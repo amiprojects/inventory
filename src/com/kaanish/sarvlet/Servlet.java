@@ -34,7 +34,7 @@ import com.kaanish.util.DateConverter;
 		"/createSubDept", "/deleteSubDept", "/createCategory",
 		"/deleteCategory", "/newVendorType", "/addCountry", "/addState",
 		"/createProduct", "/deleteCountry", "/addVendor", "/addUOM",
-		"/editVendorType" })
+		"/editVendorType", "/deleteVendorType" })
 public class Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -126,6 +126,13 @@ public class Servlet extends HttpServlet {
 
 				ejb.updateVendorType(vendorType);
 				msg = "Vendor type updated successfully.";
+				break;
+
+			case "deleteVendorType":
+				page = "purchasingVendorType.jsp";
+				ejb.deleteVendorTypeById(Integer.parseInt(req
+						.getParameter("id")));
+				msg = "Vendor type deleted successfully.";
 				break;
 
 			case "addTax":
@@ -365,10 +372,11 @@ public class Servlet extends HttpServlet {
 			default:
 				break;
 			}
-		} catch (NumberFormatException e) {
+		} catch (Exception e) {
 			msg = "error: " + e.getMessage();
 			e.printStackTrace();
 		}
+
 		req.setAttribute("msg", msg);
 		req.getRequestDispatcher(page).forward(req, resp);
 	}
