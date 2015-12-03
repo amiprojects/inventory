@@ -35,19 +35,30 @@
 }
 </style>
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
+<link rel="stylesheet" href="css/toast.css" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		if ($('#msg').html() != "") {
+			$('.toast').fadeIn(400).delay(3000).fadeOut(400);
+		}
+	});
+</script>
 </head>
 <body>
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.html"%>
 		<div class="page-container menu-left" style="height: 100%;">
 			<%@include file="includeSidebar.html"%>
-			<div class="content-sec" style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
+			<div class="content-sec"
+				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
 				<div class="container">
 					<div class="row">
 						<div class="masonary-grids">
 							<div class="col-md-8">
 								<div class="widget-area">
-									<form action="newVendorType">
+									<form action="newVendorType" method="get">
 										<div class="col-md-10">
 											<div class="form-group">
 												<label for="" class="font">Vendor type :</label> <input
@@ -59,13 +70,25 @@
 											value="Add">
 									</form>
 									<div class="widget-area" style="height: 300px; overflow: auto;">
+
 										<c:forEach items="${sessionScope['ejb'].getAllVendorType()}"
 											var="vendorType">
-											${vendorType.type}<br>
+											<ul>
+												<li>${vendorType.type}&nbsp;<a href="#"
+													onclick="editVendorType('${vendorType.id}','${vendorType.type}')">
+														<img src="img/edit.png" height="16px" width="16px">
+												</a>&nbsp;<a href="deleteVendorType?id=${vendorType.id}"> <img
+														src="img/cross.png" height="16px" width="16px"></a>
+												</li>
+											</ul>
 										</c:forEach>
+
 										<!-- Vendor type 1<br> Vendor type 1<br> Vendor type 1<br> -->
 									</div>
-									<p>${requestScope['msg']}</p>
+									<%-- <p>${requestScope['msg']}</p> --%>
+									<div class='toast' style='display: none'>
+										<h3 id="msg">${requestScope['msg']}</h3>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -76,7 +99,29 @@
 	</div>
 	<!-- main -->
 
+	<div id="editVendorTypeDialog" class="modal fade" role="dialog"
+		style="top: 25px;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Modal Header</h4>
+				</div>
+				<div class="modal-body">
+					<form role="form" class="sec" action="editVendorType" method="post">
+						<input type="hidden" name="id" value="" id="id1"> <span>Vendor
+							type : </span> <input type="text" class="form-control" name="name"
+							value="" id="type1"> <input type="submit"
+							class="btn btn-default" value="Update">
+					</form>
+				</div>
+				<div class="modal-footer">
+					<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+				</div>
+			</div>
 
+		</div>
+	</div>
 
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
@@ -91,6 +136,13 @@
 		$(function() {
 			$("#datepicker").datepicker();
 		});
+
+		function editVendorType(vId, vType) {
+
+			$('#id1').val(vId);
+			$('#type1').val(vType);
+			$("#editVendorTypeDialog").modal('show');
+		}
 	</script>
 </body>
 

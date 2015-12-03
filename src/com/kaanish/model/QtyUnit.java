@@ -15,6 +15,8 @@ public class QtyUnit {
 	@GeneratedValue
 	private int id;
 	private String name;
+	private String abbreviation;
+	private String description;
 
 	@ManyToOne
 	@JoinColumn(name = "qtyUnitTypeId")
@@ -63,6 +65,22 @@ public class QtyUnit {
 
 	public void setQtyUnitConversions1(List<QtyUnitConversion> qtyUnitConversions1) {
 		this.qtyUnitConversions1 = qtyUnitConversions1;
+	}
+
+	public String getAbbreviation() {
+		return abbreviation;
+	}
+
+	public void setAbbreviation(String abbreviation) {
+		this.abbreviation = abbreviation;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

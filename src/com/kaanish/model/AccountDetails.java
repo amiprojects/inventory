@@ -43,8 +43,13 @@ public class AccountDetails {
 	@ManyToOne
 	@JoinColumn(name = "vendorId")
 	private Vendor vendor;
-	
-	@ManyToOne @JoinColumn(name="taxTypeGroupId")
+
+	@ManyToOne
+	@JoinColumn(name = "userId")
+	private Users users;
+
+	@ManyToOne
+	@JoinColumn(name = "taxTypeGroupId")
 	private Tax_Type_Group tax_Type_Group;
 
 	public int getId() {

@@ -1,5 +1,6 @@
 package com.kaanish.ejb;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -9,11 +10,14 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpSession;
 
+import com.kaanish.model.AccountDetails;
 import com.kaanish.model.Category;
 import com.kaanish.model.City;
 import com.kaanish.model.Country;
 import com.kaanish.model.Department;
 import com.kaanish.model.ProductDetail;
+import com.kaanish.model.QtyUnit;
+import com.kaanish.model.QtyUnitType;
 import com.kaanish.model.State;
 import com.kaanish.model.SubDepartment;
 import com.kaanish.model.Tax;
@@ -29,6 +33,38 @@ public class Ejb {
 	@Inject
 	private HttpSession httpSession;
 
+	/***************** for user **********************/
+	public void setUser(Users users) {
+		em.merge(users);
+	}
+
+	public Users getUserById(int id) {
+		return em.find(Users.class, id);
+	}
+	
+	/**************for qty unit type***************/
+	public void setQtyUnitType(QtyUnitType qtyUnitType){
+		em.persist(qtyUnitType);
+	}
+	public QtyUnitType getQtyUnitTypeById(int id){
+		return em.find(QtyUnitType.class, id);
+	}
+	
+	public List<QtyUnitType> getAllQtyUnitTypes(){
+		TypedQuery<QtyUnitType> q=em.createQuery("select c from QtyUnitType c",QtyUnitType.class);
+		return q.getResultList();
+	}
+	
+	/**************for UOM type***************/
+	public void setQtyUnit(QtyUnit qtyUnit){
+		em.persist(qtyUnit);
+	}
+	
+	public List<QtyUnit> getAllQtyUnit(){
+		TypedQuery<QtyUnit> q=em.createQuery("select c from QtyUnit c",QtyUnit.class);
+		return q.getResultList();
+	}
+
 	/*************************** for login purpose *****************/
 	public boolean getCheckLogin(String usr, String pwd) {
 
@@ -38,12 +74,12 @@ public class Ejb {
 		q.setParameter("pwd", pwd);
 		return q.getResultList().size() > 0;
 	}
-	
-	public boolean getCheckPassword(String pwd){
+
+	public boolean getCheckPassword(String pwd) {
 		String usr;
 		TypedQuery<Users> q = em.createQuery("select c from Users c where (c.userId=:user AND c.password=:pwd)",
 				Users.class);
-		usr=httpSession.getAttribute("user").toString();
+		usr = httpSession.getAttribute("user").toString();
 		q.setParameter("user", usr);
 		q.setParameter("pwd", pwd);
 		return q.getResultList().size() > 0;
@@ -62,17 +98,33 @@ public class Ejb {
 		TypedQuery<Tax> q = em.createQuery("select c from Tax c", Tax.class);
 		return q.getResultList();
 	}
+	
+	public List<Tax> getAllTaxByTaxTypeGroupId(String name) {
+		Tax_Type_Group tg=getTax_Type_GroupById(name);
+		List<Tax> taxLst=new ArrayList<>();
+		for(Tax tax:getAllTax()){
+			if(tg.getTaxes().contains(tax)){
+				tax.setAvailable(true);
+			}else{
+				tax.setAvailable(false);
+			}
+			taxLst.add(tax);
+		}
+		
+		
+		return taxLst;
+	}
 
 	public List<Tax_Type_Group> getAllTax_Type_Groups() {
 		TypedQuery<Tax_Type_Group> q = em.createQuery("select s from Tax_Type_Group s", Tax_Type_Group.class);
 		return q.getResultList();
 	}
 
-	public void removeTax(String taxName) {
+	public void deleteTax(String taxName) {
 		em.remove(getTaxById(taxName));
 	}
 
-	public void removeTaxTYpeGroup(Tax_Type_Group tax_Type_Group) {
+	public void deleteTaxTYpeGroup(Tax_Type_Group tax_Type_Group) {
 		em.remove(tax_Type_Group);
 	}
 
@@ -82,6 +134,14 @@ public class Ejb {
 
 	public Tax_Type_Group getTax_Type_GroupById(String name) {
 		return em.find(Tax_Type_Group.class, name);
+	}
+	
+	public void updateTax(Tax tax){
+		em.merge(tax);
+	}
+	
+	public void updateTaxTypeGroup(Tax_Type_Group tax_Type_Group){
+		em.merge(tax_Type_Group);
 	}
 
 	/******************** for vendor *******************************/
@@ -126,6 +186,10 @@ public class Ejb {
 	public List<VendorType> getAllVendorType() {
 		TypedQuery<VendorType> q = em.createQuery("select c from VendorType c", VendorType.class);
 		return q.getResultList();
+	}
+	/******************* foe account details***************************/
+	public void setAccountDetails(AccountDetails accountDetails){
+		em.persist(accountDetails);
 	}
 
 	/******************** for City *******************************/

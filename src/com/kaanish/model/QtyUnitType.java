@@ -33,6 +33,11 @@ public class QtyUnitType {
 	public void setQtyUnits(List<QtyUnit> qtyUnits) {
 		this.qtyUnits = qtyUnits;
 	}
-	
+	@Override
+	public String toString() {
+		String json;
+		json="{\"name\":\""+name+"\",\"id\":\""+id+"\"}";
+		return json;
+	}
 	
 }
