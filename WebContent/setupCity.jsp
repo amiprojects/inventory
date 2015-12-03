@@ -241,6 +241,8 @@
 		function closed() {
 			$("#createState").hide();
 		}
+		
+		
 		function deleteCountry(id,c){
 			y=confirm("Do you want to delete country: "+c);
 			if(y==true){

@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -62,12 +63,10 @@
 								<div class="widget-area" style="width: 25%;">
 									<form action="addCountry">
 										<h3>Country</h3>
-										<br> <label for="exampleInputEmail1">Name:</label> <input
-											id="creConName" type="text" class="form-control" name="name"
-											onkeyup="crecontxt();"> <input id="creConbtn"
-											class="btn btn-info mini"
-											style="left: 173px; position: absolute;" type="submit"
-											value="Add" disabled="disabled"> <br> <br>
+										<br>  <input
+											 class="btn green pull-left" type="button"
+											onclick="countryPopup();" value="AddCountry" >
+										<br> <br>
 										<div
 											style="overflow-y: scroll; width: 193px; height: 317px; border: 1px solid rgba(119, 119, 119, 0.73);">
 
@@ -84,6 +83,29 @@
 
 										</div>
 
+										<div id="createCountry" style="top: 25px; position:absolute;">
+											<div class="modal-dialog" style="z-index: 1">
+												<div class="modal-content">
+													<div class="modal-header">
+														<button type="button" class="close"  onclick="closed();">&times;</button>
+														<h4 class="modal-title">Country Ctreation</h4>
+													</div>
+													<div class="modal-body">
+
+														<label for="exampleInputEmail1">Name:</label> <input
+															id="creConName" type="text" class="form-control"
+															name="name" onkeyup="crecontxt();"> <input 
+															id="creConbtn" class="btn btn-info mini"
+															style="left: 173px; position: absolute;" type="submit"
+															value="Add" disabled="disabled">
+
+													</div>
+													<div class="modal-footer"></div>
+												</div>
+
+											</div>
+										</div>
+
 									</form>
 
 								</div>
@@ -94,10 +116,8 @@
 										<h3>State</h3>
 										<br> <label for="exampleInputEmail1">Name:</label> <input
 											id="creConName" type="text" class="form-control" name="name"
-											onkeyup="crecontxt();">
-
-
-										<input style="left: 173px; position: absolute;"
+											onkeyup="crecontxt();"> <input
+											style="left: 173px; position: absolute;"
 											class="btn btn-info mini" type="submit" value="Add">
 
 										<br> <span><b>Country:</b></span><select name="countryid"
@@ -127,8 +147,8 @@
 
 									</form>
 								</div>
-								
-								
+
+
 								<div class="widget-area" style="width: 25%;">
 									<h3>City</h3>
 									<br> <label for="exampleInputEmail1">Name:</label> <input
@@ -149,7 +169,8 @@
 
 								</div>
 								<div class="widget-area" style="width: 25%">
-									<div class="tree-list"><h3>Tree List</h3>
+									<div class="tree-list">
+										<h3>Tree List</h3>
 										<p>
 											<a href="#" id="tree-expand-all">Expand all</a> | <a href="#"
 												id="tree-collapse-all">Collapse all</a>
@@ -265,6 +286,12 @@
 		}
 		function closed() {
 			$("#createState").hide();
+		}
+		function countryPopup() {
+			$("#createCountry").show();
+		}
+		function closed() {
+			$("#createCountry").hide();
 		}
 		function deleteCountry(id,c){
 			y=confirm("Do you want to delete country: "+c);
