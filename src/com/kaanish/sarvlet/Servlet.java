@@ -29,7 +29,7 @@ import com.kaanish.model.Vendor;
 import com.kaanish.model.VendorType;
 import com.kaanish.util.DateConverter;
 
-@WebServlet({ "/login", "/logout", "/addTax", "/addTaxGroup","/editTax","/deleteTax", "/createDept",
+@WebServlet({ "/login", "/logout", "/addTax", "/addTaxGroup","/editTax","/editTaxGroup", "/createDept",
 		"/deleteDept", "/createSubDept", "/deleteSubDept", "/createCategory",
 		"/deleteCategory", "/newVendorType", "/addCountry", "/addState",
 		"/createProduct", "/deleteCountry", "/addVendor", "/addUOM" })
@@ -151,13 +151,36 @@ public class Servlet extends HttpServlet {
 				
 			case "editTax":
 				page = "setupTaxManagement.jsp";
-				tax = new Tax();
+				tax = ejb.getTaxById(req.getParameter("id"));
 				tax.setName(req.getParameter("name"));
 				tax.setValue(Float.parseFloat(req.getParameter("value")));
 
 				ejb.updateTax(tax);
 				msg = "Tax updated successfully.";
-				break;				
+				break;
+			case "editTaxGroup":
+				page = "setupTaxManagement.jsp";
+				tax_type_group = ejb.getTax_Type_GroupById(req.getParameter("id"));
+				tax_type_group.setName(req.getParameter("name"));
+
+				String[] taxes1 = req.getParameterValues("tax");
+
+				if (taxes1 != null) {
+
+					List<Tax> taxlst = new ArrayList<Tax>();
+
+					for (String taxName : taxes1) {
+						taxlst.add(ejb.getTaxById(taxName));
+					}
+
+					tax_type_group.setTaxes(taxlst);
+
+					ejb.updateTaxTypeGroup(tax_type_group);
+					msg = "Tax group updated succesfully.";
+				} else {
+					msg = "please select tax.";
+				}
+				break;
 				
 			case "createDept":
 				page = "setupDepartment.jsp";

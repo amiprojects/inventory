@@ -2,19 +2,24 @@ package com.kaanish.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 @Entity
 public class Tax {
 	@Id
 	private String name;
 	private float value;
+	
+	@Transient
+	private boolean isAvailable;
 
-	@ManyToMany(targetEntity = Tax_Type_Group.class)
+	@ManyToMany(cascade=CascadeType.ALL,targetEntity = Tax_Type_Group.class)
 	private List<Tax_Type_Group> tax_type_groups;
 
 	@ManyToOne
@@ -51,6 +56,14 @@ public class Tax {
 
 	public void setUsers(Users users) {
 		this.users = users;
+	}
+
+	public boolean isAvailable() {
+		return isAvailable;
+	}
+
+	public void setAvailable(boolean isAvailable) {
+		this.isAvailable = isAvailable;
 	}
 
 }

@@ -9,9 +9,11 @@
 <body>
 <form action="editTax">
 <c:set var="tax" value="${sessionScope['ejb'].getTaxById(param.id)}"/>
+<input type="hidden" name="id" value="${tax.name}">
 <input type="text" name="name" value="${tax.name}">
 <input type="number" name="value" value="${tax.value}">
 <input type="submit" value="Update">
 </form>
+
 </body>
 </html>
