@@ -29,11 +29,10 @@ import com.kaanish.model.Vendor;
 import com.kaanish.model.VendorType;
 import com.kaanish.util.DateConverter;
 
-
-@WebServlet({ "/login", "/logout", "/addTax", "/addTaxGroup", "/createDept", "/deleteDept", "/createSubDept",
-		"/deleteSubDept", "/createCategory", "/deleteCategory", "/newVendorType", "/addCountry", "/addState",
+@WebServlet({ "/login", "/logout", "/addTax", "/addTaxGroup", "/createDept",
+		"/deleteDept", "/createSubDept", "/deleteSubDept", "/createCategory",
+		"/deleteCategory", "/newVendorType", "/addCountry", "/addState",
 		"/createProduct", "/deleteCountry", "/addVendor", "/addUOM" })
-
 public class Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -81,7 +80,7 @@ public class Servlet extends HttpServlet {
 				break;
 			case "logout":
 				page = "index.jsp";
-				msg = "Logout Successful.";
+				msg = "Logout Successfull.";
 				break;
 			case "createProduct":
 				page = "setupDepartment.jsp";
@@ -132,20 +131,20 @@ public class Servlet extends HttpServlet {
 				tax_type_group.setName(req.getParameter("name"));
 
 				String[] taxes = req.getParameterValues("tax");
-				
-				if(taxes!=null){
-				
-				List<Tax> taxlst = new ArrayList<Tax>();
 
-				for (String taxName : taxes) {
-					taxlst.add(ejb.getTaxById(taxName));
-				}
-				
-				tax_type_group.setTaxes(taxlst);
+				if (taxes != null) {
 
-				ejb.setTaxTYpeGroup(tax_type_group);
-				msg = "Tax group added succesfully.";
-				}else{
+					List<Tax> taxlst = new ArrayList<Tax>();
+
+					for (String taxName : taxes) {
+						taxlst.add(ejb.getTaxById(taxName));
+					}
+
+					tax_type_group.setTaxes(taxlst);
+
+					ejb.setTaxTYpeGroup(tax_type_group);
+					msg = "Tax group added succesfully.";
+				} else {
 					msg = "please select tax.";
 				}
 				break;
@@ -224,7 +223,6 @@ public class Servlet extends HttpServlet {
 				accountDetails = new AccountDetails();
 				dt = new Date();
 
-
 				vendor.setName(req.getParameter("vendorName"));
 
 				vendor.setLastModifiedDate(dt);
@@ -275,23 +273,21 @@ public class Servlet extends HttpServlet {
 				accountDetails.setTax_Type_Group(ejb.getTax_Type_GroupById(req
 						.getParameter("taxTypeGroupId")));
 
-
 				accountDetails.setVendor(vendor);
 
-				
 				ejb.setVendor(vendor);
 				ejb.setAccountDetails(accountDetails);
 
-				msg = "vendor added successful;";
-
-				msg = "vendor added successful;";
+				msg = "vendor added successfully;";
 				break;
 
 			case "addUOM":
 				page = "setupUnitOfMeasure.jsp";
 				int flag = 0;
 				for (QtyUnit qut : ejb.getAllQtyUnit()) {
-					if ((qut.getName().equalsIgnoreCase(req.getParameter("name"))||(qut.getAbbreviation().equalsIgnoreCase(req.getParameter("abbreviation"))))) {
+					if ((qut.getName().equalsIgnoreCase(
+							req.getParameter("name")) || (qut.getAbbreviation()
+							.equalsIgnoreCase(req.getParameter("abbreviation"))))) {
 						flag = 1;
 						break;
 					}
@@ -301,10 +297,11 @@ public class Servlet extends HttpServlet {
 					qtyUnit.setName(req.getParameter("name"));
 					qtyUnit.setAbbreviation(req.getParameter("abbreviation"));
 					qtyUnit.setDescription(req.getParameter("description"));
-					qtyUnit.setQtyUnitType(ejb.getQtyUnitTypeById(Integer.parseInt(req.getParameter("qtyUnitTypeId"))));
+					qtyUnit.setQtyUnitType(ejb.getQtyUnitTypeById(Integer
+							.parseInt(req.getParameter("qtyUnitTypeId"))));
 					ejb.setQtyUnit(qtyUnit);
 					msg = "new UOM added successfully";
-				}else{
+				} else {
 					msg = "UOM name already exists";
 				}
 

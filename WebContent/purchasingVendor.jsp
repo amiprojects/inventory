@@ -15,7 +15,17 @@
 <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700'
 	rel='stylesheet' type='text/css' />
 <link rel="stylesheet" href="bootstrapcdn.css">
+<link rel="stylesheet" href="css/toast.css" type="text/css" />
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		if ($('#msg').html() != "") {
+			$('.toast').fadeIn(400).delay(3000).fadeOut(400);
+		}
+	});
+</script>
+
 <script src="maxcdn.bootstrapcdn.js"></script>
 
 <style>
@@ -118,7 +128,8 @@ $(document).ready(function(){
 <script>
 	$(function() {
 		$("#datepicker").datepicker({
-			dateFormat : "dd-mm-yy"
+			dateFormat : "dd-mm-yy",
+			maxDate : 0
 
 		/* , onSelect : function() {
 				$("#datepicker").prop('readonly', "readonly");
@@ -128,17 +139,20 @@ $(document).ready(function(){
 
 	$(function() {
 		$("#datepicker1").datepicker({
-			dateFormat : "dd-mm-yy"
+			dateFormat : "dd-mm-yy",
+			maxDate : 0
 		});
 	});
 	$(function() {
 		$("#datepicker2").datepicker({
-			dateFormat : "dd-mm-yy"
+			dateFormat : "dd-mm-yy",
+			maxDate : 0
 		});
 	});
 	$(function() {
 		$("#datepicker3").datepicker({
-			dateFormat : "dd-mm-yy"
+			dateFormat : "dd-mm-yy",
+			maxDate : 0
 		});
 	});
 </script>
@@ -225,7 +239,7 @@ $(document).ready(function(){
 									</table>
 								</div>
 								<div class="widget-area" style="width: 72%">
-									<p>${requestScope['msg']}</p>
+									<%-- <p>${requestScope['msg']}</p> --%>
 									<form role="form" class="sec" action="addVendor" method="post">
 										<ul class="nav nav-tabs">
 											<li class="active" id="detl"><a data-toggle="tab"
@@ -633,6 +647,9 @@ $(document).ready(function(){
 
 										</div>
 									</form>
+									<div class='toast' style='display: none'>
+										<h3 id="msg">${requestScope['msg']}</h3>
+									</div>
 								</div>
 							</div>
 						</div>

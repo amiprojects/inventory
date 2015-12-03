@@ -35,13 +35,24 @@
 }
 </style>
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
+<link rel="stylesheet" href="css/toast.css" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		if ($('#msg').html() != "") {
+			$('.toast').fadeIn(400).delay(3000).fadeOut(400);
+		}
+	});
+</script>
 </head>
 <body>
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.html"%>
 		<div class="page-container menu-left" style="height: 100%;">
 			<%@include file="includeSidebar.html"%>
-			<div class="content-sec" style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
+			<div class="content-sec"
+				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
 				<div class="container">
 					<div class="row">
 						<div class="masonary-grids">
@@ -59,13 +70,24 @@
 											value="Add">
 									</form>
 									<div class="widget-area" style="height: 300px; overflow: auto;">
+
 										<c:forEach items="${sessionScope['ejb'].getAllVendorType()}"
 											var="vendorType">
-											${vendorType.type}<br>
+											<ul>
+												<li>${vendorType.type}&nbsp;<a href="#"> <img
+														src="img/edit.png" height="16px" width="16px"></a>&nbsp;<a
+													href="#"> <img src="img/cross.png" height="16px"
+														width="16px"></a>
+												</li>
+											</ul>
 										</c:forEach>
+
 										<!-- Vendor type 1<br> Vendor type 1<br> Vendor type 1<br> -->
 									</div>
-									<p>${requestScope['msg']}</p>
+									<%-- <p>${requestScope['msg']}</p> --%>
+									<div class='toast' style='display: none'>
+										<h3 id="msg">${requestScope['msg']}</h3>
+									</div>
 								</div>
 							</div>
 						</div>
