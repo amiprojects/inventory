@@ -90,10 +90,11 @@
 											<div style="height: 310px; overflow: auto;">
 												<c:forEach items="${sessionScope['ejb'].getAllTax()}"
 													var="tax">
-													<input type="checkbox" value="${tax.name}" name="tax">${tax.name}&nbsp;<a
-														href="tax.jsp?id=${tax.name}"> <img src="img/edit.png"
-														height="16px" width="16px"></a>&nbsp;<a href="#"> <img
-														src="img/cross.png" height="16px" width="16px"></a>
+													<input type="checkbox" value="${tax.name}" name="tax">${tax.name}&nbsp;
+													<a href="#" onclick="editTax('${tax.name}','${tax.value}')"><img
+														src="img/edit.png" height="16px" width="16px"></a>&nbsp;
+													<a href="deleteTax?id=${tax.name}"> <img src="img/cross.png" height="16px"
+														width="16px"></a>
 													<br>
 												</c:forEach>
 											</div>
@@ -188,7 +189,28 @@
 	</div>
 	<!-- main -->
 
+	<div id="editTaxDiv" class="modal fade" role="dialog" style="top: 25px;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Modal Header</h4>
+				</div>
+				<div class="modal-body">
+					<form role="form" class="sec" action="editTax">
+					<input type="hidden" name="id" value="" id="id1">
+						<span>Tax name : </span> <input type="text" class="form-control" name="name" value="" id="name1">
+						<span>Tax Value : </span> <input type="text" class="form-control" name="value" value="" id="value1">
+						<input type="submit" class="btn btn-default" value="Update">
+					</form>
+				</div>
+				<div class="modal-footer">
+					<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+				</div>
+			</div>
 
+		</div>
+	</div>
 
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
@@ -207,6 +229,14 @@
 
 			/* alert(tg); */
 			$("#taxList" + tg).modal('show');
+		}
+
+		function editTax(taxnm, taxval) {
+			
+			$('#id1').val(taxnm);
+			$('#name1').val(taxnm);
+			$('#value1').val(taxval);
+			$("#editTaxDiv").modal('show');
 		}
 	</script>
 </body>

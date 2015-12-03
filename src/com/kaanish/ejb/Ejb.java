@@ -120,11 +120,11 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	public void removeTax(String taxName) {
+	public void deleteTax(String taxName) {
 		em.remove(getTaxById(taxName));
 	}
 
-	public void removeTaxTYpeGroup(Tax_Type_Group tax_Type_Group) {
+	public void deleteTaxTYpeGroup(Tax_Type_Group tax_Type_Group) {
 		em.remove(tax_Type_Group);
 	}
 
