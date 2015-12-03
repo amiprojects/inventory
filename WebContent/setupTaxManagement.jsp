@@ -66,7 +66,7 @@
 								</ul>
 							</div>
 							<div class="widget-area">
-								<form action="addTax">
+								<form action="addTax" method="post">
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="" class="font">Tax Name :</label> <input
@@ -86,13 +86,13 @@
 								<%-- <p>${requestScope['msg']}</p> --%>
 								<div class="col-md-6">
 									<div class="widget-area">
-										<form action="addTaxGroup">
+										<form action="addTaxGroup" method="post">
 											<div style="height: 310px; overflow: auto;">
 												<c:forEach items="${sessionScope['ejb'].getAllTax()}"
 													var="tax">
 													<input type="checkbox" value="${tax.name}" name="tax">${tax.name}&nbsp;<a
-														href="tax.jsp?id=${tax.name}"> <img src="img/edit.png" height="16px"
-														width="16px"></a>&nbsp;<a href="#"> <img
+														href="tax.jsp?id=${tax.name}"> <img src="img/edit.png"
+														height="16px" width="16px"></a>&nbsp;<a href="#"> <img
 														src="img/cross.png" height="16px" width="16px"></a>
 													<br>
 												</c:forEach>
@@ -140,10 +140,10 @@
 												var="taxGroup">
 												<ul>
 													<li><span onclick="showTaxes('${taxGroup.name}');">
-															${taxGroup.name}</span>&nbsp;<a href="#"> <img
-															src="img/edit.png" height="16px" width="16px"></a>&nbsp;<a
-														href="#"> <img src="img/cross.png" height="16px"
-															width="16px"></a></li>
+															<a href="#"> ${taxGroup.name}</a>
+													</span>&nbsp;<a href="#"> <img src="img/edit.png"
+															height="16px" width="16px"></a>&nbsp;<a href="#"> <img
+															src="img/cross.png" height="16px" width="16px"></a></li>
 												</ul>
 												<div id="taxList${taxGroup.name}" class="modal fade"
 													role="dialog" style="top: 25px;">
