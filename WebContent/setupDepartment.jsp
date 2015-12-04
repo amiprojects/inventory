@@ -46,94 +46,97 @@
 <script src="js/jquery-ui/jquery-ui.js"></script>
 <script type="text/javascript">
 	$(function() {
-		$("#prnt").autocomplete({
-			source : function(req, resp) {
-				$.ajax({
-					url : "getAllDepartments",
-					dataType : "json",
-					data : {
-						name : req.term
-					},
-					success : function(data) {
-						resp($.map(data, function(item) {
-							return {
-								value : item.name,
-								id : item.id,
-								status : item.status,
-								pname : item.pName
+		$("#prnt").autocomplete(
+				{
+					source : function(req, resp) {
+						$.ajax({
+							url : "getAllDepartments",
+							dataType : "json",
+							data : {
+								name : req.term
+							},
+							success : function(data) {
+								resp($.map(data, function(item) {
+									return {
+										value : item.name,
+										id : item.id,
+										status : item.status,
+										pname : item.pName
+									}
+								}));
 							}
-						}));
+						});
+					},
+					change : function(event, ui) {
+						if (ui.item == null) {
+							$(this).val("");
+							$("#id").val("");
+							$('#status').val("");
+							$("#perentOfSubDept").html("");
+							$("#attr1").prop("disabled", true);
+							$("#attr2").prop("disabled", true);
+							$("#attr3").prop("disabled", true);
+							$("#attr4").prop("disabled", true);
+							$("#attr5").prop("disabled", true);
+							$("#attr6").prop("disabled", true);
+						} else {
+							$("#id").val(ui.item.id);
+							$('#status').val(ui.item.status);
+							if (ui.item.status == "2") {
+								$("#perentOfSubDept").html(
+										'Perent Department: ' + ui.item.pname);
+								$("#attr1").prop("disabled", false);
+								$("#attr2").prop("disabled", false);
+								$("#attr3").prop("disabled", false);
+								$("#attr4").prop("disabled", false);
+								$("#attr5").prop("disabled", false);
+								$("#attr6").prop("disabled", false);
+							} else {
+								$("#perentOfSubDept").html("");
+								$("#attr1").prop("disabled", true);
+								$("#attr2").prop("disabled", true);
+								$("#attr3").prop("disabled", true);
+								$("#attr4").prop("disabled", true);
+								$("#attr5").prop("disabled", true);
+								$("#attr6").prop("disabled", true);
+							}
+						}
+					},
+					select : function(event, ui) {
+						if (ui.item == null) {
+							$(this).val("");
+							$("#id").val("");
+							$('#status').val("");
+							$("#attr1").prop("disabled", true);
+							$("#attr2").prop("disabled", true);
+							$("#attr3").prop("disabled", true);
+							$("#attr4").prop("disabled", true);
+							$("#attr5").prop("disabled", true);
+							$("#attr6").prop("disabled", true);
+						} else {
+							$("#id").val(ui.item.id);
+							$('#status').val(ui.item.status);
+							if (ui.item.status == "2") {
+								$("#perentOfSubDept").html(
+										'Perent Department: ' + ui.item.pname);
+								$("#attr1").prop("disabled", false);
+								$("#attr2").prop("disabled", false);
+								$("#attr3").prop("disabled", false);
+								$("#attr4").prop("disabled", false);
+								$("#attr5").prop("disabled", false);
+								$("#attr6").prop("disabled", false);
+							} else {
+								$("#perentOfSubDept").html("");
+								$("#attr1").prop("disabled", true);
+								$("#attr2").prop("disabled", true);
+								$("#attr3").prop("disabled", true);
+								$("#attr4").prop("disabled", true);
+								$("#attr5").prop("disabled", true);
+								$("#attr6").prop("disabled", true);
+							}
+						}
 					}
 				});
-			},
-			change : function(event, ui) {
-				if (ui.item == null) {
-					$(this).val("");
-					$("#id").val("");
-					$('#status').val("");
-					$("#perentOfSubDept").html("");
-					$("#attr1").prop("disabled", true);
-					$("#attr2").prop("disabled", true);
-					$("#attr3").prop("disabled", true);
-					$("#attr4").prop("disabled", true);
-					$("#attr5").prop("disabled", true);
-					$("#attr6").prop("disabled", true);
-				} else {
-					$("#id").val(ui.item.id);
-					$('#status').val(ui.item.status);
-					if (ui.item.status == "2") {						
-						$("#perentOfSubDept").html('Perent Department: '+ui.item.pname);
-						$("#attr1").prop("disabled", false);
-						$("#attr2").prop("disabled", false);
-						$("#attr3").prop("disabled", false);
-						$("#attr4").prop("disabled", false);
-						$("#attr5").prop("disabled", false);
-						$("#attr6").prop("disabled", false);
-					} else {
-						$("#perentOfSubDept").html("");
-						$("#attr1").prop("disabled", true);
-						$("#attr2").prop("disabled", true);
-						$("#attr3").prop("disabled", true);
-						$("#attr4").prop("disabled", true);
-						$("#attr5").prop("disabled", true);
-						$("#attr6").prop("disabled", true);
-					}
-				}
-			},
-			select : function(event, ui) {
-				if (ui.item == null) {
-					$(this).val("");
-					$("#id").val("");
-					$('#status').val("");
-					$("#attr1").prop("disabled", true);
-					$("#attr2").prop("disabled", true);
-					$("#attr3").prop("disabled", true);
-					$("#attr4").prop("disabled", true);
-					$("#attr5").prop("disabled", true);
-					$("#attr6").prop("disabled", true);
-				} else {
-					$("#id").val(ui.item.id);
-					$('#status').val(ui.item.status);
-					if (ui.item.status == "2") {
-						$("#perentOfSubDept").html('Perent Department: '+ui.item.pname);
-						$("#attr1").prop("disabled", false);
-						$("#attr2").prop("disabled", false);
-						$("#attr3").prop("disabled", false);
-						$("#attr4").prop("disabled", false);
-						$("#attr5").prop("disabled", false);
-						$("#attr6").prop("disabled", false);
-					} else {
-						$("#perentOfSubDept").html("");
-						$("#attr1").prop("disabled", true);
-						$("#attr2").prop("disabled", true);
-						$("#attr3").prop("disabled", true);
-						$("#attr4").prop("disabled", true);
-						$("#attr5").prop("disabled", true);
-						$("#attr6").prop("disabled", true);
-					}
-				}
-			}
-		});
 	});
 	function addBtn() {
 		if ($("#dName").val() != "") {
@@ -193,6 +196,9 @@
 </script>
 </head>
 <body>
+	<c:if test="${sessionScope['user']==null}">
+		<c:redirect url="index.jsp" />
+	</c:if>
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.html"%>
 		<div class="page-container menu-left" style="height: 100%;">
