@@ -91,8 +91,11 @@
 												<c:forEach items="${sessionScope['ejb'].getAllTax()}"
 													var="tax">
 													<input type="checkbox" value="${tax.id}" name="tax">${tax.name}&nbsp;
-													<a href="#" onclick="editTax('${tax.id}','${tax.name}','${tax.value}')"><img src="img/edit.png" height="16px" width="16px"></a>&nbsp;
-													<a href="deleteTax?id=${tax.id}"> <img src="img/cross.png" height="16px" width="16px"></a>
+													<a href="#"
+														onclick="editTax('${tax.id}','${tax.name}','${tax.value}')"><img
+														src="img/edit.png" height="16px" width="16px"></a>&nbsp;
+													<a href="deleteTax?id=${tax.id}"> <img
+														src="img/cross.png" height="16px" width="16px"></a>
 													<br>
 												</c:forEach>
 											</div>
@@ -141,10 +144,10 @@
 													<li><span onclick="showTaxes('${taxGroup.id}');">
 
 															<a href="#">${taxGroup.name}</a>
-													</span>&nbsp;<a href="tax1.jsp?id=${taxGroup.id}"> <img
-															src="img/edit.png" height="16px" width="16px"></a>&nbsp;<a
-														href="deleteTaxGroup?id=${taxGroup.id}"> <img src="img/cross.png" height="16px"
-															width="16px"></a></li>
+													</span>&nbsp;<a href="#" onclick="editTaxGroup('${taxGroup.id}');">
+															<img src="img/edit.png" height="16px" width="16px">
+													</a>&nbsp;<a href="deleteTaxGroup?id=${taxGroup.id}"> <img
+															src="img/cross.png" height="16px" width="16px"></a></li>
 
 												</ul>
 												<div id="taxList${taxGroup.id}" class="modal fade"
@@ -159,8 +162,48 @@
 																<c:forEach
 																	items="${sessionScope['ejb'].getTax_Type_GroupById(taxGroup.id).taxes}"
 																	var="tax">
-																	<br>${tax.name} 
-						</c:forEach>
+																	<br>
+																	<span>${tax.name}</span>
+																</c:forEach>
+															</div>
+															<div class="modal-footer">
+																<!-- <button type="button" class="btn btn-default"
+													data-dismiss="modal">Close</button> -->
+															</div>
+														</div>
+
+													</div>
+												</div>
+												<div id="taxListEdit${taxGroup.id}" class="modal fade"
+													role="dialog" style="top: 25px;">
+													<div class="modal-dialog">
+														<div class="modal-content">
+															<div class="modal-header">
+																<button type="button" class="close" data-dismiss="modal">&times;</button>
+																<h4 class="modal-title">Tax list</h4>
+															</div>
+															<div class="modal-body">
+																<form action="editTaxGroup" method="post">
+																	<input type="hidden" value="${taxGroup.id}" name="id">
+																	<input type="text" value="${taxGroup.name}" name="name">
+																	<c:forEach
+																		items="${sessionScope['ejb'].getAllTaxByTaxTypeGroupId(taxGroup.id)}"
+																		var="tax">
+
+																		<c:choose>
+																			<c:when test="${tax.isAvailable()}">
+																				<input checked="checked" type="checkbox"
+																					value="${tax.id}" name="tax">
+																				<span>${tax.name}</span>
+																			</c:when>
+																			<c:otherwise>
+																				<input type="checkbox" value="${tax.id}" name="tax">
+																				<span>${tax.name}</span>
+																			</c:otherwise>
+																		</c:choose>
+																	</c:forEach>
+																	<input type="submit" value="update">
+																</form>
 															</div>
 															<div class="modal-footer">
 																<!-- <button type="button" class="btn btn-default"
@@ -232,12 +275,16 @@
 			$("#taxList" + tg).modal('show');
 		}
 
-		function editTax(id,taxnm, taxval) {
+		function editTax(id, taxnm, taxval) {
 
 			$('#id1').val(id);
 			$('#name1').val(taxnm);
 			$('#value1').val(taxval);
 			$("#editTaxDiv").modal('show');
+		}
+		function editTaxGroup(id) {
+			//alert(id);
+			$("#taxListEdit" + id).modal('show');
 		}
 	</script>
 </body>
