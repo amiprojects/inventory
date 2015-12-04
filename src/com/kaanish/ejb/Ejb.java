@@ -284,9 +284,7 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	/******************************
-	 * for Department
-	 *********************************/
+	/************************* for Department *********************/
 	public void setDepartment(Department department) {
 		em.persist(department);
 	}
@@ -308,9 +306,14 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	/******************************
-	 * for Sub Department
-	 *********************************/
+	public List<Department> getAllDepartmentsByName(String name) {
+		TypedQuery<Department> q = em.createQuery("select s from Department s where s.name LIKE :name",
+				Department.class);
+		q.setParameter("name", "%" + name + "%");
+		return q.getResultList();
+	}
+
+	/****************** for Sub Department **************************/
 	public void setSubDepartment(SubDepartment subDepartment) {
 		em.persist(subDepartment);
 	}
@@ -339,9 +342,13 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	/******************************
-	 * for Category
-	 *********************************/
+	public List<SubDepartment> getAllSubDepartmentsByName(String name) {
+		TypedQuery<SubDepartment> q = em.createQuery("select s from SubDepartment s where s.name LIKE :name", SubDepartment.class);
+		q.setParameter("name", "%" + name + "%");
+		return q.getResultList();
+	}
+
+	/************************** for Category *****************************/
 	public void setCategory(Category category) {
 		em.persist(category);
 	}

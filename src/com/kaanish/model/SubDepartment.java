@@ -53,4 +53,9 @@ public class SubDepartment {
 		this.categories = categories;
 	}
 
+	@Override
+	public String toString() {
+		return "{\"id\":\"" + id + "\", \"name\":\"" + name + "\"}";
+	}
+
 }
