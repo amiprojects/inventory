@@ -16,7 +16,6 @@ public class Category {
 	@GeneratedValue
 	private int id;
 	private String name;
-	private int subDepID;
 	private String attrNmae1;
 	private String attrNmae2;
 	private String attrNmae3;
@@ -44,14 +43,6 @@ public class Category {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public int getSubDepID() {
-		return subDepID;
-	}
-
-	public void setSubDepID(int subDepID) {
-		this.subDepID = subDepID;
 	}
 
 	public String getAttrNmae1() {
