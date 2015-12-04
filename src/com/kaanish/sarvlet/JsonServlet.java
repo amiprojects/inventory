@@ -83,7 +83,7 @@ public class JsonServlet extends HttpServlet {
 				for (Department d : ejb.getAllDepartmentsByName(name)) {
 					cotractor = new DepartmentCotractor();
 					cotractor.setId(d.getId());
-					cotractor.setName(d.getName());
+					cotractor.setName(d.getName()+"(Department)");
 					cotractor.setpName("");
 					cotractor.setStatus(1);
 					lst.add(cotractor);
@@ -91,7 +91,7 @@ public class JsonServlet extends HttpServlet {
 				for (SubDepartment d : ejb.getAllSubDepartmentsByName(name)) {
 					cotractor = new DepartmentCotractor();
 					cotractor.setId(d.getId());
-					cotractor.setName(d.getName());
+					cotractor.setName(d.getName()+"(Sub-Department)");
 					cotractor.setpName(d.getDepartment().getName());
 					cotractor.setStatus(2);
 					lst.add(cotractor);
