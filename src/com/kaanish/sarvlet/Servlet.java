@@ -30,8 +30,8 @@ import com.kaanish.model.VendorType;
 import com.kaanish.util.DateConverter;
 
 @WebServlet({ "/login", "/logout", "/addTax", "/addTaxGroup", "/editTax",
-		"/deleteTax", "/editTaxGroup","/deleteTaxGroup", "/createDept", "/deleteDept",
-		"/createSubDept", "/deleteSubDept", "/createCategory",
+		"/deleteTax", "/editTaxGroup", "/deleteTaxGroup", "/createDept",
+		"/deleteDept", "/createSubDept", "/deleteSubDept", "/createCategory",
 		"/deleteCategory", "/newVendorType", "/addCountry", "/addState",
 		"/createProduct", "/deleteCountry", "/addVendor", "/addUOM",
 		"/editVendorType", "/deleteVendorType" })
@@ -187,7 +187,8 @@ public class Servlet extends HttpServlet {
 
 			case "editTaxGroup":
 				page = "setupTaxManagement.jsp";
-				tax_type_group = ejb.getTax_Type_GroupById(Integer.parseInt(req.getParameter("id")));
+				tax_type_group = ejb.getTax_Type_GroupById(Integer.parseInt(req
+						.getParameter("id")));
 				tax_type_group.setName(req.getParameter("name"));
 
 				String[] taxes1 = req.getParameterValues("tax");
@@ -208,10 +209,11 @@ public class Servlet extends HttpServlet {
 					msg = "please select tax.";
 				}
 				break;
-				
+
 			case "deleteTaxGroup":
 				page = "setupTaxManagement.jsp";
-				ejb.deleteTaxTYpeGroupById(Integer.parseInt(req.getParameter("id")));
+				ejb.deleteTaxTYpeGroupById(Integer.parseInt(req
+						.getParameter("id")));
 				msg = "Tax Group deleted successfully.";
 				break;
 
@@ -264,12 +266,10 @@ public class Servlet extends HttpServlet {
 				msg = "Category deleted.";
 				break;
 			case "addCountry":
-				page = "countryStateCity.jsp";
-				
-				
+				page = "setupCountryStateCity.jsp";
+
 				int flagg1 = 0;
-				List<Country> cuty = ejb
-						.getAllCountry();
+				List<Country> cuty = ejb.getAllCountry();
 				for (Country coty : cuty) {
 					if (coty.getCountryName().equals(req.getParameter("name"))) {
 						flagg1 = 1;
@@ -278,22 +278,22 @@ public class Servlet extends HttpServlet {
 
 				}
 				if (flagg1 == 0) {
-				country = new Country();
-				country.setCountryName(req.getParameter("name"));
-				ejb.setCountry(country);
-				msg = "country added successfully.";
+					country = new Country();
+					country.setCountryName(req.getParameter("name"));
+					ejb.setCountry(country);
+					msg = "country added successfully.";
 				} else {
 					msg = "Duplicate entry";
 
 				}
 				break;
 			case "deleteCountry":
-				page = "countryStateCity.jsp";
+				page = "setupCountryStateCity.jsp";
 				ejb.deleteCountryById(Integer.parseInt(req.getParameter("id")));
 				msg = "country deleted successfully.";
 				break;
 			case "addState":
-				page = "countryStateCity.jsp";
+				page = "setupCountryStateCity.jsp";
 				state = new State();
 				state.setStateName(req.getParameter("name"));
 				state.setCountry(ejb.getCountryById(Integer.parseInt(req
@@ -354,7 +354,9 @@ public class Servlet extends HttpServlet {
 				accountDetails.setVatNumber(req.getParameter("vendorVATno"));
 				accountDetails.setVatRegistrationDate(DateConverter.getDate(req
 						.getParameter("vendorVATregDate")));
-				accountDetails.setTax_Type_Group(ejb.getTax_Type_GroupById(Integer.parseInt(req.getParameter("id"))));
+				accountDetails.setTax_Type_Group(ejb
+						.getTax_Type_GroupById(Integer.parseInt(req
+								.getParameter("id"))));
 
 				accountDetails.setVendor(vendor);
 

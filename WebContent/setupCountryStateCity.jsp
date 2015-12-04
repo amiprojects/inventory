@@ -1,0 +1,446 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel</title>
+<link
+	href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700,900'
+	rel='stylesheet' type='text/css' />
+<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700'
+	rel='stylesheet' type='text/css' />
+
+<!-- Styles -->
+<link rel="stylesheet" href="font-awesome-4.2.0/css/font-awesome.css"
+	type="text/css" />
+<!-- Font Awesome -->
+<link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
+<!-- Bootstrap -->
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+<!-- Style -->
+<link rel="stylesheet" href="css/responsive.css" type="text/css" />
+<!-- Responsive -->
+<style>
+.font {
+	color: #777777;
+	float: left;
+	font-family: Roboto;
+	font-size: 12px;
+	letter-spacing: 0.3px;
+	padding-right: 20px;
+}
+</style>
+<link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
+<link rel="stylesheet" href="css/toast.css" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		if ($('#msg').html() != "") {
+			$('.toast').fadeIn(400).delay(3000).fadeOut(400);
+		}
+	});
+</script>
+</head>
+<body>
+	<div class="main" style="height: 664px;">
+		<%@include file="includeHeader.html"%>
+		<div class="page-container menu-left" style="height: 100%;">
+			<%@include file="includeSidebar.html"%>
+			<div class="content-sec"
+				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
+				<div class="container">
+					<div class="row">
+						<div class="masonary-grids">
+							<div class="breadcrumbs" style="height: 39px">
+								<ul>
+									<li><p
+											style="right: -422px; font-size: 20px; position: absolute;">
+											<b> Country/State/City</b>
+										</p></li>
+								</ul>
+							</div>
+							<div class="widget-area" style="width: 25%; height: 500px;">
+								<form action="addCountry" class="sec">
+									<h3>Country</h3>
+									<input class="btn green pull-left" type="button"
+										onclick="countryPopup();" value="Add Country">
+									<div id="createCountry" style="top: 25px; position: absolute;">
+										<div class="modal-dialog" style="z-index: 1">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" onclick="closed();">&times;</button>
+													<h4 class="modal-title">Country Ctreation</h4>
+												</div>
+												<div class="modal-body">
+													<div class="row">
+														<div class="col-md-1">Name:</div>
+														<div class="col-md-10">
+															<input id="creConName" type="text" class="form-control"
+																name="name" onkeyup="crecontxt();">
+														</div>
+														<div class="col-md-1">
+															<input id="creConbtn" class="btn green pull-right"
+																type="submit" value="Add" disabled="disabled">
+														</div>
+													</div>
+												</div>
+												<div class="modal-footer"></div>
+											</div>
+										</div>
+									</div>
+								</form>
+								<div class="widget-area"
+									style="overflow-y: scroll; height: 350px;">
+									<ul>
+										<c:forEach items="${sessionScope['ejb'].getAllCountry()}"
+											var="contry">
+											<li>${contry.countryName}<a href="#"
+												onclick="deleteCountry(${contry.id},'${contry.countryName}')">
+													<img src="img/cross.png" height="16px" width="16px">
+											</a></li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+
+							<div class="widget-area" style="width: 25%; height: 500px;">
+								<form action="addState" class="sec">
+									<h3>State</h3>
+									<input class="btn green pull-left" type="button"
+										onclick="statePopup();" value="Add State">
+									<div id="createState" style="top: 25px; position: absolute;">
+										<div class="modal-dialog" style="z-index: 1">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" onclick="closed();">&times;</button>
+													<h4 class="modal-title">State Ctreation</h4>
+												</div>
+												<div class="modal-body">
+													<div class="row">
+														<div class="col-md-1">Name:</div>
+														<div class="col-md-11">
+															<input type="text" class="form-control" name="name"
+																id="stateName" onkeyup="stateNameKeyUp();">
+														</div>
+													</div>
+													<br>
+													<div class="row">
+														<div class="col-md-4">The State Belongs to :</div>
+														<div class="col-md-6">
+															<input id="country" type="text" name="name"
+																class="form-control"> <input id="countryId"
+																type="hidden" name="id">
+														</div>
+														<div class="col-md-2">
+															<input id="countryForStatebtn" type="submit"
+																value="create" disabled="disabled"
+																class="btn green pull-right">
+														</div>
+													</div>
+												</div>
+												<div class="modal-footer"></div>
+											</div>
+										</div>
+									</div>
+								</form>
+								<br> <br> <span><b>Select Country:</b></span><select
+									class="form-control" name="countryid"
+									style="width: 185px; height: 30px;">
+									<c:forEach items="${sessionScope['ejb'].getAllCountry()}"
+										var="contry">
+										<option value="${contry.id}">${contry.countryName}</option>
+									</c:forEach>
+								</select>
+								<div class="widget-area"
+									style="overflow-y: scroll; height: 292px;">
+									<ul>
+										<li>State<a href="#" onclick=""> <img
+												src="img/cross.png" height="16px" width="16px">
+										</a></li>
+										<li>State<a href="#" onclick=""> <img
+												src="img/cross.png" height="16px" width="16px">
+										</a></li>
+										<li>State<a href="#" onclick=""> <img
+												src="img/cross.png" height="16px" width="16px">
+										</a></li>
+										<li>State<a href="#" onclick=""> <img
+												src="img/cross.png" height="16px" width="16px">
+										</a></li>
+										<li>State<a href="#" onclick=""> <img
+												src="img/cross.png" height="16px" width="16px">
+										</a></li>
+										<li>State<a href="#" onclick=""> <img
+												src="img/cross.png" height="16px" width="16px">
+										</a></li>
+										<li>State<a href="#" onclick=""> <img
+												src="img/cross.png" height="16px" width="16px">
+										</a></li>
+										<li>State<a href="#" onclick=""> <img
+												src="img/cross.png" height="16px" width="16px">
+										</a></li>
+										<li>State<a href="#" onclick=""> <img
+												src="img/cross.png" height="16px" width="16px">
+										</a></li>
+										<li>State<a href="#" onclick=""> <img
+												src="img/cross.png" height="16px" width="16px">
+										</a></li>
+										<li>State<a href="#" onclick=""> <img
+												src="img/cross.png" height="16px" width="16px">
+										</a></li>
+										<li>State<a href="#" onclick=""> <img
+												src="img/cross.png" height="16px" width="16px">
+										</a></li>
+									</ul>
+								</div>
+							</div>
+
+
+							<div class="widget-area" style="width: 25%; height: 500px;">
+								<form action="addCity" class="sec">
+									<h3>City</h3>
+									<input class="btn green pull-left" type="button"
+										onclick="cityPopup();" value="Add City">
+									<div id="createCity"
+										style="top: 25px; left: 25px; position: absolute;">
+										<div class="modal-dialog"
+											style="z-index: 1; float: left; width: 200%;">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" onclick="closed();">&times;</button>
+													<h4 class="modal-title">State Ctreation</h4>
+												</div>
+												<div class="modal-body">
+													<div class="row">
+														<div class="col-md-1">Name:</div>
+														<div class="col-md-11">
+															<input type="text" class="form-control" name="name"
+																id="cityName" onkeyup="cityNameKeyUp();">
+														</div>
+													</div>
+													<br> <b>The City Belongs to :</b>
+													<div class="row">
+														<div class="col-md-2">Country:</div>
+														<div class="col-md-10">
+															<input id="country" type="text" name="name"
+																class="form-control"> <input id="countryId"
+																type="hidden" name="id">
+														</div>
+
+														<div class="col-md-2">State:</div>
+														<div class="col-md-8">
+															<input id="state" type="text" name="name"
+																class="form-control"> <input id="stateId"
+																type="hidden" name="id">
+														</div>
+														<div class="col-md-2">
+															<input id="countryForStatebtn" type="submit"
+																value="create" disabled="disabled"
+																class="btn green pull-right">
+														</div>
+													</div>
+												</div>
+												<div class="modal-footer"></div>
+											</div>
+										</div>
+									</div>
+								</form>
+								<br> <br> <span><b>Select Country:</b></span><select
+									class="form-control" name="countryid">
+									<c:forEach items="${sessionScope['ejb'].getAllCountry()}"
+										var="contry">
+										<option value="${contry.id}">${contry.countryName}</option>
+									</c:forEach>
+								</select> <span><b>Select State:</b></span><select class="form-control"
+									name="">
+									<option>state</option>
+								</select>
+								<div class="widget-area"
+									style="overflow-y: scroll; height: 233px;">
+									<ul>
+										<li>City<a href="#" onclick=""> <img
+												src="img/cross.png" height="16px" width="16px">
+										</a></li>
+										<li>City<a href="#" onclick=""> <img
+												src="img/cross.png" height="16px" width="16px">
+										</a></li>
+										<li>City<a href="#" onclick=""> <img
+												src="img/cross.png" height="16px" width="16px">
+										</a></li>
+										<li>City<a href="#" onclick=""> <img
+												src="img/cross.png" height="16px" width="16px">
+										</a></li>
+										<li>City<a href="#" onclick=""> <img
+												src="img/cross.png" height="16px" width="16px">
+										</a></li>
+										<li>City<a href="#" onclick=""> <img
+												src="img/cross.png" height="16px" width="16px">
+										</a></li>
+										<li>City<a href="#" onclick=""> <img
+												src="img/cross.png" height="16px" width="16px">
+										</a></li>
+										<li>City<a href="#" onclick=""> <img
+												src="img/cross.png" height="16px" width="16px">
+										</a></li>
+										<li>City<a href="#" onclick=""> <img
+												src="img/cross.png" height="16px" width="16px">
+										</a></li>
+										<li>City<a href="#" onclick=""> <img
+												src="img/cross.png" height="16px" width="16px">
+										</a></li>
+										<li>City<a href="#" onclick=""> <img
+												src="img/cross.png" height="16px" width="16px">
+										</a></li>
+										<li>City<a href="#" onclick=""> <img
+												src="img/cross.png" height="16px" width="16px">
+										</a></li>
+									</ul>
+								</div>
+							</div>
+
+
+							<div class="widget-area" style="width: 25%; height: 500px;">
+								<p>
+									<a href="#" id="tree-expand-all">Expand all</a> | <a href="#"
+										id="tree-collapse-all">Collapse all</a>
+								</p>
+								<div class="tree-list"
+									style="height: 444px; overflow-y: scroll;">
+
+									<!-- Listing directory ZendX from ZendFramework library -->
+									<ul id="tree">
+										<c:forEach items="${sessionScope['ejb'].getAllCountry()}"
+											var="contry">
+											<li>${contry.countryName}<a href="#"
+												onclick="deleteCountry(${contry.id},'${contry.countryName}')">
+													<img src="img/cross.png" height="16px" width="16px">
+											</a>
+
+												<ul>
+													<c:forEach var="state"
+														items="${sessionScope['ejb'].getAllStatesByCountryId(contry.id)}">
+														<li>${state.stateName}
+															<ul>
+																<li>Jquery.php</li>
+															</ul>
+														</li>
+													</c:forEach>
+												</ul>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+							<div class='toast' style='display: none'>
+								<h3 id="msg">${requestScope['msg']}</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- main -->
+
+
+
+	<!-- Script -->
+	<script type="text/javascript" src="js/modernizr.js"></script>
+	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+	<script type="text/javascript" src="js/script.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+	<script type="text/javascript" src="js/enscroll.js"></script>
+	<script type="text/javascript" src="js/grid-filter.js"></script>
+	<script type="text/javascript" src="js/abixTreeList.min.js"></script>
+	<script src="js/jquery-ui/jquery-ui.js"></script>
+
+	<script>
+		$(document).ready(function() {
+			$('#tree').abixTreeList();
+			$("#createCountry").hide();
+			$("#createState").hide();
+			$("#createCity").hide();
+		});
+
+		function crecontxt() {
+			if ($('#creConName').val() != "") {
+				$('#creConbtn').prop("disabled", false);
+			} else {
+				$('#creConbtn').prop("disabled", true);
+			}
+		}
+		function stateNameKeyUp() {
+			if ($('#stateName').val() != "") {
+				$('#stateNameBtn').prop("disabled", false);
+			} else {
+				$('#stateNameBtn').prop("disabled", true);
+			}
+		}
+		$(function() {
+			$("#country").autocomplete({
+				source : function(request, response) {
+					$.ajax({
+						url : "getcountry",
+						dataType : "json",
+						data : {
+							term : request.term
+						},
+						success : function(data) {
+							response($.map(data, function(item) {
+								return {
+									value : item.countryName,
+									id : item.id
+								}
+							}));
+						}
+					});
+				},
+				change : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$('#countryForStatebtn').prop("disabled", true);
+					} else {
+						$("#countryId").val(ui.item.id);
+						$('#countryForStatebtn').prop("disabled", false);
+					}
+				},
+				select : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$('#countryForStatebtn').prop("disabled", true);
+					} else {
+						$("#countryId").val(ui.item.id);
+						$('#countryForStatebtn').prop("disabled", false);
+					}
+				}
+			});
+		});
+		function cityPopup() {
+			$("#createCity").show();
+		}
+		function statePopup() {
+			$("#createState").show();
+		}
+		function countryPopup() {
+			$("#createCountry").show();
+		}
+		function closed() {
+			$("#createCountry").hide();
+			$("#createState").hide();
+			$("#createCity").hide();
+		}
+
+		function deleteCountry(id, c) {
+			y = confirm("Do you want to delete country: " + c);
+			if (y == true) {
+				window.location = "deleteCountry?id=" + id;
+			}
+		}
+	</script>
+</body>
+
+<!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
+</html>
