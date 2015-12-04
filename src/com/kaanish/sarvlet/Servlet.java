@@ -30,7 +30,7 @@ import com.kaanish.model.VendorType;
 import com.kaanish.util.DateConverter;
 
 @WebServlet({ "/login", "/logout", "/addTax", "/addTaxGroup", "/editTax",
-		"/deleteTax", "/editTaxGroup", "/createDept", "/deleteDept",
+		"/deleteTax", "/editTaxGroup","/deleteTaxGroup", "/createDept", "/deleteDept",
 		"/createSubDept", "/deleteSubDept", "/createCategory",
 		"/deleteCategory", "/newVendorType", "/addCountry", "/addState",
 		"/createProduct", "/deleteCountry", "/addVendor", "/addUOM",
@@ -207,6 +207,12 @@ public class Servlet extends HttpServlet {
 				} else {
 					msg = "please select tax.";
 				}
+				break;
+				
+			case "deleteTaxGroup":
+				page = "setupTaxManagement.jsp";
+				ejb.deleteTaxTYpeGroupById(Integer.parseInt(req.getParameter("id")));
+				msg = "Tax Group deleted successfully.";
 				break;
 
 			case "createDept":

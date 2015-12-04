@@ -143,7 +143,7 @@
 															<a href="#">${taxGroup.name}</a>
 													</span>&nbsp;<a href="tax1.jsp?id=${taxGroup.id}"> <img
 															src="img/edit.png" height="16px" width="16px"></a>&nbsp;<a
-														href="#"> <img src="img/cross.png" height="16px"
+														href="deleteTaxGroup?id=${taxGroup.id}"> <img src="img/cross.png" height="16px"
 															width="16px"></a></li>
 
 												</ul>

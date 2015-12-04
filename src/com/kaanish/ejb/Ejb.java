@@ -123,8 +123,8 @@ public class Ejb {
 		em.remove(getTaxById(id));
 	}
 
-	public void deleteTaxTYpeGroup(Tax_Type_Group tax_Type_Group) {
-		em.remove(tax_Type_Group);
+	public void deleteTaxTYpeGroupById(int id) {
+		em.remove(getTax_Type_GroupById(id));
 	}
 
 	public Tax getTaxById(int id) {
