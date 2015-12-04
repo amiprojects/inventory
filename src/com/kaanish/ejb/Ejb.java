@@ -41,27 +41,28 @@ public class Ejb {
 	public Users getUserById(int id) {
 		return em.find(Users.class, id);
 	}
-	
-	/**************for qty unit type***************/
-	public void setQtyUnitType(QtyUnitType qtyUnitType){
+
+	/************** for qty unit type ***************/
+	public void setQtyUnitType(QtyUnitType qtyUnitType) {
 		em.persist(qtyUnitType);
 	}
-	public QtyUnitType getQtyUnitTypeById(int id){
+
+	public QtyUnitType getQtyUnitTypeById(int id) {
 		return em.find(QtyUnitType.class, id);
 	}
-	
-	public List<QtyUnitType> getAllQtyUnitTypes(){
-		TypedQuery<QtyUnitType> q=em.createQuery("select c from QtyUnitType c",QtyUnitType.class);
+
+	public List<QtyUnitType> getAllQtyUnitTypes() {
+		TypedQuery<QtyUnitType> q = em.createQuery("select c from QtyUnitType c", QtyUnitType.class);
 		return q.getResultList();
 	}
-	
-	/**************for UOM type***************/
-	public void setQtyUnit(QtyUnit qtyUnit){
+
+	/************** for UOM type ***************/
+	public void setQtyUnit(QtyUnit qtyUnit) {
 		em.persist(qtyUnit);
 	}
-	
-	public List<QtyUnit> getAllQtyUnit(){
-		TypedQuery<QtyUnit> q=em.createQuery("select c from QtyUnit c",QtyUnit.class);
+
+	public List<QtyUnit> getAllQtyUnit() {
+		TypedQuery<QtyUnit> q = em.createQuery("select c from QtyUnit c", QtyUnit.class);
 		return q.getResultList();
 	}
 
@@ -98,20 +99,18 @@ public class Ejb {
 		TypedQuery<Tax> q = em.createQuery("select c from Tax c", Tax.class);
 		return q.getResultList();
 	}
-	
-	public List<Tax> getAllTaxByTaxTypeGroupId(String name) {
-		Tax_Type_Group tg=getTax_Type_GroupById(name);
-		List<Tax> taxLst=new ArrayList<>();
-		for(Tax tax:getAllTax()){
-			if(tg.getTaxes().contains(tax)){
+
+	public List<Tax> getAllTaxByTaxTypeGroupId(int id) {
+		Tax_Type_Group tg = getTax_Type_GroupById(id);
+		List<Tax> taxLst = new ArrayList<>();
+		for (Tax tax : getAllTax()) {
+			if (tg.getTaxes().contains(tax)) {
 				tax.setAvailable(true);
-			}else{
+			} else {
 				tax.setAvailable(false);
 			}
 			taxLst.add(tax);
 		}
-		
-		
 		return taxLst;
 	}
 
@@ -120,27 +119,27 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	public void deleteTax(String taxName) {
-		em.remove(getTaxById(taxName));
+	public void deleteTax(int id) {
+		em.remove(getTaxById(id));
 	}
 
 	public void deleteTaxTYpeGroup(Tax_Type_Group tax_Type_Group) {
 		em.remove(tax_Type_Group);
 	}
 
-	public Tax getTaxById(String nm) {
-		return em.find(Tax.class, nm);
+	public Tax getTaxById(int id) {
+		return em.find(Tax.class, id);
 	}
 
-	public Tax_Type_Group getTax_Type_GroupById(String name) {
-		return em.find(Tax_Type_Group.class, name);
+	public Tax_Type_Group getTax_Type_GroupById(int id) {
+		return em.find(Tax_Type_Group.class, id);
 	}
-	
-	public void updateTax(Tax tax){
+
+	public void updateTax(Tax tax) {
 		em.merge(tax);
 	}
-	
-	public void updateTaxTypeGroup(Tax_Type_Group tax_Type_Group){
+
+	public void updateTaxTypeGroup(Tax_Type_Group tax_Type_Group) {
 		em.merge(tax_Type_Group);
 	}
 
@@ -187,8 +186,9 @@ public class Ejb {
 		TypedQuery<VendorType> q = em.createQuery("select c from VendorType c", VendorType.class);
 		return q.getResultList();
 	}
-	/******************* foe account details***************************/
-	public void setAccountDetails(AccountDetails accountDetails){
+
+	/******************* foe account details ***************************/
+	public void setAccountDetails(AccountDetails accountDetails) {
 		em.persist(accountDetails);
 	}
 

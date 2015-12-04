@@ -90,11 +90,9 @@
 											<div style="height: 310px; overflow: auto;">
 												<c:forEach items="${sessionScope['ejb'].getAllTax()}"
 													var="tax">
-													<input type="checkbox" value="${tax.name}" name="tax">${tax.name}&nbsp;
-													<a href="#" onclick="editTax('${tax.name}','${tax.value}')"><img
-														src="img/edit.png" height="16px" width="16px"></a>&nbsp;
-													<a href="deleteTax?id=${tax.name}"> <img
-														src="img/cross.png" height="16px" width="16px"></a>
+													<input type="checkbox" value="${tax.id}" name="tax">${tax.name}&nbsp;
+													<a href="#" onclick="editTax('${tax.id}','${tax.name}','${tax.value}')"><img src="img/edit.png" height="16px" width="16px"></a>&nbsp;
+													<a href="deleteTax?id=${tax.id}"> <img src="img/cross.png" height="16px" width="16px"></a>
 													<br>
 												</c:forEach>
 											</div>
@@ -140,16 +138,16 @@
 												items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
 												var="taxGroup">
 												<ul>
-													<li><span onclick="showTaxes('${taxGroup.name}');">
+													<li><span onclick="showTaxes('${taxGroup.id}');">
 
 															<a href="#">${taxGroup.name}</a>
-													</span>&nbsp;<a href="tax1.jsp?id=${taxGroup.name}"> <img
+													</span>&nbsp;<a href="tax1.jsp?id=${taxGroup.id}"> <img
 															src="img/edit.png" height="16px" width="16px"></a>&nbsp;<a
 														href="#"> <img src="img/cross.png" height="16px"
 															width="16px"></a></li>
 
 												</ul>
-												<div id="taxList${taxGroup.name}" class="modal fade"
+												<div id="taxList${taxGroup.id}" class="modal fade"
 													role="dialog" style="top: 25px;">
 													<div class="modal-dialog">
 														<div class="modal-content">
@@ -159,7 +157,7 @@
 															</div>
 															<div class="modal-body">
 																<c:forEach
-																	items="${sessionScope['ejb'].getTax_Type_GroupById(taxGroup.name).taxes}"
+																	items="${sessionScope['ejb'].getTax_Type_GroupById(taxGroup.id).taxes}"
 																	var="tax">
 																	<br>${tax.name} 
 						</c:forEach>
@@ -234,9 +232,9 @@
 			$("#taxList" + tg).modal('show');
 		}
 
-		function editTax(taxnm, taxval) {
+		function editTax(id,taxnm, taxval) {
 
-			$('#id1').val(taxnm);
+			$('#id1').val(id);
 			$('#name1').val(taxnm);
 			$('#value1').val(taxval);
 			$("#editTaxDiv").modal('show');

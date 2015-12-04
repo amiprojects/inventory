@@ -157,7 +157,7 @@ public class Servlet extends HttpServlet {
 					List<Tax> taxlst = new ArrayList<Tax>();
 
 					for (String taxName : taxes) {
-						taxlst.add(ejb.getTaxById(taxName));
+						taxlst.add(ejb.getTaxById(Integer.parseInt(taxName)));
 					}
 
 					tax_type_group.setTaxes(taxlst);
@@ -171,7 +171,7 @@ public class Servlet extends HttpServlet {
 
 			case "editTax":
 				page = "setupTaxManagement.jsp";
-				tax = ejb.getTaxById(req.getParameter("id"));
+				tax = ejb.getTaxById(Integer.parseInt(req.getParameter("id")));
 				tax.setName(req.getParameter("name"));
 				tax.setValue(Float.parseFloat(req.getParameter("value")));
 
@@ -181,14 +181,13 @@ public class Servlet extends HttpServlet {
 
 			case "deleteTax":
 				page = "setupTaxManagement.jsp";
-				ejb.deleteTax(req.getParameter("id"));
+				ejb.deleteTax(Integer.parseInt(req.getParameter("id")));
 				msg = "Tax deleted successfully.";
 				break;
 
 			case "editTaxGroup":
 				page = "setupTaxManagement.jsp";
-				tax_type_group = ejb.getTax_Type_GroupById(req
-						.getParameter("id"));
+				tax_type_group = ejb.getTax_Type_GroupById(Integer.parseInt(req.getParameter("id")));
 				tax_type_group.setName(req.getParameter("name"));
 
 				String[] taxes1 = req.getParameterValues("tax");
@@ -198,7 +197,7 @@ public class Servlet extends HttpServlet {
 					List<Tax> taxlst = new ArrayList<Tax>();
 
 					for (String taxName : taxes1) {
-						taxlst.add(ejb.getTaxById(taxName));
+						taxlst.add(ejb.getTaxById(Integer.parseInt(taxName)));
 					}
 
 					tax_type_group.setTaxes(taxlst);
@@ -349,8 +348,7 @@ public class Servlet extends HttpServlet {
 				accountDetails.setVatNumber(req.getParameter("vendorVATno"));
 				accountDetails.setVatRegistrationDate(DateConverter.getDate(req
 						.getParameter("vendorVATregDate")));
-				accountDetails.setTax_Type_Group(ejb.getTax_Type_GroupById(req
-						.getParameter("taxTypeGroupId")));
+				accountDetails.setTax_Type_Group(ejb.getTax_Type_GroupById(Integer.parseInt(req.getParameter("id"))));
 
 				accountDetails.setVendor(vendor);
 
