@@ -138,11 +138,25 @@ public class Servlet extends HttpServlet {
 			case "addTax":
 				page = "setupTaxManagement.jsp";
 				tax = new Tax();
-				tax.setName(req.getParameter("name"));
-				tax.setValue(Float.parseFloat(req.getParameter("value")));
+				List<Tax> list = new ArrayList<Tax>();
+				list = ejb.getAllTax();
+				int f = 0;
+				for (Tax t : list) {
+					if (t.getName().equals(req.getParameter("name"))) {
+						f = 1;
+						break;
+					}
+				}
+				if (f == 0) {
+					tax.setName(req.getParameter("name"));
+					tax.setValue(Float.parseFloat(req.getParameter("value")));
 
-				ejb.setTax(tax);
-				msg = "Tax added successfully.";
+					ejb.setTax(tax);
+					msg = "Tax added successfully.";
+				} else {
+					msg = "Tax already exists.";
+				}
+
 				break;
 
 			case "addTaxGroup":

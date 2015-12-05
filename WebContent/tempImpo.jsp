@@ -2,6 +2,9 @@
 <link rel="stylesheet" href="bootstrapcdn.css">
 <script src="maxcdn.bootstrapcdn.js"></script>
 
+//jstl
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 //upercase
 <input type="text" style="text-transform: uppercase;">
 

@@ -29,7 +29,9 @@
 
 </head>
 <body>
-
+	<c:if test="${sessionScope['user']==null}">
+		<c:redirect url="index.jsp" />
+	</c:if>
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.html"%>
 		<div class="page-container menu-left" style="height: 100%;">
@@ -74,15 +76,16 @@
 											</tr>
 										</thead>
 										<tbody>
-										<c:set var="count" value="${1}"/>
-										<c:forEach items="${sessionScope['ejb'].getAllQtyUnit()}" var="unit">
-											<tr>
-												<td>${count}</td>
-												<td>${unit.name}</td>
-												<td>${unit.abbreviation}</td>
-											</tr>
-											<c:set var="count" value="${count+1}"/>
-										</c:forEach>
+											<c:set var="count" value="${1}" />
+											<c:forEach items="${sessionScope['ejb'].getAllQtyUnit()}"
+												var="unit">
+												<tr>
+													<td>${count}</td>
+													<td>${unit.name}</td>
+													<td>${unit.abbreviation}</td>
+												</tr>
+												<c:set var="count" value="${count+1}" />
+											</c:forEach>
 										</tbody>
 									</table>
 								</div>
@@ -194,7 +197,8 @@
 						<div class="row">
 							<div class="col-md-3">UOM Description :</div>
 							<div class="col-md-9">
-								<textarea rows="" cols="" name="description" class="form-control"></textarea>
+								<textarea rows="" cols="" name="description"
+									class="form-control"></textarea>
 							</div>
 						</div>
 					</div>

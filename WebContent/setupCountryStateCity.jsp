@@ -46,6 +46,9 @@
 </script>
 </head>
 <body>
+	<c:if test="${sessionScope['user']==null}">
+		<c:redirect url="index.jsp" />
+	</c:if>
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.html"%>
 		<div class="page-container menu-left" style="height: 100%;">
@@ -58,7 +61,7 @@
 							<div class="breadcrumbs" style="height: 39px">
 								<ul>
 									<li><p
-											style="right: -422px; font-size: 20px; position: absolute;">
+											style="right: -700px; font-size: 20px; position: absolute;">
 											<b> Country/State/City</b>
 										</p></li>
 								</ul>
