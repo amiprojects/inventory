@@ -981,7 +981,8 @@
 		$(document)
 				.ready(
 						function() {
-
+							$("#dash").attr("id", "activeSubMenu");
+							$("#sDash").attr("style", "color: red;");
 							$(".carousal-sec").owlCarousel({
 								autoPlay : true,
 								stopOnHover : true,

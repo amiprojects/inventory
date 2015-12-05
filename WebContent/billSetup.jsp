@@ -115,6 +115,10 @@
 
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 	<script>
+		$(document).ready(function() {
+			$("#setup").attr("id", "activeSubMenu");
+			$("#sSetupBill").attr("style", "color: red;");
+		});
 		$(function() {
 			$("#datepicker").datepicker();
 		});

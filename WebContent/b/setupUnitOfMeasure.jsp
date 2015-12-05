@@ -240,7 +240,6 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#setup").attr("id", "activeSubMenu");
-			$("#sSetupUOM").attr("style", "color: red;");
 			if ($('#msg').html() != "") {
 				$('.toast').fadeIn(400).delay(3000).fadeOut(400);
 			}

@@ -1502,6 +1502,8 @@
 
 	<script type="text/javascript">
 		$(document).ready(function() {
+			$("#prodact").attr("id", "activeSubMenu");
+			$("#sProduct").attr("style", "color: red;");
 			$("#divshow").hide();
 			$("#divhide").show();
 		});

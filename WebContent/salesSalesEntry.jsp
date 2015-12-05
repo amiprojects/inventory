@@ -41,6 +41,8 @@
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
+		$("#sales").attr("id", "activeSubMenu");
+		$("#sSalesEntry").attr("style", "color: red;");
 		$("#notpaid").hide();
 		$("#semipaid").hide();
 		$("#fullpaid").hide();

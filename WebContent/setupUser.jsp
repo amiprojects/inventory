@@ -401,7 +401,12 @@
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="js/enscroll.js"></script>
 	<script type="text/javascript" src="js/grid-filter.js"></script>
-
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#setup").attr("id", "activeSubMenu");
+			$("#sSetupUser").attr("style", "color: red;");
+		});
+	</script>
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->

@@ -39,6 +39,8 @@
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
+		$("#setup").attr("id", "activeSubMenu");
+		$("#sSetupCity").attr("style", "color: red;");
 		if ($('#msg').html() != "") {
 			$('.toast').fadeIn(400).delay(3000).fadeOut(400);
 		}
@@ -152,7 +154,8 @@
 								</form>
 								<br> <br> <span><b>Select Country:</b></span><select
 									class="form-control" name="countryid"
-									style="width: 185px; height: 30px;" onchange="stateDispByCountry();">
+									style="width: 185px; height: 30px;"
+									onchange="stateDispByCountry();">
 									<option value="0">select country</option>
 									<c:forEach items="${sessionScope['ejb'].getAllCountry()}"
 										var="contry">
@@ -180,7 +183,7 @@
 											<div class="modal-content">
 												<div class="modal-header">
 													<button type="button" class="close" onclick="closed();">&times;</button>
-													<h4 class="modal-title">State Ctreation</h4>
+													<h4 class="modal-title">City Ctreation</h4>
 												</div>
 												<div class="modal-body">
 													<div class="row">
@@ -218,7 +221,8 @@
 									</div>
 								</form>
 								<br> <br> <span><b>Select Country:</b></span><select
-									class="form-control" name="countryid3" onchange="getStateList();">
+									class="form-control" name="countryid3"
+									onchange="getStateList();">
 									<option value="0">select country</option>
 									<c:forEach items="${sessionScope['ejb'].getAllCountry()}"
 										var="contry">
@@ -251,7 +255,8 @@
 									<ul id="tree">
 										<c:forEach items="${sessionScope['ejb'].getAllCountry()}"
 											var="contry">
-											<li>${contry.countryName}<a href="#" onclick="deleteCountry(${contry.id},'${contry.countryName}')">
+											<li>${contry.countryName}<a href="#"
+												onclick="deleteCountry(${contry.id},'${contry.countryName}')">
 													<img src="img/cross.png" height="16px" width="16px">
 											</a>
 

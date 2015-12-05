@@ -261,6 +261,10 @@
 
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 	<script>
+		$(document).ready(function() {
+			$("#setup").attr("id", "activeSubMenu");
+			$("#sSetupComp").attr("style", "color: red;");
+		});
 		$(function() {
 			$("#datepicker").datepicker();
 		});

@@ -66,6 +66,11 @@ $(document).ready(function(){
 });
 </script> -->
 <script type="text/javascript">
+	$(document).ready(function() {
+		$("#purch").attr("id", "activeSubMenu");
+		$("#sPurchVendor").attr("style", "color: red;");
+	});
+
 	function bankButtonPrev() {
 		$("#bAcc").removeAttr("class");
 		$("#bankAccount").attr("class", "tab-pane fade");

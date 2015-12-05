@@ -40,6 +40,8 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
+		$("#purch").attr("id", "activeSubMenu");
+		$("#sPurchVtype").attr("style", "color: red;");
 		if ($('#msg').html() != "") {
 			$('.toast').fadeIn(400).delay(3000).fadeOut(400);
 		}

@@ -708,11 +708,9 @@
 	<script type="text/javascript" src="js/abixTreeList.min.js"></script>
 	<script>
 		$(document).ready(function() {
+			$("#setup").attr("id", "activeSubMenu");
+			$("#sSetupUgroup").attr("style", "color: red;");
 			$('#tree').abixTreeList();
-		});
-	</script>
-	<script>
-		$(document).ready(function() {
 			$('#tree1').abixTreeList();
 		});
 	</script>

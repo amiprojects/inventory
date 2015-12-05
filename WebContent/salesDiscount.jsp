@@ -201,6 +201,10 @@
 
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 	<script>
+		$(document).ready(function() {
+			$("#sales").attr("id", "activeSubMenu");
+			$("#sSalesDiscount").attr("style", "color: red;");
+		});
 		$(function() {
 			$("#datepicker").datepicker();
 		});
