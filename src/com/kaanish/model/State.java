@@ -54,5 +54,10 @@ public class State {
 	public void setCities(List<City> cities) {
 		this.cities = cities;
 	}
+	
+	@Override
+	public String toString() {
+		return "{\"id\":\""+id+"\", \"stateName\":\""+stateName+"\"}";
+	}
 
 }

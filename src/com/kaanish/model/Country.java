@@ -42,4 +42,9 @@ public class Country {
 		this.states = states;
 	}
 
+	@Override
+	public String toString() {
+		return "{\"id\":\"" + id + "\", \"countryName\":\"" + countryName + "\"}";
+	}
+
 }

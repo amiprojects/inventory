@@ -215,10 +215,12 @@ public class Ejb {
 	}
 
 	public List<City> getCityByName(String name) {
-		TypedQuery<City> q = em.createQuery("select c from City c where c.cityName like :nm", City.class);
-		q.setParameter("nm", "%" + name + "%");
+		TypedQuery<City> q = em.createQuery("select c from City c where UPPER(c.cityName) like :nm", City.class);
+		q.setParameter("nm", "%" + name.toUpperCase() + "%");
 		return q.getResultList();
 	}
+	
+	
 
 	/******************** for State *******************************/
 	public void setState(State state) {
@@ -307,9 +309,9 @@ public class Ejb {
 	}
 
 	public List<Department> getAllDepartmentsByName(String name) {
-		TypedQuery<Department> q = em.createQuery("select s from Department s where s.name LIKE :name",
+		TypedQuery<Department> q = em.createQuery("select s from Department s where UPPER(s.name) LIKE :name",
 				Department.class);
-		q.setParameter("name", "%" + name + "%");
+		q.setParameter("name", "%" + name.toUpperCase() + "%");
 		return q.getResultList();
 	}
 
@@ -343,8 +345,8 @@ public class Ejb {
 	}
 
 	public List<SubDepartment> getAllSubDepartmentsByName(String name) {
-		TypedQuery<SubDepartment> q = em.createQuery("select s from SubDepartment s where s.name LIKE :name", SubDepartment.class);
-		q.setParameter("name", "%" + name + "%");
+		TypedQuery<SubDepartment> q = em.createQuery("select s from SubDepartment s where UPPER(s.name) LIKE :name", SubDepartment.class);
+		q.setParameter("name", "%" + name.toUpperCase() + "%");
 		return q.getResultList();
 	}
 

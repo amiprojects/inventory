@@ -22,13 +22,12 @@ import com.kaanish.model.QtyUnitType;
 import com.kaanish.model.SubDepartment;
 import com.kaanish.util.DepartmentCotractor;
 
-@WebServlet({ "/getcountry", "/addNewUOMtype", "/getUOMtype", "/getAllDepartments" })
+@WebServlet({ "/getcountry", "/addNewUOMtype", "/getUOMtype", "/getAllDepartments", "/getStateByCountry" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	@EJB
 	private Ejb ejb;
-	private String msg;
 	private QtyUnitType qtyUnitType;
 	private String jsonString;
 	private PrintWriter pw;
@@ -43,9 +42,7 @@ public class JsonServlet extends HttpServlet {
 			switch (url) {
 			case "getcountry":
 				pw = resp.getWriter();
-
-				jsonString = new Gson().toJson(ejb.getCountryByName(req.getParameter("term")));
-				pw.print(jsonString);
+				pw.print(ejb.getCountryByName(req.getParameter("term")));
 				break;
 
 			case "addNewUOMtype":
@@ -99,6 +96,11 @@ public class JsonServlet extends HttpServlet {
 
 				pw.print(lst);
 				break;
+				
+			case "getStateByCountry":
+				pw=resp.getWriter();
+				pw.print(ejb.getAllStatesByCountryId(Integer.parseInt(req.getParameter("id"))));
+				break;
 
 			default:
 				break;
@@ -106,7 +108,6 @@ public class JsonServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		req.setAttribute("msg", msg);
 	}
 
 	@Override

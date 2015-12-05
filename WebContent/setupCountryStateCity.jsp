@@ -149,51 +149,17 @@
 								</form>
 								<br> <br> <span><b>Select Country:</b></span><select
 									class="form-control" name="countryid"
-									style="width: 185px; height: 30px;">
+									style="width: 185px; height: 30px;" onchange="stateDispByCountry();">
+									<option value="0">select country</option>
 									<c:forEach items="${sessionScope['ejb'].getAllCountry()}"
 										var="contry">
 										<option value="${contry.id}">${contry.countryName}</option>
 									</c:forEach>
 								</select>
 								<div class="widget-area"
-									style="overflow-y: scroll; height: 292px;">
+									style="overflow-y: scroll; height: 292px;" id="states">
 									<ul>
-										<li>State<a href="#" onclick=""> <img
-												src="img/cross.png" height="16px" width="16px">
-										</a></li>
-										<li>State<a href="#" onclick=""> <img
-												src="img/cross.png" height="16px" width="16px">
-										</a></li>
-										<li>State<a href="#" onclick=""> <img
-												src="img/cross.png" height="16px" width="16px">
-										</a></li>
-										<li>State<a href="#" onclick=""> <img
-												src="img/cross.png" height="16px" width="16px">
-										</a></li>
-										<li>State<a href="#" onclick=""> <img
-												src="img/cross.png" height="16px" width="16px">
-										</a></li>
-										<li>State<a href="#" onclick=""> <img
-												src="img/cross.png" height="16px" width="16px">
-										</a></li>
-										<li>State<a href="#" onclick=""> <img
-												src="img/cross.png" height="16px" width="16px">
-										</a></li>
-										<li>State<a href="#" onclick=""> <img
-												src="img/cross.png" height="16px" width="16px">
-										</a></li>
-										<li>State<a href="#" onclick=""> <img
-												src="img/cross.png" height="16px" width="16px">
-										</a></li>
-										<li>State<a href="#" onclick=""> <img
-												src="img/cross.png" height="16px" width="16px">
-										</a></li>
-										<li>State<a href="#" onclick=""> <img
-												src="img/cross.png" height="16px" width="16px">
-										</a></li>
-										<li>State<a href="#" onclick=""> <img
-												src="img/cross.png" height="16px" width="16px">
-										</a></li>
+										<!-- ***************************state List here displayed******************* -->
 									</ul>
 								</div>
 							</div>
@@ -249,51 +215,19 @@
 									</div>
 								</form>
 								<br> <br> <span><b>Select Country:</b></span><select
-									class="form-control" name="countryid">
+									class="form-control" name="countryid3" onchange="getStateList();">
+									<option value="0">select country</option>
 									<c:forEach items="${sessionScope['ejb'].getAllCountry()}"
 										var="contry">
 										<option value="${contry.id}">${contry.countryName}</option>
 									</c:forEach>
 								</select> <span><b>Select State:</b></span><select class="form-control"
-									name="">
-									<option>state</option>
+									name="sateid" id="statelist1" onchange="getCityList();">
+									<!-- ********************state option**************************** -->
 								</select>
 								<div class="widget-area"
 									style="overflow-y: scroll; height: 233px;">
 									<ul>
-										<li>City<a href="#" onclick=""> <img
-												src="img/cross.png" height="16px" width="16px">
-										</a></li>
-										<li>City<a href="#" onclick=""> <img
-												src="img/cross.png" height="16px" width="16px">
-										</a></li>
-										<li>City<a href="#" onclick=""> <img
-												src="img/cross.png" height="16px" width="16px">
-										</a></li>
-										<li>City<a href="#" onclick=""> <img
-												src="img/cross.png" height="16px" width="16px">
-										</a></li>
-										<li>City<a href="#" onclick=""> <img
-												src="img/cross.png" height="16px" width="16px">
-										</a></li>
-										<li>City<a href="#" onclick=""> <img
-												src="img/cross.png" height="16px" width="16px">
-										</a></li>
-										<li>City<a href="#" onclick=""> <img
-												src="img/cross.png" height="16px" width="16px">
-										</a></li>
-										<li>City<a href="#" onclick=""> <img
-												src="img/cross.png" height="16px" width="16px">
-										</a></li>
-										<li>City<a href="#" onclick=""> <img
-												src="img/cross.png" height="16px" width="16px">
-										</a></li>
-										<li>City<a href="#" onclick=""> <img
-												src="img/cross.png" height="16px" width="16px">
-										</a></li>
-										<li>City<a href="#" onclick=""> <img
-												src="img/cross.png" height="16px" width="16px">
-										</a></li>
 										<li>City<a href="#" onclick=""> <img
 												src="img/cross.png" height="16px" width="16px">
 										</a></li>
@@ -314,8 +248,7 @@
 									<ul id="tree">
 										<c:forEach items="${sessionScope['ejb'].getAllCountry()}"
 											var="contry">
-											<li>${contry.countryName}<a href="#"
-												onclick="deleteCountry(${contry.id},'${contry.countryName}')">
+											<li>${contry.countryName}<a href="#" onclick="deleteCountry(${contry.id},'${contry.countryName}')">
 													<img src="img/cross.png" height="16px" width="16px">
 											</a>
 
@@ -438,6 +371,50 @@
 			if (y == true) {
 				window.location = "deleteCountry?id=" + id;
 			}
+		}
+		function stateDispByCountry(){
+			var a=$('[name="countryid"]').val();
+			if(a!=0){
+				$.ajax({
+					url:"getStateByCountry",
+					dataType:"json",
+					data:{"id":a},
+					success:function(data){
+						$("#states ul").empty();
+						$.each(data,function(index,value){
+							$("#states ul").append('<li>'+value.stateName+'<a href="#" onclick=""> <img src="img/cross.png" height="16px" width="16px"></a></li>');
+						});
+					}
+				});
+			}else{
+				$("#states ul").empty();
+				alert("select a country.");
+			}
+		}
+		
+		function getStateList(){
+			var a=$("[name='countryid3']").val();
+			if(a!=0){
+				$.ajax({
+					url:"getStateByCountry",
+					dataType:"json",
+					data:{"id":a},
+					success:function(data){
+						$("#statelist1").empty();
+						$("#statelist1").append('<option value="0">select state</option>');
+						$.map(data,function(item){
+							$("#statelist1").append('<option value="'+item.id+'">'+item.stateName+'</option>');
+						});
+					}
+				});
+				
+			}else{
+				$("#statelist1").empty();
+			}
+		}
+		function getCityList(){
+			var a=$('[name="sateid"]').val();
+			alert(a);
 		}
 	</script>
 </body>
