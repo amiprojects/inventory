@@ -39,6 +39,8 @@
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
+		$("#setup").attr("id", "activeSubMenu");
+		$("#sSetupCity").attr("style", "color: red;");
 		if ($('#msg').html() != "") {
 			$('.toast').fadeIn(400).delay(3000).fadeOut(400);
 		}
@@ -233,7 +235,7 @@
 								<div class="widget-area"
 									style="overflow-y: scroll; height: 233px;" id="cityList">
 									<ul>
-										
+
 									</ul>
 								</div>
 							</div>
@@ -261,7 +263,9 @@
 														items="${sessionScope['ejb'].getAllStatesByCountryId(contry.id)}">
 														<li>${state.stateName}
 															<ul>
-																<c:forEach items="${sessionScope['ejb'].getCityByState(state.id)}" var="city">
+																<c:forEach
+																	items="${sessionScope['ejb'].getCityByState(state.id)}"
+																	var="city">
 																	<li>${city.cityName}</li>
 																</c:forEach>
 															</ul>
