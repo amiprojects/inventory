@@ -34,7 +34,7 @@ import com.kaanish.util.DateConverter;
 		"/deleteDept", "/createSubDept", "/deleteSubDept", "/createCategory",
 		"/deleteCategory", "/newVendorType", "/addCountry", "/addState",
 		"/createProduct", "/deleteCountry", "/addVendor", "/addUOM",
-		"/editVendorType", "/deleteVendorType" })
+		"/editVendorType", "/deleteVendorType","/addCity" })
 public class Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -315,6 +315,18 @@ public class Servlet extends HttpServlet {
 				ejb.setState(state);
 				msg = "State added successfully.";
 				break;
+				
+			case "addCity":
+				page= "setupCountryStateCity.jsp";
+				city=new City();
+				city.setCityName(req.getParameter("name"));
+				city.setState(ejb.getStateById(Integer.parseInt(req.getParameter("id"))));
+				
+				ejb.setCity(city);				
+				msg="City added susseccfully";
+				break;
+				
+				
 			case "addVendor":
 				page = "purchasingVendor.jsp";
 				vendor = new Vendor();

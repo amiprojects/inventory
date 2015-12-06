@@ -39,8 +39,6 @@
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("#setup").attr("id", "activeSubMenu");
-		$("#sSetupCity").attr("style", "color: red;");
 		if ($('#msg').html() != "") {
 			$('.toast').fadeIn(400).delay(3000).fadeOut(400);
 		}
@@ -172,20 +170,20 @@
 
 
 							<div class="widget-area" style="width: 25%; height: 500px;">
-								<form action="addCity" class="sec">
-									<h3>City</h3>
-									<input class="btn green pull-left" type="button"
-										onclick="cityPopup();" value="Add City">
-									<div id="createCity"
-										style="top: 25px; left: 25px; position: absolute;">
-										<div class="modal-dialog"
-											style="z-index: 1; float: left; width: 200%;">
-											<div class="modal-content">
-												<div class="modal-header">
-													<button type="button" class="close" onclick="closed();">&times;</button>
-													<h4 class="modal-title">City Ctreation</h4>
-												</div>
-												<div class="modal-body">
+								<h3>City</h3>
+								<input class="btn green pull-left" type="button"
+									onclick="cityPopup();" value="Add City">
+								<div id="createCity"
+									style="top: 25px; left: 25px; position: absolute;">
+									<div class="modal-dialog"
+										style="z-index: 1; float: left; width: 200%;">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" onclick="closed();">&times;</button>
+												<h4 class="modal-title">City Ctreation</h4>
+											</div>
+											<div class="modal-body">
+												<form action="addCity" class="sec">
 													<div class="row">
 														<div class="col-md-1">Name:</div>
 														<div class="col-md-11">
@@ -197,29 +195,29 @@
 													<div class="row">
 														<div class="col-md-2">Country:</div>
 														<div class="col-md-10">
-															<input id="country" type="text" name="name"
-																class="form-control"> <input id="countryId"
-																type="hidden" name="id">
+															<input id="country1" type="text" name="name"
+																class="form-control">
 														</div>
 
 														<div class="col-md-2">State:</div>
+
 														<div class="col-md-8">
 															<input id="state" type="text" name="name"
-																class="form-control"> <input id="stateId"
-																type="hidden" name="id">
+																class="form-control" disabled="disabled"> <input
+																id="stateId" type="hidden" name="id">
 														</div>
+
 														<div class="col-md-2">
-															<input id="countryForStatebtn" type="submit"
-																value="create" disabled="disabled"
-																class="btn green pull-right">
+															<input id="cityAddbtn" type="submit" value="create"
+																disabled="disabled" class="btn green pull-right">
 														</div>
 													</div>
-												</div>
-												<div class="modal-footer"></div>
+												</form>
 											</div>
+											<div class="modal-footer"></div>
 										</div>
 									</div>
-								</form>
+								</div>
 								<br> <br> <span><b>Select Country:</b></span><select
 									class="form-control" name="countryid3"
 									onchange="getStateList();">
@@ -233,11 +231,9 @@
 									<!-- ********************state option**************************** -->
 								</select>
 								<div class="widget-area"
-									style="overflow-y: scroll; height: 233px;">
+									style="overflow-y: scroll; height: 233px;" id="cityList">
 									<ul>
-										<li>City<a href="#" onclick=""> <img
-												src="img/cross.png" height="16px" width="16px">
-										</a></li>
+										
 									</ul>
 								</div>
 							</div>
@@ -265,7 +261,9 @@
 														items="${sessionScope['ejb'].getAllStatesByCountryId(contry.id)}">
 														<li>${state.stateName}
 															<ul>
-																<li>Jquery.php</li>
+																<c:forEach items="${sessionScope['ejb'].getCityByState(state.id)}" var="city">
+																	<li>${city.cityName}</li>
+																</c:forEach>
 															</ul>
 														</li>
 													</c:forEach>
@@ -421,9 +419,108 @@
 			}
 		}
 		function getCityList(){
-			var a=$('[name="sateid"]').val();
-			alert(a);
+			var a=$('[name="sateid"]').val();//state id
+			if(a!=0){
+				$.ajax({
+					type:"post",
+					url:"getCity",
+					data:{id:a},
+					dataType:"json",
+					success:function(data){
+						$("#cityList ul").empty();
+						$.each(data,function(index,val){
+							$("#cityList ul").append('<li>'+val.cityName+'<a href="#" onclick=""> <img src="img/cross.png" height="16px" width="16px"></a></li>');
+						});
+					}
+				});
+			}else{
+				alert("please select a state");
+			}
+			
 		}
+		/**********************************for city add pupose******************************/
+		$(function() {
+			$("#country1").autocomplete({
+				source : function(request, response) {
+					$.ajax({
+						url : "getcountry",
+						dataType : "json",
+						data : {
+							term : request.term
+						},
+						success : function(data) {
+							response($.map(data, function(item) {
+								return {
+									value : item.countryName,
+									id : item.id
+								}
+							}));
+						}
+					});
+				},
+				change : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#state").val("");
+						$("#state").prop("disabled",true);
+					} else {
+						$("#state").prop("disabled",false);
+						$("#state").autocomplete({
+							source : function(request, response) {
+								$.ajax({
+									url : "getStateByCountryByStateName",
+									dataType : "json",
+									data : {
+										name : request.term,
+										cid:ui.item.id
+									},
+									success : function(data) {
+										response($.map(data, function(item) {
+											return {
+												value : item.stateName,
+												id : item.id
+											}
+										}));
+									}
+								});
+							},
+							select:function(event,ui){
+									$("#stateId").val(ui.item.id);
+									if($("#cityName").val()!=""){
+										$("#cityAddbtn").prop("disabled",false);
+									}
+								
+							},
+							change:function(event,ui){
+								if(ui.item==null){
+									$(this).val("");
+									$("#stateId").val("");
+									$("#cityAddbtn").prop("disabled",true);
+								}else{
+									$("#stateId").val(ui.item.id);
+									if($("#cityName").val()!=""){
+										$("#cityAddbtn").prop("disabled",false);
+									}
+								}
+							}
+						});
+					}
+				},
+				select:function(event, ui) {
+					if (ui.item != null) {
+						$("#state").prop("disabled",false);
+					}
+				}
+			});
+		});
+		function cityNameKeyUp(){
+			if($("#cityName").val()!="" && $("#stateId").val()!=""){
+				$("#cityAddbtn").prop("disabled",false);
+			}else{
+				$("#cityAddbtn").prop("disabled",true);
+			}
+		}
+		
 	</script>
 </body>
 
