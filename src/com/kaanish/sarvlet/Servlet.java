@@ -239,6 +239,7 @@ public class Servlet extends HttpServlet {
 				ejb.setDepartment(department);
 				msg = "Department added.";
 				break;
+
 			case "deleteDept":
 				page = "setupDepartment.jsp";
 				ejb.deleteDepartmentById(Integer.parseInt(req
@@ -373,10 +374,10 @@ public class Servlet extends HttpServlet {
 
 				vendor.setAddress(req.getParameter("vendorAddress"));
 				vendor.setAliseName(req.getParameter("vendorAlias"));
-				/*
-				 * vendor.setCity(ejb.getCityById(Integer.parseInt(req
-				 * .getParameter("vendorCity"))));
-				 */
+
+				vendor.setCity(ejb.getCityById(Integer.parseInt(req
+						.getParameter("vendorCityId"))));
+
 				vendor.setCompanyName(req.getParameter("vendorCompanyName"));
 				vendor.setEmail(req.getParameter("vendorMail"));
 				vendor.setPh1(req.getParameter("vendorPh1"));
@@ -384,7 +385,8 @@ public class Servlet extends HttpServlet {
 				vendor.setPinCode(req.getParameter("vendorPin"));
 				vendor.setVendorType(ejb.getVendorTypeById(Integer.parseInt(req
 						.getParameter("vendorType"))));
-				// vendor.setUsers();
+				vendor.setUsers(ejb.getUserById((String) httpSession
+						.getAttribute("user")));
 
 				accountDetails.setBankAccountNumber(req
 						.getParameter("bankAccNo"));
@@ -395,10 +397,10 @@ public class Servlet extends HttpServlet {
 				accountDetails.setBankName(req.getParameter("bankName"));
 				accountDetails.setBankRTGCnumber(req.getParameter("bankRTGS"));
 				accountDetails.setBranch(req.getParameter("bankBranch"));
-				/*
-				 * accountDetails.setCity(ejb.getCityById(Integer.parseInt(req
-				 * .getParameter("bankCity"))));
-				 */
+
+				accountDetails.setCity(ejb.getCityById(Integer.parseInt(req
+						.getParameter("bankCity"))));
+
 				accountDetails.setCstNumber(req.getParameter("vendorCSTno"));
 				accountDetails.setCstRegistrationDate(DateConverter.getDate(req
 						.getParameter("vendorCSTregDate")));
@@ -416,7 +418,9 @@ public class Servlet extends HttpServlet {
 						.getParameter("vendorVATregDate")));
 				accountDetails.setTax_Type_Group(ejb
 						.getTax_Type_GroupById(Integer.parseInt(req
-								.getParameter("id"))));
+								.getParameter("taxTypeGroupId"))));
+				accountDetails.setUsers(ejb.getUserById((String) httpSession
+						.getAttribute("user")));
 
 				accountDetails.setVendor(vendor);
 

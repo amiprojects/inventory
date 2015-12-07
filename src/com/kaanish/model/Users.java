@@ -3,19 +3,16 @@ package com.kaanish.model;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
 public class Users {
 	@Id
-	@GeneratedValue
-	private int id;
+	private String userId;
 
 	private String name;
 	private String ph;
-	private String userId;
 
 	private String password;
 
@@ -27,14 +24,8 @@ public class Users {
 	private List<Vendor> vendors;
 	@OneToMany(mappedBy = "users")
 	private List<AccountDetails> accountDetails;
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
+	@OneToMany(mappedBy = "users")
+	private List<Purchase_Entry> purchase_Entries;
 
 	public String getName() {
 		return name;
@@ -90,6 +81,22 @@ public class Users {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public List<AccountDetails> getAccountDetails() {
+		return accountDetails;
+	}
+
+	public void setAccountDetails(List<AccountDetails> accountDetails) {
+		this.accountDetails = accountDetails;
+	}
+
+	public List<Purchase_Entry> getPurchase_Entries() {
+		return purchase_Entries;
+	}
+
+	public void setPurchase_Entries(List<Purchase_Entry> purchase_Entries) {
+		this.purchase_Entries = purchase_Entries;
 	}
 
 }

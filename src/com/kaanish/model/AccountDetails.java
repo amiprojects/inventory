@@ -213,4 +213,12 @@ public class AccountDetails {
 		this.tax_Type_Group = tax_Type_Group;
 	}
 
+	public Users getUsers() {
+		return users;
+	}
+
+	public void setUsers(Users users) {
+		this.users = users;
+	}
+
 }

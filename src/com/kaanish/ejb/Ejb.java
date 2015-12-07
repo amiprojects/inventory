@@ -38,7 +38,7 @@ public class Ejb {
 		em.merge(users);
 	}
 
-	public Users getUserById(int id) {
+	public Users getUserById(String id) {
 		return em.find(Users.class, id);
 	}
 
@@ -262,11 +262,10 @@ public class Ejb {
 	}
 
 	public List<State> getStateByName(String name, int countryId) {
-		TypedQuery<State> q = em
-				.createQuery(
-						"select c from State c where c.country.id=:cid AND c.stateName like :nm",
-						State.class);
-		q.setParameter("nm", "%" + name + "%");
+
+		TypedQuery<State> q = em.createQuery("select c from State c where c.country.id=:cid AND UPPER(c.stateName) like :nm",
+				State.class);
+		q.setParameter("nm", "%" + name.toUpperCase() + "%");
 		q.setParameter("cid", countryId);
 		return q.getResultList();
 

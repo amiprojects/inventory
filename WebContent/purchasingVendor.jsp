@@ -45,7 +45,9 @@
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script type="text/javascript" src="js/enscroll.js"></script>
 <script type="text/javascript" src="js/grid-filter.js"></script>
+<script src="js/jquery-ui/jquery-ui.js"></script>
 
+<link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
 <!-- Styles -->
 <link rel="stylesheet" href="font-awesome-4.2.0/css/font-awesome.css"
 	type="text/css" />
@@ -120,13 +122,74 @@ $(document).ready(function(){
 		$("#vendorAccount").attr("class", "tab-pane fade active in");
 	}
 
-	/* 	$("#bankButonNext").click(function() {
-	 alert("hi");
-	 /* $("#bAcc").removeAttr("class");
-	 $("#vAcc").attr("class", "active");
-	 $("#bankAccount").removeAttr("class");
-	 $("#vendorAccount").attr("class", "tab-pane fade active in");
-	 }); */
+	$(function() {
+		$("#bankCity").autocomplete({
+			source : function(req, resp) {
+				$.ajax({
+					type : "post",
+					url : "getCityByName",
+					data : {
+						name : req.term
+					},
+					dataType : "json",
+					success : function(data) {
+						resp($.map(data, function(item) {
+							return ({
+								value : item.cityName,
+								id : item.id
+							});
+						}));
+					}
+
+				});
+			},
+			change : function(event, ui) {
+				if (ui.item == null) {
+					$(this).val("");
+					$("#bankCityId").val("");
+				} else {
+					$("#bankCityId").val(ui.item.id);
+				}
+			},
+			select : function(event, ui) {
+				$("#bankCityId").val(ui.item.id);
+			}
+		});
+	});
+	$(function() {
+		$("#vendorCity").autocomplete({
+			source : function(req, resp) {
+				$.ajax({
+					type : "post",
+					url : "getCityByName",
+					data : {
+						name : req.term
+					},
+					dataType : "json",
+					success : function(data) {
+						resp($.map(data, function(item) {
+							return ({
+								value : item.cityName,
+								id : item.id
+							});
+						}));
+					}
+
+				});
+			},
+			change : function(event, ui) {
+				if (ui.item == null) {
+					$(this).val("");
+					$("#vendorCityId").val("");
+				} else {
+					$("#vendorCityId").val(ui.item.id);
+				}
+			},
+			select : function(event, ui) {
+				$("#vendorCityId").val(ui.item.id);
+			}
+		});
+	});
 </script>
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
 <script src="js/jquery-ui/jquery-ui.js"></script>
@@ -135,10 +198,6 @@ $(document).ready(function(){
 		$("#datepicker").datepicker({
 			dateFormat : "dd-mm-yy",
 			maxDate : 0
-
-		/* , onSelect : function() {
-				$("#datepicker").prop('readonly', "readonly");
-			} */
 		});
 	});
 
@@ -227,21 +286,15 @@ $(document).ready(function(){
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td>1</td>
-												<td>Name</td>
-												<td>Number</td>
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>Name</td>
-												<td>Number</td>
-											</tr>
-											<tr>
-												<td>3</td>
-												<td>Name</td>
-												<td>Number</td>
-											</tr>
+										<c:set var="c" value="1"/>
+											<c:forEach items="${sessionScope['ejb'].getAllVendors()}" var="vendor">
+												<tr>
+													<td>${c}</td>
+													<td>${vendor.companyName}</td>
+													<td>${vendor.ph1}</td>
+												</tr>
+												<c:set var="c" value="${c+1}"/>
+											</c:forEach>
 										</tbody>
 									</table>
 								</div>
@@ -289,8 +342,9 @@ $(document).ready(function(){
 														<b>City:</b>
 													</div>
 													<div class="col-md-9">
-														<input type="text" class="form-control" name="bankCity"
-															required="required">
+														<input type="text" class="form-control" id="bankCity"
+															required="required"> <input type="hidden"
+															value="" name="bankCity" id="bankCityId">
 													</div>
 													<br>
 													<div class="col-md-3">
@@ -443,7 +497,7 @@ $(document).ready(function(){
 																<c:forEach
 																	items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
 																	var="taxTypeGroup">
-																	<option value="${taxTypeGroup.name}">${taxTypeGroup.name}</option>
+																	<option value="${taxTypeGroup.id}">${taxTypeGroup.name}</option>
 																</c:forEach>
 															</select>
 														</div>
@@ -559,8 +613,10 @@ $(document).ready(function(){
 													<div class="row">
 														<div class="col-md-3">City :</div>
 														<div class="col-md-9">
-															<input type="text" class="form-control" name="vendorCity"
-																required="required">
+															<input type="text" class="form-control cityAuto"
+																name="vendorCity" required="required" id="vendorCity">
+															<input type="hidden" name="vendorCityId"
+																id="vendorCityId">
 														</div>
 													</div>
 													<div class="row">
