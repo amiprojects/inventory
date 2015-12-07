@@ -29,10 +29,12 @@ import com.kaanish.model.Vendor;
 import com.kaanish.model.VendorType;
 import com.kaanish.util.DateConverter;
 
+
 @WebServlet({ "/login", "/logout", "/addTax", "/addTaxGroup", "/editTax", "/deleteTax", "/editTaxGroup",
 		"/deleteTaxGroup", "/createDept", "/deleteDept", "/createSubDept", "/deleteSubDept", "/createCategory",
 		"/deleteCategory", "/newVendorType", "/addCountry", "/addState", "/createProduct", "/deleteCountry",
 		"/addVendor", "/addUOM", "/editVendorType", "/deleteVendorType", "/addCity" })
+
 public class Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -297,6 +299,9 @@ public class Servlet extends HttpServlet {
 				break;
 			case "addState":
 				page = "setupCountryStateCity.jsp";
+				List<State> sList = ejb.getAllStatesByCountryId(Integer
+						.parseInt(req.getParameter("id")));
+				
 				state = new State();
 				state.setStateName(req.getParameter("name"));
 				state.setCountry(ejb.getCountryById(Integer.parseInt(req.getParameter("id"))));
@@ -309,6 +314,7 @@ public class Servlet extends HttpServlet {
 				city = new City();
 				city.setCityName(req.getParameter("name"));
 				city.setState(ejb.getStateById(Integer.parseInt(req.getParameter("id"))));
+
 
 				ejb.setCity(city);
 				msg = "City added susseccfully";
