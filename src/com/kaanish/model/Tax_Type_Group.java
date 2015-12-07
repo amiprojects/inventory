@@ -12,7 +12,8 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Tax_Type_Group {
-	@Id@GeneratedValue
+	@Id
+	@GeneratedValue
 	private int id;
 	private String name;
 
@@ -21,8 +22,10 @@ public class Tax_Type_Group {
 	@ManyToOne
 	@JoinColumn(name = "userId")
 	private Users users;
-	@OneToMany(mappedBy="tax_Type_Group")
+	@OneToMany(mappedBy = "tax_Type_Group")
 	private List<AccountDetails> accountDetails;
+	@OneToMany(mappedBy = "tax_Type_Group")
+	private List<Purchase_Entry> purchase_Entries;
 
 	public String getName() {
 		return name;
@@ -62,6 +65,14 @@ public class Tax_Type_Group {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public List<Purchase_Entry> getPurchase_Entries() {
+		return purchase_Entries;
+	}
+
+	public void setPurchase_Entries(List<Purchase_Entry> purchase_Entries) {
+		this.purchase_Entries = purchase_Entries;
 	}
 
 }

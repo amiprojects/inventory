@@ -283,7 +283,7 @@
 
 
 											<fieldset>
-												<legend> Parts Custom fields </legend>
+												<legend> Products Custom fields </legend>
 
 												<p style="font-size: 14px">(Enter Custom fields values.)</p>
 												<br> <br> <br>
@@ -685,12 +685,7 @@
 	<div id="newMP" class="modal fade" role="dialog">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
-				<!-- <div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">Modal Header</h4>
-				</div>
-				<div cl -->
-				ass="modal-body">
+
 				<div class="widget-area"
 					style="width: 751px; height: 557px; padding: 2px; font-family: arial;">
 
@@ -744,7 +739,7 @@
 						<div id="bU"
 							style="position: position: absolute; top: 3px; right: 2px; width: 560px; height: 187px; font-family: arial; padding: 3px;">
 							<fieldset>
-								<legend>Parts:</legend>
+								<legend>Product:</legend>
 								<form action="#" method="get">
 									<div class="col-md-6">
 										<div>
@@ -989,7 +984,7 @@
 							<legend> Initial inventory tracking </legend>
 
 							<p style="font-size: 14px">(Enter the tracking information
-								for parts being added to inventory.)</p>
+								for Products being added to inventory.)</p>
 							<br> <br> <br>
 							<div class="col-md-6">
 								<div>
@@ -1109,7 +1104,7 @@
 
 
 						<fieldset>
-							<legend> Parts category fields </legend>
+							<legend> Products category fields </legend>
 
 							<p style="font-size: 14px">(Enter category fields values.)</p>
 							<br> <br> <br>

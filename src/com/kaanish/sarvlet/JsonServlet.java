@@ -15,21 +15,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
 import com.kaanish.ejb.Ejb;
 import com.kaanish.model.Department;
 import com.kaanish.model.QtyUnitType;
 import com.kaanish.model.SubDepartment;
 import com.kaanish.util.DepartmentCotractor;
 
-@WebServlet({ "/getcountry", "/addNewUOMtype", "/getUOMtype", "/getAllDepartments", "/getStateByCountry","/getStateByCountryByStateName","/getCity" })
+@WebServlet({ "/getcountry", "/addNewUOMtype", "/getUOMtype", "/getAllDepartments", "/getStateByCountry","/getStateByCountryByStateName","/getCity","/getCityByName" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	@EJB
 	private Ejb ejb;
 	private QtyUnitType qtyUnitType;
-	private String jsonString;
 	private PrintWriter pw;
 	private String name;
 	@Override
@@ -110,6 +108,11 @@ public class JsonServlet extends HttpServlet {
 			case "getCity":
 				pw=resp.getWriter();
 				pw.print(ejb.getCityByState(Integer.parseInt(req.getParameter("id"))));
+				break;
+				
+			case "getCityByName":
+				pw=resp.getWriter();
+				pw.print(ejb.getCityByName(req.getParameter("name")));
 				break;
 
 			default:
