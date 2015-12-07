@@ -1,6 +1,7 @@
 package com.kaanish.sarvlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -34,7 +35,7 @@ import com.kaanish.util.DateConverter;
 		"/deleteDept", "/createSubDept", "/deleteSubDept", "/createCategory",
 		"/deleteCategory", "/newVendorType", "/addCountry", "/addState",
 		"/createProduct", "/deleteCountry", "/addVendor", "/addUOM",
-		"/editVendorType", "/deleteVendorType", "/addCity" })
+		"/editVendorType", "/deleteVendorType", "/addCity", "/deleteState" })
 public class Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -306,32 +307,58 @@ public class Servlet extends HttpServlet {
 				ejb.deleteCountryById(Integer.parseInt(req.getParameter("id")));
 				msg = "country deleted successfully.";
 				break;
+
+			case "deleteState":
+				page = "setupCountryStateCity.jsp";
+				ejb.deleteStateById(Integer.parseInt(req.getParameter("id")));
+				msg = "State deleted successfully.";
+				break;
+
 			case "addState":
 				page = "setupCountryStateCity.jsp";
 				List<State> sList = ejb.getAllStatesByCountryId(Integer
 						.parseInt(req.getParameter("id")));
-				int flag = 0;
-				for (State st : sList){
-					if()
+				int flag1 = 0;
+				for (State st : sList) {
+					if (st.getStateName().equals(req.getParameter("name"))) {
+						flag1 = 1;
+						break;
+					}
 				}
-
-				state = new State();
-				state.setStateName(req.getParameter("name"));
-				state.setCountry(ejb.getCountryById(Integer.parseInt(req
-						.getParameter("id"))));
-				ejb.setState(state);
-				msg = "State added successfully.";
+				if (flag1 == 0) {
+					state = new State();
+					state.setStateName(req.getParameter("name"));
+					state.setCountry(ejb.getCountryById(Integer.parseInt(req
+							.getParameter("id"))));
+					ejb.setState(state);
+					msg = "State added successfully.";
+				} else {
+					msg = "Duplicate entry";
+				}
 				break;
 
 			case "addCity":
 				page = "setupCountryStateCity.jsp";
-				city = new City();
-				city.setCityName(req.getParameter("name"));
-				city.setState(ejb.getStateById(Integer.parseInt(req
-						.getParameter("id"))));
+				List<City> cities = ejb.getCityByState(Integer.parseInt(req
+						.getParameter("id")));
+				int flag2 = 0;
+				for (City c : cities) {
+					if (c.getCityName().equals(req.getParameter("name"))) {
+						flag2 = 1;
+						break;
+					}
+				}
+				if (flag2 == 0) {
+					city = new City();
+					city.setCityName(req.getParameter("name"));
+					city.setState(ejb.getStateById(Integer.parseInt(req
+							.getParameter("id"))));
 
-				ejb.setCity(city);
-				msg = "City added susseccfully";
+					ejb.setCity(city);
+					msg = "City added susseccfully";
+				} else {
+					msg = "Duplicate entry.";
+				}
 				break;
 
 			case "addVendor":

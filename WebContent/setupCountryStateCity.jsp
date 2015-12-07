@@ -382,6 +382,23 @@
 				window.location = "deleteCountry?id=" + id;
 			}
 		}
+		function deleteState(id,s){
+			//alert(a+b);
+			/* y = confirm("Do you want to delete State : " + s);
+			if (y == true) {
+				$.ajax({
+					url:"deleteState",
+					type:"post",
+					data:{id:id},
+					success:function(data){
+						alert(data);
+						window.location = "setupCountryStateCity.jsp";						
+					}
+				}); */
+				//window.location = "deleteState?id=" + id;
+			}
+		}
+		
 		function stateDispByCountry(){
 			var a=$('[name="countryid"]').val();
 			if(a!=0){
@@ -392,7 +409,7 @@
 					success:function(data){
 						$("#states ul").empty();
 						$.each(data,function(index,value){
-							$("#states ul").append('<li>'+value.stateName+'<a href="#" onclick=""> <img src="img/cross.png" height="16px" width="16px"></a></li>');
+							$("#states ul").append('<li>'+value.stateName+'<a href="#" onclick="deleteState(\''+value.id+'\',\''+value.stateName+'\')"> <img src="img/cross.png" height="16px" width="16px"></a></li>');
 						});
 					}
 				});
