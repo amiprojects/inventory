@@ -21,7 +21,9 @@ import com.kaanish.model.QtyUnitType;
 import com.kaanish.model.SubDepartment;
 import com.kaanish.util.DepartmentCotractor;
 
-@WebServlet({ "/getcountry", "/addNewUOMtype", "/getUOMtype", "/getAllDepartments", "/getStateByCountry","/getStateByCountryByStateName","/getCity","/getCityByName" })
+@WebServlet({ "/getcountry", "/addNewUOMtype", "/getUOMtype",
+		"/getAllDepartments", "/getStateByCountry",
+		"/getStateByCountryByStateName", "/getCity", "/getCityByName" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -30,8 +32,10 @@ public class JsonServlet extends HttpServlet {
 	private QtyUnitType qtyUnitType;
 	private PrintWriter pw;
 	private String name;
+
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 		String url = req.getRequestURL().toString();
 		url = url.substring(url.lastIndexOf('/') + 1);
 		resp.setContentType("application/json");
@@ -45,7 +49,8 @@ public class JsonServlet extends HttpServlet {
 
 			case "addNewUOMtype":
 				pw = new PrintWriter(resp.getOutputStream());
-				JsonGeneratorFactory factory = Json.createGeneratorFactory(null);
+				JsonGeneratorFactory factory = Json
+						.createGeneratorFactory(null);
 				JsonGenerator gen = factory.createGenerator(pw);
 				qtyUnitType = new QtyUnitType();
 				name = req.getParameter("typeName");
@@ -59,9 +64,11 @@ public class JsonServlet extends HttpServlet {
 				if (flag == 0) {
 					qtyUnitType.setName(name);
 					ejb.setQtyUnitType(qtyUnitType);
-					gen.writeStartObject().write("response", "success").writeEnd().close();
+					gen.writeStartObject().write("response", "success")
+							.writeEnd().close();
 				} else {
-					gen.writeStartObject().write("response", "already exist").writeEnd().close();
+					gen.writeStartObject().write("response", "already exist")
+							.writeEnd().close();
 				}
 				break;
 
@@ -72,13 +79,13 @@ public class JsonServlet extends HttpServlet {
 
 			case "getAllDepartments":
 				pw = resp.getWriter();
-				name=req.getParameter("name");
+				name = req.getParameter("name");
 				List<DepartmentCotractor> lst = new ArrayList<>();
 				DepartmentCotractor cotractor;
 				for (Department d : ejb.getAllDepartmentsByName(name)) {
 					cotractor = new DepartmentCotractor();
 					cotractor.setId(d.getId());
-					cotractor.setName(d.getName()+"(Department)");
+					cotractor.setName(d.getName() + "(Department)");
 					cotractor.setpName("");
 					cotractor.setStatus(1);
 					lst.add(cotractor);
@@ -86,7 +93,7 @@ public class JsonServlet extends HttpServlet {
 				for (SubDepartment d : ejb.getAllSubDepartmentsByName(name)) {
 					cotractor = new DepartmentCotractor();
 					cotractor.setId(d.getId());
-					cotractor.setName(d.getName()+"(Sub-Department)");
+					cotractor.setName(d.getName() + "(Sub-Department)");
 					cotractor.setpName(d.getDepartment().getName());
 					cotractor.setStatus(2);
 					lst.add(cotractor);
@@ -94,24 +101,27 @@ public class JsonServlet extends HttpServlet {
 
 				pw.print(lst);
 				break;
-				
+
 			case "getStateByCountry":
-				pw=resp.getWriter();
-				pw.print(ejb.getAllStatesByCountryId(Integer.parseInt(req.getParameter("id"))));
+				pw = resp.getWriter();
+				pw.print(ejb.getAllStatesByCountryId(Integer.parseInt(req
+						.getParameter("id"))));
 				break;
-				
+
 			case "getStateByCountryByStateName":
-				pw=resp.getWriter();
-				pw.print(ejb.getStateByName(req.getParameter("name"), Integer.parseInt(req.getParameter("cid"))));
+				pw = resp.getWriter();
+				pw.print(ejb.getStateByName(req.getParameter("name"),
+						Integer.parseInt(req.getParameter("cid"))));
 				break;
-				
+
 			case "getCity":
-				pw=resp.getWriter();
-				pw.print(ejb.getCityByState(Integer.parseInt(req.getParameter("id"))));
+				pw = resp.getWriter();
+				pw.print(ejb.getCityByState(Integer.parseInt(req
+						.getParameter("id"))));
 				break;
-				
+
 			case "getCityByName":
-				pw=resp.getWriter();
+				pw = resp.getWriter();
 				pw.print(ejb.getCityByName(req.getParameter("name")));
 				break;
 
@@ -124,7 +134,8 @@ public class JsonServlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 		doGet(req, resp);
 	}
 }
