@@ -41,27 +41,28 @@ public class Ejb {
 	public Users getUserById(int id) {
 		return em.find(Users.class, id);
 	}
-	
-	/**************for qty unit type***************/
-	public void setQtyUnitType(QtyUnitType qtyUnitType){
+
+	/************** for qty unit type ***************/
+	public void setQtyUnitType(QtyUnitType qtyUnitType) {
 		em.persist(qtyUnitType);
 	}
-	public QtyUnitType getQtyUnitTypeById(int id){
+
+	public QtyUnitType getQtyUnitTypeById(int id) {
 		return em.find(QtyUnitType.class, id);
 	}
-	
-	public List<QtyUnitType> getAllQtyUnitTypes(){
-		TypedQuery<QtyUnitType> q=em.createQuery("select c from QtyUnitType c",QtyUnitType.class);
+
+	public List<QtyUnitType> getAllQtyUnitTypes() {
+		TypedQuery<QtyUnitType> q = em.createQuery("select c from QtyUnitType c", QtyUnitType.class);
 		return q.getResultList();
 	}
-	
-	/**************for UOM type***************/
-	public void setQtyUnit(QtyUnit qtyUnit){
+
+	/************** for UOM type ***************/
+	public void setQtyUnit(QtyUnit qtyUnit) {
 		em.persist(qtyUnit);
 	}
-	
-	public List<QtyUnit> getAllQtyUnit(){
-		TypedQuery<QtyUnit> q=em.createQuery("select c from QtyUnit c",QtyUnit.class);
+
+	public List<QtyUnit> getAllQtyUnit() {
+		TypedQuery<QtyUnit> q = em.createQuery("select c from QtyUnit c", QtyUnit.class);
 		return q.getResultList();
 	}
 
@@ -98,20 +99,18 @@ public class Ejb {
 		TypedQuery<Tax> q = em.createQuery("select c from Tax c", Tax.class);
 		return q.getResultList();
 	}
-	
-	public List<Tax> getAllTaxByTaxTypeGroupId(String name) {
-		Tax_Type_Group tg=getTax_Type_GroupById(name);
-		List<Tax> taxLst=new ArrayList<>();
-		for(Tax tax:getAllTax()){
-			if(tg.getTaxes().contains(tax)){
+
+	public List<Tax> getAllTaxByTaxTypeGroupId(int id) {
+		Tax_Type_Group tg = getTax_Type_GroupById(id);
+		List<Tax> taxLst = new ArrayList<>();
+		for (Tax tax : getAllTax()) {
+			if (tg.getTaxes().contains(tax)) {
 				tax.setAvailable(true);
-			}else{
+			} else {
 				tax.setAvailable(false);
 			}
 			taxLst.add(tax);
 		}
-		
-		
 		return taxLst;
 	}
 
@@ -120,27 +119,27 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	public void deleteTax(String taxName) {
-		em.remove(getTaxById(taxName));
+	public void deleteTax(int id) {
+		em.remove(getTaxById(id));
 	}
 
-	public void deleteTaxTYpeGroup(Tax_Type_Group tax_Type_Group) {
-		em.remove(tax_Type_Group);
+	public void deleteTaxTYpeGroupById(int id) {
+		em.remove(getTax_Type_GroupById(id));
 	}
 
-	public Tax getTaxById(String nm) {
-		return em.find(Tax.class, nm);
+	public Tax getTaxById(int id) {
+		return em.find(Tax.class, id);
 	}
 
-	public Tax_Type_Group getTax_Type_GroupById(String name) {
-		return em.find(Tax_Type_Group.class, name);
+	public Tax_Type_Group getTax_Type_GroupById(int id) {
+		return em.find(Tax_Type_Group.class, id);
 	}
-	
-	public void updateTax(Tax tax){
+
+	public void updateTax(Tax tax) {
 		em.merge(tax);
 	}
-	
-	public void updateTaxTypeGroup(Tax_Type_Group tax_Type_Group){
+
+	public void updateTaxTypeGroup(Tax_Type_Group tax_Type_Group) {
 		em.merge(tax_Type_Group);
 	}
 
@@ -187,8 +186,9 @@ public class Ejb {
 		TypedQuery<VendorType> q = em.createQuery("select c from VendorType c", VendorType.class);
 		return q.getResultList();
 	}
-	/******************* foe account details***************************/
-	public void setAccountDetails(AccountDetails accountDetails){
+
+	/******************* foe account details ***************************/
+	public void setAccountDetails(AccountDetails accountDetails) {
 		em.persist(accountDetails);
 	}
 
@@ -215,8 +215,14 @@ public class Ejb {
 	}
 
 	public List<City> getCityByName(String name) {
-		TypedQuery<City> q = em.createQuery("select c from City c where c.cityName like :nm", City.class);
-		q.setParameter("nm", "%" + name + "%");
+		TypedQuery<City> q = em.createQuery("select c from City c where UPPER(c.cityName) like :nm", City.class);
+		q.setParameter("nm", "%" + name.toUpperCase() + "%");
+		return q.getResultList();
+	}
+
+	public List<City> getCityByState(int id) {
+		TypedQuery<City> q = em.createQuery("select c from City c where c.state.id = :id", City.class);
+		q.setParameter("id", id);
 		return q.getResultList();
 	}
 
@@ -242,9 +248,11 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	public List<State> getStateByName(String name) {
-		TypedQuery<State> q = em.createQuery("select c from State c where c.stateName like :nm", State.class);
+	public List<State> getStateByName(String name, int countryId) {
+		TypedQuery<State> q = em.createQuery("select c from State c where c.country.id=:cid AND c.stateName like :nm",
+				State.class);
 		q.setParameter("nm", "%" + name + "%");
+		q.setParameter("cid", countryId);
 		return q.getResultList();
 
 	}
@@ -284,9 +292,7 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	/******************************
-	 * for Department
-	 *********************************/
+	/************************* for Department *********************/
 	public void setDepartment(Department department) {
 		em.persist(department);
 	}
@@ -308,9 +314,14 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	/******************************
-	 * for Sub Department
-	 *********************************/
+	public List<Department> getAllDepartmentsByName(String name) {
+		TypedQuery<Department> q = em.createQuery("select s from Department s where UPPER(s.name) LIKE :name",
+				Department.class);
+		q.setParameter("name", "%" + name.toUpperCase() + "%");
+		return q.getResultList();
+	}
+
+	/****************** for Sub Department **************************/
 	public void setSubDepartment(SubDepartment subDepartment) {
 		em.persist(subDepartment);
 	}
@@ -339,9 +350,14 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	/******************************
-	 * for Category
-	 *********************************/
+	public List<SubDepartment> getAllSubDepartmentsByName(String name) {
+		TypedQuery<SubDepartment> q = em.createQuery("select s from SubDepartment s where UPPER(s.name) LIKE :name",
+				SubDepartment.class);
+		q.setParameter("name", "%" + name.toUpperCase() + "%");
+		return q.getResultList();
+	}
+
+	/************************** for Category *****************************/
 	public void setCategory(Category category) {
 		em.persist(category);
 	}

@@ -41,5 +41,10 @@ public class Department {
 	public void setSubDepartments(List<SubDepartment> subDepartments) {
 		this.subDepartments = subDepartments;
 	}
+	
+	@Override
+	public String toString() {
+		return "{\"id\":\""+id+"\", \"name\":\""+name+"\"}";
+	}
 
 }

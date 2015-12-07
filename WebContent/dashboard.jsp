@@ -33,14 +33,15 @@
 <!-- Responsive -->
 </head>
 <body>
-	<%-- <c:if test="${sessionScope['user']==null}">
-	<c:redirect url="index.jsp"/>
-</c:if> --%>
+	<c:if test="${sessionScope['user']==null}">
+		<c:redirect url="index.jsp" />
+	</c:if>
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.html"%>
 		<div class="page-container menu-left" style="height: 100%;">
 			<%@include file="includeSidebar.html"%>
-			<div class="content-sec" style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
+			<div class="content-sec"
+				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
 				<div class="breadcrumbs">
 					<ul>
 						<li><a href="dashboard.html" title=""><i
@@ -980,7 +981,8 @@
 		$(document)
 				.ready(
 						function() {
-
+							$("#dash").attr("id", "activeSubMenu");
+							$("#sDash").attr("style", "color: red;");
 							$(".carousal-sec").owlCarousel({
 								autoPlay : true,
 								stopOnHover : true,

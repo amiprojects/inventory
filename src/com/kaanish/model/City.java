@@ -24,9 +24,9 @@ public class City {
 	@OneToMany(mappedBy = "city")
 	private List<Vendor> vendors;
 
-	@OneToMany(mappedBy="city")
+	@OneToMany(mappedBy = "city")
 	private List<AccountDetails> accountDetails;
-	
+
 	public int getId() {
 		return id;
 	}
@@ -67,4 +67,8 @@ public class City {
 		this.accountDetails = accountDetails;
 	}
 
+	@Override
+	public String toString() {
+		return "{\"id\":\"" + id + "\", \"cityName\":\"" + cityName + "\"}";
+	}
 }

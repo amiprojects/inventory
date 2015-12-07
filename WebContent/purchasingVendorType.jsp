@@ -40,6 +40,8 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
+		$("#purch").attr("id", "activeSubMenu");
+		$("#sPurchVtype").attr("style", "color: red;");
 		if ($('#msg').html() != "") {
 			$('.toast').fadeIn(400).delay(3000).fadeOut(400);
 		}
@@ -47,6 +49,9 @@
 </script>
 </head>
 <body>
+	<c:if test="${sessionScope['user']==null}">
+		<c:redirect url="index.jsp" />
+	</c:if>
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.html"%>
 		<div class="page-container menu-left" style="height: 100%;">

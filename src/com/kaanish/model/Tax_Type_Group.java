@@ -3,6 +3,7 @@ package com.kaanish.model;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
@@ -11,7 +12,8 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Tax_Type_Group {
-	@Id
+	@Id@GeneratedValue
+	private int id;
 	private String name;
 
 	@ManyToMany
@@ -52,6 +54,14 @@ public class Tax_Type_Group {
 
 	public void setAccountDetails(List<AccountDetails> accountDetails) {
 		this.accountDetails = accountDetails;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

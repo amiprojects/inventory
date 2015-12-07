@@ -37,6 +37,9 @@
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
 </head>
 <body>
+	<c:if test="${sessionScope['user']==null}">
+		<c:redirect url="index.jsp" />
+	</c:if>
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.html"%>
 		<div class="page-container menu-left" style="height: 100%;">
@@ -112,6 +115,10 @@
 
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 	<script>
+		$(document).ready(function() {
+			$("#setup").attr("id", "activeSubMenu");
+			$("#sSetupBill").attr("style", "color: red;");
+		});
 		$(function() {
 			$("#datepicker").datepicker();
 		});

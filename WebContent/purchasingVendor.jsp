@@ -66,6 +66,11 @@ $(document).ready(function(){
 });
 </script> -->
 <script type="text/javascript">
+	$(document).ready(function() {
+		$("#purch").attr("id", "activeSubMenu");
+		$("#sPurchVendor").attr("style", "color: red;");
+	});
+
 	function bankButtonPrev() {
 		$("#bAcc").removeAttr("class");
 		$("#bankAccount").attr("class", "tab-pane fade");
@@ -159,7 +164,9 @@ $(document).ready(function(){
 
 </head>
 <body>
-
+	<c:if test="${sessionScope['user']==null}">
+		<c:redirect url="index.jsp" />
+	</c:if>
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.html"%>
 		<div class="page-container menu-left" style="height: 100%;">

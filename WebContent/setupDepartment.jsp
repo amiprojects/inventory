@@ -35,8 +35,170 @@
 }
 </style>
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
+<!-- Script -->
+<script type="text/javascript" src="js/modernizr.js"></script>
+<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
+<script type="text/javascript" src="js/bootstrap.js"></script>
+<script type="text/javascript" src="js/enscroll.js"></script>
+<script type="text/javascript" src="js/grid-filter.js"></script>
+
+<script src="js/jquery-ui/jquery-ui.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$("#prnt").autocomplete(
+				{
+					source : function(req, resp) {
+						$.ajax({
+							url : "getAllDepartments",
+							dataType : "json",
+							data : {
+								name : req.term
+							},
+							success : function(data) {
+								resp($.map(data, function(item) {
+									return {
+										value : item.name,
+										id : item.id,
+										status : item.status,
+										pname : item.pName
+									}
+								}));
+							}
+						});
+					},
+					change : function(event, ui) {
+						if (ui.item == null) {
+							$(this).val("");
+							$("#id").val("");
+							$('#status').val("");
+							$("#perentOfSubDept").html("");
+							$("#attr1").prop("disabled", true);
+							$("#attr2").prop("disabled", true);
+							$("#attr3").prop("disabled", true);
+							$("#attr4").prop("disabled", true);
+							$("#attr5").prop("disabled", true);
+							$("#attr6").prop("disabled", true);
+						} else {
+							$("#id").val(ui.item.id);
+							$('#status').val(ui.item.status);
+							if (ui.item.status == "2") {
+								$("#perentOfSubDept").html(
+										'Perent Department: ' + ui.item.pname);
+								$("#attr1").prop("disabled", false);
+								$("#attr2").prop("disabled", false);
+								$("#attr3").prop("disabled", false);
+								$("#attr4").prop("disabled", false);
+								$("#attr5").prop("disabled", false);
+								$("#attr6").prop("disabled", false);
+							} else {
+								$("#perentOfSubDept").html("");
+								$("#attr1").prop("disabled", true);
+								$("#attr2").prop("disabled", true);
+								$("#attr3").prop("disabled", true);
+								$("#attr4").prop("disabled", true);
+								$("#attr5").prop("disabled", true);
+								$("#attr6").prop("disabled", true);
+							}
+						}
+					},
+					select : function(event, ui) {
+						if (ui.item == null) {
+							$(this).val("");
+							$("#id").val("");
+							$('#status').val("");
+							$("#attr1").prop("disabled", true);
+							$("#attr2").prop("disabled", true);
+							$("#attr3").prop("disabled", true);
+							$("#attr4").prop("disabled", true);
+							$("#attr5").prop("disabled", true);
+							$("#attr6").prop("disabled", true);
+						} else {
+							$("#id").val(ui.item.id);
+							$('#status').val(ui.item.status);
+							if (ui.item.status == "2") {
+								$("#perentOfSubDept").html(
+										'Perent Department: ' + ui.item.pname);
+								$("#attr1").prop("disabled", false);
+								$("#attr2").prop("disabled", false);
+								$("#attr3").prop("disabled", false);
+								$("#attr4").prop("disabled", false);
+								$("#attr5").prop("disabled", false);
+								$("#attr6").prop("disabled", false);
+							} else {
+								$("#perentOfSubDept").html("");
+								$("#attr1").prop("disabled", true);
+								$("#attr2").prop("disabled", true);
+								$("#attr3").prop("disabled", true);
+								$("#attr4").prop("disabled", true);
+								$("#attr5").prop("disabled", true);
+								$("#attr6").prop("disabled", true);
+							}
+						}
+					}
+				});
+	});
+	function addBtn() {
+		if ($("#dName").val() != "") {
+			if ($('input[name=parent]:checked').val() == 'n') {
+				$.ajax({
+					type : "post",
+					url : "createDept",
+					data : {
+						name : $("#dName").val()
+					},
+					success : function(data) {
+						window.location = "setupDepartment.jsp";
+					}
+				});
+			} else if ($("#prnt").val() != "") {
+				if ($('#status').val() == "1") {
+					$.ajax({
+						type : "post",
+						url : "createSubDept",
+						data : {
+							name : $("#dName").val(),
+							deptId : $("#id").val()
+						},
+						success : function(data) {
+							window.location = "setupDepartment.jsp";
+						}
+					});
+				} else if ($('#status').val() == "2") {
+					$.ajax({
+						type : "post",
+						url : "createCategory",
+						data : {
+							name : $("#dName").val(),
+							subDeptId : $("#id").val(),
+							attr1 : $("#attr1").val(),
+							attr2 : $("#attr2").val(),
+							attr3 : $("#attr3").val(),
+							attr4 : $("#attr4").val(),
+							attr5 : $("#attr5").val(),
+							attr6 : $("#attr6").val()
+						},
+						success : function(data) {
+							window.location = "setupDepartment.jsp";
+						}
+					});
+				} else {
+					alert("invalid denomination.");
+				}
+			} else {
+				alert("Please enter parent name");
+			}
+		} else {
+			alert("Please enter Department name")
+		}
+
+	}
+</script>
 </head>
 <body>
+	<c:if test="${sessionScope['user']==null}">
+		<c:redirect url="index.jsp" />
+	</c:if>
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.html"%>
 		<div class="page-container menu-left" style="height: 100%;">
@@ -58,30 +220,41 @@
 								</div>
 								<div class="widget-area">
 									<div class="widget-area" style="width: 70%">
-										<div class="widget-area" style="width: 60%">
-											<div class="breadcrumbs">
-												<ul>
-													<li>Add Department</li>
-												</ul>
+										<form action="#">
+											<input type="hidden" value="" id="status"> <input
+												type="hidden" value="" id="id">
+											<div class="widget-area" style="width: 60%">
+												<div class="breadcrumbs">
+													<ul>
+														<li>Add Department</li>
+													</ul>
+												</div>
+												<span>Department name: </span> <input type="text" id="dName"
+													class="form-control"> <span>Parent</span>&nbsp; <input
+													type="radio" name="parent" value="y">&nbsp;Y &nbsp;<input
+													type="radio" name="parent" value="n" checked="checked">&nbsp;N
+												<br> <span>Parent name: </span><span
+													id="perentOfSubDept"></span> <input type="text"
+													class="form-control" id="prnt" disabled="disabled"><br>
+												<input type="button" value="submit" onclick="addBtn()"
+													class="btn green pull-right">
 											</div>
-											<span>Department name: </span> <input type="text"
-												class="form-control"> <span>Parent</span>&nbsp; <input
-												type="radio" name="parent" value="y">&nbsp;Y &nbsp;<input
-												type="radio" name="parent" value="n">&nbsp;N <br>
-											<span>Parent name: </span> <input type="text"
-												class="form-control" id="prnt" disabled="disabled">
-										</div>
-										<div class="widget-area" style="width: 40%">
-											<input type="text" class="form-control"
-												placeholder="Attribute name 1" disabled="disabled"><input type="text"
-												class="form-control" placeholder="Attribute name 2" disabled="disabled"><input
-												type="text" class="form-control"
-												placeholder="Attribute name 3" disabled="disabled"><input type="text"
-												class="form-control" placeholder="Attribute name 4" disabled="disabled"><input
-												type="text" class="form-control"
-												placeholder="Attribute name 5" disabled="disabled"><input type="text"
-												class="form-control" placeholder="Attribute name 6" disabled="disabled">
-										</div>
+											<div class="widget-area" style="width: 40%">
+												<input type="text" class="form-control"
+													placeholder="Attribute name 1" disabled="disabled"
+													id="attr1"><input type="text" class="form-control"
+													placeholder="Attribute name 2" disabled="disabled"
+													id="attr2"><input type="text" class="form-control"
+													placeholder="Attribute name 3" disabled="disabled"
+													id="attr3"><input type="text" class="form-control"
+													placeholder="Attribute name 4" disabled="disabled"
+													id="attr4"><input type="text" class="form-control"
+													placeholder="Attribute name 5" disabled="disabled"
+													id="attr5"><input type="text" class="form-control"
+													placeholder="Attribute name 6" disabled="disabled"
+													id="attr6">
+											</div>
+										</form>
 									</div>
 									<div class="widget-area" style="width: 30%">
 										<!-- <h2 class="widget-title">
@@ -148,7 +321,7 @@
 																							<h4 class="modal-title">Create Category</h4>
 																						</div>
 																						<div class="modal-body">
-																							<form action="createCategory">
+																							<form action="createCategory" method="post">
 																								<input type="hidden" name="subDeptId"
 																									value="${subDept.id}"> <label
 																									for="name">Category name</label> <input
@@ -181,7 +354,7 @@
 																				href="deleteCategory?id=${cat.id}"><span
 																					style="color: red;">X</span></a>
 																				<ul>
-																					<li onclick="createProduct('${cat.id}');">Create
+																					<%-- <li onclick="createProduct('${cat.id}');">Create
 																						Product
 
 																						<div id="createProduct${cat.id}"
@@ -195,7 +368,7 @@
 																										<h4 class="modal-title">Tax list</h4>
 																									</div>
 																									<div class="modal-body">
-																										<form action="createProduct">
+																										<form action="createProduct" method="post">
 																											<span>Product type : </span><select
 																												class="form-control" name="name">
 																												<option value="raw">Raw</option>
@@ -216,7 +389,7 @@
 
 																							</div>
 																						</div>
-																					</li>
+																					</li> --%>
 
 																					<c:forEach var="cat"
 																						items="${sessionScope['ejb'].getAllProductDetailByCategoryId(cat.id)}">
@@ -255,7 +428,7 @@
 					<h4 class="modal-title">Tax list</h4>
 				</div>
 				<div class="modal-body">
-					<form action="createDept">
+					<form action="createDept" method="post">
 						<input type="text" name="name"> <input type="submit"
 							value="add">
 					</form>
@@ -265,15 +438,6 @@
 
 		</div>
 	</div>
-	<!-- Script -->
-	<script type="text/javascript" src="js/modernizr.js"></script>
-	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
-	<script type="text/javascript" src="js/script.js"></script>
-	<script type="text/javascript" src="js/bootstrap.js"></script>
-	<script type="text/javascript" src="js/enscroll.js"></script>
-	<script type="text/javascript" src="js/grid-filter.js"></script>
-
-	<script src="js/jquery-ui/jquery-ui.js"></script>
 
 	<script>
 		$("input:radio[name=parent]").click(function() {
@@ -306,6 +470,8 @@
 	<script type="text/javascript" src="js/abixTreeList.min.js"></script>
 	<script>
 		$(document).ready(function() {
+			$("#setup").attr("id", "activeSubMenu");
+			$("#sSetupDept").attr("style", "color: red;");
 			$('#tree').abixTreeList();
 		});
 	</script>
