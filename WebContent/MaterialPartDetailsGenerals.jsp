@@ -105,12 +105,27 @@
 
 						//$("#step1").show();
 					});
+
+	
+	function increSerial() {
+		$("#step67").modal('show');
+	}
 </script>
 
 
 
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+
+<style>
+#selectedFiles img {
+	max-width: 125px;
+	max-height: 125px;
+	float: left;
+	margin-bottom: 10px;
+}
+</style>
+
 </head>
 <body>
 	<c:if test="${sessionScope['user']==null}">
@@ -683,6 +698,8 @@
 
 	<!-- main -->
 
+
+
 	<div id="newMP" class="modal fade" role="dialog">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
@@ -733,7 +750,37 @@
 						</table>
 
 					</div>
+					
 
+
+					<div id="step67" class="modal fade" role="dialog"
+						style="top: 25px; right: 2px">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+
+									<h4 class="modal-title">Serial Number</h4>
+									<button type="button" id="close2">&times;</button>
+								</div>
+								<div class="modal-body">
+
+									<input type="hidden" name="id" value="" id="id1"> <span>Enter
+										Initial Serial Number: </span> <input type="text"
+										class="form-control" name="name" value="" id="name1">
+
+									<input type="hidden" name="id" value="" id="id1"> <span>Enter
+										Increment Limit: </span> <input type="text" class="form-control"
+										name="name" value="" id="name1"> <input type="submit"
+										class="btn btn-default" value="submit">
+
+								</div>
+								<div class="modal-footer">
+									<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+								</div>
+							</div>
+
+						</div>
+					</div>
 
 					<div id="step1"
 						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial;">
@@ -745,15 +792,15 @@
 									<div class="col-md-6">
 										<div>
 											<label for="exampleInputEmail1">Product Code:</label> <input
-												type="text" name="pcode" placeholder="Enter Product code"
+												type="text" name="productCode" 
 												required class="form-control"><br>
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div>
 											<label for="exampleInputPassword1">Description:</label> <input
-												type="text" name="Description"
-												placeholder="product Description" required
+												type="text" name="description"
+												 required
 												class="form-control"><br>
 										</div>
 
@@ -761,13 +808,13 @@
 
 									<div class="col-md-6">
 										<label for="exampleInputEmail1">Universal Product
-											Code:</label> <input type="text" name="Universal Product Code"
+											Code:</label> <input type="text" name="universalProductCode" required
 											placeholder="" class="form-control"><br>
 									</div>
 									<div class="col-md-6">
 										<div>
-											<label for="exampleInputPassword1">UOM:</label> <select
-												name="uom" style="width: 238px; height: 34px">
+											<label for="exampleInputPassword1">Unit Of Measurement:</label> <select required
+												name="uom" style="width: 245px; height: 34px">
 												<option value="volvo">Volvo</option>
 												<option value="saab">Saab</option>
 												<option value="opel">Opel</option>
@@ -781,15 +828,15 @@
 						</div>
 						<div id="bD"
 							style="position: absolute; top: 225px; right: 2px; width: 560px; height: 180px; font-family: arial;">
-							<fieldset>
-								<legend>Products:</legend>
 
-								<p style="font-size: 14px; margin-left: 342px;">
-									<input type="checkbox" name="salepart" value="salep" id="salepart">This
-									Products is for sale:
-								</p>
-							</fieldset>
+							<h3>Products:</h3>
 
+							<p style="font-size: 14px; margin-right: 342px;">
+								<input type="checkbox" name="isSalesPart" value="salep"
+									id="salepart">This Products is for sale:
+							</p>
+
+							<hr width="100%">
 						</div>
 
 
@@ -822,19 +869,18 @@
 								</thead>
 								<tbody>
 									<tr>
-										<td><input type="checkbox" name="track" value="track"></td>
+										<td><input type="checkbox" name="lotNumber" 
+										onclick="L()" id="ll"
+										value="lotnumber"></td>
 										<td>Lot Number</td>
 										<td>Lot#</td>
 
 									</tr>
-									<tr>
-										<td><input type="checkbox" name="expDate" value="track"></td>
-										<td>Expiration Date</td>
-										<td>Exp Date</td>
 
-									</tr>
 									<tr>
-										<td><input type="checkbox" name="track" value="track"></td>
+										<td><input type="checkbox" name="serialNumber"
+										onclick="S()" id="ss"
+										 value="track"></td>
 										<td>Serial Number</td>
 										<td>Ser#</td>
 
@@ -859,49 +905,111 @@
 
 							<p style="font-size: 14px">(Enter the Products's initial
 								inventory.)</p>
-							<br> <br> <br> <input type="radio" name="do"
-								value="doNotAdd">Do not add initial inventory <br>
+							<br> <br> <input type="radio" name="do" checked
+								id="idd" onclick="o();" value="doNotAdd">Do not add
+							initial inventory <br> <br> <input type="radio"
+								name="do" id="openn" onclick="openn();">Add initial
+							inventory <br>
 							<hr width="100%">
-							<input type="radio" name="do" value="initialInventory">Add
-							initial inventory <br> <br>
-							<div class="col-md-6">
-								<div>
-									<label for="exampleInputEmail1">Location:</label> <input
-										type="text" name="location" required class="form-control"><br>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div>
-									<label for="exampleInputEmail1">Quantity:</label> <input
-										type="number" name="qty" required class="form-control"><br>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div>
-									<label for="exampleInputEmail1">UOM:</label><select name="uom"
-										style="width: 238px; height: 34px">
-										<option value="volvo">km</option>
-										<option value="saab">mm</option>
-										<option value="mercedes">hm</option>
-										<option value="audi">cm</option>
-									</select><br>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div>
-									<label for="exampleInputEmail1">Unit Cost:</label> <input
-										type="text" name="pcode" required class="form-control"><br>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div>
-									<label for="exampleInputEmail1">Date:</label> <input
-										type="text" name="date" id="datepicker1" required
-										class="form-control"><br>
-								</div>
-							</div>
 
 
+
+							<script type="text/javascript">
+								$(document).ready(function() {
+									$("#divshow").hide();
+									$("#divhide").show();
+								});
+								function openn() {
+									if ($("#openn").is(":checked")) {
+										$("#divshow").show();
+										$("#divhide").hide();
+									}
+								}
+								function o() {
+									if ($("#idd").is(":checked")) {
+										$("#divshow").hide();
+										$("#divhide").show();
+									}
+								}
+							</script>
+							
+							
+							<div id="divshow">
+
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="" class="font">Maximum Retail Price :</label> <input type="text" name="mrp"
+											placeholder="" id="" class="form-control">
+									</div>
+									<div class="form-group">
+										<label for="" class="font">Wholesale Price :</label> <input type="text" name="wsp"
+											placeholder="" id="" class="form-control">
+									</div>
+									<div class="form-group">
+										<label for="" class="font">Quantity:</label> <input
+											type="number" placeholder="" id="" class="form-control">
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="" class="font">Unit of Measure :</label> <select name="uom"
+											style="width: 249px; height: 34px">
+											<option value="volvo">km</option>
+											<option value="saab">mm</option>
+											<option value="mercedes">hm</option>
+											<option value="audi">cm</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<label for="" class="font">Unit Cost:</label> <input
+											type="text" placeholder="" id="" class="form-control">
+
+									</div>
+									<div class="form-group">
+										<label for="" class="font">Date:</label> <input type="text"
+											placeholder="" id="datepicker" class="form-control">
+									</div>
+								</div>
+
+							</div>
+
+							<div id="divhide">
+
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="" class="font">Maximum Retail Price :</label> <input type="text" 
+											readonly="readonly" placeholder="" id="" class="form-control">
+									</div>
+									<div class="form-group">
+										<label for="" class="font">Wholesale Price :</label> <input type="text"
+											readonly="readonly" placeholder="" id="" class="form-control">
+									</div>
+									<div class="form-group">
+										<label for="" class="font">Quantity:</label> <input
+											readonly="readonly" type="number" placeholder="" id=""
+											class="form-control">
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="" class="font">Unit of Measure :</label> <select name="uom"
+											style="width: 238px; height: 34px">
+
+										</select>
+									</div>
+									<div class="form-group">
+										<label for="" class="font">Unit Cost:</label> <input
+											readonly="readonly" type="text" placeholder="" id=""
+											class="form-control">
+
+									</div>
+									<div class="form-group">
+										<label for="" class="font">Date:</label> <input type="text"
+											readonly="readonly" placeholder="" id="" class="form-control">
+									</div>
+								</div>
+
+							</div>
 
 
 						</fieldset>
@@ -920,40 +1028,24 @@
 								for Products being added to inventory.)</p>
 							<br> <br> <br>
 							<div class="col-md-6">
-								<div>
+								<div id="lotdiv">
 									<label for="exampleInputEmail1">Lot Number:</label> <input
-										type="number" name="location" required class="form-control"><br>
+										type="text" name="lotNumber" required class="form-control"><br>
 								</div>
 							</div>
+							<div id="serdiv">
 							<div class="col-md-6">
-								<div>
-									<label for="exampleInputEmail1">Expiration Date:</label> <input
-										type="text" id="datepicker" name="location" required
-										class="form-control"><br>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div>
+								<div >
 									<label for="exampleInputEmail1">Serial Number:</label> <input
-										type="number" name="serialN" required class="form-control"><br>
+										type="text" name="serialNumber" required class="form-control"><br>
 								</div>
 							</div>
+
 							<div class="col-md-9">
 								<div>
 									<table id="stream_table"
 										class="table table-striped table-bordered">
-										<!-- 	<thead>
-												<tr>
-													<th>Serial Number</th>
 
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>1</td>
-
-												</tr>
-											</tbody> -->
 										<tr>
 											<td>
 												<table cellspacing="0" cellpadding="1" width="304">
@@ -1013,18 +1105,17 @@
 											</td>
 										</tr>
 									</table>
-
 								</div>
 							</div>
-							<div style="position: absolute; bottom: 124px; left: 425px;">
-								<a href="#"> <img src="img/pus.PNG"
-									style="top: 2px; left: 3px"></a> <a href="#"> <img
-									src="img/sp.PNG" style="top: 2px; left: 3px">
-								</a> <a href="#"><img src="img/hash.PNG"
-									style="top: 2px; left: 3px"> </a> <a href="#"><img
-									src="img/delete.PNG" style="top: 2px; left: 3px"></a>
+							<div style="position: absolute; bottom: 203px; left: 425px;">
+								<a href="#" onclick="addSerial();"> <img
+									src="img/pus.PNG" style="top: 2px; left: 3px"></a> <a
+									onclick="increSerial();" href="#"> <img src="img/hash.PNG"
+									style="top: 2px; left: 3px">
+								</a> <a href="#"><img src="img/delete.PNG"
+									style="top: 2px; left: 3px"></a>
 							</div>
-
+</div>
 
 						</fieldset>
 
@@ -1040,41 +1131,42 @@
 							<legend> Products category fields </legend>
 
 							<p style="font-size: 14px">(Enter category fields values.)</p>
-							<br> <br> <br>
-							<div class="col-md-8">
-								<div>
-									<label for="exampleInputEmail1">Category 1:</label> <input
-										type="text" name="c1" required class="form-control"><br>
-								</div>
-							</div>
-							<div class="col-md-8">
-								<div>
-									<label for="exampleInputEmail1">Category 2:</label> <input
-										type="text" name="c2" required class="form-control"><br>
-								</div>
-							</div>
-							<div class="col-md-8">
-								<div>
-									<label for="exampleInputEmail1">Category 3:</label> <input
-										type="text" name="c3" required class="form-control"><br>
-								</div>
-							</div>
-							<div class="col-md-8">
-								<div>
-									<label for="exampleInputEmail1">Category 4:</label> <input
-										type="text" name="c4" required class="form-control"><br>
-								</div>
-							</div>
 
 
+
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="" class="font">Attribute 1:</label> <input name="a1"
+										type="text" placeholder="" id="" class="form-control">
+								</div>
+								<div class="form-group">
+									<label for="" class="font">Attribute 2:</label> <input name="a2"
+										type="text" placeholder="" id="" class="form-control">
+								</div>
+								<div class="form-group">
+									<label for="" class="font">Attribute 3:</label> <input name="a3"
+										type="number" placeholder="" id="" class="form-control">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="" class="font">Attribute 4:</label> <input name="a4"
+										type="text" placeholder="" id="" class="form-control">
+								</div>
+								<div class="form-group">
+									<label for="" class="font">Attribute 5:</label> <input name="a5"
+										type="text" placeholder="" id="" class="form-control">
+								</div>
+								<div class="form-group">
+									<label for="" class="font">Attribute 6:</label> <input name="a6"
+										type="number" placeholder="" id="" class="form-control">
+								</div>
+							</div>
 						</fieldset>
 
 					</div>
 					<div id="step6"
 						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial;">
-
-
-
 
 						<div class="masonary-grids">
 							<div class="col-md-6">
@@ -1279,34 +1371,25 @@
 							<legend> Product category fields </legend>
 
 							<p style="font-size: 14px">(Enter category fields values.)</p>
-							<br> <br> <br>
-							<div class="col-md-8">
-								<div>
-									<label for="exampleInputEmail1">Category 1:</label> <input
-										type="text" name="c1" required class="form-control"><br>
-								</div>
-							</div>
-							<div class="col-md-8">
-								<div>
-									<label for="exampleInputEmail1">Category 2:</label> <input
-										type="text" name="c2" required class="form-control"><br>
-								</div>
-							</div>
-							<div class="col-md-8">
-								<div>
-									<label for="exampleInputEmail1">Category 3:</label> <input
-										type="text" name="c3" required class="form-control"><br>
-								</div>
-							</div>
-							<div class="col-md-8">
-								<div>
-									<label for="exampleInputEmail1">Category 4:</label> <input
-										type="text" name="c4" required class="form-control"><br>
-								</div>
-							</div>
+
+							<form id="myForm" method="post" enctype="multipart/form-data">
+
+								Files: <input type="file" id="files" name="files" multiple=""
+									accept="image/*"><br>
+
+								<div style="width: 564px; height: 302px; overflow-y: scroll;"
+									id="selectedFiles"></div>
+
+							</form>
+
+
 
 
 						</fieldset>
+
+
+
+
 
 					</div>
 					<div id="step8"
@@ -1314,7 +1397,6 @@
 						<fieldset>
 							<legend> Summary </legend>
 							<form>
-
 								<h4>
 									<u>Products:</u>
 								</h4>
@@ -1380,15 +1462,23 @@
 
 
 					<div id="head"
-						style="position: absolute; top: -1px; left: -3px; width: 754px; height: 50px; padding: 2px;">
+						style="position: absolute; top: -1px; left: -2px; width: 754px; height: 50px; padding: 2px;">
 						<!-- <h3>Create a new Part</h3> -->
 						<div class="breadcrumbs">
 							<ul>
 
-								<li><a title=""><h4>Create a new Products</h4></a></li>
+								<li><a title=""><h4>
+											Create a new Product &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp
+											&nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+											&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+											&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+											&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+											&nbsp &nbsp &nbsp &nbsp
+											<button type="button" class="close" data-dismiss="modal">&times;</button>
+										</h4></a></li>
 							</ul>
 						</div>
-						<!-- breadcrumbs -->
+
 					</div>
 
 					<div class="breadcrumbs">
@@ -1429,13 +1519,23 @@
 	<!-- Script -->
 
 	<script type="text/javascript">
+	
 		$(document).ready(function() {
 			$("#prodact").attr("id", "activeSubMenu");
 			$("#sProduct").attr("style", "color: red;");
 			$("#divshow").hide();
 			$("#divhide").show();
 		});
+		$("#close").click(function() {
+			$("#newMP").modal("hide");
+		});
+		
+		
+		$("#close2").click(function() {
+			$("#step67").modal("hide");
+		});
 	</script>
+
 
 	<script type="text/javascript" src="js/modernizr.js"></script>
 
@@ -1444,6 +1544,37 @@
 	<script type="text/javascript" src="js/enscroll.js"></script>
 	<script type="text/javascript" src="js/grid-filter.js"></script>
 	<script src="js/jquery-ui/jquery-ui.js"></script>
+	
+	<script type="text/javascript">
+								$(document).ready(function() {
+									$("#lotdiv").hide();
+									$("#serdiv").hide();
+								});
+								function L() {
+									if ($("#ll").is(":checked")) {
+										$("#lotdiv").show();
+										
+										
+									}
+									else{
+										$("#lotdiv").hide();
+										
+									}
+								}
+								function S() {
+									if ($("#ss").is(":checked")) {
+										$("#serdiv").show();
+										
+										
+									}
+									
+									else{
+										$("#serdiv").hide();
+										
+									}
+								}
+							</script>
+	
 	<script>
 		$(function() {
 			$("#datepicker").datepicker();
@@ -1452,8 +1583,46 @@
 		$(function() {
 			$("#datepicker1").datepicker();
 		});
+		$(function() {
+			$("#datepicker").datepicker();
+		});
 	</script>
+	<script>
+		var selDiv = "";
 
+		document.addEventListener("DOMContentLoaded", init, false);
+
+		function init() {
+			document.querySelector('#files').addEventListener('change',
+					handleFileSelect, false);
+			selDiv = document.querySelector("#selectedFiles");
+		}
+
+		function handleFileSelect(e) {
+
+			if (!e.target.files || !window.FileReader)
+				return;
+
+			var files = e.target.files;
+			var filesArr = Array.prototype.slice.call(files);
+			filesArr.forEach(function(f) {
+				if (!f.type.match("image.*")) {
+					return;
+				}
+
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					var html = "<img src=\"" + e.target.result + "\">" + f.name
+							+ "<br clear=\"left\"/>";
+					selDiv.innerHTML += html;
+				}
+				reader.readAsDataURL(f);
+
+			});
+
+		}
+		
+	</script>
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->

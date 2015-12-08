@@ -194,7 +194,7 @@
 														<div class="col-md-6">
 															<div>
 																<label for="exampleInputPassword1">CST
-																	Registration:</label> <input type="text" name="email"
+																	Registration:</label> <input type="text" name="cstDate"
 																	id="datepicker" required class="form-control"><br>
 															</div>
 														</div>
@@ -271,5 +271,5 @@
 	</script>
 </body>
 
-<!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
+
 </html>
