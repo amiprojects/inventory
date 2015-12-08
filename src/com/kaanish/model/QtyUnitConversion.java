@@ -10,7 +10,7 @@ public class QtyUnitConversion {
 
 	@EmbeddedId
 	private QtyUnitConversionPK conversionPK;
-	private int conversion;
+	private float conversion;
 
 	@ManyToOne
 	@JoinColumn(name = "qtyUnitId2")
@@ -28,11 +28,11 @@ public class QtyUnitConversion {
 		this.conversionPK = conversionPK;
 	}
 
-	public int getConversion() {
+	public float getConversion() {
 		return conversion;
 	}
 
-	public void setConversion(int conversion) {
+	public void setConversion(float conversion) {
 		this.conversion = conversion;
 	}
 
@@ -51,5 +51,9 @@ public class QtyUnitConversion {
 	public void setQtyUnitId1(QtyUnit qtyUnitId1) {
 		this.qtyUnitId1 = qtyUnitId1;
 	}
-
+	
+	@Override
+	public String toString() {
+		return "{\"qtyUnitId1\":\""+qtyUnitId1.getId()+"\", "+"\"qtyUnitId2\":\""+qtyUnitId2.getId()+"\", \"qtyUnit1Name\":\""+qtyUnitId1.getName()+"\", \"qtyUnit2Name\":\""+qtyUnitId2.getName()+"\", "+"\"conversion\":\""+conversion+"\"}"; 
+	}
 }

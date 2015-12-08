@@ -82,5 +82,10 @@ public class QtyUnit {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
+	@Override
+	public String toString() {
+		return "{\"id\":\""+id+"\", "+"\"name\":\""+name+"\", "+"\"abbreviation\":\""+abbreviation+"\", "+"\"description\":\""+description+"\"}";
+	}
 
 }
