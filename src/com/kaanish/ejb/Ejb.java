@@ -61,13 +61,37 @@ public class Ejb {
 	public void setQtyUnit(QtyUnit qtyUnit) {
 		em.persist(qtyUnit);
 	}
+	
+	public QtyUnit getQtyUnitById(int id){
+		return em.find(QtyUnit.class, id);
+	}
 
 	public List<QtyUnit> getAllQtyUnit() {
 		TypedQuery<QtyUnit> q = em.createQuery("select c from QtyUnit c",
 				QtyUnit.class);
 		return q.getResultList();
 	}
-
+	
+	public List<QtyUnit> getAllQtyUnitByType(int id){
+		TypedQuery<QtyUnit> q=em.createQuery("select c from QtyUnit c where c.qtyUnitType.id=:id",QtyUnit.class);
+		q.setParameter("id", id);
+		return q.getResultList();
+	}
+	
+	public List<QtyUnit> getAllOthersQtyUnitForConversion(int id){
+		QtyUnit qu=getQtyUnitById(id);
+		TypedQuery<QtyUnit> q=em.createQuery("select c from QtyUnit c where c.qtyUnitType.id=:id",QtyUnit.class);
+		q.setParameter("id", qu.getId());
+		List<QtyUnit> lst=new ArrayList<>();
+		for(QtyUnit qtyu:q.getResultList()){
+			if(!qu.getQtyUnitConversions2().contains(qtyu)){
+				lst.add(qtyu);
+			}
+		}
+		return lst;
+	}
+	
+	
 	/*************************** for login purpose *****************/
 	public boolean getCheckLogin(String usr, String pwd) {
 
