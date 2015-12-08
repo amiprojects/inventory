@@ -149,9 +149,10 @@
 																</div>
 
 																<div class="modal-footer">
-																	<input type="submit" class="btn btn-default" value="Save">
-																	<input type="button" class="btn btn-default"
-																		data-dismiss="modal" value="Close">
+																	<input type="submit" class="btn btn-default"
+																		value="Save"> <input type="button"
+																		class="btn btn-default" data-dismiss="modal"
+																		value="Close">
 																</div>
 															</form>
 														</div>
@@ -217,7 +218,7 @@
 												</div>
 
 												<textarea rows="" cols="" id="" class="form-control"
-													readonly="readonly"></textarea>
+													readonly="readonly" id="unitConversionDetails"></textarea>
 
 											</div>
 											<div class="col-md-2">
@@ -429,18 +430,6 @@
 						$("#selectUnit2" + id).html(data.name);
 						unit2 = data.name;
 						$("#unitNameId1").val(data.id);
-						$.ajax({
-							type : "post",
-							url : "getQtyUnitConversion",
-							data:{id:data.id},
-							dataType:"json",
-							success:function(data1){
-								$.map(data,function(item){
-									alert("1 "+item.qtyUnit1Name+" = "+item.conversion+" "+item.qtyUnit2Name+"<br>");
-									$("#conversionDetails").html("1 "+item.qtyUnit1Name+" = "+item.conversion+" "+item.qtyUnit2Name+"<br>");
-								});
-							}
-						});
 					}
 
 				});
@@ -466,6 +455,23 @@
 					$("#conversionDetails").html(
 							"Unit Conversion for " + data.name);
 					unit1 = data.name;
+					$.ajax({
+						type : "post",
+						url : "getQtyUnitConversion",
+						data : {
+							id : data.id
+						},
+						dataType : "json",
+						success : function(data1) {
+							var txt="";
+							$.map(data1, function(item) {
+						
+								txt=txt+"1 " + item.qtyUnit1Name + " = "+ item.conversion + " "	+ item.qtyUnit2Name + "<br>";
+							});
+							alert(txt);
+							document.getElementById("unitConversionDetails").value=txt;
+						}
+					});
 				}
 
 			});
