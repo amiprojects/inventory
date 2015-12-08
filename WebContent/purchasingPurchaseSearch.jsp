@@ -25,7 +25,8 @@
 <!-- Style -->
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
 <!-- Responsive -->
-
+<link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 </head>
 <body>
 	<c:if test="${sessionScope['user']==null}">
@@ -70,15 +71,16 @@
 											<div class="col-md-6">
 												<div class="form-group">
 													<label for="">Search between two dates : (Start
-														Date)</label> <input type="date" placeholder="Enter First Date"
-														id="" class="form-control">
+														Date)</label> <input type="text" placeholder="Enter First Date"
+														id="datepicker" class="form-control">
 												</div>
 											</div>
 
 											<div class="col-md-6">
 												<div class="form-group">
-													<label for="">(End Date)</label> <input type="date"
-														placeholder="Enter last date" id="" class="form-control">
+													<label for="">(End Date)</label> <input type="text"
+														placeholder="Enter last date" id="datepicker1"
+														class="form-control">
 												</div>
 											</div>
 										</div>
@@ -146,6 +148,17 @@
 		$(document).ready(function() {
 			$("#purch").attr("id", "activeSubMenu");
 			$("#sPurchSearch").attr("style", "color: red;");
+		});
+	</script>
+	<script src="js/jquery-ui/jquery-ui.js"></script>
+	<script>
+		$(function() {
+			$("#datepicker").datepicker();
+		});
+	</script>
+	<script>
+		$(function() {
+			$("#datepicker1").datepicker();
 		});
 	</script>
 </body>
