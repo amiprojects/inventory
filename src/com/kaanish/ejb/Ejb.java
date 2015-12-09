@@ -238,11 +238,13 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	public List<Vendor> getVendorsByVendorTypeId(int id) {
+	public List<Vendor> getVendorsByVendorTypeIdByName(int id, String nm) {
 		TypedQuery<Vendor> q = em
-				.createQuery("select c from Vendor c where c.vendorType.Id=:Id",
+				.createQuery(
+						"select c from Vendor c where c.vendorType.id=:Id AND UPPER(c.name) LIKE :name",
 						Vendor.class);
 		q.setParameter("Id", id);
+		q.setParameter("name", "%"+nm.toUpperCase()+"%");
 		return q.getResultList();
 	}
 
@@ -515,7 +517,6 @@ public class Ejb {
 		q.setParameter("Id", id);
 		return q.getResultList();
 	}
-	/*******************for bill setup**************************/
-	
+	/******************* for bill setup **************************/
 
 }

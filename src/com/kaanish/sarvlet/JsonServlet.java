@@ -111,8 +111,10 @@ public class JsonServlet extends HttpServlet {
 
 			case "getVendorByVendorType":
 				pw = resp.getWriter();
-				pw.print(ejb.getVendorsByVendorTypeId(Integer.parseInt(req
-						.getParameter("id"))));
+				pw.print(ejb.getVendorsByVendorTypeIdByName(Integer
+						.parseInt(req.getParameter("id")), req
+						.getParameter("term")));
+
 				break;
 
 			case "getStateByCountryByStateName":

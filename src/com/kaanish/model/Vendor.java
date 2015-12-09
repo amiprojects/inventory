@@ -43,7 +43,18 @@ public class Vendor {
 	private Users users;
 
 	@OneToMany(mappedBy = "vendor")
+	private List<Purchase_Entry> purchaseEntry;
+
+	@OneToMany(mappedBy = "vendor")
 	private List<AccountDetails> accountDetails;
+
+	public List<Purchase_Entry> getPurchaseEntry() {
+		return purchaseEntry;
+	}
+
+	public void setPurchaseEntry(List<Purchase_Entry> purchaseEntry) {
+		this.purchaseEntry = purchaseEntry;
+	}
 
 	public int getId() {
 		return id;
@@ -160,9 +171,11 @@ public class Vendor {
 	@Override
 	public String toString() {
 		return "{\"id\":\"" + id + "\", " + "\"name\":\"" + name + "\", "
-				+ "\"companyName\":\"" + companyName + "\", " + "\"ph1\":\"" + ph1 + "\", "
-				+ "\"ph2\":\"" + ph2 + "\", " + "\"address\":\"" + address + "\", "
-				+ "\"pinCode\":\"" + pinCode + "\", " + "\"email\":\"" + email + "\", " + "\"city\":\"" + city + "\"}";
+				+ "\"companyName\":\"" + companyName + "\", " + "\"ph1\":\""
+				+ ph1 + "\", " + "\"ph2\":\"" + ph2 + "\", " + "\"address\":\""
+				+ address + "\", " + "\"pinCode\":\"" + pinCode + "\", "
+				+ "\"email\":\"" + email + "\", " + "\"city\":\""
+				+ city.getCityName() + "\"}";
 	}
 
 }

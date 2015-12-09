@@ -527,12 +527,28 @@ public class Servlet extends HttpServlet {
 				purchaseProductDetails = new Purchase_Product_Details();
 				rawMaterialsStock = new RawMaterialsStock();
 				readyGoodsStock = new ReadyGoodsStock();
+				dt = new Date();
 
 				purchaseEntry.setChallan_no(Integer.parseInt(req
 						.getParameter("")));
 				purchaseEntry.setVendor_bill_no(Integer.parseInt(req
 						.getParameter("")));
-				//purchaseEntry.set
+				purchaseEntry.setPurchase_date(DateConverter.getDate(req
+						.getParameter("")));
+				purchaseEntry.setVendor(ejb.getVendorById(Integer.parseInt(req
+						.getParameter(""))));
+				purchaseEntry.setUsers(ejb.getUserById(httpSession
+						.getAttribute("user").toString()));
+				purchaseEntry.setEntry_date(dt);
+				purchaseEntry.setSur_charge(Integer.parseInt(req
+						.getParameter("")));
+				purchaseEntry.setTransport_cost(Integer.parseInt(req
+						.getParameter("")));
+				// purchaseEntry.setTax_Type_Group();
+				// purchaseEntry.setBill_setup();
+				
+				purchaseProductDetails.setAttrValue1(req.getParameter(""));
+				
 
 				msg = "Purchase entry was successfull.";
 				break;

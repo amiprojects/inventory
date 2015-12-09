@@ -35,12 +35,25 @@ public class Purchase_Entry {
 	@ManyToOne
 	@JoinColumn(name = "taxGroupID")
 	private Tax_Type_Group tax_Type_Group;
-	
-	@ManyToOne@JoinColumn(name="billSetupId")
+
+	@ManyToOne
+	@JoinColumn(name = "billSetupId")
 	private Bill_setup bill_setup;
+
+	@ManyToOne
+	@JoinColumn(name = "vendorId")
+	private Vendor vendor;
 
 	public int getId() {
 		return id;
+	}
+
+	public Vendor getVendor() {
+		return vendor;
+	}
+
+	public void setVendor(Vendor vendor) {
+		this.vendor = vendor;
 	}
 
 	public void setId(int id) {
@@ -99,7 +112,8 @@ public class Purchase_Entry {
 		return purchase_Product_Details;
 	}
 
-	public void setPurchase_Product_Details(List<Purchase_Product_Details> purchase_Product_Details) {
+	public void setPurchase_Product_Details(
+			List<Purchase_Product_Details> purchase_Product_Details) {
 		this.purchase_Product_Details = purchase_Product_Details;
 	}
 
