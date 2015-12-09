@@ -450,7 +450,7 @@
 					success:function(data){
 						$("#cityList ul").empty();
 						$.each(data,function(index,val){
-							$("#cityList ul").append('<li>'+val.cityName+'<a href="#" onclick=""> <img src="img/cross.png" height="16px" width="16px"></a></li>');
+							$("#cityList ul").append('<li>'+val.cityName+'<a href="#" onclick="cityDelete(\''+val.id+'\')"> <img src="img/cross.png" height="16px" width="16px"></a></li><form action="deleteCity" method="post" id="deleteCity'+val.id+'"><input type="hidden" name="id" value="'+val.id+'"></input></form>');
 						});
 					}
 				});
@@ -459,6 +459,12 @@
 			}
 			
 		}
+		
+		function cityDelete(id){
+			$("#deleteCity"+id).submit();
+		}
+		
+		
 		/**********************************for city add pupose******************************/
 		$(function() {
 			$("#country1").autocomplete({

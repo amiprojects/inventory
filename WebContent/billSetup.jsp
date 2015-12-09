@@ -51,40 +51,170 @@
 						<div class="masonary-grids">
 							<div class="col-md-12">
 								<div class="widget-area">
-									<div class="row">
-										<div class="col-md-3">
-											<label>Challan Suffix:</label>
-										</div>
-										<div class="col-md-9">
-
-											<input type="text" class="form-control">
-										</div>
-
+									<div>
+										<h1>Purchase Invoice Setup</h1>
+									</div>
+									<div class="col-md-3">
+										<label>Purchase Invoice Sample:</label>
 									</div>
 									<br>
-									<div class="row">
-										<div class="col-md-3">
-											<label>Financial year:</label>
-										</div>
-										<div class="col-md-9">
-
-											<input type="text" class="form-control">
-										</div>
+									<div class="col-md-8">
+										<label style="font-size: 30px;" style="text-align:center;">KK&nbsp;/&nbsp;PUR&nbsp;/&nbsp;15-16&nbsp;/&nbsp;12&nbsp;/&nbsp;0091&nbsp;/&nbsp;001</label><br>
+										<img src="img/th.jpg" height="33px" width="33px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<img src="img/th_1.jpg" height="33px" width="33px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<img src="img/th_1.jpg" height="33px" width="33px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<img src="img/th_1.jpg" height="33px" width="33px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<img src="img/th_1.jpg" height="33px" width="33px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<img src="img/th_1.jpg" height="33px" width="33px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<h5 style="text-align:left;">Company Name&nbsp;&nbsp;/&nbsp;&nbsp;Invoice Type&nbsp;&nbsp;/&nbsp;&nbsp;Year&nbsp;&nbsp;/&nbsp;&nbsp;Month&nbsp;&nbsp;/&nbsp;&nbsp;Auto Number&nbsp;&nbsp;/&nbsp;&nbsp;Suffix</h5>
+									</div>
+									<div class="col-md-9">
+										<label>Present Setup:</label> <br> 
+										
+										<input type="text" id="pcomname" style="width: 50px" name="com" value="KK" readonly="readonly"></input>											
+										<input type="text" name="ptype" id="ptype" readonly="readonly" value="PUR" style="width: 50px"></input>
+										<input type="text" readonly="readonly" name="pyear" id="pyear" style="width: 50px" value="15-16"></input>
+										<input type="text" readonly="readonly" name="pmonth" id="pmonth" style="width: 50px" value="12"></input>
+									    <input type="text" readonly="readonly" name="pautonum" id="pautonum" style="width: 50px" value="0091"></input>
+										<input type="text" name="psuffix" id="psuffix" style="width: 50px" value="001" readonly="readonly"></input>
+										
+										<a href="#" onclick="editPurchaseInvoce()"> <img src="img/edit.png"
+											height="29px" width="29px">
+										</a>
 
 									</div>
-									<br>
+
+
+									<br> <br> <br>
 									<div class="row">
 										<div class="col-md-3">
-											<label>Company Initial</label>
-										</div>
-										<div class="col-md-9">
+											<button type="button" class="c-btn medium gray">save</button>
 
-											<input type="text" class="form-control">
 										</div>
+									</div>
+
+
+								</div>
+								<div class="widget-area">
+									<div>
+										<h1>Sales Invoice Setup</h1>
+									</div>
+									<div class="col-md-3">
+										<label>Sales Invoice Sample:</label>
+									</div>
+									<br>
+									<div class="col-md-8">
+										<label style="font-size: 30px;">KK&nbsp;/&nbsp;INV&nbsp;/&nbsp;15-16&nbsp;/&nbsp;12&nbsp;/&nbsp;0091&nbsp;/&nbsp;001</label><br>
+										<img src="img/th.jpg" height="33px" width="33px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<img src="img/th_1.jpg" height="33px" width="33px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<img src="img/th_1.jpg" height="33px" width="33px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<img src="img/th_1.jpg" height="33px" width="33px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<img src="img/th_1.jpg" height="33px" width="33px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<img src="img/th_1.jpg" height="33px" width="33px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<h5 style="text-align:left;">Company Name&nbsp;&nbsp;/&nbsp;&nbsp;Invoice Type&nbsp;&nbsp;/&nbsp;&nbsp;Year&nbsp;&nbsp;/&nbsp;&nbsp;Month&nbsp;&nbsp;/&nbsp;&nbsp;Auto Number&nbsp;&nbsp;/&nbsp;&nbsp;Suffix</h5>
+									</div>
+									<div class="col-md-8">
+										<label>Present Setup:</label> <br> 
+										<input type="text" style="width: 50px" name="scomname" id="scomname" value="KK" readonly="readonly"></input>
+										<input type="text" name="stype" id="stype" readonly="readonly" value="INV" style="width: 50px"></input>
+										<input type="text" readonly="readonly" name="syear" id="syear" style="width: 50px" value="15-16"></input>
+										<input type="text" readonly="readonly" name="smonth" id="smonth" style="width: 50px" value="12"></input>
+										<input type="text" readonly="readonly" name="sautonum" id="sautonum" style="width: 50px" value="0091"></input>
+										<input type="text" name="ssuffix" id="ssuffix" style="width: 50px" value="001" readonly="readonly"></input>		
+										<a href="#" onclick="editSalesInvoice()"> <img src="img/edit.png"
+											height="29px" width="29px">
+										</a>
 
 									</div>
 
+
+									<br> <br> <br>
+									<div class="row">
+										<div class="col-md-3">
+											<button type="button" class="c-btn medium gray">save</button>
+
+										</div>
+									</div>
+
+
+								</div>
+								<div class="widget-area">
+									<div>
+										<h1>Jobber Challan</h1>
+									</div>
+									<div class="col-md-3">
+										<label>Jobber Challan Sample:</label>
+									</div>
 									<br>
+									<div class="col-md-8">
+										<label style="font-size: 30px;">KK&nbsp;/&nbsp;JOB&nbsp;/&nbsp;15-16&nbsp;/&nbsp;12/&nbsp;0091&nbsp;/&nbsp;001</label><br>
+										<img src="img/th.jpg" height="33px" width="33px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<img src="img/th_1.jpg" height="33px" width="33px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<img src="img/th_1.jpg" height="33px" width="33px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<img src="img/th.jpg" height="33px" width="33px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<img src="img/th_1.jpg" height="33px" width="33px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<img src="img/th_1.jpg" height="33px" width="33px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<h5 style="text-align:left;">Company Name&nbsp;&nbsp;/&nbsp;&nbsp;Challan Type&nbsp;&nbsp;/&nbsp;&nbsp;Year&nbsp;&nbsp;/&nbsp;&nbsp;Month&nbsp;&nbsp;/&nbsp;&nbsp;Auto Number&nbsp;&nbsp;/&nbsp;&nbsp;Suffix</h5>
+									</div>
+									<div class="col-md-9">
+										<label>Present Setup:</label> <br> 
+										<input type="text"style="width: 50px" name="jcomname" id="jcomname" value="KK" readonly="readonly"></input>
+										<input type="text" name="jtype" id="jtype" readonly="readonly" value="JOB" style="width: 50px"></input>
+										<input type="text" readonly="readonly" name="jyear" id="jyear" style="width: 50px" value="15-16"></input>
+										<input type="text" readonly="readonly" name="jmonth" id="jmonth" style="width: 50px" value="12"></input>
+										<input type="text"readonly="readonly" name="jautonum" id="jautonum" style="width: 50px" value="0091"></input>	
+										<input type="text" name="jsuffix" id="jsuffix" style="width: 50px" value="001" readonly="readonly"></input>											
+										<a href="#" onclick="editJobberChallan()"> <img src="img/edit.png"
+											height="29px" width="29px">
+										</a>
+
+									</div>
+
+
+									<br> <br> <br>
+									<div class="row">
+										<div class="col-md-3">
+											<button type="button" class="c-btn medium gray">save</button>
+
+										</div>
+									</div>
+
+
+								</div>
+								<div class="widget-area">
+									<div>
+										<h1>Road Challan</h1>
+									</div>
+									<div class="col-md-3">
+										<label>Road Challan Sample:</label>
+									</div>
+									<br>
+									<div class="col-md-8">
+										<label style="font-size: 30px;">KK&nbsp;/&nbsp;ROAD&nbsp;/&nbsp;15-16&nbsp;/&nbsp;12&nbsp;/&nbsp;0091&nbsp;/&nbsp;001</label><br>
+										<img src="img/th.jpg" height="33px" width="33px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<img src="img/th_1.jpg" height="33px" width="33px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<img src="img/th.jpg" height="33px" width="33px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<img src="img/th.jpg" height="33px" width="33px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<img src="img/th.jpg" height="33px" width="33px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<img src="img/th.jpg" height="33px" width="33px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<h5 style="text-align:left;">Company Name&nbsp;&nbsp;/&nbsp;&nbsp;Challan Type&nbsp;&nbsp;/&nbsp;&nbsp;Year&nbsp;&nbsp;/&nbsp;&nbsp;Month&nbsp;&nbsp;/&nbsp;&nbsp;Auto Number&nbsp;&nbsp;/&nbsp;&nbsp;Suffix</h5>
+									</div>
+									<div class="col-md-9">
+										<label>Present Setup:</label> <br> 
+										<input type="text" style="width: 50px" name="rcomname" id="rcomname" value="KK"></input>
+										<input type="text" name="rtype" id="rtype" readonly="readonly" value="ROAD" style="width: 50px"></input>
+										<input type="text" readonly="readonly" name="ryear" id="ryear" style="width: 50px" value="15-16"></input>
+										<input type="text" readonly="readonly" name="rmonth" id="rmonth" style="width: 50px" value="12"></input>
+										<input type="text" readonly="readonly" name="rautonum" id="rautonum" style="width: 50px" value="0091"></input>
+										<input type="text" name="rsuffix" id="rsuffix" style="width: 50px" value="001"></input>
+										<a href="#" onclick="editRoadChallan()"> <img src="img/edit.png"
+											height="29px" width="29px">
+										</a>
+
+									</div>
+
+
+									<br> <br> <br>
 									<div class="row">
 										<div class="col-md-3">
 											<button type="button" class="c-btn medium gray">save</button>
@@ -101,6 +231,8 @@
 			</div>
 		</div>
 	</div>
+
+
 	<!-- main -->
 
 
@@ -122,6 +254,27 @@
 		$(function() {
 			$("#datepicker").datepicker();
 		});
+		
+		function editPurchaseInvoce(){
+			$('#pcomname').prop("readonly",false);
+			$('#psuffix').prop("readonly",false);
+		}
+		
+		function editSalesInvoice(){
+			$('#scomname').prop("readonly",false);
+			$('#ssuffix').prop("readonly",false);
+		}
+		
+		function editJobberChallan(){
+			$('#jcomname').prop("readonly",false);
+			$('#jsuffix').prop("readonly",false);
+		}
+		
+		function editRoadChallan(){
+			$('#rcomname').prop("readonly",false);
+			$('#rsuffix').prop("readonly",false);
+		}
+		
 	</script>
 </body>
 
