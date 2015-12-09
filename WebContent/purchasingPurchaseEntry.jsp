@@ -45,6 +45,18 @@
 			maxDate : 0
 		});
 	});
+	$(function() {
+		$("#datepicker1").datepicker({
+			dateFormat : "dd-mm-yy",
+			maxDate : 0
+		});
+	});
+	$(function() {
+		$("#datepicker2").datepicker({
+			dateFormat : "dd-mm-yy",
+			maxDate : 0
+		});
+	});
 </script>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -193,27 +205,27 @@
 												<div class="form-group">
 													<label for="" class="font">Vendor Bill no :</label> <input
 														type="text" placeholder="" id="" class="form-control"
-														readonly="readonly">
+														readonly="readonly" name="vendorBillNo">
 												</div>
 												<div class="form-group">
 													<label for="" class="font">Purchase challan no. :</label> <input
 														type="text" placeholder="" id="" class="form-control"
-														readonly="readonly">
+														readonly="readonly" name="challanNo">
 												</div>
 												<div class="form-group">
 													<label for="" class="font">Purchase Date :</label> <input
-														type="text" id="datepicker" class="form-control">
+														type="text" id="datepicker" class="form-control" name="purchaseDate">
 												</div>
 											</div>
 										</div>
 										<div class="widget-area">
 											<input type="button" class="btn green pull-right"
 												data-toggle="modal" data-target="#addProduct"
-												value="Add Product" style="width: 100%">
+												value="Add Product" style="width: 100%" onclick="manage();">
 										</div>
 										<table id="purProTable"
 											class="table table-striped table-bordered">
-											<thead style="background-color: #C0C0C0;">
+											<thead style="background-color: #D8D8D8;">
 												<tr>
 													<th>#</th>
 													<th>Product code</th>
@@ -267,13 +279,13 @@
 												<tbody>
 													<tr>
 														<td colspan="2">Transport charge :</td>
-														<td><input type="text" class="form-control"></td>
+														<td><input type="text" class="form-control" name="transportCost"></td>
 													</tr>
 												</tbody>
 												<tbody>
 													<tr>
 														<td colspan="2">Surcharge :</td>
-														<td><input type="text" class="form-control"></td>
+														<td><input type="text" class="form-control" name="surcharge"></td>
 													</tr>
 												</tbody>
 												<thead>
@@ -395,7 +407,7 @@
 										</div>
 										<div class="col-md-5">Payment Date :</div>
 										<div class="col-md-7">
-											<input type="text" id="datepicker" class="form-control">
+											<input type="text" id="datepicker2" class="form-control">
 										</div>
 										<div class="col-md-5">Full Amount :</div>
 										<div class="col-md-7">
@@ -494,15 +506,14 @@
 		</div>
 	</div>
 
-	<div id="addProduct" class="modal fade" role="dialog"
-		style="top: 25px;">
+	<div id="addProduct" class="modal fade" role="dialog" style="top: -110px; overflow-y: hidden; overflow-x: hidden;">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
-				<div class="modal-header">
+				<!-- <div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
 						onclick="close();">&times;</button>
 					<h4 class="modal-title">Add Product</h4>
-				</div>
+				</div> -->
 				<div class="modal-body">
 					<div class="row">
 						<div class="widget-area" style="width: 50%; height: 275px;">
@@ -515,15 +526,15 @@
 							<div class="row">
 								<div class="col-md-5">Department:</div>
 								<div class="col-md-7">
-									<input type="text" class="form-control">
+									<input type="text" class="form-control" readonly="readonly">
 								</div>
 								<div class="col-md-5">Sub-Department:</div>
 								<div class="col-md-7">
-									<input type="text" class="form-control">
+									<input type="text" class="form-control" readonly="readonly">
 								</div>
 								<div class="col-md-5">Category:</div>
 								<div class="col-md-7">
-									<input type="text" class="form-control">
+									<input type="text" class="form-control" readonly="readonly">
 								</div>
 								<div class="col-md-12">
 									<br>
@@ -534,7 +545,7 @@
 								</div>
 								<div class="col-md-5">Product Descripsion:</div>
 								<div class="col-md-7">
-									<input type="text" class="form-control">
+									<input type="text" class="form-control" readonly="readonly">
 								</div>
 							</div>
 						</div>
@@ -548,27 +559,27 @@
 							<div class="row">
 								<div class="col-md-2">Attribute1:</div>
 								<div class="col-md-10">
-									<input type="text" class="form-control">
+									<input type="text" class="form-control" name="attr1">
 								</div>
 								<div class="col-md-2">Attribute2:</div>
 								<div class="col-md-10">
-									<input type="text" class="form-control">
+									<input type="text" class="form-control" name="attr2">
 								</div>
 								<div class="col-md-2">Attribute3:</div>
 								<div class="col-md-10">
-									<input type="text" class="form-control">
+									<input type="text" class="form-control" name="attr3">
 								</div>
 								<div class="col-md-2">Attribute4:</div>
 								<div class="col-md-10">
-									<input type="text" class="form-control">
+									<input type="text" class="form-control" name="attr4">
 								</div>
 								<div class="col-md-2">Attribute5:</div>
 								<div class="col-md-10">
-									<input type="text" class="form-control">
+									<input type="text" class="form-control" name="attr5">
 								</div>
 								<div class="col-md-2">Attribute6:</div>
 								<div class="col-md-10">
-									<input type="text" class="form-control">
+									<input type="text" class="form-control" name="attr6">
 								</div>
 							</div>
 						</div>
@@ -576,7 +587,7 @@
 							<div class="row">
 								<div class="col-md-3">Quantity:</div>
 								<div class="col-md-9">
-									<input type="text" class="form-control">
+									<input type="text" class="form-control" name="qty">
 								</div>
 								<div class="col-md-3">UOM:</div>
 								<div class="col-md-9">
@@ -597,24 +608,24 @@
 								<div class="col-md-2">Wsp:</div>
 								<div class="col-md-10">
 									<input type="text" class="form-control" id="wsp"
-										readonly="readonly">
+										readonly="readonly" name="wsp">
 								</div>
 								<div class="col-md-2">MRP:</div>
 								<div class="col-md-10">
 									<input type="text" class="form-control" id="mrp"
-										readonly="readonly">
+										readonly="readonly" name="mrp">
 								</div>
 							</div>
 						</div>
-						<div class="widget-area" style="width: 100%;">
+						<div class="widget-area" style="width: 100%; top: 0px;">
 							<div class="row">
 								&nbsp; &nbsp; <span>Lot no : &nbsp;</span> <input type="radio"
 									name="lot" value="yesLot">&nbsp; Yes <input
 									type="radio" name="lot" value="noLot">&nbsp; No
 							</div>
-							<br>
+							
 							<div class="row">
-								<div class="col-md-2">Lot No. :</div>
+								<div class="col-md-2"><b>Lot No. :</b></div>
 								<div class="col-md-10">
 									<input type="text" class="form-control" id="lotText"
 										disabled="disabled">
@@ -626,35 +637,36 @@
 									name="serial" value="yesSerial">&nbsp; Yes <input
 									type="radio" name="serial" value="noSerial">&nbsp; No
 							</div>
-							<br>
+							
 							<div class="row">
-								<div class="col-md-2">Initial Serial. :</div>
+								<div class="col-md-2"><b>Initial Serial. :</b></div>
 								<div class="col-md-10">
 									<input type="text" class="form-control" id="serialText"
 										disabled="disabled">
 								</div>
 							</div>
 							<br>
-							<div class="row" style="float: left;">
-								&nbsp; &nbsp; <span>Bar code : &nbsp; </span> <input
+							<div class="row"> <div style="float: left;">
+								&nbsp; &nbsp; <span><b>Bar code :</b> &nbsp; </span> <input
 									type="radio" name="bar" value="yesBar">&nbsp; Yes <input
-									type="radio" name="bar" value="noBar">&nbsp; No
-							</div>
+									type="radio" name="bar" value="noBar">&nbsp; No</div>
+							
+							<div style="float: right; right: 25px;"><input type="button" class="btn btn-default" value="Add"
+						data-toggle="modal" onclick="anotherShow();"> <input
+						type="button" class="btn btn-default" data-dismiss="modal"
+						value="Close" id="close"></div>
 						</div>
 					</div>
 				</div>
-				<div class="modal-footer">
-					<input type="button" class="btn btn-default" value="Add"
-						data-toggle="modal" onclick="anotherShow();"> <input
-						type="button" class="btn btn-default" data-dismiss="modal"
-						value="Close" id="close">
-				</div>
+				<!-- <div class="modal-footer">
+					
+				</div> -->
 			</div>
 
 		</div>
-	</div>
+	</div></div>
 
-	<div id="another" class="modal fade" role="dialog" style="top: 25px;">
+	<div id="another" class="modal fade" role="dialog" style="top: -25px;">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<!-- <div class="modal-header">
@@ -669,14 +681,14 @@
 							</div>
 							<br>
 							<div class="row">
-								<button type="button" class="btn btn-default">Yes</button>
-								<button type="button" class="btn btn-default">No</button>
+								<button type="button" class="btn btn-default" id="yesP">Yes</button>
+								<button type="button" class="btn btn-default" id="noP">No</button>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" id="close1">Close</button>
+					<button type="button" class="btn btn-default" id="close1" onclick="close1();">Close</button>
 				</div>
 			</div>
 
@@ -731,9 +743,24 @@
 
 		$("#close").click(function() {
 			$("#addProduct").modal("hide");
+			$("#header").show();
 		});
-		$("#close1").click(function() {
+		/* $("#close1").click(function() {
 			$("#another").modal("hide");
+		}); */
+		function close1(){
+			$("#another").modal("hide");
+		}
+		function manage(){
+			$("#header").hide();		
+		}
+		$("#yesP").click(function(){
+			$("#another").modal("hide");
+		});
+		$("#noP").click(function(){
+			$("#another").modal("hide");
+			$("#addProduct").modal("hide");
+			$("#header").show();
 		});
 		var i = 1;
 		function anotherShow() {
