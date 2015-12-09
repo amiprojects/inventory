@@ -20,6 +20,8 @@ import com.kaanish.model.QtyUnit;
 import com.kaanish.model.QtyUnitConversion;
 import com.kaanish.model.QtyUnitConversionPK;
 import com.kaanish.model.QtyUnitType;
+import com.kaanish.model.RawMaterialsStock;
+import com.kaanish.model.ReadyGoodsStock;
 import com.kaanish.model.State;
 import com.kaanish.model.SubDepartment;
 import com.kaanish.model.Tax;
@@ -472,5 +474,48 @@ public class Ejb {
 		q.setParameter("Id", id);
 		return q.getResultList();
 	}
-
+	/********************* for RawMaterial Stock ************************/
+	
+	
+	public void setRawMaterialsStocktDetail(RawMaterialsStock rawMaterialsStock) {
+		em.persist(rawMaterialsStock);
+	}
+	
+	public RawMaterialsStock getRawMaterialStocktDetailById(int id) {
+		return em.find(RawMaterialsStock.class, id);
+	}
+	public void deleteRawMaterialStockDetailById(int id) {
+		em.remove(getProductDetailById(id));
+	}
+	public void updateRawMaterialStockDetail(ProductDetail rawMaterialsStock) {
+		em.merge(rawMaterialsStock);
+	}
+	public List<RawMaterialsStock> getAllRawMaterialStockDetail() {
+		TypedQuery<RawMaterialsStock> q = em.createQuery("select c from RawMaterialsStock c", RawMaterialsStock.class);
+		return q.getResultList();
+	}
+	
+	
+	/********************* for ReadyGood Stock ************************/
+	
+	
+	
+	public void setReadyGoodsStockDetail(ReadyGoodsStock readyGoodsStock) {
+		em.persist(readyGoodsStock);
+	}
+	
+	public ReadyGoodsStock getReadyGoodsStocktDetailById(int id) {
+		return em.find(ReadyGoodsStock.class, id);
+	}
+	public void deleteReadyGoodsStockDetailById(int id) {
+		em.remove(getReadyGoodsStocktDetailById(id));
+	}
+	public void updateRawMaterialStockDetail(ReadyGoodsStock readyGoodsStock) {
+		em.merge(readyGoodsStock);
+	}
+	public List<ReadyGoodsStock> getAllRawMaterialsStockDetail() {
+		TypedQuery<ReadyGoodsStock> q = em.createQuery("select c from ReadyGoodsStock c", ReadyGoodsStock.class);
+		return q.getResultList();
+	}
+	
 }
