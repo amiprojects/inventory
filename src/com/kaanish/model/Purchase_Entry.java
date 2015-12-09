@@ -35,6 +35,9 @@ public class Purchase_Entry {
 	@ManyToOne
 	@JoinColumn(name = "taxGroupID")
 	private Tax_Type_Group tax_Type_Group;
+	
+	@ManyToOne@JoinColumn(name="billSetupId")
+	private Bill_setup bill_setup;
 
 	public int getId() {
 		return id;
@@ -114,6 +117,14 @@ public class Purchase_Entry {
 
 	public void setTax_Type_Group(Tax_Type_Group tax_Type_Group) {
 		this.tax_Type_Group = tax_Type_Group;
+	}
+
+	public Bill_setup getBill_setup() {
+		return bill_setup;
+	}
+
+	public void setBill_setup(Bill_setup bill_setup) {
+		this.bill_setup = bill_setup;
 	}
 
 }

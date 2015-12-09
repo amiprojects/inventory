@@ -515,5 +515,7 @@ public class Ejb {
 		q.setParameter("Id", id);
 		return q.getResultList();
 	}
+	/*******************for bill setup**************************/
+	
 
 }
