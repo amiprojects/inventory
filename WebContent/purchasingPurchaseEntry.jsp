@@ -37,6 +37,15 @@
 
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+<script src="js/jquery-ui/jquery-ui.js"></script>
+<script>
+	$(function() {
+		$("#datepicker").datepicker({
+			dateFormat : "dd-mm-yy",
+			maxDate : 0
+		});
+	});
+</script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#purch").attr("id", "activeSubMenu");
@@ -148,20 +157,25 @@
 									</ul>
 								</div>
 								<div class="col-md-12">
-									<form role="form" class="sec">
+									<form role="form" class="sec" method="post"
+										action="purchaseEntry">
 										<div class="widget-area">
 											<div class="col-md-6">
 												<div class="col-md-12">
 													&nbsp; &nbsp; &nbsp; <b class="font">Vendor Type :</b> <select
-														class="form-control">
-														<option>Select vendor type</option>
-														<option>Direct</option>
-														<option>Agent</option>
+														class="form-control" name="vendorType"
+														onchange="getVendorNameByType();">
+														<option value="0">Select Vendor Type</option>
+														<c:forEach
+															items="${sessionScope['ejb'].getAllVendorType()}"
+															var="vType">
+															<option value="${vType.id}">${vType.type}</option>
+														</c:forEach>
 													</select>
 												</div>
 												<div class="col-md-12">
 													&nbsp; &nbsp; &nbsp; <b class="font">Vendor Name :</b> <input
-														type="text" class="form-control">
+														type="text" class="form-control" id="vName" name="vName">
 												</div>
 												<div class="col-md-12">
 													<!-- <div class="breadcrumbs">
@@ -178,11 +192,13 @@
 											<div class="col-md-6">
 												<div class="form-group">
 													<label for="" class="font">Vendor Bill no :</label> <input
-														type="number" placeholder="" id="" class="form-control">
+														type="text" placeholder="" id="" class="form-control"
+														readonly="readonly">
 												</div>
 												<div class="form-group">
 													<label for="" class="font">Purchase challan no. :</label> <input
-														type="number" placeholder="" id="" class="form-control">
+														type="text" placeholder="" id="" class="form-control"
+														readonly="readonly">
 												</div>
 												<div class="form-group">
 													<label for="" class="font">Purchase Date :</label> <input
@@ -193,11 +209,11 @@
 										<div class="widget-area">
 											<input type="button" class="btn green pull-right"
 												data-toggle="modal" data-target="#addProduct"
-												value="Add Product">
+												value="Add Product" style="width: 100%">
 										</div>
-										<table id="stream_table"
+										<table id="purProTable"
 											class="table table-striped table-bordered">
-											<thead>
+											<thead style="background-color: #C0C0C0;">
 												<tr>
 													<th>#</th>
 													<th>Product code</th>
@@ -210,11 +226,11 @@
 											<tbody>
 												<tr>
 													<td>1</td>
-													<td>---</td>
-													<td>---</td>
-													<td>---</td>
-													<td>---</td>
-													<td>---</td>
+													<td>#123ABC</td>
+													<td>NA</td>
+													<td>A</td>
+													<td>5</td>
+													<td>20</td>
 												</tr>
 											</tbody>
 										</table>
@@ -224,8 +240,8 @@
 												<thead>
 													<tr>
 														<td colspan="2">Sub Total :</td>
-														<td><input type="number" class="form-control"
-															placeholder="0.0" readonly="readonly"></td>
+														<td><input type="text" class="form-control"
+															id="subTotal" value="0.0" readonly="readonly"></td>
 													</tr>
 												</thead>
 												<tbody>
@@ -235,34 +251,35 @@
 																<option>TAX type</option>
 																<option>TAX type</option>
 																<option>TAX type</option>
-																<option>TAX type</option>
 														</select></td>
 														<td>%</td>
-														<td><input type="number" class="form-control"></td>
+														<td><input type="text" class="form-control"
+															readonly="readonly" value="0.0"></td>
 													</tr>
 												</tbody>
 												<tbody>
 													<tr>
 														<td colspan="2">Tax Amount :</td>
-														<td><input type="number" class="form-control"
+														<td><input type="text" class="form-control"
 															readonly="readonly"></td>
 													</tr>
 												</tbody>
 												<tbody>
 													<tr>
 														<td colspan="2">Transport charge :</td>
-														<td><input type="number" class="form-control"></td>
+														<td><input type="text" class="form-control"></td>
 													</tr>
 												</tbody>
 												<tbody>
 													<tr>
-														<td><input type="number" class="form-control"></td>
+														<td colspan="2">Surcharge :</td>
+														<td><input type="text" class="form-control"></td>
 													</tr>
 												</tbody>
 												<thead>
 													<tr>
 														<td colspan="2">Grand Total :</td>
-														<td><input type="number" class="form-control"
+														<td><input type="text" class="form-control"
 															placeholder="0.0" readonly="readonly"></td>
 													</tr>
 												</thead>
@@ -628,9 +645,9 @@
 				</div>
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" value="Add"
-						data-toggle="modal" data-target="#another"> <input
+						data-toggle="modal" onclick="anotherShow();"> <input
 						type="button" class="btn btn-default" data-dismiss="modal"
-						value="Close" onclick="close();">
+						value="Close" id="close">
 				</div>
 			</div>
 
@@ -659,7 +676,7 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" onclick="close1();">Close</button>
+					<button type="button" class="btn btn-default" id="close1">Close</button>
 				</div>
 			</div>
 
@@ -711,12 +728,57 @@
 				alert("hi");
 			}
 		} */
-		function close() {
-			$("#addProduct").hide();
+
+		$("#close").click(function() {
+			$("#addProduct").modal("hide");
+		});
+		$("#close1").click(function() {
+			$("#another").modal("hide");
+		});
+		var i = 1;
+		function anotherShow() {
+			$("#another").modal("show");
+			$("#purProTable")
+					.append(
+							'<tbody><tr><td>'
+									+ i
+									+ '</td><td>#123ABC</td><td>NA</td><td>A</td><td>5</td><td>20</td></tr></tbody>');
+			$("#subTotal").val(Number($("#subTotal").val()) + Number(20.5));
+			i++;
 		}
-		function close1() {
-			$("#another").hide();
+
+		function getVendorNameByType() {
 		}
+
+		$(function() {
+			$("#vName").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						url : "getVendorByVendorType",
+						dataType : "json",
+						data : {
+							id : $('[name="vendorType"]').val(),
+							term : req.term
+						},
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.name,
+									addr : item.address
+								});
+							}));
+						}
+					});
+				},
+				change : function(event, ui) {
+					alert(ui.item.addr);
+					//$("#vd").val();
+				},
+				select : function(event, ui) {
+					alert("select");
+				}
+			});
+		});
 	</script>
 </body>
 
