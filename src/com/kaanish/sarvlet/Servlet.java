@@ -20,10 +20,17 @@ import com.kaanish.model.City;
 import com.kaanish.model.Country;
 import com.kaanish.model.Department;
 import com.kaanish.model.ProductDetail;
+import com.kaanish.model.Purchase_Entry;
+import com.kaanish.model.Purchase_Product_Details;
 import com.kaanish.model.QtyUnit;
 import com.kaanish.model.QtyUnitConversion;
 import com.kaanish.model.QtyUnitConversionPK;
+
 import com.kaanish.model.QtyUnitType;
+
+import com.kaanish.model.RawMaterialsStock;
+import com.kaanish.model.ReadyGoodsStock;
+
 import com.kaanish.model.State;
 import com.kaanish.model.SubDepartment;
 import com.kaanish.model.Tax;
@@ -36,7 +43,8 @@ import com.kaanish.util.DateConverter;
 		"/deleteTaxGroup", "/createDept", "/deleteDept", "/createSubDept", "/deleteSubDept", "/createCategory",
 		"/deleteCategory", "/newVendorType", "/addCountry", "/addState", "/createProduct", "/deleteCountry",
 		"/addVendor", "/addUOM", "/editVendorType", "/deleteVendorType", "/addCity", "/deleteState", "/deleteCity",
-		"/addNewConversion" })
+		"/addNewConversion", "/purchaseEntry"  })
+
 public class Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -63,6 +71,10 @@ public class Servlet extends HttpServlet {
 	private QtyUnitConversion qtyUnitConversion;
 	private QtyUnitConversionPK qtyUnitConversionPK;
 	private QtyUnitType qtyUnitType;
+	private Purchase_Entry purchaseEntry;
+	private Purchase_Product_Details purchaseProductDetails;
+	private RawMaterialsStock rawMaterialsStock;
+	private ReadyGoodsStock readyGoodsStock;
 
 	@Override
 	public void init() throws ServletException {
@@ -283,6 +295,7 @@ public class Servlet extends HttpServlet {
 				page = "setupDepartment.jsp";
 				List<SubDepartment> sdept = ejb
 						.getAllSubDepartmentsByDepartmentId(Integer.parseInt(req.getParameter("deptId")));
+
 				int counter = 0;
 
 				for (SubDepartment sdep : sdept) {
@@ -313,6 +326,7 @@ public class Servlet extends HttpServlet {
 				page = "setupDepartment.jsp";
 				List<Category> cat = ejb
 						.getAllCategoryBySubDepartmentId(Integer.parseInt(req.getParameter("subDeptId")));
+
 				int counter1 = 0;
 				for (Category cate : cat) {
 					if (cate.getName().equals(req.getParameter("name"))) {
@@ -435,7 +449,10 @@ public class Servlet extends HttpServlet {
 				for (Vendor ven : vend) {
 
 					if (ven.getEmail().equals(req.getParameter("vendorMail"))
-							|| ven.getPh1().equals(req.getParameter("vendorPh1"))) {
+
+							|| ven.getPh1().equals(
+									req.getParameter("vendorPh1"))) {
+
 						counter2 = 1;
 						break;
 					}
@@ -461,17 +478,17 @@ public class Servlet extends HttpServlet {
 					vendor.setPinCode(req.getParameter("vendorPin"));
 					vendor.setVendorType(ejb.getVendorTypeById(Integer.parseInt(req.getParameter("vendorType"))));
 					vendor.setUsers(ejb.getUserById((String) httpSession.getAttribute("user")));
-
 					accountDetails.setBankAccountNumber(req.getParameter("bankAccNo"));
 					accountDetails.setBankChequeLable(req.getParameter("bankCheckLebel"));
 					accountDetails.setBankIFSCnumber(req.getParameter("bankIFSC"));
 					accountDetails.setBankMICRnumber(req.getParameter("bankMICR"));
+
 					accountDetails.setBankName(req.getParameter("bankName"));
-					accountDetails.setBankRTGCnumber(req.getParameter("bankRTGS"));
+					accountDetails.setBankRTGCnumber(req
+							.getParameter("bankRTGS"));
 					accountDetails.setBranch(req.getParameter("bankBranch"));
 
 					accountDetails.setCity(ejb.getCityById(Integer.parseInt(req.getParameter("bankCity"))));
-
 					accountDetails.setCstNumber(req.getParameter("vendorCSTno"));
 					accountDetails.setCstRegistrationDate(DateConverter.getDate(req.getParameter("vendorCSTregDate")));
 					accountDetails
@@ -487,6 +504,7 @@ public class Servlet extends HttpServlet {
 							ejb.getTax_Type_GroupById(Integer.parseInt(req.getParameter("taxTypeGroupId"))));
 					accountDetails.setUsers(ejb.getUserById((String) httpSession.getAttribute("user")));
 
+
 					accountDetails.setVendor(vendor);
 
 					ejb.setVendor(vendor);
@@ -497,6 +515,40 @@ public class Servlet extends HttpServlet {
 				} else {
 					msg = "Duplicate vendor Entry";
 				}
+
+				break;
+
+			case "purchaseEntry":
+				page = "purchasingPurchaseEntry.jsp";
+
+				purchaseEntry = new Purchase_Entry();
+				purchaseProductDetails = new Purchase_Product_Details();
+				rawMaterialsStock = new RawMaterialsStock();
+				readyGoodsStock = new ReadyGoodsStock();
+				dt = new Date();
+
+				purchaseEntry.setChallan_no(Integer.parseInt(req
+						.getParameter("")));
+				purchaseEntry.setVendor_bill_no(Integer.parseInt(req
+						.getParameter("")));
+				purchaseEntry.setPurchase_date(DateConverter.getDate(req
+						.getParameter("")));
+				purchaseEntry.setVendor(ejb.getVendorById(Integer.parseInt(req
+						.getParameter(""))));
+				purchaseEntry.setUsers(ejb.getUserById(httpSession
+						.getAttribute("user").toString()));
+				purchaseEntry.setEntry_date(dt);
+				purchaseEntry.setSur_charge(Integer.parseInt(req
+						.getParameter("")));
+				purchaseEntry.setTransport_cost(Integer.parseInt(req
+						.getParameter("")));
+				// purchaseEntry.setTax_Type_Group();
+				// purchaseEntry.setBill_setup();
+				
+				purchaseProductDetails.setAttrValue1(req.getParameter(""));
+				
+
+				msg = "Purchase entry was successfull.";
 				break;
 
 			case "addUOM":
