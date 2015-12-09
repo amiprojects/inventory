@@ -286,14 +286,15 @@ $(document).ready(function(){
 											</tr>
 										</thead>
 										<tbody>
-										<c:set var="c" value="1"/>
-											<c:forEach items="${sessionScope['ejb'].getAllVendors()}" var="vendor">
+											<c:set var="c" value="1" />
+											<c:forEach items="${sessionScope['ejb'].getAllVendors()}"
+												var="vendor">
 												<tr>
 													<td>${c}</td>
 													<td>${vendor.companyName}</td>
 													<td>${vendor.ph1}</td>
 												</tr>
-												<c:set var="c" value="${c+1}"/>
+												<c:set var="c" value="${c+1}" />
 											</c:forEach>
 										</tbody>
 									</table>
@@ -567,12 +568,6 @@ $(document).ready(function(){
 														<b>Vendor type :</b>
 													</div>
 													<div class="col-md-9">
-														<!-- <select class="form-control">
-															<option>Supplier</option>
-															<option>Agent</option>
-															<option>Jobber</option>
-															<option>Transporter</option>
-														</select> -->
 														<select class="form-control" name="vendorType">
 															<c:forEach
 																items="${sessionScope['ejb'].getAllVendorType()}"

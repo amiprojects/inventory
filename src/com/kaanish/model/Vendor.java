@@ -41,8 +41,8 @@ public class Vendor {
 	@ManyToOne
 	@JoinColumn(name = "userId")
 	private Users users;
-	
-	@OneToMany(mappedBy="vendor")
+
+	@OneToMany(mappedBy = "vendor")
 	private List<AccountDetails> accountDetails;
 
 	public int getId() {
@@ -155,6 +155,14 @@ public class Vendor {
 
 	public void setAccountDetails(List<AccountDetails> accountDetails) {
 		this.accountDetails = accountDetails;
+	}
+
+	@Override
+	public String toString() {
+		return "{\"id\":\"" + id + "\", " + "\"name\":\"" + name + "\", "
+				+ "\"companyName\":\"" + companyName + "\", " + "\"ph1\":\"" + ph1 + "\", "
+				+ "\"ph2\":\"" + ph2 + "\", " + "\"address\":\"" + address + "\", "
+				+ "\"pinCode\":\"" + pinCode + "\", " + "\"email\":\"" + email + "\", " + "\"city\":\"" + city + "\"}";
 	}
 
 }

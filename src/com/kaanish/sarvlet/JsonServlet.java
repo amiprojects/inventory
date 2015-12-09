@@ -23,7 +23,8 @@ import com.kaanish.util.DepartmentCotractor;
 
 @WebServlet({ "/getcountry", "/addNewUOMtype", "/getUOMtype",
 		"/getAllDepartments", "/getStateByCountry",
-		"/getStateByCountryByStateName", "/getCity", "/getCityByName","/getQtyUnit","/getQtyUnitConversion"})
+		"/getStateByCountryByStateName", "/getCity", "/getCityByName",
+		"/getQtyUnit", "/getQtyUnitConversion", "/getVendorByVendorType" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -108,6 +109,12 @@ public class JsonServlet extends HttpServlet {
 						.getParameter("id"))));
 				break;
 
+			case "getVendorByVendorType":
+				pw = resp.getWriter();
+				pw.print(ejb.getVendorsByVendorTypeId(Integer.parseInt(req
+						.getParameter("id"))));
+				break;
+
 			case "getStateByCountryByStateName":
 				pw = resp.getWriter();
 				pw.print(ejb.getStateByName(req.getParameter("name"),
@@ -125,12 +132,14 @@ public class JsonServlet extends HttpServlet {
 				pw.print(ejb.getCityByName(req.getParameter("name")));
 				break;
 			case "getQtyUnit":
-				pw=resp.getWriter();
-				pw.print(ejb.getQtyUnitById(Integer.parseInt(req.getParameter("id"))));
+				pw = resp.getWriter();
+				pw.print(ejb.getQtyUnitById(Integer.parseInt(req
+						.getParameter("id"))));
 				break;
 			case "getQtyUnitConversion":
-				pw=resp.getWriter();
-				pw.print(ejb.getAllQtyUnitConversionByQtyUnitId(Integer.parseInt(req.getParameter("id"))));
+				pw = resp.getWriter();
+				pw.print(ejb.getAllQtyUnitConversionByQtyUnitId(Integer
+						.parseInt(req.getParameter("id"))));
 				break;
 
 			default:
