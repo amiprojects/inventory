@@ -354,42 +354,7 @@
 																				href="deleteCategory?id=${cat.id}"><span
 																					style="color: red;">X</span></a>
 																				<ul>
-																					<%-- <li onclick="createProduct('${cat.id}');">Create
-																						Product
 
-																						<div id="createProduct${cat.id}"
-																							class="modal fade" role="dialog"
-																							style="top: 25px;">
-																							<div class="modal-dialog">
-																								<div class="modal-content">
-																									<div class="modal-header">
-																										<button type="button" class="close"
-																											data-dismiss="modal">&times;</button>
-																										<h4 class="modal-title">Tax list</h4>
-																									</div>
-																									<div class="modal-body">
-																										<form action="createProduct" method="post">
-																											<span>Product type : </span><select
-																												class="form-control" name="name">
-																												<option value="raw">Raw</option>
-																												<option value="ready">Ready</option>
-																											</select> <span>Product name : </span><input
-																												type="text" class="form-control"
-																												name="productName"> <span>Product
-																												code : </span><input type="text"
-																												class="form-control" name="productCode">
-																											<input type="hidden" name="catId"
-																												value="${cat.id}"> <input
-																												type="submit" value="Save"
-																												class="btn green pull-right" name="catId">
-																										</form>
-																									</div>
-																									<div class="modal-footer"></div>
-																								</div>
-
-																							</div>
-																						</div>
-																					</li> --%>
 
 																					<c:forEach var="cat"
 																						items="${sessionScope['ejb'].getAllProductDetailByCategoryId(cat.id)}">

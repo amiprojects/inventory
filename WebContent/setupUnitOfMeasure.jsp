@@ -75,6 +75,7 @@
 												<th>#</th>
 												<th>Name</th>
 												<th>Abbrev</th>
+												<th></th>
 											</tr>
 										</thead>
 										<tbody>
@@ -85,8 +86,78 @@
 													<td>${count}</td>
 													<td>${unit.name}</td>
 													<td>${unit.abbreviation}</td>
+													<td><a href="#" onclick="viewQtyUnit('${unit.id}');"><img
+															alt="click to view" src="images/eye.png" height="20"></a></td>
 												</tr>
 												<c:set var="count" value="${count+1}" />
+												<div id="addCon${unit.id}" class="modal fade" role="dialog"
+													style="top: 25px;">
+
+													<div class="modal-dialog">
+														<div class="modal-content">
+															<div class="modal-header">
+																<button type="button" class="close" data-dismiss="modal">&times;</button>
+																<h4 class="modal-title">Select UOM to which UOM is
+																	related</h4>
+															</div>
+															<form action="addNewConversion" method="post">
+																<div class="modal-body">
+																	<div class="col-md-12">
+																		<input type="hidden" value="${unit.id}"
+																			name="firstUnit"> Select Target UOM for this
+																		conversion: <select id="contype${unit.id}"
+																			onchange="selectUnit()" name="selectedUnit">
+																			<option value="0">Select Unit</option>
+																			<c:forEach
+																				items="${sessionScope['ejb'].getAllOthersQtyUnitForConversion(unit.id)}"
+																				var="qtyUnit">
+																				<option value="${qtyUnit.id}">${qtyUnit.name}</option>
+																			</c:forEach>
+																		</select>
+																	</div>
+																	<br> <br> <br>
+																	<div class="col-md-12">Defining the relationship
+																		between units:</div>
+																	<br>
+																	<div class="col-md-12">
+																		<input type="radio" name="name1" value="1"
+																			onclick="relSelect();">1 <span
+																			id="selectUnit1${unit.id}"></span> is greater than 1
+																		<span>${unit.name}</span>
+																	</div>
+																	<br>
+																	<div class="col-md-12">
+																		<input type="radio" name="name1" value="2"
+																			onclick="relSelect();">1 <span>${unit.name}</span>
+																		is greater then 1 <span id="selectUnit2${unit.id}"></span>
+
+																	</div>
+																	<br> <br> <br>
+																	<div class="col-md-12">Defining ratio between the
+																		units:</div>
+																	<br>
+																	<div class="col-md-12">Fill in the blank with
+																		correct number</div>
+																	<br>
+																	<div class="col-md-12">
+																		1 <span id="selectUnit3${unit.id}"></span> is<input
+																			type="number" name="convValue">in <span
+																			id="selectUnit4${unit.id}"></span>
+																	</div>
+																	<br>
+
+																</div>
+
+																<div class="modal-footer">
+																	<input type="submit" class="btn btn-default"
+																		value="Save"> <input type="button"
+																		class="btn btn-default" data-dismiss="modal"
+																		value="Close">
+																</div>
+															</form>
+														</div>
+													</div>
+												</div>
 											</c:forEach>
 										</tbody>
 									</table>
@@ -116,20 +187,24 @@
 											<div class="row">
 												<div class="col-md-2">Abreve :</div>
 												<div class="col-md-10">
-													<input type="text" readonly="readonly" class="form-control">
+													<input type="text" id="Abreve" readonly="readonly"
+														class="form-control">
 												</div>
 											</div>
 											<div class="row">
 												<div class="col-md-2">Name :</div>
 												<div class="col-md-10">
-													<input type="text" readonly="readonly" class="form-control">
+													<input type="text" id="unitName" readonly="readonly"
+														class="form-control"> <input type="hidden"
+														id="unitNameId" value=""> <input type="hidden"
+														id="unitNameId1" value="">
 												</div>
 											</div>
 											<div class="row">
-												<div class="col-md-2">Description :</div>
+												<div class="col-md-2">Description</div>
 												<div class="col-md-10">
 													<textarea rows="" cols="" class="form-control"
-														readonly="readonly"></textarea>
+														readonly="readonly" id="DisplayDescription"></textarea>
 												</div>
 											</div>
 										</div>
@@ -138,16 +213,17 @@
 											<div class="col-md-10">
 												<div class="breadcrumbs">
 													<ul>
-														<li><a title="">Description </a></li>
+														<li><a title="" id="conversionDetails"></a></li>
 													</ul>
 												</div>
-												<textarea rows="" cols="" id="" class="form-control"
-													readonly="readonly"></textarea>
+
+												<textarea rows="" cols="" class="form-control"
+													readonly="readonly" id="unitConversionDetails"></textarea>
 
 											</div>
 											<div class="col-md-2">
-												<button type="button" class="btn btn-default"
-													data-toggle="modal" data-target="#addCon">Add</button>
+												<input type="button" class="btn btn-default"
+													onclick="addNewConversion();" value="add">
 
 												<button type="button" class="btn btn-default"
 													data-toggle="modal" data-target="#editCon">Edit</button>
@@ -155,71 +231,7 @@
 												<button type="button" class="btn btn-default">Delete</button>
 											</div>
 
-											<div id="addCon" class="modal fade" role="dialog"
-												style="top: 25px;">
 
-												<div class="modal-dialog">
-													<div class="modal-content">
-														<div class="modal-header">
-															<button type="button" class="close" data-dismiss="modal">&times;</button>
-															<h4 class="modal-title">Select UOM to which UOM is
-																related</h4>
-														</div>
-														<div class="modal-body">
-
-
-															<form>
-																<div class="col-md-12">
-																	Select Target UOM for this conversion: <select
-																		id="contype">
-																		<option value="0">Name</option>
-																		<option value="1">Foot(ft)</option>
-																		<option value="2">Pound(lbs)</option>
-																		<option value="3">Hour(hr)</option>
-																		<option value="4">Gallon(gal)</option>
-																		<option value="5">Foot(ft)</option>
-																	</select>
-																</div>
-																<br> <br> <br>
-																<div class="col-md-12">Defining the relationship
-																	between units:</div>
-																<br>
-																<div class="col-md-12">
-																	<input type="radio" name="name1">1 each is
-																	greater than 1 pound
-																</div>
-																<br>
-																<div class="col-md-12">
-																	<input type="radio" name="name1">1 pound is
-																	greater then 1 each
-
-																</div>
-																<br> <br> <br>
-																<div class="col-md-12">Defining ratio between the
-																	units:</div>
-																<br>
-																<div class="col-md-12">Fill in the blank with
-																	correct number</div>
-																<br>
-																<div class="col-md-12">
-																	1 Each is<input type="text">in Pound
-																</div>
-																<br>
-															</form>
-														</div>
-
-														<div class="modal-footer">
-                                                            <button type="button" class="btn btn-default">Save</button>
-															<button type="button" class="btn btn-default"
-																data-dismiss="modal">Close</button>
-															
-														</div>
-
-													</div>
-
-												</div>
-
-											</div>
 
 											<div id="editCon" class="modal fade" role="dialog"
 												style="top: 25px;">
@@ -230,7 +242,7 @@
 															<h4 class="modal-title">Edit UOM to which UOM is
 																related</h4>
 														</div>
-														
+
 														<div class="col-md-12">
 															<form>
 																<div class="col-md-12">
@@ -244,9 +256,7 @@
 																		<option value="5">Foot(ft)</option>
 																	</select>
 																</div>
-																<br> 
-																<br> 
-																<br>
+																<br> <br> <br>
 																<div class="col-md-12">Defining the relationship
 																	between units:</div>
 																<br>
@@ -260,9 +270,7 @@
 																	greater then 1 each
 
 																</div>
-																<br> 
-																<br> 
-																<br>
+																<br> <br> <br>
 																<div class="col-md-12">Defining ratio between the
 																	units:</div>
 																<br>
@@ -277,10 +285,10 @@
 														</div>
 
 														<div class="modal-footer">
-                                                            <button type="button" class="btn btn-default">Update</button>
+															<button type="button" class="btn btn-default">Update</button>
 															<button type="button" class="btn btn-default"
 																data-dismiss="modal">Close</button>
-															
+
 
 														</div>
 													</div>
@@ -383,6 +391,98 @@
 	<script type="text/javascript" src="js/grid-filter.js"></script>
 
 	<script type="text/javascript">
+		var unit1;
+		var unit2;
+
+		function relSelect() {
+			var id = $("#unitNameId").val();
+			var optVal = $("#contype" + id + " option:selected").val();
+			if (optVal != 0) {
+
+				if ($("[name='name1']:checked").val() == 1) {
+					$("#selectUnit3" + id).html(unit2);
+					$("#selectUnit4" + id).html(unit1);
+				} else if ($("[name='name1']:checked").val() == 2) {
+					$("#selectUnit3" + id).html(unit1);
+					$("#selectUnit4" + id).html(unit2);
+				} else {
+					alert("inconvenience highly regretted.")
+				}
+			}
+		}
+
+		function addNewConversion() {
+			$("#addCon" + $("#unitNameId").val()).modal("show");
+		}
+		function selectUnit() {
+			var id = $("#unitNameId").val();
+			var optVal = $("#contype" + id + " option:selected").val();
+			if (optVal != 0) {
+				$.ajax({
+					type : "post",
+					url : "getQtyUnit",
+					data : {
+						id : optVal
+					},
+					dataType : "json",
+					success : function(data) {
+						$("#selectUnit1" + id).html(data.name);
+						$("#selectUnit2" + id).html(data.name);
+						unit2 = data.name;
+						$("#unitNameId1").val(data.id);
+					}
+
+				});
+			} else {
+				alert("please select a unit.");
+			}
+
+		}
+
+		function viewQtyUnit(id) {
+			$
+					.ajax({
+						type : "post",
+						url : "getQtyUnit",
+						data : {
+							id : id
+						},
+						dataType : "json",
+						success : function(data) {
+							$("#Abreve").val(data.abbreviation);
+							$("#unitName").val(data.name);
+							$("#DisplayDescription").val(data.description);
+							$("#unitNameId").val(data.id);
+							$("#conversionDetails").html(
+									"Unit Conversion for " + data.name);
+							unit1 = data.name;
+							$
+									.ajax({
+										type : "post",
+										url : "getQtyUnitConversion",
+										data : {
+											id : data.id
+										},
+										dataType : "json",
+										success : function(data1) {
+											var txt = "";
+											$.map(data1, function(item) {
+
+												txt = txt + "1 "
+														+ item.qtyUnit1Name
+														+ " = "
+														+ item.conversion + " "
+														+ item.qtyUnit2Name
+														+ "\n";
+											});
+											$("#unitConversionDetails").val(txt);
+										}
+									});
+						}
+
+					});
+		}
+
 		$(document).ready(function() {
 			$("#setup").attr("id", "activeSubMenu");
 			$("#sSetupUOM").attr("style", "color: red;");

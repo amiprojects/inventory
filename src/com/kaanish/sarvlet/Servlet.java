@@ -21,6 +21,8 @@ import com.kaanish.model.Country;
 import com.kaanish.model.Department;
 import com.kaanish.model.ProductDetail;
 import com.kaanish.model.QtyUnit;
+import com.kaanish.model.QtyUnitConversion;
+import com.kaanish.model.QtyUnitConversionPK;
 import com.kaanish.model.State;
 import com.kaanish.model.SubDepartment;
 import com.kaanish.model.Tax;
@@ -34,7 +36,7 @@ import com.kaanish.util.DateConverter;
 		"/deleteDept", "/createSubDept", "/deleteSubDept", "/createCategory",
 		"/deleteCategory", "/newVendorType", "/addCountry", "/addState",
 		"/createProduct", "/deleteCountry", "/addVendor", "/addUOM",
-		"/editVendorType", "/deleteVendorType", "/addCity", "/deleteState","/deleteCity" })
+		"/editVendorType", "/deleteVendorType", "/addCity", "/deleteState","/deleteCity", "/addNewConversion" })
 public class Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -58,6 +60,8 @@ public class Servlet extends HttpServlet {
 	private Vendor vendor;
 	private AccountDetails accountDetails;
 	private QtyUnit qtyUnit;
+	private QtyUnitConversion qtyUnitConversion;
+	private QtyUnitConversionPK qtyUnitConversionPK;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -525,7 +529,65 @@ public class Servlet extends HttpServlet {
 				} else {
 					msg = "UOM name already exists";
 				}
-
+				break;
+			case "addNewConversion":
+				page="setupUnitOfMeasure.jsp";
+				qtyUnitConversion =new QtyUnitConversion();
+				qtyUnitConversionPK=new QtyUnitConversionPK();
+				if(req.getParameter("name1").equals("2")){
+					qtyUnitConversionPK.setQtyUnitId1(Integer.parseInt(req.getParameter("firstUnit")));
+					qtyUnitConversionPK.setQtyUnitId2(Integer.parseInt(req.getParameter("selectedUnit")));
+					
+					qtyUnitConversion.setConversionPK(qtyUnitConversionPK);
+					qtyUnitConversion.setQtyUnitId1(ejb.getQtyUnitById(Integer.parseInt(req.getParameter("firstUnit"))));
+					qtyUnitConversion.setQtyUnitId2(ejb.getQtyUnitById(Integer.parseInt(req.getParameter("selectedUnit"))));
+					qtyUnitConversion.setConversion(Float.parseFloat(req.getParameter("convValue")));
+					
+					ejb.setQtyUnitConversion(qtyUnitConversion);
+					
+					qtyUnitConversion =new QtyUnitConversion();
+					qtyUnitConversionPK=new QtyUnitConversionPK();
+					
+					qtyUnitConversionPK.setQtyUnitId2(Integer.parseInt(req.getParameter("firstUnit")));
+					qtyUnitConversionPK.setQtyUnitId1(Integer.parseInt(req.getParameter("selectedUnit")));
+					
+					qtyUnitConversion.setConversionPK(qtyUnitConversionPK);
+					qtyUnitConversion.setQtyUnitId2(ejb.getQtyUnitById(Integer.parseInt(req.getParameter("firstUnit"))));
+					qtyUnitConversion.setQtyUnitId1(ejb.getQtyUnitById(Integer.parseInt(req.getParameter("selectedUnit"))));
+					qtyUnitConversion.setConversion(1/Float.parseFloat(req.getParameter("convValue")));
+					
+					ejb.setQtyUnitConversion(qtyUnitConversion);
+					
+					msg="New conversion added successfully.";
+				}else if(req.getParameter("name1").equals("1")){
+					qtyUnitConversionPK.setQtyUnitId2(Integer.parseInt(req.getParameter("firstUnit")));
+					qtyUnitConversionPK.setQtyUnitId1(Integer.parseInt(req.getParameter("selectedUnit")));
+					
+					qtyUnitConversion.setConversionPK(qtyUnitConversionPK);
+					qtyUnitConversion.setQtyUnitId2(ejb.getQtyUnitById(Integer.parseInt(req.getParameter("firstUnit"))));
+					qtyUnitConversion.setQtyUnitId1(ejb.getQtyUnitById(Integer.parseInt(req.getParameter("selectedUnit"))));
+					qtyUnitConversion.setConversion(Float.parseFloat(req.getParameter("convValue")));
+					
+					ejb.setQtyUnitConversion(qtyUnitConversion);
+					
+					qtyUnitConversion =new QtyUnitConversion();
+					qtyUnitConversionPK=new QtyUnitConversionPK();
+					
+					qtyUnitConversionPK.setQtyUnitId1(Integer.parseInt(req.getParameter("firstUnit")));
+					qtyUnitConversionPK.setQtyUnitId2(Integer.parseInt(req.getParameter("selectedUnit")));
+					
+					qtyUnitConversion.setConversionPK(qtyUnitConversionPK);
+					qtyUnitConversion.setQtyUnitId1(ejb.getQtyUnitById(Integer.parseInt(req.getParameter("firstUnit"))));
+					qtyUnitConversion.setQtyUnitId2(ejb.getQtyUnitById(Integer.parseInt(req.getParameter("selectedUnit"))));
+					qtyUnitConversion.setConversion(1/Float.parseFloat(req.getParameter("convValue")));
+					
+					ejb.setQtyUnitConversion(qtyUnitConversion);
+					
+					msg="New conversion added successfully.";
+				}else{
+					msg="Something is wrong.";
+				}
+				
 				break;
 
 			default:
