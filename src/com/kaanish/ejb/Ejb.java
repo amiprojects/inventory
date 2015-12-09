@@ -79,14 +79,24 @@ public class Ejb {
 	}
 
 	public List<QtyUnit> getAllOthersQtyUnitForConversion(int id) {
-		QtyUnit qu = getQtyUnitById(id);
+		QtyUnit qu = new QtyUnit();
+		qu=this.getQtyUnitById(id);
 		TypedQuery<QtyUnit> q = em.createQuery("select c from QtyUnit c where c.qtyUnitType.id=:id AND c.id<>:oid",
 				QtyUnit.class);
 		q.setParameter("id", qu.getQtyUnitType().getId());
 		q.setParameter("oid", id);
+		
+		TypedQuery<QtyUnitConversion> q1=em.createQuery("select s from QtyUnitConversion s where s.qtyUnitId1.id=:id1", QtyUnitConversion.class);
+		q1.setParameter("id1", id);
+		
+		List<QtyUnit> lst1 = new ArrayList<>();
+		for(QtyUnitConversion quc:q1.getResultList()){
+			lst1.add(quc.getQtyUnitId2());
+		}		
+		
 		List<QtyUnit> lst = new ArrayList<>();
 		for (QtyUnit qtyu : q.getResultList()) {
-			if (!qu.getQtyUnitConversions2().contains(qtyu)) {
+			if (!lst1.contains(qtyu)) {
 				lst.add(qtyu);
 			}
 		}

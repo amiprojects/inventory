@@ -217,7 +217,7 @@
 													</ul>
 												</div>
 
-												<textarea rows="" cols="" id="" class="form-control"
+												<textarea rows="" cols="" class="form-control"
 													readonly="readonly" id="unitConversionDetails"></textarea>
 
 											</div>
@@ -440,41 +440,47 @@
 		}
 
 		function viewQtyUnit(id) {
-			$.ajax({
-				type : "post",
-				url : "getQtyUnit",
-				data : {
-					id : id
-				},
-				dataType : "json",
-				success : function(data) {
-					$("#Abreve").val(data.abbreviation);
-					$("#unitName").val(data.name);
-					$("#DisplayDescription").val(data.description);
-					$("#unitNameId").val(data.id);
-					$("#conversionDetails").html(
-							"Unit Conversion for " + data.name);
-					unit1 = data.name;
-					$.ajax({
+			$
+					.ajax({
 						type : "post",
-						url : "getQtyUnitConversion",
+						url : "getQtyUnit",
 						data : {
-							id : data.id
+							id : id
 						},
 						dataType : "json",
-						success : function(data1) {
-							var txt="";
-							$.map(data1, function(item) {
-						
-								txt=txt+"1 " + item.qtyUnit1Name + " = "+ item.conversion + " "	+ item.qtyUnit2Name + "<br>";
-							});
-							alert(txt);
-							document.getElementById("unitConversionDetails").value=txt;
-						}
-					});
-				}
+						success : function(data) {
+							$("#Abreve").val(data.abbreviation);
+							$("#unitName").val(data.name);
+							$("#DisplayDescription").val(data.description);
+							$("#unitNameId").val(data.id);
+							$("#conversionDetails").html(
+									"Unit Conversion for " + data.name);
+							unit1 = data.name;
+							$
+									.ajax({
+										type : "post",
+										url : "getQtyUnitConversion",
+										data : {
+											id : data.id
+										},
+										dataType : "json",
+										success : function(data1) {
+											var txt = "";
+											$.map(data1, function(item) {
 
-			});
+												txt = txt + "1 "
+														+ item.qtyUnit1Name
+														+ " = "
+														+ item.conversion + " "
+														+ item.qtyUnit2Name
+														+ "\n";
+											});
+											$("#unitConversionDetails").val(txt);
+										}
+									});
+						}
+
+					});
 		}
 
 		$(document).ready(function() {
