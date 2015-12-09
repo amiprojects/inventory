@@ -148,20 +148,24 @@
 									</ul>
 								</div>
 								<div class="col-md-12">
-									<form role="form" class="sec">
+									<form role="form" class="sec" method="post"
+										action="purchaseEntry">
 										<div class="widget-area">
 											<div class="col-md-6">
 												<div class="col-md-12">
 													&nbsp; &nbsp; &nbsp; <b class="font">Vendor Type :</b> <select
-														class="form-control">
-														<option>Select vendor type</option>
-														<option>Direct</option>
-														<option>Agent</option>
+														class="form-control" name="vendorType"
+														onchange="getVendorNameByType();">
+														<c:forEach
+															items="${sessionScope['ejb'].getAllVendorType()}"
+															var="vType">
+															<option value="${vType.id}">${vType.type}</option>
+														</c:forEach>
 													</select>
 												</div>
 												<div class="col-md-12">
 													&nbsp; &nbsp; &nbsp; <b class="font">Vendor Name :</b> <input
-														type="text" class="form-control">
+														type="text" class="form-control" id="vName" name="vName">
 												</div>
 												<div class="col-md-12">
 													<!-- <div class="breadcrumbs">
@@ -178,11 +182,12 @@
 											<div class="col-md-6">
 												<div class="form-group">
 													<label for="" class="font">Vendor Bill no :</label> <input
-														type="number" placeholder="" id="" class="form-control">
+														type="text" placeholder="" id="" class="form-control" readonly="readonly">
 												</div>
 												<div class="form-group">
-													<label for="" class="font">Purchase challan no. :</label> <input
-														type="number" placeholder="" id="" class="form-control">
+													<label for="" class="font">Purchase challan no. :</label>
+													<input type="text" placeholder="" id=""
+														class="form-control" readonly="readonly">
 												</div>
 												<div class="form-group">
 													<label for="" class="font">Purchase Date :</label> <input
@@ -193,7 +198,7 @@
 										<div class="widget-area">
 											<input type="button" class="btn green pull-right"
 												data-toggle="modal" data-target="#addProduct"
-												value="Add Product">
+												value="Add Product" style="width: 100%">
 										</div>
 										<table id="stream_table"
 											class="table table-striped table-bordered">
@@ -256,6 +261,7 @@
 												</tbody>
 												<tbody>
 													<tr>
+														<td colspan="2">Surcharge :</td>
 														<td><input type="number" class="form-control"></td>
 													</tr>
 												</tbody>
@@ -716,6 +722,26 @@
 		}
 		function close1() {
 			$("#another").hide();
+		}
+		function getVendorNameByType() {
+			var a = $('[name="vendorType"]').val();
+			if (a != 0) {
+				$.ajax({
+					url : "getVendorByVendorType",
+					dataType : "json",
+					data : {
+						"id" : a
+					},
+					success : function(data) {
+						
+					}
+				})
+			}
+			/* $("#vName").autocomplete({
+				source : function(req,resp){
+					
+				}
+			}); */
 		}
 	</script>
 </body>
