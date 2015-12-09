@@ -23,6 +23,7 @@ import com.kaanish.model.ProductDetail;
 import com.kaanish.model.QtyUnit;
 import com.kaanish.model.QtyUnitConversion;
 import com.kaanish.model.QtyUnitConversionPK;
+import com.kaanish.model.QtyUnitType;
 import com.kaanish.model.State;
 import com.kaanish.model.SubDepartment;
 import com.kaanish.model.Tax;
@@ -31,12 +32,11 @@ import com.kaanish.model.Vendor;
 import com.kaanish.model.VendorType;
 import com.kaanish.util.DateConverter;
 
-@WebServlet({ "/login", "/logout", "/addTax", "/addTaxGroup", "/editTax",
-		"/deleteTax", "/editTaxGroup", "/deleteTaxGroup", "/createDept",
-		"/deleteDept", "/createSubDept", "/deleteSubDept", "/createCategory",
-		"/deleteCategory", "/newVendorType", "/addCountry", "/addState",
-		"/createProduct", "/deleteCountry", "/addVendor", "/addUOM",
-		"/editVendorType", "/deleteVendorType", "/addCity", "/deleteState","/deleteCity", "/addNewConversion" })
+@WebServlet({ "/login", "/logout", "/addTax", "/addTaxGroup", "/editTax", "/deleteTax", "/editTaxGroup",
+		"/deleteTaxGroup", "/createDept", "/deleteDept", "/createSubDept", "/deleteSubDept", "/createCategory",
+		"/deleteCategory", "/newVendorType", "/addCountry", "/addState", "/createProduct", "/deleteCountry",
+		"/addVendor", "/addUOM", "/editVendorType", "/deleteVendorType", "/addCity", "/deleteState", "/deleteCity",
+		"/addNewConversion" })
 public class Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -62,10 +62,33 @@ public class Servlet extends HttpServlet {
 	private QtyUnit qtyUnit;
 	private QtyUnitConversion qtyUnitConversion;
 	private QtyUnitConversionPK qtyUnitConversionPK;
+	private QtyUnitType qtyUnitType;
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	public void init() throws ServletException {
+
+		if (ejb.getAllQtyUnitTypes().size() < 6) {
+
+			List<String> str = new ArrayList<>();
+			str.add("Count");
+			str.add("Weight");
+			str.add("Length");
+			str.add("Area");
+			str.add("Volume");
+			str.add("Time");
+
+			for (String s : str) {
+				qtyUnitType = new QtyUnitType();
+				qtyUnitType.setName(s);
+				ejb.setQtyUnitType(qtyUnitType);
+			}
+
+		}
+
+	}
+
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		url = req.getRequestURL().toString();
 		url = url.substring(url.lastIndexOf('/') + 1);
 		httpSession = req.getSession();
@@ -95,8 +118,7 @@ public class Servlet extends HttpServlet {
 				productDetail.setProductType(req.getParameter("name"));
 				productDetail.setName(req.getParameter("productName"));
 				productDetail.setCode(req.getParameter("productCode"));
-				productDetail.setCategory(ejb.getCategoryById(Integer
-						.parseInt(req.getParameter("catId"))));
+				productDetail.setCategory(ejb.getCategoryById(Integer.parseInt(req.getParameter("catId"))));
 				ejb.setProductDetail(productDetail);
 				msg = "Product detail added successfully.";
 				break;
@@ -124,8 +146,7 @@ public class Servlet extends HttpServlet {
 
 			case "editVendorType":
 				page = "purchasingVendorType.jsp";
-				vendorType = ejb.getVendorTypeById(Integer.parseInt(req
-						.getParameter("id")));
+				vendorType = ejb.getVendorTypeById(Integer.parseInt(req.getParameter("id")));
 				vendorType.setType(req.getParameter("name"));
 
 				ejb.updateVendorType(vendorType);
@@ -134,8 +155,7 @@ public class Servlet extends HttpServlet {
 
 			case "deleteVendorType":
 				page = "purchasingVendorType.jsp";
-				ejb.deleteVendorTypeById(Integer.parseInt(req
-						.getParameter("id")));
+				ejb.deleteVendorTypeById(Integer.parseInt(req.getParameter("id")));
 				msg = "Vendor type deleted successfully.";
 				break;
 
@@ -205,8 +225,7 @@ public class Servlet extends HttpServlet {
 
 			case "editTaxGroup":
 				page = "setupTaxManagement.jsp";
-				tax_type_group = ejb.getTax_Type_GroupById(Integer.parseInt(req
-						.getParameter("id")));
+				tax_type_group = ejb.getTax_Type_GroupById(Integer.parseInt(req.getParameter("id")));
 				tax_type_group.setName(req.getParameter("name"));
 
 				String[] taxes1 = req.getParameterValues("tax");
@@ -230,86 +249,80 @@ public class Servlet extends HttpServlet {
 
 			case "deleteTaxGroup":
 				page = "setupTaxManagement.jsp";
-				ejb.deleteTaxTYpeGroupById(Integer.parseInt(req
-						.getParameter("id")));
+				ejb.deleteTaxTYpeGroupById(Integer.parseInt(req.getParameter("id")));
 				msg = "Tax Group deleted successfully.";
 				break;
 
 			case "createDept":
 				page = "setupDepartment.jsp";
-				List<Department> dept=ejb.getAllDepartments();
-				int fc=0;
-				for(Department dep:dept){
-					if(dep.getName().equals(req.getParameter("name"))){
-						fc=1;
+				List<Department> dept = ejb.getAllDepartments();
+				int fc = 0;
+				for (Department dep : dept) {
+					if (dep.getName().equals(req.getParameter("name"))) {
+						fc = 1;
 						break;
 					}
 				}
-				if(fc==0){
+				if (fc == 0) {
 					department = new Department();
 					department.setName(req.getParameter("name"));
 					ejb.setDepartment(department);
 					msg = "Department added.";
+				} else {
+					msg = "Duplicate Entry";
 				}
-				else{
-					msg="Duplicate Entry";
-				}
-				
-				
+
 				break;
 
 			case "deleteDept":
 				page = "setupDepartment.jsp";
-				ejb.deleteDepartmentById(Integer.parseInt(req
-						.getParameter("id")));
+				ejb.deleteDepartmentById(Integer.parseInt(req.getParameter("id")));
 				msg = "Department deleted.";
 				break;
 			case "createSubDept":
 				page = "setupDepartment.jsp";
-				List<SubDepartment> sdept=ejb.getAllSubDepartmentsByDepartmentId(Integer.parseInt(req.getParameter("deptId"))) ;
-				int counter=0;
+				List<SubDepartment> sdept = ejb
+						.getAllSubDepartmentsByDepartmentId(Integer.parseInt(req.getParameter("deptId")));
+				int counter = 0;
 
-				for(SubDepartment sdep:sdept){
+				for (SubDepartment sdep : sdept) {
 
-				       if(sdep.getName().equals(req.getParameter("name"))){
-				               counter=1;
-				               break;
+					if (sdep.getName().equals(req.getParameter("name"))) {
+						counter = 1;
+						break;
 
-				         }
+					}
 				}
-				if(counter==0){
+				if (counter == 0) {
 					subDepartment = new SubDepartment();
 					subDepartment.setName(req.getParameter("name"));
-					subDepartment.setDepartment(ejb.getDepartmentById(Integer
-							.parseInt(req.getParameter("deptId"))));
+					subDepartment.setDepartment(ejb.getDepartmentById(Integer.parseInt(req.getParameter("deptId"))));
 					ejb.setSubDepartment(subDepartment);
 					msg = "SubDepartment added.";
+				} else {
+					msg = "Duplicate Entry";
 				}
-				else{
-					msg="Duplicate Entry";
-				}
-				
-				
+
 				break;
 			case "deleteSubDept":
 				page = "setupDepartment.jsp";
-				ejb.deleteSubDepartmentById(Integer.parseInt(req
-						.getParameter("id")));
+				ejb.deleteSubDepartmentById(Integer.parseInt(req.getParameter("id")));
 				msg = "Department deleted.";
 				break;
 			case "createCategory":
 				page = "setupDepartment.jsp";
-				List<Category> cat=ejb.getAllCategoryBySubDepartmentId(Integer.parseInt(req.getParameter("subDeptId")));
-				int counter1=0;
-				for(Category cate:cat){
-				       if(cate.getName().equals(req.getParameter("name"))){
-				       
-				          counter1=1;
-				          break;
-				      }
+				List<Category> cat = ejb
+						.getAllCategoryBySubDepartmentId(Integer.parseInt(req.getParameter("subDeptId")));
+				int counter1 = 0;
+				for (Category cate : cat) {
+					if (cate.getName().equals(req.getParameter("name"))) {
+
+						counter1 = 1;
+						break;
+					}
 
 				}
-				if(counter1==0){
+				if (counter1 == 0) {
 					category = new Category();
 					category.setName(req.getParameter("name"));
 					category.setAttrNmae1(req.getParameter("attr1"));
@@ -318,15 +331,14 @@ public class Servlet extends HttpServlet {
 					category.setAttrNmae4(req.getParameter("attr4"));
 					category.setAttrNmae5(req.getParameter("attr5"));
 					category.setAttrNmae6(req.getParameter("attr6"));
-					category.setSubDepartment(ejb.getSubDepartmentById(Integer
-							.parseInt(req.getParameter("subDeptId"))));
+					category.setSubDepartment(
+							ejb.getSubDepartmentById(Integer.parseInt(req.getParameter("subDeptId"))));
 					ejb.setCategory(category);
 					msg = "Category added.";
+				} else {
+					msg = "Duplicate Entry";
 				}
-				else{
-					msg="Duplicate Entry";
-				}
-			
+
 				break;
 			case "deleteCategory":
 				page = "setupDepartment.jsp";
@@ -366,13 +378,10 @@ public class Servlet extends HttpServlet {
 				ejb.deleteStateById(Integer.parseInt(req.getParameter("id")));
 				msg = "State deleted successfully.";
 				break;
-				
-			
 
 			case "addState":
 				page = "setupCountryStateCity.jsp";
-				List<State> sList = ejb.getAllStatesByCountryId(Integer
-						.parseInt(req.getParameter("id")));
+				List<State> sList = ejb.getAllStatesByCountryId(Integer.parseInt(req.getParameter("id")));
 				int flag1 = 0;
 				for (State st : sList) {
 					if (st.getStateName().equals(req.getParameter("name"))) {
@@ -383,8 +392,7 @@ public class Servlet extends HttpServlet {
 				if (flag1 == 0) {
 					state = new State();
 					state.setStateName(req.getParameter("name"));
-					state.setCountry(ejb.getCountryById(Integer.parseInt(req
-							.getParameter("id"))));
+					state.setCountry(ejb.getCountryById(Integer.parseInt(req.getParameter("id"))));
 					ejb.setState(state);
 					msg = "State added successfully.";
 				} else {
@@ -394,8 +402,7 @@ public class Servlet extends HttpServlet {
 
 			case "addCity":
 				page = "setupCountryStateCity.jsp";
-				List<City> cities = ejb.getCityByState(Integer.parseInt(req
-						.getParameter("id")));
+				List<City> cities = ejb.getCityByState(Integer.parseInt(req.getParameter("id")));
 				int flag2 = 0;
 				for (City c : cities) {
 					if (c.getCityName().equals(req.getParameter("name"))) {
@@ -406,8 +413,7 @@ public class Servlet extends HttpServlet {
 				if (flag2 == 0) {
 					city = new City();
 					city.setCityName(req.getParameter("name"));
-					city.setState(ejb.getStateById(Integer.parseInt(req
-							.getParameter("id"))));
+					city.setState(ejb.getStateById(Integer.parseInt(req.getParameter("id"))));
 
 					ejb.setCity(city);
 					msg = "City added susseccfully";
@@ -415,26 +421,26 @@ public class Servlet extends HttpServlet {
 					msg = "Duplicate entry.";
 				}
 				break;
-				
+
 			case "deleteCity":
-				page="setupCountryStateCity.jsp";
+				page = "setupCountryStateCity.jsp";
 				ejb.deleteCityById(Integer.parseInt(req.getParameter("id")));
 				msg = "City deleted successfully.";
 				break;
 
 			case "addVendor":
 				page = "purchasingVendor.jsp";
-				List<Vendor> vend=ejb.getAllVendors();
-				int counter2=0;
-				for(Vendor ven:vend){
-					
+				List<Vendor> vend = ejb.getAllVendors();
+				int counter2 = 0;
+				for (Vendor ven : vend) {
 
-				            if(ven.getEmail().equals(req.getParameter("vendorMail")) || ven.getPh1().equals(req.getParameter("vendorPh1"))){				            	
-				                 counter2=1;
-				                 break;
-				             }
+					if (ven.getEmail().equals(req.getParameter("vendorMail"))
+							|| ven.getPh1().equals(req.getParameter("vendorPh1"))) {
+						counter2 = 1;
+						break;
+					}
 				}
-				if(counter2==0){
+				if (counter2 == 0) {
 					vendor = new Vendor();
 					accountDetails = new AccountDetails();
 					dt = new Date();
@@ -446,52 +452,40 @@ public class Servlet extends HttpServlet {
 					vendor.setAddress(req.getParameter("vendorAddress"));
 					vendor.setAliseName(req.getParameter("vendorAlias"));
 
-					vendor.setCity(ejb.getCityById(Integer.parseInt(req
-							.getParameter("vendorCityId"))));
+					vendor.setCity(ejb.getCityById(Integer.parseInt(req.getParameter("vendorCityId"))));
 
 					vendor.setCompanyName(req.getParameter("vendorCompanyName"));
 					vendor.setEmail(req.getParameter("vendorMail"));
 					vendor.setPh1(req.getParameter("vendorPh1"));
 					vendor.setPh2(req.getParameter("vendorPh2"));
 					vendor.setPinCode(req.getParameter("vendorPin"));
-					vendor.setVendorType(ejb.getVendorTypeById(Integer.parseInt(req
-							.getParameter("vendorType"))));
-					vendor.setUsers(ejb.getUserById((String) httpSession
-							.getAttribute("user")));
+					vendor.setVendorType(ejb.getVendorTypeById(Integer.parseInt(req.getParameter("vendorType"))));
+					vendor.setUsers(ejb.getUserById((String) httpSession.getAttribute("user")));
 
-					accountDetails.setBankAccountNumber(req
-							.getParameter("bankAccNo"));
-					accountDetails.setBankChequeLable(req
-							.getParameter("bankCheckLebel"));
+					accountDetails.setBankAccountNumber(req.getParameter("bankAccNo"));
+					accountDetails.setBankChequeLable(req.getParameter("bankCheckLebel"));
 					accountDetails.setBankIFSCnumber(req.getParameter("bankIFSC"));
 					accountDetails.setBankMICRnumber(req.getParameter("bankMICR"));
 					accountDetails.setBankName(req.getParameter("bankName"));
 					accountDetails.setBankRTGCnumber(req.getParameter("bankRTGS"));
 					accountDetails.setBranch(req.getParameter("bankBranch"));
 
-					accountDetails.setCity(ejb.getCityById(Integer.parseInt(req
-							.getParameter("bankCity"))));
+					accountDetails.setCity(ejb.getCityById(Integer.parseInt(req.getParameter("bankCity"))));
 
 					accountDetails.setCstNumber(req.getParameter("vendorCSTno"));
-					accountDetails.setCstRegistrationDate(DateConverter.getDate(req
-							.getParameter("vendorCSTregDate")));
-					accountDetails.setExciseRegistrationDate(DateConverter
-							.getDate(req.getParameter("vendorExciseRegDate")));
-					accountDetails.setExciseRegistrationNumber(req
-							.getParameter("vendorExciseRegNo"));
+					accountDetails.setCstRegistrationDate(DateConverter.getDate(req.getParameter("vendorCSTregDate")));
+					accountDetails
+							.setExciseRegistrationDate(DateConverter.getDate(req.getParameter("vendorExciseRegDate")));
+					accountDetails.setExciseRegistrationNumber(req.getParameter("vendorExciseRegNo"));
 					accountDetails.setPanNumber(req.getParameter("vendorPANno"));
-					accountDetails.setServiceTaxRegistrationDate(DateConverter
-							.getDate(req.getParameter("vendorServiceTaxRegDate")));
-					accountDetails.setServiceTaxRegistrationNumber(req
-							.getParameter("vendorServiceTaxRegNo"));
+					accountDetails.setServiceTaxRegistrationDate(
+							DateConverter.getDate(req.getParameter("vendorServiceTaxRegDate")));
+					accountDetails.setServiceTaxRegistrationNumber(req.getParameter("vendorServiceTaxRegNo"));
 					accountDetails.setVatNumber(req.getParameter("vendorVATno"));
-					accountDetails.setVatRegistrationDate(DateConverter.getDate(req
-							.getParameter("vendorVATregDate")));
-					accountDetails.setTax_Type_Group(ejb
-							.getTax_Type_GroupById(Integer.parseInt(req
-									.getParameter("taxTypeGroupId"))));
-					accountDetails.setUsers(ejb.getUserById((String) httpSession
-							.getAttribute("user")));
+					accountDetails.setVatRegistrationDate(DateConverter.getDate(req.getParameter("vendorVATregDate")));
+					accountDetails.setTax_Type_Group(
+							ejb.getTax_Type_GroupById(Integer.parseInt(req.getParameter("taxTypeGroupId"))));
+					accountDetails.setUsers(ejb.getUserById((String) httpSession.getAttribute("user")));
 
 					accountDetails.setVendor(vendor);
 
@@ -499,10 +493,9 @@ public class Servlet extends HttpServlet {
 					ejb.setAccountDetails(accountDetails);
 
 					msg = "vendor added successfully;";
-					
-				}
-				else{
-					msg="Duplicate vendor Entry";
+
+				} else {
+					msg = "Duplicate vendor Entry";
 				}
 				break;
 
@@ -510,9 +503,8 @@ public class Servlet extends HttpServlet {
 				page = "setupUnitOfMeasure.jsp";
 				int flag = 0;
 				for (QtyUnit qut : ejb.getAllQtyUnit()) {
-					if ((qut.getName().equalsIgnoreCase(
-							req.getParameter("name")) || (qut.getAbbreviation()
-							.equalsIgnoreCase(req.getParameter("abbreviation"))))) {
+					if ((qut.getName().equalsIgnoreCase(req.getParameter("name"))
+							|| (qut.getAbbreviation().equalsIgnoreCase(req.getParameter("abbreviation"))))) {
 						flag = 1;
 						break;
 					}
@@ -522,8 +514,7 @@ public class Servlet extends HttpServlet {
 					qtyUnit.setName(req.getParameter("name"));
 					qtyUnit.setAbbreviation(req.getParameter("abbreviation"));
 					qtyUnit.setDescription(req.getParameter("description"));
-					qtyUnit.setQtyUnitType(ejb.getQtyUnitTypeById(Integer
-							.parseInt(req.getParameter("qtyUnitTypeId"))));
+					qtyUnit.setQtyUnitType(ejb.getQtyUnitTypeById(Integer.parseInt(req.getParameter("qtyUnitTypeId"))));
 					ejb.setQtyUnit(qtyUnit);
 					msg = "new UOM added successfully";
 				} else {
@@ -531,63 +522,75 @@ public class Servlet extends HttpServlet {
 				}
 				break;
 			case "addNewConversion":
-				page="setupUnitOfMeasure.jsp";
-				qtyUnitConversion =new QtyUnitConversion();
-				qtyUnitConversionPK=new QtyUnitConversionPK();
-				if(req.getParameter("name1").equals("2")){
-					qtyUnitConversionPK.setQtyUnitId1(Integer.parseInt(req.getParameter("firstUnit")));
-					qtyUnitConversionPK.setQtyUnitId2(Integer.parseInt(req.getParameter("selectedUnit")));
-					
-					qtyUnitConversion.setConversionPK(qtyUnitConversionPK);
-					qtyUnitConversion.setQtyUnitId1(ejb.getQtyUnitById(Integer.parseInt(req.getParameter("firstUnit"))));
-					qtyUnitConversion.setQtyUnitId2(ejb.getQtyUnitById(Integer.parseInt(req.getParameter("selectedUnit"))));
-					qtyUnitConversion.setConversion(Float.parseFloat(req.getParameter("convValue")));
-					
-					ejb.setQtyUnitConversion(qtyUnitConversion);
-					
-					qtyUnitConversion =new QtyUnitConversion();
-					qtyUnitConversionPK=new QtyUnitConversionPK();
-					
-					qtyUnitConversionPK.setQtyUnitId2(Integer.parseInt(req.getParameter("firstUnit")));
-					qtyUnitConversionPK.setQtyUnitId1(Integer.parseInt(req.getParameter("selectedUnit")));
-					
-					qtyUnitConversion.setConversionPK(qtyUnitConversionPK);
-					qtyUnitConversion.setQtyUnitId2(ejb.getQtyUnitById(Integer.parseInt(req.getParameter("firstUnit"))));
-					qtyUnitConversion.setQtyUnitId1(ejb.getQtyUnitById(Integer.parseInt(req.getParameter("selectedUnit"))));
-					qtyUnitConversion.setConversion(1/Float.parseFloat(req.getParameter("convValue")));
-					
-					ejb.setQtyUnitConversion(qtyUnitConversion);
-					
-					msg="New conversion added successfully.";
-				}else if(req.getParameter("name1").equals("1")){
-					qtyUnitConversionPK.setQtyUnitId2(Integer.parseInt(req.getParameter("firstUnit")));
-					qtyUnitConversionPK.setQtyUnitId1(Integer.parseInt(req.getParameter("selectedUnit")));
-					
-					qtyUnitConversion.setConversionPK(qtyUnitConversionPK);
-					qtyUnitConversion.setQtyUnitId2(ejb.getQtyUnitById(Integer.parseInt(req.getParameter("firstUnit"))));
-					qtyUnitConversion.setQtyUnitId1(ejb.getQtyUnitById(Integer.parseInt(req.getParameter("selectedUnit"))));
-					qtyUnitConversion.setConversion(Float.parseFloat(req.getParameter("convValue")));
-					
-					ejb.setQtyUnitConversion(qtyUnitConversion);
-					
-					qtyUnitConversion =new QtyUnitConversion();
-					qtyUnitConversionPK=new QtyUnitConversionPK();
-					
-					qtyUnitConversionPK.setQtyUnitId1(Integer.parseInt(req.getParameter("firstUnit")));
-					qtyUnitConversionPK.setQtyUnitId2(Integer.parseInt(req.getParameter("selectedUnit")));
-					
-					qtyUnitConversion.setConversionPK(qtyUnitConversionPK);
-					qtyUnitConversion.setQtyUnitId1(ejb.getQtyUnitById(Integer.parseInt(req.getParameter("firstUnit"))));
-					qtyUnitConversion.setQtyUnitId2(ejb.getQtyUnitById(Integer.parseInt(req.getParameter("selectedUnit"))));
-					qtyUnitConversion.setConversion(1/Float.parseFloat(req.getParameter("convValue")));
-					
-					ejb.setQtyUnitConversion(qtyUnitConversion);
-					
-					msg="New conversion added successfully.";
+				page = "setupUnitOfMeasure.jsp";
+				qtyUnitConversion = new QtyUnitConversion();
+				qtyUnitConversionPK = new QtyUnitConversionPK();
+				if (Float.parseFloat(req.getParameter("convValue")) > 0) {
+					if (req.getParameter("name1").equals("2")) {
+						qtyUnitConversionPK.setQtyUnitId1(Integer.parseInt(req.getParameter("firstUnit")));
+						qtyUnitConversionPK.setQtyUnitId2(Integer.parseInt(req.getParameter("selectedUnit")));
+
+						qtyUnitConversion.setConversionPK(qtyUnitConversionPK);
+						qtyUnitConversion
+								.setQtyUnitId1(ejb.getQtyUnitById(Integer.parseInt(req.getParameter("firstUnit"))));
+						qtyUnitConversion
+								.setQtyUnitId2(ejb.getQtyUnitById(Integer.parseInt(req.getParameter("selectedUnit"))));
+						qtyUnitConversion.setConversion(Float.parseFloat(req.getParameter("convValue")));
+
+						ejb.setQtyUnitConversion(qtyUnitConversion);
+
+						qtyUnitConversion = new QtyUnitConversion();
+						qtyUnitConversionPK = new QtyUnitConversionPK();
+
+						qtyUnitConversionPK.setQtyUnitId2(Integer.parseInt(req.getParameter("firstUnit")));
+						qtyUnitConversionPK.setQtyUnitId1(Integer.parseInt(req.getParameter("selectedUnit")));
+
+						qtyUnitConversion.setConversionPK(qtyUnitConversionPK);
+						qtyUnitConversion
+								.setQtyUnitId2(ejb.getQtyUnitById(Integer.parseInt(req.getParameter("firstUnit"))));
+						qtyUnitConversion
+								.setQtyUnitId1(ejb.getQtyUnitById(Integer.parseInt(req.getParameter("selectedUnit"))));
+						qtyUnitConversion.setConversion(1 / Float.parseFloat(req.getParameter("convValue")));
+
+						ejb.setQtyUnitConversion(qtyUnitConversion);
+
+						msg = "New conversion added successfully.";
+					} else if (req.getParameter("name1").equals("1")) {
+						qtyUnitConversionPK.setQtyUnitId2(Integer.parseInt(req.getParameter("firstUnit")));
+						qtyUnitConversionPK.setQtyUnitId1(Integer.parseInt(req.getParameter("selectedUnit")));
+
+						qtyUnitConversion.setConversionPK(qtyUnitConversionPK);
+						qtyUnitConversion
+								.setQtyUnitId2(ejb.getQtyUnitById(Integer.parseInt(req.getParameter("firstUnit"))));
+						qtyUnitConversion
+								.setQtyUnitId1(ejb.getQtyUnitById(Integer.parseInt(req.getParameter("selectedUnit"))));
+						qtyUnitConversion.setConversion(Float.parseFloat(req.getParameter("convValue")));
+
+						ejb.setQtyUnitConversion(qtyUnitConversion);
+
+						qtyUnitConversion = new QtyUnitConversion();
+						qtyUnitConversionPK = new QtyUnitConversionPK();
+
+						qtyUnitConversionPK.setQtyUnitId1(Integer.parseInt(req.getParameter("firstUnit")));
+						qtyUnitConversionPK.setQtyUnitId2(Integer.parseInt(req.getParameter("selectedUnit")));
+
+						qtyUnitConversion.setConversionPK(qtyUnitConversionPK);
+						qtyUnitConversion
+								.setQtyUnitId1(ejb.getQtyUnitById(Integer.parseInt(req.getParameter("firstUnit"))));
+						qtyUnitConversion
+								.setQtyUnitId2(ejb.getQtyUnitById(Integer.parseInt(req.getParameter("selectedUnit"))));
+						qtyUnitConversion.setConversion(1 / Float.parseFloat(req.getParameter("convValue")));
+
+						ejb.setQtyUnitConversion(qtyUnitConversion);
+
+						msg = "New conversion added successfully.";
+					} else {
+						msg = "Something is wrong.";
+					}
 				}else{
-					msg="Something is wrong.";
+					msg="please enter proper conversion value";
 				}
-				
+
 				break;
 
 			default:
@@ -603,8 +606,7 @@ public class Servlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doGet(req, resp);
 	}
 }
