@@ -41,6 +41,8 @@
 	<c:if test="${sessionScope['user']==null}">
 		<c:redirect url="index.jsp" />
 	</c:if>
+	<c:set var="compInfo" value="${sessionScope['ejb'].getCompanyInfo() }"/>
+	
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.html"%>
 		<div class="page-container menu-left" style="height: 100%;">
@@ -74,39 +76,40 @@
 
 												<div id="step-1">
 
-													<form action="#" method="get">
+													<form action="updateCompanyInfo" method="get">
 
 														<div class="col-md-6">
 															<div>
 																<label for="exampleInputEmail1">Company Name:</label> <input
-																	type="text" name="name"
-																	placeholder="Enter Company Name" required
-																	class="form-control"><br>
+																	type="text" name="name" id="compname"
+																	placeholder="Enter Company Name" required="requied"
+																	class="form-control" readonly="readonly" value="${compInfo.compname}"><br>
+																	<input type="hidden" value="${compInfo.id}" name="id">
 															</div>
 														</div>
 														<div class="col-md-6">
 															<div>
 																<label for="exampleInputPassword1">Company
-																	Email:</label> <input type="email" name="email"
+																	Email:</label> <input type="email" name="email" id="compemail"
 																	placeholder="Enter Company Email" required
-																	class="form-control"><br>
+																	class="form-control" readonly="readonly" onchange="verifyEmail();"><br>
 															</div>
 
 														</div>
 
 														<div class="col-md-6">
 															<label for="exampleInputEmail1">Company Mobile
-																No:</label> <input type='tel' pattern="[0-9]{10,10}" name="mono"
+																No:</label> <input type='tel' pattern="[0-9]{10,10}" name="mono" id="mobile"
 																placeholder="Eg. +9900000000" minlength="10"
-																maxlength="10" required class="form-control"><br>
+																maxlength="10" required class="form-control" readonly="readonly" onkeyup="checkMobile();"><br>
 														</div>
 														<div class="col-md-6">
 															<div>
 																<label for="exampleInputPassword1">Company Phone
 																	No:</label> <input type='tel' pattern="[0-9]{10,10}"
-																	name="phno" placeholder="Eg. +9900000000"
+																	name="phno" id="phone" placeholder="Eg. +9900000000"
 																	minlength="10" maxlength="10" required
-																	class="form-control"><br>
+																	class="form-control" readonly="readonly" onkeyup="checkPhone();"><br>
 															</div>
 														</div>
 
@@ -114,7 +117,7 @@
 															<div>
 																<label for="exampleInputPassword1">Company
 																	Address:</label><br>
-																<textarea name="adress" rows="5" cols="59"></textarea>
+																<textarea name="adress" id="addr" rows="5" cols="59" readonly="readonly"></textarea>
 																<br>
 															</div>
 														</div>
@@ -122,15 +125,15 @@
 														<div class="col-md-6">
 															<div>
 																<label for="exampleInputPassword1"> City:</label> <input
-																	type="text" name="city" placeholder="Enter city"
-																	required class="form-control"><br>
+																	type="text" name="city" id="cityname" placeholder="Enter city"
+																	required class="form-control" readonly="readonly"><br>
 															</div>
 														</div>
 														<div class="col-md-6">
 															<div>
 																<label for="exampleInputPassword1"> State:</label> <input
-																	type="text" name="state" placeholder="Enter State"
-																	required class="form-control"><br>
+																	type="text" name="state" id="statename" placeholder="Enter State"
+																	required class="form-control" readonly="readonly"><br>
 															</div>
 														</div>
 
@@ -146,7 +149,10 @@
 																onchange="readURL(this);">
 														</div>
 														<div class="col-md-6" style="top: 23px; right: -350px">
-															<button class="btn btn-primary large" type="submit">Submit</button>
+															<button class="btn btn-primary large" type="edit" onclick="activatefields();">Edit</button>
+														</div>
+														<div class="col-md-6" style="top: 23px; right: -350px">
+															<button class="btn btn-primary large" type="submit" onclick="submitCompmanyDetails();">Submit</button>
 														</div>
 													</form>
 
@@ -164,74 +170,78 @@
 												<div id="step-1">
 
 
-													<form action="#" method="get">
+													<form action="updateCompanyInfo" method="get">
 
 														<div class="col-md-6">
 															<div>
 																<label for="exampleInputEmail1">VAT No:</label> <input
-																	type="number" name="vatno"
+																	type="number" name="vatno" id="vat"
 																	placeholder="Enter Company VAT No" required
-																	class="form-control"><br>
+																	class="form-control" readonly="readonly"><br>
 															</div>
 														</div>
 
 														<div class="col-md-6">
 															<div>
 																<label for="exampleInputPassword1">VAT
-																	Registration:</label> <input type="text" name="email"
-																	id="datepicker" required class="form-control"><br>
+																	Registration Date:</label> <input type="text" name="date"
+																	id="vatdate" required class="form-control" readonly="readonly"><br>
 															</div>
 														</div>
 														<div class="col-md-6">
 															<div>
 																<label for="exampleInputEmail1">CST No:</label> <input
-																	type="number" name="vatno"
+																	type="number" name="cstno" id="cst"
 																	placeholder="Enter Company CST No" required
-																	class="form-control"><br>
+																	class="form-control" readonly="readonly"><br>
 															</div>
 														</div>
 
 														<div class="col-md-6">
 															<div>
 																<label for="exampleInputPassword1">CST
-																	Registration:</label> <input type="text" name="cstDate"
-																	id="datepicker" required class="form-control"><br>
+																	Registration Date:</label> <input type="text" name="cstDate"
+																	id="cstdate" required class="form-control"readonly="readonly"><br>
 															</div>
 														</div>
 														<div class="col-md-6">
 															<div>
 																<label for="exampleInputEmail1">TIN No:</label> <input
-																	type="number" name="vatno"
+																	type="number" name="tinno" id="tin"
 																	placeholder="Enter Company TIN No" required
-																	class="form-control"><br>
+																	class="form-control" readonly="readonly"><br>
 															</div>
 														</div>
 
 														<div class="col-md-6">
 															<div>
 																<label for="exampleInputPassword1">TIN
-																	Registration:</label> <input type="text" name="email"
-																	id="datepicker" required class="form-control"><br>
+																	Registration Date:</label> <input type="text" name="tinDate"
+																	id="tindate" required class="form-control" readonly="readonly"><br>
 															</div>
 														</div>
 														<div class="col-md-6">
 															<div>
 																<label for="exampleInputEmail1">Service Tax No:</label>
-																<input type="number" name="servicet"
+																<input type="number" name="servicet" id="service"
 																	placeholder="Enter Company Name" required
-																	class="form-control"><br>
+																	class="form-control" readonly="readonly"><br>
 															</div>
 														</div>
 
 														<div class="col-md-6">
 															<div>
 																<label for="exampleInputPassword1">Service Tax
-																	Registration:</label> <input type="text" name="email"
-																	id="datepicker" required class="form-control"><br>
+																	Registration Date:</label> <input type="text" name="serviceDate"
+																	id="servicedate" required class="form-control" readonly="readonly"><br>
 															</div>
 														</div>
+														
 
-														<div class="col-md-6" style="top: 21px; right: -809px">
+														<div class="col-md-6">
+														     <button class="btn btn-primary large" type="edit" onclick="activateTaxFields();">Edit</button> 
+
+
 															<button class="btn btn-primary large" type="submit">Submit</button>
 														</div>
 													</form>
@@ -268,6 +278,112 @@
 		$(function() {
 			$("#datepicker").datepicker();
 		});
+		
+		 function activatefields(){
+			 $('#compname').attr("readonly",false);
+			 $('#compemail').attr("readonly",false);
+			 $('#mobile').attr("readonly",false);
+			 $('#phone').attr("readonly",false);
+			 $('#addr').attr("readonly",false);
+			 $('#cityname').attr("readonly",false);
+			 $('#statename').attr("readonly",false);
+			 
+		 }
+		 function activateTaxFields(){
+			 $('#vat').attr("readonly",false);
+			 $('#cst').attr("readonly",false);
+			 $('#tin').attr("readonly",false);
+			 $('#service').attr("readonly",false);
+			 $('#vatdate').attr("readonly",false);
+			 $('#cstdate').attr("readonly",false);
+			 $('#tindate').attr("readonly",false);
+			 $('#servicedate').attr("readonly",false);
+		 }
+		 
+		 function submitCompmanyDetails(){
+			 
+		 }
+		 
+		 function verifyEmail(){
+			 var email=jQuery('#compemail').val();
+			 var eml = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+				
+				if (eml.test($.trim($("#email").val())) == false) {
+		          alert("Please enter valid email address.");
+		          $("#email").focus();
+		          return false;
+		        }
+			 
+		 }
+		 function readURL(input) {
+				if (input.files && input.files[0]) {
+					var reader = new FileReader();
+
+					reader.onload = function(e) {
+						$('#image').attr('src', e.target.result).width(120).height(85);
+					};
+
+					reader.readAsDataURL(input.files[0]);
+				}
+			}
+		 function checkMobile(){
+			 var number=jQuery('#mobile').val();
+			// var splchars="*|,\":<>[]{}`\';()@&$#%";
+			 var splchars = /^[0-9-+]+$/;
+			 
+			 //var alpha="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+			 //var alpha1=alpha.toLowerCase();
+			 
+			 if (splchars.test(number)) {
+				         return true;
+				     }
+		      else {
+						alert("Illegal characters detected!");
+				         return false;
+				 
+				     }
+
+			 /*for(var i=0;i<splchars.lenght;i++){
+				 if (number==splchars)
+				 {
+					 alert ("Illegal characters detected!"); 
+				 }
+			 }
+			 for(var j=0;j<alpha.length;j++){
+				 if (number==alpha)
+				 {
+					 alert ("Illegal characters detected!"); 
+				 }
+				 
+			 }
+			 for(var j=0;j<alpha1.length;j++){
+				 if (number==alpha1)
+				 {
+					 alert ("Illegal characters detected!"); 
+				 }
+				 
+			 }*/
+				 
+		 }
+		 function checkPhone(){
+			 var number=jQuery('#phone').val();
+			 var splchars = /^[0-9-+]+$/;
+			 if (splchars.test(number)) {
+		         return true;
+		     }
+             else {
+				alert("Illegal characters detected!");
+		         return false;
+		 
+		     }
+			 
+		 }
+		 
+		 
+		 
+		 
+		
+		
 	</script>
 </body>
 

@@ -16,6 +16,7 @@ public class CompanyInfo {
 	private String compname;
 	private String email;
 	private String mobile;
+	private String phone;
 	private String addr;
 	private String city;
 	private String state;
@@ -151,6 +152,15 @@ public class CompanyInfo {
 
 	public void setServtaxcate(Date servtaxcate) {
 		this.servtaxcate = servtaxcate;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+>>>>>>> refs/remotes/origin/master
 	}
 
 }

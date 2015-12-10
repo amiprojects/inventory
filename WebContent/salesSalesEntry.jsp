@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
@@ -38,6 +38,8 @@
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
 
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
+<link rel="stylesheet" href="css/Checkbox.css" type="text/css" />
+<link rel="stylesheet" href="css/checkbox1.css" type="text/css" />
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -138,112 +140,95 @@
 				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
 				<div class="row">
 					<div class="masonary-grids">
-						<div class="col-md-12">
-							<div class="breadcrumbs" style="height: 39px">
-								<ul>
-									<li><p
-											style="right: -422px; font-size: 20px; position: absolute;">
-											<b>Sales Entry</b>
-										</p></li>
-								</ul>
-							</div>
-
-							<br> <br>
-							<form role="form" class="sec">
-								<div class="col-md-12">
-									<div class="col-md-6">
-										&nbsp; &nbsp; &nbsp; <b class="font">Customer Name :</b>
-										<div class="col-md-10">
-											<div class="sec">
-												<select class="form-control">
-													<option>SLC</option>
-													<option>SLC</option>
-													<option>SLC</option>
-													<option>SLC</option>
-													<option>SLC</option>
-												</select>
-											</div>
-										</div>
-										<div class="col-md-2">
-											<button type="submit" class="btn green pull-right">Add</button>
-										</div>
-										<div class="col-md-12">
-											<div class="breadcrumbs">
-												<ul>
-													<li><a title="" class="font">Customer Address :</a></li>
-												</ul>
-											</div>
-											<textarea rows="" cols="" id="" class="form-control"
-												readonly="readonly"></textarea>
-
-										</div>
-										<div class="form-group">
-											<label for="" class="font">Buyer's VAT TIN :</label> <input
-												type="text" placeholder="" id="" class="form-control">
-										</div>
-										<div class="form-group">
-											<label for="" class="font">Buyer's CST No. :</label> <input
-												type="text" placeholder="" id="" class="form-control">
-										</div>
+					   
+						<div class="col-md-12" style="height:800px;">
+						<div class="row">
+						<div class="col-md-6">
+						<div class="widget-area" style="height:250px;">
+									<div  style="background-color:lightgrey;">
+										<h1>Bill To</h1>
 									</div>
-									<div class="col-md-6">
-										<div class="form-group">
-											<label for="" class="font">Invoice Info. :</label> <input
-												type="text" placeholder="" id="" class="form-control">
-										</div>
-										<div class="form-group">
-											<label for="" class="font">Sales Date :</label> <input
-												type="text" id="datepicker" class="form-control">
-										</div>
-										<div class="form-group">
-											<label for="" class="font">Entry Date :</label> <input
-												type="text" id="datepicker" class="form-control">
-										</div>
-										<div class="form-group">
-											<label for="" class="font">Vendor SO :</label> <input
-												type="number" placeholder="" id="" class="form-control">
-										</div>
-									</div>
+									    <table cellspacing="1">
+										      <tr>
+										       <td>Name :</td>
+										        <td><input type="text" name="cusname" style="align:center;"></input></td>
+										       </tr><br>
+										       <tr>
+										        <td>Address :</td>
+										        <td><input type="text" name="addr" style="length:40px;" style="align:center;"></input></td>
+										       </tr>
+										       <tr>
+										       <td>City :</td>
+										       <td><input type="text" name="addr" style="length:40px;"></input></td>
+										       </tr>
+										
+										       <tr>
+										       <td>Phone No. :</td>
+										       <td><input type="text" name="phone" style="length:40px;"></input></td>
+										       </tr>
+										
+										         <tr>
+										         <td>Vat No./CST No. :</td>
+										         <td><input type="text" name="vatcst" style="length:40px;"></input></td>
+										          </tr>
+									              </table>
+					                         </div>
+					                         </div>
+					                         <div class="col-md-6">
+						                       <div class="widget-area" style="height:250px;">
+									                 <div style="background-color:lightgrey;">
+										                     <h1>Invoice Details</h1>
+									                </div>
+									    <table>
+									       <tr>
+									       <td>Invoice No. :</td>
+										    <td><input type="text" name="inv"></input></td>
+									       </tr>
+									       <tr>
+									          <td>Date :</td>
+										      <td><input type="text"  name="date" id="datepicker" readonly="readonly"></td>
+									       </tr>
+									       
+									    </table>
+					</div>
+					</div>
+						</div>
+						<div class="widget-area">
+						<div style="background-color:lightgrey;">
+						    <h3>Sale Product at:</h3>
+						</div>
+						<input type="radio" class="chk" name="prod" value="mrp" id="mrp" style="display: none;"><label for="mrp"></label>MRP<input
+										type="radio" class="chk" name="prod" value="wsp" id="wsp" style="display: none;">&nbsp;<label for="wsp"></label>WSP
+									
 								</div>
+					<div class="widget-area">
+						         <b>Quantity :</b>
+										<input type="text" name="qty" style="width:70px"></input>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								 <b>Product :</b>
+										<input type="text" name="product" style="width:540px"></input><br>
+						    </div>
 								<div class="widget-area">
-									<div class="col-md-2">Product Barcode :</div>
-									<div class="col-md-4">
-										<input type="text" class="form-control">
-									</div>
-									<div class="col-md-1">or</div>
-									<div class="col-md-2">Product code :</div>
-									<div class="col-md-2">
-										<input type="text" class="form-control">
-									</div>
-								</div>
-								<div class="widget-area">
-									<h5>Product Details :</h5>
-									<input type="radio" name="prod" value="mrp">MRP <input
-										type="radio" name="prod" value="wsp">WSP
 									<table id="stream_table"
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<th>#</th>
-												<th>Product no.</th>
-												<th>Product code</th>
-												<th>Product catagory</th>
-												<th>Product Barcode</th>
-												<th>MRP.</th>
-												<th>Qty</th>
-												<th>Total Amount</th>
+												<th id="serial">#</th>
+												<th id="prodcode">Product code</th>
+												<th id="desc">Product Description</th>
+												<th id="qty">Qty.</th>
+												<th id="perqty">MRP/Qty</th>
+												<th id="total">Total</th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr>
-												<td>1</td>
-												<td>---</td>
-												<td>---</td>
-												<td>---</td>
-												<td>---</td>
-												<td>---</td>
-												<td>---</td>
-												<td>---</td>
+												<td id="serialvalue">1</td>
+												<td id="codevalue">---</td>
+												<td id="descvalue">---</td>
+												<td id="qtyvalue">---</td>
+												<td id="qtyvalue">---</td>
+												<td id="totalvalue">---</td>
+												
 											</tr>
 										</tbody>
 									</table>
@@ -252,259 +237,78 @@
 									<table id="stream_table"
 										class="table table-striped table-bordered">
 										<thead>
-											<tr>
-												<td colspan="2">Sub Total :</td>
+										    <tr>
+										         <td colspan="2" id="round">Round Of :</td>
 												<td><input type="number" class="form-control"
-													placeholder="0.0" readonly="readonly"></td>
+													placeholder="" readonly="readonly" id="roundvalue"></td>
+										    </tr>
+											<tr>
+												<td colspan="2" id="sub">Sub Total :</td>
+												<td><input type="number" class="form-control"
+													placeholder="0.0" readonly="readonly" id="subvalue"></td>
 											</tr>
 										</thead>
 										<tbody>
 											<tr>
-												<td colspan="3">Select TAX type :</td>
+												<td colspan="2">Discount :<br><input type="radio" class="chk1" name="dis" id="percent" style="display: none;"><label for="percent" style="top: -2px;"></label>% <input
+										type="radio" class="chk1" name="dis" id="flat" style="display: none;"><label for="flat" style="top: 7px;">&nbsp;</label>FLAT</td>
+										<td><input type="number" class="form-control"
+													placeholder="" readonly="readonly"></td>
 											</tr>
+										</tbody>
+										
+										<tbody>
+											<tr>
+												<td colspan="2" id="disc">Discount Value:</td>
+												<td><input type="number" class="form-control" readonly="readonly" id="discount"></td>	
+											</tr>
+											
 										</tbody>
 										<tbody>
 											<tr>
-												<td><select class="form-control">
-														<option>TAX type</option>
-														<option>TAX type</option>
-														<option>TAX type</option>
-														<option>TAX type</option>
-														<option>TAX type</option>
-												</select></td>
-												<td>%</td>
-												<td><input type="number" class="form-control"></td>
+												<td colspan="2" id="trans">Transport charge :</td>
+												<td><input type="number" class="form-control" id="transcharge"></td>
 											</tr>
 										</tbody>
+										
 										<tbody>
 											<tr>
-												<td colspan="2">VAT Amount :</td>
-												<td><input type="number" class="form-control"
-													readonly="readonly"></td>
+												<td colspan="2" id="sur">Surcharge :</td>
+												<td><input type="number" class="form-control" id="surcharge"></td>
 											</tr>
 										</tbody>
-										<tbody>
-											<tr>
-												<td colspan="2">Surcharge :</td>
-												<td><input type="number" class="form-control"></td>
-											</tr>
-										</tbody>
-										<tbody>
-											<tr>
-												<td colspan="2">Transport charge :</td>
-												<td><input type="number" class="form-control"></td>
-											</tr>
-										</tbody>
+										
 										<thead>
 											<tr>
-												<td colspan="2">Grand Total :</td>
+												<td colspan="2" id="grand">Grand Total :</td>
 												<td><input type="number" class="form-control"
-													placeholder="0.0" readonly="readonly"></td>
+													placeholder="0.0" readonly="readonly" id="grandtotal"></td>
 											</tr>
 										</thead>
 									</table>
 									<div style="float: right;">
 										<button type="button" class="btn btn-info btn-lg"
-											data-toggle="modal" data-target="#savePurchase">Save</button>
+											data-toggle="modal" data-target="#savePurchase" id="save">Save</button>
 									</div>
 								</div>
-							</form>
+							
+					</div>
+					</div>
+					</div>	
+					</div>		
 						</div>
 					</div>
-				</div>
+					</div>
 			</div>
 		</div>
+				
 		<!-- Content Sec -->
 	</div>
 	<!-- Page Container -->
 	</div>
 	<!-- main -->
 
-	<div id="savePurchase" class="modal fade" role="dialog"
-		style="top: 25px;">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">Payment Details</h4>
-				</div>
-				<div class="modal-body">
-					<div class="col-md-6">
-						<div class="widget-area">
-							<div class="breadcrumbs">
-								<ul>
-									<li><a title="">Select Payment status : </a></li>
-								</ul>
-							</div>
-							<br> <br> <br>
-							<div class="row">
-								<div class="col-md-5">Payment status :</div>
-								<div class="col-md-7">
-									<div class="sec">
-										<select class="form-control" name="pstatus"
-											onchange="pstatus()">
-											<option value="-" selected="selected">---</option>
-											<option value="fpaid">Full paid</option>
-											<option value="spaid">Semi paid</option>
-											<option value="npaid">not paid</option>
-										</select>
-									</div>
-								</div>
-							</div>
-							<div class="widget-area" id="fullpaid">
-								<div class="breadcrumbs">
-									<ul>
-										<li><a title="">Select Payment type : </a></li>
-									</ul>
-								</div>
-								<br> <br> <br>
-								<div class="row">
-									<div class="col-md-5">Payment type :</div>
-									<div class="col-md-7">
-										<div class="sec">
-											<select class="form-control" name="fptype"
-												onchange="fptype()">
-												<option value="-" selected="selected">---</option>
-												<option value="cash">Cash</option>
-												<option value="cheq">Cheque</option>
-												<option value="btra">Bank transfer</option>
-											</select>
-										</div>
-									</div>
-									<div class="col-md-5">Payment Date :</div>
-									<div class="col-md-7">
-										<input type="text" id="datepicker1" class="form-control">
-									</div>
-									<div class="col-md-5">Amount :</div>
-									<div class="col-md-7">
-										<input type="text" class="form-control" readonly="readonly">
-									</div>
-								</div>
-								<br>
-								<div class="breadcrumbs" id="cash">
-									<button type="submit" class="btn green pull-right">Save</button>
-								</div>
-							</div>
-
-							<div id="semipaid">
-								<div class="breadcrumbs">
-									<ul>
-										<li><a title="">Select Payment type : </a></li>
-									</ul>
-								</div>
-								<br> <br> <br>
-								<div class="row">
-									<div class="col-md-5">Payment type :</div>
-									<div class="col-md-7">
-										<div class="sec">
-											<select class="form-control" name="sptype"
-												onchange="sptype()">
-												<option value="-" selected="selected">---</option>
-												<option value="cash">Cash</option>
-												<option value="cheq">Cheque</option>
-												<option value="btra">Bank transfer</option>
-											</select>
-										</div>
-									</div>
-									<div class="col-md-5">Payment Date :</div>
-									<div class="col-md-7">
-										<input type="text" id="datepicker" class="form-control">
-									</div>
-									<div class="col-md-5">Full Amount :</div>
-									<div class="col-md-7">
-										<input type="text" class="form-control" readonly="readonly">
-									</div>
-									<div class="col-md-5">Payment Amount :</div>
-									<div class="col-md-7">
-										<input type="text" class="form-control">
-									</div>
-									<div class="col-md-5">Due Amount :</div>
-									<div class="col-md-7">
-										<input type="text" class="form-control" readonly="readonly">
-									</div>
-								</div>
-								<br>
-								<div class="breadcrumbs" id="scash">
-									<button type="submit" class="btn green pull-right">Save</button>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6" style="float: right;" id="notpaid">
-						<div class="widget-area">
-							<div class="breadcrumbs">
-								<ul>
-									<li><a title="">Not Paid : </a></li>
-								</ul>
-							</div>
-							<br> <br> <br>
-							<div class="row">
-								<div class="col-md-4">Due Amount :</div>
-								<div class="col-md-8">
-									<input type="text" class="form-control" readonly="readonly">
-								</div>
-							</div>
-							<br>
-							<div class="breadcrumbs">
-								<button type="submit" class="btn green pull-right">Save</button>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6" style="float: right;" id="cheque">
-						<div class="widget-area">
-							<div class="breadcrumbs">
-								<ul>
-									<li><a title="">Provide Cheque details : </a></li>
-								</ul>
-							</div>
-							<br> <br> <br>
-							<div class="row">
-								<div class="col-md-5">Cheque No. :</div>
-								<div class="col-md-7">
-									<input type="text" class="form-control">
-								</div>
-								<div class="col-md-5">Description(if any):</div>
-								<div class="col-md-7">
-									<textarea rows="" cols="" class="form-control"></textarea>
-								</div>
-							</div>
-							<br>
-							<div class="breadcrumbs">
-								<button type="submit" class="btn green pull-right">Save</button>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6" style="float: right;" id="bank">
-						<div class="widget-area">
-							<div class="breadcrumbs">
-								<ul>
-									<li><a title="">Provide Bank transfer details : </a></li>
-								</ul>
-							</div>
-							<br> <br> <br>
-							<div class="row">
-								<div class="col-md-5">Transaction ID :</div>
-								<div class="col-md-7">
-									<input type="text" class="form-control">
-								</div>
-								<div class="col-md-5">Description(if any):</div>
-								<div class="col-md-7">
-									<textarea rows="" cols="" class="form-control"></textarea>
-								</div>
-							</div>
-							<br>
-							<div class="breadcrumbs">
-								<button type="submit" class="btn green pull-right">Save</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
-				</div>
-			</div>
-		</div>
-	</div>
+	
 
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>

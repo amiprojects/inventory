@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,8 +15,10 @@ import javax.servlet.http.HttpSession;
 
 import com.kaanish.ejb.Ejb;
 import com.kaanish.model.AccountDetails;
+import com.kaanish.model.Bill_setup;
 import com.kaanish.model.Category;
 import com.kaanish.model.City;
+import com.kaanish.model.CompanyInfo;
 import com.kaanish.model.Country;
 import com.kaanish.model.Department;
 import com.kaanish.model.ProductDetail;
@@ -26,12 +27,9 @@ import com.kaanish.model.Purchase_Product_Details;
 import com.kaanish.model.QtyUnit;
 import com.kaanish.model.QtyUnitConversion;
 import com.kaanish.model.QtyUnitConversionPK;
-
 import com.kaanish.model.QtyUnitType;
-
 import com.kaanish.model.RawMaterialsStock;
 import com.kaanish.model.ReadyGoodsStock;
-
 import com.kaanish.model.State;
 import com.kaanish.model.SubDepartment;
 import com.kaanish.model.Tax;
@@ -40,11 +38,12 @@ import com.kaanish.model.Vendor;
 import com.kaanish.model.VendorType;
 import com.kaanish.util.DateConverter;
 
-@WebServlet({ "/login", "/logout", "/addTax", "/addTaxGroup", "/editTax", "/deleteTax", "/editTaxGroup",
-		"/deleteTaxGroup", "/createDept", "/deleteDept", "/createSubDept", "/deleteSubDept", "/createCategory",
-		"/deleteCategory", "/newVendorType", "/addCountry", "/addState", "/createProduct", "/deleteCountry",
-		"/addVendor", "/addUOM", "/editVendorType", "/deleteVendorType", "/addCity", "/deleteState", "/deleteCity",
-		"/addNewConversion", "/purchaseEntry" })
+@WebServlet({ "/login", "/logout", "/addTax", "/addTaxGroup", "/editTax",
+		"/deleteTax", "/editTaxGroup", "/deleteTaxGroup", "/createDept",
+		"/deleteDept", "/createSubDept", "/deleteSubDept", "/createCategory",
+		"/deleteCategory", "/newVendorType", "/addCountry", "/addState",
+		"/createProduct", "/deleteCountry", "/addVendor", "/addUOM",
+		"/editVendorType", "/deleteVendorType", "/addCity", "/deleteState","/deleteCity", "/addNewConversion","/purchaseEntry", "/addBillSetup","/updateCompanyInfo" })
 
 public class Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -71,11 +70,14 @@ public class Servlet extends HttpServlet {
 	private QtyUnit qtyUnit;
 	private QtyUnitConversion qtyUnitConversion;
 	private QtyUnitConversionPK qtyUnitConversionPK;
+	private Bill_setup billSetup;
+	private CompanyInfo companyInfo;
 	private QtyUnitType qtyUnitType;
 	private Purchase_Entry purchaseEntry;
 	private Purchase_Product_Details purchaseProductDetails;
 	private RawMaterialsStock rawMaterialsStock;
 	private ReadyGoodsStock readyGoodsStock;
+
 
 	@Override
 	public void init() throws ServletException {
@@ -125,6 +127,18 @@ public class Servlet extends HttpServlet {
 				httpSession.removeAttribute("user");
 				msg = "Logout Successfull.";
 				break;
+			
+			case "updateCompanyInfo":
+				 page="setupCompanyInfo.jsp";
+				 companyInfo=new CompanyInfo();
+				 companyInfo.setCompname("");
+				 companyInfo.setEmail("");
+				 companyInfo.setMobile("");
+				 companyInfo.setPhone("");
+				 
+				 
+			
+				 break;
 			case "createProduct":
 				page = "setupDepartment.jsp";
 				productDetail = new ProductDetail();
@@ -135,6 +149,16 @@ public class Servlet extends HttpServlet {
 				ejb.setProductDetail(productDetail);
 				msg = "Product detail added successfully.";
 				break;
+				
+			case "addBillSetup":
+				 page="billSetup.jsp";
+				 billSetup=new Bill_setup();
+				 billSetup.setCompanyInitial(req.getParameter("comname"));
+				 billSetup.setBillType(req.getParameter("type"));
+				 billSetup.setSufix(req.getParameter("suffix"));
+				 ejb.setBillSetup(billSetup);
+				 msg = "Bill created successfully.";
+				 break;
 
 			case "newVendorType":
 				page = "purchasingVendorType.jsp";
