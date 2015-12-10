@@ -468,19 +468,19 @@
 											var txt = "<table>";
 											$.map(data1, function(item) {
 											if(i%2==0){
-												txt = txt + "<tr><td style='background-color:#989898;'><span >1 "
+												txt = txt + "<tr><td style='background-color:#989898;' width='500px'><span >1 "
 												+ item.qtyUnit1Name
 												+ " = "
 												+ item.conversion + " "
 												+ item.qtyUnit2Name
-												+ "</span><a href=\"#\"><img src=\"img/edit.png\" height=\"20\"></a></span></td></tr>";
+												+ "</span><a href=\"#\"></td><td><img src=\"img/edit.png\" height=\"20\"></a></span></td></tr>";
 											}else{
 												txt = txt + "<tr><td style='background-color:#C0C0C0;'><span>1 "
 												+ item.qtyUnit1Name
 												+ " = "
 												+ item.conversion + " "
 												+ item.qtyUnit2Name
-												+ "<a href=\"#\"><img src=\"img/edit.png\" height=\"20\"></a></span></td></tr>";
+												+ "<a href=\"#\"></td><td><img src=\"img/edit.png\" height=\"20\"></a></span></td></tr>";
 											}
 											i++;	
 											});
