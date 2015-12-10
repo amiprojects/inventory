@@ -539,11 +539,12 @@ public class Servlet extends HttpServlet {
 
 				purchaseEntry = new Purchase_Entry();
 				purchaseProductDetails = new Purchase_Product_Details();
-				rawMaterialsStock = new RawMaterialsStock();
-				readyGoodsStock = new ReadyGoodsStock();
+				/*rawMaterialsStock = new RawMaterialsStock();
+				readyGoodsStock = new ReadyGoodsStock();*/
 				dt = new Date();
 
 				purchaseEntry.setChallan_no(Integer.parseInt(req.getParameter("challanNo")));
+				purchaseEntry.setChallanSuffix(Integer.parseInt(req.getParameter("challanSuffix")));
 				purchaseEntry.setVendor_bill_no(Integer.parseInt(req.getParameter("vendorBillNo")));
 				purchaseEntry.setPurchase_date(DateConverter.getDate(req.getParameter("purchaseDate")));
 				//purchaseEntry.setVendor(ejb.getVendorById(Integer.parseInt(req.getParameter(""))));
@@ -570,15 +571,15 @@ public class Servlet extends HttpServlet {
 				// purchaseProductDetails.setProductDetail();
 				
 				//rawMaterialsStock.setProductDetail();
-				rawMaterialsStock.setRemainingQty(Integer.parseInt(req.getParameter("")));
+				//rawMaterialsStock.setRemainingQty(Integer.parseInt(req.getParameter("")));
 				
 				//readyGoodsStock.setProductDetail();
-				readyGoodsStock.setRemainingQty(Integer.parseInt(req.getParameter("")));
+				//readyGoodsStock.setRemainingQty(Integer.parseInt(req.getParameter("")));
 				
 				ejb.setPurchaseEntry(purchaseEntry);
 				ejb.setPurchaseProductDetails(purchaseProductDetails);
-				ejb.setRawMaterialsStocktDetail(rawMaterialsStock);
-				ejb.setReadyGoodsStockDetail(readyGoodsStock);
+				//ejb.setRawMaterialsStocktDetail(rawMaterialsStock);
+				//ejb.setReadyGoodsStockDetail(readyGoodsStock);
 
 				msg = "Purchase entry was successfull.";
 				break;

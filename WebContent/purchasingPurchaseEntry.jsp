@@ -150,6 +150,13 @@
 	<c:if test="${sessionScope['user']==null}">
 		<c:redirect url="index.jsp" />
 	</c:if>
+	<c:set var="cno"
+		value="${sessionScope['ejb'].getLastPurchaseChallanNumber()+1}" />
+	<c:set var="csuf"
+		value="${sessionScope['ejb'].getLastPurchaseChallanSuffix()+1}" />
+	<c:set var="suf" value="PUR" />
+	<c:set var="bs"
+		value="${sessionScope['ejb'].getLastBillSetupBySufix(suf)}" />
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.html"%>
 		<div class="page-container menu-left" style="height: 100%;">
@@ -209,9 +216,23 @@
 														name="vendorBillNo">
 												</div>
 												<div class="form-group">
-													<label for="" class="font">Purchase challan no. :</label> <input
-														type="text" placeholder="" id="" class="form-control"
-														name="challanNo" value="">
+
+													<label for="" class="font">Purchase challan no. :</label>
+													<c:set var="fy"
+														value="${sessionScope['ejb'].getCurrentFinancialYear()}" />
+													<fmt:formatNumber value="${cno}" var="lastChNo"
+														minIntegerDigits="4" groupingUsed="false" />
+													<fmt:formatNumber value="${csuf}" var="lastSuf"
+														minIntegerDigits="3" groupingUsed="false" />
+													<fmt:formatDate
+														value="${sessionScope['ejb'].getCurrentDateTime()}"
+														pattern="MM" var="yr" />
+													<input readonly="readonly" type="text" placeholder="" id=""
+														class="form-control"
+														value="${bs.companyInitial}/${fy}/${yr}/${bs.billType}/${lastChNo}/${lastSuf}">
+													<input type="hidden" name="challanNo" value="${lastChNo}"
+														id="challanNo"> <input type="hidden"
+														name="challanSuffix" value="${lastSuf}"> 
 												</div>
 												<div class="form-group">
 													<label for="" class="font">Purchase Date :</label> <input
@@ -292,35 +313,35 @@
 													</tr>
 												</thead>
 											</table>
+											<div class="widget-area" style="display: none;">
+												<!-- <div class="widget-area" style="overflow-x: scroll;"> -->
+												<table id="hiddenTable"
+													class="table table-striped table-bordered">
+													<thead style="background-color: #F0F0F0;">
+														<tr>
+															<th>Product code id</th>
+															<th>Attribute1</th>
+															<th>Atribute2</th>
+															<th>Atribute3</th>
+															<th>Atribute4</th>
+															<th>Atribute5</th>
+															<th>Atribute6</th>
+															<th>Quantity</th>
+															<th>UOM</th>
+															<th>Rate</th>
+															<th>WSP</th>
+															<th>MRP</th>
+															<th>Lot no.</th>
+															<th>Initial Serial</th>
+														</tr>
+													</thead>
+												</table>
+											</div>
 											<div style="float: right;">
-												<input type="button" class="btn green pull-right"
+												<input type="submit" class="btn green pull-right"
 													data-toggle="modal" data-target="#savePurchase"
 													value="Save">
 											</div>
-										</div>
-										<div class="widget-area" style="display: none;">
-											<!-- <div class="widget-area" style="overflow-x: scroll;"> -->
-											<table id="hiddenTable"
-												class="table table-striped table-bordered">
-												<thead style="background-color: #F0F0F0;">
-													<tr>
-														<th>Product code id</th>
-														<th>Attribute1</th>
-														<th>Atribute2</th>
-														<th>Atribute3</th>
-														<th>Atribute4</th>
-														<th>Atribute5</th>
-														<th>Atribute6</th>
-														<th>Quantity</th>
-														<th>UOM</th>
-														<th>Rate</th>
-														<th>WSP</th>
-														<th>MRP</th>
-														<th>Lot no.</th>
-														<th>Initial Serial</th>
-													</tr>
-												</thead>
-											</table>
 										</div>
 									</form>
 									<!-- <input type="radio" name="a" value="x" onclick="first()" id="a">1
