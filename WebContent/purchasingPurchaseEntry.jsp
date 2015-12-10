@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
 <html>
@@ -196,7 +197,7 @@
 														</ul>
 													</div> -->
 													&nbsp; &nbsp; &nbsp; <b class="font">Vendor Details :</b>
-													<textarea rows="" cols="" id="" class="form-control"
+													<textarea rows="" cols="" id="vDetail" class="form-control"
 														readonly="readonly"></textarea>
 
 												</div>
@@ -205,16 +206,17 @@
 												<div class="form-group">
 													<label for="" class="font">Vendor Bill no :</label> <input
 														type="text" placeholder="" id="" class="form-control"
-														readonly="readonly" name="vendorBillNo">
+														name="vendorBillNo">
 												</div>
 												<div class="form-group">
 													<label for="" class="font">Purchase challan no. :</label> <input
 														type="text" placeholder="" id="" class="form-control"
-														readonly="readonly" name="challanNo">
+														name="challanNo" value="">
 												</div>
 												<div class="form-group">
 													<label for="" class="font">Purchase Date :</label> <input
-														type="text" id="datepicker" class="form-control" name="purchaseDate">
+														type="text" id="datepicker" class="form-control"
+														name="purchaseDate">
 												</div>
 											</div>
 										</div>
@@ -225,7 +227,7 @@
 										</div>
 										<table id="purProTable"
 											class="table table-striped table-bordered">
-											<thead style="background-color: #D8D8D8;">
+											<thead style="background-color: #F0F0F0;">
 												<tr>
 													<th>#</th>
 													<th>Product code</th>
@@ -235,16 +237,6 @@
 													<th>Amount</th>
 												</tr>
 											</thead>
-											<tbody>
-												<tr>
-													<td>1</td>
-													<td>#123ABC</td>
-													<td>NA</td>
-													<td>A</td>
-													<td>5</td>
-													<td>20</td>
-												</tr>
-											</tbody>
 										</table>
 										<div style="width: 40%; float: right;">
 											<table id="stream_table"
@@ -260,9 +252,11 @@
 													<tr>
 														<td><select class="form-control">
 																<option>TAX type</option>
-																<option>TAX type</option>
-																<option>TAX type</option>
-																<option>TAX type</option>
+																<c:forEach
+																	items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
+																	var="taxTypeGroup">
+																	<option value="${taxTypeGroup.id}">${taxTypeGroup.name}</option>
+																</c:forEach>
 														</select></td>
 														<td>%</td>
 														<td><input type="text" class="form-control"
@@ -279,13 +273,15 @@
 												<tbody>
 													<tr>
 														<td colspan="2">Transport charge :</td>
-														<td><input type="text" class="form-control" name="transportCost"></td>
+														<td><input type="text" class="form-control"
+															name="transportCost"></td>
 													</tr>
 												</tbody>
 												<tbody>
 													<tr>
 														<td colspan="2">Surcharge :</td>
-														<td><input type="text" class="form-control" name="surcharge"></td>
+														<td><input type="text" class="form-control"
+															name="surcharge"></td>
 													</tr>
 												</tbody>
 												<thead>
@@ -301,6 +297,30 @@
 													data-toggle="modal" data-target="#savePurchase"
 													value="Save">
 											</div>
+										</div>
+										<div class="widget-area" style="display: none;">
+											<!-- <div class="widget-area" style="overflow-x: scroll;"> -->
+											<table id="hiddenTable"
+												class="table table-striped table-bordered">
+												<thead style="background-color: #F0F0F0;">
+													<tr>
+														<th>Product code id</th>
+														<th>Attribute1</th>
+														<th>Atribute2</th>
+														<th>Atribute3</th>
+														<th>Atribute4</th>
+														<th>Atribute5</th>
+														<th>Atribute6</th>
+														<th>Quantity</th>
+														<th>UOM</th>
+														<th>Rate</th>
+														<th>WSP</th>
+														<th>MRP</th>
+														<th>Lot no.</th>
+														<th>Initial Serial</th>
+													</tr>
+												</thead>
+											</table>
 										</div>
 									</form>
 									<!-- <input type="radio" name="a" value="x" onclick="first()" id="a">1
@@ -506,7 +526,8 @@
 		</div>
 	</div>
 
-	<div id="addProduct" class="modal fade" role="dialog" style="top: -110px; overflow-y: hidden; overflow-x: hidden;">
+	<div id="addProduct" class="modal fade" role="dialog"
+		style="top: -110px; overflow-y: hidden; overflow-x: hidden;">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<!-- <div class="modal-header">
@@ -526,26 +547,29 @@
 							<div class="row">
 								<div class="col-md-5">Department:</div>
 								<div class="col-md-7">
-									<input type="text" class="form-control" readonly="readonly">
+									<input type="text" class="form-control" readonly="readonly"
+										id="dept" name="dept">
 								</div>
 								<div class="col-md-5">Sub-Department:</div>
 								<div class="col-md-7">
-									<input type="text" class="form-control" readonly="readonly">
+									<input type="text" class="form-control" readonly="readonly"
+										id="subDept" name="subDept">
 								</div>
 								<div class="col-md-5">Category:</div>
 								<div class="col-md-7">
-									<input type="text" class="form-control" readonly="readonly">
+									<input type="text" class="form-control" readonly="readonly"
+										id="cat" name="cat">
 								</div>
 								<div class="col-md-12">
 									<br>
 								</div>
 								<div class="col-md-5">Product-Code:</div>
 								<div class="col-md-7">
-									<input type="text" class="form-control">
+									<input type="text" class="form-control" name="pCode" id="pCode">
 								</div>
 								<div class="col-md-5">Product Descripsion:</div>
 								<div class="col-md-7">
-									<input type="text" class="form-control" readonly="readonly">
+									<input type="text" class="form-control" name="pDesc" id="pDesc">
 								</div>
 							</div>
 						</div>
@@ -559,27 +583,27 @@
 							<div class="row">
 								<div class="col-md-2">Attribute1:</div>
 								<div class="col-md-10">
-									<input type="text" class="form-control" name="attr1">
+									<input type="text" class="form-control" name="attr1" id="attr1">
 								</div>
 								<div class="col-md-2">Attribute2:</div>
 								<div class="col-md-10">
-									<input type="text" class="form-control" name="attr2">
+									<input type="text" class="form-control" name="attr2" id="attr2">
 								</div>
 								<div class="col-md-2">Attribute3:</div>
 								<div class="col-md-10">
-									<input type="text" class="form-control" name="attr3">
+									<input type="text" class="form-control" name="attr3" id="attr3">
 								</div>
 								<div class="col-md-2">Attribute4:</div>
 								<div class="col-md-10">
-									<input type="text" class="form-control" name="attr4">
+									<input type="text" class="form-control" name="attr4" id="attr4">
 								</div>
 								<div class="col-md-2">Attribute5:</div>
 								<div class="col-md-10">
-									<input type="text" class="form-control" name="attr5">
+									<input type="text" class="form-control" name="attr5" id="attr5">
 								</div>
 								<div class="col-md-2">Attribute6:</div>
 								<div class="col-md-10">
-									<input type="text" class="form-control" name="attr6">
+									<input type="text" class="form-control" name="attr6" id="attr6">
 								</div>
 							</div>
 						</div>
@@ -587,15 +611,15 @@
 							<div class="row">
 								<div class="col-md-3">Quantity:</div>
 								<div class="col-md-9">
-									<input type="text" class="form-control" name="qty">
+									<input type="text" class="form-control" name="qty" id="qty">
 								</div>
 								<div class="col-md-3">UOM:</div>
 								<div class="col-md-9">
-									<input type="text" class="form-control">
+									<input type="text" class="form-control" id="uom" name="uom">
 								</div>
 								<div class="col-md-3">Rate:</div>
 								<div class="col-md-9">
-									<input type="text" class="form-control">
+									<input type="text" class="form-control" name="rate" id="rate">
 								</div>
 							</div>
 						</div>
@@ -623,12 +647,14 @@
 									name="lot" value="yesLot">&nbsp; Yes <input
 									type="radio" name="lot" value="noLot">&nbsp; No
 							</div>
-							
+
 							<div class="row">
-								<div class="col-md-2"><b>Lot No. :</b></div>
+								<div class="col-md-2">
+									<b>Lot No. :</b>
+								</div>
 								<div class="col-md-10">
 									<input type="text" class="form-control" id="lotText"
-										disabled="disabled">
+										name="lotText" disabled="disabled">
 								</div>
 							</div>
 							<br>
@@ -637,34 +663,41 @@
 									name="serial" value="yesSerial">&nbsp; Yes <input
 									type="radio" name="serial" value="noSerial">&nbsp; No
 							</div>
-							
+
 							<div class="row">
-								<div class="col-md-2"><b>Initial Serial. :</b></div>
+								<div class="col-md-2">
+									<b>Initial Serial. :</b>
+								</div>
 								<div class="col-md-10">
 									<input type="text" class="form-control" id="serialText"
-										disabled="disabled">
+										name="serialText" disabled="disabled">
 								</div>
 							</div>
 							<br>
-							<div class="row"> <div style="float: left;">
-								&nbsp; &nbsp; <span><b>Bar code :</b> &nbsp; </span> <input
-									type="radio" name="bar" value="yesBar">&nbsp; Yes <input
-									type="radio" name="bar" value="noBar">&nbsp; No</div>
-							
-							<div style="float: right; right: 25px;"><input type="button" class="btn btn-default" value="Add"
-						data-toggle="modal" onclick="anotherShow();"> <input
-						type="button" class="btn btn-default" data-dismiss="modal"
-						value="Close" id="close"></div>
+							<div class="row">
+								<div style="float: left;">
+									&nbsp; &nbsp; <span><b>Bar code :</b> &nbsp; </span> <input
+										type="radio" name="bar" value="yesBar">&nbsp; Yes <input
+										type="radio" name="bar" value="noBar">&nbsp; No
+								</div>
+
+								<div style="float: right; right: 25px;">
+									<input type="button" class="btn btn-default" value="Add"
+										data-toggle="modal" onclick="anotherShow();"> <input
+										type="button" class="btn btn-default" data-dismiss="modal"
+										value="Close" id="close">
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>
-				<!-- <div class="modal-footer">
+					<!-- <div class="modal-footer">
 					
 				</div> -->
-			</div>
+				</div>
 
+			</div>
 		</div>
-	</div></div>
+	</div>
 
 	<div id="another" class="modal fade" role="dialog" style="top: -25px;">
 		<div class="modal-dialog">
@@ -677,7 +710,8 @@
 					<div class="row">
 						<div class="widget-area">
 							<div class="row">
-								<span>Do you want to add another product?</span>
+								<span>Product added successfully...</span> <span>Do you
+									want to add another product?</span>
 							</div>
 							<br>
 							<div class="row">
@@ -688,7 +722,8 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" id="close1" onclick="close1();">Close</button>
+					<!-- <button type="button" class="btn btn-default" id="close1"
+						onclick="close1();">Close</button> -->
 				</div>
 			</div>
 
@@ -748,16 +783,16 @@
 		/* $("#close1").click(function() {
 			$("#another").modal("hide");
 		}); */
-		function close1(){
+		function close1() {
 			$("#another").modal("hide");
 		}
-		function manage(){
-			$("#header").hide();		
+		function manage() {
+			$("#header").hide();
 		}
-		$("#yesP").click(function(){
+		$("#yesP").click(function() {
 			$("#another").modal("hide");
 		});
-		$("#noP").click(function(){
+		$("#noP").click(function() {
 			$("#another").modal("hide");
 			$("#addProduct").modal("hide");
 			$("#header").show();
@@ -765,46 +800,120 @@
 		var i = 1;
 		function anotherShow() {
 			$("#another").modal("show");
-			$("#purProTable")
-					.append(
-							'<tbody><tr><td>'
-									+ i
-									+ '</td><td>#123ABC</td><td>NA</td><td>A</td><td>5</td><td>20</td></tr></tbody>');
-			$("#subTotal").val(Number($("#subTotal").val()) + Number(20.5));
+			//$("#amount").val(Number($("#qty").val()) * Number($("#rate").val()));
+			$("#purProTable").append(
+					'<tbody><tr><td>' + i + '</td><td>' + $("#pCode").val()
+							+ '</td><td>' + $("#pDesc").val() + '</td><td>'
+							+ $("#rate").val() + '</td><td>' + $("#qty").val()
+							+ '</td><td>' + Number($("#qty").val())
+							* Number($("#rate").val()) + '</td></tr></tbody>');
+			$("#subTotal").val(
+					Number($("#subTotal").val()) + Number($("#qty").val())
+							* Number($("#rate").val()));
+			//$("#qty").val("");
 			i++;
+
+			$("#pCodeIdH").val("Id");
+			$("#hiddenTable").append(
+					'<tbody><tr>'
+							+ '<td><input type="text" name="pCodeIdH" value=\''
+							+ $("#pCode").val()
+							+ '\'></td>'
+							+ '<td><input type="text" name="attr1H" value=\''
+							+ $("#attr1").val()
+							+ '\'></td>'
+							+ '<td><input type="text" name="attr2H" value=\''
+							+ $("#attr2").val()
+							+ '\'></td>'
+							+ '<td><input type="text" name="attr3H" value=\''
+							+ $("#attr3").val()
+							+ '\'></td>'
+							+ '<td><input type="text" name="attr4H" value=\''
+							+ $("#attr4").val()
+							+ '\'></td>'
+							+ '<td><input type="text" name="attr5H" value=\''
+							+ $("#attr5").val()
+							+ '\'></td>'
+							+ '<td><input type="text" name="attr6H" value=\''
+							+ $("#attr6").val()
+							+ '\'></td>'
+							+ '<td><input type="text" name="qtyH" value=\''
+							+ $("#qty").val()
+							+ '\'></td>'
+							+ '<td><input type="text" name="uomH" value=\''
+							+ $("#uom").val()
+							+ '\'></td>'
+							+ '<td><input type="text" name="rateH" value=\''
+							+ $("#rate").val()
+							+ '\'></td>'
+							+ '<td><input type="text" name="wspH" value=\''
+							+ $("#wsp").val()
+							+ '\'></td>'
+							+ '<td><input type="text" name="mrpH" value=\''
+							+ $("#mrp").val()
+							+ '\'></td>'
+							+ '<td><input type="text" name="lotH" value=\''
+							+ $("#lotText").val()
+							+ '\'></td>'
+							+ '<td><input type="text" name="serialH" value=\''
+							+ $("#serialText").val()
+							+ '\'></td>'
+							+ '</tr></tbody>');
 		}
 
 		function getVendorNameByType() {
+			$("#vName").val("");
+			$("#vDetail").val("");
 		}
 
 		$(function() {
-			$("#vName").autocomplete({
-				source : function(req, resp) {
-					$.ajax({
-						url : "getVendorByVendorType",
-						dataType : "json",
-						data : {
-							id : $('[name="vendorType"]').val(),
-							term : req.term
+			$("#vName").autocomplete(
+					{
+						source : function(req, resp) {
+							$.ajax({
+								url : "getVendorByVendorType",
+								dataType : "json",
+								data : {
+									id : $('[name="vendorType"]').val(),
+									term : req.term
+								},
+								success : function(data) {
+									resp($.map(data, function(item) {
+										return ({
+											value : item.name,
+											addr : item.address,
+											//email : item.email,
+											ph1 : item.ph1,
+											ph2 : item.ph2
+										});
+									}));
+								}
+							});
 						},
-						success : function(data) {
-							resp($.map(data, function(item) {
-								return ({
-									value : item.name,
-									addr : item.address
-								});
-							}));
+						change : function(event, ui) {
+							if (ui.item == null) {
+								$("#vName").val("");
+								$("#vDetail").val("");
+							} else {
+								$("#vDetail").val(
+										"Address : \n\t" + ui.item.addr
+												+ "\nPhone1 : " + ui.item.ph1
+												+ "\nPhone2 : " + ui.item.ph2);
+							}
+
+						},
+						select : function(event, ui) {
+							if (ui.item == null) {
+								$("#vName").val("");
+							} else {
+								$("#vDetail").val(
+										"Address : \n\t" + ui.item.addr
+												+ "\nPhone1 : " + ui.item.ph1
+												+ "\nPhone2 : " + ui.item.ph2);
+								//$("#vDetail").val(ui.item.ph1);
+							}
 						}
 					});
-				},
-				change : function(event, ui) {
-					alert(ui.item.addr);
-					//$("#vd").val();
-				},
-				select : function(event, ui) {
-					alert("select");
-				}
-			});
 		});
 	</script>
 </body>

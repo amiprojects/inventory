@@ -40,7 +40,7 @@ import com.kaanish.util.DateConverter;
 		"/deleteTaxGroup", "/createDept", "/deleteDept", "/createSubDept", "/deleteSubDept", "/createCategory",
 		"/deleteCategory", "/newVendorType", "/addCountry", "/addState", "/createProduct", "/deleteCountry",
 		"/addVendor", "/addUOM", "/editVendorType", "/deleteVendorType", "/addCity", "/deleteState", "/deleteCity",
-		"/addNewConversion", "/purchaseEntry", "/updateConversion" })
+		"/addNewConversion", "/purchaseEntry", "/updateConversion","/purchaseEntry", "/addBillSetup","/updateCompanyInfo","/purchaseEntry", "/addBillSetup","/updateCompanyInfo"  })
 
 public class Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -67,6 +67,8 @@ public class Servlet extends HttpServlet {
 	private QtyUnit qtyUnit;
 	private QtyUnitConversion qtyUnitConversion;
 	private QtyUnitConversionPK qtyUnitConversionPK;
+	private Bill_setup billSetup;
+	private CompanyInfo companyInfo;
 	private QtyUnitType qtyUnitType;
 	private Purchase_Entry purchaseEntry;
 	private Purchase_Product_Details purchaseProductDetails;
@@ -121,6 +123,18 @@ public class Servlet extends HttpServlet {
 				httpSession.removeAttribute("user");
 				msg = "Logout Successfull.";
 				break;
+			
+			case "updateCompanyInfo":
+				 page="setupCompanyInfo.jsp";
+				 companyInfo=new CompanyInfo();
+				 companyInfo.setCompname("");
+				 companyInfo.setEmail("");
+				 companyInfo.setMobile("");
+				 companyInfo.setPhone("");
+				 
+				 
+			
+				 break;
 			case "createProduct":
 				page = "setupDepartment.jsp";
 				productDetail = new ProductDetail();
@@ -131,6 +145,16 @@ public class Servlet extends HttpServlet {
 				ejb.setProductDetail(productDetail);
 				msg = "Product detail added successfully.";
 				break;
+				
+			case "addBillSetup":
+				 page="billSetup.jsp";
+				 billSetup=new Bill_setup();
+				 billSetup.setCompanyInitial(req.getParameter("comname"));
+				 billSetup.setBillType(req.getParameter("type"));
+				 billSetup.setSufix(req.getParameter("suffix"));
+				 ejb.setBillSetup(billSetup);
+				 msg = "Bill created successfully.";
+				 break;
 
 			case "newVendorType":
 				page = "purchasingVendorType.jsp";

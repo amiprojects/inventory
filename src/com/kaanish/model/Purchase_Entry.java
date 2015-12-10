@@ -19,6 +19,7 @@ public class Purchase_Entry {
 	private int id;
 
 	private int challan_no;
+	private int challanSuffix;
 	private int vendor_bill_no;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date purchase_date;
@@ -172,6 +173,13 @@ public class Purchase_Entry {
 
 	public void setPaymentType(PaymentType paymentType) {
 		this.paymentType = paymentType;
+	}
+		public int getChallanSuffix() {
+		return challanSuffix;
+	}
+
+	public void setChallanSuffix(int challanSuffix) {
+		this.challanSuffix = challanSuffix;
 	}
 
 }

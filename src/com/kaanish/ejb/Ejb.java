@@ -11,8 +11,10 @@ import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpSession;
 
 import com.kaanish.model.AccountDetails;
+import com.kaanish.model.Bill_setup;
 import com.kaanish.model.Category;
 import com.kaanish.model.City;
+import com.kaanish.model.CompanyInfo;
 import com.kaanish.model.Country;
 import com.kaanish.model.Department;
 import com.kaanish.model.ProductDetail;
@@ -275,12 +277,32 @@ public class Ejb {
 	public void setPurchaseEntry(Purchase_Entry purchaseEntry) {
 		em.persist(purchaseEntry);
 	}
-	
-	public Purchase_Entry getPurchaseEntryById(int id){
+
+	public Purchase_Entry getPurchaseEntryById(int id) {
 		return em.find(Purchase_Entry.class, id);
 	}
+
+	public int getLastPurchaseChallanNumber(){
+		TypedQuery<Purchase_Entry> q=em.createQuery("select c from Purchase_Entry c ORDER BY ID DESC", Purchase_Entry.class);
+		if(q.getResultList().size()>0){
+			return q.getResultList().get(0).getChallan_no();
+		}else{
+			return 0;
+		}		
+		
+	}
+	
+	public int getLastPurchaseChallanSuffix(){
+		TypedQuery<Purchase_Entry> q=em.createQuery("select c from Purchase_Entry c ORDER BY ID DESC", Purchase_Entry.class);
+		if(q.getResultList().size()>0){
+			return q.getResultList().get(0).getChallanSuffix();
+		}else{
+			return 0;
+		}
+	} 
 	
 	/******************* for purchase product details ***************************/
+
 	public void setPurchaseProductDetails(Purchase_Product_Details purchaseProductDetails) {
 		em.persist(purchaseProductDetails);
 	}
@@ -507,6 +529,38 @@ public class Ejb {
 				ProductDetail.class);
 		q.setParameter("Id", id);
 		return q.getResultList();
+	}
+
+	/******************* for bill setup **************************/
+
+	public void setBillSetup(Bill_setup billSetup) {
+		em.persist(billSetup);
+
+	}
+
+	/*********************** for company info *********************/
+
+	public void setCompanyInfo(CompanyInfo companyInfo) {
+		em.persist(companyInfo);
+	}
+
+	public void updateCompanyInfo(CompanyInfo companyInfo) {
+		em.merge(companyInfo);
+
+	}
+
+	public CompanyInfo getCompanyInfo() {
+		TypedQuery<CompanyInfo> q = em.createQuery("Select c from CompanyInfo c", CompanyInfo.class);
+		if (q.getResultList().size() > 0) {
+			return q.getResultList().get(0);
+		} else {
+			return null;
+		}
+
+	}
+
+	public CompanyInfo getCompanyInfoById(int id){
+		return em.find(CompanyInfo.class, id);
 	}
 
 	/********************* for RawMaterial Stock ************************/
