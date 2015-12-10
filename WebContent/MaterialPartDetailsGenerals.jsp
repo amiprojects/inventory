@@ -58,6 +58,8 @@
 <script type="text/javascript" src="js/html5lightbox.js"></script> -->
 <script>
 	var i = 2;
+	var x = "";
+	var serial = [];
 	$(document)
 			.ready(
 					function() {
@@ -82,15 +84,58 @@
 																"style",
 																"color: red; font-weight: bolder; background-color: #A3DEDE; box-shadow: 1px 1px 1px 1px #507B8A");
 												i = i + 1;
-												
+
 											}
-											$("#pcodedisp").html($("#productCode").val());
-											
+											if (i == 9) {
+												$("#finish").prop("disabled", false);
+												$("#pcodedisp")
+														.val(
+																$(
+																		"#productCode")
+																		.val());
+												$("#description1")
+														.val(
+																$(
+																		"#description")
+																		.val());
+												$("#upc ")
+														.val(
+																$(
+																		"#universalProductCode")
+																		.val());
+												$("#uom1")
+														.val($("#uomO").val());
+												$("#mrp1")
+														.val($("#mrpO").val());
+												$("#wsp").val($("#wspO").val());
+												$("#qty").html(
+														$("#quantity").val());
+												$("#uom")
+														.val($("#uomO1").val());
+												$("#ucost")
+														.val($("#ucO").val());
+												$("#date2").val(
+														$("#datepicker").val());
+												$("#ltnum").val(
+														$("#lotnO").val());
+												$("#att1").val($("#a1O").val());
+												$("#att2").val($("#a2O").val());
+												$("#att3").val($("#a3O").val());
+												$("#att4").val($("#a4O").val());
+												$("#att5").val($("#a5O").val());
+												$("#att6").val($("#a6O").val());
+
+												for (l = 0; l < serial.length; l++) {
+													x = x + serial[l] + '<br>';
+												}
+												$("#slNo").html(x);
+											}
 										});
 
 						$("#prev")
 								.click(
 										function() {
+											$("#finish").prop("disabled", true);
 											if (i > 2) {
 												$("#step" + (i - 1)).hide();
 												$("#menu" + (i - 1)).attr(
@@ -103,8 +148,6 @@
 																"color: red; font-weight: bolder; background-color: #A3DEDE; box-shadow: 1px 1px 1px 1px #507B8A");
 												i = i - 1;
 											}
-											
-											
 
 										});
 
@@ -112,6 +155,9 @@
 
 	function increSerial() {
 		$("#step67").modal('show');
+	}
+	function submitSumary() {
+		$("#fs").submit();
 	}
 </script>
 
@@ -799,26 +845,29 @@
 									<div class="col-md-6">
 										<div>
 											<label for="exampleInputEmail1">Product Code:</label> <input
-												type="text" name="productCode" id="productCode" required class="form-control"><br>
+												type="text" name="productCode" id="productCode" required
+												class="form-control"><br>
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div>
 											<label for="exampleInputPassword1">Description:</label> <input
-												type="text" name="description" required class="form-control"><br>
+												type="text" name="description" id="description" required
+												class="form-control"><br>
 										</div>
 
 									</div>
 
 									<div class="col-md-6">
 										<label for="exampleInputEmail1">Universal Product
-											Code:</label> <input type="text" name="universalProductCode" required
-											placeholder="" class="form-control"><br>
+											Code:</label> <input type="text" name="universalProductCode"
+											id="universalProductCode" required placeholder=""
+											class="form-control"><br>
 									</div>
 									<div class="col-md-6">
 										<div>
 											<label for="exampleInputPassword1">Unit Of
-												Measurement:</label> <select required name="uom"
+												Measurement:</label> <select required name="uom" id="uomO"
 												style="width: 250px; height: 34px">
 												<option value="volvo">Volvo</option>
 												<option value="saab">Saab</option>
@@ -942,24 +991,24 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="" class="font">Maximum Retail Price :</label> <input
-											type="text" name="mrp" placeholder="" id=""
+											type="text" name="mrp" placeholder="" id="mrpO"
 											class="form-control">
 									</div>
 									<div class="form-group">
 										<label for="" class="font">Wholesale Price :</label> <input
-											type="text" name="wsp" placeholder="" id=""
+											type="text" name="wsp" placeholder="" id="wspO"
 											class="form-control">
 									</div>
 									<div class="form-group">
 										<label for="" class="font">Quantity:</label> <input
-											name="quantity" type="text" placeholder="" id="quantity" name
+											name="quantity" type="text" id="quantity"
 											class="form-control">
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="" class="font">Unit of Measurement :</label> <select
-											name="uom1" style="width: 253px; height: 34px">
+											id="uomO1" name="uom1" style="width: 253px; height: 34px">
 											<option value="volvo">km</option>
 											<option value="saab">mm</option>
 											<option value="mercedes">hm</option>
@@ -968,7 +1017,7 @@
 									</div>
 									<div class="form-group">
 										<label for="" class="font">Unit Cost:</label> <input
-											name="unitCost" type="text" placeholder="" id=""
+											name="unitCost" type="text" placeholder="" id="ucO"
 											class="form-control">
 
 									</div>
@@ -996,7 +1045,7 @@
 									</div>
 									<div class="form-group">
 										<label for="" class="font">Quantity:</label> <input
-											readonly="readonly" type="number" placeholder="" id=""
+											readonly="readonly" type="text" placeholder="" id=""
 											class="form-control">
 									</div>
 								</div>
@@ -1040,7 +1089,8 @@
 							<div class="col-md-6">
 								<div id="lotdiv">
 									<label for="exampleInputEmail1">Lot Number:</label> <input
-										type="text" name="lotNumber" required class="form-control"><br>
+										id="lotnO" type="text" name="lotNumber" required
+										class="form-control"><br>
 								</div>
 							</div>
 							<div id="serdiv">
@@ -1110,34 +1160,34 @@
 							<div class="col-md-6">
 								<div class="form-group">
 									<label for="" class="font">Attribute 1:</label> <input
-										name="a1" type="text" placeholder="" id=""
+										name="a1" type="text" placeholder="" id="a1O"
 										class="form-control">
 								</div>
 								<div class="form-group">
 									<label for="" class="font">Attribute 2:</label> <input
-										name="a2" type="text" placeholder="" id=""
+										name="a2" type="text" placeholder="" id="a2O"
 										class="form-control">
 								</div>
 								<div class="form-group">
 									<label for="" class="font">Attribute 3:</label> <input
-										name="a3" type="number" placeholder="" id=""
+										name="a3" type="number" placeholder="" id="a3O"
 										class="form-control">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
 									<label for="" class="font">Attribute 4:</label> <input
-										name="a4" type="text" placeholder="" id=""
+										name="a4" type="text" placeholder="" id="a4O"
 										class="form-control">
 								</div>
 								<div class="form-group">
 									<label for="" class="font">Attribute 5:</label> <input
-										name="a5" type="text" placeholder="" id=""
+										name="a5" type="text" placeholder="" id="a5O"
 										class="form-control">
 								</div>
 								<div class="form-group">
 									<label for="" class="font">Attribute 6:</label> <input
-										name="a6" type="number" placeholder="" id=""
+										name="a6" type="number" placeholder="" id="a6O"
 										class="form-control">
 								</div>
 							</div>
@@ -1375,57 +1425,131 @@
 						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial; overflow: auto;">
 						<div></div>
 						<div>
-						<fieldset>
-							<legend> Summary </legend>
-							<form>
-								<h4>
-									<u>Products:</u>
-								</h4><table><tr><td>
-								<b>Code:</b> </td><td><span id="pcodedisp"></span></td></tr><!-- <tr><td><b>Description:</b></td><td> <b>Universal
-									Product Code:</b></td><b>Unit of Measurement:</b> </table> --></table>
-								
-								<hr width="100%">
-
-							
-								<h4>
-									<u>Add initial inventory:</u>
-								</h4>
-								<b>Location:</b><br> <b>Quantity:</b><br> <b>UOM:</b><br>
-								<b>Unit Cost:</b><br> <b>Date:</b>
-								<hr width="100%">
-
-								<h4>
-									<u>Initial inventory tracking:</u>
-								</h4>
-								<b>Lot Number:</b><br>  <b>Serial
-									Number:</b><br><div style="width: 190px;height: 224px; border: 1px solid; overflow: auto;">
-									<table  align="center" >
-									<tr><td >56565</td></tr>
+							<fieldset>
+								<legend> Summary </legend>
+								<form action="productSumary" id="fs" >
+									<h4>
+										<u>Products:</u>
+									</h4>
+									<table>
+										<tr>
+											<td><b>Code:</b></td>
+											<td><input id="pcodedisp" name="productCode" type="text"
+												readonly></td>
+										<tr>
+											<td>Description:</td>
+											<td><input type="text" name="description" readonly
+												id="description1"></td>
+										</tr>
+										<tr>
+											<td>Universal Product Code:</td>
+											<td><input type="text" readonly name="upc" id="upc"></td>
+										<tr>
+										<tr>
+											<td>Unit of Measurement:</td>
+											<td><input type="text" readonly name="uom" id="uom1"></td>
+										</tr>
 									</table>
-									
+									<hr width="100%">
+
+
+									<h4>
+										<u>Add initial inventory:</u>
+									</h4>
+									<table>
+										<tr>
+											<td>Maximum Retail Price:</td>
+											<td><input id="mrp1" readonly type="text" name="mrp1"></td>
+										</tr>
+
+										<tr>
+											<td>Wholesale Price:</td>
+											<td><input type="text" readonly name="wsp1" id="wsp"></td>
+										</tr>
+
+										<tr>
+											<td>Quantity:</td>
+											<td><input id="quantity" readonly name="qty1" type="text"></td>
+										<tr>
+											<td>Unit of Measurement:</td>
+											<td><input id="uom" readonly name="uom" type="text"></td>
+										<tr>
+										<tr>
+											<td>Unit Cost:</td>
+											<td><input id="ucost" readonly name="ucost" type="text"></td>
+										<tr>
+										<tr>
+											<td>Date:</td>
+											<td><input id="date2" readonly name="date2" type="text"></td>
+										</tr>
+									</table>
+									<hr width="100%">
+
+									<h4>
+										<u>Initial inventory tracking:</u>
+									</h4>
+									<b>Lot Number:</b> <input type="text" name="lotnumber" readonly
+										id="ltnum"> <br> <b>Serial Number:</b> <br>
+									<div
+										style="width: 190px; height: 224px; border: 1px solid; overflow: auto;">
+										<table align="center">
+											<tr>
+												<td><span id="slNo"></span></td>
+											</tr>
+										</table>
+
 									</div>
-								<hr width="100%">
+									<hr width="100%">
 
-								<h4>
-									<u>Products Custom Field:</u>
-								</h4>
-								<b>Attribute 1:</b><br> <b>Attribute 2:</b><br> <b>Attribute 4:</b><br>
-								<b>Attribute 4:</b><br><b>Attribute 5:</b><br><b>Attribute 6:</b>
-								<hr width="100%">
+									<h4>
+										<u>Products Custom Field:</u>
+									</h4>
+									<table>
+										<tr>
+											<td>Attribute 1:</td>
+											<td><input  readonly id="att1" name="att1"></td>
+										</tr>
+										<tr>
+											<td>Attribute 2:</td>
+											<td><input readonly name="a2" id="att2">
+										</tr>
+										<tr>
+											<td>Attribute 3:</td>
+											<td><input readonly name="a3" id="att3"></td>
+										</tr>
+										<tr>
+											<td>Attribute 4:</td>
+											<td><input readonly name="a4" id="att4"></td>
+										</tr>
+										<tr>
+											<td>Attribute 5:</td>
+											<td><input readonly name="a5" id="att5"></td>
+										</tr>
+										<tr>
+											<td>Attribute 6:</td>
+											<td><input readonly name="a6" id="att6"></td>
+										</tr>
+									</table>
 
-								
+									<hr width="100%">
 
-								<h4>
-									<u>Product Image Fields:</u>
-								</h4>
-								<div style="width: 190px;height: 224px; border: 1px solid; overflow: auto;">
-									
-									
+
+
+									<h4>
+										<u>Product Image Fields:</u>
+									</h4>
+									<div
+										style="width: 190px; height: 224px; border: 1px solid; overflow: auto;">
+
+
 									</div>
-								<hr width="100%">
-							</form>
-						</fieldset>
-</div>
+									<hr width="100%">
+
+
+
+								</form>
+							</fieldset>
+						</div>
 					</div>
 
 
@@ -1464,7 +1588,7 @@
 							<button type="button" class="c-btn medium gray"
 								style="position: absolute; right: 7px; top: 3px;"
 								data-dismiss="modal">Cancel</button>
-							<button type="button" class="c-btn medium gray"
+							<button type="button" class="c-btn medium gray" disabled="disabled" id="finish" onclick="submitSumary()"
 								style="position: absolute; right: 87px; top: 3px;">Finish</button>
 							<button type="button" class="c-btn medium gray"
 								style="position: absolute; right: 165px; top: 3px;" id="next">Next</button>
@@ -1503,7 +1627,6 @@
 
 
 	<script type="text/javascript" src="js/modernizr.js"></script>
-
 	<script type="text/javascript" src="js/script.js"></script>
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="js/enscroll.js"></script>
@@ -1511,43 +1634,59 @@
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 
 	<script type="text/javascript">
+	var dupli = [];
 		function incre() {
 
 			var a = $("#1stSerial").val();
 			var b = $("#limit").val();
+			var p=0;
 			for (xc = a; xc <= Number(a) + Number(b); xc++) {
 				$("#serialNo").append("<tr><td>" + xc + "</td></tr>");
+				serial[j] = xc;
+				dupli[p]=xc;
+				p++
 				$("#step67").hide();
+				j++;
 			}
 
 		}
+		var xli = 0;
 		
 		var j = 0;
 		var xc = 0;
 		function addSerial() {
 			q = $("#quantity").val();
-			
-			if(j<q){
+
+			if (j < q) {
 				if ($("#indvSerial").val() != "") {
-					j++;
 					$("#limit").empty();
-					$("#serialNo").append(
-							"<tr><td>" + $("#indvSerial").val() + "</td></tr>");
+				for(k=0;k<dupli.length();k++){					
+					if (serial.indexOf(dupli[k])!=-1) {
+						$("#serialNo").append(
+								"<tr><td>" + $("#indvSerial").val()
+										+ "</td></tr>");
+					} else {
+						alert("dupliacte");
+					}
+				}
+
+					
+					serial[j] = $("#indvSerial").val();
 					$("#indvSerial").val("");
-					for (gt = j; gt <= q - j; gt++) {
+					for (gt = j; gt <= q - j - 1; gt++) {
 						$("#limit").val(gt);
 					}
-
+					j++;
 				} else {
 					alert("Give a Serial Number");
 				}
-				
+
 			}
-			
-			else{
-				
+
+			else {
+
 				alert("Quantity limit cross");
-			}	
+			}
 
 		}
 		$(document).ready(function() {
