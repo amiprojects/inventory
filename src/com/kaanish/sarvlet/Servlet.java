@@ -553,16 +553,16 @@ public class Servlet extends HttpServlet {
 				// purchaseEntry.setTax_Type_Group();
 				// purchaseEntry.setBill_setup();
 
-				purchaseProductDetails.setAttrValue1(req.getParameter("attr1"));
-				purchaseProductDetails.setAttrValue2(req.getParameter("attr2"));
-				purchaseProductDetails.setAttrValue3(req.getParameter("attr3"));
-				purchaseProductDetails.setAttrValue4(req.getParameter("attr4"));
-				purchaseProductDetails.setAttrValue5(req.getParameter("attr5"));
-				purchaseProductDetails.setAttrValue6(req.getParameter("attr6"));
+				purchaseProductDetails.setAttrValue1(req.getParameter("attr1H"));
+				purchaseProductDetails.setAttrValue2(req.getParameter("attr2H"));
+				purchaseProductDetails.setAttrValue3(req.getParameter("attr3H"));
+				purchaseProductDetails.setAttrValue4(req.getParameter("attr4H"));
+				purchaseProductDetails.setAttrValue5(req.getParameter("attr5H"));
+				purchaseProductDetails.setAttrValue6(req.getParameter("attr6H"));
 				// purchaseProductDetails.setCost(Float.parseFloat(req.getParameter("")));
-				purchaseProductDetails.setWsp(Integer.parseInt(req.getParameter("wsp")));
-				purchaseProductDetails.setMrp(Integer.parseInt(req.getParameter("mrp")));
-				purchaseProductDetails.setQuantity(Integer.parseInt(req.getParameter("qty")));
+				purchaseProductDetails.setWsp(Integer.parseInt(req.getParameter("wspH")));
+				purchaseProductDetails.setMrp(Integer.parseInt(req.getParameter("mrpH")));
+				purchaseProductDetails.setQuantity(Integer.parseInt(req.getParameter("qtyH")));
 				// purchaseProductDetails.setRemaining_quantity(Integer.parseInt(req.getParameter("")));
 				// purchaseProductDetails.setPurchase_Entry(ejb.getPurchaseEntryById(Integer.parseInt(req.getParameter(""))));
 				// purchaseProductDetails.setInitialInventory();
