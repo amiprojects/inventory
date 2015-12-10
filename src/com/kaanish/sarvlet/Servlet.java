@@ -38,12 +38,11 @@ import com.kaanish.model.Vendor;
 import com.kaanish.model.VendorType;
 import com.kaanish.util.DateConverter;
 
-@WebServlet({ "/login", "/logout", "/addTax", "/addTaxGroup", "/editTax",
-		"/deleteTax", "/editTaxGroup", "/deleteTaxGroup", "/createDept",
-		"/deleteDept", "/createSubDept", "/deleteSubDept", "/createCategory",
-		"/deleteCategory", "/newVendorType", "/addCountry", "/addState",
-		"/createProduct", "/deleteCountry", "/addVendor", "/addUOM",
-		"/editVendorType", "/deleteVendorType", "/addCity", "/deleteState","/deleteCity", "/addNewConversion","/purchaseEntry", "/addBillSetup","/updateCompanyInfo" })
+@WebServlet({ "/login", "/logout", "/addTax", "/addTaxGroup", "/editTax", "/deleteTax", "/editTaxGroup",
+		"/deleteTaxGroup", "/createDept", "/deleteDept", "/createSubDept", "/deleteSubDept", "/createCategory",
+		"/deleteCategory", "/newVendorType", "/addCountry", "/addState", "/createProduct", "/deleteCountry",
+		"/addVendor", "/addUOM", "/editVendorType", "/deleteVendorType", "/addCity", "/deleteState", "/deleteCity",
+		"/addNewConversion", "/purchaseEntry", "/updateConversion","/purchaseEntry", "/addBillSetup","/updateCompanyInfo","/purchaseEntry", "/addBillSetup","/updateCompanyInfo"  })
 
 public class Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -77,7 +76,6 @@ public class Servlet extends HttpServlet {
 	private Purchase_Product_Details purchaseProductDetails;
 	private RawMaterialsStock rawMaterialsStock;
 	private ReadyGoodsStock readyGoodsStock;
-
 
 	@Override
 	public void init() throws ServletException {
@@ -547,7 +545,7 @@ public class Servlet extends HttpServlet {
 				purchaseEntry.setChallanSuffix(Integer.parseInt(req.getParameter("challanSuffix")));
 				purchaseEntry.setVendor_bill_no(Integer.parseInt(req.getParameter("vendorBillNo")));
 				purchaseEntry.setPurchase_date(DateConverter.getDate(req.getParameter("purchaseDate")));
-				//purchaseEntry.setVendor(ejb.getVendorById(Integer.parseInt(req.getParameter(""))));
+				// purchaseEntry.setVendor(ejb.getVendorById(Integer.parseInt(req.getParameter(""))));
 				purchaseEntry.setUsers(ejb.getUserById(httpSession.getAttribute("user").toString()));
 				purchaseEntry.setEntry_date(dt);
 				purchaseEntry.setSur_charge(Integer.parseInt(req.getParameter("surcharge")));
@@ -555,27 +553,27 @@ public class Servlet extends HttpServlet {
 				// purchaseEntry.setTax_Type_Group();
 				// purchaseEntry.setBill_setup();
 
-				purchaseProductDetails.setAttrValue1(req.getParameter("attr1H"));
-				purchaseProductDetails.setAttrValue2(req.getParameter("attr2H"));
-				purchaseProductDetails.setAttrValue3(req.getParameter("attr3H"));
-				purchaseProductDetails.setAttrValue4(req.getParameter("attr4H"));
-				purchaseProductDetails.setAttrValue5(req.getParameter("attr5H"));
-				purchaseProductDetails.setAttrValue6(req.getParameter("attr6H"));
-				//purchaseProductDetails.setCost(Float.parseFloat(req.getParameter("")));
-				purchaseProductDetails.setWsp(Integer.parseInt(req.getParameter("wspH")));
-				purchaseProductDetails.setMrp(Integer.parseInt(req.getParameter("mrpH")));
-				purchaseProductDetails.setQuantity(Integer.parseInt(req.getParameter("qtyH")));
-				//purchaseProductDetails.setRemaining_quantity(Integer.parseInt(req.getParameter("")));
-				//purchaseProductDetails.setPurchase_Entry(ejb.getPurchaseEntryById(Integer.parseInt(req.getParameter(""))));
+				purchaseProductDetails.setAttrValue1(req.getParameter("attr1"));
+				purchaseProductDetails.setAttrValue2(req.getParameter("attr2"));
+				purchaseProductDetails.setAttrValue3(req.getParameter("attr3"));
+				purchaseProductDetails.setAttrValue4(req.getParameter("attr4"));
+				purchaseProductDetails.setAttrValue5(req.getParameter("attr5"));
+				purchaseProductDetails.setAttrValue6(req.getParameter("attr6"));
+				// purchaseProductDetails.setCost(Float.parseFloat(req.getParameter("")));
+				purchaseProductDetails.setWsp(Integer.parseInt(req.getParameter("wsp")));
+				purchaseProductDetails.setMrp(Integer.parseInt(req.getParameter("mrp")));
+				purchaseProductDetails.setQuantity(Integer.parseInt(req.getParameter("qty")));
+				// purchaseProductDetails.setRemaining_quantity(Integer.parseInt(req.getParameter("")));
+				// purchaseProductDetails.setPurchase_Entry(ejb.getPurchaseEntryById(Integer.parseInt(req.getParameter(""))));
 				// purchaseProductDetails.setInitialInventory();
-				// purchaseProductDetails.setProductDetail();
-				
+				// purchaseProductDetails.setProductDetail();				
 				//rawMaterialsStock.setProductDetail();
 				//rawMaterialsStock.setRemainingQty(Integer.parseInt(req.getParameter("")));
 				
 				//readyGoodsStock.setProductDetail();
 				//readyGoodsStock.setRemainingQty(Integer.parseInt(req.getParameter("")));
 				
+
 				ejb.setPurchaseEntry(purchaseEntry);
 				ejb.setPurchaseProductDetails(purchaseProductDetails);
 				//ejb.setRawMaterialsStocktDetail(rawMaterialsStock);
@@ -676,6 +674,32 @@ public class Servlet extends HttpServlet {
 					msg = "please enter proper conversion value";
 				}
 
+				break;
+
+			case "updateConversion":
+				page = "setupUnitOfMeasure.jsp";
+
+				if (Float.parseFloat(req.getParameter("editValue")) > 0) {
+					
+					qtyUnitConversionPK = new QtyUnitConversionPK();
+					qtyUnitConversionPK.setQtyUnitId1(Integer.parseInt(req.getParameter("u1")));
+					qtyUnitConversionPK.setQtyUnitId2(Integer.parseInt(req.getParameter("u2")));
+					qtyUnitConversion = ejb.getQtyUnitConversionById(qtyUnitConversionPK);			
+					qtyUnitConversion.setConversion(Float.parseFloat(req.getParameter("editValue")));
+					ejb.updateQtyUnitConversion(qtyUnitConversion);
+					
+					qtyUnitConversionPK = new QtyUnitConversionPK();
+					qtyUnitConversionPK.setQtyUnitId1(Integer.parseInt(req.getParameter("u2")));
+					qtyUnitConversionPK.setQtyUnitId2(Integer.parseInt(req.getParameter("u1")));
+					qtyUnitConversion = ejb.getQtyUnitConversionById(qtyUnitConversionPK);			
+					qtyUnitConversion.setConversion(1/Float.parseFloat(req.getParameter("editValue")));
+					ejb.updateQtyUnitConversion(qtyUnitConversion);				
+
+					msg = "Conversion updated successfully.";
+
+				} else {
+					msg = "please enter proper conversion value";
+				}
 				break;
 
 			default:

@@ -136,6 +136,10 @@ public class Ejb {
 
 	/******************** qty Unit conversion ******************/
 	public void setQtyUnitConversion(QtyUnitConversion quc) {
+		em.persist(quc);
+	}
+	
+	public void updateQtyUnitConversion(QtyUnitConversion quc) {
 		em.merge(quc);
 	}
 
@@ -149,6 +153,10 @@ public class Ejb {
 				QtyUnitConversion.class);
 		q.setParameter("id", id);
 		return q.getResultList();
+	}
+	
+	public QtyUnitConversion getQtyUnitConversionById(QtyUnitConversionPK qtyUnitConversionPK){
+		return em.find(QtyUnitConversion.class, qtyUnitConversionPK);
 	}
 
 	/******************** qty Unit conversion PK **********************/
