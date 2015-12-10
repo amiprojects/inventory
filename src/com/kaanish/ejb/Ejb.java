@@ -1,6 +1,8 @@
 package com.kaanish.ejb;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -10,12 +12,18 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpSession;
 
+import org.apache.taglibs.standard.lang.jstl.test.beans.PublicBean1;
+
 import com.kaanish.model.AccountDetails;
+import com.kaanish.model.Bill_setup;
 import com.kaanish.model.Category;
 import com.kaanish.model.City;
+import com.kaanish.model.CompanyInfo;
 import com.kaanish.model.Country;
 import com.kaanish.model.Department;
 import com.kaanish.model.ProductDetail;
+import com.kaanish.model.Purchase_Entry;
+import com.kaanish.model.Purchase_Product_Details;
 import com.kaanish.model.QtyUnit;
 import com.kaanish.model.QtyUnitConversion;
 import com.kaanish.model.QtyUnitConversionPK;
@@ -36,6 +44,19 @@ public class Ejb {
 	private EntityManager em;
 	@Inject
 	private HttpSession httpSession;
+
+	public Date getCurrentDateTime() {
+		return new Date();
+	}
+
+	public String getCurrentFinancialYear() {
+		LocalDateTime dt = LocalDateTime.now();
+		if (dt.getMonthValue() < 4) {
+			return (dt.getYear() - 1) + "-" + dt.getYear();
+		} else {
+			return dt.getYear() + "-" + (dt.getYear() + 1);
+		}
+	}
 
 	/***************** for user **********************/
 	public void setUser(Users users) {
@@ -115,6 +136,10 @@ public class Ejb {
 
 	/******************** qty Unit conversion ******************/
 	public void setQtyUnitConversion(QtyUnitConversion quc) {
+		em.persist(quc);
+	}
+	
+	public void updateQtyUnitConversion(QtyUnitConversion quc) {
 		em.merge(quc);
 	}
 
@@ -128,6 +153,10 @@ public class Ejb {
 				QtyUnitConversion.class);
 		q.setParameter("id", id);
 		return q.getResultList();
+	}
+	
+	public QtyUnitConversion getQtyUnitConversionById(QtyUnitConversionPK qtyUnitConversionPK){
+		return em.find(QtyUnitConversion.class, qtyUnitConversionPK);
 	}
 
 	/******************** qty Unit conversion PK **********************/
@@ -246,7 +275,7 @@ public class Ejb {
 						"select c from Vendor c where c.vendorType.id=:Id AND UPPER(c.name) LIKE :name",
 						Vendor.class);
 		q.setParameter("Id", id);
-		q.setParameter("name", "%"+nm.toUpperCase()+"%");
+		q.setParameter("name", "%" + nm.toUpperCase() + "%");
 		return q.getResultList();
 	}
 
@@ -276,6 +305,60 @@ public class Ejb {
 	/******************* foe account details ***************************/
 	public void setAccountDetails(AccountDetails accountDetails) {
 		em.persist(accountDetails);
+	}
+
+	/******************* for purchase entry ***************************/
+	public void setPurchaseEntry(Purchase_Entry purchaseEntry) {
+		em.persist(purchaseEntry);
+	}
+
+	public Purchase_Entry getPurchaseEntryById(int id) {
+		return em.find(Purchase_Entry.class, id);
+	}
+
+	public int getLastPurchaseChallanNumber() {
+		TypedQuery<Purchase_Entry> q = em.createQuery(
+				"select c from Purchase_Entry c ORDER BY c.id DESC",
+				Purchase_Entry.class);
+		if (q.getResultList().size() > 0) {
+			return q.getResultList().get(0).getChallan_no();
+		} else {
+			return 0;
+		}
+
+	}
+
+	public int getLastPurchaseChallanSuffix() {
+		TypedQuery<Purchase_Entry> q = em.createQuery(
+				"select c from Purchase_Entry c ORDER BY c.id DESC",
+				Purchase_Entry.class);
+		if (q.getResultList().size() > 0) {
+			int s = q.getResultList().get(0).getChallanSuffix();
+			if (getLastBillSetupBySufix("PUR").equals(null)) {
+				return s;
+			} else {
+				if (Integer.parseInt(getLastBillSetupBySufix("PUR").getSufix()) > s) {
+					return s;
+				} else {
+					return Integer.parseInt(getLastBillSetupBySufix("PUR")
+							.getSufix());
+				}
+			}
+		} else {
+			if (getLastBillSetupBySufix("PUR").equals(null)) {
+				return 0;
+			} else {
+				return Integer.parseInt(getLastBillSetupBySufix("PUR")
+						.getSufix());
+			}
+		}
+	}
+
+	/******************* for purchase product details ***************************/
+
+	public void setPurchaseProductDetails(
+			Purchase_Product_Details purchaseProductDetails) {
+		em.persist(purchaseProductDetails);
 	}
 
 	/******************** for City *******************************/
@@ -520,49 +603,97 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	/******************* for bill setup **************************/
+
+	public void setBillSetup(Bill_setup billSetup) {
+		em.persist(billSetup);
+	}
+
+	public Bill_setup getLastBillSetupBySufix(String billType) {
+		TypedQuery<Bill_setup> q = em
+				.createQuery(
+						"select s from Bill_setup s where s.billType=:btype order by s.id DESC",
+						Bill_setup.class);
+		q.setParameter("btype", billType);
+		if (q.getResultList().size() > 0) {
+			return q.getResultList().get(0);
+		} else {
+			return null;
+		}
+	}
+
+	/*********************** for company info *********************/
+
+	public void setCompanyInfo(CompanyInfo companyInfo) {
+		em.persist(companyInfo);
+	}
+
+	public void updateCompanyInfo(CompanyInfo companyInfo) {
+		em.merge(companyInfo);
+
+	}
+
+	public CompanyInfo getCompanyInfo() {
+		TypedQuery<CompanyInfo> q = em.createQuery(
+				"Select c from CompanyInfo c", CompanyInfo.class);
+		if (q.getResultList().size() > 0) {
+			return q.getResultList().get(0);
+		} else {
+			return null;
+		}
+
+	}
+
+	public CompanyInfo getCompanyInfoById(int id) {
+		return em.find(CompanyInfo.class, id);
+	}
+
 	/********************* for RawMaterial Stock ************************/
-	
-	
+
 	public void setRawMaterialsStocktDetail(RawMaterialsStock rawMaterialsStock) {
 		em.persist(rawMaterialsStock);
 	}
-	
+
 	public RawMaterialsStock getRawMaterialStocktDetailById(int id) {
 		return em.find(RawMaterialsStock.class, id);
 	}
+
 	public void deleteRawMaterialStockDetailById(int id) {
 		em.remove(getProductDetailById(id));
 	}
+
 	public void updateRawMaterialStockDetail(ProductDetail rawMaterialsStock) {
 		em.merge(rawMaterialsStock);
 	}
+
 	public List<RawMaterialsStock> getAllRawMaterialStockDetail() {
-		TypedQuery<RawMaterialsStock> q = em.createQuery("select c from RawMaterialsStock c", RawMaterialsStock.class);
+		TypedQuery<RawMaterialsStock> q = em.createQuery(
+				"select c from RawMaterialsStock c", RawMaterialsStock.class);
 		return q.getResultList();
 	}
-	
-	
+
 	/********************* for ReadyGood Stock ************************/
-	
-	
-	
+
 	public void setReadyGoodsStockDetail(ReadyGoodsStock readyGoodsStock) {
 		em.persist(readyGoodsStock);
 	}
-	
+
 	public ReadyGoodsStock getReadyGoodsStocktDetailById(int id) {
 		return em.find(ReadyGoodsStock.class, id);
 	}
+
 	public void deleteReadyGoodsStockDetailById(int id) {
 		em.remove(getReadyGoodsStocktDetailById(id));
 	}
+
 	public void updateRawMaterialStockDetail(ReadyGoodsStock readyGoodsStock) {
 		em.merge(readyGoodsStock);
 	}
+
 	public List<ReadyGoodsStock> getAllRawMaterialsStockDetail() {
-		TypedQuery<ReadyGoodsStock> q = em.createQuery("select c from ReadyGoodsStock c", ReadyGoodsStock.class);
+		TypedQuery<ReadyGoodsStock> q = em.createQuery(
+				"select c from ReadyGoodsStock c", ReadyGoodsStock.class);
 		return q.getResultList();
 	}
-	
 
 }

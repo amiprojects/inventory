@@ -15,12 +15,5 @@ public class DateConverter {
 		cal.set(cal.YEAR, Integer.parseInt(DateParts[2]));
 		
 		return cal.getTime();
-		
-		
-		
-		
-		
-		
 	}
-
 }
