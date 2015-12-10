@@ -272,6 +272,25 @@ public class Ejb {
 		return em.find(Purchase_Entry.class, id);
 	}
 	
+	public int getLastPurchaseChallanNumber(){
+		TypedQuery<Purchase_Entry> q=em.createQuery("select c from Purchase_Entry c ORDER BY ID DESC", Purchase_Entry.class);
+		if(q.getResultList().size()>0){
+			return q.getResultList().get(0).getChallan_no();
+		}else{
+			return 0;
+		}		
+		
+	}
+	
+	public int getLastPurchaseChallanSuffix(){
+		TypedQuery<Purchase_Entry> q=em.createQuery("select c from Purchase_Entry c ORDER BY ID DESC", Purchase_Entry.class);
+		if(q.getResultList().size()>0){
+			return q.getResultList().get(0).getChallanSuffix();
+		}else{
+			return 0;
+		}
+	} 
+	
 	/******************* for purchase product details ***************************/
 	public void setPurchaseProductDetails(Purchase_Product_Details purchaseProductDetails) {
 		em.persist(purchaseProductDetails);
