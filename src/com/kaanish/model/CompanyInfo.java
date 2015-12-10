@@ -160,7 +160,6 @@ public class CompanyInfo {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
->>>>>>> refs/remotes/origin/master
 	}
 
 }
