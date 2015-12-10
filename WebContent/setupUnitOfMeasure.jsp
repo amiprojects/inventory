@@ -100,7 +100,8 @@
 																<h4 class="modal-title">Select UOM to which UOM is
 																	related</h4>
 															</div>
-															<form action="addNewConversion" method="post" id="addNewConversion">
+															<form action="addNewConversion" method="post"
+																id="addNewConversion">
 																<div class="modal-body">
 																	<div class="col-md-12">
 																		<input type="hidden" value="${unit.id}"
@@ -120,7 +121,7 @@
 																		between units:</div>
 																	<br>
 																	<div class="col-md-12">
-																		<input type="radio" name="name1" checked="checked" value="1"
+																		<input type="radio" name="name1" value="1"
 																			onclick="relSelect();">1 <span
 																			id="selectUnit1${unit.id}"></span> is greater than 1
 																		<span>${unit.name}</span>
@@ -141,8 +142,8 @@
 																	<br>
 																	<div class="col-md-12">
 																		1 <span id="selectUnit3${unit.id}"></span> is<input
-																			type="number" name="convValue" required="required">in <span
-																			id="selectUnit4${unit.id}"></span>
+																			type="number" name="convValue" required="required">in
+																		<span id="selectUnit4${unit.id}"></span>
 																	</div>
 																	<br>
 
@@ -213,7 +214,8 @@
 											<div class="col-md-10">
 												<div class="breadcrumbs">
 													<ul>
-														<li><span id="conversionDetails">Unit conversion for</span></li>
+														<li><span id="conversionDetails">Unit
+																conversion for</span></li>
 													</ul>
 												</div>
 												<hr>
@@ -225,7 +227,7 @@
 													onclick="addNewConversion();" value="add">
 
 												<button type="button" class="btn btn-default"
-													data-toggle="modal" data-target="#editCon">Edit</button>
+													data-toggle="modal">Edit</button>
 
 												<button type="button" class="btn btn-default">Delete</button>
 											</div>
@@ -241,55 +243,24 @@
 															<h4 class="modal-title">Edit UOM to which UOM is
 																related</h4>
 														</div>
-
-														<div class="col-md-12">
-															<form>
-																<div class="col-md-12">
-																	Select Target UOM for this conversion: <select
-																		id="contype">
-																		<option value="0">Name</option>
-																		<option value="1">Foot(ft)</option>
-																		<option value="2">Pound(lbs)</option>
-																		<option value="3">Hour(hr)</option>
-																		<option value="4">Gallon(gal)</option>
-																		<option value="5">Foot(ft)</option>
-																	</select>
-																</div>
-																<br> <br> <br>
-																<div class="col-md-12">Defining the relationship
-																	between units:</div>
+														<form action="updateConversion" method="post">
+															<div class="col-md-12">
 																<br>
 																<div class="col-md-12">
-																	<input type="radio" name="name1">1 each is
-																	greater than 1 pound
+																	1 <span id="unit1"></span>=<input type="text"
+																		id="editValue" name="editValue"><span
+																		id="unit2"></span>
 																</div>
 																<br>
-																<div class="col-md-12">
-																	<input type="radio" name="name1">1 pound is
-																	greater then 1 each
-
-																</div>
-																<br> <br> <br>
-																<div class="col-md-12">Defining ratio between the
-																	units:</div>
-																<br>
-																<div class="col-md-12">Fill in the blank with
-																	correct number</div>
-																<br>
-																<div class="col-md-12">
-																	1 Each is<input type="text">in Pound
-																</div>
-																<br>
-															</form>
-														</div>
-
-														<div class="modal-footer">
-															<button type="button" class="btn btn-default">Update</button>
-															<button type="button" class="btn btn-default"
-																data-dismiss="modal">Close</button>
-
-
-														</div>
+															</div>
+															<input type="hidden" value="" name="u1" id="u1">
+															<input type="hidden" value="" name="u2" id="u2">
+															<div class="modal-footer">
+																<input type="submit" class="btn btn-default" value="update">
+																<button type="button" class="btn btn-default"
+																	data-dismiss="modal">Close</button>
+															</div>
+														</form>
 													</div>
 												</div>
 
@@ -464,32 +435,68 @@
 										},
 										dataType : "json",
 										success : function(data1) {
-											var i=0;
+											var i = 0;
 											var txt = "<table>";
-											$.map(data1, function(item) {
-											if(i%2==0){
-												txt = txt + "<tr><td style='background-color:#989898;' width='500px'><span >1 "
-												+ item.qtyUnit1Name
-												+ " = "
-												+ item.conversion + " "
-												+ item.qtyUnit2Name
-												+ "</span><a href=\"#\"></td><td><img src=\"img/edit.png\" height=\"20\"></a></span></td></tr>";
-											}else{
-												txt = txt + "<tr><td style='background-color:#C0C0C0;'><span>1 "
-												+ item.qtyUnit1Name
-												+ " = "
-												+ item.conversion + " "
-												+ item.qtyUnit2Name
-												+ "<a href=\"#\"></td><td><img src=\"img/edit.png\" height=\"20\"></a></span></td></tr>";
-											}
-											i++;	
-											});
-											$("#unitConversionDetails").html(txt+"</table>");
+											$
+													.map(
+															data1,
+															function(item) {
+																if (i % 2 == 0) {
+																	txt = txt
+																			+ "<tr><td style='background-color:#989898;' width='500px'><span >1 "
+																			+ item.qtyUnit1Name
+																			+ " = "
+																			+ item.conversion
+																			+ " "
+																			+ item.qtyUnit2Name
+																			+ "</span></td><td><a onclick='editConversion(\""
+																			+ item.qtyUnitId1
+																			+ "\",\""
+																			+ item.qtyUnitId2
+																			+ "\")' href=\"#\"><img src=\"img/edit.png\" height=\"20\"></a></span></td></tr>";
+																} else {
+																	txt = txt
+																			+ "<tr><td style='background-color:#C0C0C0;'><span>1 "
+																			+ item.qtyUnit1Name
+																			+ " = "
+																			+ item.conversion
+																			+ " "
+																			+ item.qtyUnit2Name
+																			+ "</td><td><a onclick='editConversion(\""
+																			+ item.qtyUnitId1
+																			+ "\",\""
+																			+ item.qtyUnitId2
+																			+ "\")' href=\"#\"><img src=\"img/edit.png\" height=\"20\"></a></span></td></tr>";
+																}
+																i++;
+															});
+											$("#unitConversionDetails").html(
+													txt + "</table>");
 										}
 									});
 						}
 
 					});
+		}
+		function editConversion(a, b) {
+			$("#editCon").modal('show');
+			$.ajax({
+				type : "post",
+				url : "getQtyConversion",
+				dataType : "json",
+				data : {
+					id1 : a,
+					id2 : b
+				},
+				success : function(data) {
+
+					$("#unit1").html(data.qtyUnit1Name);
+					$("#unit2").html(data.qtyUnit2Name);
+					$("#u1").val(data.qtyUnitId1);
+					$("#u2").val(data.qtyUnitId2);					
+					$("#editValue").val(data.conversion);
+				}
+			});
 		}
 
 		$(document).ready(function() {

@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.kaanish.ejb.Ejb;
 import com.kaanish.model.Department;
+import com.kaanish.model.QtyUnitConversionPK;
 import com.kaanish.model.QtyUnitType;
 import com.kaanish.model.SubDepartment;
 import com.kaanish.util.DepartmentCotractor;
@@ -24,7 +25,7 @@ import com.kaanish.util.DepartmentCotractor;
 @WebServlet({ "/getcountry", "/addNewUOMtype", "/getUOMtype",
 		"/getAllDepartments", "/getStateByCountry",
 		"/getStateByCountryByStateName", "/getCity", "/getCityByName",
-		"/getQtyUnit", "/getQtyUnitConversion", "/getVendorByVendorType" })
+		"/getQtyUnit", "/getQtyUnitConversion", "/getVendorByVendorType","/getQtyConversion" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -142,6 +143,13 @@ public class JsonServlet extends HttpServlet {
 				pw = resp.getWriter();
 				pw.print(ejb.getAllQtyUnitConversionByQtyUnitId(Integer
 						.parseInt(req.getParameter("id"))));
+				break;
+			case "getQtyConversion":
+				pw = resp.getWriter();
+				QtyUnitConversionPK qpk=new QtyUnitConversionPK();
+				qpk.setQtyUnitId1(Integer.parseInt(req.getParameter("id1")));
+				qpk.setQtyUnitId2(Integer.parseInt(req.getParameter("id2")));
+				pw.print(ejb.getQtyUnitConversionById(qpk));
 				break;
 
 			default:

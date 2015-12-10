@@ -43,6 +43,15 @@ public class Purchase_Entry {
 	@ManyToOne
 	@JoinColumn(name = "vendorId")
 	private Vendor vendor;
+	
+	@ManyToOne@JoinColumn(name="paymentDetailsId")
+	private PaymentDetails paymentDetails;
+	
+	@ManyToOne@JoinColumn(name="paymentStatusId")
+	private PaymentStatus paymentStatus;
+	
+	@ManyToOne@JoinColumn(name="paymentTypeId")
+	private PaymentType paymentType;
 
 	public int getId() {
 		return id;
@@ -139,6 +148,30 @@ public class Purchase_Entry {
 
 	public void setBill_setup(Bill_setup bill_setup) {
 		this.bill_setup = bill_setup;
+	}
+
+	public PaymentDetails getPaymentDetails() {
+		return paymentDetails;
+	}
+
+	public void setPaymentDetails(PaymentDetails paymentDetails) {
+		this.paymentDetails = paymentDetails;
+	}
+
+	public PaymentStatus getPaymentStatus() {
+		return paymentStatus;
+	}
+
+	public void setPaymentStatus(PaymentStatus paymentStatus) {
+		this.paymentStatus = paymentStatus;
+	}
+
+	public PaymentType getPaymentType() {
+		return paymentType;
+	}
+
+	public void setPaymentType(PaymentType paymentType) {
+		this.paymentType = paymentType;
 	}
 
 }
