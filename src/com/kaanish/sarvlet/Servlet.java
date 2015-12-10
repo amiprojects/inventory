@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,12 +25,9 @@ import com.kaanish.model.Purchase_Product_Details;
 import com.kaanish.model.QtyUnit;
 import com.kaanish.model.QtyUnitConversion;
 import com.kaanish.model.QtyUnitConversionPK;
-
 import com.kaanish.model.QtyUnitType;
-
 import com.kaanish.model.RawMaterialsStock;
 import com.kaanish.model.ReadyGoodsStock;
-
 import com.kaanish.model.State;
 import com.kaanish.model.SubDepartment;
 import com.kaanish.model.Tax;
