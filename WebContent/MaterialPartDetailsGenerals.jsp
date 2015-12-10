@@ -25,6 +25,7 @@
 <!-- Style -->
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
 <!-- Responsive -->
+<script type="text/javascript" src="js/jquery.min.js"></script>
 
 <script type="text/javascript">
 	function readURL(input) {
@@ -42,7 +43,7 @@
 
 
 
-
+<!-- 
 <script type="text/javascript" src="js/enscroll.js"></script>
 
 <script type="text/javascript" src="js/moment.js"></script>
@@ -54,8 +55,7 @@
 <script type="text/javascript" src="js/jquery.flot.min.js"></script>
 <script type="text/javascript" src="js/jquery.sparkline.min.js"></script>
 <script type="text/javascript" src="js/owl.carousel.min.js"></script>
-<script type="text/javascript" src="js/html5lightbox.js"></script>
-<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/html5lightbox.js"></script> -->
 <script>
 	var i = 2;
 	$(document)
@@ -82,7 +82,10 @@
 																"style",
 																"color: red; font-weight: bolder; background-color: #A3DEDE; box-shadow: 1px 1px 1px 1px #507B8A");
 												i = i + 1;
+												
 											}
+											$("#pcodedisp").html($("#productCode").val());
+											
 										});
 
 						$("#prev")
@@ -100,13 +103,13 @@
 																"color: red; font-weight: bolder; background-color: #A3DEDE; box-shadow: 1px 1px 1px 1px #507B8A");
 												i = i - 1;
 											}
+											
+											
 
 										});
 
-						//$("#step1").show();
 					});
 
-	
 	function increSerial() {
 		$("#step67").modal('show');
 	}
@@ -154,16 +157,18 @@
 									<form role="form" class="sec">
 										<div class="form-group">
 											<label for="" class="">Products Number : </label> <input
-												type="text" placeholder="Enter Products Number" id=""
-												class="">
+												type="text" class="form-control"
+												placeholder="Enter Products Number" id="" class="">
 										</div>
 										<div class="form-group">
 											<label for="" class="">Description : </label> <input
-												type="text" placeholder="Enter Description" id="" class="">
+												type="text" class="form-control"
+												placeholder="Enter Description" id="" class="">
 										</div>
 										<div class="form-group">
 											<label for="" class="">Products Type : </label>&nbsp &nbsp <input
-												type="text" placeholder="Enter Products type" id="" class="">
+												type="text" class="form-control"
+												placeholder="Enter Products type" id="" class="">
 										</div>
 
 										<button class="btn green btn-default" type="submit">Search
@@ -750,7 +755,7 @@
 						</table>
 
 					</div>
-					
+
 
 
 					<div id="step67" class="modal fade" role="dialog"
@@ -760,22 +765,24 @@
 								<div class="modal-header">
 
 									<h4 class="modal-title">Serial Number</h4>
-									<button type="button" id="close2">&times;</button>
+
 								</div>
 								<div class="modal-body">
 
 									<input type="hidden" name="id" value="" id="id1"> <span>Enter
 										Initial Serial Number: </span> <input type="text"
-										class="form-control" name="name" value="" id="name1">
+										class="form-control" name="name" value="" id="1stSerial"><br>
 
-									<input type="hidden" name="id" value="" id="id1"> <span>Enter
-										Increment Limit: </span> <input type="text" class="form-control"
-										name="name" value="" id="name1"> <input type="submit"
-										class="btn btn-default" value="submit">
+									<input type="hidden" name="id" value="" id="id1"> <span>Count:
+									</span> <input type="text" class="form-control" id="limit" readonly
+										name="increLimit">
 
 								</div>
 								<div class="modal-footer">
-									<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+									<button style="float: left;" onclick="incre();"
+										class="c-btn small green" type="button">Submit</button>
+									<button style="float: right;" class="c-btn small red"
+										type="button" id="close2">Close</button>
 								</div>
 							</div>
 
@@ -792,16 +799,13 @@
 									<div class="col-md-6">
 										<div>
 											<label for="exampleInputEmail1">Product Code:</label> <input
-												type="text" name="productCode" 
-												required class="form-control"><br>
+												type="text" name="productCode" id="productCode" required class="form-control"><br>
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div>
 											<label for="exampleInputPassword1">Description:</label> <input
-												type="text" name="description"
-												 required
-												class="form-control"><br>
+												type="text" name="description" required class="form-control"><br>
 										</div>
 
 									</div>
@@ -813,8 +817,9 @@
 									</div>
 									<div class="col-md-6">
 										<div>
-											<label for="exampleInputPassword1">Unit Of Measurement:</label> <select required
-												name="uom" style="width: 245px; height: 34px">
+											<label for="exampleInputPassword1">Unit Of
+												Measurement:</label> <select required name="uom"
+												style="width: 250px; height: 34px">
 												<option value="volvo">Volvo</option>
 												<option value="saab">Saab</option>
 												<option value="opel">Opel</option>
@@ -869,18 +874,16 @@
 								</thead>
 								<tbody>
 									<tr>
-										<td><input type="checkbox" name="lotNumber" 
-										onclick="L()" id="ll"
-										value="lotnumber"></td>
+										<td><input type="checkbox" name="iSLotNumber"
+											onclick="L()" id="ll" value="lotnumber"></td>
 										<td>Lot Number</td>
 										<td>Lot#</td>
 
 									</tr>
 
 									<tr>
-										<td><input type="checkbox" name="serialNumber"
-										onclick="S()" id="ss"
-										 value="track"></td>
+										<td><input type="checkbox" name="isSerialNumber"
+											onclick="S()" id="ss" value="track"></td>
 										<td>Serial Number</td>
 										<td>Ser#</td>
 
@@ -932,28 +935,31 @@
 									}
 								}
 							</script>
-							
-							
+
+
 							<div id="divshow">
 
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="" class="font">Maximum Retail Price :</label> <input type="text" name="mrp"
-											placeholder="" id="" class="form-control">
+										<label for="" class="font">Maximum Retail Price :</label> <input
+											type="text" name="mrp" placeholder="" id=""
+											class="form-control">
 									</div>
 									<div class="form-group">
-										<label for="" class="font">Wholesale Price :</label> <input type="text" name="wsp"
-											placeholder="" id="" class="form-control">
+										<label for="" class="font">Wholesale Price :</label> <input
+											type="text" name="wsp" placeholder="" id=""
+											class="form-control">
 									</div>
 									<div class="form-group">
 										<label for="" class="font">Quantity:</label> <input
-											type="number" placeholder="" id="" class="form-control">
+											name="quantity" type="text" placeholder="" id="quantity" name
+											class="form-control">
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="" class="font">Unit of Measure :</label> <select name="uom"
-											style="width: 249px; height: 34px">
+										<label for="" class="font">Unit of Measurement :</label> <select
+											name="uom1" style="width: 253px; height: 34px">
 											<option value="volvo">km</option>
 											<option value="saab">mm</option>
 											<option value="mercedes">hm</option>
@@ -962,12 +968,14 @@
 									</div>
 									<div class="form-group">
 										<label for="" class="font">Unit Cost:</label> <input
-											type="text" placeholder="" id="" class="form-control">
+											name="unitCost" type="text" placeholder="" id=""
+											class="form-control">
 
 									</div>
 									<div class="form-group">
 										<label for="" class="font">Date:</label> <input type="text"
-											placeholder="" id="datepicker" class="form-control">
+											name="date1" placeholder="" id="datepicker"
+											class="form-control">
 									</div>
 								</div>
 
@@ -977,12 +985,14 @@
 
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="" class="font">Maximum Retail Price :</label> <input type="text" 
-											readonly="readonly" placeholder="" id="" class="form-control">
+										<label for="" class="font">Maximum Retail Price :</label> <input
+											type="text" readonly="readonly" placeholder="" id=""
+											class="form-control">
 									</div>
 									<div class="form-group">
-										<label for="" class="font">Wholesale Price :</label> <input type="text"
-											readonly="readonly" placeholder="" id="" class="form-control">
+										<label for="" class="font">Wholesale Price :</label> <input
+											type="text" readonly="readonly" placeholder="" id=""
+											class="form-control">
 									</div>
 									<div class="form-group">
 										<label for="" class="font">Quantity:</label> <input
@@ -992,8 +1002,8 @@
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="" class="font">Unit of Measure :</label> <select name="uom"
-											style="width: 238px; height: 34px">
+										<label for="" class="font">Unit of Measure :</label> <select
+											style="width: 253px; height: 34px">
 
 										</select>
 									</div>
@@ -1034,88 +1044,51 @@
 								</div>
 							</div>
 							<div id="serdiv">
-							<div class="col-md-6">
-								<div >
-									<label for="exampleInputEmail1">Serial Number:</label> <input
-										type="text" name="serialNumber" required class="form-control"><br>
+								<div class="col-md-6">
+									<div>
+										<label for="exampleInputEmail1">Serial Number:</label> <input
+											type="text" name="serialNumber" id="indvSerial"
+											class="form-control" required><br>
+									</div>
 								</div>
-							</div>
 
-							<div class="col-md-9">
-								<div>
-									<table id="stream_table"
-										class="table table-striped table-bordered">
+								<div class="col-md-9">
+									<div>
+										<table id="stream_table"
+											class="table table-striped table-bordered">
 
-										<tr>
-											<td>
-												<table cellspacing="0" cellpadding="1" width="304">
-													<tr style="">
-														<th>Serial Number</th>
+											<tr>
+												<td>
+													<table cellspacing="0" cellpadding="1" width="304">
+														<tr style="">
+															<th>Serial Number</th>
 
-													</tr>
-												</table>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<div style="width: 375px; height: 86px; overflow: auto;">
-													<table cellspacing="0" cellpadding="1" width="300">
-														<tr>
-															<td>789456123</td>
-
-														</tr>
-														<tr>
-
-															<td>789456123</td>
-														</tr>
-														<tr>
-
-															<td>789456123</td>
-														</tr>
-														<tr>
-
-															<td>789456123</td>
-														</tr>
-														<tr>
-
-															<td>789456123</td>
-														</tr>
-														<tr>
-
-															<td>789456123</td>
-														</tr>
-														<tr>
-
-															<td>789456123</td>
-														</tr>
-														<tr>
-
-															<td>789456123</td>
-														</tr>
-														<tr>
-
-															<td>789456123</td>
-														</tr>
-														<tr>
-
-															<td>789456123</td>
 														</tr>
 													</table>
-												</div>
-											</td>
-										</tr>
-									</table>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<div style="width: 375px; height: 164px; overflow: auto;">
+														<table cellspacing="0" cellpadding="1" width="300"
+															id="serialNo">
+
+														</table>
+													</div>
+												</td>
+											</tr>
+										</table>
+									</div>
+								</div>
+								<div style="position: absolute; bottom: 203px; left: 425px;">
+									<a href="#" id="addSeriall" onclick="addSerial();"> <img
+										src="img/pus.PNG" style="top: 2px; left: 3px"></a> <a
+										onclick="increSerial();" href="#"> <img src="img/hash.PNG"
+										style="top: 2px; left: 3px">
+									</a> <a href="#"><img src="img/delete.PNG"
+										style="top: 2px; left: 3px"></a>
 								</div>
 							</div>
-							<div style="position: absolute; bottom: 203px; left: 425px;">
-								<a href="#" onclick="addSerial();"> <img
-									src="img/pus.PNG" style="top: 2px; left: 3px"></a> <a
-									onclick="increSerial();" href="#"> <img src="img/hash.PNG"
-									style="top: 2px; left: 3px">
-								</a> <a href="#"><img src="img/delete.PNG"
-									style="top: 2px; left: 3px"></a>
-							</div>
-</div>
 
 						</fieldset>
 
@@ -1136,30 +1109,36 @@
 
 							<div class="col-md-6">
 								<div class="form-group">
-									<label for="" class="font">Attribute 1:</label> <input name="a1"
-										type="text" placeholder="" id="" class="form-control">
+									<label for="" class="font">Attribute 1:</label> <input
+										name="a1" type="text" placeholder="" id=""
+										class="form-control">
 								</div>
 								<div class="form-group">
-									<label for="" class="font">Attribute 2:</label> <input name="a2"
-										type="text" placeholder="" id="" class="form-control">
+									<label for="" class="font">Attribute 2:</label> <input
+										name="a2" type="text" placeholder="" id=""
+										class="form-control">
 								</div>
 								<div class="form-group">
-									<label for="" class="font">Attribute 3:</label> <input name="a3"
-										type="number" placeholder="" id="" class="form-control">
+									<label for="" class="font">Attribute 3:</label> <input
+										name="a3" type="number" placeholder="" id=""
+										class="form-control">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<label for="" class="font">Attribute 4:</label> <input name="a4"
-										type="text" placeholder="" id="" class="form-control">
+									<label for="" class="font">Attribute 4:</label> <input
+										name="a4" type="text" placeholder="" id=""
+										class="form-control">
 								</div>
 								<div class="form-group">
-									<label for="" class="font">Attribute 5:</label> <input name="a5"
-										type="text" placeholder="" id="" class="form-control">
+									<label for="" class="font">Attribute 5:</label> <input
+										name="a5" type="text" placeholder="" id=""
+										class="form-control">
 								</div>
 								<div class="form-group">
-									<label for="" class="font">Attribute 6:</label> <input name="a6"
-										type="number" placeholder="" id="" class="form-control">
+									<label for="" class="font">Attribute 6:</label> <input
+										name="a6" type="number" placeholder="" id=""
+										class="form-control">
 								</div>
 							</div>
 						</fieldset>
@@ -1368,13 +1347,13 @@
 
 
 						<fieldset>
-							<legend> Product category fields </legend>
+							<legend> Product Image fields </legend>
 
-							<p style="font-size: 14px">(Enter category fields values.)</p>
+							<p style="font-size: 14px">(Upload product image)</p>
 
 							<form id="myForm" method="post" enctype="multipart/form-data">
 
-								Files: <input type="file" id="files" name="files" multiple=""
+								Image: <input type="file" id="files" name="files" multiple=""
 									accept="image/*"><br>
 
 								<div style="width: 564px; height: 302px; overflow-y: scroll;"
@@ -1394,27 +1373,20 @@
 					</div>
 					<div id="step8"
 						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial; overflow: auto;">
+						<div></div>
+						<div>
 						<fieldset>
 							<legend> Summary </legend>
 							<form>
 								<h4>
 									<u>Products:</u>
-								</h4>
-								<b>Code:</b><br> <b>Description:</b><br> <b>Universal
-									Product Code:</b><br> <b>UOM:</b><br> <br>
-								<h4>
-									<u>Product:</u>
-								</h4>
-								<b>Code:</b><br> <b>Description:</b><br> <b>Universal
-									Product Code:</b><br> <b>UOM:</b><br>
+								</h4><table><tr><td>
+								<b>Code:</b> </td><td><span id="pcodedisp"></span></td></tr><!-- <tr><td><b>Description:</b></td><td> <b>Universal
+									Product Code:</b></td><b>Unit of Measurement:</b> </table> --></table>
+								
 								<hr width="100%">
 
-								<h4>
-									<u>Tracking Options:</u>
-								</h4>
-								<b>Lot Number:</b><br>
-								<hr width="100%">
-
+							
 								<h4>
 									<u>Add initial inventory:</u>
 								</h4>
@@ -1425,37 +1397,35 @@
 								<h4>
 									<u>Initial inventory tracking:</u>
 								</h4>
-								<b>Lot Number:</b><br> <b>Expiration Date:</b><br> <b>Serial
-									Number:</b><br>
+								<b>Lot Number:</b><br>  <b>Serial
+									Number:</b><br><div style="width: 190px;height: 224px; border: 1px solid; overflow: auto;">
+									<table  align="center" >
+									<tr><td >56565</td></tr>
+									</table>
+									
+									</div>
 								<hr width="100%">
 
 								<h4>
 									<u>Products Custom Field:</u>
 								</h4>
-								<b>Custom1:</b><br> <b>Custom2:</b><br> <b>Custom3:</b><br>
-								<b>Custom4:</b>
+								<b>Attribute 1:</b><br> <b>Attribute 2:</b><br> <b>Attribute 4:</b><br>
+								<b>Attribute 4:</b><br><b>Attribute 5:</b><br><b>Attribute 6:</b>
 								<hr width="100%">
+
+								
 
 								<h4>
-									<u>Product Tree:</u>
+									<u>Product Image Fields:</u>
 								</h4>
-								<b>product was not added to any categories:</b>
+								<div style="width: 190px;height: 224px; border: 1px solid; overflow: auto;">
+									
+									
+									</div>
 								<hr width="100%">
-
-								<h4>
-									<u>Product Custom Fields:</u>
-								</h4>
-								<b>Custom1:</b><br> <b>Custom2:</b><br> <b>Custom3:</b><br>
-								<b>Custom4:</b>
-								<hr width="100%">
-
-
-
 							</form>
-
-
 						</fieldset>
-
+</div>
 					</div>
 
 
@@ -1468,13 +1438,10 @@
 							<ul>
 
 								<li><a title=""><h4>
-											Create a new Product &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp
-											&nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
-											&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
-											&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
-											&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
-											&nbsp &nbsp &nbsp &nbsp
-											<button type="button" class="close" data-dismiss="modal">&times;</button>
+											Create a new Product
+											<button
+												style="position: absolute; right: 11px; font-size: 41px; color: red; top: 0px;"
+												type="button" class="close" data-dismiss="modal">&times;</button>
 										</h4></a></li>
 							</ul>
 						</div>
@@ -1519,7 +1486,6 @@
 	<!-- Script -->
 
 	<script type="text/javascript">
-	
 		$(document).ready(function() {
 			$("#prodact").attr("id", "activeSubMenu");
 			$("#sProduct").attr("style", "color: red;");
@@ -1529,8 +1495,7 @@
 		$("#close").click(function() {
 			$("#newMP").modal("hide");
 		});
-		
-		
+
 		$("#close2").click(function() {
 			$("#step67").modal("hide");
 		});
@@ -1544,37 +1509,73 @@
 	<script type="text/javascript" src="js/enscroll.js"></script>
 	<script type="text/javascript" src="js/grid-filter.js"></script>
 	<script src="js/jquery-ui/jquery-ui.js"></script>
-	
+
 	<script type="text/javascript">
-								$(document).ready(function() {
-									$("#lotdiv").hide();
-									$("#serdiv").hide();
-								});
-								function L() {
-									if ($("#ll").is(":checked")) {
-										$("#lotdiv").show();
-										
-										
-									}
-									else{
-										$("#lotdiv").hide();
-										
-									}
-								}
-								function S() {
-									if ($("#ss").is(":checked")) {
-										$("#serdiv").show();
-										
-										
-									}
-									
-									else{
-										$("#serdiv").hide();
-										
-									}
-								}
-							</script>
-	
+		function incre() {
+
+			var a = $("#1stSerial").val();
+			var b = $("#limit").val();
+			for (xc = a; xc <= Number(a) + Number(b); xc++) {
+				$("#serialNo").append("<tr><td>" + xc + "</td></tr>");
+				$("#step67").hide();
+			}
+
+		}
+		
+		var j = 0;
+		var xc = 0;
+		function addSerial() {
+			q = $("#quantity").val();
+			
+			if(j<q){
+				if ($("#indvSerial").val() != "") {
+					j++;
+					$("#limit").empty();
+					$("#serialNo").append(
+							"<tr><td>" + $("#indvSerial").val() + "</td></tr>");
+					$("#indvSerial").val("");
+					for (gt = j; gt <= q - j; gt++) {
+						$("#limit").val(gt);
+					}
+
+				} else {
+					alert("Give a Serial Number");
+				}
+				
+			}
+			
+			else{
+				
+				alert("Quantity limit cross");
+			}	
+
+		}
+		$(document).ready(function() {
+			$("#lotdiv").hide();
+			$("#serdiv").hide();
+		});
+		function L() {
+			if ($("#ll").is(":checked")) {
+				$("#lotdiv").show();
+
+			} else {
+				$("#lotdiv").hide();
+
+			}
+		}
+		function S() {
+			if ($("#ss").is(":checked")) {
+				$("#serdiv").show();
+
+			}
+
+			else {
+				$("#serdiv").hide();
+
+			}
+		}
+	</script>
+
 	<script>
 		$(function() {
 			$("#datepicker").datepicker();
@@ -1621,7 +1622,6 @@
 			});
 
 		}
-		
 	</script>
 </body>
 
