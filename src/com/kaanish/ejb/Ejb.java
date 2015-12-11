@@ -30,6 +30,7 @@ import com.kaanish.model.QtyUnitConversionPK;
 import com.kaanish.model.QtyUnitType;
 import com.kaanish.model.RawMaterialsStock;
 import com.kaanish.model.ReadyGoodsStock;
+import com.kaanish.model.SerialNumber;
 import com.kaanish.model.State;
 import com.kaanish.model.SubDepartment;
 import com.kaanish.model.Tax;
@@ -601,6 +602,10 @@ public class Ejb {
 				ProductDetail.class);
 		q.setParameter("Id", id);
 		return q.getResultList();
+	}
+	/**********************for serial number********************/
+	public void setSerialNumber(SerialNumber serialNumber){
+		em.persist(serialNumber);
 	}
 
 	/******************* for bill setup **************************/

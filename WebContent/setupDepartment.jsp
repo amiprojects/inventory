@@ -356,9 +356,9 @@
 																				<ul>
 
 
-																					<c:forEach var="cat"
+																					<c:forEach var="pro"
 																						items="${sessionScope['ejb'].getAllProductDetailByCategoryId(cat.id)}">
-																						<li>${cat.name}</li>
+																						<li>${pro.description}</li>
 																					</c:forEach>
 																				</ul>
 																			</li>

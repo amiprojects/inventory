@@ -30,6 +30,7 @@ import com.kaanish.model.QtyUnitConversionPK;
 import com.kaanish.model.QtyUnitType;
 import com.kaanish.model.RawMaterialsStock;
 import com.kaanish.model.ReadyGoodsStock;
+import com.kaanish.model.SerialNumber;
 import com.kaanish.model.State;
 import com.kaanish.model.SubDepartment;
 import com.kaanish.model.Tax;
@@ -41,7 +42,7 @@ import com.kaanish.util.DateConverter;
 @WebServlet({ "/login", "/logout", "/addTax", "/addTaxGroup", "/editTax", "/deleteTax", "/editTaxGroup",
 		"/deleteTaxGroup", "/createDept", "/deleteDept", "/createSubDept", "/deleteSubDept", "/createCategory",
 		"/deleteCategory", "/newVendorType", "/addCountry", "/addState", "/createProduct", "/deleteCountry",
-		"/addVendor", "/addUOM", "/editVendorType", "/deleteVendorType", "/addCity", "/deleteState", "/deleteCity",
+		"/addVendor", "/addUOM", "/editVendorType", "/deleteVendorType", "/addCity", "/deleteState", "/deleteCity","/productSumary",
 		"/addNewConversion", "/purchaseEntry", "/updateConversion","/purchaseEntry", "/addBillSetup","/updateCompanyInfo","/purchaseEntry", "/addBillSetup","/updateCompanyInfo"  })
 
 public class Servlet extends HttpServlet {
@@ -76,6 +77,7 @@ public class Servlet extends HttpServlet {
 	private Purchase_Product_Details purchaseProductDetails;
 	private RawMaterialsStock rawMaterialsStock;
 	private ReadyGoodsStock readyGoodsStock;
+	private SerialNumber serialNumber;
 
 	@Override
 	public void init() throws ServletException {
@@ -134,8 +136,6 @@ public class Servlet extends HttpServlet {
 				 companyInfo.setMobile("");
 				 companyInfo.setPhone("");
 				 
-				 
-			
 				 break;
 			case "createProduct":
 				page = "setupDepartment.jsp";
@@ -148,6 +148,50 @@ public class Servlet extends HttpServlet {
 				msg = "Product detail added successfully.";
 				break;
 				
+			case "productSumary":
+				page = "MaterialPartDetailsGenerals.jsp";
+				productDetail = new ProductDetail();
+				
+				
+				String slno[]=req.getParameterValues("serialNumber");
+				for(int i=0;i<slno.length;i++){
+					serialNumber=new SerialNumber();
+					serialNumber.setSerialNumber(slno[i]);
+					ejb.setSerialNumber(serialNumber);
+					serialNumber=null;
+				}
+				
+				
+				productDetail.setCode(req.getParameter("productCode"));
+				productDetail.setDescription(req.getParameter("description"));
+				productDetail.setUniversalCode(req.getParameter("upc"));
+				productDetail.setQtyUnit(ejb.getQtyUnitById(Integer.parseInt(req.getParameter("uom"))));
+				//productDetail.setCategory(ejb.getCategoryById(Integer.parseInt(req.getParameter("catagoryId"))));
+				ejb.setProductDetail(productDetail);
+				
+				
+				
+				purchaseProductDetails	= new Purchase_Product_Details();
+				purchaseProductDetails.setMrp(Integer.parseInt(req.getParameter("mrp1")));
+				purchaseProductDetails.setWsp(Integer.parseInt(req.getParameter("wsp1")));
+				purchaseProductDetails.setQuantity(Integer.parseInt(req.getParameter("qty1")));
+				
+				/*purchaseProductDetails.set(ejb.getQtyUnitById(Integer.parseInt(req.getParameter(""))));*/
+				
+				purchaseProductDetails.setCost(Integer.parseInt(req.getParameter("ucost")));
+				purchaseProductDetails.setProductDetail(productDetail);
+				
+				purchaseProductDetails.setAttrValue1(req.getParameter("att1") );
+				purchaseProductDetails.setAttrValue2(req.getParameter("att2"));
+				purchaseProductDetails.setAttrValue3(req.getParameter("att3"));
+				purchaseProductDetails.setAttrValue4(req.getParameter("att4"));
+				purchaseProductDetails.setAttrValue5(req.getParameter("att5"));
+				purchaseProductDetails.setAttrValue6(req.getParameter("att6"));
+				
+				purchaseProductDetails.setInitialInventory(true);
+			    ejb.setPurchaseProductDetails(purchaseProductDetails);
+			 msg = "Bill created successfully.";
+			break;
 			case "addBillSetup":
 				 page="billSetup.jsp";
 				 billSetup=new Bill_setup();
@@ -252,6 +296,8 @@ public class Servlet extends HttpServlet {
 				msg = "Tax updated successfully.";
 				break;
 
+				
+				
 			case "deleteTax":
 				page = "setupTaxManagement.jsp";
 				ejb.deleteTax(Integer.parseInt(req.getParameter("id")));

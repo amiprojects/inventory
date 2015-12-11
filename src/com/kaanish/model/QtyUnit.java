@@ -26,6 +26,9 @@ public class QtyUnit {
 	private List<QtyUnitConversion> qtyUnitConversions2;
 	@OneToMany(mappedBy = "qtyUnitId1")
 	private List<QtyUnitConversion> qtyUnitConversions1;
+	
+	@OneToMany(mappedBy="qtyUnit")
+	private List<ProductDetail> productDetails;
 
 	public int getId() {
 		return id;

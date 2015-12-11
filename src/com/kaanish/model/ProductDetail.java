@@ -23,16 +23,20 @@ public class ProductDetail {
 	private String universalCode;
 	private boolean isSaleble;
 	private boolean isActive;
+	private String description;
 
 	@ManyToOne
 	@JoinColumn(name = "categoryId")
-	private Category category;	
-	@OneToMany(mappedBy="productDetail")
-	private List<Purchase_Product_Details> purchase_Product_Details;	
+	private Category category;
+	@OneToMany(mappedBy = "productDetail")
+	private List<Purchase_Product_Details> purchase_Product_Details;
 	@OneToOne
 	private ReadyGoodsStock readyGoodsStock;
 	@OneToOne
 	private RawMaterialsStock rawMaterialsStock;
+	
+	@ManyToOne@JoinColumn(name="qtyUnitId")
+	private QtyUnit qtyUnit;
 
 	public int getId() {
 		return id;
@@ -122,4 +126,21 @@ public class ProductDetail {
 		this.rawMaterialsStock = rawMaterialsStock;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public QtyUnit getQtyUnit() {
+		return qtyUnit;
+	}
+
+	public void setQtyUnit(QtyUnit qtyUnit) {
+		this.qtyUnit = qtyUnit;
+	}
+
+	
 }
