@@ -12,8 +12,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpSession;
 
-import org.apache.taglibs.standard.lang.jstl.test.beans.PublicBean1;
-
 import com.kaanish.model.AccountDetails;
 import com.kaanish.model.Bill_setup;
 import com.kaanish.model.Category;
@@ -138,7 +136,7 @@ public class Ejb {
 	public void setQtyUnitConversion(QtyUnitConversion quc) {
 		em.persist(quc);
 	}
-	
+
 	public void updateQtyUnitConversion(QtyUnitConversion quc) {
 		em.merge(quc);
 	}
@@ -154,8 +152,9 @@ public class Ejb {
 		q.setParameter("id", id);
 		return q.getResultList();
 	}
-	
-	public QtyUnitConversion getQtyUnitConversionById(QtyUnitConversionPK qtyUnitConversionPK){
+
+	public QtyUnitConversion getQtyUnitConversionById(
+			QtyUnitConversionPK qtyUnitConversionPK) {
 		return em.find(QtyUnitConversion.class, qtyUnitConversionPK);
 	}
 
@@ -305,6 +304,20 @@ public class Ejb {
 	/******************* foe account details ***************************/
 	public void setAccountDetails(AccountDetails accountDetails) {
 		em.persist(accountDetails);
+	}
+
+	public AccountDetails getAccountDetailsByVendorId(int id) {
+		TypedQuery<AccountDetails> q = em
+				.createQuery(
+						"select c from AccountDetails c WHERE c.vendor.id=:id ORDER BY c.id DESC",
+						AccountDetails.class);
+		q.setParameter("id", id);
+		if (q.getResultList().size() > 0) {
+			return q.getResultList().get(0);
+		} else {
+			return null;
+		}
+
 	}
 
 	/******************* for purchase entry ***************************/

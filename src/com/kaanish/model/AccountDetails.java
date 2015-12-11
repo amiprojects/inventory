@@ -221,4 +221,9 @@ public class AccountDetails {
 		this.users = users;
 	}
 
+	@Override
+	public String toString() {
+		return "{\"tax_Type_Group\":\"" + tax_Type_Group.getId() + "\", "
+				+ "\"id\":\"" + id + "\", "+ "\"taxTotal\":\"" + tax_Type_Group.getTotalTaxValue() + "\"}";
+	}
 }
