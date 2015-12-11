@@ -1,16 +1,18 @@
 package com.kaanish.model;
 
-import java.util.Date;
+
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.Lob;
+
+import com.kaanish.util.Base64;
 
 @Entity
 public class CompanyInfo {
 
-	@Id
+	@Id@GeneratedValue
 	private int id;
 
 	private String compname;
@@ -20,19 +22,26 @@ public class CompanyInfo {
 	private String addr;
 	private String city;
 	private String state;
+	@Lob
+	private byte[] image;
 
 	private String vatno;
 	private String cstno;
 	private String tinno;
 	private String servicetaxno;
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date vatdate;
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date cstdate;
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date tindate;
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date servtaxcate;
+	
+	private String vatdate;	
+	private String cstdate;
+	private String tindate;	
+	private String servtaxdate;
+	
+	public String getImageAsString(){
+		if(image.equals(null)){
+			return "";
+		}else{
+			return Base64.encodeBytes(image);
+		}
+	}
 
 	public int getId() {
 		return id;
@@ -122,36 +131,36 @@ public class CompanyInfo {
 		this.servicetaxno = servicetaxno;
 	}
 
-	public Date getVatdate() {
+	public String getVatdate() {
 		return vatdate;
 	}
 
-	public void setVatdate(Date vatdate) {
+	public void setVatdate(String vatdate) {
 		this.vatdate = vatdate;
 	}
 
-	public Date getCstdate() {
+	public String getCstdate() {
 		return cstdate;
 	}
 
-	public void setCstdate(Date cstdate) {
+	public void setCstdate(String cstdate) {
 		this.cstdate = cstdate;
 	}
 
-	public Date getTindate() {
+	public String getTindate() {
 		return tindate;
 	}
 
-	public void setTindate(Date tindate) {
+	public void setTindate(String tindate) {
 		this.tindate = tindate;
 	}
 
-	public Date getServtaxcate() {
-		return servtaxcate;
+	public String getServtaxdate() {
+		return servtaxdate;
 	}
 
-	public void setServtaxcate(Date servtaxcate) {
-		this.servtaxcate = servtaxcate;
+	public void setServtaxdate(String servtaxdate) {
+		this.servtaxdate = servtaxdate;
 	}
 
 	public String getPhone() {
@@ -160,6 +169,14 @@ public class CompanyInfo {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
 
 }

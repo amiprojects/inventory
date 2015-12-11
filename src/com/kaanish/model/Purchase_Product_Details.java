@@ -17,8 +17,8 @@ public class Purchase_Product_Details {
 	private float cost;
 	private int remaining_quantity;
 	private int quantity;
-	private int mrp;
-	private int wsp;
+	private float mrp;
+	private float wsp;
 	private String attrValue1;
 	private String attrValue2;
 	private String attrValue3;
@@ -70,20 +70,20 @@ public class Purchase_Product_Details {
 		this.quantity = quantity;
 	}
 
-	public int getMrp() {
+	public float getMrp() {
 		return mrp;
 	}
 
-	public void setMrp(int mrp) {
-		this.mrp = mrp;
+	public void setMrp(float f) {
+		this.mrp = f;
 	}
 
-	public int getWsp() {
+	public float getWsp() {
 		return wsp;
 	}
 
-	public void setWsp(int wsp) {
-		this.wsp = wsp;
+	public void setWsp(float f) {
+		this.wsp = f;
 	}
 
 	public String getAttrValue1() {

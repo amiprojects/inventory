@@ -50,3 +50,13 @@
 <div class='toast' style='display: none'>
 	<h3 id="msg">${requestScope['msg']}</h3>
 </div>
+
+//AUTOCOMPLETE
+<input list="browsers" name="">
+<datalist id="browsers">
+	<option value="Internet Explorer">
+	<option value="Firefox">
+	<option value="Chrome">
+	<option value="Opera">
+	<option value="Safari">
+</datalist>

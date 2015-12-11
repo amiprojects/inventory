@@ -144,8 +144,7 @@ public class AccountDetails {
 		return serviceTaxRegistrationNumber;
 	}
 
-	public void setServiceTaxRegistrationNumber(
-			String serviceTaxRegistrationNumber) {
+	public void setServiceTaxRegistrationNumber(String serviceTaxRegistrationNumber) {
 		this.serviceTaxRegistrationNumber = serviceTaxRegistrationNumber;
 	}
 
@@ -221,4 +220,21 @@ public class AccountDetails {
 		this.users = users;
 	}
 
+	@Override
+	public String toString() {
+		return "{\"bankAccountNumber\":\"" + bankAccountNumber + "\", " + "\"bankChequeLable\":\"" + bankChequeLable
+				+ "\", " + "\"bankIFSCnumber\":\"" + bankIFSCnumber + "\", " + "\"bankMICRnumber\":\"" + bankMICRnumber
+				+ "\", " + "\"bankName\":\"" + bankName + "\", " + "\"bankRTGCnumber\":\"" + bankRTGCnumber + "\", "
+				+ "\"branch\":\"" + branch + "\", " + "\"city\":\"" + city + "\", " + "\"cstNumber\":\"" + cstNumber
+				+ "\"," + "\"cstRegistrationDate\":\"" + cstRegistrationDate + "\"," + "\"exciseRegistrationDate\":\""
+				+ exciseRegistrationDate + "\"," + "\"id\":\"" + id + "\"," + "\"panNumber\":\"" + panNumber + "\","
+				+ "\"serviceTaxRegistrationDate\":\"" + serviceTaxRegistrationDate + "\","
+				+ "\"serviceTaxRegistrationNumber\":\"" + serviceTaxRegistrationNumber + "\"," + "\"tax_Type_Group\":\""
+				+ tax_Type_Group + "\"," + "\"users\":\"" + users + "\"," + "\"vatNumber\":\"" + vatNumber + "\","
+				+ "\"vatRegistrationDate\":\"" + vatRegistrationDate + "\"," + "\"vendor\":\"" + vendor + "\""+
+				"\"tax_Type_Group\":\"" + tax_Type_Group.getId() + "\", "
+				+ "\"id\":\"" + id + "\", "+ "\"taxTotal\":\"" + tax_Type_Group.getTotalTaxValue() + "\"}"	;
+		
+
+	}
 }

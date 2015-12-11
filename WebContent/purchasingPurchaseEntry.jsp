@@ -145,6 +145,15 @@
 		}
 	}
 </script>
+<link rel="stylesheet" href="css/toast.css" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		if ($('#msg').html() != "") {
+			$('.toast').fadeIn(400).delay(3000).fadeOut(400);
+		}
+	});
+</script>
 </head>
 <body>
 	<c:if test="${sessionScope['user']==null}">
@@ -196,6 +205,7 @@
 												<div class="col-md-12">
 													&nbsp; &nbsp; &nbsp; <b class="font">Vendor Name :</b> <input
 														type="text" class="form-control" id="vName" name="vName">
+													<input type="hidden" id="vId" name="vId">
 												</div>
 												<div class="col-md-12">
 													<!-- <div class="breadcrumbs">
@@ -204,8 +214,8 @@
 														</ul>
 													</div> -->
 													&nbsp; &nbsp; &nbsp; <b class="font">Vendor Details :</b>
-													<textarea rows="" cols="" id="vDetail" class="form-control"
-														readonly="readonly"></textarea>
+													<textarea rows="5" cols="" id="vDetail"
+														class="form-control" readonly="readonly"></textarea>
 
 												</div>
 											</div>
@@ -232,20 +242,26 @@
 														value="${bs.companyInitial}/${fy}/${yr}/${bs.billType}/${lastChNo}/${lastSuf}">
 													<input type="hidden" name="challanNo" value="${lastChNo}"
 														id="challanNo"> <input type="hidden"
-														name="challanSuffix" value="${lastSuf}"> 
+														name="challanSuffix" value="${lastSuf}">
 												</div>
 												<div class="form-group">
 													<label for="" class="font">Purchase Date :</label> <input
 														type="text" id="datepicker" class="form-control"
 														name="purchaseDate">
 												</div>
+												<br> <input type="button" class="btn green pull-right"
+													data-toggle="modal" data-target="#addProduct"
+													value="Add Product" style="width: 100%" onclick="manage();">
+											</div>
+											<div class='toast' style='display: none'>
+												<h3 id="msg">${requestScope['msg']}</h3>
 											</div>
 										</div>
-										<div class="widget-area">
+										<!-- <div class="widget-area">
 											<input type="button" class="btn green pull-right"
 												data-toggle="modal" data-target="#addProduct"
 												value="Add Product" style="width: 100%" onclick="manage();">
-										</div>
+										</div> -->
 										<table id="purProTable"
 											class="table table-striped table-bordered">
 											<thead style="background-color: #F0F0F0;">
@@ -266,49 +282,53 @@
 													<tr>
 														<td colspan="2">Sub Total :</td>
 														<td><input type="text" class="form-control"
-															id="subTotal" value="0.0" readonly="readonly"></td>
+															id="subTotal" value="0.0" readonly="readonly"
+															onkeyup="subTotal();"></td>
 													</tr>
 												</thead>
 												<tbody>
 													<tr>
-														<td><select class="form-control">
-																<option>TAX type</option>
+														<td><select class="form-control" id="taxGroup"
+															name="taxGroup" onchange="selectedTaxGroup();">
+																<option value="0">TAX type</option>
 																<c:forEach
 																	items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
 																	var="taxTypeGroup">
 																	<option value="${taxTypeGroup.id}">${taxTypeGroup.name}</option>
 																</c:forEach>
-														</select></td>
+														</select><input type="hidden" id="taxTypeId" name="taxTypeId"></td>
 														<td>%</td>
 														<td><input type="text" class="form-control"
-															readonly="readonly" value="0.0"></td>
+															readonly="readonly" value="0.0" id="taxTot"></td>
 													</tr>
 												</tbody>
 												<tbody>
 													<tr>
 														<td colspan="2">Tax Amount :</td>
 														<td><input type="text" class="form-control"
-															readonly="readonly"></td>
+															readonly="readonly" value="0.0" id="taxAmount"></td>
 													</tr>
 												</tbody>
 												<tbody>
 													<tr>
 														<td colspan="2">Transport charge :</td>
 														<td><input type="text" class="form-control"
-															name="transportCost"></td>
+															name="transportCost" id="transportCost" onkeyup="gtot();"
+															value="0.0"></td>
 													</tr>
 												</tbody>
 												<tbody>
 													<tr>
 														<td colspan="2">Surcharge :</td>
 														<td><input type="text" class="form-control"
-															name="surcharge"></td>
+															id="surcharge" name="surcharge" onkeyup="gtot();"
+															value="0.0"></td>
 													</tr>
 												</tbody>
 												<thead>
 													<tr>
 														<td colspan="2">Grand Total :</td>
-														<td><input type="text" class="form-control"
+														<td><input type="text" class="form-control" id="gt"
 															placeholder="0.0" readonly="readonly"></td>
 													</tr>
 												</thead>
@@ -343,6 +363,7 @@
 													value="Save">
 											</div>
 										</div>
+										<input type="hidden" name="isSalable" id="isSalable">
 									</form>
 									<!-- <input type="radio" name="a" value="x" onclick="first()" id="a">1
 									<input type="radio" name="a" value="y" onclick="second()"
@@ -551,11 +572,6 @@
 		style="top: -110px; overflow-y: hidden; overflow-x: hidden;">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
-				<!-- <div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						onclick="close();">&times;</button>
-					<h4 class="modal-title">Add Product</h4>
-				</div> -->
 				<div class="modal-body">
 					<div class="row">
 						<div class="widget-area" style="width: 50%; height: 275px;">
@@ -586,11 +602,22 @@
 								</div>
 								<div class="col-md-5">Product-Code:</div>
 								<div class="col-md-7">
-									<input type="text" class="form-control" name="pCode" id="pCode">
+									<input type="text" list="browsers" class="form-control"
+										name="pCode" id="pCode">
+									<datalist id="browsers"> <c:forEach
+										items="${sessionScope['ejb'].getAllProductDetail()}"
+										var="productDetail">
+										<option value="${productDetail.code}">
+									</c:forEach> <!-- <option value="Internet Explorer">
+									<option value="Firefox">
+									<option value="Chrome">
+									<option value="Opera">
+									<option value="Safari"> --> </datalist>
 								</div>
 								<div class="col-md-5">Product Descripsion:</div>
 								<div class="col-md-7">
-									<input type="text" class="form-control" name="pDesc" id="pDesc">
+									<input type="text" class="form-control" name="pDesc" id="pDesc"
+										readonly="readonly">
 								</div>
 							</div>
 						</div>
@@ -636,7 +663,8 @@
 								</div>
 								<div class="col-md-3">UOM:</div>
 								<div class="col-md-9">
-									<input type="text" class="form-control" id="uom" name="uom">
+									<input type="text" class="form-control" id="uom" name="uom"
+										readonly="readonly">
 								</div>
 								<div class="col-md-3">Rate:</div>
 								<div class="col-md-9">
@@ -649,6 +677,7 @@
 								<div class="row">
 									&nbsp; &nbsp; &nbsp; &nbsp; <input type="checkbox" id="sale"
 										onclick="salable();"> &nbsp; Is salable
+
 								</div>
 								<div class="col-md-2">Wsp:</div>
 								<div class="col-md-10">
@@ -761,14 +790,20 @@
 
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 	<script>
+		$(document).ready(function() {
+			$("#isSalable").val('no');
+		});
 		$(function() {
 			$("#datepicker").datepicker();
 		});
 		function salable() {
+
 			if ($('#sale').is(":checked")) {
+				$("#isSalable").val('yes');
 				$("#wsp").attr("readonly", false);
 				$("#mrp").attr("readonly", false);
 			} else {
+				$("#isSalable").val('no');
 				$("#wsp").attr("readonly", true);
 				$("#mrp").attr("readonly", true);
 			}
@@ -880,6 +915,14 @@
 							+ $("#serialText").val()
 							+ '\'></td>'
 							+ '</tr></tbody>');
+			$("#taxAmount").val(
+					Number($("#subTotal").val()) * Number($("#taxTot").val())
+							/ Number(100));
+			$("#gt").val(
+					Number($("#subTotal").val())
+							+ Number($("#taxAmount").val())
+							+ Number($("#transportCost").val())
+							+ Number($("#surcharge").val()));
 		}
 
 		function getVendorNameByType() {
@@ -903,7 +946,7 @@
 										return ({
 											value : item.name,
 											addr : item.address,
-											//email : item.email,
+											id : item.id,
 											ph1 : item.ph1,
 											ph2 : item.ph2
 										});
@@ -915,7 +958,11 @@
 							if (ui.item == null) {
 								$("#vName").val("");
 								$("#vDetail").val("");
+								$("#taxGroup").val(0).prop("selected", true);
+								$("#taxTot").val('0.0');
+								$("#taxAmount").val('0.0');
 							} else {
+								$("#vId").val(ui.item.id)
 								$("#vDetail").val(
 										"Address : \n\t" + ui.item.addr
 												+ "\nPhone1 : " + ui.item.ph1
@@ -926,16 +973,85 @@
 						select : function(event, ui) {
 							if (ui.item == null) {
 								$("#vName").val("");
+
 							} else {
+								$("#vId").val(ui.item.id)
 								$("#vDetail").val(
 										"Address : \n\t" + ui.item.addr
 												+ "\nPhone1 : " + ui.item.ph1
 												+ "\nPhone2 : " + ui.item.ph2);
-								//$("#vDetail").val(ui.item.ph1);
+
+								$.ajax({
+									type : "post",
+									url : "getAccountDetails",
+									data : {
+										id : ui.item.id
+									},
+									dataType : "json",
+									success : function(data5) {
+										$("#taxGroup")
+												.val(data5.tax_Type_Group)
+												.prop("selected", true);
+										$("#taxTot").val(data5.taxTotal);
+										$("#taxTypeId").val(data5.id);
+										$("#taxAmount").val(
+												Number($("#subTotal").val())
+														* Number($("#taxTot")
+																.val())
+														/ Number(100));
+										$("#gt").val(
+												Number($("#subTotal").val())
+														+ Number($("#taxAmount").val())
+														+ Number($("#transportCost").val())
+														+ Number($("#surcharge").val()));
+
+									},
+									error : function(a, b, c) {
+										alert("error: " + b);
+									}
+								});
 							}
 						}
 					});
 		});
+		function selectedTaxGroup() {
+			if ($("#taxGroup").val() != 0) {
+				$.ajax({
+					url : "getTaxGroupById",
+					data : {
+						id : $("#taxGroup").val()
+					},
+					dataType : "json",
+					success : function(data) {
+						$("#taxTot").val(data.taxtot);
+						$("#taxTypeId").val(data.id);
+						$("#taxAmount").val(
+								Number($("#subTotal").val())
+										* Number($("#taxTot").val())
+										/ Number(100));
+					},
+					error : function(a, b, c) {
+						alert(c);
+					}
+				});
+			} else {
+				$("#taxTot").val('0.0');
+				$("#taxTypeId").val("");
+			}
+
+		}
+		function gtot() {
+			if (($("#transportCost").val() != "")
+					|| ($("#surcharge").val() != "")) {
+				$("#gt").val(
+						Number($("#subTotal").val())
+								+ Number($("#taxAmount").val())
+								+ Number($("#transportCost").val())
+								+ Number($("#surcharge").val()));
+			} else {
+				$("#gt").val('0.0');
+			}
+		}
 	</script>
 </body>
 

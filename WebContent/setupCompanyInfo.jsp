@@ -62,29 +62,31 @@
 								</ul>
 							</div>
 							<div class="widget-area">
+								<form action="updateCompanyInfo" enctype="multipart/form-data"
+									method="post" id="companydetails">
+								<input type="hidden" value="${compInfo.id}" name="companyId">
+									<ul class="nav nav-tabs">
+										<li class="active"><a data-toggle="tab" href="#comp">Company
+												details</a></li>
+										<li><a data-toggle="tab" href="#tax">Tax details</a></li>
+									</ul>
+									<div class="tab-content">
+										<div id="comp" class="tab-pane fade active in">
+											<div class="widget-area">
 
-								<ul class="nav nav-tabs">
-									<li class="active"><a data-toggle="tab" href="#comp">Company
-											details</a></li>
-									<li><a data-toggle="tab" href="#tax">Tax details</a></li>
-								</ul>
-								<div class="tab-content">
-									<div id="comp" class="tab-pane fade active in">
-										<div class="widget-area">
+												<div class="wizard-form-h">
 
-											<div class="wizard-form-h">
+													<div id="step-1">
 
-												<div id="step-1">
 
-													<form action="updateCompanyInfo" method="get">
 
 														<div class="col-md-6">
 															<div>
 																<label for="exampleInputEmail1">Company Name:</label> <input
 																	type="text" name="name" id="compname"
 																	placeholder="Enter Company Name" required="requied"
-																	class="form-control" readonly="readonly" value="${compInfo.compname}"><br>
-																	<input type="hidden" value="${compInfo.id}" name="id">
+																	class="form-control" readonly="readonly"
+																	value="${compInfo.compname}"><br>
 															</div>
 														</div>
 														<div class="col-md-6">
@@ -92,24 +94,28 @@
 																<label for="exampleInputPassword1">Company
 																	Email:</label> <input type="email" name="email" id="compemail"
 																	placeholder="Enter Company Email" required
-																	class="form-control" readonly="readonly" onchange="verifyEmail();"><br>
+																	class="form-control" readonly="readonly" value="${compInfo.email}"
+																	onchange="verifyEmail();"><br>
 															</div>
 
 														</div>
 
 														<div class="col-md-6">
 															<label for="exampleInputEmail1">Company Mobile
-																No:</label> <input type='tel' pattern="[0-9]{10,10}" name="mono" id="mobile"
-																placeholder="Eg. +9900000000" minlength="10"
-																maxlength="10" required class="form-control" readonly="readonly" onkeyup="checkMobile();"><br>
+																No:</label> <input type='number' pattern="[0-9]{10,10}" name="mono"
+																id="mobile" placeholder="Eg. +9900000000" minlength="10"
+																maxlength="10" required class="form-control"
+																readonly="readonly" value="${compInfo.mobile}" onkeyup="checkMobile();"
+																value="${compInfo.mobile}"><br>
 														</div>
 														<div class="col-md-6">
 															<div>
 																<label for="exampleInputPassword1">Company Phone
-																	No:</label> <input type='tel' pattern="[0-9]{10,10}"
+																	No:</label> <input type='number' pattern="[0-9]{10,10}"
 																	name="phno" id="phone" placeholder="Eg. +9900000000"
 																	minlength="10" maxlength="10" required
-																	class="form-control" readonly="readonly" onkeyup="checkPhone();"><br>
+																	class="form-control" readonly="readonly" value="${compInfo.phone}"
+																	onkeyup="checkPhone();"><br>
 															</div>
 														</div>
 
@@ -117,7 +123,8 @@
 															<div>
 																<label for="exampleInputPassword1">Company
 																	Address:</label><br>
-																<textarea name="adress" id="addr" rows="5" cols="59" readonly="readonly"></textarea>
+																<textarea name="adress" id="addr" rows="5" cols="59"
+																	readonly="readonly">${compInfo.addr}</textarea>
 																<br>
 															</div>
 														</div>
@@ -125,15 +132,17 @@
 														<div class="col-md-6">
 															<div>
 																<label for="exampleInputPassword1"> City:</label> <input
-																	type="text" name="city" id="cityname" placeholder="Enter city"
-																	required class="form-control" readonly="readonly"><br>
+																	type="text" name="city" id="cityname"
+																	placeholder="Enter city" required class="form-control"
+																	readonly="readonly" value="${compInfo.city}"><br>
 															</div>
 														</div>
 														<div class="col-md-6">
 															<div>
 																<label for="exampleInputPassword1"> State:</label> <input
-																	type="text" name="state" id="statename" placeholder="Enter State"
-																	required class="form-control" readonly="readonly"><br>
+																	type="text" name="state" id="statename"
+																	placeholder="Enter State" required class="form-control"
+																	readonly="readonly" value="${compInfo.state}"><br>
 															</div>
 														</div>
 
@@ -142,50 +151,40 @@
 															<div>
 																<label for="exampleInputPassword1"> Upload logo:</label>
 																<div>
-																	<img id="image" alt="" src="">
+																	<img id="image" alt="" src="data:image/jpeg;base64,${compInfo.getImageAsString()}" style="width:100px;height:50px;">
 																</div>
 															</div>
-															<input type="file" name="proImg" size="50" required
-																onchange="readURL(this);">
+															<input type="file" name="proImg" size="50" id="image"
+																required onchange="readURL(this);" value="${compInfo.image}">
 														</div>
-														<div class="col-md-6" style="top: 23px; right: -350px">
-															<button class="btn btn-primary large" type="edit" onclick="activatefields();">Edit</button>
-														</div>
-														<div class="col-md-6" style="top: 23px; right: -350px">
-															<button class="btn btn-primary large" type="submit" onclick="submitCompmanyDetails();">Submit</button>
-														</div>
-													</form>
+														
+													</div>
 
 												</div>
 
 											</div>
-
 										</div>
-									</div>
-									<div id="tax" class="tab-pane fade ">
-										<div class="widget-area">
+										<div id="tax" class="tab-pane fade ">
+											<div class="widget-area">
 
-											<div class="wizard-form-h">
+												<div class="wizard-form-h">
 
-												<div id="step-1">
-
-
-													<form action="updateCompanyInfo" method="get">
-
+													<div id="step-1">
 														<div class="col-md-6">
 															<div>
 																<label for="exampleInputEmail1">VAT No:</label> <input
 																	type="number" name="vatno" id="vat"
 																	placeholder="Enter Company VAT No" required
-																	class="form-control" readonly="readonly"><br>
+																	class="form-control" readonly="readonly" value="${compInfo.vatno}"><br>
 															</div>
 														</div>
 
 														<div class="col-md-6">
 															<div>
 																<label for="exampleInputPassword1">VAT
-																	Registration Date:</label> <input type="text" name="date"
-																	id="vatdate" required class="form-control" readonly="readonly"><br>
+																	Registration Date:</label> <input type="text" name="vatdate"
+																	id="vatdate" required class="form-control"
+																	readonly="readonly" value="${compInfo.vatdate}"><br>
 															</div>
 														</div>
 														<div class="col-md-6">
@@ -193,7 +192,7 @@
 																<label for="exampleInputEmail1">CST No:</label> <input
 																	type="number" name="cstno" id="cst"
 																	placeholder="Enter Company CST No" required
-																	class="form-control" readonly="readonly"><br>
+																	class="form-control" readonly="readonly" value="${compInfo.cstno}"><br>
 															</div>
 														</div>
 
@@ -201,7 +200,8 @@
 															<div>
 																<label for="exampleInputPassword1">CST
 																	Registration Date:</label> <input type="text" name="cstDate"
-																	id="cstdate" required class="form-control"readonly="readonly"><br>
+																	id="cstdate" required class="form-control"
+																	readonly="readonly" value="${compInfo.cstdate}"><br>
 															</div>
 														</div>
 														<div class="col-md-6">
@@ -209,7 +209,7 @@
 																<label for="exampleInputEmail1">TIN No:</label> <input
 																	type="number" name="tinno" id="tin"
 																	placeholder="Enter Company TIN No" required
-																	class="form-control" readonly="readonly"><br>
+																	class="form-control" readonly="readonly" value="${compInfo.tinno}"><br>
 															</div>
 														</div>
 
@@ -217,7 +217,8 @@
 															<div>
 																<label for="exampleInputPassword1">TIN
 																	Registration Date:</label> <input type="text" name="tinDate"
-																	id="tindate" required class="form-control" readonly="readonly"><br>
+																	id="tindate" required class="form-control"
+																	readonly="readonly" value="${compInfo.tindate}"><br>
 															</div>
 														</div>
 														<div class="col-md-6">
@@ -225,32 +226,36 @@
 																<label for="exampleInputEmail1">Service Tax No:</label>
 																<input type="number" name="servicet" id="service"
 																	placeholder="Enter Company Name" required
-																	class="form-control" readonly="readonly"><br>
+																	class="form-control" readonly="readonly" value="${compInfo.servicetaxno}"><br>
 															</div>
 														</div>
 
 														<div class="col-md-6">
 															<div>
 																<label for="exampleInputPassword1">Service Tax
-																	Registration Date:</label> <input type="text" name="serviceDate"
-																	id="servicedate" required class="form-control" readonly="readonly"><br>
+																	Registration Date:</label> <input type="text"
+																	name="serviceDate" id="servicedate" required
+																	class="form-control" readonly="readonly" value="${compInfo.servtaxdate}"><br>
 															</div>
 														</div>
-														
+
 
 														<div class="col-md-6">
-														     <button class="btn btn-primary large" type="edit" onclick="activateTaxFields();">Edit</button> 
+															<button class="btn btn-primary large" type="submit"
+																onclick="submitCompmanyDetails();">Submit</button>
 
-
-															<button class="btn btn-primary large" type="submit">Submit</button>
 														</div>
-													</form>
+
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-							</div>
+								</form>
+								<div class="col-md-6">
+						                <input class="btn btn-primary large" type="button" onclick="activatefields();" value="Edit">
+								</div>							
+						 </div>
 						</div>
 					</div>
 				</div>
@@ -287,9 +292,6 @@
 			 $('#addr').attr("readonly",false);
 			 $('#cityname').attr("readonly",false);
 			 $('#statename').attr("readonly",false);
-			 
-		 }
-		 function activateTaxFields(){
 			 $('#vat').attr("readonly",false);
 			 $('#cst').attr("readonly",false);
 			 $('#tin').attr("readonly",false);
@@ -298,12 +300,8 @@
 			 $('#cstdate').attr("readonly",false);
 			 $('#tindate').attr("readonly",false);
 			 $('#servicedate').attr("readonly",false);
-		 }
-		 
-		 function submitCompmanyDetails(){
 			 
 		 }
-		 
 		 function verifyEmail(){
 			 var email=jQuery('#compemail').val();
 			 var eml = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
@@ -327,43 +325,15 @@
 				}
 			}
 		 function checkMobile(){
-			 var number=jQuery('#mobile').val();
-			// var splchars="*|,\":<>[]{}`\';()@&$#%";
-			 var splchars = /^[0-9-+]+$/;
-			 
-			 //var alpha="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-			 //var alpha1=alpha.toLowerCase();
-			 
+			 var number=jQuery('#mobile').val();			 
+			 var splchars = /^[0-9-+]+$/;			 
 			 if (splchars.test(number)) {
 				         return true;
 				     }
 		      else {
 						alert("Illegal characters detected!");
 				         return false;
-				 
 				     }
-
-			 /*for(var i=0;i<splchars.lenght;i++){
-				 if (number==splchars)
-				 {
-					 alert ("Illegal characters detected!"); 
-				 }
-			 }
-			 for(var j=0;j<alpha.length;j++){
-				 if (number==alpha)
-				 {
-					 alert ("Illegal characters detected!"); 
-				 }
-				 
-			 }
-			 for(var j=0;j<alpha1.length;j++){
-				 if (number==alpha1)
-				 {
-					 alert ("Illegal characters detected!"); 
-				 }
-				 
-			 }*/
-				 
 		 }
 		 function checkPhone(){
 			 var number=jQuery('#phone').val();
@@ -379,11 +349,9 @@
 			 
 		 }
 		 
-		 
-		 
-		 
-		
-		
+         function submitCompmanyDetails(){
+			 $("#companydetails").submit();
+		 }
 	</script>
 </body>
 

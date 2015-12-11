@@ -25,7 +25,8 @@ import com.kaanish.util.DepartmentCotractor;
 @WebServlet({ "/getcountry", "/addNewUOMtype", "/getUOMtype",
 		"/getAllDepartments", "/getStateByCountry",
 		"/getStateByCountryByStateName", "/getCity", "/getCityByName",
-		"/getQtyUnit", "/getQtyUnitConversion", "/getVendorByVendorType","/getQtyConversion" })
+		"/getQtyUnit", "/getQtyUnitConversion", "/getVendorByVendorType","/getQtyConversion","/getVendorByVendorId","/getAccountByVendorId"})
+		
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -116,6 +117,13 @@ public class JsonServlet extends HttpServlet {
 						.parseInt(req.getParameter("id")), req
 						.getParameter("term")));
 
+				break;
+			case "getVendorByVendorId":
+				  resp.getWriter().print(ejb.getVendorById(Integer.parseInt(req.getParameter("id"))));;
+				break;
+				
+			case "getAccountByVendorId":
+				//resp.getWriter().print(ejb.getAccountByVendorId(Integer.parseInt(req.getParameter("id"))));;
 				break;
 
 			case "getStateByCountryByStateName":
