@@ -72,6 +72,16 @@
 		$("#scash").hide();
 
 	});
+	function closePayment() {
+		$("#notpaid").hide();
+		$("#semipaid").hide();
+		$("#fullpaid").hide();
+		$("#cash").hide();
+		$("#bank").hide();
+		$("#cheque").hide();
+		$("#scash").hide();
+		$("#pstatus").val('-');
+	}
 	function pstatus() {
 		var val = $('[name="pstatus"]').val();
 		//alert(val);
@@ -88,19 +98,30 @@
 			$("#semipaid").hide();
 			$("#bank").hide();
 			$("#cheque").hide();
+			$("#notPaidDueAmount").val(Number($("#gt").val()));
 		} else if (val == 'fpaid') {
 			$("#fullpaid").show();
 			$("#notpaid").hide();
 			$("#semipaid").hide();
 			$("#bank").hide();
 			$("#cheque").hide();
+			$("#fullPaidAmount").val(Number($("#gt").val()));
 		} else if (val == 'spaid') {
 			$("#semipaid").show();
 			$("#notpaid").hide();
 			$("#fullpaid").hide();
 			$("#bank").hide();
 			$("#cheque").hide();
+			$("#spAmount").val(Number($("#gt").val()));
+			$("#spDueAmount").val(
+					Number($("#spAmount").val())
+							- Number($("#spPaymentAmount").val()));
 		}
+	}
+	function spPaymentAmount() {
+		$("#spDueAmount").val(
+				Number($("#spAmount").val())
+						- Number($("#spPaymentAmount").val()));
 	}
 	function fptype() {
 		var val = $('[name="fptype"]').val();
@@ -159,13 +180,6 @@
 	<c:if test="${sessionScope['user']==null}">
 		<c:redirect url="index.jsp" />
 	</c:if>
-	<c:set var="cno"
-		value="${sessionScope['ejb'].getLastPurchaseChallanNumber()+1}" />
-	<c:set var="csuf"
-		value="${sessionScope['ejb'].getLastPurchaseChallanSuffix()+1}" />
-	<c:set var="suf" value="PUR" />
-	<c:set var="bs"
-		value="${sessionScope['ejb'].getLastBillSetupBySufix(suf)}" />
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.html"%>
 		<div class="page-container menu-left" style="height: 100%;">
@@ -186,7 +200,7 @@
 									</ul>
 								</div>
 								<div class="col-md-12">
-									<form role="form" class="sec" method="post"
+									<form role="form" class="sec" method="post" id="purchaseForm"
 										action="purchaseEntry">
 										<div class="widget-area">
 											<div class="col-md-6">
@@ -230,6 +244,13 @@
 													<label for="" class="font">Purchase challan no. :</label>
 													<c:set var="fy"
 														value="${sessionScope['ejb'].getCurrentFinancialYear()}" />
+													<c:set var="cno"
+														value="${sessionScope['ejb'].getLastPurchaseChallanNumber()+1}" />
+													<c:set var="csuf"
+														value="${sessionScope['ejb'].getLastPurchaseChallanSuffix()+1}" />
+													<c:set var="suf" value="PUR" />
+													<c:set var="bs"
+														value="${sessionScope['ejb'].getLastBillSetupBySufix(suf)}" />
 													<fmt:formatNumber value="${cno}" var="lastChNo"
 														minIntegerDigits="4" groupingUsed="false" />
 													<fmt:formatNumber value="${csuf}" var="lastSuf"
@@ -282,8 +303,7 @@
 													<tr>
 														<td colspan="2">Sub Total :</td>
 														<td><input type="text" class="form-control"
-															id="subTotal" value="0.0" readonly="readonly"
-															onkeyup="subTotal();"></td>
+															id="subTotal" value="0" readonly="readonly""></td>
 													</tr>
 												</thead>
 												<tbody>
@@ -296,17 +316,17 @@
 																	var="taxTypeGroup">
 																	<option value="${taxTypeGroup.id}">${taxTypeGroup.name}</option>
 																</c:forEach>
-														</select><input type="hidden" id="taxTypeId" name="taxTypeId"></td>
+														</select></td>
 														<td>%</td>
 														<td><input type="text" class="form-control"
-															readonly="readonly" value="0.0" id="taxTot"></td>
+															readonly="readonly" value="0" id="taxTot"></td>
 													</tr>
 												</tbody>
 												<tbody>
 													<tr>
 														<td colspan="2">Tax Amount :</td>
 														<td><input type="text" class="form-control"
-															readonly="readonly" value="0.0" id="taxAmount"></td>
+															readonly="readonly" value="0" id="taxAmount"></td>
 													</tr>
 												</tbody>
 												<tbody>
@@ -314,7 +334,7 @@
 														<td colspan="2">Transport charge :</td>
 														<td><input type="text" class="form-control"
 															name="transportCost" id="transportCost" onkeyup="gtot();"
-															value="0.0"></td>
+															value="0"></td>
 													</tr>
 												</tbody>
 												<tbody>
@@ -322,14 +342,14 @@
 														<td colspan="2">Surcharge :</td>
 														<td><input type="text" class="form-control"
 															id="surcharge" name="surcharge" onkeyup="gtot();"
-															value="0.0"></td>
+															value="0"></td>
 													</tr>
 												</tbody>
 												<thead>
 													<tr>
 														<td colspan="2">Grand Total :</td>
 														<td><input type="text" class="form-control" id="gt"
-															placeholder="0.0" readonly="readonly"></td>
+															placeholder="0" readonly="readonly"></td>
 													</tr>
 												</thead>
 											</table>
@@ -358,7 +378,7 @@
 												</table>
 											</div>
 											<div style="float: right;">
-												<input type="submit" class="btn green pull-right"
+												<input type="button" class="btn green pull-right"
 													data-toggle="modal" data-target="#savePurchase"
 													value="Save">
 											</div>
@@ -385,7 +405,8 @@
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<button type="button" class="close" data-dismiss="modal"
+						onclick="closePayment();">&times;</button>
 					<h4 class="modal-title">Payment Details</h4>
 				</div>
 				<div class="modal-body">
@@ -402,7 +423,7 @@
 									<div class="col-md-5">Payment status :</div>
 									<div class="col-md-7">
 										<div class="sec">
-											<select class="form-control" name="pstatus"
+											<select class="form-control" name="pstatus" id="pstatus"
 												onchange="pstatus()">
 												<option value="-" selected="selected">---</option>
 												<option value="fpaid">Full paid</option>
@@ -438,12 +459,14 @@
 										</div>
 										<div class="col-md-5">Amount :</div>
 										<div class="col-md-7">
-											<input type="text" class="form-control" readonly="readonly">
+											<input type="text" class="form-control" readonly="readonly"
+												id="fullPaidAmount" name="fullPaidAmount">
 										</div>
 									</div>
 									<br>
 									<div class="breadcrumbs" id="cash">
-										<button type="submit" class="btn green pull-right">Save</button>
+										<button type="button" class="btn green pull-right"
+											onclick="submit();">Save</button>
 									</div>
 								</div>
 
@@ -473,20 +496,25 @@
 										</div>
 										<div class="col-md-5">Full Amount :</div>
 										<div class="col-md-7">
-											<input type="text" class="form-control" readonly="readonly">
+											<input type="text" class="form-control" readonly="readonly"
+												id="spAmount" name="spAmount">
 										</div>
 										<div class="col-md-5">Payment Amount :</div>
 										<div class="col-md-7">
-											<input type="text" class="form-control">
+											<input type="text" class="form-control" value="0"
+												id="spPaymentAmount" name="spPaymentAmount"
+												onkeyup="spPaymentAmount();">
 										</div>
 										<div class="col-md-5">Due Amount :</div>
 										<div class="col-md-7">
-											<input type="text" class="form-control" readonly="readonly">
+											<input type="text" class="form-control" readonly="readonly"
+												id="spDueAmount" name="spDueAmount">
 										</div>
 									</div>
 									<br>
 									<div class="breadcrumbs" id="scash">
-										<button type="submit" class="btn green pull-right">Save</button>
+										<button type="button" class="btn green pull-right"
+											onclick="submit();">Save</button>
 									</div>
 								</div>
 							</div>
@@ -502,12 +530,14 @@
 								<div class="row">
 									<div class="col-md-4">Due Amount :</div>
 									<div class="col-md-8">
-										<input type="text" class="form-control" readonly="readonly">
+										<input type="text" class="form-control" readonly="readonly"
+											id="notPaidDueAmount" name="notPaidDueAmount">
 									</div>
 								</div>
 								<br>
 								<div class="breadcrumbs">
-									<button type="submit" class="btn green pull-right">Save</button>
+									<button type="button" class="btn green pull-right"
+										onclick="submit();">Save</button>
 								</div>
 							</div>
 						</div>
@@ -531,7 +561,8 @@
 								</div>
 								<br>
 								<div class="breadcrumbs">
-									<button type="submit" class="btn green pull-right">Save</button>
+									<button type="button" class="btn green pull-right"
+										onclick="submit();">Save</button>
 								</div>
 							</div>
 						</div>
@@ -555,7 +586,8 @@
 								</div>
 								<br>
 								<div class="breadcrumbs">
-									<button type="submit" class="btn green pull-right">Save</button>
+									<button type="button" class="btn green pull-right"
+										onclick="submit();">Save</button>
 								</div>
 							</div>
 						</div>
@@ -931,88 +963,130 @@
 		}
 
 		$(function() {
-			$("#vName").autocomplete(
-					{
-						source : function(req, resp) {
-							$.ajax({
-								url : "getVendorByVendorType",
-								dataType : "json",
-								data : {
-									id : $('[name="vendorType"]').val(),
-									term : req.term
+			$("#vName")
+					.autocomplete(
+							{
+								source : function(req, resp) {
+									$
+											.ajax({
+												url : "getVendorByVendorType",
+												dataType : "json",
+												data : {
+													id : $(
+															'[name="vendorType"]')
+															.val(),
+													term : req.term
+												},
+												success : function(data) {
+													resp($
+															.map(
+																	data,
+																	function(
+																			item) {
+																		return ({
+																			value : item.name,
+																			addr : item.address,
+																			id : item.id,
+																			ph1 : item.ph1,
+																			ph2 : item.ph2
+																		});
+																	}));
+												}
+											});
 								},
-								success : function(data) {
-									resp($.map(data, function(item) {
-										return ({
-											value : item.name,
-											addr : item.address,
-											id : item.id,
-											ph1 : item.ph1,
-											ph2 : item.ph2
-										});
-									}));
+								change : function(event, ui) {
+									if (ui.item == null) {
+										$("#vName").val("");
+										$("#vDetail").val("");
+										$("#taxGroup").val(0).prop("selected",
+												true);
+										$("#taxTot").val('0');
+										$("#taxAmount").val('0');
+										$("#gt")
+												.val(
+														Number($("#subTotal")
+																.val())
+																+ Number($(
+																		"#taxAmount")
+																		.val())
+																+ Number($(
+																		"#transportCost")
+																		.val())
+																+ Number($(
+																		"#surcharge")
+																		.val()));
+									} else {
+										$("#vId").val(ui.item.id)
+										$("#vDetail").val(
+												"Address : \n\t" + ui.item.addr
+														+ "\nPhone1 : "
+														+ ui.item.ph1
+														+ "\nPhone2 : "
+														+ ui.item.ph2);
+									}
+
+								},
+								select : function(event, ui) {
+									if (ui.item == null) {
+										$("#vName").val("");
+
+									} else {
+										$("#vId").val(ui.item.id)
+										$("#vDetail").val(
+												"Address : \n\t" + ui.item.addr
+														+ "\nPhone1 : "
+														+ ui.item.ph1
+														+ "\nPhone2 : "
+														+ ui.item.ph2);
+
+										$
+												.ajax({
+													type : "post",
+													url : "getAccountDetails",
+													data : {
+														id : ui.item.id
+													},
+													dataType : "json",
+													success : function(data5) {
+														$("#taxGroup")
+																.val(
+																		data5.tax_Type_Group)
+																.prop(
+																		"selected",
+																		true);
+														$("#taxTot").val(
+																data5.taxTotal);
+														$("#taxAmount")
+																.val(
+																		Number($(
+																				"#subTotal")
+																				.val())
+																				* Number($(
+																						"#taxTot")
+																						.val())
+																				/ Number(100));
+														$("#gt")
+																.val(
+																		Number($(
+																				"#subTotal")
+																				.val())
+																				+ Number($(
+																						"#taxAmount")
+																						.val())
+																				+ Number($(
+																						"#transportCost")
+																						.val())
+																				+ Number($(
+																						"#surcharge")
+																						.val()));
+													},
+													error : function(a, b, c) {
+														alert("error: " + b);
+													}
+												});
+									}
 								}
 							});
-						},
-						change : function(event, ui) {
-							if (ui.item == null) {
-								$("#vName").val("");
-								$("#vDetail").val("");
-								$("#taxGroup").val(0).prop("selected", true);
-								$("#taxTot").val('0.0');
-								$("#taxAmount").val('0.0');
-							} else {
-								$("#vId").val(ui.item.id)
-								$("#vDetail").val(
-										"Address : \n\t" + ui.item.addr
-												+ "\nPhone1 : " + ui.item.ph1
-												+ "\nPhone2 : " + ui.item.ph2);
-							}
-
-						},
-						select : function(event, ui) {
-							if (ui.item == null) {
-								$("#vName").val("");
-
-							} else {
-								$("#vId").val(ui.item.id)
-								$("#vDetail").val(
-										"Address : \n\t" + ui.item.addr
-												+ "\nPhone1 : " + ui.item.ph1
-												+ "\nPhone2 : " + ui.item.ph2);
-
-								$.ajax({
-									type : "post",
-									url : "getAccountDetails",
-									data : {
-										id : ui.item.id
-									},
-									dataType : "json",
-									success : function(data5) {
-										$("#taxGroup")
-												.val(data5.tax_Type_Group)
-												.prop("selected", true);
-										$("#taxTot").val(data5.taxTotal);
-										$("#taxTypeId").val(data5.id);
-										$("#taxAmount").val(
-												Number($("#subTotal").val())
-														* Number($("#taxTot")
-																.val())
-														/ Number(100));
-										$("#gt").val(
-												Number($("#subTotal").val())
-														+ Number($("#taxAmount").val())
-														+ Number($("#transportCost").val())
-														+ Number($("#surcharge").val()));
-
-									},
-									error : function(a, b, c) {
-										alert("error: " + b);
-									}
-								});
-							}
-						}
-					});
 		});
 		function selectedTaxGroup() {
 			if ($("#taxGroup").val() != 0) {
@@ -1024,19 +1098,28 @@
 					dataType : "json",
 					success : function(data) {
 						$("#taxTot").val(data.taxtot);
-						$("#taxTypeId").val(data.id);
 						$("#taxAmount").val(
 								Number($("#subTotal").val())
 										* Number($("#taxTot").val())
 										/ Number(100));
+						$("#gt").val(
+								Number($("#subTotal").val())
+										+ Number($("#taxAmount").val())
+										+ Number($("#transportCost").val())
+										+ Number($("#surcharge").val()));
 					},
 					error : function(a, b, c) {
 						alert(c);
 					}
 				});
 			} else {
-				$("#taxTot").val('0.0');
-				$("#taxTypeId").val("");
+				$("#taxTot").val('0');
+				$("#taxAmount").val('0');
+				$("#gt").val(
+						Number($("#subTotal").val())
+								+ Number($("#taxAmount").val())
+								+ Number($("#transportCost").val())
+								+ Number($("#surcharge").val()));
 			}
 
 		}
@@ -1049,8 +1132,15 @@
 								+ Number($("#transportCost").val())
 								+ Number($("#surcharge").val()));
 			} else {
-				$("#gt").val('0.0');
+				$("#gt").val(
+						Number($("#subTotal").val())
+								+ Number($("#taxAmount").val())
+								+ Number($("#transportCost").val())
+								+ Number($("#surcharge").val()));
 			}
+		}
+		function submit() {
+			document.getElementById("purchaseForm").submit();
 		}
 	</script>
 </body>

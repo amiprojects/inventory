@@ -329,7 +329,13 @@ public class Ejb {
 	public int getLastPurchaseChallanSuffix() {
 		TypedQuery<Purchase_Entry> q = em.createQuery("select c from Purchase_Entry c ORDER BY c.id DESC",
 				Purchase_Entry.class);
-		if (q.getResultList().size() > 0) {
+		if(q.getResultList().size()>0){
+			return q.getResultList().get(0).getChallanSuffix();
+		}
+		else{
+			return 0;
+		}
+		/*if (q.getResultList().size() > 0) {
 			int s = q.getResultList().get(0).getChallanSuffix();
 			if (getLastBillSetupBySufix("PUR").equals(null)) {
 				return s;
@@ -346,7 +352,7 @@ public class Ejb {
 			} else {
 				return Integer.parseInt(getLastBillSetupBySufix("PUR").getSufix());
 			}
-		}
+		}*/
 	}
 
 	/*******************

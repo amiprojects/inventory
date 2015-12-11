@@ -47,7 +47,7 @@ import com.kaanish.util.DateConverter;
 		"/deleteTaxGroup", "/createDept", "/deleteDept", "/createSubDept", "/deleteSubDept", "/createCategory",
 		"/deleteCategory", "/newVendorType", "/addCountry", "/addState", "/createProduct", "/deleteCountry",
 		"/addVendor", "/addUOM", "/editVendorType", "/deleteVendorType", "/addCity", "/deleteState", "/deleteCity","/productSumary",
-		"/addNewConversion", "/purchaseEntry", "/updateConversion","/purchaseEntry", "/addBillSetup","/updateCompanyInfo","/purchaseEntry", "/addBillSetup","/updateCompanyInfo"  })
+		"/addNewConversion", "/purchaseEntry", "/updateConversion", "/addBillSetup","/updateCompanyInfo", "/addBillSetup","/updateCompanyInfo"  })
 
 
 

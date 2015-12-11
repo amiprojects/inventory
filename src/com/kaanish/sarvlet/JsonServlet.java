@@ -22,11 +22,11 @@ import com.kaanish.model.QtyUnitType;
 import com.kaanish.model.SubDepartment;
 import com.kaanish.util.DepartmentCotractor;
 
-@WebServlet({ "/getcountry", "/addNewUOMtype", "/getUOMtype",
-		"/getAllDepartments", "/getStateByCountry",
-		"/getStateByCountryByStateName", "/getCity", "/getCityByName",
-		"/getQtyUnit", "/getQtyUnitConversion", "/getVendorByVendorType","/getQtyConversion","/getVendorByVendorId","/getAccountByVendorId"})
-		
+@WebServlet({ "/getcountry", "/addNewUOMtype", "/getUOMtype", "/getAllDepartments", "/getStateByCountry",
+		"/getStateByCountryByStateName", "/getCity", "/getCityByName", "/getQtyUnit", "/getQtyUnitConversion",
+		"/getVendorByVendorType", "/getQtyConversion", "/getVendorByVendorId", "/getAccountByVendorId",
+		"/getTaxGroupById", "/getAccountDetails" })
+
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -37,8 +37,7 @@ public class JsonServlet extends HttpServlet {
 	private String name;
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String url = req.getRequestURL().toString();
 		url = url.substring(url.lastIndexOf('/') + 1);
 		resp.setContentType("application/json");
@@ -52,8 +51,7 @@ public class JsonServlet extends HttpServlet {
 
 			case "addNewUOMtype":
 				pw = new PrintWriter(resp.getOutputStream());
-				JsonGeneratorFactory factory = Json
-						.createGeneratorFactory(null);
+				JsonGeneratorFactory factory = Json.createGeneratorFactory(null);
 				JsonGenerator gen = factory.createGenerator(pw);
 				qtyUnitType = new QtyUnitType();
 				name = req.getParameter("typeName");
@@ -67,11 +65,9 @@ public class JsonServlet extends HttpServlet {
 				if (flag == 0) {
 					qtyUnitType.setName(name);
 					ejb.setQtyUnitType(qtyUnitType);
-					gen.writeStartObject().write("response", "success")
-							.writeEnd().close();
+					gen.writeStartObject().write("response", "success").writeEnd().close();
 				} else {
-					gen.writeStartObject().write("response", "already exist")
-							.writeEnd().close();
+					gen.writeStartObject().write("response", "already exist").writeEnd().close();
 				}
 				break;
 
@@ -107,35 +103,38 @@ public class JsonServlet extends HttpServlet {
 
 			case "getStateByCountry":
 				pw = resp.getWriter();
-				pw.print(ejb.getAllStatesByCountryId(Integer.parseInt(req
-						.getParameter("id"))));
+				pw.print(ejb.getAllStatesByCountryId(Integer.parseInt(req.getParameter("id"))));
 				break;
 
 			case "getVendorByVendorType":
 				pw = resp.getWriter();
-				pw.print(ejb.getVendorsByVendorTypeIdByName(Integer
-						.parseInt(req.getParameter("id")), req
-						.getParameter("term")));
+				pw.print(ejb.getVendorsByVendorTypeIdByName(Integer.parseInt(req.getParameter("id")),
+						req.getParameter("term")));
+				break;
+			case "getAccountDetails":
+				resp.getWriter().print(ejb.getAccountDetailsByVendorId(Integer.parseInt(req.getParameter("id"))));
+				break;
+			case "getTaxGroupById":
+				resp.getWriter().print(ejb.getTax_Type_GroupById(Integer.parseInt(req.getParameter("id"))));
+				break;
 
-				break;
 			case "getVendorByVendorId":
-				  resp.getWriter().print(ejb.getVendorById(Integer.parseInt(req.getParameter("id"))));;
+				resp.getWriter().print(ejb.getVendorById(Integer.parseInt(req.getParameter("id"))));
+				;
 				break;
-				
+
 			case "getAccountByVendorId":
-				//resp.getWriter().print(ejb.getAccountByVendorId(Integer.parseInt(req.getParameter("id"))));;
+				// resp.getWriter().print(ejb.getAccountByVendorId(Integer.parseInt(req.getParameter("id"))));;
 				break;
 
 			case "getStateByCountryByStateName":
 				pw = resp.getWriter();
-				pw.print(ejb.getStateByName(req.getParameter("name"),
-						Integer.parseInt(req.getParameter("cid"))));
+				pw.print(ejb.getStateByName(req.getParameter("name"), Integer.parseInt(req.getParameter("cid"))));
 				break;
 
 			case "getCity":
 				pw = resp.getWriter();
-				pw.print(ejb.getCityByState(Integer.parseInt(req
-						.getParameter("id"))));
+				pw.print(ejb.getCityByState(Integer.parseInt(req.getParameter("id"))));
 				break;
 
 			case "getCityByName":
@@ -144,17 +143,15 @@ public class JsonServlet extends HttpServlet {
 				break;
 			case "getQtyUnit":
 				pw = resp.getWriter();
-				pw.print(ejb.getQtyUnitById(Integer.parseInt(req
-						.getParameter("id"))));
+				pw.print(ejb.getQtyUnitById(Integer.parseInt(req.getParameter("id"))));
 				break;
 			case "getQtyUnitConversion":
 				pw = resp.getWriter();
-				pw.print(ejb.getAllQtyUnitConversionByQtyUnitId(Integer
-						.parseInt(req.getParameter("id"))));
+				pw.print(ejb.getAllQtyUnitConversionByQtyUnitId(Integer.parseInt(req.getParameter("id"))));
 				break;
 			case "getQtyConversion":
 				pw = resp.getWriter();
-				QtyUnitConversionPK qpk=new QtyUnitConversionPK();
+				QtyUnitConversionPK qpk = new QtyUnitConversionPK();
 				qpk.setQtyUnitId1(Integer.parseInt(req.getParameter("id1")));
 				qpk.setQtyUnitId2(Integer.parseInt(req.getParameter("id2")));
 				pw.print(ejb.getQtyUnitConversionById(qpk));
@@ -169,8 +166,7 @@ public class JsonServlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doGet(req, resp);
 	}
 }
