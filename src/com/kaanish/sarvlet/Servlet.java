@@ -1,6 +1,7 @@
 package com.kaanish.sarvlet;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import com.kaanish.ejb.Ejb;
 import com.kaanish.model.AccountDetails;
@@ -100,7 +102,11 @@ public class Servlet extends HttpServlet {
 			}
 
 		}
-
+		if(!ejb.isCompanyInfoExist()){
+			companyInfo=new CompanyInfo();
+			ejb.setCompanyInfo(companyInfo);
+		}
+		
 	}
 
 	@Override
@@ -131,7 +137,7 @@ public class Servlet extends HttpServlet {
 			
 			case "updateCompanyInfo":
 				 page="setupCompanyInfo.jsp";
-				 companyInfo=new CompanyInfo();
+				 companyInfo=ejb.getCompanyInfoById(Integer.parseInt(req.getParameter("companyId")));
 				 companyInfo.setCompname(req.getParameter("name"));
 				 companyInfo.setEmail(req.getParameter("email"));
 				 companyInfo.setMobile(req.getParameter("mono"));
@@ -143,15 +149,18 @@ public class Servlet extends HttpServlet {
 				 companyInfo.setCstno(req.getParameter("cstno"));
 				 companyInfo.setTinno(req.getParameter("tinno"));
 				 companyInfo.setServicetaxno(req.getParameter("servicet"));
-				 companyInfo.setVatdate(req.getParameter("vatDate"));
-				 companyInfo.setCstdate(req.getParameter("cstdate"));
+				 companyInfo.setVatdate(req.getParameter("vatdate"));
+				 companyInfo.setCstdate(req.getParameter("cstDate"));
 				 companyInfo.setTindate(req.getParameter("tinDate"));
 				 companyInfo.setServtaxdate(req.getParameter("serviceDate"));
 				 
-				 ejb.setCompanyInfo(companyInfo);
+				 Part p=req.getPart("proImg");
+				 InputStream is=p.getInputStream();
+				 byte[] content=new byte[is.available()];
+				 is.read(content);
+				 companyInfo.setImage(content);
+				 ejb.updateCompanyInfo(companyInfo);
 				 msg = "Company info updated successfully.";
-				 
-			
 				 break;
 			case "createProduct":
 				page = "setupDepartment.jsp";
@@ -170,8 +179,6 @@ public class Servlet extends HttpServlet {
 				 billSetup.setCompanyInitial(req.getParameter("comname"));
 				 billSetup.setBillType(req.getParameter("type"));
 				 billSetup.setSufix(req.getParameter("suffix"));
-				 
-				 
 				 ejb.setBillSetup(billSetup);
 				 
 				 msg = "Bill created successfully.";

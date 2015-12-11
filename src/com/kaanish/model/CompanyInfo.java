@@ -3,13 +3,16 @@ package com.kaanish.model;
 
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+
+import com.kaanish.util.Base64;
 
 @Entity
 public class CompanyInfo {
 
-	@Id
+	@Id@GeneratedValue
 	private int id;
 
 	private String compname;
@@ -27,13 +30,18 @@ public class CompanyInfo {
 	private String tinno;
 	private String servicetaxno;
 	
-	private String vatdate;
-	
+	private String vatdate;	
 	private String cstdate;
-
-	private String tindate;
-	
+	private String tindate;	
 	private String servtaxdate;
+	
+	public String getImageAsString(){
+		if(image.equals(null)){
+			return "";
+		}else{
+			return Base64.encodeBytes(image);
+		}
+	}
 
 	public int getId() {
 		return id;
