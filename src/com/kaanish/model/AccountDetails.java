@@ -231,6 +231,10 @@ public class AccountDetails {
 				+ "\"serviceTaxRegistrationDate\":\"" + serviceTaxRegistrationDate + "\","
 				+ "\"serviceTaxRegistrationNumber\":\"" + serviceTaxRegistrationNumber + "\"," + "\"tax_Type_Group\":\""
 				+ tax_Type_Group + "\"," + "\"users\":\"" + users + "\"," + "\"vatNumber\":\"" + vatNumber + "\","
-				+ "\"vatRegistrationDate\":\"" + vatRegistrationDate + "\"," + "\"vendor\":\"" + vendor + "\"}";
+				+ "\"vatRegistrationDate\":\"" + vatRegistrationDate + "\"," + "\"vendor\":\"" + vendor + "\""+
+				"\"tax_Type_Group\":\"" + tax_Type_Group.getId() + "\", "
+				+ "\"id\":\"" + id + "\", "+ "\"taxTotal\":\"" + tax_Type_Group.getTotalTaxValue() + "\"}"	;
+		
+
 	}
 }

@@ -26,6 +26,7 @@ import com.kaanish.util.DepartmentCotractor;
 		"/getAllDepartments", "/getStateByCountry",
 		"/getStateByCountryByStateName", "/getCity", "/getCityByName",
 		"/getQtyUnit", "/getQtyUnitConversion", "/getVendorByVendorType","/getQtyConversion","/getVendorByVendorId","/getAccountByVendorId"})
+		
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;

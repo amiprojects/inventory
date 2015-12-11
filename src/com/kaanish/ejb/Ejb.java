@@ -146,6 +146,7 @@ public class Ejb {
 	}
 
 	public QtyUnitConversion getQtyUnitConversionById(QtyUnitConversionPK qtyUnitConversionPK) {
+
 		return em.find(QtyUnitConversion.class, qtyUnitConversionPK);
 	}
 
@@ -289,6 +290,20 @@ public class Ejb {
 	}
 	
 	
+
+	public AccountDetails getAccountDetailsByVendorId(int id) {
+		TypedQuery<AccountDetails> q = em
+				.createQuery(
+						"select c from AccountDetails c WHERE c.vendor.id=:id ORDER BY c.id DESC",
+						AccountDetails.class);
+		q.setParameter("id", id);
+		if (q.getResultList().size() > 0) {
+			return q.getResultList().get(0);
+		} else {
+			return null;
+		}
+
+	}
 
 	/******************* for purchase entry ***************************/
 	public void setPurchaseEntry(Purchase_Entry purchaseEntry) {

@@ -562,7 +562,7 @@ public class Servlet extends HttpServlet {
 				page = "purchasingPurchaseEntry.jsp";
 
 				purchaseEntry = new Purchase_Entry();
-				purchaseProductDetails = new Purchase_Product_Details();
+				
 				/*rawMaterialsStock = new RawMaterialsStock();
 				readyGoodsStock = new ReadyGoodsStock();*/
 				dt = new Date();
@@ -571,26 +571,51 @@ public class Servlet extends HttpServlet {
 				purchaseEntry.setChallanSuffix(Integer.parseInt(req.getParameter("challanSuffix")));
 				purchaseEntry.setVendor_bill_no(Integer.parseInt(req.getParameter("vendorBillNo")));
 				purchaseEntry.setPurchase_date(DateConverter.getDate(req.getParameter("purchaseDate")));
-				// purchaseEntry.setVendor(ejb.getVendorById(Integer.parseInt(req.getParameter(""))));
+				purchaseEntry.setVendor(ejb.getVendorById(Integer.parseInt(req.getParameter("vId"))));
 				purchaseEntry.setUsers(ejb.getUserById(httpSession.getAttribute("user").toString()));
 				purchaseEntry.setEntry_date(dt);
 				purchaseEntry.setSur_charge(Integer.parseInt(req.getParameter("surcharge")));
 				purchaseEntry.setTransport_cost(Integer.parseInt(req.getParameter("transportCost")));
-				// purchaseEntry.setTax_Type_Group();
-				// purchaseEntry.setBill_setup();
+				purchaseEntry.setTax_Type_Group(ejb.getTax_Type_GroupById(Integer.parseInt(req.getParameter("taxGroup"))));
+				//purchaseEntry.setBill_setup();
+				ejb.setPurchaseEntry(purchaseEntry);
 
-				purchaseProductDetails.setAttrValue1(req.getParameter("attr1H"));
-				purchaseProductDetails.setAttrValue2(req.getParameter("attr2H"));
-				purchaseProductDetails.setAttrValue3(req.getParameter("attr3H"));
-				purchaseProductDetails.setAttrValue4(req.getParameter("attr4H"));
-				purchaseProductDetails.setAttrValue5(req.getParameter("attr5H"));
-				purchaseProductDetails.setAttrValue6(req.getParameter("attr6H"));
-				// purchaseProductDetails.setCost(Float.parseFloat(req.getParameter("")));
-				purchaseProductDetails.setWsp(Integer.parseInt(req.getParameter("wspH")));
-				purchaseProductDetails.setMrp(Integer.parseInt(req.getParameter("mrpH")));
-				purchaseProductDetails.setQuantity(Integer.parseInt(req.getParameter("qtyH")));
-				// purchaseProductDetails.setRemaining_quantity(Integer.parseInt(req.getParameter("")));
-				// purchaseProductDetails.setPurchase_Entry(ejb.getPurchaseEntryById(Integer.parseInt(req.getParameter(""))));
+				String attr1[]=req.getParameterValues("attr1H");
+				String attr2[]=req.getParameterValues("attr2H");
+				String attr3[]=req.getParameterValues("attr3H");
+				String attr4[]=req.getParameterValues("attr4H");
+				String attr5[]=req.getParameterValues("attr5H");
+				String attr6[]=req.getParameterValues("attr6H");
+				
+				String mrp[]=req.getParameterValues("mrpH");
+				String wsp[]=req.getParameterValues("wspH");
+				
+				String qty[]=req.getParameterValues("qtyH");
+				String remQty[]=req.getParameterValues("qtyH");
+				String cost[]=req.getParameterValues("rateH");
+				
+				
+				for(int l=0;l<mrp.length;l++){
+					purchaseProductDetails = new Purchase_Product_Details();
+					
+					purchaseProductDetails.setAttrValue1(attr1[l]);
+					purchaseProductDetails.setAttrValue2(attr2[l]);
+					purchaseProductDetails.setAttrValue3(attr3[l]);
+					purchaseProductDetails.setAttrValue4(attr4[l]);
+					purchaseProductDetails.setAttrValue5(attr5[l]);
+					purchaseProductDetails.setAttrValue6(attr6[l]);
+					if(req.getParameter("isSalable").equals("yes")){
+						purchaseProductDetails.setMrp(Float.parseFloat(mrp[l]));
+						purchaseProductDetails.setWsp(Float.parseFloat(wsp[l]));
+					}					
+					purchaseProductDetails.setQuantity(Integer.parseInt(qty[l]));
+					purchaseProductDetails.setRemaining_quantity(Integer.parseInt(remQty[l]));
+					purchaseProductDetails.setCost(Integer.parseInt(cost[l]));
+					purchaseProductDetails.setPurchase_Entry(purchaseEntry);					
+					ejb.setPurchaseProductDetails(purchaseProductDetails);
+					purchaseProductDetails=null;
+				}
+				
 				// purchaseProductDetails.setInitialInventory();
 				// purchaseProductDetails.setProductDetail();				
 				//rawMaterialsStock.setProductDetail();
@@ -600,8 +625,7 @@ public class Servlet extends HttpServlet {
 				//readyGoodsStock.setRemainingQty(Integer.parseInt(req.getParameter("")));
 				
 
-				ejb.setPurchaseEntry(purchaseEntry);
-				ejb.setPurchaseProductDetails(purchaseProductDetails);
+				
 				//ejb.setRawMaterialsStocktDetail(rawMaterialsStock);
 				//ejb.setReadyGoodsStockDetail(readyGoodsStock);
 
