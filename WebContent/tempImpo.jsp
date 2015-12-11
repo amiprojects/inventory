@@ -52,14 +52,11 @@
 </div>
 
 //AUTOCOMPLETE
-<form action="#" method="get">
-  <input list="browsers" name="browser">
-  <datalist id="browsers">
-    <option value="Internet Explorer">
-    <option value="Firefox">
-    <option value="Chrome">
-    <option value="Opera">
-    <option value="Safari">
-  </datalist>
-  <input type="submit">
-</form>
+<input list="browsers" name="">
+<datalist id="browsers">
+	<option value="Internet Explorer">
+	<option value="Firefox">
+	<option value="Chrome">
+	<option value="Opera">
+	<option value="Safari">
+</datalist>

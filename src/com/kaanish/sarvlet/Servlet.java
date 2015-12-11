@@ -582,6 +582,7 @@ public class Servlet extends HttpServlet {
 				
 				String mrp[]=req.getParameterValues("mrpH");
 				String wsp[]=req.getParameterValues("wspH");
+				
 				String qty[]=req.getParameterValues("qtyH");
 				String remQty[]=req.getParameterValues("qtyH");
 				String cost[]=req.getParameterValues("rateH");
@@ -596,8 +597,10 @@ public class Servlet extends HttpServlet {
 					purchaseProductDetails.setAttrValue4(attr4[l]);
 					purchaseProductDetails.setAttrValue5(attr5[l]);
 					purchaseProductDetails.setAttrValue6(attr6[l]);
-					purchaseProductDetails.setMrp(Float.parseFloat(mrp[l]));
-					purchaseProductDetails.setWsp(Float.parseFloat(wsp[l]));
+					if(req.getParameter("isSalable").equals("yes")){
+						purchaseProductDetails.setMrp(Float.parseFloat(mrp[l]));
+						purchaseProductDetails.setWsp(Float.parseFloat(wsp[l]));
+					}					
 					purchaseProductDetails.setQuantity(Integer.parseInt(qty[l]));
 					purchaseProductDetails.setRemaining_quantity(Integer.parseInt(remQty[l]));
 					purchaseProductDetails.setCost(Integer.parseInt(cost[l]));

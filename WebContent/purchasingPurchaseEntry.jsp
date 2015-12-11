@@ -282,7 +282,8 @@
 													<tr>
 														<td colspan="2">Sub Total :</td>
 														<td><input type="text" class="form-control"
-															id="subTotal" value="0.0" readonly="readonly"></td>
+															id="subTotal" value="0.0" readonly="readonly"
+															onkeyup="subTotal();"></td>
 													</tr>
 												</thead>
 												<tbody>
@@ -312,20 +313,20 @@
 													<tr>
 														<td colspan="2">Transport charge :</td>
 														<td><input type="text" class="form-control"
-															name="transportCost"></td>
+															name="transportCost" id="transportCost" onkeyup="gtot();"></td>
 													</tr>
 												</tbody>
 												<tbody>
 													<tr>
 														<td colspan="2">Surcharge :</td>
-														<td><input type="text" class="form-control"
-															name="surcharge"></td>
+														<td><input type="text" class="form-control" id="surcharge"
+															name="surcharge" onkeyup="gtot();"></td>
 													</tr>
 												</tbody>
 												<thead>
 													<tr>
 														<td colspan="2">Grand Total :</td>
-														<td><input type="text" class="form-control"
+														<td><input type="text" class="form-control" id="gt"
 															placeholder="0.0" readonly="readonly"></td>
 													</tr>
 												</thead>
@@ -360,6 +361,7 @@
 													value="Save">
 											</div>
 										</div>
+										<input type="hidden" name="isSalable" id="isSalable">
 									</form>
 									<!-- <input type="radio" name="a" value="x" onclick="first()" id="a">1
 									<input type="radio" name="a" value="y" onclick="second()"
@@ -598,11 +600,22 @@
 								</div>
 								<div class="col-md-5">Product-Code:</div>
 								<div class="col-md-7">
-									<input type="text" class="form-control" name="pCode" id="pCode">
+									<input type="text" list="browsers" class="form-control"
+										name="pCode" id="pCode">
+									<datalist id="browsers"> <c:forEach
+										items="${sessionScope['ejb'].getAllProductDetail()}"
+										var="productDetail">
+										<option value="${productDetail.code}">
+									</c:forEach> <!-- <option value="Internet Explorer">
+									<option value="Firefox">
+									<option value="Chrome">
+									<option value="Opera">
+									<option value="Safari"> --> </datalist>
 								</div>
 								<div class="col-md-5">Product Descripsion:</div>
 								<div class="col-md-7">
-									<input type="text" class="form-control" name="pDesc" id="pDesc">
+									<input type="text" class="form-control" name="pDesc" id="pDesc"
+										readonly="readonly">
 								</div>
 							</div>
 						</div>
@@ -648,7 +661,7 @@
 								</div>
 								<div class="col-md-3">UOM:</div>
 								<div class="col-md-9">
-									<input type="text" class="form-control" id="uom" name="uom">
+									<input type="text" class="form-control" id="uom" name="uom" readonly="readonly">
 								</div>
 								<div class="col-md-3">Rate:</div>
 								<div class="col-md-9">
@@ -661,6 +674,7 @@
 								<div class="row">
 									&nbsp; &nbsp; &nbsp; &nbsp; <input type="checkbox" id="sale"
 										onclick="salable();"> &nbsp; Is salable
+										
 								</div>
 								<div class="col-md-2">Wsp:</div>
 								<div class="col-md-10">
@@ -773,14 +787,20 @@
 
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 	<script>
+	$(document).ready(function(){
+		$("#isSalable").val('no');
+	});
 		$(function() {
 			$("#datepicker").datepicker();
 		});
 		function salable() {
+			
 			if ($('#sale').is(":checked")) {
+				$("#isSalable").val('yes');
 				$("#wsp").attr("readonly", false);
 				$("#mrp").attr("readonly", false);
 			} else {
+				$("#isSalable").val('no');
 				$("#wsp").attr("readonly", true);
 				$("#mrp").attr("readonly", true);
 			}
@@ -963,6 +983,11 @@
 												.prop("selected", true);
 										$("#taxTot").val(data5.taxTotal);
 										$("#taxTypeId").val(data5.id);
+										$("#taxAmount").val(
+												Number($("#subTotal").val())
+														* Number($("#taxTot")
+																.val())
+														/ Number(100));
 
 									},
 									error : function(a, b, c) {
@@ -984,6 +1009,10 @@
 					success : function(data) {
 						$("#taxTot").val(data.taxtot);
 						$("#taxTypeId").val(data.id);
+						$("#taxAmount").val(
+								Number($("#subTotal").val())
+										* Number($("#taxTot").val())
+										/ Number(100));
 					},
 					error : function(a, b, c) {
 						alert(c);
@@ -994,6 +1023,18 @@
 				$("#taxTypeId").val("");
 			}
 
+		}
+		function subTotal() {
+			$("#taxAmount").val(
+					Number($("#subTotal").val()) * Number($("#taxTot").val())
+							/ Number(100));
+		}
+		function gtot(){
+			if(($("#transportCost").val()!="") || ($("#surcharge").val()!="")){
+				$("#gt").val(213);
+			}else{
+				$("#gt").val("");
+			}
 		}
 	</script>
 </body>
