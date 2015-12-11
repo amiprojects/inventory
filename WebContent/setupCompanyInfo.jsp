@@ -76,7 +76,7 @@
 
 												<div id="step-1">
 
-													<form action="updateCompanyInfo" method="get">
+													<form action="updateCompanyInfo" enctype="multipart/form-data" method="post" id="companydetails">
 
 														<div class="col-md-6">
 															<div>
@@ -145,7 +145,7 @@
 																	<img id="image" alt="" src="">
 																</div>
 															</div>
-															<input type="file" name="proImg" size="50" required
+															<input type="file" name="proImg" size="50" id="image" required
 																onchange="readURL(this);">
 														</div>
 														<div class="col-md-6" style="top: 23px; right: -350px">
@@ -154,7 +154,7 @@
 														<div class="col-md-6" style="top: 23px; right: -350px">
 															<button class="btn btn-primary large" type="submit" onclick="submitCompmanyDetails();">Submit</button>
 														</div>
-													</form>
+													
 
 												</div>
 
@@ -170,7 +170,7 @@
 												<div id="step-1">
 
 
-													<form action="updateCompanyInfo" method="get">
+													
 
 														<div class="col-md-6">
 															<div>
@@ -239,10 +239,10 @@
 														
 
 														<div class="col-md-6">
-														     <button class="btn btn-primary large" type="edit" onclick="activateTaxFields();">Edit</button> 
+														     <button class="btn btn-primary large" type="submit" onclick="activateTaxFields();">Edit</button> 
 
 
-															<button class="btn btn-primary large" type="submit">Submit</button>
+															<button class="btn btn-primary large" type="submit" onclick="submitTaxDetails();">Submit</button>
 														</div>
 													</form>
 												</div>
@@ -327,43 +327,15 @@
 				}
 			}
 		 function checkMobile(){
-			 var number=jQuery('#mobile').val();
-			// var splchars="*|,\":<>[]{}`\';()@&$#%";
-			 var splchars = /^[0-9-+]+$/;
-			 
-			 //var alpha="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-			 //var alpha1=alpha.toLowerCase();
-			 
+			 var number=jQuery('#mobile').val();			 
+			 var splchars = /^[0-9-+]+$/;			 
 			 if (splchars.test(number)) {
 				         return true;
 				     }
 		      else {
 						alert("Illegal characters detected!");
 				         return false;
-				 
 				     }
-
-			 /*for(var i=0;i<splchars.lenght;i++){
-				 if (number==splchars)
-				 {
-					 alert ("Illegal characters detected!"); 
-				 }
-			 }
-			 for(var j=0;j<alpha.length;j++){
-				 if (number==alpha)
-				 {
-					 alert ("Illegal characters detected!"); 
-				 }
-				 
-			 }
-			 for(var j=0;j<alpha1.length;j++){
-				 if (number==alpha1)
-				 {
-					 alert ("Illegal characters detected!"); 
-				 }
-				 
-			 }*/
-				 
 		 }
 		 function checkPhone(){
 			 var number=jQuery('#phone').val();
@@ -378,6 +350,16 @@
 		     }
 			 
 		 }
+		 
+		 function submitCompmanyDetails(){
+			 $("#companydetails").submit();
+		 }
+		 function submitTaxDetails(){
+			 $("#taxdetails").submit();
+		 }
+		 
+		 
+		 
 		 
 		 
 		 

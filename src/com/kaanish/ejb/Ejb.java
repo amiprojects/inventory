@@ -634,6 +634,8 @@ public class Ejb {
 			return null;
 		}
 	}
+	
+	
 
 	/*********************** for company info *********************/
 
