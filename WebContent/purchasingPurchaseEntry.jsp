@@ -313,14 +313,16 @@
 													<tr>
 														<td colspan="2">Transport charge :</td>
 														<td><input type="text" class="form-control"
-															name="transportCost" id="transportCost" onkeyup="gtot();"></td>
+															name="transportCost" id="transportCost" onkeyup="gtot();"
+															value="0.0"></td>
 													</tr>
 												</tbody>
 												<tbody>
 													<tr>
 														<td colspan="2">Surcharge :</td>
-														<td><input type="text" class="form-control" id="surcharge"
-															name="surcharge" onkeyup="gtot();"></td>
+														<td><input type="text" class="form-control"
+															id="surcharge" name="surcharge" onkeyup="gtot();"
+															value="0.0"></td>
 													</tr>
 												</tbody>
 												<thead>
@@ -661,7 +663,8 @@
 								</div>
 								<div class="col-md-3">UOM:</div>
 								<div class="col-md-9">
-									<input type="text" class="form-control" id="uom" name="uom" readonly="readonly">
+									<input type="text" class="form-control" id="uom" name="uom"
+										readonly="readonly">
 								</div>
 								<div class="col-md-3">Rate:</div>
 								<div class="col-md-9">
@@ -674,7 +677,7 @@
 								<div class="row">
 									&nbsp; &nbsp; &nbsp; &nbsp; <input type="checkbox" id="sale"
 										onclick="salable();"> &nbsp; Is salable
-										
+
 								</div>
 								<div class="col-md-2">Wsp:</div>
 								<div class="col-md-10">
@@ -787,14 +790,14 @@
 
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 	<script>
-	$(document).ready(function(){
-		$("#isSalable").val('no');
-	});
+		$(document).ready(function() {
+			$("#isSalable").val('no');
+		});
 		$(function() {
 			$("#datepicker").datepicker();
 		});
 		function salable() {
-			
+
 			if ($('#sale').is(":checked")) {
 				$("#isSalable").val('yes');
 				$("#wsp").attr("readonly", false);
@@ -912,6 +915,14 @@
 							+ $("#serialText").val()
 							+ '\'></td>'
 							+ '</tr></tbody>');
+			$("#taxAmount").val(
+					Number($("#subTotal").val()) * Number($("#taxTot").val())
+							/ Number(100));
+			$("#gt").val(
+					Number($("#subTotal").val())
+							+ Number($("#taxAmount").val())
+							+ Number($("#transportCost").val())
+							+ Number($("#surcharge").val()));
 		}
 
 		function getVendorNameByType() {
@@ -988,6 +999,11 @@
 														* Number($("#taxTot")
 																.val())
 														/ Number(100));
+										$("#gt").val(
+												Number($("#subTotal").val())
+														+ Number($("#taxAmount").val())
+														+ Number($("#transportCost").val())
+														+ Number($("#surcharge").val()));
 
 									},
 									error : function(a, b, c) {
@@ -1024,16 +1040,16 @@
 			}
 
 		}
-		function subTotal() {
-			$("#taxAmount").val(
-					Number($("#subTotal").val()) * Number($("#taxTot").val())
-							/ Number(100));
-		}
-		function gtot(){
-			if(($("#transportCost").val()!="") || ($("#surcharge").val()!="")){
-				$("#gt").val(213);
-			}else{
-				$("#gt").val("");
+		function gtot() {
+			if (($("#transportCost").val() != "")
+					|| ($("#surcharge").val() != "")) {
+				$("#gt").val(
+						Number($("#subTotal").val())
+								+ Number($("#taxAmount").val())
+								+ Number($("#transportCost").val())
+								+ Number($("#surcharge").val()));
+			} else {
+				$("#gt").val('0.0');
 			}
 		}
 	</script>
