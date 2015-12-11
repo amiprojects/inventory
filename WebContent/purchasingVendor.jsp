@@ -24,6 +24,37 @@
 			$('.toast').fadeIn(400).delay(3000).fadeOut(400);
 		}
 	});
+	
+	function fillFields(){
+		$("#name").val();
+		$("#compname").val();
+		$("#phn1").val();
+		$("#phn2").val();
+		$("#email").val();
+		$("#alias").val();
+		$("#type").val();
+		$("#addr").val();
+		$("#vendorCity").val();
+		$("#pin").val();
+		$("#datepicker").val();
+		$("#vatno").val();
+		$("#cstno").val();
+		$("#datepicker1").val();
+		$("#pan").val();
+		$("#datepicker2").val();
+		$("#exciseno").val();
+		$("#servtaxno").val();
+		$("#datepicker3").val();
+		$("#taxgroup").val();		
+		$("#bankname").val();
+		$("#acno").val();
+		$("#branch").val();
+		$("#bankCity").val();
+		$("#ifsc").val();
+		$("#micrno").val();
+		$("#rtgscd").val();
+		$("#label").val();
+	}
 </script>
 
 <script src="maxcdn.bootstrapcdn.js"></script>
@@ -283,6 +314,7 @@ $(document).ready(function(){
 												<th>#</th>
 												<th>Name</th>
 												<th>Number</th>
+												<th></th>
 											</tr>
 										</thead>
 										<tbody>
@@ -293,6 +325,7 @@ $(document).ready(function(){
 													<td>${c}</td>
 													<td>${vendor.companyName}</td>
 													<td>${vendor.ph1}</td>
+													<td><a href="#" onclick="fillFields();">edit</a></td>
 												</tr>
 												<c:set var="c" value="${c+1}" />
 											</c:forEach>
@@ -319,7 +352,7 @@ $(document).ready(function(){
 														<b>Bank Name:</b>
 													</div>
 													<div class="col-md-9">
-														<input type="text" class="form-control" name="bankName"
+														<input type="text" class="form-control" name="bankName" id="bankname"
 															required="required">
 													</div>
 													<br>
@@ -327,7 +360,7 @@ $(document).ready(function(){
 														<b>A/C no.:</b>
 													</div>
 													<div class="col-md-9">
-														<input type="text" class="form-control" name="bankAccNo"
+														<input type="text" class="form-control" name="bankAccNo" id="acno"
 															required="required">
 													</div>
 													<br>
@@ -335,7 +368,7 @@ $(document).ready(function(){
 														<b>Branch:</b>
 													</div>
 													<div class="col-md-9">
-														<input type="text" class="form-control" name="bankBranch"
+														<input type="text" class="form-control" name="bankBranch" id="branch"
 															required="required">
 													</div>
 													<br>
@@ -352,7 +385,7 @@ $(document).ready(function(){
 														<b>IFSC no.:</b>
 													</div>
 													<div class="col-md-9">
-														<input type="text" class="form-control" name="bankIFSC"
+														<input type="text" class="form-control" name="bankIFSC" id="ifsc"
 															required="required">
 													</div>
 													<br>
@@ -360,7 +393,7 @@ $(document).ready(function(){
 														<b>MICR no.:</b>
 													</div>
 													<div class="col-md-9">
-														<input type="text" class="form-control" name="bankMICR"
+														<input type="text" class="form-control" name="bankMICR" id="micrno"
 															required="required">
 													</div>
 													<br>
@@ -368,7 +401,7 @@ $(document).ready(function(){
 														<b>RTGS code:</b>
 													</div>
 													<div class="col-md-9">
-														<input type="text" class="form-control" name="bankRTGS"
+														<input type="text" class="form-control" name="bankRTGS" id="rtgscd"
 															required="required">
 													</div>
 													<br>
@@ -377,7 +410,7 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control"
-															name="bankCheckLebel" required="required">
+															name="bankCheckLebel" id="label" required="required">
 													</div>
 												</div>
 												<br>
@@ -402,7 +435,7 @@ $(document).ready(function(){
 														</div>
 														<div class="col-md-7">
 															<input type="text" class="form-control"
-																name="vendorVATno" required="required">
+																name="vendorVATno" id="vatno" required="required">
 														</div>
 													</div>
 
@@ -423,7 +456,7 @@ $(document).ready(function(){
 														</div>
 														<div class="col-md-7">
 															<input type="text" class="form-control"
-																name="vendorCSTno" required="required">
+																name="vendorCSTno" id="cstno" required="required">
 														</div>
 													</div>
 
@@ -444,7 +477,7 @@ $(document).ready(function(){
 														</div>
 														<div class="col-md-7">
 															<input type="text" class="form-control"
-																name="vendorPANno" required="required">
+																name="vendorPANno" id="pan" required="required">
 														</div>
 													</div>
 
@@ -454,7 +487,7 @@ $(document).ready(function(){
 														</div>
 														<div class="col-md-7">
 															<input type="text" class="form-control"
-																name="vendorExciseRegNo" required="required">
+																name="vendorExciseRegNo" id="exciseno" required="required">
 														</div>
 													</div>
 
@@ -475,7 +508,7 @@ $(document).ready(function(){
 														</div>
 														<div class="col-md-7">
 															<input type="text" class="form-control"
-																name="vendorServiceTaxRegNo" required="required">
+																name="vendorServiceTaxRegNo" id="servtaxno" required="required">
 														</div>
 													</div>
 
@@ -494,7 +527,7 @@ $(document).ready(function(){
 															<b>Tax group id:</b>
 														</div>
 														<div class="col-md-7">
-															<select class="form-control" name="taxTypeGroupId">
+															<select class="form-control" name="taxTypeGroupId" id="taxgroup">
 																<c:forEach
 																	items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
 																	var="taxTypeGroup">
@@ -520,7 +553,7 @@ $(document).ready(function(){
 														<b>Name:</b>
 													</div>
 													<div class="col-md-9">
-														<input type="text" class="form-control" name="vendorName"
+														<input type="text" class="form-control" name="vendorName" id="name"
 															required="required">
 													</div>
 													<br>
@@ -529,14 +562,14 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control"
-															name="vendorCompanyName" required="required">
+															name="vendorCompanyName" id="compname" required="required">
 													</div>
 
 													<div class="col-md-3">
 														<b>Ph No1:</b>
 													</div>
 													<div class="col-md-9">
-														<input type="text" class="form-control" name="vendorPh1"
+														<input type="text" class="form-control" name="vendorPh1" id="phn1"
 															required="required">
 													</div>
 
@@ -544,7 +577,7 @@ $(document).ready(function(){
 														<b>Ph No2:</b>
 													</div>
 													<div class="col-md-9">
-														<input type="text" class="form-control" name="vendorPh2"
+														<input type="text" class="form-control" name="vendorPh2" id="phn2"
 															required="required">
 													</div>
 
@@ -552,7 +585,7 @@ $(document).ready(function(){
 														<b>Email :</b>
 													</div>
 													<div class="col-md-9">
-														<input type="text" class="form-control" name="vendorMail"
+														<input type="text" class="form-control" name="vendorMail" id="email"
 															required="required">
 													</div>
 
@@ -560,7 +593,7 @@ $(document).ready(function(){
 														<b>Alias name :</b>
 													</div>
 													<div class="col-md-9">
-														<input type="text" class="form-control" name="vendorAlias"
+														<input type="text" class="form-control" name="vendorAlias" id="alias"
 															required="required">
 													</div>
 
@@ -568,7 +601,7 @@ $(document).ready(function(){
 														<b>Vendor type :</b>
 													</div>
 													<div class="col-md-9">
-														<select class="form-control" name="vendorType">
+														<select class="form-control" name="vendorType" id="type">
 															<c:forEach
 																items="${sessionScope['ejb'].getAllVendorType()}"
 																var="vType">
@@ -604,7 +637,7 @@ $(document).ready(function(){
 														</ul>
 													</div>
 													<textarea rows="" cols="" class="form-control"
-														name="vendorAddress" required="required"></textarea>
+														name="vendorAddress" id="addr" required="required"></textarea>
 													<div class="row">
 														<div class="col-md-3">City :</div>
 														<div class="col-md-9">
@@ -617,7 +650,7 @@ $(document).ready(function(){
 													<div class="row">
 														<div class="col-md-3">Pin code :</div>
 														<div class="col-md-9">
-															<input type="text" class="form-control" name="vendorPin"
+															<input type="text" class="form-control" name="vendorPin" id="pin"
 																required="required">
 														</div>
 													</div>

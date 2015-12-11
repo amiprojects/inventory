@@ -18,7 +18,7 @@ public class PaymentDetails {
 	private String details;
 	private String description;
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date date;
+	private Date paymentDate;
 	private float due;
 
 	@OneToMany(mappedBy = "paymentDetails")
@@ -48,14 +48,6 @@ public class PaymentDetails {
 		this.description = description;
 	}
 
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
 	public float getDue() {
 		return due;
 	}
@@ -70,6 +62,14 @@ public class PaymentDetails {
 
 	public void setPurchase_Entries(List<Purchase_Entry> purchase_Entries) {
 		this.purchase_Entries = purchase_Entries;
+	}
+
+	public Date getPaymentDate() {
+		return paymentDate;
+	}
+
+	public void setPaymentDate(Date paymentDate) {
+		this.paymentDate = paymentDate;
 	}
 
 }
