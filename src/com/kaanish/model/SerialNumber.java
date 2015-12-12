@@ -12,6 +12,7 @@ public class SerialNumber {
 	private int id;
 	private String serialNumber;
 	private String barcode;
+	private String lotNo;
 
 	@ManyToOne
 	@JoinColumn(name = "purchaseProductDetailsId")
@@ -47,6 +48,14 @@ public class SerialNumber {
 
 	public void setBarcode(String barcode) {
 		this.barcode = barcode;
+	}
+
+	public String getLotNo() {
+		return lotNo;
+	}
+
+	public void setLotNo(String lotNo) {
+		this.lotNo = lotNo;
 	}
 
 }

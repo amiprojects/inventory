@@ -20,7 +20,7 @@ public class Purchase_Entry {
 
 	private int challan_no;
 	private int challanSuffix;
-	private int vendor_bill_no;
+	private String vendor_bill_no;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date purchase_date;
 	@Temporal(TemporalType.TIMESTAMP)
@@ -44,14 +44,17 @@ public class Purchase_Entry {
 	@ManyToOne
 	@JoinColumn(name = "vendorId")
 	private Vendor vendor;
-	
-	@ManyToOne@JoinColumn(name="paymentDetailsId")
+
+	@ManyToOne
+	@JoinColumn(name = "paymentDetailsId")
 	private PaymentDetails paymentDetails;
-	
-	@ManyToOne@JoinColumn(name="paymentStatusId")
+
+	@ManyToOne
+	@JoinColumn(name = "paymentStatusId")
 	private PaymentStatus paymentStatus;
-	
-	@ManyToOne@JoinColumn(name="paymentTypeId")
+
+	@ManyToOne
+	@JoinColumn(name = "paymentTypeId")
 	private PaymentType paymentType;
 
 	public int getId() {
@@ -78,11 +81,11 @@ public class Purchase_Entry {
 		this.challan_no = challan_no;
 	}
 
-	public int getVendor_bill_no() {
+	public String getVendor_bill_no() {
 		return vendor_bill_no;
 	}
 
-	public void setVendor_bill_no(int vendor_bill_no) {
+	public void setVendor_bill_no(String vendor_bill_no) {
 		this.vendor_bill_no = vendor_bill_no;
 	}
 
@@ -174,7 +177,8 @@ public class Purchase_Entry {
 	public void setPaymentType(PaymentType paymentType) {
 		this.paymentType = paymentType;
 	}
-		public int getChallanSuffix() {
+
+	public int getChallanSuffix() {
 		return challanSuffix;
 	}
 
