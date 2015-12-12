@@ -289,14 +289,10 @@ public class Ejb {
 	public void setAccountDetails(AccountDetails accountDetails) {
 		em.persist(accountDetails);
 	}
-	
-	
 
 	public AccountDetails getAccountDetailsByVendorId(int id) {
-		TypedQuery<AccountDetails> q = em
-				.createQuery(
-						"select c from AccountDetails c WHERE c.vendor.id=:id ORDER BY c.id DESC",
-						AccountDetails.class);
+		TypedQuery<AccountDetails> q = em.createQuery(
+				"select c from AccountDetails c WHERE c.vendor.id=:id ORDER BY c.id DESC", AccountDetails.class);
 		q.setParameter("id", id);
 		if (q.getResultList().size() > 0) {
 			return q.getResultList().get(0);
@@ -329,12 +325,10 @@ public class Ejb {
 	public int getLastPurchaseChallanSuffix() {
 		TypedQuery<Purchase_Entry> q = em.createQuery("select c from Purchase_Entry c ORDER BY c.id DESC",
 				Purchase_Entry.class);
-		/*if(q.getResultList().size()>0){
-			return q.getResultList().get(0).getChallanSuffix();
-		}
-		else{
-			return 0;
-		}*/
+		/*
+		 * if(q.getResultList().size()>0){ return
+		 * q.getResultList().get(0).getChallanSuffix(); } else{ return 0; }
+		 */
 		if (q.getResultList().size() > 0) {
 			int s = q.getResultList().get(0).getChallanSuffix();
 			if (getLastBillSetupBySufix("PUR").equals(null)) {
@@ -355,7 +349,7 @@ public class Ejb {
 		}
 	}
 
-	/***************** for purchase product details***********************/
+	/***************** for purchase product details ***********************/
 
 	public void setPurchaseProductDetails(Purchase_Product_Details purchaseProductDetails) {
 		em.persist(purchaseProductDetails);
@@ -584,8 +578,9 @@ public class Ejb {
 		q.setParameter("Id", id);
 		return q.getResultList();
 	}
-	/**********************for serial number********************/
-	public void setSerialNumber(SerialNumber serialNumber){
+
+	/********************** for serial number ********************/
+	public void setSerialNumber(SerialNumber serialNumber) {
 		em.persist(serialNumber);
 	}
 
@@ -650,13 +645,20 @@ public class Ejb {
 		em.remove(getProductDetailById(id));
 	}
 
-	public void updateRawMaterialStockDetail(ProductDetail rawMaterialsStock) {
+	public void updateRawMaterialStockDetail(RawMaterialsStock rawMaterialsStock) {
 		em.merge(rawMaterialsStock);
 	}
 
 	public List<RawMaterialsStock> getAllRawMaterialStockDetail() {
 		TypedQuery<RawMaterialsStock> q = em.createQuery("select c from RawMaterialsStock c", RawMaterialsStock.class);
 		return q.getResultList();
+	}
+
+	public RawMaterialsStock getRawMeterialStoctByProductId(int id) {
+		TypedQuery<RawMaterialsStock> q = em
+				.createQuery("select s from RawMaterialsStock s where s.productDetail.id=:id", RawMaterialsStock.class);
+		q.setParameter("id", id);
+		return q.getResultList().get(0);
 	}
 
 	/********************* for ReadyGood Stock ************************/
@@ -673,13 +675,20 @@ public class Ejb {
 		em.remove(getReadyGoodsStocktDetailById(id));
 	}
 
-	public void updateRawMaterialStockDetail(ReadyGoodsStock readyGoodsStock) {
+	public void updateReadyGoodsStockDetail(ReadyGoodsStock readyGoodsStock) {
 		em.merge(readyGoodsStock);
 	}
 
 	public List<ReadyGoodsStock> getAllRawMaterialsStockDetail() {
 		TypedQuery<ReadyGoodsStock> q = em.createQuery("select c from ReadyGoodsStock c", ReadyGoodsStock.class);
 		return q.getResultList();
+	}
+
+	public ReadyGoodsStock getReadyGoodsStoctByProductId(int id) {
+		TypedQuery<ReadyGoodsStock> q = em.createQuery("select s from ReadyGoodsStock s where s.productDetail.id=:id",
+				ReadyGoodsStock.class);
+		q.setParameter("id", id);
+		return q.getResultList().get(0);
 	}
 
 }
