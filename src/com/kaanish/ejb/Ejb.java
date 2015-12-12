@@ -355,12 +355,13 @@ public class Ejb {
 		}*/
 	}
 
-	/*******************
-	 * for purchase product details
-	 ***************************/
+	/************** for purchase product details ***************************/
 
 	public void setPurchaseProductDetails(Purchase_Product_Details purchaseProductDetails) {
 		em.persist(purchaseProductDetails);
+	}
+	public ProductDetail getProductDetailsById(int id){
+		return em.find(ProductDetail.class, id);
 	}
 
 	/******************** for City *******************************/

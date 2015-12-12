@@ -60,3 +60,6 @@
 	<option value="Opera">
 	<option value="Safari">
 </datalist>
+
+//
+http://localhost:8088/kaanish_kouture/getProductDetailById?id=1

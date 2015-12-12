@@ -2,6 +2,8 @@ package com.kaanish.model;
 
 import java.util.List;
 
+import javax.json.Json;
+import javax.json.stream.JsonGeneratorFactory;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -34,8 +36,9 @@ public class ProductDetail {
 	private ReadyGoodsStock readyGoodsStock;
 	@OneToOne
 	private RawMaterialsStock rawMaterialsStock;
-	
-	@ManyToOne@JoinColumn(name="qtyUnitId")
+
+	@ManyToOne
+	@JoinColumn(name = "qtyUnitId")
 	private QtyUnit qtyUnit;
 
 	public int getId() {
@@ -106,7 +109,8 @@ public class ProductDetail {
 		return purchase_Product_Details;
 	}
 
-	public void setPurchase_Product_Details(List<Purchase_Product_Details> purchase_Product_Details) {
+	public void setPurchase_Product_Details(
+			List<Purchase_Product_Details> purchase_Product_Details) {
 		this.purchase_Product_Details = purchase_Product_Details;
 	}
 
@@ -142,5 +146,15 @@ public class ProductDetail {
 		this.qtyUnit = qtyUnit;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "{\"id\":\"" + id + "\"," + "\"name\":\"" + name + "\","
+				+ "\"code\":\"" + code + "\"," + "\"universalCode\":\""
+				+ universalCode + "\"," + "\"isSaleble\":\"" + isSaleble
+				+ "\"," + "\"isActive\":\"" + isActive + "\","
+				+ "\"description\":\"" + description + "\"category\":\""
+				+ category.getName() + "\"subDepartment\":\""
+				+ category.getSubDepartment().getName() + "\"Department\":\""
+				+ category.getSubDepartment().getDepartment().getName() + "\"}";
+	}
 }
