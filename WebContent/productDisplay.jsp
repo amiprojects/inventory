@@ -59,11 +59,11 @@
 						$("#step5").hide();
 						$("#step6").hide();
 						$("#step7").hide();
-
+						$("#step8").hide();
 						$("#next")
 								.click(
 										function() {
-											if (i < 8) {
+											if (i < 9) {
 												$("#step" + (i - 1)).hide();
 												$("#menu" + (i - 1)).attr(
 														"style", "");
@@ -76,7 +76,7 @@
 												i = i + 1;
 
 											}
-											if (i == 8) {
+											if (i == 9) {
 												$("#finish").prop("disabled",
 														false);
 												$("#pcodedisp")
@@ -124,7 +124,6 @@
 												}
 												$("#slNo").html(x);
 											}
-
 										});
 
 						$("#prev")
@@ -189,91 +188,11 @@
 									<ul>
 										<li><p
 												style="right: -422px; font-size: 20px; position: absolute;">
-												<b>Product/Material</b> 
+												<b>Product/Material</b> ${requestScope['msg']}
 											</p></li>
 									</ul>
 								</div>
-
-								<div class="widget-area" style="width: 34%;">
-									<form role="form" class="sec">
-										<div class="form-group">
-											<label for="" class="">Products Number : </label> <input
-												type="text" class="form-control"
-												placeholder="Enter Products Number" id="" class="">
-										</div>
-										<div class="form-group">
-											<label for="" class="">Description : </label> <input
-												type="text" class="form-control"
-												placeholder="Enter Description" id="" class="">
-										</div>
-										<div class="form-group">
-											<label for="" class="">Products Type : </label>&nbsp &nbsp <input
-												type="text" class="form-control"
-												placeholder="Enter Products type" id="" class="">
-										</div>
-
-										<button class="btn green btn-default" type="submit">Search
-										</button>
-										<button class="btn green btn-default" type="submit">Advanced
-											Search</button>
-									</form>
-									<br> <br>
-									<table class="table">
-										<thead>
-											<tr>
-												<th>#</th>
-												<th>Number</th>
-												<th>Description</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>1</td>
-												<td>Mark</td>
-												<td>Otto</td>
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>Jacob</td>
-												<td>Thornton</td>
-											</tr>
-											<tr>
-												<td>3</td>
-												<td>Larry</td>
-												<td>the Bird</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>Mark</td>
-												<td>Otto</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>Mark</td>
-												<td>Otto</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>Mark</td>
-												<td>Otto</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
 								<div class="widget-area" style="width: 66%">
-									<div class="breadcrumbs">
-										<ul>
-											<li><a title="">Products Details : </a></li>
-											<li><a href="#" title=""><button type="button"
-														class="btn btn-info btn-sm" data-toggle="modal"
-														data-target="#newMP">New</button></a></li>
-											<li><a title=""><button class="btn btn-info btn-sm"
-														type="submit">Edit</button></a></li>
-											<li><a title=""><button class="btn btn-info btn-sm"
-														type="submit">Delete</button></a></li>
-										</ul>
-									</div>
-
 									<ul class="nav nav-tabs">
 										<li class="active"><a data-toggle="tab" href="#general">General</a></li>
 										<li><a data-toggle="tab" href="#details">Details</a></li>
@@ -324,26 +243,13 @@
 													<br>
 												</div>
 												<br> <br>
-												<div class="col-md-2">
-													<label>Image:</label> <input type="file" name="proImg"
-														size="50" required onchange="readURL(this);">
-												</div>
-
 												<div class="col-md-8">
-
 													<img id="image" alt="" src="">
-
 												</div>
-
-
 											</div>
-
-
 										</div>
 
 										<div id="Custom" class="tab-pane fade ">
-
-
 											<fieldset>
 												<legend> Products Custom fields </legend>
 
@@ -373,13 +279,7 @@
 															type="text" name="c4" required class="form-control"><br>
 													</div>
 												</div>
-
-
 											</fieldset>
-
-
-
-
 										</div>
 										<div id="Vendor" class="tab-pane fade ">
 
@@ -396,36 +296,23 @@
 															<th>Last Date</th>
 															<th>Lead Time</th>
 															<th>Default</th>
-
 														</tr>
 													</thead>
 													<tbody>
 														<tr>
-
 															<td>wd</td>
 															<td>fd</td>
 															<td>dfd</td>
 															<td>wd</td>
 															<td>fd</td>
 															<td>dfd</td>
-															<td><input type="checkbox" name="active"
-																value="active"></td>
-
+															<td><input type="checkbox" name="active" value="active"></td>
 														</tr>
-
 													</tbody>
 												</table>
-
 											</div>
-
 										</div>
-
-
-
-
-
 										<div id="inventory" class="tab-pane fade ">
-
 											<div class="row">
 												<div class="col-md-3">
 													<label>Unit Of Measure:</label>
@@ -434,19 +321,12 @@
 
 													<input type="text" class="form-control">
 												</div>
-
 											</div>
 											<br>
-
-
-
 											<div class="row">
 												<div class="col-md-12" style="background-color: #f5f5f5;">
 													<label>Inventory:</label>
-
-
 												</div>
-
 											</div>
 											<br>
 											<div class="row">
@@ -463,11 +343,8 @@
 												<div class="col-md-3">
 													<input type="text" class="form-control">
 												</div>
-
 											</div>
 											<br>
-
-
 											<div class="row">
 												<div class="col-md-3">
 													<label>Allocated :</label>
@@ -482,7 +359,6 @@
 												<div class="col-md-3">
 													<input type="text" class="form-control">
 												</div>
-
 											</div>
 											<br>
 											<div class="row">
@@ -519,22 +395,12 @@
 
 											</div>
 											<br> <br>
-
-
-
 											<div class="row">
 												<div class="col-md-12" style="background-color: #f5f5f5;">
 													<label>Reorder Information:</label>
-
-
 												</div>
-
 											</div>
-
-
-
 											<div class="col-md-12">
-
 												<table id="stream_table"
 													class="table table-striped table-bordered">
 													<thead>
@@ -542,27 +408,18 @@
 															<th>Location group</th>
 															<th>Order upto top lable</th>
 															<th>Reorder Point</th>
-
 														</tr>
 													</thead>
 													<tbody>
 														<tr>
-
 															<td>wd</td>
 															<td>fd</td>
 															<td>dfd</td>
-
 														</tr>
-
 													</tbody>
 												</table>
-
 											</div>
-
 										</div>
-
-
-
 										<div id="details" class="tab-pane fade ">
 											<div class="row">
 												<div class="col-md-3">
@@ -571,8 +428,6 @@
 												<div class="col-md-3">
 													<input type="text" class="form-control">
 												</div>
-
-
 												<div class="col-md-2">
 													<label>Last Cost:</label>
 												</div>
@@ -593,7 +448,6 @@
 												<div class="col-md-4">
 													<label>Length:</label> <input type="text"
 														class="form-control">
-
 												</div>
 												<div class="col-md-3">
 													<label>width:</label> <input type="text"
@@ -611,9 +465,6 @@
 															<option>Kilo meter</option></select>
 													</div>
 												</div>
-
-
-
 											</div>
 											<div class="row">
 												<div class="col-md-3">
@@ -649,7 +500,6 @@
 																<th>Abbr</th>
 																<th>Description</th>
 																<th>Type</th>
-
 															</tr>
 														</thead>
 														<tbody>
@@ -713,30 +563,21 @@
 																<td><input type="checkbox" name="active"
 																	value="active"></td>
 															</tr>
-
-
 														</tbody>
 													</table>
-
 												</div>
 											</div>
-
-
 										</div>
 									</div>
+									<div class="col-md-6">
+									<input class="btn btn-primary large" type="button" onclick="back();" value="Back">
+								</div>					
 								</div>
-
-
+								
 							</div>
-
-
 						</div>
-<div class='toast' style='display: none'>
-												<h3 id="msg">${requestScope['msg']}</h3>
-											</div>
+
 					</div>
-					
-					
 				</div>
 			</div>
 		</div>
@@ -788,10 +629,12 @@
 								<tr>
 									<td id="menu6">step6</td>
 								</tr>
-
+								<tr>
+									<td id="menu7">step7</td>
+								</tr>
 
 								<tr>
-									<td id="menu7">summary</td>
+									<td id="menu8">summary</td>
 								</tr>
 
 							</tbody>
@@ -896,78 +739,72 @@
 
 
 						<script type="text/javascript">
-							$('#salepart').click(
-									function() {
+							$('#salepart').click(function() {
 
-										if ($('#salepart').is(':checked')) {
-											$("#cross").hide();
-											$("#tick").show();
-											$("#isSalebi").val(
-													$('#salepart').is(
-															':checked'));
-										} else {
+								if ($('#salepart').is(':checked')) {
+									$("#cross").hide();
+									$("#tick").show();
+								} else {
 
-											$("#tick").hide();
-											$("#cross").show();
-											$("#isSalebi").val(
-													$('#salepart').is(
-															':checked'));
-										}
-									});
+									$("#tick").hide();
+									$("#cross").show();
+								}
+							});
 						</script>
 
 					</div>
 
-					<div id="step5"
+					<div id="step2"
 						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial;">
 
+	<div class="masonary-grids">
+							<div class="col-md-6">
+								<div class="widget-area">
+									<h2 class="widget-title">
+										<strong>Tree</strong> List
+									</h2>
+									<div class="tree-list">
+										<p>
+											<a href="#" id="tree-expand-all">Expand all</a> | <a href="#"
+												id="tree-collapse-all">Collapse all</a>
+										</p>
+										<!-- Listing directory ZendX from ZendFramework library -->
+										<ul id="tree">
+											<c:forEach items="${sessionScope['ejb'].getAllDepartments()}"
+												var="dept">
+												<li>${dept.name}
+													<ul>
+														<c:forEach
+															items="${sessionScope['ejb'].getAllSubDepartmentsByDepartmentId(dept.id)}"
+															var="subDept">
+															<li>${subDept.name}
+																<ul>
+																	<c:forEach var="cat"
+																		items="${sessionScope['ejb'].getAllCategoryBySubDepartmentId(subDept.id)}">
+																		<li><input type="radio"
+																			onclick="catProblem('${cat.id}')" value="${cat.id}">
+																			${cat.name}
+																			<ul>
+																				<c:forEach var="pro"
+																					items="${sessionScope['ejb'].getAllProductDetailByCategoryId(cat.id)}">
+																					<li>${pro.description}</li>
+																				</c:forEach>
+																			</ul></li>
+																	</c:forEach>
+																</ul>
+															</li>
+														</c:forEach>
+													</ul>
+												</li>
+											</c:forEach>
+										</ul>
+									</div>
 
-
-
-						<fieldset>
-							<legend>
-								<img src="Capture.PNG">&nbsp &nbsp Track
-							</legend>
-
-							<p style="font-size: 14px">(You want to track the product/raw
-								materials by)</p>
-							<br> <br> <br>
-							<div id="trackkDiv">
-								<table class="table">
-
-									<thead>
-										<tr>
-											<th>Selected</th>
-											<th>Name</th>
-											<th>Abbr</th>
-
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td><input type="checkbox" name="iSLotNumber"
-												onclick="L()" id="ll" value="lotnumber"></td>
-											<td>Lot Number</td>
-											<td>Lot#</td>
-
-										</tr>
-
-										<tr>
-											<td><input type="checkbox" name="isSerialNumber"
-												onclick="S()" id="ss" value="track"></td>
-											<td>Serial Number</td>
-											<td>Ser#</td>
-
-
-
-										</tr>
-									</tbody>
-								</table>
+								</div>
 							</div>
-							<div id="nottrack">
-								<h3>Skip the step</h3>
-							</div>
-						</fieldset>
+						</div>
+
+
 
 					</div>
 
@@ -983,50 +820,43 @@
 							<p style="font-size: 14px">(Enter the Products's initial
 								inventory.)</p>
 							<br> <br> <input type="radio" name="do" checked
-								id="idd" onclick="openn();" value="doNotAdd">Do not add
+								id="idd" onclick="o();" value="doNotAdd">Do not add
 							initial inventory <br> <br> <input type="radio"
-								name="do" id="openn" onclick="openn();" value="add">Add
-							initial inventory <br>
+								name="do" id="openn" onclick="openn();">Add initial
+							inventory <br>
 							<hr width="100%">
 
 
 
 							<script type="text/javascript">
+							function back(){
+								window.location='stockView.jsp';
+							}
+							
 								$(document).ready(function() {
 									$("#divshow").hide();
 									$("#divhide").show();
 									$("#AttiDiv").hide();
 									$("#skip").show();
 									$("#showhide").show();
-									$("#nottrack").show();
-									$("#trackkDiv").hide();
 								});
 								function openn() {
-
-									if ($("[name='do']:checked").val() == "add") {
-										$("#showhide").hide();
-
+									if ($("#openn").is(":checked")) {
 										$("#divshow").show();
 										$("#divhide").hide();
 										$("#AttiDiv").show();
+										$("#l&S").show();
 										$("#skip").hide();
-										$("#nottrack").hide();
-										$("#trackkDiv").show();
-										$("#addini").val(
-												$("[name='do']:checked").val());
-
-									} else {
+										$("#showhide").hide();
+									}
+								}
+								function o() {
+									if ($("#idd").is(":checked")) {
 										$("#divshow").hide();
 										$("#divhide").show();
 										$("#skip").show();
 										$("#showhide").show();
-										$("#AttiDiv").hide();
-										$("#nottrack").show();
-										$("#trackkDiv").hide();
-										$("#addini").val(
-												$("[name='do']:checked").val());
 									}
-
 								}
 							</script>
 
@@ -1070,10 +900,9 @@
 											class="form-control">
 
 									</div>
-									<div class="form-group">
-										<h4>
-											Print Barcode <input type="checkbox" id="barCode">
-										</h4>
+									<div  class="form-group" >
+										<h4>Print Barcode
+										<input type="checkbox" id="barCode"></h4>
 									</div>
 								</div>
 
@@ -1116,7 +945,7 @@
 						</fieldset>
 
 					</div>
-					<div id="step6"
+					<div id="step4"
 						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial;">
 
 
@@ -1189,119 +1018,142 @@
 						</div>
 					</div>
 
-					<div id="step4"
+					<div id="step5"
 						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial;">
 
 
+						<div id="AttiDiv">
+
+							<fieldset>
+								<legend> Products category fields </legend>
+
+								<p style="font-size: 14px">(Enter category fields values.)</p>
 
 
-						<fieldset>
-							<legend> Products attribute fields </legend>
-
-							<p style="font-size: 14px">(Enter category fields values.)</p>
-
-							<div id="AttiDiv">
 
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="" class="font">Attribute 1:</label> <input
-											name="a1" type="text" disable placeholder="" id="a1O"
+											name="a1" type="text" placeholder="" id="a1O"
 											class="form-control">
 									</div>
 									<div class="form-group">
 										<label for="" class="font">Attribute 2:</label> <input
-											name="a2" type="text" disable placeholder="" id="a2O"
+											name="a2" type="text" placeholder="" id="a2O"
 											class="form-control">
 									</div>
 									<div class="form-group">
 										<label for="" class="font">Attribute 3:</label> <input
-											name="a3" type="text" disable placeholder="" id="a3O"
+											name="a3" type="text" placeholder="" id="a3O"
 											class="form-control">
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="" class="font">Attribute 4:</label> <input
-											name="a4" type="text" disable placeholder="" id="a4O"
+											name="a4" type="text" placeholder="" id="a4O"
 											class="form-control">
 									</div>
 									<div class="form-group">
 										<label for="" class="font">Attribute 5:</label> <input
-											name="a5" type="text" disable placeholder="" id="a5O"
+											name="a5" type="text" placeholder="" id="a5O"
 											class="form-control">
 									</div>
 									<div class="form-group">
 										<label for="" class="font">Attribute 6:</label> <input
-											name="a6" type="text" disable placeholder="" id="a6O"
+											name="a6" type="text" placeholder="" id="a6O"
 											class="form-control">
 									</div>
 								</div>
-							</div>
-							<div id="showhide">
-								<h3>Skip the step</h3>
-							</div>
-
-						</fieldset>
-
-
-
-					</div>
-					<div id="step2"
-						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial;">
-
-						<div class="masonary-grids">
-							<div class="col-md-6">
-								<div class="widget-area">
-									<h2 class="widget-title">
-										<strong>Tree</strong> List
-									</h2>
-									<div class="tree-list">
-										<p>
-											<a href="#" id="tree-expand-all">Expand all</a> | <a href="#"
-												id="tree-collapse-all">Collapse all</a>
-										</p>
-										<!-- Listing directory ZendX from ZendFramework library -->
-										<ul id="tree">
-											<c:forEach items="${sessionScope['ejb'].getAllDepartments()}"
-												var="dept">
-												<li>${dept.name}
-													<ul>
-														<c:forEach
-															items="${sessionScope['ejb'].getAllSubDepartmentsByDepartmentId(dept.id)}"
-															var="subDept">
-															<li>${subDept.name}
-																<ul>
-																	<c:forEach var="cat"
-																		items="${sessionScope['ejb'].getAllCategoryBySubDepartmentId(subDept.id)}">
-																		<li><input type="radio"
-																			onclick="catProblem('${cat.id}')" value="${cat.id}">
-																			${cat.name}
-																			<ul>
-																				<c:forEach var="pro"
-																					items="${sessionScope['ejb'].getAllProductDetailByCategoryId(cat.id)}">
-																					<li>${pro.description}</li>
-																				</c:forEach>
-																			</ul></li>
-																	</c:forEach>
-																</ul>
-															</li>
-														</c:forEach>
-													</ul>
-												</li>
-											</c:forEach>
-										</ul>
-									</div>
-
-								</div>
-							</div>
+							</fieldset>
+						</div>
+						<div id="showhide"><h3>
+						Skip the step</h3>
 						</div>
 					</div>
+					<div id="step6"
+						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial;">
 
+
+
+						<fieldset>
+							<legend>
+								<img src="Capture.PNG">&nbsp &nbsp Track
+							</legend>
+
+							<p style="font-size: 14px">(You want to track the product/raw
+								materials by)</p>
+							<br> <br> <br>
+							<table class="table">
+
+								<thead>
+									<tr>
+										<th>Selected</th>
+										<th>Name</th>
+										<th>Abbr</th>
+
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><input type="checkbox" name="iSLotNumber"
+											onclick="L()" id="ll" value="lotnumber"></td>
+										<td>Lot Number</td>
+										<td>Lot#</td>
+
+									</tr>
+
+									<tr>
+										<td><input type="checkbox" name="isSerialNumber"
+											onclick="S()" id="ss" value="track"></td>
+										<td>Serial Number</td>
+										<td>Ser#</td>
+
+
+
+									</tr>
+								</tbody>
+							</table>
+
+						</fieldset>
+					
+					</div>
 
 
 
 
 					<div id="step7"
+						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial;">
+
+
+
+
+						<fieldset>
+							<legend> Product Image fields </legend>
+
+							<p style="font-size: 14px">(Upload product image)</p>
+
+							<form id="myForm" method="post" enctype="multipart/form-data">
+
+								Image: <input type="file" id="files" name="files" multiple=""
+									accept="image/*"><br>
+
+								<div style="width: 564px; height: 302px; overflow-y: scroll;"
+									id="selectedFiles"></div>
+
+							</form>
+
+
+
+
+						</fieldset>
+
+
+
+
+
+					</div>
+					<div id="step8"
 						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial; overflow: auto;">
 						<div></div>
 						<div>
@@ -1321,7 +1173,9 @@
 										</tr>
 										<tr>
 											<td>&nbsp;</td>
-										<tr>
+											<tr>
+										
+										
 										<tr>
 											<td>Description:</td>
 											<td><input type="text" class="form-control "
@@ -1329,15 +1183,27 @@
 										</tr>
 										<tr>
 											<td>&nbsp;</td>
+										
+										
 										<tr>
+										
+										
 										<tr>
 											<td>Universal Product Code:</td>
 											<td><input type="text" class="form-control " readonly
 												name="upc" id="upc"></td>
+										
+										
 										<tr>
+										
+										
 										<tr>
 											<td>&nbsp;</td>
+										
+										
 										<tr>
+										
+										
 										<tr>
 											<td>Unit of Measurement:</td>
 											<td><input type="text" class="form-control " readonly
@@ -1346,7 +1212,11 @@
 
 										<tr>
 											<td>&nbsp;</td>
+										
+										
 										<tr>
+										
+										
 										<tr>
 											<td>Is Salable:</td>
 											<td>
@@ -1354,10 +1224,7 @@
 													<p style="font-size: 29px">&#10004;</p>
 												</div>
 												<div id="cross">
-													<p style="font-size: 29px">
-														&#10007; <input type="text" class="form-control" readonly
-															id="isSalebi" name="isSalebi" value="false">
-													</p>
+													<p style="font-size: 29px">&#10007;</p>
 												</div>
 											</td>
 										</tr>
@@ -1369,14 +1236,6 @@
 										<u>Add initial inventory:</u>
 									</h4>
 									<table>
-										<tr>
-											
-											<td><input type="text" id="addini" class="form-control" readonly
-												name="addini" value="false"></td>
-										</tr>
-										<tr>
-											<td>&nbsp;</td>
-										</tr>
 										<tr>
 											<td>Maximum Retail Price:</td>
 											<td><input id="mrp1" class="form-control " readonly
@@ -1402,7 +1261,15 @@
 										<tr>
 											<td>&nbsp;</td>
 										</tr>
+										<!-- 	<tr>
 
+											<td>Unit of Measurement:</td>
+											<td><input id="uom" readonly class="form-control "
+												name="uom11" type="text"></td>
+										</tr>
+										<tr>
+											<td>&nbsp;</td>
+										</tr> -->
 										<tr>
 											<td>Unit Cost:</td>
 											<td><input id="ucost" class="form-control " readonly
@@ -1411,18 +1278,25 @@
 										<tr>
 											<td>&nbsp;</td>
 										</tr>
+										<!-- 	<tr>
+											<td>Date:</td>
+											<td><input id="date2" class="form-control " readonly
+												name="date2" type="text"></td>
+										</tr> -->
 									</table>
 									<hr width="100%">
 
 									<h4>
 										<u>Initial inventory tracking:</u>
 									</h4>
-								<!-- 	<table>
+									<table>
 										<tr>
 											<td><b>Lot Number:</b></td>
 											<td><input class="form-control " type="text"
 												name="lotnumber" readonly id="ltnum"></td>
-									</table> -->
+									
+									
+									</table>
 									<br> <b>Serial Number:</b>
 									<div
 										style="width: 190px; height: 224px; border: 1px solid; overflow: auto;">
@@ -1451,6 +1325,8 @@
 											<td>Attribute 2:</td>
 											<td><input readonly class="form-control " name="a2"
 												id="att2">
+										
+										
 										</tr>
 										<tr>
 											<td>&nbsp;</td>
@@ -1487,6 +1363,20 @@
 									</table>
 
 									<hr width="100%">
+
+
+
+									<h4>
+										<u>Product Image Fields:</u>
+									</h4>
+									<div
+										style="width: 190px; height: 224px; border: 1px solid; overflow: auto;">
+
+
+									</div>
+									<hr width="100%">
+
+
 
 								</form>
 							</fieldset>
@@ -1559,8 +1449,6 @@
 			$("#sProduct").attr("style", "color: red;");
 			$("#divshow").hide();
 			$("#divhide").show();
-			$("#isSalebi").hide();
-			$("#addini").hide();
 		});
 		$("#close").click(function() {
 			$("#newMP").modal("hide");
@@ -1675,23 +1563,49 @@
 		});
 	</script>
 	<script>
+		var selDiv = "";
+
+		document.addEventListener("DOMContentLoaded", init, false);
+
+		function init() {
+			document.querySelector('#files').addEventListener('change',
+					handleFileSelect, false);
+			selDiv = document.querySelector("#selectedFiles");
+		}
+
+		function handleFileSelect(e) {
+
+			if (!e.target.files || !window.FileReader)
+				return;
+
+			var files = e.target.files;
+			var filesArr = Array.prototype.slice.call(files);
+			filesArr.forEach(function(f) {
+				if (!f.type.match("image.*")) {
+					return;
+				}
+
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					var html = "<img src=\"" + e.target.result + "\">" + f.name
+							+ "<br clear=\"left\"/>";
+					selDiv.innerHTML += html;
+				}
+				reader.readAsDataURL(f);
+
+			});
+
+		}
 		function catProblem(a) {
 			$("#catagoryId").val(a);
 		}
 	</script>
 
 
-<script type="text/javascript">
-	$(document).ready(function() {
-		if ($('#msg').html() != "") {
-			$('.toast').fadeIn(400).delay(3000).fadeOut(400);
-		}
-	});
-</script>
 
 
-
-</body>
+										
+										</body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
 </html>

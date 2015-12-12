@@ -154,8 +154,9 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	public QtyUnitConversion getQtyUnitConversionById(
-			QtyUnitConversionPK qtyUnitConversionPK) {
+
+	public QtyUnitConversion getQtyUnitConversionById(QtyUnitConversionPK qtyUnitConversionPK) {
+
 
 		return em.find(QtyUnitConversion.class, qtyUnitConversionPK);
 	}
@@ -309,10 +310,8 @@ public class Ejb {
 	}
 
 	public AccountDetails getAccountDetailsByVendorId(int id) {
-		TypedQuery<AccountDetails> q = em
-				.createQuery(
-						"select c from AccountDetails c WHERE c.vendor.id=:id ORDER BY c.id DESC",
-						AccountDetails.class);
+		TypedQuery<AccountDetails> q = em.createQuery(
+				"select c from AccountDetails c WHERE c.vendor.id=:id ORDER BY c.id DESC", AccountDetails.class);
 		q.setParameter("id", id);
 		if (q.getResultList().size() > 0) {
 			return q.getResultList().get(0);
@@ -373,7 +372,9 @@ public class Ejb {
 		}
 	}
 
-	/************** for purchase product details ***************************/
+
+	/***************** for purchase product details ***********************/
+
 
 	public void setPurchaseProductDetails(
 			Purchase_Product_Details purchaseProductDetails) {
@@ -697,7 +698,7 @@ public class Ejb {
 		em.remove(getProductDetailById(id));
 	}
 
-	public void updateRawMaterialStockDetail(ProductDetail rawMaterialsStock) {
+	public void updateRawMaterialStockDetail(RawMaterialsStock rawMaterialsStock) {
 		em.merge(rawMaterialsStock);
 	}
 
@@ -705,6 +706,13 @@ public class Ejb {
 		TypedQuery<RawMaterialsStock> q = em.createQuery(
 				"select c from RawMaterialsStock c", RawMaterialsStock.class);
 		return q.getResultList();
+	}
+
+	public RawMaterialsStock getRawMeterialStoctByProductId(int id) {
+		TypedQuery<RawMaterialsStock> q = em
+				.createQuery("select s from RawMaterialsStock s where s.productDetail.id=:id", RawMaterialsStock.class);
+		q.setParameter("id", id);
+		return q.getResultList().get(0);
 	}
 
 	/********************* for ReadyGood Stock ************************/
@@ -721,7 +729,7 @@ public class Ejb {
 		em.remove(getReadyGoodsStocktDetailById(id));
 	}
 
-	public void updateRawMaterialStockDetail(ReadyGoodsStock readyGoodsStock) {
+	public void updateReadyGoodsStockDetail(ReadyGoodsStock readyGoodsStock) {
 		em.merge(readyGoodsStock);
 	}
 
@@ -729,6 +737,13 @@ public class Ejb {
 		TypedQuery<ReadyGoodsStock> q = em.createQuery(
 				"select c from ReadyGoodsStock c", ReadyGoodsStock.class);
 		return q.getResultList();
+	}
+
+	public ReadyGoodsStock getReadyGoodsStoctByProductId(int id) {
+		TypedQuery<ReadyGoodsStock> q = em.createQuery("select s from ReadyGoodsStock s where s.productDetail.id=:id",
+				ReadyGoodsStock.class);
+		q.setParameter("id", id);
+		return q.getResultList().get(0);
 	}
 
 }

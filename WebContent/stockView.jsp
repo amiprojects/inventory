@@ -104,7 +104,7 @@
 												<th>Quantity</th>
 												<th>UOM</th>
 												<th>MRP</th>
-												<th>WSP</th>
+												
 												<th></th>
 												
 											</tr>
@@ -117,8 +117,8 @@
 												<td>Takashi Miike</td>
 												<td>Takashi Miike</td>
 												<td>Takashi Miike</td>
-												<td></td>
-												<td><img alt="" src="images/eye.png" height="25px"></td>
+												
+												<td><img alt="" src="images/eye.png" height="25px" onclick="viewPage()"></td>
 
 											</tr>
 										</tbody>
@@ -127,7 +127,7 @@
 
 								</div>
 								</div>
-								<div class="widget-area" style="width: 34%;">
+								<!--<div class="widget-area" style="width: 34%;">
 									<table class="table">
 										<tbody>
 											<tr>
@@ -230,71 +230,9 @@
 											</tr>
 										</tbody>
 									</table>
-									</div>
+									</div>-->
 								 
-								 <div class=""col-md-9" style="width:300px;height:250px;">
-						         <div class="widget-area" style="width: 100%; height:20%; float:left;">
-						         <label>Product Code</label>
-						         <label>Product Description</label>
-						         </div>
-						         
-						         <div class="widget-area" style="width: 100%; height:80%; float:left; overflow-y:scroll;">
-						            <div style="width: 48%; height: 100%; float:left; overflow-x:scroll; overflow-y:none;">
-						                <ul>
-						                <li>789456123</li>
-                                        <li>789456123</li>     
-                                        <li>789456123</li>
-                                        <li>789456123</li>   
-                                        <li>789456123</li>
-                                        <li>789456123</li>   
-                                        <li>789456123</li>
-                                        <li>789456123</li>
-                                        <li>789456123</li>
-                                        <li>789456123</li>     
-                                        <li>789456123</li>
-                                        <li>789456123</li>   
-                                        <li>789456123</li>
-                                        <li>789456123</li>   
-                                        <li>789456123</li>
-                                        <li>789456123</li>
-                                        <li>789456123</li>
-                                        <li>789456123</li>     
-                                        <li>789456123</li>
-                                        <li>789456123</li>   
-                                        <li>789456123</li>
-                                        <li>789456123</li>   
-                                        <li>789456123</li>
-                                        <li>789456123</li>                                      
-                                        </ul>
-						            </div>
-						            <div style="width: 48%; height: 100%; float:left; overflow-x:scroll;overflow-y:none;">
-						            <ul>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            </ul>
-						            
-						            </div>
-						         </div>	
-						       
-						         </div>		
+								 	
 						         
 								
 								
@@ -309,13 +247,11 @@
 	</div>
 	<!-- main -->
 		<div id="step8"
-						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial; 
-
-overflow: auto;">
+		style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial; overflow: auto;">
 						<div></div>
 						<div>
 							<fieldset>
-								<p id="sum"> Summary </p>
+								<legend> Summary </legend>
 								<form action="productSumary" id="fs" method="Post">
 									<h4>
 										<u>Products:</u>
@@ -332,9 +268,7 @@ overflow: auto;">
 										<tr>
 											<td>Description:</td>
 											<td><input type="text" class="form-control "
-												name="description" id="desc" readonly 
-
-id="description1"></td>
+												name="description" id="desc" readonly id="description1"></td>
 										</tr>
 										<tr>
 											<td>&nbsp;</td>
@@ -360,21 +294,19 @@ id="description1"></td>
 											<td>Is Salable:</td>
 											<td>
 												<div id="tick">
-													<p style="font-size: 
+													<p style="font-size:  29px">&#10004;</p>
 
-29px">&#10004;</p>
+
 												</div>
 												<div id="cross">
-													<p style="font-size: 
+													<p style="font-size:29px">&#10007;</p> 
 
-29px">&#10007;</p>
+
 												</div>
 											</td>
 										</tr>
 									</table>
 									<hr width="100%">
-
-
 									<h4>
 										<u>Add initial inventory:</u>
 									</h4>
@@ -497,27 +429,17 @@ id="description1"></td>
 									</table>
 
 									<hr width="100%">
-
-
-
 									<h4>
 										<u>Product Image Fields:</u>
 									</h4>
 									<div
 										style="width: 190px; height: 224px; border: 1px solid; overflow: auto;">
-
-
 									</div>
 									<hr width="100%">
-
-
-
 								</form>
 							</fieldset>
 						</div>
 					</div>
-	
-
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
 	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
@@ -532,6 +454,10 @@ id="description1"></td>
 			$("#step8").hide();
 	
 		});
+		
+		function viewPage(){
+			window.location='productDisplay.jsp';
+		}
 	</script>
 </body>
 
