@@ -124,7 +124,7 @@ public class JsonServlet extends HttpServlet {
 				break;
 
 			case "getAccountByVendorId":
-				// resp.getWriter().print(ejb.getAccountByVendorId(Integer.parseInt(req.getParameter("id"))));;
+				resp.getWriter().print(ejb.getAccountDetailsByVendorId(Integer.parseInt(req.getParameter("id"))));;
 				break;
 
 			case "getStateByCountryByStateName":
