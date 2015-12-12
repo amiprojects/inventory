@@ -172,6 +172,9 @@ public class Servlet extends HttpServlet {
 				productDetail.setName(req.getParameter("productName"));
 				productDetail.setCode(req.getParameter("productCode"));
 				productDetail.setCategory(ejb.getCategoryById(Integer.parseInt(req.getParameter("catId"))));
+				
+				
+				
 				ejb.setProductDetail(productDetail);
 				msg = "Product detail added successfully.";
 				break;
@@ -181,7 +184,7 @@ public class Servlet extends HttpServlet {
 				productDetail = new ProductDetail();
 				
 				
-				String slno[]=req.getParameterValues("serialNumber");
+			/*	String slno[]=req.getParameterValues("serialNumber");
 				for(int i=0;i<slno.length;i++){
 					serialNumber=new SerialNumber();
 					serialNumber.setSerialNumber(slno[i]);
@@ -194,12 +197,31 @@ public class Servlet extends HttpServlet {
 				productDetail.setDescription(req.getParameter("description"));
 				productDetail.setUniversalCode(req.getParameter("upc"));
 				productDetail.setQtyUnit(ejb.getQtyUnitById(Integer.parseInt(req.getParameter("uom"))));
+				productDetail.setSaleble(Boolean.parseBoolean(req.getParameter("isSalebi")) );
 				//productDetail.setCategory(ejb.getCategoryById(Integer.parseInt(req.getParameter("catagoryId"))));
-				ejb.setProductDetail(productDetail);
+				ejb.setProductDetail(productDetail);*/
 				
 				
 				
 				purchaseProductDetails	= new Purchase_Product_Details();
+				if( req.getParameter("addini")=="add"){
+					String slno[]=req.getParameterValues("serialNumber");
+					for(int i=0;i<slno.length;i++){
+						serialNumber=new SerialNumber();
+						serialNumber.setSerialNumber(slno[i]);
+						ejb.setSerialNumber(serialNumber);
+						serialNumber=null;
+					}
+					
+					
+					productDetail.setCode(req.getParameter("productCode"));
+					productDetail.setDescription(req.getParameter("description"));
+					productDetail.setUniversalCode(req.getParameter("upc"));
+					productDetail.setQtyUnit(ejb.getQtyUnitById(Integer.parseInt(req.getParameter("uom"))));
+					productDetail.setSaleble(Boolean.parseBoolean(req.getParameter("isSalebi")) );
+					//productDetail.setCategory(ejb.getCategoryById(Integer.parseInt(req.getParameter("catagoryId"))));
+					ejb.setProductDetail(productDetail);
+				
 				purchaseProductDetails.setMrp(Integer.parseInt(req.getParameter("mrp1")));
 				purchaseProductDetails.setWsp(Integer.parseInt(req.getParameter("wsp1")));
 				purchaseProductDetails.setQuantity(Integer.parseInt(req.getParameter("qty1")));
@@ -217,8 +239,21 @@ public class Servlet extends HttpServlet {
 				purchaseProductDetails.setAttrValue6(req.getParameter("att6"));
 				
 				purchaseProductDetails.setInitialInventory(true);
+				
 			    ejb.setPurchaseProductDetails(purchaseProductDetails);
-			 msg = "Bill created successfully.";
+			
+				}
+				else{
+					productDetail.setCode(req.getParameter("productCode"));
+					productDetail.setDescription(req.getParameter("description"));
+					productDetail.setUniversalCode(req.getParameter("upc"));
+					productDetail.setQtyUnit(ejb.getQtyUnitById(Integer.parseInt(req.getParameter("uom"))));
+					productDetail.setSaleble(Boolean.parseBoolean(req.getParameter("isSalebi")) );
+					//productDetail.setCategory(ejb.getCategoryById(Integer.parseInt(req.getParameter("catagoryId"))));
+					ejb.setProductDetail(productDetail);
+				
+				}
+				 msg = "Bill created successfully.";
 			break;
 			case "addBillSetup":
 				 page="billSetup.jsp";
