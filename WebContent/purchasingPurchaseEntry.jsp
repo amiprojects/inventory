@@ -642,7 +642,7 @@
 											var="productDetail">
 											<option value="${productDetail.id}">${productDetail.code}</option>
 										</c:forEach>
-									</select>
+									</select> <input type="hidden" id="pCode" name="pCode">
 								</div>
 								<div class="col-md-5">Product Descripsion:</div>
 								<div class="col-md-7">
@@ -857,6 +857,7 @@
 					},
 					success : function(data) {
 						$("#dept").val(data.Department);
+						$("#pCode").val(data.code);
 						if (data.isSaleble == 'true') {
 							$("#wsp").attr("readonly", false);
 							$("#mrp").attr("readonly", false);
@@ -872,7 +873,8 @@
 						$("#cat").val(data.category);
 						$("#pDesc").val(data.description);
 						$("#uom").val(data.qtyUnit);
-						if ((data.attrNmae1) != 'null') {
+						if ((data.attrNmae1) != 'null'
+								|| (data.attrNmae1) != "") {
 							$("#attr1Name").html(data.attrNmae1);
 							$("#attr1").prop("readonly", false);
 						} else {
@@ -928,6 +930,7 @@
 				$("#cat").val("");
 				$("#pDesc").val("");
 				$("#uom").val("");
+				$("#pCode").val("");
 				$("#attr1Name").html("Attribute1:");
 				$("#attr2Name").html("Attribute2:");
 				$("#attr3Name").html("Attribute3:");
@@ -1025,7 +1028,7 @@
 			$("#another").modal("show");
 			//$("#amount").val(Number($("#qty").val()) * Number($("#rate").val()));
 			$("#purProTable").append(
-					'<tbody><tr><td>' + i + '</td><td>' + $("#productCode").val()
+					'<tbody><tr><td>' + i + '</td><td>' + $("#pCode").val()
 							+ '</td><td>' + $("#pDesc").val() + '</td><td>'
 							+ $("#rate").val() + '</td><td>' + $("#qty").val()
 							+ '</td><td>' + Number($("#qty").val())
@@ -1036,7 +1039,6 @@
 			//$("#qty").val("");
 			i++;
 
-			//$("#pCodeIdH").val("Id");
 			$("#hiddenTable").append(
 					'<tbody><tr>'
 							+ '<td><input type="text" name="pCodeIdH" value=\''
