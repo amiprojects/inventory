@@ -332,7 +332,7 @@
 												<tbody>
 													<tr>
 														<td colspan="2">Transport charge :</td>
-														<td><input type="text" class="form-control"
+														<td><input type="number" class="form-control"
 															name="transportCost" id="transportCost" onkeyup="gtot();"
 															value="0"></td>
 													</tr>
@@ -340,7 +340,7 @@
 												<tbody>
 													<tr>
 														<td colspan="2">Surcharge :</td>
-														<td><input type="text" class="form-control"
+														<td><input type="number" class="form-control"
 															id="surcharge" name="surcharge" onkeyup="gtot();"
 															value="0"></td>
 													</tr>
@@ -659,29 +659,47 @@
 							</div>
 							<br> <br>
 							<div class="row">
-								<div class="col-md-2">Attribute1:</div>
-								<div class="col-md-10">
-									<input type="text" class="form-control" name="attr1" id="attr1">
+								<div class="col-md-2">
+									<span id="attr1Name">Attribute1:</span>
 								</div>
-								<div class="col-md-2">Attribute2:</div>
 								<div class="col-md-10">
-									<input type="text" class="form-control" name="attr2" id="attr2">
+									<input type="text" class="form-control" name="attr1" id="attr1"
+										readonly="readonly">
 								</div>
-								<div class="col-md-2">Attribute3:</div>
-								<div class="col-md-10">
-									<input type="text" class="form-control" name="attr3" id="attr3">
+								<div class="col-md-2">
+									<span id="attr2Name">Attribute2:</span>
 								</div>
-								<div class="col-md-2">Attribute4:</div>
 								<div class="col-md-10">
-									<input type="text" class="form-control" name="attr4" id="attr4">
+									<input type="text" class="form-control" name="attr2" id="attr2"
+										readonly="readonly">
 								</div>
-								<div class="col-md-2">Attribute5:</div>
-								<div class="col-md-10">
-									<input type="text" class="form-control" name="attr5" id="attr5">
+								<div class="col-md-2">
+									<span id="attr3Name">Attribute3:</span>
 								</div>
-								<div class="col-md-2">Attribute6:</div>
 								<div class="col-md-10">
-									<input type="text" class="form-control" name="attr6" id="attr6">
+									<input type="text" class="form-control" name="attr3" id="attr3"
+										readonly="readonly">
+								</div>
+								<div class="col-md-2">
+									<span id="attr4Name">Attribute4:</span>
+								</div>
+								<div class="col-md-10">
+									<input type="text" class="form-control" name="attr4" id="attr4"
+										readonly="readonly">
+								</div>
+								<div class="col-md-2">
+									<span id="attr5Name">Attribute5:</span>
+								</div>
+								<div class="col-md-10">
+									<input type="text" class="form-control" name="attr5" id="attr5"
+										readonly="readonly">
+								</div>
+								<div class="col-md-2">
+									<span id="attr6Name">Attribute6:</span>
+								</div>
+								<div class="col-md-10">
+									<input type="text" class="form-control" name="attr6" id="attr6"
+										readonly="readonly">
 								</div>
 							</div>
 						</div>
@@ -689,7 +707,7 @@
 							<div class="row">
 								<div class="col-md-3">Quantity:</div>
 								<div class="col-md-9">
-									<input type="text" class="form-control" name="qty" id="qty">
+									<input type="number" class="form-control" name="qty" id="qty">
 								</div>
 								<div class="col-md-3">UOM:</div>
 								<div class="col-md-9">
@@ -698,7 +716,7 @@
 								</div>
 								<div class="col-md-3">Rate:</div>
 								<div class="col-md-9">
-									<input type="text" class="form-control" name="rate" id="rate">
+									<input type="number" class="form-control" name="rate" id="rate">
 								</div>
 							</div>
 						</div>
@@ -706,17 +724,18 @@
 							<div class="row">
 								<div class="row">
 									&nbsp; &nbsp; &nbsp; &nbsp; <input type="checkbox" id="sale"
-										onclick="salable();"> &nbsp; Is salable
+										onclick="salable();" style="display: none;"> &nbsp;
+									<!-- Is salable -->
 
 								</div>
 								<div class="col-md-2">Wsp:</div>
 								<div class="col-md-10">
-									<input type="text" class="form-control" id="wsp"
+									<input type="number" class="form-control" id="wsp"
 										readonly="readonly" name="wsp">
 								</div>
 								<div class="col-md-2">MRP:</div>
 								<div class="col-md-10">
-									<input type="text" class="form-control" id="mrp"
+									<input type="number" class="form-control" id="mrp"
 										readonly="readonly" name="mrp">
 								</div>
 							</div>
@@ -724,8 +743,8 @@
 						<div class="widget-area" style="width: 100%; top: 0px;">
 							<div class="row">
 								&nbsp; &nbsp; <span>Lot no : &nbsp;</span> <input type="radio"
-									name="lot" value="yesLot">&nbsp; Yes <input
-									type="radio" name="lot" value="noLot">&nbsp; No
+									name="lot" value="yesLot" checked="checked">&nbsp; Yes
+								<input type="radio" name="lot" value="noLot">&nbsp; No
 							</div>
 
 							<div class="row">
@@ -734,14 +753,15 @@
 								</div>
 								<div class="col-md-10">
 									<input type="text" class="form-control" id="lotText"
-										name="lotText" disabled="disabled">
+										name="lotText">
 								</div>
 							</div>
 							<br>
 							<div class="row">
 								&nbsp; &nbsp; <span>Serial : &nbsp; </span> <input type="radio"
-									name="serial" value="yesSerial">&nbsp; Yes <input
-									type="radio" name="serial" value="noSerial">&nbsp; No
+									name="serial" value="yesSerial" checked="checked">&nbsp;
+								Yes <input type="radio" name="serial" value="noSerial">&nbsp;
+								No
 							</div>
 
 							<div class="row">
@@ -749,8 +769,8 @@
 									<b>Initial Serial. :</b>
 								</div>
 								<div class="col-md-10">
-									<input type="text" class="form-control" id="serialText"
-										name="serialText" disabled="disabled">
+									<input type="number" class="form-control" id="serialText"
+										name="serialText">
 								</div>
 							</div>
 							<br>
@@ -827,15 +847,121 @@
 			$("#datepicker").datepicker();
 		});
 		function getProductDetailsByProductCode() {
-			$.ajax({
-				url:'getProductDetailById',
-				type:'post',
-				dataType:"json",
-				data:{id:$("#productCode").val()},
-				success:function(data){
-					alert(data.code);
+			if ($("#productCode").val() != 0) {
+				$.ajax({
+					url : 'getProductDetailById',
+					type : 'post',
+					dataType : "json",
+					data : {
+						id : $("#productCode").val()
+					},
+					success : function(data) {
+						$("#dept").val(data.Department);
+						if (data.isSaleble == 'true') {
+							$("#wsp").attr("readonly", false);
+							$("#mrp").attr("readonly", false);
+							$("#isSalable").val('yes');
+							$('#sale').prop("checked", "checked");
+						} else {
+							$("#wsp").attr("readonly", true);
+							$("#mrp").attr("readonly", true);
+							$("#isSalable").val('no');
+							$('#sale').removeProp("checked");
+						}
+						$("#subDept").val(data.subDepartment);
+						$("#cat").val(data.category);
+						$("#pDesc").val(data.description);
+						$("#uom").val(data.qtyUnit);
+						if ((data.attrNmae1) != 'null') {
+							$("#attr1Name").html(data.attrNmae1);
+							$("#attr1").prop("readonly", false);
+						} else {
+							$("#attr1Name").html("Attribute1:");
+							$("#attr1").prop("readonly", true);
+						}
+						if ((data.attrNmae2) != 'null') {
+							$("#attr2Name").html(data.attrNmae2);
+							$("#attr2").prop("readonly", false);
+						} else {
+							$("#attr2Name").html("Attribute2:");
+							$("#attr2").prop("readonly", true);
+						}
+						if ((data.attrNmae3) != 'null') {
+							$("#attr3Name").html(data.attrNmae3);
+							$("#attr3").prop("readonly", false);
+						} else {
+							$("#attr3Name").html("Attribute3:");
+							$("#attr3").prop("readonly", true);
+						}
+						if ((data.attrNmae4) != 'null') {
+							$("#attr4Name").html(data.attrNmae4);
+							$("#attr4").prop("readonly", false);
+						} else {
+							$("#attr4Name").html("Attribute4:");
+							$("#attr4").prop("readonly", true);
+						}
+						if ((data.attrNmae5) != 'null') {
+							$("#attr5Name").html(data.attrNmae5);
+							$("#attr5").prop("readonly", false);
+						} else {
+							$("#attr5Name").html("Attribute5:");
+							$("#attr5").prop("readonly", true);
+						}
+						if ((data.attrNmae6) != 'null') {
+							$("#attr6Name").html(data.attrNmae6);
+							$("#attr6").prop("readonly", false);
+						} else {
+							$("#attr6Name").html("Attribute6:");
+							$("#attr6").prop("readonly", true);
+						}
+					},
+					error : function(a, b, c) {
+						alert(b + ": " + c);
+					}
+				});
+			} else {
+				alert("please select one product-code");
+				$("#wsp").val("");
+				$("#mrp").val("");
+				$("#subDept").val("");
+				$("#dept").val("");
+				$("#cat").val("");
+				$("#pDesc").val("");
+				$("#uom").val("");
+				$("#attr1Name").html("Attribute1:");
+				$("#attr2Name").html("Attribute2:");
+				$("#attr3Name").html("Attribute3:");
+				$("#attr4Name").html("Attribute4:");
+				$("#attr5Name").html("Attribute5:");
+				$("#attr6Name").html("Attribute6:");
+				$("#attr1").prop("readonly", true);
+				$("#attr2").prop("readonly", true);
+				$("#attr3").prop("readonly", true);
+				$("#attr4").prop("readonly", true);
+				$("#attr5").prop("readonly", true);
+				$("#attr6").prop("readonly", true);
+			}
+			/* $.ajax({
+				url : 'getCategoryById',
+				type : 'post',
+				dataType : "json",
+				data : {
+					id : $("#catId").val()
+				},
+				success : function(data) {
+					if ((data.attrNmae1) != null) {
+						$("#attr1Name").html(data.attrNmae1);
+					}
+					//$("#attr2Name").html(data.attrNmae2);
+					//$("#attr3Name").html(data.attrNmae3);
+					//$("#attr4Name").html(data.attrNmae4);
+					//$("#attr5Name").html(data.attrNmae5);
+					//$("#attr6Name").html(data.attrNmae6);
+				},
+				error : function(a, b, c) {
+					alert(b + ": " + c);
 				}
-			});
+			}); */
 		}
 		function salable() {
 
@@ -899,7 +1025,7 @@
 			$("#another").modal("show");
 			//$("#amount").val(Number($("#qty").val()) * Number($("#rate").val()));
 			$("#purProTable").append(
-					'<tbody><tr><td>' + i + '</td><td>' + $("#pCode").val()
+					'<tbody><tr><td>' + i + '</td><td>' + $("#productCode").val()
 							+ '</td><td>' + $("#pDesc").val() + '</td><td>'
 							+ $("#rate").val() + '</td><td>' + $("#qty").val()
 							+ '</td><td>' + Number($("#qty").val())
@@ -910,11 +1036,11 @@
 			//$("#qty").val("");
 			i++;
 
-			$("#pCodeIdH").val("Id");
+			//$("#pCodeIdH").val("Id");
 			$("#hiddenTable").append(
 					'<tbody><tr>'
 							+ '<td><input type="text" name="pCodeIdH" value=\''
-							+ $("#pCode").val()
+							+ $("#productCode").val()
 							+ '\'></td>'
 							+ '<td><input type="text" name="attr1H" value=\''
 							+ $("#attr1").val()
@@ -1108,7 +1234,8 @@
 																						.val()));
 													},
 													error : function(a, b, c) {
-														alert("error: " + b);
+														alert(b + " error: "
+																+ c);
 													}
 												});
 									}

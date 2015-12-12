@@ -223,7 +223,7 @@ public class AccountDetails {
 	/*
 	 * @Override public String toString() { return "{\"tax_Type_Group\":\"" +
 	 * tax_Type_Group.getId() + "\", " + "\"id\":\"" + id + "\", " +
-	 * "\"taxTotal\":\"" + tax_Type_Group.getTotalTaxValue() + "\"}"; }
+	 * "\"taxTotal\":\"" + tax_Type_Group.getTotalTaxValue() + "\"}";
 	 */
 
 	@Override
@@ -231,15 +231,15 @@ public class AccountDetails {
 		return "{\"bankAccountNumber\":\"" + bankAccountNumber + "\", " + "\"bankChequeLable\":\"" + bankChequeLable
 				+ "\", " + "\"bankIFSCnumber\":\"" + bankIFSCnumber + "\", " + "\"bankMICRnumber\":\"" + bankMICRnumber
 				+ "\", " + "\"bankName\":\"" + bankName + "\", " + "\"bankRTGCnumber\":\"" + bankRTGCnumber + "\", "
-				+ "\"branch\":\"" + branch + "\", " + "\"cityId\":\"" + city.getId() + "\"city\":\""
+				+ "\"branch\":\"" + branch + "\", " + "\"cityId\":\"" + city.getId() + "\",\"city\":\""
 				+ city.getCityName() + "\", " + "\"cstNumber\":\"" + cstNumber + "\"," + "\"cstRegistrationDate\":\""
 				+ cstRegistrationDate + "\"," + "\"exciseRegistrationDate\":\"" + exciseRegistrationDate + "\","
 				+ "\"id\":\"" + id + "\"," + "\"panNumber\":\"" + panNumber + "\","
 				+ "\"serviceTaxRegistrationDate\":\"" + serviceTaxRegistrationDate + "\","
-				+ "\"serviceTaxRegistrationNumber\":\"" + serviceTaxRegistrationNumber + "\"," + "\"," + "\"users\":\""
+				+ "\"serviceTaxRegistrationNumber\":\"" + serviceTaxRegistrationNumber + "\"," +  "\"users\":\""
 				+ users + "\"," + "\"vatNumber\":\"" + vatNumber + "\"," + "\"vatRegistrationDate\":\""
-				+ vatRegistrationDate + "\","+ "\"vendorId\":\"" + vendor.getId() + "\"vendorName\":\"" + vendor.getName() + "\"" + "\"tax_Type_Group\":\""
-				+ tax_Type_Group.getId() + "\", " + "\"id\":\"" + id + "\", " + "\"taxTotal\":\""
+				+ vatRegistrationDate + "\","+ "\"vendorId\":\"" + vendor.getId() + "\", \"vendorName\":\"" + vendor.getName() + "\"," + "\"tax_Type_Group\":\""
+				+ tax_Type_Group.getId() + "\", " + "\"taxTotal\":\""
 				+ tax_Type_Group.getTotalTaxValue() + "\"}";
 	}
 

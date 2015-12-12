@@ -215,14 +215,18 @@ public class Servlet extends HttpServlet {
 				 * (req.getParameter(""))));
 				 */
 
-				/*purchaseProductDetails.setCost(Integer.parseInt(req
-						.getParameter("ucost")));
-				productDetail.setQtyUnit(ejb.getQtyUnitById(Integer
-						.parseInt(req.getParameter("uom"))));
-				productDetail.setSaleble(Boolean.parseBoolean(req
-						.getParameter("isSalebi")));
-				// productDetail.setCategory(ejb.getCategoryById(Integer.parseInt(req.getParameter("catagoryId"))));
-				ejb.setProductDetail(productDetail);*/
+				/*
+				 * purchaseProductDetails.setCost(Integer.parseInt(req
+				 * .getParameter("ucost")));
+				 * productDetail.setQtyUnit(ejb.getQtyUnitById(Integer
+				 * .parseInt(req.getParameter("uom"))));
+				 * productDetail.setSaleble(Boolean.parseBoolean(req
+				 * .getParameter("isSalebi"))); //
+				 * productDetail.setCategory(ejb.
+				 * getCategoryById(Integer.parseInt
+				 * (req.getParameter("catagoryId"))));
+				 * ejb.setProductDetail(productDetail);
+				 */
 
 				purchaseProductDetails = new Purchase_Product_Details();
 				if (req.getParameter("addini") == "add") {
@@ -242,7 +246,8 @@ public class Servlet extends HttpServlet {
 							.parseInt(req.getParameter("uom"))));
 					productDetail.setSaleble(Boolean.parseBoolean(req
 							.getParameter("isSalebi")));
-					// productDetail.setCategory(ejb.getCategoryById(Integer.parseInt(req.getParameter("catagoryId"))));
+					productDetail.setCategory(ejb.getCategoryById(Integer
+							.parseInt(req.getParameter("catagoryId"))));
 					ejb.setProductDetail(productDetail);
 
 					purchaseProductDetails.setMrp(Integer.parseInt(req
@@ -286,7 +291,8 @@ public class Servlet extends HttpServlet {
 							.parseInt(req.getParameter("uom"))));
 					productDetail.setSaleble(Boolean.parseBoolean(req
 							.getParameter("isSalebi")));
-					// productDetail.setCategory(ejb.getCategoryById(Integer.parseInt(req.getParameter("catagoryId"))));
+					productDetail.setCategory(ejb.getCategoryById(Integer
+							.parseInt(req.getParameter("catagoryId"))));
 					ejb.setProductDetail(productDetail);
 
 				}
@@ -757,6 +763,7 @@ public class Servlet extends HttpServlet {
 				String qty[] = req.getParameterValues("qtyH");
 				String remQty[] = req.getParameterValues("qtyH");
 				String cost[] = req.getParameterValues("rateH");
+				String productId[] = req.getParameterValues("pCodeIdH");
 
 				for (int l = 0; l < mrp.length; l++) {
 					purchaseProductDetails = new Purchase_Product_Details();
@@ -767,6 +774,9 @@ public class Servlet extends HttpServlet {
 					purchaseProductDetails.setAttrValue4(attr4[l]);
 					purchaseProductDetails.setAttrValue5(attr5[l]);
 					purchaseProductDetails.setAttrValue6(attr6[l]);
+					purchaseProductDetails.setProductDetail(ejb
+							.getProductDetailsById(Integer
+									.parseInt(productId[l])));
 					if (req.getParameter("isSalable").equals("yes")) {
 						purchaseProductDetails.setMrp(Float.parseFloat(mrp[l]));
 						purchaseProductDetails.setWsp(Float.parseFloat(wsp[l]));

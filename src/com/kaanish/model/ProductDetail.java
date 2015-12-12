@@ -146,15 +146,29 @@ public class ProductDetail {
 		this.qtyUnit = qtyUnit;
 	}
 
+	/*
+	 * @Override public String toString() { return
+	 * "{\"aaaa\":\""+description+"\"}"; }
+	 */
+
 	@Override
 	public String toString() {
 		return "{\"id\":\"" + id + "\"," + "\"name\":\"" + name + "\","
 				+ "\"code\":\"" + code + "\"," + "\"universalCode\":\""
 				+ universalCode + "\"," + "\"isSaleble\":\"" + isSaleble
 				+ "\"," + "\"isActive\":\"" + isActive + "\","
-				+ "\"description\":\"" + description + "\"category\":\""
-				+ category.getName() + "\"subDepartment\":\""
-				+ category.getSubDepartment().getName() + "\"Department\":\""
+				+ "\"description\":\"" + description + "\"," + "\"qtyUnit\":\""
+				+ qtyUnit.getName() + "\"," + "\"category\":\""
+				+ category.getName() + "\"," + "\"attrNmae1\":\""
+				+ category.getAttrNmae1() + "\"," + "\"attrNmae2\":\""
+				+ category.getAttrNmae2() + "\"," + "\"attrNmae3\":\""
+				+ category.getAttrNmae3() + "\"," + "\"attrNmae4\":\""
+				+ category.getAttrNmae4() + "\"," + "\"attrNmae5\":\""
+				+ category.getAttrNmae5() + "\"," + "\"attrNmae6\":\""
+				+ category.getAttrNmae6() + "\",\"subDepartment\":\""
+				+ category.getSubDepartment().getName()
+				+ "\",\"categoryId\":\"" + category.getId()
+				+ "\",\"Department\":\""
 				+ category.getSubDepartment().getDepartment().getName() + "\"}";
 	}
 }
