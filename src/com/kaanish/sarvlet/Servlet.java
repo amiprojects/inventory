@@ -176,6 +176,7 @@ public class Servlet extends HttpServlet {
 				productDetail.setCode(req.getParameter("productCode"));
 				productDetail.setCategory(ejb.getCategoryById(Integer
 						.parseInt(req.getParameter("catId"))));
+
 				ejb.setProductDetail(productDetail);
 				msg = "Product detail added successfully.";
 				break;
@@ -184,48 +185,111 @@ public class Servlet extends HttpServlet {
 				page = "MaterialPartDetailsGenerals.jsp";
 				productDetail = new ProductDetail();
 
-				String slno[] = req.getParameterValues("serialNumber");
-				for (int i = 0; i < slno.length; i++) {
-					serialNumber = new SerialNumber();
-					serialNumber.setSerialNumber(slno[i]);
-					ejb.setSerialNumber(serialNumber);
-					serialNumber = null;
-				}
-
-				productDetail.setCode(req.getParameter("productCode"));
-				productDetail.setDescription(req.getParameter("description"));
-				productDetail.setUniversalCode(req.getParameter("upc"));
-				productDetail.setQtyUnit(ejb.getQtyUnitById(Integer
-						.parseInt(req.getParameter("uom"))));
-				// productDetail.setCategory(ejb.getCategoryById(Integer.parseInt(req.getParameter("catagoryId"))));
-				ejb.setProductDetail(productDetail);
-
-				purchaseProductDetails = new Purchase_Product_Details();
-				purchaseProductDetails.setMrp(Integer.parseInt(req
-						.getParameter("mrp1")));
-				purchaseProductDetails.setWsp(Integer.parseInt(req
-						.getParameter("wsp1")));
-				purchaseProductDetails.setQuantity(Integer.parseInt(req
-						.getParameter("qty1")));
-
 				/*
+				 * String slno[]=req.getParameterValues("serialNumber"); for(int
+				 * i=0;i<slno.length;i++){ serialNumber=new SerialNumber();
+				 * serialNumber.setSerialNumber(slno[i]);
+				 * ejb.setSerialNumber(serialNumber); serialNumber = null; }
+				 * 
+				 * productDetail.setCode(req.getParameter("productCode"));
+				 * productDetail
+				 * .setDescription(req.getParameter("description"));
+				 * productDetail.setUniversalCode(req.getParameter("upc"));
+				 * productDetail.setQtyUnit(ejb.getQtyUnitById(Integer
+				 * .parseInt(req.getParameter("uom")))); //
+				 * productDetail.setCategory
+				 * (ejb.getCategoryById(Integer.parseInt
+				 * (req.getParameter("catagoryId"))));
+				 * ejb.setProductDetail(productDetail);
+				 * 
+				 * purchaseProductDetails = new Purchase_Product_Details();
+				 * purchaseProductDetails.setMrp(Integer.parseInt(req
+				 * .getParameter("mrp1")));
+				 * purchaseProductDetails.setWsp(Integer.parseInt(req
+				 * .getParameter("wsp1")));
+				 * purchaseProductDetails.setQuantity(Integer.parseInt(req
+				 * .getParameter("qty1")));
+				 * 
+				 * /*
 				 * purchaseProductDetails.set(ejb.getQtyUnitById(Integer.parseInt
 				 * (req.getParameter(""))));
 				 */
 
-				purchaseProductDetails.setCost(Integer.parseInt(req
+				/*purchaseProductDetails.setCost(Integer.parseInt(req
 						.getParameter("ucost")));
-				purchaseProductDetails.setProductDetail(productDetail);
+				productDetail.setQtyUnit(ejb.getQtyUnitById(Integer
+						.parseInt(req.getParameter("uom"))));
+				productDetail.setSaleble(Boolean.parseBoolean(req
+						.getParameter("isSalebi")));
+				// productDetail.setCategory(ejb.getCategoryById(Integer.parseInt(req.getParameter("catagoryId"))));
+				ejb.setProductDetail(productDetail);*/
 
-				purchaseProductDetails.setAttrValue1(req.getParameter("att1"));
-				purchaseProductDetails.setAttrValue2(req.getParameter("att2"));
-				purchaseProductDetails.setAttrValue3(req.getParameter("att3"));
-				purchaseProductDetails.setAttrValue4(req.getParameter("att4"));
-				purchaseProductDetails.setAttrValue5(req.getParameter("att5"));
-				purchaseProductDetails.setAttrValue6(req.getParameter("att6"));
+				purchaseProductDetails = new Purchase_Product_Details();
+				if (req.getParameter("addini") == "add") {
+					String slno[] = req.getParameterValues("serialNumber");
+					for (int i = 0; i < slno.length; i++) {
+						serialNumber = new SerialNumber();
+						serialNumber.setSerialNumber(slno[i]);
+						ejb.setSerialNumber(serialNumber);
+						serialNumber = null;
+					}
 
-				purchaseProductDetails.setInitialInventory(true);
-				ejb.setPurchaseProductDetails(purchaseProductDetails);
+					productDetail.setCode(req.getParameter("productCode"));
+					productDetail.setDescription(req
+							.getParameter("description"));
+					productDetail.setUniversalCode(req.getParameter("upc"));
+					productDetail.setQtyUnit(ejb.getQtyUnitById(Integer
+							.parseInt(req.getParameter("uom"))));
+					productDetail.setSaleble(Boolean.parseBoolean(req
+							.getParameter("isSalebi")));
+					// productDetail.setCategory(ejb.getCategoryById(Integer.parseInt(req.getParameter("catagoryId"))));
+					ejb.setProductDetail(productDetail);
+
+					purchaseProductDetails.setMrp(Integer.parseInt(req
+							.getParameter("mrp1")));
+					purchaseProductDetails.setWsp(Integer.parseInt(req
+							.getParameter("wsp1")));
+					purchaseProductDetails.setQuantity(Integer.parseInt(req
+							.getParameter("qty1")));
+
+					/*
+					 * purchaseProductDetails.set(ejb.getQtyUnitById(Integer.
+					 * parseInt(req.getParameter(""))));
+					 */
+
+					purchaseProductDetails.setCost(Integer.parseInt(req
+							.getParameter("ucost")));
+					purchaseProductDetails.setProductDetail(productDetail);
+
+					purchaseProductDetails.setAttrValue1(req
+							.getParameter("att1"));
+					purchaseProductDetails.setAttrValue2(req
+							.getParameter("att2"));
+					purchaseProductDetails.setAttrValue3(req
+							.getParameter("att3"));
+					purchaseProductDetails.setAttrValue4(req
+							.getParameter("att4"));
+					purchaseProductDetails.setAttrValue5(req
+							.getParameter("att5"));
+					purchaseProductDetails.setAttrValue6(req
+							.getParameter("att6"));
+
+					purchaseProductDetails.setInitialInventory(true);
+					ejb.setPurchaseProductDetails(purchaseProductDetails);
+
+				} else {
+					productDetail.setCode(req.getParameter("productCode"));
+					productDetail.setDescription(req
+							.getParameter("description"));
+					productDetail.setUniversalCode(req.getParameter("upc"));
+					productDetail.setQtyUnit(ejb.getQtyUnitById(Integer
+							.parseInt(req.getParameter("uom"))));
+					productDetail.setSaleble(Boolean.parseBoolean(req
+							.getParameter("isSalebi")));
+					// productDetail.setCategory(ejb.getCategoryById(Integer.parseInt(req.getParameter("catagoryId"))));
+					ejb.setProductDetail(productDetail);
+
+				}
 				msg = "Bill created successfully.";
 				break;
 			case "addBillSetup":
