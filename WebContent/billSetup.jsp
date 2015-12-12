@@ -84,14 +84,6 @@
 										</form>
 									</div>
 									<br> <br> <br>
-									<div class="row">
-										<div class="col-md-3">
-											<button type="button" class="c-btn medium gray">save</button>
-
-										</div>
-									</div>
-
-
 								</div>
 								<div class="widget-area">
 									<div>
@@ -127,17 +119,7 @@
 										</form>
 
 									</div>
-
-
 									<br> <br> <br>
-									<div class="row">
-										<div class="col-md-3">
-											<button type="button" class="c-btn medium gray">save</button>
-
-										</div>
-									</div>
-
-
 								</div>
 								<div class="widget-area">
 									<div>
@@ -173,17 +155,7 @@
 										</form>
 
 									</div>
-
-
 									<br> <br> <br>
-									<div class="row">
-										<div class="col-md-3">
-											<button type="button" class="c-btn medium gray">save</button>
-
-										</div>
-									</div>
-
-
 								</div>
 								<div class="widget-area">
 									<div>
@@ -203,7 +175,7 @@
 										<img src="img/th.jpg" height="33px" width="33px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 										<h5 style="text-align:left;">Company Name&nbsp;&nbsp;/&nbsp;&nbsp;Challan Type&nbsp;&nbsp;/&nbsp;&nbsp;Year&nbsp;&nbsp;/&nbsp;&nbsp;Month&nbsp;&nbsp;/&nbsp;&nbsp;Auto Number&nbsp;&nbsp;/&nbsp;&nbsp;Suffix</h5>
 									</div>
-									<c:set value="${sessionScope['ejb'].getLastBillSetupBySufix('Road')}" var="road"/>
+									<c:set value="${sessionScope['ejb'].getLastBillSetupBySufix('ROAD')}" var="road"/>
 									<div class="col-md-9">
 										<label>Present Setup:</label> <br> 
 										<form action="addBillSetup" method="post" id="addroadchallan">
@@ -218,17 +190,7 @@
 										</form>
 
 									</div>
-
-
 									<br> <br> <br>
-									<div class="row">
-										<div class="col-md-3">
-											<button type="button" class="c-btn medium gray">save</button>
-
-										</div>
-									</div>
-
-
 								</div>
 							</div>
 						</div>
