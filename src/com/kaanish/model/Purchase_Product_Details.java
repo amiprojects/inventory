@@ -2,12 +2,15 @@ package com.kaanish.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import org.eclipse.persistence.jpa.config.Cascade;
 
 @Entity
 public class Purchase_Product_Details {
@@ -27,7 +30,7 @@ public class Purchase_Product_Details {
 	private String attrValue6;
 	private boolean initialInventory;
 
-	@OneToMany(mappedBy = "purchase_Product_Details")
+	@OneToMany(mappedBy = "purchase_Product_Details",cascade=CascadeType.ALL)
 	private List<SerialNumber> serialNumbers;
 
 	@ManyToOne

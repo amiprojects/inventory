@@ -634,17 +634,15 @@
 								</div>
 								<div class="col-md-5">Product-Code:</div>
 								<div class="col-md-7">
-									<input type="text" list="browsers" class="form-control"
-										name="pCode" id="pCode">
-									<datalist id="browsers"> <c:forEach
-										items="${sessionScope['ejb'].getAllProductDetail()}"
-										var="productDetail">
-										<option value="${productDetail.code}">
-									</c:forEach> <!-- <option value="Internet Explorer">
-									<option value="Firefox">
-									<option value="Chrome">
-									<option value="Opera">
-									<option value="Safari"> --> </datalist>
+									<select class="form-control" name="productCode"
+										id="productCode" onchange="getProductDetailsByProductCode();">
+										<option value="0">Select Product Code</option>
+										<c:forEach
+											items="${sessionScope['ejb'].getAllProductDetail()}"
+											var="productDetail">
+											<option value="${productDetail.id}">${productDetail.code}</option>
+										</c:forEach>
+									</select>
 								</div>
 								<div class="col-md-5">Product Descripsion:</div>
 								<div class="col-md-7">
@@ -828,6 +826,17 @@
 		$(function() {
 			$("#datepicker").datepicker();
 		});
+		function getProductDetailsByProductCode() {
+			$.ajax({
+				url:'getProductDetailById',
+				type:'post',
+				dataType:"json",
+				data:{id:$("#productCode").val()},
+				success:function(data){
+					alert(data.code);
+				}
+			});
+		}
 		function salable() {
 
 			if ($('#sale').is(":checked")) {
@@ -955,6 +964,24 @@
 							+ Number($("#taxAmount").val())
 							+ Number($("#transportCost").val())
 							+ Number($("#surcharge").val()));
+			$("#dept").val("");
+			$("#subDept").val("");
+			$("#cat").val("");
+			$("#pCode").val("");
+			$("#pDesc").val("");
+			$("#attr1").val("");
+			$("#attr2").val("");
+			$("#attr3").val("");
+			$("#attr4").val("");
+			$("#attr5").val("");
+			$("#attr6").val("");
+			$("#qty").val("");
+			$("#uom").val("");
+			$("#rate").val("");
+			$("#wsp").val("");
+			$("#mrp").val("");
+			$("#lotText").val("");
+			$("#serialText").val("");
 		}
 
 		function getVendorNameByType() {
