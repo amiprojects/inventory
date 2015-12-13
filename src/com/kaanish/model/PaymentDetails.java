@@ -15,11 +15,11 @@ public class PaymentDetails {
 	@Id
 	@GeneratedValue
 	private int id;
-	private String details;
 	private String description;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date paymentDate;
-	private float due;
+	private float totalAmount;
+	private float dueAmount;
 
 	@OneToMany(mappedBy = "paymentDetails")
 	private List<Purchase_Entry> purchase_Entries;
@@ -32,14 +32,6 @@ public class PaymentDetails {
 		this.id = id;
 	}
 
-	public String getDetails() {
-		return details;
-	}
-
-	public void setDetails(String details) {
-		this.details = details;
-	}
-
 	public String getDescription() {
 		return description;
 	}
@@ -49,11 +41,11 @@ public class PaymentDetails {
 	}
 
 	public float getDue() {
-		return due;
+		return dueAmount;
 	}
 
 	public void setDue(float due) {
-		this.due = due;
+		this.dueAmount = due;
 	}
 
 	public List<Purchase_Entry> getPurchase_Entries() {
@@ -70,6 +62,14 @@ public class PaymentDetails {
 
 	public void setPaymentDate(Date paymentDate) {
 		this.paymentDate = paymentDate;
+	}
+
+	public float getTotalAmount() {
+		return totalAmount;
+	}
+
+	public void setTotalAmount(float totalAmount) {
+		this.totalAmount = totalAmount;
 	}
 
 }
