@@ -3,6 +3,8 @@ package com.kaanish.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,13 +17,14 @@ public class PaymentDetails {
 	@Id
 	@GeneratedValue
 	private int id;
+	@Column(length = 800)
 	private String description;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date paymentDate;
 	private float totalAmount;
-	private float dueAmount;
+	private float paidAmount;
 
-	@OneToMany(mappedBy = "paymentDetails")
+	@OneToMany(mappedBy = "paymentDetails", cascade = CascadeType.ALL)
 	private List<Purchase_Entry> purchase_Entries;
 
 	public int getId() {
@@ -38,14 +41,6 @@ public class PaymentDetails {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public float getDue() {
-		return dueAmount;
-	}
-
-	public void setDue(float due) {
-		this.dueAmount = due;
 	}
 
 	public List<Purchase_Entry> getPurchase_Entries() {
@@ -70,6 +65,14 @@ public class PaymentDetails {
 
 	public void setTotalAmount(float totalAmount) {
 		this.totalAmount = totalAmount;
+	}
+
+	public float getPaidAmount() {
+		return paidAmount;
+	}
+
+	public void setPaidAmount(float paidAmount) {
+		this.paidAmount = paidAmount;
 	}
 
 }

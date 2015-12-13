@@ -2,6 +2,7 @@ package com.kaanish.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,7 +15,7 @@ public class PaymentType {
 	private int id;
 	private String Type;
 
-	@OneToMany(mappedBy = "paymentType")
+	@OneToMany(mappedBy = "paymentType",cascade=CascadeType.ALL)
 	private List<Purchase_Entry> purchase_Entries;
 
 	public int getId() {
