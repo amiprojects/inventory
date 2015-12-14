@@ -51,7 +51,7 @@ import com.kaanish.util.DateConverter;
 		"/editVendorType", "/deleteVendorType", "/addCity", "/deleteState",
 		"/deleteCity", "/productSumary", "/addNewConversion", "/purchaseEntry",
 		"/updateConversion", "/addBillSetup", "/updateCompanyInfo",
-		"/addBillSetup", "/updateCompanyInfo" })
+		"/addBillSetup", "/updateCompanyInfo","/updateVendor" })
 public class Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -332,6 +332,44 @@ public class Servlet extends HttpServlet {
 
 				ejb.updateVendorType(vendorType);
 				msg = "Vendor type updated successfully.";
+				break;
+				
+			case "updateVendor":
+				 page="purchasingVendor.jsp";
+				 vendor=ejb.getVendorById(Integer.parseInt(req.getParameter("vendoeId")));//vendorid
+				 
+			     vendor.setName(req.getParameter("vendorName"));
+				 vendor.setCompanyName(req.getParameter("vendorCompanyName"));
+				 vendor.setPh1(req.getParameter("vendorPh1"));
+				 vendor.setPh2(req.getParameter("vendorPh2"));
+				 vendor.setEmail(req.getParameter("vendorMail"));
+				 vendor.setAliseName(req.getParameter("vendorAlias"));
+				 vendor.setAddress(req.getParameter("vendorAddress"));
+				 vendor.setPinCode(req.getParameter("vendorPin"));
+				 vendor.setVendorType(ejb.getVendorTypeById(Integer.parseInt(req.getParameter("vendorType"))));
+				 vendor.setCity(ejb.getCityById(Integer.parseInt(req.getParameter("vendorCityId"))));
+				 
+				 accountDetails=ejb.getAccountDetailsByVendorId(Integer.parseInt(req.getParameter("vendoeId")));//vender id
+				 
+				 accountDetails.setVatNumber(req.getParameter("vendorVATno"));
+				 accountDetails.setVatRegistrationDate(DateConverter.getDate(req.getParameter("vendorVATregDate")));
+				 accountDetails.setCstNumber(req.getParameter("vendorCSTno"));
+				 accountDetails.setCstRegistrationDate(DateConverter.getDate(req.getParameter("vendorVATregDate")));
+				 accountDetails.setPanNumber(req.getParameter("vendorPANno"));
+				 accountDetails.setExciseRegistrationNumber(req.getParameter("vendorExciseRegNo"));
+				 accountDetails.setExciseRegistrationDate(DateConverter.getDate(req.getParameter("vendorExciseRegDate")));
+				 accountDetails.setServiceTaxRegistrationNumber(req.getParameter("vendorServiceTaxRegNo"));
+				 accountDetails.setServiceTaxRegistrationDate(DateConverter.getDate(req.getParameter("vendorServiceTaxRegDate")));
+				 accountDetails.setBankName(req.getParameter("bankName"));
+				 accountDetails.setBankAccountNumber(req.getParameter("bankAccNo"));
+				 accountDetails.setBranch(req.getParameter("bankBranch"));
+				 accountDetails.setCity(ejb.getCityById(Integer.parseInt(req.getParameter("bankCity"))));
+				 accountDetails.setBankIFSCnumber(req.getParameter("bankIFSC"));
+				 accountDetails.setBankMICRnumber(req.getParameter("bankMICR"));
+				 accountDetails.setBankRTGCnumber(req.getParameter("bankRTGS"));
+				 ejb.updateVendor(vendor);
+				 ejb.updateAccountDetails(accountDetails);
+				 msg = "Vendor details updated successfully.";
 				break;
 
 			case "deleteVendorType":

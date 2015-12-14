@@ -311,6 +311,7 @@ $(document).ready(function(){
 											Search</button>
 									</form>
 									<br> <br>
+									<div style="overflow-x:auto;">
 									<table class="table">
 										<thead>
 											<tr>
@@ -334,6 +335,7 @@ $(document).ready(function(){
 											</c:forEach>
 										</tbody>
 									</table>
+									</div>
 								</div>
 								<div class="widget-area" style="width: 72%">
 									<%-- <p>${requestScope['msg']}</p> --%>
@@ -611,17 +613,6 @@ $(document).ready(function(){
 																<option value="${vType.id}">${vType.type}</option>
 															</c:forEach>
 														</select>
-													</div>
-
-													<div class="breadcrumbs">
-														<ul>
-															<li><a title="" class="font">Change History</a></li>
-														</ul>
-														<hr>
-													</div>
-
-													<div class="row">
-														<b>Last modified date :</b>
 													</div>
 												</div>
 												<br>

@@ -146,9 +146,9 @@
 						<div class="col-md-6">
 						<div class="widget-area" style="height:250px;">
 									<div  style="background-color:lightgrey;">
-										<h1>Bill To</h1>
+										<h3>Bill To:</h3>
 									</div>
-									    <table cellspacing="1">
+									    <table cellspacing="2">
 										      <tr>
 										       <td>Name :</td>
 										        <td><input type="text" name="cusname" style="align:center;"></input></td>
@@ -177,7 +177,7 @@
 					                         <div class="col-md-6">
 						                       <div class="widget-area" style="height:250px;">
 									                 <div style="background-color:lightgrey;">
-										                     <h1>Invoice Details</h1>
+										                     <h3>Invoice Details:</h3>
 									                </div>
 									    <table>
 									       <tr>

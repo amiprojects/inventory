@@ -126,8 +126,6 @@
 										<div class="widget-area">
 											<div class="col-md-6">
 												<div class="col-md-12">
-												
-														
 													
 												</div>
 												<div class="col-md-12">
@@ -146,14 +144,14 @@
 											<div class="col-md-6">
 												<div class="form-group">
 													<label for="" class="font">Job Challan no :</label> <input
-														type="text" placeholder="" id="" class="form-control"
-														name="vendorBillNo">
+														type="text" placeholder="" id="jobchallan" class="form-control"
+														name="jobChallanNo">
 												</div>
 												<div class="form-group">
 
 													<label for="" class="font">Asigned Date :</label>
 													<input type="text" class="form-control"
-																name="vendorVATregDate" required="required"
+																name="assignedDate" id="assigneddatet" required="required"
 																id="datepicker" readonly="readonly">
 												</div>
 												
@@ -200,7 +198,7 @@
 										<div class="col-md-6">
 										  <b class="font">Submission Date :</b>
 										  <input type="text" class="form-control"
-																name="submissionDate" required="required"
+																name="submissionDate" name="subDate" required="required"
 																id="datepicker1" readonly="readonly">
 										</div><br><br>
 										<input type="button" class="btn green pull-right"
@@ -233,15 +231,15 @@
 					
 				</div>
 				<div class="modal-body">
-					<span>Product Code :</span> <input type="text" id="prodcode"
+					<span>Product Code :</span> <input type="text" id="prodcode" name="code"
 						class="form-control">
 				</div>
 				<div class="modal-body">
-					<span>Quantity :</span> <input type="text" id="prodqty"
+					<span>Quantity :</span> <input type="text" id="prodqty" name="qty"
 						class="form-control">
 				</div>
 				<div class="modal-body">
-					<span>Describe Work :</span> <textarea rows="5" cols="" id="work"
+					<span>Describe Work :</span> <textarea rows="5" cols="" id="work" name="work"
 														class="form-control"></textarea>
 				</div>
 				<div class="modal-footer">

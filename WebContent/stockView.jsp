@@ -63,69 +63,74 @@
 									</ul>
 								</div>
 								<div class="row">
-								<div class="widget-area" style="width: 34%;">
-									<form role="form" class="sec">
-										<div class="form-group">
-											<label for="" class="">Product Code: </label> <input
-												type="text" placeholder="" id="prodcode" class="form-control">
-											<label for="" class="">Product Description: </label> <input
-												type="text" placeholder="" id="prodesc" class="form-control">
-												<label for="" class="">Department/Sub Department/Category: </label> <input
-												type="text" placeholder="" id="deptcat" class="form-control">
-												
+									<div class="widget-area" style="width: 34%;">
+										<form role="form" class="sec">
+											<div class="form-group">
+												<label for="" class="">Product Code: </label> <input
+													type="text" placeholder="" id="prodcode"
+													class="form-control"> <label for="" class="">Product
+													Description: </label> <input type="text" placeholder=""
+													id="prodesc" class="form-control"> <label for=""
+													class="">Department/Sub Department/Category: </label> <input
+													type="text" placeholder="" id="deptcat"
+													class="form-control">
+
+											</div>
+
+
+											<button class="btn green btn-default" type="submit">Search
+											</button>
+											<button class="btn green btn-default" type="submit">Show
+												All</button>
+										</form>
+										<br> <br>
+
+
+
+									</div>
+									<div class="widget-area" style="width: 66%">
+										<div class="breadcrumbs">
+											<ul>
+												<li><a title="">Stock View : </a></li>
+											</ul>
 										</div>
 
 
-										<button class="btn green btn-default" type="submit">Search
-										</button>
-										<button class="btn green btn-default" type="submit">Show All</button>
-									</form>
-									<br> <br>
-									
+
+										<table id="stream_table"
+											class="table table-striped table-bordered">
+											<thead>
+												<tr>
+													<th>#</th>
+													<th>Product Code:</th>
+													<th>Product Description:</th>
+													<th>Quantity</th>
+													<th>UOM</th>
+													<th>MRP</th>
+
+													<th></th>
+
+												</tr>
+											</thead>
+											<tbody>
+											<c:set var="count" value="${1}"/>
+												<c:forEach items="${sessionScope['ejb'].getAllProductDetail()}" var="pro">
+													<tr>
+														<td>${count}</td>
+														<td>${pro.code}</td>
+														<td>${pro.description}</td>
+														<td>${pro.qtyUnit.name}</td>
+														<td>${pro.isSaleble()?1:sessionScope['ejb'].getRawMaterialStocktDetailByProductId(pro.id).remainingQty}</td>
+														<td>${pro.code}</td>
+														<td><img alt="" src="images/eye.png" height="25px"></td>
+													</tr>
+													<c:set var="count" value="${count+1}"/>
+												</c:forEach>
+											</tbody>
+										</table>
 
 
-								</div>
-								<div class="widget-area" style="width: 66%">
-									<div class="breadcrumbs">
-										<ul>
-											<li><a title="">Stock View : </a></li>
-										</ul>
 									</div>
-
-
-
-									<table id="stream_table"
-										class="table table-striped table-bordered">
-										<thead>
-											<tr>
-                                                <th>#</th>
-												<th>Product Code:</th>
-												<th>Product Description:</th>
-												<th>Quantity</th>
-												<th>UOM</th>
-												<th>MRP</th>
-												
-												<th></th>
-												
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>13 Assassins</td>
-												<td>Takashi Miike</td>
-												<td>Takashi Miike</td>
-												<td>Takashi Miike</td>
-												<td>Takashi Miike</td>
-												<td>Takashi Miike</td>
-												
-												<td><img alt="" src="images/eye.png" height="25px" onclick="viewPage()"></td>
-
-											</tr>
-										</tbody>
-									</table>
-
-
-								</div>
 								</div>
 								<!--<div class="widget-area" style="width: 34%;">
 									<table class="table">
@@ -231,11 +236,11 @@
 										</tbody>
 									</table>
 									</div>-->
-								 
-								 	
-						         
-								
-								
+
+
+
+
+
 							</div>
 						</div>
 					</div>
@@ -246,200 +251,200 @@
 		<!-- Page Container -->
 	</div>
 	<!-- main -->
-		<div id="step8"
+	<div id="step8"
 		style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial; overflow: auto;">
-						<div></div>
-						<div>
-							<fieldset>
-								<legend> Summary </legend>
-								<form action="productSumary" id="fs" method="Post">
-									<h4>
-										<u>Products:</u>
-									</h4>
-									<table>
-										<tr>
-											<td>Code:</td>
-											<td><input id="pcodedisp" name="productCode" type="text"
-												class="form-control " readonly></td>
-										</tr>
-										<tr>
-											<td>&nbsp;</td>
-										<tr>
-										<tr>
-											<td>Description:</td>
-											<td><input type="text" class="form-control "
-												name="description" id="desc" readonly id="description1"></td>
-										</tr>
-										<tr>
-											<td>&nbsp;</td>
-										<tr>
-										<tr>
-											<td>Universal Product Code:</td>
-											<td><input type="text" class="form-control " readonly
-												name="upc" id="upc"></td>
-										<tr>
-										<tr>
-											<td>&nbsp;</td>
-										<tr>
-										<tr>
-											<td>Unit of Measurement:</td>
-											<td><input type="text" class="form-control " readonly
-												name="uom" id="uom1"></td>
-										</tr>
+		<div></div>
+		<div>
+			<fieldset>
+				<legend> Summary </legend>
+				<form action="productSumary" id="fs" method="Post">
+					<h4>
+						<u>Products:</u>
+					</h4>
+					<table>
+						<tr>
+							<td>Code:</td>
+							<td><input id="pcodedisp" name="productCode" type="text"
+								class="form-control " readonly></td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+						<tr>
+						<tr>
+							<td>Description:</td>
+							<td><input type="text" class="form-control "
+								name="description" id="desc" readonly id="description1"></td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+						<tr>
+						<tr>
+							<td>Universal Product Code:</td>
+							<td><input type="text" class="form-control " readonly
+								name="upc" id="upc"></td>
+						<tr>
+						<tr>
+							<td>&nbsp;</td>
+						<tr>
+						<tr>
+							<td>Unit of Measurement:</td>
+							<td><input type="text" class="form-control " readonly
+								name="uom" id="uom1"></td>
+						</tr>
 
-										<tr>
-											<td>&nbsp;</td>
-										<tr>
-										<tr>
-											<td>Is Salable:</td>
-											<td>
-												<div id="tick">
-													<p style="font-size:  29px">&#10004;</p>
-
-
-												</div>
-												<div id="cross">
-													<p style="font-size:29px">&#10007;</p> 
+						<tr>
+							<td>&nbsp;</td>
+						<tr>
+						<tr>
+							<td>Is Salable:</td>
+							<td>
+								<div id="tick">
+									<p style="font-size: 29px">&#10004;</p>
 
 
-												</div>
-											</td>
-										</tr>
-									</table>
-									<hr width="100%">
-									<h4>
-										<u>Add initial inventory:</u>
-									</h4>
-									<table>
-										<tr>
-											<td>Maximum Retail Price:</td>
-											<td><input id="mrp1" class="form-control " readonly
-												type="text" name="mrp1"></td>
-										</tr>
+								</div>
+								<div id="cross">
+									<p style="font-size: 29px">&#10007;</p>
 
-										<tr>
-											<td>&nbsp;</td>
-										<tr>
-										<tr>
-											<td>Wholesale Price:</td>
-											<td><input type="text" class="form-control " readonly
-												name="wsp1" id="wsp"></td>
-										</tr>
-										<tr>
-											<td>&nbsp;</td>
-										<tr>
-										<tr>
-											<td>Quantity:</td>
-											<td><input id="quantity" class="form-control " readonly
-												name="qty1" id="qty" type="text"></td>
-										<tr>
-										<tr>
-											<td>&nbsp;</td>
-										<tr>
 
-											<td>Unit of Measurement:</td>
-											<td><input id="uom" readonly class="form-control "
-												name="uom" id="UOM" type="text"></td>
-										<tr>
-										<tr>
-											<td>&nbsp;</td>
-										<tr>
-										<tr>
-											<td>Unit Cost:</td>
-											<td><input id="ucost" class="form-control " readonly
-												name="ucost" id="cost" type="text"></td>
-										<tr>
-										<tr>
-											<td>&nbsp;</td>
-										<tr>
-										<tr>
-											<td>Date:</td>
-											<td><input id="date2" class="form-control " readonly
-												name="date2" id="date" type="text"></td>
-										</tr>
-									</table>
-									<hr width="100%">
+								</div>
+							</td>
+						</tr>
+					</table>
+					<hr width="100%">
+					<h4>
+						<u>Add initial inventory:</u>
+					</h4>
+					<table>
+						<tr>
+							<td>Maximum Retail Price:</td>
+							<td><input id="mrp1" class="form-control " readonly
+								type="text" name="mrp1"></td>
+						</tr>
 
-									<h4>
-										<u>Initial inventory tracking:</u>
-									</h4>
-									<b>Lot Number:</b> <input class="form-control " type="text"
-										name="lotnumber" id="ltnum"> <br> <b>Serial
-										Number:</b> <br>
-									<div
-										style="width: 190px; height: 224px; border: 1px solid; overflow: auto;">
-										<table align="center">
-											<tr>
-												<td><span id="slNo"></span></td>
-											</tr>
-										</table>
+						<tr>
+							<td>&nbsp;</td>
+						<tr>
+						<tr>
+							<td>Wholesale Price:</td>
+							<td><input type="text" class="form-control " readonly
+								name="wsp1" id="wsp"></td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+						<tr>
+						<tr>
+							<td>Quantity:</td>
+							<td><input id="quantity" class="form-control " readonly
+								name="qty1" id="qty" type="text"></td>
+						<tr>
+						<tr>
+							<td>&nbsp;</td>
+						<tr>
 
-									</div>
-									<hr width="100%">
+							<td>Unit of Measurement:</td>
+							<td><input id="uom" readonly class="form-control "
+								name="uom" id="UOM" type="text"></td>
+						<tr>
+						<tr>
+							<td>&nbsp;</td>
+						<tr>
+						<tr>
+							<td>Unit Cost:</td>
+							<td><input id="ucost" class="form-control " readonly
+								name="ucost" id="cost" type="text"></td>
+						<tr>
+						<tr>
+							<td>&nbsp;</td>
+						<tr>
+						<tr>
+							<td>Date:</td>
+							<td><input id="date2" class="form-control " readonly
+								name="date2" id="date" type="text"></td>
+						</tr>
+					</table>
+					<hr width="100%">
 
-									<h4>
-										<u>Products Custom Field:</u>
-									</h4>
-									<table>
-										<tr>
-											<td>Attribute 1:</td>
-											<td><input readonly class="form-control " id="att1"
-												name="att1"></td>
-										</tr>
-										<tr>
-											<td>&nbsp;</td>
-										<tr>
-										<tr>
-											<td>Attribute 2:</td>
-											<td><input readonly class="form-control " name="a2"
-												id="att2">
-										</tr>
-										<tr>
-											<td>&nbsp;</td>
-										<tr>
-										<tr>
-											<td>Attribute 3:</td>
-											<td><input readonly class="form-control " name="a3"
-												id="att3"></td>
-										</tr>
-										<tr>
-											<td>&nbsp;</td>
-										<tr>
-										<tr>
-											<td>Attribute 4:</td>
-											<td><input readonly class="form-control " name="a4"
-												id="att4"></td>
-										</tr>
-										<tr>
-											<td>&nbsp;</td>
-										<tr>
-										<tr>
-											<td>Attribute 5:</td>
-											<td><input readonly class="form-control " name="a5"
-												id="att5"></td>
-										</tr>
-										<tr>
-											<td>&nbsp;</td>
-										<tr>
-										<tr>
-											<td>Attribute 6:</td>
-											<td><input readonly class="form-control " name="a6"
-												id="att6"></td>
-										</tr>
-									</table>
+					<h4>
+						<u>Initial inventory tracking:</u>
+					</h4>
+					<b>Lot Number:</b> <input class="form-control " type="text"
+						name="lotnumber" id="ltnum"> <br> <b>Serial
+						Number:</b> <br>
+					<div
+						style="width: 190px; height: 224px; border: 1px solid; overflow: auto;">
+						<table align="center">
+							<tr>
+								<td><span id="slNo"></span></td>
+							</tr>
+						</table>
 
-									<hr width="100%">
-									<h4>
-										<u>Product Image Fields:</u>
-									</h4>
-									<div
-										style="width: 190px; height: 224px; border: 1px solid; overflow: auto;">
-									</div>
-									<hr width="100%">
-								</form>
-							</fieldset>
-						</div>
 					</div>
+					<hr width="100%">
+
+					<h4>
+						<u>Products Custom Field:</u>
+					</h4>
+					<table>
+						<tr>
+							<td>Attribute 1:</td>
+							<td><input readonly class="form-control " id="att1"
+								name="att1"></td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+						<tr>
+						<tr>
+							<td>Attribute 2:</td>
+							<td><input readonly class="form-control " name="a2"
+								id="att2">
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+						<tr>
+						<tr>
+							<td>Attribute 3:</td>
+							<td><input readonly class="form-control " name="a3"
+								id="att3"></td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+						<tr>
+						<tr>
+							<td>Attribute 4:</td>
+							<td><input readonly class="form-control " name="a4"
+								id="att4"></td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+						<tr>
+						<tr>
+							<td>Attribute 5:</td>
+							<td><input readonly class="form-control " name="a5"
+								id="att5"></td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+						<tr>
+						<tr>
+							<td>Attribute 6:</td>
+							<td><input readonly class="form-control " name="a6"
+								id="att6"></td>
+						</tr>
+					</table>
+
+					<hr width="100%">
+					<h4>
+						<u>Product Image Fields:</u>
+					</h4>
+					<div
+						style="width: 190px; height: 224px; border: 1px solid; overflow: auto;">
+					</div>
+					<hr width="100%">
+				</form>
+			</fieldset>
+		</div>
+	</div>
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
 	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
@@ -452,11 +457,11 @@
 			$("#stock").attr("id", "activeSubMenu");
 			$("#sStock").attr("style", "color: red;");
 			$("#step8").hide();
-	
+
 		});
-		
-		function viewPage(){
-			window.location='productDisplay.jsp';
+
+		function viewPage() {
+			window.location = 'productDisplay.jsp';
 		}
 	</script>
 </body>

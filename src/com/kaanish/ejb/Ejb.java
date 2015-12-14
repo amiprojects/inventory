@@ -321,6 +321,10 @@ public class Ejb {
 		}
 
 	}
+	public void updateAccountDetails(AccountDetails accountDetails) {
+		em.merge(accountDetails);
+	}
+
 
 	/******************* for purchase entry ***************************/
 	public void setPurchaseEntry(Purchase_Entry purchaseEntry) {
@@ -691,6 +695,12 @@ public class Ejb {
 
 	public RawMaterialsStock getRawMaterialStocktDetailById(int id) {
 		return em.find(RawMaterialsStock.class, id);
+	}
+	
+	public RawMaterialsStock getRawMaterialStocktDetailByProductId(int id) {
+		TypedQuery<RawMaterialsStock> q=em.createQuery("select c from RawMaterialsStock c where c.productDetail.id=:ID",RawMaterialsStock.class);
+		q.setParameter("ID", id);
+		return q.getResultList().size()>0?q.getResultList().get(0):null;
 	}
 
 	public void deleteRawMaterialStockDetailById(int id) {
