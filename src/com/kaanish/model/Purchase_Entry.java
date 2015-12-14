@@ -46,16 +46,12 @@ public class Purchase_Entry {
 	@JoinColumn(name = "vendorId")
 	private Vendor vendor;
 
-	@OneToMany(mappedBy="purchase_Entry",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "purchase_Entry", cascade = CascadeType.ALL)
 	private List<PaymentDetails> paymentDetails;
 
 	@ManyToOne
 	@JoinColumn(name = "paymentStatus")
 	private PaymentStatus paymentStatus;
-
-	@ManyToOne
-	@JoinColumn(name = "paymentType")
-	private PaymentType paymentType;
 
 	public int getId() {
 		return id;
@@ -125,8 +121,7 @@ public class Purchase_Entry {
 		return purchase_Product_Details;
 	}
 
-	public void setPurchase_Product_Details(
-			List<Purchase_Product_Details> purchase_Product_Details) {
+	public void setPurchase_Product_Details(List<Purchase_Product_Details> purchase_Product_Details) {
 		this.purchase_Product_Details = purchase_Product_Details;
 	}
 
@@ -160,14 +155,6 @@ public class Purchase_Entry {
 
 	public void setPaymentStatus(PaymentStatus paymentStatus) {
 		this.paymentStatus = paymentStatus;
-	}
-
-	public PaymentType getPaymentType() {
-		return paymentType;
-	}
-
-	public void setPaymentType(PaymentType paymentType) {
-		this.paymentType = paymentType;
 	}
 
 	public int getChallanSuffix() {

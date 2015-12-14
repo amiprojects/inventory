@@ -27,6 +27,10 @@ public class PaymentDetails {
 	@JoinColumn(name = "purchaseEntryId")
 	private Purchase_Entry purchase_Entry;
 
+	@ManyToOne
+	@JoinColumn(name = "paymentTypeId")
+	private PaymentType paymentType;
+
 	public int getId() {
 		return id;
 	}
@@ -73,6 +77,14 @@ public class PaymentDetails {
 
 	public void setPurchase_Entry(Purchase_Entry purchase_Entry) {
 		this.purchase_Entry = purchase_Entry;
+	}
+
+	public PaymentType getPaymentType() {
+		return paymentType;
+	}
+
+	public void setPaymentType(PaymentType paymentType) {
+		this.paymentType = paymentType;
 	}
 
 }

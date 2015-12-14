@@ -762,7 +762,6 @@ public class Servlet extends HttpServlet {
 								.getParameter("taxGroup"))));
 				purchaseEntry.setPaymentStatus(ejb
 						.getPaymentStatusByStatus("pstatus"));
-				purchaseEntry.setPaymentType(ejb.getPaymentTypeByType("pType"));
 				ejb.setPurchaseEntry(purchaseEntry);
 				
 				paymentDetails.setPaymentDate(DateConverter.getDate(req
@@ -773,6 +772,7 @@ public class Servlet extends HttpServlet {
 						.getParameter("spPaymentAmount")));
 				paymentDetails.setDescription(req.getParameter("desc"));
 				paymentDetails.setPurchase_Entry(purchaseEntry);
+				paymentDetails.setPaymentType(ejb.getPaymentTypeByType("pType"));
 				ejb.setPaymentDetails(paymentDetails);
 
 				String attr1[] = req.getParameterValues("attr1H");
