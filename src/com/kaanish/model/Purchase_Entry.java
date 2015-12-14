@@ -50,11 +50,11 @@ public class Purchase_Entry {
 	private PaymentDetails paymentDetails;
 
 	@ManyToOne
-	@JoinColumn(name = "paymentStatusId")
+	@JoinColumn(name = "paymentStatus")
 	private PaymentStatus paymentStatus;
 
 	@ManyToOne
-	@JoinColumn(name = "paymentTypeId")
+	@JoinColumn(name = "paymentType")
 	private PaymentType paymentType;
 
 	public int getId() {
