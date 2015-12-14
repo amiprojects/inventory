@@ -188,8 +188,6 @@
 										</div><br><br>
 										<input type="button" class="btn green pull-right"
 													value="Save" style="width: 40%" >
-										
-										<input type="hidden" name="isSalable" id="isSalable">
 									</form>
 									
 								</div>
@@ -250,27 +248,14 @@
 		$(function() {
 			$("#datepicker").datepicker();
 		});
-		
-		$("input:radio[name=lot]").click(function() {
-			var value = $(this).val();
-			//alert(value);
-			if (value == "yesLot") {
-				$("#lotText").prop("disabled", false);
-			} else {
-				$("#lotText").prop("disabled", true);
-			}
-		});
-		
-		
-
 		$("#close").click(function() {
 			$("#addProduct").modal("hide");
-			$("#header").show();
+			
 		});
 		
 		$("#close1").click(function() {
 			$("#addProduct").modal("hide");
-			$("#header").modal("hide");
+			
 		});
 		
 	</script>
