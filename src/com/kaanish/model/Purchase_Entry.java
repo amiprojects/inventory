@@ -3,6 +3,7 @@ package com.kaanish.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -45,17 +46,12 @@ public class Purchase_Entry {
 	@JoinColumn(name = "vendorId")
 	private Vendor vendor;
 
-	@ManyToOne
-	@JoinColumn(name = "paymentDetailsId")
-	private PaymentDetails paymentDetails;
+	@OneToMany(mappedBy = "purchase_Entry", cascade = CascadeType.ALL)
+	private List<PaymentDetails> paymentDetails;
 
 	@ManyToOne
 	@JoinColumn(name = "paymentStatus")
 	private PaymentStatus paymentStatus;
-
-	@ManyToOne
-	@JoinColumn(name = "paymentType")
-	private PaymentType paymentType;
 
 	public int getId() {
 		return id;
@@ -125,8 +121,7 @@ public class Purchase_Entry {
 		return purchase_Product_Details;
 	}
 
-	public void setPurchase_Product_Details(
-			List<Purchase_Product_Details> purchase_Product_Details) {
+	public void setPurchase_Product_Details(List<Purchase_Product_Details> purchase_Product_Details) {
 		this.purchase_Product_Details = purchase_Product_Details;
 	}
 
@@ -154,14 +149,6 @@ public class Purchase_Entry {
 		this.bill_setup = bill_setup;
 	}
 
-	public PaymentDetails getPaymentDetails() {
-		return paymentDetails;
-	}
-
-	public void setPaymentDetails(PaymentDetails paymentDetails) {
-		this.paymentDetails = paymentDetails;
-	}
-
 	public PaymentStatus getPaymentStatus() {
 		return paymentStatus;
 	}
@@ -170,20 +157,20 @@ public class Purchase_Entry {
 		this.paymentStatus = paymentStatus;
 	}
 
-	public PaymentType getPaymentType() {
-		return paymentType;
-	}
-
-	public void setPaymentType(PaymentType paymentType) {
-		this.paymentType = paymentType;
-	}
-
 	public int getChallanSuffix() {
 		return challanSuffix;
 	}
 
 	public void setChallanSuffix(int challanSuffix) {
 		this.challanSuffix = challanSuffix;
+	}
+
+	public List<PaymentDetails> getPaymentDetails() {
+		return paymentDetails;
+	}
+
+	public void setPaymentDetails(List<PaymentDetails> paymentDetails) {
+		this.paymentDetails = paymentDetails;
 	}
 
 }

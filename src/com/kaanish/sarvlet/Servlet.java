@@ -736,15 +736,6 @@ public class Servlet extends HttpServlet {
 
 				dt = new Date();
 
-				paymentDetails.setPaymentDate(DateConverter.getDate(req
-						.getParameter("purchaseDate")));
-				paymentDetails.setTotalAmount(Float.parseFloat(req
-						.getParameter("spAmount")));
-				paymentDetails.setPaidAmount(Float.parseFloat(req
-						.getParameter("spPaymentAmount")));
-				paymentDetails.setDescription(req.getParameter("desc"));
-				ejb.setPaymentDetails(paymentDetails);
-
 				purchaseEntry.setChallan_no(Integer.parseInt(req
 						.getParameter("challanNo")));
 				purchaseEntry.setChallanSuffix(Integer.parseInt(req
@@ -768,9 +759,18 @@ public class Servlet extends HttpServlet {
 								.getParameter("taxGroup"))));
 				purchaseEntry.setPaymentStatus(ejb
 						.getPaymentStatusByStatus("pstatus"));
-				purchaseEntry.setPaymentType(ejb.getPaymentTypeByType("pType"));
-				purchaseEntry.setPaymentDetails(paymentDetails);
 				ejb.setPurchaseEntry(purchaseEntry);
+				
+				paymentDetails.setPaymentDate(DateConverter.getDate(req
+						.getParameter("purchaseDate")));
+				paymentDetails.setTotalAmount(Float.parseFloat(req
+						.getParameter("spAmount")));
+				paymentDetails.setPaidAmount(Float.parseFloat(req
+						.getParameter("spPaymentAmount")));
+				paymentDetails.setDescription(req.getParameter("desc"));
+				paymentDetails.setPurchase_Entry(purchaseEntry);
+				paymentDetails.setPaymentType(ejb.getPaymentTypeByType("pType"));
+				ejb.setPaymentDetails(paymentDetails);
 
 				String attr1[] = req.getParameterValues("attr1H");
 				String attr2[] = req.getParameterValues("attr2H");

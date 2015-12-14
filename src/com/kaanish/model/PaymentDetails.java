@@ -1,14 +1,13 @@
 package com.kaanish.model;
 
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -24,8 +23,13 @@ public class PaymentDetails {
 	private float totalAmount;
 	private float paidAmount;
 
-	@OneToMany(mappedBy = "paymentDetails", cascade = CascadeType.ALL)
-	private List<Purchase_Entry> purchase_Entries;
+	@ManyToOne
+	@JoinColumn(name = "purchaseEntryId")
+	private Purchase_Entry purchase_Entry;
+
+	@ManyToOne
+	@JoinColumn(name = "paymentTypeId")
+	private PaymentType paymentType;
 
 	public int getId() {
 		return id;
@@ -41,14 +45,6 @@ public class PaymentDetails {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public List<Purchase_Entry> getPurchase_Entries() {
-		return purchase_Entries;
-	}
-
-	public void setPurchase_Entries(List<Purchase_Entry> purchase_Entries) {
-		this.purchase_Entries = purchase_Entries;
 	}
 
 	public Date getPaymentDate() {
@@ -73,6 +69,22 @@ public class PaymentDetails {
 
 	public void setPaidAmount(float paidAmount) {
 		this.paidAmount = paidAmount;
+	}
+
+	public Purchase_Entry getPurchase_Entry() {
+		return purchase_Entry;
+	}
+
+	public void setPurchase_Entry(Purchase_Entry purchase_Entry) {
+		this.purchase_Entry = purchase_Entry;
+	}
+
+	public PaymentType getPaymentType() {
+		return paymentType;
+	}
+
+	public void setPaymentType(PaymentType paymentType) {
+		this.paymentType = paymentType;
 	}
 
 }
