@@ -52,12 +52,7 @@
 			maxDate : 0
 		});
 	});
-	$(function() {
-		$("#datepicker2").datepicker({
-			dateFormat : "dd-mm-yy",
-			maxDate : 0
-		});
-	});
+	
 </script>
 <script type="text/javascript">
 	$(document).ready(function() {
