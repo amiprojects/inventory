@@ -829,6 +829,7 @@ public class Servlet extends HttpServlet {
 				}
 				if (req.getParameter("isBarPrint").equals("yes")) {
 					req.setAttribute("print", 1);
+					req.setAttribute("purDet", purchaseEntry);
 				} else {
 					req.setAttribute("print", 0);
 				}
