@@ -24,6 +24,9 @@ import com.kaanish.model.City;
 import com.kaanish.model.CompanyInfo;
 import com.kaanish.model.Country;
 import com.kaanish.model.Department;
+import com.kaanish.model.PaymentDetails;
+import com.kaanish.model.PaymentStatus;
+import com.kaanish.model.PaymentType;
 import com.kaanish.model.ProductDetail;
 import com.kaanish.model.Purchase_Entry;
 import com.kaanish.model.Purchase_Product_Details;
@@ -43,12 +46,17 @@ import com.kaanish.model.VendorType;
 import com.kaanish.util.DateConverter;
 
 @MultipartConfig
-@WebServlet({ "/login", "/logout", "/addTax", "/addTaxGroup", "/editTax", "/deleteTax", "/editTaxGroup",
-		"/deleteTaxGroup", "/createDept", "/deleteDept", "/createSubDept", "/deleteSubDept", "/createCategory",
-		"/deleteCategory", "/newVendorType", "/addCountry", "/addState", "/createProduct", "/deleteCountry",
-		"/addVendor", "/addUOM", "/editVendorType", "/deleteVendorType", "/addCity", "/deleteState", "/deleteCity",
-		"/productSumary", "/addNewConversion", "/purchaseEntry", "/updateConversion", "/addBillSetup",
-		"/updateCompanyInfo", "/addBillSetup", "/updateCompanyInfo" })
+
+@WebServlet({ "/login", "/logout", "/addTax", "/addTaxGroup", "/editTax",
+		"/deleteTax", "/editTaxGroup", "/deleteTaxGroup", "/createDept",
+		"/deleteDept", "/createSubDept", "/deleteSubDept", "/createCategory",
+		"/deleteCategory", "/newVendorType", "/addCountry", "/addState",
+		"/createProduct", "/deleteCountry", "/addVendor", "/addUOM",
+		"/editVendorType", "/deleteVendorType", "/addCity", "/deleteState",
+		"/deleteCity", "/productSumary", "/addNewConversion", "/purchaseEntry",
+		"/updateConversion", "/addBillSetup", "/updateCompanyInfo",
+		"/updateVendor", "/purchaseSearchByDate" })
+
 public class Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -82,6 +90,9 @@ public class Servlet extends HttpServlet {
 	private RawMaterialsStock rawMaterialsStock;
 	private ReadyGoodsStock readyGoodsStock;
 	private SerialNumber serialNumber;
+	private PaymentStatus paymentStatus;
+	private PaymentType paymentType;
+	private PaymentDetails paymentDetails;
 
 	@Override
 	public void init() throws ServletException {
@@ -103,6 +114,50 @@ public class Servlet extends HttpServlet {
 			}
 
 		}
+		if (ejb.getAllPaymentStatus().size() < 3) {
+
+			List<String> str = new ArrayList<>();
+			str.add("Full Paid");
+			str.add("Semi Paid");
+			str.add("Not Paid");
+
+			for (String s : str) {
+				paymentStatus = new PaymentStatus();
+				paymentStatus.setStatus(s);
+				ejb.setPaymentStatus(paymentStatus);
+			}
+
+		}
+		if (ejb.getAllPaymentType().size() < 3) {
+
+			List<String> str = new ArrayList<>();
+			str.add("Cash");
+			str.add("Cheque");
+			str.add("Bank Transfer");
+
+			for (String s : str) {
+				paymentType = new PaymentType();
+				paymentType.setType(s);
+				ejb.setPaymentType(paymentType);
+			}
+
+		}
+		if (ejb.getAllVendorType().size() < 4) {
+
+			List<String> str = new ArrayList<>();
+			str.add("Vendor");
+			str.add("Sales Agent");
+			str.add("Purchase Agent");
+			str.add("Jobber");
+
+			for (String s : str) {
+				vendorType = new VendorType();
+				vendorType.setType(s);
+				ejb.setVendorType(vendorType);
+			}
+
+		}
+
 		if (!ejb.isCompanyInfoExist()) {
 			companyInfo = new CompanyInfo();
 			ejb.setCompanyInfo(companyInfo);
@@ -296,6 +351,57 @@ public class Servlet extends HttpServlet {
 
 				ejb.updateVendorType(vendorType);
 				msg = "Vendor type updated successfully.";
+				break;
+
+			case "updateVendor":
+				page = "purchasingVendor.jsp";
+				vendor = ejb.getVendorById(Integer.parseInt(req
+						.getParameter("vendoeId")));// vendorid
+
+				vendor.setName(req.getParameter("vendorName"));
+				vendor.setCompanyName(req.getParameter("vendorCompanyName"));
+				vendor.setPh1(req.getParameter("vendorPh1"));
+				vendor.setPh2(req.getParameter("vendorPh2"));
+				vendor.setEmail(req.getParameter("vendorMail"));
+				vendor.setAliseName(req.getParameter("vendorAlias"));
+				vendor.setAddress(req.getParameter("vendorAddress"));
+				vendor.setPinCode(req.getParameter("vendorPin"));
+				vendor.setVendorType(ejb.getVendorTypeById(Integer.parseInt(req
+						.getParameter("vendorType"))));
+				vendor.setCity(ejb.getCityById(Integer.parseInt(req
+						.getParameter("vendorCityId"))));
+
+				accountDetails = ejb.getAccountDetailsByVendorId(Integer
+						.parseInt(req.getParameter("vendoeId")));// vender
+																	// id
+
+				accountDetails.setVatNumber(req.getParameter("vendorVATno"));
+				accountDetails.setVatRegistrationDate(DateConverter.getDate(req
+						.getParameter("vendorVATregDate")));
+				accountDetails.setCstNumber(req.getParameter("vendorCSTno"));
+				accountDetails.setCstRegistrationDate(DateConverter.getDate(req
+						.getParameter("vendorVATregDate")));
+				accountDetails.setPanNumber(req.getParameter("vendorPANno"));
+				accountDetails.setExciseRegistrationNumber(req
+						.getParameter("vendorExciseRegNo"));
+				accountDetails.setExciseRegistrationDate(DateConverter
+						.getDate(req.getParameter("vendorExciseRegDate")));
+				accountDetails.setServiceTaxRegistrationNumber(req
+						.getParameter("vendorServiceTaxRegNo"));
+				accountDetails.setServiceTaxRegistrationDate(DateConverter
+						.getDate(req.getParameter("vendorServiceTaxRegDate")));
+				accountDetails.setBankName(req.getParameter("bankName"));
+				accountDetails.setBankAccountNumber(req
+						.getParameter("bankAccNo"));
+				accountDetails.setBranch(req.getParameter("bankBranch"));
+				accountDetails.setCity(ejb.getCityById(Integer.parseInt(req
+						.getParameter("bankCity"))));
+				accountDetails.setBankIFSCnumber(req.getParameter("bankIFSC"));
+				accountDetails.setBankMICRnumber(req.getParameter("bankMICR"));
+				accountDetails.setBankRTGCnumber(req.getParameter("bankRTGS"));
+				ejb.updateVendor(vendor);
+				ejb.updateAccountDetails(accountDetails);
+				msg = "Vendor details updated successfully.";
 				break;
 
 			case "deleteVendorType":
@@ -646,28 +752,49 @@ public class Servlet extends HttpServlet {
 				page = "purchasingPurchaseEntry.jsp";
 
 				purchaseEntry = new Purchase_Entry();
+				paymentDetails = new PaymentDetails();
 
-				/*
-				 * rawMaterialsStock = new RawMaterialsStock(); readyGoodsStock
-				 * = new ReadyGoodsStock();
-				 */
 				dt = new Date();
-
-				purchaseEntry.setChallan_no(Integer.parseInt(req.getParameter("challanNo")));
-				purchaseEntry.setChallanSuffix(Integer.parseInt(req.getParameter("challanSuffix")));
-				purchaseEntry.setVendor_bill_no(req.getParameter("vendorBillNo"));
-				purchaseEntry.setPurchase_date(DateConverter.getDate(req.getParameter("purchaseDate")));
-				purchaseEntry.setVendor(ejb.getVendorById(Integer.parseInt(req.getParameter("vId"))));
-				purchaseEntry.setUsers(ejb.getUserById(httpSession.getAttribute("user").toString()));
+				purchaseEntry.setChallan_no(Integer.parseInt(req
+						.getParameter("challanNo")));
+				purchaseEntry.setChallanSuffix(Integer.parseInt(req
+						.getParameter("challanSuffix")));
+				purchaseEntry.setChallanNumber(req
+						.getParameter("challanNumber"));
+				purchaseEntry.setVendor_bill_no(req
+						.getParameter("vendorBillNo"));
+				purchaseEntry.setPurchase_date(DateConverter.getDate(req
+						.getParameter("purchaseDate")));
+				purchaseEntry.setVendor(ejb.getVendorById(Integer.parseInt(req
+						.getParameter("vId"))));
+				purchaseEntry.setUsers(ejb.getUserById(httpSession
+						.getAttribute("user").toString()));
 				purchaseEntry.setEntry_date(dt);
 
-				purchaseEntry.setSur_charge(Integer.parseInt(req.getParameter("surcharge")));
-				purchaseEntry.setTransport_cost(Integer.parseInt(req.getParameter("transportCost")));
-				purchaseEntry
-						.setTax_Type_Group(ejb.getTax_Type_GroupById(Integer.parseInt(req.getParameter("taxGroup"))));
-
-				// purchaseEntry.setBill_setup();
+				purchaseEntry.setSur_charge(Float.parseFloat(req
+						.getParameter("surcharge")));
+				purchaseEntry.setTransport_cost(Float.parseFloat(req
+						.getParameter("transportCost")));
+				purchaseEntry.setTotalCost(Float.parseFloat(req
+						.getParameter("spAmount")));
+				purchaseEntry.setTax_Type_Group(ejb
+						.getTax_Type_GroupById(Integer.parseInt(req
+								.getParameter("taxGroup"))));
 				ejb.setPurchaseEntry(purchaseEntry);
+
+				paymentDetails.setPaymentDate(DateConverter.getDate(req
+						.getParameter("purchaseDate")));
+				paymentDetails.setTotalAmount(Float.parseFloat(req
+						.getParameter("spAmount")));
+				paymentDetails.setPaidAmount(Float.parseFloat(req
+						.getParameter("spPaymentAmount")));
+				paymentDetails.setDescription(req.getParameter("desc"));
+				paymentDetails.setPurchase_Entry(purchaseEntry);
+				paymentDetails.setPaymentType(ejb.getPaymentTypeByType(req
+						.getParameter("pType")));
+				paymentDetails.setPaymentStatus(ejb
+						.getPaymentStatusByStatus(req.getParameter("pstatus")));
+				ejb.setPaymentDetails(paymentDetails);
 
 				String attr1[] = req.getParameterValues("attr1H");
 				String attr2[] = req.getParameterValues("attr2H");
@@ -680,7 +807,6 @@ public class Servlet extends HttpServlet {
 				String wsp[] = req.getParameterValues("wspH");
 
 				String qty[] = req.getParameterValues("qtyH");
-				String remQty[] = req.getParameterValues("qtyH");
 				String cost[] = req.getParameterValues("rateH");
 				String productId[] = req.getParameterValues("pCodeIdH");
 
@@ -699,42 +825,88 @@ public class Servlet extends HttpServlet {
 						purchaseProductDetails.setWsp(Float.parseFloat(wsp[l]));
 					}
 
-					purchaseProductDetails.setQuantity(Integer.parseInt(qty[l]));
-					int lq = Integer.parseInt(qty[l]);
-					int InitialSlNo = Integer.parseInt(req.getParameter("serialH"));
+					purchaseProductDetails
+							.setQuantity(Integer.parseInt(qty[l]));
 
-					purchaseProductDetails.setRemaining_quantity(Integer.parseInt(remQty[l]));
-
+					purchaseProductDetails.setRemaining_quantity(Integer
+							.parseInt(qty[l]));
 					purchaseProductDetails.setCost(Integer.parseInt(cost[l]));
 					purchaseProductDetails.setPurchase_Entry(purchaseEntry);
 					ejb.setPurchaseProductDetails(purchaseProductDetails);
+					int lq = Integer.parseInt(qty[l]);
+					if (req.getParameter("isSerial").equals("yes")) {
+						int InitialSlNo = Integer.parseInt(req
+								.getParameter("serialH"));
+						for (int ln = 0; ln < lq; ln++) {
+							serialNumber = new SerialNumber();
+							serialNumber.setSerialNumber(String
+									.valueOf(InitialSlNo));
+							InitialSlNo++;
+							if (req.getParameter("isLot").equals("yes")) {
+								serialNumber.setLotNo(req.getParameter("lotH"));
+							}
+							// serialNumber.setBarcode();
+							serialNumber
+									.setPurchase_Product_Details(purchaseProductDetails);
+							ejb.setSerialNumber(serialNumber);
+							serialNumber = null;
+						}
+					} else {
+						if (req.getParameter("isLot").equals("yes")) {
+							for (int ln = 0; ln < lq; ln++) {
+								serialNumber = new SerialNumber();
+								serialNumber.setLotNo(req.getParameter("lotH"));
+								// serialNumber.setBarcode();
+								serialNumber
+										.setPurchase_Product_Details(purchaseProductDetails);
+								ejb.setSerialNumber(serialNumber);
 
-					for (int ln = 0; ln < lq; ln++) {
-						serialNumber = new SerialNumber();
-						serialNumber.setSerialNumber("" + InitialSlNo);
-						InitialSlNo++;
-						serialNumber.setLotNo(req.getParameter("lotH"));
-						// serialNumber.setBarcode();
-						serialNumber.setPurchase_Product_Details(purchaseProductDetails);
-						ejb.setSerialNumber(serialNumber);
-						serialNumber = null;
+								serialNumber = null;
+							}
+						}
+					}
+					if (req.getParameter("isSalable").equals("yes")) {
+						readyGoodsStock = ejb
+								.getReadyGoodsStoctByProductId(purchaseProductDetails
+										.getProductDetail().getId());
+						readyGoodsStock.setProductDetail(ejb
+								.getProductDetailsById(Integer
+										.parseInt(productId[l])));
+						readyGoodsStock.setRemainingQty(readyGoodsStock
+								.getRemainingQty() + Integer.parseInt(qty[l]));
+						ejb.updateReadyGoodsStockDetail(readyGoodsStock);
+						readyGoodsStock = null;
+					} else {
+						// rawMaterialsStock = new RawMaterialsStock();
+						rawMaterialsStock = ejb
+								.getRawMeterialStoctByProductId(purchaseProductDetails
+										.getProductDetail().getId());
+						rawMaterialsStock.setProductDetail(ejb
+								.getProductDetailsById(Integer
+										.parseInt(productId[l])));
+						rawMaterialsStock.setRemainingQty(rawMaterialsStock
+								.getRemainingQty() + Integer.parseInt(qty[l]));
+						ejb.updateRawMaterialStockDetail(rawMaterialsStock);
+						rawMaterialsStock = null;
 					}
 
 					purchaseProductDetails = null;
 				}
-
-				// purchaseProductDetails.setInitialInventory();
-				// purchaseProductDetails.setProductDetail();
-				// rawMaterialsStock.setProductDetail();
-				// rawMaterialsStock.setRemainingQty(Integer.parseInt(req.getParameter("")));
-
-				// readyGoodsStock.setProductDetail();
-				// readyGoodsStock.setRemainingQty(Integer.parseInt(req.getParameter("")));
-
-				// ejb.setRawMaterialsStocktDetail(rawMaterialsStock);
-				// ejb.setReadyGoodsStockDetail(readyGoodsStock);
-
+				if (req.getParameter("isBarPrint").equals("yes")) {
+					req.setAttribute("print", 1);
+					req.setAttribute("purDet", purchaseEntry);
+				} else {
+					req.setAttribute("print", 0);
+				}
 				msg = "Purchase entry was successfull.";
+				break;
+
+			case "purchaseSearchByDate":
+				page = "purchasingPurchaseSearch.jsp";
+				List<Purchase_Entry> purEntryList = ejb.getPurchaseEntryByDate(
+						DateConverter.getDate(req.getParameter("fDate")),
+						DateConverter.getDate(req.getParameter("lDate")));
+				req.setAttribute("purEntryList", purEntryList);
 				break;
 
 			case "addUOM":

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
 <html>
@@ -23,6 +24,8 @@
 		if ($('#msg').html() != "") {
 			$('.toast').fadeIn(400).delay(3000).fadeOut(400);
 		}
+		
+		$("#type").val($("#oldVendortypeID").val());
 	});
 	
 	function fillFields(){
@@ -154,7 +157,7 @@ $(document).ready(function(){
 	}
 
 	$(function() {
-		$("#bankCity").autocomplete({
+		$("#bankcity").autocomplete({
 			source : function(req, resp) {
 				$.ajax({
 					type : "post",
@@ -188,7 +191,7 @@ $(document).ready(function(){
 		});
 	});
 	$(function() {
-		$("#vendorCity").autocomplete({
+		$("#vendorcity").autocomplete({
 			source : function(req, resp) {
 				$.ajax({
 					type : "post",
@@ -250,6 +253,10 @@ $(document).ready(function(){
 			maxDate : 0
 		});
 	});
+	
+	function submitVendorDetails(){
+		 $("#vendordetails").submit();
+	 }
 </script>
 
 </head>
@@ -282,7 +289,9 @@ $(document).ready(function(){
 								
 								<div class="widget-area" style="width: 72%">
 									<%-- <p>${requestScope['msg']}</p> --%>
-									<form role="form" class="sec" action="addVendor" method="post">
+									<form role="form" class="sec" action="updateVendor" method="post" id="vendordetails">
+									   <input type="hidden" value="${param.id}" name="vendoeId" id="vendorid">
+									   
 										<ul class="nav nav-tabs">
 											<li class="active" id="detl"><a data-toggle="tab"
 												href="#detail">Details</a></li>
@@ -324,7 +333,7 @@ $(document).ready(function(){
 														<b>City:</b>
 													</div>
 													<div class="col-md-9">
-														<input type="text" class="form-control" id="bankCity"
+														<input type="text" class="form-control" id="bankcity"
 															required="required"  value="${account.city.cityName}"> <input type="hidden"
 															value="${account.city.id}" name="bankCity" id="bankCityId">
 													</div>
@@ -368,7 +377,7 @@ $(document).ready(function(){
 													<!-- <input
 														class="btn green pull-left" type="button" value="Next"
 														onclick="partButtonNext();"> -->
-													<button class="btn green pull-right" type="submit">Finish</button>
+													
 												</div>
 												<!-- <div class="col-md-12">
 													<input type="button" value="Next"
@@ -392,9 +401,10 @@ $(document).ready(function(){
 															<b>VAT registration date:</b>
 														</div>
 														<div class="col-md-7">
+														<fmt:formatDate value="${account.vatRegistrationDate}" var="vatregdate" pattern="dd-MM-yyyy"/>
 															<input type="text" class="form-control"
 																name="vendorVATregDate" required="required"
-																id="datepicker" readonly="readonly"  value="${account.vatRegistrationDate}">
+																id="datepicker" readonly="readonly"  value="${vatregdate}">
 														</div>
 													</div>
 
@@ -413,9 +423,10 @@ $(document).ready(function(){
 															<b>CST registration date:</b>
 														</div>
 														<div class="col-md-7">
+														<fmt:formatDate value="${account.cstRegistrationDate}" var="cstregdate" pattern="dd-MM-yyyy"/>
 															<input type="text" class="form-control"
 																name="vendorCSTregDate" required="required"
-																id="datepicker1" readonly="readonly" value="${account.cstRegistrationDate}">
+																id="datepicker1" readonly="readonly" value="${cstregdate}">
 														</div>
 													</div>
 
@@ -444,9 +455,10 @@ $(document).ready(function(){
 															<b>Excise registration date:</b>
 														</div>
 														<div class="col-md-7">
+														<fmt:formatDate value="${account.exciseRegistrationDate}" var="exciseregdate" pattern="dd-MM-yyyy"/>
 															<input type="text" class="form-control"
 																name="vendorExciseRegDate" required="required"
-																id="datepicker2" readonly="readonly" value="${account.exciseRegistrationDate}">
+																id="datepicker2" readonly="readonly" value="${exciseregdate}">
 														</div>
 													</div>
 
@@ -465,9 +477,10 @@ $(document).ready(function(){
 															<b>Service tax registration date:</b>
 														</div>
 														<div class="col-md-7">
+														<fmt:formatDate value="${account.serviceTaxRegistrationDate}" var="serviceregdate" pattern="dd-MM-yyyy"/>
 															<input type="text" class="form-control"
 																name="vendorServiceTaxRegDate" required="required"
-																id="datepicker3" readonly="readonly" value="${account.serviceTaxRegistrationDate}">
+																id="datepicker3" readonly="readonly" value="${serviceregdate}">
 														</div>
 													</div>
 													<div class="row">
@@ -549,24 +562,14 @@ $(document).ready(function(){
 														<b>Vendor type :</b>
 													</div>
 													<div class="col-md-9">
-														<select class="form-control" name="vendorType" id="type"  value="${vendor.vendorType}">
+													<input type="hidden" id="oldVendortypeID" value="${vendor.vendorType.id}">
+														<select class="form-control" name="vendorType" id="type">
 															<c:forEach
 																items="${sessionScope['ejb'].getAllVendorType()}"
 																var="vType">
 																<option value="${vType.id}">${vType.type}</option>
 															</c:forEach>
 														</select>
-													</div>
-
-													<div class="breadcrumbs">
-														<ul>
-															<li><a title="" class="font">Change History</a></li>
-														</ul>
-														<hr>
-													</div>
-
-													<div class="row">
-														<b>Last modified date :</b>
 													</div>
 												</div>
 												<br>
@@ -589,7 +592,7 @@ $(document).ready(function(){
 													<div class="row">
 														<div class="col-md-3">City :</div>
 														<div class="col-md-9">
-															<input type="text" class="form-control cityAuto"
+															<input type="text" class="form-control cityAuto" id="vendorcity"
 																name="vendorCity" required="required"  value="${vendor.city.cityName}">
 															<input type="hidden" name="vendorCityId" value="${account.city.id}"
 																id="vendorCityId">
@@ -609,7 +612,7 @@ $(document).ready(function(){
 														value="Previous" onclick="addressButtonPrev();"> <input
 														class="btn green pull-right" type="button" value="Next"
 														onclick="addressButtonNext();">
-												</div>
+												</div><br>
 											</div>
 											<div id="part" class="tab-pane fade ">
 												<div class="widget-area">
@@ -681,10 +684,9 @@ $(document).ready(function(){
 													</table>
 												</div>
 												<br>
-
 											</div>
-
 										</div>
+										<input type="button" class="btn green pull-left" type="submit" style="width: 100px;margin-top: 27px;" value="Submit" onclick="submitVendorDetails();">
 									</form>
 									<div class='toast' style='display: none'>
 										<h3 id="msg">${requestScope['msg']}</h3>

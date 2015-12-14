@@ -52,122 +52,88 @@
 			maxDate : 0
 		});
 	});
-	$(function() {
+	/* $(function() {
 		$("#datepicker2").datepicker({
 			dateFormat : "dd-mm-yy",
 			maxDate : 0
 		});
-	});
+	}); */
 </script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#purch").attr("id", "activeSubMenu");
 		$("#sPurchEntry").attr("style", "color: red;");
-		$("#notpaid").hide();
-		$("#semipaid").hide();
-		$("#fullpaid").hide();
-		$("#cash").hide();
-		$("#bank").hide();
-		$("#cheque").hide();
-		$("#scash").hide();
+		$("#payDetail").hide();
+		$("#description").hide();
 
 	});
 	function closePayment() {
-		$("#notpaid").hide();
-		$("#semipaid").hide();
-		$("#fullpaid").hide();
-		$("#cash").hide();
-		$("#bank").hide();
-		$("#cheque").hide();
-		$("#scash").hide();
+		$("#payDetail").hide();
+		$("#description").hide();
 		$("#pstatus").val('-');
+		$("#pType").val('-');
 	}
-	function pstatus() {
+	function pStatusDiv() {
 		var val = $('[name="pstatus"]').val();
+		$("#payDetail").show();
 		//alert(val);
 		if (val == '-') {
 			alert('Please select Payment status...');
-			$("#notpaid").hide();
-			$("#semipaid").hide();
-			$("#fullpaid").hide();
-			$("#bank").hide();
-			$("#cheque").hide();
-		} else if (val == 'npaid') {
-			$("#notpaid").show();
-			$("#fullpaid").hide();
-			$("#semipaid").hide();
-			$("#bank").hide();
-			$("#cheque").hide();
-			$("#notPaidDueAmount").val(Number($("#gt").val()));
-		} else if (val == 'fpaid') {
-			$("#fullpaid").show();
-			$("#notpaid").hide();
-			$("#semipaid").hide();
-			$("#bank").hide();
-			$("#cheque").hide();
-			$("#fullPaidAmount").val(Number($("#gt").val()));
-		} else if (val == 'spaid') {
-			$("#semipaid").show();
-			$("#notpaid").hide();
-			$("#fullpaid").hide();
-			$("#bank").hide();
-			$("#cheque").hide();
+			$("#payDetail").hide();
+			$("#description").hide();
+		} else if (val == 'Not Paid') {
+			$("#pPayAmount").hide();
+			$("#pAmount").hide();
+			$("#pDate").hide();
+			$("#pTypeDiv").hide();
+			$("#pDueAmount").show();
+			$("#description").show();
 			$("#spAmount").val(Number($("#gt").val()));
+			$("#spPaymentAmount").val(Number(0));
+			$("#spDueAmount").val(
+					Number($("#spAmount").val())
+							- Number($("#spPaymentAmount").val()));
+		} else if (val == 'Full Paid') {
+			$("#pPayAmount").hide();
+			$("#pDueAmount").hide();
+			$("#pAmount").show();
+			$("#pDate").show();
+			$("#pTypeDiv").show();
+			$("#description").hide();
+			$("#spAmount").val(Number($("#gt").val()));
+			$("#spPaymentAmount").val(Number($("#gt").val()));
+			$("#spDueAmount").val(
+					Number($("#spAmount").val())
+							- Number($("#spPaymentAmount").val()));
+		} else if (val == 'Semi Paid') {
+			$("#pPayAmount").show();
+			$("#pDueAmount").show();
+			$("#pAmount").show();
+			$("#pDate").show();
+			$("#pTypeDiv").show();
+			$("#description").hide();
+			$("#spAmount").val(Number($("#gt").val()));
+			$("#spPaymentAmount").val(Number(0));
 			$("#spDueAmount").val(
 					Number($("#spAmount").val())
 							- Number($("#spPaymentAmount").val()));
 		}
 	}
-	function spPaymentAmount() {
+	function spPaymentAmountFunc() {
 		$("#spDueAmount").val(
 				Number($("#spAmount").val())
 						- Number($("#spPaymentAmount").val()));
 	}
-	function fptype() {
-		var val = $('[name="fptype"]').val();
+	function pTypeFunc() {
+		$("#description").show();
+		var val = $('[name="pType"]').val();
 		if (val == '-') {
-			alert('Please select Payment type...');
-			$("#cash").hide();
-			$("#bank").hide();
-			$("#cheque").hide();
-		} else if (val == 'cash') {
-			$("#cash").show();
-			$("#cheque").hide();
-			$("#bank").hide();
-		} else if (val == 'cheq') {
-			$("#cheque").show();
-			$("#cash").hide();
-			$("#bank").hide();
-		} else if (val == 'btra') {
-			$("#bank").show();
-			$("#cheque").hide();
-			$("#cash").hide();
-		}
-	}
-	function sptype() {
-		var val = $('[name="sptype"]').val();
-		if (val == '-') {
-			alert('Please select Payment type...');
-			$("#scash").hide();
-			$("#bank").hide();
-			$("#cheque").hide();
-		} else if (val == 'cash') {
-			$("#scash").show();
-			$("#cheque").hide();
-			$("#bank").hide();
-		} else if (val == 'cheq') {
-			$("#cheque").show();
-			$("#scash").hide();
-			$("#bank").hide();
-		} else if (val == 'btra') {
-			$("#bank").show();
-			$("#cheque").hide();
-			$("#scash").hide();
+			alert('Please select Payment Type...');
+			$("#description").hide();
 		}
 	}
 </script>
 <link rel="stylesheet" href="css/toast.css" type="text/css" />
-<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		if ($('#msg').html() != "") {
@@ -177,6 +143,11 @@
 </script>
 </head>
 <body>
+	<c:if test="${requestScope['print']==1}">
+		<script type="text/javascript">
+			window.open('barcodePrint.jsp', 'name', 'width=600,height=400');
+		</script>
+	</c:if>
 	<c:if test="${sessionScope['user']==null}">
 		<c:redirect url="index.jsp" />
 	</c:if>
@@ -207,7 +178,7 @@
 												<div class="col-md-12">
 													&nbsp; &nbsp; &nbsp; <b class="font">Vendor Type :</b> <select
 														class="form-control" name="vendorType"
-														onchange="getVendorNameByType();">
+														onchange="getVendorNameByType();" required="required">
 														<option value="0">Select Vendor Type</option>
 														<c:forEach
 															items="${sessionScope['ejb'].getAllVendorType()}"
@@ -218,8 +189,9 @@
 												</div>
 												<div class="col-md-12">
 													&nbsp; &nbsp; &nbsp; <b class="font">Vendor Name :</b> <input
-														type="text" class="form-control" id="vName" name="vName">
-													<input type="hidden" id="vId" name="vId">
+														type="text" class="form-control" id="vName" name="vName"
+														required="required"> <input type="hidden" id="vId"
+														name="vId">
 												</div>
 												<div class="col-md-12">
 													<!-- <div class="breadcrumbs">
@@ -237,7 +209,7 @@
 												<div class="form-group">
 													<label for="" class="font">Vendor Bill no :</label> <input
 														type="text" placeholder="" id="" class="form-control"
-														name="vendorBillNo">
+														name="vendorBillNo" required="required">
 												</div>
 												<div class="form-group">
 
@@ -258,8 +230,8 @@
 													<fmt:formatDate
 														value="${sessionScope['ejb'].getCurrentDateTime()}"
 														pattern="MM" var="yr" />
-													<input readonly="readonly" type="text" placeholder="" id=""
-														class="form-control"
+													<input readonly="readonly" type="text" placeholder=""
+														name="challanNumber" class="form-control"
 														value="${bs.companyInitial}/${fy}/${yr}/${bs.billType}/${lastChNo}/${lastSuf}">
 													<input type="hidden" name="challanNo" value="${lastChNo}"
 														id="challanNo"> <input type="hidden"
@@ -268,7 +240,7 @@
 												<div class="form-group">
 													<label for="" class="font">Purchase Date :</label> <input
 														type="text" id="datepicker" class="form-control"
-														name="purchaseDate">
+														name="purchaseDate" required="required">
 												</div>
 												<br> <input type="button" class="btn green pull-right"
 													data-toggle="modal" data-target="#addProduct"
@@ -332,7 +304,7 @@
 												<tbody>
 													<tr>
 														<td colspan="2">Transport charge :</td>
-														<td><input type="number" class="form-control"
+														<td><input type="text" class="form-control"
 															name="transportCost" id="transportCost" onkeyup="gtot();"
 															value="0"></td>
 													</tr>
@@ -340,7 +312,7 @@
 												<tbody>
 													<tr>
 														<td colspan="2">Surcharge :</td>
-														<td><input type="number" class="form-control"
+														<td><input type="text" class="form-control"
 															id="surcharge" name="surcharge" onkeyup="gtot();"
 															value="0"></td>
 													</tr>
@@ -377,13 +349,148 @@
 													</thead>
 												</table>
 											</div>
-											<div style="float: right;">
-												<input type="button" class="btn green pull-right"
-													data-toggle="modal" data-target="#savePurchase"
-													value="Save">
+											<div class="row">
+												<div style="float: left;">
+													&nbsp; &nbsp; <span><b>Bar code :</b> &nbsp; </span> <input
+														type="radio" name="bar" value="yesBar" checked="checked">&nbsp;
+													Yes <input type="radio" name="bar" value="noBar">&nbsp;
+													No
+												</div>
+												<div style="float: right;">
+													<input type="button" class="btn green pull-right"
+														data-toggle="modal" data-target="#savePurchase"
+														value="Save" onclick="paymentDate();">
+												</div>
+											</div>
+											<div id="savePurchase" class="modal fade" role="dialog"
+												style="top: 25px;">
+												<div class="modal-dialog modal-lg">
+													<div class="modal-content">
+														<div class="modal-header">
+															<button type="button" class="close" data-dismiss="modal"
+																onclick="closePayment();">&times;</button>
+															<h4 class="modal-title">Payment Details</h4>
+														</div>
+														<div class="modal-body">
+															<div class="row">
+																<div class="col-md-6">
+																	<div class="widget-area">
+																		<div class="breadcrumbs">
+																			<ul>
+																				<li><a title="">Select Payment status : </a></li>
+																			</ul>
+																		</div>
+																		<br> <br> <br>
+																		<div class="row">
+																			<div class="col-md-5">Payment status :</div>
+																			<div class="col-md-7">
+																				<div class="sec">
+
+																					<select class="form-control" id="pstatus"
+																						name="pstatus" onchange="pStatusDiv()">
+																						<option value="-" selected="selected">---</option>
+																						<c:forEach
+																							items="${sessionScope['ejb'].getAllPaymentStatus()}"
+																							var="payStatus">
+																							<option value="${payStatus.status}">${payStatus.status}</option>
+																						</c:forEach>
+																					</select>
+																				</div>
+																			</div>
+																		</div>
+																		<div id="payDetail">
+																			<div class="breadcrumbs">
+																				<ul>
+																					<li><a title="">Payment Details : </a></li>
+																				</ul>
+																			</div>
+																			<br> <br> <br>
+																			<div class="row">
+																				<div class="sec" id="pTypeDiv">
+																					<div class="col-md-5">Payment type :</div>
+																					<div class="col-md-7">
+																						<select class="form-control" id="pType"
+																							name="pType" onchange="pTypeFunc()">
+																							<option value="-" selected="selected">---</option>
+																							<c:forEach
+																								items="${sessionScope['ejb'].getAllPaymentType()}"
+																								var="payType">
+																								<option value="${payType.getType()}">${payType.getType()}</option>
+																							</c:forEach>
+																						</select>
+																					</div>
+																				</div>
+																				<div id="pDate">
+																					<div class="col-md-5">Payment Date :</div>
+																					<div class="col-md-7">
+																						<input type="text" id="datepicker2"
+																							class="form-control" readonly="readonly">
+																					</div>
+																				</div>
+																				<div id="pAmount">
+																					<div class="col-md-5">Full Amount :</div>
+																					<div class="col-md-7">
+																						<input type="text" class="form-control"
+																							readonly="readonly" id="spAmount" name="spAmount">
+																					</div>
+																				</div>
+																				<div id="pPayAmount">
+																					<div class="col-md-5">Payment Amount :</div>
+																					<div class="col-md-7">
+																						<input type="text" class="form-control" value="0"
+																							id="spPaymentAmount" name="spPaymentAmount"
+																							onkeyup="spPaymentAmountFunc();">
+																					</div>
+																				</div>
+																				<div id="pDueAmount">
+																					<div class="col-md-5">Due Amount :</div>
+																					<div class="col-md-7">
+																						<input type="text" class="form-control"
+																							readonly="readonly" id="spDueAmount"
+																							name="spDueAmount">
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+
+																<div class="col-md-6" style="float: right;"
+																	id="description">
+																	<div class="widget-area">
+																		<div class="breadcrumbs">
+																			<ul>
+																				<li><a title="">Provide Description : </a></li>
+																			</ul>
+																		</div>
+																		<br> <br> <br>
+																		<div class="row">
+																			<div class="col-md-5">Description :</div>
+																			<div class="col-md-7">
+																				<textarea rows="" cols="" class="form-control"
+																					id="desc" name="desc"></textarea>
+																			</div>
+																		</div>
+																		<br>
+																		<div class="breadcrumbs">
+																			<button type="button" class="btn green pull-right"
+																				onclick="submit();">Save</button>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="modal-footer">
+															<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+														</div>
+													</div>
+												</div>
 											</div>
 										</div>
 										<input type="hidden" name="isSalable" id="isSalable">
+										<input type="hidden" name="isBarPrint" id="isBarPrint">
+										<input type="hidden" name="isSerial" id="isSerial"> <input
+											type="hidden" name="isLot" id="isLot">
 									</form>
 									<!-- <input type="radio" name="a" value="x" onclick="first()" id="a">1
 									<input type="radio" name="a" value="y" onclick="second()"
@@ -399,206 +506,6 @@
 		<!-- Page Container -->
 	</div>
 	<!-- main -->
-
-	<div id="savePurchase" class="modal fade" role="dialog"
-		style="top: 25px;">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						onclick="closePayment();">&times;</button>
-					<h4 class="modal-title">Payment Details</h4>
-				</div>
-				<div class="modal-body">
-					<div class="row">
-						<div class="col-md-6">
-							<div class="widget-area">
-								<div class="breadcrumbs">
-									<ul>
-										<li><a title="">Select Payment status : </a></li>
-									</ul>
-								</div>
-								<br> <br> <br>
-								<div class="row">
-									<div class="col-md-5">Payment status :</div>
-									<div class="col-md-7">
-										<div class="sec">
-											<select class="form-control" name="pstatus" id="pstatus"
-												onchange="pstatus()">
-												<option value="-" selected="selected">---</option>
-												<option value="fpaid">Full paid</option>
-												<option value="spaid">Semi paid</option>
-												<option value="npaid">not paid</option>
-											</select>
-										</div>
-									</div>
-								</div>
-								<div class="widget-area" id="fullpaid">
-									<div class="breadcrumbs">
-										<ul>
-											<li><a title="">Select Payment type : </a></li>
-										</ul>
-									</div>
-									<br> <br> <br>
-									<div class="row">
-										<div class="col-md-5">Payment type :</div>
-										<div class="col-md-7">
-											<div class="sec">
-												<select class="form-control" name="fptype"
-													onchange="fptype()">
-													<option value="-" selected="selected">---</option>
-													<option value="cash">Cash</option>
-													<option value="cheq">Cheque</option>
-													<option value="btra">Bank transfer</option>
-												</select>
-											</div>
-										</div>
-										<div class="col-md-5">Payment Date :</div>
-										<div class="col-md-7">
-											<input type="text" id="datepicker1" class="form-control">
-										</div>
-										<div class="col-md-5">Amount :</div>
-										<div class="col-md-7">
-											<input type="text" class="form-control" readonly="readonly"
-												id="fullPaidAmount" name="fullPaidAmount">
-										</div>
-									</div>
-									<br>
-									<div class="breadcrumbs" id="cash">
-										<button type="button" class="btn green pull-right"
-											onclick="submit();">Save</button>
-									</div>
-								</div>
-
-								<div id="semipaid">
-									<div class="breadcrumbs">
-										<ul>
-											<li><a title="">Select Payment type : </a></li>
-										</ul>
-									</div>
-									<br> <br> <br>
-									<div class="row">
-										<div class="col-md-5">Payment type :</div>
-										<div class="col-md-7">
-											<div class="sec">
-												<select class="form-control" name="sptype"
-													onchange="sptype()">
-													<option value="-" selected="selected">---</option>
-													<option value="cash">Cash</option>
-													<option value="cheq">Cheque</option>
-													<option value="btra">Bank transfer</option>
-												</select>
-											</div>
-										</div>
-										<div class="col-md-5">Payment Date :</div>
-										<div class="col-md-7">
-											<input type="text" id="datepicker2" class="form-control">
-										</div>
-										<div class="col-md-5">Full Amount :</div>
-										<div class="col-md-7">
-											<input type="text" class="form-control" readonly="readonly"
-												id="spAmount" name="spAmount">
-										</div>
-										<div class="col-md-5">Payment Amount :</div>
-										<div class="col-md-7">
-											<input type="text" class="form-control" value="0"
-												id="spPaymentAmount" name="spPaymentAmount"
-												onkeyup="spPaymentAmount();">
-										</div>
-										<div class="col-md-5">Due Amount :</div>
-										<div class="col-md-7">
-											<input type="text" class="form-control" readonly="readonly"
-												id="spDueAmount" name="spDueAmount">
-										</div>
-									</div>
-									<br>
-									<div class="breadcrumbs" id="scash">
-										<button type="button" class="btn green pull-right"
-											onclick="submit();">Save</button>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-6" style="float: right;" id="notpaid">
-							<div class="widget-area">
-								<div class="breadcrumbs">
-									<ul>
-										<li><a title="">Not Paid : </a></li>
-									</ul>
-								</div>
-								<br> <br> <br>
-								<div class="row">
-									<div class="col-md-4">Due Amount :</div>
-									<div class="col-md-8">
-										<input type="text" class="form-control" readonly="readonly"
-											id="notPaidDueAmount" name="notPaidDueAmount">
-									</div>
-								</div>
-								<br>
-								<div class="breadcrumbs">
-									<button type="button" class="btn green pull-right"
-										onclick="submit();">Save</button>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-6" style="float: right;" id="cheque">
-							<div class="widget-area">
-								<div class="breadcrumbs">
-									<ul>
-										<li><a title="">Provide Cheque details : </a></li>
-									</ul>
-								</div>
-								<br> <br> <br>
-								<div class="row">
-									<div class="col-md-5">Cheque No. :</div>
-									<div class="col-md-7">
-										<input type="text" class="form-control">
-									</div>
-									<div class="col-md-5">Description(if any):</div>
-									<div class="col-md-7">
-										<textarea rows="" cols="" class="form-control"></textarea>
-									</div>
-								</div>
-								<br>
-								<div class="breadcrumbs">
-									<button type="button" class="btn green pull-right"
-										onclick="submit();">Save</button>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-6" style="float: right;" id="bank">
-							<div class="widget-area">
-								<div class="breadcrumbs">
-									<ul>
-										<li><a title="">Provide Bank transfer details : </a></li>
-									</ul>
-								</div>
-								<br> <br> <br>
-								<div class="row">
-									<div class="col-md-5">Transaction ID :</div>
-									<div class="col-md-7">
-										<input type="text" class="form-control">
-									</div>
-									<div class="col-md-5">Description(if any):</div>
-									<div class="col-md-7">
-										<textarea rows="" cols="" class="form-control"></textarea>
-									</div>
-								</div>
-								<br>
-								<div class="breadcrumbs">
-									<button type="button" class="btn green pull-right"
-										onclick="submit();">Save</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
-				</div>
-			</div>
-		</div>
-	</div>
 
 	<div id="addProduct" class="modal fade" role="dialog"
 		style="top: -110px; overflow-y: hidden; overflow-x: hidden;">
@@ -635,7 +542,8 @@
 								<div class="col-md-5">Product-Code:</div>
 								<div class="col-md-7">
 									<select class="form-control" name="productCode"
-										id="productCode" onchange="getProductDetailsByProductCode();">
+										id="productCode" onchange="getProductDetailsByProductCode();"
+										required="required">
 										<option value="0">Select Product Code</option>
 										<c:forEach
 											items="${sessionScope['ejb'].getAllProductDetail()}"
@@ -707,7 +615,8 @@
 							<div class="row">
 								<div class="col-md-3">Quantity:</div>
 								<div class="col-md-9">
-									<input type="number" class="form-control" name="qty" id="qty">
+									<input type="number" class="form-control" name="qty" id="qty"
+										required="required">
 								</div>
 								<div class="col-md-3">UOM:</div>
 								<div class="col-md-9">
@@ -716,7 +625,8 @@
 								</div>
 								<div class="col-md-3">Rate:</div>
 								<div class="col-md-9">
-									<input type="number" class="form-control" name="rate" id="rate">
+									<input type="number" class="form-control" name="rate" id="rate"
+										required="required">
 								</div>
 							</div>
 						</div>
@@ -775,17 +685,18 @@
 							</div>
 							<br>
 							<div class="row">
-								<div style="float: left;">
+								<!-- <div style="float: left;">
 									&nbsp; &nbsp; <span><b>Bar code :</b> &nbsp; </span> <input
-										type="radio" name="bar" value="yesBar">&nbsp; Yes <input
-										type="radio" name="bar" value="noBar">&nbsp; No
-								</div>
+										type="radio" name="bar" value="yesBar" checked="checked">&nbsp;
+									Yes <input type="radio" name="bar" value="noBar">&nbsp;
+									No
+								</div> -->
 
 								<div style="float: right; right: 25px;">
 									<input type="button" class="btn btn-default" value="Add"
 										data-toggle="modal" onclick="anotherShow();"> <input
 										type="button" class="btn btn-default" data-dismiss="modal"
-										value="Close" id="close">
+										value="Close" id="close" onclick="closeProduct()">
 								</div>
 							</div>
 						</div>
@@ -832,16 +743,17 @@
 
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
-	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 	<script type="text/javascript" src="js/script.js"></script>
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="js/enscroll.js"></script>
 	<script type="text/javascript" src="js/grid-filter.js"></script>
 
-	<script src="js/jquery-ui/jquery-ui.js"></script>
 	<script>
 		$(document).ready(function() {
 			$("#isSalable").val('no');
+			$("#isBarPrint").val('yes');
+			$("#isSerial").val('yes');
+			$("#isLot").val('yes');
 		});
 		$(function() {
 			$("#datepicker").datepicker();
@@ -873,8 +785,7 @@
 						$("#cat").val(data.category);
 						$("#pDesc").val(data.description);
 						$("#uom").val(data.qtyUnit);
-						if ((data.attrNmae1) != 'null'
-								|| (data.attrNmae1) != "") {
+						if ((data.attrNmae1) != 'null') {
 							$("#attr1Name").html(data.attrNmae1);
 							$("#attr1").prop("readonly", false);
 						} else {
@@ -978,13 +889,24 @@
 				$("#mrp").attr("readonly", true);
 			}
 		}
+		$("input:radio[name=bar]").click(function() {
+			var value = $(this).val();
+			//alert(value);
+			if (value == "yesBar") {
+				$("#isBarPrint").val('yes');
+			} else {
+				$("#isBarPrint").val('no');
+			}
+		});
 		$("input:radio[name=lot]").click(function() {
 			var value = $(this).val();
 			//alert(value);
 			if (value == "yesLot") {
 				$("#lotText").prop("disabled", false);
+				$("#isLot").val('yes');
 			} else {
 				$("#lotText").prop("disabled", true);
+				$("#isLot").val('no');
 			}
 		});
 		$("input:radio[name=serial]").click(function() {
@@ -992,8 +914,10 @@
 			//alert(value);
 			if (value == "yesSerial") {
 				$("#serialText").prop("disabled", false);
+				$("#isSerial").val('yes');
 			} else {
 				$("#serialText").prop("disabled", true);
+				$("#isSerial").val('no');
 			}
 		});
 		/* function first() {
@@ -1110,6 +1034,53 @@
 			$("#mrp").val("");
 			$("#lotText").val("");
 			$("#serialText").val("");
+			$("#productCode").val("0");
+			$("#attr1Name").html("Attribute1:");
+			$("#attr2Name").html("Attribute2:");
+			$("#attr3Name").html("Attribute3:");
+			$("#attr4Name").html("Attribute4:");
+			$("#attr5Name").html("Attribute5:");
+			$("#attr6Name").html("Attribute6:");
+			$("#attr1").prop("readonly", true);
+			$("#attr2").prop("readonly", true);
+			$("#attr3").prop("readonly", true);
+			$("#attr4").prop("readonly", true);
+			$("#attr5").prop("readonly", true);
+			$("#attr6").prop("readonly", true);
+		}
+
+		function closeProduct() {
+			$("#dept").val("");
+			$("#subDept").val("");
+			$("#cat").val("");
+			$("#pCode").val("");
+			$("#pDesc").val("");
+			$("#attr1").val("");
+			$("#attr2").val("");
+			$("#attr3").val("");
+			$("#attr4").val("");
+			$("#attr5").val("");
+			$("#attr6").val("");
+			$("#qty").val("");
+			$("#uom").val("");
+			$("#rate").val("");
+			$("#wsp").val("");
+			$("#mrp").val("");
+			$("#lotText").val("");
+			$("#serialText").val("");
+			$("#productCode").val("0");
+			$("#attr1Name").html("Attribute1:");
+			$("#attr2Name").html("Attribute2:");
+			$("#attr3Name").html("Attribute3:");
+			$("#attr4Name").html("Attribute4:");
+			$("#attr5Name").html("Attribute5:");
+			$("#attr6Name").html("Attribute6:");
+			$("#attr1").prop("readonly", true);
+			$("#attr2").prop("readonly", true);
+			$("#attr3").prop("readonly", true);
+			$("#attr4").prop("readonly", true);
+			$("#attr5").prop("readonly", true);
+			$("#attr6").prop("readonly", true);
 		}
 
 		function getVendorNameByType() {
@@ -1297,6 +1268,9 @@
 		}
 		function submit() {
 			document.getElementById("purchaseForm").submit();
+		}
+		function paymentDate() {
+			$("#datepicker2").val($("#datepicker").val());
 		}
 	</script>
 </body>

@@ -55,15 +55,16 @@
 										<div class="row">
 											<div class="col-md-6">
 												<div class="form-group">
-													<label for="">Job Challan Number :</label> <input
-														type="" placeholder="Enter Challan Number" id=""
+													<label for="">Job Challan Number :</label> <input type=""
+														placeholder="Enter Challan Number" id=""
 														class="form-control">
 												</div>
 											</div>
 											<div class="col-md-6">
 												<div class="form-group">
 													<label for="">Jobber Name :</label> <input type=""
-														placeholder="Enter Jobber Name :" id="" class="form-control">
+														placeholder="Enter Jobber Name :" id=""
+														class="form-control">
 												</div>
 											</div>
 										</div>
@@ -84,7 +85,7 @@
 												</div>
 											</div>
 										</div>
-										
+
 										<button class="btn green pull-right" type="submit">Search</button>
 									</form>
 									<br> <br>
@@ -132,8 +133,8 @@
 	<script type="text/javascript" src="js/grid-filter.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$("#purch").attr("id", "activeSubMenu");
-			$("#sPurchSearch").attr("style", "color: red;");
+			$("#jobs").attr("id", "activeSubMenu");
+			$("#jSearch").attr("style", "color: red;");
 		});
 	</script>
 	<script src="js/jquery-ui/jquery-ui.js"></script>

@@ -28,6 +28,18 @@ public class Purchase_Product_Details {
 	private String attrValue6;
 	private boolean initialInventory;
 
+	@OneToMany(mappedBy = "purchase_Product_Details")
+	private List<JobAssignmentProducts> jobAssignmentProducts;
+
+	public List<JobAssignmentProducts> getJobAssignmentProducts() {
+		return jobAssignmentProducts;
+	}
+
+	public void setJobAssignmentProducts(
+			List<JobAssignmentProducts> jobAssignmentProducts) {
+		this.jobAssignmentProducts = jobAssignmentProducts;
+	}
+
 	@OneToMany(mappedBy = "purchase_Product_Details", cascade = CascadeType.ALL)
 	private List<SerialNumber> serialNumbers;
 

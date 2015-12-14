@@ -1,7 +1,6 @@
 package com.kaanish.model;
 
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -40,7 +39,7 @@ public class ProductDetail {
 	@JoinColumn(name = "qtyUnitId")
 	private QtyUnit qtyUnit;
 
-	@OneToMany(mappedBy = "productDetail",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "productDetail", cascade = CascadeType.ALL)
 	private List<ProductImage> productImages;
 
 	public int getId() {

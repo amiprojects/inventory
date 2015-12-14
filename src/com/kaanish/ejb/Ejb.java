@@ -19,6 +19,9 @@ import com.kaanish.model.City;
 import com.kaanish.model.CompanyInfo;
 import com.kaanish.model.Country;
 import com.kaanish.model.Department;
+import com.kaanish.model.PaymentDetails;
+import com.kaanish.model.PaymentStatus;
+import com.kaanish.model.PaymentType;
 import com.kaanish.model.ProductDetail;
 import com.kaanish.model.ProductImage;
 import com.kaanish.model.Purchase_Entry;
@@ -77,7 +80,71 @@ public class Ejb {
 	}
 
 	public List<QtyUnitType> getAllQtyUnitTypes() {
-		TypedQuery<QtyUnitType> q = em.createQuery("select c from QtyUnitType c", QtyUnitType.class);
+
+		TypedQuery<QtyUnitType> q = em.createQuery(
+				"select c from QtyUnitType c", QtyUnitType.class);
+		return q.getResultList();
+	}
+
+	/************** for payment status ***************/
+	public void setPaymentStatus(PaymentStatus paymentStatus) {
+		em.persist(paymentStatus);
+	}
+
+	public PaymentStatus getPaymentStatusByStatus(String status) {
+		TypedQuery<PaymentStatus> q = em.createQuery(
+				"select c from PaymentStatus c Where c.status=:status",
+				PaymentStatus.class);
+		q.setParameter("status", status);
+		if (q.getResultList().size() > 0) {
+			return q.getResultList().get(0);
+		} else {
+			return null;
+		}
+	}
+
+	public List<PaymentStatus> getAllPaymentStatus() {
+		TypedQuery<PaymentStatus> q = em.createQuery(
+				"select c from PaymentStatus c", PaymentStatus.class);
+		return q.getResultList();
+	}
+
+	/************** for payment type ***************/
+	public void setPaymentType(PaymentType paymentType) {
+		em.persist(paymentType);
+	}
+
+	public PaymentType getPaymentTypeByType(String type) {
+		TypedQuery<PaymentType> q = em.createQuery(
+				"select c from PaymentType c Where c.Type=:type",
+				PaymentType.class);
+		q.setParameter("type", type);
+		if (q.getResultList().size() > 0) {
+			return q.getResultList().get(0);
+		} else {
+			return null;
+		}
+	}
+
+	public List<PaymentType> getAllPaymentType() {
+		TypedQuery<PaymentType> q = em.createQuery(
+				"select c from PaymentType c", PaymentType.class);
+		return q.getResultList();
+	}
+
+	/************** for payment details ***************/
+	public void setPaymentDetails(PaymentDetails paymentDetails) {
+		em.persist(paymentDetails);
+	}
+
+	public PaymentDetails getPaymentDetailsById(int id) {
+		return em.find(PaymentDetails.class, id);
+	}
+
+	public List<PaymentDetails> getAllPaymentDetails() {
+		TypedQuery<PaymentDetails> q = em.createQuery(
+				"select c from PaymentDetails c", PaymentDetails.class);
+
 		return q.getResultList();
 	}
 
@@ -147,7 +214,9 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	public QtyUnitConversion getQtyUnitConversionById(QtyUnitConversionPK qtyUnitConversionPK) {
+
+	public QtyUnitConversion getQtyUnitConversionById(
+			QtyUnitConversionPK qtyUnitConversionPK) {
 
 		return em.find(QtyUnitConversion.class, qtyUnitConversionPK);
 	}
@@ -292,8 +361,10 @@ public class Ejb {
 	}
 
 	public AccountDetails getAccountDetailsByVendorId(int id) {
-		TypedQuery<AccountDetails> q = em.createQuery(
-				"select c from AccountDetails c WHERE c.vendor.id=:id ORDER BY c.id DESC", AccountDetails.class);
+		TypedQuery<AccountDetails> q = em
+				.createQuery(
+						"select c from AccountDetails c WHERE c.vendor.id=:id ORDER BY c.id DESC",
+						AccountDetails.class);
 		q.setParameter("id", id);
 		if (q.getResultList().size() > 0) {
 			return q.getResultList().get(0);
@@ -302,6 +373,10 @@ public class Ejb {
 		}
 
 	}
+	public void updateAccountDetails(AccountDetails accountDetails) {
+		em.merge(accountDetails);
+	}
+
 
 	/******************* for purchase entry ***************************/
 	public void setPurchaseEntry(Purchase_Entry purchaseEntry) {
@@ -310,6 +385,17 @@ public class Ejb {
 
 	public Purchase_Entry getPurchaseEntryById(int id) {
 		return em.find(Purchase_Entry.class, id);
+	}
+
+	public List<Purchase_Entry> getPurchaseEntryByDate(Date startDate,
+			Date endDate) {
+		TypedQuery<Purchase_Entry> q = em
+				.createQuery(
+						"select c from Purchase_Entry c WHERE c.purchase_date BETWEEN :startDate AND :endDate",
+						Purchase_Entry.class);
+		q.setParameter("startDate", startDate);
+		q.setParameter("endDate", endDate);
+		return q.getResultList();
 	}
 
 	public int getLastPurchaseChallanNumber() {
@@ -676,6 +762,12 @@ public class Ejb {
 	public RawMaterialsStock getRawMaterialStocktDetailById(int id) {
 		return em.find(RawMaterialsStock.class, id);
 	}
+	
+	public RawMaterialsStock getRawMaterialStocktDetailByProductId(int id) {
+		TypedQuery<RawMaterialsStock> q=em.createQuery("select c from RawMaterialsStock c where c.productDetail.id=:ID",RawMaterialsStock.class);
+		q.setParameter("ID", id);
+		return q.getResultList().size()>0?q.getResultList().get(0):null;
+	}
 
 	public void deleteRawMaterialStockDetailById(int id) {
 		em.remove(getProductDetailById(id));
@@ -692,7 +784,9 @@ public class Ejb {
 
 	public RawMaterialsStock getRawMeterialStoctByProductId(int id) {
 		TypedQuery<RawMaterialsStock> q = em
-				.createQuery("select s from RawMaterialsStock s where s.productDetail.id=:id", RawMaterialsStock.class);
+				.createQuery(
+						"select s from RawMaterialsStock s where s.productDetail.id=:id",
+						RawMaterialsStock.class);
 		q.setParameter("id", id);
 		return q.getResultList().get(0);
 	}
@@ -710,6 +804,11 @@ public class Ejb {
 	public void deleteReadyGoodsStockDetailById(int id) {
 		em.remove(getReadyGoodsStocktDetailById(id));
 	}
+	public ReadyGoodsStock getReadyGoodsStocktDetailByProductId(int id) {
+		TypedQuery<ReadyGoodsStock> q=em.createQuery("select c from ReadyGoodsStock c where c.productDetail.id=:ID",ReadyGoodsStock.class);
+		q.setParameter("ID", id);
+		return q.getResultList().size()>0?q.getResultList().get(0):null;
+	}
 
 	public void updateReadyGoodsStockDetail(ReadyGoodsStock readyGoodsStock) {
 		em.merge(readyGoodsStock);
@@ -721,7 +820,8 @@ public class Ejb {
 	}
 
 	public ReadyGoodsStock getReadyGoodsStoctByProductId(int id) {
-		TypedQuery<ReadyGoodsStock> q = em.createQuery("select s from ReadyGoodsStock s where s.productDetail.id=:id",
+		TypedQuery<ReadyGoodsStock> q = em.createQuery(
+				"select s from ReadyGoodsStock s where s.productDetail.id=:id",
 				ReadyGoodsStock.class);
 		q.setParameter("id", id);
 		return q.getResultList().get(0);
