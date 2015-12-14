@@ -733,10 +733,7 @@ public class Servlet extends HttpServlet {
 
 				purchaseEntry = new Purchase_Entry();
 				paymentDetails = new PaymentDetails();
-				/*
-				 * rawMaterialsStock = new RawMaterialsStock(); readyGoodsStock
-				 * = new ReadyGoodsStock();
-				 */
+
 				dt = new Date();
 
 				paymentDetails.setPaymentDate(DateConverter.getDate(req
@@ -832,17 +829,29 @@ public class Servlet extends HttpServlet {
 						serialNumber = null;
 					}
 
+					if (req.getParameter("isSalable").equals("yes")) {
+						readyGoodsStock = new ReadyGoodsStock();
+						readyGoodsStock.setProductDetail(ejb
+								.getProductDetailsById(Integer
+										.parseInt(productId[l])));
+						readyGoodsStock.setRemainingQty(Integer.parseInt(req
+								.getParameter("")));
+						ejb.setReadyGoodsStockDetail(readyGoodsStock);
+						readyGoodsStock = null;
+					} else {
+						rawMaterialsStock = new RawMaterialsStock();
+						rawMaterialsStock.setProductDetail(ejb
+								.getProductDetailsById(Integer
+										.parseInt(productId[l])));
+						rawMaterialsStock.setRemainingQty(Integer.parseInt(req
+								.getParameter("")));
+
+						ejb.setRawMaterialsStocktDetail(rawMaterialsStock);
+						rawMaterialsStock = null;
+					}
+
 					purchaseProductDetails = null;
 				}
-
-				// rawMaterialsStock.setProductDetail();
-				// rawMaterialsStock.setRemainingQty(Integer.parseInt(req.getParameter("")));
-
-				// readyGoodsStock.setProductDetail();
-				// readyGoodsStock.setRemainingQty(Integer.parseInt(req.getParameter("")));
-
-				// ejb.setRawMaterialsStocktDetail(rawMaterialsStock);
-				// ejb.setReadyGoodsStockDetail(readyGoodsStock);
 
 				msg = "Purchase entry was successfull.";
 				break;
