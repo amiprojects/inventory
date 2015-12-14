@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -28,6 +29,8 @@
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
 <!-- Responsive -->
 <script type="text/javascript" src="js/jquery.min.js"></script>
+<!-- tost msg -->
+<link rel="stylesheet" href="css/toast.css" type="text/css" />
 
 <script type="text/javascript">
 	function readURL(input) {
@@ -96,25 +99,45 @@
 																		.val());
 												$("#uom1")
 														.val($("#uomO").val());
+												$
+														.ajax({
+															url : "getQtyUnit",
+															type : "post",
+															dataType : "json",
+															data : {
+																id : $("#uomO")
+																		.val()
+															},
+															success : function(
+																	data) {
+																$(
+																		"#uomnamedisplay")
+																		.val(
+																				data.name);
+															}
+														});
+
 												$("#mrp1")
 														.val($("#mrpO").val());
 												$("#wsp").val($("#wspO").val());
 												$("#quantity111").val(
 														$("#quantity").val());
-												$("#uom")
-														.val($("#uomO1").val());
+												/* $("#uom")
+														.val($("#uomO1").val()); */
 												$("#ucost")
 														.val($("#ucO").val());
 												$("#date2").val(
 														$("#datepicker").val());
 												$("#ltnum").val(
 														$("#lotnO").val());
-												$("#att1").val($("#a1O").val());
-												$("#att2").val($("#a2O").val());
-												$("#att3").val($("#a3O").val());
-												$("#att4").val($("#a4O").val());
-												$("#att5").val($("#a5O").val());
-												$("#att6").val($("#a6O").val());
+												$("#att1").val($("#a10").val());
+												$("#att2").val($("#a20").val());
+												$("#att3").val($("#a30").val());
+												$("#att4").val($("#a40").val());
+												$("#att5").val($("#a50").val());
+												$("#att6").val($("#a60").val());
+												$("#lotnumberS").val(
+														$("#lotnO").val());
 
 												for (l = 0; l < serial.length; l++) {
 													x = x
@@ -189,78 +212,58 @@
 									<ul>
 										<li><p
 												style="right: -422px; font-size: 20px; position: absolute;">
-												<b>Product/Material</b> 
+												<b>Product/Material</b>
 											</p></li>
 									</ul>
 								</div>
 
-								<div class="widget-area" style="width: 34%;">
+								<div class="widget-area" style="width: 40%;">
 									<form role="form" class="sec">
-										<div class="form-group">
-											<label for="" class="">Products Number : </label> <input
-												type="text" class="form-control"
-												placeholder="Enter Products Number" id="" class="">
-										</div>
+
 										<div class="form-group">
 											<label for="" class="">Description : </label> <input
 												type="text" class="form-control"
-												placeholder="Enter Description" id="" class="">
-										</div>
-										<div class="form-group">
-											<label for="" class="">Products Type : </label>&nbsp &nbsp <input
-												type="text" class="form-control"
-												placeholder="Enter Products type" id="" class="">
+												placeholder="Enter Description" id="descriptionName"
+												name="descriptionName" class="form-control">
 										</div>
 
-										<button class="btn green btn-default" type="submit">Search
-										</button>
-										<button class="btn green btn-default" type="submit">Advanced
-											Search</button>
+
+										<button class="btn green btn-default" onclick="masterSearch()"
+											type="button">Search</button>
+
 									</form>
 									<br> <br>
 									<table class="table">
-										<thead>
-											<tr>
-												<th>#</th>
-												<th>Number</th>
-												<th>Description</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>1</td>
-												<td>Mark</td>
-												<td>Otto</td>
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>Jacob</td>
-												<td>Thornton</td>
-											</tr>
-											<tr>
-												<td>3</td>
-												<td>Larry</td>
-												<td>the Bird</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>Mark</td>
-												<td>Otto</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>Mark</td>
-												<td>Otto</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>Mark</td>
-												<td>Otto</td>
-											</tr>
-										</tbody>
+
+										<tr>
+											<th align="center">#</th>
+											<th align="center">Product Code</th>
+											<th align="center">Description</th>
+											<th align="center">view</th>
+										</tr>
 									</table>
+									<div
+										style="overflow-y: scroll; overflow-x: scroll; height: 281px; width: 360px; border: 1px;">
+										<table class="table">
+											<c:set var="countt" value="${1}" />
+											<c:forEach
+												items="${sessionScope['ejb'].getAllProductDetail() }"
+												var="productt">
+												<tr>
+													<td align="left">${countt}</td>
+													<td align="left">${productt.code}</td>
+													<td align="left">${productt.description}</td>
+													<td align="left"><a href="#"
+														onclick="viewProduct('${productt.id}');"> <img
+															alt="click to view" src="images/eye.png" height="20"></a></td>
+												</tr>
+												<c:set var="countt" value="${countt+1}" />
+											</c:forEach>
+
+										</table>
+									</div>
 								</div>
-								<div class="widget-area" style="width: 66%">
+								<div class="widget-area" style="width: 60%">
 									<div class="breadcrumbs">
 										<ul>
 											<li><a title="">Products Details : </a></li>
@@ -269,8 +272,6 @@
 														data-target="#newMP">New</button></a></li>
 											<li><a title=""><button class="btn btn-info btn-sm"
 														type="submit">Edit</button></a></li>
-											<li><a title=""><button class="btn btn-info btn-sm"
-														type="submit">Delete</button></a></li>
 										</ul>
 									</div>
 
@@ -279,63 +280,59 @@
 										<li><a data-toggle="tab" href="#details">Details</a></li>
 										<li><a data-toggle="tab" href="#inventory">Inventory</a></li>
 										<li><a data-toggle="tab" href="#Vendor">Vendor</a></li>
-										<li><a data-toggle="tab" href="#Custom">Custom</a></li>
+										<li><a data-toggle="tab" href="#Custom">Attribute</a></li>
 									</ul>
 									<br>
 									<div class="tab-content">
+
 										<div id="general" class="tab-pane fade active in">
 											<div class="row">
-												<div class="col-md-2">
-													<label>Products No:</label>
+												<div class="col-md-3">
+													<label>Products Code:</label>
 												</div>
-												<div class="col-md-4">
-													<input type="text" readonly="readonly" class="form-control">
+												<div class="col-md-5">
+													<input id="pp1" type="text" readonly="readonly"
+														class="form-control">
 												</div>
 												<div class="col-md-1">
 													<label>UOM:</label>
 												</div>
 												<div class="col-md-2">
-													<input type="text" readonly="readonly" class="form-control">
-												</div>
-												<div class="col-md-1">
-													<label>Type:</label>
-												</div>
-												<div class="col-md-2">
-													<input type="text" readonly="readonly" class="form-control">
+													<input type="text" id="uomuom" readonly="readonly"
+														class="form-control">
 												</div>
 												<br> <br> <br>
-												<div class="col-md-2">
+
+												<div class="col-md-3">
 													<label>Description:</label>
 												</div>
 
-												<div class="col-md-10">
-													<input type="text" readonly="readonly" class="form-control">
-													<input type="checkbox" name="active" value="active">&nbsp
-													Active<br> <br>
-												</div>
-												<div class="col-md-2">
-													<label>Details:</label>
-												</div>
+												<div class="col-md-9">
 
-												<div class="col-md-10">
-
-													<textarea readonly="readonly" class="form-control"
-														name="adress" rows="5" cols="59"></textarea>
+													<textarea readonly="readonly" id="descc"
+														class="form-control" name="adress" rows="5" cols="53"></textarea>
 													<br>
 												</div>
-												<br> <br>
-												<div class="col-md-2">
-													<label>Image:</label> <input type="file" name="proImg"
-														size="50" required onchange="readURL(this);">
+
+
+
+												<br> 
+
+
+
+												<div class="col-md-1">
+													<label>Active</label>
 												</div>
-
-												<div class="col-md-8">
-
-													<img id="image" alt="" src="">
-
+												<div class="col-md-1">
+													<input id="actact" type="checkbox" name="active">
 												</div>
-
-
+												
+											<a href="addNewProductImage.jsp">	<button id="sooImage" class="btn btn-info btn-sm"
+													style="position: absolute; left: 429px; top: 326px;">
+													Add Product Image</button></a>
+													<br><br>
+													
+													<div id="show_product_image"></div>
 											</div>
 
 
@@ -345,35 +342,54 @@
 
 
 											<fieldset>
-												<legend> Products Custom fields </legend>
+												<legend> Products attribute fields </legend>
 
-												<p style="font-size: 14px">(Enter Custom fields values.)</p>
-												<br> <br> <br>
+												<p style="font-size: 14px">(Enter attribute fields
+													values.)</p>
+
 												<div class="col-md-8">
 													<div>
-														<label for="exampleInputEmail1">Custom 1:</label> <input
-															type="text" name="c1" required class="form-control"><br>
+														<label for="exampleInputEmail1">Attribute 1:</label> <input
+															type="text" id="ac1" name="c1" readonly
+															class="form-control"><br>
 													</div>
 												</div>
 												<div class="col-md-8">
 													<div>
-														<label for="exampleInputEmail1">Custom 2:</label> <input
-															type="text" name="c2" required class="form-control"><br>
+														<label for="exampleInputEmail1">Attribute 2:</label> <input
+															type="text" id="ac2" name="c2" readonly
+															class="form-control"><br>
 													</div>
 												</div>
 												<div class="col-md-8">
 													<div>
-														<label for="exampleInputEmail1">Custom 3:</label> <input
-															type="text" name="c3" required class="form-control"><br>
+														<label for="exampleInputEmail1">Attribute 3:</label> <input
+															type="text" id="ac3" name="c3" readonly
+															class="form-control"><br>
 													</div>
 												</div>
 												<div class="col-md-8">
 													<div>
-														<label for="exampleInputEmail1">Custom 4:</label> <input
-															type="text" name="c4" required class="form-control"><br>
+														<label for="exampleInputEmail1">Attribute 4:</label> <input
+															type="text" id="ac4" name="c4" readonly
+															class="form-control"><br>
 													</div>
 												</div>
 
+												<div class="col-md-8">
+													<div>
+														<label for="exampleInputEmail1">Attribute 5:</label> <input
+															type="text" name="ac5" id="ac5" readonly
+															class="form-control"><br>
+													</div>
+												</div>
+												<div class="col-md-8">
+													<div>
+														<label for="exampleInputEmail1">Attribute 6:</label> <input
+															type="text" name="ac6" id="ac6" readonly
+															class="form-control"><br>
+													</div>
+												</div>
 
 											</fieldset>
 
@@ -387,33 +403,29 @@
 
 												<table id="stream_table"
 													class="table table-striped table-bordered">
-													<thead>
-														<tr>
-															<th>Vendor</th>
-															<th>Number</th>
-															<th>Last Cost</th>
-															<th>UOM</th>
-															<th>Last Date</th>
-															<th>Lead Time</th>
-															<th>Default</th>
 
-														</tr>
-													</thead>
-													<tbody>
-														<tr>
+													<tr>
+														<td><b>Vendor Name</b></td>
+														<td><input class="form-control" type="text" readonly
+															id="vName" name="vName"></td>
+													</tr>
+													<tr>
+														<td><b>Vendor Company</b></td>
+														<td><input type="text" class="form-control" readonly
+															id="vCompany" name="vCompany"></td>
+													</tr>
+													<tr>
+														<td><b>Vendor Address</b></td>
+														<td><input type="text" class="form-control" readonly
+															id="vAdress" name="vAdress"></td>
+													</tr>
+													<tr>
+														<td><b>Vendor Phone</b></td>
+														<td><input type="text" class="form-control" readonly
+															id="vPhone" name="vPhone"></td>
+													</tr>
 
-															<td>wd</td>
-															<td>fd</td>
-															<td>dfd</td>
-															<td>wd</td>
-															<td>fd</td>
-															<td>dfd</td>
-															<td><input type="checkbox" name="active"
-																value="active"></td>
 
-														</tr>
-
-													</tbody>
 												</table>
 
 											</div>
@@ -426,300 +438,77 @@
 
 										<div id="inventory" class="tab-pane fade ">
 
-											<div class="row">
-												<div class="col-md-3">
-													<label>Unit Of Measure:</label>
-												</div>
-												<div class="col-md-9">
+											<table>
 
-													<input type="text" class="form-control">
-												</div>
-
-											</div>
-											<br>
-
-
-
-											<div class="row">
-												<div class="col-md-12" style="background-color: #f5f5f5;">
-													<label>Inventory:</label>
-
-
-												</div>
-
-											</div>
-											<br>
-											<div class="row">
-												<div class="col-md-3">
-													<label>On Hand :</label>
-												</div>
-												<div class="col-md-3">
-
-													<input type="text" class="form-control">
-												</div>
-												<div class="col-md-3">
-													<label>On Oder:</label>
-												</div>
-												<div class="col-md-3">
-													<input type="text" class="form-control">
-												</div>
-
-											</div>
-											<br>
-
-
-											<div class="row">
-												<div class="col-md-3">
-													<label>Allocated :</label>
-												</div>
-												<div class="col-md-3">
-
-													<input type="text" class="form-control">
-												</div>
-												<div class="col-md-3">
-													<label>Committed:</label>
-												</div>
-												<div class="col-md-3">
-													<input type="text" class="form-control">
-												</div>
-
-											</div>
-											<br>
-											<div class="row">
-												<div class="col-md-3">
-													<label>Not Available :</label>
-												</div>
-												<div class="col-md-3">
-
-													<input type="text" class="form-control">
-												</div>
-												<div class="col-md-3">
-													<label>Back Oder:</label>
-												</div>
-												<div class="col-md-3">
-													<input type="text" class="form-control">
-												</div>
-
-											</div>
-											<br>
-											<div class="row">
-												<div class="col-md-3">
-													<label>Available for sale:</label>
-												</div>
-												<div class="col-md-3">
-
-													<input type="text" class="form-control">
-												</div>
-												<div class="col-md-3">
-													<label>Available to pick:</label>
-												</div>
-												<div class="col-md-3">
-													<input type="text" class="form-control">
-												</div>
-
-											</div>
-											<br> <br>
+												<tr>
+													<td>&nbsp;</td>
+												</tr>
+												<tr>
+													<td><b>Maximum Retail Price:</b></td>
+													<td><input id="mrp111" class="form-control " readonly
+														type="text" name="mrp1"></td>
+												</tr>
 
 
 
-											<div class="row">
-												<div class="col-md-12" style="background-color: #f5f5f5;">
-													<label>Reorder Information:</label>
+												<tr>
+													<td>&nbsp;</td>
+												</tr>
+												<tr>
+													<td><b>Wholesale Price:</b></td>
+													<td><input type="text" class="form-control " readonly
+														name="wsp111" id="wsp111"></td>
+												</tr>
+												<tr>
+													<td>&nbsp;</td>
+												</tr>
+												<tr>
+													<td><b>Remaining Quantity:</b></td>
+													<td><input id="RquantitY" class="form-control "
+														readonly name="Rty11Y" type="text"></td>
+												</tr>
+												<tr>
+													<td>&nbsp;</td>
+												</tr>
+												<tr>
+													<td><b>Purchasing Quantity:</b></td>
+													<td><input id="quantity0101" class="form-control "
+														readonly name="qty111" type="text"></td>
+												</tr>
+												<tr>
+													<td>&nbsp;</td>
+												</tr>
 
-
-												</div>
-
-											</div>
-
-
-
-											<div class="col-md-12">
-
-												<table id="stream_table"
-													class="table table-striped table-bordered">
-													<thead>
-														<tr>
-															<th>Location group</th>
-															<th>Order upto top lable</th>
-															<th>Reorder Point</th>
-
-														</tr>
-													</thead>
-													<tbody>
-														<tr>
-
-															<td>wd</td>
-															<td>fd</td>
-															<td>dfd</td>
-
-														</tr>
-
-													</tbody>
-												</table>
-
-											</div>
-
+												<tr>
+													<td><b>Unit Cost:</b></td>
+													<td><input id="ucost111" class="form-control "
+														readonly name="ucost" type="text"></td>
+												</tr>
+												<tr>
+													<td>&nbsp;</td>
+												</tr>
+											</table>
 										</div>
 
 
 
 										<div id="details" class="tab-pane fade ">
-											<div class="row">
-												<div class="col-md-3">
-													<label>UPC Code:</label>
-												</div>
-												<div class="col-md-3">
-													<input type="text" class="form-control">
-												</div>
 
 
-												<div class="col-md-2">
-													<label>Last Cost:</label>
-												</div>
+											<div class="col-md-12">
 
-												<div class="col-md-4">
-													<input type="text" class="form-control"> <br>
-												</div>
+												<label>Universal Product Code:</label> <br> <input
+													type="text" id="upcupc" class="form-control"> <br>
+												<br>
+
+
+
+
+												<h4>
+													Is Saleable &nbsp; &nbsp;<input type="checkbox" id="salsal">
+												</h4>
 											</div>
-											<div class="row">
-												<div class="col-md-12">
-													<div class="breadcrumbs">
-														<p style="font-size: 15px">
-															<b>Size & Weight</b>
-														</p>
-													</div>
-												</div>
 
-												<div class="col-md-4">
-													<label>Length:</label> <input type="text"
-														class="form-control">
-
-												</div>
-												<div class="col-md-3">
-													<label>width:</label> <input type="text"
-														class="form-control">
-
-												</div>
-												<div class="col-md-3">
-													<label>Height:</label> <input type="text"
-														class="form-control">
-
-												</div>
-												<div class="col-md-2">
-													<div style="top: 30px; left: -5px; position: absolute;">
-														<select><option>Miter</option>
-															<option>Kilo meter</option></select>
-													</div>
-												</div>
-
-
-
-											</div>
-											<div class="row">
-												<div class="col-md-3">
-													<label>Width:</label> <input type="text"
-														class="form-control">
-
-												</div>
-												<div class="col-md-2">
-													<div style="top: 30px; position: absolute;">
-														<select><option>Miter</option>
-															<option>Kilo meter</option></select>
-													</div>
-												</div>
-
-											</div>
-											<div class="row">
-
-												<div class="col-md-12">
-													<div class="breadcrumbs">
-														<p style="font-size: 15px">
-															<b>Tracking</b>
-														</p>
-													</div>
-												</div>
-												<div class="col-md-12">
-
-													<table id="stream_table"
-														class="table table-striped table-bordered">
-														<thead>
-															<tr>
-																<th>Selected</th>
-																<th>Name</th>
-																<th>Abbr</th>
-																<th>Description</th>
-																<th>Type</th>
-
-															</tr>
-														</thead>
-														<tbody>
-															<tr>
-																<td><input type="checkbox" name="active"
-																	value="active"></td>
-																<td>wd</td>
-																<td>fd</td>
-																<td>dfd</td>
-																<td>dfd</td>
-															</tr>
-															<tr>
-																<td><input type="checkbox" name="active"
-																	value="active"></td>
-																<td>wd</td>
-																<td>fd</td>
-																<td>dfd</td>
-																<td>dfd</td>
-															</tr>
-															<tr>
-																<td><input type="checkbox" name="active"
-																	value="active"></td>
-																<td>wd</td>
-																<td>fd</td>
-																<td>dfd</td>
-																<td>dfd</td>
-															</tr>
-														</tbody>
-													</table>
-
-												</div>
-											</div>
-											<div class="row">
-
-												<div class="col-md-12">
-													<div class="breadcrumbs">
-														<p style="font-size: 15px">
-															<b>Product</b>
-														</p>
-													</div>
-												</div>
-												<div class="col-md-12">
-
-													<table id="stream_table"
-														class="table table-striped table-bordered">
-														<thead>
-															<tr>
-																<th>Product code</th>
-																<th>Description</th>
-																<th>price</th>
-																<th>Default</th>
-
-
-															</tr>
-														</thead>
-														<tbody>
-															<tr>
-																<td>wd</td>
-																<td>fd</td>
-																<td>dfd</td>
-																<td><input type="checkbox" name="active"
-																	value="active"></td>
-															</tr>
-
-
-														</tbody>
-													</table>
-
-												</div>
-											</div>
 
 
 										</div>
@@ -728,15 +517,15 @@
 
 
 							</div>
-
+							<div class='toast' style='display: none'>
+								<h3 id="msg">${requestScope['msg']}</h3>
+							</div>
 
 						</div>
-<div class='toast' style='display: none'>
-												<h3 id="msg">${requestScope['msg']}</h3>
-											</div>
+
 					</div>
-					
-					
+
+
 				</div>
 			</div>
 		</div>
@@ -865,8 +654,9 @@
 										<div>
 											<label for="exampleInputPassword1">Unit Of
 												Measurement:</label> <select required name="uom" id="uomO"
-												class="form-control" style="width: 250px; height: 34px">
-
+												onchange="uomFunction()" class="form-control"
+												style="width: 250px; height: 34px">
+												<option value="0">select an UOM</option>
 												<c:forEach items="${sessionScope['ejb'].getAllQtyUnit()}"
 													var="qqty">
 													<option value="${qqty.id}">${qqty.name}</option>
@@ -910,11 +700,30 @@
 											$("#tick").hide();
 											$("#cross").show();
 											$("#isSalebi").val(
-													$('#salepart').is(
-															':checked'));
+													$('#barCode')
+															.is(':checked'));
 										}
 									});
 						</script>
+						<!-- <script type="text/javascript">
+							$('#barCode').click(
+									function() {
+										if ($('#barCode').is(':checked')) {
+
+											$("#barCode").val(
+													$('#barcodeS').is(
+															':checked'));
+										}
+										else{
+											
+											$("#barCode").val(
+													$('#barcodeS').is(
+															':checked'));
+										}
+									}
+
+							);
+						</script> -->
 
 					</div>
 
@@ -1072,7 +881,8 @@
 									</div>
 									<div class="form-group">
 										<h4>
-											Print Barcode <input type="checkbox" id="barCode">
+											Print Barcode <input type="checkbox" id="barCode"
+												onclick="showbar()">
 										</h4>
 									</div>
 								</div>
@@ -1204,35 +1014,35 @@
 
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="" class="font">Attribute 1:</label> <input
-											name="a1" type="text" disable placeholder="" id="a1O"
+										<span id="sa1" style="font-size: 17px">Attribute 1:</span> <input
+											name="a1" type="text" disabled="disabled" id="a10"
 											class="form-control">
 									</div>
 									<div class="form-group">
-										<label for="" class="font">Attribute 2:</label> <input
-											name="a2" type="text" disable placeholder="" id="a2O"
+										<span id="sa2" style="font-size: 17px">Attribute 2:</span> <input
+											name="a2" type="text" disabled="disabled" id="a20"
 											class="form-control">
 									</div>
 									<div class="form-group">
-										<label for="" class="font">Attribute 3:</label> <input
-											name="a3" type="text" disable placeholder="" id="a3O"
+										<span id="sa3" style="font-size: 17px">Attribute 3:</span> <input
+											name="a3" type="text" id="a30" disabled="disabled"
 											class="form-control">
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="" class="font">Attribute 4:</label> <input
-											name="a4" type="text" disable placeholder="" id="a4O"
+										<span id="sa4" style="font-size: 17px">Attribute 4:</span> <input
+											name="a4" type="text" disabled="disabled" id="a40"
 											class="form-control">
 									</div>
 									<div class="form-group">
-										<label for="" class="font">Attribute 5:</label> <input
-											name="a5" type="text" disable placeholder="" id="a5O"
+										<span id="sa5" style="font-size: 17px">Attribute 5:</span> <input
+											name="a5" type="text" disabled="disabled" id="a50"
 											class="form-control">
 									</div>
 									<div class="form-group">
-										<label for="" class="font">Attribute 6:</label> <input
-											name="a6" type="text" disable placeholder="" id="a6O"
+										<span id="sa6" style="font-size: 17px">Attribute 6:</span> <input
+											name="a6" type="text" disabled="disabled" id="a60"
 											class="form-control">
 									</div>
 								</div>
@@ -1251,16 +1061,20 @@
 
 						<div class="masonary-grids">
 							<div class="col-md-6">
-								<div class="widget-area">
+								<div class="widget-area" align="left">
 									<h2 class="widget-title">
 										<strong>Tree</strong> List
 									</h2>
-									<div class="tree-list">
-										<p>
-											<a href="#" id="tree-expand-all">Expand all</a> | <a href="#"
-												id="tree-collapse-all">Collapse all</a>
-										</p>
+									<p>
+										<a href="#" id="tree-expand-all">Expand all</a> | <a href="#"
+											id="tree-collapse-all">Collapse all</a>
+									</p>
+
+									<div class="tree-list"
+										style="overflow-y: scroll; overflow-y: scroll; height: 300px">
+
 										<!-- Listing directory ZendX from ZendFramework library -->
+
 										<ul id="tree">
 											<c:forEach items="${sessionScope['ejb'].getAllDepartments()}"
 												var="dept">
@@ -1273,7 +1087,7 @@
 																<ul>
 																	<c:forEach var="cat"
 																		items="${sessionScope['ejb'].getAllCategoryBySubDepartmentId(subDept.id)}">
-																		<li><input type="radio"
+																		<li><input type="radio" name="same"
 																			onclick="catProblem('${cat.id}')" value="${cat.id}">
 																			${cat.name}
 																			<ul>
@@ -1290,6 +1104,7 @@
 												</li>
 											</c:forEach>
 										</ul>
+										<!-- </div> -->
 									</div>
 
 								</div>
@@ -1340,8 +1155,11 @@
 										<tr>
 										<tr>
 											<td>Unit of Measurement:</td>
-											<td><input type="text" class="form-control " readonly
-												name="uom" id="uom1"></td>
+											<td><input type="hidden" class="form-control " readonly
+												name="uom" id="uom1"> <input type="text"
+												class="form-control " readonly name="uom"
+												id="uomnamedisplay"></td>
+
 										</tr>
 
 										<tr>
@@ -1370,9 +1188,9 @@
 									</h4>
 									<table>
 										<tr>
-											
-											<td><input type="text" id="addini" class="form-control" readonly
-												name="addini" value="false"></td>
+
+											<td><input type="text" id="addini" class="form-control"
+												readonly name="addini" value="false"></td>
 										</tr>
 										<tr>
 											<td>&nbsp;</td>
@@ -1382,6 +1200,13 @@
 											<td><input id="mrp1" class="form-control " readonly
 												type="text" name="mrp1"></td>
 										</tr>
+
+
+										<!-- <tr>
+											<td>barcode:</td>
+											<td><input id="barcodeS" class="form-control " readonly
+												type="text" name="barcodeS"></td>
+										</tr> -->
 
 										<tr>
 											<td>&nbsp;</td>
@@ -1417,12 +1242,15 @@
 									<h4>
 										<u>Initial inventory tracking:</u>
 									</h4>
-								<!-- 	<table>
+									<table>
 										<tr>
-											<td><b>Lot Number:</b></td>
+											<td><b>Lot Number:</b>
+											<td>
+											<td>&nbsp; &nbsp; &nbsp;</td>
+											</td>
 											<td><input class="form-control " type="text"
-												name="lotnumber" readonly id="ltnum"></td>
-									</table> -->
+												name="lotnumberS" readonly id="lotnumberS"></td>
+									</table>
 									<br> <b>Serial Number:</b>
 									<div
 										style="width: 190px; height: 224px; border: 1px solid; overflow: auto;">
@@ -1436,11 +1264,12 @@
 									<hr width="100%">
 
 									<h4>
-										<u>Products Custom Field:</u>
+										<u>Products Attribute Field:</u>
 									</h4>
 									<table>
 										<tr>
-											<td>Attribute 1:</td>
+											<td><span id="summaryA1" style="font-size: 15px">Attribute
+													1:</span></td>
 											<td><input readonly class="form-control " id="att1"
 												name="att1"></td>
 										</tr>
@@ -1448,40 +1277,45 @@
 											<td>&nbsp;</td>
 										</tr>
 										<tr>
-											<td>Attribute 2:</td>
-											<td><input readonly class="form-control " name="a2"
+											<td><span id="summaryA2" style="font-size: 15px">Attribute
+													2:</span></td>
+											<td><input readonly class="form-control " name="att2"
 												id="att2">
 										</tr>
 										<tr>
 											<td>&nbsp;</td>
 										</tr>
 										<tr>
-											<td>Attribute 3:</td>
-											<td><input readonly class="form-control " name="a3"
+											<td><span id="summaryA3" style="font-size: 15px">Attribute
+													3:</span></td>
+											<td><input readonly class="form-control " name="att3"
 												id="att3"></td>
 										</tr>
 										<tr>
 											<td>&nbsp;</td>
 										</tr>
 										<tr>
-											<td>Attribute 4:</td>
-											<td><input readonly class="form-control " name="a4"
+											<td><span id="summaryA4" style="font-size: 15px">Attribute
+													4:</span></td>
+											<td><input readonly class="form-control " name="att4"
 												id="att4"></td>
 										</tr>
 										<tr>
 											<td>&nbsp;</td>
 										</tr>
 										<tr>
-											<td>Attribute 5:</td>
-											<td><input readonly class="form-control " name="a5"
+											<td><span id="summaryA5" style="font-size: 15px">Attribute
+													5:</span></td>
+											<td><input readonly class="form-control " name="att5"
 												id="att5"></td>
 										</tr>
 										<tr>
 											<td>&nbsp;</td>
 										</tr>
 										<tr>
-											<td>Attribute 6:</td>
-											<td><input readonly class="form-control " name="a6"
+											<td><span id="summaryA6" style="font-size: 15px">Attribute
+													6:</span></td>
+											<td><input readonly class="form-control " name="att6"
 												id="att6"></td>
 										</tr>
 									</table>
@@ -1510,6 +1344,7 @@
 										</h4></a></li>
 							</ul>
 						</div>
+
 
 					</div>
 
@@ -1674,22 +1509,218 @@
 			$("#datepicker").datepicker();
 		});
 	</script>
+	<!-- <script>
+		function catProblem(a) {
+			$("#catagoryId").val(a);
+			
+		}
+	</script> -->
 	<script>
 		function catProblem(a) {
 			$("#catagoryId").val(a);
+			$.ajax({
+				url : 'getCategoryById',
+				type : 'post',
+				dataType : "json",
+				data : {
+					id : a
+				},
+				success : function(data) {
+
+					if ((data.attrNmae1) != 'null') {
+						$("#sa1").html(data.attrNmae1);
+						$("#summaryA1").html(data.attrNmae1);
+						$("#a10").prop("disabled", false);
+					} else {
+						$("#sa1").html("Attribute1:");
+						$("#summaryA1").html(data.attrNmae1);
+						$("#a10").prop("disabled", true);
+					}
+					if ((data.attrNmae2) != 'null') {
+						$("#sa2").html(data.attrNmae2);
+						$("#summaryA2").html(data.attrNmae2);
+						$("#a20").prop("disabled", false);
+					} else {
+						$("#sa2").html("Attribute2:");
+						$("#summaryA2").html(data.attrNmae2);
+						$("#a20").prop("disabled", true);
+					}
+					if ((data.attrNmae3) != 'null') {
+						$("#sa3").html(data.attrNmae3);
+						$("#summaryA3").html(data.attrNmae3);
+						$("#a30").prop("disabled", false);
+					} else {
+						$("#sa3").html("Attribute3:");
+						$("#summaryA3").html(data.attrNmae3);
+						$("#a30").prop("disabled", true);
+					}
+					if ((data.attrNmae4) != 'null') {
+						$("#sa4").html(data.attrNmae4);
+						$("#summaryA4").html(data.attrNmae4);
+						$("#a40").prop("disabled", false);
+					} else {
+						$("#sa4").html("Attribute4:");
+						$("#summaryA4").html(data.attrNmae4);
+						$("#a40").prop("disabled", true);
+					}
+					if ((data.attrNmae5) != 'null') {
+						$("#sa5").html(data.attrNmae5);
+						$("#summaryA5").html(data.attrNmae5);
+						$("#a50").prop("disabled", false);
+					} else {
+						$("#sa5").html("Attribute5:");
+						$("#summaryA5").html(data.attrNmae5);
+						$("#a50").prop("disabled", true);
+					}
+					if ((data.attrNmae6) != 'null') {
+						$("#sa6").html(data.attrNmae6);
+						$("#summaryA6").html(data.attrNmae6);
+						$("#a60").prop("disabled", false);
+					} else {
+						$("#sa6").html("Attribute6:");
+						$("#summaryA6").html(data.attrNmae6);
+						$("#a60").prop("disabled", true);
+					}
+				},
+				error : function(a, b, c) {
+					alert(b + ": " + c);
+				}
+			});
 		}
 	</script>
 
 
-<script type="text/javascript">
-	$(document).ready(function() {
-		if ($('#msg').html() != "") {
-			$('.toast').fadeIn(400).delay(3000).fadeOut(400);
+	<script type="text/javascript">
+		$(document).ready(function() {
+			if ($('#msg').html() != "") {
+				$('.toast').fadeIn(400).delay(3000).fadeOut(400);
+			}
+		});
+	</script>
+
+	<script type="text/javascript">
+		$(function() {
+			$("#descriptionName").autocomplete({
+				source : function(request, response) {
+					$.ajax({
+						url : "getProductByDescription",
+						dataType : "json",
+						data : {
+							descriptionName : request.term
+						},
+						success : function(data) {
+							response($.map(data, function(item) {
+								return {
+									value : item.description,
+									id : item.id,
+									code : item.code
+								}
+							}));
+						}
+					});
+				},
+				select : function(item, ui) {
+					viewProduct(ui.item.id);
+				}
+			})
+
+		});
+	</script>
+
+	<script>
+		function viewProduct(id) {
+
+			$.ajax({
+				type : "post",
+				url : "getproductPro",
+				data : {
+					id : id
+				},
+				dataType : "json",
+				success : function(data) {
+					$("#pp1").val(data.code);
+					$("#descc").val(data.description);
+					$("#uomuom").val(data.qtyUnit);
+					$("#upcupc").val(data.universalCode);
+
+					if (data.isActive) {
+						$("#actact").prop("checked", true);
+					} else {
+						$("#actact").prop("checked", false);
+					}
+					if (data.isSaleble == 'true') {
+						$("#salsal").prop("checked", true);
+					} else {
+						$("#salsal").prop("checked", false);
+					}
+					$.ajax({
+						type : "post",
+						url : "getproductPro",
+						data : {
+							id : data.id
+						},
+						dataType : "json",
+						success : function(data1) {
+							$.map(data1,function(item){
+								alert(item.image);
+							});
+						}
+					});
+				}
+
+			});
+
+			$.ajax({
+				type : "post",
+				url : "getPurchasebyPro",
+				data : {
+					id : id
+				},
+				dataType : "json",
+				success : function(data) {
+					var qty = 0;
+					var rqty = 0;
+					$.each(data, function(index, value) {
+						$("#mrp111").val(value.mrp);
+						$("#wsp111").val(value.wsp);
+						$("#ucost111").val(value.cost);
+						$("#ac1").val(value.attrValue1);
+						$("#ac2").val(value.attrValue2);
+						$("#ac3").val(value.attrValue3);
+						$("#ac4").val(value.attrValue4);
+						$("#ac5").val(value.attrValue5);
+						$("#ac6").val(value.attrValue6);
+						$("#vName").val(value.purchaseVendorName);
+						$("#vAdress").val(value.purchaseVendorAddress);
+						$("#vCompany").val(value.purchaseVendorCompanyName);
+						$("#vPhone").val(value.purchaseVendorPhoneNumber);
+						rqty = rqty + Number(value.remaining_quantity)
+						qty = qty + Number(value.quantity);
+						$("#quantity0101").val(qty);
+						$("#RquantitY").val(data.remaining_quantity);
+					});
+
+					/* $("#ucost111").val(data.unitCostAj);
+					$("#mrp111").val(data.mrp);
+					$("#wsp111").val(data.wsp);
+					
+					$("#ucost111").val(data.cost);
+					$("#ac1").val(data.attrValue1);
+					$("#ac2").val(data.attrValue2);
+					$("#ac3").val(data.attrValue3);
+					$("#ac4").val(data.attrValue4);
+					$("#ac5").val(data.attrValue5);
+					$("#ac6").val(data.attrValue6);
+					$("#vName").val(data.purchaseVendorName);
+					$("#vAdress").val(data.purchaseVendorAddress);
+					$("#vCompany").val(data.purchaseVendorCompanyName);
+					$("#vPhone").val(data.purchaseVendorPhoneNumber); */
+
+				}
+			});
+
 		}
-	});
-</script>
-
-
+	</script>
 
 </body>
 

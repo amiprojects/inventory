@@ -10,8 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import org.eclipse.persistence.jpa.config.Cascade;
-
 @Entity
 public class Purchase_Product_Details {
 	@Id
@@ -30,7 +28,7 @@ public class Purchase_Product_Details {
 	private String attrValue6;
 	private boolean initialInventory;
 
-	@OneToMany(mappedBy = "purchase_Product_Details",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "purchase_Product_Details", cascade = CascadeType.ALL)
 	private List<SerialNumber> serialNumbers;
 
 	@ManyToOne
@@ -167,6 +165,30 @@ public class Purchase_Product_Details {
 
 	public void setPurchase_Entry(Purchase_Entry purchase_Entry) {
 		this.purchase_Entry = purchase_Entry;
+	}
+
+	@Override
+	public String toString() {
+		String str;
+		if (isInitialInventory()) {
+			str = "{\"id\":\"" + id + "\"," + "\"mrp\":\"" + mrp + "\"," + "\"wsp\":\"" + wsp + "\","
+					+ "\"remaining_quantity\":\"" + remaining_quantity + "\"," + "\"quantity\":\"" + quantity + "\","
+					+ "\"cost\":\"" + cost + "\"," + "\"attrValue1\":\"" + attrValue1 + "\"," + "\"attrValue2\":\""
+					+ attrValue2 + "\"," + "\"attrValue3\":\"" + attrValue3 + "\"," + "\"attrValue4\":\"" + attrValue4
+					+ "\"," + "\"attrValue5\":\"" + attrValue5 + "\"," + "\"attrValue6\":\"" + attrValue6 + "\"}";
+		} else {
+			str = "{\"id\":\"" + id + "\"," + "\"mrp\":\"" + mrp + "\"," + "\"wsp\":\"" + wsp + "\","
+					+ "\"remaining_quantity\":\"" + remaining_quantity + "\"," + "\"quantity\":\"" + quantity + "\","
+					+ "\"cost\":\"" + cost + "\"," + "\"attrValue1\":\"" + attrValue1 + "\"," + "\"attrValue2\":\""
+					+ attrValue2 + "\"," + "\"attrValue3\":\"" + attrValue3 + "\"," + "\"attrValue4\":\"" + attrValue4
+					+ "\"," + "\"attrValue5\":\"" + attrValue5 + "\"," + "\"attrValue6\":\"" + attrValue6 + "\","
+					+ "\"purchaseVendorName\":\"" + purchase_Entry.getVendor().getName() + "\","
+					+ "\"purchaseVendorAddress\":\"" + purchase_Entry.getVendor().getAddress() + "\","
+					+ "\"purchaseVendorCompanyName\":\"" + purchase_Entry.getVendor().getCompanyName() + "\","
+					+ "\"purchaseVendorPhoneNumber\":\"" + purchase_Entry.getVendor().getPh1() + "\"}";
+		}
+		return str;
+
 	}
 
 }

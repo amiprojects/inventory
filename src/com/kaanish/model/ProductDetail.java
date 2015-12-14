@@ -2,8 +2,7 @@ package com.kaanish.model;
 
 import java.util.List;
 
-import javax.json.Json;
-import javax.json.stream.JsonGeneratorFactory;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -40,6 +39,9 @@ public class ProductDetail {
 	@ManyToOne
 	@JoinColumn(name = "qtyUnitId")
 	private QtyUnit qtyUnit;
+
+	@OneToMany(mappedBy = "productDetail",cascade=CascadeType.ALL)
+	private List<ProductImage> productImages;
 
 	public int getId() {
 		return id;
@@ -109,8 +111,7 @@ public class ProductDetail {
 		return purchase_Product_Details;
 	}
 
-	public void setPurchase_Product_Details(
-			List<Purchase_Product_Details> purchase_Product_Details) {
+	public void setPurchase_Product_Details(List<Purchase_Product_Details> purchase_Product_Details) {
 		this.purchase_Product_Details = purchase_Product_Details;
 	}
 
@@ -153,22 +154,23 @@ public class ProductDetail {
 
 	@Override
 	public String toString() {
-		return "{\"id\":\"" + id + "\"," + "\"name\":\"" + name + "\","
-				+ "\"code\":\"" + code + "\"," + "\"universalCode\":\""
-				+ universalCode + "\"," + "\"isSaleble\":\"" + isSaleble
-				+ "\"," + "\"isActive\":\"" + isActive + "\","
-				+ "\"description\":\"" + description + "\"," + "\"qtyUnit\":\""
-				+ qtyUnit.getName() + "\"," + "\"category\":\""
-				+ category.getName() + "\"," + "\"attrNmae1\":\""
-				+ category.getAttrNmae1() + "\"," + "\"attrNmae2\":\""
-				+ category.getAttrNmae2() + "\"," + "\"attrNmae3\":\""
-				+ category.getAttrNmae3() + "\"," + "\"attrNmae4\":\""
-				+ category.getAttrNmae4() + "\"," + "\"attrNmae5\":\""
-				+ category.getAttrNmae5() + "\"," + "\"attrNmae6\":\""
-				+ category.getAttrNmae6() + "\",\"subDepartment\":\""
-				+ category.getSubDepartment().getName()
-				+ "\",\"categoryId\":\"" + category.getId()
-				+ "\",\"Department\":\""
+		return "{\"id\":\"" + id + "\"," + "\"name\":\"" + name + "\"," + "\"code\":\"" + code + "\","
+				+ "\"universalCode\":\"" + universalCode + "\"," + "\"isSaleble\":\"" + isSaleble + "\","
+				+ "\"isActive\":\"" + isActive + "\"," + "\"description\":\"" + description + "\"," + "\"qtyUnit\":\""
+				+ qtyUnit.getName() + "\"," + "\"category\":\"" + category.getName() + "\"," + "\"attrNmae1\":\""
+				+ category.getAttrNmae1() + "\"," + "\"attrNmae2\":\"" + category.getAttrNmae2() + "\","
+				+ "\"attrNmae3\":\"" + category.getAttrNmae3() + "\"," + "\"attrNmae4\":\"" + category.getAttrNmae4()
+				+ "\"," + "\"attrNmae5\":\"" + category.getAttrNmae5() + "\"," + "\"attrNmae6\":\""
+				+ category.getAttrNmae6() + "\",\"subDepartment\":\"" + category.getSubDepartment().getName()
+				+ "\",\"categoryId\":\"" + category.getId() + "\",\"Department\":\""
 				+ category.getSubDepartment().getDepartment().getName() + "\"}";
+	}
+
+	public List<ProductImage> getProductImages() {
+		return productImages;
+	}
+
+	public void setProductImages(List<ProductImage> productImages) {
+		this.productImages = productImages;
 	}
 }
