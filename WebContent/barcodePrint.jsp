@@ -15,18 +15,51 @@
 </style>
 </head>
 <body>
-<p id="rcorners3">
+<div id="rcorners3">
 <span style="font-weight: bold; font-size: 9px">Kaanish Kouture</span><br>
 <span style="font-size: 9px">Pcode:123</span><br>
 <span style="font-size: 9px">MRP:123</span><br>
 <img src="http://localhost:8080/barbecue/BarcodeServlet?data=12345&drawText=true&width=2&height=30" width="110"/><br>
 <span style="font-size: 5px">12345</span><br>
-</p>
+</div>
+<div id="rcorners3">
+<span style="font-weight: bold; font-size: 9px">Kaanish Kouture</span><br>
+<span style="font-size: 9px">Pcode:123</span><br>
+<span style="font-size: 9px">MRP:123</span><br>
+<img src="http://localhost:8080/barbecue/BarcodeServlet?data=12345&drawText=true&width=2&height=30" width="110"/><br>
+<span style="font-size: 5px">12345</span><br>
+</div>
+<div id="rcorners3">
+<span style="font-weight: bold; font-size: 9px">Kaanish Kouture</span><br>
+<span style="font-size: 9px">Pcode:123</span><br>
+<span style="font-size: 9px">MRP:123</span><br>
+<img src="http://localhost:8080/barbecue/BarcodeServlet?data=12345&drawText=true&width=2&height=30" width="110"/><br>
+<span style="font-size: 5px">12345</span><br>
+</div>
+<div id="rcorners3">
+<span style="font-weight: bold; font-size: 9px">Kaanish Kouture</span><br>
+<span style="font-size: 9px">Pcode:123</span><br>
+<span style="font-size: 9px">MRP:123</span><br>
+<img src="http://localhost:8080/barbecue/BarcodeServlet?data=12345&drawText=true&width=2&height=30" width="110"/><br>
+<span style="font-size: 5px">12345</span><br>
+</div>
+<div id="rcorners3">
+<span style="font-weight: bold; font-size: 9px">Kaanish Kouture</span><br>
+<span style="font-size: 9px">Pcode:123</span><br>
+<span style="font-size: 9px">MRP:123</span><br>
+<img src="http://localhost:8080/barbecue/BarcodeServlet?data=12345&drawText=true&width=2&height=30" width="110"/><br>
+<span style="font-size: 5px; text-align: center;">12345</span><br>
+</div>
+
+
+
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-	window.print();
-	window.clse();
+	if(window.print()){
+		window.close();
+	}
+	
 });
 </script>
 
