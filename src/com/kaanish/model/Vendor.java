@@ -27,6 +27,18 @@ public class Vendor {
 
 	private String aliseName;
 
+	@OneToMany(mappedBy = "vendor")
+	private List<JobAssignmentDetails> jobAssignmentDetails;
+
+	public List<JobAssignmentDetails> getJobAssignmentDetails() {
+		return jobAssignmentDetails;
+	}
+
+	public void setJobAssignmentDetails(
+			List<JobAssignmentDetails> jobAssignmentDetails) {
+		this.jobAssignmentDetails = jobAssignmentDetails;
+	}
+
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastModifiedDate;
 

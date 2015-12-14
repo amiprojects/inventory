@@ -52,7 +52,6 @@
 			maxDate : 0
 		});
 	});
-
 </script>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -170,9 +169,10 @@
 											</tbody>
 										</table>
 										<div class="col-md-6">
-											<b class="font">Submission Date :</b> <input type="text"
-												class="form-control" name="submissionDate" name="subDate"
-												required="required" id="datepicker1" readonly="readonly">
+											<b class="font">Estimated Submission Date :</b> <input
+												type="text" class="form-control" name="submissionDate"
+												name="subDate" required="required" id="datepicker1"
+												readonly="readonly">
 										</div>
 										<br> <br> <input type="button"
 											class="btn green pull-right" value="Save" style="width: 40%">
