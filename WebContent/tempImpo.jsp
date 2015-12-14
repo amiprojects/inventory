@@ -8,7 +8,6 @@
 //upercase
 <input type="text" style="text-transform: uppercase;">
 
-
 //form
 <form role="form" class="sec"></form>
 

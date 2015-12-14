@@ -1,6 +1,7 @@
 package com.kaanish.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -8,9 +9,10 @@ import javax.persistence.OneToOne;
 @Entity
 public class ReadyGoodsStock {
 
-	@Id
+	@Id@GeneratedValue
 	private int id;
 	private int remainingQty;
+	
 	@OneToOne@JoinColumn(name="productId")
 	private ProductDetail productDetail;
 

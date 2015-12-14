@@ -109,4 +109,13 @@ public class Category {
 		this.productDetails = productDetails;
 	}
 
+	@Override
+	public String toString() {
+		return "{\"name\":\"" + name + "\", " + "\"id\":\"" + id + "\", "
+				+ "\"attrNmae1\":\"" + attrNmae1 + "\", " + "\"attrNmae2\":\""
+				+ attrNmae2 + "\", " + "\"attrNmae3\":\"" + attrNmae3 + "\", "
+				+ "\"attrNmae4\":\"" + attrNmae4 + "\", " + "\"attrNmae5\":\""
+				+ attrNmae5 + "\", " + "\"attrNmae6\":\"" + attrNmae6 + "\"}";
+	}
+
 }

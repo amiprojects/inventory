@@ -189,7 +189,7 @@
 									<ul>
 										<li><p
 												style="right: -422px; font-size: 20px; position: absolute;">
-												<b>Product/Material</b> ${requestScope['msg']}
+												<b>Product/Material</b> 
 											</p></li>
 									</ul>
 								</div>
@@ -731,8 +731,12 @@
 
 
 						</div>
-
+<div class='toast' style='display: none'>
+												<h3 id="msg">${requestScope['msg']}</h3>
+											</div>
 					</div>
+					
+					
 				</div>
 			</div>
 		</div>
@@ -1350,12 +1354,12 @@
 													<p style="font-size: 29px">&#10004;</p>
 												</div>
 												<div id="cross">
-													<p style="font-size: 29px">&#10007;</p>
+													<p style="font-size: 29px">
+														&#10007; <input type="text" class="form-control" readonly
+															id="isSalebi" name="isSalebi" value="false">
+													</p>
 												</div>
 											</td>
-											<td><div>
-													<input type="text" id="isSalebi" name="isSalebi" value="false">
-												</div></td>
 										</tr>
 									</table>
 									<hr width="100%">
@@ -1365,12 +1369,14 @@
 										<u>Add initial inventory:</u>
 									</h4>
 									<table>
-									<tr>
-									<td>
-									addInitial
-									</td>
-									<td> <input type="text" id="addini" name="addini" value="false"></td>
-									</tr>
+										<tr>
+											
+											<td><input type="text" id="addini" class="form-control" readonly
+												name="addini" value="false"></td>
+										</tr>
+										<tr>
+											<td>&nbsp;</td>
+										</tr>
 										<tr>
 											<td>Maximum Retail Price:</td>
 											<td><input id="mrp1" class="form-control " readonly
@@ -1411,12 +1417,12 @@
 									<h4>
 										<u>Initial inventory tracking:</u>
 									</h4>
-									<table>
+								<!-- 	<table>
 										<tr>
 											<td><b>Lot Number:</b></td>
 											<td><input class="form-control " type="text"
 												name="lotnumber" readonly id="ltnum"></td>
-									</table>
+									</table> -->
 									<br> <b>Serial Number:</b>
 									<div
 										style="width: 190px; height: 224px; border: 1px solid; overflow: auto;">
@@ -1553,6 +1559,8 @@
 			$("#sProduct").attr("style", "color: red;");
 			$("#divshow").hide();
 			$("#divhide").show();
+			$("#isSalebi").hide();
+			$("#addini").hide();
 		});
 		$("#close").click(function() {
 			$("#newMP").modal("hide");
@@ -1673,6 +1681,13 @@
 	</script>
 
 
+<script type="text/javascript">
+	$(document).ready(function() {
+		if ($('#msg').html() != "") {
+			$('.toast').fadeIn(400).delay(3000).fadeOut(400);
+		}
+	});
+</script>
 
 
 

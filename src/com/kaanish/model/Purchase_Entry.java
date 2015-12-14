@@ -3,6 +3,7 @@ package com.kaanish.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -19,14 +20,16 @@ public class Purchase_Entry {
 	private int id;
 
 	private int challan_no;
+	private String challanNumber;
 	private int challanSuffix;
 	private String vendor_bill_no;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date purchase_date;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date entry_date;
-	private int transport_cost;
-	private int sur_charge;
+	private float transport_cost;
+	private float sur_charge;
+	private float totalCost;
 
 	@OneToMany(mappedBy = "purchase_Entry")
 	private List<Purchase_Product_Details> purchase_Product_Details;
@@ -45,17 +48,8 @@ public class Purchase_Entry {
 	@JoinColumn(name = "vendorId")
 	private Vendor vendor;
 
-	@ManyToOne
-	@JoinColumn(name = "paymentDetailsId")
-	private PaymentDetails paymentDetails;
-
-	@ManyToOne
-	@JoinColumn(name = "paymentStatusId")
-	private PaymentStatus paymentStatus;
-
-	@ManyToOne
-	@JoinColumn(name = "paymentTypeId")
-	private PaymentType paymentType;
+	@OneToMany(mappedBy = "purchase_Entry", cascade = CascadeType.ALL)
+	private List<PaymentDetails> paymentDetails;
 
 	public int getId() {
 		return id;
@@ -105,19 +99,19 @@ public class Purchase_Entry {
 		this.entry_date = entry_date;
 	}
 
-	public int getTransport_cost() {
+	public float getTransport_cost() {
 		return transport_cost;
 	}
 
-	public void setTransport_cost(int transport_cost) {
+	public void setTransport_cost(float transport_cost) {
 		this.transport_cost = transport_cost;
 	}
 
-	public int getSur_charge() {
+	public float getSur_charge() {
 		return sur_charge;
 	}
 
-	public void setSur_charge(int sur_charge) {
+	public void setSur_charge(float sur_charge) {
 		this.sur_charge = sur_charge;
 	}
 
@@ -154,36 +148,36 @@ public class Purchase_Entry {
 		this.bill_setup = bill_setup;
 	}
 
-	public PaymentDetails getPaymentDetails() {
-		return paymentDetails;
-	}
-
-	public void setPaymentDetails(PaymentDetails paymentDetails) {
-		this.paymentDetails = paymentDetails;
-	}
-
-	public PaymentStatus getPaymentStatus() {
-		return paymentStatus;
-	}
-
-	public void setPaymentStatus(PaymentStatus paymentStatus) {
-		this.paymentStatus = paymentStatus;
-	}
-
-	public PaymentType getPaymentType() {
-		return paymentType;
-	}
-
-	public void setPaymentType(PaymentType paymentType) {
-		this.paymentType = paymentType;
-	}
-
 	public int getChallanSuffix() {
 		return challanSuffix;
 	}
 
 	public void setChallanSuffix(int challanSuffix) {
 		this.challanSuffix = challanSuffix;
+	}
+
+	public List<PaymentDetails> getPaymentDetails() {
+		return paymentDetails;
+	}
+
+	public void setPaymentDetails(List<PaymentDetails> paymentDetails) {
+		this.paymentDetails = paymentDetails;
+	}
+
+	public String getChallanNumber() {
+		return challanNumber;
+	}
+
+	public void setChallanNumber(String challanNumber) {
+		this.challanNumber = challanNumber;
+	}
+
+	public float getTotalCost() {
+		return totalCost;
+	}
+
+	public void setTotalCost(float totalCost) {
+		this.totalCost = totalCost;
 	}
 
 }

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
 <html>
@@ -51,28 +52,29 @@
 									</ul>
 								</div>
 								<div class="widget-area">
-									<form role="form" class="sec">
-										<div class="row">
+									<form role="form" class="sec" action="purchaseSearchByDate">
+										<!-- <div class="row">
 											<div class="col-md-6">
 												<div class="form-group">
-													<label for="">Purchase Entry Number :</label> <input
-														type="" placeholder="Enter Purchase Entry Number" id=""
+													<label for="">Purchase challan no. :</label> <input type=""
+														placeholder="Enter Purchase Entry Number" id=""
 														class="form-control">
 												</div>
 											</div>
 											<div class="col-md-6">
 												<div class="form-group">
-													<label for="">Vendor SO :</label> <input type=""
+													<label for="">Vendor Bill no. :</label> <input type=""
 														placeholder="Enter Vendor SO :" id="" class="form-control">
 												</div>
 											</div>
-										</div>
+										</div> -->
 										<div class="row">
 											<div class="col-md-6">
 												<div class="form-group">
 													<label for="">Search between two dates : (Start
 														Date)</label> <input type="text" placeholder="Enter First Date"
-														id="datepicker" class="form-control">
+														id="datepicker" class="form-control" name="fDate"
+														id="fDate">
 												</div>
 											</div>
 
@@ -80,11 +82,11 @@
 												<div class="form-group">
 													<label for="">(End Date)</label> <input type="text"
 														placeholder="Enter last date" id="datepicker1"
-														class="form-control">
+														class="form-control" name="lDate" id="lDate">
 												</div>
 											</div>
 										</div>
-										<div class="row">
+										<!-- <div class="row">
 
 											<div class="col-md-6">
 												<div class="form-group">
@@ -99,7 +101,7 @@
 														placeholder="Enter Vendor Name" id="" class="form-control">
 												</div>
 											</div>
-										</div>
+										</div> -->
 										<button class="btn green pull-right" type="submit">Search</button>
 									</form>
 									<br> <br>
@@ -107,23 +109,30 @@
 										<thead>
 											<tr>
 												<th>#</th>
-												<th>PO no.</th>
+												<th>Purchase challan no.</th>
 												<th>Vendor Name</th>
-												<th>Vendor SO</th>
+												<th>Vendor Bill no.</th>
 												<th>Purchase Date</th>
 												<th>Cost</th>
 											</tr>
 										</thead>
-										<tbody>
-											<tr>
-												<td>1</td>
-												<td>---</td>
-												<td>---</td>
-												<td>---</td>
-												<td>---</td>
-												<td>---</td>
-											</tr>
-										</tbody>
+
+										<c:set var="count" value="${1}" />
+										<c:forEach items="${requestScope['purEntryList']}"
+											var="pEntryByD">
+											<tbody>
+												<tr>
+													<td>${count}</td>
+													<td>${pEntryByD.challanNumber}</td>
+													<td>${pEntryByD.vendor.name}</td>
+													<td>${pEntryByD.vendor_bill_no}</td>
+													<td><fmt:formatDate value="${pEntryByD.purchase_date}"
+															pattern="dd-MM-yy" /></td>
+													<td>${pEntryByD.totalCost}</td>
+												</tr>
+											</tbody>
+											<c:set var="count" value="${count+1}" />
+										</c:forEach>
 									</table>
 								</div>
 							</div>
@@ -153,12 +162,16 @@
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 	<script>
 		$(function() {
-			$("#datepicker").datepicker();
+			$("#datepicker").datepicker({
+				dateFormat : "dd-mm-yy"
+			});
 		});
 	</script>
 	<script>
 		$(function() {
-			$("#datepicker1").datepicker();
+			$("#datepicker1").datepicker({
+				dateFormat : "dd-mm-yy"
+			});
 		});
 	</script>
 </body>
