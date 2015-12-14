@@ -61,8 +61,8 @@
 </script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("#purch").attr("id", "activeSubMenu");
-		$("#sPurchEntry").attr("style", "color: red;");
+		$("#jobs").attr("id", "activeSubMenu");
+		$("#jAssign").attr("style", "color: red;");
 		$("#notpaid").hide();
 		$("#semipaid").hide();
 		$("#fullpaid").hide();
