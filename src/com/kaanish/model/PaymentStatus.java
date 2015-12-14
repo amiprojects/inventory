@@ -15,8 +15,8 @@ public class PaymentStatus {
 	private int id;
 	private String status;
 
-	@OneToMany(mappedBy = "paymentStatus",cascade=CascadeType.ALL)
-	private List<Purchase_Entry> purchase_Entries;
+	@OneToMany(mappedBy = "paymentStatus", cascade = CascadeType.ALL)
+	private List<PaymentDetails> paymentDetails;
 
 	public int getId() {
 		return id;
@@ -34,11 +34,12 @@ public class PaymentStatus {
 		this.status = status;
 	}
 
-	public List<Purchase_Entry> getPurchase_Entries() {
-		return purchase_Entries;
+	public List<PaymentDetails> getPaymentDetails() {
+		return paymentDetails;
 	}
 
-	public void setPurchase_Entries(List<Purchase_Entry> purchase_Entries) {
-		this.purchase_Entries = purchase_Entries;
+	public void setPaymentDetails(List<PaymentDetails> paymentDetails) {
+		this.paymentDetails = paymentDetails;
 	}
+
 }

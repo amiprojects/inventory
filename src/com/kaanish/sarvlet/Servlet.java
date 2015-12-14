@@ -54,7 +54,7 @@ import com.kaanish.util.DateConverter;
 		"/editVendorType", "/deleteVendorType", "/addCity", "/deleteState",
 		"/deleteCity", "/productSumary", "/addNewConversion", "/purchaseEntry",
 		"/updateConversion", "/addBillSetup", "/updateCompanyInfo",
-		"/addBillSetup", "/updateCompanyInfo" })
+		"/addBillSetup", "/updateCompanyInfo", "/purchaseSearchByDate" })
 public class Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -740,6 +740,8 @@ public class Servlet extends HttpServlet {
 						.getParameter("challanNo")));
 				purchaseEntry.setChallanSuffix(Integer.parseInt(req
 						.getParameter("challanSuffix")));
+				purchaseEntry.setChallanNumber(req
+						.getParameter("challanNumber"));
 				purchaseEntry.setVendor_bill_no(req
 						.getParameter("vendorBillNo"));
 				purchaseEntry.setPurchase_date(DateConverter.getDate(req
@@ -750,17 +752,17 @@ public class Servlet extends HttpServlet {
 						.getAttribute("user").toString()));
 				purchaseEntry.setEntry_date(dt);
 
-				purchaseEntry.setSur_charge(Integer.parseInt(req
+				purchaseEntry.setSur_charge(Float.parseFloat(req
 						.getParameter("surcharge")));
-				purchaseEntry.setTransport_cost(Integer.parseInt(req
+				purchaseEntry.setTransport_cost(Float.parseFloat(req
 						.getParameter("transportCost")));
+				purchaseEntry.setTotalCost(Float.parseFloat(req
+						.getParameter("spAmount")));
 				purchaseEntry.setTax_Type_Group(ejb
 						.getTax_Type_GroupById(Integer.parseInt(req
 								.getParameter("taxGroup"))));
-				purchaseEntry.setPaymentStatus(ejb
-						.getPaymentStatusByStatus("pstatus"));
 				ejb.setPurchaseEntry(purchaseEntry);
-				
+
 				paymentDetails.setPaymentDate(DateConverter.getDate(req
 						.getParameter("purchaseDate")));
 				paymentDetails.setTotalAmount(Float.parseFloat(req
@@ -769,7 +771,10 @@ public class Servlet extends HttpServlet {
 						.getParameter("spPaymentAmount")));
 				paymentDetails.setDescription(req.getParameter("desc"));
 				paymentDetails.setPurchase_Entry(purchaseEntry);
-				paymentDetails.setPaymentType(ejb.getPaymentTypeByType("pType"));
+				paymentDetails.setPaymentType(ejb.getPaymentTypeByType(req
+						.getParameter("pType")));
+				paymentDetails.setPaymentStatus(ejb
+						.getPaymentStatusByStatus(req.getParameter("pstatus")));
 				ejb.setPaymentDetails(paymentDetails);
 
 				String attr1[] = req.getParameterValues("attr1H");
@@ -783,7 +788,6 @@ public class Servlet extends HttpServlet {
 				String wsp[] = req.getParameterValues("wspH");
 
 				String qty[] = req.getParameterValues("qtyH");
-				String remQty[] = req.getParameterValues("qtyH");
 				String cost[] = req.getParameterValues("rateH");
 				String productId[] = req.getParameterValues("pCodeIdH");
 
@@ -806,54 +810,86 @@ public class Servlet extends HttpServlet {
 
 					purchaseProductDetails
 							.setQuantity(Integer.parseInt(qty[l]));
-					int lq = Integer.parseInt(qty[l]);
-					int InitialSlNo = Integer.parseInt(req
-							.getParameter("serialH"));
 
 					purchaseProductDetails.setRemaining_quantity(Integer
-							.parseInt(remQty[l]));
+							.parseInt(qty[l]));
 					purchaseProductDetails.setCost(Integer.parseInt(cost[l]));
 					purchaseProductDetails.setPurchase_Entry(purchaseEntry);
 					ejb.setPurchaseProductDetails(purchaseProductDetails);
-					for (int ln = 0; ln < lq; ln++) {
-						serialNumber = new SerialNumber();
-						serialNumber.setSerialNumber(String
-								.valueOf(InitialSlNo));
-						InitialSlNo++;
-						serialNumber.setLotNo(req.getParameter("lotH"));
-						// serialNumber.setBarcode();
-						serialNumber
-								.setPurchase_Product_Details(purchaseProductDetails);
-						ejb.setSerialNumber(serialNumber);
+					int lq = Integer.parseInt(qty[l]);
+					if (req.getParameter("isSerial").equals("yes")) {
+						int InitialSlNo = Integer.parseInt(req
+								.getParameter("serialH"));
+						for (int ln = 0; ln < lq; ln++) {
+							serialNumber = new SerialNumber();
+							serialNumber.setSerialNumber(String
+									.valueOf(InitialSlNo));
+							InitialSlNo++;
+							if (req.getParameter("isLot").equals("yes")) {
+								serialNumber.setLotNo(req.getParameter("lotH"));
+							}
+							// serialNumber.setBarcode();
+							serialNumber
+									.setPurchase_Product_Details(purchaseProductDetails);
+							ejb.setSerialNumber(serialNumber);
 
-						serialNumber = null;
+							serialNumber = null;
+						}
+					} else {
+						if (req.getParameter("isLot").equals("yes")) {
+							for (int ln = 0; ln < lq; ln++) {
+								serialNumber = new SerialNumber();
+								serialNumber.setLotNo(req.getParameter("lotH"));
+								// serialNumber.setBarcode();
+								serialNumber
+										.setPurchase_Product_Details(purchaseProductDetails);
+								ejb.setSerialNumber(serialNumber);
+
+								serialNumber = null;
+							}
+						}
 					}
-
 					if (req.getParameter("isSalable").equals("yes")) {
-						readyGoodsStock = new ReadyGoodsStock();
+						readyGoodsStock = ejb
+								.getReadyGoodsStoctByProductId(purchaseProductDetails
+										.getProductDetail().getId());
 						readyGoodsStock.setProductDetail(ejb
 								.getProductDetailsById(Integer
 										.parseInt(productId[l])));
-						readyGoodsStock.setRemainingQty(Integer.parseInt(req
-								.getParameter("")));
-						ejb.setReadyGoodsStockDetail(readyGoodsStock);
+						readyGoodsStock.setRemainingQty(readyGoodsStock
+								.getRemainingQty() + Integer.parseInt(qty[l]));
+						ejb.updateReadyGoodsStockDetail(readyGoodsStock);
 						readyGoodsStock = null;
 					} else {
-						rawMaterialsStock = new RawMaterialsStock();
+						// rawMaterialsStock = new RawMaterialsStock();
+						rawMaterialsStock = ejb
+								.getRawMeterialStoctByProductId(purchaseProductDetails
+										.getProductDetail().getId());
 						rawMaterialsStock.setProductDetail(ejb
 								.getProductDetailsById(Integer
 										.parseInt(productId[l])));
-						rawMaterialsStock.setRemainingQty(Integer.parseInt(req
-								.getParameter("")));
-
-						ejb.setRawMaterialsStocktDetail(rawMaterialsStock);
+						rawMaterialsStock.setRemainingQty(rawMaterialsStock
+								.getRemainingQty() + Integer.parseInt(qty[l]));
+						ejb.updateRawMaterialStockDetail(rawMaterialsStock);
 						rawMaterialsStock = null;
 					}
 
 					purchaseProductDetails = null;
 				}
-
+				if (req.getParameter("isBarPrint").equals("yes")) {
+					req.setAttribute("print", 1);
+				} else {
+					req.setAttribute("print", 0);
+				}
 				msg = "Purchase entry was successfull.";
+				break;
+
+			case "purchaseSearchByDate":
+				page = "purchasingPurchaseSearch.jsp";
+				List<Purchase_Entry> purEntryList = ejb.getPurchaseEntryByDate(
+						DateConverter.getDate(req.getParameter("fDate")),
+						DateConverter.getDate(req.getParameter("lDate")));
+				req.setAttribute("purEntryList", purEntryList);
 				break;
 
 			case "addUOM":

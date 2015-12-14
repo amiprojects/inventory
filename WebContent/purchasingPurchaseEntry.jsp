@@ -143,6 +143,11 @@
 </script>
 </head>
 <body>
+	<c:if test="${requestScope['print']==1}">
+		<script type="text/javascript">
+			window.open('barcodePrint.jsp', 'name', 'width=600,height=400');
+		</script>
+	</c:if>
 	<c:if test="${sessionScope['user']==null}">
 		<c:redirect url="index.jsp" />
 	</c:if>
@@ -173,7 +178,7 @@
 												<div class="col-md-12">
 													&nbsp; &nbsp; &nbsp; <b class="font">Vendor Type :</b> <select
 														class="form-control" name="vendorType"
-														onchange="getVendorNameByType();">
+														onchange="getVendorNameByType();" required="required">
 														<option value="0">Select Vendor Type</option>
 														<c:forEach
 															items="${sessionScope['ejb'].getAllVendorType()}"
@@ -184,8 +189,9 @@
 												</div>
 												<div class="col-md-12">
 													&nbsp; &nbsp; &nbsp; <b class="font">Vendor Name :</b> <input
-														type="text" class="form-control" id="vName" name="vName">
-													<input type="hidden" id="vId" name="vId">
+														type="text" class="form-control" id="vName" name="vName"
+														required="required"> <input type="hidden" id="vId"
+														name="vId">
 												</div>
 												<div class="col-md-12">
 													<!-- <div class="breadcrumbs">
@@ -203,7 +209,7 @@
 												<div class="form-group">
 													<label for="" class="font">Vendor Bill no :</label> <input
 														type="text" placeholder="" id="" class="form-control"
-														name="vendorBillNo">
+														name="vendorBillNo" required="required">
 												</div>
 												<div class="form-group">
 
@@ -224,8 +230,8 @@
 													<fmt:formatDate
 														value="${sessionScope['ejb'].getCurrentDateTime()}"
 														pattern="MM" var="yr" />
-													<input readonly="readonly" type="text" placeholder="" id=""
-														class="form-control"
+													<input readonly="readonly" type="text" placeholder=""
+														name="challanNumber" class="form-control"
 														value="${bs.companyInitial}/${fy}/${yr}/${bs.billType}/${lastChNo}/${lastSuf}">
 													<input type="hidden" name="challanNo" value="${lastChNo}"
 														id="challanNo"> <input type="hidden"
@@ -234,7 +240,7 @@
 												<div class="form-group">
 													<label for="" class="font">Purchase Date :</label> <input
 														type="text" id="datepicker" class="form-control"
-														name="purchaseDate">
+														name="purchaseDate" required="required">
 												</div>
 												<br> <input type="button" class="btn green pull-right"
 													data-toggle="modal" data-target="#addProduct"
@@ -343,10 +349,18 @@
 													</thead>
 												</table>
 											</div>
-											<div style="float: right;">
-												<input type="button" class="btn green pull-right"
-													data-toggle="modal" data-target="#savePurchase"
-													value="Save" onclick="paymentDate();">
+											<div class="row">
+												<div style="float: left;">
+													&nbsp; &nbsp; <span><b>Bar code :</b> &nbsp; </span> <input
+														type="radio" name="bar" value="yesBar" checked="checked">&nbsp;
+													Yes <input type="radio" name="bar" value="noBar">&nbsp;
+													No
+												</div>
+												<div style="float: right;">
+													<input type="button" class="btn green pull-right"
+														data-toggle="modal" data-target="#savePurchase"
+														value="Save" onclick="paymentDate();">
+												</div>
 											</div>
 											<div id="savePurchase" class="modal fade" role="dialog"
 												style="top: 25px;">
@@ -474,6 +488,9 @@
 											</div>
 										</div>
 										<input type="hidden" name="isSalable" id="isSalable">
+										<input type="hidden" name="isBarPrint" id="isBarPrint">
+										<input type="hidden" name="isSerial" id="isSerial"> <input
+											type="hidden" name="isLot" id="isLot">
 									</form>
 									<!-- <input type="radio" name="a" value="x" onclick="first()" id="a">1
 									<input type="radio" name="a" value="y" onclick="second()"
@@ -525,7 +542,8 @@
 								<div class="col-md-5">Product-Code:</div>
 								<div class="col-md-7">
 									<select class="form-control" name="productCode"
-										id="productCode" onchange="getProductDetailsByProductCode();">
+										id="productCode" onchange="getProductDetailsByProductCode();"
+										required="required">
 										<option value="0">Select Product Code</option>
 										<c:forEach
 											items="${sessionScope['ejb'].getAllProductDetail()}"
@@ -597,7 +615,8 @@
 							<div class="row">
 								<div class="col-md-3">Quantity:</div>
 								<div class="col-md-9">
-									<input type="number" class="form-control" name="qty" id="qty">
+									<input type="number" class="form-control" name="qty" id="qty"
+										required="required">
 								</div>
 								<div class="col-md-3">UOM:</div>
 								<div class="col-md-9">
@@ -606,7 +625,8 @@
 								</div>
 								<div class="col-md-3">Rate:</div>
 								<div class="col-md-9">
-									<input type="number" class="form-control" name="rate" id="rate">
+									<input type="number" class="form-control" name="rate" id="rate"
+										required="required">
 								</div>
 							</div>
 						</div>
@@ -665,11 +685,12 @@
 							</div>
 							<br>
 							<div class="row">
-								<div style="float: left;">
+								<!-- <div style="float: left;">
 									&nbsp; &nbsp; <span><b>Bar code :</b> &nbsp; </span> <input
-										type="radio" name="bar" value="yesBar">&nbsp; Yes <input
-										type="radio" name="bar" value="noBar">&nbsp; No
-								</div>
+										type="radio" name="bar" value="yesBar" checked="checked">&nbsp;
+									Yes <input type="radio" name="bar" value="noBar">&nbsp;
+									No
+								</div> -->
 
 								<div style="float: right; right: 25px;">
 									<input type="button" class="btn btn-default" value="Add"
@@ -730,6 +751,9 @@
 	<script>
 		$(document).ready(function() {
 			$("#isSalable").val('no');
+			$("#isBarPrint").val('yes');
+			$("#isSerial").val('yes');
+			$("#isLot").val('yes');
 		});
 		$(function() {
 			$("#datepicker").datepicker();
@@ -865,13 +889,24 @@
 				$("#mrp").attr("readonly", true);
 			}
 		}
+		$("input:radio[name=bar]").click(function() {
+			var value = $(this).val();
+			//alert(value);
+			if (value == "yesBar") {
+				$("#isBarPrint").val('yes');
+			} else {
+				$("#isBarPrint").val('no');
+			}
+		});
 		$("input:radio[name=lot]").click(function() {
 			var value = $(this).val();
 			//alert(value);
 			if (value == "yesLot") {
 				$("#lotText").prop("disabled", false);
+				$("#isLot").val('yes');
 			} else {
 				$("#lotText").prop("disabled", true);
+				$("#isLot").val('no');
 			}
 		});
 		$("input:radio[name=serial]").click(function() {
@@ -879,8 +914,10 @@
 			//alert(value);
 			if (value == "yesSerial") {
 				$("#serialText").prop("disabled", false);
+				$("#isSerial").val('yes');
 			} else {
 				$("#serialText").prop("disabled", true);
+				$("#isSerial").val('no');
 			}
 		});
 		/* function first() {

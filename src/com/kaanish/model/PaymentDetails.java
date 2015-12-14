@@ -31,6 +31,10 @@ public class PaymentDetails {
 	@JoinColumn(name = "paymentTypeId")
 	private PaymentType paymentType;
 
+	@ManyToOne
+	@JoinColumn(name = "paymentStatusId")
+	private PaymentStatus paymentStatus;
+
 	public int getId() {
 		return id;
 	}
@@ -85,6 +89,14 @@ public class PaymentDetails {
 
 	public void setPaymentType(PaymentType paymentType) {
 		this.paymentType = paymentType;
+	}
+
+	public PaymentStatus getPaymentStatus() {
+		return paymentStatus;
+	}
+
+	public void setPaymentStatus(PaymentStatus paymentStatus) {
+		this.paymentStatus = paymentStatus;
 	}
 
 }

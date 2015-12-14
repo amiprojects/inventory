@@ -395,6 +395,17 @@ public class Ejb {
 		return em.find(Purchase_Entry.class, id);
 	}
 
+	public List<Purchase_Entry> getPurchaseEntryByDate(Date startDate,
+			Date endDate) {
+		TypedQuery<Purchase_Entry> q = em
+				.createQuery(
+						"select c from Purchase_Entry c WHERE c.purchase_date BETWEEN :startDate AND :endDate",
+						Purchase_Entry.class);
+		q.setParameter("startDate", startDate);
+		q.setParameter("endDate", endDate);
+		return q.getResultList();
+	}
+
 	public int getLastPurchaseChallanNumber() {
 		TypedQuery<Purchase_Entry> q = em.createQuery(
 				"select c from Purchase_Entry c ORDER BY c.id DESC",

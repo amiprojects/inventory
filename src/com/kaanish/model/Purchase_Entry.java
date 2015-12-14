@@ -20,14 +20,16 @@ public class Purchase_Entry {
 	private int id;
 
 	private int challan_no;
+	private String challanNumber;
 	private int challanSuffix;
 	private String vendor_bill_no;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date purchase_date;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date entry_date;
-	private int transport_cost;
-	private int sur_charge;
+	private float transport_cost;
+	private float sur_charge;
+	private float totalCost;
 
 	@OneToMany(mappedBy = "purchase_Entry")
 	private List<Purchase_Product_Details> purchase_Product_Details;
@@ -48,10 +50,6 @@ public class Purchase_Entry {
 
 	@OneToMany(mappedBy = "purchase_Entry", cascade = CascadeType.ALL)
 	private List<PaymentDetails> paymentDetails;
-
-	@ManyToOne
-	@JoinColumn(name = "paymentStatus")
-	private PaymentStatus paymentStatus;
 
 	public int getId() {
 		return id;
@@ -101,19 +99,19 @@ public class Purchase_Entry {
 		this.entry_date = entry_date;
 	}
 
-	public int getTransport_cost() {
+	public float getTransport_cost() {
 		return transport_cost;
 	}
 
-	public void setTransport_cost(int transport_cost) {
+	public void setTransport_cost(float transport_cost) {
 		this.transport_cost = transport_cost;
 	}
 
-	public int getSur_charge() {
+	public float getSur_charge() {
 		return sur_charge;
 	}
 
-	public void setSur_charge(int sur_charge) {
+	public void setSur_charge(float sur_charge) {
 		this.sur_charge = sur_charge;
 	}
 
@@ -121,7 +119,8 @@ public class Purchase_Entry {
 		return purchase_Product_Details;
 	}
 
-	public void setPurchase_Product_Details(List<Purchase_Product_Details> purchase_Product_Details) {
+	public void setPurchase_Product_Details(
+			List<Purchase_Product_Details> purchase_Product_Details) {
 		this.purchase_Product_Details = purchase_Product_Details;
 	}
 
@@ -149,14 +148,6 @@ public class Purchase_Entry {
 		this.bill_setup = bill_setup;
 	}
 
-	public PaymentStatus getPaymentStatus() {
-		return paymentStatus;
-	}
-
-	public void setPaymentStatus(PaymentStatus paymentStatus) {
-		this.paymentStatus = paymentStatus;
-	}
-
 	public int getChallanSuffix() {
 		return challanSuffix;
 	}
@@ -171,6 +162,22 @@ public class Purchase_Entry {
 
 	public void setPaymentDetails(List<PaymentDetails> paymentDetails) {
 		this.paymentDetails = paymentDetails;
+	}
+
+	public String getChallanNumber() {
+		return challanNumber;
+	}
+
+	public void setChallanNumber(String challanNumber) {
+		this.challanNumber = challanNumber;
+	}
+
+	public float getTotalCost() {
+		return totalCost;
+	}
+
+	public void setTotalCost(float totalCost) {
+		this.totalCost = totalCost;
 	}
 
 }
