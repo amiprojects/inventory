@@ -63,25 +63,10 @@
 	$(document).ready(function() {
 		$("#jobs").attr("id", "activeSubMenu");
 		$("#jAssign").attr("style", "color: red;");
-		$("#notpaid").hide();
-		$("#semipaid").hide();
-		$("#fullpaid").hide();
-		$("#cash").hide();
-		$("#bank").hide();
-		$("#cheque").hide();
-		$("#scash").hide();
+		
 
 	});
-	function closePayment() {
-		$("#notpaid").hide();
-		$("#semipaid").hide();
-		$("#fullpaid").hide();
-		$("#cash").hide();
-		$("#bank").hide();
-		$("#cheque").hide();
-		$("#scash").hide();
-		$("#pstatus").val('-');
-	}
+	
 	
 	
 	
@@ -121,8 +106,8 @@
 									</ul>
 								</div>
 								<div class="col-md-12">
-									<form role="form" class="sec" method="post" id="purchaseForm"
-										action="purchaseEntry">
+									<form role="form" class="sec" method="post" id="jobForm"
+										action="jobEntry">
 										<div class="widget-area">
 											<div class="col-md-6">
 												<div class="col-md-12">
@@ -261,24 +246,11 @@
 
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 	<script>
-		$(document).ready(function() {
-			$("#isSalable").val('no');
-		});
+		
 		$(function() {
 			$("#datepicker").datepicker();
 		});
-		function salable() {
-
-			if ($('#sale').is(":checked")) {
-				$("#isSalable").val('yes');
-				$("#wsp").attr("readonly", false);
-				$("#mrp").attr("readonly", false);
-			} else {
-				$("#isSalable").val('no');
-				$("#wsp").attr("readonly", true);
-				$("#mrp").attr("readonly", true);
-			}
-		}
+		
 		$("input:radio[name=lot]").click(function() {
 			var value = $(this).val();
 			//alert(value);
@@ -288,299 +260,19 @@
 				$("#lotText").prop("disabled", true);
 			}
 		});
-		$("input:radio[name=serial]").click(function() {
-			var value = $(this).val();
-			//alert(value);
-			if (value == "yesSerial") {
-				$("#serialText").prop("disabled", false);
-			} else {
-				$("#serialText").prop("disabled", true);
-			}
-		});
-		/* function first() {
-			if ($('#a').is(":checked")) {
-				alert("hi");
-			}
-		} */
+		
+		
 
 		$("#close").click(function() {
 			$("#addProduct").modal("hide");
 			$("#header").show();
 		});
-		/* $("#close1").click(function() {
-			$("#another").modal("hide");
-		}); */
-		function close1() {
-			$("#another").modal("hide");
-		}
-		function manage() {
-			$("#header").hide();
-		}
-		$("#yesP").click(function() {
-			$("#another").modal("hide");
-		});
-		$("#noP").click(function() {
-			$("#another").modal("hide");
+		
+		$("#close1").click(function() {
 			$("#addProduct").modal("hide");
-			$("#header").show();
+			$("#header").modal("hide");
 		});
-		var i = 1;
-		function anotherShow() {
-			$("#another").modal("show");
-			//$("#amount").val(Number($("#qty").val()) * Number($("#rate").val()));
-			$("#purProTable").append(
-					'<tbody><tr><td>' + i + '</td><td>' + $("#pCode").val()
-							+ '</td><td>' + $("#pDesc").val() + '</td><td>'
-							+ $("#rate").val() + '</td><td>' + $("#qty").val()
-							+ '</td><td>' + Number($("#qty").val())
-							* Number($("#rate").val()) + '</td></tr></tbody>');
-			$("#subTotal").val(
-					Number($("#subTotal").val()) + Number($("#qty").val())
-							* Number($("#rate").val()));
-			//$("#qty").val("");
-			i++;
-
-			$("#pCodeIdH").val("Id");
-			$("#hiddenTable").append(
-					'<tbody><tr>'
-							+ '<td><input type="text" name="pCodeIdH" value=\''
-							+ $("#pCode").val()
-							+ '\'></td>'
-							+ '<td><input type="text" name="attr1H" value=\''
-							+ $("#attr1").val()
-							+ '\'></td>'
-							+ '<td><input type="text" name="attr2H" value=\''
-							+ $("#attr2").val()
-							+ '\'></td>'
-							+ '<td><input type="text" name="attr3H" value=\''
-							+ $("#attr3").val()
-							+ '\'></td>'
-							+ '<td><input type="text" name="attr4H" value=\''
-							+ $("#attr4").val()
-							+ '\'></td>'
-							+ '<td><input type="text" name="attr5H" value=\''
-							+ $("#attr5").val()
-							+ '\'></td>'
-							+ '<td><input type="text" name="attr6H" value=\''
-							+ $("#attr6").val()
-							+ '\'></td>'
-							+ '<td><input type="text" name="qtyH" value=\''
-							+ $("#qty").val()
-							+ '\'></td>'
-							+ '<td><input type="text" name="uomH" value=\''
-							+ $("#uom").val()
-							+ '\'></td>'
-							+ '<td><input type="text" name="rateH" value=\''
-							+ $("#rate").val()
-							+ '\'></td>'
-							+ '<td><input type="text" name="wspH" value=\''
-							+ $("#wsp").val()
-							+ '\'></td>'
-							+ '<td><input type="text" name="mrpH" value=\''
-							+ $("#mrp").val()
-							+ '\'></td>'
-							+ '<td><input type="text" name="lotH" value=\''
-							+ $("#lotText").val()
-							+ '\'></td>'
-							+ '<td><input type="text" name="serialH" value=\''
-							+ $("#serialText").val()
-							+ '\'></td>'
-							+ '</tr></tbody>');
-			$("#taxAmount").val(
-					Number($("#subTotal").val()) * Number($("#taxTot").val())
-							/ Number(100));
-			$("#gt").val(
-					Number($("#subTotal").val())
-							+ Number($("#taxAmount").val())
-							+ Number($("#transportCost").val())
-							+ Number($("#surcharge").val()));
-		}
-
-		function getVendorNameByType() {
-			$("#vName").val("");
-			$("#vDetail").val("");
-		}
-
-		$(function() {
-			$("#vName")
-					.autocomplete(
-							{
-								source : function(req, resp) {
-									$
-											.ajax({
-												url : "getVendorByVendorType",
-												dataType : "json",
-												data : {
-													id : $(
-															'[name="vendorType"]')
-															.val(),
-													term : req.term
-												},
-												success : function(data) {
-													resp($
-															.map(
-																	data,
-																	function(
-																			item) {
-																		return ({
-																			value : item.name,
-																			addr : item.address,
-																			id : item.id,
-																			ph1 : item.ph1,
-																			ph2 : item.ph2
-																		});
-																	}));
-												}
-											});
-								},
-								change : function(event, ui) {
-									if (ui.item == null) {
-										$("#vName").val("");
-										$("#vDetail").val("");
-										$("#taxGroup").val(0).prop("selected",
-												true);
-										$("#taxTot").val('0');
-										$("#taxAmount").val('0');
-										$("#gt")
-												.val(
-														Number($("#subTotal")
-																.val())
-																+ Number($(
-																		"#taxAmount")
-																		.val())
-																+ Number($(
-																		"#transportCost")
-																		.val())
-																+ Number($(
-																		"#surcharge")
-																		.val()));
-									} else {
-										$("#vId").val(ui.item.id)
-										$("#vDetail").val(
-												"Address : \n\t" + ui.item.addr
-														+ "\nPhone1 : "
-														+ ui.item.ph1
-														+ "\nPhone2 : "
-														+ ui.item.ph2);
-									}
-
-								},
-								select : function(event, ui) {
-									if (ui.item == null) {
-										$("#vName").val("");
-
-									} else {
-										$("#vId").val(ui.item.id)
-										$("#vDetail").val(
-												"Address : \n\t" + ui.item.addr
-														+ "\nPhone1 : "
-														+ ui.item.ph1
-														+ "\nPhone2 : "
-														+ ui.item.ph2);
-
-										$
-												.ajax({
-													type : "post",
-													url : "getAccountDetails",
-													data : {
-														id : ui.item.id
-													},
-													dataType : "json",
-													success : function(data5) {
-														$("#taxGroup")
-																.val(
-																		data5.tax_Type_Group)
-																.prop(
-																		"selected",
-																		true);
-														$("#taxTot").val(
-																data5.taxTotal);
-														$("#taxAmount")
-																.val(
-																		Number($(
-																				"#subTotal")
-																				.val())
-																				* Number($(
-																						"#taxTot")
-																						.val())
-																				/ Number(100));
-														$("#gt")
-																.val(
-																		Number($(
-																				"#subTotal")
-																				.val())
-																				+ Number($(
-																						"#taxAmount")
-																						.val())
-																				+ Number($(
-																						"#transportCost")
-																						.val())
-																				+ Number($(
-																						"#surcharge")
-																						.val()));
-													},
-													error : function(a, b, c) {
-														alert("error: " + b);
-													}
-												});
-									}
-								}
-							});
-		});
-		function selectedTaxGroup() {
-			if ($("#taxGroup").val() != 0) {
-				$.ajax({
-					url : "getTaxGroupById",
-					data : {
-						id : $("#taxGroup").val()
-					},
-					dataType : "json",
-					success : function(data) {
-						$("#taxTot").val(data.taxtot);
-						$("#taxAmount").val(
-								Number($("#subTotal").val())
-										* Number($("#taxTot").val())
-										/ Number(100));
-						$("#gt").val(
-								Number($("#subTotal").val())
-										+ Number($("#taxAmount").val())
-										+ Number($("#transportCost").val())
-										+ Number($("#surcharge").val()));
-					},
-					error : function(a, b, c) {
-						alert(c);
-					}
-				});
-			} else {
-				$("#taxTot").val('0');
-				$("#taxAmount").val('0');
-				$("#gt").val(
-						Number($("#subTotal").val())
-								+ Number($("#taxAmount").val())
-								+ Number($("#transportCost").val())
-								+ Number($("#surcharge").val()));
-			}
-
-		}
-		function gtot() {
-			if (($("#transportCost").val() != "")
-					|| ($("#surcharge").val() != "")) {
-				$("#gt").val(
-						Number($("#subTotal").val())
-								+ Number($("#taxAmount").val())
-								+ Number($("#transportCost").val())
-								+ Number($("#surcharge").val()));
-			} else {
-				$("#gt").val(
-						Number($("#subTotal").val())
-								+ Number($("#taxAmount").val())
-								+ Number($("#transportCost").val())
-								+ Number($("#surcharge").val()));
-			}
-		}
-		function submit() {
-			document.getElementById("purchaseForm").submit();
-		}
+		
 	</script>
 </body>
 

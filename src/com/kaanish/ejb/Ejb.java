@@ -814,6 +814,11 @@ public class Ejb {
 	public void deleteReadyGoodsStockDetailById(int id) {
 		em.remove(getReadyGoodsStocktDetailById(id));
 	}
+	public ReadyGoodsStock getReadyGoodsStocktDetailByProductId(int id) {
+		TypedQuery<ReadyGoodsStock> q=em.createQuery("select c from ReadyGoodsStock c where c.productDetail.id=:ID",ReadyGoodsStock.class);
+		q.setParameter("ID", id);
+		return q.getResultList().size()>0?q.getResultList().get(0):null;
+	}
 
 	public void updateReadyGoodsStockDetail(ReadyGoodsStock readyGoodsStock) {
 		em.merge(readyGoodsStock);

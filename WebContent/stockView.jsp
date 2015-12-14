@@ -120,7 +120,7 @@
 														<td>${pro.code}</td>
 														<td>${pro.description}</td>
 														<td>${pro.qtyUnit.name}</td>
-														<td>${pro.isSaleble()?1:sessionScope['ejb'].getRawMaterialStocktDetailByProductId(pro.id).remainingQty}</td>
+														<td>${pro.isSaleble()?sessionScope['ejb'].getReadyGoodsStocktDetailByProductId(pro.id).remainingQty:sessionScope['ejb'].getRawMaterialStocktDetailByProductId(pro.id).remainingQty}</td>
 														<td>${pro.code}</td>
 														<td><img alt="" src="images/eye.png" height="25px"></td>
 													</tr>
