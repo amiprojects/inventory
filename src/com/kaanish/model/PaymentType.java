@@ -15,7 +15,7 @@ public class PaymentType {
 	private int id;
 	private String Type;
 
-	@OneToMany(mappedBy = "purchase_Entry", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "paymentType", cascade = CascadeType.ALL)
 	private List<PaymentDetails> paymentDetails;
 
 	public int getId() {
