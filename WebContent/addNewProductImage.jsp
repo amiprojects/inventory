@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
 <html>
@@ -57,7 +58,7 @@
 								</div>
 								<div class="widget-area">
 									<div align="center">
-										<form action="#" enctype="multipart/form-data" method="post">
+										<form action="uploadProductImage" enctype="multipart/form-data" method="post">
 
 											<h3 style="color: purple;">Image:</h3>
 											<input type="file" name="proImg" size="50"
@@ -66,6 +67,9 @@
 											<br> <input class="btn green btn-default" type="submit"
 												value="Send">
 										</form>
+										<c:forEach items="${getAllProductImageByProductId(param.id)}" var="img">
+										<img alt="" src="data:image/jpeg;base64,data:image/jpeg;base64,${img.getImageAsString()}">
+										</c:forEach>
 									</div>
 
 								</div>

@@ -452,7 +452,13 @@ public class Ejb {
 				Purchase_Product_Details.class);
 		q.setParameter("Id", id);
 		return q.getResultList();
-
+	}
+	
+	public List<Purchase_Product_Details> getPurchase_Product_DetailsByPurchaseEntryId(int id) {
+		TypedQuery<Purchase_Product_Details> q = em.createQuery("select s from Purchase_Product_Details s where s.purchase_Entry.id=:Id",
+				Purchase_Product_Details.class);
+		q.setParameter("Id", id);
+		return q.getResultList();
 	}
 
 	/******************** for City *******************************/

@@ -55,7 +55,7 @@ import com.kaanish.util.DateConverter;
 		"/editVendorType", "/deleteVendorType", "/addCity", "/deleteState",
 		"/deleteCity", "/productSumary", "/addNewConversion", "/purchaseEntry",
 		"/updateConversion", "/addBillSetup", "/updateCompanyInfo",
-		"/updateVendor", "/purchaseSearchByDate" })
+		"/updateVendor", "/purchaseSearchByDate","/uploadProductImage" })
 
 public class Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -894,7 +894,7 @@ public class Servlet extends HttpServlet {
 				}
 				if (req.getParameter("isBarPrint").equals("yes")) {
 					req.setAttribute("print", 1);
-					req.setAttribute("purDet", purchaseEntry);
+					req.setAttribute("purDet", purchaseEntry.getId());
 				} else {
 					req.setAttribute("print", 0);
 				}
@@ -1031,6 +1031,11 @@ public class Servlet extends HttpServlet {
 				} else {
 					msg = "please enter proper conversion value";
 				}
+				break;
+			case "uploadProductImage":
+				page="addNewProductImage.jsp";
+				
+				msg="image added successfully";
 				break;
 
 			default:

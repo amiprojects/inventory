@@ -327,7 +327,7 @@
 													<input id="actact" type="checkbox" name="active">
 												</div>
 												
-											<a href="addNewProductImage.jsp">	<button id="sooImage" class="btn btn-info btn-sm"
+											<a href="addNewProductImage.jsp" id="proImg">	<button id="sooImage" class="btn btn-info btn-sm"
 													style="position: absolute; left: 429px; top: 326px;">
 													Add Product Image</button></a>
 													<br><br>
@@ -1642,6 +1642,7 @@
 					$("#descc").val(data.description);
 					$("#uomuom").val(data.qtyUnit);
 					$("#upcupc").val(data.universalCode);
+					$("#proImg").attr("src","addNewProductImage.jsp?id="+data.id);
 
 					if (data.isActive) {
 						$("#actact").prop("checked", true);
@@ -1662,7 +1663,7 @@
 						dataType : "json",
 						success : function(data1) {
 							$.map(data1,function(item){
-								alert(item.image);
+								//alert(item.image);
 							});
 						}
 					});

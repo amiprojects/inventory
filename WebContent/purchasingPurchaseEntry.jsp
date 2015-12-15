@@ -145,7 +145,7 @@
 <body>
 	<c:if test="${requestScope['print']==1}">
 		<script type="text/javascript">
-			window.open('barcodePrint.jsp', 'name', 'width=600,height=400');
+			window.open("barcodePrint.jsp?id=${requestScope['purDet']}", 'name', 'width=600,height=400');
 		</script>
 	</c:if>
 	<c:if test="${sessionScope['user']==null}">
