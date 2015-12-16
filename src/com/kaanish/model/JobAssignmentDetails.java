@@ -18,6 +18,8 @@ public class JobAssignmentDetails {
 	@GeneratedValue
 	private int id;
 	@Temporal(TemporalType.TIMESTAMP)
+	private Date entryDate; 
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date assignDate;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date estimatedCompletionDate;
@@ -65,6 +67,14 @@ public class JobAssignmentDetails {
 	public void setJobAssignmentProducts(
 			List<JobAssignmentProducts> jobAssignmentProducts) {
 		this.jobAssignmentProducts = jobAssignmentProducts;
+	}
+
+	public Date getEntryDate() {
+		return entryDate;
+	}
+
+	public void setEntryDate(Date entryDate) {
+		this.entryDate = entryDate;
 	}
 
 	@OneToMany(mappedBy = "jobAssignmentDetails")

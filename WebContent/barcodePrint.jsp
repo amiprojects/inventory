@@ -15,13 +15,14 @@
 </style>
 </head>
 <body>
-	<c:forEach items="${sessionScope['ejb'].getPurchase_Product_DetailsByPurchaseEntryId(param.id)}" var="purProDet">
+<c:set value="${sessionScope['ejb'].getPurchaseEntryById(param.id)}" var="purentry"/>
+	<c:forEach items="${purentry.purchase_Product_Details}" var="purProDet">
 		<c:forEach items="${purProDet.serialNumbers}" var="barcode">
 			<div id="rcorners3">
 				<span style="font-weight: bold; font-size: 9px">Kaanish
 					Kouture</span><br> <span style="font-size: 9px">Pcode:${purProDet.productDetail.code}</span><br>
 				<span style="font-size: 9px">MRP:${purProDet.mrp}</span><br> <img
-					src="http://localhost:8088/barbecue/BarcodeServlet?data=${purProDet.id}/${barcode.lotNo}/${barcode.serialNumber}&drawText=true&width=2&height=30"
+					src="http://localhost:8081/barbecue/BarcodeServlet?data=${purProDet.id}/${barcode.lotNo}/${barcode.serialNumber}&drawText=true&width=2&height=30"
 					width="110" /><br>
 				<center>
 					<span style="font-size: 5px">${purProDet.id}/${barcode.lotNo}/${barcode.serialNumber}</span>

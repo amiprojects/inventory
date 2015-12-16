@@ -27,6 +27,7 @@ public class Purchase_Product_Details {
 	private String attrValue5;
 	private String attrValue6;
 	private boolean initialInventory;
+	private boolean isReady;
 
 	@OneToMany(mappedBy = "purchase_Product_Details")
 	private List<JobAssignmentProducts> jobAssignmentProducts;
@@ -201,6 +202,14 @@ public class Purchase_Product_Details {
 		}
 		return str;
 
+	}
+
+	public boolean isReady() {
+		return isReady;
+	}
+
+	public void setReady(boolean isReady) {
+		this.isReady = isReady;
 	}
 
 }

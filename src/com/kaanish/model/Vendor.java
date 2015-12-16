@@ -24,23 +24,15 @@ public class Vendor {
 	private String address;
 	private String pinCode;
 	private String email;
-
 	private String aliseName;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date lastModifiedDate;
 
 	@OneToMany(mappedBy = "vendor")
 	private List<JobAssignmentDetails> jobAssignmentDetails;
-
-	public List<JobAssignmentDetails> getJobAssignmentDetails() {
-		return jobAssignmentDetails;
-	}
-
-	public void setJobAssignmentDetails(
-			List<JobAssignmentDetails> jobAssignmentDetails) {
-		this.jobAssignmentDetails = jobAssignmentDetails;
-	}
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date lastModifiedDate;
+	
+	@OneToMany(mappedBy="vendor")
+	private List<JobAssignmentProducts> jobAssignmentProducts;
 
 	@ManyToOne
 	@JoinColumn(name = "venderTypeId")
@@ -179,6 +171,15 @@ public class Vendor {
 	public void setAccountDetails(List<AccountDetails> accountDetails) {
 		this.accountDetails = accountDetails;
 	}
+	
+	public List<JobAssignmentDetails> getJobAssignmentDetails() {
+		return jobAssignmentDetails;
+	}
+
+	public void setJobAssignmentDetails(
+			List<JobAssignmentDetails> jobAssignmentDetails) {
+		this.jobAssignmentDetails = jobAssignmentDetails;
+	}
 
 	@Override
 	public String toString() {
@@ -188,6 +189,14 @@ public class Vendor {
 				+ address + "\", " + "\"pinCode\":\"" + pinCode + "\", "
 				+ "\"email\":\"" + email + "\", " + "\"city\":\""
 				+ city.getCityName() + "\"}";
+	}
+
+	public List<JobAssignmentProducts> getJobAssignmentProducts() {
+		return jobAssignmentProducts;
+	}
+
+	public void setJobAssignmentProducts(List<JobAssignmentProducts> jobAssignmentProducts) {
+		this.jobAssignmentProducts = jobAssignmentProducts;
 	}
 
 }

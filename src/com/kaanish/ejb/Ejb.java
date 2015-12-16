@@ -454,7 +454,8 @@ public class Ejb {
 		return q.getResultList();
 	}
 	
-	public List<Purchase_Product_Details> getPurchase_Product_DetailsByPurchaseEntryId(int id) {
+	public List<Purchase_Product_Details> getPurchase_Product_DetailsByPurchaseEntryId(int id) throws Throwable {
+		finalize();
 		TypedQuery<Purchase_Product_Details> q = em.createQuery("select s from Purchase_Product_Details s where s.purchase_Entry.id=:Id",
 				Purchase_Product_Details.class);
 		q.setParameter("Id", id);
@@ -710,6 +711,12 @@ public class Ejb {
 	/********************** for serial number ********************/
 	public void setSerialNumber(SerialNumber serialNumber) {
 		em.persist(serialNumber);
+	}
+	
+	public List<SerialNumber> getSerialNumberByPurchaseEntryId(int id){
+		TypedQuery<SerialNumber> q=em.createQuery("select c from SerialNumber c where c.purchase_Product_Details.purchase_Entry.id=:id", SerialNumber.class);
+		q.setParameter("id", id);
+		return q.getResultList();
 	}
 
 	/******************* for bill setup **************************/
