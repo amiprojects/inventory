@@ -95,14 +95,24 @@
 								</div>
 								<div class="col-md-12">
 									<form role="form" class="sec" method="post" id="jobForm"
-										action="jobEntry">
+										action="jobAssignment">
 										<div class="widget-area">
 											<div class="col-md-6">
 												<div class="col-md-12"></div>
 												<div class="col-md-12">
-													<b class="font">Jobber Name :</b> <input type="text"
-														class="form-control" id="jName" name="jName"> <input
-														type="hidden" id="jId" name="jId">
+													<b class="font">Jobber Name :</b>
+													<!-- <input type="text"
+														class="form-control" id="jName" name="jName">
+													<input type="hidden" id="jId" name="jId"> -->
+													<select class="form-control" name="jName" id="jName"
+														onchange="getDetailsByJobberName();" required="required">
+														<option value="0">Select Jobber Name</option>
+														<c:forEach
+															items="${sessionScope['ejb'].getVendorsByVendorTypeJobber('Jobber')}"
+															var="jobber">
+															<option value="${jobber.id}">${jobber.name}</option>
+														</c:forEach>
+													</select>
 												</div>
 												<div class="col-md-12">
 
@@ -114,16 +124,38 @@
 											</div>
 											<div class="col-md-6">
 												<div class="form-group">
-													<label for="" class="font">Job Challan no :</label> <input
-														type="text" placeholder="" id="jobchallan"
-														class="form-control" name="jobChallanNo">
+													<label for="" class="font">Job Challan no :</label>
+													<!-- <input
+														type="text" placeholder="" id="jobChallanNo"
+														class="form-control" name="jobChallanNo"> -->
+													<c:set var="fy"
+														value="${sessionScope['ejb'].getCurrentFinancialYear()}" />
+													<c:set var="cno"
+														value="${sessionScope['ejb'].getLastJobChallanNumber()+1}" />
+													<c:set var="csuf"
+														value="${sessionScope['ejb'].getLastJobChallanSuffix()+1}" />
+													<c:set var="suf" value="JOB" />
+													<c:set var="bs"
+														value="${sessionScope['ejb'].getLastBillSetupBySufix(suf)}" />
+													<fmt:formatNumber value="${cno}" var="lastChNo"
+														minIntegerDigits="4" groupingUsed="false" />
+													<fmt:formatNumber value="${csuf}" var="lastSuf"
+														minIntegerDigits="3" groupingUsed="false" />
+													<fmt:formatDate
+														value="${sessionScope['ejb'].getCurrentDateTime()}"
+														pattern="MM" var="yr" />
+													<input readonly="readonly" type="text" placeholder=""
+														name="jobChallanNo" id="jobChallanNo" class="form-control"
+														value="${bs.companyInitial}/${fy}/${yr}/${bs.billType}/${lastChNo}/${lastSuf}">
+													<input type="hidden" name="challanNo" value="${lastChNo}"
+														id="challanNo"> <input type="hidden"
+														name="challanSuffix" value="${lastSuf}">
 												</div>
 												<div class="form-group">
 
 													<label for="" class="font">Asigned Date :</label> <input
 														type="text" class="form-control" name="assignedDate"
-														id="datepicker" required="required" id="datepicker"
-														readonly="readonly">
+														required="required" id="datepicker" readonly="readonly">
 												</div>
 
 												<br> <input type="button" class="btn green pull-right"
@@ -170,12 +202,13 @@
 										</table>
 										<div class="col-md-6">
 											<b class="font">Estimated Submission Date :</b> <input
-												type="text" class="form-control" name="submissionDate"
+												type="text" class="form-control" name="estSubmissionDate"
 												name="subDate" required="required" id="datepicker1"
 												readonly="readonly">
 										</div>
 										<br> <br> <input type="button"
-											class="btn green pull-right" value="Save" style="width: 40%">
+											class="btn green pull-right" value="Save" style="width: 40%"
+											onclick="submitForm()">
 									</form>
 
 								</div>
@@ -205,13 +238,19 @@
 				<div class="modal-body">
 					<span>Product Code :</span> <input type="text" id="prodcode"
 						name="code" class="form-control">
-				</div>
-				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-8">
+							<span>Product Description :</span>
+							<textarea rows="5" cols="" readonly="readonly"
+								class="form-control"></textarea>
+						</div>
+						<div class="col-md-4" style="float: right;">
+							<span>Product Image :</span><br> <img alt=""
+								src="img/Koala.jpg" height="115px">
+						</div>
+					</div>
 					<span>Quantity :</span> <input type="text" id="prodqty" name="qty"
-						class="form-control">
-				</div>
-				<div class="modal-body">
-					<span>Describe Work :</span>
+						class="form-control"> <span>Describe Work :</span>
 					<textarea rows="5" cols="" id="work" name="work"
 						class="form-control"></textarea>
 				</div>
@@ -243,6 +282,41 @@
 			$("#addProduct").modal("hide");
 
 		});
+
+		function getDetailsByJobberName() {
+			if ($("#jName").val() != 0) {
+				$.ajax({
+					url : 'getJobberDetailsByName',
+					type : 'post',
+					dataType : "json",
+					data : {
+						id : $("#jName").val()
+					},
+					success : function(data) {
+						$("#jDetail").val(
+								"Address :\n\t" + data.address + "\nPh1 : "
+										+ data.ph1 + "\nPh2 : " + data.ph2);
+					},
+					error : function(a, b, c) {
+						alert(b + ": " + c);
+					}
+				});
+			} else {
+				alert("please select one jobber name");
+				$("#jDetail").val("");
+			}
+		}
+		function submitForm() {
+			if ($("#jName").val() == 0) {
+				alert("please select jobber name");
+			} else if ($("#datepicker").val() == "") {
+				alert("please select Assigning date");
+			} else if ($("#datepicker1").val() == "") {
+				alert("please select Estimated submission date");
+			} else {
+				$("#jobForm").submit();
+			}
+		}
 	</script>
 </body>
 

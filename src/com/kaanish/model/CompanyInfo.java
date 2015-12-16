@@ -36,7 +36,7 @@ public class CompanyInfo {
 	private String servtaxdate;
 	
 	public String getImageAsString(){
-		if(image.equals(null)){
+		if(image==null){
 			return "";
 		}else{
 			return Base64.encodeBytes(image);

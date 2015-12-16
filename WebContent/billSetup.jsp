@@ -68,7 +68,6 @@
 										<img src="img/th.jpg" height="33px" width="33px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 										<h5 style="text-align:left;">Company Name&nbsp;&nbsp;/&nbsp;&nbsp;Invoice Type&nbsp;&nbsp;/&nbsp;&nbsp;Year&nbsp;&nbsp;/&nbsp;&nbsp;Month&nbsp;&nbsp;/&nbsp;&nbsp;Auto Number&nbsp;&nbsp;/&nbsp;&nbsp;Suffix</h5>
 									</div>
-									<c:set var="type" value="PUR"/>
 									<c:set value="${sessionScope['ejb'].getLastBillSetupBySufix('PUR')}" var="pur"/>
 									<div class="col-md-9">
 										<label>Present Setup:</label> <br> 
@@ -78,7 +77,7 @@
 										<input type="text" readonly="readonly" name="year" id="pyear" style="width: 50px" value="15-16"></input>
 										<input type="text" readonly="readonly" name="month" id="pmonth" style="width: 50px" value="12"></input>
 									    <input type="text" readonly="readonly" name="autonum" id="pautonum" style="width: 50px" value="0091"></input>
-										<input type="text" name="suffix" id="psuffix" style="width: 50px" value="001" readonly="readonly" value="${pur.sufix}"></input>
+										<input type="text" name="suffix" id="psuffix" style="width: 50px" readonly="readonly" value="${pur.sufix}"></input>
 										<div  id="purInvImgEdit" style="display: block;"><a href="#" onclick="editPurchaseInvoce()"> <img src="img/edit.png"height="29px" width="29px"></a></div>
 										<div style="display: none;" id="purInvImgAdd"><a href="#" onclick="addPurchaseInvoice();"> <img src="img/add.png"height="29px" width="29px"></a></div>
 										</form>

@@ -2,18 +2,17 @@ package com.kaanish.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
 public class JobStock {
 	@Id
 	private int id;
-	private int qty;
+	private float givenQty;
+	private float remainingQty;
 	private float cost;
 
 	@ManyToOne
-	@JoinColumn(name = "jobAsignmentProductId")
 	private JobAssignmentProducts jobAssignmentProducts;
 
 	public int getId() {
@@ -22,14 +21,6 @@ public class JobStock {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public int getQty() {
-		return qty;
-	}
-
-	public void setQty(int qty) {
-		this.qty = qty;
 	}
 
 	public float getCost() {
@@ -44,8 +35,23 @@ public class JobStock {
 		return jobAssignmentProducts;
 	}
 
-	public void setJobAssignmentProducts(
-			JobAssignmentProducts jobAssignmentProducts) {
+	public void setJobAssignmentProducts(JobAssignmentProducts jobAssignmentProducts) {
 		this.jobAssignmentProducts = jobAssignmentProducts;
+	}
+
+	public float getGivenQty() {
+		return givenQty;
+	}
+
+	public void setGivenQty(float givenQty) {
+		this.givenQty = givenQty;
+	}
+
+	public float getRemainingQty() {
+		return remainingQty;
+	}
+
+	public void setRemainingQty(float remainingQty) {
+		this.remainingQty = remainingQty;
 	}
 }

@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class JobAssignmentProducts {
@@ -20,13 +21,9 @@ public class JobAssignmentProducts {
 	@OneToMany(mappedBy = "jobAssignmentProducts")
 	private List<JobRecievedDetails> jobRecievedDetails;
 
-	public List<JobRecievedDetails> getJobRecievedDetails() {
-		return jobRecievedDetails;
-	}
-
-	public void setJobRecievedDetails(List<JobRecievedDetails> jobRecievedDetails) {
-		this.jobRecievedDetails = jobRecievedDetails;
-	}
+	@ManyToOne
+	@JoinColumn(name = "designerID")
+	private Vendor vendor;
 
 	@ManyToOne
 	@JoinColumn(name = "jobAsignmentDetailsId")
@@ -36,16 +33,8 @@ public class JobAssignmentProducts {
 	@JoinColumn(name = "purchaseProductDetailsId")
 	private Purchase_Product_Details purchase_Product_Details;
 
-	@OneToMany(mappedBy = "jobAssignmentProducts")
-	private List<JobStock> jobStocks;
-
-	public List<JobStock> getJobStocks() {
-		return jobStocks;
-	}
-
-	public void setJobStocks(List<JobStock> jobStocks) {
-		this.jobStocks = jobStocks;
-	}
+	@OneToOne@JoinColumn(name="jobStockId")
+	private JobStock jobStock;
 
 	public int getId() {
 		return id;
@@ -75,8 +64,7 @@ public class JobAssignmentProducts {
 		return jobAssignmentDetails;
 	}
 
-	public void setJobAssignmentDetails(
-			JobAssignmentDetails jobAssignmentDetails) {
+	public void setJobAssignmentDetails(JobAssignmentDetails jobAssignmentDetails) {
 		this.jobAssignmentDetails = jobAssignmentDetails;
 	}
 
@@ -84,8 +72,31 @@ public class JobAssignmentProducts {
 		return purchase_Product_Details;
 	}
 
-	public void setPurchase_Product_Details(
-			Purchase_Product_Details purchase_Product_Details) {
+	public void setPurchase_Product_Details(Purchase_Product_Details purchase_Product_Details) {
 		this.purchase_Product_Details = purchase_Product_Details;
+	}
+
+	public Vendor getVendor() {
+		return vendor;
+	}
+
+	public void setVendor(Vendor vendor) {
+		this.vendor = vendor;
+	}
+
+	public List<JobRecievedDetails> getJobRecievedDetails() {
+		return jobRecievedDetails;
+	}
+
+	public void setJobRecievedDetails(List<JobRecievedDetails> jobRecievedDetails) {
+		this.jobRecievedDetails = jobRecievedDetails;
+	}
+
+	public JobStock getJobStock() {
+		return jobStock;
+	}
+
+	public void setJobStock(JobStock jobStock) {
+		this.jobStock = jobStock;
 	}
 }

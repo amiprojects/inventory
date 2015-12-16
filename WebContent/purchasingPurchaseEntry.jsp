@@ -145,7 +145,8 @@
 <body>
 	<c:if test="${requestScope['print']==1}">
 		<script type="text/javascript">
-			window.open("barcodePrint.jsp?id=${requestScope['purDet']}", 'name', 'width=600,height=400');
+			window.open("barcodePrint.jsp?id=${requestScope['purDet']}",
+					'name', 'width=600,height=400');
 		</script>
 	</c:if>
 	<c:if test="${sessionScope['user']==null}">
@@ -638,7 +639,7 @@
 									<!-- Is salable -->
 
 								</div>
-								<div class="col-md-2">Wsp:</div>
+								<div class="col-md-2">WSP:</div>
 								<div class="col-md-10">
 									<input type="number" class="form-control" id="wsp"
 										readonly="readonly" name="wsp">
@@ -854,6 +855,8 @@
 				$("#attr4").prop("readonly", true);
 				$("#attr5").prop("readonly", true);
 				$("#attr6").prop("readonly", true);
+				$("#wsp").prop("readonly", true);
+				$("#mrp").prop("readonly", true);
 			}
 			/* $.ajax({
 				url : 'getCategoryById',
