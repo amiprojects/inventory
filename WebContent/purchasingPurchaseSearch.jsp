@@ -114,6 +114,7 @@
 												<th>Vendor Bill no.</th>
 												<th>Purchase Date</th>
 												<th>Cost</th>
+												<th>Barcode</th>
 											</tr>
 										</thead>
 
@@ -129,6 +130,9 @@
 													<td><fmt:formatDate value="${pEntryByD.purchase_date}"
 															pattern="dd-MM-yy" /></td>
 													<td>${pEntryByD.totalCost}</td>
+													<td><a href="printBarcode.jsp?id=${pEntryByD.id}">
+															<img alt="click to view" src="Capture.PNG" height="20">
+													</a></td>
 												</tr>
 											</tbody>
 											<c:set var="count" value="${count+1}" />

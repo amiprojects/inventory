@@ -45,87 +45,12 @@
 	$(document).ready(function() {
 		$("#sales").attr("id", "activeSubMenu");
 		$("#sSalesEntry").attr("style", "color: red;");
-		$("#notpaid").hide();
-		$("#semipaid").hide();
-		$("#fullpaid").hide();
-		$("#cash").hide();
-		$("#bank").hide();
-		$("#cheque").hide();
-		$("#scash").hide();
+		
 
 	});
-	function pstatus() {
-		var val = $('[name="pstatus"]').val();
-		//alert(val);
-		if (val == '-') {
-			alert('Please select Payment status...');
-			$("#notpaid").hide();
-			$("#semipaid").hide();
-			$("#fullpaid").hide();
-			$("#bank").hide();
-			$("#cheque").hide();
-		} else if (val == 'npaid') {
-			$("#notpaid").show();
-			$("#fullpaid").hide();
-			$("#semipaid").hide();
-			$("#bank").hide();
-			$("#cheque").hide();
-		} else if (val == 'fpaid') {
-			$("#fullpaid").show();
-			$("#notpaid").hide();
-			$("#semipaid").hide();
-			$("#bank").hide();
-			$("#cheque").hide();
-		} else if (val == 'spaid') {
-			$("#semipaid").show();
-			$("#notpaid").hide();
-			$("#fullpaid").hide();
-			$("#bank").hide();
-			$("#cheque").hide();
-		}
-	}
-	function fptype() {
-		var val = $('[name="fptype"]').val();
-		if (val == '-') {
-			alert('Please select Payment type...');
-			$("#cash").hide();
-			$("#bank").hide();
-			$("#cheque").hide();
-		} else if (val == 'cash') {
-			$("#cash").show();
-			$("#cheque").hide();
-			$("#bank").hide();
-		} else if (val == 'cheq') {
-			$("#cheque").show();
-			$("#cash").hide();
-			$("#bank").hide();
-		} else if (val == 'btra') {
-			$("#bank").show();
-			$("#cheque").hide();
-			$("#cash").hide();
-		}
-	}
-	function sptype() {
-		var val = $('[name="sptype"]').val();
-		if (val == '-') {
-			alert('Please select Payment type...');
-			$("#scash").hide();
-			$("#bank").hide();
-			$("#cheque").hide();
-		} else if (val == 'cash') {
-			$("#scash").show();
-			$("#cheque").hide();
-			$("#bank").hide();
-		} else if (val == 'cheq') {
-			$("#cheque").show();
-			$("#scash").hide();
-			$("#bank").hide();
-		} else if (val == 'btra') {
-			$("#bank").show();
-			$("#cheque").hide();
-			$("#scash").hide();
-		}
-	}
+	
+	
+
 </script>
 </head>
 <body>
@@ -298,17 +223,18 @@
 					</div>		
 						</div>
 					</div>
-					</div>
-			</div>
-		</div>
-				
-		<!-- Content Sec -->
-	</div>
-	<!-- Page Container -->
-	</div>
-	<!-- main -->
+			
 
+	<script>
 	
+	
+	$(function() {
+		$("#datepicker").datepicker({
+			dateFormat : "dd-mm-yy",
+			maxDate : 0
+		});
+	});
+	</script>
 
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>

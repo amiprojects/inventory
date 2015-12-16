@@ -25,6 +25,9 @@ public class Tax_Type_Group {
 	@OneToMany(mappedBy = "tax_Type_Group")
 	private List<AccountDetails> accountDetails;
 	@OneToMany(mappedBy = "tax_Type_Group")
+	private List<SalesEntry> salesEntry;
+	
+	@OneToMany(mappedBy = "tax_Type_Group")
 	private List<Purchase_Entry> purchase_Entries;
 	
 	public float getTotalTaxValue(){

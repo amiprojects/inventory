@@ -28,6 +28,7 @@ import com.kaanish.model.PaymentDetails;
 import com.kaanish.model.PaymentStatus;
 import com.kaanish.model.PaymentType;
 import com.kaanish.model.ProductDetail;
+import com.kaanish.model.ProductImage;
 import com.kaanish.model.Purchase_Entry;
 import com.kaanish.model.Purchase_Product_Details;
 import com.kaanish.model.QtyUnit;
@@ -41,6 +42,7 @@ import com.kaanish.model.State;
 import com.kaanish.model.SubDepartment;
 import com.kaanish.model.Tax;
 import com.kaanish.model.Tax_Type_Group;
+import com.kaanish.model.Users;
 import com.kaanish.model.Vendor;
 import com.kaanish.model.VendorType;
 import com.kaanish.util.DateConverter;
@@ -49,7 +51,7 @@ import com.kaanish.util.DateConverter;
 
 @WebServlet({ "/login", "/logout", "/addTax", "/addTaxGroup", "/editTax",
 		"/deleteTax", "/editTaxGroup", "/deleteTaxGroup", "/createDept",
-		"/deleteDept", "/createSubDept", "/deleteSubDept", "/createCategory",
+		"/deleteDept", "/createSubDept", "/deleteSubDept","/editproductSummary", "/createCategory",
 		"/deleteCategory", "/newVendorType", "/addCountry", "/addState",
 		"/createProduct", "/deleteCountry", "/addVendor", "/addUOM",
 		"/editVendorType", "/deleteVendorType", "/addCity", "/deleteState",
@@ -64,6 +66,7 @@ public class Servlet extends HttpServlet {
 	private Ejb ejb;
 	private HttpSession httpSession;
 	private Date dt;
+	private Users users;
 	private String page;
 	private String msg;
 	private String url;
@@ -161,6 +164,12 @@ public class Servlet extends HttpServlet {
 		if (!ejb.isCompanyInfoExist()) {
 			companyInfo = new CompanyInfo();
 			ejb.setCompanyInfo(companyInfo);
+		}
+		if(ejb.getAllUsers().size()==0){
+			users= new Users();
+			users.setUserId("kaanish");
+			users.setPassword("kaanish");
+			ejb.setUser(users);
 		}
 
 	}
@@ -404,6 +413,21 @@ public class Servlet extends HttpServlet {
 				msg = "Vendor details updated successfully.";
 				break;
 
+			case"editproductSummary":
+				page="MaterialPartDetailsGenerals.jsp";
+			 productDetail = new  ProductDetail();
+			 
+			 productDetail	 = ejb.getProductDetailsById(Integer.parseInt(req
+						.getParameter("productid")));
+			 productDetail.setCode(req.getParameter("productCode123"));
+			 productDetail.setDescription(req.getParameter("productCode123"));
+			 productDetail.setQtyUnit(ejb.getQtyUnitById(Integer.parseInt(req.getParameter("uom123"))));
+			 productDetail.setUniversalCode(req.getParameter("upc123"));
+			 ejb.updateProductDetail(productDetail);
+			 
+				msg="update successfully.";
+				
+				break;
 			case "deleteVendorType":
 				page = "purchasingVendorType.jsp";
 				ejb.deleteVendorTypeById(Integer.parseInt(req.getParameter("id")));
@@ -1034,7 +1058,15 @@ public class Servlet extends HttpServlet {
 				break;
 			case "uploadProductImage":
 				page="addNewProductImage.jsp";
-				
+				Part p1=req.getPart("proImg");
+				is= p1.getInputStream();
+				byte cont[]=new byte[is.available()];
+				is.read(cont);
+				productDetail=ejb.getProductDetailById(Integer.parseInt(req.getParameter("id")));
+				ProductImage proimg=new ProductImage();
+				proimg.setProductDetail(productDetail);
+				proimg.setImage(cont);
+				ejb.setProductImage(proimg);
 				msg="image added successfully";
 				break;
 

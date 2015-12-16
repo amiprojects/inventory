@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
 <html>
@@ -52,33 +52,52 @@
 									<ul>
 										<li><p
 												style="right: -422px; font-size: 20px; position: absolute;">
-												<b>Upload Product Image</b>
+												<b>Barcode</b>
 											</p></li>
 									</ul>
 								</div>
 								<div class="widget-area">
-									<div align="center">
-										<form action="uploadProductImage" enctype="multipart/form-data" method="post">
-											<input type="hidden" value="${param.id}" name="id">
-											<h3 style="color: purple;">Image:</h3>
-											<input type="file" name="proImg" size="20"
-												onchange="readURL(this);"><br> <img id="image"
-												alt="" src=""> <br>
-											<br> <input class="btn green btn-default" type="submit"
-												value="Send">
-										</form>
-										<c:forEach items="${sessionScope['ejb'].getAllProductImageByProductId(param.id)}" var="img">
-										<img alt="" src="data:image/jpeg;base64,${img.getImageAsString()}">
-										</c:forEach>
-									</div>
+									<table class="table table-striped table-bordered">
 
+										<thead>
+											<tr>
+												<th width="10%"></th>
+												<th width="15%">Sl No</th>
+
+												<th width="25%">Product Code</th>
+												<th width="25%">product Name</th>
+										</thead>
+
+
+
+										<tbody>
+											<tr>
+												<td width="10%" align="left"><input type="checkbox"></td>
+												<td width="25%" align="left">ahhhhhhs</td>
+												<td width="25%" align="left">ahhhhhhhhhs</td>
+												<td width="25%" align="left">ahhhhhhhhhs</td>
+
+											</tr>
+
+
+
+
+
+										</tbody>
+									</table>
+									<a href="barcodePrint.jsp"><button
+											class="btn btn-info btn-sm" style="float: right;" id="b1"
+											value="print">Print</button></a>
 								</div>
+
+
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 	</div>
 
 

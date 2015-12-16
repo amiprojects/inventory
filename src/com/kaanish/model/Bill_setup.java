@@ -24,6 +24,9 @@ public class Bill_setup {
 	@OneToMany(mappedBy = "bill_setup")
 	private List<Purchase_Entry> purchase_Entries;
 
+	@OneToMany(mappedBy = "bill_setup")
+	private List<SalesEntry> salesEntry;
+	
 	public List<Purchase_Entry> getPurchase_Entries() {
 		return purchase_Entries;
 	}

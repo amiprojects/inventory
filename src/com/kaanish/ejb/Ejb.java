@@ -18,6 +18,7 @@ import com.kaanish.model.Category;
 import com.kaanish.model.City;
 import com.kaanish.model.CompanyInfo;
 import com.kaanish.model.Country;
+import com.kaanish.model.CustomerEntry;
 import com.kaanish.model.Department;
 import com.kaanish.model.PaymentDetails;
 import com.kaanish.model.PaymentStatus;
@@ -32,6 +33,8 @@ import com.kaanish.model.QtyUnitConversionPK;
 import com.kaanish.model.QtyUnitType;
 import com.kaanish.model.RawMaterialsStock;
 import com.kaanish.model.ReadyGoodsStock;
+import com.kaanish.model.SalesEntry;
+import com.kaanish.model.SalesProductDetails;
 import com.kaanish.model.SerialNumber;
 import com.kaanish.model.State;
 import com.kaanish.model.SubDepartment;
@@ -68,6 +71,11 @@ public class Ejb {
 
 	public Users getUserById(String id) {
 		return em.find(Users.class, id);
+	}
+	
+	public List<Users> getAllUsers() {
+		TypedQuery<Users> q =em.createQuery("select c from Users c", Users.class);
+				return q.getResultList();
 	}
 
 	/************** for qty unit type ***************/
@@ -712,6 +720,7 @@ public class Ejb {
 		em.persist(serialNumber);
 	}
 
+	
 	/******************* for bill setup **************************/
 
 	public void setBillSetup(Bill_setup billSetup) {
@@ -832,5 +841,80 @@ public class Ejb {
 		q.setParameter("id", id);
 		return q.getResultList().get(0);
 	}
+	/****************SalesEntry*****************/
+	
+	public void setSalesEntry(SalesEntry salesEntry) {
+		em.persist(salesEntry);
+	}
 
+	public SalesEntry getSalesEntryById(int id) {
+		return em.find(SalesEntry.class, id);
+	}
+
+	public void deleteSalesEntryById(int id) {            
+		em.remove(getSalesEntryById(id));
+	}
+
+	public void updateSalesEntry(SalesEntry salesEntry) {
+		em.merge(salesEntry);
+	}
+	public int getLastSalesChallanSuffix() {
+		TypedQuery<SalesEntry> q = em.createQuery("select c from SalesEntry c ORDER BY c.id DESC",
+				SalesEntry.class);
+		
+		if (q.getResultList().size() > 0) {
+			int s = q.getResultList().get(0).getChallanSuffix();
+			if (getLastBillSetupBySufix("INV").equals(null)) {
+				return s;
+			} else {
+				if (Integer.parseInt(getLastBillSetupBySufix("INV").getSufix()) < s) {
+					return s;
+				} else {
+					return Integer.parseInt(getLastBillSetupBySufix("INV").getSufix());
+				}
+			}
+		} else {
+			if (getLastBillSetupBySufix("INV").equals(null)) {
+				return 0;
+			} else {
+				return Integer.parseInt(getLastBillSetupBySufix("INV").getSufix());
+			}
+		}
+	}
+
+	/****************SalesProductDetails*****************/
+	
+	public void setDepartment(SalesProductDetails salesProductDetails) {
+		em.persist(salesProductDetails);
+	}
+
+	public SalesProductDetails getSalesProductDetailsById(int id) {
+		return em.find(SalesProductDetails.class, id);
+	}
+
+	public void deleteSalesProductDetailsById(int id) {
+		em.remove(getSalesProductDetailsById(id));
+	}
+
+	public void updateSalesProductDetails(SalesProductDetails salesProductDetails) {
+		em.merge(salesProductDetails);
+	}
+	
+	/****************Customer*****************/
+	
+	public void setCustomerEntry(CustomerEntry customerEntry) {
+		em.persist(customerEntry);
+	}
+
+	public CustomerEntry getCustomerEntryById(int id) {
+		return em.find(CustomerEntry.class, id);
+	}
+
+	public void deleteCustomerEntryById(int id) {
+		em.remove(getCustomerEntryById(id));
+	}
+
+	public void updateDepartment(CustomerEntry customerEntry) {
+		em.merge(customerEntry);
+	}
 }

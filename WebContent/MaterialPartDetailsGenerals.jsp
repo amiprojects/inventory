@@ -177,6 +177,7 @@
 	function submitSumary() {
 		$("#fs").submit();
 	}
+	/* function */ 
 </script>
 
 
@@ -238,12 +239,12 @@
 										<tr>
 											<th align="center">#</th>
 											<th align="center">Product Code</th>
-											<th align="center">Description</th>
-											<th align="center">view</th>
+											<th align="right">Description</th>
+											<th align="right">view</th>
 										</tr>
 									</table>
 									<div
-										style="overflow-y: scroll; overflow-x: scroll; height: 281px; width: 360px; border: 1px;">
+										style="overflow-y: scroll; overflow-x: scroll; height: 281px; width: 357px; border: 1px;">
 										<table class="table">
 											<c:set var="countt" value="${1}" />
 											<c:forEach
@@ -252,8 +253,8 @@
 												<tr>
 													<td align="left">${countt}</td>
 													<td align="left">${productt.code}</td>
-													<td align="left">${productt.description}</td>
-													<td align="left"><a href="#"
+													<td align="center">${productt.description}</td>
+													<td align="center"><a href="#" id="abcdef"
 														onclick="viewProduct('${productt.id}');"> <img
 															alt="click to view" src="images/eye.png" height="20"></a></td>
 												</tr>
@@ -270,17 +271,20 @@
 											<li><a href="#" title=""><button type="button"
 														class="btn btn-info btn-sm" data-toggle="modal"
 														data-target="#newMP">New</button></a></li>
-											<li><a title=""><button class="btn btn-info btn-sm"
-														type="submit">Edit</button></a></li>
+											
+												<li><a href="#" id="editId"><button class="btn btn-info btn-sm"
+															id="sAnDfield" disabled="disabled" type="button">Edit</button></a></li>
+											
+										
+
 										</ul>
 									</div>
 
 									<ul class="nav nav-tabs">
 										<li class="active"><a data-toggle="tab" href="#general">General</a></li>
 										<li><a data-toggle="tab" href="#details">Details</a></li>
-										<li><a data-toggle="tab" href="#inventory">Inventory</a></li>
-										<li><a data-toggle="tab" href="#Vendor">Vendor</a></li>
 										<li><a data-toggle="tab" href="#Custom">Attribute</a></li>
+										<li><a data-toggle="tab" href="#inventory">Inventory</a></li>
 									</ul>
 									<br>
 									<div class="tab-content">
@@ -316,7 +320,7 @@
 
 
 
-												<br> 
+												<br>
 
 
 
@@ -326,13 +330,14 @@
 												<div class="col-md-1">
 													<input id="actact" type="checkbox" name="active">
 												</div>
-												
-											<a href="addNewProductImage.jsp" id="proImg">	<button id="sooImage" class="btn btn-info btn-sm"
-													style="position: absolute; left: 429px; top: 326px;">
-													Add Product Image</button></a>
-													<br><br>
-													
-													<div id="show_product_image"></div>
+
+												<a href="#" id="proImg">
+													<button id="sooImage" class="btn btn-info btn-sm"
+														style="position: absolute; left: 429px; top: 326px;">
+														Add Product Image</button>
+												</a> <br> <br>
+
+												<div id="show_product_image"></div>
 											</div>
 
 
@@ -347,44 +352,39 @@
 												<p style="font-size: 14px">(Enter attribute fields
 													values.)</p>
 
-												<div class="col-md-8">
-													<div>
+												<div class="col-md-6">
+													<div class="form-group">
 														<label for="exampleInputEmail1">Attribute 1:</label> <input
 															type="text" id="ac1" name="c1" readonly
 															class="form-control"><br>
 													</div>
-												</div>
-												<div class="col-md-8">
-													<div>
+
+													<div class="form-group">
 														<label for="exampleInputEmail1">Attribute 2:</label> <input
 															type="text" id="ac2" name="c2" readonly
 															class="form-control"><br>
 													</div>
-												</div>
-												<div class="col-md-8">
-													<div>
+
+													<div class="form-group">
 														<label for="exampleInputEmail1">Attribute 3:</label> <input
 															type="text" id="ac3" name="c3" readonly
 															class="form-control"><br>
 													</div>
 												</div>
-												<div class="col-md-8">
-													<div>
+												<div class="col-md-6">
+													<div class="form-group">
 														<label for="exampleInputEmail1">Attribute 4:</label> <input
 															type="text" id="ac4" name="c4" readonly
 															class="form-control"><br>
 													</div>
-												</div>
 
-												<div class="col-md-8">
-													<div>
+													<div class="form-group">
 														<label for="exampleInputEmail1">Attribute 5:</label> <input
 															type="text" name="ac5" id="ac5" readonly
 															class="form-control"><br>
 													</div>
-												</div>
-												<div class="col-md-8">
-													<div>
+
+													<div class="form-group">
 														<label for="exampleInputEmail1">Attribute 6:</label> <input
 															type="text" name="ac6" id="ac6" readonly
 															class="form-control"><br>
@@ -397,43 +397,28 @@
 
 
 										</div>
-										<div id="Vendor" class="tab-pane fade ">
+
+
+		<div id="details" class="tab-pane fade ">
+
 
 											<div class="col-md-12">
 
-												<table id="stream_table"
-													class="table table-striped table-bordered">
-
-													<tr>
-														<td><b>Vendor Name</b></td>
-														<td><input class="form-control" type="text" readonly
-															id="vName" name="vName"></td>
-													</tr>
-													<tr>
-														<td><b>Vendor Company</b></td>
-														<td><input type="text" class="form-control" readonly
-															id="vCompany" name="vCompany"></td>
-													</tr>
-													<tr>
-														<td><b>Vendor Address</b></td>
-														<td><input type="text" class="form-control" readonly
-															id="vAdress" name="vAdress"></td>
-													</tr>
-													<tr>
-														<td><b>Vendor Phone</b></td>
-														<td><input type="text" class="form-control" readonly
-															id="vPhone" name="vPhone"></td>
-													</tr>
+												<label>Universal Product Code:</label> <br> <input
+													readonly type="text" id="upcupc" class="form-control">
+												<br> <br>
 
 
-												</table>
 
+
+												<h4>
+													Is Saleable &nbsp; &nbsp;<input type="checkbox" id="salsal">
+												</h4>
 											</div>
 
+
+
 										</div>
-
-
-
 
 
 										<div id="inventory" class="tab-pane fade ">
@@ -492,26 +477,7 @@
 
 
 
-										<div id="details" class="tab-pane fade ">
-
-
-											<div class="col-md-12">
-
-												<label>Universal Product Code:</label> <br> <input
-													type="text" id="upcupc" class="form-control"> <br>
-												<br>
-
-
-
-
-												<h4>
-													Is Saleable &nbsp; &nbsp;<input type="checkbox" id="salsal">
-												</h4>
-											</div>
-
-
-
-										</div>
+								
 									</div>
 								</div>
 
@@ -705,25 +671,7 @@
 										}
 									});
 						</script>
-						<!-- <script type="text/javascript">
-							$('#barCode').click(
-									function() {
-										if ($('#barCode').is(':checked')) {
-
-											$("#barCode").val(
-													$('#barcodeS').is(
-															':checked'));
-										}
-										else{
-											
-											$("#barCode").val(
-													$('#barcodeS').is(
-															':checked'));
-										}
-									}
-
-							);
-						</script> -->
+						
 
 					</div>
 
@@ -879,12 +827,12 @@
 											class="form-control">
 
 									</div>
-									<div class="form-group">
+									<!-- 	<div class="form-group">
 										<h4>
 											Print Barcode <input type="checkbox" id="barCode"
 												onclick="showbar()">
 										</h4>
-									</div>
+									</div> -->
 								</div>
 
 							</div>
@@ -1246,8 +1194,8 @@
 										<tr>
 											<td><b>Lot Number:</b>
 											<td>
-											<td>&nbsp; &nbsp; &nbsp;</td>
-											</td>
+											<td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</td>
+
 											<td><input class="form-control " type="text"
 												name="lotnumberS" readonly id="lotnumberS"></td>
 									</table>
@@ -1384,7 +1332,37 @@
 	</div>
 
 
+	<!-- <div id="editPro" class="modal fade" role="dialog" 
+		style="top: -110px; overflow-y: hidden; overflow-x: hidden;">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-content">
+					<div class="modal-header">
 
+						<h4>............</h4>
+
+					</div>
+					<div class="modal-body">
+						<br> <br>
+						<h3 align="center">Product Update</h3>
+						<!-- heading 
+
+
+
+
+					</div>
+					<div class="modal-footer">
+						<input type="button" class="btn btn-default" value="Update"
+							style="float: left;" data-toggle="modal" onclick="anotherShow();">
+						<input type="button" class="btn btn-default" data-dismiss="modal"
+							style="float: right;" value="Close" id="close9"
+							onclick="closeProduct()">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+-->
 
 	<!-- Script -->
 
@@ -1629,6 +1607,7 @@
 
 	<script>
 		function viewProduct(id) {
+			$("#sAnDfield").prop("disabled", false);
 
 			$.ajax({
 				type : "post",
@@ -1642,7 +1621,10 @@
 					$("#descc").val(data.description);
 					$("#uomuom").val(data.qtyUnit);
 					$("#upcupc").val(data.universalCode);
-					$("#proImg").attr("src","addNewProductImage.jsp?id="+data.id);
+					$("#proImg").attr("href",
+							"addNewProductImage.jsp?id=" + data.id);
+					$("#editId").attr("href",
+							"editPro.jsp?id=" + data.id);
 
 					if (data.isActive) {
 						$("#actact").prop("checked", true);
@@ -1662,7 +1644,7 @@
 						},
 						dataType : "json",
 						success : function(data1) {
-							$.map(data1,function(item){
+							$.map(data1, function(item) {
 								//alert(item.image);
 							});
 						}
