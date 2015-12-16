@@ -17,15 +17,18 @@ public class JobAssignmentDetails {
 	@Id
 	@GeneratedValue
 	private int id;
+	private int challan_no;
+	private String challanNumber;
+	private int challanSuffix;
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date entryDate; 
+	private Date entryDate;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date assignDate;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date estimatedCompletionDate;
 
 	@ManyToOne
-	@JoinColumn(name = "vendorId")
+	@JoinColumn(name = "jobberId")
 	private Vendor vendor;
 
 	public int getId() {
@@ -75,6 +78,30 @@ public class JobAssignmentDetails {
 
 	public void setEntryDate(Date entryDate) {
 		this.entryDate = entryDate;
+	}
+
+	public int getChallan_no() {
+		return challan_no;
+	}
+
+	public void setChallan_no(int challan_no) {
+		this.challan_no = challan_no;
+	}
+
+	public String getChallanNumber() {
+		return challanNumber;
+	}
+
+	public void setChallanNumber(String challanNumber) {
+		this.challanNumber = challanNumber;
+	}
+
+	public int getChallanSuffix() {
+		return challanSuffix;
+	}
+
+	public void setChallanSuffix(int challanSuffix) {
+		this.challanSuffix = challanSuffix;
 	}
 
 	@OneToMany(mappedBy = "jobAssignmentDetails")
