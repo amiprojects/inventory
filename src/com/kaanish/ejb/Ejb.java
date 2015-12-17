@@ -792,7 +792,7 @@ public class Ejb {
 	public List<ProductDetail> getProductDetailBydescription(String name) {
 		TypedQuery<ProductDetail> q = em
 				.createQuery(
-						"select c from ProductDetail c where UPPER(c.description) like :nm",
+						"select c from ProductDetail c where UPPER(c.code) like :nm",
 						ProductDetail.class);
 		q.setParameter("nm", "%" + name.toUpperCase() + "%");
 		return q.getResultList();
@@ -984,6 +984,20 @@ public class Ejb {
 	public void updateSalesEntry(SalesEntry salesEntry) {
 		em.merge(salesEntry);
 	}
+	
+	public int getLastSalesChallanNumber() {
+		TypedQuery<SalesEntry> q = em.createQuery(
+				"select c from SalesEntry c ORDER BY c.id DESC",
+				SalesEntry.class);
+		if (q.getResultList().size() > 0) {
+			return q.getResultList().get(0).getChallanNo();
+		} else {
+			return 0;
+		}
+
+	}
+	
+	
 	public int getLastSalesChallanSuffix() {
 		TypedQuery<SalesEntry> q = em.createQuery("select c from SalesEntry c ORDER BY c.id DESC",
 				SalesEntry.class);

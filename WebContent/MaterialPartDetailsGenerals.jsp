@@ -1589,9 +1589,9 @@
 						success : function(data) {
 							response($.map(data, function(item) {
 								return {
-									value : item.description,
+									value : item.code,
 									id : item.id,
-									code : item.code
+									
 								}
 							}));
 						}
@@ -1683,22 +1683,7 @@
 						$("#RquantitY").val(data.remaining_quantity);
 					});
 
-					/* $("#ucost111").val(data.unitCostAj);
-					$("#mrp111").val(data.mrp);
-					$("#wsp111").val(data.wsp);
 					
-					$("#ucost111").val(data.cost);
-					$("#ac1").val(data.attrValue1);
-					$("#ac2").val(data.attrValue2);
-					$("#ac3").val(data.attrValue3);
-					$("#ac4").val(data.attrValue4);
-					$("#ac5").val(data.attrValue5);
-					$("#ac6").val(data.attrValue6);
-					$("#vName").val(data.purchaseVendorName);
-					$("#vAdress").val(data.purchaseVendorAddress);
-					$("#vCompany").val(data.purchaseVendorCompanyName);
-					$("#vPhone").val(data.purchaseVendorPhoneNumber); */
-
 				}
 			});
 

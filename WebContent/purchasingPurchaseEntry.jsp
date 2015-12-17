@@ -251,11 +251,7 @@
 												<h3 id="msg">${requestScope['msg']}</h3>
 											</div>
 										</div>
-										<!-- <div class="widget-area">
-											<input type="button" class="btn green pull-right"
-												data-toggle="modal" data-target="#addProduct"
-												value="Add Product" style="width: 100%" onclick="manage();">
-										</div> -->
+									
 										<table id="purProTable"
 											class="table table-striped table-bordered">
 											<thead style="background-color: #F0F0F0;">

@@ -2,6 +2,7 @@ package com.kaanish.model;
 
 import java.util.List;
 
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
 @Entity
+@Cacheable(false)
 public class Tax {
 	@Id@GeneratedValue
 	private int id;

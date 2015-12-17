@@ -2,6 +2,7 @@ package com.kaanish.model;
 
 import java.util.List;
 
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
+@Cacheable(false)
 public class PaymentStatus {
 	@Id
 	@GeneratedValue

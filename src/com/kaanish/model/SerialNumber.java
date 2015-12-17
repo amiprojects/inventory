@@ -1,5 +1,6 @@
 package com.kaanish.model;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -7,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
+@Cacheable(false)
 public class SerialNumber {
 	@Id@GeneratedValue
 	private int id;

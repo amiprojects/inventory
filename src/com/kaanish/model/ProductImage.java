@@ -1,5 +1,6 @@
 package com.kaanish.model;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,6 +11,7 @@ import javax.persistence.ManyToOne;
 import com.kaanish.util.Base64;
 
 @Entity
+@Cacheable(false)
 public class ProductImage {
 
 	@Id

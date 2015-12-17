@@ -2,11 +2,13 @@ package com.kaanish.model;
 
 import java.util.List;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
+@Cacheable(false)
 public class Users {
 	@Id
 	private String userId;

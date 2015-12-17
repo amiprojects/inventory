@@ -1,10 +1,12 @@
 package com.kaanish.model;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
+@Cacheable(false)
 public class JobStock {
 	@Id
 	private int id;

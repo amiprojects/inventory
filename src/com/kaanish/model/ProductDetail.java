@@ -1,6 +1,8 @@
 package com.kaanish.model;
 
 import java.util.List;
+
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
+@Cacheable(false)
 public class ProductDetail {
 
 	@Id

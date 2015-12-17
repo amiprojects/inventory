@@ -3,6 +3,7 @@ package com.kaanish.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,11 +15,12 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
+@Cacheable(false)
 public class SalesEntry {
 	@Id
 	@GeneratedValue
 	private int id;
-	private String challanNo;
+	private int challanNo;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date Entry_Date;
 	@Temporal(TemporalType.TIMESTAMP)
@@ -53,11 +55,13 @@ public class SalesEntry {
 		this.id = id;
 	}
 
-	public String getChallanNo() {
+
+
+	public int getChallanNo() {
 		return challanNo;
 	}
 
-	public void setChallanNo(String challanNo) {
+	public void setChallanNo(int challanNo) {
 		this.challanNo = challanNo;
 	}
 
