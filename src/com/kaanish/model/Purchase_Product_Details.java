@@ -186,21 +186,36 @@ public class Purchase_Product_Details {
 	public String toString() {
 		String str;
 		if (isInitialInventory()) {
-			str = "{\"id\":\"" + id + "\"," + "\"mrp\":\"" + mrp + "\"," + "\"wsp\":\"" + wsp + "\","
-					+ "\"remaining_quantity\":\"" + remaining_quantity + "\"," + "\"quantity\":\"" + quantity + "\","
-					+ "\"cost\":\"" + cost + "\"," + "\"attrValue1\":\"" + attrValue1 + "\"," + "\"attrValue2\":\""
-					+ attrValue2 + "\"," + "\"attrValue3\":\"" + attrValue3 + "\"," + "\"attrValue4\":\"" + attrValue4
-					+ "\"," + "\"attrValue5\":\"" + attrValue5 + "\"," + "\"attrValue6\":\"" + attrValue6 + "\"}";
+			str = "{\"id\":\"" + id + "\"," + "\"mrp\":\"" + mrp + "\","
+					+ "\"wsp\":\"" + wsp + "\"," + "\"remaining_quantity\":\""
+					+ remaining_quantity + "\"," + "\"quantity\":\"" + quantity
+					+ "\"," + "\"cost\":\"" + cost + "\","
+					+ "\"attrValue1\":\"" + attrValue1 + "\","
+					+ "\"attrValue2\":\"" + attrValue2 + "\","
+					+ "\"attrValue3\":\"" + attrValue3 + "\","
+					+ "\"attrValue4\":\"" + attrValue4 + "\","
+					+ "\"attrValue5\":\"" + attrValue5 + "\","
+					+ "\"attrValue6\":\"" + attrValue6 + "\"}";
 		} else {
-			str = "{\"id\":\"" + id + "\"," + "\"mrp\":\"" + mrp + "\"," + "\"wsp\":\"" + wsp + "\","
-					+ "\"remaining_quantity\":\"" + remaining_quantity + "\"," + "\"quantity\":\"" + quantity + "\","
-					+ "\"cost\":\"" + cost + "\"," + "\"attrValue1\":\"" + attrValue1 + "\"," + "\"attrValue2\":\""
-					+ attrValue2 + "\"," + "\"attrValue3\":\"" + attrValue3 + "\"," + "\"attrValue4\":\"" + attrValue4
-					+ "\"," + "\"attrValue5\":\"" + attrValue5 + "\"," + "\"attrValue6\":\"" + attrValue6 + "\","
-					+ "\"purchaseVendorName\":\"" + purchase_Entry.getVendor().getName() + "\","
-					+ "\"purchaseVendorAddress\":\"" + purchase_Entry.getVendor().getAddress() + "\","
-					+ "\"purchaseVendorCompanyName\":\"" + purchase_Entry.getVendor().getCompanyName() + "\","
-					+ "\"purchaseVendorPhoneNumber\":\"" + purchase_Entry.getVendor().getPh1() + "\"}";
+			str = "{\"id\":\"" + id + "\"," + "\"mrp\":\"" + mrp + "\","
+					+ "\"wsp\":\"" + wsp + "\"," + "\"remaining_quantity\":\""
+					+ remaining_quantity + "\"," + "\"quantity\":\"" + quantity
+					+ "\"," + "\"cost\":\"" + cost + "\","
+					+ "\"attrValue1\":\"" + attrValue1 + "\","
+					+ "\"attrValue2\":\"" + attrValue2 + "\","
+					+ "\"attrValue3\":\"" + attrValue3 + "\","
+					+ "\"attrValue4\":\"" + attrValue4 + "\","
+					+ "\"attrValue5\":\"" + attrValue5 + "\","
+					+ "\"attrValue6\":\"" + attrValue6 + "\","
+					+ "\"purchaseVendorName\":\""
+					+ purchase_Entry.getVendor().getName() + "\","
+					+ "\"purchaseDate\":\"" + purchase_Entry.getPurchase_date()
+					+ "\"," + "\"purchaseVendorAddress\":\""
+					+ purchase_Entry.getVendor().getAddress() + "\","
+					+ "\"purchaseVendorCompanyName\":\""
+					+ purchase_Entry.getVendor().getCompanyName() + "\","
+					+ "\"purchaseVendorPhoneNumber\":\""
+					+ purchase_Entry.getVendor().getPh1() + "\"}";
 		}
 		return str;
 

@@ -73,10 +73,11 @@ public class Ejb {
 	public Users getUserById(String id) {
 		return em.find(Users.class, id);
 	}
-	
+
 	public List<Users> getAllUsers() {
-		TypedQuery<Users> q =em.createQuery("select c from Users c", Users.class);
-				return q.getResultList();
+		TypedQuery<Users> q = em.createQuery("select c from Users c",
+				Users.class);
+		return q.getResultList();
 	}
 
 	/************** for qty unit type ***************/
@@ -469,6 +470,18 @@ public class Ejb {
 		em.persist(jobAssignmentDetails);
 	}
 
+	public List<Purchase_Product_Details> getPurchaseProductDetailsByQty() {
+		TypedQuery<Purchase_Product_Details> q = em
+				.createQuery(
+						"select c from Purchase_Product_Details c where c.remaining_quantity>0 and c.isReady=0",
+						Purchase_Product_Details.class);
+		return q.getResultList();
+	}
+
+	public Purchase_Product_Details getPurchaseProductDetailsById(int id) {
+		return em.find(Purchase_Product_Details.class, id);
+	}
+
 	public List<Vendor> getVendorsByVendorTypeJobber(String jobber) {
 		TypedQuery<Vendor> q = em.createQuery(
 				"select c from Vendor c where c.vendorType.type=:jobber",
@@ -790,10 +803,9 @@ public class Ejb {
 	}
 
 	public List<ProductDetail> getProductDetailBydescription(String name) {
-		TypedQuery<ProductDetail> q = em
-				.createQuery(
-						"select c from ProductDetail c where UPPER(c.code) like :nm",
-						ProductDetail.class);
+		TypedQuery<ProductDetail> q = em.createQuery(
+				"select c from ProductDetail c where UPPER(c.code) like :nm",
+				ProductDetail.class);
 		q.setParameter("nm", "%" + name.toUpperCase() + "%");
 		return q.getResultList();
 	}
@@ -833,7 +845,6 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	
 	/******************* for bill setup **************************/
 
 	public void setBillSetup(Bill_setup billSetup) {
@@ -967,8 +978,9 @@ public class Ejb {
 		q.setParameter("id", id);
 		return q.getResultList().get(0);
 	}
-	/****************SalesEntry*****************/
-	
+
+	/**************** SalesEntry *****************/
+
 	public void setSalesEntry(SalesEntry salesEntry) {
 		em.persist(salesEntry);
 	}
@@ -977,14 +989,14 @@ public class Ejb {
 		return em.find(SalesEntry.class, id);
 	}
 
-	public void deleteSalesEntryById(int id) {            
+	public void deleteSalesEntryById(int id) {
 		em.remove(getSalesEntryById(id));
 	}
 
 	public void updateSalesEntry(SalesEntry salesEntry) {
 		em.merge(salesEntry);
 	}
-	
+
 	public int getLastSalesChallanNumber() {
 		TypedQuery<SalesEntry> q = em.createQuery(
 				"select c from SalesEntry c ORDER BY c.id DESC",
@@ -996,12 +1008,12 @@ public class Ejb {
 		}
 
 	}
-	
-	
+
 	public int getLastSalesChallanSuffix() {
-		TypedQuery<SalesEntry> q = em.createQuery("select c from SalesEntry c ORDER BY c.id DESC",
+		TypedQuery<SalesEntry> q = em.createQuery(
+				"select c from SalesEntry c ORDER BY c.id DESC",
 				SalesEntry.class);
-		
+
 		if (q.getResultList().size() > 0) {
 			int s = q.getResultList().get(0).getChallanSuffix();
 			if (getLastBillSetupBySufix("INV").equals(null)) {
@@ -1010,20 +1022,22 @@ public class Ejb {
 				if (Integer.parseInt(getLastBillSetupBySufix("INV").getSufix()) < s) {
 					return s;
 				} else {
-					return Integer.parseInt(getLastBillSetupBySufix("INV").getSufix());
+					return Integer.parseInt(getLastBillSetupBySufix("INV")
+							.getSufix());
 				}
 			}
 		} else {
 			if (getLastBillSetupBySufix("INV").equals(null)) {
 				return 0;
 			} else {
-				return Integer.parseInt(getLastBillSetupBySufix("INV").getSufix());
+				return Integer.parseInt(getLastBillSetupBySufix("INV")
+						.getSufix());
 			}
 		}
 	}
 
-	/****************SalesProductDetails*****************/
-	
+	/**************** SalesProductDetails *****************/
+
 	public void setDepartment(SalesProductDetails salesProductDetails) {
 		em.persist(salesProductDetails);
 	}
@@ -1036,12 +1050,13 @@ public class Ejb {
 		em.remove(getSalesProductDetailsById(id));
 	}
 
-	public void updateSalesProductDetails(SalesProductDetails salesProductDetails) {
+	public void updateSalesProductDetails(
+			SalesProductDetails salesProductDetails) {
 		em.merge(salesProductDetails);
 	}
-	
-	/****************Customer*****************/
-	
+
+	/**************** Customer *****************/
+
 	public void setCustomerEntry(CustomerEntry customerEntry) {
 		em.persist(customerEntry);
 	}
