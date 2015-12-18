@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 @Cacheable(false)
@@ -53,6 +54,9 @@ public class Purchase_Product_Details {
 	@ManyToOne
 	@JoinColumn(name = "purchaseEntryId")
 	private Purchase_Entry purchase_Entry;
+	
+	@OneToOne@JoinColumn(name="jobRecievedDetailsId")
+	private JobRecievedDetails recievedDetails;
 
 	public int getId() {
 		return id;
@@ -227,6 +231,14 @@ public class Purchase_Product_Details {
 
 	public void setReady(boolean isReady) {
 		this.isReady = isReady;
+	}
+
+	public JobRecievedDetails getRecievedDetails() {
+		return recievedDetails;
+	}
+
+	public void setRecievedDetails(JobRecievedDetails recievedDetails) {
+		this.recievedDetails = recievedDetails;
 	}
 
 }
