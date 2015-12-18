@@ -32,6 +32,8 @@ public class JobAssignmentDetails {
 	@ManyToOne
 	@JoinColumn(name = "jobberId")
 	private Vendor vendor;
+	
+	
 
 	public int getId() {
 		return id;

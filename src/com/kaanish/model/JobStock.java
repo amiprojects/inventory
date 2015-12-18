@@ -3,7 +3,7 @@ package com.kaanish.model;
 import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 @Cacheable(false)
@@ -14,7 +14,7 @@ public class JobStock {
 	private float remainingQty;
 	private float cost;
 
-	@ManyToOne
+	@OneToOne
 	private JobAssignmentProducts jobAssignmentProducts;
 
 	public int getId() {
