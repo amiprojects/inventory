@@ -236,18 +236,28 @@
 
 				</div>
 				<div class="modal-body">
-					<span>Product Code :</span> <input type="text" id="prodcode"
-						name="code" class="form-control">
+					<span>Product Code :</span>
+					<!-- <input type="text" id="prodCode"
+						name="prodCode" class="form-control"> -->
+					<select class="form-control" name="prodCode" id="prodCode"
+						onchange="getProdDetByPurchaseProdDetId();" required="required">
+						<option value="0">Select Product code</option>
+						<c:forEach
+							items="${sessionScope['ejb'].getPurchaseProductDetailsByQty()}"
+							var="pCode">
+							<option value="${pCode.id}">${pCode.productDetail.code}</option>
+						</c:forEach>
+					</select>
 					<div class="row">
-						<div class="col-md-8">
+						<div class="col-md-12">
 							<span>Product Description :</span>
 							<textarea rows="5" cols="" readonly="readonly"
-								class="form-control"></textarea>
+								class="form-control" id="prodDesc" name="prodDesc"></textarea>
 						</div>
-						<div class="col-md-4" style="float: right;">
+						<!-- <div class="col-md-4" style="float: right;">
 							<span>Product Image :</span><br> <img alt=""
 								src="img/Koala.jpg" height="115px">
-						</div>
+						</div> -->
 					</div>
 					<span>Quantity :</span> <input type="text" id="prodqty" name="qty"
 						class="form-control"> <span>Describe Work :</span>
@@ -304,6 +314,33 @@
 			} else {
 				alert("please select one jobber name");
 				$("#jDetail").val("");
+			}
+		}
+		function getProdDetByPurchaseProdDetId() {
+			if ($("#prodCode").val() != 0) {
+				$.ajax({
+					url : 'getProdDetByPurchaseProdDetailsId',
+					type : 'post',
+					dataType : "json",
+					data : {
+						id : $("#prodCode").val()
+					},
+					success : function(data) {
+						$("#prodDesc").val(
+								"Remaining Quantity : "
+										+ data.remaining_quantity
+										+ "\nVendor Name : "
+										+ data.purchaseVendorName
+										+ "\nPurchase Date : "
+										+ data.purchaseDate);
+					},
+					error : function(a, b, c) {
+						alert(b + ": " + c);
+					}
+				});
+			} else {
+				alert("please select product code");
+				$("prodCode#").val("");
 			}
 		}
 		function submitForm() {

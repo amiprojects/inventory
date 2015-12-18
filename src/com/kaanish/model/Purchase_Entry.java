@@ -33,7 +33,7 @@ public class Purchase_Entry {
 	private float sur_charge;
 	private float totalCost;
 
-	@OneToMany(mappedBy = "purchase_Entry",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "purchase_Entry", cascade = CascadeType.ALL)
 	private List<Purchase_Product_Details> purchase_Product_Details;
 	@ManyToOne
 	@JoinColumn(name = "usersId")
