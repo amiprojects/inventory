@@ -62,6 +62,7 @@ import com.kaanish.util.DateConverter;
 		"/updateConversion", "/addBillSetup", "/updateCompanyInfo",
 		"/updateVendor", "/purchaseSearchByDate", "/uploadProductImage",
 		"/jobAssignment", "/jobAssignSearchByDate" })
+
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -173,8 +174,8 @@ public class Servlet extends HttpServlet {
 		}
 		if (ejb.getAllUsers().size() == 0) {
 			users = new Users();
-			users.setUserId("kaanish");
-			users.setPassword("kaanish");
+			users.setUserId("admin");
+			users.setPassword("admin");
 			ejb.setUser(users);
 		}
 
@@ -1229,6 +1230,18 @@ public class Servlet extends HttpServlet {
 					msg = "please enter proper conversion value";
 				}
 				break;
+				/***************stock*************show***************/
+				
+			case "stockDetailShow":
+				page = "stockShowdetails.jsp";
+				
+				req.setAttribute("proid1", req.getParameter("proId"));
+				
+				msg="";
+				
+				break;
+				/*********************************************************/
+				
 			case "uploadProductImage":
 				page = "addNewProductImage.jsp";
 				Part p1 = req.getPart("proImg");

@@ -22,6 +22,7 @@
 <link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
 <!-- Bootstrap -->
 <link rel="stylesheet" href="css/style.css" type="text/css" />
+
 <!-- Style -->
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
 <!-- Responsive -->

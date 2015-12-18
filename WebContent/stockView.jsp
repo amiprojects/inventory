@@ -122,7 +122,7 @@
 														<td>${pro.qtyUnit.name}</td>
 														<td>${pro.isSaleble()?sessionScope['ejb'].getReadyGoodsStocktDetailByProductId(pro.id).remainingQty:sessionScope['ejb'].getRawMaterialStocktDetailByProductId(pro.id).remainingQty}</td>
 														<td>${pro.code}</td>
-														<td><img alt="" src="images/eye.png" height="25px"></td>
+														<td><form action="stockDetailShow" method="post" id="StockDetails${pro.id}"><a href="#" onclick="showDetails('${pro.id}');"><input type="hidden" value="${pro.id}" name="proId"><img alt="" src="images/eye.png" height="25px"></a></form></td>
 													</tr>
 													<c:set var="count" value="${count+1}"/>
 												</c:forEach>
@@ -132,112 +132,7 @@
 
 									</div>
 								</div>
-								<!--<div class="widget-area" style="width: 34%;">
-									<table class="table">
-										<tbody>
-											<tr>
-												<td>
-												    
-													<table cellspacing="0" cellpadding="1" width="304">
-														<tbody>
-															<tr style="">
-																<th>Product Code</th>
-																<th>Product Description</th>
-
-															</tr>
-														</tbody>
-													</table>
-													
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<div style="width: 293px; height: 310px; overflow-x:none; overflow-y:scroll;">
-														<table cellspacing="0" cellpadding="1" width="300">
-															<tbody>
-																<tr>
-																	<td>789456123</td>
-																	<td>466545644</td>
-																</tr>
-																<tr>
-																	<td>789456123</td>
-																	<td>466545644</td>
-																</tr>
-																<tr>
-																	<td>789456123</td>
-																	<td>466545644</td>
-																</tr>
-																<tr>
-																	<td>789456123</td>
-																	<td>466545644</td>
-																</tr>
-																<tr>
-																	<td>789456123</td>
-																	<td>466545644</td>
-																</tr>
-																<tr>
-																	<td>789456123</td>
-																	<td>466545644</td>
-																</tr>
-
-																<tr>
-																	<td>789456123</td>
-																	<td>466545644</td>
-																</tr>
-																<tr>
-																	<td>789456123</td>
-																	<td>466545644</td>
-																</tr>
-																<tr>
-																	<td>789456123</td>
-																	<td>466545644</td>
-																</tr>
-																<tr>
-																	<td>789456123</td>
-																	<td>466545644</td>
-																</tr>
-																<tr>
-																	<td>789456123</td>
-																	<td>466545644</td>
-																</tr>
-																<tr>
-																	<td>789456123</td>
-																	<td>466545644</td>
-																</tr>
-																<tr>
-																	<td>789456123</td>
-																	<td>466545644</td>
-																</tr>
-																<tr>
-																	<td>789456123</td>
-																	<td>466545644</td>
-																</tr>
-																<tr>
-																	<td>789456123</td>
-																	<td>466545644</td>
-																</tr>
-																<tr>
-																	<td>789456123</td>
-																	<td>466545644</td>
-																</tr>
-																<tr>
-																	<td>789456123</td>
-																	<td>466545644</td>
-																</tr>
-																<tr>
-																	<td>789456123</td>
-																	<td>466545644</td>
-																</tr>
-															</tbody>
-														</table>
-													</div>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-									</div>-->
-
-
+								
 
 
 
@@ -459,6 +354,10 @@
 			$("#step8").hide();
 
 		});
+		function showDetails(id){
+			//alert(id);
+			$("#StockDetails"+id).submit();
+		}
 
 		function viewPage() {
 			window.location = 'productDisplay.jsp';

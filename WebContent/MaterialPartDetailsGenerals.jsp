@@ -177,7 +177,7 @@
 	function submitSumary() {
 		$("#fs").submit();
 	}
-	/* function */ 
+	/* function */
 </script>
 
 
@@ -264,18 +264,19 @@
 										</table>
 									</div>
 								</div>
-								<div class="widget-area" style="width: 60%">
+								<div class="widget-area" style="width: 60%; height: 536px">
 									<div class="breadcrumbs">
 										<ul>
 											<li><a title="">Products Details : </a></li>
 											<li><a href="#" title=""><button type="button"
 														class="btn btn-info btn-sm" data-toggle="modal"
 														data-target="#newMP">New</button></a></li>
-											
-												<li><a href="#" id="editId"><button class="btn btn-info btn-sm"
-															id="sAnDfield" disabled="disabled" type="button">Edit</button></a></li>
-											
-										
+
+											<li><a href="#" id="editId"><button
+														class="btn btn-info btn-sm" id="sAnDfield"
+														disabled="disabled" type="button">Edit</button></a></li>
+
+
 
 										</ul>
 									</div>
@@ -331,13 +332,16 @@
 													<input id="actact" type="checkbox" name="active">
 												</div>
 
+
 												<a href="#" id="proImg">
 													<button id="sooImage" class="btn btn-info btn-sm"
 														style="position: absolute; left: 429px; top: 326px;">
 														Add Product Image</button>
 												</a> <br> <br>
 
-												<div id="show_product_image"></div>
+												<div
+													style="position: absolute; width: 533px; height:116px; top: 385px; left: 32px; overflow:scroll;">
+													<div id="peoImg"></div></div>
 											</div>
 
 
@@ -399,7 +403,7 @@
 										</div>
 
 
-		<div id="details" class="tab-pane fade ">
+										<div id="details" class="tab-pane fade ">
 
 
 											<div class="col-md-12">
@@ -477,7 +481,7 @@
 
 
 
-								
+
 									</div>
 								</div>
 
@@ -671,7 +675,7 @@
 										}
 									});
 						</script>
-						
+
 
 					</div>
 
@@ -1591,7 +1595,7 @@
 								return {
 									value : item.code,
 									id : item.id,
-									
+
 								}
 							}));
 						}
@@ -1609,49 +1613,58 @@
 		function viewProduct(id) {
 			$("#sAnDfield").prop("disabled", false);
 
-			$.ajax({
-				type : "post",
-				url : "getproductPro",
-				data : {
-					id : id
-				},
-				dataType : "json",
-				success : function(data) {
-					$("#pp1").val(data.code);
-					$("#descc").val(data.description);
-					$("#uomuom").val(data.qtyUnit);
-					$("#upcupc").val(data.universalCode);
-					$("#proImg").attr("href",
-							"addNewProductImage.jsp?id=" + data.id);
-					$("#editId").attr("href",
-							"editPro.jsp?id=" + data.id);
-
-					if (data.isActive) {
-						$("#actact").prop("checked", true);
-					} else {
-						$("#actact").prop("checked", false);
-					}
-					if (data.isSaleble == 'true') {
-						$("#salsal").prop("checked", true);
-					} else {
-						$("#salsal").prop("checked", false);
-					}
-					$.ajax({
+			$
+					.ajax({
 						type : "post",
 						url : "getproductPro",
 						data : {
-							id : data.id
+							id : id
 						},
 						dataType : "json",
-						success : function(data1) {
-							$.map(data1, function(item) {
-								//alert(item.image);
-							});
-						}
-					});
-				}
+						success : function(data) {
+							$("#pp1").val(data.code);
+							$("#descc").val(data.description);
+							$("#uomuom").val(data.qtyUnit);
+							$("#upcupc").val(data.universalCode);
+							$("#proImg").attr("href",
+									"addNewProductImage.jsp?id=" + data.id);
+							$("#editId").attr("href",
+									"editPro.jsp?id=" + data.id);
 
-			});
+							if (data.isActive) {
+								$("#actact").prop("checked", true);
+							} else {
+								$("#actact").prop("checked", false);
+							}
+							if (data.isSaleble == 'true') {
+								$("#salsal").prop("checked", true);
+							} else {
+								$("#salsal").prop("checked", false);
+							}
+							var img = "";
+							$
+									.ajax({
+										type : "post",
+										url : "getProductImageByProductid",
+										data : {
+											id : data.id
+										},
+										dataType : "json",
+										success : function(data1) {
+											$
+													.map(
+															data1,
+															function(item) {
+																//alert(item.image);
+																img = img
+																		+ '<img width="100" height="100" style="" alt="" src="data:image/jpeg;base64,'+item.image+'">';
+															});
+											$("#peoImg").html(img);
+										}
+									});
+						}
+
+					});
 
 			$.ajax({
 				type : "post",
@@ -1683,7 +1696,6 @@
 						$("#RquantitY").val(data.remaining_quantity);
 					});
 
-					
 				}
 			});
 
