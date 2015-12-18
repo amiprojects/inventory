@@ -440,6 +440,7 @@
 			
 			barcodeParts=$("[name='barcode']").val().split('/');
 			var purchaseProductId=barcodeParts[0];
+			$("#prodCode").val(purchaseProductId);
 			$.ajax({
 				url : 'getProdDetByPurchaseProdDetailsId',
 				type : 'post',
