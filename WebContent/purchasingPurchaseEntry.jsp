@@ -251,7 +251,7 @@
 												<h3 id="msg">${requestScope['msg']}</h3>
 											</div>
 										</div>
-									
+
 										<table id="purProTable"
 											class="table table-striped table-bordered">
 											<thead style="background-color: #F0F0F0;">
@@ -948,106 +948,118 @@
 		});
 		var i = 1;
 		function anotherShow() {
-			$("#another").modal("show");
-			//$("#amount").val(Number($("#qty").val()) * Number($("#rate").val()));
-			$("#purProTable").append(
-					'<tbody><tr><td>' + i + '</td><td>' + $("#pCode").val()
-							+ '</td><td>' + $("#pDesc").val() + '</td><td>'
-							+ $("#rate").val() + '</td><td>' + $("#qty").val()
-							+ '</td><td>' + Number($("#qty").val())
-							* Number($("#rate").val()) + '</td></tr></tbody>');
-			$("#subTotal").val(
-					Number($("#subTotal").val()) + Number($("#qty").val())
-							* Number($("#rate").val()));
-			//$("#qty").val("");
-			i++;
 
-			$("#hiddenTable").append(
-					'<tbody><tr>'
-							+ '<td><input type="text" name="pCodeIdH" value=\''
-							+ $("#productCode").val()
-							+ '\'></td>'
-							+ '<td><input type="text" name="attr1H" value=\''
-							+ $("#attr1").val()
-							+ '\'></td>'
-							+ '<td><input type="text" name="attr2H" value=\''
-							+ $("#attr2").val()
-							+ '\'></td>'
-							+ '<td><input type="text" name="attr3H" value=\''
-							+ $("#attr3").val()
-							+ '\'></td>'
-							+ '<td><input type="text" name="attr4H" value=\''
-							+ $("#attr4").val()
-							+ '\'></td>'
-							+ '<td><input type="text" name="attr5H" value=\''
-							+ $("#attr5").val()
-							+ '\'></td>'
-							+ '<td><input type="text" name="attr6H" value=\''
-							+ $("#attr6").val()
-							+ '\'></td>'
-							+ '<td><input type="text" name="qtyH" value=\''
-							+ $("#qty").val()
-							+ '\'></td>'
-							+ '<td><input type="text" name="uomH" value=\''
-							+ $("#uom").val()
-							+ '\'></td>'
-							+ '<td><input type="text" name="rateH" value=\''
-							+ $("#rate").val()
-							+ '\'></td>'
-							+ '<td><input type="text" name="wspH" value=\''
-							+ $("#wsp").val()
-							+ '\'></td>'
-							+ '<td><input type="text" name="mrpH" value=\''
-							+ $("#mrp").val()
-							+ '\'></td>'
-							+ '<td><input type="text" name="lotH" value=\''
-							+ $("#lotText").val()
-							+ '\'></td>'
-							+ '<td><input type="text" name="serialH" value=\''
-							+ $("#serialText").val()
-							+ '\'></td>'
-							+ '</tr></tbody>');
-			$("#taxAmount").val(
-					Number($("#subTotal").val()) * Number($("#taxTot").val())
-							/ Number(100));
-			$("#gt").val(
-					Number($("#subTotal").val())
-							+ Number($("#taxAmount").val())
-							+ Number($("#transportCost").val())
-							+ Number($("#surcharge").val()));
-			$("#dept").val("");
-			$("#subDept").val("");
-			$("#cat").val("");
-			$("#pCode").val("");
-			$("#pDesc").val("");
-			$("#attr1").val("");
-			$("#attr2").val("");
-			$("#attr3").val("");
-			$("#attr4").val("");
-			$("#attr5").val("");
-			$("#attr6").val("");
-			$("#qty").val("");
-			$("#uom").val("");
-			$("#rate").val("");
-			$("#wsp").val("");
-			$("#mrp").val("");
-			$("#lotText").val("");
-			$("#serialText").val("");
-			$("#productCode").val("0");
-			$("#attr1Name").html("Attribute1:");
-			$("#attr2Name").html("Attribute2:");
-			$("#attr3Name").html("Attribute3:");
-			$("#attr4Name").html("Attribute4:");
-			$("#attr5Name").html("Attribute5:");
-			$("#attr6Name").html("Attribute6:");
-			$("#attr1").prop("readonly", true);
-			$("#attr2").prop("readonly", true);
-			$("#attr3").prop("readonly", true);
-			$("#attr4").prop("readonly", true);
-			$("#attr5").prop("readonly", true);
-			$("#attr6").prop("readonly", true);
+			if ($("#productCode").val() == 0) {
+				alert("please select Product code");
+			} else if ($("#qty").val() == "") {
+				alert("please insert quantity");
+			} else if ($("#rate").val() == "") {
+				alert("please insert Rate");
+			} else {
+
+				$("#another").modal("show");
+				//$("#amount").val(Number($("#qty").val()) * Number($("#rate").val()));
+				$("#purProTable").append(
+						'<tbody><tr><td>' + i + '</td><td>' + $("#pCode").val()
+								+ '</td><td>' + $("#pDesc").val() + '</td><td>'
+								+ $("#rate").val() + '</td><td>'
+								+ $("#qty").val() + '</td><td>'
+								+ Number($("#qty").val())
+								* Number($("#rate").val())
+								+ '</td></tr></tbody>');
+				$("#subTotal").val(
+						Number($("#subTotal").val()) + Number($("#qty").val())
+								* Number($("#rate").val()));
+				//$("#qty").val("");
+				i++;
+
+				$("#hiddenTable")
+						.append(
+								'<tbody><tr>'
+										+ '<td><input type="text" name="pCodeIdH" value=\''
+										+ $("#productCode").val()
+										+ '\'></td>'
+										+ '<td><input type="text" name="attr1H" value=\''
+										+ $("#attr1").val()
+										+ '\'></td>'
+										+ '<td><input type="text" name="attr2H" value=\''
+										+ $("#attr2").val()
+										+ '\'></td>'
+										+ '<td><input type="text" name="attr3H" value=\''
+										+ $("#attr3").val()
+										+ '\'></td>'
+										+ '<td><input type="text" name="attr4H" value=\''
+										+ $("#attr4").val()
+										+ '\'></td>'
+										+ '<td><input type="text" name="attr5H" value=\''
+										+ $("#attr5").val()
+										+ '\'></td>'
+										+ '<td><input type="text" name="attr6H" value=\''
+										+ $("#attr6").val()
+										+ '\'></td>'
+										+ '<td><input type="text" name="qtyH" value=\''
+										+ $("#qty").val()
+										+ '\'></td>'
+										+ '<td><input type="text" name="uomH" value=\''
+										+ $("#uom").val()
+										+ '\'></td>'
+										+ '<td><input type="text" name="rateH" value=\''
+										+ $("#rate").val()
+										+ '\'></td>'
+										+ '<td><input type="text" name="wspH" value=\''
+										+ $("#wsp").val()
+										+ '\'></td>'
+										+ '<td><input type="text" name="mrpH" value=\''
+										+ $("#mrp").val()
+										+ '\'></td>'
+										+ '<td><input type="text" name="lotH" value=\''
+										+ $("#lotText").val()
+										+ '\'></td>'
+										+ '<td><input type="text" name="serialH" value=\''
+										+ $("#serialText").val()
+										+ '\'></td>'
+										+ '</tr></tbody>');
+				$("#taxAmount").val(
+						Number($("#subTotal").val())
+								* Number($("#taxTot").val()) / Number(100));
+				$("#gt").val(
+						Number($("#subTotal").val())
+								+ Number($("#taxAmount").val())
+								+ Number($("#transportCost").val())
+								+ Number($("#surcharge").val()));
+				$("#dept").val("");
+				$("#subDept").val("");
+				$("#cat").val("");
+				$("#pCode").val("");
+				$("#pDesc").val("");
+				$("#attr1").val("");
+				$("#attr2").val("");
+				$("#attr3").val("");
+				$("#attr4").val("");
+				$("#attr5").val("");
+				$("#attr6").val("");
+				$("#qty").val("");
+				$("#uom").val("");
+				$("#rate").val("");
+				$("#wsp").val("");
+				$("#mrp").val("");
+				$("#lotText").val("");
+				$("#serialText").val("");
+				$("#productCode").val("0");
+				$("#attr1Name").html("Attribute1:");
+				$("#attr2Name").html("Attribute2:");
+				$("#attr3Name").html("Attribute3:");
+				$("#attr4Name").html("Attribute4:");
+				$("#attr5Name").html("Attribute5:");
+				$("#attr6Name").html("Attribute6:");
+				$("#attr1").prop("readonly", true);
+				$("#attr2").prop("readonly", true);
+				$("#attr3").prop("readonly", true);
+				$("#attr4").prop("readonly", true);
+				$("#attr5").prop("readonly", true);
+				$("#attr6").prop("readonly", true);
+			}
 		}
-
 		function closeProduct() {
 			$("#dept").val("");
 			$("#subDept").val("");

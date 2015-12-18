@@ -54,8 +54,9 @@ public class Purchase_Product_Details {
 	@ManyToOne
 	@JoinColumn(name = "purchaseEntryId")
 	private Purchase_Entry purchase_Entry;
-	
-	@OneToOne@JoinColumn(name="jobRecievedDetailsId")
+
+	@OneToOne
+	@JoinColumn(name = "jobRecievedDetailsId")
 	private JobRecievedDetails recievedDetails;
 
 	public int getId() {
@@ -214,6 +215,10 @@ public class Purchase_Product_Details {
 					+ "\"purchaseVendorName\":\""
 					+ purchase_Entry.getVendor().getName() + "\","
 					+ "\"purchaseDate\":\"" + purchase_Entry.getPurchase_date()
+					+ "\"," + "\"uom\":\""
+					+ productDetail.getQtyUnit().getName() + "\","
+					+ "\"productCode\":\"" + productDetail.getCode() + "\","
+					+ "\"productDesc\":\"" + productDetail.getDescription()
 					+ "\"," + "\"purchaseVendorAddress\":\""
 					+ purchase_Entry.getVendor().getAddress() + "\","
 					+ "\"purchaseVendorCompanyName\":\""

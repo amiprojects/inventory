@@ -2,6 +2,7 @@ package com.kaanish.model;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
@@ -9,6 +10,7 @@ import javax.persistence.OneToOne;
 @Cacheable(false)
 public class JobStock {
 	@Id
+	@GeneratedValue
 	private int id;
 	private float givenQty;
 	private float remainingQty;
@@ -37,7 +39,8 @@ public class JobStock {
 		return jobAssignmentProducts;
 	}
 
-	public void setJobAssignmentProducts(JobAssignmentProducts jobAssignmentProducts) {
+	public void setJobAssignmentProducts(
+			JobAssignmentProducts jobAssignmentProducts) {
 		this.jobAssignmentProducts = jobAssignmentProducts;
 	}
 

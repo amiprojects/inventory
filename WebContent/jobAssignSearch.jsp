@@ -51,8 +51,9 @@
 									</ul>
 								</div>
 								<div class="widget-area">
-									<form role="form" class="sec">
-										<div class="row">
+									<form role="form" class="sec" action="jobAssignSearchByDate"
+										method="post">
+										<!-- <div class="row">
 											<div class="col-md-6">
 												<div class="form-group">
 													<label for="">Job Challan Number :</label> <input type=""
@@ -67,13 +68,14 @@
 														class="form-control">
 												</div>
 											</div>
-										</div>
+										</div> -->
 										<div class="row">
 											<div class="col-md-6">
 												<div class="form-group">
 													<label for="">Search between two dates : (Start
 														Date)</label> <input type="text" placeholder="Enter First Date"
-														id="datepicker" class="form-control">
+														id="datepicker" class="form-control" name="fDate"
+														id="fDate">
 												</div>
 											</div>
 
@@ -81,7 +83,7 @@
 												<div class="form-group">
 													<label for="">(End Date)</label> <input type="text"
 														placeholder="Enter last date" id="datepicker1"
-														class="form-control">
+														class="form-control" name="lDate" id="lDate">
 												</div>
 											</div>
 										</div>
@@ -95,7 +97,7 @@
 												<th>#</th>
 												<th>Job Assigned No.</th>
 												<th>Assigned Date</th>
-												<th>Submission Date</th>
+												<th>Est. Submission Date</th>
 												<th>Number of Items</th>
 												<th>Quantity</th>
 											</tr>

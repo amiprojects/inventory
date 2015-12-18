@@ -3,6 +3,7 @@ package com.kaanish.model;
 import java.util.List;
 
 import javax.persistence.Cacheable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -19,6 +20,8 @@ public class JobAssignmentProducts {
 	private int id;
 	private int qty;
 	private float estimatedCost;
+	@Column(length = 800)
+	private String workDescription;
 
 	@OneToMany(mappedBy = "jobAssignmentProducts")
 	private List<JobRecievedDetails> jobRecievedDetails;
@@ -35,7 +38,8 @@ public class JobAssignmentProducts {
 	@JoinColumn(name = "purchaseProductDetailsId")
 	private Purchase_Product_Details purchase_Product_Details;
 
-	@OneToOne@JoinColumn(name="jobStockId")
+	@OneToOne
+	@JoinColumn(name = "jobStockId")
 	private JobStock jobStock;
 
 	public int getId() {
@@ -66,7 +70,8 @@ public class JobAssignmentProducts {
 		return jobAssignmentDetails;
 	}
 
-	public void setJobAssignmentDetails(JobAssignmentDetails jobAssignmentDetails) {
+	public void setJobAssignmentDetails(
+			JobAssignmentDetails jobAssignmentDetails) {
 		this.jobAssignmentDetails = jobAssignmentDetails;
 	}
 
@@ -74,7 +79,8 @@ public class JobAssignmentProducts {
 		return purchase_Product_Details;
 	}
 
-	public void setPurchase_Product_Details(Purchase_Product_Details purchase_Product_Details) {
+	public void setPurchase_Product_Details(
+			Purchase_Product_Details purchase_Product_Details) {
 		this.purchase_Product_Details = purchase_Product_Details;
 	}
 
@@ -90,7 +96,8 @@ public class JobAssignmentProducts {
 		return jobRecievedDetails;
 	}
 
-	public void setJobRecievedDetails(List<JobRecievedDetails> jobRecievedDetails) {
+	public void setJobRecievedDetails(
+			List<JobRecievedDetails> jobRecievedDetails) {
 		this.jobRecievedDetails = jobRecievedDetails;
 	}
 
@@ -100,5 +107,13 @@ public class JobAssignmentProducts {
 
 	public void setJobStock(JobStock jobStock) {
 		this.jobStock = jobStock;
+	}
+
+	public String getWorkDescription() {
+		return workDescription;
+	}
+
+	public void setWorkDescription(String workDescription) {
+		this.workDescription = workDescription;
 	}
 }

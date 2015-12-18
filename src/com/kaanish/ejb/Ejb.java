@@ -21,6 +21,8 @@ import com.kaanish.model.Country;
 import com.kaanish.model.CustomerEntry;
 import com.kaanish.model.Department;
 import com.kaanish.model.JobAssignmentDetails;
+import com.kaanish.model.JobAssignmentProducts;
+import com.kaanish.model.JobStock;
 import com.kaanish.model.PaymentDetails;
 import com.kaanish.model.PaymentStatus;
 import com.kaanish.model.PaymentType;
@@ -528,6 +530,17 @@ public class Ejb {
 		}
 	}
 
+	/***************** for Job Assignment Products ***********************/
+	public void setJobAssignmentProducts(
+			JobAssignmentProducts jobAssignmentProducts) {
+		em.persist(jobAssignmentProducts);
+	}
+
+	/***************** for Job AStock ***********************/
+	public void setJobStock(JobStock jobStock) {
+		em.persist(jobStock);
+	}
+
 	/***************** for purchase product details ***********************/
 
 	public void setPurchaseProductDetails(
@@ -558,6 +571,11 @@ public class Ejb {
 						Purchase_Product_Details.class);
 		q.setParameter("Id", id);
 		return q.getResultList();
+	}
+
+	public void updatePurchaseProductDetails(
+			Purchase_Product_Details purchase_Product_Details) {
+		em.merge(purchase_Product_Details);
 	}
 
 	/******************** for City *******************************/
