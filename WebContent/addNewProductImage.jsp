@@ -67,9 +67,10 @@
 											<br> <input class="btn green btn-default" type="submit"
 												value="Send">
 										</form>
+										<div style=" overflow-x:scroll; overflow-y:hidden">	
 										<c:forEach items="${sessionScope['ejb'].getAllProductImageByProductId(param.id)}" var="img">
-										<img alt="" src="data:image/jpeg;base64,${img.getImageAsString()}">
-										</c:forEach>
+									<img width="100" height="100" style="" alt="" src="data:image/jpeg;base64,${img.getImageAsString()}">
+										</c:forEach></div>
 									</div>
 
 								</div>

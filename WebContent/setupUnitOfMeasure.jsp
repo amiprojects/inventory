@@ -59,7 +59,7 @@
 												placeholder="" id="" class="">
 										</div>
 										<div class="form-group">
-											<label for="" class="">Abbrev : </label> <input type="text"
+											<label for="" class="">Abbrev : </label> <input type="text" 
 												placeholder="" id="" class="">
 										</div>
 
@@ -188,14 +188,14 @@
 											<div class="row">
 												<div class="col-md-2">Abreve :</div>
 												<div class="col-md-10">
-													<input type="text" id="Abreve" readonly="readonly"
+													<input type="text" id="Abreve" readonly="readonly" required
 														class="form-control">
 												</div>
 											</div>
 											<div class="row">
 												<div class="col-md-2">Name :</div>
 												<div class="col-md-10">
-													<input type="text" id="unitName" readonly="readonly"
+													<input type="text" id="unitName" readonly="readonly" required
 														class="form-control"> <input type="hidden"
 														id="unitNameId" value=""> <input type="hidden"
 														id="unitNameId1" value="">
@@ -204,7 +204,7 @@
 											<div class="row">
 												<div class="col-md-2">Description</div>
 												<div class="col-md-10">
-													<textarea rows="" cols="" class="form-control"
+													<textarea rows="" cols="" class="form-control" 
 														readonly="readonly" id="DisplayDescription"></textarea>
 												</div>
 											</div>
@@ -308,13 +308,13 @@
 						<div class="row">
 							<div class="col-md-3">Abbreviation :</div>
 							<div class="col-md-9">
-								<input type="text" name="abbreviation" class="form-control">
+								<input type="text" required name="abbreviation" class="form-control">
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-3">Name UOM :</div>
 							<div class="col-md-9">
-								<input type="text" name="name" class="form-control">
+								<input type="text" required name="name" class="form-control">
 							</div>
 						</div>
 						<div class="row">
