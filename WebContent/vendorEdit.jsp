@@ -374,15 +374,10 @@ $(document).ready(function(){
 												<div class="col-md-12">
 													<input class="btn green pull-left" type="button"
 														value="Previous" onclick="bankButtonPrev();">
-													<!-- <input
-														class="btn green pull-left" type="button" value="Next"
-														onclick="partButtonNext();"> -->
+												
 													
 												</div>
-												<!-- <div class="col-md-12">
-													<input type="button" value="Next"
-														class="btn green pull-right" onclick="bankButonNext();">
-												</div> -->
+												
 											</div>
 											<div id="vendorAccount" class="tab-pane fade">
 												<div class="widget-area">

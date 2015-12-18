@@ -340,8 +340,9 @@
 												</a> <br> <br>
 
 												<div
-													style="position: absolute; width: 533px; height:116px; top: 385px; left: 32px; overflow:scroll;">
-													<div id="peoImg"></div></div>
+													style="position: absolute; width: 533px; height: 116px; top: 385px; left: 32px; overflow: scroll;">
+													<div id="peoImg"></div>
+												</div>
 											</div>
 
 
@@ -1335,39 +1336,6 @@
 
 	</div>
 
-
-	<!-- <div id="editPro" class="modal fade" role="dialog" 
-		style="top: -110px; overflow-y: hidden; overflow-x: hidden;">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-content">
-					<div class="modal-header">
-
-						<h4>............</h4>
-
-					</div>
-					<div class="modal-body">
-						<br> <br>
-						<h3 align="center">Product Update</h3>
-						<!-- heading 
-
-
-
-
-					</div>
-					<div class="modal-footer">
-						<input type="button" class="btn btn-default" value="Update"
-							style="float: left;" data-toggle="modal" onclick="anotherShow();">
-						<input type="button" class="btn btn-default" data-dismiss="modal"
-							style="float: right;" value="Close" id="close9"
-							onclick="closeProduct()">
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
--->
-
 	<!-- Script -->
 
 	<script type="text/javascript">
@@ -1623,6 +1591,38 @@
 						dataType : "json",
 						success : function(data) {
 							$("#pp1").val(data.code);
+							
+							if(data.attrNmae1=='null'){
+								$("#ac1").val("");
+							}else{
+								$("#ac1").val(data.attrNmae1);
+							}
+							if(data.attrNmae2=='null'){
+								$("#ac2").val("");
+							}else{
+								$("#ac2").val(data.attrNmae2);
+							}
+							if(data.attrNmae3=='null'){
+								$("#ac3").val("");
+							}else{
+								$("#ac3").val(data.attrNmae3);
+							}
+							if(data.attrNmae4=='null'){
+								$("#ac4").val("");
+							}else{
+								$("#ac4").val(data.attrNmae4);
+							}
+							if(data.attrNmae5=='null'){
+								$("#ac5").val("");
+							}else{
+								$("#ac5").val(data.attrNmae5);
+							}
+							if(data.attrNmae6=='null'){
+								$("#ac6").val("");
+							}else{
+								$("#ac6").val(data.attrNmae6);
+							}
+
 							$("#descc").val(data.description);
 							$("#uomuom").val(data.qtyUnit);
 							$("#upcupc").val(data.universalCode);
@@ -1680,12 +1680,6 @@
 						$("#mrp111").val(value.mrp);
 						$("#wsp111").val(value.wsp);
 						$("#ucost111").val(value.cost);
-						$("#ac1").val(value.attrValue1);
-						$("#ac2").val(value.attrValue2);
-						$("#ac3").val(value.attrValue3);
-						$("#ac4").val(value.attrValue4);
-						$("#ac5").val(value.attrValue5);
-						$("#ac6").val(value.attrValue6);
 						$("#vName").val(value.purchaseVendorName);
 						$("#vAdress").val(value.purchaseVendorAddress);
 						$("#vCompany").val(value.purchaseVendorCompanyName);
@@ -1693,7 +1687,7 @@
 						rqty = rqty + Number(value.remaining_quantity)
 						qty = qty + Number(value.quantity);
 						$("#quantity0101").val(qty);
-						$("#RquantitY").val(data.remaining_quantity);
+						$("#RquantitY").val(rqty);
 					});
 
 				}
