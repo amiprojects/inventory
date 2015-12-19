@@ -258,8 +258,9 @@
 <c:set value="${sessionScope['ejb'].getAllProductImageByProductId(requestScope['proid1'])}" var="pImage"/>
 											<br> <br>
 											<div style="width: 927px; height: 176px; overflow: scroll;">
-												
-									<img width="100" height="100" style="" alt="ProductImage" src="data:image/jpeg;base64,${pImage.getImageAsString()}">
+										<c:forEach items="${pImage}" var="image">		
+									<img width="100" height="100" style="" alt="ProductImage" src="data:image/jpeg;base64,${image.getImageAsString()}">
+									</c:forEach>
 											</div>
 
 										</div>
