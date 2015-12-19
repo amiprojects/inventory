@@ -72,6 +72,8 @@
 									<div style="float: left;"><img width="100" height="100" style="" alt="" src="data:image/jpeg;base64,${img.getImageAsString()}"><br>
 									<a href="deleteProductImage?imageId=${img.id}&id=${param.id}">delete Image</a></div>
 										</c:forEach></div>
+										<div align="right">
+										<a href="MaterialPartDetailsGenerals.jsp"><button class="btn blue btn-default"  type="button">Back</button></a></div>
 									</div>
 
 								</div>

@@ -69,7 +69,8 @@
 <body>
 	<c:set var="purchasePro"
 		value="${sessionScope['ejb'].getPurchase_Product_DetailsByProId(requestScope['proid1'])}" />
-
+	<c:set var="jobProList"
+		value="${sessionScope['ejb'].getJobAssignmentProductDetailsByproductId(requestScope['proid1'])}"/>
 
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.html"%>
@@ -93,9 +94,11 @@
 
 
 								<div class="widget-area" style="width: 100%">
-								<c:set value="${sessionScope['ejb'].getProductDetailById(requestScope['proid1'])}" var="p"/>
-										<h4 align="center">Product Code:</h4>
-										<h3 align="center">${p.code}</h3>
+									<c:set
+										value="${sessionScope['ejb'].getProductDetailById(requestScope['proid1'])}"
+										var="p" />
+									<h4 align="center">Product Code:</h4>
+									<h3 align="center">${p.code}</h3>
 									<br> <br>
 
 									<ul class="nav nav-tabs">
@@ -108,8 +111,8 @@
 										<li><a data-toggle="tab" href="#Attribute">Attribute</a></li>
 									</ul>
 									<div class="tab-content">
-									
-<!-- ////////////*******************************************************************************************jobber***************************************************//// -->
+
+										<!-- ////////////********************************************************************************jobber***************************************************//// -->
 
 										<div id="jobber" class="tab-pane fade">
 											<div class="widget-area">
@@ -128,12 +131,16 @@
 													</thead>
 													<tbody>
 														<tr>
-															<td>...</td>
-															<td>....</td>
-															<td>......</td>
-															<td>......</td>
+														<c:forEach items="${jobProList}" var="jobPro">
+															
+																<td>${jobPro.vendor.name}</td>
+																<td>${jobPro.workDescription}</td>
+																<td>${jobPro.qty}</td>
+																<td><fmt:formatDate
+																		value="${jobPro.jobRecievedDetails.recievingDate}"
+																		pattern="dd-MM-yyyy" /></td>
 
-
+															</c:forEach>
 														</tr>
 													</tbody>
 
@@ -144,7 +151,7 @@
 											<br>
 
 										</div>
-<!-- .......................................*************************purchase************************************************...................................... -->
+										<!-- .......................................*************************purchase************************************************...................................... -->
 										<div id="purchase" class="tab-pane fade active in">
 											<div class="widget-area">
 
@@ -185,7 +192,7 @@
 											<br>
 
 										</div>
-	<!-- .......................................**********************Sales****************************************************...................................... -->
+										<!-- .......................................**********************Sales****************************************************...................................... -->
 										<div id="Sales" class="tab-pane fade ">
 											<div class="widget-area">
 
@@ -209,7 +216,7 @@
 											</div>
 											<br> <br>
 										</div>
-	<!-- .......................................**********************Details****************************************************...................................... -->
+										<!-- .......................................**********************Details****************************************************...................................... -->
 
 
 
@@ -218,16 +225,14 @@
 											<div class="col-md-6">
 												<div class="form-group">
 													<label for="exampleInputEmail1">Code:</label> <input
-														type="text" readonly
-														value="${p.code}"
+														type="text" readonly value="${p.code}"
 														class="form-control"><br>
 												</div>
 
 
 												<div class="form-group">
 													<label for="exampleInputEmail1">Universal Product
-														code:</label> <input type="text"
-														value="${p.universalCode}"
+														code:</label> <input type="text" value="${p.universalCode}"
 														readonly class="form-control"><br>
 												</div>
 											</div>
@@ -235,39 +240,40 @@
 
 												<div class="form-group">
 													<label for="exampleInputEmail1">Description:</label> <input
-														type="text" readonly
-														value="${p.description} "
+														type="text" readonly value="${p.description} "
 														class="form-control"><br>
 												</div>
 
 												<div class="form-group">
 													<label for="exampleInputEmail1">Unit Of
 														Measurement:</label> <input type="text" readonly
-														value="${p.qtyUnit.name} "
-														class="form-control"><br>
+														value="${p.qtyUnit.name} " class="form-control"><br>
 												</div>
 
 											</div>
 										</div>
 
-	<!-- .......................................**********************Image****************************************************...................................... -->
+										<!-- .......................................**********************Image****************************************************...................................... -->
 
 
 
 										<div id="Image" class="tab-pane fade">
-<c:set value="${sessionScope['ejb'].getAllProductImageByProductId(requestScope['proid1'])}" var="pImage"/>
+											<c:set
+												value="${sessionScope['ejb'].getAllProductImageByProductId(requestScope['proid1'])}"
+												var="pImage" />
 											<br> <br>
 											<div style="width: 927px; height: 176px; overflow: scroll;">
-										<c:forEach items="${pImage}" var="image">		
-									<img width="100" height="100" style="" alt="ProductImage" src="data:image/jpeg;base64,${image.getImageAsString()}">
-									</c:forEach>
+												<c:forEach items="${pImage}" var="image">
+													<img width="100" height="100" style="" alt="ProductImage"
+														src="data:image/jpeg;base64,${image.getImageAsString()}">
+												</c:forEach>
 											</div>
 
 										</div>
 
 
 
-		<!-- .......................................**********************Attribute****************************************************...................................... -->
+										<!-- .......................................**********************Attribute****************************************************...................................... -->
 
 										<div id="Attribute" class="tab-pane fade">
 
@@ -275,10 +281,8 @@
 											<div class="col-md-6">
 												<div class="form-group">
 													<label for="exampleInputEmail1">Attribute 1:</label> <input
-														type="text"
-														value="${p.category.attrNmae1}"
-
-														readonly class="form-control"><br>
+														type="text" value="${p.category.attrNmae1}" readonly
+														class="form-control"><br>
 												</div>
 
 												<div class="form-group">
@@ -316,7 +320,7 @@
 
 
 										</div>
-		<!-- ........................................................................************************************..............	 -->
+										<!-- ........................................................................************************************..............	 -->
 									</div>
 								</div>
 							</div>
