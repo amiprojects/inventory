@@ -51,9 +51,20 @@
 </script>
 </head>
 <body>
-	<c:if test="${sessionScope['user']==null}">
-		<c:redirect url="index.jsp" />
-	</c:if>
+
+
+
+<!-- 
+"Replacement" will be done on 21/12/15.....Purchase return will same....as sales return.......after Click.......save A popup will asked to print challan............."
+ -->
+
+
+
+
+
+
+
+
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.html"%>
 		<div class="page-container menu-left" style="height: 100%;">
@@ -67,14 +78,27 @@
 
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
-								<h4>
-									Enter Challan Number <input type="text" name="cusname">
-								</h4>
+								<h3>Sales Return</h3>
 							</div>
 
 
 
 							<div class="row">
+								<div class="col-md-12">
+									<div class="widget-area">
+										<div class="col-md-4">
+											<p style="font-size: 20px; color: black">
+												<b></b> Enter Sales Challan Number
+											<p>
+										</div>
+										<div class="col-md-8">
+											<input type="text" class="form-control" width="10px"
+												name="cusname">
+										</div>
+
+									</div>
+								</div>
+
 								<div class="col-md-6">
 									<div class="widget-area" style="height: 290px;">
 										<div style="background-color: lightgrey;">
@@ -83,40 +107,35 @@
 										<table cellspacing="2">
 											<tr>
 												<td>Name :</td>
-												<td><input type="text" name="cusname"
-													readonly="readonly" style="align: center;"></td>
+												
 											</tr>
 											<tr>
 												<td>&nbsp;</td>
 											</tr>
 											<tr>
 												<td>Address :</td>
-												<td><input type="text" name="addr" readonly="readonly"
-													style="length: 40px;" style="align:center;"></td>
+												
 											</tr>
 											<tr>
 												<td>&nbsp;</td>
 											</tr>
 											<tr>
 												<td>City :</td>
-												<td><input type="text" name="addr" readonly="readonly"
-													style="length: 40px;"></td>
+												
 											</tr>
 											<tr>
 												<td>&nbsp;</td>
 											</tr>
 											<tr>
 												<td>Phone No. :</td>
-												<td><input type="text" name="phone" readonly="readonly"
-													style="length: 40px;"></td>
+												
 											</tr>
 											<tr>
 												<td>&nbsp;</td>
 											</tr>
 											<tr>
 												<td>Vat No./CST No. :</td>
-												<td><input type="text" name="vatcst"
-													readonly="readonly" style="length: 40px;"></td>
+											
 											</tr>
 										</table>
 									</div>
@@ -134,7 +153,7 @@
 
 											<label style="font-size: 15px" class="font">Sales
 												challan no. :</label>
-											<c:set var="fy"
+											<%-- <c:set var="fy"
 												value="${sessionScope['ejb'].getCurrentFinancialYear()}" />
 											<c:set var="cno"
 												value="${sessionScope['ejb'].getLastSalesChallanNumber()+1}" />
@@ -149,13 +168,11 @@
 												minIntegerDigits="3" groupingUsed="false" />
 											<fmt:formatDate
 												value="${sessionScope['ejb'].getCurrentDateTime()}"
-												pattern="MM" var="yr" />
+												pattern="MM" var="yr" /> --%>
 											<input readonly="readonly" type="text" placeholder=""
-												name="challanNumber" class="form-control"
-												value="${bs.companyInitial}/${fy}/${yr}/${bs.billType}/${lastChNo}/${lastSuf}">
-											<input type="hidden" name="challanNo" value="${lastChNo}"
-												id="challanNo"> <input type="hidden"
-												name="cha\llanSuffix" value="${lastSuf}">
+												name="challanNumber" class="form-control" value="">
+											<input type="hidden" name="challanNo" value="" id="challanNo">
+											<input type="hidden" name="cha\llanSuffix" value="">
 										</div>
 
 
@@ -170,20 +187,22 @@
 							</div>
 
 							<div class="widget-area">
+								<b>Replaceable</b>&nbsp;&nbsp;&nbsp;<input value="ji"
+									id="replace" type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-
-								<b>Quantity :</b> <input type="text" name="qty"
-									style="width: 70px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<b>Quantity :</b> <input type="text" name="qty" id="input1"
+									disabled="disabled" style="width: 70px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 								<b>Product :</b> <input type="text" name="descriptionName"
-									id="descriptionName"> <input type="hidden"
-									name="descriptiondId" id="descriptionId">&nbsp; &nbsp;
-								&nbsp;<b>Product with Barcode</b> <input type="text"
-									id="salesbar" name="salesbar">
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a>Replaceable</a>&nbsp;&nbsp;&nbsp;
+									disabled="disabled" id="input2"> &nbsp; &nbsp; &nbsp;<b>Product
+									with Barcode</b> <input type="text" disabled="disabled" id="input3"
+									name="salesbar">
+
 
 
 							</div>
+
+
 							<div class="widget-area">
 								<table id="stream_table"
 									class="table table-striped table-bordered">
@@ -195,62 +214,53 @@
 											<th id="desc">Quantity</th>
 											<th id="perqty">MRP/Qty</th>
 											<th id="total">Total</th>
+											<th id="total">Returning Quantity</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr>
 											<td><input type="checkbox"></td>
-											<td><input type="text" name="codevalue" id="codevalue"></td>
-											<td><input type="text" name="descvalue" id="descvalue"></td>
-											<td><input type="text" name="qtyvalue" id="qtyvalue"></td>
-											<td><input type="text" name="mrpQty" id="mrpQty"></td>
-											<td><input type="text" name="mrpQty" id="mrpQty"></td>
+											<td>..</td>
+											<td>...></td>
+											<td></td>
+											<td>..</td>
+											<td>..</td>
+											<td>..</td>
+
+
+
+										</tr>
+
+
+										<tr>
+											<td><input type="checkbox"></td>
+											<td>..</td>
+											<td>...></td>
+											<td></td>
+											<td>..</td>
+											<td>..</td>
+											<td>..</td>
 
 
 
 										</tr>
 										<tr>
 											<td><input type="checkbox"></td>
-											<td><input type="text" name="codevalue" id="codevalue"></td>
-											<td><input type="text" name="descvalue" id="descvalue"></td>
-											<td><input type="text" name="qtyvalue" id="qtyvalue"></td>
-											<td><input type="text" name="mrpQty" id="mrpQty"></td>
-											<td><input type="text" name="mrpQty" id="mrpQty"></td>
+											<td>..</td>
+											<td>...></td>
+											<td></td>
+											<td>..</td>
+											<td>..</td>
+											<td>..</td>
 
-
-										</tr>
-										<tr>
-											<td><input type="checkbox"></td>
-											<td><input type="text" name="codevalue" id="codevalue"></td>
-											<td><input type="text" name="descvalue" id="descvalue"></td>
-											<td><input type="text" name="qtyvalue" id="qtyvalue"></td>
-											<td><input type="text" name="mrpQty" id="mrpQty"></td>
-											<td><input type="text" name="mrpQty" id="mrpQty"></td>
-
-
-										</tr>
-										<tr>
-											<td><input type="checkbox"></td>
-											<td><input type="text" name="codevalue" id="codevalue"></td>
-											<td><input type="text" name="descvalue" id="descvalue"></td>
-											<td><input type="text" name="qtyvalue" id="qtyvalue"></td>
-											<td><input type="text" name="mrpQty" id="mrpQty"></td>
-											<td><input type="text" name="mrpQty" id="mrpQty"></td>
-
-
-										</tr>
-										<tr>
-											<td><input type="checkbox"></td>
-											<td><input type="text" name="codevalue" id="codevalue"></td>
-											<td><input type="text" name="descvalue" id="descvalue"></td>
-											<td><input type="text" name="mrpQty" id="mrpQty"></td>
-											<td><input type="text" name="qtyvalue" id="qtyvalue"></td>
-											<td><input type="text" name="mrpQty" id="mrpQty"></td>
 
 
 										</tr>
 									</tbody>
 								</table>
+								
+								<button style="float: right;" class="btn btn-default small" type="button">Cash</button>&nbsp;&nbsp;
+							<a href="salesSalesEntry.jsp">	<button style="float: right;" class="btn btn-default small" type="button">Replace</button></a>
 							</div>
 
 							<div style="width: 40%; float: right;">
@@ -324,8 +334,8 @@
 				</div>
 			</div>
 		</div>
-	</div>
 
+	</div>
 
 	<script>
 		$(function() {
@@ -336,6 +346,7 @@
 		});
 	</script>
 
+
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
 	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
@@ -345,13 +356,23 @@
 	<script type="text/javascript" src="js/grid-filter.js"></script>
 
 	<script src="js/jquery-ui/jquery-ui.js"></script>
-	<script>
-		$(function() {
-			$("#datepicker").datepicker();
+
+
+	<script type="text/javascript">
+		$('#replace').click(function() {
+			if ($('#replace').is(':checked')) {
+
+				$("#input1").prop("disabled", false);
+				$("#input2").prop("disabled", false);
+				$("#input3").prop("disabled", false);
+			} else {
+
+				$("#input1").prop("disabled", true);
+				$("#input2").prop("disabled", true);
+				$("#input3").prop("disabled", true);
+			}
 		});
 	</script>
-
-
 
 
 </body>

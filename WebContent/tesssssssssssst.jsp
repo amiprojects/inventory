@@ -67,8 +67,8 @@
             <th >Hiiuiyui 1</th>
             <th >Head 2</th>
             <th >Head 3</th>
-            <th align="center">Head 4</th>
-            <th align="center">Head 5</th>
+            <th >Head 4</th>
+            <th >Head 5</th>
         </tr>
     </thead>
     <tbody>
@@ -77,11 +77,11 @@
             <td align="center">Content 2</td>
             <td align="center">Content 3</td>
             <td align="center">Content 4</td>
-            <td>Content 5</td>
+            <td align="center">Content 5</td>
         </tr>
         <tr>
             <td align="center">Content 1</td>
-            <td align="center">Lorem ipsum dolor sit amet.</td>
+            <td align="center">Lorem ipsum </td>
             <td align="center">Content 3</td>
             <td align="center">Content 4</td>
             <td align="center">Content 5</td>
