@@ -255,10 +255,11 @@
 
 
 										<div id="Image" class="tab-pane fade">
-
+<c:set value="${sessionScope['ejb'].getAllProductImageByProductId(requestScope['proid1'])}" var="pImage"/>
 											<br> <br>
 											<div style="width: 927px; height: 176px; overflow: scroll;">
-												<div id="peoImg"></div>
+												
+									<img width="100" height="100" style="" alt="ProductImage" src="data:image/jpeg;base64,${pImage.getImageAsString()}">
 											</div>
 
 										</div>

@@ -820,9 +820,17 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	public List<ProductDetail> getProductDetailBydescription(String name) {
+	public List<ProductDetail> getProductDetailByCode(String name) {
 		TypedQuery<ProductDetail> q = em.createQuery(
 				"select c from ProductDetail c where UPPER(c.code) like :nm",
+				ProductDetail.class);
+		q.setParameter("nm", "%" + name.toUpperCase() + "%");
+		return q.getResultList();
+	}
+	
+	public List<ProductDetail> getProductDetailBydescription(String name) {
+		TypedQuery<ProductDetail> q = em.createQuery(
+				"select c from ProductDetail c where UPPER(c.description) like :nm",
 				ProductDetail.class);
 		q.setParameter("nm", "%" + name.toUpperCase() + "%");
 		return q.getResultList();
