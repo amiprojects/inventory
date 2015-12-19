@@ -23,6 +23,7 @@ import com.kaanish.model.Category;
 import com.kaanish.model.City;
 import com.kaanish.model.CompanyInfo;
 import com.kaanish.model.Country;
+import com.kaanish.model.CustomerEntry;
 import com.kaanish.model.Department;
 import com.kaanish.model.JobAssignmentDetails;
 import com.kaanish.model.JobAssignmentProducts;
@@ -40,6 +41,7 @@ import com.kaanish.model.QtyUnitConversionPK;
 import com.kaanish.model.QtyUnitType;
 import com.kaanish.model.RawMaterialsStock;
 import com.kaanish.model.ReadyGoodsStock;
+import com.kaanish.model.SalesEntry;
 import com.kaanish.model.SerialNumber;
 import com.kaanish.model.State;
 import com.kaanish.model.SubDepartment;
@@ -52,17 +54,17 @@ import com.kaanish.util.DateConverter;
 
 @MultipartConfig
 @WebServlet({ "/login", "/logout", "/addTax", "/addTaxGroup", "/editTax",
-		"/deleteTax", "/editTaxGroup", "/deleteTaxGroup","/stockDetailShow" ,"/createDept",
-		"/deleteDept", "/createSubDept", "/deleteSubDept",
+		"/deleteTax", "/editTaxGroup", "/deleteTaxGroup", "/stockDetailShow",
+		"/createDept", "/deleteDept", "/createSubDept", "/deleteSubDept",
 		"/editproductSummary", "/createCategory", "/deleteCategory",
 		"/newVendorType", "/addCountry", "/addState", "/createProduct",
 		"/deleteCountry", "/addVendor", "/addUOM", "/editVendorType",
 		"/deleteVendorType", "/addCity", "/deleteState", "/deleteCity",
 		"/productSumary", "/addNewConversion", "/purchaseEntry",
 		"/updateConversion", "/addBillSetup", "/updateCompanyInfo",
-		"/updateVendor", "/purchaseSearchByDate", "/uploadProductImage","/deleteProductImage",
-		"/jobAssignment", "/jobAssignSearchByDate" })
-
+		"/updateVendor", "/purchaseSearchByDate", "/uploadProductImage",
+		"/deleteProductImage", "/jobAssignment", "/jobAssignSearchByDate",
+		"salesEntry" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -103,6 +105,8 @@ public class Servlet extends HttpServlet {
 	private JobAssignmentDetails jobAssignmentDetails;
 	private JobAssignmentProducts jobAssignmentProducts;
 	private JobStock jobStock;
+	private CustomerEntry customerEntry;
+	private SalesEntry salesEntry;
 
 	@Override
 	public void init() throws ServletException {
@@ -937,6 +941,8 @@ public class Servlet extends HttpServlet {
 							InitialSlNo++;
 							if (req.getParameter("isLot").equals("yes")) {
 								serialNumber.setLotNo(req.getParameter("lotH"));
+							} else {
+								serialNumber.setLotNo("0");
 							}
 							// serialNumber.setBarcode();
 							serialNumber
@@ -949,7 +955,18 @@ public class Servlet extends HttpServlet {
 							for (int ln = 0; ln < lq; ln++) {
 								serialNumber = new SerialNumber();
 								serialNumber.setLotNo(req.getParameter("lotH"));
-								// serialNumber.setBarcode();
+								serialNumber.setSerialNumber("0");
+								serialNumber
+										.setPurchase_Product_Details(purchaseProductDetails);
+								ejb.setSerialNumber(serialNumber);
+
+								serialNumber = null;
+							}
+						} else {
+							for (int ln = 0; ln < lq; ln++) {
+								serialNumber = new SerialNumber();
+								serialNumber.setLotNo("0");
+								serialNumber.setSerialNumber("0");
 								serialNumber
 										.setPurchase_Product_Details(purchaseProductDetails);
 								ejb.setSerialNumber(serialNumber);
@@ -993,6 +1010,39 @@ public class Servlet extends HttpServlet {
 				}
 				purchaseEntry = null;
 				msg = "Purchase entry was successfull.";
+				break;
+
+			case "salesEntry":
+				page = "salesSalesEntry.jsp";
+
+				customerEntry = new CustomerEntry();
+				customerEntry.setName(req.getParameter("custName"));
+				customerEntry.setAddress(req.getParameter("addr"));
+				customerEntry.setCity(req.getParameter("city"));
+				customerEntry.setMobile(req.getParameter("phone"));
+				ejb.setCustomerEntry(customerEntry);
+
+				salesEntry = new SalesEntry();
+				dt = new Date();
+				salesEntry.setChallanNumber(req.getParameter("challanNumber"));
+				salesEntry.setChallanNo(Integer.parseInt(req
+						.getParameter("challanNo")));
+				salesEntry.setChallanSuffix(Integer.parseInt(req
+						.getParameter("challanSuffix")));
+				salesEntry.setEntry_Date(dt);
+				salesEntry.setSales_date(DateConverter.getDate(req
+						.getParameter("salesDate")));
+				salesEntry.setCustomer(customerEntry);
+				ejb.setSalesEntry(salesEntry);
+
+				break;
+
+			case "purchaseSearchByDate":
+				page = "purchasingPurchaseSearch.jsp";
+				List<Purchase_Entry> purEntryList = ejb.getPurchaseEntryByDate(
+						DateConverter.getDate(req.getParameter("fDate")),
+						DateConverter.getDate(req.getParameter("lDate")));
+				req.setAttribute("purEntryList", purEntryList);
 				break;
 
 			case "jobAssignment":
@@ -1064,17 +1114,13 @@ public class Servlet extends HttpServlet {
 				msg = "Job assigned succesfully.";
 				break;
 
-			case "purchaseSearchByDate":
-				page = "purchasingPurchaseSearch.jsp";
-				List<Purchase_Entry> purEntryList = ejb.getPurchaseEntryByDate(
-						DateConverter.getDate(req.getParameter("fDate")),
-						DateConverter.getDate(req.getParameter("lDate")));
-				req.setAttribute("purEntryList", purEntryList);
-				break;
-
 			case "jobAssignSearchByDate":
 				page = "jobAssignSearch.jsp";
-
+				List<JobAssignmentDetails> jobAssignList = ejb
+						.getJobAssignmentByDate(DateConverter.getDate(req
+								.getParameter("fDate")), DateConverter
+								.getDate(req.getParameter("lDate")));
+				req.setAttribute("jobAssignList", jobAssignList);
 				break;
 
 			case "addUOM":
@@ -1230,18 +1276,18 @@ public class Servlet extends HttpServlet {
 					msg = "please enter proper conversion value";
 				}
 				break;
-				/***************stock*************show***************/
-				
+			/*************** stock*************show ***************/
+
 			case "stockDetailShow":
 				page = "stockShowdetails.jsp";
-				
+
 				req.setAttribute("proid1", req.getParameter("proId"));
-				
-				msg="";
-				
+
+				msg = "";
+
 				break;
-				/*********************************************************/
-				
+			/*********************************************************/
+
 			case "uploadProductImage":
 				page = "addNewProductImage.jsp";
 				Part p1 = req.getPart("proImg");
@@ -1257,9 +1303,10 @@ public class Servlet extends HttpServlet {
 				msg = "image added successfully";
 				break;
 			case "deleteProductImage":
-				page = "addNewProductImage.jsp?id="+req.getParameter("id");
-				ejb.removeImageById(Integer.parseInt(req.getParameter("imageId")));
-				msg="Image deleted successfully";
+				page = "addNewProductImage.jsp?id=" + req.getParameter("id");
+				ejb.removeImageById(Integer.parseInt(req
+						.getParameter("imageId")));
+				msg = "Image deleted successfully";
 				break;
 
 			default:

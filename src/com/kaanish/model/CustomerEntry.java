@@ -12,13 +12,15 @@ import javax.persistence.OneToMany;
 @Cacheable(false)
 public class CustomerEntry {
 
-	@Id@GeneratedValue
+	@Id
+	@GeneratedValue
 	private int id;
 	private String name;
 	private String mobile;
 	private String email;
 	private String address;
-	
+	private String city;
+
 	@OneToMany(mappedBy = "customer")
 	private List<SalesEntry> salesEntries;
 
@@ -69,5 +71,13 @@ public class CustomerEntry {
 	public void setSalesEntries(List<SalesEntry> salesEntries) {
 		this.salesEntries = salesEntries;
 	}
-	
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
 }

@@ -485,19 +485,31 @@ public class Ejb {
 		}
 	}
 
+	public List<JobAssignmentDetails> getJobAssignmentByDate(Date startDate, Date endDate) {
+		TypedQuery<JobAssignmentDetails> q = em.createQuery(
+				"select c from JobAssignmentDetails c WHERE c.assignDate BETWEEN :startDate AND :endDate",
+				JobAssignmentDetails.class);
+		q.setParameter("startDate", startDate);
+		q.setParameter("endDate", endDate);
+		return q.getResultList();
+	}
+
 	/***************** for Job Assignment Products ***********************/
 	public void setJobAssignmentProducts(JobAssignmentProducts jobAssignmentProducts) {
 		em.persist(jobAssignmentProducts);
 	}
-	
-	public List<JobAssignmentProducts> getJobAssignmentProductDetailsByproductId(int id){
-		TypedQuery<JobAssignmentProducts> q=em.createQuery("select c from JobAssignmentProducts c where c.purchase_Product_Details.productDetail.id=:id", JobAssignmentProducts.class);
+
+	public List<JobAssignmentProducts> getJobAssignmentProductDetailsByproductId(int id) {
+		TypedQuery<JobAssignmentProducts> q = em.createQuery(
+				"select c from JobAssignmentProducts c where c.purchase_Product_Details.productDetail.id=:id",
+				JobAssignmentProducts.class);
 		q.setParameter("id", id);
 		return q.getResultList();
 	}
-	
-	public List<JobAssignmentProducts> getAllJobAssignmentProductDetails(){
-		TypedQuery<JobAssignmentProducts> q=em.createQuery("select c from JobAssignmentProducts c ", JobAssignmentProducts.class);
+
+	public List<JobAssignmentProducts> getAllJobAssignmentProductDetails() {
+		TypedQuery<JobAssignmentProducts> q = em.createQuery("select c from JobAssignmentProducts c ",
+				JobAssignmentProducts.class);
 		return q.getResultList();
 	}
 
@@ -539,7 +551,7 @@ public class Ejb {
 
 	public List<Purchase_Product_Details> getPurchaseProductDetailsByQty() {
 		TypedQuery<Purchase_Product_Details> q = em.createQuery(
-				"select c from Purchase_Product_Details c where c.remaining_quantity>0 and c.isReady=0",
+				"select c from Purchase_Product_Details c where c.remaining_quantity>0 and c.isReady=0 ORDER BY c.purchase_Entry.purchase_date ASC",
 				Purchase_Product_Details.class);
 		return q.getResultList();
 	}

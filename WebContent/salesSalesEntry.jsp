@@ -65,212 +65,216 @@
 					<div class="masonary-grids">
 
 						<div class="col-md-12" style="height: 800px;">
-							<div class="row">
-								<div class="col-md-6">
-									<div class="widget-area" style="height: 250px;">
-										<div style="background-color: lightgrey;">
-											<h3>Bill To:</h3>
-										</div>
-										<table cellspacing="2">
-											<tr>
-												<td>Name :</td>
-												<td><input type="text" name="cusname"
-													style="align: center;"></input></td>
-											</tr>
-											<br>
-											<tr>
-												<td>Address :</td>
-												<td><input type="text" name="addr"
-													style="length: 40px;" style="align:center;"></input></td>
-											</tr>
-											<tr>
-												<td>City :</td>
-												<td><input type="text" name="addr"
-													style="length: 40px;"></input></td>
-											</tr>
+							<form class="sec" action="salesEntry" method="post">
+								<div class="row">
+									<div class="col-md-6">
+										<div class="widget-area" style="height: 250px;">
+											<div style="background-color: lightgrey;">
+												<h3>Bill To:</h3>
+											</div>
+											<table cellspacing="2">
+												<tr>
+													<td>Name :</td>
+													<td><input type="text" name="custName"
+														style="align: center;"></input></td>
+												</tr>
+												<br>
+												<tr>
+													<td>Address :</td>
+													<td><input type="text" name="addr"
+														style="length: 40px;" style="align:center;"></input></td>
+												</tr>
+												<tr>
+													<td>City :</td>
+													<td><input type="text" name="city"
+														style="length: 40px;"></input></td>
+												</tr>
 
-											<tr>
-												<td>Phone No. :</td>
-												<td><input type="text" name="phone"
-													style="length: 40px;"></input></td>
-											</tr>
+												<tr>
+													<td>Phone No. :</td>
+													<td><input type="text" name="phone"
+														style="length: 40px;"></input></td>
+												</tr>
 
-											<tr>
-												<td>Vat No./CST No. :</td>
-												<td><input type="text" name="vatcst"
-													style="length: 40px;"></input></td>
-											</tr>
-										</table>
-									</div>
-								</div>
-
-
-								<div class="col-md-6">
-									<div class="widget-area" style="height: 250px;">
-										<div style="background-color: lightgrey;">
-											<h3>Invoice Details:</h3>
-										</div>
-
-
-										<div class="form-group">
-
-											<label style="font-size: 15px" class="font">Sales
-												challan no. :</label>
-											<c:set var="fy"
-												value="${sessionScope['ejb'].getCurrentFinancialYear()}" />
-											<c:set var="cno"
-												value="${sessionScope['ejb'].getLastSalesChallanNumber()+1}" />
-											<c:set var="csuf"
-												value="${sessionScope['ejb'].getLastSalesChallanSuffix()+1}" />
-											<c:set var="suf" value="INV" />
-											<c:set var="bs"
-												value="${sessionScope['ejb'].getLastBillSetupBySufix(suf)}" />
-											<fmt:formatNumber value="${cno}" var="lastChNo"
-												minIntegerDigits="4" groupingUsed="false" />
-											<fmt:formatNumber value="${csuf}" var="lastSuf"
-												minIntegerDigits="3" groupingUsed="false" />
-											<fmt:formatDate
-												value="${sessionScope['ejb'].getCurrentDateTime()}"
-												pattern="MM" var="yr" />
-											<input readonly="readonly" type="text" placeholder=""
-												name="challanNumber" class="form-control"
-												value="${bs.companyInitial}/${fy}/${yr}/${bs.billType}/${lastChNo}/${lastSuf}">
-											<input type="hidden" name="challanNo" value="${lastChNo}"
-												id="challanNo"> <input type="hidden"
-												name="cha\llanSuffix" value="${lastSuf}">
-										</div>
-
-
-										<div class="form-group">
-											<label style="font-size: 15px" class="font">Date :</label> <input
-												class="form-control" type="text" name="date" id="datepicker"
-												readonly="readonly">
-
+												<tr>
+													<td>Vat No./CST No. :</td>
+													<td><input type="text" name="vatcst"
+														style="length: 40px;"></input></td>
+												</tr>
+											</table>
 										</div>
 									</div>
+
+
+									<div class="col-md-6">
+										<div class="widget-area" style="height: 250px;">
+											<div style="background-color: lightgrey;">
+												<h3>Invoice Details:</h3>
+											</div>
+
+
+											<div class="form-group">
+
+												<label style="font-size: 15px" class="font">Sales
+													challan no. :</label>
+												<c:set var="fy"
+													value="${sessionScope['ejb'].getCurrentFinancialYear()}" />
+												<c:set var="cno"
+													value="${sessionScope['ejb'].getLastSalesChallanNumber()+1}" />
+												<c:set var="csuf"
+													value="${sessionScope['ejb'].getLastSalesChallanSuffix()+1}" />
+												<c:set var="suf" value="INV" />
+												<c:set var="bs"
+													value="${sessionScope['ejb'].getLastBillSetupBySufix(suf)}" />
+												<fmt:formatNumber value="${cno}" var="lastChNo"
+													minIntegerDigits="4" groupingUsed="false" />
+												<fmt:formatNumber value="${csuf}" var="lastSuf"
+													minIntegerDigits="3" groupingUsed="false" />
+												<fmt:formatDate
+													value="${sessionScope['ejb'].getCurrentDateTime()}"
+													pattern="MM" var="yr" />
+												<input readonly="readonly" type="text" placeholder=""
+													name="challanNumber" class="form-control"
+													value="${bs.companyInitial}/${fy}/${yr}/${bs.billType}/${lastChNo}/${lastSuf}">
+												<input type="hidden" name="challanNo" value="${lastChNo}"
+													id="challanNo"> <input type="hidden"
+													name="challanSuffix" value="${lastSuf}">
+											</div>
+
+
+											<div class="form-group">
+												<label style="font-size: 15px" class="font">Date :</label> <input
+													class="form-control" type="text" name="salesDate"
+													id="datepicker" readonly="readonly">
+
+											</div>
+										</div>
+									</div>
 								</div>
-							</div>
-							<div class="widget-area">
-								<div style="background-color: lightgrey;">
-									<h3>Sale Product at:</h3>
+								<div class="widget-area">
+									<div style="background-color: lightgrey;">
+										<h3>Sale Product at:</h3>
+									</div>
+									<input type="radio" class="chk" name="prod" value="mrp"
+										id="mrp" style="display: none;"><label for="mrp"></label>MRP<input
+										type="radio" class="chk" name="prod" value="wsp" id="wsp"
+										style="display: none;">&nbsp;<label for="wsp"></label>WSP
+
 								</div>
-								<input type="radio" class="chk" name="prod" value="mrp" id="mrp"
-									style="display: none;"><label for="mrp"></label>MRP<input
-									type="radio" class="chk" name="prod" value="wsp" id="wsp"
-									style="display: none;">&nbsp;<label for="wsp"></label>WSP
-
-							</div>
-							<div class="widget-area">
+								<div class="widget-area">
 
 
-								<b>Quantity :</b> <input type="text" name="qty"
-									style="width: 70px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<b>Quantity :</b> <input type="text" name="qty"
+										style="width: 70px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-								<b>Product :</b> <input type="text" name="descriptionName"
-									id="descriptionName"> <input type="hidden"
-									name="descriptiondId" id="descriptionId">&nbsp; &nbsp;
-								&nbsp;<b>Product with Barcode</b> <input type="text"
-									id="salesbar" name="salesbar">
-								<button onclick="probar()" type="button">Go</button>
+									<b>Product :</b> <input type="text" name="descriptionName"
+										id="descriptionName"> <input type="hidden"
+										name="descriptiondId" id="descriptionId">&nbsp; &nbsp;
+									&nbsp;<b>Product with Barcode</b> <input type="text"
+										id="salesbar" name="salesbar">
+									<button onclick="probar()" type="button">Go</button>
 
-								<!-- <input type="text" name="productCode"
+									<!-- <input type="text" name="productCode"
 									id="productCode" style="width: 540px">  <input type="hidden"
 									name="productCodeH" id="productCodeH"> <br> -->
 
-							</div>
-							<div class="widget-area">
-								<table id="stream_table"
-									class="table table-striped table-bordered">
-									<thead>
-										<tr>
-											<th id="serial">#</th>
-											<th id="prodcode">Product code</th>
-											<th id="desc">Product Description</th>
-											<th id="qty">Qty.</th>
-											<th id="perqty">MRP/Qty</th>
-											<th id="total">Total</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td >1</td>
-											<td ><input type="text" name="codevalue" id="codevalue"></td>
-											<td ><input type="text" name="descvalue" id="descvalue"></td>
-											<td ><input type="text" name="qtyvalue" id="qtyvalue"></td>
-											<td ><input type="text" name="mrpQty" id="mrpQty"></td>
-											<td ><input type="text" name="totalvalue" id="totalvalue"></td>
-
-										</tr>
-									</tbody>
-								</table>
-							</div>
-
-							<div style="width: 40%; float: right;">
-								<table id="stream_table"
-									class="table table-striped table-bordered">
-									<thead>
-										<tr>
-											<td colspan="2" id="round">Round Of :</td>
-											<td><input type="number" class="form-control"
-												placeholder="" readonly="readonly" id="roundvalue"></td>
-										</tr>
-										<tr>
-											<td colspan="2" id="sub">Sub Total :</td>
-											<td><input type="number" class="form-control"
-												placeholder="0.0" readonly="readonly" id="subvalue"></td>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td colspan="2">Discount :<br> <input type="radio"
-												class="chk1" name="dis" id="percent" style="display: none;"><label
-												for="percent" style="top: -2px;"></label>% <input
-												type="radio" class="chk1" name="dis" id="flat"
-												style="display: none;"><label for="flat"
-												style="top: 7px;">&nbsp;</label>FLAT
-											</td>
-											<td><input type="number" class="form-control"
-												placeholder="" readonly="readonly"></td>
-										</tr>
-									</tbody>
-
-									<tbody>
-										<tr>
-											<td colspan="2" id="disc">Discount Value:</td>
-											<td><input type="number" class="form-control"
-												readonly="readonly" id="discount"></td>
-										</tr>
-
-									</tbody>
-									<tbody>
-										<tr>
-											<td colspan="2" id="trans">Transport charge :</td>
-											<td><input type="number" class="form-control"
-												id="transcharge"></td>
-										</tr>
-									</tbody>
-
-									<tbody>
-										<tr>
-											<td colspan="2" id="sur">Surcharge :</td>
-											<td><input type="number" class="form-control"
-												id="surcharge"></td>
-										</tr>
-									</tbody>
-
-									<thead>
-										<tr>
-											<td colspan="2" id="grand">Grand Total :</td>
-											<td><input type="number" class="form-control"
-												placeholder="0.0" readonly="readonly" id="grandtotal"></td>
-										</tr>
-									</thead>
-								</table>
-								<div style="float: right;">
-									<button type="button" class="btn btn-info btn-lg"
-										data-toggle="modal" data-target="#savePurchase" id="save">Save</button>
 								</div>
-							</div>
+								<div class="widget-area">
+									<table id="stream_table"
+										class="table table-striped table-bordered">
+										<thead>
+											<tr>
+												<th id="serial">#</th>
+												<th id="prodcode">Product code</th>
+												<th id="desc">Product Description</th>
+												<th id="qty">Qty.</th>
+												<th id="perqty">MRP/Qty</th>
+												<th id="total">Total</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>1</td>
+												<td><input type="text" name="codevalue" id="codevalue"></td>
+												<td><input type="text" name="descvalue" id="descvalue"></td>
+												<td><input type="text" name="qtyvalue" id="qtyvalue"></td>
+												<td><input type="text" name="mrpQty" id="mrpQty"></td>
+												<td><input type="text" name="totalvalue"
+													id="totalvalue"></td>
+
+											</tr>
+										</tbody>
+									</table>
+								</div>
+
+								<div style="width: 40%; float: right;">
+									<table id="stream_table"
+										class="table table-striped table-bordered">
+										<thead>
+											<tr>
+												<td colspan="2" id="round">Round Of :</td>
+												<td><input type="number" class="form-control"
+													placeholder="" readonly="readonly" id="roundvalue"></td>
+											</tr>
+											<tr>
+												<td colspan="2" id="sub">Sub Total :</td>
+												<td><input type="number" class="form-control"
+													placeholder="0.0" readonly="readonly" id="subvalue"></td>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td colspan="2">Discount :<br> <input type="radio"
+													class="chk1" name="dis" id="percent" style="display: none;"><label
+													for="percent" style="top: -2px;"></label>% <input
+													type="radio" class="chk1" name="dis" id="flat"
+													style="display: none;"><label for="flat"
+													style="top: 7px;">&nbsp;</label>FLAT
+												</td>
+												<td><input type="number" class="form-control"
+													placeholder="" readonly="readonly"></td>
+											</tr>
+										</tbody>
+
+										<tbody>
+											<tr>
+												<td colspan="2" id="disc">Discount Value:</td>
+												<td><input type="number" class="form-control"
+													readonly="readonly" id="discount"></td>
+											</tr>
+
+										</tbody>
+										<tbody>
+											<tr>
+												<td colspan="2" id="trans">Transport charge :</td>
+												<td><input type="number" class="form-control"
+													id="transcharge"></td>
+											</tr>
+										</tbody>
+
+										<tbody>
+											<tr>
+												<td colspan="2" id="sur">Surcharge :</td>
+												<td><input type="number" class="form-control"
+													id="surcharge"></td>
+											</tr>
+										</tbody>
+
+										<thead>
+											<tr>
+												<td colspan="2" id="grand">Grand Total :</td>
+												<td><input type="number" class="form-control"
+													placeholder="0.0" readonly="readonly" id="grandtotal"></td>
+											</tr>
+										</thead>
+									</table>
+									<div style="float: right;">
+										<input type="submit" class="btn btn-info btn-sm" value="Save">
+										<!-- <button type="button" class="btn btn-info btn-lg"
+											data-toggle="modal" data-target="#savePurchase" id="save">Save</button> -->
+									</div>
+								</div>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -355,62 +359,57 @@
 			for (var i = 0; i < countryArray.length; i++) {
 				countryArray[i];
 			}
-	var id=	countryArray[0];
-			
-			
-	$.ajax({
-		type : "post",
-		url : "getproductPro",
-		data : {
-			id : id
-		},
-		dataType : "json",
-		success : function(data) {
-	
-			$("#codevalue").val(data.code);
-			$("#descvalue").val(data.description);
+			var id = countryArray[0];
+
 			$.ajax({
 				type : "post",
 				url : "getproductPro",
 				data : {
-					id : data.id
+					id : id
 				},
 				dataType : "json",
-				success : function(data1) {
-					$.map(data1, function(item) {
-						
+				success : function(data) {
+
+					$("#codevalue").val(data.code);
+					$("#descvalue").val(data.description);
+					$.ajax({
+						type : "post",
+						url : "getproductPro",
+						data : {
+							id : data.id
+						},
+						dataType : "json",
+						success : function(data1) {
+							$.map(data1, function(item) {
+
+							});
+						}
 					});
 				}
+
 			});
-		}
+			$.ajax({
+				type : "post",
+				url : "getPurchasebyPro",
+				data : {
+					id : id
+				},
+				dataType : "json",
+				success : function(data) {
+					var qty = 0;
+					var rqty = 0;
+					$.each(data, function(index, value) {
+						$("#mrpQty").val(value.mrp);
+						/* $("#wsp111").val(value.wsp); */
+						rqty = rqty + Number(value.remaining_quantity)
 
-	});
-	$.ajax({
-		type : "post",
-		url : "getPurchasebyPro",
-		data : {
-			id : id
-		},
-		dataType : "json",
-		success : function(data) {
-			var qty = 0;
-			var rqty = 0;
-			$.each(data, function(index, value) {
-				$("#mrpQty").val(value.mrp);
-				/* $("#wsp111").val(value.wsp); */
-				rqty = rqty + Number(value.remaining_quantity)
-				
-				
-				$("#qtyvalue").val(data.remaining_quantity);
+						$("#qtyvalue").val(data.remaining_quantity);
+					});
+
+				}
 			});
 
-			
 		}
-	});
-
-}
-			
-		
 	</script>
 
 	<script>

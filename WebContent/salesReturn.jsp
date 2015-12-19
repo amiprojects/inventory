@@ -45,7 +45,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#sales").attr("id", "activeSubMenu");
-		$("#sSalesEntry").attr("style", "color: red;");
+		$("#sSalesReturn").attr("style", "color: red;");
 
 	});
 </script>
@@ -181,7 +181,7 @@
 								&nbsp;<b>Product with Barcode</b> <input type="text"
 									id="salesbar" name="salesbar">
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a>Replaceable</a>&nbsp;&nbsp;&nbsp;
-								
+
 
 							</div>
 							<div class="widget-area">
