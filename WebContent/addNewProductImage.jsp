@@ -67,9 +67,10 @@
 											<br> <input class="btn green btn-default" type="submit"
 												value="Send">
 										</form>
-										<div style=" overflow-x:scroll; overflow-y:hidden">	
+										<div style=" overflow-x:scroll; overflow-y:hidden; width: 500px;">	
 										<c:forEach items="${sessionScope['ejb'].getAllProductImageByProductId(param.id)}" var="img">
-									<img width="100" height="100" style="" alt="" src="data:image/jpeg;base64,${img.getImageAsString()}">
+									<div style="float: left;"><img width="100" height="100" style="" alt="" src="data:image/jpeg;base64,${img.getImageAsString()}"><br>
+									<a href="deleteProductImage?imageId=${img.id}&id=${param.id}">delete Image</a></div>
 										</c:forEach></div>
 									</div>
 

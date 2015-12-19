@@ -60,7 +60,7 @@ import com.kaanish.util.DateConverter;
 		"/deleteVendorType", "/addCity", "/deleteState", "/deleteCity",
 		"/productSumary", "/addNewConversion", "/purchaseEntry",
 		"/updateConversion", "/addBillSetup", "/updateCompanyInfo",
-		"/updateVendor", "/purchaseSearchByDate", "/uploadProductImage",
+		"/updateVendor", "/purchaseSearchByDate", "/uploadProductImage","/deleteProductImage",
 		"/jobAssignment", "/jobAssignSearchByDate" })
 
 public class Servlet extends HttpServlet {
@@ -1255,6 +1255,11 @@ public class Servlet extends HttpServlet {
 				proimg.setImage(cont);
 				ejb.setProductImage(proimg);
 				msg = "image added successfully";
+				break;
+			case "deleteProductImage":
+				page = "addNewProductImage.jsp?id="+req.getParameter("id");
+				ejb.removeImageById(Integer.parseInt(req.getParameter("imageId")));
+				msg="Image deleted successfully";
 				break;
 
 			default:
