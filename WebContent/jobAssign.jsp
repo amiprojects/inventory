@@ -279,13 +279,18 @@
 								<c:forEach
 									items="${sessionScope['ejb'].getPurchaseProductDetailsByQty()}"
 									var="pCode">
-									<option value="${pCode.id}">${pCode.productDetail.code}&nbsp;(${pCode.purchase_Entry.purchase_date})</option>
+									<option value="${pCode.id}">${pCode.productDetail.code}&nbsp;(<fmt:formatDate
+											value="${pCode.purchase_Entry.purchase_date}"
+											pattern="dd-MM-yy" />)
+									</option>
 								</c:forEach>
 							</select><input type="hidden" id="prCode" name="prCode"> <input
 								type="hidden" id="prDesc" name="prDesc">
 						</div>
 						<div class="col-md-6">
-							<span>Barcode :</span><input type="text" name="barcode" class="form-control" onkeypress="Javascript: if (event.keyCode==13) fnsearch();">
+							<span>Barcode :</span><input type="text" name="barcode"
+								class="form-control"
+								onkeypress="Javascript: if (event.keyCode==13) fnsearch();">
 						</div>
 					</div>
 					<div class="row">
@@ -403,8 +408,7 @@
 				$("#jDetail").val("");
 			}
 		}
-		
-		
+
 		function getProdDetByPurchaseProdDetId() {
 			if ($("#prodCode").val() != 0) {
 				$.ajax({
@@ -436,40 +440,39 @@
 				$("prodCode#").val("");
 			}
 		}
-		function fnsearch(){
-			
-			barcodeParts=$("[name='barcode']").val().split('/');
-			var purchaseProductId=barcodeParts[0];
+		function fnsearch() {
+
+			barcodeParts = $("[name='barcode']").val().split('/');
+			var purchaseProductId = barcodeParts[0];
 			$("#prodCode").val(purchaseProductId);
-			$.ajax({
-				url : 'getProdDetByPurchaseProdDetailsId',
-				type : 'post',
-				dataType : "json",
-				data : {
-					id : purchaseProductId
-				},
-				success : function(data) {
-					$("#prodDesc").val(
-							"Remaining Quantity : "
-									+ data.remaining_quantity
-									+ "\nVendor Name : "
-									+ data.purchaseVendorName
-									+ "\nPurchase Date : "
-									+ data.purchaseDate);
-					$("#remQty").val(Number(data.remaining_quantity));
-					$("#uom").val(data.uom);
-					$("#prCode").val(data.productCode);
-					$("#prDesc").val(data.productDesc);
-				},
-				error : function(a, b, c) {
-					alert(b + ": " + c);
-				}
-			});
-			
+			$
+					.ajax({
+						url : 'getProdDetByPurchaseProdDetailsId',
+						type : 'post',
+						dataType : "json",
+						data : {
+							id : purchaseProductId
+						},
+						success : function(data) {
+							$("#prodDesc").val(
+									"Remaining Quantity : "
+											+ data.remaining_quantity
+											+ "\nVendor Name : "
+											+ data.purchaseVendorName
+											+ "\nPurchase Date : "
+											+ data.purchaseDate);
+							$("#remQty").val(Number(data.remaining_quantity));
+							$("#uom").val(data.uom);
+							$("#prCode").val(data.productCode);
+							$("#prDesc").val(data.productDesc);
+						},
+						error : function(a, b, c) {
+							alert(b + ": " + c);
+						}
+					});
+
 		}
-		
-		
-		
+
 		function checkQty() {
 			if ($("#qty").val() > $("#remQty").val()) {
 				alert('Please enter less quantity than remaining');

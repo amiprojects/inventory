@@ -475,7 +475,7 @@ public class Ejb {
 	public List<Purchase_Product_Details> getPurchaseProductDetailsByQty() {
 		TypedQuery<Purchase_Product_Details> q = em
 				.createQuery(
-						"select c from Purchase_Product_Details c where c.remaining_quantity>0 and c.isReady=0",
+						"select c from Purchase_Product_Details c where c.remaining_quantity>0 and c.isReady=0 ORDER BY c.purchase_Entry.purchase_date ASC",
 						Purchase_Product_Details.class);
 		return q.getResultList();
 	}
@@ -528,6 +528,17 @@ public class Ejb {
 						.getSufix());
 			}
 		}
+	}
+
+	public List<JobAssignmentDetails> getJobAssignmentByDate(Date startDate,
+			Date endDate) {
+		TypedQuery<JobAssignmentDetails> q = em
+				.createQuery(
+						"select c from JobAssignmentDetails c WHERE c.assignDate BETWEEN :startDate AND :endDate",
+						JobAssignmentDetails.class);
+		q.setParameter("startDate", startDate);
+		q.setParameter("endDate", endDate);
+		return q.getResultList();
 	}
 
 	/***************** for Job Assignment Products ***********************/
@@ -827,11 +838,12 @@ public class Ejb {
 		q.setParameter("nm", "%" + name.toUpperCase() + "%");
 		return q.getResultList();
 	}
-	
+
 	public List<ProductDetail> getProductDetailBydescription(String name) {
-		TypedQuery<ProductDetail> q = em.createQuery(
-				"select c from ProductDetail c where UPPER(c.description) like :nm",
-				ProductDetail.class);
+		TypedQuery<ProductDetail> q = em
+				.createQuery(
+						"select c from ProductDetail c where UPPER(c.description) like :nm",
+						ProductDetail.class);
 		q.setParameter("nm", "%" + name.toUpperCase() + "%");
 		return q.getResultList();
 	}

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
 <html>
@@ -102,7 +103,7 @@
 												<th>Quantity</th>
 											</tr>
 										</thead>
-										<tbody>
+										<!-- <tbody>
 											<tr>
 												<td>1</td>
 												<td>---</td>
@@ -112,7 +113,30 @@
 												<td>---</td>
 												<td><img alt="" src="images/eye.png" height="25px"></td>
 											</tr>
-										</tbody>
+										</tbody> -->
+										<c:set var="count" value="${1}" />
+										<c:forEach items="${requestScope['jobAssignList']}"
+											var="jobAssignByDate">
+											<tbody>
+												<tr>
+													<td>${count}</td>
+													<td>${jobAssignByDate.challanNumber}</td>
+													<td><fmt:formatDate
+															value="${jobAssignByDate.assignDate}" pattern="dd-MM-yy" /></td>
+													<td><fmt:formatDate
+															value="${jobAssignByDate.estimatedCompletionDate}"
+															pattern="dd-MM-yy" /></td>
+													<td>${jobAssignByDate.jobAssignmentProducts.size()}</td>
+													<c:set value="${0}" var="totqty"/>
+													<c:forEach items="${jobAssignByDate.jobAssignmentProducts}" var="proDet">
+													<c:set value="${totqty+proDet.qty}" var="totqty"/>
+													</c:forEach>
+													<td>${totqty}</td>
+													<td><img alt="" src="images/eye.png" height="25px"></td>
+												</tr>
+											</tbody>
+											<c:set var="count" value="${count+1}" />
+										</c:forEach>
 									</table>
 								</div>
 							</div>
@@ -142,12 +166,16 @@
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 	<script>
 		$(function() {
-			$("#datepicker").datepicker();
+			$("#datepicker").datepicker({
+				dateFormat : "dd-mm-yy"
+			});
 		});
 	</script>
 	<script>
 		$(function() {
-			$("#datepicker1").datepicker();
+			$("#datepicker1").datepicker({
+				dateFormat : "dd-mm-yy"
+			});
 		});
 	</script>
 </body>

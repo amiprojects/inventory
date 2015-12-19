@@ -827,6 +827,29 @@
 					},
 					error : function(a, b, c) {
 						alert(b + ": " + c);
+						$("#wsp").val("");
+						$("#mrp").val("");
+						$("#subDept").val("");
+						$("#dept").val("");
+						$("#cat").val("");
+						$("#pDesc").val("");
+						$("#uom").val("");
+						$("#pCode").val("");
+						$("#attr1Name").html("Attribute1:");
+						$("#attr2Name").html("Attribute2:");
+						$("#attr3Name").html("Attribute3:");
+						$("#attr4Name").html("Attribute4:");
+						$("#attr5Name").html("Attribute5:");
+						$("#attr6Name").html("Attribute6:");
+						$("#attr1").prop("readonly", true);
+						$("#attr2").prop("readonly", true);
+						$("#attr3").prop("readonly", true);
+						$("#attr4").prop("readonly", true);
+						$("#attr5").prop("readonly", true);
+						$("#attr6").prop("readonly", true);
+						$("#wsp").prop("readonly", true);
+						$("#mrp").prop("readonly", true);
+						$("#productCode").val(0);
 					}
 				});
 			} else {
