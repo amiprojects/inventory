@@ -184,7 +184,7 @@ public class JsonServlet extends HttpServlet {
 				break;
 			case "getProductByDescription":
 				pw = resp.getWriter();
-				pw.print(ejb.getProductDetailBydescription(req
+				pw.print(ejb.getProductDetailByCode(req
 						.getParameter("descriptionName")));
 				break;
 			case "getQtyUnit":

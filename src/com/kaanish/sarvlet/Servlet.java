@@ -52,7 +52,7 @@ import com.kaanish.util.DateConverter;
 
 @MultipartConfig
 @WebServlet({ "/login", "/logout", "/addTax", "/addTaxGroup", "/editTax",
-		"/deleteTax", "/editTaxGroup", "/deleteTaxGroup", "/createDept",
+		"/deleteTax", "/editTaxGroup", "/deleteTaxGroup","/stockDetailShow" ,"/createDept",
 		"/deleteDept", "/createSubDept", "/deleteSubDept",
 		"/editproductSummary", "/createCategory", "/deleteCategory",
 		"/newVendorType", "/addCountry", "/addState", "/createProduct",

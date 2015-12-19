@@ -8,7 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Panel</title>
-
+<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 <link
 	href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700,900'
 	rel='stylesheet' type='text/css' />
@@ -113,8 +113,10 @@
 												</tr>
 											</thead>
 											<tbody>
-											<c:set var="count" value="${1}"/>
-												<c:forEach items="${sessionScope['ejb'].getAllProductDetail()}" var="pro">
+												<c:set var="count" value="${1}" />
+												<c:forEach
+													items="${sessionScope['ejb'].getAllProductDetail()}"
+													var="pro">
 													<tr>
 														<td>${count}</td>
 														<td>${pro.code}</td>
@@ -122,9 +124,14 @@
 														<td>${pro.qtyUnit.name}</td>
 														<td>${pro.isSaleble()?sessionScope['ejb'].getReadyGoodsStocktDetailByProductId(pro.id).remainingQty:sessionScope['ejb'].getRawMaterialStocktDetailByProductId(pro.id).remainingQty}</td>
 														<td>${pro.code}</td>
-														<td><form action="stockDetailShow" method="post" id="StockDetails${pro.id}"><a href="#" onclick="showDetails('${pro.id}');"><input type="hidden" value="${pro.id}" name="proId"><img alt="" src="images/eye.png" height="25px"></a></form></td>
+														<td><form action="stockDetailShow" method="post"
+																id="StockDetails${pro.id}">
+																<a href="#" onclick="showDetails('${pro.id}');"><input
+																	type="hidden" value="${pro.id}" name="proId"><img
+																	alt="" src="images/eye.png" height="25px"></a>
+															</form></td>
 													</tr>
-													<c:set var="count" value="${count+1}"/>
+													<c:set var="count" value="${count+1}" />
 												</c:forEach>
 											</tbody>
 										</table>
@@ -132,7 +139,7 @@
 
 									</div>
 								</div>
-								
+
 
 
 
@@ -342,7 +349,7 @@
 	</div>
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
-	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+
 	<script type="text/javascript" src="js/script.js"></script>
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="js/enscroll.js"></script>
@@ -354,9 +361,9 @@
 			$("#step8").hide();
 
 		});
-		function showDetails(id){
+		function showDetails(id) {
 			//alert(id);
-			$("#StockDetails"+id).submit();
+			$("#StockDetails" + id).submit();
 		}
 
 		function viewPage() {
