@@ -60,41 +60,73 @@ page[size="A4"] {
 </head>
 <body>
 	<page size="A4">
-	<table class="tg" style="border: 1px solid; height: 1055px; width: 755px">
+	<style type="text/css">
+.tg {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+.tg td {
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	padding: 10px 5px;
+	border-style: solid;
+	border-width: 1px;
+	overflow: hidden;
+	word-break: normal;
+}
+
+.tg th {
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	font-weight: normal;
+	padding: 10px 5px;
+	border-style: solid;
+	border-width: 1px;
+	overflow: hidden;
+	word-break: normal;
+}
+</style>
+	<table class="tg"
+		style="border: 1px solid; height: 1055px; width: 755px">
 		<tr style="height: 50px">
-			<td class="tg-031e" colspan="3" rowspan="3"></td>
-			<td class="tg-yw4l" colspan="3"></td>
+			<th class="tg-031e" colspan="3" rowspan="3"></th>
+			<th class="tg-031e" colspan="2"></th>
+			<th class="tg-031e" colspan="2"></th>
 		</tr>
 		<tr style="height: 50px">
-			<td class="tg-yw4l" colspan="3"></td>
+			<td class="tg-031e" colspan="2"></td>
+			<td class="tg-031e" colspan="2"></td>
 		</tr>
 		<tr style="height: 50px">
-			<td class="tg-yw4l" colspan="3"></td>
+			<td class="tg-031e" colspan="2"></td>
+			<td class="tg-031e" colspan="2"></td>
 		</tr>
 		<tr style="height: 50px">
-			<td class="tg-yw4l" colspan="3" rowspan="5"></td>
-			<td class="tg-yw4l" colspan="3"></td>
+			<td class="tg-031e" colspan="3" rowspan="4"></td>
+			<td class="tg-031e" colspan="2"></td>
+			<td class="tg-031e" colspan="2"></td>
 		</tr>
 		<tr style="height: 50px">
-			<td class="tg-yw4l" colspan="3"></td>
+			<td class="tg-031e" colspan="2"></td>
+			<td class="tg-031e" colspan="2"></td>
 		</tr>
 		<tr style="height: 50px">
-			<td class="tg-yw4l" colspan="3" rowspan="2"></td>
-		</tr>
-		<tr style="height: 25px">
+			<td class="tg-031e" colspan="2"></td>
+			<td class="tg-031e" colspan="2"></td>
 		</tr>
 		<tr style="height: 50px">
-			<td class="tg-yw4l" colspan="3"></td>
+			<td class="tg-031e" colspan="4"></td>
 		</tr>
 		<tr>
-			<td class="tg-yw4l" colspan="6"></td>
+			<td class="tg-031e" colspan="7"></td>
 		</tr>
-		<tr style="height: 100px">
-			<td class="tg-yw4l" colspan="6"></td>
+		<tr  style="height: 75px">
+			<td class="tg-031e" colspan="7"></td>
 		</tr>
-		<tr style="height: 100px">
-			<td class="tg-yw4l" colspan="3"></td>
-			<td class="tg-yw4l" colspan="3"></td>
+		<tr style="height: 75px">
+			<td class="tg-031e" colspan="4"></td>
+			<td class="tg-031e" colspan="3"></td>
 		</tr>
 	</table>
 	</page>
