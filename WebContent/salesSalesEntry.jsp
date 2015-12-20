@@ -50,6 +50,15 @@
 
 	});
 </script>
+<link rel="stylesheet" href="css/toast.css" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		if ($('#msg').html() != "") {
+			$('.toast').fadeIn(400).delay(3000).fadeOut(400);
+		}
+	});
+</script>
 </head>
 <body>
 	<c:if test="${sessionScope['user']==null}">
@@ -152,6 +161,9 @@
 									</div>
 								</div>
 								<div class="widget-area">
+									<div class='toast' style='display: none'>
+										<h3 id="msg">${requestScope['msg']}</h3>
+									</div>
 									<div style="background-color: lightgrey;">
 										<h3>Sale Product at:</h3>
 									</div>

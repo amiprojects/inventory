@@ -1035,6 +1035,7 @@ public class Servlet extends HttpServlet {
 				salesEntry.setCustomer(customerEntry);
 				ejb.setSalesEntry(salesEntry);
 
+				msg="Sales entry is successfull...";
 				break;
 
 			case "purchaseSearchByDate":
