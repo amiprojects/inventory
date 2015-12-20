@@ -46,6 +46,7 @@ import com.kaanish.model.Tax_Type_Group;
 import com.kaanish.model.Users;
 import com.kaanish.model.Vendor;
 import com.kaanish.model.VendorType;
+import com.kaanish.util.DigitToWords;
 
 @Stateless
 public class Ejb {
@@ -65,6 +66,10 @@ public class Ejb {
 		} else {
 			return dt.getYear() + "-" + (dt.getYear() + 1);
 		}
+	}
+	
+	public String getNumberToWords(int number) {
+		return DigitToWords.convertNumberToWords(number);
 	}
 
 	/***************** for user **********************/

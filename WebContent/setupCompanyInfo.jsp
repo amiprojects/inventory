@@ -41,7 +41,7 @@
 	<c:if test="${sessionScope['user']==null}">
 		<c:redirect url="index.jsp" />
 	</c:if>
-	<c:set var="compInfo" value="${sessionScope['ejb'].getCompanyInfo() }"/>
+	<c:set var="compInfo" value="${sessionScope['ejb'].getCompanyInfo()}"/>
 	
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.html"%>
