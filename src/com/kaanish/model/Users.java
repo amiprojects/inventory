@@ -5,6 +5,8 @@ import java.util.List;
 import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -15,7 +17,6 @@ public class Users {
 
 	private String name;
 	private String ph;
-
 	private String password;
 
 	@OneToMany(mappedBy = "users")
@@ -28,6 +29,10 @@ public class Users {
 	private List<AccountDetails> accountDetails;
 	@OneToMany(mappedBy = "users")
 	private List<Purchase_Entry> purchase_Entries;
+
+	@ManyToOne
+	@JoinColumn(name = "userGroupId")
+	private UserGroup userGroup;
 
 	public String getName() {
 		return name;
@@ -99,6 +104,14 @@ public class Users {
 
 	public void setPurchase_Entries(List<Purchase_Entry> purchase_Entries) {
 		this.purchase_Entries = purchase_Entries;
+	}
+
+	public UserGroup getUserGroup() {
+		return userGroup;
+	}
+
+	public void setUserGroup(UserGroup userGroup) {
+		this.userGroup = userGroup;
 	}
 
 }
