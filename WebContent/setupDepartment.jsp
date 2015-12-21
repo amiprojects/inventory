@@ -165,23 +165,29 @@
 						}
 					});
 				} else if ($('#status').val() == "2") {
-					$.ajax({
-						type : "post",
-						url : "createCategory",
-						data : {
-							name : $("#dName").val(),
-							subDeptId : $("#id").val(),
-							attr1 : $("#attr1").val(),
-							attr2 : $("#attr2").val(),
-							attr3 : $("#attr3").val(),
-							attr4 : $("#attr4").val(),
-							attr5 : $("#attr5").val(),
-							attr6 : $("#attr6").val()
-						},
-						success : function(data) {
-							window.location = "setupDepartment.jsp";
-						}
-					});
+					if ($("#attr1").val() != 0 || $("#attr2").val() != 0
+							|| $("#attr3").val() != 0 || $("#attr4").val() != 0
+							|| $("#attr5").val() != 0 || $("#attr6").val() != 0) {
+						$.ajax({
+							type : "post",
+							url : "createCategory",
+							data : {
+								name : $("#dName").val(),
+								subDeptId : $("#id").val(),
+								attr1 : $("#attr1").val(),
+								attr2 : $("#attr2").val(),
+								attr3 : $("#attr3").val(),
+								attr4 : $("#attr4").val(),
+								attr5 : $("#attr5").val(),
+								attr6 : $("#attr6").val()
+							},
+							success : function(data) {
+								window.location = "setupDepartment.jsp";
+							}
+						});
+					} else {
+						alert("Please insert atleast one attribute");
+					}
 				} else {
 					alert("invalid denomination.");
 				}
@@ -193,6 +199,14 @@
 		}
 
 	}
+</script>
+<link rel="stylesheet" href="css/toast.css" type="text/css" />
+<script type="text/javascript">
+	$(document).ready(function() {
+		if ($('#msg').html() != "") {
+			$('.toast').fadeIn(400).delay(3000).fadeOut(400);
+		}
+	});
 </script>
 </head>
 <body>
@@ -224,6 +238,9 @@
 											<input type="hidden" value="" id="status"> <input
 												type="hidden" value="" id="id">
 											<div class="widget-area" style="width: 60%">
+												<div class='toast' style='display: none'>
+													<h3 id="msg">${requestScope['msg']}</h3>
+												</div>
 												<div class="breadcrumbs">
 													<ul>
 														<li>Add Department</li>
@@ -240,18 +257,21 @@
 													class="btn green pull-right">
 											</div>
 											<div class="widget-area" style="width: 40%">
-												<input type="text" class="form-control"
-													placeholder="Attribute name 1" disabled="disabled"
-													id="attr1"><input type="text" class="form-control"
-													placeholder="Attribute name 2" disabled="disabled"
-													id="attr2"><input type="text" class="form-control"
-													placeholder="Attribute name 3" disabled="disabled"
-													id="attr3"><input type="text" class="form-control"
-													placeholder="Attribute name 4" disabled="disabled"
-													id="attr4"><input type="text" class="form-control"
-													placeholder="Attribute name 5" disabled="disabled"
-													id="attr5"><input type="text" class="form-control"
-													placeholder="Attribute name 6" disabled="disabled"
+												<label for="" class="font">Attribute 1:</label><input
+													type="text" class="form-control" placeholder=""
+													disabled="disabled" id="attr1"><label for=""
+													class="font">Attribute 2:</label><input type="text"
+													class="form-control" placeholder="" disabled="disabled"
+													id="attr2"><label for="" class="font">Attribute
+													3:</label><input type="text" class="form-control" placeholder=""
+													disabled="disabled" id="attr3"><label for=""
+													class="font">Attribute 4:</label><input type="text"
+													class="form-control" placeholder="" disabled="disabled"
+													id="attr4"><label for="" class="font">Attribute
+													5:</label><input type="text" class="form-control" placeholder=""
+													disabled="disabled" id="attr5"><label for=""
+													class="font">Attribute 6:</label><input type="text"
+													class="form-control" placeholder="" disabled="disabled"
 													id="attr6">
 											</div>
 										</form>

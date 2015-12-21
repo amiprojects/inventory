@@ -19,6 +19,7 @@ public class Tax {
 	private int id;
 	private String name;
 	private float value;
+	private boolean isActive;
 	
 	@Transient
 	private boolean isAvailable;
@@ -76,6 +77,14 @@ public class Tax {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
 	}
 
 }
