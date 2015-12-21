@@ -264,7 +264,8 @@
 															<div class="widget-area">
 																<div class="col-md-4"
 																	style="height: 310px; overflow: auto;">
-																	<c:forEach items="${sessionScope['ejb'].getAllTax()}"
+																	<c:forEach
+																		items="${sessionScope['ejb'].getAllActiveTax()}"
 																		var="tax">
 																		<input type="checkbox" value="${tax.id}" name="tax">${tax.name} (${tax.value})&nbsp;													
 																	<br>
