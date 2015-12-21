@@ -71,42 +71,190 @@
 								</ul>
 							</div>
 							<div class="widget-area">
-								<form action="addTax" method="post">
-									<div class="col-md-6">
-										<div class="form-group">
-											<label for="" class="font">Tax Name :</label> <input
-												type="text" placeholder="Enter tax name" id="" name="name"
-												class="form-control">
+								<ul class="nav nav-tabs">
+									<li class="active"><a data-toggle="tab" href="#tax">Tax</a></li>
+									<li><a data-toggle="tab" href="#taxGroup">Tax Group</a></li>
+								</ul>
+								<div class="tab-content">
+									<div id="tax" class="tab-pane fade active in">
+										<div class="widget-area"
+											style="height: 380px; overflow: auto; width: 50%;">
+											<form action="addTax" method="post">
+												<div class="col-md-12">
+													<div class="form-group">
+														<label for="" class="font">Tax Name :</label> <input
+															type="text" placeholder="Enter tax name" id=""
+															name="name" class="form-control">
+													</div>
+												</div>
+												<div class="col-md-11">
+													<div class="form-group">
+														<label for="" class="font">Value :</label> <input
+															step="0.01" type="number" placeholder="" id=""
+															name="value" class="form-control">
+													</div>
+												</div>
+												<div class="col-md-1" style="top: 28px; float: left;">
+													<img alt="" src="img/perc.png" height="20px" width="20px">
+												</div>
+												<div class="col-md-12">
+													<input class="btn green pull-left" type="submit"
+														value="Add">
+												</div>
+											</form>
 										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group">
-											<label for="" class="font">Value :</label> <input type="text"
-												placeholder="" id="" name="value" class="form-control">
-										</div>
-									</div>
-
-									<input class="btn green pull-right" type="submit" value="Add">
-								</form>
-								<%-- <p>${requestScope['msg']}</p> --%>
-								<div class="col-md-6">
-									<div class="widget-area">
-										<form action="addTaxGroup" method="post">
-											<div style="height: 310px; overflow: auto;">
-												<c:forEach items="${sessionScope['ejb'].getAllTax()}"
-													var="tax">
-													<input type="checkbox" value="${tax.id}" name="tax">${tax.name}&nbsp;
-													<a href="#"
-														onclick="editTax('${tax.id}','${tax.name}','${tax.value}')"><img
-														src="img/edit.png" height="16px" width="16px"></a>&nbsp;
-													<a href="deleteTax?id=${tax.id}"> <img
-														src="img/cross.png" height="16px" width="16px"></a>
-													<br>
-												</c:forEach>
+										<div class="widget-area" style="width: 50%;">
+											<table class="table">
+												<tbody>
+													<tr>
+														<th width="30%">Tax name</th>
+														<th width="35%">Tax value (%)</th>
+														<th width="20%">Status</th>
+														<th></th>
+													</tr>
+												</tbody>
+											</table>
+											<div style="height: 273px; overflow: auto;">
+												<table class="table">
+													<c:forEach items="${sessionScope['ejb'].getAllTax()}"
+														var="tax">
+														<tbody>
+															<tr>
+																<td width="35%">${tax.name}</td>
+																<td width="35%">${tax.value}</td>
+																<td width="20%"><c:choose>
+																		<c:when test="${tax.active.equals(true)}">Active</c:when>
+																		<c:otherwise>Inactive</c:otherwise>
+																	</c:choose></td>
+																<td><a href="#"
+																	onclick="editTax('${tax.id}','${tax.isActive()}')"><img
+																		src="img/edit.png" height="16px" width="16px"></a></td>
+															</tr>
+														</tbody>
+													</c:forEach>
+												</table>
 											</div>
-											<div id="newTaxGroup" class="modal fade" role="dialog"
-												style="top: 25px;">
-												<div class="modal-dialog">
+										</div>
+									</div>
+									<div id="taxGroup" class="tab-pane fade ">
+										<div class="widget-area"
+											style="height: 380px; overflow: auto; width: 40%;">
+											<button type="button" class="btn btn-info btn-lg"
+												data-toggle="modal" data-target="#newTaxGroup">Create
+												Tax Group</button>
+										</div>
+										<div class="widget-area"
+											style="height: 380px; overflow: auto; width: 60%;">
+											<table class="table">
+												<tbody>
+													<tr>
+														<th width="35%">Tax Group name</th>
+														<th width="35%">Status</th>
+														<th></th>
+													</tr>
+												</tbody>
+											</table>
+											<div style="height: 273px; overflow: auto;">
+												<table class="table">
+													<c:forEach
+														items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
+														var="taxGroup">
+														<tbody>
+															<tr>
+																<td width="35%"><span
+																	onclick="showTaxes('${taxGroup.id}');"> <a
+																		href="#"><u>${taxGroup.name}</u></a>
+																</span></td>
+																<td width="35%"><c:choose>
+																		<c:when test="${taxGroup.active.equals(true)}">Active</c:when>
+																		<c:otherwise>Inactive</c:otherwise>
+																	</c:choose></td>
+																<td><a href="#"
+																	onclick="editTaxGroup('${taxGroup.id}','${taxGroup.isActive()}');">
+																		<img src="img/edit.png" height="16px" width="16px">
+																</a></td>
+															</tr>
+														</tbody>
+														<div id="taxList${taxGroup.id}" class="modal fade"
+															role="dialog" style="top: 25px;">
+															<div class="modal-dialog">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<button type="button" class="close"
+																			data-dismiss="modal">&times;</button>
+																		<h4 class="modal-title">Tax list</h4>
+																	</div>
+																	<div class="modal-body">
+																		<c:forEach
+																			items="${sessionScope['ejb'].getTax_Type_GroupById(taxGroup.id).taxes}"
+																			var="tax">
+																			<br>
+																			<span>${tax.name} (${tax.value})</span>
+																		</c:forEach>
+																	</div>
+																	<div class="modal-footer">
+																		<!-- <button type="button" class="btn btn-default"
+													data-dismiss="modal">Close</button> -->
+																	</div>
+																</div>
+
+															</div>
+														</div>
+														<div id="taxListEdit${taxGroup.id}" class="modal fade"
+															role="dialog" style="top: 25px;">
+															<div class="modal-dialog">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<button type="button" class="close"
+																			data-dismiss="modal">&times;</button>
+																		<h4 class="modal-title">Edit tax group</h4>
+																	</div>
+
+																	<form action="editTaxGroup" method="post">
+																		<div class="modal-body">
+																			<input type="hidden" value="${taxGroup.id}" name="id">
+																			<%-- <input type="text" value="${taxGroup.name}"
+																				name="name">
+																			<c:forEach
+																				items="${sessionScope['ejb'].getAllTaxByTaxTypeGroupId(taxGroup.id)}"
+																				var="tax">
+
+																				<c:choose>
+																					<c:when test="${tax.isAvailable()}">
+																						<input checked="checked" type="checkbox"
+																							value="${tax.id}" name="tax">
+																						<span>${tax.name}</span>
+																					</c:when>
+																					<c:otherwise>
+																						<input type="checkbox" value="${tax.id}"
+																							name="tax">
+																						<span>${tax.name}</span>
+																					</c:otherwise>
+																				</c:choose>
+																			</c:forEach>
+																			<input type="submit" value="update"> --%>
+																			<input type="radio" name="isActiveG" value="true"
+																				id="activeRadioG">Active&nbsp; &nbsp;<input
+																				type="radio" name="isActiveG" value="false"
+																				id="inactiveRadioG">Inactive
+																			<div style="float: right;"></div>
+																			<div class="modal-footer">
+																				<input type="submit" class="btn btn-default"
+																					value="Update">
+																			</div>
+																	</form>
+																</div>
+
+															</div>
+														</div>
+													</c:forEach>
+												</table>
+											</div>
+										</div>
+										<div id="newTaxGroup" class="modal fade" role="dialog"
+											style="top: 25px;">
+											<form action="addTaxGroup" method="post">
+												<div class="modal-dialog modal-lg">
 													<div class="modal-content">
 														<div class="modal-header">
 															<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -114,14 +262,21 @@
 														</div>
 														<div class="modal-body">
 															<div class="widget-area">
-
-																<div class="form-group">
+																<div class="col-md-4"
+																	style="height: 310px; overflow: auto;">
+																	<c:forEach items="${sessionScope['ejb'].getAllTax()}"
+																		var="tax">
+																		<input type="checkbox" value="${tax.id}" name="tax">${tax.name} (${tax.value})&nbsp;													
+																	<br>
+																	</c:forEach>
+																</div>
+																<div class="col-md-8">
 																	<label for="" class="font">Tax Group Name :</label> <input
 																		type="text" placeholder="Enter tax group name" id=""
-																		name="name" class="form-control">
+																		name="name" class="form-control"> <input
+																		class="btn green pull-right" type="submit"
+																		value="Create">
 																</div>
-																<input class="btn green pull-right" type="submit"
-																	value="Create">
 															</div>
 														</div>
 														<div class="modal-footer">
@@ -131,94 +286,7 @@
 													</div>
 
 												</div>
-											</div>
-										</form>
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="widget-area">
-										<button type="button" class="btn btn-info btn-lg"
-											data-toggle="modal" data-target="#newTaxGroup">Create
-											Tax Group</button>
-										<div class="widget-area"
-											style="height: 200px; overflow: auto;">
-											<c:forEach
-												items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
-												var="taxGroup">
-												<ul>
-													<li><span onclick="showTaxes('${taxGroup.id}');">
-
-															<a href="#">${taxGroup.name}</a>
-													</span>&nbsp;<a href="#" onclick="editTaxGroup('${taxGroup.id}');">
-															<img src="img/edit.png" height="16px" width="16px">
-													</a>&nbsp;<a href="deleteTaxGroup?id=${taxGroup.id}"> <img
-															src="img/cross.png" height="16px" width="16px"></a></li>
-
-												</ul>
-												<div id="taxList${taxGroup.id}" class="modal fade"
-													role="dialog" style="top: 25px;">
-													<div class="modal-dialog">
-														<div class="modal-content">
-															<div class="modal-header">
-																<button type="button" class="close" data-dismiss="modal">&times;</button>
-																<h4 class="modal-title">Tax list</h4>
-															</div>
-															<div class="modal-body">
-																<c:forEach
-																	items="${sessionScope['ejb'].getTax_Type_GroupById(taxGroup.id).taxes}"
-																	var="tax">
-																	<br>
-																	<span>${tax.name}</span>
-																</c:forEach>
-															</div>
-															<div class="modal-footer">
-																<!-- <button type="button" class="btn btn-default"
-													data-dismiss="modal">Close</button> -->
-															</div>
-														</div>
-
-													</div>
-												</div>
-												<div id="taxListEdit${taxGroup.id}" class="modal fade"
-													role="dialog" style="top: 25px;">
-													<div class="modal-dialog">
-														<div class="modal-content">
-															<div class="modal-header">
-																<button type="button" class="close" data-dismiss="modal">&times;</button>
-																<h4 class="modal-title">Tax list</h4>
-															</div>
-															<div class="modal-body">
-																<form action="editTaxGroup" method="post">
-																	<input type="hidden" value="${taxGroup.id}" name="id">
-																	<input type="text" value="${taxGroup.name}" name="name">
-																	<c:forEach
-																		items="${sessionScope['ejb'].getAllTaxByTaxTypeGroupId(taxGroup.id)}"
-																		var="tax">
-
-																		<c:choose>
-																			<c:when test="${tax.isAvailable()}">
-																				<input checked="checked" type="checkbox"
-																					value="${tax.id}" name="tax">
-																				<span>${tax.name}</span>
-																			</c:when>
-																			<c:otherwise>
-																				<input type="checkbox" value="${tax.id}" name="tax">
-																				<span>${tax.name}</span>
-																			</c:otherwise>
-																		</c:choose>
-																	</c:forEach>
-																	<input type="submit" value="update">
-																</form>
-															</div>
-															<div class="modal-footer">
-																<!-- <button type="button" class="btn btn-default"
-													data-dismiss="modal">Close</button> -->
-															</div>
-														</div>
-
-													</div>
-												</div>
-											</c:forEach>
+											</form>
 										</div>
 									</div>
 								</div>
@@ -241,16 +309,22 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">Modal Header</h4>
+					<h4 class="modal-title">Edit tax</h4>
 				</div>
 				<div class="modal-body">
 					<form role="form" class="sec" action="editTax">
-						<input type="hidden" name="id" value="" id="id1"> <span>Tax
+						<input type="hidden" name="id" value="" id="id1">
+						<!-- <span>Tax
 							name : </span> <input type="text" class="form-control" name="name"
 							value="" id="name1"> <span>Tax Value : </span> <input
 							type="text" class="form-control" name="value" value=""
-							id="value1"> <input type="submit" class="btn btn-default"
-							value="Update">
+							id="value1"> -->
+						<input type="radio" name="isActive" value="true" id="activeRadio">Active&nbsp;
+						&nbsp;<input type="radio" name="isActive" value="false"
+							id="inactiveRadio">Inactive
+						<div style="float: right;">
+							<input type="submit" class="btn btn-default" value="Update">
+						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
@@ -280,16 +354,25 @@
 			$("#taxList" + tg).modal('show');
 		}
 
-		function editTax(id, taxnm, taxval) {
-
+		function editTax(id, isactive) {
 			$('#id1').val(id);
-			$('#name1').val(taxnm);
-			$('#value1').val(taxval);
+			/* $('#name1').val(taxnm);
+				$('#value1').val(taxval); */
+			if (isactive == 'true') {
+				$('#activeRadio').prop("checked", "checked");
+			} else {
+				$('#inactiveRadio').prop("checked", "checked");
+			}
 			$("#editTaxDiv").modal('show');
 		}
-		function editTaxGroup(id) {
+		function editTaxGroup(id, isactiveG) {
 			//alert(id);
 			$("#taxListEdit" + id).modal('show');
+			if (isactiveG == 'true') {
+				$('#activeRadioG').prop("checked", "checked");
+			} else {
+				$('#inactiveRadioG').prop("checked", "checked");
+			}
 		}
 	</script>
 </body>

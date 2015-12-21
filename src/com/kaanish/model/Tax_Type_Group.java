@@ -18,6 +18,7 @@ public class Tax_Type_Group {
 	@GeneratedValue
 	private int id;
 	private String name;
+	private boolean isActive;
 
 	@ManyToMany
 	private List<Tax> taxes;
@@ -92,6 +93,14 @@ public class Tax_Type_Group {
 	public String toString(){
 		return "{\"name\":\"" + name + "\", "
 				+ "\"id\":\"" + id + "\", "+ "\"taxtot\":\"" + getTotalTaxValue() + "\"}";
+	}
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
 	}
 
 }

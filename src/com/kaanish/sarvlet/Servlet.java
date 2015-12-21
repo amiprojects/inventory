@@ -480,19 +480,24 @@ public class Servlet extends HttpServlet {
 				list = ejb.getAllTax();
 				int f = 0;
 				for (Tax t : list) {
-					if (t.getName().equals(req.getParameter("name"))) {
+					if (t.getName().equals(
+							req.getParameter("name").toUpperCase())
+							&& t.isActive()) {
 						f = 1;
 						break;
 					}
 				}
 				if (f == 0) {
-					tax.setName(req.getParameter("name"));
+					tax.setName(req.getParameter("name").toUpperCase());
 					tax.setValue(Float.parseFloat(req.getParameter("value")));
+					tax.setActive(true);
+					tax.setUsers(ejb.getUserById((String) httpSession
+							.getAttribute("user")));
 
 					ejb.setTax(tax);
 					msg = "Tax added successfully.";
 				} else {
-					msg = "Tax already exists.";
+					msg = "Tax already exists/active.";
 				}
 
 				break;
@@ -500,32 +505,56 @@ public class Servlet extends HttpServlet {
 			case "addTaxGroup":
 				page = "setupTaxManagement.jsp";
 				tax_type_group = new Tax_Type_Group();
-				tax_type_group.setName(req.getParameter("name"));
-
-				String[] taxes = req.getParameterValues("tax");
-
-				if (taxes != null) {
-
-					List<Tax> taxlst = new ArrayList<Tax>();
-
-					for (String taxName : taxes) {
-						taxlst.add(ejb.getTaxById(Integer.parseInt(taxName)));
+				List<Tax_Type_Group> list1 = new ArrayList<Tax_Type_Group>();
+				list1 = ejb.getAllTax_Type_Groups();
+				int f1 = 0;
+				for (Tax_Type_Group t : list1) {
+					if (t.getName().equals(
+							req.getParameter("name").toUpperCase())
+							&& t.isActive()) {
+						f1 = 1;
+						break;
 					}
+				}
 
-					tax_type_group.setTaxes(taxlst);
+				if (f1 == 0) {
+					tax_type_group.setName(req.getParameter("name")
+							.toUpperCase());
 
-					ejb.setTaxTYpeGroup(tax_type_group);
-					msg = "Tax group added succesfully.";
+					String[] taxes = req.getParameterValues("tax");
+
+					if (taxes != null) {
+
+						List<Tax> taxlst = new ArrayList<Tax>();
+
+						for (String taxName : taxes) {
+							taxlst.add(ejb.getTaxById(Integer.parseInt(taxName)));
+						}
+
+						tax_type_group.setTaxes(taxlst);
+						tax_type_group.setActive(true);
+						tax_type_group.setUsers(ejb
+								.getUserById((String) httpSession
+										.getAttribute("user")));
+
+						ejb.setTaxTYpeGroup(tax_type_group);
+						msg = "Tax group added succesfully.";
+					} else {
+						msg = "please select tax.";
+					}
 				} else {
-					msg = "please select tax.";
+					msg = "Tax group already exist/active.";
 				}
 				break;
 
 			case "editTax":
 				page = "setupTaxManagement.jsp";
 				tax = ejb.getTaxById(Integer.parseInt(req.getParameter("id")));
-				tax.setName(req.getParameter("name"));
-				tax.setValue(Float.parseFloat(req.getParameter("value")));
+				/*
+				 * tax.setName(req.getParameter("name"));
+				 * tax.setValue(Float.parseFloat(req.getParameter("value")));
+				 */
+				tax.setActive(Boolean.parseBoolean(req.getParameter("isActive")));
 
 				ejb.updateTax(tax);
 				msg = "Tax updated successfully.";
@@ -541,25 +570,28 @@ public class Servlet extends HttpServlet {
 				page = "setupTaxManagement.jsp";
 				tax_type_group = ejb.getTax_Type_GroupById(Integer.parseInt(req
 						.getParameter("id")));
-				tax_type_group.setName(req.getParameter("name"));
-
-				String[] taxes1 = req.getParameterValues("tax");
-
-				if (taxes1 != null) {
-
-					List<Tax> taxlst = new ArrayList<Tax>();
-
-					for (String taxName : taxes1) {
-						taxlst.add(ejb.getTaxById(Integer.parseInt(taxName)));
-					}
-
-					tax_type_group.setTaxes(taxlst);
-
-					ejb.updateTaxTypeGroup(tax_type_group);
-					msg = "Tax group updated succesfully.";
-				} else {
-					msg = "please select tax.";
-				}
+				/*
+				 * tax_type_group.setName(req.getParameter("name"));
+				 * 
+				 * String[] taxes1 = req.getParameterValues("tax");
+				 * 
+				 * if (taxes1 != null) {
+				 * 
+				 * List<Tax> taxlst = new ArrayList<Tax>();
+				 * 
+				 * for (String taxName : taxes1) {
+				 * taxlst.add(ejb.getTaxById(Integer.parseInt(taxName))); }
+				 * 
+				 * tax_type_group.setTaxes(taxlst);
+				 * 
+				 * ejb.updateTaxTypeGroup(tax_type_group); msg =
+				 * "Tax group updated succesfully."; } else { msg =
+				 * "please select tax."; }
+				 */
+				tax_type_group.setActive(Boolean.parseBoolean(req
+						.getParameter("isActiveG")));
+				ejb.updateTaxTypeGroup(tax_type_group);
+				msg = "Tax group updated succesfully.";
 				break;
 
 			case "deleteTaxGroup":
@@ -581,13 +613,12 @@ public class Servlet extends HttpServlet {
 				}
 				if (fc == 0) {
 					department = new Department();
-					department.setName(req.getParameter("name"));
+					department.setName(req.getParameter("name").toUpperCase());
 					ejb.setDepartment(department);
 					msg = "Department added.";
 				} else {
 					msg = "Duplicate Entry";
 				}
-
 				break;
 
 			case "deleteDept":
@@ -614,7 +645,8 @@ public class Servlet extends HttpServlet {
 				}
 				if (counter == 0) {
 					subDepartment = new SubDepartment();
-					subDepartment.setName(req.getParameter("name"));
+					subDepartment.setName(req.getParameter("name")
+							.toUpperCase());
 					subDepartment.setDepartment(ejb.getDepartmentById(Integer
 							.parseInt(req.getParameter("deptId"))));
 					ejb.setSubDepartment(subDepartment);
@@ -647,13 +679,19 @@ public class Servlet extends HttpServlet {
 				}
 				if (counter1 == 0) {
 					category = new Category();
-					category.setName(req.getParameter("name"));
-					category.setAttrNmae1(req.getParameter("attr1"));
-					category.setAttrNmae2(req.getParameter("attr2"));
-					category.setAttrNmae3(req.getParameter("attr3"));
-					category.setAttrNmae4(req.getParameter("attr4"));
-					category.setAttrNmae5(req.getParameter("attr5"));
-					category.setAttrNmae6(req.getParameter("attr6"));
+					category.setName(req.getParameter("name").toUpperCase());
+					category.setAttrNmae1(req.getParameter("attr1")
+							.toUpperCase());
+					category.setAttrNmae2(req.getParameter("attr2")
+							.toUpperCase());
+					category.setAttrNmae3(req.getParameter("attr3")
+							.toUpperCase());
+					category.setAttrNmae4(req.getParameter("attr4")
+							.toUpperCase());
+					category.setAttrNmae5(req.getParameter("attr5")
+							.toUpperCase());
+					category.setAttrNmae6(req.getParameter("attr6")
+							.toUpperCase());
 					category.setSubDepartment(ejb.getSubDepartmentById(Integer
 							.parseInt(req.getParameter("subDeptId"))));
 					ejb.setCategory(category);
@@ -1035,7 +1073,7 @@ public class Servlet extends HttpServlet {
 				salesEntry.setCustomer(customerEntry);
 				ejb.setSalesEntry(salesEntry);
 
-				msg="Sales entry is successfull...";
+				msg = "Sales entry is successfull...";
 				break;
 
 			case "purchaseSearchByDate":
@@ -1314,8 +1352,12 @@ public class Servlet extends HttpServlet {
 				break;
 			}
 		} catch (Exception e) {
-			msg = "error: " + e.getMessage();
-			e.printStackTrace();
+			if (e.getMessage().equals("Transaction aborted")) {
+				msg = "Can not delete...";
+			} else {
+				msg = "error: " + e.getMessage();
+				e.printStackTrace();
+			}
 		} finally {
 			tax = null;
 			tax_type_group = null;
