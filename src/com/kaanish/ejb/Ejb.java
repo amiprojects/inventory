@@ -177,6 +177,21 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	/************************************************AVIK for search UOM by name**************************************************/
+	
+	public List<QtyUnit> getAllQtyUnitByNameOrAbv(String name) {
+		TypedQuery<QtyUnit> q = em.createQuery("select c from QtyUnit c where UPPER(c.name) like :nm OR UPPER(c.abbreviation) like :av",
+				QtyUnit.class);
+		q.setParameter("nm", name.toUpperCase() + "%");
+		q.setParameter("av", name.toUpperCase() + "%");
+		return q.getResultList();
+	}
+	
+	/**************************************************************************************************************/
+	
+	
+	
+	
 	public List<QtyUnit> getAllOthersQtyUnitForConversion(int id) {
 		QtyUnit qu = new QtyUnit();
 		qu = this.getQtyUnitById(id);
@@ -635,6 +650,19 @@ public class Ejb {
 		TypedQuery<State> q = em.createQuery("select c from State c where c.country.id=:Id", State.class);
 		q.setParameter("Id", id);
 		return q.getResultList();
+	}
+	
+	public List<State> getStateByCityName(String nm){
+		TypedQuery<State> q = em.createQuery("select c from State c", State.class);
+		List<State> stList=new ArrayList<>();
+		for(State s:q.getResultList()){
+			for(City c:s.getCities()){
+				if(c.getCityName().equals(nm)){
+					stList.add(s);
+				}
+			}
+		}
+		return stList;
 	}
 
 	/******************** for Country *******************************/

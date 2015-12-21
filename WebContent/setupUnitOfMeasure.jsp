@@ -55,18 +55,17 @@
 								<div class="widget-area" style="width: 30%">
 									<form role="form" class="sec">
 										<div class="form-group">
-											<label for="" class="">Name : </label> <input type="text"
+											<label for="" class="">Name : </label> <input type="text" id="searchUOMname"
 												placeholder="" id="" class="">
 										</div>
 										<div class="form-group">
-											<label for="" class="">Abbrev : </label> <input type="text" 
+											<label for="" class="">Abbrev : </label> <input type="text"  id="searchUOMabbr"
 												placeholder="" id="" class="">
 										</div>
 
-										<button class="btn green btn-default" type="submit">Search
+										<button class="btn green btn-default" onclick="search();" type="button">Search
 										</button>
-										<button class="btn green btn-default" type="submit">Advanced
-											Search</button>
+										
 									</form>
 									<br> <br>
 									<table class="table">
@@ -171,8 +170,8 @@
 											<li><a title=""><button type="button"
 														class="btn btn-info btn-sm" data-toggle="modal"
 														data-target="#newUOM">New</button></a></li>
-											<li><a title=""><button type="submit"
-														class="btn btn-info btn-sm">Edit</button></a></li>
+											<!-- <li><a title=""><button type="submit"
+														class="btn btn-info btn-sm">Edit</button></a></li> -->
 											<li><a title=""><button type="submit"
 														class="btn btn-info btn-sm">Delete</button></a></li>
 										</ul>
@@ -226,8 +225,8 @@
 												<input type="button" class="btn btn-default"
 													onclick="addNewConversion();" value="add">
 
-												<button type="button" class="btn btn-default"
-													data-toggle="modal">Edit</button>
+												<!-- <button type="button" class="btn btn-default"
+													data-toggle="modal">Edit</button> -->
 
 												<button type="button" class="btn btn-default">Delete</button>
 											</div>
@@ -579,6 +578,20 @@
 										.fadeOut(400);
 							}
 						});
+		function search(){
+			var nm=$("#searchUOMname").val();
+			$.ajax({
+				url:'getAllQtyUnitByNameOrAbv',
+				dataType:'json',
+				data:{name:nm},
+				success:function(data){
+					$.map(data,function(item){
+						
+					});
+				}
+			});
+		}
+		
 	</script>
 	<div class='toast' style='display: none'>
 		<h3 id="msg">${requestScope['msg']}</h3>

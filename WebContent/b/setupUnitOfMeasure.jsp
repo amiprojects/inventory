@@ -27,6 +27,8 @@
 <!-- Responsive -->
 <link rel="stylesheet" href="css/toast.css" type="text/css" />
 
+
+
 </head>
 <body>
 	<c:if test="${sessionScope['user']==null}">
@@ -57,14 +59,13 @@
 												placeholder="" id="" class="">
 										</div>
 										<div class="form-group">
-											<label for="" class="">Abbrev : </label> <input type="text"
+											<label for="" class="">Abbrev : </label> <input type="text" 
 												placeholder="" id="" class="">
 										</div>
 
 										<button class="btn green btn-default" type="submit">Search
 										</button>
-										<button class="btn green btn-default" type="submit">Advanced
-											Search</button>
+										
 									</form>
 									<br> <br>
 									<table class="table">
@@ -73,6 +74,7 @@
 												<th>#</th>
 												<th>Name</th>
 												<th>Abbrev</th>
+												<th></th>
 											</tr>
 										</thead>
 										<tbody>
@@ -83,8 +85,79 @@
 													<td>${count}</td>
 													<td>${unit.name}</td>
 													<td>${unit.abbreviation}</td>
+													<td><a href="#" onclick="viewQtyUnit('${unit.id}');"><img
+															alt="click to view" src="images/eye.png" height="20"></a></td>
 												</tr>
 												<c:set var="count" value="${count+1}" />
+												<div id="addCon${unit.id}" class="modal fade" role="dialog"
+													style="top: 25px;">
+
+													<div class="modal-dialog">
+														<div class="modal-content">
+															<div class="modal-header">
+																<button type="button" class="close" data-dismiss="modal">&times;</button>
+																<h4 class="modal-title">Select UOM to which UOM is
+																	related</h4>
+															</div>
+															<form action="addNewConversion" method="post"
+																id="addNewConversion">
+																<div class="modal-body">
+																	<div class="col-md-12">
+																		<input type="hidden" value="${unit.id}"
+																			name="firstUnit"> Select Target UOM for this
+																		conversion: <select id="contype${unit.id}"
+																			onchange="selectUnit()" name="selectedUnit">
+																			<option value="0">Select Unit</option>
+																			<c:forEach
+																				items="${sessionScope['ejb'].getAllOthersQtyUnitForConversion(unit.id)}"
+																				var="qtyUnit">
+																				<option value="${qtyUnit.id}">${qtyUnit.name}</option>
+																			</c:forEach>
+																		</select>
+																	</div>
+																	<br> <br> <br>
+																	<div class="col-md-12">Defining the relationship
+																		between units:</div>
+																	<br>
+																	<div class="col-md-12">
+																		<input type="radio" name="name1" value="1"
+																			onclick="relSelect();">1 <span
+																			id="selectUnit1${unit.id}"></span> is greater than 1
+																		<span>${unit.name}</span>
+																	</div>
+																	<br>
+																	<div class="col-md-12">
+																		<input type="radio" name="name1" value="2"
+																			onclick="relSelect();">1 <span>${unit.name}</span>
+																		is greater then 1 <span id="selectUnit2${unit.id}"></span>
+
+																	</div>
+																	<br> <br> <br>
+																	<div class="col-md-12">Defining ratio between the
+																		units:</div>
+																	<br>
+																	<div class="col-md-12">Fill in the blank with
+																		correct number</div>
+																	<br>
+																	<div class="col-md-12">
+																		1 <span id="selectUnit3${unit.id}"></span> is<input
+																			type="number" name="convValue" required="required">in
+																		<span id="selectUnit4${unit.id}"></span>
+																	</div>
+																	<br>
+
+																</div>
+
+																<div class="modal-footer">
+																	<input type="submit" class="btn btn-default"
+																		value="Save"> <input type="button"
+																		class="btn btn-default" data-dismiss="modal"
+																		value="Close">
+																</div>
+															</form>
+														</div>
+													</div>
+												</div>
 											</c:forEach>
 										</tbody>
 									</table>
@@ -114,33 +187,81 @@
 											<div class="row">
 												<div class="col-md-2">Abreve :</div>
 												<div class="col-md-10">
-													<input type="text" readonly="readonly" class="form-control">
+													<input type="text" id="Abreve" readonly="readonly" required
+														class="form-control">
 												</div>
 											</div>
 											<div class="row">
 												<div class="col-md-2">Name :</div>
 												<div class="col-md-10">
-													<input type="text" readonly="readonly" class="form-control">
+													<input type="text" id="unitName" readonly="readonly" required
+														class="form-control"> <input type="hidden"
+														id="unitNameId" value=""> <input type="hidden"
+														id="unitNameId1" value="">
 												</div>
 											</div>
 											<div class="row">
-												<div class="col-md-2">Description :</div>
+												<div class="col-md-2">Description</div>
 												<div class="col-md-10">
-													<textarea rows="" cols="" class="form-control"
-														readonly="readonly"></textarea>
+													<textarea rows="" cols="" class="form-control" 
+														readonly="readonly" id="DisplayDescription"></textarea>
 												</div>
 											</div>
 										</div>
 										<div id="con" class="tab-pane fade ">
 
-											<div class="col-md-12">
+											<div class="col-md-10">
 												<div class="breadcrumbs">
 													<ul>
-														<li><a title="">Description </a></li>
+														<li><span id="conversionDetails">Unit
+																conversion for</span></li>
 													</ul>
 												</div>
-												<textarea rows="" cols="" id="" class="form-control"
-													readonly="readonly"></textarea>
+												<hr>
+												<div id="unitConversionDetails"></div>
+
+											</div>
+											<div class="col-md-2">
+												<input type="button" class="btn btn-default"
+													onclick="addNewConversion();" value="add">
+
+												<button type="button" class="btn btn-default"
+													data-toggle="modal">Edit</button>
+
+												<button type="button" class="btn btn-default">Delete</button>
+											</div>
+
+
+
+											<div id="editCon" class="modal fade" role="dialog"
+												style="top: 25px;">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<div class="modal-header">
+															<button type="button" class="close" data-dismiss="modal">&times;</button>
+															<h4 class="modal-title">Edit UOM to which UOM is
+																related</h4>
+														</div>
+														<form action="updateConversion" method="post">
+															<div class="col-md-12">
+																<br>
+																<div class="col-md-12">
+																	1 <span id="unit1"></span>=<input type="text"
+																		id="editValue" name="editValue"><span
+																		id="unit2"></span>
+																</div>
+																<br>
+															</div>
+															<input type="hidden" value="" name="u1" id="u1">
+															<input type="hidden" value="" name="u2" id="u2">
+															<div class="modal-footer">
+																<input type="submit" class="btn btn-default" value="update">
+																<button type="button" class="btn btn-default"
+																	data-dismiss="modal">Close</button>
+															</div>
+														</form>
+													</div>
+												</div>
 
 											</div>
 										</div>
@@ -150,11 +271,12 @@
 						</div>
 					</div>
 				</div>
-				<!-- Content Sec -->
 			</div>
-			<!-- Page Container -->
+			<!-- Content Sec -->
 		</div>
+		<!-- Page Container -->
 	</div>
+
 	<!-- main -->
 
 	<div id="newUOM" class="modal fade" role="dialog" style="top: 25px;">
@@ -177,21 +299,21 @@
 									</c:forEach>
 								</select>
 							</div>
-							<div class="col-md-2">
+							<!-- <div class="col-md-2">
 								<button type="button" class="btn btn-info btn-sm"
 									data-toggle="modal" data-target="#nameUOM">Add</button>
-							</div>
+							</div> -->
 						</div>
 						<div class="row">
 							<div class="col-md-3">Abbreviation :</div>
 							<div class="col-md-9">
-								<input type="text" name="abbreviation" class="form-control">
+								<input type="text" required name="abbreviation" class="form-control">
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-3">Name UOM :</div>
 							<div class="col-md-9">
-								<input type="text" name="name" class="form-control">
+								<input type="text" required name="name" class="form-control">
 							</div>
 						</div>
 						<div class="row">
@@ -238,6 +360,144 @@
 	<script type="text/javascript" src="js/grid-filter.js"></script>
 
 	<script type="text/javascript">
+		var unit1;
+		var unit2;
+
+		function relSelect() {
+			var id = $("#unitNameId").val();
+			var optVal = $("#contype" + id + " option:selected").val();
+			if (optVal != 0) {
+
+				if ($("[name='name1']:checked").val() == 1) {
+					$("#selectUnit3" + id).html(unit2);
+					$("#selectUnit4" + id).html(unit1);
+				} else if ($("[name='name1']:checked").val() == 2) {
+					$("#selectUnit3" + id).html(unit1);
+					$("#selectUnit4" + id).html(unit2);
+				} else {
+					alert("inconvenience highly regretted.")
+				}
+			}
+		}
+
+		function addNewConversion() {
+			$("#addCon" + $("#unitNameId").val()).modal("show");
+		}
+		function selectUnit() {
+			var id = $("#unitNameId").val();
+			var optVal = $("#contype" + id + " option:selected").val();
+			if (optVal != 0) {
+				$.ajax({
+					type : "post",
+					url : "getQtyUnit",
+					data : {
+						id : optVal
+					},
+					dataType : "json",
+					success : function(data) {
+						$("#selectUnit1" + id).html(data.name);
+						$("#selectUnit2" + id).html(data.name);
+						unit2 = data.name;
+						$("#unitNameId1").val(data.id);
+					}
+
+				});
+			} else {
+				alert("please select a unit.");
+			}
+
+		}
+
+		function viewQtyUnit(id) {
+			$
+					.ajax({
+						type : "post",
+						url : "getQtyUnit",
+						data : {
+							id : id
+						},
+						dataType : "json",
+						success : function(data) {
+							$("#Abreve").val(data.abbreviation);
+							$("#unitName").val(data.name);
+							$("#DisplayDescription").val(data.description);
+							$("#unitNameId").val(data.id);
+							$("#conversionDetails").html(
+									"Unit Conversion for " + data.name);
+							unit1 = data.name;
+							$
+									.ajax({
+										type : "post",
+										url : "getQtyUnitConversion",
+										data : {
+											id : data.id
+										},
+										dataType : "json",
+										success : function(data1) {
+											var i = 0;
+											var txt = "<table>";
+											$
+													.map(
+															data1,
+															function(item) {
+																if (i % 2 == 0) {
+																	txt = txt
+																			+ "<tr><td style='background-color:#989898;' width='500px'><span >1 "
+																			+ item.qtyUnit1Name
+																			+ " = "
+																			+ item.conversion
+																			+ " "
+																			+ item.qtyUnit2Name
+																			+ "</span></td><td><a onclick='editConversion(\""
+																			+ item.qtyUnitId1
+																			+ "\",\""
+																			+ item.qtyUnitId2
+																			+ "\")' href=\"#\"><img src=\"img/edit.png\" height=\"20\"></a></span></td></tr>";
+																} else {
+																	txt = txt
+																			+ "<tr><td style='background-color:#C0C0C0;'><span>1 "
+																			+ item.qtyUnit1Name
+																			+ " = "
+																			+ item.conversion
+																			+ " "
+																			+ item.qtyUnit2Name
+																			+ "</td><td><a onclick='editConversion(\""
+																			+ item.qtyUnitId1
+																			+ "\",\""
+																			+ item.qtyUnitId2
+																			+ "\")' href=\"#\"><img src=\"img/edit.png\" height=\"20\"></a></span></td></tr>";
+																}
+																i++;
+															});
+											$("#unitConversionDetails").html(
+													txt + "</table>");
+										}
+									});
+						}
+
+					});
+		}
+		function editConversion(a, b) {
+			$("#editCon").modal('show');
+			$.ajax({
+				type : "post",
+				url : "getQtyConversion",
+				dataType : "json",
+				data : {
+					id1 : a,
+					id2 : b
+				},
+				success : function(data) {
+
+					$("#unit1").html(data.qtyUnit1Name);
+					$("#unit2").html(data.qtyUnit2Name);
+					$("#u1").val(data.qtyUnitId1);
+					$("#u2").val(data.qtyUnitId2);					
+					$("#editValue").val(data.conversion);
+				}
+			});
+		}
+
 		$(document).ready(function() {
 			$("#setup").attr("id", "activeSubMenu");
 			$("#sSetupUOM").attr("style", "color: red;");

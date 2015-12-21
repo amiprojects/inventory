@@ -237,7 +237,10 @@ public class Servlet extends HttpServlet {
 				InputStream is = p.getInputStream();
 				byte[] content = new byte[is.available()];
 				is.read(content);
-				companyInfo.setImage(content);
+				if(!(content.length==0)){
+					companyInfo.setImage(content);
+				}
+				
 				ejb.updateCompanyInfo(companyInfo);
 				msg = "Company info updated successfully.";
 				break;

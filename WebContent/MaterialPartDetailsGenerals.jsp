@@ -329,7 +329,7 @@
 													<label>Active</label>
 												</div>
 												<div class="col-md-1">
-													<input id="actact" type="checkbox" name="active">
+													<input id="actact" disabled type="checkbox" name="active">
 												</div>
 
 
