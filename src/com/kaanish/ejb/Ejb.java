@@ -23,6 +23,8 @@ import com.kaanish.model.Department;
 import com.kaanish.model.JobAssignmentDetails;
 import com.kaanish.model.JobAssignmentProducts;
 import com.kaanish.model.JobStock;
+import com.kaanish.model.Module;
+import com.kaanish.model.PageList;
 import com.kaanish.model.PaymentDetails;
 import com.kaanish.model.PaymentStatus;
 import com.kaanish.model.PaymentType;
@@ -43,6 +45,7 @@ import com.kaanish.model.State;
 import com.kaanish.model.SubDepartment;
 import com.kaanish.model.Tax;
 import com.kaanish.model.Tax_Type_Group;
+import com.kaanish.model.UserGroup;
 import com.kaanish.model.Users;
 import com.kaanish.model.Vendor;
 import com.kaanish.model.VendorType;
@@ -84,6 +87,58 @@ public class Ejb {
 	public List<Users> getAllUsers() {
 		TypedQuery<Users> q = em.createQuery("select c from Users c",
 				Users.class);
+		return q.getResultList();
+	}
+	
+	/*********************for user group****************/
+	public void setUserGroup(UserGroup ug){
+		em.persist(ug);
+	}
+	public void updateUserGroup(UserGroup ug){
+		em.merge(ug);
+	}
+	public UserGroup getUserGroupById(int id){
+		return em.find(UserGroup.class, id);
+	}
+	public void deleteUserGroupById(int id){
+		em.remove(getUserGroupById(id));
+	}
+	public List<UserGroup> getAllUserGroup(){
+		TypedQuery<UserGroup> q=em.createQuery("select c from UserGroup c", UserGroup.class);
+		return q.getResultList();
+	}
+	/*********************for Page List****************/
+	public void setPageList(PageList pl){
+		em.persist(pl);
+	}
+	public void updatePageList(PageList pl){
+		em.merge(pl);
+	}
+	public PageList getPageListById(int id){
+		return em.find(PageList.class, id);
+	}
+	public void deletePageListById(int id){
+		em.remove(getPageListById(id));
+	}
+	public List<PageList> getAllPageList(){
+		TypedQuery<PageList> q=em.createQuery("select c from PageList c", PageList.class);
+		return q.getResultList();
+	}
+	/*********************for User Module****************/
+	public void setModule(Module m){
+		em.persist(m);
+	}
+	public void updateModule(Module m){
+		em.merge(m);
+	}
+	public Module getModuleById(int id){
+		return em.find(Module.class, id);
+	}
+	public void deleteModuleById(int id){
+		em.remove(getModuleById(id));
+	}
+	public List<Module> getAllModule(){
+		TypedQuery<Module> q=em.createQuery("select c from Module c", Module.class);
 		return q.getResultList();
 	}
 
