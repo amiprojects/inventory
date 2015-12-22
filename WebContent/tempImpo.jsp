@@ -2,6 +2,13 @@
 <link rel="stylesheet" href="bootstrapcdn.css">
 <script src="maxcdn.bootstrapcdn.js"></script>
 
+//include
+includeHeader.jsp
+includeSidebar.jsp
+
+includeHeader.html
+includeSidebar.html
+
 //tabs
 <ul class="nav nav-tabs">
 	<li class="active"><a data-toggle="tab" href="#detail">Details</a></li>

@@ -153,9 +153,9 @@
 		<c:redirect url="index.jsp" />
 	</c:if>
 	<div class="main" style="height: 664px;">
-		<%@include file="includeHeader.html"%>
+		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
-			<%@include file="includeSidebar.html"%>
+			<%@include file="includeSidebar.jsp"%>
 			<div class="content-sec"
 				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
 				<div class="container">
@@ -184,7 +184,12 @@
 														<c:forEach
 															items="${sessionScope['ejb'].getAllVendorType()}"
 															var="vType">
-															<option value="${vType.id}">${vType.type}</option>
+															<c:choose>
+																<c:when
+																	test="${vType.type.equals('Vendor') || vType.type.equals('Purchase Agent')}">
+																	<option value="${vType.id}">${vType.type}</option>
+																</c:when>
+															</c:choose>
 														</c:forEach>
 													</select>
 												</div>
@@ -243,12 +248,38 @@
 														type="text" id="datepicker" class="form-control"
 														name="purchaseDate" required="required">
 												</div>
-												<br> <input type="button" class="btn green pull-right"
+												<input type="button" class="btn green pull-right"
 													data-toggle="modal" data-target="#addProduct"
 													value="Add Product" style="width: 100%" onclick="manage();">
 											</div>
 											<div class='toast' style='display: none'>
 												<h3 id="msg">${requestScope['msg']}</h3>
+											</div>
+											<div class="col-md-12">
+												<div class="col-md-6">
+													<input type="checkbox" onclick="isAgentF();" id="agent"
+														name="agent">&nbsp;<span>Via Agent</span>
+													<div class="col-md-12" id="aNameDiv">
+														<label for="" class="font">Agent Name:</label>
+														<!-- <input
+															type="text" class="form-control" name="agentName"
+															id="agentName"> -->
+														<select class="form-control" id="agentName"
+															name="agentName" onchange="getAgentDetail();">
+															<option value="0">Select Agent name</option>
+															<c:forEach
+																items="${sessionScope['ejb'].getVendorsByVendorTypeJobber('Purchase Agent')}"
+																var="agents">
+																<option value="${agents.id}">${agents.name}</option>
+															</c:forEach>
+														</select>
+													</div>
+												</div>
+												<div class="col-md-6" id="aDetailDiv">
+													<label for="" class="font">Agent Details:</label>
+													<textarea rows="" cols="6" class="form-control"
+														readonly="readonly" id="agentDet" name="agentDet"></textarea>
+												</div>
 											</div>
 										</div>
 
@@ -487,7 +518,8 @@
 										<input type="hidden" name="isSalable" id="isSalable">
 										<input type="hidden" name="isBarPrint" id="isBarPrint">
 										<input type="hidden" name="isSerial" id="isSerial"> <input
-											type="hidden" name="isLot" id="isLot">
+											type="hidden" name="isLot" id="isLot"> <input
+											type="hidden" name="isAgent" id="isAgent">
 									</form>
 									<!-- <input type="radio" name="a" value="x" onclick="first()" id="a">1
 									<input type="radio" name="a" value="y" onclick="second()"
@@ -543,7 +575,7 @@
 										required="required">
 										<option value="0">Select Product Code</option>
 										<c:forEach
-											items="${sessionScope['ejb'].getAllProductDetail()}"
+											items="${sessionScope['ejb'].getAllActiveProductDetail()}"
 											var="productDetail">
 											<option value="${productDetail.id}">${productDetail.code}</option>
 										</c:forEach>
@@ -751,6 +783,9 @@
 			$("#isBarPrint").val('yes');
 			$("#isSerial").val('yes');
 			$("#isLot").val('yes');
+			$("#isAgent").val('no');
+			$("#aNameDiv").hide();
+			$("#aDetailDiv").hide();
 		});
 		$(function() {
 			$("#datepicker").datepicker();
@@ -899,6 +934,32 @@
 				}
 			}); */
 		}
+		function getAgentDetail() {
+			if ($("#agentName").val() != 0) {
+				$.ajax({
+					url : 'getAgentDetails',
+					type : 'post',
+					dataType : "json",
+					data : {
+						id : $("#agentName").val()
+					},
+					success : function(data) {
+						$("#agentDet").val(
+								"Address :\n\t" + data.address + "\nPh1 : "
+										+ data.ph1 + "\nPh2 : " + data.ph2);
+					},
+					error : function(a, b, c) {
+						alert(b + ": " + c);
+						$("#agentName").val(0);
+						$("#agentDet").val("");
+					}
+				});
+			} else {
+				alert("please select one product-code");
+				$("#agentName").val(0);
+				$("#agentDet").val("");
+			}
+		}
 		function salable() {
 
 			if ($('#sale').is(":checked")) {
@@ -909,6 +970,20 @@
 				$("#isSalable").val('no');
 				$("#wsp").attr("readonly", true);
 				$("#mrp").attr("readonly", true);
+			}
+		}
+		function isAgentF() {
+			if ($('#agent').is(":checked")) {
+				$("#isAgent").val('yes');
+				$("#aNameDiv").show();
+				$("#aDetailDiv").show();
+			} else {
+				$("#isAgent").val('no');
+				$("#wsp").attr("readonly", true);
+				$("#aNameDiv").hide();
+				$("#aDetailDiv").hide();
+				$("#agentName").val(0);
+				$("#agentDet").val("");
 			}
 		}
 		$("input:radio[name=bar]").click(function() {
@@ -971,7 +1046,6 @@
 		});
 		var i = 1;
 		function anotherShow() {
-
 			if ($("#productCode").val() == 0) {
 				alert("please select Product code");
 			} else if ($("#qty").val() == "") {

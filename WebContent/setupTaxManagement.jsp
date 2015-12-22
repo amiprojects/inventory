@@ -53,9 +53,9 @@
 		<c:redirect url="index.jsp" />
 	</c:if>
 	<div class="main" style="height: 664px;">
-		<%@include file="includeHeader.html"%>
+		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
-			<%@include file="includeSidebar.html"%>
+			<%@include file="includeSidebar.jsp"%>
 			<div class="content-sec"
 				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
 				<div class="container">
@@ -84,14 +84,14 @@
 													<div class="form-group">
 														<label for="" class="font">Tax Name :</label> <input
 															type="text" placeholder="Enter tax name" id=""
-															name="name" class="form-control">
+															name="name" class="form-control" required>
 													</div>
 												</div>
 												<div class="col-md-11">
 													<div class="form-group">
 														<label for="" class="font">Value :</label> <input
 															step="0.01" type="number" placeholder="" id=""
-															name="value" class="form-control">
+															name="value" class="form-control" required>
 													</div>
 												</div>
 												<div class="col-md-1" style="top: 28px; float: left;">

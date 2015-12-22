@@ -32,6 +32,7 @@ public class Purchase_Entry {
 	private float transport_cost;
 	private float sur_charge;
 	private float totalCost;
+	private int agentId;
 
 	@OneToMany(mappedBy = "purchase_Entry", cascade = CascadeType.ALL)
 	private List<Purchase_Product_Details> purchase_Product_Details;
@@ -180,6 +181,14 @@ public class Purchase_Entry {
 
 	public void setTotalCost(float totalCost) {
 		this.totalCost = totalCost;
+	}
+
+	public int getAgentId() {
+		return agentId;
+	}
+
+	public void setAgentId(int agentId) {
+		this.agentId = agentId;
 	}
 
 }

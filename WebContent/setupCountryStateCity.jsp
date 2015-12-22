@@ -43,6 +43,9 @@
 		$("#sSetupCity").attr("style", "color: red;");
 		if ($('#msg').html() != "") {
 			$('.toast').fadeIn(400).delay(3000).fadeOut(400);
+			if ($('#msg').html() == "error: Transaction aborted") {
+				($('#msg').html("Can not delete due to used in somewhere..."));
+			}
 		}
 	});
 </script>
@@ -52,9 +55,9 @@
 		<c:redirect url="index.jsp" />
 	</c:if>
 	<div class="main" style="height: 664px;">
-		<%@include file="includeHeader.html"%>
+		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
-			<%@include file="includeSidebar.html"%>
+			<%@include file="includeSidebar.jsp"%>
 			<div class="content-sec"
 				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
 				<div class="container">

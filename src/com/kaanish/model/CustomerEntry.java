@@ -17,7 +17,7 @@ public class CustomerEntry {
 	private int id;
 	private String name;
 	private String mobile;
-	private String email;
+	private String vat_cst_no;
 	private String address;
 	private String city;
 
@@ -48,14 +48,6 @@ public class CustomerEntry {
 		this.mobile = mobile;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	public String getAddress() {
 		return address;
 	}
@@ -78,6 +70,14 @@ public class CustomerEntry {
 
 	public void setCity(String city) {
 		this.city = city;
+	}
+
+	public String getVat_cst_no() {
+		return vat_cst_no;
+	}
+
+	public void setVat_cst_no(String vat_cst_no) {
+		this.vat_cst_no = vat_cst_no;
 	}
 
 }

@@ -1,3 +1,4 @@
+
 <aside class="sidebar" style="height: 100%; overflow-y: scroll;">
 	<div class="menu-sec">
 		<div id="menu-toogle" class="menus">
@@ -45,6 +46,7 @@
 					</ul>
 				</div>
 			</div>
+<%-- <c:if test="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"> --%>
 
 			<div class="single-menu">
 				<h2 id="sales">
@@ -60,6 +62,7 @@
 					</ul>
 				</div>
 			</div>
+			
 			<div class="single-menu">
 				<h2 id="stock">
 					<a title=""><span>Stock</span></a>
