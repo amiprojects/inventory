@@ -167,28 +167,38 @@
 									<div style="background-color: lightgrey;">
 										<h3>Sale Product at:</h3>
 									</div>
-									<input type="radio" class="chk" name="prod" value="mrp"
+									<input type="radio" class="chk" name="saleAt" value="mrp"
 										id="mrp" style="display: none;"><label for="mrp"></label>MRP<input
-										type="radio" class="chk" name="prod" value="wsp" id="wsp"
+										type="radio" class="chk" name="saleAt" value="wsp" id="wsp"
 										style="display: none;">&nbsp;<label for="wsp"></label>WSP
 
 								</div>
 								<div class="widget-area">
 
 
-									<b>Quantity :</b> <input type="text" name="qty"
+									<b>Quantity :</b> <input type="text" name="qty" id="qty"
 										style="width: 70px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-									<b>Product :</b> <input type="text" name="descriptionName"
-										id="descriptionName"> <input type="hidden"
-										name="descriptiondId" id="descriptionId">&nbsp; &nbsp;
-									&nbsp;<b>Product with Barcode</b> <input type="text"
-										id="salesbar" name="salesbar">
+									<b>Product :</b>
+									<!-- <input type="text" name="descriptionName"
+										id="descriptionName"> -->
+									<select name="prodCode" id="prodCode"
+										onchange="getProdDetByPurchaseProdDetId();"
+										required="required">
+										<option value="0">Select Product code</option>
+										<c:forEach
+											items="${sessionScope['ejb'].getReadyPurchaseProductDetailsByQty()}"
+											var="pCode">
+											<option value="${pCode.id}">${pCode.productDetail.code}&nbsp;(<fmt:formatDate
+													value="${pCode.purchase_Entry.purchase_date}"
+													pattern="dd-MM-yy" />)
+											</option>
+										</c:forEach>
+									</select>
+									<!-- <input type="hidden" name="descriptiondId" id="descriptionId"> -->
+									&nbsp; &nbsp; &nbsp;<b>Product with Barcode</b> <input
+										type="text" id="salesbar" name="salesbar">
 									<button onclick="probar()" type="button">Go</button>
-
-									<!-- <input type="text" name="productCode"
-									id="productCode" style="width: 540px">  <input type="hidden"
-									name="productCodeH" id="productCodeH"> <br> -->
 
 								</div>
 								<div class="widget-area">
@@ -200,20 +210,24 @@
 												<th id="prodcode">Product code</th>
 												<th id="desc">Product Description</th>
 												<th id="qty">Qty.</th>
-												<th id="perqty">MRP/Qty</th>
+												<th id="mrpWSP">MRP/Qty</th>
 												<th id="total">Total</th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr>
 												<td>1</td>
-												<td><input type="text" name="codevalue" id="codevalue"></td>
-												<td><input type="text" name="descvalue" id="descvalue"></td>
-												<td><input type="text" name="qtyvalue" id="qtyvalue"></td>
-												<td><input type="text" name="mrpQty" id="mrpQty"></td>
+												<td><input type="text" name="codevalue" id="codevalue"
+													readonly="readonly"></td>
+												<td><input type="text" name="descvalue" id="descvalue"
+													readonly="readonly"></td>
+												<td><input type="text" name="qtyvalue" id="qtyvalue"
+													readonly="readonly" value="0"></td>
+												<td><input type="hidden" id="wspORmrp" name="wspORmrp">
+													<input type="text" name="mrpQty" id="mrpQty"
+													readonly="readonly"></td>
 												<td><input type="text" name="totalvalue"
-													id="totalvalue"></td>
-
+													id="totalvalue" readonly="readonly"></td>
 											</tr>
 										</tbody>
 									</table>
@@ -226,7 +240,8 @@
 											<tr>
 												<td colspan="2" id="round">Round Of :</td>
 												<td><input type="number" class="form-control"
-													placeholder="" readonly="readonly" id="roundvalue"></td>
+													placeholder="" readonly="readonly" id="roundvalue"
+													name="roundvalue"></td>
 											</tr>
 											<tr>
 												<td colspan="2" id="sub">Sub Total :</td>
@@ -320,7 +335,17 @@
 	</script>
 
 	<script>
-		
+		$("input:radio[name=saleAt]").click(function() {
+			var value = $(this).val();
+			//alert(value);
+			if (value == "mrp") {
+				$("#mrpWSP").html("MRP/Qty");
+				$("#wspORmrp").val('mrpVal');
+			} else {
+				$("#mrpWSP").html("WSP/Qty");
+				$("#wspORmrp").val('wspVal');
+			}
+		});
 	</script>
 
 	<script type="text/javascript">
@@ -363,64 +388,57 @@
 	</script>
 
 	<script>
+		function getProdDetByPurchaseProdDetId() {
+			$("#salesbar").val($("#prodCode").val());
+		}
+
 		function probar() {
+			if ($("#wspORmrp").val() == 'mrpVal'
+					|| $("#wspORmrp").val() == 'wspVal') {
+				var countryName = $("#salesbar").val();
+				var countryArray = countryName.split('/');
 
-			var countryName = $("#salesbar").val();
-			var countryArray = countryName.split('/');
+				for (var i = 0; i < countryArray.length; i++) {
+					countryArray[i];
+				}
+				var id = countryArray[0];
 
-			for (var i = 0; i < countryArray.length; i++) {
-				countryArray[i];
-			}
-			var id = countryArray[0];
-
-			$.ajax({
-				type : "post",
-				url : "getproductPro",
-				data : {
-					id : id
-				},
-				dataType : "json",
-				success : function(data) {
-
-					$("#codevalue").val(data.code);
-					$("#descvalue").val(data.description);
-					$.ajax({
-						type : "post",
-						url : "getproductPro",
-						data : {
-							id : data.id
-						},
-						dataType : "json",
-						success : function(data1) {
-							$.map(data1, function(item) {
-
-							});
+				$.ajax({
+					type : "post",
+					url : "getProdDetByPurchaseProdDetailsId",
+					data : {
+						id : id
+					},
+					dataType : "json",
+					success : function(data) {
+						$("#codevalue").val(data.productCode);
+						$("#descvalue").val(data.productDesc);
+						$("#qtyvalue").val(Number($("#qty").val()));
+						if ($("#wspORmrp").val() == 'mrpVal') {
+							$("#mrpQty").val(data.mrp);
+							$("#totalvalue").val(
+									Number(data.mrp * $("#qtyvalue").val()));
+						} else {
+							$("#mrpQty").val(data.wsp);
+							$("#totalvalue").val(
+									Number(data.wsp * $("#qtyvalue").val()));
 						}
-					});
-				}
+						$("#prodCode").val(data.id);
+						var tot = $("#totalvalue").val();
+						var round = Math.round(tot);
+						if (tot > round) {
+							$("#roundvalue").val(
+									Math.round((round + 1 - tot) * 100) / 100);
+						} else {
+							$("#roundvalue").val(
+									Math.round((round - tot) * 100) / 100);
+						}
+					}
 
-			});
-			$.ajax({
-				type : "post",
-				url : "getPurchasebyPro",
-				data : {
-					id : id
-				},
-				dataType : "json",
-				success : function(data) {
-					var qty = 0;
-					var rqty = 0;
-					$.each(data, function(index, value) {
-						$("#mrpQty").val(value.mrp);
-						/* $("#wsp111").val(value.wsp); */
-						rqty = rqty + Number(value.remaining_quantity)
-
-						$("#qtyvalue").val(data.remaining_quantity);
-					});
-
-				}
-			});
-
+				});
+			} else {
+				alert("Please choose one between MRP and WSP");
+			}
 		}
 	</script>
 

@@ -30,7 +30,8 @@ import com.kaanish.util.DepartmentCotractor;
 		"/getTaxGroupById", "/getproductPro", "/getPurchasebyPro",
 		"/getAccountDetails", "/getProductDetailById", "/getCategoryById",
 		"/getProductImageByProductid", "/getJobberDetailsByName",
-		"/getProdDetByPurchaseProdDetailsId","/getStateByCityName","/getAllQtyUnitByNameOrAbv" })
+		"/getProdDetByPurchaseProdDetailsId", "/getStateByCityName",
+		"/getAllQtyUnitByNameOrAbv", "/getAgentDetails" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -152,6 +153,12 @@ public class JsonServlet extends HttpServlet {
 								.getParameter("id"))));
 				break;
 
+			case "getAgentDetails":
+				resp.getWriter().print(
+						ejb.getVendorById(Integer.parseInt(req
+								.getParameter("id"))));
+				break;
+
 			case "getVendorByVendorId":
 				resp.getWriter().print(
 						ejb.getVendorById(Integer.parseInt(req
@@ -221,10 +228,12 @@ public class JsonServlet extends HttpServlet {
 								.getParameter("id"))));
 				break;
 			case "getStateByCityName":
-				resp.getWriter().print(ejb.getStateByCityName(req.getParameter("nm")));
+				resp.getWriter().print(
+						ejb.getStateByCityName(req.getParameter("nm")));
 				break;
 			case "getAllQtyUnitByNameOrAbv":
-				resp.getWriter().print(ejb.getAllQtyUnitByNameOrAbv(req.getParameter("name")));
+				resp.getWriter().print(
+						ejb.getAllQtyUnitByNameOrAbv(req.getParameter("name")));
 				break;
 
 			default:

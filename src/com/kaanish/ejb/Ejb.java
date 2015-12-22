@@ -50,6 +50,7 @@ import com.kaanish.model.Users;
 import com.kaanish.model.Vendor;
 import com.kaanish.model.VendorType;
 import com.kaanish.util.DigitToWords;
+import com.sun.faces.mgbean.ManagedBeanPreProcessingException.Type;
 
 @Stateless
 public class Ejb {
@@ -260,21 +261,20 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	/************************************************AVIK for search UOM by name**************************************************/
-	
+	/************************************************ AVIK for search UOM by name **************************************************/
+
 	public List<QtyUnit> getAllQtyUnitByNameOrAbv(String name) {
-		TypedQuery<QtyUnit> q = em.createQuery("select c from QtyUnit c where UPPER(c.name) like :nm OR UPPER(c.abbreviation) like :av",
-				QtyUnit.class);
+		TypedQuery<QtyUnit> q = em
+				.createQuery(
+						"select c from QtyUnit c where UPPER(c.name) like :nm OR UPPER(c.abbreviation) like :av",
+						QtyUnit.class);
 		q.setParameter("nm", name.toUpperCase() + "%");
 		q.setParameter("av", name.toUpperCase() + "%");
 		return q.getResultList();
 	}
-	
+
 	/**************************************************************************************************************/
-	
-	
-	
-	
+
 	public List<QtyUnit> getAllOthersQtyUnitForConversion(int id) {
 		QtyUnit qu = new QtyUnit();
 		qu = this.getQtyUnitById(id);
@@ -565,6 +565,18 @@ public class Ejb {
 		}
 	}
 
+	public List<Purchase_Entry> getAllPurchaseEntry() {
+		TypedQuery<Purchase_Entry> q = em.createQuery(
+				"select c from Purchase_Entry c", Purchase_Entry.class);
+		return q.getResultList();
+	}
+
+	/*
+	 * public List<String> getAllVendorBillNumber() { TypedQuery<String> q =
+	 * em.createQuery( "select c.vendor_bill_no from Purchase_Entry c",
+	 * String.class); return q.getResultList(); }
+	 */
+
 	/***************** for Job Assignment ***********************/
 	public void setJobAssignment(JobAssignmentDetails jobAssignmentDetails) {
 		em.persist(jobAssignmentDetails);
@@ -708,6 +720,14 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<Purchase_Product_Details> getReadyPurchaseProductDetailsByQty() {
+		TypedQuery<Purchase_Product_Details> q = em
+				.createQuery(
+						"select c from Purchase_Product_Details c where c.remaining_quantity>0 and c.isReady=1 ORDER BY c.purchase_Entry.purchase_date ASC",
+						Purchase_Product_Details.class);
+		return q.getResultList();
+	}
+
 	public Purchase_Product_Details getPurchaseProductDetailsById(int id) {
 		return em.find(Purchase_Product_Details.class, id);
 	}
@@ -790,13 +810,14 @@ public class Ejb {
 		q.setParameter("Id", id);
 		return q.getResultList();
 	}
-	
-	public List<State> getStateByCityName(String nm){
-		TypedQuery<State> q = em.createQuery("select c from State c", State.class);
-		List<State> stList=new ArrayList<>();
-		for(State s:q.getResultList()){
-			for(City c:s.getCities()){
-				if(c.getCityName().equals(nm)){
+
+	public List<State> getStateByCityName(String nm) {
+		TypedQuery<State> q = em.createQuery("select c from State c",
+				State.class);
+		List<State> stList = new ArrayList<>();
+		for (State s : q.getResultList()) {
+			for (City c : s.getCities()) {
+				if (c.getCityName().equals(nm)) {
 					stList.add(s);
 				}
 			}
@@ -956,6 +977,13 @@ public class Ejb {
 	public List<ProductDetail> getAllProductDetail() {
 		TypedQuery<ProductDetail> q = em.createQuery(
 				"select c from ProductDetail c", ProductDetail.class);
+		return q.getResultList();
+	}
+
+	public List<ProductDetail> getAllActiveProductDetail() {
+		TypedQuery<ProductDetail> q = em.createQuery(
+				"select c from ProductDetail c where c.isActive=true",
+				ProductDetail.class);
 		return q.getResultList();
 	}
 

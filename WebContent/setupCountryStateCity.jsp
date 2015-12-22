@@ -43,6 +43,9 @@
 		$("#sSetupCity").attr("style", "color: red;");
 		if ($('#msg').html() != "") {
 			$('.toast').fadeIn(400).delay(3000).fadeOut(400);
+			if ($('#msg').html() == "error: Transaction aborted") {
+				($('#msg').html("Can not delete due to used in somewhere..."));
+			}
 		}
 	});
 </script>

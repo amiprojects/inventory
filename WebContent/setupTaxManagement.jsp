@@ -84,14 +84,14 @@
 													<div class="form-group">
 														<label for="" class="font">Tax Name :</label> <input
 															type="text" placeholder="Enter tax name" id=""
-															name="name" class="form-control">
+															name="name" class="form-control" required>
 													</div>
 												</div>
 												<div class="col-md-11">
 													<div class="form-group">
 														<label for="" class="font">Value :</label> <input
 															step="0.01" type="number" placeholder="" id=""
-															name="value" class="form-control">
+															name="value" class="form-control" required>
 													</div>
 												</div>
 												<div class="col-md-1" style="top: 28px; float: left;">
