@@ -37,6 +37,19 @@
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
 <!-- Responsive -->
 
+<link rel="stylesheet" href="css/toast.css" type="text/css" />
+<link rel="stylesheet" href="css/toast.css" type="text/css" />
+
+<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		if ($('#msg').html() != "") {
+			$('.toast').fadeIn(400).delay(3000).fadeOut(400);
+		}
+	});
+</script>
+
 </head>
 <body>
 	<c:if test="${sessionScope['user']==null}">
@@ -61,187 +74,126 @@
 											</p></li>
 									</ul>
 								</div>
-								<div class="widget-area" style="width: 30%;">
-									<form role="form" class="sec">
-										<div class="form-group">
-											<label for="" class="">Username : </label> <input type="text"
-												placeholder="Enter username" id="" class="">
-										</div>
-										<div class="form-group">
-											<label for="" class="">First name : </label> <input
-												type="text" placeholder="Enter lastname" id="" class="">
-										</div>
 
-										<button class="btn green btn-default" type="submit">Search
-										</button>
-										<button class="btn green btn-default" type="submit">Advanced
-											Search</button>
-									</form>
-									<br> <br>
-									<table class="table">
-										<thead>
-											<tr>
-												<th>#</th>
-												<th>Username</th>
-												<th>Firstname</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>1</td>
-												<td>Mark</td>
-												<td>Otto</td>
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>Jacob</td>
-												<td>Thornton</td>
-											</tr>
-											<tr>
-												<td>3</td>
-												<td>Larry</td>
-												<td>the Bird</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>Mark</td>
-												<td>Otto</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>Mark</td>
-												<td>Otto</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>Mark</td>
-												<td>Otto</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-								<div class="widget-area" style="width: 70%">
-									<div class="breadcrumbs">
-										<ul>
-											<li><a title="">User Details : </a></li>
-											<li><a title=""><button type="button"
-														class="btn btn-info btn-sm" data-toggle="modal"
-														data-target="#newUser">New</button></a></li>
-											<li><a title=""><button type="submit"
-														class="btn btn-info btn-sm">Edit</button></a></li>
-											<li><a title=""><button type="submit"
-														class="btn btn-info btn-sm">Delete</button></a></li>
-										</ul>
-									</div>
+								<div class="widget-area" style="width: 100%">
 
-									<ul class="nav nav-tabs">
-										<li class="active"><a data-toggle="tab" href="#general">General</a></li>
-										<li><a data-toggle="tab" href="#locGroups">Location
-												Groups</a></li>
-									</ul>
-									<div class="tab-content">
-										<div id="general" class="tab-pane fade active in">
-											<div class="col-md-6">
-												<div class="form-group">
-													<label for="" class="font">First Name :</label> <input
-														type="text" placeholder="" id="" class="form-control"
-														readonly="readonly">
-												</div>
-												<div class="form-group">
-													<label for="" class="font">Username :</label> <input
-														type="text" placeholder="" id="" class="form-control"
-														readonly="readonly">
-												</div>
-												<div class="form-group">
-													<label for="" class="font">Ph :</label> <input type="tel"
-														placeholder="" id="" class="form-control"
-														readonly="readonly">
-												</div>
+									<div class="widget-area"
+										style="height: 500px; overflow: auto; width: 55%; float: left;">
+										<form action="createNewUser" method="post" id="createUser">
+											<div class="col-md-4">
+												<span>User Id</span>
 											</div>
-											<div class="col-md-6">
-												<div class="form-group">
-													<label for="" class="font">Last Name :</label> <input
-														type="text" placeholder="" id="" class="form-control"
-														readonly="readonly">
-												</div>
-												<div class="form-group">
-													<label for="" class="font">Email :</label> <input
-														type="email" placeholder="" id="" class="form-control"
-														readonly="readonly">
-												</div>
+											<div class="col-md-8">
+												<input name="userId" type="text" class="form-control">
 											</div>
+
+											<div class="col-md-4">
+												<span>Name</span>
+											</div>
+											<div class="col-md-8">
+												<input name="name" type="text" class="form-control">
+											</div>
+											<div class="col-md-4">
+												<span>Password</span>
+											</div>
+											<div class="col-md-8">
+												<input name="pass" type="password" class="form-control">
+											</div>
+											<div class="col-md-4">
+												<span>Confirm Password</span>
+											</div>
+											<div class="col-md-8">
+												<input name="conPass" type="password" class="form-control">
+											</div>
+
+											<div class="col-md-12"></div>
+											<div class="col-md-4">
+												<span>mobile</span>
+											</div>
+											<div class="col-md-8">
+												<input name="mobile" type="text" maxlength="10"
+													class="form-control">
+											</div>
+
+
 											<div class="col-md-12">
-												<div class="breadcrumbs">
-													<ul>
-														<li><a title="">User Groups : </a></li>
-													</ul>
-												</div>
-												<hr>
-												<div class="row">
-													<div class="col-md-6">
-														<div class="breadcrumbs">
-															<ul>
-																<li><a title="" class="font">Available Groups</a></li>
-															</ul>
-														</div>
-														<textarea rows="" cols="" id="" class="form-control"
-															readonly="readonly"></textarea>
-													</div>
-													<div class="col-md-6">
-														<div class="breadcrumbs">
-															<ul>
-																<li><a title="" class="font">User belongs to</a></li>
-															</ul>
-														</div>
-														<textarea rows="" cols="" id="" class="form-control"
-															readonly="readonly"></textarea>
-													</div>
-												</div>
-											</div>
-										</div>
-
-										<div id="locGroups" class="tab-pane fade ">
-											Default location groups :
-											<div class="sec">
-												<select class="form-control" disabled="disabled">
-													<option>SLC</option>
-													<option>SLC</option>
-													<option>SLC</option>
-													<option>SLC</option>
-													<option>SLC</option>
+												<select class="form-control" name="ugid">
+													<option value="0">Select a user group</option>
+													<c:forEach items="${sessionScope['ejb'].getAllUserGroup()}"
+														var="ug">
+														<option value="${ug.id}">${ug.groupName}</option>
+													</c:forEach>
 												</select>
 											</div>
 											<div class="col-md-12">
-												<div class="breadcrumbs">
-													<ul>
-														<li><a title="">Location Groups : </a></li>
-													</ul>
-												</div>
-												<hr>
-												<div class="row">
-													<div class="col-md-6">
-														<div class="breadcrumbs">
-															<ul>
-																<li><a title="" class="font">Available</a></li>
-															</ul>
-														</div>
-														<textarea rows="" cols="" id="" class="form-control"
-															readonly="readonly"></textarea>
-													</div>
-													<div class="col-md-6">
-														<div class="breadcrumbs">
-															<ul>
-																<li><a title="" class="font">Member of</a></li>
-															</ul>
-														</div>
-														<textarea rows="" cols="" id="" class="form-control"
-															readonly="readonly"></textarea>
-													</div>
-												</div>
+												<input name="name" onclick="submit1();" type="button"
+													class="btn green pull-right" value="Create">
 											</div>
+										</form>
+										<div class="col-md-12"></div>
+
+										<div class='toast' style='display: none'>
+											<h3 id="msg">${requestScope['msg']}</h3>
 										</div>
 									</div>
+									<div class="widget-area"
+										style="height: 500px; overflow: auto; width: 45%; float: left;">
+										<ul>
+											<c:forEach items="${sessionScope['ejb'].getAllUsers()}"
+												var="user">
+												<c:if test="${!user.userId.equals('admin')}">
+													<li><a href="#" onclick="userEdit('${user.userId}');">${user.name}</a></li>
+												</c:if>
+												<div id="edit${user.userId}" class="modal fade" role="dialog"
+													style="top: 25px;">
+													<div class="modal-dialog">
+														<div class="modal-content">
+															<div class="modal-header">
+																<button type="button" class="close" data-dismiss="modal">&times;</button>
+																<h4 class="modal-title">Modal Header</h4>
+															</div>
+															<div class="modal-body">
+																<form action="updateUser" method="post">
+																	<input type="hidden" value="${user.userId}"
+																		name="userId">
+
+																	<div class="col-md-12">
+																		<select class="form-control" name="ugid">
+																			<option value="0">Select a user group</option>
+																			<c:forEach																			
+																				items="${sessionScope['ejb'].getAllUserGroup()}"
+																				var="ug">
+																				<c:choose>
+																				<c:when test="${ug.id==user.userGroup.id}">
+																					<option value="${ug.id}" selected="selected">${ug.groupName}</option>
+																				</c:when>
+																				<c:otherwise>
+																				<option value="${ug.id}">${ug.groupName}</option>
+																				</c:otherwise>
+																			</c:choose>
+																				
+																			</c:forEach>
+																		</select>
+																	</div>
+																	<div class="col-md-12">
+																		<input type="submit" class="btn green pull-right" value="Update">
+																	</div>
+																</form>
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-default"
+																	data-dismiss="modal">Close</button>
+															</div>
+														</div>
+
+													</div>
+												</div>
+
+											</c:forEach>
+										</ul>
+									</div>
 								</div>
+
 							</div>
 						</div>
 					</div>
@@ -252,151 +204,9 @@
 		<!-- Page Container -->
 	</div>
 	<!-- main -->
-	<div id="newUser" class="modal fade" role="dialog" style="top: 25px;">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">New User :</h4>
-				</div>
-				<div class="modal-body">
-					<div class="widget-area">
-						<!-- <div class="breadcrumbs">
-							<ul>
-								<li><a title="">New User : </a></li>
-							</ul>
-						</div> -->
-						<form role="form" class="sec">
-							<ul class="nav nav-tabs">
-								<li class="active"><a data-toggle="tab" href="#generalN">General</a></li>
-								<li><a data-toggle="tab" href="#locGroupsN">Location
-										Groups</a></li>
-							</ul>
-							<div class="tab-content">
-								<div id="generalN" class="tab-pane fade active in">
-									<div class="col-md-6">
-										<div class="form-group">
-											<label for="" class="font">First Name :</label> <input
-												type="text" placeholder="" id="" class="form-control">
-										</div>
-										<div class="form-group">
-											<label for="" class="font">Username :</label> <input
-												type="text" placeholder="" id="" class="form-control">
-										</div>
-										<div class="form-group">
-											<label for="" class="font">Ph :</label> <input type="tel"
-												placeholder="" id="" class="form-control">
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group">
-											<label for="" class="font">Last Name :</label> <input
-												type="text" placeholder="" id="" class="form-control">
-										</div>
-										<div class="form-group">
-											<label for="" class="font">Email :</label> <input
-												type="email" placeholder="" id="" class="form-control">
-										</div>
-										<button class="btn green pull-right" type="submit">Set
-											password</button>
-									</div>
-									<div class="col-md-12">
-										<div class="breadcrumbs">
-											<ul>
-												<li><a title="">User Groups : </a></li>
-											</ul>
-										</div>
-										<hr>
-										<div class="row">
-											<div class="col-md-6">
-												<div class="breadcrumbs">
-													<ul>
-														<li><a title="" class="font">Available Groups</a></li>
-													</ul>
-												</div>
-												<textarea rows="" cols="" id="" class="form-control"></textarea>
-											</div>
-											<div class="col-md-1">
-												<a href="#"><img src="images/forward.png"></a> <a
-													href="#"><img src="images/backward.png"></a> <br>
-												<a href="#"><img src="images/allForwaRD.png"></a> <a
-													href="#"><img src="images/allbACKWARD.png"></a>
-											</div>
-											<div class="col-md-5">
-												<div class="breadcrumbs">
-													<ul>
-														<li><a title="" class="font">User belongs to</a></li>
-													</ul>
-												</div>
-												<textarea rows="" cols="" id="" class="form-control"></textarea>
-											</div>
-										</div>
-									</div>
-									<br>
-									<button class="btn green pull-right" type="submit">Next</button>
-								</div>
 
-								<div id="locGroupsN" class="tab-pane fade ">
-									Default location groups :
-									<div class="sec">
-										<select class="form-control">
-											<option>SLC</option>
-											<option>SLC</option>
-											<option>SLC</option>
-											<option>SLC</option>
-											<option>SLC</option>
-										</select>
-									</div>
-									<div class="col-md-12">
-										<div class="breadcrumbs">
-											<ul>
-												<li><a title="">Location Groups : </a></li>
-											</ul>
-										</div>
-										<hr>
-										<div class="row">
-											<div class="col-md-6">
-												<div class="breadcrumbs">
-													<ul>
-														<li><a title="" class="font">Available</a></li>
-													</ul>
-												</div>
-												<textarea rows="" cols="" id="" class="form-control"></textarea>
-											</div>
-											<div class="col-md-1">
-												<a href="#"><img src="images/forward.png"></a> <a
-													href="#"><img src="images/backward.png"></a> <br>
-												<a href="#"><img src="images/allForwaRD.png"></a> <a
-													href="#"><img src="images/allbACKWARD.png"></a>
-											</div>
-											<div class="col-md-5">
-												<div class="breadcrumbs">
-													<ul>
-														<li><a title="" class="font">Member of</a></li>
-													</ul>
-												</div>
-												<textarea rows="" cols="" id="" class="form-control"></textarea>
-											</div>
-										</div>
-									</div>
-									<br>
-									<div class="col-md-12">
-										<button class="btn green pull-left" type="submit">Previous</button>
-										<button class="btn green pull-right" type="submit">Submit</button>
-									</div>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-				<div class="modal-footer"></div>
-			</div>
-
-		</div>
-	</div>
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
-	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 	<script type="text/javascript" src="js/script.js"></script>
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="js/enscroll.js"></script>
@@ -406,6 +216,32 @@
 			$("#setup").attr("id", "activeSubMenu");
 			$("#sSetupUser").attr("style", "color: red;");
 		});
+
+		function submit1() {
+			var uid = $('[name="userId"]').val();
+			var name = $('[name="name"]').val();
+			var pass = $('[name="pass"]').val();
+			var conPass = $('[name="conPass"]').val();
+			var mobile = $('[name="mobile"]').val();
+			var ugid = $('[name="ugid"]').val();
+
+			if (ugid != 0) {
+				if (pass == conPass) {
+					if (uid != "" && name != "" && mobile != "") {
+						$("#createUser").submit();
+					} else {
+						alert("you can not left any field blank.");
+					}
+				} else {
+					alert('password does not match with confirm password');
+				}
+			} else {
+				alert('please select a user group');
+			}
+		}
+		function userEdit(id) {
+			$("#edit"+id).modal('show');
+		}
 	</script>
 </body>
 
