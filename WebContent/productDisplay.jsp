@@ -175,9 +175,9 @@
 		<c:redirect url="index.jsp" />
 	</c:if>
 	<div class="main" style="height: 664px;">
-		<%@include file="includeHeader.html"%>
+		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
-			<%@include file="includeSidebar.html"%>
+			<%@include file="includeSidebar.jsp"%>
 			<div class="content-sec"
 				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
 				<div class="container">
@@ -306,7 +306,8 @@
 															<td>wd</td>
 															<td>fd</td>
 															<td>dfd</td>
-															<td><input type="checkbox" name="active" value="active"></td>
+															<td><input type="checkbox" name="active"
+																value="active"></td>
 														</tr>
 													</tbody>
 												</table>
@@ -570,10 +571,11 @@
 										</div>
 									</div>
 									<div class="col-md-6">
-									<input class="btn btn-primary large" type="button" onclick="back();" value="Back">
-								</div>					
+										<input class="btn btn-primary large" type="button"
+											onclick="back();" value="Back">
+									</div>
 								</div>
-								
+
 							</div>
 						</div>
 
@@ -757,7 +759,7 @@
 					<div id="step2"
 						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial;">
 
-	<div class="masonary-grids">
+						<div class="masonary-grids">
 							<div class="col-md-6">
 								<div class="widget-area">
 									<h2 class="widget-title">
@@ -829,10 +831,10 @@
 
 
 							<script type="text/javascript">
-							function back(){
-								window.location='stockView.jsp';
-							}
-							
+								function back() {
+									window.location = 'stockView.jsp';
+								}
+
 								$(document).ready(function() {
 									$("#divshow").hide();
 									$("#divhide").show();
@@ -900,9 +902,10 @@
 											class="form-control">
 
 									</div>
-									<div  class="form-group" >
-										<h4>Print Barcode
-										<input type="checkbox" id="barCode"></h4>
+									<div class="form-group">
+										<h4>
+											Print Barcode <input type="checkbox" id="barCode">
+										</h4>
 									</div>
 								</div>
 
@@ -1067,8 +1070,8 @@
 								</div>
 							</fieldset>
 						</div>
-						<div id="showhide"><h3>
-						Skip the step</h3>
+						<div id="showhide">
+							<h3>Skip the step</h3>
 						</div>
 					</div>
 					<div id="step6"
@@ -1116,7 +1119,7 @@
 							</table>
 
 						</fieldset>
-					
+
 					</div>
 
 
@@ -1173,9 +1176,7 @@
 										</tr>
 										<tr>
 											<td>&nbsp;</td>
-											<tr>
-										
-										
+										<tr>
 										<tr>
 											<td>Description:</td>
 											<td><input type="text" class="form-control "
@@ -1183,27 +1184,15 @@
 										</tr>
 										<tr>
 											<td>&nbsp;</td>
-										
-										
 										<tr>
-										
-										
 										<tr>
 											<td>Universal Product Code:</td>
 											<td><input type="text" class="form-control " readonly
 												name="upc" id="upc"></td>
-										
-										
 										<tr>
-										
-										
 										<tr>
 											<td>&nbsp;</td>
-										
-										
 										<tr>
-										
-										
 										<tr>
 											<td>Unit of Measurement:</td>
 											<td><input type="text" class="form-control " readonly
@@ -1212,11 +1201,7 @@
 
 										<tr>
 											<td>&nbsp;</td>
-										
-										
 										<tr>
-										
-										
 										<tr>
 											<td>Is Salable:</td>
 											<td>
@@ -1294,8 +1279,6 @@
 											<td><b>Lot Number:</b></td>
 											<td><input class="form-control " type="text"
 												name="lotnumber" readonly id="ltnum"></td>
-									
-									
 									</table>
 									<br> <b>Serial Number:</b>
 									<div
@@ -1325,8 +1308,6 @@
 											<td>Attribute 2:</td>
 											<td><input readonly class="form-control " name="a2"
 												id="att2">
-										
-										
 										</tr>
 										<tr>
 											<td>&nbsp;</td>
@@ -1604,8 +1585,8 @@
 
 
 
-										
-										</body>
+
+</body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
 </html>
