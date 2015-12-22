@@ -199,24 +199,27 @@
 	<c:if test="${sessionScope['user']==null}">
 		<c:redirect url="index.jsp" />
 	</c:if>
-	
-	<c:forEach
-		items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
-		var="page">
 
-		<c:if test="${page.name.equals('MaterialPartDetailsGenerals')}">
-			<c:set var="i" value="5" />
+
+	<c:if test="${!sessionScope['user'].equals('admin')}">
+
+		<c:forEach
+			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
+			var="page">
+
+			<c:if test="${page.name.equals('MaterialPartDetailsGenerals')}">
+				<c:set var="i" value="5" />
+			</c:if>
+		</c:forEach>
+		<c:if test="${i!=5}">
+			<script type="text/javascript">
+				alert('you have no permission to view this page');
+				window.location = "dashboard.jsp";
+			</script>
 		</c:if>
-	</c:forEach>
-	<c:if test="${i!=5}">
-		<script type="text/javascript">
-			alert('you have no permission to view this page');
-			window.location = "dashboard.jsp";
-		</script>
 	</c:if>
-	
-	
-	
+
+
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
@@ -1609,35 +1612,35 @@
 						dataType : "json",
 						success : function(data) {
 							$("#pp1").val(data.code);
-							
-							if(data.attrNmae1=='null'){
+
+							if (data.attrNmae1 == 'null') {
 								$("#ac1").val("");
-							}else{
+							} else {
 								$("#ac1").val(data.attrNmae1);
 							}
-							if(data.attrNmae2=='null'){
+							if (data.attrNmae2 == 'null') {
 								$("#ac2").val("");
-							}else{
+							} else {
 								$("#ac2").val(data.attrNmae2);
 							}
-							if(data.attrNmae3=='null'){
+							if (data.attrNmae3 == 'null') {
 								$("#ac3").val("");
-							}else{
+							} else {
 								$("#ac3").val(data.attrNmae3);
 							}
-							if(data.attrNmae4=='null'){
+							if (data.attrNmae4 == 'null') {
 								$("#ac4").val("");
-							}else{
+							} else {
 								$("#ac4").val(data.attrNmae4);
 							}
-							if(data.attrNmae5=='null'){
+							if (data.attrNmae5 == 'null') {
 								$("#ac5").val("");
-							}else{
+							} else {
 								$("#ac5").val(data.attrNmae5);
 							}
-							if(data.attrNmae6=='null'){
+							if (data.attrNmae6 == 'null') {
 								$("#ac6").val("");
-							}else{
+							} else {
 								$("#ac6").val(data.attrNmae6);
 							}
 
