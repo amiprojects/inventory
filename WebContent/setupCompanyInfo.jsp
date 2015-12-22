@@ -23,6 +23,7 @@
 <link rel="stylesheet" href="css/style.css" type="text/css" />
 <!-- Style -->
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
+<link rel="stylesheet" href="css/toast.css" type="text/css" />
 <!-- Responsive -->
 <style>
 .font {
@@ -89,6 +90,7 @@
 																	readonly="readonly" value="${compInfo.compname}"><br>
 															</div>
 														</div>
+
 														<div class="col-md-6">
 															<div>
 																<label for="exampleInputPassword1">Company
@@ -97,19 +99,34 @@
 																	class="form-control" readonly="readonly"
 																	value="${compInfo.email}"><br>
 															</div>
-															<!-- <input type="text" id="email" name="email"  /> -->
+
+														</div>
+
+
+														<div class="col-md-6">
+															<div>
+																<label for="exampleInputEmail1">Company Mobile
+																	No:</label> <input type='text' name="mono" id="mobile"
+																	maxlength="10" minlength="10"
+																	onChange="this.value = minmax(this.value, 999999999, 9999999999)"
+																	placeholder="Eg. 9xxxxxxxxx" class="form-control"
+																	readonly="readonly" value="${compInfo.mobile}"><br>
+															</div>
 														</div>
 
 
 
 														<div class="col-md-6">
-															<label for="exampleInputEmail1">Company Mobile
-																No:</label> <input type='text' name="mono" id="mobile"
-																maxlength="10" minlength="10"
-																onChange="this.value = minmax(this.value, 999999999, 9999999999)"
-																placeholder="Eg. 9xxxxxxxxx" class="form-control"
-																readonly="readonly" value="${compInfo.mobile}"><br>
+															<div>
+																<label for="exampleInputPassword1"> Country:</label> <input
+																	id="country1" readonly="readonly" type="text"
+																	value="${compInfo.country1}"
+																	placeholder="choose Country name" name="country1"
+																	class="form-control"> <br>
+															</div>
 														</div>
+
+
 
 														<div class="col-md-6">
 															<div>
@@ -117,68 +134,64 @@
 																	No:</label> <input type='number' name="phno" id="phone"
 																	placeholder="Enter Phone Number" class="form-control"
 																	readonly="readonly" value="${compInfo.phone}"><br>
+															</div>
 
-
-
-
+														</div>
+														<br>
+														<div class="col-md-6">
+															<div>
+																<label for="exampleInputPassword1"> State:</label> <input
+																	id="state" readonly="readonly"
+																	value="${compInfo.state}" name="state"
+																	class="form-control" placeholder="choose state name"
+																	type="text"><br>
 															</div>
 														</div>
-
-
+														<br> <br>
 
 														<div class="col-md-6">
 															<div>
 																<label for="exampleInputPassword1">Company
 																	Address:</label><br>
-																<textarea name="adress" id="addr" rows="5" cols="59"
-																	readonly="readonly">${compInfo.addr}</textarea>
+																<textarea name="adress" id="addr" rows="5" cols="55"
+																	disabled="disabled">${compInfo.addr}</textarea>
 																<br>
 															</div>
 														</div>
-
+														<br>
 														<div class="col-md-6">
 															<div>
 																<label for="exampleInputPassword1"> City:</label> <input
-																	type="text" name="city" id="cityname"
-																	placeholder="Enter city" class="form-control"
-																	readonly="readonly" value="${compInfo.city}"><br>
+																	placeholder="choose city name" id="city"
+																	readonly="readonly" value="${compInfo.city}"
+																	class="form-control" name="city" type="text"><br>
 
-																<input type="hidden" name="vendorCityId"
-																	value="${compInfo.city}" id="vendorCityId">
 															</div>
 														</div>
-														<div class="col-md-6">
+
+
+														<div>
+															<label for="exampleInputPassword1"> Upload logo:</label>
 															<div>
-																<label for="exampleInputPassword1"> State:</label> <select
-																	name="state" id="state"></select> <input type="hidden"
-																	name="state1" readonly="readonly"
-																	value="${compInfo.state}"><br>
+																<img id="image" alt=""
+																	src="data:image/jpeg;base64,${compInfo.getImageAsString()}"
+																	style="width: 100px; height: 50px;">
 															</div>
 														</div>
-
-
-														<div class="col-md-6">
-															<div>
-																<label for="exampleInputPassword1"> Upload logo:</label>
-																<div>
-																	<img id="image" alt=""
-																		src="data:image/jpeg;base64,${compInfo.getImageAsString()}"
-																		style="width: 100px; height: 50px;">
-																</div>
-															</div>
-															<div id="companyLogo">
-																<input type="file" name="proImg" size="50" id="image"
-																	onchange="readURL(this);" value="${compInfo.image}">
-															</div>
+														<div id="companyLogo">
+															<input type="file" name="proImg" size="60" id="image"
+																onchange="readURL(this);" value="${compInfo.image}">
 														</div>
-
 													</div>
+
+
 
 
 
 												</div>
 
-												<div align="left" id="companyinfo">
+												<div style="position: absolute; bottom: 16px" align="left"
+													id="companyinfo">
 													<input class="btn btn-primary large" type="button"
 														onclick="activatefields();" value="Edit">
 												</div>
@@ -271,8 +284,11 @@
 
 
 														<div>
-															<button style="float: right" class="btn green pull-right"
-																type="submit" onclick="submitCompmanyDetails();">Submit</button>
+															<div id="subBId">
+																<button style="float: right"
+																	class="btn green pull-right" type="button"
+																	onclick="submitCompmanyDetails();">Submit</button>
+															</div>
 															<button
 																style="margin-left: 14px; margin-top: 1px; float: left"
 																class="btn btn-primary midium" type="button"
@@ -287,13 +303,10 @@
 									</div>
 								</form>
 							</div>
-
-							<!-- <div align="right" class="col-md-12">
-									<input class="btn btn-primary large" type="button"
-										onclick="activatefields();" value="Edit">
-								</div> -->
-
 						</div>
+					</div>
+					<div class='toast' style='display: none'>
+						<h3 id="msg">${requestScope['msg']}</h3>
 					</div>
 				</div>
 			</div>
@@ -317,6 +330,7 @@
 		$(document).ready(function() {
 			$("#setup").attr("id", "activeSubMenu");
 			$("#companyinfo").show();
+			$('#subBId').hide();
 			$("#companyLogo").hide();
 			$("#sSetupComp").attr("style", "color: red;");
 		});
@@ -329,8 +343,11 @@
 			$('#email').attr("readonly", false);
 			$('#mobile').attr("readonly", false);
 			$('#phone').attr("readonly", false);
-			$('#addr').attr("readonly", false);
-			$('#cityname').attr("readonly", false);
+			$('#addr').attr("disabled", false);
+			$('#city').attr("readonly", false);
+			$('#state').attr("readonly", false);
+			$('#country1').attr("readonly", false);
+			$('#subBId').show();
 			//	$('#state').attr("readonly", false);
 			$('#vat').attr("readonly", false);
 			$('#cst').attr("readonly", false);
@@ -345,17 +362,7 @@
 			$("#companyLogo").show();
 
 		}
-		function verifyEmail() {
-			var email = jQuery('#compemail').val();
-			var eml = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 
-			if (eml.test($.trim($("#email").val())) == false) {
-				alert("Please enter valid email address.");
-				$("#email").focus();
-				return false;
-			}
-
-		}
 		function readURL(input) {
 			if (input.files && input.files[0]) {
 				var reader = new FileReader();
@@ -368,16 +375,7 @@
 				reader.readAsDataURL(input.files[0]);
 			}
 		}
-		/* 	function checkMobile() {
-				var number = jQuery('#mobile').val();
-				var splchars = /^[0-9-+]+$/;
-				if (splchars.test(number)) {
-					return true;
-				} else {
-					alert("Illegal characters detected!");
-					return false;
-				}
-			} */
+
 		function checkPhone() {
 			var number = jQuery('#phone').val();
 			var splchars = /^[0-9-+]+$/;
@@ -427,7 +425,6 @@
 				$("#companydetails").submit();
 			}
 
-			/* $("#companydetails").submit(); */
 		}
 	</script>
 	<script type="text/javascript">
@@ -452,7 +449,7 @@
 				return true;
 			} else {
 
-				alert("dff00");
+				alert("valid email id: abc@pqr.com");
 				document.getElementById("email").value = "";
 				return false;
 			}
@@ -474,101 +471,136 @@
 	</script>
 	<script type="text/javascript">
 		$(function() {
-			$("#cityname").autocomplete({
-				source : function(req, resp) {
-					$.ajax({
-						type : "post",
-						url : "getCityByName",
-						data : {
-							name : req.term
-						},
-						dataType : "json",
-						success : function(data) {
-							resp($.map(data, function(item) {
-								return ({
-									value : item.cityName,
-									id : item.id
-								});
-							}));
-						}
+			$("#country1")
+					.autocomplete(
+							{
+								source : function(request, response) {
+									$
+											.ajax({
+												url : "getcountry",
+												dataType : "json",
+												data : {
+													term : request.term
+												},
+												success : function(data) {
+													response($
+															.map(
+																	data,
+																	function(
+																			item) {
+																		return {
+																			value : item.countryName,
+																			id : item.id
+																		}
+																	}));
+												}
+											});
+								},
+								change : function(event, ui) {
+									if (ui.item == null) {
+										$(this).val("");
+										$("#state").val("");
+										$("#state").prop("disabled", true);
+									} else {
+										$("#state").prop("disabled", false);
+										$("#state")
+												.autocomplete(
+														{
+															source : function(
+																	request,
+																	response) {
+																$
+																		.ajax({
+																			url : "getStateByCountryByStateName",
+																			dataType : "json",
+																			data : {
+																				name : request.term,
+																				cid : ui.item.id
+																			},
+																			success : function(
+																					data) {
+																				response($
+																						.map(
+																								data,
+																								function(
+																										item) {
+																									return {
+																										value : item.stateName,
+																										id : item.id
+																									}
+																								}));
+																			}
 
-					});
-				},
-				change : function(event, ui) {
-					alert('hello');
-					if (ui.item == null) {
-						$(this).val("");
-						$("#vendorCityId").val("");
-					} else {
-						alert(ui.item.id);
-						 $.ajax({
-							url:"getStateByCityName",
-							dataType:"json",
-							data:{nm:ui.item.value},
-							success:function(data1){
-								$("#state").empty();
-								$.map(data1,function(item1){
-									alert(item1.stateName);
-									$("#state").append("<option>"+item1.stateName+"</option>");
-								});
-							},
-							error:function(a,b,c){
-								alert(a+b+c);
-							}
-						});
-						$("#vendorCityId").val(ui.item.id);
-					}
-				},
-				select : function(event, ui) {
-					$("#vendorCityId").val(ui.item.id);
-				}
-			});
+																		});
+															},
+
+															change : function(
+																	event, ui) {
+																if (ui.item == null) {
+																	$(this)
+																			.val(
+																					"");
+																	$("#city")
+																			.val(
+																					"");
+																	$("#city")
+																			.prop(
+																					"disabled",
+																					true);
+																} else {
+																	$("#city")
+																			.prop(
+																					"disabled",
+																					false);
+																	$("#city")
+																			.autocomplete(
+																					{
+																						source : function(
+																								request,
+																								response) {
+																							$
+																									.ajax({
+																										url : "getCityByStateByCityName",
+																										dataType : "json",
+																										data : {
+																											name1 : request.term,
+																											cid1 : ui.item.id
+																										},
+																										success : function(
+																												data) {
+																											response($
+																													.map(
+																															data,
+																															function(
+																																	item) {
+																																return {
+																																	value : item.cityName,
+																																	id : item.id
+																																}
+																															}));
+																										}
+
+																									});
+																						},
+
+																					});
+																}
+															},
+
+														});
+									}
+								},
+
+							});
 		});
 	</script>
-
-	<!-- <script type="text/javascript">
-	
-	$(function() {
-		$("#descriptionName").autocomplete({
-			source : function(request, response) {
-				$.ajax({
-					url : "getProductByDescription",
-					dataType : "json",
-					data : {
-						descriptionName : request.term
-					},
-					success : function(data) {
-						response($.map(data, function(item) {
-							return {
-								value : item.code,
-								id : item.id,
-
-							}
-						}));
-					}
-				});
-			},
-			select : function(item, ui) {
-				viewProduct(ui.item.id);
+	<script type="text/javascript">
+		$(document).ready(function() {
+			if ($('#msg').html() != "") {
+				$('.toast').fadeIn(400).delay(3000).fadeOut(400);
 			}
-		})
-
-	});
-	</script> -->
-	<!-- <script type="text/javascript">
-$(document)
-.ready(
-		function() {
-			$("#companyinfo").show();
-		}
-);
-
-
-function activatefields() {
-	$("#companyinfo").modal('hide');
-}
-</script> -->
-
+		});
+	</script>
 
 </body>
 

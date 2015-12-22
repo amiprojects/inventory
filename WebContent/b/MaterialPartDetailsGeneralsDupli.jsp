@@ -33,19 +33,17 @@
 <link rel="stylesheet" href="css/toast.css" type="text/css" />
 
 <script type="text/javascript">
-function readURL(input) {
-	if (input.files && input.files[0]) {
-		var reader = new FileReader();
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
 
-		reader.onload = function(e) {
-			$('#image').attr('src', e.target.result).width(120).height(
-					85);
-		};
+			reader.onload = function(e) {
+				$('#image').attr('src', e.target.result).width(120).height(85);
+			};
 
-		reader.readAsDataURL(input.files[0]);
+			reader.readAsDataURL(input.files[0]);
+		}
 	}
-}
-
 </script>
 
 
@@ -54,7 +52,7 @@ function readURL(input) {
 <script>
 	var i = 2;
 	var x = "";
-
+	var serial = [];
 	$(document)
 			.ready(
 					function() {
@@ -141,6 +139,13 @@ function readURL(input) {
 												$("#lotnumberS").val(
 														$("#lotnO").val());
 
+												for (l = 0; l < serial.length; l++) {
+													x = x
+															+ serial[l]
+															+ '<br><input type="hidden" value="'+serial[l]+'" name="serialNumber">';
+
+												}
+												$("#slNo").html(x);
 											}
 
 										});
@@ -166,9 +171,9 @@ function readURL(input) {
 
 					});
 
-	/* function increSerial() {
+	function increSerial() {
 		$("#step67").modal('show');
-	} */
+	}
 	function submitSumary() {
 		$("#fs").submit();
 	}
@@ -216,17 +221,45 @@ function readURL(input) {
 								<div class="widget-area" style="width: 40%;">
 
 
+									<!-- <div class="form-group">
+											<label for="" class="">Product code : </label> <input
+												type="text" class="form-control"
+												placeholder="Enter Description" id="descriptionName"
+												name="descriptionName" class="form-control">
+										</div>
 
+										<div class="form-group">
+											<label for="" class="">Description : </label> <input
+												type="text" class="form-control"
+												placeholder="Enter Description" id="ProductCodeName"
+												name="descriptionName" class="form-control">
+										</div>
 
+										<div class="form-group">
+											<label for="" class="">Product Category : </label> <input
+												type="text" class="form-control"
+												placeholder="Enter Description" id="ProductCodeName"
+												name="descriptionName" class="form-control">
+										</div>
 
-									<!-- .........*****************************............ PRODUCT SEARCH PANAEL............***************************************-->
+										<div class="form-group">
+											<label for="" class="">Product Sub Category : </label> <input
+												type="text" class="form-control"
+												placeholder="Enter Description" id="ProductCodeName"
+												name="descriptionName" class="form-control">
+										</div> 
+										
+										
+										
+<!-- .........*****************************............ PRODUCT SEARCH PANAEL............***************************************-->
 									<form action="MaterialPartDetailsGenerals.jsp" method="get">
 										<table>
 											<tr>
 												<td><b>Product code</b></td>
 												<td><input type="text" placeholder="Search by Code"
 													id="pCodeSearch" name="pCodeSearch"></td>
-												<td>&nbsp; <input type="submit" value="Search">
+												<td>&nbsp;
+													<button  type="submit">Search</button>
 												</td>
 											</tr>
 											<tr>
@@ -234,22 +267,20 @@ function readURL(input) {
 											</tr>
 										</table>
 									</form>
-									<form action="MaterialPartDetailsGeneralsDupli.jsp"
-										method="get">
-										<table>
-											<tr>
-												<td><b>Category</b></td>
-												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
-													type="text" placeholder="Search by Category"
-													id="pCatSearch" name="pCatSearch"></td>
+									<form action="MaterialPartDetailsGeneralsDupli.jsp" method="get">
+									<table>	<tr>
+											<td><b>Category</b></td>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" placeholder="Search by Category"
+												id="pCatSearch" name="pCatSearch"></td>
 
-												<td>&nbsp; <input type="submit" value="Search">
-												</td>
-											</tr>
+											<td>&nbsp;
+												<button  type="submit">Search</button>
+											</td>
+										</tr>
 
-										</table>
+									</table>
 									</form>
-									<!-- ************************************************endSearch*************************************************************** -->
+
 									<br> <br>
 									<table class="table">
 
@@ -265,15 +296,15 @@ function readURL(input) {
 										<table class="table">
 											<c:set var="countt" value="${1}" />
 											<c:forEach
-												items="${param.pCodeSearch.equals(null)?sessionScope['ejb'].getAllProductDetail():sessionScope['ejb'].getAllProductByProductCode(param.pCodeSearch)}"
-												var="productt">
+												items="${param.pCatSearch.equals(null)?sessionScope['ejb'].getAllProductDetail():sessionScope['ejb'].getAllProductByCategory(param.pCatSearch)}"
+												var="productt22">
 
 												<tr>
 													<td align="left">${countt}</td>
-													<td align="left">${productt.code}</td>
-													<td align="center">${productt.description}</td>
+													<td align="left">${productt22.code}</td>
+													<td align="center">${productt22.description}</td>
 													<td align="center"><a href="#" id="abcdef"
-														onclick="viewProduct('${productt.id}');"> <img
+														onclick="viewProduct('${productt22.id}');"> <img
 															alt="click to view" src="images/eye.png" height="20"></a></td>
 												</tr>
 												<c:set var="countt" value="${countt+1}" />
@@ -282,6 +313,7 @@ function readURL(input) {
 										</table>
 									</div>
 								</div>
+		<!-- ************************************************endSearch   and view*************************************************************** -->
 								<div class="widget-area" style="width: 60%; height: 536px">
 									<div class="breadcrumbs">
 										<ul>
@@ -578,7 +610,7 @@ function readURL(input) {
 					</div>
 
 
-					<!-- 
+
 					<div id="step67" class="modal fade" role="dialog"
 						style="top: 25px; right: 2px">
 						<div class="modal-dialog">
@@ -609,7 +641,7 @@ function readURL(input) {
 
 						</div>
 					</div>
- -->
+
 					<div id="step1"
 						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial;">
 						<div id="bU"
@@ -698,32 +730,60 @@ function readURL(input) {
 
 					</div>
 
-					<div id="step3"
+					<div id="step5"
 						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial;">
+
+
+
+
 						<fieldset>
+							<legend>
+								<img src="Capture.PNG">&nbsp &nbsp Track
+							</legend>
 
-							<legend> Add Product Image </legend>
+							<p style="font-size: 14px">(You want to track the product/raw
+								materials by)</p>
+							<br> <br> <br>
+							<div id="trackkDiv">
+								<table class="table">
 
-							<p style="font-size: 14px">(Enter the Products Image .)</p>
-							
-							
-									<div>
-															<label > Upload logo:</label>
-															<div>
-																<img id="image" alt=""
-																	src="data:image/jpeg;base64,"
-																	style="width: 100px; height: 50px;">
-															</div>
-														</div>
-														<div id="companyLogo">
-															<input type="file" name="proImg" size="60" id="image"
-																onchange="readURL(this);" value="">
-														</div>
+									<thead>
+										<tr>
+											<th>Selected</th>
+											<th>Name</th>
+											<th>Abbr</th>
 
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td><input type="checkbox" name="iSLotNumber"
+												onclick="L()" id="ll" value="lotnumber"></td>
+											<td>Lot Number</td>
+											<td>Lot#</td>
+
+										</tr>
+
+										<tr>
+											<td><input type="checkbox" name="isSerialNumber"
+												onclick="S()" id="ss" value="track"></td>
+											<td>Serial Number</td>
+											<td>Ser#</td>
+
+
+
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<div id="nottrack">
+								<h3>Skip the step</h3>
+							</div>
 						</fieldset>
+
 					</div>
 
-					<div id="step4"
+					<div id="step3"
 						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial;">
 
 
@@ -837,12 +897,12 @@ function readURL(input) {
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="" class="font">Maximum Retail Price :</label> <input
-											type="text" readonly="readonly" placeholder="" id="mrpAmi"
+											type="text" readonly="readonly" placeholder="" id=""
 											class="form-control">
 									</div>
 									<div class="form-group">
 										<label for="" class="font">Wholesale Price :</label> <input
-											type="text" readonly="readonly" placeholder="" id="wspAmi"
+											type="text" readonly="readonly" placeholder="" id=""
 											class="form-control">
 									</div>
 								</div>
@@ -869,94 +929,80 @@ function readURL(input) {
 						</fieldset>
 
 					</div>
-
-
-
-					<div id="step2"
-						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial;">
-
-						<div class="masonary-grids">
-							<div class="col-md-6">
-								<div class="widget-area" align="left">
-									<h2 class="widget-title">
-										<strong>Tree</strong> List
-									</h2>
-									<p>
-										<a href="#" id="tree-expand-all">Expand all</a> | <a href="#"
-											id="tree-collapse-all">Collapse all</a>
-									</p>
-
-									<div class="tree-list"
-										style="overflow-y: scroll; overflow-y: scroll; height: 300px">
-
-										<!-- Listing directory ZendX from ZendFramework library -->
-
-										<ul id="tree">
-											<c:forEach items="${sessionScope['ejb'].getAllDepartments()}"
-												var="dept">
-												<li>${dept.name}
-													<ul>
-														<c:forEach
-															items="${sessionScope['ejb'].getAllSubDepartmentsByDepartmentId(dept.id)}"
-															var="subDept">
-															<li>${subDept.name}
-																<ul>
-																	<c:forEach var="cat"
-																		items="${sessionScope['ejb'].getAllCategoryBySubDepartmentId(subDept.id)}">
-																		<li><input type="radio" name="same"
-																			onclick="catProblem('${cat.id}')" value="${cat.id}">
-																			${cat.name}
-																			<ul>
-																				<c:forEach var="pro"
-																					items="${sessionScope['ejb'].getAllProductDetailByCategoryId(cat.id)}">
-																					<li>${pro.description}</li>
-																				</c:forEach>
-																			</ul></li>
-																	</c:forEach>
-																</ul>
-															</li>
-														</c:forEach>
-													</ul>
-												</li>
-											</c:forEach>
-										</ul>
-										<!-- </div> -->
-									</div>
-
-								</div>
-							</div>
-						</div>
-					</div>
-
 					<div id="step6"
 						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial;">
 
-						<!-- ******************************************************************************* -->
-						<fieldset>
-							<legend>
-								<img src="Capture.PNG">&nbsp &nbsp Initial inventory
-								tracking
-							</legend>
 
-							<p style="font-size: 14px">(Track the product/raw materials
-								by Lot Number)</p>
-							<br> <br>
-							<div id="trackkDiv">
+						<div id="l&S">
+
+							<fieldset>
+								<legend> Initial inventory tracking </legend>
+
+								<p style="font-size: 14px">(Enter the tracking information
+									for Products being added to inventory.)</p>
+								<br> <br> <br>
 								<div class="col-md-6">
-
-									<label for="exampleInputEmail1">Lot Number:</label> <input
-										id="lotnO" type="text" name="lotNumber" required
-										class="form-control"><br>
-
+									<div id="lotdiv">
+										<label for="exampleInputEmail1">Lot Number:</label> <input
+											id="lotnO" type="text" name="lotNumber" required
+											class="form-control"><br>
+									</div>
 								</div>
-							</div>
-							<div id="nottrack">
-								<h3>Skip the step</h3>
-							</div>
-						</fieldset>
+								<div id="serdiv">
+									<div class="col-md-6">
+										<div>
+											<label for="exampleInputEmail1">Serial Number:</label> <input
+												type="text" name="serialNumber" id="indvSerial"
+												class="form-control" required><br>
+										</div>
+									</div>
+
+									<div class="col-md-9">
+										<div>
+											<table id="stream_table"
+												class="table table-striped table-bordered">
+
+												<tr>
+													<td>
+														<table cellspacing="0" cellpadding="1" width="304">
+															<tr style="">
+																<th>Serial Number</th>
+
+															</tr>
+														</table>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<div style="width: 375px; height: 164px; overflow: auto;">
+															<table cellspacing="0" cellpadding="1" width="300"
+																id="serialNo">
+
+															</table>
+														</div>
+													</td>
+												</tr>
+											</table>
+										</div>
+									</div>
+									<div style="position: absolute; bottom: 203px; left: 425px;">
+										<a href="#" id="addSeriall" onclick="addSerial();"> <img
+											src="img/pus.PNG" style="top: 2px; left: 3px"></a> <a
+											onclick="increSerial();" href="#"> <img
+											src="img/hash.PNG" style="top: 2px; left: 3px">
+										</a> <a href="#"><img src="img/delete.PNG"
+											style="top: 2px; left: 3px"></a>
+									</div>
+								</div>
+
+							</fieldset>
+						</div>
+						<div id="skip">
+							<h3>Skip the step</h3>
+						</div>
 					</div>
 
-					<div id="step5"
+					<div id="step4"
 						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial;">
 
 
@@ -1013,6 +1059,65 @@ function readURL(input) {
 
 
 					</div>
+					<div id="step2"
+						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial;">
+
+						<div class="masonary-grids">
+							<div class="col-md-6">
+								<div class="widget-area" align="left">
+									<h2 class="widget-title">
+										<strong>Tree</strong> List
+									</h2>
+									<p>
+										<a href="#" id="tree-expand-all">Expand all</a> | <a href="#"
+											id="tree-collapse-all">Collapse all</a>
+									</p>
+
+									<div class="tree-list"
+										style="overflow-y: scroll; overflow-y: scroll; height: 300px">
+
+										<!-- Listing directory ZendX from ZendFramework library -->
+
+										<ul id="tree">
+											<c:forEach items="${sessionScope['ejb'].getAllDepartments()}"
+												var="dept">
+												<li>${dept.name}
+													<ul>
+														<c:forEach
+															items="${sessionScope['ejb'].getAllSubDepartmentsByDepartmentId(dept.id)}"
+															var="subDept">
+															<li>${subDept.name}
+																<ul>
+																	<c:forEach var="cat"
+																		items="${sessionScope['ejb'].getAllCategoryBySubDepartmentId(subDept.id)}">
+																		<li><input type="radio" name="same"
+																			onclick="catProblem('${cat.id}')" value="${cat.id}">
+																			${cat.name}
+																			<ul>
+																				<c:forEach var="pro"
+																					items="${sessionScope['ejb'].getAllProductDetailByCategoryId(cat.id)}">
+																					<li>${pro.description}</li>
+																				</c:forEach>
+																			</ul></li>
+																	</c:forEach>
+																</ul>
+															</li>
+														</c:forEach>
+													</ul>
+												</li>
+											</c:forEach>
+										</ul>
+										<!-- </div> -->
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+
+
 
 					<div id="step7"
 						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial; overflow: auto;">
@@ -1034,8 +1139,7 @@ function readURL(input) {
 										</tr>
 										<tr>
 											<td>&nbsp;</td>
-											<tr>
-										
+										<tr>
 										<tr>
 											<td>Description:</td>
 											<td><input type="text" class="form-control "
@@ -1043,21 +1147,15 @@ function readURL(input) {
 										</tr>
 										<tr>
 											<td>&nbsp;</td>
-										
 										<tr>
-										
 										<tr>
 											<td>Universal Product Code:</td>
 											<td><input type="text" class="form-control " readonly
 												name="upc" id="upc"></td>
-										
 										<tr>
-										
 										<tr>
 											<td>&nbsp;</td>
-										
 										<tr>
-										
 										<tr>
 											<td>Unit of Measurement:</td>
 											<td><input type="hidden" class="form-control " readonly
@@ -1069,9 +1167,7 @@ function readURL(input) {
 
 										<tr>
 											<td>&nbsp;</td>
-										
 										<tr>
-										
 										<tr>
 											<td>Is Salable:</td>
 											<td>
@@ -1087,22 +1183,8 @@ function readURL(input) {
 											</td>
 										</tr>
 									</table>
-
-
-
 									<hr width="100%">
 
-									<h4>Image</h4> <br><br>
-									
-									
-									<div id="imageSummary">
-									
-									
-									
-									
-									</div>
-
-									<hr width="100%">
 
 									<h4>
 										<u>Add initial inventory:</u>
@@ -1166,16 +1248,22 @@ function readURL(input) {
 									<table>
 										<tr>
 											<td><b>Lot Number:</b>
-											
 											<td>
-											
 											<td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</td>
 
 											<td><input class="form-control " type="text"
 												name="lotnumberS" readonly id="lotnumberS"></td>
-									
 									</table>
+									<br> <b>Serial Number:</b>
+									<div
+										style="width: 190px; height: 224px; border: 1px solid; overflow: auto;">
+										<table align="center">
+											<tr>
+												<td><span id="slNo"></span></td>
+											</tr>
+										</table>
 
+									</div>
 									<hr width="100%">
 
 									<h4>
@@ -1196,7 +1284,6 @@ function readURL(input) {
 													2:</span></td>
 											<td><input readonly class="form-control " name="att2"
 												id="att2">
-										
 										</tr>
 										<tr>
 											<td>&nbsp;</td>
@@ -1237,7 +1324,7 @@ function readURL(input) {
 									</table>
 
 									<hr width="100%">
-								
+
 								</form>
 							</fieldset>
 						</div>
@@ -1320,7 +1407,7 @@ function readURL(input) {
 	</script>
 
 
-											<script type="text/javascript" src="js/modernizr.js"></script>
+	<script type="text/javascript" src="js/modernizr.js"></script>
 	<script type="text/javascript" src="js/script.js"></script>
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="js/enscroll.js"></script>
@@ -1334,7 +1421,50 @@ function readURL(input) {
 	</script>
 	<script type="text/javascript" src="js/abixTreeList.min.js"></script>
 	<script type="text/javascript">
-	
+		var dupli = [];
+		function incre() {
+			var a = $("#1stSerial").val();
+			var b = $("#limit").val();
+			for (xc = a; xc < Number(a) + Number(b); xc++) {
+				if (serial.lastIndexOf(Number(xc)) == -1) {
+					$("#serialNo").append("<tr><td>" + xc + "</td></tr>");
+					serial[j] = xc;
+					$("#step67").hide();
+					j++;
+				} else {
+					alert("Duplicate Serial number: " + xc);
+				}
+			}
+		}
+
+		var j = 0;
+		function addSerial() {
+			q = $("#quantity").val();
+
+			if (j < q) {
+				if ($("#indvSerial").val() != "") {
+					if (serial.lastIndexOf($("#indvSerial").val()) == -1) {
+						$("#serialNo").append(
+								"<tr><td>" + $("#indvSerial").val()
+										+ "</td></tr>");
+						serial[j] = $("#indvSerial").val();
+						$("#indvSerial").val("");
+						$("#limit").val(q - j - 1);
+						j++;
+					} else {
+						alert("Duplicate Serial number");
+					}
+
+				} else {
+					alert("Give a Serial Number");
+				}
+
+			} else {
+
+				alert("Quantity limit cross");
+			}
+
+		}
 
 		function setLimit() {
 			$("#limit").val($("#quantity").val());
@@ -1345,7 +1475,27 @@ function readURL(input) {
 			$("#serdiv").hide();
 			$("#tick").hide();
 		});
-			</script>
+		function L() {
+			if ($("#ll").is(":checked")) {
+				$("#lotdiv").show();
+
+			} else {
+				$("#lotdiv").hide();
+
+			}
+		}
+		function S() {
+			if ($("#ss").is(":checked")) {
+				$("#serdiv").show();
+
+			}
+
+			else {
+				$("#serdiv").hide();
+
+			}
+		}
+	</script>
 
 	<script>
 		$(function() {
@@ -1359,7 +1509,12 @@ function readURL(input) {
 			$("#datepicker").datepicker();
 		});
 	</script>
-	
+	<!-- <script>
+		function catProblem(a) {
+			$("#catagoryId").val(a);
+			
+		}
+	</script> -->
 	<script>
 		function catProblem(a) {
 			$("#catagoryId").val(a);
@@ -1591,8 +1746,7 @@ function readURL(input) {
 		}
 	</script>
 
-
-										</body>
+</body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
 </html>

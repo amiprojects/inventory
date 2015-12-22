@@ -270,8 +270,25 @@ public class Ejb {
 		return q.getResultList();
 	}
 	
-	/**************************************************************************************************************/
+	/**************************************** Product Search By Code**************************************************/
 	
+	public List<ProductDetail>getAllProductByProductCode(String code) {
+		TypedQuery<ProductDetail> q = em.createQuery("select c from ProductDetail c where UPPER(c.code) like :nm ",
+				ProductDetail.class);
+		q.setParameter("nm", code.toUpperCase() + "%");
+		
+		return q.getResultList();
+	}
+	/***************************************** Product Search By Category**************************************************/
+
+	public List<ProductDetail> getAllProductByCategory(String cat) {
+		TypedQuery<ProductDetail> q = em.createQuery("select c from ProductDetail c where UPPER(c.category.name) like :nm ",
+				ProductDetail.class);
+		q.setParameter("nm", cat.toUpperCase() + "%");
+		
+		return q.getResultList();
+	}
+/*************************************************************************************************************************/	
 	
 	
 	
@@ -783,7 +800,17 @@ public class Ejb {
 		return q.getResultList();
 
 	}
+	public List<City> getCityByNameAjax(String name, int Stateid) {
 
+		TypedQuery<City> q = em
+				.createQuery(
+						"select c from City c where c.state.id=:cid AND UPPER(c.cityName) like :nm",
+						City.class);
+		q.setParameter("nm", "%" + name.toUpperCase() + "%");
+		q.setParameter("cid", Stateid);
+		return q.getResultList();
+
+	}
 	public List<State> getAllStatesByCountryId(int id) {
 		TypedQuery<State> q = em.createQuery(
 				"select c from State c where c.country.id=:Id", State.class);

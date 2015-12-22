@@ -30,7 +30,7 @@ import com.kaanish.util.DepartmentCotractor;
 		"/getTaxGroupById", "/getproductPro", "/getPurchasebyPro",
 		"/getAccountDetails", "/getProductDetailById", "/getCategoryById",
 		"/getProductImageByProductid", "/getJobberDetailsByName",
-		"/getProdDetByPurchaseProdDetailsId","/getStateByCityName","/getAllQtyUnitByNameOrAbv" })
+		"/getProdDetByPurchaseProdDetailsId","/getStateByCityName","/getCityByStateByCityName" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -171,6 +171,12 @@ public class JsonServlet extends HttpServlet {
 				pw.print(ejb.getStateByName(req.getParameter("name"),
 						Integer.parseInt(req.getParameter("cid"))));
 				break;
+				
+			case "getCityByStateByCityName":
+				pw = resp.getWriter();
+				pw.print(ejb.getCityByNameAjax(req.getParameter("name1"),
+						Integer.parseInt(req.getParameter("cid1"))));
+				break;
 
 			case "getCity":
 				pw = resp.getWriter();
@@ -223,10 +229,6 @@ public class JsonServlet extends HttpServlet {
 			case "getStateByCityName":
 				resp.getWriter().print(ejb.getStateByCityName(req.getParameter("nm")));
 				break;
-			case "getAllQtyUnitByNameOrAbv":
-				resp.getWriter().print(ejb.getAllQtyUnitByNameOrAbv(req.getParameter("name")));
-				break;
-
 			default:
 				break;
 			}

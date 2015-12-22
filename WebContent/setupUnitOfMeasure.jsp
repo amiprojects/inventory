@@ -53,114 +53,122 @@
 									</ul>
 								</div>
 								<div class="widget-area" style="width: 30%">
-									<form role="form" class="sec">
+									<form role="form" class="sec" method="get"
+										action="setupUnitOfMeasure.jsp">
 										<div class="form-group">
-											<label for="" class="">Name : </label> <input type="text" id="searchUOMname"
-												placeholder="" id="" class="">
+											<label for="" class="">Name/Abbreviation : </label> <input type="text"
+												id="searchUOMname" class="form-control" name="SearchName" placeholder="" id=""
+												class="">
 										</div>
-										<div class="form-group">
-											<label for="" class="">Abbrev : </label> <input type="text"  id="searchUOMabbr"
-												placeholder="" id="" class="">
-										</div>
-
-										<button class="btn green btn-default" onclick="search();" type="button">Search
-										</button>
 										
+										<input class="btn green btn-default" type="submit"
+											value="Search">
+
 									</form>
 									<br> <br>
 									<table class="table">
 										<thead>
 											<tr>
-												<th>#</th>
-												<th>Name</th>
-												<th>Abbrev</th>
-												<th></th>
+												<!-- hidden -->
+												<th width="20%">#</th>
+												<th width="40%">Name</th>
+												<th width="40%">Abbrev</th>
+												<th width="5%">view</th>
 											</tr>
 										</thead>
-										<tbody>
-											<c:set var="count" value="${1}" />
-											<c:forEach items="${sessionScope['ejb'].getAllQtyUnit()}"
-												var="unit">
-												<tr>
-													<td>${count}</td>
-													<td>${unit.name}</td>
-													<td>${unit.abbreviation}</td>
-													<td><a href="#" onclick="viewQtyUnit('${unit.id}');"><img
-															alt="click to view" src="images/eye.png" height="20"></a></td>
-												</tr>
-												<c:set var="count" value="${count+1}" />
-												<div id="addCon${unit.id}" class="modal fade" role="dialog"
-													style="top: 25px;">
+									</table>
+									<div
+										style="height: 250px; overflow-y: scroll; overflow-x: hidden; width: 253px;">
+										<table class="table">
+											<tbody>
+												<c:set var="count" value="${1}" />
+												<c:forEach
+													items="${param.SearchName.equals(null)?sessionScope['ejb'].getAllQtyUnit():sessionScope['ejb'].getAllQtyUnitByNameOrAbv(param.SearchName)}"
+													var="unit"> <!-- if null then ?work or not null then :work -->
+													<tr>
+														<td width="20%">${count}</td>
+														<td width="40%">${unit.name}</td>
+														<td width="35%">${unit.abbreviation}</td>
+														<td width="5%"><a href="#"
+															onclick="viewQtyUnit('${unit.id}');"><img
+																alt="click to view" src="images/eye.png" height="20"></a></td>
+													</tr>
+													<c:set var="count" value="${count+1}" />
+													<div id="addCon${unit.id}" class="modal fade" role="dialog"
+														style="top: 25px;">
 
-													<div class="modal-dialog">
-														<div class="modal-content">
-															<div class="modal-header">
-																<button type="button" class="close" data-dismiss="modal">&times;</button>
-																<h4 class="modal-title">Select UOM to which UOM is
-																	related</h4>
+														<div class="modal-dialog">
+															<div class="modal-content">
+																<div class="modal-header">
+																	<button type="button" class="close"
+																		data-dismiss="modal">&times;</button>
+																	<h4 class="modal-title">Select UOM to which UOM is
+																		related</h4>
+																</div> 
+																<form action="addNewConversion" method="post"
+																	id="addNewConversion">
+																	<div class="modal-body">
+																		<div class="col-md-12">
+																			<input type="hidden" value="${unit.id}"
+																				name="firstUnit"> Select Target UOM for this
+																			conversion: <select id="contype${unit.id}"
+																				onchange="selectUnit()" name="selectedUnit">
+																				<option value="0">Select Unit</option>
+																				<c:forEach
+																					items="${sessionScope['ejb'].getAllOthersQtyUnitForConversion(unit.id)}"
+																					var="qtyUnit">
+																					<option value="${qtyUnit.id}">${qtyUnit.name}</option>
+																				</c:forEach>
+																			</select>
+																		</div>
+																		<br> <br> <br>
+																		<div class="col-md-12">Defining the relationship
+																			between units:</div>
+																		<br>
+																		<div class="col-md-12">
+																			<input type="radio" name="name1" value="1"
+																				onclick="relSelect();">1 <span
+																				id="selectUnit1${unit.id}"></span> is greater than 1
+																			<span>${unit.name}</span>
+																		</div>
+																		<br>
+																		<div class="col-md-12">
+																			<input type="radio" name="name1" value="2"
+																				onclick="relSelect();">1 <span>${unit.name}</span>
+																			is greater then 1 <span id="selectUnit2${unit.id}"></span>
+
+																		</div>
+																		<br> <br> <br>
+																		<div class="col-md-12">Defining ratio between
+																			the units:</div>
+																		<br>
+																		<div class="col-md-12">Fill in the blank with
+																			correct number</div>
+																		<br>
+																		<div class="col-md-12">
+																			1 <span id="selectUnit3${unit.id}"></span> is<input
+																				type="number" name="convValue" required="required">in
+																			<span id="selectUnit4${unit.id}"></span>
+																		</div>
+																		<br>
+
+																	</div>
+
+																	<div class="modal-footer">
+																		<input type="submit" class="btn btn-default"
+																			value="Save"> <input type="button"
+																			class="btn btn-default" data-dismiss="modal"
+																			value="Close">
+																	</div>
+																</form>
 															</div>
-															<form action="addNewConversion" method="post"
-																id="addNewConversion">
-																<div class="modal-body">
-																	<div class="col-md-12">
-																		<input type="hidden" value="${unit.id}"
-																			name="firstUnit"> Select Target UOM for this
-																		conversion: <select id="contype${unit.id}"
-																			onchange="selectUnit()" name="selectedUnit">
-																			<option value="0">Select Unit</option>
-																			<c:forEach
-																				items="${sessionScope['ejb'].getAllOthersQtyUnitForConversion(unit.id)}"
-																				var="qtyUnit">
-																				<option value="${qtyUnit.id}">${qtyUnit.name}</option>
-																			</c:forEach>
-																		</select>
-																	</div>
-																	<br> <br> <br>
-																	<div class="col-md-12">Defining the relationship
-																		between units:</div>
-																	<br>
-																	<div class="col-md-12">
-																		<input type="radio" name="name1" value="1"
-																			onclick="relSelect();">1 <span
-																			id="selectUnit1${unit.id}"></span> is greater than 1
-																		<span>${unit.name}</span>
-																	</div>
-																	<br>
-																	<div class="col-md-12">
-																		<input type="radio" name="name1" value="2"
-																			onclick="relSelect();">1 <span>${unit.name}</span>
-																		is greater then 1 <span id="selectUnit2${unit.id}"></span>
-
-																	</div>
-																	<br> <br> <br>
-																	<div class="col-md-12">Defining ratio between the
-																		units:</div>
-																	<br>
-																	<div class="col-md-12">Fill in the blank with
-																		correct number</div>
-																	<br>
-																	<div class="col-md-12">
-																		1 <span id="selectUnit3${unit.id}"></span> is<input
-																			type="number" name="convValue" required="required">in
-																		<span id="selectUnit4${unit.id}"></span>
-																	</div>
-																	<br>
-
-																</div>
-
-																<div class="modal-footer">
-																	<input type="submit" class="btn btn-default"
-																		value="Save"> <input type="button"
-																		class="btn btn-default" data-dismiss="modal"
-																		value="Close">
-																</div>
-															</form>
 														</div>
 													</div>
-												</div>
-											</c:forEach>
-										</tbody>
-									</table>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
+
 								</div>
 								<div class="widget-area" style="width: 70%">
 									<div class="breadcrumbs">
@@ -194,16 +202,16 @@
 											<div class="row">
 												<div class="col-md-2">Name :</div>
 												<div class="col-md-10">
-													<input type="text" id="unitName" readonly="readonly" required
-														class="form-control"> <input type="hidden"
-														id="unitNameId" value=""> <input type="hidden"
-														id="unitNameId1" value="">
+													<input type="text" id="unitName" readonly="readonly"
+														required class="form-control"> <input
+														type="hidden" id="unitNameId" value=""> <input
+														type="hidden" id="unitNameId1" value="">
 												</div>
 											</div>
 											<div class="row">
 												<div class="col-md-2">Description</div>
 												<div class="col-md-10">
-													<textarea rows="" cols="" class="form-control" 
+													<textarea rows="" cols="" class="form-control"
 														readonly="readonly" id="DisplayDescription"></textarea>
 												</div>
 											</div>
@@ -255,7 +263,8 @@
 															<input type="hidden" value="" name="u1" id="u1">
 															<input type="hidden" value="" name="u2" id="u2">
 															<div class="modal-footer">
-																<input type="submit" class="btn btn-default" value="update">
+																<input type="submit" class="btn btn-default"
+																	value="update">
 																<button type="button" class="btn btn-default"
 																	data-dismiss="modal">Close</button>
 															</div>
@@ -307,7 +316,8 @@
 						<div class="row">
 							<div class="col-md-3">Abbreviation :</div>
 							<div class="col-md-9">
-								<input type="text" required name="abbreviation" class="form-control">
+								<input type="text" required name="abbreviation"
+									class="form-control">
 							</div>
 						</div>
 						<div class="row">
@@ -492,7 +502,7 @@
 					$("#unit1").html(data.qtyUnit1Name);
 					$("#unit2").html(data.qtyUnit2Name);
 					$("#u1").val(data.qtyUnitId1);
-					$("#u2").val(data.qtyUnitId2);					
+					$("#u2").val(data.qtyUnitId2);
 					$("#editValue").val(data.conversion);
 				}
 			});
@@ -578,20 +588,21 @@
 										.fadeOut(400);
 							}
 						});
-		function search(){
-			var nm=$("#searchUOMname").val();
+		function search() {
+			var nm = $("#searchUOMname").val();
 			$.ajax({
-				url:'getAllQtyUnitByNameOrAbv',
-				dataType:'json',
-				data:{name:nm},
-				success:function(data){
-					$.map(data,function(item){
-						
+				url : 'getAllQtyUnitByNameOrAbv',
+				dataType : 'json',
+				data : {
+					name : nm
+				},
+				success : function(data) {
+					$.map(data, function(item) {
+
 					});
 				}
 			});
 		}
-		
 	</script>
 	<div class='toast' style='display: none'>
 		<h3 id="msg">${requestScope['msg']}</h3>

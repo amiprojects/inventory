@@ -24,6 +24,7 @@ public class CompanyInfo {
 	private String addr;
 	private String city;
 	private String state;
+	private String country1;
 	@Lob
 	private byte[] image;
 
@@ -179,6 +180,14 @@ public class CompanyInfo {
 
 	public void setImage(byte[] image) {
 		this.image = image;
+	}
+
+	public String getCountry1() {
+		return country1;
+	}
+
+	public void setCountry1(String country1) {
+		this.country1 = country1;
 	}
 
 }

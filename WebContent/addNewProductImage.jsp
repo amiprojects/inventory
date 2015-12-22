@@ -65,7 +65,7 @@
 												onchange="readURL(this);"><br> <img id="image"
 												alt="" src=""> <br>
 											<br> <input class="btn green btn-default" type="submit"
-												value="Send">
+												value="Save">
 										</form>
 										<div style=" overflow-x:scroll; overflow-y:hidden; width: 500px;">	
 										<c:forEach items="${sessionScope['ejb'].getAllProductImageByProductId(param.id)}" var="img">

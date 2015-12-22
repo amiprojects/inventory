@@ -381,6 +381,7 @@ public class Servlet extends HttpServlet {
 				companyInfo.setPhone(req.getParameter("phno"));
 				companyInfo.setAddr(req.getParameter("adress"));
 				companyInfo.setCity(req.getParameter("city"));
+				companyInfo.setCountry1(req.getParameter("country1"));
 				companyInfo.setState(req.getParameter("state"));
 				companyInfo.setVatno(req.getParameter("vatno"));
 				companyInfo.setCstno(req.getParameter("cstno"));
@@ -443,7 +444,7 @@ public class Servlet extends HttpServlet {
 				}
 
 				if (req.getParameter("addini").equals("add")) {
-					String slno[] = req.getParameterValues("serialNumber");
+					
 
 					purchaseProductDetails.setMrp(Integer.parseInt(req.getParameter("mrp1")));
 					purchaseProductDetails.setWsp(Integer.parseInt(req.getParameter("wsp1")));
@@ -460,21 +461,12 @@ public class Servlet extends HttpServlet {
 					purchaseProductDetails.setProductDetail(productDetail);
 
 					ejb.setPurchaseProductDetails(purchaseProductDetails);
-					if (slno.length > 0) {
-						for (int i = 0; i < slno.length; i++) {
-							serialNumber = new SerialNumber();
-							serialNumber.setSerialNumber(slno[i]);
-							serialNumber.setPurchase_Product_Details(purchaseProductDetails);
-							serialNumber.setLotNo(req.getParameter("lotnumberS"));
-							ejb.setSerialNumber(serialNumber);
-							serialNumber = null;
-						}
-					} else {
+				 
 						serialNumber = new SerialNumber();
 						serialNumber.setLotNo(req.getParameter("lotnumberS"));
 						serialNumber.setPurchase_Product_Details(purchaseProductDetails);
 						ejb.setSerialNumber(serialNumber);
-					}
+				
 
 					if (productDetail.isSaleble()) {
 						readyGoodsStock = ejb.getReadyGoodsStoctByProductId(productDetail.getId());

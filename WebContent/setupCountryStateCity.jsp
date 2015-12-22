@@ -197,7 +197,7 @@
 													<div class="row">
 														<div class="col-md-2">Country:</div>
 														<div class="col-md-10">
-															<input id="country1" type="text" name="name"
+															<input id="country1" type="text" name="country1"
 																class="form-control">
 														</div>
 
