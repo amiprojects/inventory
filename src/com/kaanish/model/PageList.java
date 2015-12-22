@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 @Entity
 @Cacheable(false)
@@ -18,6 +19,8 @@ public class PageList {
 	@Id@GeneratedValue
 	private int id;
 	private String name;
+	@Transient
+	private boolean isContains;
 
 	@ManyToOne
 	@JoinColumn(name = "moduleId")
@@ -56,6 +59,14 @@ public class PageList {
 
 	public void setUserGroups(List<UserGroup> userGroups) {
 		this.userGroups = userGroups;
+	}
+
+	public boolean isContains() {
+		return isContains;
+	}
+
+	public void setContains(boolean isContains) {
+		this.isContains = isContains;
 	}
 
 }

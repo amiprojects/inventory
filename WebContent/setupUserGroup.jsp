@@ -25,9 +25,21 @@
 <!-- Style -->
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
 <!-- Responsive -->
+<link rel="stylesheet" href="css/toast.css" type="text/css" />
+
+<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		if ($('#msg').html() != "") {
+			$('.toast').fadeIn(400).delay(3000).fadeOut(400);
+		}
+	});
+</script>
 
 </head>
 <body>
+
 	<c:if test="${sessionScope['user']==null}">
 		<c:redirect url="index.jsp" />
 	</c:if>
@@ -50,7 +62,7 @@
 							</div>
 							<div class="widget-area"
 								style="height: 500px; overflow: auto; width: 60%; float: left;">
-								<form action="createUserGroup">
+								<form action="createUserGroup" method="post">
 									<div class="col-md-8">
 										<input type="text" name="userGroupName" class="form-control">
 									</div>
@@ -58,28 +70,95 @@
 										<input type="submit" value="Create Group"
 											class="btn green pull-right">
 									</div>
-
+									<p>
+										<a href="#" id="tree-expand-all">Expand all</a> | <a href="#"
+											id="tree-collapse-all">Collapse all</a>
+									</p>
 									<ul id="tree">
 										<c:forEach items="${sessionScope['ejb'].getAllModule()}"
 											var="module">
 											<li><input type="checkbox" value="">${module.name}
 												<ul>
 													<c:forEach items="${module.pageLists}" var="page">
-														<li><input name="pageId" type="checkbox" value="${page.id}">${page.name}
-														</li>
+														<li><input name="pageId" type="checkbox"
+															value="${page.id}">${page.name}</li>
 													</c:forEach>
 												</ul></li>
 										</c:forEach>
 									</ul>
 								</form>
+								<div class='toast' style='display: none'>
+									<h3 id="msg">${requestScope['msg']}</h3>
+								</div>
 							</div>
+
 							<div class="widget-area"
 								style="height: 500px; overflow: auto; width: 40%; float: left;">
 								<h2>User Group</h2>
 								<ul>
-								<c:forEach items="${sessionScope['ejb'].getAllUserGroup()}" var="ug">
-								<li>${ug.groupName}</li>
-								</c:forEach>
+									<c:forEach items="${sessionScope['ejb'].getAllUserGroup()}"
+										var="ug">
+										<li><a href="#" onclick="viewUser('${ug.id}');">${ug.groupName}</a></li>
+
+										<div id="userGroup${ug.id}" class="modal fade" role="dialog"
+											style="top: 25px;">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header">
+														<button type="button" class="close" data-dismiss="modal">&times;</button>
+														<h4 class="modal-title">Modal Header</h4>
+													</div>
+													<div class="modal-body">
+														<form action="updateUserGroup" method="post">
+															<div class="col-md-8">
+																<input type="hidden" name="usrGpId" value="${ug.id}">
+																<input type="text" name="userGroupName"
+																	class="form-control" value="${ug.groupName}">
+															</div>
+															<div class="col-md-4">
+																<input type="submit" value="Create Group"
+																	class="btn green pull-right">
+															</div>
+															<p></p>
+															<ul id="tree">
+																<c:forEach
+																	items="${sessionScope['ejb'].getAllModuleListAccordingUserGroupId(ug.id)}"
+																	var="module">
+																	<li>${module.name}
+																		<ul>
+																			<c:set value="${ug.pageLists}" var="pglst" />
+
+																			<c:forEach items="${module.pageLists}" var="page">
+																				<c:choose>
+
+																					<c:when test="${page.contains}">
+																						<li><input name="pageId" type="checkbox"
+																							checked="checked" value="${page.id}">${page.name}</li>
+																					</c:when>
+																					<c:otherwise>
+																						<li><input name="pageId" type="checkbox"
+																							value="${page.id}">${page.name}</li>
+																					</c:otherwise>
+
+																				</c:choose>
+																			</c:forEach>
+																		</ul>
+																	</li>
+																</c:forEach>
+															</ul>
+														</form>
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-default"
+															data-dismiss="modal">Close</button>
+													</div>
+												</div>
+											</div>
+										</div>
+
+
+
+									</c:forEach>
 								</ul>
 							</div>
 						</div>
@@ -93,7 +172,6 @@
 	<!-- main -->
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
-	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 	<script type="text/javascript" src="js/script.js"></script>
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="js/enscroll.js"></script>
@@ -106,6 +184,9 @@
 			$("#sSetupUgroup").attr("style", "color: red;");
 			$('#tree').abixTreeList();
 		});
+		function viewUser(id) {
+			$("#userGroup" + id).modal();
+		}
 	</script>
 </body>
 

@@ -213,9 +213,32 @@
 </script>
 </head>
 <body>
+	<script>
+		var i = 0;
+	</script>
 	<c:if test="${sessionScope['user']==null}">
 		<c:redirect url="index.jsp" />
 	</c:if>
+
+
+	<c:forEach
+		items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
+		var="page">
+
+		<c:if test="${page.name.equals('Department/Sub-Department/Category')}">
+			<c:set var="i" value="5" />
+		</c:if>
+	</c:forEach>
+	<c:if test="${i!=5}">
+		<script type="text/javascript">
+			alert('you have no permission to view this page');
+			window.location = "dashboard.jsp";
+		</script>
+	</c:if>
+
+
+
+
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">

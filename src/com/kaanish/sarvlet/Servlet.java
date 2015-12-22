@@ -67,7 +67,7 @@ import com.kaanish.util.DateConverter;
 		"/updateConversion", "/addBillSetup", "/updateCompanyInfo",
 		"/updateVendor", "/purchaseSearchByDate", "/uploadProductImage",
 		"/deleteProductImage", "/jobAssignment", "/jobAssignSearchByDate",
-		"/salesEntry", "/createUserGroup" })
+		"/salesEntry", "/createUserGroup", "/updateUserGroup", "/updateUser" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -113,6 +113,7 @@ public class Servlet extends HttpServlet {
 	private Module module;
 	private PageList pageList;
 	private UserGroup userGroup;
+	private Users usr;
 
 	@Override
 	public void init() throws ServletException {
@@ -345,6 +346,7 @@ public class Servlet extends HttpServlet {
 			users = new Users();
 			users.setUserId("admin");
 			users.setPassword("admin");
+			users.setPh("0");
 			ejb.setUser(users);
 		}
 
@@ -1545,16 +1547,77 @@ public class Servlet extends HttpServlet {
 				msg = "Image deleted successfully";
 				break;
 			case "createUserGroup":
+				int fl = 0;
+				for (UserGroup ug : ejb.getAllUserGroup()) {
+					if (ug.getGroupName().equals(
+							req.getParameter("userGroupName").toUpperCase())) {
+						fl = 1;
+						break;
+					}
+				}
+				if (fl == 0) {
+					page = "setupUserGroup.jsp";
+					userGroup = new UserGroup();
+					userGroup.setGroupName(req.getParameter("userGroupName")
+							.toUpperCase());
+					List<PageList> plist = new ArrayList<>();
+					for (String str : req.getParameterValues("pageId")) {
+						plist.add(ejb.getPageListById(Integer.parseInt(str)));
+					}
+					userGroup.setPageLists(plist);
+					ejb.setUserGroup(userGroup);
+					msg = "User group created successfully";
+				} else {
+					msg = "User group name already exist";
+				}
+
+				break;
+			case "updateUserGroup":
 				page = "setupUserGroup.jsp";
-				userGroup = new UserGroup();
-				userGroup.setGroupName(req.getParameter("userGroupName"));
+				userGroup = ejb.getUserGroupById(Integer.parseInt(req
+						.getParameter("usrGpId")));
+				userGroup.setGroupName(req.getParameter("userGroupName")
+						.toUpperCase());
 				List<PageList> plist = new ArrayList<>();
 				for (String str : req.getParameterValues("pageId")) {
 					plist.add(ejb.getPageListById(Integer.parseInt(str)));
 				}
 				userGroup.setPageLists(plist);
-				ejb.setUserGroup(userGroup);
-				msg = "User group created successfully";
+				ejb.updateUserGroup(userGroup);
+				msg = "User group update successfully";
+				break;
+			case "createNewUser":
+				page = "setupUser.jsp";
+				int uf = 0;
+				for (Users u : ejb.getAllUsers()) {
+					if (u.getPh().equals(req.getParameter("mobile"))
+							|| u.getUserId().equals(req.getParameter("userId"))) {
+						uf = 1;
+					}
+				}
+
+				if (uf == 0) {
+					usr = new Users();
+					usr.setName(req.getParameter("name"));
+					usr.setPassword(req.getParameter("pass"));
+					usr.setPh(req.getParameter("mobile"));
+					usr.setUserId(req.getParameter("userId"));
+					usr.setUserGroup(ejb.getUserGroupById(Integer.parseInt(req
+							.getParameter("ugid"))));
+					ejb.setUser(usr);
+					msg = "User Added Successfully";
+				} else {
+					msg = "User mobile/id already exists";
+				}
+
+				break;
+			case "updateUser":
+				page = "setupUser.jsp";
+				usr = ejb.getUserById(req.getParameter("userId"));
+				usr.setUserGroup(ejb.getUserGroupById(Integer.parseInt(req
+						.getParameter("ugid"))));
+				ejb.updateUser(usr);
+				msg = "User updated Successfully";
 				break;
 
 			default:
