@@ -67,10 +67,30 @@
 
 </head>
 <body>
+<c:if test="${!sessionScope['user'].equals('admin')}">
+		<c:forEach
+			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
+			var="page">
+
+			<c:if
+				test="${page.name.equals('Stock')}">
+				<c:set var="i" value="5" />
+			</c:if>
+		</c:forEach>
+		<c:if test="${i!=5}">
+			<script type="text/javascript">
+				alert('you have no permission to view this page');
+				window.location = "dashboard.jsp";
+			</script>
+		</c:if>
+	</c:if>
 	<c:set var="purchasePro"
 		value="${sessionScope['ejb'].getPurchase_Product_DetailsByProId(requestScope['proid1'])}" />
 	<c:set var="jobProList"
 		value="${sessionScope['ejb'].getJobAssignmentProductDetailsByproductId(requestScope['proid1'])}"/>
+		
+		
+		
 
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
