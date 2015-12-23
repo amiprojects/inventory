@@ -195,7 +195,10 @@ public class Purchase_Product_Details {
 					+ "\"wsp\":\"" + wsp + "\"," + "\"remaining_quantity\":\""
 					+ remaining_quantity + "\"," + "\"quantity\":\"" + quantity
 					+ "\"," + "\"cost\":\"" + cost + "\","
-					+ "\"attrValue1\":\"" + attrValue1 + "\","
+					+ "\"productCode\":\"" + productDetail.getCode() + "\","
+					+ "\"productId\":\"" + productDetail.getId() + "\","
+					+ "\"productDesc\":\"" + productDetail.getDescription()
+					+ "\"," + "\"attrValue1\":\"" + attrValue1 + "\","
 					+ "\"attrValue2\":\"" + attrValue2 + "\","
 					+ "\"attrValue3\":\"" + attrValue3 + "\","
 					+ "\"attrValue4\":\"" + attrValue4 + "\","
@@ -218,6 +221,7 @@ public class Purchase_Product_Details {
 					+ "\"," + "\"uom\":\""
 					+ productDetail.getQtyUnit().getName() + "\","
 					+ "\"productCode\":\"" + productDetail.getCode() + "\","
+					+ "\"productId\":\"" + productDetail.getId() + "\","
 					+ "\"productDesc\":\"" + productDetail.getDescription()
 					+ "\"," + "\"purchaseVendorAddress\":\""
 					+ purchase_Entry.getVendor().getAddress() + "\","

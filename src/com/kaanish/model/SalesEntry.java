@@ -27,6 +27,7 @@ public class SalesEntry {
 	private Date sales_date;
 	private float surcharge;
 	private float transportcCharge;
+	private float totalCost;
 	private float roundOf;
 	private String saleType;
 	private String challanNumber;
@@ -39,13 +40,16 @@ public class SalesEntry {
 	@OneToMany(mappedBy = "salesEntry", cascade = CascadeType.ALL)
 	private List<SalesProductDetails> salesProductDetails;
 
+	@OneToMany(mappedBy = "salesEntry")
+	private List<PaymentDetails> paymentDetails;
+
 	@ManyToOne
 	@JoinColumn(name = "taxtypeId")
 	private Tax_Type_Group tax_Type_Group;
 
 	@ManyToOne
 	@JoinColumn(name = "bill_setupId")
-	private Bill_setup  bill_setup;
+	private Bill_setup bill_setup;
 
 	public int getId() {
 		return id;
@@ -54,8 +58,6 @@ public class SalesEntry {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-
 
 	public int getChallanNo() {
 		return challanNo;
@@ -125,7 +127,8 @@ public class SalesEntry {
 		return salesProductDetails;
 	}
 
-	public void setSalesProductDetails(List<SalesProductDetails> salesProductDetails) {
+	public void setSalesProductDetails(
+			List<SalesProductDetails> salesProductDetails) {
 		this.salesProductDetails = salesProductDetails;
 	}
 
@@ -161,6 +164,12 @@ public class SalesEntry {
 		this.challanSuffix = challanSuffix;
 	}
 
-	
-	
+	public float getTotalCost() {
+		return totalCost;
+	}
+
+	public void setTotalCost(float totalCost) {
+		this.totalCost = totalCost;
+	}
+
 }
