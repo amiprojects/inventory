@@ -172,6 +172,10 @@
 		$("#step67").modal('show');
 	} */
 	function submitSumary() {
+		
+		
+		
+		
 		$("#fs").submit();
 	}
 	/* function */
@@ -848,7 +852,7 @@
 								<script type="text/javascript">
 									function relationMW(value, max) {
 										
-										if (parseInt(value) > max) {
+										if (parseFloat(value) > max) {
 											alert("WSP is less or equal to MRP");
 
 											return "";
@@ -861,7 +865,7 @@
 								<script type="text/javascript">
 									function relationWP(value, max) {
 										
-										if (parseInt(value) > max) {
+										if (parseFloat(value) > max) {
 											alert("Per unit cost is less or equal to WSP");
 
 											return "";
@@ -1472,34 +1476,7 @@
 		});
 	</script>
 
-	<!-- <script type="text/javascript">
-		$(function() {
-			$("#descriptionName").autocomplete({
-				source : function(request, response) {
-					$.ajax({
-						url : "getProductByDescription",
-						dataType : "json",
-						data : {
-							descriptionName : request.term
-						},
-						success : function(data) {
-							response($.map(data, function(item) {
-								return {
-									value : item.code,
-									id : item.id,
-
-								}
-							}));
-						}
-					});
-				},
-				select : function(item, ui) {
-					viewProduct(ui.item.id);
-				}
-			})
-
-		});
-	</script>***************************************description auto complete********************* -->
+	
 
 	<script>
 		function viewProduct(id) {
