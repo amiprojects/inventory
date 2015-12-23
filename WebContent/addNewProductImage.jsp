@@ -38,6 +38,23 @@
 
 </head>
 <body>
+<c:if test="${!sessionScope['user'].equals('admin')}">
+
+		<c:forEach
+			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
+			var="page">
+
+			<c:if test="${page.name.equals('MaterialPartDetailsGenerals')}">
+				<c:set var="i" value="5" />
+			</c:if>
+		</c:forEach>
+		<c:if test="${i!=5}">
+			<script type="text/javascript">
+				alert('you have no permission to view this page');
+				window.location = "dashboard.jsp";
+			</script>
+		</c:if>
+	</c:if>
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
@@ -111,6 +128,11 @@
 			}
 		}
 	</script>
+		<script type="text/javascript">
+		$(document).ready(function() {
+			$("#prodact").attr("id", "activeSubMenu");
+			$("#sProduct").attr("style", "color: red;");	});
+		</script>
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->

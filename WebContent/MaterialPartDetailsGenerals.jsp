@@ -33,19 +33,21 @@
 <link rel="stylesheet" href="css/toast.css" type="text/css" />
 
 <script type="text/javascript">
-function readURL(input) {
-	if (input.files && input.files[0]) {
-		var reader = new FileReader();
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
 
 		reader.onload = function(e) {
 			$('#image').attr('src', e.target.result).width(120).height(
 					85);
+			var str=e.target.result;
+			$("#proImage1").val(str.substring(str.lastIndexOf(',')+1));
 		};
 
-		reader.readAsDataURL(input.files[0]);
-	}
-}
 
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
 </script>
 
 
@@ -170,6 +172,10 @@ function readURL(input) {
 		$("#step67").modal('show');
 	} */
 	function submitSumary() {
+		
+		
+		
+		
 		$("#fs").submit();
 	}
 	/* function */
@@ -726,20 +732,19 @@ function readURL(input) {
 							<legend> Add Product Image </legend>
 
 							<p style="font-size: 14px">(Enter the Products Image .)</p>
-							
-							
-									<div>
-															<label > Upload logo:</label>
-															<div>
-																<img id="image" alt=""
-																	src="data:image/jpeg;base64,"
-																	style="width: 100px; height: 50px;">
-															</div>
-														</div>
-														<div id="companyLogo">
-															<input type="file" name="proImg" size="60" id="image"
-																onchange="readURL(this);" value="">
-														</div>
+
+
+							<div>
+								<label> Upload logo:</label>
+								<div>
+									<img id="image" alt="" src="data:image/jpeg;base64,"
+										style="width: 100px; height: 50px;">
+								</div>
+							</div>
+							<div id="companyLogo">
+								<input type="file" name="proImg" size="60" id="image"
+									onchange="readURL(this);" value="">
+							</div>
 
 						</fieldset>
 					</div>
@@ -810,12 +815,13 @@ function readURL(input) {
 									<div class="form-group">
 										<label for="" class="font">Maximum Retail Price :</label> <input
 											type="number" name="mrp" placeholder="" id="mrpO"
-											class="form-control">
+											onChange="wShow()" class="form-control">
 									</div>
 									<div class="form-group">
 										<label for="" class="font">Wholesale Price :</label> <input
-											type="number" name="wsp" placeholder="" id="wspO"
-											class="form-control">
+											type="number" name="wsp" readonly="readonly"
+											onChange="this.value = relationMW(this.value,$('#mrpO').val())"
+											placeholder="" id="wspO" class="form-control">
 									</div>
 								</div>
 								<div class="col-md-6">
@@ -825,31 +831,56 @@ function readURL(input) {
 											onkeyup="setLimit()" class="form-control">
 									</div>
 
-
-									<%-- 	<div class="form-group">
-										<label for="" class="font">Unit of Measurement :</label> <select
-											id="uomO1" name="uom1" style="width: 253px; height: 34px">
-											<c:forEach items="${sessionScope['ejb'].getAllQtyUnit()}"
-												var="qity">
-												<option value="${qity.id}">${qity.name}</option>
-											</c:forEach>
-										</select>
-									</div> --%>
-
-
 									<div class="form-group">
 										<label for="" class="font">Per Unit Cost:</label> <input
-											name="unitCost" type="number" placeholder="" id="ucO"
+											readonly="readonly" name="unitCost" type="number"
+											placeholder="" id="ucO" onChange="this.value = relationWP(this.value,$('#wspO').val())"
 											class="form-control">
 
 									</div>
-									<!-- 	<div class="form-group">
-										<h4>
-											Print Barcode <input type="checkbox" id="barCode"
-												onclick="showbar()">
-										</h4>
-									</div> -->
+
 								</div>
+
+								<script type="text/javascript">
+									function wShow() {
+
+										$("#wspO").prop("readonly", false);
+
+									}
+								</script>
+
+								<script type="text/javascript">
+									function relationMW(value, max) {
+										
+										if (parseFloat(value) > max) {
+											alert("WSP is less or equal to MRP");
+
+											return "";
+										} else {
+											$("#ucO").prop("readonly", false);
+											return value;
+										}
+									}
+								</script>
+								<script type="text/javascript">
+									function relationWP(value, max) {
+										
+										if (parseFloat(value) > max) {
+											alert("Per unit cost is less or equal to WSP");
+
+											return "";
+										} else {
+											
+											return value;
+										}
+									}
+								</script>
+								
+
+
+
+
+
 
 							</div>
 
@@ -1041,8 +1072,8 @@ function readURL(input) {
 						<div>
 							<fieldset>
 								<legend> Summary </legend>
-								<form action="productSumary" id="fs" method="Post">
-
+								<form action="productSumary" id="fs" method="Post" enctype="multipart/form-data">
+									<input type="hidden" name="proImage1" id="proImage1" value="">
 									<input type="hidden" name="catagoryId" id="catagoryId" value="">
 									<h4>
 										<u>Products:</u>
@@ -1055,8 +1086,7 @@ function readURL(input) {
 										</tr>
 										<tr>
 											<td>&nbsp;</td>
-											<tr>
-										
+										<tr>
 										<tr>
 											<td>Description:</td>
 											<td><input type="text" class="form-control "
@@ -1064,21 +1094,15 @@ function readURL(input) {
 										</tr>
 										<tr>
 											<td>&nbsp;</td>
-										
 										<tr>
-										
 										<tr>
 											<td>Universal Product Code:</td>
 											<td><input type="text" class="form-control " readonly
 												name="upc" id="upc"></td>
-										
 										<tr>
-										
 										<tr>
 											<td>&nbsp;</td>
-										
 										<tr>
-										
 										<tr>
 											<td>Unit of Measurement:</td>
 											<td><input type="hidden" class="form-control " readonly
@@ -1090,9 +1114,7 @@ function readURL(input) {
 
 										<tr>
 											<td>&nbsp;</td>
-										
 										<tr>
-										
 										<tr>
 											<td>Is Salable:</td>
 											<td>
@@ -1113,15 +1135,11 @@ function readURL(input) {
 
 									<hr width="100%">
 
-									<h4>Image</h4> <br><br>
-									
-									
-									<div id="imageSummary">
-									
-									
-									
-									
-									</div>
+									<h4>Image</h4>
+									<br> <br>
+
+
+									<div id="imageSummary"></div>
 
 									<hr width="100%">
 
@@ -1187,14 +1205,11 @@ function readURL(input) {
 									<table>
 										<tr>
 											<td><b>Lot Number:</b>
-											
 											<td>
-											
 											<td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</td>
 
 											<td><input class="form-control " type="text"
 												name="lotnumberS" readonly id="lotnumberS"></td>
-									
 									</table>
 
 									<hr width="100%">
@@ -1217,7 +1232,6 @@ function readURL(input) {
 													2:</span></td>
 											<td><input readonly class="form-control " name="att2"
 												id="att2">
-										
 										</tr>
 										<tr>
 											<td>&nbsp;</td>
@@ -1258,7 +1272,7 @@ function readURL(input) {
 									</table>
 
 									<hr width="100%">
-								
+
 								</form>
 							</fieldset>
 						</div>
@@ -1341,7 +1355,7 @@ function readURL(input) {
 	</script>
 
 
-											<script type="text/javascript" src="js/modernizr.js"></script>
+	<script type="text/javascript" src="js/modernizr.js"></script>
 	<script type="text/javascript" src="js/script.js"></script>
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="js/enscroll.js"></script>
@@ -1355,8 +1369,6 @@ function readURL(input) {
 	</script>
 	<script type="text/javascript" src="js/abixTreeList.min.js"></script>
 	<script type="text/javascript">
-	
-
 		function setLimit() {
 			$("#limit").val($("#quantity").val());
 		}
@@ -1366,7 +1378,7 @@ function readURL(input) {
 			$("#serdiv").hide();
 			$("#tick").hide();
 		});
-			</script>
+	</script>
 
 	<script>
 		$(function() {
@@ -1380,7 +1392,7 @@ function readURL(input) {
 			$("#datepicker").datepicker();
 		});
 	</script>
-	
+
 	<script>
 		function catProblem(a) {
 			$("#catagoryId").val(a);
@@ -1464,34 +1476,7 @@ function readURL(input) {
 		});
 	</script>
 
-	<!-- <script type="text/javascript">
-		$(function() {
-			$("#descriptionName").autocomplete({
-				source : function(request, response) {
-					$.ajax({
-						url : "getProductByDescription",
-						dataType : "json",
-						data : {
-							descriptionName : request.term
-						},
-						success : function(data) {
-							response($.map(data, function(item) {
-								return {
-									value : item.code,
-									id : item.id,
-
-								}
-							}));
-						}
-					});
-				},
-				select : function(item, ui) {
-					viewProduct(ui.item.id);
-				}
-			})
-
-		});
-	</script>***************************************description auto complete********************* -->
+	
 
 	<script>
 		function viewProduct(id) {
@@ -1613,7 +1598,7 @@ function readURL(input) {
 	</script>
 
 
-										</body>
+</body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
 </html>
