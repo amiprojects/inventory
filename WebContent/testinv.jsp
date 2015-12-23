@@ -14,8 +14,8 @@ body {
 
 page[size="A4"] {
 	background: white;
-	width: 20.5cm;
-	height: 29cm;
+	width: 21.0cm;
+	height: 29.7cm;
 	display: block;
 	margin: 0 auto;
 	margin-bottom: 0.5cm;
@@ -102,7 +102,7 @@ page[size="A4"] {
 		</tr>
 		<tr>
 			<td class="tg-031e" colspan="7">
-				<table style="height: auto; width: 730px; border-color: white;">
+				<table class="tg" style="height: auto; width: 750px; border-color: white; margin-left: -6px; margin-right: -4px;     margin-top: -11px;">
 					<tr>
 						<th>Sl No</th>
 						<th>Description of goods</th>

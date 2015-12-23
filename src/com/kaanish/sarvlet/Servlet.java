@@ -53,6 +53,7 @@ import com.kaanish.model.UserGroup;
 import com.kaanish.model.Users;
 import com.kaanish.model.Vendor;
 import com.kaanish.model.VendorType;
+import com.kaanish.util.Base64;
 import com.kaanish.util.DateConverter;
 
 @MultipartConfig
@@ -481,6 +482,13 @@ public class Servlet extends HttpServlet {
 					}
 
 				}
+				
+				String imgstr=req.getParameter("proImage1");
+				
+				ProductImage proimg = new ProductImage();
+				proimg.setProductDetail(productDetail);
+				proimg.setImage(Base64.decode(imgstr));
+				ejb.setProductImage(proimg);
 
 				msg = "Add successfully.";
 
@@ -1341,12 +1349,12 @@ public class Servlet extends HttpServlet {
 				page = "addNewProductImage.jsp";
 				Part p1 = req.getPart("proImg");
 				is = p1.getInputStream();
-				byte cont[] = new byte[is.available()];
-				is.read(cont);
+				byte cont1[] = new byte[is.available()];
+				is.read(cont1);
 				productDetail = ejb.getProductDetailById(Integer.parseInt(req.getParameter("id")));
-				ProductImage proimg = new ProductImage();
+				proimg = new ProductImage();
 				proimg.setProductDetail(productDetail);
-				proimg.setImage(cont);
+				proimg.setImage(cont1);
 				ejb.setProductImage(proimg);
 				msg = "image added successfully";
 				break;

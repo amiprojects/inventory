@@ -40,6 +40,8 @@ function readURL(input) {
 		reader.onload = function(e) {
 			$('#image').attr('src', e.target.result).width(120).height(
 					85);
+			var str=e.target.result;
+			$("#proImage1").val(str.substring(str.lastIndexOf(',')+1));
 		};
 
 		reader.readAsDataURL(input.files[0]);
@@ -1041,8 +1043,8 @@ function readURL(input) {
 						<div>
 							<fieldset>
 								<legend> Summary </legend>
-								<form action="productSumary" id="fs" method="Post">
-
+								<form action="productSumary" id="fs" method="Post" enctype="multipart/form-data">
+									<input type="hidden" name="proImage1" id="proImage1" value="">
 									<input type="hidden" name="catagoryId" id="catagoryId" value="">
 									<h4>
 										<u>Products:</u>

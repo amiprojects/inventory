@@ -1125,7 +1125,7 @@
 						<div>
 							<fieldset>
 								<legend> Summary </legend>
-								<form action="productSumary" id="fs" method="Post">
+								<form action="productSumary" id="fs" method="Post" enctype="multipart/form-data">
 
 									<input type="hidden" name="catagoryId" id="catagoryId" value="">
 									<h4>
