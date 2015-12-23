@@ -342,6 +342,7 @@
 										</div>
 										<!-- ........................................................................************************************..............	 -->
 									</div>
+								<a href="stockView.jsp"><button class="btn blue btn-default" style="float: right">BACK</button></a>
 								</div>
 							</div>
 						</div>

@@ -37,13 +37,11 @@
 		if (input.files && input.files[0]) {
 			var reader = new FileReader();
 
-		reader.onload = function(e) {
-			$('#image').attr('src', e.target.result).width(120).height(
-					85);
-			var str=e.target.result;
-			$("#proImage1").val(str.substring(str.lastIndexOf(',')+1));
-		};
-
+			reader.onload = function(e) {
+				$('#image').attr('src', e.target.result).width(120).height(85);
+				var str = e.target.result;
+				$("#proImage1").val(str.substring(str.lastIndexOf(',') + 1));
+			};
 
 			reader.readAsDataURL(input.files[0]);
 		}
@@ -83,6 +81,7 @@
 												i = i + 1;
 
 											}
+
 											if (i == 8) {
 												$("#finish").prop("disabled",
 														false);
@@ -126,8 +125,7 @@
 												$("#wsp").val($("#wspO").val());
 												$("#quantity111").val(
 														$("#quantity").val());
-												/* $("#uom")
-														.val($("#uomO1").val()); */
+
 												$("#ucost")
 														.val($("#ucO").val());
 												$("#date2").val(
@@ -172,11 +170,43 @@
 		$("#step67").modal('show');
 	} */
 	function submitSumary() {
-		
-		
-		
-		
-		$("#fs").submit();
+
+		if ($("#productCode").val() == 0) {
+			alert("please select ProductCode");
+		} else if ($("#description").val() == "") {
+			alert("please select Description");
+		} else if ($("#universalProductCode").val() == "") {
+			alert("please select universal Product Code");
+		} else if ($("#uomnamedisplay").val() == "") {
+			alert("please select Unit of measurement");
+		} else if (!$("[name='same']").is(':checked')) {
+			alert("please select product Category");
+		} else if ($("#openn").is(':checked')) {
+
+			if ($("#quantity").val() == 0) {
+				alert("please select quantity");
+			} else if ($("#mrpO").val() == 0) {
+
+				alert("please select MRP");
+
+			} else if ($("#wspO").val() == 0) {
+				alert("please select WSP");
+			} else if ($("#ucO").val() == 0) {
+				alert("please select per unit cost");
+
+			} else if ($("#lotnumberS").val() == 0) {
+				alert("please select lot number");
+
+			}
+
+			else {
+				$("#fs").submit();
+			}
+		} else {
+			$("#fs").submit();
+
+		}
+
 	}
 	/* function */
 </script>
@@ -240,12 +270,7 @@
 									</ul>
 								</div>
 
-								<div class="widget-area" style="width: 40%;">
-
-
-
-
-
+								<div class="widget-area" style="width: 40%; height: 536px;">
 									<!-- .........*****************************............ PRODUCT SEARCH PANAEL............***************************************-->
 									<form action="MaterialPartDetailsGenerals.jsp" method="get">
 										<table>
@@ -380,8 +405,8 @@
 
 												<a href="#" id="proImg">
 													<button id="sooImage" class="btn btn-info btn-sm"
-														style="position: absolute; left: 429px; top: 326px;">
-														Add Product Image</button>
+														style="position: absolute; left: 391px; top: 326px;">
+														Add Multiple Product Image</button>
 												</a> <br> <br>
 
 												<div
@@ -647,7 +672,7 @@
 									<div class="col-md-6">
 										<div>
 											<label for="exampleInputEmail1">Product Code:</label> <input
-												type="text" name="productCode" id="productCode" required
+												type="text" name="productCode2" id="productCode" required
 												class="form-control"><br>
 										</div>
 									</div>
@@ -761,9 +786,9 @@
 							<p style="font-size: 14px">(Enter the Products's initial
 								inventory.)</p>
 							<br> <br> <input type="radio" name="do" checked
-								id="idd" onclick="openn();" value="doNotAdd">Do not add
+								id="idd" onclick="openn1();" value="doNotAdd">Do not add
 							initial inventory <br> <br> <input type="radio"
-								name="do" id="openn" onclick="openn();" value="add">Add
+								name="do" id="openn" onclick="openn1();" value="add">Add
 							initial inventory <br>
 							<hr width="100%">
 
@@ -779,7 +804,7 @@
 									$("#nottrack").show();
 									$("#trackkDiv").hide();
 								});
-								function openn() {
+								function openn1() {
 
 									if ($("[name='do']:checked").val() == "add") {
 										$("#showhide").hide();
@@ -815,7 +840,8 @@
 									<div class="form-group">
 										<label for="" class="font">Maximum Retail Price :</label> <input
 											type="number" name="mrp" placeholder="" id="mrpO"
-											onChange="wShow()" class="form-control">
+											onChange="this.value = wShow(this.value,$('#wspO').val())"
+											class="form-control">
 									</div>
 									<div class="form-group">
 										<label for="" class="font">Wholesale Price :</label> <input
@@ -834,7 +860,8 @@
 									<div class="form-group">
 										<label for="" class="font">Per Unit Cost:</label> <input
 											readonly="readonly" name="unitCost" type="number"
-											placeholder="" id="ucO" onChange="this.value = relationWP(this.value,$('#wspO').val())"
+											placeholder="" id="ucO"
+											onChange="this.value = relationWP(this.value,$('#wspO').val())"
 											class="form-control">
 
 									</div>
@@ -842,16 +869,23 @@
 								</div>
 
 								<script type="text/javascript">
-									function wShow() {
+									function wShow(value, max) {
 
-										$("#wspO").prop("readonly", false);
+										if (parseFloat(value) > max) {
+
+											$("#wspO").prop("readonly", false);
+											return value;
+										} else {
+											alert("WSP is less or equal to MRP");
+											return "";
+										}
 
 									}
 								</script>
 
 								<script type="text/javascript">
 									function relationMW(value, max) {
-										
+
 										if (parseFloat(value) > max) {
 											alert("WSP is less or equal to MRP");
 
@@ -864,18 +898,18 @@
 								</script>
 								<script type="text/javascript">
 									function relationWP(value, max) {
-										
+
 										if (parseFloat(value) > max) {
 											alert("Per unit cost is less or equal to WSP");
 
 											return "";
 										} else {
-											
+
 											return value;
 										}
 									}
 								</script>
-								
+
 
 
 
@@ -956,8 +990,8 @@
 																	<c:forEach var="cat"
 																		items="${sessionScope['ejb'].getAllCategoryBySubDepartmentId(subDept.id)}">
 																		<li><input type="radio" name="same"
-																			onclick="catProblem('${cat.id}')" value="${cat.id}">
-																			${cat.name}
+																			onclick="catProblem('${cat.id}')"
+																			value="${cat.id}"> ${cat.name}
 																			<ul>
 																				<c:forEach var="pro"
 																					items="${sessionScope['ejb'].getAllProductDetailByCategoryId(cat.id)}">
@@ -1072,7 +1106,8 @@
 						<div>
 							<fieldset>
 								<legend> Summary </legend>
-								<form action="productSumary" id="fs" method="Post" enctype="multipart/form-data">
+								<form action="productSumary" id="fs" method="Post"
+									enctype="multipart/form-data">
 									<input type="hidden" name="proImage1" id="proImage1" value="">
 									<input type="hidden" name="catagoryId" id="catagoryId" value="">
 									<h4>
@@ -1133,13 +1168,13 @@
 
 
 
-									<hr width="100%">
+									<!-- <hr width="100%">
 
 									<h4>Image</h4>
 									<br> <br>
 
 
-									<div id="imageSummary"></div>
+									<div id="imageSummary"></div> -->
 
 									<hr width="100%">
 
@@ -1411,7 +1446,7 @@
 						$("#a10").prop("disabled", false);
 					} else {
 						$("#sa1").html("Attribute1:");
-						$("#summaryA1").html(data.attrNmae1);
+						$("#summaryA1").html("Attribute1:");
 						$("#a10").prop("disabled", true);
 					}
 					if ((data.attrNmae2) != 'null') {
@@ -1420,7 +1455,7 @@
 						$("#a20").prop("disabled", false);
 					} else {
 						$("#sa2").html("Attribute2:");
-						$("#summaryA2").html(data.attrNmae2);
+						$("#summaryA2").html("Attribute2:");
 						$("#a20").prop("disabled", true);
 					}
 					if ((data.attrNmae3) != 'null') {
@@ -1429,7 +1464,7 @@
 						$("#a30").prop("disabled", false);
 					} else {
 						$("#sa3").html("Attribute3:");
-						$("#summaryA3").html(data.attrNmae3);
+						$("#summaryA3").html("Attribute3:");
 						$("#a30").prop("disabled", true);
 					}
 					if ((data.attrNmae4) != 'null') {
@@ -1438,7 +1473,7 @@
 						$("#a40").prop("disabled", false);
 					} else {
 						$("#sa4").html("Attribute4:");
-						$("#summaryA4").html(data.attrNmae4);
+						$("#summaryA4").html("Attribute4:");
 						$("#a40").prop("disabled", true);
 					}
 					if ((data.attrNmae5) != 'null') {
@@ -1447,7 +1482,7 @@
 						$("#a50").prop("disabled", false);
 					} else {
 						$("#sa5").html("Attribute5:");
-						$("#summaryA5").html(data.attrNmae5);
+						$("#summaryA5").html("Attribute5:");
 						$("#a50").prop("disabled", true);
 					}
 					if ((data.attrNmae6) != 'null') {
@@ -1456,7 +1491,7 @@
 						$("#a60").prop("disabled", false);
 					} else {
 						$("#sa6").html("Attribute6:");
-						$("#summaryA6").html(data.attrNmae6);
+						$("#summaryA6").html("Attribute6:");
 						$("#a60").prop("disabled", true);
 					}
 				},
@@ -1476,7 +1511,7 @@
 		});
 	</script>
 
-	
+
 
 	<script>
 		function viewProduct(id) {

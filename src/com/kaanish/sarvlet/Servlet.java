@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+
 import com.kaanish.ejb.Ejb;
 import com.kaanish.model.AccountDetails;
 import com.kaanish.model.Bill_setup;
@@ -421,13 +422,25 @@ public class Servlet extends HttpServlet {
 
 			case "productSumary":
 				page = "MaterialPartDetailsGenerals.jsp";
-				productDetail = new ProductDetail();
+			
+				int flagg = 0;
+				List<ProductDetail> pro1 = ejb.getAllProductDetail();
+				for (ProductDetail pqu : pro1) {
+					if (pqu.getCode().equals(req.getParameter("productCode"))) {
+						flagg = 1;
+						break;
+					}
 
-				purchaseProductDetails = new Purchase_Product_Details();
+				}
+				if (flagg == 0) {
+					productDetail = new ProductDetail();
 
-				productDetail.setCode(req.getParameter("productCode"));
-				productDetail.setDescription(req.getParameter("description"));
-				productDetail.setUniversalCode(req.getParameter("upc"));
+					purchaseProductDetails = new Purchase_Product_Details();
+
+					
+				productDetail.setCode(req.getParameter("productCode").toUpperCase());
+				productDetail.setDescription(req.getParameter("description").toUpperCase());
+				productDetail.setUniversalCode(req.getParameter("upc").toUpperCase());
 				productDetail.setQtyUnit(ejb.getQtyUnitById(Integer.parseInt(req.getParameter("uom"))));
 				productDetail.setSaleble(Boolean.parseBoolean(req.getParameter("isSalebi")));
 				productDetail.setCategory(ejb.getCategoryById(Integer.parseInt(req.getParameter("catagoryId"))));
@@ -465,7 +478,7 @@ public class Servlet extends HttpServlet {
 
 					ejb.setPurchaseProductDetails(purchaseProductDetails);
 					serialNumber = new SerialNumber();
-					serialNumber.setLotNo(req.getParameter("lotnumberS"));
+					serialNumber.setLotNo(req.getParameter("lotnumberS").toUpperCase());
 					serialNumber.setPurchase_Product_Details(purchaseProductDetails);
 					ejb.setSerialNumber(serialNumber);
 
@@ -491,6 +504,10 @@ public class Servlet extends HttpServlet {
 				ejb.setProductImage(proimg);
 
 				msg = "Add successfully.";
+				} else {
+					msg = "Duplicate Product entry";
+
+				}
 
 				break;
 			case "addBillSetup":
@@ -1352,7 +1369,7 @@ public class Servlet extends HttpServlet {
 				byte cont1[] = new byte[is.available()];
 				is.read(cont1);
 				productDetail = ejb.getProductDetailById(Integer.parseInt(req.getParameter("id")));
-				proimg = new ProductImage();
+				ProductImage proimg = new ProductImage();
 				proimg.setProductDetail(productDetail);
 				proimg.setImage(cont1);
 				ejb.setProductImage(proimg);
