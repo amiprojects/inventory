@@ -7,28 +7,45 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 <style type="text/css">
-#rcorners3 {
-	padding: 9px;
-	width: 110px;
-	height: 50px;
+body {
+	background: rgb(204, 204, 204);
 }
+
+page[size="A4"] {
+	background: white;
+	width: 3.8cm;
+	height: 2cm;
+	display: block;
+	margin: 0 auto;
+	margin-bottom: 0.5cm;
+	box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+}
+
+@media print {
+	body, page[size="A4"] {
+		margin: 0;
+		box-shadow: 0;
+	}
+}
+
 </style>
 </head>
 <body>
 <c:set value="${sessionScope['ejb'].getPurchaseEntryById(param.id)}" var="purentry"/>
 	<c:forEach items="${purentry.purchase_Product_Details}" var="purProDet">
+	
 		<c:forEach items="${purProDet.serialNumbers}" var="barcode">
-			<div id="rcorners3">
+			<page size="A4">			
 				<span style="font-weight: bold; font-size: 9px">Kaanish
 					Kouture</span><br> <span style="font-size: 9px">Pcode:${purProDet.productDetail.code}</span><br>
 				<span style="font-size: 9px">MRP:${purProDet.mrp}</span><br> <img
-					src="http://localhost:8088/barbecue/BarcodeServlet?data=${purProDet.id}/${barcode.lotNo}/${barcode.serialNumber}&drawText=true&width=2&height=30"
+					src="http://localhost:8080/barbecue/BarcodeServlet?data=${purProDet.id}/${barcode.lotNo}/${barcode.serialNumber}&drawText=true&width=2&height=30"
 					width="110" /><br>
 				<center>
 					<span style="font-size: 5px">${purProDet.id}/${barcode.lotNo}/${barcode.serialNumber}</span>
 				</center>
 				<br>
-			</div>
+			</page>
 		</c:forEach>
 	</c:forEach>
 
