@@ -47,7 +47,7 @@
 	$(document).ready(function() {
 		$("#sales").attr("id", "activeSubMenu");
 		$("#sSalesEntry").attr("style", "color: red;");
-
+		$("#wspORmrp").val('mrpVal');
 	});
 </script>
 <link rel="stylesheet" href="css/toast.css" type="text/css" />
@@ -132,7 +132,6 @@
 										</div>
 									</div>
 
-
 									<div class="col-md-6">
 										<div class="widget-area" style="height: 250px;">
 											<div style="background-color: lightgrey;">
@@ -186,33 +185,36 @@
 										<h3>Sale Product at:</h3>
 									</div>
 									<input type="radio" class="chk" name="saleAt" value="mrp"
-										id="mrp" style="display: none;"><label for="mrp"></label>MRP<input
-										type="radio" class="chk" name="saleAt" value="wsp" id="wsp"
-										style="display: none;">&nbsp;<label for="wsp"></label>WSP
+										id="mrp" style="display: none;" checked="checked"><label
+										for="mrp"></label>MRP<input type="radio" class="chk"
+										name="saleAt" value="wsp" id="wsp" style="display: none;">&nbsp;<label
+										for="wsp"></label>WSP
 
 								</div>
 								<div class="widget-area">
 
 
 									<b>Quantity :</b> <input type="text" name="qty" id="qty"
-										style="width: 70px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										onkeyup="checkQty();" value="0" style="width: 70px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-									<b>Product :</b>
-									<!-- <input type="text" name="descriptionName"
-										id="descriptionName"> -->
-									<select name="prodCode" id="prodCode"
+									<b>Product :</b> <select name="prodCode" id="prodCode"
 										onchange="getProdDetByPurchaseProdDetId();"
 										required="required">
 										<option value="0">Select Product code</option>
 										<c:forEach
 											items="${sessionScope['ejb'].getReadyPurchaseProductDetailsByQty()}"
 											var="pCode">
-											<option value="${pCode.id}">${pCode.productDetail.code}&nbsp;(<fmt:formatDate
-													value="${pCode.purchase_Entry.purchase_date}"
-													pattern="dd-MM-yy" />)
+											<option value="${pCode.id}">${pCode.productDetail.code}&nbsp;(${pCode.remaining_quantity})(<c:choose>
+													<c:when test="${pCode.initialInventory.equals(false)}">
+														<fmt:formatDate
+															value="${pCode.purchase_Entry.purchase_date}"
+															pattern="dd-MM-yy" />
+													</c:when>
+													<c:otherwise>Intial inventory</c:otherwise>
+												</c:choose>)
 											</option>
 										</c:forEach>
-									</select>
+									</select><input type="hidden" id="remQty" name="remQty">
 									<!-- <input type="hidden" name="descriptiondId" id="descriptionId"> -->
 									&nbsp; &nbsp; &nbsp;<b>Product with Barcode</b> <input
 										type="text" id="salesbar" name="salesbar">
@@ -220,64 +222,63 @@
 
 								</div>
 								<div class="widget-area">
-									<table id="stream_table"
-										class="table table-striped table-bordered">
+									<table class="table table-striped table-bordered"
+										id="productTable">
 										<thead>
 											<tr>
-												<th id="serial">#</th>
-												<th id="prodcode">Product code</th>
-												<th id="desc">Product Description</th>
-												<th id="qty">Qty.</th>
+												<th>#</th>
+												<th>Product code</th>
+												<th>Product Description</th>
+												<th>Qty.</th>
 												<th id="mrpWSP">MRP/Qty</th>
-												<th id="total">Total</th>
+												<th>Total</th>
 											</tr>
 										</thead>
-										<tbody>
+										<tbody style="display: none;">
+											<!-- <tbody> -->
 											<tr>
-												<td>1</td>
-												<td><input type="text" name="codevalue" id="codevalue"
+												<td>0</td>
+												<td><input type="text" id="codevalue"
+													readonly="readonly"><input type="text"
+													id="productId" readonly="readonly"></td>
+												<td><input type="text" id="descvalue"
 													readonly="readonly"></td>
-												<td><input type="text" name="descvalue" id="descvalue"
-													readonly="readonly"></td>
-												<td><input type="text" name="qtyvalue" id="qtyvalue"
+												<td><input type="text" id="qtyvalue"
 													readonly="readonly" value="0"></td>
-												<td><input type="hidden" id="wspORmrp" name="wspORmrp">
-													<input type="text" name="mrpQty" id="mrpQty"
+												<td><input type="hidden" id="wspORmrp"> <input
+													type="text" id="mrpQty" readonly="readonly"></td>
+												<td><input type="text" id="eachtotalvalue"
 													readonly="readonly"></td>
-												<td><input type="text" name="totalvalue"
-													id="totalvalue" readonly="readonly"></td>
 											</tr>
 										</tbody>
 									</table>
 								</div>
 
 								<div style="width: 40%; float: right;">
+									<input type="hidden" id="totalvalue" name="totalvalue"
+										value="0">
 									<table id="stream_table"
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<td colspan="2" id="round">Round Of :</td>
-												<td><input type="number" class="form-control"
-													placeholder="" readonly="readonly" id="roundvalue"
-													name="roundvalue"></td>
-											</tr>
-											<tr>
 												<td colspan="2" id="sub">Sub Total :</td>
 												<td><input type="number" class="form-control"
-													placeholder="0.0" readonly="readonly" id="subvalue"></td>
+													readonly="readonly" id="subtotalvalue" name="subtotalvalue"
+													value="0"></td>
 											</tr>
 										</thead>
 										<tbody>
 											<tr>
-												<td colspan="2">Discount :<br> <input type="radio"
+												<td colspan="2">Discount (%) :<!-- <br> <input type="radio"
 													class="chk1" name="dis" id="percent" style="display: none;"><label
 													for="percent" style="top: -2px;"></label>% <input
 													type="radio" class="chk1" name="dis" id="flat"
 													style="display: none;"><label for="flat"
-													style="top: 7px;">&nbsp;</label>FLAT
+													style="top: 7px;">&nbsp;</label>FLAT -->
 												</td>
 												<td><input type="number" class="form-control"
-													placeholder="" readonly="readonly"></td>
+													id="discount" name="discount" placeholder=""
+													onkeyup="discountF();"></td>
 											</tr>
 										</tbody>
 
@@ -285,15 +286,39 @@
 											<tr>
 												<td colspan="2" id="disc">Discount Value:</td>
 												<td><input type="number" class="form-control"
-													readonly="readonly" id="discount"></td>
+													readonly="readonly" id="discountValue" name="discountValue"></td>
 											</tr>
 
 										</tbody>
 										<tbody>
 											<tr>
+												<td><select class="form-control" id="taxGroup"
+													name="taxGroup" onchange="selectedTaxGroup();">
+														<option value="0">TAX type</option>
+														<c:forEach
+															items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
+															var="taxTypeGroup">
+															<option value="${taxTypeGroup.id}">${taxTypeGroup.name}</option>
+														</c:forEach>
+												</select></td>
+												<td>%</td>
+												<td><input type="text" class="form-control"
+													readonly="readonly" value="0" id="taxTot"></td>
+											</tr>
+										</tbody>
+										<tbody>
+											<tr>
+												<td colspan="2">Tax Amount :</td>
+												<td><input type="text" class="form-control"
+													readonly="readonly" value="0" id="taxAmount"></td>
+											</tr>
+										</tbody>
+										<tbody>
+											<tr>
 												<td colspan="2" id="trans">Transport charge :</td>
 												<td><input type="number" class="form-control"
-													id="transcharge"></td>
+													id="transcharge" name="transcharge"
+													onkeyup="transchargeF();"></td>
 											</tr>
 										</tbody>
 
@@ -301,22 +326,156 @@
 											<tr>
 												<td colspan="2" id="sur">Surcharge :</td>
 												<td><input type="number" class="form-control"
-													id="surcharge"></td>
+													id="surcharge" name="surcharge" onkeyup="surchargeF();"></td>
 											</tr>
 										</tbody>
-
+										<tbody>
+											<tr>
+												<td colspan="2" id="round">Round Of :</td>
+												<td><input type="number" class="form-control"
+													placeholder="" readonly="readonly" id="roundvalue"
+													name="roundvalue" value="0"></td>
+											</tr>
+										</tbody>
 										<thead>
 											<tr>
 												<td colspan="2" id="grand">Grand Total :</td>
 												<td><input type="number" class="form-control"
-													placeholder="0.0" readonly="readonly" id="grandtotal"></td>
+													placeholder="0" readonly="readonly" id="grandtotal"
+													name="grandtotal"></td>
 											</tr>
 										</thead>
 									</table>
 									<div style="float: right;">
-										<input type="submit" class="btn btn-info btn-sm" value="Save">
+										<input type="button" class="btn btn-info btn-sm"
+											data-toggle="modal" data-target="#saveSales" value="Save"
+											onclick="paymentDate();">
+										<div id="saveSales" class="modal fade" role="dialog"
+											style="top: 25px;">
+											<div class="modal-dialog modal-lg">
+												<div class="modal-content">
+													<div class="modal-header">
+														<button type="button" class="close" data-dismiss="modal"
+															onclick="closePayment();">&times;</button>
+														<h4 class="modal-title">Payment Details</h4>
+													</div>
+													<div class="modal-body">
+														<div class="row">
+															<div class="col-md-6">
+																<div class="widget-area">
+																	<div class="breadcrumbs">
+																		<ul>
+																			<li><a title="">Select Payment status : </a></li>
+																		</ul>
+																	</div>
+																	<br> <br> <br>
+																	<div class="row">
+																		<div class="col-md-5">Payment status :</div>
+																		<div class="col-md-7">
+																			<div class="sec">
+
+																				<select class="form-control" id="pstatus"
+																					name="pstatus" onchange="pStatusDiv()">
+																					<option value="-" selected="selected">---</option>
+																					<c:forEach
+																						items="${sessionScope['ejb'].getAllPaymentStatus()}"
+																						var="payStatus">
+																						<option value="${payStatus.status}">${payStatus.status}</option>
+																					</c:forEach>
+																				</select>
+																			</div>
+																		</div>
+																	</div>
+																	<div id="payDetail">
+																		<div class="breadcrumbs">
+																			<ul>
+																				<li><a title="">Payment Details : </a></li>
+																			</ul>
+																		</div>
+																		<br> <br> <br>
+																		<div class="row">
+																			<div class="sec" id="pTypeDiv">
+																				<div class="col-md-5">Payment type :</div>
+																				<div class="col-md-7">
+																					<select class="form-control" id="pType"
+																						name="pType" onchange="pTypeFunc()">
+																						<option value="-" selected="selected">---</option>
+																						<c:forEach
+																							items="${sessionScope['ejb'].getAllPaymentType()}"
+																							var="payType">
+																							<option value="${payType.getType()}">${payType.getType()}</option>
+																						</c:forEach>
+																					</select>
+																				</div>
+																			</div>
+																			<div id="pDate">
+																				<div class="col-md-5">Payment Date :</div>
+																				<div class="col-md-7">
+																					<input type="text" id="datepicker2"
+																						class="form-control" readonly="readonly">
+																				</div>
+																			</div>
+																			<div id="pAmount">
+																				<div class="col-md-5">Full Amount :</div>
+																				<div class="col-md-7">
+																					<input type="text" class="form-control"
+																						readonly="readonly" id="spAmount" name="spAmount">
+																				</div>
+																			</div>
+																			<div id="pPayAmount">
+																				<div class="col-md-5">Payment Amount :</div>
+																				<div class="col-md-7">
+																					<input type="text" class="form-control" value="0"
+																						id="spPaymentAmount" name="spPaymentAmount"
+																						onkeyup="spPaymentAmountFunc();">
+																				</div>
+																			</div>
+																			<div id="pDueAmount">
+																				<div class="col-md-5">Due Amount :</div>
+																				<div class="col-md-7">
+																					<input type="text" class="form-control"
+																						readonly="readonly" id="spDueAmount"
+																						name="spDueAmount">
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+
+															<div class="col-md-6" style="float: right;"
+																id="description">
+																<div class="widget-area">
+																	<div class="breadcrumbs">
+																		<ul>
+																			<li><a title="">Provide Description : </a></li>
+																		</ul>
+																	</div>
+																	<br> <br> <br>
+																	<div class="row">
+																		<div class="col-md-5">Description :</div>
+																		<div class="col-md-7">
+																			<textarea rows="" cols="" class="form-control"
+																				id="desc" name="desc"></textarea>
+																		</div>
+																	</div>
+																	<br>
+																	<div class="breadcrumbs">
+																		<button type="button" class="btn green pull-right"
+																			onclick="submit();">Save</button>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="modal-footer">
+														<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+													</div>
+												</div>
+											</div>
+										</div>
 										<!-- <button type="button" class="btn btn-info btn-lg"
-											data-toggle="modal" data-target="#savePurchase" id="save">Save</button> -->
+											data-toggle="modal" data-target="#" id="save">Save</button> -->
 									</div>
 								</div>
 							</form>
@@ -366,104 +525,385 @@
 		});
 	</script>
 
-	<script type="text/javascript">
-		$(function() {
-			$("#descriptionName").autocomplete({
-				source : function(request, response) {
-					$.ajax({
-						url : "getProductByDescription",
-						dataType : "json",
-						data : {
-							descriptionName : request.term
-						},
-						success : function(data) {
-							response($.map(data, function(item) {
-								return {
-									value : item.code,
-									id : item.id,
-									description : item.description,
-								}
-							}));
-						}
-					});
-				},
-				change : function(event, ui) {
-					if (ui.item == null) {
-						$(this).val("");
-						$("#descriptiondId").val("");
-						$("#descvalue").val("");
-
-					} else {
-						$("#descriptiondId").val(ui.item.id);
-						$("#descvalue").val(ui.item.description);
-					}
-				},
-				select : function(event, ui) {
-					$("#descriptiondId").val(ui.item.id);
-				}
-			});
-		});
-	</script>
-
 	<script>
 		function getProdDetByPurchaseProdDetId() {
 			$("#salesbar").val($("#prodCode").val());
+			/* $("#remQty").val("${pCode.remaining_quantity}");
+			if ($("#qty").val() > $("#remQty").val()) {
+				alert('Please enter less quantity than remaining');
+				$("#qty").val(0);
+			} */
 		}
-
-		function probar() {
-			if ($("#wspORmrp").val() == 'mrpVal'
-					|| $("#wspORmrp").val() == 'wspVal') {
-				var countryName = $("#salesbar").val();
-				var countryArray = countryName.split('/');
-
-				for (var i = 0; i < countryArray.length; i++) {
-					countryArray[i];
-				}
-				var id = countryArray[0];
-
-				$.ajax({
-					type : "post",
-					url : "getProdDetByPurchaseProdDetailsId",
-					data : {
-						id : id
-					},
-					dataType : "json",
-					success : function(data) {
-						$("#codevalue").val(data.productCode);
-						$("#descvalue").val(data.productDesc);
-						$("#qtyvalue").val(Number($("#qty").val()));
-						if ($("#wspORmrp").val() == 'mrpVal') {
-							$("#mrpQty").val(data.mrp);
-							$("#totalvalue").val(
-									Number(data.mrp * $("#qtyvalue").val()));
-						} else {
-							$("#mrpQty").val(data.wsp);
-							$("#totalvalue").val(
-									Number(data.wsp * $("#qtyvalue").val()));
-						}
-						$("#prodCode").val(data.id);
-						var tot = $("#totalvalue").val();
-						var round = Math.round(tot);
-						if (tot > round) {
-							$("#roundvalue").val(
-									Math.round((round + 1 - tot) * 100) / 100);
-						} else {
-							$("#roundvalue").val(
-									Math.round((round - tot) * 100) / 100);
-						}
-					}
-
-				});
+		/* function checkQty() {
+			if ($("#prodCode").val() == 0) {
+				alert('Please select product code first');
+				$("#qty").val(0);
 			} else {
-				alert("Please choose one between MRP and WSP");
+				if ($("#qty").val() > $("#remQty").val()) {
+					alert('Please enter less quantity than remaining');
+					$("#qty").val("");
+				}
 			}
+		} */
+		var k = 0;
+		function probar() {
+			k = k + 1;
+			var countryName = $("#salesbar").val();
+			var countryArray = countryName.split('/');
+
+			for (var i = 0; i < countryArray.length; i++) {
+				countryArray[i];
+			}
+			var id = countryArray[0];
+
+			$
+					.ajax({
+						type : "post",
+						url : "getProdDetByPurchaseProdDetailsId",
+						data : {
+							id : id
+						},
+						dataType : "json",
+						success : function(data) {
+							$("#codevalue").val(data.productCode);
+							$("#productId").val(data.productId);
+							$("#descvalue").val(data.productDesc);
+							$("#qtyvalue").val(Number($("#qty").val()));
+							if ($("#wspORmrp").val() == 'mrpVal') {
+								$("#mrpQty").val(data.mrp);
+								$("#eachtotalvalue")
+										.val(
+												Math
+														.round((Number(data.mrp
+																* $("#qtyvalue")
+																		.val())) * 100) / 100);
+							} else {
+								$("#mrpQty").val(data.wsp);
+								$("#eachtotalvalue")
+										.val(
+												Math
+														.round((Number(data.wsp
+																* $("#qtyvalue")
+																		.val())) * 100) / 100);
+							}
+							$("#prodCode").val(data.id);
+							$("#subtotalvalue")
+									.val(
+											Math
+													.round((Number($(
+															"#subtotalvalue")
+															.val()) + Number($(
+															"#eachtotalvalue")
+															.val())) * 100) / 100);
+							$("#discountValue")
+									.val(
+											Math
+													.round((Number($(
+															"#subtotalvalue")
+															.val())
+															* Number($(
+																	"#discount")
+																	.val()) / 100) * 100) / 100);
+							$("#taxAmount")
+									.val(
+											Math
+													.round((Number($(
+															"#subtotalvalue")
+															.val())
+															* Number($(
+																	"#taxTot")
+																	.val()) * 100) / 100)
+													/ Number(100));
+							$("#totalvalue")
+									.val(
+											Math
+													.round((Number($(
+															"#subtotalvalue")
+															.val())
+															- Number($(
+																	"#discountValue")
+																	.val())
+															+ Number($(
+																	"#taxAmount")
+																	.val())
+															+ Number($(
+																	"#transcharge")
+																	.val()) + Number($(
+															"#surcharge").val())) * 100) / 100);
+							var tot = $("#totalvalue").val();
+							var round = Math.round(tot);
+							if (tot > round) {
+								$("#roundvalue")
+										.val(
+												Math
+														.round((round + 1 - tot) * 100) / 100);
+							} else {
+								$("#roundvalue").val(
+										Math.round((round - tot) * 100) / 100);
+							}
+
+							$("#grandtotal").val(
+									Number($("#totalvalue").val())
+											+ Number($("#roundvalue").val()));
+
+							$("#productTable")
+									.append(
+											'<tbody><tr>'
+													+ '<td>'
+													+ k
+													+ '</td>'
+													+ '<td><input readonly="readonly" type="text" name="codevalue" value=\''
+													+ data.productCode
+													+ '\'><input readonly="readonly" type="hidden" name="productId" value=\''
+													+ data.productId
+													+ '\'></td>'
+													+ '<td><input readonly="readonly" type="text" name="descvalue" value=\''
+													+ data.productDesc
+													+ '\'></td>'
+													+ '<td><input readonly="readonly" type="text" name="qtyvalue" value=\''
+													+ $("#qty").val()
+													+ '\'></td>'
+													+ '<td><input readonly="readonly" type="text" name="mrpQty" value=\''
+													+ $("#mrpQty").val()
+													+ '\'></td>'
+													+ '<td><input readonly="readonly" type="text" name="eachtotalvalue" value=\''
+													+ $("#eachtotalvalue")
+															.val() + '\'></td>'
+													+ '</tr></tbody>');
+
+						}
+
+					});
+		}
+		function discountF() {
+			$("#discountValue").val(
+					Math.round((Number($("#subtotalvalue").val())
+							* Number($("#discount").val()) / 100) * 100) / 100);
+			$("#totalvalue").val(
+					Math.round((Number($("#subtotalvalue").val())
+							- Number($("#discountValue").val())
+							+ Number($("#taxAmount").val())
+							+ Number($("#transcharge").val()) + Number($(
+							"#surcharge").val())) * 100) / 100);
+			var tot = $("#totalvalue").val();
+			var round = Math.round(tot);
+			if (tot > round) {
+				$("#roundvalue").val(Math.round((round + 1 - tot) * 100) / 100);
+			} else {
+				$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
+			}
+
+			$("#grandtotal").val(
+					Number($("#totalvalue").val())
+							+ Number($("#roundvalue").val()));
+		}
+		function transchargeF() {
+			$("#totalvalue").val(
+					Math.round((Number($("#subtotalvalue").val())
+							- Number($("#discountValue").val())
+							+ Number($("#taxAmount").val())
+							+ Number($("#transcharge").val()) + Number($(
+							"#surcharge").val())) * 100) / 100);
+			var tot = $("#totalvalue").val();
+			var round = Math.round(tot);
+			if (tot > round) {
+				$("#roundvalue").val(Math.round((round + 1 - tot) * 100) / 100);
+			} else {
+				$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
+			}
+
+			$("#grandtotal").val(
+					Number($("#totalvalue").val())
+							+ Number($("#roundvalue").val()));
+		}
+		function surchargeF() {
+			$("#totalvalue").val(
+					Math.round((Number($("#subtotalvalue").val())
+							- Number($("#discountValue").val())
+							+ Number($("#taxAmount").val())
+							+ Number($("#transcharge").val()) + Number($(
+							"#surcharge").val())) * 100) / 100);
+			var tot = $("#totalvalue").val();
+			var round = Math.round(tot);
+			if (tot > round) {
+				$("#roundvalue").val(Math.round((round + 1 - tot) * 100) / 100);
+			} else {
+				$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
+			}
+
+			$("#grandtotal").val(
+					Number($("#totalvalue").val())
+							+ Number($("#roundvalue").val()));
+		}
+		function selectedTaxGroup() {
+			if ($("#taxGroup").val() != 0) {
+				$
+						.ajax({
+							url : "getTaxGroupById",
+							data : {
+								id : $("#taxGroup").val()
+							},
+							dataType : "json",
+							success : function(data) {
+								$("#taxTot").val(data.taxtot);
+								$("#taxAmount")
+										.val(
+												Math
+														.round((Number($(
+																"#subtotalvalue")
+																.val())
+																* Number($(
+																		"#taxTot")
+																		.val()) * 100) / 100)
+														/ Number(100));
+								$("#totalvalue")
+										.val(
+												Math
+														.round((Number($(
+																"#subtotalvalue")
+																.val())
+																- Number($(
+																		"#discountValue")
+																		.val())
+																+ Number($(
+																		"#taxAmount")
+																		.val())
+																+ Number($(
+																		"#transcharge")
+																		.val()) + Number($(
+																"#surcharge")
+																.val())) * 100) / 100);
+								var tot = $("#totalvalue").val();
+								var round = Math.round(tot);
+								if (tot > round) {
+									$("#roundvalue")
+											.val(
+													Math
+															.round((round + 1 - tot) * 100) / 100);
+								} else {
+									$("#roundvalue")
+											.val(
+													Math
+															.round((round - tot) * 100) / 100);
+								}
+
+								$("#grandtotal")
+										.val(
+												Number($("#totalvalue").val())
+														+ Number($(
+																"#roundvalue")
+																.val()));
+							},
+							error : function(a, b, c) {
+								alert(c);
+							}
+						});
+			} else {
+				$("#taxTot").val('0');
+				$("#taxAmount").val('0');
+				$("#totalvalue").val(
+						Math.round((Number($("#subtotalvalue").val())
+								- Number($("#discountValue").val())
+								+ Number($("#taxAmount").val())
+								+ Number($("#transcharge").val()) + Number($(
+								"#surcharge").val())) * 100) / 100);
+				var tot = $("#totalvalue").val();
+				var round = Math.round(tot);
+				if (tot > round) {
+					$("#roundvalue").val(
+							Math.round((round + 1 - tot) * 100) / 100);
+				} else {
+					$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
+				}
+
+				$("#grandtotal").val(
+						Number($("#totalvalue").val())
+								+ Number($("#roundvalue").val()));
+			}
+
 		}
 	</script>
 
 	<script>
-		
+		function paymentDate() {
+			$("#datepicker2").val($("#datepicker").val());
+		}
 	</script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#payDetail").hide();
+			$("#description").hide();
 
+		});
+		function closePayment() {
+			$("#payDetail").hide();
+			$("#description").hide();
+			$("#pstatus").val('-');
+			$("#pType").val('-');
+		}
+		function pStatusDiv() {
+			var val = $('[name="pstatus"]').val();
+			$("#payDetail").show();
+			//alert(val);
+			if (val == '-') {
+				alert('Please select Payment status...');
+				$("#payDetail").hide();
+				$("#description").hide();
+			} else if (val == 'Not Paid') {
+				$("#pPayAmount").hide();
+				$("#pAmount").hide();
+				$("#pDate").hide();
+				$("#pTypeDiv").hide();
+				$("#pDueAmount").show();
+				$("#description").show();
+				$("#spAmount").val(Number($("#grandtotal").val()));
+				$("#spPaymentAmount").val(Number(0));
+				$("#spDueAmount").val(
+						Number($("#spAmount").val())
+								- Number($("#spPaymentAmount").val()));
+			} else if (val == 'Full Paid') {
+				$("#pPayAmount").hide();
+				$("#pDueAmount").hide();
+				$("#pAmount").show();
+				$("#pDate").show();
+				$("#pTypeDiv").show();
+				$("#description").hide();
+				$("#spAmount").val(Number($("#grandtotal").val()));
+				$("#spPaymentAmount").val(Number($("#grandtotal").val()));
+				$("#spDueAmount").val(
+						Number($("#spAmount").val())
+								- Number($("#spPaymentAmount").val()));
+			} else if (val == 'Semi Paid') {
+				$("#pPayAmount").show();
+				$("#pDueAmount").show();
+				$("#pAmount").show();
+				$("#pDate").show();
+				$("#pTypeDiv").show();
+				$("#description").hide();
+				$("#spAmount").val(Number($("#grandtotal").val()));
+				$("#spPaymentAmount").val(Number(0));
+				$("#spDueAmount").val(
+						Number($("#spAmount").val())
+								- Number($("#spPaymentAmount").val()));
+			}
+		}
+		function spPaymentAmountFunc() {
+			$("#spDueAmount").val(
+					Number($("#spAmount").val())
+							- Number($("#spPaymentAmount").val()));
+		}
+		function pTypeFunc() {
+			$("#description").show();
+			var val = $('[name="pType"]').val();
+			if (val == '-') {
+				alert('Please select Payment Type...');
+				$("#description").hide();
+			}
+		}
+		function submit() {
+			document.getElementById("purchaseForm").submit();
+		}
+	</script>
 
 </body>
 

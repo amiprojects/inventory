@@ -296,9 +296,12 @@
 								<c:forEach
 									items="${sessionScope['ejb'].getPurchaseProductDetailsByQty()}"
 									var="pCode">
-									<option value="${pCode.id}">${pCode.productDetail.code}&nbsp;(<fmt:formatDate
-											value="${pCode.purchase_Entry.purchase_date}"
-											pattern="dd-MM-yy" />)
+									<option value="${pCode.id}">${pCode.productDetail.code}&nbsp;(<c:choose>
+											<c:when
+												test="${pCode.initialInventory.equals(false)}"><fmt:formatDate value="${pCode.purchase_Entry.purchase_date}"
+											pattern="dd-MM-yy" /></c:when>
+											<c:otherwise>Intial inventory</c:otherwise>
+										</c:choose>)
 									</option>
 								</c:forEach>
 							</select><input type="hidden" id="prCode" name="prCode"> <input

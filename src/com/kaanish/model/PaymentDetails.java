@@ -30,6 +30,10 @@ public class PaymentDetails {
 	private Purchase_Entry purchase_Entry;
 
 	@ManyToOne
+	@JoinColumn(name = "salesEntryId")
+	private SalesEntry salesEntry;
+
+	@ManyToOne
 	@JoinColumn(name = "paymentTypeId")
 	private PaymentType paymentType;
 
