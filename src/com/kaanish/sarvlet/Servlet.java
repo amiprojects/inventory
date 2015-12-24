@@ -1133,6 +1133,8 @@ public class Servlet extends HttpServlet {
 					} else {
 						req.setAttribute("print", 0);
 					}
+					
+					req.setAttribute("purDetIdforPC", purchaseEntry.getId());
 					purchaseEntry = null;
 					msg = "Purchase entry was successfull.";
 				} else {
