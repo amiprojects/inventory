@@ -203,7 +203,7 @@
 											<div class="col-md-6">
 												<div class="col-md-12">
 													&nbsp; &nbsp; &nbsp; <b class="font">Vendor Type :</b> <select
-														class="form-control" name="vendorType"
+														class="form-control" name="vendorType" id="vendorType"
 														onchange="getVendorNameByType();" required="required">
 														<option value="0">Select Vendor Type</option>
 														<c:forEach
@@ -283,7 +283,8 @@
 											<div class="col-md-12">
 												<div class="col-md-6">
 													<input type="checkbox" onclick="isAgentF();" id="agent"
-														name="agent">&nbsp;<span>Via Agent</span>
+														name="agent" disabled="disabled">&nbsp;<span>Via
+														Agent</span>
 													<div class="col-md-12" id="aNameDiv">
 														<label for="" class="font">Agent Name:</label>
 														<!-- <input
@@ -1219,6 +1220,25 @@
 		function getVendorNameByType() {
 			$("#vName").val("");
 			$("#vDetail").val("");
+			$.ajax({
+				url : "getVendorTypeById",
+				data : {
+					id : $('[name="vendorType"]').val()
+				},
+				dataType : "json",
+				success : function(data) {
+					if ($("#vendorType").val() != 0) {
+						if (data.type == 'Vendor') {
+							$("#agent").removeProp("disabled");
+						} else {
+							$("#agent").prop("disabled", "disabled");
+						}
+					}
+				},
+				error : function(a, b, c) {
+					alert(c);
+				}
+			});
 		}
 
 		$(function() {

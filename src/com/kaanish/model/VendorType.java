@@ -44,4 +44,8 @@ public class VendorType {
 		this.vendors = vendors;
 	}
 
+	@Override
+	public String toString() {
+		return "{\"id\":\"" + id + "\", \"type\":\"" + type + "\"}";
+	}
 }
