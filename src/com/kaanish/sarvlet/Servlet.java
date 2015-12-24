@@ -492,7 +492,7 @@ public class Servlet extends HttpServlet {
 						} else {
 							rawMaterialsStock = ejb.getRawMeterialStoctByProductId(productDetail.getId());
 							rawMaterialsStock.setRemainingQty(
-									readyGoodsStock.getRemainingQty() + Integer.parseInt(req.getParameter("qty1")));
+									rawMaterialsStock.getRemainingQty() + Integer.parseInt(req.getParameter("qty1")));
 							ejb.updateRawMaterialStockDetail(rawMaterialsStock);
 						}
 
