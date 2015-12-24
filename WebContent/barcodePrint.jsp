@@ -52,9 +52,8 @@ page[size="A4"] {
 	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			if (window.print()) {
-				window.close();
-			}
+			window.print();
+				
 		});
 	</script>
 </body>

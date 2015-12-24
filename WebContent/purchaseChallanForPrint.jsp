@@ -15,7 +15,7 @@ body {
 page[size="A4"] {
 	background: white;
 	width: 21.0cm;
-	height: 29.7cm;
+	height: 29.0cm;
 	display: block;
 	margin: 0 auto;
 	margin-bottom: 0.0cm;
