@@ -1308,7 +1308,7 @@ public class Ejb {
 
 	/**************** SalesProductDetails *****************/
 
-	public void setDepartment(SalesProductDetails salesProductDetails) {
+	public void setSalesProductDetails(SalesProductDetails salesProductDetails) {
 		em.persist(salesProductDetails);
 	}
 

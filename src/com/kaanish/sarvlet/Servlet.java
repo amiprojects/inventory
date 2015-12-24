@@ -1180,6 +1180,7 @@ public class Servlet extends HttpServlet {
 					salesProductDetails.setSalesPrice(Float.parseFloat(mrpQty[l]));
 					salesProductDetails.setQuantity(Integer.parseInt(qtyvalue[l]));
 					salesProductDetails.setProductDetail(ejb.getProductDetailById(Integer.parseInt(productId[l])));
+					ejb.setSalesProductDetails(salesProductDetails);
 
 					purchaseProductDetails = ejb
 							.getPurchaseProductDetailsById(Integer.parseInt(purchaseProductDetId[l]));
