@@ -157,8 +157,7 @@
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
 
-			<c:if
-				test="${page.name.equals('Purchase Entry')}">
+			<c:if test="${page.name.equals('Purchase Entry')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
@@ -169,7 +168,7 @@
 			</script>
 		</c:if>
 	</c:if>
-	
+
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
@@ -713,11 +712,11 @@
 										name="lotText">
 								</div>
 							</div>
-							<br>
+							<!-- <br>
 							<div class="row">
 								&nbsp; &nbsp; <span>Serial : &nbsp; </span> <input type="radio"
-									name="serial" value="yesSerial" checked="checked">&nbsp;
-								Yes <input type="radio" name="serial" value="noSerial">&nbsp;
+									name="serial" value="yesSerial">&nbsp; Yes <input
+									type="radio" name="serial" value="noSerial" checked="checked">&nbsp;
 								No
 							</div>
 
@@ -727,9 +726,9 @@
 								</div>
 								<div class="col-md-10">
 									<input type="number" class="form-control" id="serialText"
-										name="serialText">
+										name="serialText" dis>
 								</div>
-							</div>
+							</div> -->
 							<br>
 							<div class="row">
 								<!-- <div style="float: left;">
@@ -799,7 +798,7 @@
 		$(document).ready(function() {
 			$("#isSalable").val('no');
 			$("#isBarPrint").val('yes');
-			$("#isSerial").val('yes');
+			$("#isSerial").val('no');
 			$("#isLot").val('yes');
 			$("#isAgent").val('no');
 			$("#aNameDiv").hide();

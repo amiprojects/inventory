@@ -105,4 +105,12 @@ public class PaymentDetails {
 		this.paymentStatus = paymentStatus;
 	}
 
+	public SalesEntry getSalesEntry() {
+		return salesEntry;
+	}
+
+	public void setSalesEntry(SalesEntry salesEntry) {
+		this.salesEntry = salesEntry;
+	}
+
 }

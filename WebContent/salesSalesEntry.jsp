@@ -64,14 +64,13 @@
 	<c:if test="${sessionScope['user']==null}">
 		<c:redirect url="index.jsp" />
 	</c:if>
-	
+
 	<c:if test="${!sessionScope['user'].equals('admin')}">
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
 
-			<c:if
-				test="${page.name.equals('Sales Entry')}">
+			<c:if test="${page.name.equals('Sales Entry')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
@@ -286,7 +285,8 @@
 											<tr>
 												<td colspan="2" id="disc">Discount Value:</td>
 												<td><input type="number" class="form-control"
-													readonly="readonly" id="discountValue" name="discountValue"></td>
+													readonly="readonly" id="discountValue" name="discountValue"
+													value="0"></td>
 											</tr>
 
 										</tbody>
@@ -316,7 +316,7 @@
 										<tbody>
 											<tr>
 												<td colspan="2" id="trans">Transport charge :</td>
-												<td><input type="number" class="form-control"
+												<td><input type="number" class="form-control" value="0"
 													id="transcharge" name="transcharge"
 													onkeyup="transchargeF();"></td>
 											</tr>
@@ -325,7 +325,7 @@
 										<tbody>
 											<tr>
 												<td colspan="2" id="sur">Surcharge :</td>
-												<td><input type="number" class="form-control"
+												<td><input type="number" class="form-control" value="0"
 													id="surcharge" name="surcharge" onkeyup="surchargeF();"></td>
 											</tr>
 										</tbody>
@@ -656,6 +656,8 @@
 													+ data.productCode
 													+ '\'><input readonly="readonly" type="hidden" name="productId" value=\''
 													+ data.productId
+													+ '\'><input readonly="readonly" type="hidden" name="purchaseProductDetId" value=\''
+													+ $("#prodCode").val()
 													+ '\'></td>'
 													+ '<td><input readonly="readonly" type="text" name="descvalue" value=\''
 													+ data.productDesc

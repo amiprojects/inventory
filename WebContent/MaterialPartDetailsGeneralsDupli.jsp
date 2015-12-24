@@ -39,6 +39,8 @@
 
 			reader.onload = function(e) {
 				$('#image').attr('src', e.target.result).width(120).height(85);
+				var str = e.target.result;
+				$("#proImage1").val(str.substring(str.lastIndexOf(',') + 1));
 			};
 
 			reader.readAsDataURL(input.files[0]);
@@ -52,7 +54,7 @@
 <script>
 	var i = 2;
 	var x = "";
-	var serial = [];
+
 	$(document)
 			.ready(
 					function() {
@@ -79,6 +81,7 @@
 												i = i + 1;
 
 											}
+
 											if (i == 8) {
 												$("#finish").prop("disabled",
 														false);
@@ -122,8 +125,7 @@
 												$("#wsp").val($("#wspO").val());
 												$("#quantity111").val(
 														$("#quantity").val());
-												/* $("#uom")
-														.val($("#uomO1").val()); */
+
 												$("#ucost")
 														.val($("#ucO").val());
 												$("#date2").val(
@@ -139,13 +141,6 @@
 												$("#lotnumberS").val(
 														$("#lotnO").val());
 
-												for (l = 0; l < serial.length; l++) {
-													x = x
-															+ serial[l]
-															+ '<br><input type="hidden" value="'+serial[l]+'" name="serialNumber">';
-
-												}
-												$("#slNo").html(x);
 											}
 
 										});
@@ -171,11 +166,47 @@
 
 					});
 
-	function increSerial() {
+	/* function increSerial() {
 		$("#step67").modal('show');
-	}
+	} */
 	function submitSumary() {
-		$("#fs").submit();
+
+		if ($("#productCode").val() == 0) {
+			alert("please select ProductCode");
+		} else if ($("#description").val() == "") {
+			alert("please select Description");
+		} else if ($("#universalProductCode").val() == "") {
+			alert("please select universal Product Code");
+		} else if ($("#uomnamedisplay").val() == "") {
+			alert("please select Unit of measurement");
+		} else if (!$("[name='same']").is(':checked')) {
+			alert("please select product Category");
+		} else if ($("#openn").is(':checked')) {
+
+			if ($("#quantity").val() == 0) {
+				alert("please select quantity");
+			} else if ($("#mrpO").val() == 0) {
+
+				alert("please select MRP");
+
+			} else if ($("#wspO").val() == 0) {
+				alert("please select WSP");
+			} else if ($("#ucO").val() == 0) {
+				alert("please select per unit cost");
+
+			} else if ($("#lotnumberS").val() == 0) {
+				alert("please select lot number");
+
+			}
+
+			else {
+				$("#fs").submit();
+			}
+		} else {
+			$("#fs").submit();
+
+		}
+
 	}
 	/* function */
 </script>
@@ -199,8 +230,8 @@
 	<c:if test="${sessionScope['user']==null}">
 		<c:redirect url="index.jsp" />
 	</c:if>
-	
-	
+
+
 	<c:if test="${!sessionScope['user'].equals('admin')}">
 
 		<c:forEach
@@ -218,6 +249,8 @@
 			</script>
 		</c:if>
 	</c:if>
+
+
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
@@ -237,48 +270,15 @@
 									</ul>
 								</div>
 
-								<div class="widget-area" style="width: 40%;">
-
-
-									<!-- <div class="form-group">
-											<label for="" class="">Product code : </label> <input
-												type="text" class="form-control"
-												placeholder="Enter Description" id="descriptionName"
-												name="descriptionName" class="form-control">
-										</div>
-
-										<div class="form-group">
-											<label for="" class="">Description : </label> <input
-												type="text" class="form-control"
-												placeholder="Enter Description" id="ProductCodeName"
-												name="descriptionName" class="form-control">
-										</div>
-
-										<div class="form-group">
-											<label for="" class="">Product Category : </label> <input
-												type="text" class="form-control"
-												placeholder="Enter Description" id="ProductCodeName"
-												name="descriptionName" class="form-control">
-										</div>
-
-										<div class="form-group">
-											<label for="" class="">Product Sub Category : </label> <input
-												type="text" class="form-control"
-												placeholder="Enter Description" id="ProductCodeName"
-												name="descriptionName" class="form-control">
-										</div> 
-										
-										
-										
-<!-- .........*****************************............ PRODUCT SEARCH PANAEL............***************************************-->
+								<div class="widget-area" style="width: 40%; height: 536px;">
+									<!-- .........*****************************............ PRODUCT SEARCH PANAEL............***************************************-->
 									<form action="MaterialPartDetailsGenerals.jsp" method="get">
 										<table>
 											<tr>
 												<td><b>Product code</b></td>
 												<td><input type="text" placeholder="Search by Code"
 													id="pCodeSearch" name="pCodeSearch"></td>
-												<td>&nbsp;
-													<button  type="submit">Search</button>
+												<td>&nbsp; <input type="submit" value="Search">
 												</td>
 											</tr>
 											<tr>
@@ -286,20 +286,22 @@
 											</tr>
 										</table>
 									</form>
-									<form action="MaterialPartDetailsGeneralsDupli.jsp" method="get">
-									<table>	<tr>
-											<td><b>Category</b></td>
-											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" placeholder="Search by Category"
-												id="pCatSearch" name="pCatSearch"></td>
+									<form action="MaterialPartDetailsGeneralsDupli.jsp"
+										method="get">
+										<table>
+											<tr>
+												<td><b>Category</b></td>
+												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
+													type="text" placeholder="Search by Category"
+													id="pCatSearch" name="pCatSearch"></td>
 
-											<td>&nbsp;
-												<button  type="submit">Search</button>
-											</td>
-										</tr>
+												<td>&nbsp; <input type="submit" value="Search">
+												</td>
+											</tr>
 
-									</table>
+										</table>
 									</form>
-
+									<!-- ************************************************endSearch*************************************************************** -->
 									<br> <br>
 									<table class="table">
 
@@ -315,15 +317,15 @@
 										<table class="table">
 											<c:set var="countt" value="${1}" />
 											<c:forEach
-												items="${param.pCatSearch.equals(null)?sessionScope['ejb'].getAllProductDetail():sessionScope['ejb'].getAllProductByCategory(param.pCatSearch)}"
-												var="productt22">
+												items="${param.pCodeSearch.equals(null)?sessionScope['ejb'].getAllProductDetail():sessionScope['ejb'].getAllProductByProductCode(param.pCodeSearch)}"
+												var="productt">
 
 												<tr>
 													<td align="left">${countt}</td>
-													<td align="left">${productt22.code}</td>
-													<td align="center">${productt22.description}</td>
+													<td align="left">${productt.code}</td>
+													<td align="center">${productt.description}</td>
 													<td align="center"><a href="#" id="abcdef"
-														onclick="viewProduct('${productt22.id}');"> <img
+														onclick="viewProduct('${productt.id}');"> <img
 															alt="click to view" src="images/eye.png" height="20"></a></td>
 												</tr>
 												<c:set var="countt" value="${countt+1}" />
@@ -332,7 +334,6 @@
 										</table>
 									</div>
 								</div>
-								<!-- ************************************************endSearch   and view*************************************************************** -->
 								<div class="widget-area" style="width: 60%; height: 536px">
 									<div class="breadcrumbs">
 										<ul>
@@ -404,8 +405,8 @@
 
 												<a href="#" id="proImg">
 													<button id="sooImage" class="btn btn-info btn-sm"
-														style="position: absolute; left: 429px; top: 326px;">
-														Add Product Image</button>
+														style="position: absolute; left: 391px; top: 326px;">
+														Add Multiple Product Image</button>
 												</a> <br> <br>
 
 												<div
@@ -629,7 +630,7 @@
 					</div>
 
 
-
+					<!-- 
 					<div id="step67" class="modal fade" role="dialog"
 						style="top: 25px; right: 2px">
 						<div class="modal-dialog">
@@ -660,7 +661,7 @@
 
 						</div>
 					</div>
-
+ -->
 					<div id="step1"
 						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial;">
 						<div id="bU"
@@ -671,7 +672,7 @@
 									<div class="col-md-6">
 										<div>
 											<label for="exampleInputEmail1">Product Code:</label> <input
-												type="text" name="productCode" id="productCode" required
+												type="text" name="productCode2" id="productCode" required
 												class="form-control"><br>
 										</div>
 									</div>
@@ -749,60 +750,31 @@
 
 					</div>
 
-					<div id="step5"
+					<div id="step3"
 						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial;">
-
-
-
-
 						<fieldset>
-							<legend>
-								<img src="Capture.PNG">&nbsp &nbsp Track
-							</legend>
 
-							<p style="font-size: 14px">(You want to track the product/raw
-								materials by)</p>
-							<br> <br> <br>
-							<div id="trackkDiv">
-								<table class="table">
+							<legend> Add Product Image </legend>
 
-									<thead>
-										<tr>
-											<th>Selected</th>
-											<th>Name</th>
-											<th>Abbr</th>
-
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td><input type="checkbox" name="iSLotNumber"
-												onclick="L()" id="ll" value="lotnumber"></td>
-											<td>Lot Number</td>
-											<td>Lot#</td>
-
-										</tr>
-
-										<tr>
-											<td><input type="checkbox" name="isSerialNumber"
-												onclick="S()" id="ss" value="track"></td>
-											<td>Serial Number</td>
-											<td>Ser#</td>
+							<p style="font-size: 14px">(Enter the Products Image .)</p>
 
 
-
-										</tr>
-									</tbody>
-								</table>
+							<div>
+								<label> Upload logo:</label>
+								<div>
+									<img id="image" alt="" src="data:image/jpeg;base64,"
+										style="width: 100px; height: 50px;">
+								</div>
 							</div>
-							<div id="nottrack">
-								<h3>Skip the step</h3>
+							<div id="companyLogo">
+								<input type="file" name="proImg" size="60" id="image"
+									onchange="readURL(this);" value="">
 							</div>
+
 						</fieldset>
-
 					</div>
 
-					<div id="step3"
+					<div id="step4"
 						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial;">
 
 
@@ -814,9 +786,9 @@
 							<p style="font-size: 14px">(Enter the Products's initial
 								inventory.)</p>
 							<br> <br> <input type="radio" name="do" checked
-								id="idd" onclick="openn();" value="doNotAdd">Do not add
+								id="idd" onclick="openn1();" value="doNotAdd">Do not add
 							initial inventory <br> <br> <input type="radio"
-								name="do" id="openn" onclick="openn();" value="add">Add
+								name="do" id="openn" onclick="openn1();" value="add">Add
 							initial inventory <br>
 							<hr width="100%">
 
@@ -832,7 +804,7 @@
 									$("#nottrack").show();
 									$("#trackkDiv").hide();
 								});
-								function openn() {
+								function openn1() {
 
 									if ($("[name='do']:checked").val() == "add") {
 										$("#showhide").hide();
@@ -868,12 +840,14 @@
 									<div class="form-group">
 										<label for="" class="font">Maximum Retail Price :</label> <input
 											type="number" name="mrp" placeholder="" id="mrpO"
+											onChange="this.value = wShow(this.value,$('#wspO').val())"
 											class="form-control">
 									</div>
 									<div class="form-group">
 										<label for="" class="font">Wholesale Price :</label> <input
-											type="number" name="wsp" placeholder="" id="wspO"
-											class="form-control">
+											type="number" name="wsp" readonly="readonly"
+											onChange="this.value = relationMW(this.value,$('#mrpO').val(),$('#ucO').val())"
+											placeholder="" id="wspO" class="form-control">
 									</div>
 								</div>
 								<div class="col-md-6">
@@ -883,31 +857,69 @@
 											onkeyup="setLimit()" class="form-control">
 									</div>
 
-
-									<%-- 	<div class="form-group">
-										<label for="" class="font">Unit of Measurement :</label> <select
-											id="uomO1" name="uom1" style="width: 253px; height: 34px">
-											<c:forEach items="${sessionScope['ejb'].getAllQtyUnit()}"
-												var="qity">
-												<option value="${qity.id}">${qity.name}</option>
-											</c:forEach>
-										</select>
-									</div> --%>
-
-
 									<div class="form-group">
 										<label for="" class="font">Per Unit Cost:</label> <input
-											name="unitCost" type="number" placeholder="" id="ucO"
+											readonly="readonly" name="unitCost" type="number"
+											placeholder="" id="ucO"
+											onChange="this.value = relationWP(this.value,$('#wspO').val())"
 											class="form-control">
 
 									</div>
-									<!-- 	<div class="form-group">
-										<h4>
-											Print Barcode <input type="checkbox" id="barCode"
-												onclick="showbar()">
-										</h4>
-									</div> -->
+
 								</div>
+
+								<script type="text/javascript">
+									function wShow(value, max) {
+
+										if (parseFloat(value) > max) {
+
+											$("#wspO").prop("readonly", false);
+											return value;
+										} else {
+											alert("WSP is less or equal to MRP");
+											return "";
+										}
+
+									}
+								</script>
+
+								<script type="text/javascript">
+									function relationMW(value, max, min) {
+
+										if (parseFloat(value) > max) {
+											alert("WSP is less or equal to MRP");
+
+											return "";
+										}
+										else if (parseFloat(value) < min) {
+											alert("WSP is greater or equal to cost per unit");
+											return "";
+										} 
+										else {
+											$("#ucO").prop("readonly", false);
+											return value;
+										}
+									}
+								</script>
+								<script type="text/javascript">
+									function relationWP(value, max) {
+
+										if (parseFloat(value) > max) {
+											alert("Per unit cost is less or equal to WSP");
+
+											return "";
+										} else {
+
+											return value;
+										}
+									}
+								</script>
+
+
+
+
+
+
 
 							</div>
 
@@ -916,12 +928,12 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="" class="font">Maximum Retail Price :</label> <input
-											type="text" readonly="readonly" placeholder="" id=""
+											type="text" readonly="readonly" placeholder="" id="mrpAmi"
 											class="form-control">
 									</div>
 									<div class="form-group">
 										<label for="" class="font">Wholesale Price :</label> <input
-											type="text" readonly="readonly" placeholder="" id=""
+											type="text" readonly="readonly" placeholder="" id="wspAmi"
 											class="form-control">
 									</div>
 								</div>
@@ -948,80 +960,94 @@
 						</fieldset>
 
 					</div>
-					<div id="step6"
+
+
+
+					<div id="step2"
 						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial;">
 
+						<div class="masonary-grids">
+							<div class="col-md-6">
+								<div class="widget-area" align="left">
+									<h2 class="widget-title">
+										<strong>Tree</strong> List
+									</h2>
+									<p>
+										<a href="#" id="tree-expand-all">Expand all</a> | <a href="#"
+											id="tree-collapse-all">Collapse all</a>
+									</p>
 
-						<div id="l&S">
+									<div class="tree-list"
+										style="overflow-y: scroll; overflow-y: scroll; height: 300px">
 
-							<fieldset>
-								<legend> Initial inventory tracking </legend>
+										<!-- Listing directory ZendX from ZendFramework library -->
 
-								<p style="font-size: 14px">(Enter the tracking information
-									for Products being added to inventory.)</p>
-								<br> <br> <br>
-								<div class="col-md-6">
-									<div id="lotdiv">
-										<label for="exampleInputEmail1">Lot Number:</label> <input
-											id="lotnO" type="text" name="lotNumber" required
-											class="form-control"><br>
+										<ul id="tree">
+											<c:forEach items="${sessionScope['ejb'].getAllDepartments()}"
+												var="dept">
+												<li>${dept.name}
+													<ul>
+														<c:forEach
+															items="${sessionScope['ejb'].getAllSubDepartmentsByDepartmentId(dept.id)}"
+															var="subDept">
+															<li>${subDept.name}
+																<ul>
+																	<c:forEach var="cat"
+																		items="${sessionScope['ejb'].getAllCategoryBySubDepartmentId(subDept.id)}">
+																		<li><input type="radio" name="same"
+																			onclick="catProblem('${cat.id}')"
+																			value="${cat.id}"> ${cat.name}
+																			<ul>
+																				<c:forEach var="pro"
+																					items="${sessionScope['ejb'].getAllProductDetailByCategoryId(cat.id)}">
+																					<li>${pro.description}</li>
+																				</c:forEach>
+																			</ul></li>
+																	</c:forEach>
+																</ul>
+															</li>
+														</c:forEach>
+													</ul>
+												</li>
+											</c:forEach>
+										</ul>
+										<!-- </div> -->
 									</div>
+
 								</div>
-								<div id="serdiv">
-									<div class="col-md-6">
-										<div>
-											<label for="exampleInputEmail1">Serial Number:</label> <input
-												type="text" name="serialNumber" id="indvSerial"
-												class="form-control" required><br>
-										</div>
-									</div>
-
-									<div class="col-md-9">
-										<div>
-											<table id="stream_table"
-												class="table table-striped table-bordered">
-
-												<tr>
-													<td>
-														<table cellspacing="0" cellpadding="1" width="304">
-															<tr style="">
-																<th>Serial Number</th>
-
-															</tr>
-														</table>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<div style="width: 375px; height: 164px; overflow: auto;">
-															<table cellspacing="0" cellpadding="1" width="300"
-																id="serialNo">
-
-															</table>
-														</div>
-													</td>
-												</tr>
-											</table>
-										</div>
-									</div>
-									<div style="position: absolute; bottom: 203px; left: 425px;">
-										<a href="#" id="addSeriall" onclick="addSerial();"> <img
-											src="img/pus.PNG" style="top: 2px; left: 3px"></a> <a
-											onclick="increSerial();" href="#"> <img
-											src="img/hash.PNG" style="top: 2px; left: 3px">
-										</a> <a href="#"><img src="img/delete.PNG"
-											style="top: 2px; left: 3px"></a>
-									</div>
-								</div>
-
-							</fieldset>
-						</div>
-						<div id="skip">
-							<h3>Skip the step</h3>
+							</div>
 						</div>
 					</div>
 
-					<div id="step4"
+					<div id="step6"
+						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial;">
+
+						<!-- ******************************************************************************* -->
+						<fieldset>
+							<legend>
+								<img src="Capture.PNG">&nbsp &nbsp Initial inventory
+								tracking
+							</legend>
+
+							<p style="font-size: 14px">(Track the product/raw materials
+								by Lot Number)</p>
+							<br> <br>
+							<div id="trackkDiv">
+								<div class="col-md-6">
+
+									<label for="exampleInputEmail1">Lot Number:</label> <input
+										id="lotnO" type="text" name="lotNumber" required
+										class="form-control"><br>
+
+								</div>
+							</div>
+							<div id="nottrack">
+								<h3>Skip the step</h3>
+							</div>
+						</fieldset>
+					</div>
+
+					<div id="step5"
 						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial;">
 
 
@@ -1078,65 +1104,6 @@
 
 
 					</div>
-					<div id="step2"
-						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial;">
-
-						<div class="masonary-grids">
-							<div class="col-md-6">
-								<div class="widget-area" align="left">
-									<h2 class="widget-title">
-										<strong>Tree</strong> List
-									</h2>
-									<p>
-										<a href="#" id="tree-expand-all">Expand all</a> | <a href="#"
-											id="tree-collapse-all">Collapse all</a>
-									</p>
-
-									<div class="tree-list"
-										style="overflow-y: scroll; overflow-y: scroll; height: 300px">
-
-										<!-- Listing directory ZendX from ZendFramework library -->
-
-										<ul id="tree">
-											<c:forEach items="${sessionScope['ejb'].getAllDepartments()}"
-												var="dept">
-												<li>${dept.name}
-													<ul>
-														<c:forEach
-															items="${sessionScope['ejb'].getAllSubDepartmentsByDepartmentId(dept.id)}"
-															var="subDept">
-															<li>${subDept.name}
-																<ul>
-																	<c:forEach var="cat"
-																		items="${sessionScope['ejb'].getAllCategoryBySubDepartmentId(subDept.id)}">
-																		<li><input type="radio" name="same"
-																			onclick="catProblem('${cat.id}')" value="${cat.id}">
-																			${cat.name}
-																			<ul>
-																				<c:forEach var="pro"
-																					items="${sessionScope['ejb'].getAllProductDetailByCategoryId(cat.id)}">
-																					<li>${pro.description}</li>
-																				</c:forEach>
-																			</ul></li>
-																	</c:forEach>
-																</ul>
-															</li>
-														</c:forEach>
-													</ul>
-												</li>
-											</c:forEach>
-										</ul>
-										<!-- </div> -->
-									</div>
-
-								</div>
-							</div>
-						</div>
-					</div>
-
-
-
-
 
 					<div id="step7"
 						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial; overflow: auto;">
@@ -1144,8 +1111,9 @@
 						<div>
 							<fieldset>
 								<legend> Summary </legend>
-								<form action="productSumary" id="fs" method="Post" enctype="multipart/form-data">
-
+								<form action="productSumary" id="fs" method="Post"
+									enctype="multipart/form-data">
+									<input type="hidden" name="proImage1" id="proImage1" value="">
 									<input type="hidden" name="catagoryId" id="catagoryId" value="">
 									<h4>
 										<u>Products:</u>
@@ -1202,8 +1170,18 @@
 											</td>
 										</tr>
 									</table>
-									<hr width="100%">
 
+
+
+									<!-- <hr width="100%">
+
+									<h4>Image</h4>
+									<br> <br>
+
+
+									<div id="imageSummary"></div> -->
+
+									<hr width="100%">
 
 									<h4>
 										<u>Add initial inventory:</u>
@@ -1273,16 +1251,7 @@
 											<td><input class="form-control " type="text"
 												name="lotnumberS" readonly id="lotnumberS"></td>
 									</table>
-									<br> <b>Serial Number:</b>
-									<div
-										style="width: 190px; height: 224px; border: 1px solid; overflow: auto;">
-										<table align="center">
-											<tr>
-												<td><span id="slNo"></span></td>
-											</tr>
-										</table>
 
-									</div>
 									<hr width="100%">
 
 									<h4>
@@ -1440,51 +1409,6 @@
 	</script>
 	<script type="text/javascript" src="js/abixTreeList.min.js"></script>
 	<script type="text/javascript">
-		var dupli = [];
-		function incre() {
-			var a = $("#1stSerial").val();
-			var b = $("#limit").val();
-			for (xc = a; xc < Number(a) + Number(b); xc++) {
-				if (serial.lastIndexOf(Number(xc)) == -1) {
-					$("#serialNo").append("<tr><td>" + xc + "</td></tr>");
-					serial[j] = xc;
-					$("#step67").hide();
-					j++;
-				} else {
-					alert("Duplicate Serial number: " + xc);
-				}
-			}
-		}
-
-		var j = 0;
-		function addSerial() {
-			q = $("#quantity").val();
-
-			if (j < q) {
-				if ($("#indvSerial").val() != "") {
-					if (serial.lastIndexOf($("#indvSerial").val()) == -1) {
-						$("#serialNo").append(
-								"<tr><td>" + $("#indvSerial").val()
-										+ "</td></tr>");
-						serial[j] = $("#indvSerial").val();
-						$("#indvSerial").val("");
-						$("#limit").val(q - j - 1);
-						j++;
-					} else {
-						alert("Duplicate Serial number");
-					}
-
-				} else {
-					alert("Give a Serial Number");
-				}
-
-			} else {
-
-				alert("Quantity limit cross");
-			}
-
-		}
-
 		function setLimit() {
 			$("#limit").val($("#quantity").val());
 		}
@@ -1494,26 +1418,6 @@
 			$("#serdiv").hide();
 			$("#tick").hide();
 		});
-		function L() {
-			if ($("#ll").is(":checked")) {
-				$("#lotdiv").show();
-
-			} else {
-				$("#lotdiv").hide();
-
-			}
-		}
-		function S() {
-			if ($("#ss").is(":checked")) {
-				$("#serdiv").show();
-
-			}
-
-			else {
-				$("#serdiv").hide();
-
-			}
-		}
 	</script>
 
 	<script>
@@ -1528,12 +1432,7 @@
 			$("#datepicker").datepicker();
 		});
 	</script>
-	<!-- <script>
-		function catProblem(a) {
-			$("#catagoryId").val(a);
-			
-		}
-	</script> -->
+
 	<script>
 		function catProblem(a) {
 			$("#catagoryId").val(a);
@@ -1552,7 +1451,7 @@
 						$("#a10").prop("disabled", false);
 					} else {
 						$("#sa1").html("Attribute1:");
-						$("#summaryA1").html(data.attrNmae1);
+						$("#summaryA1").html("Attribute1:");
 						$("#a10").prop("disabled", true);
 					}
 					if ((data.attrNmae2) != 'null') {
@@ -1561,7 +1460,7 @@
 						$("#a20").prop("disabled", false);
 					} else {
 						$("#sa2").html("Attribute2:");
-						$("#summaryA2").html(data.attrNmae2);
+						$("#summaryA2").html("Attribute2:");
 						$("#a20").prop("disabled", true);
 					}
 					if ((data.attrNmae3) != 'null') {
@@ -1570,7 +1469,7 @@
 						$("#a30").prop("disabled", false);
 					} else {
 						$("#sa3").html("Attribute3:");
-						$("#summaryA3").html(data.attrNmae3);
+						$("#summaryA3").html("Attribute3:");
 						$("#a30").prop("disabled", true);
 					}
 					if ((data.attrNmae4) != 'null') {
@@ -1579,7 +1478,7 @@
 						$("#a40").prop("disabled", false);
 					} else {
 						$("#sa4").html("Attribute4:");
-						$("#summaryA4").html(data.attrNmae4);
+						$("#summaryA4").html("Attribute4:");
 						$("#a40").prop("disabled", true);
 					}
 					if ((data.attrNmae5) != 'null') {
@@ -1588,7 +1487,7 @@
 						$("#a50").prop("disabled", false);
 					} else {
 						$("#sa5").html("Attribute5:");
-						$("#summaryA5").html(data.attrNmae5);
+						$("#summaryA5").html("Attribute5:");
 						$("#a50").prop("disabled", true);
 					}
 					if ((data.attrNmae6) != 'null') {
@@ -1597,7 +1496,7 @@
 						$("#a60").prop("disabled", false);
 					} else {
 						$("#sa6").html("Attribute6:");
-						$("#summaryA6").html(data.attrNmae6);
+						$("#summaryA6").html("Attribute6:");
 						$("#a60").prop("disabled", true);
 					}
 				},
@@ -1617,34 +1516,7 @@
 		});
 	</script>
 
-	<!-- <script type="text/javascript">
-		$(function() {
-			$("#descriptionName").autocomplete({
-				source : function(request, response) {
-					$.ajax({
-						url : "getProductByDescription",
-						dataType : "json",
-						data : {
-							descriptionName : request.term
-						},
-						success : function(data) {
-							response($.map(data, function(item) {
-								return {
-									value : item.code,
-									id : item.id,
 
-								}
-							}));
-						}
-					});
-				},
-				select : function(item, ui) {
-					viewProduct(ui.item.id);
-				}
-			})
-
-		});
-	</script>***************************************description auto complete********************* -->
 
 	<script>
 		function viewProduct(id) {
@@ -1764,6 +1636,7 @@
 
 		}
 	</script>
+
 
 </body>
 

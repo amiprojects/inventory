@@ -846,7 +846,7 @@
 									<div class="form-group">
 										<label for="" class="font">Wholesale Price :</label> <input
 											type="number" name="wsp" readonly="readonly"
-											onChange="this.value = relationMW(this.value,$('#mrpO').val())"
+											onChange="this.value = relationMW(this.value,$('#mrpO').val(),$('#ucO').val())"
 											placeholder="" id="wspO" class="form-control">
 									</div>
 								</div>
@@ -884,13 +884,18 @@
 								</script>
 
 								<script type="text/javascript">
-									function relationMW(value, max) {
+									function relationMW(value, max, min) {
 
 										if (parseFloat(value) > max) {
 											alert("WSP is less or equal to MRP");
 
 											return "";
-										} else {
+										}
+										else if (parseFloat(value) < min) {
+											alert("WSP is greater or equal to cost per unit");
+											return "";
+										} 
+										else {
 											$("#ucO").prop("readonly", false);
 											return value;
 										}
