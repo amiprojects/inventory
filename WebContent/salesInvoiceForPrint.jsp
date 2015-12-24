@@ -76,7 +76,7 @@ page[size="A4"] {
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
 
-			<c:if test="${page.name.equals('Purchase Entry')}">
+			<c:if test="${page.name.equals('Sales Entry')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
@@ -89,7 +89,7 @@ page[size="A4"] {
 	</c:if>
 	<c:set value="${sessionScope['ejb'].getCompanyInfo()}"
 		var="companyInfo" />
-	<c:set value="${sessionScope['ejb'].getPurchaseEntryById(param.id)}"
+	<c:set value="${sessionScope['ejb'].getSalesEntryById(param.id)}"
 		var="purEntry" />
 	<page id="print1" size="A4">
 	<h3 align="center">Sales Invoice</h3>
@@ -113,7 +113,12 @@ page[size="A4"] {
 			<td class="tg-031e" colspan="2">Other references</td>
 		</tr>
 		<tr style="height: 50px">
-			<td class="tg-031e" colspan="3" rowspan="4">Buyer Cash</td>
+			<td class="tg-031e" colspan="3" rowspan="4"><strong>Customer
+					Details:</strong> <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Name :</span>
+				${purEntry.customer.name} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>City
+					:</span> ${purEntry.customer.city} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Address
+					:</span> ${purEntry.customer.name} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Ph
+					:</span> ${purEntry.customer.mobile}</td>
 			<td class="tg-031e" colspan="2">Buyer's Oder No:</td>
 			<td class="tg-031e" colspan="2">Date:</td>
 		</tr>
@@ -143,16 +148,17 @@ page[size="A4"] {
 					<c:set value="${1}" var="sl" />
 					<c:set value="${0}" var="tqty" />
 					<c:set value="${0}" var="gtot" />
-					<c:forEach items="${purEntry.purchase_Product_Details}" var="ppdet">
+					<c:forEach items="${purEntry.salesProductDetails}" var="ppdet">
 						<tr>
 							<td>${sl}</td>
 							<td>${ppdet.productDetail.description}</td>
 							<td>${ppdet.quantity}</td>
 							<c:set value="${tqty+ppdet.quantity}" var="tqty" />
-							<td>${ppdet.cost}</td>
+							<td>${ppdet.getSalesPrice()}</td>
 							<td>${ppdet.productDetail.qtyUnit.name}</td>
-							<td>${ppdet.cost*ppdet.quantity}</td>
-							<c:set value="${gtot+ppdet.cost*ppdet.quantity}" var="gtot" />
+							<td>${ppdet.getSalesPrice()*ppdet.quantity}</td>
+							<c:set value="${gtot+ppdet.getSalesPrice()*ppdet.quantity}"
+								var="gtot" />
 						</tr>
 						<c:set value="${sl+1}" var="sl" />
 					</c:forEach>
