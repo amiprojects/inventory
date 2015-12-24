@@ -73,6 +73,8 @@ public class Servlet extends HttpServlet {
 	private Ejb ejb;
 	private HttpSession httpSession;
 	private Date dt;
+	private String serverIp;
+	private int port;
 	private Users users;
 	private String page;
 	private String msg;
@@ -356,6 +358,8 @@ public class Servlet extends HttpServlet {
 		url = req.getRequestURL().toString();
 		url = url.substring(url.lastIndexOf('/') + 1);
 		httpSession = req.getSession();
+		serverIp=req.getLocalAddr();
+		port=req.getLocalPort();
 		try {
 			switch (url) {
 
@@ -364,6 +368,8 @@ public class Servlet extends HttpServlet {
 				String user = req.getParameter("usrName");
 				if (ejb.getCheckLogin(user, req.getParameter("password"))) {
 					httpSession.setAttribute("user", user);
+					httpSession.setAttribute("sip", serverIp);
+					httpSession.setAttribute("port", port);
 					page = "dashboard.jsp";
 					msg = "Login Successful.";
 				} else {
@@ -374,6 +380,8 @@ public class Servlet extends HttpServlet {
 			case "logout":
 				page = "index.jsp";
 				httpSession.removeAttribute("user");
+				httpSession.removeAttribute("sip");
+				httpSession.removeAttribute("port");
 				msg = "Logout Successfull.";
 				break;
 
