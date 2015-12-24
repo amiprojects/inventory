@@ -63,7 +63,7 @@ page[size="A4"] {
 <script type="text/javascript">
 	$(document).ready(function() {
 		window.print();
-		window.open("barcodePrint.jsp?id=${param.id}",
+		window.open("barcodePrint.jsp?id=${param.id}&ip=${sessionScope['sip']}&port=${sessionScope['port']}",
 				'name', 'width=600,height=400');
 		
 	});
