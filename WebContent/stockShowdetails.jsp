@@ -86,6 +86,9 @@
 	</c:if>
 	<c:set var="purchasePro"
 		value="${sessionScope['ejb'].getPurchase_Product_DetailsByProId(requestScope['proid1'])}" />
+		<c:set var="salesPro"
+		value="${sessionScope['ejb'].getSales_Product_DetailsByProId(requestScope['proid1'])}" />
+		
 	<c:set var="jobProList"
 		value="${sessionScope['ejb'].getJobAssignmentProductDetailsByproductId(requestScope['proid1'])}"/>
 		
@@ -225,12 +228,14 @@
 															<th>Date</th>
 														</tr>
 													</thead>
-													<tbody>
+													<tbody><c:forEach items="${salesPro}" var="salesPro1">
 														<tr>
-															<td>...</td>
-															<td>....</td>
-															<td>....</td>
-														</tr>
+															<td>${salesPro1.salesEntry.customer.name}</td>
+															<td>${salesPro1.quantity}</td>
+															<td><fmt:formatDate
+																		value="${salesPro1.salesEntry.sales_date}"
+																		pattern="dd-MM-yyyy" /></td>
+														</tr></c:forEach>
 													</tbody>
 												</table>
 											</div>

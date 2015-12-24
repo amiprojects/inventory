@@ -18,7 +18,7 @@ page[size="A4"] {
 	height: 29.7cm;
 	display: block;
 	margin: 0 auto;
-	margin-bottom: 0.5cm;
+	margin-bottom: 0.0cm;
 	box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
 }
 
@@ -59,15 +59,23 @@ page[size="A4"] {
 	vertical-align: top
 }
 </style>
+<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		window.print();
+		window.open("barcodePrint.jsp?id=${param.id}",
+				'name', 'width=600,height=400');
+		
+	});
+</script>
 </head>
 <body>
-<c:if test="${!sessionScope['user'].equals('admin')}">
+	<c:if test="${!sessionScope['user'].equals('admin')}">
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
 
-			<c:if
-				test="${page.name.equals('Purchase Entry')}">
+			<c:if test="${page.name.equals('Purchase Entry')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
@@ -79,9 +87,11 @@ page[size="A4"] {
 		</c:if>
 	</c:if>
 	<c:set value="${sessionScope['ejb'].getCompanyInfo()}"
-		var="companyInfo"/>
-		<c:set value="${sessionScope['ejb'].getPurchaseEntryById(param.id)}" var="purEntry"/>
-	<page size="A4">
+		var="companyInfo" />
+	<c:set value="${sessionScope['ejb'].getPurchaseEntryById(param.id)}"
+		var="purEntry" />
+	<page id="print1" size="A4">
+	<h3 align="center">Purchase Challan</h3>
 	<table class="tg"
 		style="border: 1px solid; height: 1050px; width: 750px">
 		<tr style="height: 50px">
@@ -119,7 +129,8 @@ page[size="A4"] {
 		</tr>
 		<tr>
 			<td class="tg-031e" colspan="7">
-				<table class="tg" style="height: auto; width: 750px; border-color: white; margin-left: -6px; margin-right: -4px;     margin-top: -11px;">
+				<table class="tg"
+					style="height: auto; width: 750px; border-color: white; margin-left: -6px; margin-right: -4px; margin-top: -11px;">
 					<tr>
 						<th>Sl No</th>
 						<th>Description of goods</th>
@@ -128,21 +139,21 @@ page[size="A4"] {
 						<th>Per</th>
 						<th>Amount</th>
 					</tr>
-					<c:set value="${1}" var="sl"/>
-					<c:set value="${0}" var="tqty"/>
-					<c:set value="${0}" var="gtot"/>
+					<c:set value="${1}" var="sl" />
+					<c:set value="${0}" var="tqty" />
+					<c:set value="${0}" var="gtot" />
 					<c:forEach items="${purEntry.purchase_Product_Details}" var="ppdet">
-					<tr>
-						<td>${sl}</td>
-						<td>${ppdet.productDetail.description}</td>
-						<td>${ppdet.quantity}</td>
-						<c:set value="${tqty+ppdet.quantity}" var="tqty"/>
-						<td>${ppdet.cost}</td>
-						<td>${ppdet.productDetail.qtyUnit.name}</td>
-						<td>${ppdet.cost*ppdet.quantity}</td>
-						<c:set value="${gtot+ppdet.cost*ppdet.quantity}" var="gtot"/>
-					</tr>
-					<c:set value="${sl+1}" var="sl"/>
+						<tr>
+							<td>${sl}</td>
+							<td>${ppdet.productDetail.description}</td>
+							<td>${ppdet.quantity}</td>
+							<c:set value="${tqty+ppdet.quantity}" var="tqty" />
+							<td>${ppdet.cost}</td>
+							<td>${ppdet.productDetail.qtyUnit.name}</td>
+							<td>${ppdet.cost*ppdet.quantity}</td>
+							<c:set value="${gtot+ppdet.cost*ppdet.quantity}" var="gtot" />
+						</tr>
+						<c:set value="${sl+1}" var="sl" />
 					</c:forEach>
 					<tr>
 						<td colspan="2">Total</td>
@@ -153,7 +164,9 @@ page[size="A4"] {
 			</td>
 		</tr>
 		<tr style="height: 75px">
-			<td class="tg-031e" colspan="7"><span>Amount Chargeable (in words)</span><br><span>${sessionScope['ejb'].getNumberToWords('521421')}</span></td>
+			<td class="tg-031e" colspan="7"><span>Amount Chargeable
+					(in words)</span><br>
+			<span>${sessionScope['ejb'].getNumberToWords('521421')}</span></td>
 		</tr>
 		<tr style="height: 75px">
 			<td class="tg-031e" colspan="4"><strong>Declaration:</strong><br>We

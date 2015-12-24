@@ -1324,7 +1324,15 @@ public class Ejb {
 			SalesProductDetails salesProductDetails) {
 		em.merge(salesProductDetails);
 	}
-
+	public List<SalesProductDetails> getSales_Product_DetailsByProId(
+			int id) {
+		TypedQuery<SalesProductDetails> q = em
+				.createQuery(
+						"select s from SalesProductDetails s where s.productDetail.id=:Id",
+						SalesProductDetails.class);
+		q.setParameter("Id", id);
+		return q.getResultList();
+	}
 	/**************** Customer *****************/
 
 	public void setCustomerEntry(CustomerEntry customerEntry) {

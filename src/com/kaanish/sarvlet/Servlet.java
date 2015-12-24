@@ -500,7 +500,7 @@ public class Servlet extends HttpServlet {
 						} else {
 							rawMaterialsStock = ejb.getRawMeterialStoctByProductId(productDetail.getId());
 							rawMaterialsStock.setRemainingQty(
-									readyGoodsStock.getRemainingQty() + Integer.parseInt(req.getParameter("qty1")));
+									rawMaterialsStock.getRemainingQty() + Integer.parseInt(req.getParameter("qty1")));
 							ejb.updateRawMaterialStockDetail(rawMaterialsStock);
 						}
 
@@ -1133,6 +1133,8 @@ public class Servlet extends HttpServlet {
 					} else {
 						req.setAttribute("print", 0);
 					}
+					
+					req.setAttribute("purDetIdforPC", purchaseEntry.getId());
 					purchaseEntry = null;
 					msg = "Purchase entry was successfull.";
 				} else {
