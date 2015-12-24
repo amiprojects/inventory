@@ -90,7 +90,9 @@
 													class="">Department/Sub Department/Category: </label> <input
 													type="text" placeholder="" id="deptcat"
 													class="form-control"> -->
-											<h3>Stock Search</h3><br><br>
+											<h3>Stock Search</h3>
+											<br>
+											<br>
 
 											<form action="stockView.jsp">
 												<table>
@@ -158,7 +160,7 @@
 
 										<br>
 										<div
-											style="position: absolute; overflow-y: scroll; overflow-x: hidden; height: 490px">
+											style="position: absolute; overflow-y: scroll; overflow-x: hidden; height: 466px">
 
 											<table id="stream_table"
 												class="table table-striped table-bordered">
@@ -179,7 +181,7 @@
 												<tbody>
 													<c:set var="count" value="${1}" />
 													<c:forEach
-														items="${param.pCodeSearch.equals(null)?sessionScope['ejb'].getAllProductDetail():sessionScope['ejb'].getAllProductByProductCode(param.pCodeSearch)}"
+														items="${param.pCodeSearch.equals(null)?sessionScope['ejb'].getAllProductDetail():sessionScope['ejb'].getAllProductByCategory(param.pCodeSearch)}"
 														var="pro">
 														<tr>
 															<td>${count}</td>
@@ -203,10 +205,6 @@
 
 									</div>
 								</div>
-
-
-
-
 							</div>
 						</div>
 					</div>

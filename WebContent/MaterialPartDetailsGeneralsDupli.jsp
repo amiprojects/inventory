@@ -317,7 +317,7 @@
 										<table class="table">
 											<c:set var="countt" value="${1}" />
 											<c:forEach
-												items="${param.pCodeSearch.equals(null)?sessionScope['ejb'].getAllProductDetail():sessionScope['ejb'].getAllProductByProductCode(param.pCodeSearch)}"
+												items="${param.pCatSearch.equals(null)?sessionScope['ejb'].getAllProductDetail():sessionScope['ejb'].getAllProductByCategory(param.pCatSearch)}"
 												var="productt">
 
 												<tr>
@@ -487,7 +487,7 @@
 
 
 												<h4>
-													Is Saleable &nbsp; &nbsp;<input type="checkbox" id="salsal">
+													Is Saleable &nbsp; &nbsp;<input disabled type="checkbox" id="salsal">
 												</h4>
 											</div>
 
@@ -1202,12 +1202,6 @@
 										</tr>
 
 
-										<!-- <tr>
-											<td>barcode:</td>
-											<td><input id="barcodeS" class="form-control " readonly
-												type="text" name="barcodeS"></td>
-										</tr> -->
-
 										<tr>
 											<td>&nbsp;</td>
 										</tr>
@@ -1224,6 +1218,7 @@
 											<td><input id="quantity111" class="form-control "
 												readonly name="qty1" type="text"></td>
 										</tr>
+										
 										<tr>
 											<td>&nbsp;</td>
 										</tr>

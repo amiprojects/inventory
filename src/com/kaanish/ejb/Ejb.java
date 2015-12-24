@@ -300,9 +300,7 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	/****************************************
-	 * Product Search By Code
-	 **************************************************/
+	/**************************************** * Product Search By Code*********************************************/
 
 	public List<ProductDetail> getAllProductByProductCode(String code) {
 		TypedQuery<ProductDetail> q = em.createQuery(
@@ -313,9 +311,7 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	/*****************************************
-	 * Product Search By Category
-	 **************************************************/
+	/******************************	 * Product Search By Category*************************************/
 
 	public List<ProductDetail> getAllProductByCategory(String cat) {
 		TypedQuery<ProductDetail> q = em
@@ -323,6 +319,19 @@ public class Ejb {
 						"select c from ProductDetail c where UPPER(c.category.name) like :nm ",
 						ProductDetail.class);
 		q.setParameter("nm", cat.toUpperCase() + "%");
+
+		return q.getResultList();
+	}
+
+	
+	/******************************	 * Product Search By Description*************************************/
+
+
+	public List<ProductDetail> getAllProductByProductDescription(String des) {
+		TypedQuery<ProductDetail> q = em.createQuery(
+				"select c from ProductDetail c where UPPER(c.description) like :nm ",
+				ProductDetail.class);
+		q.setParameter("nm", des.toUpperCase() + "%");
 
 		return q.getResultList();
 	}
@@ -399,7 +408,7 @@ public class Ejb {
 						Users.class);
 		q.setParameter("user", usr);
 		q.setParameter("pwd", pwd);
-		return q.getResultList().size() > 0;
+		return q.getResultList().size() > 0;           
 	}
 
 	public boolean getCheckPassword(String pwd) {
@@ -1350,4 +1359,20 @@ public class Ejb {
 	public void updateDepartment(CustomerEntry customerEntry) {
 		em.merge(customerEntry);
 	}
+	/******************************stock search by product code****************/
+	
+	/*public boolean getProductDetailsByProductCodeAndProductDescription(String code, String description, String name) {
+		  
+		TypedQuery<ProductDetail> q = em
+				.createQuery(
+						"select c from ProductDetail c where (c.code=:code AND c.description=:description AND c.category.name=:name)",
+						ProductDetail.class);
+		q.setParameter("code", code);
+		q.setParameter("description", description);
+		q.setParameter("name", name);
+		return q.getResultList().size() > 0;           
+	}
+	*/
+	
+	
 }

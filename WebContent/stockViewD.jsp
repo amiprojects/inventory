@@ -179,7 +179,7 @@
 												<tbody>
 													<c:set var="count" value="${1}" />
 													<c:forEach
-														items="${param.pCodeSearch.equals(null)?sessionScope['ejb'].getAllProductDetail():sessionScope['ejb'].getAllProductByProductCode(param.pCodeSearch)}"
+														items="${param.pCodeSearch.equals(null)?sessionScope['ejb'].getAllProductDetail():sessionScope['ejb'].getAllProductByProductDescription(param.pCodeSearch)}"
 														var="pro">
 														<tr>
 															<td>${count}</td>

@@ -608,7 +608,7 @@ public class Servlet extends HttpServlet {
 
 				productDetail = ejb.getProductDetailsById(Integer.parseInt(req.getParameter("productid")));
 				productDetail.setCode(req.getParameter("productCode123"));
-				productDetail.setDescription(req.getParameter("productCode123"));
+				productDetail.setDescription(req.getParameter("description123"));
 				productDetail.setQtyUnit(ejb.getQtyUnitById(Integer.parseInt(req.getParameter("uom123"))));
 				productDetail.setUniversalCode(req.getParameter("upc123"));
 				ejb.updateProductDetail(productDetail);
