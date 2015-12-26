@@ -523,7 +523,7 @@
 
 
 												<h4>
-													Is Saleable &nbsp; &nbsp;<input type="checkbox" id="salsal">
+													Is Saleable &nbsp; &nbsp;<input disabled  type="checkbox" id="salsal">
 												</h4>
 											</div>
 
