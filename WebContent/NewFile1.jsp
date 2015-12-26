@@ -145,7 +145,7 @@
 
 										</div>
 
-										<h4>Stock View :</h4>
+										<h3>Stock View :</h3>
 
 										<br>
 									<div style="width: 100%;">

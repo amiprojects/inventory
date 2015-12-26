@@ -349,7 +349,7 @@
 										</tr>
 									</table>
 									<div
-										style="overflow-y: scroll; overflow-x: scroll; height: 281px; width: 357px; border: 1px;">
+										style="overflow-y: scroll; overflow-x: scroll; height: 281px;  border: 1px;">
 										<table class="table">
 											<c:set var="countt" value="${1}" />
 											<c:forEach

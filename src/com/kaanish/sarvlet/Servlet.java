@@ -58,18 +58,14 @@ import com.kaanish.util.Base64;
 import com.kaanish.util.DateConverter;
 
 @MultipartConfig
-@WebServlet({ "/login", "/logout", "/addTax", "/addTaxGroup", "/editTax",
-		"/deleteTax", "/editTaxGroup", "/deleteTaxGroup", "/stockDetailShow",
-		"/createDept", "/deleteDept", "/createSubDept", "/deleteSubDept",
-		"/editproductSummary", "/createCategory", "/deleteCategory",
-		"/newVendorType", "/addCountry", "/addState", "/createProduct",
-		"/deleteCountry", "/addVendor", "/addUOM", "/editVendorType",
-		"/deleteVendorType", "/addCity", "/deleteState", "/deleteCity",
-		"/productSumary", "/addNewConversion", "/purchaseEntry",
-		"/updateConversion", "/addBillSetup", "/updateCompanyInfo",
-		"/updateVendor", "/purchaseSearchByDate", "/uploadProductImage",
-		"/deleteProductImage", "/jobAssignment", "/jobAssignSearchByDate",
-		"/salesEntry", "/createUserGroup", "/updateUserGroup", "/updateUser" })
+@WebServlet({ "/login", "/logout", "/addTax", "/addTaxGroup", "/editTax", "/deleteTax", "/editTaxGroup",
+		"/deleteTaxGroup", "/stockDetailShow", "/createDept", "/deleteDept", "/createSubDept", "/deleteSubDept",
+		"/editproductSummary", "/createCategory", "/deleteCategory", "/newVendorType", "/addCountry", "/addState",
+		"/createProduct", "/deleteCountry", "/addVendor", "/addUOM", "/editVendorType", "/deleteVendorType", "/addCity",
+		"/deleteState", "/deleteCity", "/productSumary", "/addNewConversion", "/purchaseEntry", "/updateConversion",
+		"/addBillSetup", "/updateCompanyInfo", "/updateVendor", "/purchaseSearchByDate", "/uploadProductImage",
+		"/deleteProductImage", "/jobAssignment", "/jobAssignSearchByDate", "/salesEntry", "/createUserGroup",
+		"/updateUserGroup", "/updateUser" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -1027,7 +1023,7 @@ public class Servlet extends HttpServlet {
 							.parseInt(req.getParameter("vendorType"))));
 					vendor.setUsers(ejb.getUserById((String) httpSession
 							.getAttribute("user")));
-					accountDetails.setBankAccountNumber(req
+					/*accountDetails.setBankAccountNumber(req
 							.getParameter("bankAccNo"));
 					accountDetails.setBankChequeLable(req
 							.getParameter("bankCheckLebel"));
@@ -1060,7 +1056,86 @@ public class Servlet extends HttpServlet {
 					accountDetails
 							.setVatNumber(req.getParameter("vendorVATno"));
 					accountDetails.setVatRegistrationDate(DateConverter
-							.getDate(req.getParameter("vendorVATregDate")));
+							.getDate(req.getParameter("vendorVATregDate")));*/
+					
+					if(req.getParameter("bankAccNo")==null){
+						accountDetails.setBankAccountNumber(" ");
+						
+					}	
+if(req.getParameter("bankCheckLebel")==null){
+						accountDetails.setBankChequeLable(" ");
+						
+					}	
+if(req.getParameter("bankIFSC")==null){
+						accountDetails.setBankIFSCnumber(" ");
+						
+					}	
+if(req.getParameter("bankMICR")==null){
+						accountDetails.setBankMICRnumber(" ");
+						
+					}	
+if(req.getParameter("bankName")==null){
+						accountDetails.setBankName(" ");
+						
+					}	
+if(req.getParameter("bankRTGS")==null){
+						accountDetails.setBankRTGCnumber(" ");
+						
+					}	
+if(req.getParameter("bankBranch")==null){
+						accountDetails.setBranch(" ");
+						
+					}	
+if(req.getParameter("bankCity")==null){
+						accountDetails.setCity(ejb.getCityById(Integer.parseInt(" ")));
+						
+					}	
+if(req.getParameter("vendorCSTno")==null){
+						accountDetails.setCstNumber(" ");
+						
+					}	
+if(req.getParameter("vendorCSTregDate")==null){
+						accountDetails.setCstRegistrationDate(DateConverter
+							.getDate(""));
+						
+					}	
+					if(req.getParameter("vendorExciseRegNo")==null){
+						accountDetails.setExciseRegistrationNumber(" ");
+						
+					}	
+if(req.getParameter("vendorExciseRegDate")==null){
+						accountDetails.setExciseRegistrationDate(DateConverter
+							.getDate(" "));
+						
+					}	
+					if(req.getParameter("vendorPANno")==null){
+						accountDetails.setPanNumber(" ");
+						
+					}	
+					if(req.getParameter("vendorServiceTaxRegNo")==null){
+						accountDetails.setServiceTaxRegistrationNumber(" ");
+						
+					}	
+if(req.getParameter("vendorServiceTaxRegDate")==null){
+						accountDetails.setServiceTaxRegistrationDate(DateConverter
+							.getDate(" "));
+						
+					}	
+					if(req.getParameter("vendorVATno")==null){
+						accountDetails.setVatNumber(" ");
+						
+					}	
+if(req.getParameter("vendorVATregDate")==null){
+						accountDetails.setVatRegistrationDate(DateConverter
+							.getDate(" "));
+						
+					}	
+if(req.getParameter("taxTypeGroupId")==null){
+	accountDetails.setTax_Type_Group(ejb
+			.getTax_Type_GroupById(Integer.parseInt(" ")));
+	
+}	
+
 					accountDetails.setTax_Type_Group(ejb
 							.getTax_Type_GroupById(Integer.parseInt(req
 									.getParameter("taxTypeGroupId"))));
@@ -1765,8 +1840,7 @@ public class Servlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doGet(req, resp);
 	}
 }

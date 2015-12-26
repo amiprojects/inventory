@@ -368,25 +368,26 @@ $(document).ready(function(){
 													Account Info</a></li>
 											<li id="bAcc"><a data-toggle="tab" href="#bankAccount">Bank
 													Account info</a></li>
-											<li id="prts"><a data-toggle="tab" href="#part">Parts</a></li>
+										 <li id="prts"><a data-toggle="tab" href="#part">Parts</a></li> 
 										</ul>
 										<div class="tab-content">
 											<div id="bankAccount" class="tab-pane fade">
 												<div class="widget-area">
+												<h5 align="center">(* All the below fields are optional)</h5><br>
 													<div class="col-md-3">
 														<b>Bank Name:</b>
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" name="bankName"
-															id="bankname" required="required">
+															id="bankname"  >
 													</div>
 													<br>
 													<div class="col-md-3">
-														<b>A/C no.:</b>
+														<b>A/C no:</b>
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" name="bankAccNo"
-															id="acno" required="required">
+															id="acno"  >
 													</div>
 													<br>
 													<div class="col-md-3">
@@ -394,7 +395,7 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" name="bankBranch"
-															id="branch" required="required">
+															id="branch"  >
 													</div>
 													<br>
 													<div class="col-md-3">
@@ -402,24 +403,24 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" id="bankCity"
-															required="required"> <input type="hidden"
+															 > <input type="hidden"
 															value="" name="bankCity" id="bankCityId">
 													</div>
 													<br>
 													<div class="col-md-3">
-														<b>IFSC no.:</b>
+														<b>IFSC no:</b>
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" name="bankIFSC"
-															id="ifsc" required="required">
+															id="ifsc"  >
 													</div>
 													<br>
 													<div class="col-md-3">
-														<b>MICR no.:</b>
+														<b>MICR no:</b>
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" name="bankMICR"
-															id="micrno" required="required">
+															id="micrno"  >
 													</div>
 													<br>
 													<div class="col-md-3">
@@ -427,7 +428,7 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" name="bankRTGS"
-															id="rtgscd" required="required">
+															id="rtgscd"  >
 													</div>
 													<br>
 													<div class="col-md-3">
@@ -435,7 +436,7 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control"
-															name="bankCheckLebel" id="label" required="required"">
+															name="bankCheckLebel" id="label"  ">
 													</div>
 												</div>
 												<br>
@@ -455,107 +456,108 @@ $(document).ready(function(){
 											<div id="vendorAccount" class="tab-pane fade">
 												<div class="widget-area">
 													<div class="row">
+													<h5 align="center">(* All the below fields are optional)</h5><br>
 														<div class="col-md-5">
-															<b>VAT no.:</b>
+															<b>VAT no:</b> 
 														</div>
 														<div class="col-md-7">
 															<input type="text" class="form-control"
-																name="vendorVATno" id="vatno" required="required">
+																name="vendorVATno" id="vatno"  >
 														</div>
 													</div>
 
 													<div class="row">
 														<div class="col-md-5">
-															<b>VAT registration date:</b>
+															<b>VAT registration date:</b> 
 														</div>
 														<div class="col-md-7">
 															<input type="text" class="form-control"
-																name="vendorVATregDate" required="required"
+																name="vendorVATregDate"  
 																id="datepicker" readonly="readonly">
 														</div>
 													</div>
 
 													<div class="row">
 														<div class="col-md-5">
-															<b>CST no.:</b>
+															<b>CST no:</b> 
 														</div>
 														<div class="col-md-7">
 															<input type="text" class="form-control"
-																name="vendorCSTno" id="cstno" required="required">
+																name="vendorCSTno" id="cstno"  >
 														</div>
 													</div>
 
 													<div class="row">
 														<div class="col-md-5">
-															<b>CST registration date:</b>
+															<b>CST registration date:</b> 
 														</div>
 														<div class="col-md-7">
 															<input type="text" class="form-control"
-																name="vendorCSTregDate" required="required"
+																name="vendorCSTregDate"  
 																id="datepicker1" readonly="readonly">
 														</div>
 													</div>
 
 													<div class="row">
 														<div class="col-md-5">
-															<b>PAN no.:</b>
+															<b>PAN no:</b> 
 														</div>
 														<div class="col-md-7">
 															<input type="text" class="form-control"
-																name="vendorPANno" id="pan" required="required">
+																name="vendorPANno" id="pan"  >
 														</div>
 													</div>
 
 													<div class="row">
 														<div class="col-md-5">
-															<b>Excise registration no.:</b>
+															<b>Excise registration no:</b> 
 														</div>
 														<div class="col-md-7">
 															<input type="text" class="form-control"
 																name="vendorExciseRegNo" id="exciseno"
-																required="required">
+																 >
 														</div>
 													</div>
 
 													<div class="row">
 														<div class="col-md-5">
-															<b>Excise registration date:</b>
+															<b>Excise registration date:</b> 
 														</div>
 														<div class="col-md-7">
 															<input type="text" class="form-control"
-																name="vendorExciseRegDate" required="required"
+																name="vendorExciseRegDate"  
 																id="datepicker2" readonly="readonly">
 														</div>
 													</div>
 
 													<div class="row">
 														<div class="col-md-5">
-															<b>Service tax registration no.:</b>
+															<b>Service tax registration no:</b> 
 														</div>
 														<div class="col-md-7">
 															<input type="text" class="form-control"
 																name="vendorServiceTaxRegNo" id="servtaxno"
-																required="required">
+																 >
 														</div>
 													</div>
 
 													<div class="row">
 														<div class="col-md-5">
-															<b>Service tax registration date:</b>
+															<b>Service tax registration date:</b> 
 														</div>
 														<div class="col-md-7">
 															<input type="text" class="form-control"
-																name="vendorServiceTaxRegDate" required="required"
+																name="vendorServiceTaxRegDate"  
 																id="datepicker3" readonly="readonly">
 														</div>
 													</div>
 													<div class="row">
 														<div class="col-md-5">
-															<b>Tax group id:</b>
+															<b>Tax group id:</b> 
 														</div>
 														<div class="col-md-7">
 															<select class="form-control" name="taxTypeGroupId"
-																id="taxgroup">
+																id="taxgroup"><option value="0">select a tax group</option>
 																<c:forEach
 																	items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
 																	var="taxTypeGroup">
@@ -591,7 +593,7 @@ $(document).ready(function(){
 													<div class="col-md-9">
 														<input type="text" class="form-control"
 															name="vendorCompanyName" id="compname"
-															required="required" value="${vendor.companyName}">
+															 value="${vendor.companyName}">
 													</div>
 
 													<div class="col-md-3">
@@ -660,7 +662,7 @@ $(document).ready(function(){
 														name="vendorAddress" id="addr" required="required"
 														value="${vendor.address}"></textarea>
 													<div class="row">
-														<div class="col-md-3">City :</div>
+														<div class="col-md-3"><b>City :</b></div>
 														<div class="col-md-9">
 															<input type="text" class="form-control cityAuto"
 																name="vendorCity" required="required" id="vendorCity"
@@ -669,7 +671,7 @@ $(document).ready(function(){
 														</div>
 													</div>
 													<div class="row">
-														<div class="col-md-3">Pin code :</div>
+														<div class="col-md-3"><b>Pin code :</b></div>
 														<div class="col-md-9">
 															<input type="text" class="form-control" name="vendorPin"
 																id="pin" required="required" value="${vendor.pinCode}">
@@ -684,7 +686,7 @@ $(document).ready(function(){
 														onclick="addressButtonNext();">
 												</div>
 											</div>
-											<div id="part" class="tab-pane fade ">
+									<div id="part" class="tab-pane fade ">
 												<div class="widget-area">
 													<div class="breadcrumbs">
 														<ul>
@@ -755,8 +757,7 @@ $(document).ready(function(){
 												</div>
 												<br>
 
-											</div>
-
+											</div> 
 										</div>
 									</form>
 									<div class='toast' style='display: none'>
