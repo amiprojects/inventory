@@ -40,13 +40,13 @@
 							title="">Purchase Entry</a></li>
 						<li><a id="sPurchSearch" href="purchasingPurchaseSearch.jsp"
 							title="">Search Purchase Entry</a></li>
-						<li><a id="sPurchVendor" href="purchasingVendor.jsp" title="">Vendor</a></li>
+						<!-- <li><a id="sPurchVendor" href="purchasingVendor.jsp" title="">Vendor</a></li> -->
 						<!-- <li><a id="sPurchVtype" href="purchasingVendorType.jsp"
 							title="">Vendor Type</a></li> -->
 					</ul>
 				</div>
 			</div>
-<%-- <c:if test="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"> --%>
+			<%-- <c:if test="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"> --%>
 
 			<div class="single-menu">
 				<h2 id="sales">
@@ -62,7 +62,18 @@
 					</ul>
 				</div>
 			</div>
-			
+
+			<div class="single-menu">
+				<h2 id="vendor">
+					<a title=""><span>Vendor</span></a>
+				</h2>
+				<div class="sub-menu">
+					<ul>
+						<li><a id="vVendor" href="purchasingVendor.jsp" title="">Vendor/Agent/Jobber</a></li>
+					</ul>
+				</div>
+			</div>
+
 			<div class="single-menu">
 				<h2 id="stock">
 					<a title=""><span>Stock</span></a>

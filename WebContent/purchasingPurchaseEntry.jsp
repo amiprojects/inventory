@@ -71,7 +71,6 @@
 		$("#sPurchEntry").attr("style", "color: red;");
 		$("#payDetail").hide();
 		$("#description").hide();
-
 	});
 	function closePayment() {
 		$("#payDetail").hide();
@@ -119,7 +118,7 @@
 			$("#pTypeDiv").show();
 			$("#description").hide();
 			$("#spAmount").val(Number($("#gt").val()));
-			$("#spPaymentAmount").val(Number(0));
+			$("#spPaymentAmount").val(Number($("#gt").val()));
 			$("#spDueAmount").val(
 					Math.round((Number($("#spAmount").val()) - Number($(
 							"#spPaymentAmount").val())) * 100) / 100);
@@ -1269,6 +1268,9 @@
 		function getVendorNameByType() {
 			$("#vName").val("");
 			$("#vDetail").val("");
+			if ($("#vendorType").val() == 0) {
+				$("#agent").prop("disabled", "disabled");
+			}
 			$.ajax({
 				url : "getVendorTypeById",
 				data : {

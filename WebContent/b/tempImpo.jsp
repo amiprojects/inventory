@@ -2,7 +2,8 @@
 <link rel="stylesheet" href="bootstrapcdn.css">
 <script src="maxcdn.bootstrapcdn.js"></script>
 
-//tabs
+//include includeHeader.jsp includeSidebar.jsp includeHeader.html
+includeSidebar.html //tabs
 <ul class="nav nav-tabs">
 	<li class="active"><a data-toggle="tab" href="#detail">Details</a></li>
 	<li><a data-toggle="tab" href="#address">Address</a></li>
@@ -71,3 +72,5 @@
 </datalist>
 
 // http://localhost:8088/kaanish_kouture/getProductDetailById?id=1
+
+Math.round((num) * 100) / 100

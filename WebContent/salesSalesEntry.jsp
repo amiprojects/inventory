@@ -894,7 +894,7 @@
 				$("#pTypeDiv").show();
 				$("#description").hide();
 				$("#spAmount").val(Number($("#grandtotal").val()));
-				$("#spPaymentAmount").val(Number(0));
+				$("#spPaymentAmount").val(Number($("#grandtotal").val()));
 				$("#spDueAmount").val(
 						Number($("#spAmount").val())
 								- Number($("#spPaymentAmount").val()));

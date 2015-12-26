@@ -425,11 +425,7 @@
 													<br>
 												</div>
 
-
-
 												<br>
-
-
 
 												<div class="col-md-1">
 													<label>Active</label>
@@ -450,8 +446,6 @@
 													<div id="peoImg"></div>
 												</div>
 											</div>
-
-
 										</div>
 
 										<div id="Custom" class="tab-pane fade ">
@@ -503,9 +497,6 @@
 												</div>
 
 											</fieldset>
-
-
-
 
 										</div>
 

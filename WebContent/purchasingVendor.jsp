@@ -102,8 +102,8 @@ $(document).ready(function(){
 </script> -->
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("#purch").attr("id", "activeSubMenu");
-		$("#sPurchVendor").attr("style", "color: red;");
+		$("#vendor").attr("id", "activeSubMenu");
+		$("#vVendor").attr("style", "color: red;");
 	});
 
 	function bankButtonPrev() {
