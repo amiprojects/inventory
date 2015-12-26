@@ -48,9 +48,6 @@
 	}
 </script>
 
-
-
-
 <script>
 	var i = 2;
 	var x = "";
