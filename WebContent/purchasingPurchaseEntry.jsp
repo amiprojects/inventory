@@ -41,14 +41,20 @@
 <script src="js/jquery-ui/jquery-ui.js"></script>
 <script>
 	$(function() {
+		var d = new Date();
+		var n = d.getFullYear();
 		$("#datepicker").datepicker({
 			dateFormat : "dd-mm-yy",
+			minDate : new Date(n, 0, 1),
 			maxDate : 0
 		});
 	});
 	$(function() {
+		var d = new Date();
+		var n = d.getFullYear();
 		$("#datepicker1").datepicker({
 			dateFormat : "dd-mm-yy",
+			minDate : new Date(n, 0, 1),
 			maxDate : 0
 		});
 	});
@@ -65,7 +71,6 @@
 		$("#sPurchEntry").attr("style", "color: red;");
 		$("#payDetail").hide();
 		$("#description").hide();
-
 	});
 	function closePayment() {
 		$("#payDetail").hide();
@@ -91,8 +96,8 @@
 			$("#spAmount").val(Number($("#gt").val()));
 			$("#spPaymentAmount").val(Number(0));
 			$("#spDueAmount").val(
-					Number($("#spAmount").val())
-							- Number($("#spPaymentAmount").val()));
+					Math.round((Number($("#spAmount").val()) - Number($(
+							"#spPaymentAmount").val())) * 100) / 100);
 		} else if (val == 'Full Paid') {
 			$("#pPayAmount").hide();
 			$("#pDueAmount").hide();
@@ -103,8 +108,8 @@
 			$("#spAmount").val(Number($("#gt").val()));
 			$("#spPaymentAmount").val(Number($("#gt").val()));
 			$("#spDueAmount").val(
-					Number($("#spAmount").val())
-							- Number($("#spPaymentAmount").val()));
+					Math.round((Number($("#spAmount").val()) - Number($(
+							"#spPaymentAmount").val())) * 100) / 100);
 		} else if (val == 'Semi Paid') {
 			$("#pPayAmount").show();
 			$("#pDueAmount").show();
@@ -113,16 +118,16 @@
 			$("#pTypeDiv").show();
 			$("#description").hide();
 			$("#spAmount").val(Number($("#gt").val()));
-			$("#spPaymentAmount").val(Number(0));
+			$("#spPaymentAmount").val(Number($("#gt").val()));
 			$("#spDueAmount").val(
-					Number($("#spAmount").val())
-							- Number($("#spPaymentAmount").val()));
+					Math.round((Number($("#spAmount").val()) - Number($(
+							"#spPaymentAmount").val())) * 100) / 100);
 		}
 	}
 	function spPaymentAmountFunc() {
 		$("#spDueAmount").val(
-				Number($("#spAmount").val())
-						- Number($("#spPaymentAmount").val()));
+				Math.round((Number($("#spAmount").val()) - Number($(
+						"#spPaymentAmount").val())) * 100) / 100);
 	}
 	function pTypeFunc() {
 		$("#description").show();
@@ -171,9 +176,11 @@
 	</c:if>
 	<c:if test="${requestScope['purDetIdforPC']!=null}">
 		<script type="text/javascript">
-			var myWindow=window.open("purchaseChallanForPrint.jsp?id=${requestScope['purDetIdforPC']}",
-					'name', 'width=600,height=400');
-			 myWindow.print();
+			var myWindow = window
+					.open(
+							"purchaseChallanForPrint.jsp?id=${requestScope['purDetIdforPC']}",
+							'name', 'width=600,height=400');
+			myWindow.print();
 		</script>
 	</c:if>
 
@@ -203,7 +210,7 @@
 											<div class="col-md-6">
 												<div class="col-md-12">
 													&nbsp; &nbsp; &nbsp; <b class="font">Vendor Type :</b> <select
-														class="form-control" name="vendorType"
+														class="form-control" name="vendorType" id="vendorType"
 														onchange="getVendorNameByType();" required="required">
 														<option value="0">Select Vendor Type</option>
 														<c:forEach
@@ -234,6 +241,26 @@
 													<textarea rows="5" cols="" id="vDetail"
 														class="form-control" readonly="readonly"></textarea>
 
+												</div>
+												<div class="col-md-12">
+													<input type="checkbox" onclick="isAgentF();" id="agent"
+														name="agent" disabled="disabled">&nbsp;<span>Via
+														Agent</span>
+												</div>
+												<div class="col-md-12" id="aNameDiv">
+													<label for="" class="font">Agent Name:</label>
+													<!-- <input
+															type="text" class="form-control" name="agentName"
+															id="agentName"> -->
+													<select class="form-control" id="agentName"
+														name="agentName" onchange="getAgentDetail();">
+														<option value="0">Select Agent name</option>
+														<c:forEach
+															items="${sessionScope['ejb'].getVendorsByVendorTypeJobber('Purchase Agent')}"
+															var="agents">
+															<option value="${agents.id}">${agents.name}</option>
+														</c:forEach>
+													</select>
 												</div>
 											</div>
 											<div class="col-md-6">
@@ -271,40 +298,25 @@
 												<div class="form-group">
 													<label for="" class="font">Purchase Date :</label> <input
 														type="text" id="datepicker" class="form-control"
-														name="purchaseDate" required="required">
+														name="purchaseDate" required="required"
+														readonly="readonly">
 												</div>
-												<input type="button" class="btn green pull-right"
-													data-toggle="modal" data-target="#addProduct"
-													value="Add Product" style="width: 100%" onclick="manage();">
+												<div class="form-group" id="aDetailDiv">
+													<label for="" class="font">Agent Details:</label>
+													<textarea rows="5" cols="" class="form-control"
+														readonly="readonly" id="agentDet" name="agentDet"></textarea>
+												</div>
 											</div>
 											<div class='toast' style='display: none'>
 												<h3 id="msg">${requestScope['msg']}</h3>
 											</div>
-											<div class="col-md-12">
-												<div class="col-md-6">
-													<input type="checkbox" onclick="isAgentF();" id="agent"
-														name="agent">&nbsp;<span>Via Agent</span>
-													<div class="col-md-12" id="aNameDiv">
-														<label for="" class="font">Agent Name:</label>
-														<!-- <input
-															type="text" class="form-control" name="agentName"
-															id="agentName"> -->
-														<select class="form-control" id="agentName"
-															name="agentName" onchange="getAgentDetail();">
-															<option value="0">Select Agent name</option>
-															<c:forEach
-																items="${sessionScope['ejb'].getVendorsByVendorTypeJobber('Purchase Agent')}"
-																var="agents">
-																<option value="${agents.id}">${agents.name}</option>
-															</c:forEach>
-														</select>
-													</div>
-												</div>
-												<div class="col-md-6" id="aDetailDiv">
-													<label for="" class="font">Agent Details:</label>
-													<textarea rows="" cols="6" class="form-control"
-														readonly="readonly" id="agentDet" name="agentDet"></textarea>
-												</div>
+											<!-- <div class="col-md-12">
+												
+											</div> -->
+											<div class="col-md-12" style="left: 10px;">
+												&nbsp;<input type="button" class="btn green pull-right"
+													data-toggle="modal" data-target="#addProduct"
+													value="Add Product" style="width: 100%" onclick="manage();">
 											</div>
 										</div>
 
@@ -562,7 +574,7 @@
 	<!-- main -->
 
 	<div id="addProduct" class="modal fade" role="dialog"
-		style="top: -110px; overflow-y: hidden; overflow-x: hidden;">
+		style="top: -70px; overflow-y: hidden; overflow-x: hidden;">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-body">
@@ -570,7 +582,7 @@
 						<div class="widget-area" style="width: 50%; height: 275px;">
 							<div class="breadcrumbs">
 								<ul>
-									<li><a title="">Group</a></li>
+									<li><a title="" style="font-size: 20px;"><strong>Group</strong></a></li>
 								</ul>
 							</div>
 							<br> <br>
@@ -616,7 +628,8 @@
 						<div class="widget-area" style="width: 50%; height: 275px;">
 							<div class="breadcrumbs">
 								<ul>
-									<li><a title="">Attributes</a></li>
+									<li><a title="" style="font-size: 20px;"><strong>Attributes</strong>
+									</a></li>
 								</ul>
 							</div>
 							<br> <br>
@@ -680,7 +693,7 @@
 								<div class="col-md-3">Rate:</div>
 								<div class="col-md-9">
 									<input type="number" class="form-control" name="rate" id="rate"
-										required="required">
+										required="required" onkeyup="rateF();" value="0">
 								</div>
 							</div>
 						</div>
@@ -695,12 +708,12 @@
 								<div class="col-md-2">WSP:</div>
 								<div class="col-md-10">
 									<input type="number" class="form-control" id="wsp"
-										readonly="readonly" name="wsp">
+										readonly="readonly" name="wsp" onkeyup="wspF();" value="0">
 								</div>
 								<div class="col-md-2">MRP:</div>
 								<div class="col-md-10">
 									<input type="number" class="form-control" id="mrp"
-										readonly="readonly" name="mrp">
+										readonly="readonly" name="mrp" onkeyup="mrpF();" value="0">
 								</div>
 							</div>
 						</div>
@@ -747,10 +760,11 @@
 								</div> -->
 
 								<div style="float: right; right: 25px;">
-									<input type="button" class="btn btn-default" value="Add"
-										data-toggle="modal" onclick="anotherShow();"> <input
-										type="button" class="btn btn-default" data-dismiss="modal"
-										value="Close" id="close" onclick="closeProduct()">
+									<input type="button" class="btn green pull-left" width=""
+										value="Add Product" data-toggle="modal"
+										onclick="anotherShow();"> <input type="button"
+										class="btn btn-default" data-dismiss="modal" value="Close"
+										id="close" onclick="closeProduct()">
 								</div>
 							</div>
 						</div>
@@ -843,42 +857,42 @@
 						$("#pDesc").val(data.description);
 						$("#uom").val(data.qtyUnit);
 						if ((data.attrNmae1) != 'null') {
-							$("#attr1Name").html(data.attrNmae1);
+							$("#attr1Name").html(data.attrNmae1 + ":");
 							$("#attr1").prop("readonly", false);
 						} else {
 							$("#attr1Name").html("Attribute1:");
 							$("#attr1").prop("readonly", true);
 						}
 						if ((data.attrNmae2) != 'null') {
-							$("#attr2Name").html(data.attrNmae2);
+							$("#attr2Name").html(data.attrNmae2 + ":");
 							$("#attr2").prop("readonly", false);
 						} else {
 							$("#attr2Name").html("Attribute2:");
 							$("#attr2").prop("readonly", true);
 						}
 						if ((data.attrNmae3) != 'null') {
-							$("#attr3Name").html(data.attrNmae3);
+							$("#attr3Name").html(data.attrNmae3 + ":");
 							$("#attr3").prop("readonly", false);
 						} else {
 							$("#attr3Name").html("Attribute3:");
 							$("#attr3").prop("readonly", true);
 						}
 						if ((data.attrNmae4) != 'null') {
-							$("#attr4Name").html(data.attrNmae4);
+							$("#attr4Name").html(data.attrNmae4 + ":");
 							$("#attr4").prop("readonly", false);
 						} else {
 							$("#attr4Name").html("Attribute4:");
 							$("#attr4").prop("readonly", true);
 						}
 						if ((data.attrNmae5) != 'null') {
-							$("#attr5Name").html(data.attrNmae5);
+							$("#attr5Name").html(data.attrNmae5 + ":");
 							$("#attr5").prop("readonly", false);
 						} else {
 							$("#attr5Name").html("Attribute5:");
 							$("#attr5").prop("readonly", true);
 						}
 						if ((data.attrNmae6) != 'null') {
-							$("#attr6Name").html(data.attrNmae6);
+							$("#attr6Name").html(data.attrNmae6 + ":");
 							$("#attr6").prop("readonly", false);
 						} else {
 							$("#attr6Name").html("Attribute6:");
@@ -997,6 +1011,41 @@
 				$("#mrp").attr("readonly", true);
 			}
 		}
+
+		function rateF() {
+			if ($("#isSalable").val() == 'yes') {
+				if ($("#rate").val() > $("#wsp").val()) {
+					alert("Rate should be less than or equals to WSP.");
+					$("#rate").val(0);
+				} else if ($("#rate").val() > $("#mrp").val()) {
+					alert("Rate should be less than or equals to MRP.");
+					$("#rate").val(0);
+				}
+			}
+		}
+		function wspF() {
+			if ($("#isSalable").val() == 'yes') {
+				if ($("#rate").val() > $("#wsp").val()) {
+					alert("Rate should be less than or equals to WSP.");
+					$("#wsp").val(0);
+				} else if ($("#wsp").val() > $("#mrp").val()) {
+					alert("WSP should be less than or equals to MRP.");
+					$("#wsp").val(0);
+				}
+			}
+		}
+		function mrpF() {
+			if ($("#isSalable").val() == 'yes') {
+				if ($("#rate").val() > $("#mrp").val()) {
+					alert("Rate should be less than or equals to MRP.");
+					$("#mrp").val(0);
+				} else if ($("#wsp").val() > $("#mrp").val()) {
+					alert("WSP should be less than or equals to MRP.");
+					$("#mrp").val(0);
+				}
+			}
+		}
+
 		function isAgentF() {
 			if ($('#agent').is(":checked")) {
 				$("#isAgent").val('yes');
@@ -1145,10 +1194,10 @@
 						Number($("#subTotal").val())
 								* Number($("#taxTot").val()) / Number(100));
 				$("#gt").val(
-						Number($("#subTotal").val())
+						Math.round((Number($("#subTotal").val())
 								+ Number($("#taxAmount").val())
-								+ Number($("#transportCost").val())
-								+ Number($("#surcharge").val()));
+								+ Number($("#transportCost").val()) + Number($(
+								"#surcharge").val())) * 100) / 100);
 				$("#dept").val("");
 				$("#subDept").val("");
 				$("#cat").val("");
@@ -1219,6 +1268,28 @@
 		function getVendorNameByType() {
 			$("#vName").val("");
 			$("#vDetail").val("");
+			if ($("#vendorType").val() == 0) {
+				$("#agent").prop("disabled", "disabled");
+			}
+			$.ajax({
+				url : "getVendorTypeById",
+				data : {
+					id : $('[name="vendorType"]').val()
+				},
+				dataType : "json",
+				success : function(data) {
+					if ($("#vendorType").val() != 0) {
+						if (data.type == 'Vendor') {
+							$("#agent").removeProp("disabled");
+						} else {
+							$("#agent").prop("disabled", "disabled");
+						}
+					}
+				},
+				error : function(a, b, c) {
+					alert(c);
+				}
+			});
 		}
 
 		$(function() {
@@ -1263,17 +1334,18 @@
 										$("#taxAmount").val('0');
 										$("#gt")
 												.val(
-														Number($("#subTotal")
-																.val())
-																+ Number($(
-																		"#taxAmount")
+														Math
+																.round((Number($(
+																		"#subTotal")
 																		.val())
-																+ Number($(
-																		"#transportCost")
-																		.val())
-																+ Number($(
+																		+ Number($(
+																				"#taxAmount")
+																				.val())
+																		+ Number($(
+																				"#transportCost")
+																				.val()) + Number($(
 																		"#surcharge")
-																		.val()));
+																		.val())) * 100) / 100);
 									} else {
 										$("#vId").val(ui.item.id)
 										$("#vDetail").val(
@@ -1326,18 +1398,18 @@
 																				/ Number(100));
 														$("#gt")
 																.val(
-																		Number($(
-																				"#subTotal")
-																				.val())
-																				+ Number($(
-																						"#taxAmount")
+																		Math
+																				.round((Number($(
+																						"#subTotal")
 																						.val())
-																				+ Number($(
-																						"#transportCost")
-																						.val())
-																				+ Number($(
+																						+ Number($(
+																								"#taxAmount")
+																								.val())
+																						+ Number($(
+																								"#transportCost")
+																								.val()) + Number($(
 																						"#surcharge")
-																						.val()));
+																						.val())) * 100) / 100);
 													},
 													error : function(a, b, c) {
 														alert(b + " error: "
@@ -1350,36 +1422,46 @@
 		});
 		function selectedTaxGroup() {
 			if ($("#taxGroup").val() != 0) {
-				$.ajax({
-					url : "getTaxGroupById",
-					data : {
-						id : $("#taxGroup").val()
-					},
-					dataType : "json",
-					success : function(data) {
-						$("#taxTot").val(data.taxtot);
-						$("#taxAmount").val(
-								Number($("#subTotal").val())
-										* Number($("#taxTot").val())
-										/ Number(100));
-						$("#gt").val(
-								Number($("#subTotal").val())
-										+ Number($("#taxAmount").val())
-										+ Number($("#transportCost").val())
-										+ Number($("#surcharge").val()));
-					},
-					error : function(a, b, c) {
-						alert(c);
-					}
-				});
+				$
+						.ajax({
+							url : "getTaxGroupById",
+							data : {
+								id : $("#taxGroup").val()
+							},
+							dataType : "json",
+							success : function(data) {
+								$("#taxTot").val(data.taxtot);
+								$("#taxAmount").val(
+										Number($("#subTotal").val())
+												* Number($("#taxTot").val())
+												/ Number(100));
+								$("#gt")
+										.val(
+												Math
+														.round((Number($(
+																"#subTotal")
+																.val())
+																+ Number($(
+																		"#taxAmount")
+																		.val())
+																+ Number($(
+																		"#transportCost")
+																		.val()) + Number($(
+																"#surcharge")
+																.val())) * 100) / 100);
+							},
+							error : function(a, b, c) {
+								alert(c);
+							}
+						});
 			} else {
 				$("#taxTot").val('0');
 				$("#taxAmount").val('0');
 				$("#gt").val(
-						Number($("#subTotal").val())
+						Math.round((Number($("#subTotal").val())
 								+ Number($("#taxAmount").val())
-								+ Number($("#transportCost").val())
-								+ Number($("#surcharge").val()));
+								+ Number($("#transportCost").val()) + Number($(
+								"#surcharge").val())) * 100) / 100);
 			}
 
 		}
@@ -1387,16 +1469,16 @@
 			if (($("#transportCost").val() != "")
 					|| ($("#surcharge").val() != "")) {
 				$("#gt").val(
-						Number($("#subTotal").val())
+						Math.round((Number($("#subTotal").val())
 								+ Number($("#taxAmount").val())
-								+ Number($("#transportCost").val())
-								+ Number($("#surcharge").val()));
+								+ Number($("#transportCost").val()) + Number($(
+								"#surcharge").val())) * 100) / 100);
 			} else {
 				$("#gt").val(
-						Number($("#subTotal").val())
+						Math.round((Number($("#subTotal").val())
 								+ Number($("#taxAmount").val())
-								+ Number($("#transportCost").val())
-								+ Number($("#surcharge").val()));
+								+ Number($("#transportCost").val()) + Number($(
+								"#surcharge").val())) * 100) / 100);
 			}
 		}
 		function submit() {

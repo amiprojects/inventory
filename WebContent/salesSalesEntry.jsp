@@ -81,6 +81,17 @@
 			</script>
 		</c:if>
 	</c:if>
+
+	<c:if test="${requestScope['purDetIdforPC']!=null}">
+		<script type="text/javascript">
+			var myWindow = window
+					.open(
+							"salesInvoiceForPrint.jsp?id=${requestScope['purDetIdforPC']}",
+							'name', 'width=600,height=400');
+			myWindow.print();
+		</script>
+	</c:if>
+
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
@@ -883,7 +894,7 @@
 				$("#pTypeDiv").show();
 				$("#description").hide();
 				$("#spAmount").val(Number($("#grandtotal").val()));
-				$("#spPaymentAmount").val(Number(0));
+				$("#spPaymentAmount").val(Number($("#grandtotal").val()));
 				$("#spDueAmount").val(
 						Number($("#spAmount").val())
 								- Number($("#spPaymentAmount").val()));

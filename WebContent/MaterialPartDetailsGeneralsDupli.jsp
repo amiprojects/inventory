@@ -48,123 +48,156 @@
 	}
 </script>
 
-
-
-
 <script>
 	var i = 2;
 	var x = "";
 
-	$(document)
-			.ready(
+	$(document).ready(function() {
+		$("#step2").hide();
+		$("#step3").hide();
+		$("#step4").hide();
+		$("#step5").hide();
+		$("#step6").hide();
+		$("#step7").hide();
+	});
+	function nextF(){
+
+		if (i < 8) {
+			$("#step" + (i - 1)).hide();
+			$("#menu" + (i - 1)).attr("style", "");
+
+			$("#step" + i).show();
+			$("#menu" + i)
+					.attr(
+							"style",
+							"color: red; font-weight: bolder; background-color: #A3DEDE; box-shadow: 1px 1px 1px 1px #507B8A");
+			i = i + 1;
+
+		}
+
+		if (i == 8) {
+			$("#finish").prop("disabled", false);
+			$("#pcodedisp").val($("#productCode").val());
+			$("#description1").val($("#description").val());
+			$("#upc ").val($("#universalProductCode").val());
+			$("#uom1").val($("#uomO").val());
+			$.ajax({
+				url : "getQtyUnit",
+				type : "post",
+				dataType : "json",
+				data : {
+					id : $("#uomO").val()
+				},
+				success : function(data) {
+					$("#uomnamedisplay").val(data.name);
+				}
+			});
+
+			$("#mrp1").val($("#mrpO").val());
+			$("#wsp").val($("#wspO").val());
+			$("#quantity111").val($("#quantity").val());
+
+			$("#ucost").val($("#ucO").val());
+			$("#date2").val($("#datepicker").val());
+			$("#ltnum").val($("#lotnO").val());
+			$("#att1").val($("#a10").val());
+			$("#att2").val($("#a20").val());
+			$("#att3").val($("#a30").val());
+			$("#att4").val($("#a40").val());
+			$("#att5").val($("#a50").val());
+			$("#att6").val($("#a60").val());
+			$("#lotnumberS").val($("#lotnO").val());
+
+		}
+	}
+	
+	/* $("#next")
+			.click(
 					function() {
-						$("#step2").hide();
-						$("#step3").hide();
-						$("#step4").hide();
-						$("#step5").hide();
-						$("#step6").hide();
-						$("#step7").hide();
+						if (i < 8) {
+							$("#step" + (i - 1)).hide();
+							$("#menu" + (i - 1)).attr("style", "");
 
-						$("#next")
-								.click(
-										function() {
-											if (i < 8) {
-												$("#step" + (i - 1)).hide();
-												$("#menu" + (i - 1)).attr(
-														"style", "");
+							$("#step" + i).show();
+							$("#menu" + i)
+									.attr(
+											"style",
+											"color: red; font-weight: bolder; background-color: #A3DEDE; box-shadow: 1px 1px 1px 1px #507B8A");
+							i = i + 1;
 
-												$("#step" + i).show();
-												$("#menu" + i)
-														.attr(
-																"style",
-																"color: red; font-weight: bolder; background-color: #A3DEDE; box-shadow: 1px 1px 1px 1px #507B8A");
-												i = i + 1;
+						}
 
-											}
+						if (i == 8) {
+							$("#finish").prop("disabled", false);
+							$("#pcodedisp").val($("#productCode").val());
+							$("#description1").val($("#description").val());
+							$("#upc ").val($("#universalProductCode").val());
+							$("#uom1").val($("#uomO").val());
+							$.ajax({
+								url : "getQtyUnit",
+								type : "post",
+								dataType : "json",
+								data : {
+									id : $("#uomO").val()
+								},
+								success : function(data) {
+									$("#uomnamedisplay").val(data.name);
+								}
+							});
 
-											if (i == 8) {
-												$("#finish").prop("disabled",
-														false);
-												$("#pcodedisp")
-														.val(
-																$(
-																		"#productCode")
-																		.val());
-												$("#description1")
-														.val(
-																$(
-																		"#description")
-																		.val());
-												$("#upc ")
-														.val(
-																$(
-																		"#universalProductCode")
-																		.val());
-												$("#uom1")
-														.val($("#uomO").val());
-												$
-														.ajax({
-															url : "getQtyUnit",
-															type : "post",
-															dataType : "json",
-															data : {
-																id : $("#uomO")
-																		.val()
-															},
-															success : function(
-																	data) {
-																$(
-																		"#uomnamedisplay")
-																		.val(
-																				data.name);
-															}
-														});
+							$("#mrp1").val($("#mrpO").val());
+							$("#wsp").val($("#wspO").val());
+							$("#quantity111").val($("#quantity").val());
 
-												$("#mrp1")
-														.val($("#mrpO").val());
-												$("#wsp").val($("#wspO").val());
-												$("#quantity111").val(
-														$("#quantity").val());
+							$("#ucost").val($("#ucO").val());
+							$("#date2").val($("#datepicker").val());
+							$("#ltnum").val($("#lotnO").val());
+							$("#att1").val($("#a10").val());
+							$("#att2").val($("#a20").val());
+							$("#att3").val($("#a30").val());
+							$("#att4").val($("#a40").val());
+							$("#att5").val($("#a50").val());
+							$("#att6").val($("#a60").val());
+							$("#lotnumberS").val($("#lotnO").val());
 
-												$("#ucost")
-														.val($("#ucO").val());
-												$("#date2").val(
-														$("#datepicker").val());
-												$("#ltnum").val(
-														$("#lotnO").val());
-												$("#att1").val($("#a10").val());
-												$("#att2").val($("#a20").val());
-												$("#att3").val($("#a30").val());
-												$("#att4").val($("#a40").val());
-												$("#att5").val($("#a50").val());
-												$("#att6").val($("#a60").val());
-												$("#lotnumberS").val(
-														$("#lotnO").val());
+						}
 
-											}
+					}); */
 
-										});
+	
+	/* $("#prev")
+			.click(
+					function() { 
+						$("#finish").prop("disabled", true);
+						if (i > 2) {
+							$("#step" + (i - 1)).hide();
+							$("#menu" + (i - 1)).attr("style", "");
 
-						$("#prev")
-								.click(
-										function() {
-											$("#finish").prop("disabled", true);
-											if (i > 2) {
-												$("#step" + (i - 1)).hide();
-												$("#menu" + (i - 1)).attr(
-														"style", "");
+							$("#step" + (i - 2)).show();
+							$("#menu" + (i - 2))
+									.attr(
+											"style",
+											"color: red; font-weight: bolder; background-color: #A3DEDE; box-shadow: 1px 1px 1px 1px #507B8A");
+							i = i - 1;
+						}
 
-												$("#step" + (i - 2)).show();
-												$("#menu" + (i - 2))
-														.attr(
-																"style",
-																"color: red; font-weight: bolder; background-color: #A3DEDE; box-shadow: 1px 1px 1px 1px #507B8A");
-												i = i - 1;
-											}
+					}); */
 
-										});
+	function prevF() {
 
-					});
+		$("#finish").prop("disabled", true);
+		if (i > 2) {
+			$("#step" + (i - 1)).hide();
+			$("#menu" + (i - 1)).attr("style", "");
+
+			$("#step" + (i - 2)).show();
+			$("#menu" + (i - 2))
+					.attr(
+							"style",
+							"color: red; font-weight: bolder; background-color: #A3DEDE; box-shadow: 1px 1px 1px 1px #507B8A");
+			i = i - 1;
+		}
+	}
 
 	/* function increSerial() {
 		$("#step67").modal('show');
@@ -317,7 +350,7 @@
 										<table class="table">
 											<c:set var="countt" value="${1}" />
 											<c:forEach
-												items="${param.pCodeSearch.equals(null)?sessionScope['ejb'].getAllProductDetail():sessionScope['ejb'].getAllProductByProductCode(param.pCodeSearch)}"
+												items="${param.pCatSearch.equals(null)?sessionScope['ejb'].getAllProductDetail():sessionScope['ejb'].getAllProductByCategory(param.pCatSearch)}"
 												var="productt">
 
 												<tr>
@@ -487,7 +520,7 @@
 
 
 												<h4>
-													Is Saleable &nbsp; &nbsp;<input type="checkbox" id="salsal">
+													Is Saleable &nbsp; &nbsp;<input disabled type="checkbox" id="salsal">
 												</h4>
 											</div>
 
@@ -890,12 +923,10 @@
 											alert("WSP is less or equal to MRP");
 
 											return "";
-										}
-										else if (parseFloat(value) < min) {
+										} else if (parseFloat(value) < min) {
 											alert("WSP is greater or equal to cost per unit");
 											return "";
-										} 
-										else {
+										} else {
 											$("#ucO").prop("readonly", false);
 											return value;
 										}
@@ -995,8 +1026,8 @@
 																	<c:forEach var="cat"
 																		items="${sessionScope['ejb'].getAllCategoryBySubDepartmentId(subDept.id)}">
 																		<li><input type="radio" name="same"
-																			onclick="catProblem('${cat.id}')"
-																			value="${cat.id}"> ${cat.name}
+																			onclick="catProblem('${cat.id}')" value="${cat.id}">
+																			${cat.name}
 																			<ul>
 																				<c:forEach var="pro"
 																					items="${sessionScope['ejb'].getAllProductDetailByCategoryId(cat.id)}">
@@ -1202,12 +1233,6 @@
 										</tr>
 
 
-										<!-- <tr>
-											<td>barcode:</td>
-											<td><input id="barcodeS" class="form-control " readonly
-												type="text" name="barcodeS"></td>
-										</tr> -->
-
 										<tr>
 											<td>&nbsp;</td>
 										</tr>
@@ -1224,6 +1249,7 @@
 											<td><input id="quantity111" class="form-control "
 												readonly name="qty1" type="text"></td>
 										</tr>
+										
 										<tr>
 											<td>&nbsp;</td>
 										</tr>
@@ -1359,9 +1385,9 @@
 								disabled="disabled" id="finish" onclick="submitSumary()"
 								style="position: absolute; right: 87px; top: 3px;">Finish</button>
 							<button type="button" class="c-btn medium gray"
-								style="position: absolute; right: 165px; top: 3px;" id="next">Next</button>
+								style="position: absolute; right: 165px; top: 3px;" id="next" onclick="nextF();">Next</button>
 							<button type="button" class="c-btn medium gray"
-								style="position: absolute; right: 240px; top: 3px;" id="prev">
+								style="position: absolute; right: 240px; top: 3px;" id="prev" onclick="prevF();">
 								Back</button>
 						</div>
 					</div>

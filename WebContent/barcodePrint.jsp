@@ -39,7 +39,7 @@ page[size="A4"] {
 				<span style="font-weight: bold; font-size: 9px">Kaanish
 					Kouture</span><br> <span style="font-size: 9px">Pcode:${purProDet.productDetail.code}</span><br>
 				<span style="font-size: 9px">MRP:${purProDet.mrp}</span><br> <img
-					src="http://${sessionScope['sip']}:${sessionScope['port']}/barbecue/BarcodeServlet?data=${purProDet.id}/${barcode.lotNo}/${barcode.serialNumber}&drawText=true&width=2&height=30"
+					src="http://localhost:8088/barbecue/BarcodeServlet?data=${purProDet.id}/${barcode.lotNo}/${barcode.serialNumber}&drawText=true&width=2&height=30"
 					width="110" /><br>
 				<center>
 					<span style="font-size: 5px">${purProDet.id}/${barcode.lotNo}/${barcode.serialNumber}</span>

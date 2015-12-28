@@ -60,7 +60,6 @@
 			</script>
 		</c:if>
 	</c:if>
-	
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
@@ -73,17 +72,17 @@
 							<div class="col-md-12">
 								<div class="breadcrumbs" style="height: 39px">
 									<ul>
-									<%-- <c:set var="userKa"
-			items="${sessionScope['ejb'].getUserById(sessionScope['user'])}"/> --%> <%-- ${userKa.name} --%>
 										<li><p
 												style="right: -470px; font-size: 20px; position: absolute;">
-												<b>Stock Table: </b>
+												<b>Stock Table:</b>
 											</p></li>
 									</ul>
 								</div>
 								<div class="row">
-									<div class="widget-area" style="width: 40%; height: 550px">
-
+									
+									<div class="widget-area" style="width: 100%; height: 550px">
+									
+									
 										<div class="form-group">
 											<!-- 	<label for="" class="">Product Code: </label> <input
 													type="text" placeholder="" id="prodcode"
@@ -93,7 +92,9 @@
 													class="">Department/Sub Department/Category: </label> <input
 													type="text" placeholder="" id="deptcat"
 													class="form-control"> -->
-											<h3>Stock Search</h3><br><br>
+											<h3>Stock Search</h3>
+											<br>
+											<br>
 
 											<form action="stockView.jsp">
 												<table>
@@ -144,45 +145,28 @@
 
 										</div>
 
-
-										<!-- <button class="btn green btn-default" type="submit">Search
-										</button>
-										<button class="btn green btn-default" type="submit">Show
-											All</button>
-
-										<br> <br> -->
-
-
-
-									</div>
-									<div class="widget-area" style="width: 60%; height: 550px">
-
-										<h4>Stock View :</h4>
+										<h3>Stock View :</h3>
 
 										<br>
-										<div
-											style="position: absolute; overflow-y: scroll; overflow-x: hidden; height: 490px">
+									<div style="width: 100%;">
+											<div style="width: 875px;">
+												<table class="table">
 
-											<table id="stream_table"
-												class="table table-striped table-bordered">
-												<thead>
 													<tr>
-														<th>#</th>
-														<th>Product Code:</th>
-														<th>Product Description:</th>
-														<th>UOM</th>
-														<th>Quantity</th>
-
-														<!-- <th>MRP</th> -->
-
-														<th></th>
-
+														<th width=5% float="left">#</th>
+														<th width=25% float="left">Product Code</th>
+														<th width=40% float="left">Product Description</th>
+														<th width=10% float="left">UOM</th>
+														<th width=10% float="left">Quantity</th>
+														<th width=10% float="left">View</th>
 													</tr>
-												</thead>
-												<tbody>
+												</table>
+											</div>
+											<div style="height: 281px; width: 899px; border: 1px;">
+												<table class="table" style="overflow: scroll;">
 													<c:set var="count" value="${1}" />
 													<c:forEach
-														items="${param.pCodeSearch.equals(null)?sessionScope['ejb'].getAllProductDetail():sessionScope['ejb'].getAllProductByProductCode(param.pCodeSearch)}"
+														items="${param.pCodeSearch.equals(null)?sessionScope['ejb'].getAllProductDetail():sessionScope['ejb'].getAllProductByCategory(param.pCodeSearch)}"
 														var="pro">
 														<tr>
 															<td>${count}</td>
@@ -203,13 +187,11 @@
 												</tbody>
 											</table>
 										</div>
+										
+										
 
 									</div>
 								</div>
-
-
-
-
 							</div>
 						</div>
 					</div>

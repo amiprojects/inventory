@@ -60,7 +60,6 @@
 			</script>
 		</c:if>
 	</c:if>
-	
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
@@ -73,11 +72,9 @@
 							<div class="col-md-12">
 								<div class="breadcrumbs" style="height: 39px">
 									<ul>
-									<%-- <c:set var="userKa"
-			items="${sessionScope['ejb'].getUserById(sessionScope['user'])}"/> --%> <%-- ${userKa.name} --%>
 										<li><p
 												style="right: -470px; font-size: 20px; position: absolute;">
-												<b>Stock Table: </b>
+												<b>Stock Table:</b>
 											</p></li>
 									</ul>
 								</div>
@@ -182,7 +179,7 @@
 												<tbody>
 													<c:set var="count" value="${1}" />
 													<c:forEach
-														items="${param.pCodeSearch.equals(null)?sessionScope['ejb'].getAllProductDetail():sessionScope['ejb'].getAllProductByProductCode(param.pCodeSearch)}"
+														items="${param.pCodeSearch.equals(null)?sessionScope['ejb'].getAllProductDetail():sessionScope['ejb'].getAllProductByProductDescription(param.pCodeSearch)}"
 														var="pro">
 														<tr>
 															<td>${count}</td>
