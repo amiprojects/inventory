@@ -1,5 +1,6 @@
 package com.kaanish.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Cacheable;
@@ -12,7 +13,9 @@ import javax.persistence.OneToMany;
 
 @Entity
 @Cacheable(false)
-public class QtyUnit {
+public class QtyUnit implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
 	private int id;
@@ -28,8 +31,8 @@ public class QtyUnit {
 	private List<QtyUnitConversion> qtyUnitConversions2;
 	@OneToMany(mappedBy = "qtyUnitId1")
 	private List<QtyUnitConversion> qtyUnitConversions1;
-	
-	@OneToMany(mappedBy="qtyUnit")
+
+	@OneToMany(mappedBy = "qtyUnit")
 	private List<ProductDetail> productDetails;
 
 	public int getId() {
@@ -87,10 +90,11 @@ public class QtyUnit {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "{\"id\":\""+id+"\", "+"\"name\":\""+name+"\", "+"\"abbreviation\":\""+abbreviation+"\", "+"\"description\":\""+description+"\"}";
+		return "{\"id\":\"" + id + "\", " + "\"name\":\"" + name + "\", " + "\"abbreviation\":\"" + abbreviation
+				+ "\", " + "\"description\":\"" + description + "\"}";
 	}
 
 }

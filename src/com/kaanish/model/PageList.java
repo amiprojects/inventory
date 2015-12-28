@@ -1,5 +1,6 @@
 package com.kaanish.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Cacheable;
@@ -14,9 +15,12 @@ import javax.persistence.Transient;
 
 @Entity
 @Cacheable(false)
-public class PageList {
+public class PageList implements Serializable {
 
-	@Id@GeneratedValue
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue
 	private int id;
 	private String name;
 	@Transient
@@ -25,7 +29,7 @@ public class PageList {
 	@ManyToOne
 	@JoinColumn(name = "moduleId")
 	private Module module;
-	
+
 	@ManyToMany(targetEntity = UserGroup.class, cascade = CascadeType.ALL)
 	private List<UserGroup> userGroups;
 

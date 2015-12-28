@@ -1,5 +1,7 @@
 package com.kaanish.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,8 +11,11 @@ import javax.persistence.ManyToOne;
 
 @Entity
 @Cacheable(false)
-public class SerialNumber {
-	@Id@GeneratedValue
+public class SerialNumber implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue
 	private int id;
 	private String serialNumber;
 	private String barcode;

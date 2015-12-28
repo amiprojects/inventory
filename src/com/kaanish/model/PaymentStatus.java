@@ -1,5 +1,6 @@
 package com.kaanish.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Cacheable;
@@ -11,7 +12,9 @@ import javax.persistence.OneToMany;
 
 @Entity
 @Cacheable(false)
-public class PaymentStatus {
+public class PaymentStatus implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
 	private int id;

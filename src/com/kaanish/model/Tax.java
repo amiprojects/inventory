@@ -1,5 +1,6 @@
 package com.kaanish.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Cacheable;
@@ -14,17 +15,20 @@ import javax.persistence.Transient;
 
 @Entity
 @Cacheable(false)
-public class Tax {
-	@Id@GeneratedValue
+public class Tax implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue
 	private int id;
 	private String name;
 	private float value;
 	private boolean isActive;
-	
+
 	@Transient
 	private boolean isAvailable;
 
-	@ManyToMany(cascade=CascadeType.ALL,targetEntity = Tax_Type_Group.class)
+	@ManyToMany(cascade = CascadeType.ALL, targetEntity = Tax_Type_Group.class)
 	private List<Tax_Type_Group> tax_type_groups;
 
 	@ManyToOne
