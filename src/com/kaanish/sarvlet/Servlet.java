@@ -1023,7 +1023,7 @@ public class Servlet extends HttpServlet {
 							.parseInt(req.getParameter("vendorType"))));
 					vendor.setUsers(ejb.getUserById((String) httpSession
 							.getAttribute("user")));
-					/*accountDetails.setBankAccountNumber(req
+					accountDetails.setBankAccountNumber(req
 							.getParameter("bankAccNo"));
 					accountDetails.setBankChequeLable(req
 							.getParameter("bankCheckLebel"));
@@ -1056,9 +1056,9 @@ public class Servlet extends HttpServlet {
 					accountDetails
 							.setVatNumber(req.getParameter("vendorVATno"));
 					accountDetails.setVatRegistrationDate(DateConverter
-							.getDate(req.getParameter("vendorVATregDate")));*/
+							.getDate(req.getParameter("vendorVATregDate")));
 					
-					if(req.getParameter("bankAccNo")==null){
+					/*if(req.getParameter("bankAccNo")==null){
 						accountDetails.setBankAccountNumber(" ");
 						
 					}	
@@ -1134,7 +1134,7 @@ if(req.getParameter("taxTypeGroupId")==null){
 	accountDetails.setTax_Type_Group(ejb
 			.getTax_Type_GroupById(Integer.parseInt(" ")));
 	
-}	
+}*/	
 
 					accountDetails.setTax_Type_Group(ejb
 							.getTax_Type_GroupById(Integer.parseInt(req

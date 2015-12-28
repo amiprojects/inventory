@@ -404,7 +404,7 @@ $(document).ready(function(){
 													<div class="col-md-9">
 														<input type="text" class="form-control" id="bankCity"
 															 > <input type="hidden"
-															value="" name="bankCity" id="bankCityId">
+															value=" " name="bankCity" id="bankCityId">
 													</div>
 													<br>
 													<div class="col-md-3">
@@ -557,7 +557,8 @@ $(document).ready(function(){
 														</div>
 														<div class="col-md-7">
 															<select class="form-control" name="taxTypeGroupId"
-																id="taxgroup"><option value="0">select a tax group</option>
+																id="taxgroup">
+																<!-- <option value="0">select a tax group</option> -->
 																<c:forEach
 																	items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
 																	var="taxTypeGroup">
