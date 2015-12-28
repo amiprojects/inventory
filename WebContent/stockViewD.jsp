@@ -60,6 +60,7 @@
 			</script>
 		</c:if>
 	</c:if>
+
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
@@ -72,26 +73,30 @@
 							<div class="col-md-12">
 								<div class="breadcrumbs" style="height: 39px">
 									<ul>
+										<%-- <c:set var="userKa"
+			items="${sessionScope['ejb'].getUserById(sessionScope['user'])}"/> --%>
+										<%-- ${userKa.name} --%>
 										<li><p
 												style="right: -470px; font-size: 20px; position: absolute;">
-												<b>Stock Table:</b>
+												<b>Stock Table </b>
 											</p></li>
 									</ul>
 								</div>
 								<div class="row">
 									<div class="widget-area" style="width: 40%; height: 550px">
-
+										<h3>Stock Search</h3>
+										<br> <br>
 										<div class="form-group">
-											<!-- 	<label for="" class="">Product Code: </label> <input
-													type="text" placeholder="" id="prodcode"
-													class="form-control"> <label for="" class="">Product
-													Description: </label> <input type="text" placeholder=""
-													id="prodesc" class="form-control"> <label for=""
-													class="">Department/Sub Department/Category: </label> <input
-													type="text" placeholder="" id="deptcat"
-													class="form-control"> -->
-											<h3>Stock Search</h3><br><br>
+											<form action="goStockView" method="post">
+												<label for="" class="">Product Code: </label> <input
+													type="text" id="prodcode" name="pCodeSearch"
+													class="form-control"> <label class="">Product
+													Description: </label> <input type="text" id="prodesc"
+													name="pDesSearch" class="form-control"> <label
+													class="">Category: </label> <input type="text" id="deptcat"
+													name="pCatSearch" class="form-control">
 
+												<!-- 
 											<form action="stockView.jsp">
 												<table>
 													<tr>
@@ -137,28 +142,29 @@
 														<td>&nbsp;&nbsp;&nbsp;</td>
 													</tr>
 												</table>
-											</form>
+											</form> -->
 
+												<br> <input class="btn green btn-default" type="submit"
+													value="Search">
+													<a href="stockView.jsp">  <input class="btn green btn-default" type="button" value="Show All"></a>
+											</form>
 										</div>
 
 
-										<!-- <button class="btn green btn-default" type="submit">Search
-										</button>
-										<button class="btn green btn-default" type="submit">Show
-											All</button>
 
-										<br> <br> -->
+
+										<br> <br>
 
 
 
 									</div>
 									<div class="widget-area" style="width: 60%; height: 550px">
 
-										<h4>Stock View :</h4>
+										<h3>Stock View</h3>
 
 										<br>
 										<div
-											style="position: absolute; overflow-y: scroll; overflow-x: hidden; height: 490px">
+											style="overflow-y: scroll; overflow-x: hidden; height: 470px">
 
 											<table id="stream_table"
 												class="table table-striped table-bordered">
@@ -169,35 +175,69 @@
 														<th>Product Description:</th>
 														<th>UOM</th>
 														<th>Quantity</th>
-
-														<!-- <th>MRP</th> -->
+													 <th>WSP</th>
+														<th>MRP</th> 
 
 														<th></th>
 
 													</tr>
-												</thead>
-												<tbody>
+												</thead><%-- <c:forEach items="${requestScope['ami']}" var="amiProStock"> --%>
+													<tbody>
 													<c:set var="count" value="${1}" />
-													<c:forEach
-														items="${param.pCodeSearch.equals(null)?sessionScope['ejb'].getAllProductDetail():sessionScope['ejb'].getAllProductByProductDescription(param.pCodeSearch)}"
-														var="pro">
-														<tr>
-															<td>${count}</td>
-															<td>${pro.code}</td>
-															<td>${pro.description}</td>
-															<td>${pro.qtyUnit.name}</td>
-															<td>${pro.isSaleble()?sessionScope['ejb'].getReadyGoodsStocktDetailByProductId(pro.id).remainingQty:sessionScope['ejb'].getRawMaterialStocktDetailByProductId(pro.id).remainingQty}</td>
-															<%-- <td>${pro.purchase_Product_Details.mrp}</td> --%>
-															<td><form action="stockDetailShow" method="post"
-																	id="StockDetails${pro.id}">
-																	<a href="#" onclick="showDetails('${pro.id}');"><input
-																		type="hidden" value="${pro.id}" name="proId"><img
+													<%-- <c:forEach
+														items="${param.pCodeSearch.equals(null)?sessionScope['ejb'].getAllProductDetail():sessionScope['ejb'].getProductDetailsByCodeDescriptionCategory(param.pCodeSearch)}"
+														var="pro"> --%>
+													<%-- 	<c:forEach items="${requestScope['ami']}" var="amiProStock"> --%>
+													<c:forEach items="${requestScope['ami']}" var="amiProStock">
+														<c:set var="qty" value="${amiProStock.isSaleble()?sessionScope['ejb'].getReadyGoodsStocktDetailByProductId(amiProStock.id).remainingQty:sessionScope['ejb'].getRawMaterialStocktDetailByProductId(amiProStock.id).remainingQty}" />
+														<c:choose>
+														<c:when test="${qty==0}">
+														<tr >
+															<td style="color: red ;">${count}</td>
+															<td style="color: red ;">${amiProStock.code}</td>
+															<td style="color: red ;">${amiProStock.description}</td>
+															<td style="color: red ;">${amiProStock.qtyUnit.name}</td>
+															<td style="color: red ;">${qty}</td>
+															<c:set var="purSize"
+																value="${amiProStock.purchase_Product_Details.size()}" />
+															<td style="color: red ;">${purSize>0?amiProStock.purchase_Product_Details.get(purSize-1).wsp:'nill'}</td>
+															<td style="color: red ;">${purSize>0?amiProStock.purchase_Product_Details.get(purSize-1).mrp:'nill'}</td>
+															<td style="color: red ;"><form action="stockDetailShow" method="post"
+																	id="StockDetails${amiProStock.id}">
+																	<a href="#"
+																		onclick="showDetails('${amiProStock.id}');"><input
+																		type="hidden" value="${amiProStock.id}" name="proId"><img
 																		alt="" src="images/eye.png" height="25px"></a>
 																</form></td>
 														</tr>
+														</c:when>
+														<c:otherwise>
+														<tr>
+															<td>${count}</td>
+															<td>${amiProStock.code}</td>
+															<td>${amiProStock.description}</td>
+															<td>${amiProStock.qtyUnit.name}</td>
+															<td>${qty}</td>
+															<c:set var="purSize"
+																value="${amiProStock.purchase_Product_Details.size()}" />
+															<td>${purSize>0?amiProStock.purchase_Product_Details.get(purSize-1).wsp:'nill'}</td>
+															<td>${purSize>0?amiProStock.purchase_Product_Details.get(purSize-1).mrp:'nill'}</td>
+															<td><form action="stockDetailShow" method="post"
+																	id="StockDetails${amiProStock.id}">
+																	<a href="#"
+																		onclick="showDetails('${amiProStock.id}');"><input
+																		type="hidden" value="${amiProStock.id}" name="proId"><img
+																		alt="" src="images/eye.png" height="25px"></a>
+																</form></td>
+														</tr>
+														
+														</c:otherwise>
+														</c:choose>
 														<c:set var="count" value="${count+1}" />
 													</c:forEach>
 												</tbody>
+											
+										
 											</table>
 										</div>
 

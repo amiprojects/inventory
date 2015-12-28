@@ -1361,18 +1361,18 @@ public class Ejb {
 	}
 	/******************************stock search by product code****************/
 	
-	/*public boolean getProductDetailsByProductCodeAndProductDescription(String code, String description, String name) {
+	public List<ProductDetail> getProductDetailsByCodeDescriptionCategory(String code, String description, String name) {
 		  
 		TypedQuery<ProductDetail> q = em
 				.createQuery(
-						"select c from ProductDetail c where (c.code=:code AND c.description=:description AND c.category.name=:name)",
+						"select c from ProductDetail c where c.code=:code OR c.description=:description OR c.category.name=:name ",
 						ProductDetail.class);
 		q.setParameter("code", code);
 		q.setParameter("description", description);
 		q.setParameter("name", name);
-		return q.getResultList().size() > 0;           
+		return q.getResultList();           
 	}
-	*/
+	
 	
 	
 }

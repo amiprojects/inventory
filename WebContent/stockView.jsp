@@ -60,7 +60,7 @@
 			</script>
 		</c:if>
 	</c:if>
-	
+
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
@@ -73,95 +73,52 @@
 							<div class="col-md-12">
 								<div class="breadcrumbs" style="height: 39px">
 									<ul>
-									<%-- <c:set var="userKa"
-			items="${sessionScope['ejb'].getUserById(sessionScope['user'])}"/> --%> <%-- ${userKa.name} --%>
+										<%-- <c:set var="userKa"
+			items="${sessionScope['ejb'].getUserById(sessionScope['user'])}"/> --%>
+										<%-- ${userKa.name} --%>
 										<li><p
 												style="right: -470px; font-size: 20px; position: absolute;">
-												<b>Stock Table: </b>
+												<b>Stock Table </b>
 											</p></li>
 									</ul>
 								</div>
 								<div class="row">
 									<div class="widget-area" style="width: 40%; height: 550px">
-
+										<h3>Stock Search</h3>
+										<br> <br>
 										<div class="form-group">
-											<!-- 	<label for="" class="">Product Code: </label> <input
-													type="text" placeholder="" id="prodcode"
-													class="form-control"> <label for="" class="">Product
-													Description: </label> <input type="text" placeholder=""
-													id="prodesc" class="form-control"> <label for=""
-													class="">Department/Sub Department/Category: </label> <input
-													type="text" placeholder="" id="deptcat"
-													class="form-control"> -->
-											<h3>Stock Search</h3><br><br>
+											<form action="goStockView" method="post">
+												<label for="" class="">Product Code: </label> <input
+													type="text" id="prodcode" name="pCodeSearch"
+													class="form-control"> <label class="">Product
+													Description: </label> <input type="text" id="prodesc"
+													name="pDesSearch" class="form-control"> <label
+													class="">Category: </label> <input type="text" id="deptcat"
+													name="pCatSearch" class="form-control">
 
-											<form action="stockView.jsp">
-												<table>
-													<tr>
-														<td><b>Product code</b></td>
-														<td><input type="text" placeholder="Search by Code"
-															style="text-transform: uppercase;" id="pCodeSearch"
-															name="pCodeSearch"></td>
-														<td>&nbsp;<input type="submit" value="Search">
-														</td>
-													</tr>
-													<tr>
-														<td>&nbsp;&nbsp;&nbsp;</td>
-													</tr>
-												</table>
+												
+												<br> <input class="btn green btn-default" type="submit"
+													value="Search"> <a href="stockView.jsp"> <input
+													class="btn green btn-default" type="button"
+													value="Show All"></a>
 											</form>
-											<form action="stockViewD.jsp">
-												<table>
-													<tr>
-														<td><b>Description</b></td>
-														<td>&nbsp;&nbsp;&nbsp;<input type="text"
-															placeholder="Search by Code"
-															style="text-transform: uppercase;" id="pCodeSearch"
-															name="pCodeSearch"></td>
-														<td>&nbsp;<input type="submit" value="Search">
-														</td>
-													</tr>
-													<tr>
-														<td>&nbsp;&nbsp;&nbsp;</td>
-													</tr>
-												</table>
-											</form>
-											<form action="stockViewC.jsp">
-												<table>
-													<tr>
-														<td><b>Category</b></td>
-														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
-															type="text" placeholder="Search by Code"
-															style="text-transform: uppercase;" id="pCodeSearch"
-															name="pCodeSearch"></td>
-														<td>&nbsp;<input type="submit" value="Search"></td>
-													</tr>
-													<tr>
-														<td>&nbsp;&nbsp;&nbsp;</td>
-													</tr>
-												</table>
-											</form>
-
 										</div>
 
 
-										<!-- <button class="btn green btn-default" type="submit">Search
-										</button>
-										<button class="btn green btn-default" type="submit">Show
-											All</button>
 
-										<br> <br> -->
+
+										<br> <br>
 
 
 
 									</div>
 									<div class="widget-area" style="width: 60%; height: 550px">
 
-										<h4>Stock View :</h4>
+										<h3>Stock View</h3>
 
 										<br>
 										<div
-											style="position: absolute; overflow-y: scroll; overflow-x: hidden; height: 490px">
+											style="overflow-y: scroll; overflow-x: hidden; height: 470px">
 
 											<table id="stream_table"
 												class="table table-striped table-bordered">
@@ -172,8 +129,9 @@
 														<th>Product Description:</th>
 														<th>UOM</th>
 														<th>Quantity</th>
+														<th>WSP</th>
+														<th>MRP</th>
 
-														<!-- <th>MRP</th> -->
 
 														<th></th>
 
@@ -181,35 +139,63 @@
 												</thead>
 												<tbody>
 													<c:set var="count" value="${1}" />
+													
 													<c:forEach
-														items="${param.pCodeSearch.equals(null)?sessionScope['ejb'].getAllProductDetail():sessionScope['ejb'].getAllProductByProductCode(param.pCodeSearch)}"
-														var="pro">
-														<tr>
-															<td>${count}</td>
-															<td>${pro.code}</td>
-															<td>${pro.description}</td>
-															<td>${pro.qtyUnit.name}</td>
-															<td>${pro.isSaleble()?sessionScope['ejb'].getReadyGoodsStocktDetailByProductId(pro.id).remainingQty:sessionScope['ejb'].getRawMaterialStocktDetailByProductId(pro.id).remainingQty}</td>
-															<%-- <td>${pro.purchase_Product_Details.mrp}</td> --%>
-															<td><form action="stockDetailShow" method="post"
-																	id="StockDetails${pro.id}">
-																	<a href="#" onclick="showDetails('${pro.id}');"><input
-																		type="hidden" value="${pro.id}" name="proId"><img
+														items="${sessionScope['ejb'].getAllProductDetail()}"
+														var="amiProStock1">
+														<c:set var="qty" value="${amiProStock1.isSaleble()?sessionScope['ejb'].getReadyGoodsStocktDetailByProductId(amiProStock1.id).remainingQty:sessionScope['ejb'].getRawMaterialStocktDetailByProductId(amiProStock1.id).remainingQty}" />
+														<c:choose>
+														<c:when test="${qty==0}">
+														<tr >
+															<td style="color: red ;">${count}</td>
+															<td style="color: red ;">${amiProStock1.code}</td>
+															<td style="color: red ;">${amiProStock1.description}</td>
+															<td style="color: red ;">${amiProStock1.qtyUnit.name}</td>
+															<td style="color: red ;">${qty}</td>
+															<c:set var="purSize"
+																value="${amiProStock1.purchase_Product_Details.size()}" />
+															<td style="color: red ;">${purSize>0?amiProStock1.purchase_Product_Details.get(purSize-1).wsp:'nill'}</td>
+															<td style="color: red ;">${purSize>0?amiProStock1.purchase_Product_Details.get(purSize-1).mrp:'nill'}</td>
+															<td style="color: red ;"><form action="stockDetailShow" method="post"
+																	id="StockDetails${amiProStock1.id}">
+																	<a href="#"
+																		onclick="showDetails('${amiProStock1.id}');"><input
+																		type="hidden" value="${amiProStock1.id}" name="proId"><img
 																		alt="" src="images/eye.png" height="25px"></a>
 																</form></td>
 														</tr>
+														</c:when>
+														<c:otherwise>
+														<tr>
+															<td>${count}</td>
+															<td>${amiProStock1.code}</td>
+															<td>${amiProStock1.description}</td>
+															<td>${amiProStock1.qtyUnit.name}</td>
+															<td>${qty}</td>
+															<c:set var="purSize"
+																value="${amiProStock1.purchase_Product_Details.size()}" />
+															<td>${purSize>0?amiProStock1.purchase_Product_Details.get(purSize-1).wsp:'nill'}</td>
+															<td>${purSize>0?amiProStock1.purchase_Product_Details.get(purSize-1).mrp:'nill'}</td>
+															<td><form action="stockDetailShow" method="post"
+																	id="StockDetails${amiProStock1.id}">
+																	<a href="#"
+																		onclick="showDetails('${amiProStock1.id}');"><input
+																		type="hidden" value="${amiProStock1.id}" name="proId"><img
+																		alt="" src="images/eye.png" height="25px"></a>
+																</form></td>
+														</tr>
+														
+														</c:otherwise>
+														</c:choose>
 														<c:set var="count" value="${count+1}" />
 													</c:forEach>
 												</tbody>
+											
 											</table>
 										</div>
 
 									</div>
 								</div>
-
-
-
-
 							</div>
 						</div>
 					</div>
