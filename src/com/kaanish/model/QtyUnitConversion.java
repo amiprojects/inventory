@@ -1,5 +1,7 @@
 package com.kaanish.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Cacheable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -8,7 +10,9 @@ import javax.persistence.ManyToOne;
 
 @Entity
 @Cacheable(false)
-public class QtyUnitConversion {
+public class QtyUnitConversion implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
 	private QtyUnitConversionPK conversionPK;
@@ -53,9 +57,11 @@ public class QtyUnitConversion {
 	public void setQtyUnitId1(QtyUnit qtyUnitId1) {
 		this.qtyUnitId1 = qtyUnitId1;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "{\"qtyUnitId1\":\""+qtyUnitId1.getId()+"\", "+"\"qtyUnitId2\":\""+qtyUnitId2.getId()+"\", \"qtyUnit1Name\":\""+qtyUnitId1.getName()+"\", \"qtyUnit2Name\":\""+qtyUnitId2.getName()+"\", "+"\"conversion\":\""+conversion+"\"}"; 
+		return "{\"qtyUnitId1\":\"" + qtyUnitId1.getId() + "\", " + "\"qtyUnitId2\":\"" + qtyUnitId2.getId()
+				+ "\", \"qtyUnit1Name\":\"" + qtyUnitId1.getName() + "\", \"qtyUnit2Name\":\"" + qtyUnitId2.getName()
+				+ "\", " + "\"conversion\":\"" + conversion + "\"}";
 	}
 }

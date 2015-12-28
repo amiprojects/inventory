@@ -1,6 +1,6 @@
 package com.kaanish.model;
 
-
+import java.io.Serializable;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Entity;
@@ -12,9 +12,12 @@ import com.kaanish.util.Base64;
 
 @Entity
 @Cacheable(false)
-public class CompanyInfo {
+public class CompanyInfo implements Serializable {
 
-	@Id@GeneratedValue
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue
 	private int id;
 
 	private String compname;
@@ -32,16 +35,16 @@ public class CompanyInfo {
 	private String cstno;
 	private String tinno;
 	private String servicetaxno;
-	
-	private String vatdate;	
+
+	private String vatdate;
 	private String cstdate;
-	private String tindate;	
+	private String tindate;
 	private String servtaxdate;
-	
-	public String getImageAsString(){
-		if(image==null){
+
+	public String getImageAsString() {
+		if (image == null) {
 			return "";
-		}else{
+		} else {
 			return Base64.encodeBytes(image);
 		}
 	}

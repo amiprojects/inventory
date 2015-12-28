@@ -1,5 +1,6 @@
 package com.kaanish.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Cacheable;
@@ -14,7 +15,9 @@ import javax.persistence.OneToOne;
 
 @Entity
 @Cacheable(false)
-public class ProductDetail {
+public class ProductDetail implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue
@@ -33,7 +36,7 @@ public class ProductDetail {
 	private Category category;
 	@OneToMany(mappedBy = "productDetail")
 	private List<Purchase_Product_Details> purchase_Product_Details;
-	@OneToMany(mappedBy="productDetail")
+	@OneToMany(mappedBy = "productDetail")
 	private List<SalesProductDetails> salesProductDetails;
 	@OneToOne
 	private ReadyGoodsStock readyGoodsStock;

@@ -1,5 +1,6 @@
 package com.kaanish.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +16,9 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Cacheable(false)
-public class Vendor {
+public class Vendor implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
 	private int id;
@@ -32,8 +35,8 @@ public class Vendor {
 
 	@OneToMany(mappedBy = "vendor")
 	private List<JobAssignmentDetails> jobAssignmentDetails;
-	
-	@OneToMany(mappedBy="vendor")
+
+	@OneToMany(mappedBy = "vendor")
 	private List<JobAssignmentProducts> jobAssignmentProducts;
 
 	@ManyToOne
@@ -173,23 +176,20 @@ public class Vendor {
 	public void setAccountDetails(List<AccountDetails> accountDetails) {
 		this.accountDetails = accountDetails;
 	}
-	
+
 	public List<JobAssignmentDetails> getJobAssignmentDetails() {
 		return jobAssignmentDetails;
 	}
 
-	public void setJobAssignmentDetails(
-			List<JobAssignmentDetails> jobAssignmentDetails) {
+	public void setJobAssignmentDetails(List<JobAssignmentDetails> jobAssignmentDetails) {
 		this.jobAssignmentDetails = jobAssignmentDetails;
 	}
 
 	@Override
 	public String toString() {
-		return "{\"id\":\"" + id + "\", " + "\"name\":\"" + name + "\", "
-				+ "\"companyName\":\"" + companyName + "\", " + "\"ph1\":\""
-				+ ph1 + "\", " + "\"ph2\":\"" + ph2 + "\", " + "\"address\":\""
-				+ address + "\", " + "\"pinCode\":\"" + pinCode + "\", "
-				+ "\"email\":\"" + email + "\", " + "\"city\":\""
+		return "{\"id\":\"" + id + "\", " + "\"name\":\"" + name + "\", " + "\"companyName\":\"" + companyName + "\", "
+				+ "\"ph1\":\"" + ph1 + "\", " + "\"ph2\":\"" + ph2 + "\", " + "\"address\":\"" + address + "\", "
+				+ "\"pinCode\":\"" + pinCode + "\", " + "\"email\":\"" + email + "\", " + "\"city\":\""
 				+ city.getCityName() + "\"}";
 	}
 

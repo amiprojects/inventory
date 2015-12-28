@@ -1,5 +1,7 @@
 package com.kaanish.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +14,9 @@ import com.kaanish.util.Base64;
 
 @Entity
 @Cacheable(false)
-public class ProductImage {
+public class ProductImage implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue
@@ -23,11 +27,11 @@ public class ProductImage {
 	@ManyToOne
 	@JoinColumn(name = "productId")
 	private ProductDetail productDetail;
-	
-	public String getImageAsString(){
-		if(image.equals(null)){
+
+	public String getImageAsString() {
+		if (image.equals(null)) {
 			return "";
-		}else{
+		} else {
 			return Base64.encodeBytes(image);
 		}
 	}
@@ -55,10 +59,11 @@ public class ProductImage {
 	public void setProductDetail(ProductDetail productDetail) {
 		this.productDetail = productDetail;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "{\"id\":\""+id+"\", "+"\"productDetailId\":\""+productDetail.getId()+"\", "+"\"image\":\""+getImageAsString()+"\"}";
+		return "{\"id\":\"" + id + "\", " + "\"productDetailId\":\"" + productDetail.getId() + "\", " + "\"image\":\""
+				+ getImageAsString() + "\"}";
 	}
 
 }

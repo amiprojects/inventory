@@ -1,5 +1,6 @@
 package com.kaanish.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Cacheable;
@@ -12,7 +13,9 @@ import javax.persistence.OneToMany;
 
 @Entity
 @Cacheable(false)
-public class SubDepartment {
+public class SubDepartment implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
 	private int id;

@@ -1,5 +1,6 @@
 package com.kaanish.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Cacheable;
@@ -14,7 +15,9 @@ import javax.persistence.OneToOne;
 
 @Entity
 @Cacheable(false)
-public class Purchase_Product_Details {
+public class Purchase_Product_Details implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
 	private int id;
@@ -39,8 +42,7 @@ public class Purchase_Product_Details {
 		return jobAssignmentProducts;
 	}
 
-	public void setJobAssignmentProducts(
-			List<JobAssignmentProducts> jobAssignmentProducts) {
+	public void setJobAssignmentProducts(List<JobAssignmentProducts> jobAssignmentProducts) {
 		this.jobAssignmentProducts = jobAssignmentProducts;
 	}
 
@@ -191,44 +193,27 @@ public class Purchase_Product_Details {
 	public String toString() {
 		String str;
 		if (isInitialInventory()) {
-			str = "{\"id\":\"" + id + "\"," + "\"mrp\":\"" + mrp + "\","
-					+ "\"wsp\":\"" + wsp + "\"," + "\"remaining_quantity\":\""
-					+ remaining_quantity + "\"," + "\"quantity\":\"" + quantity
-					+ "\"," + "\"cost\":\"" + cost + "\","
-					+ "\"productCode\":\"" + productDetail.getCode() + "\","
-					+ "\"productId\":\"" + productDetail.getId() + "\","
-					+ "\"productDesc\":\"" + productDetail.getDescription()
-					+ "\"," + "\"attrValue1\":\"" + attrValue1 + "\","
-					+ "\"attrValue2\":\"" + attrValue2 + "\","
-					+ "\"attrValue3\":\"" + attrValue3 + "\","
-					+ "\"attrValue4\":\"" + attrValue4 + "\","
-					+ "\"attrValue5\":\"" + attrValue5 + "\","
+			str = "{\"id\":\"" + id + "\"," + "\"mrp\":\"" + mrp + "\"," + "\"wsp\":\"" + wsp + "\","
+					+ "\"remaining_quantity\":\"" + remaining_quantity + "\"," + "\"quantity\":\"" + quantity + "\","
+					+ "\"cost\":\"" + cost + "\"," + "\"productCode\":\"" + productDetail.getCode() + "\","
+					+ "\"productId\":\"" + productDetail.getId() + "\"," + "\"productDesc\":\""
+					+ productDetail.getDescription() + "\"," + "\"attrValue1\":\"" + attrValue1 + "\","
+					+ "\"attrValue2\":\"" + attrValue2 + "\"," + "\"attrValue3\":\"" + attrValue3 + "\","
+					+ "\"attrValue4\":\"" + attrValue4 + "\"," + "\"attrValue5\":\"" + attrValue5 + "\","
 					+ "\"attrValue6\":\"" + attrValue6 + "\"}";
 		} else {
-			str = "{\"id\":\"" + id + "\"," + "\"mrp\":\"" + mrp + "\","
-					+ "\"wsp\":\"" + wsp + "\"," + "\"remaining_quantity\":\""
-					+ remaining_quantity + "\"," + "\"quantity\":\"" + quantity
-					+ "\"," + "\"cost\":\"" + cost + "\","
-					+ "\"attrValue1\":\"" + attrValue1 + "\","
-					+ "\"attrValue2\":\"" + attrValue2 + "\","
-					+ "\"attrValue3\":\"" + attrValue3 + "\","
-					+ "\"attrValue4\":\"" + attrValue4 + "\","
-					+ "\"attrValue5\":\"" + attrValue5 + "\","
-					+ "\"attrValue6\":\"" + attrValue6 + "\","
-					+ "\"purchaseVendorName\":\""
-					+ purchase_Entry.getVendor().getName() + "\","
-					+ "\"purchaseDate\":\"" + purchase_Entry.getPurchase_date()
-					+ "\"," + "\"uom\":\""
-					+ productDetail.getQtyUnit().getName() + "\","
-					+ "\"productCode\":\"" + productDetail.getCode() + "\","
-					+ "\"productId\":\"" + productDetail.getId() + "\","
-					+ "\"productDesc\":\"" + productDetail.getDescription()
-					+ "\"," + "\"purchaseVendorAddress\":\""
-					+ purchase_Entry.getVendor().getAddress() + "\","
-					+ "\"purchaseVendorCompanyName\":\""
-					+ purchase_Entry.getVendor().getCompanyName() + "\","
-					+ "\"purchaseVendorPhoneNumber\":\""
-					+ purchase_Entry.getVendor().getPh1() + "\"}";
+			str = "{\"id\":\"" + id + "\"," + "\"mrp\":\"" + mrp + "\"," + "\"wsp\":\"" + wsp + "\","
+					+ "\"remaining_quantity\":\"" + remaining_quantity + "\"," + "\"quantity\":\"" + quantity + "\","
+					+ "\"cost\":\"" + cost + "\"," + "\"attrValue1\":\"" + attrValue1 + "\"," + "\"attrValue2\":\""
+					+ attrValue2 + "\"," + "\"attrValue3\":\"" + attrValue3 + "\"," + "\"attrValue4\":\"" + attrValue4
+					+ "\"," + "\"attrValue5\":\"" + attrValue5 + "\"," + "\"attrValue6\":\"" + attrValue6 + "\","
+					+ "\"purchaseVendorName\":\"" + purchase_Entry.getVendor().getName() + "\"," + "\"purchaseDate\":\""
+					+ purchase_Entry.getPurchase_date() + "\"," + "\"uom\":\"" + productDetail.getQtyUnit().getName()
+					+ "\"," + "\"productCode\":\"" + productDetail.getCode() + "\"," + "\"productId\":\""
+					+ productDetail.getId() + "\"," + "\"productDesc\":\"" + productDetail.getDescription() + "\","
+					+ "\"purchaseVendorAddress\":\"" + purchase_Entry.getVendor().getAddress() + "\","
+					+ "\"purchaseVendorCompanyName\":\"" + purchase_Entry.getVendor().getCompanyName() + "\","
+					+ "\"purchaseVendorPhoneNumber\":\"" + purchase_Entry.getVendor().getPh1() + "\"}";
 		}
 		return str;
 

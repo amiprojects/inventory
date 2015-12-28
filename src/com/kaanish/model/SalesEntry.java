@@ -1,5 +1,6 @@
 package com.kaanish.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,9 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Cacheable(false)
-public class SalesEntry {
+public class SalesEntry implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
 	private int id;
@@ -127,8 +130,7 @@ public class SalesEntry {
 		return salesProductDetails;
 	}
 
-	public void setSalesProductDetails(
-			List<SalesProductDetails> salesProductDetails) {
+	public void setSalesProductDetails(List<SalesProductDetails> salesProductDetails) {
 		this.salesProductDetails = salesProductDetails;
 	}
 

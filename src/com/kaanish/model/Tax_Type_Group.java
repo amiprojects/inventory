@@ -1,5 +1,6 @@
 package com.kaanish.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Cacheable;
@@ -13,7 +14,9 @@ import javax.persistence.OneToMany;
 
 @Entity
 @Cacheable(false)
-public class Tax_Type_Group {
+public class Tax_Type_Group implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
 	private int id;
@@ -29,14 +32,14 @@ public class Tax_Type_Group {
 	private List<AccountDetails> accountDetails;
 	@OneToMany(mappedBy = "tax_Type_Group")
 	private List<SalesEntry> salesEntry;
-	
+
 	@OneToMany(mappedBy = "tax_Type_Group")
 	private List<Purchase_Entry> purchase_Entries;
-	
-	public float getTotalTaxValue(){
-		float taxtot=0;
-		for(Tax tax:taxes){
-			taxtot=taxtot+tax.getValue();
+
+	public float getTotalTaxValue() {
+		float taxtot = 0;
+		for (Tax tax : taxes) {
+			taxtot = taxtot + tax.getValue();
 		}
 		return taxtot;
 	}
@@ -88,11 +91,11 @@ public class Tax_Type_Group {
 	public void setPurchase_Entries(List<Purchase_Entry> purchase_Entries) {
 		this.purchase_Entries = purchase_Entries;
 	}
-	
+
 	@Override
-	public String toString(){
-		return "{\"name\":\"" + name + "\", "
-				+ "\"id\":\"" + id + "\", "+ "\"taxtot\":\"" + getTotalTaxValue() + "\"}";
+	public String toString() {
+		return "{\"name\":\"" + name + "\", " + "\"id\":\"" + id + "\", " + "\"taxtot\":\"" + getTotalTaxValue()
+				+ "\"}";
 	}
 
 	public boolean isActive() {

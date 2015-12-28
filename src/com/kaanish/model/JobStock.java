@@ -1,5 +1,7 @@
 package com.kaanish.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,7 +10,9 @@ import javax.persistence.OneToOne;
 
 @Entity
 @Cacheable(false)
-public class JobStock {
+public class JobStock implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
 	private int id;
@@ -39,8 +43,7 @@ public class JobStock {
 		return jobAssignmentProducts;
 	}
 
-	public void setJobAssignmentProducts(
-			JobAssignmentProducts jobAssignmentProducts) {
+	public void setJobAssignmentProducts(JobAssignmentProducts jobAssignmentProducts) {
 		this.jobAssignmentProducts = jobAssignmentProducts;
 	}
 

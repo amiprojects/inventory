@@ -1,5 +1,6 @@
 package com.kaanish.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Cacheable;
@@ -10,7 +11,9 @@ import javax.persistence.OneToMany;
 
 @Entity
 @Cacheable(false)
-public class Bill_setup {
+public class Bill_setup implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue
@@ -28,7 +31,7 @@ public class Bill_setup {
 
 	@OneToMany(mappedBy = "bill_setup")
 	private List<SalesEntry> salesEntry;
-	
+
 	public List<Purchase_Entry> getPurchase_Entries() {
 		return purchase_Entries;
 	}
