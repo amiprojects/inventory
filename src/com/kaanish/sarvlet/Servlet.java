@@ -948,112 +948,90 @@ public class Servlet extends HttpServlet {
 					vendor.setPinCode(req.getParameter("vendorPin"));
 					vendor.setVendorType(ejb.getVendorTypeById(Integer.parseInt(req.getParameter("vendorType"))));
 					vendor.setUsers(ejb.getUserById((String) httpSession.getAttribute("user")));
+
+					accountDetails.setBankAccountNumber(req.getParameter("bankAccNo"));
+					accountDetails.setBankChequeLable(req.getParameter("bankCheckLebel"));
+					accountDetails.setBankIFSCnumber(req.getParameter("bankIFSC"));
+					accountDetails.setBankMICRnumber(req.getParameter("bankMICR"));
+					accountDetails.setBankName(req.getParameter("bankName"));
+					accountDetails.setBankRTGCnumber(req.getParameter("bankRTGS"));
+					accountDetails.setBranch(req.getParameter("bankBranch"));
+					accountDetails.setCity(ejb.getCityById(Integer.parseInt(req.getParameter("bankCity"))));
+					accountDetails.setCstNumber(req.getParameter("vendorCSTno"));
+					accountDetails.setCstRegistrationDate(DateConverter.getDate(req.getParameter("vendorCSTregDate")));
+					accountDetails
+							.setExciseRegistrationDate(DateConverter.getDate(req.getParameter("vendorExciseRegDate")));
+					accountDetails.setExciseRegistrationNumber(req.getParameter("vendorExciseRegNo"));
+					accountDetails.setPanNumber(req.getParameter("vendorPANno"));
+					accountDetails.setServiceTaxRegistrationDate(
+							DateConverter.getDate(req.getParameter("vendorServiceTaxRegDate")));
+					accountDetails.setServiceTaxRegistrationNumber(req.getParameter("vendorServiceTaxRegNo"));
+					accountDetails.setVatNumber(req.getParameter("vendorVATno"));
+					accountDetails.setVatRegistrationDate(DateConverter.getDate(req.getParameter("vendorVATregDate")));
+
 					/*
-					 * accountDetails.setBankAccountNumber(req
-					 * .getParameter("bankAccNo"));
-					 * accountDetails.setBankChequeLable(req
-					 * .getParameter("bankCheckLebel"));
-					 * accountDetails.setBankIFSCnumber(req
-					 * .getParameter("bankIFSC"));
-					 * accountDetails.setBankMICRnumber(req
-					 * .getParameter("bankMICR"));
+					 * if(req.getParameter("bankAccNo")==null){
+					 * accountDetails.setBankAccountNumber(" ");
 					 * 
-					 * accountDetails.setBankName(req.getParameter("bankName"));
-					 * accountDetails.setBankRTGCnumber(req
-					 * .getParameter("bankRTGS"));
-					 * accountDetails.setBranch(req.getParameter("bankBranch"));
+					 * } if(req.getParameter("bankCheckLebel")==null){
+					 * accountDetails.setBankChequeLable(" ");
+					 * 
+					 * } if(req.getParameter("bankIFSC")==null){
+					 * accountDetails.setBankIFSCnumber(" ");
+					 * 
+					 * } if(req.getParameter("bankMICR")==null){
+					 * accountDetails.setBankMICRnumber(" ");
+					 * 
+					 * } if(req.getParameter("bankName")==null){
+					 * accountDetails.setBankName(" ");
+					 * 
+					 * } if(req.getParameter("bankRTGS")==null){
+					 * accountDetails.setBankRTGCnumber(" ");
+					 * 
+					 * } if(req.getParameter("bankBranch")==null){
+					 * accountDetails.setBranch(" ");
+					 * 
+					 * } if(req.getParameter("bankCity")==null){
 					 * accountDetails.setCity(ejb.getCityById(Integer.parseInt(
-					 * req .getParameter("bankCity")))); accountDetails
-					 * .setCstNumber(req.getParameter("vendorCSTno"));
+					 * " ")));
+					 * 
+					 * } if(req.getParameter("vendorCSTno")==null){
+					 * accountDetails.setCstNumber(" ");
+					 * 
+					 * } if(req.getParameter("vendorCSTregDate")==null){
 					 * accountDetails.setCstRegistrationDate(DateConverter
-					 * .getDate(req.getParameter("vendorCSTregDate")));
+					 * .getDate(""));
+					 * 
+					 * } if(req.getParameter("vendorExciseRegNo")==null){
+					 * accountDetails.setExciseRegistrationNumber(" ");
+					 * 
+					 * } if(req.getParameter("vendorExciseRegDate")==null){
 					 * accountDetails.setExciseRegistrationDate(DateConverter
-					 * .getDate(req.getParameter("vendorExciseRegDate")));
-					 * accountDetails.setExciseRegistrationNumber(req
-					 * .getParameter("vendorExciseRegNo")); accountDetails
-					 * .setPanNumber(req.getParameter("vendorPANno"));
+					 * .getDate(" "));
+					 * 
+					 * } if(req.getParameter("vendorPANno")==null){
+					 * accountDetails.setPanNumber(" ");
+					 * 
+					 * } if(req.getParameter("vendorServiceTaxRegNo")==null){
+					 * accountDetails.setServiceTaxRegistrationNumber(" ");
+					 * 
+					 * } if(req.getParameter("vendorServiceTaxRegDate")==null){
 					 * accountDetails.setServiceTaxRegistrationDate(
-					 * DateConverter .getDate(req
-					 * .getParameter("vendorServiceTaxRegDate")));
-					 * accountDetails.setServiceTaxRegistrationNumber(req
-					 * .getParameter("vendorServiceTaxRegNo")); accountDetails
-					 * .setVatNumber(req.getParameter("vendorVATno"));
+					 * DateConverter .getDate(" "));
+					 * 
+					 * } if(req.getParameter("vendorVATno")==null){
+					 * accountDetails.setVatNumber(" ");
+					 * 
+					 * } if(req.getParameter("vendorVATregDate")==null){
 					 * accountDetails.setVatRegistrationDate(DateConverter
-					 * .getDate(req.getParameter("vendorVATregDate")));
+					 * .getDate(" "));
+					 * 
+					 * } if(req.getParameter("taxTypeGroupId")==null){
+					 * accountDetails.setTax_Type_Group(ejb
+					 * .getTax_Type_GroupById(Integer.parseInt(" ")));
+					 * 
+					 * }
 					 */
-
-					if (req.getParameter("bankAccNo") == null) {
-						accountDetails.setBankAccountNumber(" ");
-
-					} 
-					if (req.getParameter("bankCheckLebel") == null) {
-						accountDetails.setBankChequeLable(" ");
-
-					}
-					if (req.getParameter("bankIFSC") == null) {
-						accountDetails.setBankIFSCnumber(" ");
-
-					}
-					if (req.getParameter("bankMICR") == null) {
-						accountDetails.setBankMICRnumber(" ");
-
-					}
-					if (req.getParameter("bankName") == null) {
-						accountDetails.setBankName(" ");
-
-					}
-					if (req.getParameter("bankRTGS") == null) {
-						accountDetails.setBankRTGCnumber(" ");
-
-					}
-					if (req.getParameter("bankBranch") == null) {
-						accountDetails.setBranch(" ");
-
-					}
-					if (req.getParameter("bankCity") == null) {
-						accountDetails.setCity(ejb.getCityById(Integer.parseInt(" ")));
-
-					}
-					if (req.getParameter("vendorCSTno") == null) {
-						accountDetails.setCstNumber(" ");
-
-					}
-					if (req.getParameter("vendorCSTregDate") == null) {
-						accountDetails.setCstRegistrationDate(DateConverter.getDate(""));
-
-					}
-					if (req.getParameter("vendorExciseRegNo") == null) {
-						accountDetails.setExciseRegistrationNumber(" ");
-
-					}
-					if (req.getParameter("vendorExciseRegDate") == null) {
-						accountDetails.setExciseRegistrationDate(DateConverter.getDate(" "));
-
-					}
-					if (req.getParameter("vendorPANno") == null) {
-						accountDetails.setPanNumber(" ");
-
-					}
-					if (req.getParameter("vendorServiceTaxRegNo") == null) {
-						accountDetails.setServiceTaxRegistrationNumber(" ");
-
-					}
-					if (req.getParameter("vendorServiceTaxRegDate") == null) {
-						accountDetails.setServiceTaxRegistrationDate(DateConverter.getDate(" "));
-
-					}
-					if (req.getParameter("vendorVATno") == null) {
-						accountDetails.setVatNumber(" ");
-
-					}
-					if (req.getParameter("vendorVATregDate") == null) {
-						accountDetails.setVatRegistrationDate(DateConverter.getDate(" "));
-
-					}
-					if (req.getParameter("taxTypeGroupId") == null) {
-						accountDetails.setTax_Type_Group(ejb.getTax_Type_GroupById(Integer.parseInt(" ")));
-
-					}
 
 					accountDetails.setTax_Type_Group(
 							ejb.getTax_Type_GroupById(Integer.parseInt(req.getParameter("taxTypeGroupId"))));
@@ -1614,10 +1592,16 @@ public class Servlet extends HttpServlet {
 			default:
 				break;
 			}
-		} catch (Exception e) {
+		} catch (
+
+		Exception e)
+
+		{
 			msg = "error: " + e.getMessage();
 			e.printStackTrace();
-		} finally {
+		} finally
+
+		{
 			tax = null;
 			tax_type_group = null;
 			department = null;
@@ -1654,6 +1638,7 @@ public class Servlet extends HttpServlet {
 
 		req.setAttribute("msg", msg);
 		req.getRequestDispatcher(page).forward(req, resp);
+
 	}
 
 	@Override

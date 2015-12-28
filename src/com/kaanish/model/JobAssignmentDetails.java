@@ -1,5 +1,6 @@
 package com.kaanish.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +16,9 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Cacheable(false)
-public class JobAssignmentDetails {
+public class JobAssignmentDetails implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
 	private int id;
@@ -32,8 +35,6 @@ public class JobAssignmentDetails {
 	@ManyToOne
 	@JoinColumn(name = "jobberId")
 	private Vendor vendor;
-	
-	
 
 	public int getId() {
 		return id;
@@ -71,8 +72,7 @@ public class JobAssignmentDetails {
 		return jobAssignmentProducts;
 	}
 
-	public void setJobAssignmentProducts(
-			List<JobAssignmentProducts> jobAssignmentProducts) {
+	public void setJobAssignmentProducts(List<JobAssignmentProducts> jobAssignmentProducts) {
 		this.jobAssignmentProducts = jobAssignmentProducts;
 	}
 

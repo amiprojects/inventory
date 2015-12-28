@@ -1,5 +1,6 @@
 package com.kaanish.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Cacheable;
@@ -14,7 +15,9 @@ import javax.persistence.OneToOne;
 
 @Entity
 @Cacheable(false)
-public class JobAssignmentProducts {
+public class JobAssignmentProducts implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
 	private int id;
@@ -70,8 +73,7 @@ public class JobAssignmentProducts {
 		return jobAssignmentDetails;
 	}
 
-	public void setJobAssignmentDetails(
-			JobAssignmentDetails jobAssignmentDetails) {
+	public void setJobAssignmentDetails(JobAssignmentDetails jobAssignmentDetails) {
 		this.jobAssignmentDetails = jobAssignmentDetails;
 	}
 
@@ -79,8 +81,7 @@ public class JobAssignmentProducts {
 		return purchase_Product_Details;
 	}
 
-	public void setPurchase_Product_Details(
-			Purchase_Product_Details purchase_Product_Details) {
+	public void setPurchase_Product_Details(Purchase_Product_Details purchase_Product_Details) {
 		this.purchase_Product_Details = purchase_Product_Details;
 	}
 
@@ -96,8 +97,7 @@ public class JobAssignmentProducts {
 		return jobRecievedDetails;
 	}
 
-	public void setJobRecievedDetails(
-			List<JobRecievedDetails> jobRecievedDetails) {
+	public void setJobRecievedDetails(List<JobRecievedDetails> jobRecievedDetails) {
 		this.jobRecievedDetails = jobRecievedDetails;
 	}
 

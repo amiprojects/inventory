@@ -112,30 +112,30 @@
 											<table cellspacing="2">
 												<tr>
 													<td>Name :</td>
-													<td><input type="text" name="custName"
+													<td><input type="text" name="custName" id="custName"
 														style="align: center;"></input></td>
 												</tr>
 												<br>
 												<tr>
 													<td>Address :</td>
-													<td><input type="text" name="addr"
+													<td><input type="text" name="addr" id="addr"
 														style="length: 40px;" style="align:center;"></input></td>
 												</tr>
 												<tr>
 													<td>City :</td>
-													<td><input type="text" name="city"
+													<td><input type="text" name="city" id="city"
 														style="length: 40px;"></input></td>
 												</tr>
 
 												<tr>
 													<td>Phone No. :</td>
-													<td><input type="text" name="phone"
+													<td><input type="text" name="phone" id="phone"
 														style="length: 40px;"></input></td>
 												</tr>
 
 												<tr>
 													<td>Vat No./CST No. :</td>
-													<td><input type="text" name="vatcst"
+													<td><input type="text" name="vatcst" id="vatcst"
 														style="length: 40px;"></input></td>
 												</tr>
 											</table>
@@ -359,8 +359,7 @@
 									</table>
 									<div style="float: right;">
 										<input type="button" class="btn btn-info btn-sm"
-											data-toggle="modal" data-target="#saveSales" value="Save"
-											onclick="paymentDate();">
+											data-toggle="modal" value="Save" onclick="paymentDate();">
 										<div id="saveSales" class="modal fade" role="dialog"
 											style="top: 25px;">
 											<div class="modal-dialog modal-lg">
@@ -500,13 +499,42 @@
 
 	<script>
 		$(function() {
+			var d = new Date();
+			var n = d.getFullYear();
 			$("#datepicker").datepicker({
 				dateFormat : "dd-mm-yy",
+				minDate : new Date(n, 0, 1),
 				maxDate : 0
 			});
+			$("#datepicker").datepicker('setDate', new Date());
 		});
 	</script>
-
+	<script>
+		function paymentDate() {
+			if ($("#custName").val() == "") {
+				alert("please enter customer name");
+			} else if ($("#addr").val() == "") {
+				alert("please enter customer address");
+			} else if ($("#city").val() == "") {
+				alert("please enter customer city");
+			} else if ($("#phone").val() == "") {
+				alert("please enter customer phone no.");
+			} else {
+				//$("#datepicker2").val($("#datepicker").val());
+				var d = $("#datepicker").datepicker('getDate');
+				var n = d.getFullYear();
+				var m = d.getMonth();
+				var dt = d.getDate();
+				$("#datepicker2").datepicker({
+					dateFormat : "dd-mm-yy",
+					minDate : new Date(n, m, dt),
+					maxDate : 0
+				});
+				$("#datepicker2").datepicker('setDate', new Date());
+				$("#saveSales").modal("show");
+			}
+		}
+	</script>
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
 	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
@@ -516,11 +544,6 @@
 	<script type="text/javascript" src="js/grid-filter.js"></script>
 
 	<script src="js/jquery-ui/jquery-ui.js"></script>
-	<script>
-		$(function() {
-			$("#datepicker").datepicker();
-		});
-	</script>
 
 	<script>
 		$("input:radio[name=saleAt]").click(function() {
@@ -834,12 +857,6 @@
 								+ Number($("#roundvalue").val()));
 			}
 
-		}
-	</script>
-
-	<script>
-		function paymentDate() {
-			$("#datepicker2").val($("#datepicker").val());
 		}
 	</script>
 	<script type="text/javascript">

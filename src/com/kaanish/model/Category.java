@@ -1,5 +1,6 @@
 package com.kaanish.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Cacheable;
@@ -12,7 +13,9 @@ import javax.persistence.OneToMany;
 
 @Entity
 @Cacheable(false)
-public class Category {
+public class Category implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue
@@ -113,11 +116,9 @@ public class Category {
 
 	@Override
 	public String toString() {
-		return "{\"name\":\"" + name + "\", " + "\"id\":\"" + id + "\", "
-				+ "\"attrNmae1\":\"" + attrNmae1 + "\", " + "\"attrNmae2\":\""
-				+ attrNmae2 + "\", " + "\"attrNmae3\":\"" + attrNmae3 + "\", "
-				+ "\"attrNmae4\":\"" + attrNmae4 + "\", " + "\"attrNmae5\":\""
-				+ attrNmae5 + "\", " + "\"attrNmae6\":\"" + attrNmae6 + "\"}";
+		return "{\"name\":\"" + name + "\", " + "\"id\":\"" + id + "\", " + "\"attrNmae1\":\"" + attrNmae1 + "\", "
+				+ "\"attrNmae2\":\"" + attrNmae2 + "\", " + "\"attrNmae3\":\"" + attrNmae3 + "\", " + "\"attrNmae4\":\""
+				+ attrNmae4 + "\", " + "\"attrNmae5\":\"" + attrNmae5 + "\", " + "\"attrNmae6\":\"" + attrNmae6 + "\"}";
 	}
 
 }

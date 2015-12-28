@@ -1,9 +1,12 @@
 package com.kaanish.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -12,8 +15,9 @@ import javax.persistence.OneToMany;
 
 @Entity
 @Cacheable(false)
-public class State {
+public class State implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
 	private int id;
@@ -22,7 +26,7 @@ public class State {
 	@ManyToOne
 	@JoinColumn(name = "countryId")
 	private Country country;
-	@OneToMany(mappedBy = "state")
+	@OneToMany(mappedBy = "state",cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
 	private List<City> cities;
 
 	public int getId() {
@@ -56,10 +60,10 @@ public class State {
 	public void setCities(List<City> cities) {
 		this.cities = cities;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "{\"id\":\""+id+"\", \"stateName\":\""+stateName+"\"}";
+		return "{\"id\":\"" + id + "\", \"stateName\":\"" + stateName + "\"}";
 	}
 
 }
