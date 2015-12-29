@@ -250,7 +250,7 @@
 												<div class="col-md-12">
 													&nbsp; &nbsp; &nbsp; <b class="font">Vendor Name :</b> <input
 														type="text" class="form-control" id="vName" name="vName"
-														required="required"> <input type="hidden" id="vId"
+														required="required" onchange="emptyVender();"> <input type="hidden" id="vId"
 														name="vId">
 												</div>
 												<div class="col-md-12">
@@ -413,7 +413,7 @@
 												</thead>
 											</table>
 											<div class="widget-area" style="display: none;">
-											<!-- <div class="widget-area" style="overflow-x: scroll;"> -->
+												<!-- <div class="widget-area" style="overflow-x: scroll;"> -->
 												<table id="hiddenTable"
 													class="table table-striped table-bordered">
 													<thead style="background-color: #F0F0F0;">
@@ -631,7 +631,10 @@
 								</div>
 								<div class="col-md-5">Product-Code:</div>
 								<div class="col-md-7">
-									<select class="form-control" name="productCode"
+									<input type="text" id="pCode" name="pCode" class="form-control"
+										onchange="emptyForm();"><input type="hidden"
+										id="productCode" name="productCode">
+									<%-- <select class="form-control" name="productCode"
 										id="productCode" onchange="getProductDetailsByProductCode();"
 										required="required">
 										<option value="0">Select Product Code</option>
@@ -640,7 +643,8 @@
 											var="productDetail">
 											<option value="${productDetail.id}">${productDetail.code}</option>
 										</c:forEach>
-									</select> <input type="hidden" id="pCode" name="pCode">
+									</select>
+									<input type="hidden" id="pCode" name="pCode"> --%>
 								</div>
 								<div class="col-md-5">Product Descripsion:</div>
 								<div class="col-md-7">
@@ -853,14 +857,14 @@
 		$(function() {
 			$("#datepicker").datepicker();
 		});
-		function getProductDetailsByProductCode() {
-			if ($("#productCode").val() != 0) {
+		function getProductDetailsByProductCode(id1) {
+			if (id1 != 0) {
 				$.ajax({
 					url : 'getProductDetailById',
 					type : 'post',
 					dataType : "json",
 					data : {
-						id : $("#productCode").val()
+						id : id1
 					},
 					success : function(data) {
 						$("#dept").val(data.Department);
@@ -1377,6 +1381,31 @@
 				}
 			});
 		}
+		
+		function emptyVender(){
+			if($("#vName").val()==""){
+				$("#vName").val("");
+				$("#vDetail").val("");
+				$("#taxGroup").val(0).prop("selected",
+						true);
+				$("#taxTot").val('0');
+				$("#taxAmount").val('0');
+				$("#gt")
+						.val(
+								Math
+										.round((Number($(
+												"#subTotal")
+												.val())
+												+ Number($(
+														"#taxAmount")
+														.val())
+												+ Number($(
+														"#transportCost")
+														.val()) + Number($(
+												"#surcharge")
+												.val())) * 100) / 100);
+			}
+		}
 
 		$(function() {
 			$("#vName")
@@ -1411,6 +1440,7 @@
 											});
 								},
 								change : function(event, ui) {
+									
 									if (ui.item == null) {
 										$("#vName").val("");
 										$("#vDetail").val("");
@@ -1444,6 +1474,7 @@
 
 								},
 								select : function(event, ui) {
+									
 									if (ui.item == null) {
 										$("#vName").val("");
 
@@ -1570,6 +1601,59 @@
 		function submit() {
 			document.getElementById("purchaseForm").submit();
 		}
+		function emptyForm() {
+			if ($("#pCode").val() == "") {
+				getProductDetailsByProductCode(0);
+			}
+		}
+		$(function() {
+			$("#pCode").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getProductbyProductCode",
+						data : {
+							code : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.code,
+									id : item.id
+								});
+							}));
+						},
+
+						error : function(a, b, c) {
+							alert(a + b + c);
+						}
+
+					});
+				},
+				change : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#productCode").val("");
+						getProductDetailsByProductCode(0);
+					} else {
+						$("#productCode").val(ui.item.id);
+						getProductDetailsByProductCode(ui.item.id);
+					}
+				},
+				select : function(event, ui) {
+					if (ui.item != null) {
+						$("#productCode").val(ui.item.id);
+						getProductDetailsByProductCode(ui.item.id);
+					} else {
+						$(this).val("");
+						$("#productCode").val("");
+						getProductDetailsByProductCode(0);
+					}
+
+				}
+			});
+		});
 	</script>
 </body>
 

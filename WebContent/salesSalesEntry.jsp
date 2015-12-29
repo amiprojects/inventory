@@ -203,7 +203,6 @@
 								</div>
 								<div class="widget-area">
 
-
 									<b>Quantity :</b> <input type="text" name="qty" id="qty"
 										onkeyup="checkQty();" value="0" style="width: 70px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
@@ -242,6 +241,7 @@
 												<th>Qty.</th>
 												<th id="mrpWSP">MRP/Qty</th>
 												<th>Total</th>
+												<th>Remove</th>
 											</tr>
 										</thead>
 										<tbody style="display: none;">
@@ -579,6 +579,11 @@
 				}
 			}
 		} */
+		ind = 0;
+		function removeProduct(a) {
+			$("#trRemove" + a).remove();
+			//$("#trRemoveH" + a).remove();
+		}
 		var k = 0;
 		function probar() {
 			k = k + 1;
@@ -682,7 +687,7 @@
 
 							$("#productTable")
 									.append(
-											'<tbody><tr>'
+											'<tbody><tr id="trRemove'+ind+'">'
 													+ '<td>'
 													+ k
 													+ '</td>'
@@ -704,8 +709,14 @@
 													+ '\'></td>'
 													+ '<td><input readonly="readonly" type="text" name="eachtotalvalue" value=\''
 													+ $("#eachtotalvalue")
-															.val() + '\'></td>'
-													+ '</tr></tbody>');
+															.val()
+													+ '\'></td>'
+													+ '<td>'
+													+ '<a href="#" onclick="removeProduct('
+													+ ind
+													+ ');"><img src="img/cross.png" height="16px" width="16px"></a>'
+													+ '</td>' + '</tr></tbody>');
+							ind++;
 
 						}
 

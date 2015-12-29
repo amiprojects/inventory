@@ -116,11 +116,11 @@
 											<div class="col-md-6">
 												<div class="col-md-12"></div>
 												<div class="col-md-12">
-													<b class="font">Jobber Name :</b>
-													<!-- <input type="text"
-														class="form-control" id="jName" name="jName">
-													<input type="hidden" id="jId" name="jId"> -->
-													<select class="form-control" name="jName" id="jName"
+													<b class="font">Jobber Name :</b> <input type="text"
+														class="form-control" id="jId" name="jId"
+														onchange="emptyForm();"> <input type="hidden"
+														id="jName" name="jName">
+													<%-- <select class="form-control" name="jName" id="jName"
 														onchange="getDetailsByJobberName();" required="required">
 														<option value="0">Select Jobber Name</option>
 														<c:forEach
@@ -128,7 +128,7 @@
 															var="jobber">
 															<option value="${jobber.id}">${jobber.name}</option>
 														</c:forEach>
-													</select>
+													</select> --%>
 												</div>
 												<div class="col-md-12">
 
@@ -197,6 +197,7 @@
 													<th>Quantity</th>
 													<th>UOM</th>
 													<th>Work</th>
+													<th>Remove</th>
 												</tr>
 											</thead>
 											<!-- <tbody>
@@ -297,9 +298,11 @@
 									items="${sessionScope['ejb'].getPurchaseProductDetailsByQty()}"
 									var="pCode">
 									<option value="${pCode.id}">${pCode.productDetail.code}&nbsp;(<c:choose>
-											<c:when
-												test="${pCode.initialInventory.equals(false)}"><fmt:formatDate value="${pCode.purchase_Entry.purchase_date}"
-											pattern="dd-MM-yy" /></c:when>
+											<c:when test="${pCode.initialInventory.equals(false)}">
+												<fmt:formatDate
+													value="${pCode.purchase_Entry.purchase_date}"
+													pattern="dd-MM-yy" />
+											</c:when>
 											<c:otherwise>Intial inventory</c:otherwise>
 										</c:choose>)
 									</option>
@@ -357,8 +360,8 @@
 							</div>
 							<br>
 							<div class="row">
-								<button type="button" class="btn btn-default" id="yesP">Yes</button>
-								<button type="button" class="btn btn-default" id="noP">No</button>
+								<button type="button" class="btn btn-success medium" id="yesP">Yes</button>
+								<button type="button" class="btn btn-danger medium" id="noP">No</button>
 							</div>
 						</div>
 					</div>
@@ -405,30 +408,6 @@
 
 		});
 
-		function getDetailsByJobberName() {
-			if ($("#jName").val() != 0) {
-				$.ajax({
-					url : 'getJobberDetailsByName',
-					type : 'post',
-					dataType : "json",
-					data : {
-						id : $("#jName").val()
-					},
-					success : function(data) {
-						$("#jDetail").val(
-								"Address :\n\t" + data.address + "\nPh1 : "
-										+ data.ph1 + "\nPh2 : " + data.ph2);
-					},
-					error : function(a, b, c) {
-						alert(b + ": " + c);
-					}
-				});
-			} else {
-				alert("please select one jobber name");
-				$("#jDetail").val("");
-			}
-		}
-
 		function getProdDetByPurchaseProdDetId() {
 			if ($("#prodCode").val() != 0) {
 				$.ajax({
@@ -457,7 +436,7 @@
 				});
 			} else {
 				alert("please select product code");
-				$("prodCode#").val("");
+				$("#prodDesc").val("");
 			}
 		}
 		function fnsearch() {
@@ -499,6 +478,11 @@
 				$("#qty").val("");
 			}
 		}
+		ind = 0;
+		function removeProduct(a) {
+			$("#trRemove" + a).remove();
+			$("#trRemoveH" + a).remove();
+		}
 		var i = 1;
 		function anotherShow() {
 
@@ -511,13 +495,25 @@
 			} else {
 
 				$("#another").modal("show");
-				$("#purProTable").append(
-						'<tbody><tr><td>' + i + '</td><td>'
-								+ $("#prCode").val() + '</td><td>'
-								+ $("#prDesc").val() + '</td><td>'
-								+ $("#qty").val() + '</td><td>'
-								+ $("#uom").val() + '</td><td>'
-								+ $("#work").val() + '</td></tr></tbody>');
+				$("#purProTable")
+						.append(
+								'<tbody><tr id="trRemove'+ind+'"><td>'
+										+ i
+										+ '</td><td>'
+										+ $("#prCode").val()
+										+ '</td><td>'
+										+ $("#prDesc").val()
+										+ '</td><td>'
+										+ $("#qty").val()
+										+ '</td><td>'
+										+ $("#uom").val()
+										+ '</td><td>'
+										+ $("#work").val()
+										+ '</td><td>'
+										+ '<a href="#" onclick="removeProduct('
+										+ ind
+										+ ');"><img src="img/cross.png" height="16px" width="16px"></a>'
+										+ '</td></tr></tbody>');
 				i++;
 				$("#totProd").val(Number($("#totProd").val()) + Number(1));
 				$("#totQty").val(
@@ -525,7 +521,7 @@
 
 				$("#hiddenTable")
 						.append(
-								'<tbody><tr>'
+								'<tbody><tr id="trRemoveH'+ind+'">'
 										+ '<td><input type="text" name="pProdDetIdH" value=\''
 										+ $("#prodCode").val()
 										+ '\'></td>'
@@ -535,6 +531,7 @@
 										+ '<td><input type="text" name="workH" value=\''
 										+ $("#work").val() + '\'></td>'
 										+ '</tr></tbody>');
+				ind++;
 				$("#prodDesc").val("");
 				$("#qty").val("");
 				$("#work").val("");
@@ -547,6 +544,82 @@
 		$("#noP").click(function() {
 			$("#another").modal("hide");
 			$("#addProduct").modal("hide");
+		});
+		function getDetailsByJobberName(id1) {
+			if (id1 != 0) {
+				$.ajax({
+					url : 'getJobberDetailsByName',
+					type : 'post',
+					dataType : "json",
+					data : {
+						id : id1
+					},
+					success : function(data) {
+						$("#jDetail").val(
+								"Address :\n\t" + data.address + "\nPh1 : "
+										+ data.ph1 + "\nPh2 : " + data.ph2);
+					},
+					error : function(a, b, c) {
+						alert(b + ": " + c);
+					}
+				});
+			} else {
+				alert("please select one jobber name");
+				$("#jDetail").val("");
+			}
+		}
+		function emptyForm() {
+			if ($("#jId").val() == "") {
+				getDetailsByJobberName(0);
+			}
+		}
+		$(function() {
+			$("#jId").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getVendorsByVendorTypeJobberAndName",
+						data : {
+							name : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.name,
+									id : item.id
+								});
+							}));
+						},
+
+						error : function(a, b, c) {
+							alert(a + b + c);
+						}
+
+					});
+				},
+				change : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#jName").val("");
+						getDetailsByJobberName(0);
+					} else {
+						$("#jName").val(ui.item.id);
+						getDetailsByJobberName(ui.item.id);
+					}
+				},
+				select : function(event, ui) {
+					if (ui.item != null) {
+						$("#jName").val(ui.item.id);
+						getDetailsByJobberName(ui.item.id);
+					} else {
+						$(this).val("");
+						$("#jName").val("");
+						getDetailsByJobberName(0);
+					}
+
+				}
+			});
 		});
 	</script>
 </body>
