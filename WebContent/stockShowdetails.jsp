@@ -491,8 +491,14 @@
 
 														<tr style="width: 100%">
 
-															<c:set var="mw1" value="${222}" />
-															<c:set var="mw2" value="${12}" />
+														<%-- <c:set value="${p.purchase_Product_Details.size}"/>
+															
+															
+															<c:set var="wspsps"
+																value="${purSize>0?p.purchase_Product_Details.get(purSize-1).wsp:}" />
+															<c:set var="mrprp"
+																value="${purSize>0?p.purchase_Product_Details.get(purSize-1).mrp:}" /> --%>
+																
 															<c:forEach items="${salesPro}" var="salesPro1">
 
 																<td><b>${salesPro1.salesEntry.customer.name}</b></td>
@@ -504,15 +510,23 @@
 
 																<td><b>${salesPro1.productDetail.qtyUnit.name}</b></td>
 
+																<%-- <td>&nbsp;</td>
+
+																<td><b> <c:choose>
+																			<c:when test="${salesp== wspsps}"> ${"WSP"}
+ </c:when>
+																			<c:when test="${salesp == mrprp}"> ${"MRP"}
+ </c:when>
+																			<c:otherwise>Errorr
+ </c:otherwise>
+																		</c:choose>
+																</b></td> --%>
 																<td>&nbsp;</td>
 
-																<td><b></b></td>
+																<td><b>${salesPro1.salesPrice}</b></td>
 																<td>&nbsp;</td>
 
-																<td><b>${salesPro1.SalesPrice}</b></td>
-																<td>&nbsp;</td>
-
-																<td><b>${salesPro1.quantity * salesPro1.SalesPrice}</b></td>
+																<td><b>${salesPro1.quantity * salesPro1.salesPrice}</b></td>
 																<td>&nbsp;</td>
 
 

@@ -25,7 +25,7 @@ public class SalesEntry implements Serializable {
 	private int id;
 	private int challanNo;
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date Entry_Date;
+	private Date entry_Date;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date sales_date;
 	private float surcharge;
@@ -50,6 +50,14 @@ public class SalesEntry implements Serializable {
 	@JoinColumn(name = "taxtypeId")
 	private Tax_Type_Group tax_Type_Group;
 
+	public Date getEntry_Date() {
+		return entry_Date;
+	}
+
+	public void setEntry_Date(Date entry_Date) {
+		this.entry_Date = entry_Date;
+	}
+
 	@ManyToOne
 	@JoinColumn(name = "bill_setupId")
 	private Bill_setup bill_setup;
@@ -70,13 +78,13 @@ public class SalesEntry implements Serializable {
 		this.challanNo = challanNo;
 	}
 
-	public Date getEntry_Date() {
+	/*public Date getEntry_Date() {
 		return Entry_Date;
 	}
 
 	public void setEntry_Date(Date entry_Date) {
 		Entry_Date = entry_Date;
-	}
+	}*/
 
 	public Date getSales_date() {
 		return sales_date;
