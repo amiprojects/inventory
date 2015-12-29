@@ -203,7 +203,6 @@
 								</div>
 								<div class="widget-area">
 
-
 									<b>Quantity :</b> <input type="text" name="qty" id="qty"
 										onkeyup="checkQty();" value="0" style="width: 70px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 

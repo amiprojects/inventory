@@ -74,9 +74,9 @@ public class Ejb {
 	public String getNumberToWords(int number) {
 		return DigitToWords.convertNumberToWords(number);
 	}
-	
+
 	public void backup() {
-		
+
 	}
 
 	/***************** for user **********************/
@@ -304,7 +304,7 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	/**************************************** * Product Search By Code*********************************************/
+	/**************************************** * Product Search By Code *********************************************/
 
 	public List<ProductDetail> getAllProductByProductCode(String code) {
 		TypedQuery<ProductDetail> q = em.createQuery(
@@ -315,8 +315,7 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-
-	/******************************	 * Product Search By Category*************************************/
+	/****************************** * Product Search By Category *************************************/
 
 	public List<ProductDetail> getAllProductByCategory(String cat) {
 		TypedQuery<ProductDetail> q = em
@@ -328,14 +327,13 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	
-	/******************************	 * Product Search By Description*************************************/
-
+	/****************************** * Product Search By Description *************************************/
 
 	public List<ProductDetail> getAllProductByProductDescription(String des) {
-		TypedQuery<ProductDetail> q = em.createQuery(
-				"select c from ProductDetail c where UPPER(c.description) like :nm ",
-				ProductDetail.class);
+		TypedQuery<ProductDetail> q = em
+				.createQuery(
+						"select c from ProductDetail c where UPPER(c.description) like :nm ",
+						ProductDetail.class);
 		q.setParameter("nm", des.toUpperCase() + "%");
 
 		return q.getResultList();
@@ -413,7 +411,7 @@ public class Ejb {
 						Users.class);
 		q.setParameter("user", usr);
 		q.setParameter("pwd", pwd);
-		return q.getResultList().size() > 0;           
+		return q.getResultList().size() > 0;
 	}
 
 	public boolean getCheckPassword(String pwd) {
@@ -658,6 +656,15 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<Vendor> getVendorsByVendorTypeJobberAndName(String name) {
+		TypedQuery<Vendor> q = em
+				.createQuery(
+						"select c from Vendor c where c.vendorType.type='Jobber' and UPPER(c.name) like :nm",
+						Vendor.class);
+		q.setParameter("nm", "%" + name.toUpperCase() + "%");
+		return q.getResultList();
+	}
+
 	public List<Vendor> getVendorsWithVendorTypeJobberByProductID(String jobber) {
 		TypedQuery<Vendor> q = em.createQuery(
 				"select c from Vendor c where c.vendorType.type=:jobber",
@@ -786,6 +793,17 @@ public class Ejb {
 						"select c from Purchase_Product_Details c where c.remaining_quantity>0 and c.productDetail.isSaleble=:salable ORDER BY c.id ASC",
 						Purchase_Product_Details.class);
 		q.setParameter("salable", false);
+		return q.getResultList();
+	}
+
+	public List<Purchase_Product_Details> getSaleblePurchaseProductDetailsByProductCodeAndQuantity(
+			String code) {
+		TypedQuery<Purchase_Product_Details> q = em
+				.createQuery(
+						"select c from Purchase_Product_Details c where  UPPER(c.productDetail.code) like :cd and c.remaining_quantity>0 and c.productDetail.isSaleble=:salable ORDER BY c.id ASC",
+						Purchase_Product_Details.class);
+		q.setParameter("salable", false);
+		q.setParameter("cd", "%" + code.toUpperCase() + "%");
 		return q.getResultList();
 	}
 
@@ -1338,8 +1356,8 @@ public class Ejb {
 			SalesProductDetails salesProductDetails) {
 		em.merge(salesProductDetails);
 	}
-	public List<SalesProductDetails> getSales_Product_DetailsByProId(
-			int id) {
+
+	public List<SalesProductDetails> getSales_Product_DetailsByProId(int id) {
 		TypedQuery<SalesProductDetails> q = em
 				.createQuery(
 						"select s from SalesProductDetails s where s.productDetail.id=:Id",
@@ -1347,6 +1365,7 @@ public class Ejb {
 		q.setParameter("Id", id);
 		return q.getResultList();
 	}
+
 	/**************** Customer *****************/
 
 	public void setCustomerEntry(CustomerEntry customerEntry) {
@@ -1364,10 +1383,12 @@ public class Ejb {
 	public void updateDepartment(CustomerEntry customerEntry) {
 		em.merge(customerEntry);
 	}
-	/******************************stock search by product code****************/
-	
-	public List<ProductDetail> getProductDetailsByCodeDescriptionCategory(String code, String description, String name) {
-		  
+
+	/****************************** stock search by product code ****************/
+
+	public List<ProductDetail> getProductDetailsByCodeDescriptionCategory(
+			String code, String description, String name) {
+
 		TypedQuery<ProductDetail> q = em
 				.createQuery(
 						"select c from ProductDetail c where c.code=:code OR c.description=:description OR c.category.name=:name ",
@@ -1375,9 +1396,7 @@ public class Ejb {
 		q.setParameter("code", code);
 		q.setParameter("description", description);
 		q.setParameter("name", name);
-		return q.getResultList();           
+		return q.getResultList();
 	}
-	
-	
-	
+
 }
