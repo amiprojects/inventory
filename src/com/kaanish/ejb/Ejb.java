@@ -74,6 +74,10 @@ public class Ejb {
 	public String getNumberToWords(int number) {
 		return DigitToWords.convertNumberToWords(number);
 	}
+	
+	public void backup() {
+		
+	}
 
 	/***************** for user **********************/
 	public void setUser(Users users) {
