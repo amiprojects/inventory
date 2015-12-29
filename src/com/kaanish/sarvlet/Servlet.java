@@ -1258,7 +1258,7 @@ public class Servlet extends HttpServlet {
 					salesProductDetails.setSalesEntry(salesEntry);
 					salesProductDetails.setSalesPrice(Float.parseFloat(mrpQty[l]));
 					salesProductDetails.setQuantity(Integer.parseInt(qtyvalue[l]));
-					salesProductDetails.setProductDetail(ejb.getProductDetailById(Integer.parseInt(productId[l])));
+				/*	salesProductDetails.setProductDetail(ejb.getProductDetailById(Integer.parseInt(productId[l])));*//*URGENT CHANGE*/
 					ejb.setSalesProductDetails(salesProductDetails);
 
 					purchaseProductDetails = ejb

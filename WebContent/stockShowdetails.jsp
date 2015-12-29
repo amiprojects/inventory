@@ -476,8 +476,8 @@
 															<td><b>Customer</b></td>
 															<td>&nbsp;</td>
 
-															<td><b>Agent</b></td>
-															<td>&nbsp;</td>
+															<!-- <td><b>Agent</b></td>
+															<td>&nbsp;</td> -->
 
 															<td><b>Lot Number</b></td>
 															<td>&nbsp;</td>
@@ -489,38 +489,39 @@
 
 														</tr>
 
-														<tr style="width: 100%">
 
-														<%-- <c:set value="${p.purchase_Product_Details.size}"/>
+												
 															
 															
 															<c:set var="wspsps"
-																value="${purSize>0?p.purchase_Product_Details.get(purSize-1).wsp:}" />
+																value="${purSize>0?p.purchase_Product_Details.get(purSize-1).wsp:'0'}" />
 															<c:set var="mrprp"
-																value="${purSize>0?p.purchase_Product_Details.get(purSize-1).mrp:}" /> --%>
-																
-															<c:forEach items="${salesPro}" var="salesPro1">
+																value="${purSize>0?p.purchase_Product_Details.get(purSize-1).mrp:'0'}" />
 
-																<td><b>${salesPro1.salesEntry.customer.name}</b></td>
+														<c:forEach items="${salesPro}" var="salesPro1">
+															<tr style="width: 100%">
+
+																<td><b><fmt:formatDate
+																			value="${salesPro1.salesEntry.sales_date}"
+																			pattern="dd-MM-yyyy" /></b></td>
 																<td>&nbsp;</td>
 
 																<td><b>${salesPro1.quantity}</b></td>
 
 																<td>&nbsp;</td>
-
 																<td><b>${salesPro1.productDetail.qtyUnit.name}</b></td>
 
-																<%-- <td>&nbsp;</td>
+															 <td>&nbsp;</td>
 
-																<td><b> <c:choose>
-																			<c:when test="${salesp== wspsps}"> ${"WSP"}
- </c:when>
-																			<c:when test="${salesp == mrprp}"> ${"MRP"}
- </c:when>
+															<td><b> <c:choose>
+																			<c:when test="${salesPro1.salesPrice== wspsps}"> ${"WSP"}
+ 																			</c:when>
+																			<c:when test="${salesPro1.salesPrice == mrprp}"> ${"MRP"}
+ 																			</c:when>
 																			<c:otherwise>Errorr
- </c:otherwise>
+ 																			</c:otherwise>
 																		</c:choose>
-																</b></td> --%>
+																</b></td> 
 																<td>&nbsp;</td>
 
 																<td><b>${salesPro1.salesPrice}</b></td>
@@ -533,6 +534,9 @@
 																<td><b>${salesPro1.salesEntry.customer.name}</b></td>
 																<td>&nbsp;</td>
 
+																<%-- <td><b>${sessionScope['ejb'].getVendorById(salesPro1.salesEntry.agentId).name}</b></td>
+																<td>&nbsp;</td>--%>
+ 
 																<td><b></b></td>
 																<td>&nbsp;</td>
 
@@ -540,12 +544,11 @@
 																<td>&nbsp;</td>
 
 																<td><b></b></td>
-																<td>&nbsp;</td>
 
-																<td><b></b></td>
-															</c:forEach>
+															</tr>
+														</c:forEach>
 
-														</tr>
+
 
 													</table>
 												</div>

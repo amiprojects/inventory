@@ -96,6 +96,7 @@
 								Assignment</a></li>
 						<li><a id="jSearch" href="jobAssignSearch.jsp" title="">Job
 								Assignment Search</a></li>
+						<li><a id="jR" href="jobReceive.jsp" title="">Job Receive</a></li>
 					</ul>
 				</div>
 			</div>
