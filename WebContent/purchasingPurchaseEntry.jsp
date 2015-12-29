@@ -413,7 +413,7 @@
 												</thead>
 											</table>
 											<div class="widget-area" style="display: none;">
-											<!-- <div class="widget-area" style="overflow-x: scroll;"> -->
+												<!-- <div class="widget-area" style="overflow-x: scroll;"> -->
 												<table id="hiddenTable"
 													class="table table-striped table-bordered">
 													<thead style="background-color: #F0F0F0;">
@@ -631,7 +631,9 @@
 								</div>
 								<div class="col-md-5">Product-Code:</div>
 								<div class="col-md-7">
-									<select class="form-control" name="productCode"
+									<input type="text" id="pCode" name="pCode" class="form-control"><input
+										type="text" id="productCode" name="productCode">
+									<%-- <select class="form-control" name="productCode"
 										id="productCode" onchange="getProductDetailsByProductCode();"
 										required="required">
 										<option value="0">Select Product Code</option>
@@ -640,7 +642,8 @@
 											var="productDetail">
 											<option value="${productDetail.id}">${productDetail.code}</option>
 										</c:forEach>
-									</select> <input type="hidden" id="pCode" name="pCode">
+									</select>
+									<input type="hidden" id="pCode" name="pCode"> --%>
 								</div>
 								<div class="col-md-5">Product Descripsion:</div>
 								<div class="col-md-7">
@@ -1570,6 +1573,40 @@
 		function submit() {
 			document.getElementById("purchaseForm").submit();
 		}
+		$(function() {
+			$("#pCode").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getProductbyProductCode",
+						data : {
+							code : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.code,
+									id : item.id
+								});
+							}));
+						}
+
+					});
+				},
+				change : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#productCode").val("");
+					} else {
+						$("#productCode").val(ui.item.id);
+					}
+				},
+				select : function(event, ui) {
+					$("#productCode").val(ui.item.id);
+				}
+			});
+		});
 	</script>
 </body>
 

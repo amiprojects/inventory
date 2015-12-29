@@ -315,6 +315,7 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+
 	/******************************	 * Product Search By Category*************************************/
 
 	public List<ProductDetail> getAllProductByCategory(String cat) {
