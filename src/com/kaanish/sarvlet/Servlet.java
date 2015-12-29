@@ -483,6 +483,7 @@ public class Servlet extends HttpServlet {
 						purchaseProductDetails.setRemaining_quantity(Integer.parseInt(req.getParameter("qty1")));
 						purchaseProductDetails.setInitialInventory(true);
 						purchaseProductDetails.setProductDetail(productDetail);
+						purchaseProductDetails.setLotNumber(req.getParameter("lotnumberS"));
 						// purchaseProductDetails.setReady(true);
 
 						ejb.setPurchaseProductDetails(purchaseProductDetails);
@@ -1131,6 +1132,7 @@ public class Servlet extends HttpServlet {
 						purchaseProductDetails.setRemaining_quantity(Integer.parseInt(qty[l]));
 						purchaseProductDetails.setCost(Integer.parseInt(cost[l]));
 						purchaseProductDetails.setPurchase_Entry(purchaseEntry);
+						purchaseProductDetails.setLotNumber(req.getParameter("lotH"));
 						ejb.setPurchaseProductDetails(purchaseProductDetails);
 						int lq = Integer.parseInt(qty[l]);
 						if (req.getParameter("isSerial").equals("yes")) {
