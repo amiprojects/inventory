@@ -242,17 +242,17 @@
 														<c:set
 															value="${sessionScope['ejb'].getPurchase_Product_DetailsByProId(requestScope['proid1'])}"
 															var="prolst" />
-														<c:set value="${0}" var="initialQty"/>
-														<c:set value="${0}" var="purQtyt"/>
+														<c:set value="${0}" var="initialQty" />
+														<c:set value="${0}" var="purQtyt" />
 														<c:forEach items="${prolst}" var="pro">
-														<c:choose>
-														<c:when test="${pro.isInitialInventory()}">
-															<c:set value="${pro.quantity}" var="initialQty" />
-														</c:when>
-															<c:otherwise>
+															<c:choose>
+																<c:when test="${pro.isInitialInventory()}">
+																	<c:set value="${pro.quantity}" var="initialQty" />
+																</c:when>
+																<c:otherwise>
 																	<c:set value="${purQtyt+pro.quantity}" var="purQtyt" />
 																</c:otherwise>
-														</c:choose>														
+															</c:choose>
 														</c:forEach>
 
 														<td><b>Total Purchased:</b> &nbsp;&nbsp;${purQtyt}</td>
@@ -332,7 +332,7 @@
 
 												</table> --%>
 												<div style="width: 100%; overflow-x: scroll">
-													<table class="table table-striped table-bordered">
+													<table class="table">
 
 														<tr style="width: 100%">
 															<td><b>Date</b></td>
@@ -358,55 +358,60 @@
 															<td><b>Agent</b></td>
 															<td>&nbsp;</td>
 
-															<td><b>Lot Number</b></td>
+															<!--  <td><b>Lot Number</b></td>
 															<td>&nbsp;</td>
 
 															<td><b>Barcode</b></td>
-															<td>&nbsp;</td>
+															<td>&nbsp;</td> -->
 
 															<td><b>Purchase challan number</b></td>
 
 														</tr>
 
-														<tr style="width: 100%">
-														
-															<c:forEach items="${purchasePro}" var="purPro">
+
+
+														<c:forEach items="${purchasePro}" var="purPro">
 															<c:if test="${!purPro.isInitialInventory()}">
-																
-																<td><b><fmt:formatDate value="${purPro.purchase_Entry.purchase_date}"
-																			pattern="dd-MM-yyyy" /></b></td>
+																<tr style="width: 100%">
+																	<td><b><fmt:formatDate
+																				value="${purPro.purchase_Entry.purchase_date}"
+																				pattern="dd-MM-yyyy" /></b></td>
+																	<td>&nbsp;</td>
+
+																	<td><b>${purPro.quantity}</b></td>
+
+																	<td>&nbsp;</td>
+
+																	<td><b>${purPro.productDetail.qtyUnit.name} </b></td>
+
+																	<td>&nbsp;</td>
+
+																	<td><b>${purPro.cost}</b></td>
+																	<td>&nbsp;</td>
+
+																	<td><b>${purPro.quantity*purPro.cost}</b></td>
+																	<td>&nbsp;</td>
+
+																	<td><b>${purPro.purchase_Entry.vendor.name}</b></td>
+																	<td>&nbsp;</td>
+
+																	<td><b>${sessionScope['ejb'].getVendorById(purPro.purchase_Entry.agentId).name}
+																	</b></td>
+																	<td>&nbsp;</td>
+
+
+
+																	<%-- <td><b>${purPro.serialNumbers.lotNo}</b></td>
 																<td>&nbsp;</td>
 
-																<td><b>${purPro.quantity}</b></td>
+																<td><b>${purPro.purchase_Entry.id}/${purPro.serialNumbers.lotNo}/${purPro.serialNumbers.serialNumber}</b></td> 
+																<td>&nbsp;</td>  --%>
 
-																<td>&nbsp;</td>
+																	<td><b>${purPro.purchase_Entry.challanNumber}</b></td>
+																</tr>
 
-																<td><b>${purPro.productDetail.qtyUnit.name} </b></td>
-
-																<td>&nbsp;</td>
-
-																<td><b>${purPro.cost}</b></td>
-																<td>&nbsp;</td>
-
-																<td><b>${purPro.quantity*purPro.cost}</b></td>
-																<td>&nbsp;</td>
-
-																<td><b>${purPro.purchase_Entry.vendor.name}</b></td>
-																<td>&nbsp;</td>
-
-																<td><b>${purPro.purchase_Entry.vendor.name} </b></td>
-																<td>&nbsp;</td>
-
-																<td><b>...........</b></td>
-																<td>&nbsp;</td>
-
-																<td><b>...............</b></td>
-																<td>&nbsp;</td>
-
-																<td><b>...............</b></td>
-																</c:if>
-															</c:forEach>
-														</tr>
+															</c:if>
+														</c:forEach>
 
 													</table>
 
@@ -444,7 +449,7 @@
 												</table> --%>
 
 												<div style="width: 100%; overflow-x: scroll">
-													<table class="table table-striped table-bordered">
+													<table class="table">
 
 														<tr style="width: 100%">
 															<td><b>Date</b></td>
@@ -483,40 +488,48 @@
 															<td><b>Sales Invoice number</b></td>
 
 														</tr>
+
 														<tr style="width: 100%">
-															<td><b>........</b></td>
-															<td>&nbsp;</td>
 
-															<td><b>........................y</b></td>
+															<c:set var="mw1" value="${222}" />
+															<c:set var="mw2" value="${12}" />
+															<c:forEach items="${salesPro}" var="salesPro1">
 
-															<td>&nbsp;</td>
+																<td><b>${salesPro1.salesEntry.customer.name}</b></td>
+																<td>&nbsp;</td>
 
-															<td><b>......... </b></td>
+																<td><b>${salesPro1.quantity}</b></td>
 
-															<td>&nbsp;</td>
+																<td>&nbsp;</td>
 
-															<td><b>.....</b></td>
-															<td>&nbsp;</td>
+																<td><b>${salesPro1.productDetail.qtyUnit.name}</b></td>
 
-															<td><b>..........</b></td>
-															<td>&nbsp;</td>
+																<td>&nbsp;</td>
 
-															<td><b>........</b></td>
-															<td>&nbsp;</td>
+																<td><b></b></td>
+																<td>&nbsp;</td>
 
-															<td><b>..........</b></td>
-															<td>&nbsp;</td>
+																<td><b>${salesPro1.SalesPrice}</b></td>
+																<td>&nbsp;</td>
 
-															<td><b>...........</b></td>
-															<td>&nbsp;</td>
+																<td><b>${salesPro1.quantity * salesPro1.SalesPrice}</b></td>
+																<td>&nbsp;</td>
 
-															<td><b>...............</b></td>
-															<td>&nbsp;</td>
 
-															<td><b>...............</b></td>
-															<td>&nbsp;</td>
+																<td><b>${salesPro1.salesEntry.customer.name}</b></td>
+																<td>&nbsp;</td>
 
-															<td><b>...............</b></td>
+																<td><b></b></td>
+																<td>&nbsp;</td>
+
+																<td><b></b></td>
+																<td>&nbsp;</td>
+
+																<td><b></b></td>
+																<td>&nbsp;</td>
+
+																<td><b></b></td>
+															</c:forEach>
 
 														</tr>
 
@@ -561,7 +574,7 @@
 												</table> --%>
 
 												<div style="width: 100%; overflow-x: scroll">
-													<table class="table table-striped table-bordered">
+													<table class="table">
 
 														<tr style="width: 100%">
 															<td><b>Assigned Date</b></td>
@@ -636,7 +649,7 @@
 										<div id="DSP" class="tab-pane fade">
 
 											<div style="width: 100%; overflow-x: scroll">
-												<table class="table table-striped table-bordered">
+												<table class="table">
 
 													<tr style="width: 100%">
 														<td><b>Date</b></td>
