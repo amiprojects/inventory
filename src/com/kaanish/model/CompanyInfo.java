@@ -40,6 +40,8 @@ public class CompanyInfo implements Serializable {
 	private String cstdate;
 	private String tindate;
 	private String servtaxdate;
+	
+	private int changeCount;
 
 	public String getImageAsString() {
 		if (image == null) {
@@ -191,6 +193,14 @@ public class CompanyInfo implements Serializable {
 
 	public void setCountry1(String country1) {
 		this.country1 = country1;
+	}
+
+	public int getChangeCount() {
+		return changeCount;
+	}
+
+	public void setChangeCount(int changeCount) {
+		this.changeCount = changeCount;
 	}
 
 }

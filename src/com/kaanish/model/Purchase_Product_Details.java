@@ -32,6 +32,7 @@ public class Purchase_Product_Details implements Serializable {
 	private String attrValue4;
 	private String attrValue5;
 	private String attrValue6;
+	private String lotNumber;
 	private boolean initialInventory;
 	private boolean isReady;
 
@@ -233,6 +234,14 @@ public class Purchase_Product_Details implements Serializable {
 
 	public void setRecievedDetails(JobRecievedDetails recievedDetails) {
 		this.recievedDetails = recievedDetails;
+	}
+
+	public String getLotNumber() {
+		return lotNumber;
+	}
+
+	public void setLotNumber(String lotNumber) {
+		this.lotNumber = lotNumber;
 	}
 
 }
