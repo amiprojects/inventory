@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 
 @Entity
 @Cacheable(false)
-public class SalesProductDetails implements Serializable {
+public class SalesProductDetails implements Serializable { 
 
 	private static final long serialVersionUID = 1L;
 
@@ -20,15 +20,18 @@ public class SalesProductDetails implements Serializable {
 
 	private int id;
 	private int quantity;
-	private float SalesPrice;
+	private float salesPrice;
 
 	@ManyToOne
 	@JoinColumn(name = "salesEntryId")
 	private SalesEntry salesEntry;
 
 	@ManyToOne
-	@JoinColumn(name = "productId")
-	private ProductDetail productDetail;
+	@JoinColumn(name = "purchaseProductDetailsId")
+	private Purchase_Product_Details purchase_Product_Details;
+	
+	
+	
 
 	public int getId() {
 		return id;
@@ -46,13 +49,6 @@ public class SalesProductDetails implements Serializable {
 		this.quantity = quantity;
 	}
 
-	public float getSalesPrice() {
-		return SalesPrice;
-	}
-
-	public void setSalesPrice(float salesPrice) {
-		SalesPrice = salesPrice;
-	}
 
 	public SalesEntry getSalesEntry() {
 		return salesEntry;
@@ -62,12 +58,20 @@ public class SalesProductDetails implements Serializable {
 		this.salesEntry = salesEntry;
 	}
 
-	public ProductDetail getProductDetail() {
-		return productDetail;
+	public float getSalesPrice() {
+		return salesPrice;
 	}
 
-	public void setProductDetail(ProductDetail productDetail) {
-		this.productDetail = productDetail;
+	public void setSalesPrice(float salesPrice) {
+		this.salesPrice = salesPrice;
+	}
+
+	public Purchase_Product_Details getPurchase_Product_Details() {
+		return purchase_Product_Details;
+	}
+
+	public void setPurchase_Product_Details(Purchase_Product_Details purchase_Product_Details) {
+		this.purchase_Product_Details = purchase_Product_Details;
 	}
 
 }

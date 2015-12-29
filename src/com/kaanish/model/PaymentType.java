@@ -18,7 +18,7 @@ public class PaymentType implements Serializable {
 	@Id
 	@GeneratedValue
 	private int id;
-	private String Type;
+	private String type;
 
 	@OneToMany(mappedBy = "paymentType", cascade = CascadeType.ALL)
 	private List<PaymentDetails> paymentDetails;
@@ -32,13 +32,21 @@ public class PaymentType implements Serializable {
 	}
 
 	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	/*public String getType() {
 		return Type;
 	}
 
 	public void setType(String type) {
 		Type = type;
 	}
-
+*/
 	public List<PaymentDetails> getPaymentDetails() {
 		return paymentDetails;
 	}

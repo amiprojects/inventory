@@ -235,7 +235,7 @@ public class Ejb {
 
 	public PaymentType getPaymentTypeByType(String type) {
 		TypedQuery<PaymentType> q = em.createQuery(
-				"select c from PaymentType c Where c.Type=:type",
+				"select c from PaymentType c Where c.type=:type",
 				PaymentType.class);
 		q.setParameter("type", type);
 		if (q.getResultList().size() > 0) {
