@@ -86,11 +86,11 @@
 								$("#perentOfSubDept").html(
 										'Perent Department: ' + ui.item.pname);
 								$("#attr1").prop("disabled", false);
-								$("#attr2").prop("disabled", false);
+								/* $("#attr2").prop("disabled", false);
 								$("#attr3").prop("disabled", false);
 								$("#attr4").prop("disabled", false);
 								$("#attr5").prop("disabled", false);
-								$("#attr6").prop("disabled", false);
+								$("#attr6").prop("disabled", false); */
 							} else {
 								$("#perentOfSubDept").html("");
 								$("#attr1").prop("disabled", true);
@@ -120,11 +120,11 @@
 								$("#perentOfSubDept").html(
 										'Perent Department: ' + ui.item.pname);
 								$("#attr1").prop("disabled", false);
-								$("#attr2").prop("disabled", false);
+								/* $("#attr2").prop("disabled", false);
 								$("#attr3").prop("disabled", false);
 								$("#attr4").prop("disabled", false);
 								$("#attr5").prop("disabled", false);
-								$("#attr6").prop("disabled", false);
+								$("#attr6").prop("disabled", false); */
 							} else {
 								$("#perentOfSubDept").html("");
 								$("#attr1").prop("disabled", true);
@@ -287,20 +287,22 @@
 											<div class="widget-area" style="width: 40%">
 												<label for="" class="font">Attribute 1:</label><input
 													type="text" class="form-control" placeholder=""
-													disabled="disabled" id="attr1"><label for=""
-													class="font">Attribute 2:</label><input type="text"
+													disabled="disabled" id="attr1" onchange="attr1F();"><label
+													for="" class="font">Attribute 2:</label><input type="text"
 													class="form-control" placeholder="" disabled="disabled"
-													id="attr2"><label for="" class="font">Attribute
-													3:</label><input type="text" class="form-control" placeholder=""
-													disabled="disabled" id="attr3"><label for=""
+													id="attr2" onchange="attr2F();"><label for=""
+													class="font">Attribute 3:</label><input type="text"
+													class="form-control" placeholder="" disabled="disabled"
+													id="attr3" onchange="attr3F();"><label for=""
 													class="font">Attribute 4:</label><input type="text"
 													class="form-control" placeholder="" disabled="disabled"
-													id="attr4"><label for="" class="font">Attribute
-													5:</label><input type="text" class="form-control" placeholder=""
-													disabled="disabled" id="attr5"><label for=""
+													id="attr4" onchange="attr4F();"><label for=""
+													class="font">Attribute 5:</label><input type="text"
+													class="form-control" placeholder="" disabled="disabled"
+													id="attr5" onchange="attr5F();"><label for=""
 													class="font">Attribute 6:</label><input type="text"
 													class="form-control" placeholder="" disabled="disabled"
-													id="attr6">
+													id="attr6" onchange="attr6F();">
 											</div>
 										</form>
 									</div>
@@ -477,6 +479,29 @@
 		}
 		function createProduct(id) {
 			$("#createProduct" + id).modal('show');
+		}
+		function attr1F() {
+			$("#attr2").prop("disabled", false);
+			$("#attr1").prop("disabled", true);
+		}
+		function attr2F() {
+			$("#attr3").prop("disabled", false);
+			$("#attr2").prop("disabled", true);
+		}
+		function attr3F() {
+			$("#attr4").prop("disabled", false);
+			$("#attr3").prop("disabled", true);
+		}
+		function attr4F() {
+			$("#attr5").prop("disabled", false);
+			$("#attr4").prop("disabled", true);
+		}
+		function attr5F() {
+			$("#attr6").prop("disabled", false);
+			$("#attr5").prop("disabled", true);
+		}
+		function attr6F() {
+			$("#attr6").prop("disabled", true);
 		}
 	</script>
 

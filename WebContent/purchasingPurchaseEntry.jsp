@@ -48,22 +48,44 @@
 			minDate : new Date(n, 0, 1),
 			maxDate : 0
 		});
+		$("#datepicker").datepicker('setDate', new Date());
 	});
-	$(function() {
+	/* $(function() {
 		var d = new Date();
 		var n = d.getFullYear();
-		$("#datepicker1").datepicker({
+		$("#datepicker2").datepicker({
 			dateFormat : "dd-mm-yy",
 			minDate : new Date(n, 0, 1),
 			maxDate : 0
 		});
-	});
-	/* $(function() {
-		$("#datepicker2").datepicker({
-			dateFormat : "dd-mm-yy",
-			maxDate : 0
-		});
+		$("#datepicker2").datepicker('setDate', new Date());
 	}); */
+	function paymentDate() {
+		if ($("#vendorType").val() == 0) {
+			alert("please select Vendor type");
+		} else if ($("#datepicker").val() == "") {
+			alert("please select Purchase entry date");
+		} else if ($("#vName").val() == "") {
+			alert("please enter Vendor name");
+		} else if ($("#vendorBillNo").val() == "") {
+			alert("please enter Vendor bill no.");
+		} else if ($("#isAgent").val() == 'yes' && $("#agentName").val() == 0) {
+			alert("please select agent name");
+		} else {
+			//$("#datepicker2").val($("#datepicker").val());
+			var d = $("#datepicker").datepicker('getDate');
+			var n = d.getFullYear();
+			var m = d.getMonth();
+			var dt = d.getDate();
+			$("#datepicker2").datepicker({
+				dateFormat : "dd-mm-yy",
+				minDate : new Date(n, m, dt),
+				maxDate : 0
+			});
+			$("#datepicker2").datepicker('setDate', new Date());
+			$("#savePurchase").modal("show");
+		}
+	}
 </script>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -266,8 +288,9 @@
 											<div class="col-md-6">
 												<div class="form-group">
 													<label for="" class="font">Vendor Bill no :</label> <input
-														type="text" placeholder="" id="" class="form-control"
-														name="vendorBillNo" required="required">
+														type="text" placeholder="" id="vendorBillNo"
+														class="form-control" name="vendorBillNo"
+														required="required">
 												</div>
 												<div class="form-group">
 
@@ -307,16 +330,14 @@
 														readonly="readonly" id="agentDet" name="agentDet"></textarea>
 												</div>
 											</div>
-											<div class='toast' style='display: none'>
-												<h3 id="msg">${requestScope['msg']}</h3>
-											</div>
-											<!-- <div class="col-md-12">
-												
-											</div> -->
+
 											<div class="col-md-12" style="left: 10px;">
 												&nbsp;<input type="button" class="btn green pull-right"
 													data-toggle="modal" data-target="#addProduct"
 													value="Add Product" style="width: 100%" onclick="manage();">
+											</div>
+											<div class='toast' style='display: none'>
+												<h3 id="msg">${requestScope['msg']}</h3>
 											</div>
 										</div>
 
@@ -423,8 +444,10 @@
 												</div>
 												<div style="float: right;">
 													<input type="button" class="btn green pull-right"
-														data-toggle="modal" data-target="#savePurchase"
-														value="Save" onclick="paymentDate();">
+														data-toggle="modal" value="Save" onclick="paymentDate();">
+													<input type="button"
+														onclick="window.location='purchasingPurchaseEntry.jsp'"
+														class="btn btn-danger small" value="Cancel">
 												</div>
 											</div>
 											<div id="savePurchase" class="modal fade" role="dialog"
@@ -693,7 +716,7 @@
 								<div class="col-md-3">Rate:</div>
 								<div class="col-md-9">
 									<input type="number" class="form-control" name="rate" id="rate"
-										required="required" onkeyup="rateF();" value="0">
+										required="required" onkeyup="rateF();">
 								</div>
 							</div>
 						</div>
@@ -708,21 +731,21 @@
 								<div class="col-md-2">WSP:</div>
 								<div class="col-md-10">
 									<input type="number" class="form-control" id="wsp"
-										readonly="readonly" name="wsp" onkeyup="wspF();" value="0">
+										readonly="readonly" name="wsp" onkeyup="wspF();">
 								</div>
 								<div class="col-md-2">MRP:</div>
 								<div class="col-md-10">
 									<input type="number" class="form-control" id="mrp"
-										readonly="readonly" name="mrp" onkeyup="mrpF();" value="0">
+										readonly="readonly" name="mrp" onkeyup="mrpF();">
 								</div>
 							</div>
 						</div>
 						<div class="widget-area" style="width: 100%; top: 0px;">
-							<div class="row">
+							<!-- <div class="row">
 								&nbsp; &nbsp; <span>Lot no : &nbsp;</span> <input type="radio"
 									name="lot" value="yesLot" checked="checked">&nbsp; Yes
 								<input type="radio" name="lot" value="noLot">&nbsp; No
-							</div>
+							</div> -->
 
 							<div class="row">
 								<div class="col-md-2">
@@ -794,8 +817,8 @@
 							</div>
 							<br>
 							<div class="row">
-								<button type="button" class="btn btn-default" id="yesP">Yes</button>
-								<button type="button" class="btn btn-default" id="noP">No</button>
+								<button type="button" class="btn btn-success medium" id="yesP">Yes</button>
+								<button type="button" class="btn btn-danger medium" id="noP">No</button>
 							</div>
 						</div>
 					</div>
@@ -926,10 +949,28 @@
 						$("#productCode").val(0);
 					}
 				});
+				$("#wsp").val("");
+				$("#mrp").val("");
+				$("#rate").val("");
+				$("#attr1").val("");
+				$("#attr2").val("");
+				$("#attr3").val("");
+				$("#attr4").val("");
+				$("#attr5").val("");
+				$("#attr6").val("");
+				$("#lotText").val("");
 			} else {
 				alert("please select one product-code");
 				$("#wsp").val("");
 				$("#mrp").val("");
+				$("#rate").val("");
+				$("#attr1").val("");
+				$("#attr2").val("");
+				$("#attr3").val("");
+				$("#attr4").val("");
+				$("#attr5").val("");
+				$("#attr6").val("");
+				$("#lotText").val("");
 				$("#subDept").val("");
 				$("#dept").val("");
 				$("#cat").val("");
@@ -1014,23 +1055,32 @@
 
 		function rateF() {
 			if ($("#isSalable").val() == 'yes') {
-				if ($("#rate").val() > $("#wsp").val()) {
+				if ($("#mrp").val() == "") {
+					alert("Please insert MRP first...");
+					$("#rate").val("");
+				} else if ($("#wsp").val() == "") {
+					alert("Please insert WSP first...");
+					$("#rate").val("");
+				} else if ($("#rate").val() > $("#wsp").val()) {
 					alert("Rate should be less than or equals to WSP.");
-					$("#rate").val(0);
+					$("#rate").val("");
 				} else if ($("#rate").val() > $("#mrp").val()) {
 					alert("Rate should be less than or equals to MRP.");
-					$("#rate").val(0);
+					$("#rate").val("");
 				}
 			}
 		}
 		function wspF() {
 			if ($("#isSalable").val() == 'yes') {
-				if ($("#rate").val() > $("#wsp").val()) {
+				if ($("#mrp").val() == "") {
+					alert("Please insert MRP first...");
+					$("#wsp").val("");
+				} else if ($("#rate").val() > $("#wsp").val()) {
 					alert("Rate should be less than or equals to WSP.");
-					$("#wsp").val(0);
+					$("#wsp").val("");
 				} else if ($("#wsp").val() > $("#mrp").val()) {
 					alert("WSP should be less than or equals to MRP.");
-					$("#wsp").val(0);
+					$("#wsp").val("");
 				}
 			}
 		}
@@ -1038,10 +1088,10 @@
 			if ($("#isSalable").val() == 'yes') {
 				if ($("#rate").val() > $("#mrp").val()) {
 					alert("Rate should be less than or equals to MRP.");
-					$("#mrp").val(0);
+					$("#mrp").val("");
 				} else if ($("#wsp").val() > $("#mrp").val()) {
 					alert("WSP should be less than or equals to MRP.");
-					$("#mrp").val(0);
+					$("#mrp").val("");
 				}
 			}
 		}
@@ -1069,7 +1119,7 @@
 				$("#isBarPrint").val('no');
 			}
 		});
-		$("input:radio[name=lot]").click(function() {
+		/* $("input:radio[name=lot]").click(function() {
 			var value = $(this).val();
 			//alert(value);
 			if (value == "yesLot") {
@@ -1079,7 +1129,7 @@
 				$("#lotText").prop("disabled", true);
 				$("#isLot").val('no');
 			}
-		});
+		}); */
 		$("input:radio[name=serial]").click(function() {
 			var value = $(this).val();
 			//alert(value);
@@ -1126,8 +1176,25 @@
 				alert("please insert quantity");
 			} else if ($("#rate").val() == "") {
 				alert("please insert Rate");
+			} else if ($("#lotText").val() == "") {
+				alert("please insert Lot no.");
+			} else if ($("#isSalable").val() == 'yes' && $("#wsp").val() == "") {
+				alert("please insert WSP");
+			} else if ($("#isSalable").val() == 'yes' && $("#mrp").val() == "") {
+				alert("please insert MRP");
+			} else if (!$('#attr1').attr("readonly") && $("#attr1").val() == "") {
+				alert("Please insert " + $("#attr1Name").html() + " value");
+			} else if (!$('#attr2').attr("readonly") && $("#attr2").val() == "") {
+				alert("Please insert " + $("#attr2Name").html() + " value");
+			} else if (!$('#attr3').attr("readonly") && $("#attr3").val() == "") {
+				alert("Please insert " + $("#attr3Name").html() + " value");
+			} else if (!$('#attr4').attr("readonly") && $("#attr4").val() == "") {
+				alert("Please insert " + $("#attr4Name").html() + " value");
+			} else if (!$('#attr5').attr("readonly") && $("#attr5").val() == "") {
+				alert("Please insert " + $("#attr5Name").html() + " value");
+			} else if (!$('#attr6').attr("readonly") && $("#attr6").val() == "") {
+				alert("Please insert " + $("#attr6Name").html() + " value");
 			} else {
-
 				$("#another").modal("show");
 				//$("#amount").val(Number($("#qty").val()) * Number($("#rate").val()));
 				$("#purProTable").append(
@@ -1483,9 +1550,6 @@
 		}
 		function submit() {
 			document.getElementById("purchaseForm").submit();
-		}
-		function paymentDate() {
-			$("#datepicker2").val($("#datepicker").val());
 		}
 	</script>
 </body>
