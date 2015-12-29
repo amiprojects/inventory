@@ -1376,7 +1376,29 @@ public class Ejb {
 		q.setParameter("name", name);
 		return q.getResultList();           
 	}
-	
-	
+	/******************************Search Job Assignment Details by ChallanID****************/
+/*	public JobAssignmentDetails getJobAssignmentDetailsbyChallanNumber(String challanNumber){
+		TypedQuery<JobAssignmentDetails> q = em
+				.createQuery(
+						"select c from JobAssignmentDetails c where c.challanNumber=:challanNumber ",
+						JobAssignmentDetails.class);
+		return q.getResultList(); 
+	/********************************************/////*************find only use fo4r id**************////////////*****/
+	/*public JobAssignmentDetails getJobAssignmentDetailsbyChallanNumber(String challanNumber) {
+		return em.find(JobAssignmentDetails.class, challanNumber);
+	}*/
+	public JobAssignmentDetails getJobAssignmentDetailsbyChallanNumber(String challanNumber) {
+		TypedQuery<JobAssignmentDetails> q = em
+				.createQuery(
+						"select c from JobAssignmentDetails c where c.challanNumber=:challanNumber",
+						JobAssignmentDetails.class);
+		q.setParameter("challanNumber", challanNumber);
+		if (q.getResultList().size() > 0) {
+			return q.getResultList().get(0);
+		} else {
+			return null;
+		}
+
+	}
 	
 }

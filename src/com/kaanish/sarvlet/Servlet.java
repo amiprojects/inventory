@@ -65,7 +65,7 @@ import com.kaanish.util.DateConverter;
 		"/deleteState", "/deleteCity", "/productSumary", "/addNewConversion", "/purchaseEntry", "/updateConversion",
 		"/addBillSetup", "/updateCompanyInfo", "/updateVendor", "/purchaseSearchByDate", "/uploadProductImage",
 		"/deleteProductImage", "/jobAssignment", "/jobAssignSearchByDate", "/salesEntry", "/createUserGroup",
-		"/updateUserGroup", "/updateUser", "/goStockView" })
+		"/updateUserGroup", "/updateUser", "/goStockView", "/jChallanSearch" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -1258,7 +1258,10 @@ public class Servlet extends HttpServlet {
 					salesProductDetails.setSalesEntry(salesEntry);
 					salesProductDetails.setSalesPrice(Float.parseFloat(mrpQty[l]));
 					salesProductDetails.setQuantity(Integer.parseInt(qtyvalue[l]));
-				/*	salesProductDetails.setProductDetail(ejb.getProductDetailById(Integer.parseInt(productId[l])));*//*URGENT CHANGE*/
+					/*
+					 * salesProductDetails.setProductDetail(ejb.
+					 * getProductDetailById(Integer.parseInt(productId[l])));
+					 *//* URGENT CHANGE */
 					ejb.setSalesProductDetails(salesProductDetails);
 
 					purchaseProductDetails = ejb
@@ -1346,6 +1349,23 @@ public class Servlet extends HttpServlet {
 				msg = "Job assigned succesfully.";
 				break;
 
+			case "jChallanSearch":/// jioooooooooooooooooooooooooooooooooooo
+				page = "jobReceive.jsp";
+				/*
+				 * List<JobAssignmentDetails> amiProduct =
+				 * ejb.getProductDetailsByCodeDescriptionCategory(
+				 * req.getParameter("pCodeSearch").toUpperCase(),
+				 * req.getParameter("pDesSearch").toUpperCase(),
+				 * req.getParameter("pCatSearch").toUpperCase());
+				 * 
+				 * req.setAttribute("ami", amiProduct);usr =
+				 * ejb.getUserById(req.getParameter("userId"));
+				 */
+
+				JobAssignmentDetails j= ejb.getJobAssignmentDetailsbyChallanNumber(req.getParameter("jChallan"));
+				req.setAttribute("amj", j);
+				msg = "Job assigned succesfully.";
+				break;
 			case "jobAssignSearchByDate":
 				page = "jobAssignSearch.jsp";
 				List<JobAssignmentDetails> jobAssignList = ejb.getJobAssignmentByDate(
