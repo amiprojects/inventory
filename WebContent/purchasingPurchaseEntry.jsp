@@ -351,6 +351,7 @@
 													<th>Rate</th>
 													<th>Qty</th>
 													<th>Amount</th>
+													<th>Remove</th>
 												</tr>
 											</thead>
 										</table>
@@ -412,7 +413,7 @@
 												</thead>
 											</table>
 											<div class="widget-area" style="display: none;">
-												<!-- <div class="widget-area" style="overflow-x: scroll;"> -->
+											<!-- <div class="widget-area" style="overflow-x: scroll;"> -->
 												<table id="hiddenTable"
 													class="table table-striped table-bordered">
 													<thead style="background-color: #F0F0F0;">
@@ -1168,6 +1169,11 @@
 			$("#addProduct").modal("hide");
 			$("#header").show();
 		});
+		ind = 0;
+		function removeProduct(a) {
+			$("#trRemove" + a).remove();
+			$("#trRemoveH" + a).remove();
+		}
 		var i = 1;
 		function anotherShow() {
 			if ($("#productCode").val() == 0) {
@@ -1197,14 +1203,26 @@
 			} else {
 				$("#another").modal("show");
 				//$("#amount").val(Number($("#qty").val()) * Number($("#rate").val()));
-				$("#purProTable").append(
-						'<tbody><tr><td>' + i + '</td><td>' + $("#pCode").val()
-								+ '</td><td>' + $("#pDesc").val() + '</td><td>'
-								+ $("#rate").val() + '</td><td>'
-								+ $("#qty").val() + '</td><td>'
-								+ Number($("#qty").val())
-								* Number($("#rate").val())
-								+ '</td></tr></tbody>');
+				$("#purProTable")
+						.append(
+								'<tbody><tr id="trRemove'+ind+'"><td>'
+										+ i
+										+ '</td><td>'
+										+ $("#pCode").val()
+										+ '</td><td>'
+										+ $("#pDesc").val()
+										+ '</td><td>'
+										+ $("#rate").val()
+										+ '</td><td>'
+										+ $("#qty").val()
+										+ '</td><td>'
+										+ Number($("#qty").val())
+										* Number($("#rate").val())
+										+ '</td><td>'
+										+ '<a href="#" onclick="removeProduct('
+										+ ind
+										+ ');"><img src="img/cross.png" height="16px" width="16px"></a>'
+										+ '</td></tr></tbody>');
 				$("#subTotal").val(
 						Number($("#subTotal").val()) + Number($("#qty").val())
 								* Number($("#rate").val()));
@@ -1213,7 +1231,7 @@
 
 				$("#hiddenTable")
 						.append(
-								'<tbody><tr>'
+								'<tbody><tr id="trRemoveH'+ind+'">'
 										+ '<td><input type="text" name="pCodeIdH" value=\''
 										+ $("#productCode").val()
 										+ '\'></td>'
@@ -1257,6 +1275,7 @@
 										+ $("#serialText").val()
 										+ '\'></td>'
 										+ '</tr></tbody>');
+				ind++;
 				$("#taxAmount").val(
 						Number($("#subTotal").val())
 								* Number($("#taxTot").val()) / Number(100));
