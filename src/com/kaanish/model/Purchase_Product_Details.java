@@ -39,14 +39,6 @@ public class Purchase_Product_Details implements Serializable {
 	@OneToMany(mappedBy = "purchase_Product_Details")
 	private List<JobAssignmentProducts> jobAssignmentProducts;
 
-	public List<JobAssignmentProducts> getJobAssignmentProducts() {
-		return jobAssignmentProducts;
-	}
-
-	public void setJobAssignmentProducts(List<JobAssignmentProducts> jobAssignmentProducts) {
-		this.jobAssignmentProducts = jobAssignmentProducts;
-	}
-
 	@OneToMany(mappedBy = "purchase_Product_Details", cascade = CascadeType.ALL)
 	private List<SerialNumber> serialNumbers;
 
@@ -61,6 +53,9 @@ public class Purchase_Product_Details implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "jobRecievedDetailsId")
 	private JobRecievedDetails recievedDetails;
+	
+	@OneToMany(mappedBy="purchase_Product_Details",cascade=CascadeType.PERSIST)
+	private List<SalesProductDetails> salesProductDetails;
 
 	public int getId() {
 		return id;
@@ -189,6 +184,15 @@ public class Purchase_Product_Details implements Serializable {
 	public void setPurchase_Entry(Purchase_Entry purchase_Entry) {
 		this.purchase_Entry = purchase_Entry;
 	}
+	
+	
+	public List<JobAssignmentProducts> getJobAssignmentProducts() {
+		return jobAssignmentProducts;
+	}
+
+	public void setJobAssignmentProducts(List<JobAssignmentProducts> jobAssignmentProducts) {
+		this.jobAssignmentProducts = jobAssignmentProducts;
+	}
 
 	@Override
 	public String toString() {
@@ -242,6 +246,14 @@ public class Purchase_Product_Details implements Serializable {
 
 	public void setLotNumber(String lotNumber) {
 		this.lotNumber = lotNumber;
+	}
+
+	public List<SalesProductDetails> getSalesProductDetails() {
+		return salesProductDetails;
+	}
+
+	public void setSalesProductDetails(List<SalesProductDetails> salesProductDetails) {
+		this.salesProductDetails = salesProductDetails;
 	}
 
 }

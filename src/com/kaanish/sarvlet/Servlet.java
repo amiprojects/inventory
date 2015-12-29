@@ -389,33 +389,39 @@ public class Servlet extends HttpServlet {
 				page = "setupCompanyInfo.jsp";
 				companyInfo = ejb.getCompanyInfoById(Integer.parseInt(req.getParameter("companyId")));
 
-				companyInfo.setCompname(req.getParameter("name"));
-				companyInfo.setEmail(req.getParameter("email"));
-				companyInfo.setMobile(req.getParameter("mono"));
-				companyInfo.setPhone(req.getParameter("phno"));
-				companyInfo.setAddr(req.getParameter("adress"));
-				companyInfo.setCity(req.getParameter("city"));
-				companyInfo.setCountry1(req.getParameter("country1"));
-				companyInfo.setState(req.getParameter("state"));
-				companyInfo.setVatno(req.getParameter("vatno"));
-				companyInfo.setCstno(req.getParameter("cstno"));
-				companyInfo.setTinno(req.getParameter("tinno"));
-				companyInfo.setServicetaxno(req.getParameter("servicet"));
-				companyInfo.setVatdate(req.getParameter("vatdate"));
-				companyInfo.setCstdate(req.getParameter("cstDate"));
-				companyInfo.setTindate(req.getParameter("tinDate"));
-				companyInfo.setServtaxdate(req.getParameter("serviceDate"));
+				if (companyInfo.getChangeCount() < 3) {
+					companyInfo.setCompname(req.getParameter("name"));
+					companyInfo.setEmail(req.getParameter("email"));
+					companyInfo.setMobile(req.getParameter("mono"));
+					companyInfo.setPhone(req.getParameter("phno"));
+					companyInfo.setAddr(req.getParameter("adress"));
+					companyInfo.setCity(req.getParameter("city"));
+					companyInfo.setCountry1(req.getParameter("country1"));
+					companyInfo.setState(req.getParameter("state"));
+					companyInfo.setVatno(req.getParameter("vatno"));
+					companyInfo.setCstno(req.getParameter("cstno"));
+					companyInfo.setTinno(req.getParameter("tinno"));
+					companyInfo.setServicetaxno(req.getParameter("servicet"));
+					companyInfo.setVatdate(req.getParameter("vatdate"));
+					companyInfo.setCstdate(req.getParameter("cstDate"));
+					companyInfo.setTindate(req.getParameter("tinDate"));
+					companyInfo.setServtaxdate(req.getParameter("serviceDate"));
+					companyInfo.setChangeCount(companyInfo.getChangeCount() + 1);
 
-				Part p = req.getPart("proImg");
-				InputStream is = p.getInputStream();
-				byte[] content = new byte[is.available()];
-				is.read(content);
-				if (!(content.length == 0)) {
-					companyInfo.setImage(content);
+					Part p = req.getPart("proImg");
+					InputStream is = p.getInputStream();
+					byte[] content = new byte[is.available()];
+					is.read(content);
+					if (!(content.length == 0)) {
+						companyInfo.setImage(content);
+					}
+
+					ejb.updateCompanyInfo(companyInfo);
+					msg = "Company info updated successfully.";
+				}else{
+					msg = "You have already change companyinfo maximum limit.";
 				}
 
-				ejb.updateCompanyInfo(companyInfo);
-				msg = "Company info updated successfully.";
 				break;
 			case "createProduct":
 				page = "setupDepartment.jsp";
@@ -1109,6 +1115,7 @@ public class Servlet extends HttpServlet {
 					String qty[] = req.getParameterValues("qtyH");
 					String cost[] = req.getParameterValues("rateH");
 					String productId[] = req.getParameterValues("pCodeIdH");
+					String lot[] = req.getParameterValues("lotH");
 
 					for (int l = 0; l < qty.length; l++) {
 						purchaseProductDetails = new Purchase_Product_Details();
@@ -1132,48 +1139,44 @@ public class Servlet extends HttpServlet {
 						purchaseProductDetails.setRemaining_quantity(Integer.parseInt(qty[l]));
 						purchaseProductDetails.setCost(Integer.parseInt(cost[l]));
 						purchaseProductDetails.setPurchase_Entry(purchaseEntry);
-						purchaseProductDetails.setLotNumber(req.getParameter("lotH"));
+						purchaseProductDetails.setLotNumber(lot[l]);
 						ejb.setPurchaseProductDetails(purchaseProductDetails);
-						int lq = Integer.parseInt(qty[l]);
-						if (req.getParameter("isSerial").equals("yes")) {
-							int InitialSlNo = Integer.parseInt(req.getParameter("serialH"));
-							for (int ln = 0; ln < lq; ln++) {
-								serialNumber = new SerialNumber();
-								serialNumber.setSerialNumber(String.valueOf(InitialSlNo));
-								InitialSlNo++;
-								if (req.getParameter("isLot").equals("yes")) {
-									serialNumber.setLotNo(req.getParameter("lotH"));
-								} else {
-									serialNumber.setLotNo("0");
-								}
-								// serialNumber.setBarcode();
-								serialNumber.setPurchase_Product_Details(purchaseProductDetails);
-								ejb.setSerialNumber(serialNumber);
-								serialNumber = null;
-							}
-						} else {
-							if (req.getParameter("isLot").equals("yes")) {
-								for (int ln = 0; ln < lq; ln++) {
-									serialNumber = new SerialNumber();
-									serialNumber.setLotNo(req.getParameter("lotH"));
-									serialNumber.setSerialNumber("0");
-									serialNumber.setPurchase_Product_Details(purchaseProductDetails);
-									ejb.setSerialNumber(serialNumber);
-
-									serialNumber = null;
-								}
-							} else {
-								for (int ln = 0; ln < lq; ln++) {
-									serialNumber = new SerialNumber();
-									serialNumber.setLotNo("0");
-									serialNumber.setSerialNumber("0");
-									serialNumber.setPurchase_Product_Details(purchaseProductDetails);
-									ejb.setSerialNumber(serialNumber);
-
-									serialNumber = null;
-								}
-							}
-						}
+						/*
+						 * int lq = Integer.parseInt(qty[l]); if
+						 * (req.getParameter("isSerial").equals("yes")) { int
+						 * InitialSlNo =
+						 * Integer.parseInt(req.getParameter("serialH")); for
+						 * (int ln = 0; ln < lq; ln++) { serialNumber = new
+						 * SerialNumber();
+						 * serialNumber.setSerialNumber(String.valueOf(
+						 * InitialSlNo)); InitialSlNo++; if
+						 * (req.getParameter("isLot").equals("yes")) {
+						 * serialNumber.setLotNo(req.getParameter("lotH")); }
+						 * else { serialNumber.setLotNo("0"); } //
+						 * serialNumber.setBarcode();
+						 * serialNumber.setPurchase_Product_Details(
+						 * purchaseProductDetails);
+						 * ejb.setSerialNumber(serialNumber); serialNumber =
+						 * null; } } else { if
+						 * (req.getParameter("isLot").equals("yes")) { for (int
+						 * ln = 0; ln < lq; ln++) { serialNumber = new
+						 * SerialNumber();
+						 * serialNumber.setLotNo(req.getParameter("lotH"));
+						 * serialNumber.setSerialNumber("0");
+						 * serialNumber.setPurchase_Product_Details(
+						 * purchaseProductDetails);
+						 * ejb.setSerialNumber(serialNumber);
+						 * 
+						 * serialNumber = null; } } else { for (int ln = 0; ln <
+						 * lq; ln++) { serialNumber = new SerialNumber();
+						 * serialNumber.setLotNo("0");
+						 * serialNumber.setSerialNumber("0");
+						 * serialNumber.setPurchase_Product_Details(
+						 * purchaseProductDetails);
+						 * ejb.setSerialNumber(serialNumber);
+						 * 
+						 * serialNumber = null; } } }
+						 */
 						if (req.getParameter("isSalable").equals("yes")) {
 							readyGoodsStock = ejb
 									.getReadyGoodsStoctByProductId(purchaseProductDetails.getProductDetail().getId());
@@ -1258,7 +1261,7 @@ public class Servlet extends HttpServlet {
 					salesProductDetails.setSalesEntry(salesEntry);
 					salesProductDetails.setSalesPrice(Float.parseFloat(mrpQty[l]));
 					salesProductDetails.setQuantity(Integer.parseInt(qtyvalue[l]));
-					salesProductDetails.setProductDetail(ejb.getProductDetailById(Integer.parseInt(productId[l])));
+				/*	salesProductDetails.setProductDetail(ejb.getProductDetailById(Integer.parseInt(productId[l])));*//*URGENT CHANGE*/
 					ejb.setSalesProductDetails(salesProductDetails);
 
 					purchaseProductDetails = ejb
@@ -1508,7 +1511,7 @@ public class Servlet extends HttpServlet {
 			case "uploadProductImage":
 				page = "addNewProductImage.jsp";
 				Part p1 = req.getPart("proImg");
-				is = p1.getInputStream();
+				InputStream is = p1.getInputStream();
 				byte cont1[] = new byte[is.available()];
 				is.read(cont1);
 				productDetail = ejb.getProductDetailById(Integer.parseInt(req.getParameter("id")));

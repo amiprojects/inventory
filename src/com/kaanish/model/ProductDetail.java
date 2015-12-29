@@ -36,8 +36,7 @@ public class ProductDetail implements Serializable {
 	private Category category;
 	@OneToMany(mappedBy = "productDetail")
 	private List<Purchase_Product_Details> purchase_Product_Details;
-	@OneToMany(mappedBy = "productDetail")
-	private List<SalesProductDetails> salesProductDetails;
+
 	@OneToOne
 	private ReadyGoodsStock readyGoodsStock;
 	@OneToOne
