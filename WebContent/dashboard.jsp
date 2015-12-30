@@ -54,7 +54,7 @@
 		</c:if>
 	</c:if>
 	
-	<h1>${sessionScope['user']}</h1>
+	<%-- <h1>${sessionScope['user']}</h1> --%>
 	
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
