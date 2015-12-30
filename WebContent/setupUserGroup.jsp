@@ -69,8 +69,7 @@
 					<div class="row">
 						<div class="masonary-grids">
 							 <div class="breadcrumbs" style="height: 50px; text-align: center;">
-									<h3 style="    margin-top: 11px;">User Group</h3>
-												
+									<h3 style="    margin-top: 11px;">User Group</h3>		
 											
 								</div>
 

@@ -315,40 +315,12 @@
 											</p>
 											<!-- Listing directory ZendX from ZendFramework library -->
 											<ul id="tree">
-												<li onclick="addDept();">create Department</li>
 												<c:forEach
 													items="${sessionScope['ejb'].getAllDepartments()}"
 													var="dept">
 													<li>${dept.name}<a href="deleteDept?id=${dept.id}"><span
 															style="color: red;">X</span></a>
-														<ul>
-															<li onclick="createSubDept('${dept.id}');">Create
-																Sub-Department
-
-																<div id="createSubDept${dept.id}" class="modal fade"
-																	role="dialog" style="top: 25px;">
-																	<div class="modal-dialog">
-																		<div class="modal-content">
-																			<div class="modal-header">
-																				<button type="button" class="close"
-																					data-dismiss="modal">&times;</button>
-																				<h4 class="modal-title">Tax list</h4>
-																			</div>
-																			<div class="modal-body">
-																				<form action="createSubDept">
-																					<input type="hidden" name="deptId"
-																						value="${dept.id}"> <input type="text"
-																						name="name"> <input type="submit"
-																						value="add">
-																				</form>
-																			</div>
-																			<div class="modal-footer"></div>
-																		</div>
-
-																	</div>
-																</div>
-
-															</li>
+														<ul>															
 															<c:forEach
 																items="${sessionScope['ejb'].getAllSubDepartmentsByDepartmentId(dept.id)}"
 																var="subDept">
@@ -356,46 +328,7 @@
 																	href="deleteSubDept?id=${subDept.id}"><span
 																		style="color: red;">X</span></a>
 																	<ul>
-																		<li onclick="createCategory('${subDept.id}');">Create
-																			Category
-
-																			<div id="createCategory${subDept.id}"
-																				class="modal fade" role="dialog" style="top: 25px;">
-																				<div class="modal-dialog">
-																					<div class="modal-content">
-																						<div class="modal-header">
-																							<button type="button" class="close"
-																								data-dismiss="modal">&times;</button>
-																							<h4 class="modal-title">Create Category</h4>
-																						</div>
-																						<div class="modal-body">
-																							<form action="createCategory" method="post">
-																								<input type="hidden" name="subDeptId"
-																									value="${subDept.id}"> <label
-																									for="name">Category name</label> <input
-																									type="text" name="name"> <label
-																									for="attr1">Attribute name1</label> <input
-																									type="text" name="attr1"> <label
-																									for="attr2">Attribute name2</label> <input
-																									type="text" name="attr2"> <label
-																									for="attr3">Attribute name3</label> <input
-																									type="text" name="attr3"> <label
-																									for="attr4">Attribute name4</label> <input
-																									type="text" name="attr4"> <label
-																									for="attr5">Attribute name5</label> <input
-																									type="text" name="attr5"> <label
-																									for="attr6">Attribute name6</label> <input
-																									type="text" name="attr6"> <input
-																									type="submit" value="add">
-																							</form>
-																						</div>
-																						<div class="modal-footer"></div>
-																					</div>
-
-																				</div>
-																			</div>
-
-																		</li>
+																		
 																		<c:forEach var="cat"
 																			items="${sessionScope['ejb'].getAllCategoryBySubDepartmentId(subDept.id)}">
 																			<li>${cat.name}<a

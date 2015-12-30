@@ -12,8 +12,8 @@
 				<span>You have 4 New Messages</span>
 				<ul>
 					<li><a href="#" title=""><span><img
-								src="images/resource/sender1.jpg" alt="" /></span><i>${sessionScope['user']}</i>Hi!
-							How are you?...
+								src="images/resource/sender1.jpg" alt="" /></span><i>Labrina
+								Scholer</i>Hi! How are you?...
 							<h6>2 min ago..</h6>
 							<p class="status blue">New</p></a></li>
 					<li><a href="#" title=""><span><img
@@ -89,8 +89,8 @@
 	</div>
 	<!-- <a title="" class="slide-panel-btn"><i class="fa fa-gear fa-spin"></i></a> -->
 	<div class="dropdown profile">
-		<a title=""> <img src="images/resource/me.jpg" alt="" />${sessionScope['ejb'].getUserById(sessionScope['user']).name}<i
-			class="caret"></i>
+		<a title=""> <img src="images/resource/me.jpg" alt="" />Labrina
+			Scholer<i class="caret"></i>
 		</a>
 		<div class="profile drop-list">
 			<ul>

@@ -67,7 +67,8 @@ import com.kaanish.util.DateConverter;
 		"/deleteState", "/deleteCity", "/productSumary", "/addNewConversion", "/purchaseEntry", "/updateConversion",
 		"/addBillSetup", "/updateCompanyInfo", "/updateVendor", "/purchaseSearchByDate", "/uploadProductImage",
 		"/deleteProductImage", "/jobAssignment", "/jobAssignSearchByDate", "/salesEntry", "/createUserGroup",
-		"/updateUserGroup", "/updateUser", "/goStockView", "/jChallanSearch","/jobRecieve" })
+		"/updateUserGroup", "/updateUser", "/goStockView", "/jChallanSearch","/jobRecieve","/createNewUser" })
+
 
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
@@ -351,6 +352,7 @@ public class Servlet extends HttpServlet {
 			users = new Users();
 			users.setUserId("admin");
 			users.setPassword("admin");
+			users.setName("admin");
 			users.setPh("0");
 			ejb.setUser(users);
 		}

@@ -74,3 +74,5 @@ includeSidebar.html //tabs
 // http://localhost:8088/kaanish_kouture/getProductDetailById?id=1
 
 Math.round((num) * 100) / 100
+
+<h1>${sessionScope['user']}</h1>

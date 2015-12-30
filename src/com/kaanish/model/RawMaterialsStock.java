@@ -18,7 +18,8 @@ public class RawMaterialsStock implements Serializable{
 	private int id;
 	private int remainingQty;
 	
-	@OneToOne@JoinColumn(name="productId")
+	@OneToOne
+	@JoinColumn(name="productId")
 	private ProductDetail productDetail;
 	public int getId() {
 		return id;
