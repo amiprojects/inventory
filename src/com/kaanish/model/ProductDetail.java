@@ -37,9 +37,9 @@ public class ProductDetail implements Serializable {
 	@OneToMany(mappedBy = "productDetail")
 	private List<Purchase_Product_Details> purchase_Product_Details;
 
-	@OneToOne
+	@OneToOne(cascade=CascadeType.ALL,mappedBy="productDetail")
 	private ReadyGoodsStock readyGoodsStock;
-	@OneToOne
+	@OneToOne(cascade=CascadeType.ALL,mappedBy="productDetail")
 	private RawMaterialsStock rawMaterialsStock;
 
 	@ManyToOne

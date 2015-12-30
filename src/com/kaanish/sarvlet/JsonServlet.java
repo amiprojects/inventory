@@ -35,7 +35,7 @@ import com.kaanish.util.DepartmentCotractor;
 		"/getCityByStateByCityName", "/getVendorTypeById",
 		"/getProductbyProductCode",
 		"/getSaleblePurchaseProductDetailsByProductCodeAndQuantity",
-		"/getVendorsByVendorTypeJobberAndName" })
+		"/getVendorsByVendorTypeJobberAndName", "/getProductsForSaleByCode" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -268,6 +268,9 @@ public class JsonServlet extends HttpServlet {
 			case "getAllQtyUnitByNameOrAbv":
 				resp.getWriter().print(
 						ejb.getAllQtyUnitByNameOrAbv(req.getParameter("name")));
+				break;
+			case "getProductsForSaleByCode":
+				resp.getWriter().print(ejb.getSalebleProductsByQtyAndCode(req.getParameter("codeParts")));
 				break;
 			default:
 				break;

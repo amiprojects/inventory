@@ -200,7 +200,8 @@
 
 								</div>
 								<div class="widget-area">
-									<b>Product :</b><input type="text" id=""> <%-- <select name="prodCode" id="prodCode"
+									<b>Product :</b><input type="text" id="codevalue">
+									<%-- <select name="prodCode" id="prodCode"
 										onchange="getProdDetByPurchaseProdDetId();"
 										required="required">
 										<option value="0">Select Product code</option>
@@ -245,9 +246,8 @@
 											<!-- <tbody> -->
 											<tr>
 												<td>0</td>
-												<td><input type="text" id="codevalue"
-													readonly="readonly"><input type="text"
-													id="productId" readonly="readonly"></td>
+												<td><input type="text" id="" readonly="readonly"><input
+													type="text" id="productId" readonly="readonly"></td>
 												<td><input type="text" id="descvalue"
 													readonly="readonly"></td>
 												<td><input type="text" id="qtyvalue"
