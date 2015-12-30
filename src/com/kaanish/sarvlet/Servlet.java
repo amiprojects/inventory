@@ -27,6 +27,7 @@ import com.kaanish.model.CustomerEntry;
 import com.kaanish.model.Department;
 import com.kaanish.model.JobAssignmentDetails;
 import com.kaanish.model.JobAssignmentProducts;
+import com.kaanish.model.JobRecievedDetails;
 import com.kaanish.model.JobStock;
 import com.kaanish.model.Module;
 import com.kaanish.model.PageList;
@@ -66,7 +67,7 @@ import com.kaanish.util.DateConverter;
 		"/deleteState", "/deleteCity", "/productSumary", "/addNewConversion", "/purchaseEntry", "/updateConversion",
 		"/addBillSetup", "/updateCompanyInfo", "/updateVendor", "/purchaseSearchByDate", "/uploadProductImage",
 		"/deleteProductImage", "/jobAssignment", "/jobAssignSearchByDate", "/salesEntry", "/createUserGroup",
-		"/updateUserGroup", "/updateUser", "/goStockView", "/jChallanSearch" })
+		"/updateUserGroup", "/updateUser", "/goStockView", "/jChallanSearch","/jobRecieve" })
 
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
@@ -109,6 +110,7 @@ public class Servlet extends HttpServlet {
 	private PaymentDetails paymentDetails;
 	private JobAssignmentDetails jobAssignmentDetails;
 	private JobAssignmentProducts jobAssignmentProducts;
+	private JobRecievedDetails jobRecievedDetails;
 	private JobStock jobStock;
 	private CustomerEntry customerEntry;
 	private SalesEntry salesEntry;
@@ -1478,6 +1480,7 @@ public class Servlet extends HttpServlet {
 							.getPurchaseProductDetailsById(Integer
 									.parseInt(pProdDetIdH[l])));
 					jobAssignmentProducts.setQty(Integer.parseInt(qtyH[l]));
+					jobAssignmentProducts.setRemaninQty(Integer.parseInt(qtyH[l]));
 					jobAssignmentProducts.setWorkDescription(workH[l]);
 					jobAssignmentProducts
 							.setJobAssignmentDetails(jobAssignmentDetails);
@@ -1721,6 +1724,9 @@ public class Servlet extends HttpServlet {
 				msg = "";
 
 				break;
+				
+				/**************************************************************/
+				
 
 			/**************************************************************/
 
@@ -1816,6 +1822,22 @@ public class Servlet extends HttpServlet {
 						.getParameter("ugid"))));
 				ejb.updateUser(usr);
 				msg = "User updated Successfully";
+				break;
+			case "jobRecieve":
+				page="jobReceive.jsp";				
+				jobAssignmentDetails=ejb.getJobAssignmentDetailsByID(Integer.parseInt(req.getParameter("jobAssignID")));
+				dt=new Date();
+				
+				for(JobAssignmentProducts jp:jobAssignmentDetails.getJobAssignmentProducts()){
+					jobRecievedDetails=new JobRecievedDetails();
+					jp.setRemaninQty(jp.getRemaninQty()-Integer.parseInt(req.getParameter("qtyRe"+jp.getId())));
+					ejb.updateJobAssignmentProductDetails(jp);
+					jobRecievedDetails.setJobAssignmentProducts(jp);
+					jobRecievedDetails.setQtyRecieved(Integer.parseInt(req.getParameter("qtyRe"+jp.getId())));
+					jobRecievedDetails.setRecievingDate(dt);
+					
+				}
+				
 				break;
 
 			default:

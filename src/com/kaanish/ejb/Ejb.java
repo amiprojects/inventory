@@ -609,6 +609,10 @@ public class Ejb {
 	public void setJobAssignment(JobAssignmentDetails jobAssignmentDetails) {
 		em.persist(jobAssignmentDetails);
 	}
+	
+	public JobAssignmentDetails getJobAssignmentDetailsByID(int id){
+		return em.find(JobAssignmentDetails.class, id);
+	}
 
 	public List<Vendor> getVendorsByVendorTypeJobber(String jobber) {
 		TypedQuery<Vendor> q = em.createQuery("select c from Vendor c where c.vendorType.type=:jobber", Vendor.class);
@@ -676,6 +680,13 @@ public class Ejb {
 	public void setJobAssignmentProducts(JobAssignmentProducts jobAssignmentProducts) {
 		em.persist(jobAssignmentProducts);
 	}
+	
+	public void updateJobAssignmentProductDetails(JobAssignmentProducts jobAssignmentProducts ){
+		em.merge(jobAssignmentProducts);
+
+		
+	}
+	
 
 	public List<JobAssignmentProducts> getJobAssignmentProductDetailsByproductId(int id) {
 		TypedQuery<JobAssignmentProducts> q = em.createQuery(

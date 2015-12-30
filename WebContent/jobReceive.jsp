@@ -59,12 +59,13 @@
 				<div class="container">
 					<div class="row">
 						<div class="masonary-grids">
- <div class="breadcrumbs" style="height: 50px; text-align: center;">
-									<h3 style="    margin-top: 11px;">Job Receive</h3>
-											
-								</div>
+							<div class="breadcrumbs"
+								style="height: 50px; text-align: center;">
+								<h3 style="margin-top: 11px;">Job Receive</h3>
 
-							
+							</div>
+
+
 						</div>
 						<div class="col-md-12">
 							<div class="widget-area">
@@ -96,17 +97,21 @@
 												<table>
 													<tr>
 														<c:set value="${requestScope['amj']}" var="jjjjj" />
-														<td><h4>Jobber Name:</h4></td>
-														<td>&nbsp;</td>
-														<td>${jjjjj.vendor.name}</td>
+														<td><p style="font-size: 17px; color: black;">
+																<b>Jobber Name:</b>
+															</p></td>
+
+														<td><b>${jjjjj.vendor.name}</b></td>
 
 													</tr>
 													<tr>
-														<td><h4>Jobber Details:</h4></td>
 														<td>&nbsp;</td>
-														<td>Email: ${jjjjj.vendor.email}<br>Address:${jjjjj.vendor.address}
-														</td>
-
+													</tr>
+													<tr>
+														<td><p style="font-size: 17px; color: black;">
+																<b>Jobber Details:</b>
+															</p> <br> Email: ${jjjjj.vendor.email}<br>
+															Address:${jjjjj.vendor.address}
 													</tr>
 												</table>
 
@@ -117,16 +122,23 @@
 
 												<table>
 													<tr>
-														<td><h4>Job Challan ID:</h4></td>
+														<td><p style="font-size: 17px; color: black;">
+																<b>Job Challan ID:</b>
+															</p></td>
 														<td>&nbsp;</td>
-														<td>${jjjjj.id}</td>
+														<td><b>${jjjjj.id}</b></td>
 
 													</tr>
 													<tr>
-														<td><h4>Assigned Date:</h4></td>
 														<td>&nbsp;</td>
-														<td><fmt:formatDate value="${jjjjj.assignDate}"
-																pattern="dd-MM-yyyy" /></td>
+													</tr>
+													<tr>
+														<td><p style="font-size: 17px; color: black;">
+																<b>Assigned Date:</b>
+															</p></td>
+														<td>&nbsp;</td>
+														<td><b><fmt:formatDate
+																	value="${jjjjj.assignDate}" pattern="dd-MM-yyyy" /></b></td>
 
 													</tr>
 												</table>
@@ -140,65 +152,78 @@
 
 											<hr width="100%">
 											<br> <br>
-
-											<table cellspacing="0" cellpadding="0" border="0" width="975">
-												<tr>
-													<td>
-														<table cellspacing="0" cellpadding="1" border="1"
-															width="900">
-															<tr style="color: black; background-color: #f4f4f0">
-																<th style="text-align: center" width="5%">#</th>
-
-																<th width="15%" style="text-align: center">Product
-																	Code</th>
-																<th width="15%" style="text-align: center">Product
-																	Description</th>
-																<th width="10%" style="text-align: center">UOM</th>
-																<th width="10%" style="text-align: center">Quantity</th>
-																<th width="15%" style="text-align: center">Work</th>
-																<th width="10%" style="text-align: center">Remaining
-																	Quantity</th>
-																<th width="20%" style="text-align: center">Quantity
-																	Receive</th>
-															</tr>
-														</table>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<div style="width: 960px; height: 360px; overflow: auto;">
+											<form action="jobRecieve" method="post">
+											<input type="hidden" value="${requestScope['amj'].id}" name="jobAssignID">
+												<table cellspacing="0" cellpadding="0" border="0"
+													width="975">
+													<tr>
+														<td>
 															<table cellspacing="0" cellpadding="1" border="1"
 																width="900">
+																<tr style="color: black; background-color: #f4f4f0">
+																	<th style="text-align: center" width="5%">#</th>
 
-																<c:set var="count" value="${1}" />
-
-																<c:forEach items="${jjjjj.jobAssignmentProducts}"
-																	var="jobPro">
-																	<tr>
-
-
-																		<td style="text-align: center" width="5%">${count}</td>
-
-																		<td width="15%" style="text-align: center">${jobPro.purchase_Product_Details.productDetail.code}</td>
-																		<td width="15%" style="text-align: center">545</td>
-																		<td width="10%" style="text-align: center">45454</td>
-																		<td width="10%" style="text-align: center">gdfg</td>
-																		<td width="15%" style="text-align: center">Work</td>
-																		<td width="10%" style="text-align: center">4545</td>
-																		<td width="20%"
-																			style="text-align: center; padding: 4px"><input
-																			type="text" value="0" class="form-control"
-																			name="qtyRe" id="qtyRe"></td>
-
-																	</tr>
-																</c:forEach>
-																<c:set var="count" value="${count+1}" />
+																	<th width="15%" style="text-align: center">Product
+																		Code</th>
+																	<th width="15%" style="text-align: center">Product
+																		Description</th>
+																	<th width="10%" style="text-align: center">Quantity</th>
+																	<th width="10%" style="text-align: center">UOM</th>
+																	<th width="15%" style="text-align: center">Work</th>
+																	<th width="10%" style="text-align: center">Remaining
+																		Quantity</th>
+																	<th width="20%" style="text-align: center">Quantity
+																		Receive</th>
+																</tr>
 															</table>
-														</div>
-													</td>
-												</tr>
-											</table>
-											<button class="btn green pull-right" style="float: right">Save</button>
+														</td>
+													</tr>
+													<tr>
+														<td>
+															<div style="width: 960px; height: 360px; overflow: auto;">
+																<table cellspacing="0" cellpadding="1" border="1"
+																	width="900">
+
+																	<c:set var="count" value="${1}" />
+
+																	<c:forEach items="${jjjjj.jobAssignmentProducts}"
+																		var="jobPro">
+																		<tr>
+
+
+																			<td style="text-align: center" width="5%">${count}</td>
+
+																			<td width="15%" style="text-align: center">${jobPro.purchase_Product_Details.productDetail.code}</td>
+																			<td width="15%" style="text-align: center">${jobPro.purchase_Product_Details.productDetail.description}</td>
+																			<td width="10%" style="text-align: center"><span
+																				id="qtty${jobPro.id}">${jobPro.qty}</span></td>
+																			<td width="10%" style="text-align: center">${jobPro.purchase_Product_Details.productDetail.qtyUnit.name}</td>
+																			<td width="15%" style="text-align: center">${jobPro.workDescription}</td>
+																			<td width="10%"
+																				style="text-align: center; padding: 2px"><span
+																				id="remainQtyRe${jobPro.id}">${jobPro.qty}</span></td>
+
+																			<td width="20%"
+																				style="text-align: center; padding: 4px"><input
+																				type="number" class="form-control" value="0"
+																				name="qtyRe${jobPro.id}" id="qtyRe${jobPro.id}"
+																				onkeyup="qtySubtraction('${jobPro.id}');" onchange="return0('${jobPro.id}');"></td>
+
+																		</tr>
+																	</c:forEach>
+																	<c:set var="count" value="${count+1}" />
+																</table>
+
+															</div>
+														</td>
+													</tr>
+												</table>
+												<input type="hidden" name="remaining_qty" id="remaining_qty"
+													required> <input type="hidden" name="receive_qty"
+													id="remaining_qty" required> <input
+													class="btn green pull-right" type="submit"
+													style="float: right" value="Save">
+											</form>
 										</div>
 									</div>
 								</c:if>
@@ -218,14 +243,32 @@
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script type="text/javascript" src="js/enscroll.js"></script>
 <script type="text/javascript" src="js/grid-filter.js"></script>
+<script src="js/jquery-ui/jquery-ui.js"></script>
 <script type="text/javascript">
+	function qtySubtraction(g) {
+
+		if (Number($("#qtyRe" + g).val()) > Number($("#remainQtyRe" + g).html())) {
+			alert("bad");
+			$("#qtyRe" + g).val("0");
+		}
+	}
+	function return0(g){
+		if($("#qtyRe" + g).val()==""){
+			$("#qtyRe" + g).val("0");
+		}
+				
+	}
+
 	$(document).ready(function() {
 		$("#jobs").attr("id", "activeSubMenu");
 		$("#jR").attr("style", "color: red;");
 		/* $("#jrecive").hide(); */
+
+		$("#qtyRe").val()
+
 	});
 </script>
-<script src="js/jquery-ui/jquery-ui.js"></script>
+
 <script>
 	$(function() {
 		$("#datepicker").datepicker({
