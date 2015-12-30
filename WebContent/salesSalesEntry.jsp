@@ -100,6 +100,10 @@
 				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
 				<div class="row">
 					<div class="masonary-grids">
+ <div class="breadcrumbs" style="height: 50px; text-align: center;">
+									<h3 style="    margin-top: 11px;">Sales Entry</h3>
+									
+								</div>
 
 						<div class="col-md-12" style="height: 800px;">
 							<form class="sec" action="salesEntry" method="post">

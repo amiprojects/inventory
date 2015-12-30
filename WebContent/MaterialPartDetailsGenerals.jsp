@@ -63,7 +63,7 @@
 		$("#step6").hide();
 		$("#step7").hide();
 	});
-	function nextF(){
+	function nextF() {
 
 		if (i < 8) {
 			$("#step" + (i - 1)).hide();
@@ -113,7 +113,7 @@
 
 		}
 	}
-	
+
 	/* $("#next")
 			.click(
 					function() {
@@ -167,7 +167,6 @@
 
 					}); */
 
-	
 	/* $("#prev")
 			.click(
 					function() { 
@@ -296,16 +295,14 @@
 				<div class="container">
 					<div class="row">
 						<div class="masonary-grids">
-							<div class="col-md-12">
-								<div class="breadcrumbs" style="height: 39px">
-									<ul>
-										<li><p
-												style="right: -422px; font-size: 20px; position: absolute;">
-												<b>Product/Material</b>
-											</p></li>
-									</ul>
-								</div>
 
+							 <div class="breadcrumbs" style="height: 50px; text-align: center;">
+									<h3 style="    margin-top: 11px;">Product/Material</h3>
+												
+											
+								</div>
+							
+							<div class="col-md-12">
 								<div class="widget-area" style="width: 40%; height: 536px;">
 									<!-- .........*****************************............ PRODUCT SEARCH PANAEL............***************************************-->
 									<form action="MaterialPartDetailsGenerals.jsp" method="get">
@@ -349,7 +346,7 @@
 										</tr>
 									</table>
 									<div
-										style="overflow-y: scroll; overflow-x: scroll; height: 281px;  border: 1px;">
+										style="overflow-y: scroll; overflow-x: scroll; height: 281px; border: 1px;">
 										<table class="table">
 											<c:set var="countt" value="${1}" />
 											<c:forEach
@@ -514,7 +511,8 @@
 
 
 												<h4>
-													Is Saleable &nbsp; &nbsp;<input disabled  type="checkbox" id="salsal">
+													Is Saleable &nbsp; &nbsp;<input disabled type="checkbox"
+														id="salsal">
 												</h4>
 											</div>
 
@@ -1384,10 +1382,11 @@
 								disabled="disabled" id="finish" onclick="submitSumary()"
 								style="position: absolute; right: 87px; top: 3px;">Finish</button>
 							<button type="button" class="c-btn medium gray"
-								style="position: absolute; right: 165px; top: 3px;" id="next" onclick="nextF();">Next</button>
+								style="position: absolute; right: 165px; top: 3px;" id="next"
+								onclick="nextF();">Next</button>
 							<button type="button" class="c-btn medium gray"
-								style="position: absolute; right: 240px; top: 3px;" id="prev" onclick="prevF();">
-								Back</button>
+								style="position: absolute; right: 240px; top: 3px;" id="prev"
+								onclick="prevF();">Back</button>
 						</div>
 					</div>
 				</div>

@@ -295,19 +295,18 @@ $(document).ready(function(){
 				<div class="container">
 					<div class="row">
 						<div class="masonary-grids">
-							<div class="col-md-12">
+							
 
-								<div class="breadcrumbs" style="height: 39px">
-									<ul>
-										<li><p
-												style="right: -422px; font-size: 20px; position: absolute;">
-												<b>Vendor Details</b>
-											</p></li>
-									</ul>
+								 <div class="breadcrumbs" style="height: 50px; text-align: center;">
+									<h3 style="    margin-top: 11px;">Vendor Details</h3>
+												
+											
 								</div>
+
 
 								
 								<div class="widget-area" style="width: 72%">
+								<div class="col-md-12">
 									<%-- <p>${requestScope['msg']}</p> --%>
 									<form role="form" class="sec" action="updateVendor" method="post" id="vendordetails">
 									   <input type="hidden" value="${param.id}" name="vendoeId" id="vendorid">
