@@ -281,6 +281,10 @@ public class Ejb {
 				QtyUnit.class);
 		return q.getResultList();
 	}
+	
+	public void deleteUOMById(int id){
+		em.remove(getQtyUnitById(id));
+	}
 
 	public List<QtyUnit> getAllQtyUnitByType(int id) {
 		TypedQuery<QtyUnit> q = em.createQuery(
