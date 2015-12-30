@@ -921,7 +921,7 @@ public class Servlet extends HttpServlet {
 				int flagg1 = 0;
 				List<Country> cuty = ejb.getAllCountry();
 				for (Country coty : cuty) {
-					if (coty.getCountryName().equals(req.getParameter("name"))) {
+					if (coty.getCountryName().equals(req.getParameter("name").toUpperCase())) {
 						flagg1 = 1;
 						break;
 					}
@@ -929,7 +929,7 @@ public class Servlet extends HttpServlet {
 				}
 				if (flagg1 == 0) {
 					country = new Country();
-					country.setCountryName(req.getParameter("name"));
+					country.setCountryName(req.getParameter("name").toUpperCase());
 					ejb.setCountry(country);
 					msg = "country added successfully.";
 				} else {
@@ -955,14 +955,14 @@ public class Servlet extends HttpServlet {
 						.parseInt(req.getParameter("id")));
 				int flag1 = 0;
 				for (State st : sList) {
-					if (st.getStateName().equals(req.getParameter("name"))) {
+					if (st.getStateName().equals(req.getParameter("name").toUpperCase())) {
 						flag1 = 1;
 						break;
 					}
 				}
 				if (flag1 == 0) {
 					state = new State();
-					state.setStateName(req.getParameter("name"));
+					state.setStateName(req.getParameter("name").toUpperCase());
 					state.setCountry(ejb.getCountryById(Integer.parseInt(req
 							.getParameter("id"))));
 					ejb.setState(state);
@@ -978,14 +978,14 @@ public class Servlet extends HttpServlet {
 						.getParameter("id")));
 				int flag2 = 0;
 				for (City c : cities) {
-					if (c.getCityName().equals(req.getParameter("name"))) {
+					if (c.getCityName().equals(req.getParameter("name").toUpperCase())) {
 						flag2 = 1;
 						break;
 					}
 				}
 				if (flag2 == 0) {
 					city = new City();
-					city.setCityName(req.getParameter("name"));
+					city.setCityName(req.getParameter("name").toUpperCase());
 					city.setState(ejb.getStateById(Integer.parseInt(req
 							.getParameter("id"))));
 
@@ -1554,9 +1554,9 @@ public class Servlet extends HttpServlet {
 				}
 				if (flag == 0) {
 					qtyUnit = new QtyUnit();
-					qtyUnit.setName(req.getParameter("name"));
-					qtyUnit.setAbbreviation(req.getParameter("abbreviation"));
-					qtyUnit.setDescription(req.getParameter("description"));
+					qtyUnit.setName(req.getParameter("name").toUpperCase());
+					qtyUnit.setAbbreviation(req.getParameter("abbreviation").toUpperCase());
+					qtyUnit.setDescription(req.getParameter("description").toUpperCase());
 					qtyUnit.setQtyUnitType(ejb.getQtyUnitTypeById(Integer
 							.parseInt(req.getParameter("qtyUnitTypeId"))));
 					ejb.setQtyUnit(qtyUnit);
