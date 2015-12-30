@@ -68,14 +68,12 @@
 				<div class="container">
 					<div class="row">
 						<div class="masonary-grids">
-							<div class="breadcrumbs" style="height: 39px">
-								<ul>
-									<li><p
-											style="right: -704px; font-size: 20px; position: absolute;">
-											<b>User Group</b>
-										</p></li>
-								</ul>
-							</div>
+							 <div class="breadcrumbs" style="height: 50px; text-align: center;">
+									<h3 style="    margin-top: 11px;">User Group</h3>
+												
+											
+								</div>
+
 							<div class="widget-area"
 								style="height: 500px; overflow: auto; width: 60%; float: left;">
 								<form action="createUserGroup" method="post">

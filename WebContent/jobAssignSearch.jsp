@@ -33,7 +33,7 @@
 	<c:if test="${sessionScope['user']==null}">
 		<c:redirect url="index.jsp" />
 	</c:if>
-	
+
 	<c:if test="${!sessionScope['user'].equals('admin')}">
 
 		<c:forEach
@@ -60,15 +60,14 @@
 				<div class="container">
 					<div class="row">
 						<div class="masonary-grids">
+
+							<div class="breadcrumbs"
+								style="height: 50px; text-align: center;">
+								<h3 style="margin-top: 11px;">Job Assign Search</h3>
+
+
+							</div>
 							<div class="col-md-12">
-								<div class="breadcrumbs" style="height: 39px">
-									<ul>
-										<li><p
-												style="right: -422px; font-size: 20px; position: absolute;">
-												<b>Job Assignment Search</b>
-											</p></li>
-									</ul>
-								</div>
 								<div class="widget-area">
 									<form role="form" class="sec" action="jobAssignSearchByDate"
 										method="post">
@@ -145,9 +144,10 @@
 															value="${jobAssignByDate.estimatedCompletionDate}"
 															pattern="dd-MM-yy" /></td>
 													<td>${jobAssignByDate.jobAssignmentProducts.size()}</td>
-													<c:set value="${0}" var="totqty"/>
-													<c:forEach items="${jobAssignByDate.jobAssignmentProducts}" var="proDet">
-													<c:set value="${totqty+proDet.qty}" var="totqty"/>
+													<c:set value="${0}" var="totqty" />
+													<c:forEach items="${jobAssignByDate.jobAssignmentProducts}"
+														var="proDet">
+														<c:set value="${totqty+proDet.qty}" var="totqty" />
 													</c:forEach>
 													<td>${totqty}</td>
 													<td><img alt="" src="images/eye.png" height="25px"></td>

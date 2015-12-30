@@ -67,14 +67,12 @@
 				<div class="row">
 					<div class="masonary-grids">
 
-						<div class="breadcrumbs" style="height: 39px">
-							<ul>
-								<li><p
-										style="right: -747px; font-size: 20px; position: absolute;">
-										<b>Discount</b>
-									</p></li>
-							</ul>
-						</div>
+						 <div class="breadcrumbs" style="height: 50px; text-align: center;">
+									<h3 style=" margin-top: 11px;">Sales Discount</h3>
+												
+											
+								</div>
+
 						<br> <br>
 
 						<div class="widget-area">

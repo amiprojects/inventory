@@ -33,14 +33,13 @@
 	<c:if test="${sessionScope['user']==null}">
 		<c:redirect url="index.jsp" />
 	</c:if>
-	
+
 	<c:if test="${!sessionScope['user'].equals('admin')}">
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
 
-			<c:if
-				test="${page.name.equals('Sales Entry')}">
+			<c:if test="${page.name.equals('Sales Entry')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
@@ -60,16 +59,16 @@
 				<div class="container">
 					<div class="row">
 						<div class="masonary-grids">
-							<div class="col-md-12">
-								<div class="breadcrumbs" style="height: 39px">
-									<ul>
-										<li><p
-												style="right: -422px; font-size: 20px; position: absolute;">
-												<b>Purchase Search</b>
-											</p></li>
-									</ul>
-								</div>
-								<div class="widget-area">
+
+							<div class="breadcrumbs"
+								style="height: 50px; text-align: center;">
+								<h3 style="margin-top: 11px;">Sales Search</h3>
+
+
+							</div>
+
+							<div class="widget-area">
+								<div class="col-md-12">
 									<form role="form" class="sec" action="purchaseSearchByDate">
 										<!-- <div class="row">
 											<div class="col-md-6">

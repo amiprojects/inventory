@@ -46,8 +46,8 @@
 	<c:if test="${sessionScope['user']==null}">
 		<c:redirect url="index.jsp" />
 	</c:if>
-	
-	
+
+
 	<c:if test="${!sessionScope['user'].equals('admin')}">
 
 		<c:forEach
@@ -77,17 +77,15 @@
 				<div class="container">
 					<div class="row">
 						<div class="masonary-grids">
+							<div class="breadcrumbs"
+								style="height: 50px; text-align: center;">
+								<h3 style="margin-top: 11px;">Edit Product</h3>
+
+
+							</div>
+
+
 							<div class="col-md-12">
-								<div class="breadcrumbs" style="height: 39px">
-									<ul>
-										<li><p
-												style="right: -422px; font-size: 20px; position: absolute;">
-												<b>Product/Material Update</b>
-											</p></li>
-									</ul>
-								</div>
-
-
 								<div class="widget-area" style="width: 100%">
 
 
@@ -116,24 +114,24 @@
 													Code: </label> <input type="text" value="${editpro.universalCode}"
 													name="upc123" class="form-control"><br>
 											</div>
-											
-											 <div class="form-group">
+
+											<div class="form-group">
 												<label for="exampleInputEmail1">Unit Of Measurement:</label>
 												<%--<input type="text" value="${editpro.qtyUnit.id}"
 													name="uom123" class="form-control"><br>
 											 --%>
-											<select  name="uom123" id="uomO"
-												 class="form-control"
-												style="width: 431px; height: 34px">
-												
-												<c:forEach items="${sessionScope['ejb'].getAllQtyUnit()}"
-													var="qqty">
-													<option value="${qqty.id}">${qqty.name}</option>
-												</c:forEach>
+												<select name="uom123" id="uomO" class="form-control"
+													style="width: 431px; height: 34px">
+
+													<c:forEach items="${sessionScope['ejb'].getAllQtyUnit()}"
+														var="qqty">
+														<option value="${qqty.id}">${qqty.name}</option>
+													</c:forEach>
 
 
-											</select></div>
-										
+												</select>
+											</div>
+
 
 
 
