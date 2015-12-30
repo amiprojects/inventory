@@ -64,14 +64,12 @@
 					<div class="row">
 						<div class="masonary-grids">
 							<div class="col-md-12">
-								<div class="breadcrumbs" style="height: 39px">
-									<ul>
-										<li><p
-												style="right: -422px; font-size: 20px; position: absolute;">
-												<b>Setup unit of measurement</b>
-											</p></li>
-									</ul>
+								 <div class="breadcrumbs" style="height: 50px; text-align: center;">
+									<h3 style="    margin-top: 11px;">Unit Of Measurement</h3>
+												
+											
 								</div>
+
 								<div class="widget-area" style="width: 30%">
 									<form role="form" class="sec" method="get"
 										action="setupUnitOfMeasure.jsp">

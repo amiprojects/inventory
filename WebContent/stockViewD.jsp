@@ -70,18 +70,14 @@
 				<div class="container">
 					<div class="row">
 						<div class="masonary-grids">
-							<div class="col-md-12">
-								<div class="breadcrumbs" style="height: 39px">
-									<ul>
-										<%-- <c:set var="userKa"
-			items="${sessionScope['ejb'].getUserById(sessionScope['user'])}"/> --%>
-										<%-- ${userKa.name} --%>
-										<li><p
-												style="right: -470px; font-size: 20px; position: absolute;">
-												<b>Stock Table </b>
-											</p></li>
-									</ul>
+							
+								 <div class="breadcrumbs" style="height: 50px; text-align: center;">
+									<h3 style="    margin-top: 11px;">Stock View</h3>
+												
+											
 								</div>
+
+
 								<div class="row">
 									<div class="widget-area" style="width: 40%; height: 550px">
 										<h3>Stock Search</h3>
@@ -255,7 +251,7 @@
 			<!-- Content Sec -->
 		</div>
 		<!-- Page Container -->
-	</div>
+	
 	<!-- main -->
 
 	<!-- Script -->

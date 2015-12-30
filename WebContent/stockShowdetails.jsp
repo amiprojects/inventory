@@ -103,18 +103,16 @@
 				<div class="container">
 					<div class="row">
 						<div class="masonary-grids">
-							<div class="col-md-12">
 
-								<div class="breadcrumbs" style="height: 39px">
-									<ul>
-										<li><p
-												style="right: -422px; font-size: 20px; position: absolute;">
-												<b>Stock Details</b>
-											</p></li>
-									</ul>
+
+							 <div class="breadcrumbs" style="height: 50px; text-align: center;">
+									<h3 style="margin-top: 11px;">Stock Show Details</h3>
+												
+											
 								</div>
 
 
+							<div class="col-md-12">
 								<div class="widget-area" style="width: 100%">
 									<c:set
 										value="${sessionScope['ejb'].getProductDetailById(requestScope['proid1'])}"
@@ -490,13 +488,13 @@
 														</tr>
 
 
-												
-															
-															
-															<c:set var="wspsps"
-																value="${purSize>0?p.purchase_Product_Details.get(purSize-1).wsp:'0'}" />
-															<c:set var="mrprp"
-																value="${purSize>0?p.purchase_Product_Details.get(purSize-1).mrp:'0'}" />
+
+
+
+														<c:set var="wspsps"
+															value="${purSize>0?p.purchase_Product_Details.get(purSize-1).wsp:'0'}" />
+														<c:set var="mrprp"
+															value="${purSize>0?p.purchase_Product_Details.get(purSize-1).mrp:'0'}" />
 
 														<c:forEach items="${salesPro}" var="salesPro1">
 															<tr style="width: 100%">
@@ -511,9 +509,9 @@
 																<td>&nbsp;</td>
 																<td><b>${salesPro1.productDetail.qtyUnit.name}</b></td>
 
-															 <td>&nbsp;</td>
+																<td>&nbsp;</td>
 
-															<td><b> <c:choose>
+																<td><b> <c:choose>
 																			<c:when test="${salesPro1.salesPrice== wspsps}"> ${"WSP"}
  																			</c:when>
 																			<c:when test="${salesPro1.salesPrice == mrprp}"> ${"MRP"}
@@ -521,7 +519,7 @@
 																			<c:otherwise>Errorr
  																			</c:otherwise>
 																		</c:choose>
-																</b></td> 
+																</b></td>
 																<td>&nbsp;</td>
 
 																<td><b>${salesPro1.salesPrice}</b></td>
@@ -536,7 +534,7 @@
 
 																<%-- <td><b>${sessionScope['ejb'].getVendorById(salesPro1.salesEntry.agentId).name}</b></td>
 																<td>&nbsp;</td>--%>
- 
+
 																<td><b></b></td>
 																<td>&nbsp;</td>
 

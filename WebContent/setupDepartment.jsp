@@ -250,17 +250,15 @@
 				<div class="container">
 					<div class="row">
 						<div class="masonary-grids">
-							<div class="col-md-12">
+							
 
-								<div class="breadcrumbs" style="height: 39px">
-									<ul>
-										<li><p
-												style="right: -350px; font-size: 20px; position: absolute;">
-												<b>Department/Sub-Department/Category</b>
-											</p></li>
-									</ul>
+								 <div class="breadcrumbs" style="height: 50px; text-align: center;">
+									<h3 style="    margin-top: 11px;">Department/Sub-Department/Category</h3>
+												
+											
 								</div>
-								<div class="widget-area">
+								
+								<div class="widget-area"><div class="col-md-12">
 									<div class="widget-area" style="width: 70%">
 										<form action="#">
 											<input type="hidden" value="" id="status"> <input

@@ -91,13 +91,14 @@
 				<div class="row">
 					<div class="masonary-grids">
 
-						<div class="col-md-12" style="height: 800px;">
+						
 
-							<div class="breadcrumbs"
-								style="height: 50px; text-align: center;">
-								<h3>Sales Return</h3>
-							</div>
-
+							 <div class="breadcrumbs" style="height: 50px; text-align: center;">
+									<h3 style="    margin-top: 11px;">Sales Return</h3>
+												
+											
+								</div>
+							
 
 
 							<div class="row">
@@ -352,8 +353,7 @@
 			</div>
 		</div>
 
-	</div>
-
+	
 	<script>
 		$(function() {
 			$("#datepicker").datepicker({
