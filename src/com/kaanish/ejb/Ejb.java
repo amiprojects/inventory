@@ -808,7 +808,7 @@ public class Ejb {
 				.createQuery(
 						"select c from Purchase_Product_Details c where  UPPER(c.productDetail.code) like :cd and c.remaining_quantity>0 and c.productDetail.isSaleble=:salable ORDER BY c.id ASC",
 						Purchase_Product_Details.class);
-		q.setParameter("salable", false);
+		q.setParameter("salable", true);
 		q.setParameter("cd", "%" + code.toUpperCase() + "%");
 		return q.getResultList();
 	}

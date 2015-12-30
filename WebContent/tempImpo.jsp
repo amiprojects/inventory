@@ -45,6 +45,7 @@ includeSidebar.html //tabs
 
 	</div>
 </div>
+$("#id").modal("show");
 
 
 //for toast

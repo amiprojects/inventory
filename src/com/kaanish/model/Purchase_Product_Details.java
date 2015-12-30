@@ -53,8 +53,8 @@ public class Purchase_Product_Details implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "jobRecievedDetailsId")
 	private JobRecievedDetails recievedDetails;
-	
-	@OneToMany(mappedBy="purchase_Product_Details",cascade=CascadeType.PERSIST)
+
+	@OneToMany(mappedBy = "purchase_Product_Details", cascade = CascadeType.PERSIST)
 	private List<SalesProductDetails> salesProductDetails;
 
 	public int getId() {
@@ -184,13 +184,13 @@ public class Purchase_Product_Details implements Serializable {
 	public void setPurchase_Entry(Purchase_Entry purchase_Entry) {
 		this.purchase_Entry = purchase_Entry;
 	}
-	
-	
+
 	public List<JobAssignmentProducts> getJobAssignmentProducts() {
 		return jobAssignmentProducts;
 	}
 
-	public void setJobAssignmentProducts(List<JobAssignmentProducts> jobAssignmentProducts) {
+	public void setJobAssignmentProducts(
+			List<JobAssignmentProducts> jobAssignmentProducts) {
 		this.jobAssignmentProducts = jobAssignmentProducts;
 	}
 
@@ -198,27 +198,48 @@ public class Purchase_Product_Details implements Serializable {
 	public String toString() {
 		String str;
 		if (isInitialInventory()) {
-			str = "{\"id\":\"" + id + "\"," + "\"mrp\":\"" + mrp + "\"," + "\"wsp\":\"" + wsp + "\","
-					+ "\"remaining_quantity\":\"" + remaining_quantity + "\"," + "\"quantity\":\"" + quantity + "\","
-					+ "\"cost\":\"" + cost + "\"," + "\"productCode\":\"" + productDetail.getCode() + "\","
-					+ "\"productId\":\"" + productDetail.getId() + "\"," + "\"productDesc\":\""
-					+ productDetail.getDescription() + "\"," + "\"attrValue1\":\"" + attrValue1 + "\","
-					+ "\"attrValue2\":\"" + attrValue2 + "\"," + "\"attrValue3\":\"" + attrValue3 + "\","
-					+ "\"attrValue4\":\"" + attrValue4 + "\"," + "\"attrValue5\":\"" + attrValue5 + "\","
+			str = "{\"id\":\"" + id + "\"," + "\"mrp\":\"" + mrp + "\","
+					+ "\"wsp\":\"" + wsp + "\"," + "\"lotNumber\":\""
+					+ lotNumber + "\"," + "\"remaining_quantity\":\""
+					+ remaining_quantity + "\"," + "\"quantity\":\"" + quantity
+					+ "\"," + "\"cost\":\"" + cost + "\","
+					+ "\"productCode\":\"" + productDetail.getCode() + "\","
+					+ "\"productId\":\"" + productDetail.getId() + "\","
+					+ "\"productDesc\":\"" + productDetail.getDescription()
+					+ "\"," + "\"purchaseDate\":\"" + "Initial Inventory"
+					+ "\"," + "\"purchaseVendorName\":\"" + "Initial Inventory"
+					+ "\"," + "\"attrValue1\":\"" + attrValue1 + "\","
+					+ "\"attrValue2\":\"" + attrValue2 + "\","
+					+ "\"attrValue3\":\"" + attrValue3 + "\","
+					+ "\"attrValue4\":\"" + attrValue4 + "\","
+					+ "\"attrValue5\":\"" + attrValue5 + "\","
 					+ "\"attrValue6\":\"" + attrValue6 + "\"}";
 		} else {
-			str = "{\"id\":\"" + id + "\"," + "\"mrp\":\"" + mrp + "\"," + "\"wsp\":\"" + wsp + "\","
-					+ "\"remaining_quantity\":\"" + remaining_quantity + "\"," + "\"quantity\":\"" + quantity + "\","
-					+ "\"cost\":\"" + cost + "\"," + "\"attrValue1\":\"" + attrValue1 + "\"," + "\"attrValue2\":\""
-					+ attrValue2 + "\"," + "\"attrValue3\":\"" + attrValue3 + "\"," + "\"attrValue4\":\"" + attrValue4
-					+ "\"," + "\"attrValue5\":\"" + attrValue5 + "\"," + "\"attrValue6\":\"" + attrValue6 + "\","
-					+ "\"purchaseVendorName\":\"" + purchase_Entry.getVendor().getName() + "\"," + "\"purchaseDate\":\""
-					+ purchase_Entry.getPurchase_date() + "\"," + "\"uom\":\"" + productDetail.getQtyUnit().getName()
-					+ "\"," + "\"productCode\":\"" + productDetail.getCode() + "\"," + "\"productId\":\""
-					+ productDetail.getId() + "\"," + "\"productDesc\":\"" + productDetail.getDescription() + "\","
-					+ "\"purchaseVendorAddress\":\"" + purchase_Entry.getVendor().getAddress() + "\","
-					+ "\"purchaseVendorCompanyName\":\"" + purchase_Entry.getVendor().getCompanyName() + "\","
-					+ "\"purchaseVendorPhoneNumber\":\"" + purchase_Entry.getVendor().getPh1() + "\"}";
+			str = "{\"id\":\"" + id + "\"," + "\"mrp\":\"" + mrp + "\","
+					+ "\"wsp\":\"" + wsp + "\"," + "\"lotNumber\":\""
+					+ lotNumber + "\"," + "\"remaining_quantity\":\""
+					+ remaining_quantity + "\"," + "\"quantity\":\"" + quantity
+					+ "\"," + "\"cost\":\"" + cost + "\","
+					+ "\"attrValue1\":\"" + attrValue1 + "\","
+					+ "\"attrValue2\":\"" + attrValue2 + "\","
+					+ "\"attrValue3\":\"" + attrValue3 + "\","
+					+ "\"attrValue4\":\"" + attrValue4 + "\","
+					+ "\"attrValue5\":\"" + attrValue5 + "\","
+					+ "\"attrValue6\":\"" + attrValue6 + "\","
+					+ "\"purchaseVendorName\":\""
+					+ purchase_Entry.getVendor().getName() + "\","
+					+ "\"purchaseDate\":\"" + purchase_Entry.getPurchase_date()
+					+ "\"," + "\"uom\":\""
+					+ productDetail.getQtyUnit().getName() + "\","
+					+ "\"productCode\":\"" + productDetail.getCode() + "\","
+					+ "\"productId\":\"" + productDetail.getId() + "\","
+					+ "\"productDesc\":\"" + productDetail.getDescription()
+					+ "\"," + "\"purchaseVendorAddress\":\""
+					+ purchase_Entry.getVendor().getAddress() + "\","
+					+ "\"purchaseVendorCompanyName\":\""
+					+ purchase_Entry.getVendor().getCompanyName() + "\","
+					+ "\"purchaseVendorPhoneNumber\":\""
+					+ purchase_Entry.getVendor().getPh1() + "\"}";
 		}
 		return str;
 
@@ -252,7 +273,8 @@ public class Purchase_Product_Details implements Serializable {
 		return salesProductDetails;
 	}
 
-	public void setSalesProductDetails(List<SalesProductDetails> salesProductDetails) {
+	public void setSalesProductDetails(
+			List<SalesProductDetails> salesProductDetails) {
 		this.salesProductDetails = salesProductDetails;
 	}
 

@@ -100,10 +100,6 @@
 				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
 				<div class="row">
 					<div class="masonary-grids">
- <div class="breadcrumbs" style="height: 50px; text-align: center;">
-									<h3 style="    margin-top: 11px;">Sales Entry</h3>
-									
-								</div>
 
 						<div class="col-md-12" style="height: 800px;">
 							<form class="sec" action="salesEntry" method="post">
@@ -204,7 +200,10 @@
 
 								</div>
 								<div class="widget-area">
-									<b>Product :</b><input type="text" id="codevalue">
+									<b>Quantity :</b> <input type="text" name="qty" id="qty"
+										onkeyup="checkQty();" value="0" style="width: 70px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<b>Product :</b><input type="text" id="pCode" name="pCode"><input
+										type="hidden" id="pCodeId" name="pCodeId">
 									<%-- <select name="prodCode" id="prodCode"
 										onchange="getProdDetByPurchaseProdDetId();"
 										required="required">
@@ -225,10 +224,7 @@
 									</select><input type="hidden" id="remQty" name="remQty"> --%>
 									<!-- <input type="hidden" name="descriptiondId" id="descriptionId"> -->
 									&nbsp; &nbsp; &nbsp;<b>Product with Barcode</b> <input
-										type="text" id="salesbar" name="salesbar">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									<b>Quantity :</b> <input type="text" name="qty" id="qty"
-										onkeyup="checkQty();" readonly="readonly" value="0"
-										style="width: 70px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										type="text" id="salesbar" name="salesbar">
 									<button onclick="probar()" type="button">Go</button>
 
 								</div>
@@ -250,8 +246,9 @@
 											<!-- <tbody> -->
 											<tr>
 												<td>0</td>
-												<td><input type="text" id="" readonly="readonly"><input
-													type="text" id="productId" readonly="readonly"></td>
+												<td><input type="text" id="codevalue"
+													readonly="readonly"><input type="text"
+													id="productId" readonly="readonly"></td>
 												<td><input type="text" id="descvalue"
 													readonly="readonly"></td>
 												<td><input type="text" id="qtyvalue"
@@ -359,8 +356,11 @@
 										</thead>
 									</table>
 									<div style="float: right;">
-										<input type="button" class="btn btn-info btn-sm"
-											data-toggle="modal" value="Save" onclick="paymentDate();">
+										<input type="button"
+											onclick="window.location='salesSalesEntry.jsp'"
+											class="btn btn-danger small" value="Cancel"> <input
+											type="button" class="btn btn-info btn-sm" data-toggle="modal"
+											value="Save" onclick="paymentDate();">
 										<div id="saveSales" class="modal fade" role="dialog"
 											style="top: 25px;">
 											<div class="modal-dialog modal-lg">
@@ -496,7 +496,57 @@
 			</div>
 		</div>
 	</div>
+	<div id="purchaseDetails" class="modal fade" role="dialog"
+		style="top: 25px;">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						onclick="closeModal();">&times;</button>
+					<h4 class="modal-title">Purchase Details</h4>
+				</div>
+				<div class="modal-body">
+					<table id="stream_table" width="100%">
+						<thead>
+							<tr>
+								<th>Product code :</th>
+								<td colspan="2"><input type="text" readonly="readonly"
+									id="pCodeModal" class="form-control"></td>
+							</tr>
+							<tr>
+								<th>Description :</th>
+								<td colspan="2"><input type="text" readonly="readonly"
+									id="pDescModal" class="form-control"></td>
+							</tr>
+						</thead>
+					</table>
+					<table id="purchaseDetailsTable" class="table">
+						<thead>
+							<tr>
+								<th>Purchase Date</th>
+								<th>Vendor name</th>
+								<th>Lot No.</th>
+								<th>MRP</th>
+								<th>WSP</th>
+								<th>Remaining Qty.</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+				</div>
+			</div>
 
+		</div>
+	</div>
 
 	<script>
 		$(function() {
@@ -589,6 +639,13 @@
 		function removeProduct(a) {
 			$("#trRemove" + a).remove();
 			//$("#trRemoveH" + a).remove();
+			if (a == 0) {
+				$("#mrp").prop("disabled", false);
+				$("#wsp").prop("disabled", false);
+			} else {
+				$("#mrp").prop("disabled", true);
+				$("#wsp").prop("disabled", true);
+			}
 		}
 		var k = 0;
 		function probar() {
@@ -727,6 +784,11 @@
 						}
 
 					});
+			$("#pCode").val("");
+			$("#salesbar").val("");
+			$("#mrp").prop("disabled", true);
+			$("#wsp").prop("disabled", true);
+			$("#qty").val(0);
 		}
 		function discountF() {
 			$("#discountValue").val(
@@ -950,8 +1012,168 @@
 		function submit() {
 			document.getElementById("purchaseForm").submit();
 		}
-	</script>
+		$(function() {
+			$("#pCode")
+					.autocomplete(
+							{
+								source : function(req, resp) {
+									$
+											.ajax({
+												type : "post",
+												url : "getProductsForSaleByCode",
+												data : {
+													codeParts : req.term
+												},
+												dataType : "json",
+												success : function(data) {
+													resp($
+															.map(
+																	data,
+																	function(
+																			item) {
+																		return ({
+																			value : item.code,
+																			id : item.id,
+																			description : item.description
+																		});
+																	}));
+												},
 
+												error : function(a, b, c) {
+													alert(a + b + c);
+												}
+
+											});
+								},
+								change : function(event, ui) {
+									if (ui.item == null) {
+										$(this).val("");
+										$("#pCodeId").val("");
+										//getProductDetailsByProductCode(0);
+									} else {
+										$("#pCodeId").val(ui.item.id);
+										//getProductDetailsByProductCode(ui.item.id);
+									}
+								},
+								select : function(event, ui) {
+									if (ui.item != null) {
+										$("#pCodeId").val(ui.item.id);
+										//getProductDetailsByProductCode(ui.item.id);
+										$("#purchaseDetails").modal("show");
+										$("#pCodeModal").val(ui.item.value);
+										$("#pDescModal").val(
+												ui.item.description);
+
+										$
+												.ajax({
+													type : "post",
+													url : "getSaleblePurchaseProductDetailsByProductCodeAndQuantity",
+													dataType : "json",
+													data : {
+														code : ui.item.value
+													},
+													success : function(data2) {
+														$(
+																"#purchaseDetailsTable tbody")
+																.empty();
+														$
+																.map(
+																		data2,
+																		function(
+																				item2) {
+																			if (item2.purchaseDate != 'Initial Inventory') {
+																				$(
+																						"#purchaseDetailsTable")
+																						.append(
+																								"<tbody>"
+																										+ "<tr>"
+																										+ "<td>"
+																										+ formatDate(item2.purchaseDate)
+																										+ "</td>"
+																										+ "<td>"
+																										+ item2.purchaseVendorName
+																										+ "</td>"
+																										+ "<td>"
+																										+ item2.lotNumber
+																										+ "</td>"
+																										+ "<td>"
+																										+ item2.mrp
+																										+ "</td>"
+																										+ "<td>"
+																										+ item2.wsp
+																										+ "</td>"
+																										+ "<td>"
+																										+ item2.remaining_quantity
+																										+ "</td>"
+																										+ "<td>"
+																										+ '<input type="button" onclick="chooseF('
+																										+ item2.id
+																										+ ');" value="Choose">'
+																										+ "</td>"
+																										+ "</tr>"
+																										+ "</tbody>");
+																			} else {
+																				$(
+																						"#purchaseDetailsTable")
+																						.append(
+																								"<tbody>"
+																										+ "<tr>"
+																										+ "<td>"
+																										+ item2.purchaseDate
+																										+ "</td>"
+																										+ "<td>"
+																										+ item2.purchaseVendorName
+																										+ "</td>"
+																										+ "<td>"
+																										+ item2.lotNumber
+																										+ "</td>"
+																										+ "<td>"
+																										+ item2.mrp
+																										+ "</td>"
+																										+ "<td>"
+																										+ item2.wsp
+																										+ "</td>"
+																										+ "<td>"
+																										+ item2.remaining_quantity
+																										+ "</td>"
+																										+ "<td>"
+																										+ '<input type="button" onclick="chooseF('
+																										+ item2.id
+																										+ ');" value="Choose">'
+																										+ "</td>"
+																										+ "</tr>"
+																										+ "</tbody>");
+																			}
+																		});
+													}
+												});
+
+									} else {
+										$(this).val("");
+										$("#pCodeId").val("");
+										//getProductDetailsByProductCode(0);						
+									}
+
+								}
+							});
+		});
+
+		function formatDate(d) {
+			var dateparts = d.split(" ");
+			return dateparts[2] + "-" + dateparts[1] + "-" + dateparts[5];
+		}
+		function closeModal() {
+			$("#pCode").val("");
+			$("#pCodeId").val("");
+		}
+		function chooseF(purchaseProdDetIdForBarCode) {
+			//alert(purchaseProdDetIdForBarCode);
+			$("#salesbar").val(purchaseProdDetIdForBarCode);
+			$("#salesbar").prop("readonly", true);
+			$("#purchaseDetails").modal("hide");
+			$("#qty").prop("readonly", false);
+		}
+	</script>
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
