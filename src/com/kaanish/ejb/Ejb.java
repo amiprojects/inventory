@@ -1248,7 +1248,7 @@ public class Ejb {
 
 	public List<SalesProductDetails> getSales_Product_DetailsByProId(int id) {
 		TypedQuery<SalesProductDetails> q = em.createQuery(
-				"select s from SalesProductDetails s where s.productDetail.id=:Id", SalesProductDetails.class);
+				"select s from SalesProductDetails s where s.purchase_Product_Details.productDetail.id=:Id", SalesProductDetails.class);
 		q.setParameter("Id", id);
 		return q.getResultList();
 	}
