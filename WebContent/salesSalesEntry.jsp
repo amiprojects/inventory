@@ -148,9 +148,7 @@
 												<h3>Invoice Details:</h3>
 											</div>
 
-
 											<div class="form-group">
-
 												<label style="font-size: 15px" class="font">Sales
 													challan no. :</label>
 												<c:set var="fy"
@@ -202,11 +200,7 @@
 
 								</div>
 								<div class="widget-area">
-
-									<b>Quantity :</b> <input type="text" name="qty" id="qty"
-										onkeyup="checkQty();" value="0" style="width: 70px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-									<b>Product :</b> <select name="prodCode" id="prodCode"
+									<b>Product :</b><input type="text" id=""> <%-- <select name="prodCode" id="prodCode"
 										onchange="getProdDetByPurchaseProdDetId();"
 										required="required">
 										<option value="0">Select Product code</option>
@@ -223,10 +217,13 @@
 												</c:choose>)
 											</option>
 										</c:forEach>
-									</select><input type="hidden" id="remQty" name="remQty">
+									</select><input type="hidden" id="remQty" name="remQty"> --%>
 									<!-- <input type="hidden" name="descriptiondId" id="descriptionId"> -->
 									&nbsp; &nbsp; &nbsp;<b>Product with Barcode</b> <input
-										type="text" id="salesbar" name="salesbar">
+										type="text" id="salesbar" name="salesbar">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<b>Quantity :</b> <input type="text" name="qty" id="qty"
+										onkeyup="checkQty();" readonly="readonly" value="0"
+										style="width: 70px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									<button onclick="probar()" type="button">Go</button>
 
 								</div>
@@ -241,7 +238,7 @@
 												<th>Qty.</th>
 												<th id="mrpWSP">MRP/Qty</th>
 												<th>Total</th>
-												<th>Remove</th>
+												<th><b>X</b></th>
 											</tr>
 										</thead>
 										<tbody style="display: none;">
@@ -562,6 +559,11 @@
 	<script>
 		function getProdDetByPurchaseProdDetId() {
 			$("#salesbar").val($("#prodCode").val());
+			if ($("#prodCode").val() != 0) {
+				$("#qty").prop("readonly", false);
+			} else {
+				$("#qty").prop("readonly", true);
+			}
 			/* $("#remQty").val("${pCode.remaining_quantity}");
 			if ($("#qty").val() > $("#remQty").val()) {
 				alert('Please enter less quantity than remaining');
