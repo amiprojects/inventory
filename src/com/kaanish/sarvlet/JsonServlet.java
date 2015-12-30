@@ -35,7 +35,7 @@ import com.kaanish.util.DepartmentCotractor;
 		"/getCityByStateByCityName", "/getVendorTypeById",
 		"/getProductbyProductCode",
 		"/getSaleblePurchaseProductDetailsByProductCodeAndQuantity",
-		"/getVendorsByVendorTypeJobberAndName", "/getProductsForSaleByCode" })
+		"/getVendorsByVendorTypeJobberAndName", "/getProductsForSaleByCode","/deleteUOM" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -271,6 +271,17 @@ public class JsonServlet extends HttpServlet {
 				break;
 			case "getProductsForSaleByCode":
 				resp.getWriter().print(ejb.getSalebleProductsByQtyAndCode(req.getParameter("codeParts")));
+				break;
+			case "deleteUOM":
+				PrintWriter pw=new PrintWriter(resp.getOutputStream());
+				JsonGeneratorFactory fac=Json.createGeneratorFactory(null);
+				JsonGenerator gen1=fac.createGenerator(pw);
+				try{
+					ejb.deleteUOMById(Integer.parseInt(req.getParameter("id")));
+					gen1.writeStartObject().write("response","success").writeEnd().close();
+				}catch (Exception e) {
+					gen1.writeStartObject().write("response","failed").writeEnd().close();
+				}
 				break;
 			default:
 				break;

@@ -89,7 +89,7 @@
 	</div>
 	<!-- <a title="" class="slide-panel-btn"><i class="fa fa-gear fa-spin"></i></a> -->
 	<div class="dropdown profile">
-		<a title=""> <img src="images/resource/me.jpg" alt="" />${sessionScope['user']}<i
+		<a title=""> <img src="images/resource/me.jpg" alt="" />${sessionScope['ejb'].getUserById(sessionScope['user']).name}<i
 			class="caret"></i>
 		</a>
 		<div class="profile drop-list">

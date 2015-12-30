@@ -281,6 +281,10 @@ public class Ejb {
 				QtyUnit.class);
 		return q.getResultList();
 	}
+	
+	public void deleteUOMById(int id){
+		em.remove(getQtyUnitById(id));
+	}
 
 	public List<QtyUnit> getAllQtyUnitByType(int id) {
 		TypedQuery<QtyUnit> q = em.createQuery(
@@ -653,6 +657,10 @@ public class Ejb {
 	public void setJobAssignment(JobAssignmentDetails jobAssignmentDetails) {
 		em.persist(jobAssignmentDetails);
 	}
+	
+	public JobAssignmentDetails getJobAssignmentDetailsByID(int id){
+		return em.find(JobAssignmentDetails.class, id);
+	}
 
 	public List<Vendor> getVendorsByVendorTypeJobber(String jobber) {
 		TypedQuery<Vendor> q = em.createQuery(
@@ -733,6 +741,13 @@ public class Ejb {
 			JobAssignmentProducts jobAssignmentProducts) {
 		em.persist(jobAssignmentProducts);
 	}
+	
+	public void updateJobAssignmentProductDetails(JobAssignmentProducts jobAssignmentProducts ){
+		em.merge(jobAssignmentProducts);
+
+		
+	}
+	
 
 	public List<JobAssignmentProducts> getJobAssignmentProductDetailsByproductId(
 			int id) {

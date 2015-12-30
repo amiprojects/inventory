@@ -22,6 +22,7 @@ public class JobAssignmentProducts implements Serializable {
 	@GeneratedValue
 	private int id;
 	private int qty;
+	private int remaninQty;
 	private float estimatedCost;
 	@Column(length = 800)
 	private String workDescription;
@@ -59,6 +60,15 @@ public class JobAssignmentProducts implements Serializable {
 
 	public void setQty(int qty) {
 		this.qty = qty;
+	}
+	
+
+	public int getRemaninQty() {
+		return remaninQty;
+	}
+
+	public void setRemaninQty(int remaninQty) {
+		this.remaninQty = remaninQty;
 	}
 
 	public float getEstimatedCost() {

@@ -198,8 +198,8 @@
 														data-target="#newUOM">New</button></a></li>
 											<!-- <li><a title=""><button type="submit"
 														class="btn btn-info btn-sm">Edit</button></a></li> -->
-											<li><a title=""><button type="submit"
-														class="btn btn-info btn-sm">Delete</button></a></li>
+											<li><a onclick="deleteUOM();" title=""><input type="submit"
+														class="btn btn-info btn-sm" value="Delete"></a></li>
 										</ul>
 									</div>
 
@@ -254,7 +254,7 @@
 												<!-- <button type="button" class="btn btn-default"
 													data-toggle="modal">Edit</button> -->
 
-												<button type="button" class="btn btn-default">Delete</button>
+												<!-- <button type="button" class="btn btn-default">Delete</button> -->
 											</div>
 
 
@@ -388,6 +388,33 @@
 	<script type="text/javascript" src="js/grid-filter.js"></script>
 
 	<script type="text/javascript">
+	function deleteUOM(){
+		if($("#unitNameId").val()!=""){
+			y=confirm("do yo want to delete the UOM");
+			if(y){
+				$.ajax({
+					type:"post",
+					url:"deleteUOM",
+					data:{id:$("#unitNameId").val()},
+					dataType:"json",
+					success:function(data){
+						if(data.response=="success"){
+							alert('UOM deleted Successfully');
+							window.location="setupUnitOfMeasure.jsp";
+						}else if(data.response=="failed"){
+							alert('you can not delete UOM');
+						}
+					}
+				});
+			}
+			
+		}else{
+			alert('please select UOM');
+		}
+		
+	}
+	
+	
 		var unit1;
 		var unit2;
 
