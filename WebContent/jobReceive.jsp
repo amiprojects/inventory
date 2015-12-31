@@ -103,8 +103,8 @@
 												<table>
 													<tr>
 														<c:set value="${requestScope['amj']}" var="jjjjj" />
-														<td><p style="font-size: 15px; color: black;">
-																<b>Jobber Name:</b>
+														<td><p style="font-size: 18px; color: black;">
+																Jobber Name:
 															</p></td>
 
 														<td><p style="font-size: 17px; color: black;">
@@ -116,12 +116,12 @@
 														<td>&nbsp;</td>
 													</tr>
 													<tr>
-														<td><p style="font-size: 15px; color: black;">
-																<b>Jobber Details:</b>
+														<td><p style="font-size: 18px; color: black;">
+																Jobber Details:
 															</p> <br>
 															<p style="font-size: 17px; color: black;">Email:
-																${jjjjj.vendor.email}</p> <br>
-															<p style="font-size: 17px; color: black;">Address:${jjjjj.vendor.address}</p>
+																<b>${jjjjj.vendor.email}</b></p> <br>
+															<p style="font-size: 17px; color: black;">Address:<b>${jjjjj.vendor.address}</b></p>
 													</tr>
 												</table>
 
@@ -132,11 +132,11 @@
 
 												<table>
 													<tr>
-														<td><p style="font-size: 15px; color: black;">
-																<b>Job Challan ID:</b></td>
+														<td><p style="font-size: 18px; color: black;">
+																Job Challan ID:</td>
 														<td>&nbsp;</td>
 														<td><p style="font-size: 17px; color: black;">
-																<b>${jjjjj.id}</b>
+																<b>${jjjjj.challanNumber}</b>
 															</p></td>
 
 													</tr>
@@ -144,8 +144,8 @@
 														<td>&nbsp;</td>
 													</tr>
 													<tr>
-														<td><p style="font-size: 15px; color: black;">
-																<b>Assigned Date:</b>
+														<td><p style="font-size: 18px; color: black;">
+																Assigned Date:
 															</p></td>
 														<td>&nbsp;</td>
 														<td><p style="font-size: 17px; color: black;">
