@@ -190,17 +190,17 @@
 		</c:if>
 	</c:if>
 
-	<c:if test="${requestScope['print']==1}">
+	<%-- <c:if test="${requestScope['print']==1}">
 		<script type="text/javascript">
 			window.open("barcodePrint.jsp?id=${requestScope['purDet']}",
 					'name', 'width=600,height=400');
 		</script>
-	</c:if>
+	</c:if> --%>
 	<c:if test="${requestScope['purDetIdforPC']!=null}">
 		<script type="text/javascript">
 			var myWindow = window
 					.open(
-							"purchaseChallanForPrint.jsp?id=${requestScope['purDetIdforPC']}",
+							"purchaseChallanForPrint.jsp?id=${requestScope['purDetIdforPC']}&print=${requestScope['print']}",
 							'name', 'width=600,height=400');
 			myWindow.print();
 		</script>
