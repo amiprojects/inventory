@@ -60,14 +60,20 @@ page[size="A4"] {
 }
 </style>
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
-<script type="text/javascript">
-	$(document).ready(function() {
-		window.print();
-		window.open("barcodePrint.jsp?id=${param.id}&ip=${sessionScope['sip']}&port=${sessionScope['port']}",
-				'name', 'width=600,height=400');
-		
-	});
-</script>
+<c:if test="${param.print==1}">
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							window.print();
+							window
+									.open(
+											"barcodePrint.jsp?id=${param.id}&ip=${sessionScope['sip']}&port=${sessionScope['port']}",
+											'name', 'width=600,height=400');
+
+						});
+	</script>
+</c:if>
 </head>
 <body>
 	<c:if test="${!sessionScope['user'].equals('admin')}">
@@ -165,8 +171,7 @@ page[size="A4"] {
 		</tr>
 		<tr style="height: 75px">
 			<td class="tg-031e" colspan="7"><span>Amount Chargeable
-					(in words)</span><br>
-			<span>${sessionScope['ejb'].getNumberToWords('521421')}</span></td>
+					(in words)</span><br> <span>${sessionScope['ejb'].getNumberToWords('521421')}</span></td>
 		</tr>
 		<tr style="height: 75px">
 			<td class="tg-031e" colspan="4"><strong>Declaration:</strong><br>We
