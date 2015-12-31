@@ -33,14 +33,13 @@
 	<c:if test="${sessionScope['user']==null}">
 		<c:redirect url="index.jsp" />
 	</c:if>
-	
+
 	<c:if test="${!sessionScope['user'].equals('admin')}">
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
 
-			<c:if
-				test="${page.name.equals('Purchase Search')}">
+			<c:if test="${page.name.equals('Purchase Search')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
@@ -60,15 +59,12 @@
 				<div class="container">
 					<div class="row">
 						<div class="masonary-grids">
-							<div class="col-md-12">
-								<div class="breadcrumbs" style="height: 39px">
-									<ul>
-										<li><p
-												style="right: -422px; font-size: 20px; position: absolute;">
-												<b>Purchase Search</b>
-											</p></li>
-									</ul>
-								</div>
+
+
+							<div class="breadcrumbs"
+								style="height: 50px; text-align: center;">
+								<h3 style="margin-top: 11px;">Purchase Search</h3>
+
 								<div class="widget-area">
 									<form role="form" class="sec" action="purchaseSearchByDate">
 										<!-- <div class="row">
@@ -165,37 +161,37 @@
 			<!-- Content Sec -->
 		</div>
 		<!-- Page Container -->
-	</div>
-	<!-- main -->
 
-	<!-- Script -->
-	<script type="text/javascript" src="js/modernizr.js"></script>
-	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
-	<script type="text/javascript" src="js/script.js"></script>
-	<script type="text/javascript" src="js/bootstrap.js"></script>
-	<script type="text/javascript" src="js/enscroll.js"></script>
-	<script type="text/javascript" src="js/grid-filter.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$("#purch").attr("id", "activeSubMenu");
-			$("#sPurchSearch").attr("style", "color: red;");
-		});
-	</script>
-	<script src="js/jquery-ui/jquery-ui.js"></script>
-	<script>
-		$(function() {
-			$("#datepicker").datepicker({
-				dateFormat : "dd-mm-yy"
+		<!-- main -->
+
+		<!-- Script -->
+		<script type="text/javascript" src="js/modernizr.js"></script>
+		<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+		<script type="text/javascript" src="js/script.js"></script>
+		<script type="text/javascript" src="js/bootstrap.js"></script>
+		<script type="text/javascript" src="js/enscroll.js"></script>
+		<script type="text/javascript" src="js/grid-filter.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$("#purch").attr("id", "activeSubMenu");
+				$("#sPurchSearch").attr("style", "color: red;");
 			});
-		});
-	</script>
-	<script>
-		$(function() {
-			$("#datepicker1").datepicker({
-				dateFormat : "dd-mm-yy"
+		</script>
+		<script src="js/jquery-ui/jquery-ui.js"></script>
+		<script>
+			$(function() {
+				$("#datepicker").datepicker({
+					dateFormat : "dd-mm-yy"
+				});
 			});
-		});
-	</script>
+		</script>
+		<script>
+			$(function() {
+				$("#datepicker1").datepicker({
+					dateFormat : "dd-mm-yy"
+				});
+			});
+		</script>
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->

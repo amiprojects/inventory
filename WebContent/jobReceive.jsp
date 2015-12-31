@@ -25,6 +25,9 @@
 <!-- Style -->
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
 <!-- Responsive -->
+<!-- tost msg -->
+<link rel="stylesheet" href="css/toast.css" type="text/css" />
+
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 </head>
@@ -85,6 +88,9 @@
 										</table>
 									</form>
 									<br> <br>
+									<div class='toast' style='display: none'>
+										<h3 id="msg">${requestScope['msg']}</h3>
+									</div>
 
 									<hr width="100%">
 								</div>
@@ -97,21 +103,25 @@
 												<table>
 													<tr>
 														<c:set value="${requestScope['amj']}" var="jjjjj" />
-														<td><p style="font-size: 17px; color: black;">
+														<td><p style="font-size: 15px; color: black;">
 																<b>Jobber Name:</b>
 															</p></td>
 
-														<td><b>${jjjjj.vendor.name}</b></td>
+														<td><p style="font-size: 17px; color: black;">
+																<b>${jjjjj.vendor.name}</b>
+															</p></td>
 
 													</tr>
 													<tr>
 														<td>&nbsp;</td>
 													</tr>
 													<tr>
-														<td><p style="font-size: 17px; color: black;">
+														<td><p style="font-size: 15px; color: black;">
 																<b>Jobber Details:</b>
-															</p> <br> Email: ${jjjjj.vendor.email}<br>
-															Address:${jjjjj.vendor.address}
+															</p> <br>
+															<p style="font-size: 17px; color: black;">Email:
+																${jjjjj.vendor.email}</p> <br>
+															<p style="font-size: 17px; color: black;">Address:${jjjjj.vendor.address}</p>
 													</tr>
 												</table>
 
@@ -122,23 +132,26 @@
 
 												<table>
 													<tr>
-														<td><p style="font-size: 17px; color: black;">
-																<b>Job Challan ID:</b>
-															</p></td>
+														<td><p style="font-size: 15px; color: black;">
+																<b>Job Challan ID:</b></td>
 														<td>&nbsp;</td>
-														<td><b>${jjjjj.id}</b></td>
+														<td><p style="font-size: 17px; color: black;">
+																<b>${jjjjj.id}</b>
+															</p></td>
 
 													</tr>
 													<tr>
 														<td>&nbsp;</td>
 													</tr>
 													<tr>
-														<td><p style="font-size: 17px; color: black;">
+														<td><p style="font-size: 15px; color: black;">
 																<b>Assigned Date:</b>
 															</p></td>
 														<td>&nbsp;</td>
-														<td><b><fmt:formatDate
-																	value="${jjjjj.assignDate}" pattern="dd-MM-yyyy" /></b></td>
+														<td><p style="font-size: 17px; color: black;">
+																<b><fmt:formatDate value="${jjjjj.assignDate}"
+																		pattern="dd-MM-yyyy" /></b>
+															</p></td>
 
 													</tr>
 												</table>
@@ -153,7 +166,8 @@
 											<hr width="100%">
 											<br> <br>
 											<form action="jobRecieve" method="post">
-											<input type="hidden" value="${requestScope['amj'].id}" name="jobAssignID">
+												<input type="hidden" value="${requestScope['amj'].id}"
+													name="jobAssignID">
 												<table cellspacing="0" cellpadding="0" border="0"
 													width="975">
 													<tr>
@@ -201,13 +215,14 @@
 																			<td width="15%" style="text-align: center">${jobPro.workDescription}</td>
 																			<td width="10%"
 																				style="text-align: center; padding: 2px"><span
-																				id="remainQtyRe${jobPro.id}">${jobPro.qty}</span></td>
+																				id="remainQtyRe${jobPro.id}">${jobPro.remaninQty}</span></td>
 
 																			<td width="20%"
 																				style="text-align: center; padding: 4px"><input
 																				type="number" class="form-control" value="0"
 																				name="qtyRe${jobPro.id}" id="qtyRe${jobPro.id}"
-																				onkeyup="qtySubtraction('${jobPro.id}');" onchange="return0('${jobPro.id}');"></td>
+																				onkeyup="qtySubtraction('${jobPro.id}');"
+																				onchange="return0('${jobPro.id}');"></td>
 
 																		</tr>
 																	</c:forEach>
@@ -228,6 +243,8 @@
 									</div>
 								</c:if>
 							</div>
+
+
 						</div>
 					</div>
 				</div>
@@ -252,11 +269,11 @@
 			$("#qtyRe" + g).val("0");
 		}
 	}
-	function return0(g){
-		if($("#qtyRe" + g).val()==""){
+	function return0(g) {
+		if ($("#qtyRe" + g).val() == "") {
 			$("#qtyRe" + g).val("0");
 		}
-				
+
 	}
 
 	$(document).ready(function() {
@@ -267,28 +284,53 @@
 		$("#qtyRe").val()
 
 	});
-</script>
 
-<script>
 	$(function() {
 		$("#datepicker").datepicker({
 			dateFormat : "dd-mm-yy"
 		});
 	});
-</script>
-<script>
+
 	$(function() {
 		$("#datepicker1").datepicker({
 			dateFormat : "dd-mm-yy"
 		});
 	});
-</script>
 
-<script type="text/javascript">
 	function jRec() {
 		$("#jobform").submit();
 		/* $("#jrecive").show(); */
 
 	}
+
+
+
+	function getUrlVars() {
+		var vars = {};
+		var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,
+				function(m, key, value) {
+					vars[key] = value;
+				});
+		return vars;
+	}
 </script>
+
+<c:if test="${requestScope['msg']!=''}">
+	<script>
+	if($('#msg').html()!=""){
+		$('.toast').fadeIn(400).delay(3000).fadeOut(400);
+	}
+	</script>
+</c:if>
+
+<c:if test="${requestScope['amj']==null}">
+	<script type="text/javascript">
+		if (getUrlVars()['jChallan'] != null) {
+			$('#msg').html("Invalid Challan number.");
+			$('.toast').fadeIn(400).delay(3000).fadeOut(400);
+		}
+	</script>
+</c:if>
+
+
 </html>

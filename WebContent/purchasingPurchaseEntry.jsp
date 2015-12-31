@@ -207,7 +207,7 @@
 	</c:if>
 
 	<div class="main" style="height: 664px;">
-		<%@include file="includeHeader.jsp"%>
+		<%@include file="includeHeader.jsp"%>                                        
 		<div class="page-container menu-left" style="height: 100%;">
 			<%@include file="includeSidebar.jsp"%>
 			<div class="content-sec"
@@ -216,15 +216,12 @@
 					<div class="row">
 						<div class="masonary-grids">
 
-							<div class="widget-area">
-								<div class="breadcrumbs" style="height: 39px">
-									<ul>
-										<li><p
-												style="right: -422px; font-size: 20px; position: absolute;">
-												<b>Purchase Entry</b>
-											</p></li>
-									</ul>
-								</div>
+							
+								<div class="breadcrumbs" style="height: 50px; text-align: center;">
+							<h3 style="margin-top: 11px;">Purchase Entry</h3>
+
+						</div>
+
 								<div class="col-md-12">
 									<form role="form" class="sec" method="post" id="purchaseForm"
 										action="purchaseEntry">
@@ -593,9 +590,7 @@
 			</div>
 			<!-- Content Sec -->
 		</div>
-		<!-- Page Container -->
-	</div>
-	<!-- main -->
+	
 
 	<div id="addProduct" class="modal fade" role="dialog"
 		style="top: -70px; overflow-y: hidden; overflow-x: hidden;">

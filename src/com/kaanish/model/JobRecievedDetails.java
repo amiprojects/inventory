@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -17,7 +18,7 @@ import javax.persistence.TemporalType;
 public class JobRecievedDetails implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	@Id
+	@Id@GeneratedValue
 	private int id;
 	private int qtyRecieved;
 	@Temporal(TemporalType.TIMESTAMP)
