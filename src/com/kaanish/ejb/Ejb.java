@@ -22,6 +22,7 @@ import com.kaanish.model.CustomerEntry;
 import com.kaanish.model.Department;
 import com.kaanish.model.JobAssignmentDetails;
 import com.kaanish.model.JobAssignmentProducts;
+import com.kaanish.model.JobRecievedDetails;
 import com.kaanish.model.JobStock;
 import com.kaanish.model.Module;
 import com.kaanish.model.PageList;
@@ -856,6 +857,12 @@ public class Ejb {
 	public Purchase_Product_Details getPurchaseProductDetailsById(int id) {
 		return em.find(Purchase_Product_Details.class, id);
 	}
+	
+	/*********************for job recieve*********************/
+	public void setJobRecieve(JobRecievedDetails jobRecievedDetails){
+		em.persist(jobRecievedDetails);
+	}
+	
 
 	/******************** for City *******************************/
 	public void setCity(City city) {
