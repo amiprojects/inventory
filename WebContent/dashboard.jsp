@@ -41,8 +41,7 @@
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
 
-			<c:if
-				test="${page.name.equals('dashboard')}">
+			<c:if test="${page.name.equals('dashboard')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
@@ -53,9 +52,9 @@
 			</script>
 		</c:if>
 	</c:if>
-	
+
 	<%-- <h1>${sessionScope['user']}</h1> --%>
-	
+
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
@@ -998,175 +997,191 @@
 	</script>
 
 	<script type="text/javascript">
-		$(document)
-				.ready(
-						function() {
-							$("#dash").attr("id", "activeSubMenu");
-							$("#sDash").attr("style", "color: red;");
-							$(".carousal-sec").owlCarousel({
-								autoPlay : true,
-								stopOnHover : true,
-								goToFirstSpeed : 500,
-								slideSpeed : 500,
-								singleItem : true,
-								autoHeight : true,
-								transitionStyle : "backSlide",
-								navigation : true
-							});
+		function display_c() {
+			var refresh = 1000; // Refresh rate in milli seconds
+			mytime = setTimeout('display_ct()', refresh)
+		}
 
-							$("#pie").sparkline(
-									[ 1, 1, 2 ],
-									{
-										type : 'pie',
-										width : '40',
-										height : '40',
-										sliceColors : [ '#2dcb73', '#fd6a59',
-												'#17c3e5', '#109618',
-												'#66aa00', '#dd4477',
-												'#0099c6', '#990099 ' ]
-									});
+		function display_ct() {
+			var strcount
+			var x = new Date()
+			//var x1=x.toUTCString();// changing the display to UTC string
+			var x1 = x.getDate() + "/" + x.getMonth() + "/" + x.getYear();
+			x1 = x1 + " - " + x.getHours() + ":" + x.getMinutes() + ":"
+					+ x.getSeconds();
+			document.getElementById('reportrange').innerHTML = x1;
+			tt = display_c();
+		}
+		$(document).ready(function() {
+			display_ct();
 
-							$(function() {
-								$("#new-orders").sparkline(
-										[ 4, 5, 6, 7, 6, 5, 4, 3, 2, 2, 3, 4 ],
-										{
-											type : 'bar',
-											height : '40px',
-											barSpacing : 3,
-											barWidth : 6,
-											barColor : '#2dcb73',
-											negBarColor : '#D6A838'
-										});
-							});
+			/* 
+			$("#dash").attr("id", "activeSubMenu");
+			$("#sDash").attr("style", "color: red;");
+			$(".carousal-sec").owlCarousel({
+				autoPlay : true,
+				stopOnHover : true,
+				goToFirstSpeed : 500,
+				slideSpeed : 500,
+				singleItem : true,
+				autoHeight : true,
+				transitionStyle : "backSlide",
+				navigation : true
+			});
 
-							$(function() {
-								$("#new-sales").sparkline(
-										[ 2, 3, 4, 5, 2, 5, 6, 2, 8, 5, 1, 5 ],
-										{
-											type : 'bar',
-											height : '40px',
-											barSpacing : 3,
-											barWidth : 6,
-											barColor : '#ff604f',
-											negBarColor : '#D6A838'
-										});
-							});
+			$("#pie").sparkline(
+					[ 1, 1, 2 ],
+					{
+						type : 'pie',
+						width : '40',
+						height : '40',
+						sliceColors : [ '#2dcb73', '#fd6a59',
+								'#17c3e5', '#109618',
+								'#66aa00', '#dd4477',
+								'#0099c6', '#990099 ' ]
+					});
 
-							$(function() {
-								$("#new-visitors").sparkline(
-										[ 6, 5, 3, 1, 4, 5, 6, 7, 3, 2, 3, 8 ],
-										{
-											type : 'bar',
-											height : '40px',
-											barSpacing : 3,
-											barWidth : 6,
-											barColor : '#17c3e5',
-											negBarColor : '#D6A838'
-										});
-							});
-
-							$('#reportrange')
-									.daterangepicker(
-											{
-												startDate : moment().subtract(
-														'days', 29),
-												endDate : moment(),
-												minDate : '01/01/2012',
-												maxDate : '12/31/2014',
-												dateLimit : {
-													days : 60
-												},
-												showDropdowns : true,
-												showWeekNumbers : true,
-												timePicker : false,
-												timePickerIncrement : 1,
-												timePicker12Hour : true,
-												ranges : {
-													'Today' : [ moment(),
-															moment() ],
-													'Yesterday' : [
-															moment().subtract(
-																	'days', 1),
-															moment().subtract(
-																	'days', 1) ],
-													'Last 7 Days' : [
-															moment().subtract(
-																	'days', 6),
-															moment() ],
-													'Last 30 Days' : [
-															moment().subtract(
-																	'days', 29),
-															moment() ],
-													'This Month' : [
-															moment().startOf(
-																	'month'),
-															moment().endOf(
-																	'month') ],
-													'Last Month' : [
-															moment()
-																	.subtract(
-																			'month',
-																			1)
-																	.startOf(
-																			'month'),
-															moment()
-																	.subtract(
-																			'month',
-																			1)
-																	.endOf(
-																			'month') ]
-												},
-												opens : 'left',
-												buttonClasses : [ 'btn btn-default' ],
-												applyClass : 'btn-small btn-primary',
-												cancelClass : 'btn-small',
-												format : 'MM/DD/YYYY',
-												separator : ' to ',
-												locale : {
-													applyLabel : 'Submit',
-													fromLabel : 'From',
-													toLabel : 'To',
-													customRangeLabel : 'Custom Range',
-													daysOfWeek : [ 'Su', 'Mo',
-															'Tu', 'We', 'Th',
-															'Fr', 'Sa' ],
-													monthNames : [ 'January',
-															'February',
-															'March', 'April',
-															'May', 'June',
-															'July', 'August',
-															'September',
-															'October',
-															'November',
-															'December' ],
-													firstDay : 1
-												}
-											},
-											function(start, end) {
-												console
-														.log("Callback has been called!");
-												$('#reportrange span')
-														.html(
-																start
-																		.format('MMMM D, YYYY')
-																		+ ' - '
-																		+ end
-																				.format('MMMM D, YYYY'));
-											});
-							//Set the initial state of the picker label
-							$('#reportrange span').html(
-									moment().subtract('days', 29).format(
-											'MMMM D, YYYY')
-											+ ' - '
-											+ moment().format('MMMM D, YYYY'));
-
-							$(function() {
-								$('#map').vectorMap({
-									map : 'world_en'
-								});
-							})
-
+			$(function() {
+				$("#new-orders").sparkline(
+						[ 4, 5, 6, 7, 6, 5, 4, 3, 2, 2, 3, 4 ],
+						{
+							type : 'bar',
+							height : '40px',
+							barSpacing : 3,
+							barWidth : 6,
+							barColor : '#2dcb73',
+							negBarColor : '#D6A838'
 						});
+			});
+
+			$(function() {
+				$("#new-sales").sparkline(
+						[ 2, 3, 4, 5, 2, 5, 6, 2, 8, 5, 1, 5 ],
+						{
+							type : 'bar',
+							height : '40px',
+							barSpacing : 3,
+							barWidth : 6,
+							barColor : '#ff604f',
+							negBarColor : '#D6A838'
+						});
+			});
+
+			$(function() {
+				$("#new-visitors").sparkline(
+						[ 6, 5, 3, 1, 4, 5, 6, 7, 3, 2, 3, 8 ],
+						{
+							type : 'bar',
+							height : '40px',
+							barSpacing : 3,
+							barWidth : 6,
+							barColor : '#17c3e5',
+							negBarColor : '#D6A838'
+						});
+			});
+
+			$('#reportrange')
+					.daterangepicker(
+							{
+								startDate : moment().subtract(
+										'days', 29),
+								endDate : moment(),
+								minDate : '01/01/2012',
+								maxDate : '12/31/2014',
+								dateLimit : {
+									days : 60
+								},
+								showDropdowns : true,
+								showWeekNumbers : true,
+								timePicker : false,
+								timePickerIncrement : 1,
+								timePicker12Hour : true,
+								ranges : {
+									'Today' : [ moment(),
+											moment() ],
+									'Yesterday' : [
+											moment().subtract(
+													'days', 1),
+											moment().subtract(
+													'days', 1) ],
+									'Last 7 Days' : [
+											moment().subtract(
+													'days', 6),
+											moment() ],
+									'Last 30 Days' : [
+											moment().subtract(
+													'days', 29),
+											moment() ],
+									'This Month' : [
+											moment().startOf(
+													'month'),
+											moment().endOf(
+													'month') ],
+									'Last Month' : [
+											moment()
+													.subtract(
+															'month',
+															1)
+													.startOf(
+															'month'),
+											moment()
+													.subtract(
+															'month',
+															1)
+													.endOf(
+															'month') ]
+								},
+								opens : 'left',
+								buttonClasses : [ 'btn btn-default' ],
+								applyClass : 'btn-small btn-primary',
+								cancelClass : 'btn-small',
+								format : 'MM/DD/YYYY',
+								separator : ' to ',
+								locale : {
+									applyLabel : 'Submit',
+									fromLabel : 'From',
+									toLabel : 'To',
+									customRangeLabel : 'Custom Range',
+									daysOfWeek : [ 'Su', 'Mo',
+											'Tu', 'We', 'Th',
+											'Fr', 'Sa' ],
+									monthNames : [ 'January',
+											'February',
+											'March', 'April',
+											'May', 'June',
+											'July', 'August',
+											'September',
+											'October',
+											'November',
+											'December' ],
+									firstDay : 1
+								}
+							},
+							function(start, end) {
+								console
+										.log("Callback has been called!");
+								$('#reportrange span')
+										.html(
+												start
+														.format('MMMM D, YYYY')
+														+ ' - '
+														+ end
+																.format('MMMM D, YYYY'));
+							});
+			//Set the initial state of the picker label
+			$('#reportrange span').html(
+					moment().subtract('days', 29).format(
+							'MMMM D, YYYY')
+							+ ' - '
+							+ moment().format('MMMM D, YYYY'));
+
+			$(function() {
+				$('#map').vectorMap({
+					map : 'world_en'
+				});
+			}) */
+
+		});
 	</script>
 </body>
 </html>
