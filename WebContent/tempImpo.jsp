@@ -74,6 +74,42 @@ $("#id").modal("show");
 
 // http://localhost:8088/kaanish_kouture/getProductDetailById?id=1
 
-Math.round((num) * 100) / 100
+//Math.round((num) * 100) / 100
 
-<h1>${sessionScope['user']}</h1>
+//<h1>${sessionScope['user']}</h1>
+
+//autocomplete
+$(function() {
+		$("#bankCity").autocomplete({
+			source : function(req, resp) {
+				$.ajax({
+					type : "post",
+					url : "getCityByName",
+					data : {
+						name : req.term
+					},
+					dataType : "json",
+					success : function(data) {
+						resp($.map(data, function(item) {
+							return ({
+								value : item.cityName,
+								id : item.id
+							});
+						}));
+					}
+
+				});
+			},
+			change : function(event, ui) {
+				if (ui.item == null) {
+					$(this).val("");
+					$("#bankCityId").val("");
+				} else {
+					$("#bankCityId").val(ui.item.id);
+				}
+			},
+			select : function(event, ui) {
+				$("#bankCityId").val(ui.item.id);
+			}
+		});
+	});

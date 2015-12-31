@@ -62,16 +62,11 @@ page[size="A4"] {
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 <c:if test="${param.print==1}">
 	<script type="text/javascript">
-		$(document)
-				.ready(
-						function() {
-							window.print();
-							window
-									.open(
-											"barcodePrint.jsp?id=${param.id}&ip=${sessionScope['sip']}&port=${sessionScope['port']}",
-											'name', 'width=600,height=400');
-
-						});
+	var myWindow =window
+				.open(
+						"barcodePrint.jsp?id=${param.id}&ip=${sessionScope['sip']}&port=${sessionScope['port']}",
+						'name', 'width=600,height=400');
+	myWindow.print();
 	</script>
 </c:if>
 </head>
