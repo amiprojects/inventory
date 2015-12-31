@@ -1507,9 +1507,7 @@ public class Servlet extends HttpServlet {
 				msg = "";
 
 				break;
-			/************************
-			 * Stock*MuyltiSearch*************Ami
-			 ************/
+			/************************ * Stock*MuyltiSearch*************Ami ************/
 
 			case "goStockView":
 				page = "stockViewD.jsp";
@@ -1525,7 +1523,7 @@ public class Servlet extends HttpServlet {
 
 			/**************************************************************/
 
-			/**************************************************************/
+			
 
 			case "uploadProductImage":
 				page = "addNewProductImage.jsp";

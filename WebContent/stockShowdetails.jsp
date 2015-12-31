@@ -406,7 +406,7 @@
 																<td><b>${purPro.purchase_Entry.id}/${purPro.serialNumbers.lotNo}/${purPro.serialNumbers.serialNumber}</b></td> 
 																<td>&nbsp;</td>  --%>
 
-																	<td><b>${purPro.purchase_Entry.challanNumber}</b></td>
+																	<td><a href="stockPurCha.jsp?id=${purPro.id}"><b>${purPro.purchase_Entry.challanNumber}</b></a></td>
 																</tr>
 
 															</c:if>
@@ -487,54 +487,43 @@
 															<td><b>Sales Invoice number</b></td>
 
 														</tr>
-
-
-
-
-
-														<c:set var="wspsps"
+														<%--  <c:set var="wspsps"
 															value="${purSize>0?p.purchase_Product_Details.get(purSize-1).wsp:'0'}" />
 														<c:set var="mrprp"
-															value="${purSize>0?p.purchase_Product_Details.get(purSize-1).mrp:'0'}" />
+															value="${purSize>0?p.purchase_Product_Details.get(purSize-1).mrp:'0'}" />  --%>
 
-														<c:forEach items="${salesPro}" var="salesPro1">
-															<tr style="width: 100%">
-
-																<td><b><fmt:formatDate
-																			value="${salesPro1.salesEntry.sales_date}"
-																			pattern="dd-MM-yyyy" /></b></td>
+														<tr style="width: 100%">
+														
+															<c:forEach items="${salesPro}" var="sPro">
+															
+																<%-- <td><b> <fmt:formatDate value="${}" pattern="dd-MM-yyyy" />
+																</b></td> --%>
 																<td>&nbsp;</td>
 
-																<td><b>${salesPro1.quantity}</b></td>
+																<td><b>${sPro.salesPrice}</b></td>
 
 																<td>&nbsp;</td>
-																<td><b>${salesPro1.productDetail.qtyUnit.name}</b></td>
+																<td><b> </b></td>
 
 																<td>&nbsp;</td>
 
-																<td><b> <c:choose>
-																			<c:when test="${salesPro1.salesPrice== wspsps}"> ${"WSP"}
+																<td><b> <%-- <c:choose>
+																			<c:when test="${salesPro1.salesPrice== wspsps}"> ${mrprp}
  																			</c:when>
 																			<c:when test="${salesPro1.salesPrice == mrprp}"> ${"MRP"}
  																			</c:when>
 																			<c:otherwise>Errorr
  																			</c:otherwise>
-																		</c:choose>
+																		</c:choose> --%>
 																</b></td>
 																<td>&nbsp;</td>
 
-																<td><b>${salesPro1.salesPrice}</b></td>
+																<td><b></b></td>
 																<td>&nbsp;</td>
 
-																<td><b>${salesPro1.quantity * salesPro1.salesPrice}</b></td>
+																<td><b></b></td>
 																<td>&nbsp;</td>
 
-
-																<td><b>${salesPro1.salesEntry.customer.name}</b></td>
-																<td>&nbsp;</td>
-
-																<%-- <td><b>${sessionScope['ejb'].getVendorById(salesPro1.salesEntry.agentId).name}</b></td>
-																<td>&nbsp;</td>--%>
 
 																<td><b></b></td>
 																<td>&nbsp;</td>
@@ -543,9 +532,15 @@
 																<td>&nbsp;</td>
 
 																<td><b></b></td>
+																<td>&nbsp;</td>
 
-															</tr>
-														</c:forEach>
+																<td><b></b></td>
+																<td>&nbsp;</td>
+
+																<td><b></b></td>
+															</c:forEach>
+														</tr>
+
 
 
 
@@ -650,7 +645,7 @@
 																<td>&nbsp;</td>
 
 																<td><b><fmt:formatDate
-												 							value="${jobPro.jobAssignmentDetails.estimatedCompletionDate}"
+																			value="${jobPro.jobAssignmentDetails.estimatedCompletionDate}"
 																			pattern="dd-MM-yyyy" /> </b></td>
 																<td>&nbsp;</td>
 
