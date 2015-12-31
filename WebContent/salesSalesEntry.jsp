@@ -232,7 +232,8 @@
 									<!-- <input type="hidden" name="descriptiondId" id="descriptionId"> -->
 									&nbsp; &nbsp; &nbsp;<b>Product with Barcode</b> <input
 										type="text" id="salesbar" name="salesbar"
-										onkeyup="salesbarF();">
+										onkeyup="salesbarF();"><input type="hidden"
+										id="salesbarH" name="salesbarH">
 									<button onclick="probar()" type="button">Go</button>
 
 								</div>
@@ -619,30 +620,6 @@
 	</script>
 
 	<script>
-		function getProdDetByPurchaseProdDetId() {
-			$("#salesbar").val($("#prodCode").val());
-			if ($("#prodCode").val() != 0) {
-				$("#qty").prop("readonly", false);
-			} else {
-				$("#qty").prop("readonly", true);
-			}
-			/* $("#remQty").val("${pCode.remaining_quantity}");
-			if ($("#qty").val() > $("#remQty").val()) {
-				alert('Please enter less quantity than remaining');
-				$("#qty").val(0);
-			} */
-		}
-		/* function checkQty() {
-			if ($("#prodCode").val() == 0) {
-				alert('Please select product code first');
-				$("#qty").val(0);
-			} else {
-				if ($("#qty").val() > $("#remQty").val()) {
-					alert('Please enter less quantity than remaining');
-					$("#qty").val("");
-				}
-			}
-		} */
 		ind = 0;
 		function removeProduct(a) {
 			$("#trRemove" + a).remove();
@@ -670,6 +647,7 @@
 					countryArray[i];
 				}
 				var id = countryArray[0];
+				var qty = $("#qty").val();
 
 				$
 						.ajax({
@@ -683,7 +661,7 @@
 								$("#codevalue").val(data.productCode);
 								$("#productId").val(data.productId);
 								$("#descvalue").val(data.productDesc);
-								$("#qtyvalue").val(Number($("#qty").val()));
+								$("#qtyvalue").val(Number(qty));
 								if ($("#wspORmrp").val() == 'mrpVal') {
 									$("#mrpQty").val(data.mrp);
 									$("#eachtotalvalue")
@@ -780,13 +758,13 @@
 													+ '\'><input readonly="readonly" type="hidden" name="productId" value=\''
 													+ data.productId
 													+ '\'><input readonly="readonly" type="hidden" name="purchaseProductDetId" value=\''
-														+ $("#prodCode").val()
+														+ $("#salesbarH").val()
 														+ '\'></td>'
 														+ '<td><input readonly="readonly" type="text" name="descvalue" value=\''
 													+ data.productDesc
 													+ '\'></td>'
 														+ '<td><input readonly="readonly" type="text" name="qtyvalue" value=\''
-														+ $("#qty").val()
+														+ $("#qtyvalue").val()
 														+ '\'></td>'
 														+ '<td><input readonly="readonly" type="text" name="mrpQty" value=\''
 														+ $("#mrpQty").val()
@@ -811,7 +789,8 @@
 				$("#salesbar").prop("readonly", false);
 				$("#mrp").prop("disabled", true);
 				$("#wsp").prop("disabled", true);
-				//$("#qty").val("");
+				$("#qty").prop("readonly", false);
+				$("#qty").val("");
 			}
 		}
 		function discountF() {
@@ -1081,7 +1060,6 @@
 								},
 								select : function(event, ui) {
 									if (ui.item != null) {
-
 										$("#pCodeId").val(ui.item.id);
 										//getProductDetailsByProductCode(ui.item.id);
 										$("#purchaseDetails").modal("show");
@@ -1202,9 +1180,10 @@
 		function chooseF(purchaseProdDetIdForBarCode) {
 			//alert(purchaseProdDetIdForBarCode);
 			$("#salesbar").val(purchaseProdDetIdForBarCode);
+			$("#salesbarH").val(purchaseProdDetIdForBarCode);
 			$("#salesbar").prop("readonly", true);
 			$("#purchaseDetails").modal("hide");
-			$("#qty").prop("readonly", false);
+			$("#qty").prop("readonly", true);
 		}
 		function pcodeF() {
 			if ($("#qty").val() == 0 || $("#qty").val() == "") {

@@ -819,15 +819,30 @@ public class Ejb {
 
 	public List<Purchase_Product_Details> getSaleblePurchaseProductDetailsByProductCodeAndQuantity(
 			String code, Date date) {
+		List<Purchase_Product_Details> lst=new ArrayList<Purchase_Product_Details>();
+		
 		TypedQuery<Purchase_Product_Details> q = em
 				.createQuery(
-						"select c from Purchase_Product_Details c where  UPPER(c.productDetail.code) like :cd and c.remaining_quantity>0 and c.productDetail.isSaleble=:salable and (c.purchase_Entry.purchase_date<:date OR c.initialInventory=:asd)ORDER BY c.id ASC",
+						"select c from Purchase_Product_Details c where  UPPER(c.productDetail.code) like :cd and c.remaining_quantity>0 and c.productDetail.isSaleble=:salable and c.purchase_Entry.purchase_date<:date ORDER BY c.id ASC",
 						Purchase_Product_Details.class);
 		q.setParameter("salable", true);
-		q.setParameter("asd", true);
 		q.setParameter("cd", "%" + code.toUpperCase() + "%");
 		q.setParameter("date", date);
-		return q.getResultList();
+		
+		lst=q.getResultList();
+		
+		TypedQuery<Purchase_Product_Details> q1 = em
+				.createQuery(
+						"select c from Purchase_Product_Details c where  UPPER(c.productDetail.code) like :cd and c.remaining_quantity>0 and c.productDetail.isSaleble=:salable and c.initialInventory=true ORDER BY c.id ASC",
+						Purchase_Product_Details.class);
+		q1.setParameter("salable", true);
+		q1.setParameter("cd", "%" + code.toUpperCase() + "%");
+		
+		for(Purchase_Product_Details ppd: q1.getResultList()){
+			lst.add(ppd);
+		}
+		
+		return lst;
 	}
 
 	public List<Purchase_Product_Details> getReadyPurchaseProductDetailsByQty() {
