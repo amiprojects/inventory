@@ -282,8 +282,8 @@ public class Ejb {
 				QtyUnit.class);
 		return q.getResultList();
 	}
-	
-	public void deleteUOMById(int id){
+
+	public void deleteUOMById(int id) {
 		em.remove(getQtyUnitById(id));
 	}
 
@@ -658,8 +658,8 @@ public class Ejb {
 	public void setJobAssignment(JobAssignmentDetails jobAssignmentDetails) {
 		em.persist(jobAssignmentDetails);
 	}
-	
-	public JobAssignmentDetails getJobAssignmentDetailsByID(int id){
+
+	public JobAssignmentDetails getJobAssignmentDetailsByID(int id) {
 		return em.find(JobAssignmentDetails.class, id);
 	}
 
@@ -742,13 +742,12 @@ public class Ejb {
 			JobAssignmentProducts jobAssignmentProducts) {
 		em.persist(jobAssignmentProducts);
 	}
-	
-	public void updateJobAssignmentProductDetails(JobAssignmentProducts jobAssignmentProducts ){
+
+	public void updateJobAssignmentProductDetails(
+			JobAssignmentProducts jobAssignmentProducts) {
 		em.merge(jobAssignmentProducts);
 
-		
 	}
-	
 
 	public List<JobAssignmentProducts> getJobAssignmentProductDetailsByproductId(
 			int id) {
@@ -819,13 +818,15 @@ public class Ejb {
 	}
 
 	public List<Purchase_Product_Details> getSaleblePurchaseProductDetailsByProductCodeAndQuantity(
-			String code) {
+			String code, Date date) {
 		TypedQuery<Purchase_Product_Details> q = em
 				.createQuery(
-						"select c from Purchase_Product_Details c where  UPPER(c.productDetail.code) like :cd and c.remaining_quantity>0 and c.productDetail.isSaleble=:salable ORDER BY c.id ASC",
+						"select c from Purchase_Product_Details c where  UPPER(c.productDetail.code) like :cd and c.remaining_quantity>0 and c.productDetail.isSaleble=:salable and (c.purchase_Entry.purchase_date<:date AND c.initialInventory=:asd)ORDER BY c.id ASC",
 						Purchase_Product_Details.class);
-		q.setParameter("salable", false);
+		q.setParameter("salable", true);
+		q.setParameter("asd", true);
 		q.setParameter("cd", "%" + code.toUpperCase() + "%");
+		q.setParameter("date", date);
 		return q.getResultList();
 	}
 
@@ -1130,14 +1131,13 @@ public class Ejb {
 		q.setParameter("nm", "%" + name.toUpperCase() + "%");
 		return q.getResultList();
 	}
-	
 
 	public List<ProductDetail> getSalebleProductsByQtyAndCode(String nm) {
 		TypedQuery<ProductDetail> query = em
 				.createQuery(
 						"select c from ProductDetail c where c.isSaleble=:sal AND c.readyGoodsStock.remainingQty>0 AND UPPER(c.code) like :codeName",
 						ProductDetail.class);
-		query.setParameter("codeName", nm.toUpperCase()+"%");
+		query.setParameter("codeName", "%" + nm.toUpperCase() + "%");
 		query.setParameter("sal", true);
 		return query.getResultList();
 	}
