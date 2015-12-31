@@ -35,6 +35,10 @@ public class SalesEntry implements Serializable {
 	private String saleType;
 	private String challanNumber;
 	private int challanSuffix;
+	
+	@ManyToOne
+	@JoinColumn(name = "salesAgentId")
+	private Vendor vendor;
 
 	@ManyToOne
 	@JoinColumn(name = "customerId")
@@ -180,6 +184,14 @@ public class SalesEntry implements Serializable {
 
 	public void setTotalCost(float totalCost) {
 		this.totalCost = totalCost;
+	}
+
+	public Vendor getVendor() {
+		return vendor;
+	}
+
+	public void setVendor(Vendor vendor) {
+		this.vendor = vendor;
 	}
 
 }

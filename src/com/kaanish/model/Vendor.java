@@ -55,6 +55,9 @@ public class Vendor implements Serializable {
 	private List<Purchase_Entry> purchaseEntry;
 
 	@OneToMany(mappedBy = "vendor")
+	private List<SalesEntry> salesEntry;
+
+	@OneToMany(mappedBy = "vendor")
 	private List<AccountDetails> accountDetails;
 
 	public List<Purchase_Entry> getPurchaseEntry() {
@@ -181,15 +184,18 @@ public class Vendor implements Serializable {
 		return jobAssignmentDetails;
 	}
 
-	public void setJobAssignmentDetails(List<JobAssignmentDetails> jobAssignmentDetails) {
+	public void setJobAssignmentDetails(
+			List<JobAssignmentDetails> jobAssignmentDetails) {
 		this.jobAssignmentDetails = jobAssignmentDetails;
 	}
 
 	@Override
 	public String toString() {
-		return "{\"id\":\"" + id + "\", " + "\"name\":\"" + name + "\", " + "\"companyName\":\"" + companyName + "\", "
-				+ "\"ph1\":\"" + ph1 + "\", " + "\"ph2\":\"" + ph2 + "\", " + "\"address\":\"" + address + "\", "
-				+ "\"pinCode\":\"" + pinCode + "\", " + "\"email\":\"" + email + "\", " + "\"city\":\""
+		return "{\"id\":\"" + id + "\", " + "\"name\":\"" + name + "\", "
+				+ "\"companyName\":\"" + companyName + "\", " + "\"ph1\":\""
+				+ ph1 + "\", " + "\"ph2\":\"" + ph2 + "\", " + "\"address\":\""
+				+ address + "\", " + "\"pinCode\":\"" + pinCode + "\", "
+				+ "\"email\":\"" + email + "\", " + "\"city\":\""
 				+ city.getCityName() + "\"}";
 	}
 
@@ -197,8 +203,17 @@ public class Vendor implements Serializable {
 		return jobAssignmentProducts;
 	}
 
-	public void setJobAssignmentProducts(List<JobAssignmentProducts> jobAssignmentProducts) {
+	public void setJobAssignmentProducts(
+			List<JobAssignmentProducts> jobAssignmentProducts) {
 		this.jobAssignmentProducts = jobAssignmentProducts;
+	}
+
+	public List<SalesEntry> getSalesEntry() {
+		return salesEntry;
+	}
+
+	public void setSalesEntry(List<SalesEntry> salesEntry) {
+		this.salesEntry = salesEntry;
 	}
 
 }

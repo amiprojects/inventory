@@ -679,6 +679,15 @@ public class Ejb {
 		q.setParameter("nm", "%" + name.toUpperCase() + "%");
 		return q.getResultList();
 	}
+	
+	public List<Vendor> getVendorsByVendorTypeSalesAgentAndName(String name) {
+		TypedQuery<Vendor> q = em
+				.createQuery(
+						"select c from Vendor c where c.vendorType.type='Sales Agent' and UPPER(c.name) like :nm",
+						Vendor.class);
+		q.setParameter("nm", "%" + name.toUpperCase() + "%");
+		return q.getResultList();
+	}
 
 	public List<Vendor> getVendorsWithVendorTypeJobberByProductID(String jobber) {
 		TypedQuery<Vendor> q = em.createQuery(
