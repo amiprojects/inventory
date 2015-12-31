@@ -48,6 +48,7 @@
 		$("#sales").attr("id", "activeSubMenu");
 		$("#sSalesEntry").attr("style", "color: red;");
 		$("#wspORmrp").val('mrpVal');
+		$("#aDetailsDiv").hide();
 	});
 </script>
 <link rel="stylesheet" href="css/toast.css" type="text/css" />
@@ -111,7 +112,7 @@
 							<form class="sec" action="salesEntry" method="post">
 								<div class="row">
 									<div class="col-md-6">
-										<div class="widget-area" style="height: 250px;">
+										<div class="widget-area" style="height: 270px;">
 											<div style="background-color: lightgrey;">
 												<h3>Bill To:</h3>
 											</div>
@@ -144,12 +145,19 @@
 													<td><input type="text" name="vatcst" id="vatcst"
 														style="length: 40px;"></input></td>
 												</tr>
+												<tr>
+													<td><input type="checkbox" onclick="isAgentF();"
+														id="agent" name="agent">&nbsp; Via Agent :</td>
+													<td><input type="text" name="agentName" id="agentName"
+														style="length: 40px;" readonly="readonly"></input><input
+														type="hidden" name="aId" id="aId"></td>
+												</tr>
 											</table>
 										</div>
 									</div>
 
 									<div class="col-md-6">
-										<div class="widget-area" style="height: 250px;">
+										<div class="widget-area" style="height: 270px;">
 											<div style="background-color: lightgrey;">
 												<h3>Invoice Details:</h3>
 											</div>
@@ -188,6 +196,12 @@
 													id="datepicker" readonly="readonly">
 
 											</div>
+										</div>
+									</div>
+									<div class="col-md-12" id="aDetailsDiv">
+										<div class="widget-area">
+											<textarea rows="5" cols="" id="aDetail" class="form-control"
+												readonly="readonly"></textarea>
 										</div>
 									</div>
 								</div>
@@ -365,11 +379,11 @@
 										</thead>
 									</table>
 									<div style="float: right;">
-										<input type="button"
-											onclick="window.location='salesSalesEntry.jsp'"
-											class="btn btn-danger small" value="Cancel"> <input
-											type="button" class="btn btn-info btn-sm" data-toggle="modal"
-											value="Save" onclick="paymentDate();">
+										<input type="button" onclick="cancelF();"
+											class="btn btn-danger small" value="Cancel"
+											data-toggle="modal"> <input type="button"
+											class="btn btn-info btn-sm" data-toggle="modal" value="Save"
+											onclick="paymentDate();">
 										<div id="saveSales" class="modal fade" role="dialog"
 											style="top: 25px;">
 											<div class="modal-dialog modal-lg">
@@ -479,7 +493,8 @@
 																				id="desc" name="desc"></textarea>
 																		</div>
 																	</div>
-																	<br>
+																	<br> <input type="hidden" name="isAgent"
+																		id="isAgent">
 																	<div class="breadcrumbs">
 																		<button type="button" class="btn green pull-right"
 																			onclick="submit();">Save</button>
@@ -556,7 +571,35 @@
 
 		</div>
 	</div>
+	<div id="cancelOrNot" class="modal fade" role="dialog"
+		style="top: 25px;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<!-- <h4 class="modal-title">Modal Header</h4> -->
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="widget-area">
+							<div class="row">
+								<span>Do you want to cancel?</span>
+							</div>
+							<br>
+							<div class="row">
+								<button type="button" class="btn btn-success medium" id="yesP">Yes</button>
+								<button type="button" class="btn btn-danger medium" id="noP">No</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+				</div>
+			</div>
 
+		</div>
+	</div>
 	<script>
 		$(function() {
 			var d = new Date();
@@ -647,7 +690,7 @@
 					countryArray[i];
 				}
 				var id = countryArray[0];
-				var qty = $("#qty").val();
+				var qty = Number($("#qty").val());
 
 				$
 						.ajax({
@@ -945,6 +988,7 @@
 		$(document).ready(function() {
 			$("#payDetail").hide();
 			$("#description").hide();
+			$("#isAgent").val('no');
 
 		});
 		function closePayment() {
@@ -1087,14 +1131,14 @@
 																		data2,
 																		function(
 																				item2) {
-																			if (item2.remaining_quantity >= $(
+																			if (item2.remaining_quantity >= Number($(
 																					"#qty")
-																					.val()) {
+																					.val())) {
 																				if (item2.purchaseDate != 'Initial Inventory') {
 																					$(
 																							"#purchaseDetailsTable")
 																							.append(
-																									"<tbody>"
+																									"<tbody id='viewAttr"+item2.id+"' title='"+item2.attrName1+" : "+item2.attrValue1+" , "+item2.attrName2+" : "+item2.attrValue2+" , "+item2.attrName3+" : "+item2.attrValue3+" , "+item2.attrName4+" : "+item2.attrValue4+" , "+item2.attrName5+" : "+item2.attrValue5+" , "+item2.attrName6+" : "+item2.attrValue6+"'>"
 																											+ "<tr>"
 																											+ "<td>"
 																											+ formatDate(item2.purchaseDate)
@@ -1125,7 +1169,7 @@
 																					$(
 																							"#purchaseDetailsTable")
 																							.append(
-																									"<tbody>"
+																									"<tbody id='viewAttr"+item2.id+"' title='"+item2.attrName1+" : "+item2.attrValue1+" , "+item2.attrName2+" : "+item2.attrValue2+" , "+item2.attrName3+" : "+item2.attrValue3+" , "+item2.attrName4+" : "+item2.attrValue4+" , "+item2.attrName5+" : "+item2.attrValue5+" , "+item2.attrName6+" : "+item2.attrValue6+"'>"
 																											+ "<tr>"
 																											+ "<td>"
 																											+ item2.purchaseDate
@@ -1154,8 +1198,16 @@
 																											+ "</tbody>");
 																				}
 																			}
+																			$(
+																					"#viewAttr"
+																							+ item2.id)
+																					.tooltip(
+																							{
+																								track : true
+																							});
 
 																		});
+
 													}
 												});
 
@@ -1199,6 +1251,120 @@
 				$("#qty").val("");
 			}
 		}
+		function cancelF() {
+			$("#cancelOrNot").modal("show");
+		}
+		$("#yesP").click(function() {
+			window.location = 'salesSalesEntry.jsp';
+		});
+		$("#noP").click(function() {
+			$("#cancelOrNot").modal("hide");
+		});
+		function isAgentF() {
+			if ($('#agent').is(":checked")) {
+				$("#isAgent").val('yes');
+				$("#agentName").prop("readonly", false);
+			} else {
+				$("#isAgent").val('no');
+				$("#agentName").prop("readonly", true);
+				$("#aDetailsDiv").hide();
+				$("#agentName").val("");
+			}
+		}
+		$(function() {
+			$("#agentName")
+					.autocomplete(
+							{
+								source : function(req, resp) {
+									$
+											.ajax({
+												type : "post",
+												url : "getVendorsByVendorTypeSalesAgentAndName",
+												data : {
+													name : req.term
+												},
+												dataType : "json",
+												success : function(data) {
+													resp($.map(data, function(
+															item) {
+														return ({
+															value : item.name,
+															id : item.id
+														});
+													}));
+												},
+
+												error : function(a, b, c) {
+													alert(a + b + c);
+												}
+
+											});
+								},
+								change : function(event, ui) {
+									if (ui.item == null) {
+										$(this).val("");
+										$("#aName").val("");
+										$("#aId").val("");
+									} else {
+										$("#aId").val(ui.item.id);
+									}
+								},
+								select : function(event, ui) {
+									if (ui.item != null) {
+										$("#aId").val(ui.item.id);
+										$.ajax({
+											url : 'getSalesAgentDetailsById',
+											type : 'post',
+											dataType : "json",
+											data : {
+												id : ui.item.id
+											},
+											success : function(data) {
+												$("#aDetailsDiv").show();
+												$("#aDetail").val(
+														"Address :\n\t"
+																+ data.address
+																+ "\nPh1 : "
+																+ data.ph1
+																+ "\nPh2 : "
+																+ data.ph2);
+											},
+											error : function(a, b, c) {
+												alert(b + ": " + c);
+											}
+										});
+									} else {
+										$(this).val("");
+										$("#aId").val("");
+										$("#aName").val("");
+									}
+
+								}
+							});
+		});
+		$(function() {
+			$("#city").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getCityByName",
+						data : {
+							name : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.cityName,
+									id : item.id
+								});
+							}));
+						}
+
+					});
+				}
+			});
+		});
 	</script>
 </body>
 

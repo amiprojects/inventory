@@ -100,14 +100,15 @@
 					<div class="row">
 						<div class="masonary-grids">
 
-							
-								<div class="breadcrumbs" style="height: 50px; text-align: center;">
-									<h3 style="    margin-top: 11px;">Job Assignment</h3>
-												
-											
-								</div>
-								
-								<div class="widget-area">
+
+							<div class="breadcrumbs"
+								style="height: 50px; text-align: center;">
+								<h3 style="margin-top: 11px;">Job Assignment</h3>
+
+
+							</div>
+
+							<div class="widget-area">
 								<div class="col-md-12">
 									<form role="form" class="sec" method="post" id="jobForm"
 										action="jobAssignment">
@@ -250,14 +251,17 @@
 											<div class="col-md-3">
 												<span>Estimated Submission Date: </span>
 											</div>
-											<div class="col-md-5">
+											<div class="col-md-7">
 												<input type="text" class="form-control"
 													name="estSubmissionDate" required="required"
 													id="datepicker1" readonly="readonly">
 											</div>
-											<div class="col-md-4">
-												<input type="button" class="btn green pull-right"
-													value="Save" onclick="submitForm();">
+											<div class="col-md-2">
+												<input type="button" onclick="cancelF();"
+													class="btn btn-danger small" value="Cancel"
+													data-toggle="modal"><input type="button"
+													class="btn green pull-right" value="Save"
+													onclick="submitForm();">
 											</div>
 										</div>
 									</form>
@@ -368,6 +372,35 @@
 				<div class="modal-footer">
 					<!-- <button type="button" class="btn btn-default" id="close1"
 						onclick="close1();">Close</button> -->
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<div id="cancelOrNot" class="modal fade" role="dialog"
+		style="top: 25px;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<!-- <h4 class="modal-title">Modal Header</h4> -->
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="widget-area">
+							<div class="row">
+								<span>Do you want to cancel?</span>
+							</div>
+							<br>
+							<div class="row">
+								<button type="button" class="btn btn-success medium" id="yesC">Yes</button>
+								<button type="button" class="btn btn-danger medium" id="noC">No</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
 				</div>
 			</div>
 
@@ -619,6 +652,15 @@
 
 				}
 			});
+		});
+		function cancelF() {
+			$("#cancelOrNot").modal("show");
+		}
+		$("#yesC").click(function() {
+			window.location = 'jobAssign.jsp';
+		});
+		$("#noC").click(function() {
+			$("#cancelOrNot").modal("hide");
 		});
 	</script>
 </body>
