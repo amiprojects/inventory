@@ -105,11 +105,12 @@
 						<div class="masonary-grids">
 
 
-							 <div class="breadcrumbs" style="height: 50px; text-align: center;">
-									<h3 style="margin-top: 11px;">Stock Show Details</h3>
-												
-											
-								</div>
+							<div class="breadcrumbs"
+								style="height: 50px; text-align: center;">
+								<h3 style="margin-top: 11px;">Stock Show Details</h3>
+
+
+							</div>
 
 
 							<div class="col-md-12">
@@ -592,10 +593,15 @@
 													<table class="table">
 
 														<tr style="width: 100%">
+
+
 															<td><b>Assigned Date</b></td>
 															<td>&nbsp;</td>
 
-															<td><b>Quantity</b></td>
+															<td><b>Quantity Given</b></td>
+															<td>&nbsp;</td>
+
+															<td><b>Remaining Quantity</b></td>
 
 															<td>&nbsp;</td>
 
@@ -622,30 +628,48 @@
 
 														</tr>
 														<tr style="width: 100%">
-															<td><b>........</b></td>
-															<td>&nbsp;</td>
+															<c:forEach items="${jobProList}" var="jobPro">
+																<td><b><fmt:formatDate
+																			value="${jobPro.jobAssignmentDetails.assignDate}"
+																			pattern="dd-MM-yyyy" /> </b></td>
+																<td>&nbsp;</td>
 
-															<td><b>........................y</b></td>
+																<td><b>${jobPro.qty}</b></td>
 
-															<td>&nbsp;</td>
+																<td>&nbsp;</td>
 
-															<td><b>......... </b></td>
+																<td><b>${jobPro.remaninQty}</b></td>
 
-															<td>&nbsp;</td>
+																<td>&nbsp;</td>
 
-															<td><b>.....</b></td>
-															<td>&nbsp;</td>
+																<td><b>${jobPro.purchase_Product_Details.productDetail.qtyUnit.name}</b></td>
 
-															<td><b>..........</b></td>
-															<td>&nbsp;</td>
+																<td>&nbsp;</td>
 
-															<td><b>........</b></td>
-															<td>&nbsp;</td>
+																<td><b>${jobPro.workDescription}</b></td>
+																<td>&nbsp;</td>
 
-															<td><b>..........</b></td>
-															<td>&nbsp;</td>
+																<td><b><fmt:formatDate
+												 							value="${jobPro.jobAssignmentDetails.estimatedCompletionDate}"
+																			pattern="dd-MM-yyyy" /> </b></td>
+																<td>&nbsp;</td>
 
-															<td><b>...........</b></td>
+																<td><b>${jobPro.jobAssignmentDetails.vendor.name}</b></td>
+																<td>&nbsp;</td>
+																<c:choose>
+																	<c:when test="${jobPro.remaninQty==0}">
+																		<td><b>Complete</b></td>
+																	</c:when>
+																	<c:otherwise>
+																		<td><b>Process</b></td>
+																	</c:otherwise>
+																</c:choose>
+
+
+																<td>&nbsp;</td>
+
+																<td><b>${jobPro.jobAssignmentDetails.challanNumber}</b></td>
+															</c:forEach>
 
 														</tr>
 

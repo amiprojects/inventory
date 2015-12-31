@@ -821,7 +821,7 @@ public class Ejb {
 			String code, Date date) {
 		TypedQuery<Purchase_Product_Details> q = em
 				.createQuery(
-						"select c from Purchase_Product_Details c where  UPPER(c.productDetail.code) like :cd and c.remaining_quantity>0 and c.productDetail.isSaleble=:salable and (c.purchase_Entry.purchase_date<:date AND c.initialInventory=:asd)ORDER BY c.id ASC",
+						"select c from Purchase_Product_Details c where  UPPER(c.productDetail.code) like :cd and c.remaining_quantity>0 and c.productDetail.isSaleble=:salable and (c.purchase_Entry.purchase_date<:date OR c.initialInventory=:asd)ORDER BY c.id ASC",
 						Purchase_Product_Details.class);
 		q.setParameter("salable", true);
 		q.setParameter("asd", true);
