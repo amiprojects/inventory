@@ -101,6 +101,12 @@
 				<div class="row">
 					<div class="masonary-grids">
 
+						<div class="breadcrumbs" style="height: 50px; text-align: center;">
+							<h3 style="margin-top: 11px;">Sales Entry</h3>
+
+						</div>
+
+
 						<div class="col-md-12" style="height: 800px;">
 							<form class="sec" action="salesEntry" method="post">
 								<div class="row">
@@ -200,10 +206,11 @@
 
 								</div>
 								<div class="widget-area">
-									<b>Quantity :</b> <input type="text" name="qty" id="qty"
-										onkeyup="checkQty();" value="0" style="width: 70px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									<b>Product :</b><input type="text" id="pCode" name="pCode"><input
-										type="hidden" id="pCodeId" name="pCodeId">
+									<b>Quantity :</b> <input type="number" name="qty" id="qty"
+										style="width: 70px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<b>Product :</b><input type="text" id="pCode" name="pCode"
+										onkeyup="pcodeF();"><input type="hidden" id="pCodeId"
+										name="pCodeId">
 									<%-- <select name="prodCode" id="prodCode"
 										onchange="getProdDetByPurchaseProdDetId();"
 										required="required">
@@ -224,7 +231,9 @@
 									</select><input type="hidden" id="remQty" name="remQty"> --%>
 									<!-- <input type="hidden" name="descriptiondId" id="descriptionId"> -->
 									&nbsp; &nbsp; &nbsp;<b>Product with Barcode</b> <input
-										type="text" id="salesbar" name="salesbar">
+										type="text" id="salesbar" name="salesbar"
+										onkeyup="salesbarF();"><input type="hidden"
+										id="salesbarH" name="salesbarH">
 									<button onclick="probar()" type="button">Go</button>
 
 								</div>
@@ -611,30 +620,6 @@
 	</script>
 
 	<script>
-		function getProdDetByPurchaseProdDetId() {
-			$("#salesbar").val($("#prodCode").val());
-			if ($("#prodCode").val() != 0) {
-				$("#qty").prop("readonly", false);
-			} else {
-				$("#qty").prop("readonly", true);
-			}
-			/* $("#remQty").val("${pCode.remaining_quantity}");
-			if ($("#qty").val() > $("#remQty").val()) {
-				alert('Please enter less quantity than remaining');
-				$("#qty").val(0);
-			} */
-		}
-		/* function checkQty() {
-			if ($("#prodCode").val() == 0) {
-				alert('Please select product code first');
-				$("#qty").val(0);
-			} else {
-				if ($("#qty").val() > $("#remQty").val()) {
-					alert('Please enter less quantity than remaining');
-					$("#qty").val("");
-				}
-			}
-		} */
 		ind = 0;
 		function removeProduct(a) {
 			$("#trRemove" + a).remove();
@@ -649,146 +634,164 @@
 		}
 		var k = 0;
 		function probar() {
-			k = k + 1;
-			var countryName = $("#salesbar").val();
-			var countryArray = countryName.split('/');
+			if ($("#qty").val() == 0 || $("#qty").val() == "") {
+				alert("Please enter a valid quantity");
+			} else if ($("#salesbar").val() == 0 || $("#salesbar").val() == "") {
+				alert("Please select a product or enter barcode.");
+			} else {
+				k = k + 1;
+				var countryName = $("#salesbar").val();
+				var countryArray = countryName.split('/');
 
-			for (var i = 0; i < countryArray.length; i++) {
-				countryArray[i];
-			}
-			var id = countryArray[0];
+				for (var i = 0; i < countryArray.length; i++) {
+					countryArray[i];
+				}
+				var id = countryArray[0];
+				var qty = $("#qty").val();
 
-			$
-					.ajax({
-						type : "post",
-						url : "getProdDetByPurchaseProdDetailsId",
-						data : {
-							id : id
-						},
-						dataType : "json",
-						success : function(data) {
-							$("#codevalue").val(data.productCode);
-							$("#productId").val(data.productId);
-							$("#descvalue").val(data.productDesc);
-							$("#qtyvalue").val(Number($("#qty").val()));
-							if ($("#wspORmrp").val() == 'mrpVal') {
-								$("#mrpQty").val(data.mrp);
-								$("#eachtotalvalue")
+				$
+						.ajax({
+							type : "post",
+							url : "getProdDetByPurchaseProdDetailsId",
+							data : {
+								id : id
+							},
+							dataType : "json",
+							success : function(data) {
+								$("#codevalue").val(data.productCode);
+								$("#productId").val(data.productId);
+								$("#descvalue").val(data.productDesc);
+								$("#qtyvalue").val(Number(qty));
+								if ($("#wspORmrp").val() == 'mrpVal') {
+									$("#mrpQty").val(data.mrp);
+									$("#eachtotalvalue")
+											.val(
+													Math
+															.round((Number(data.mrp
+																	* $(
+																			"#qtyvalue")
+																			.val())) * 100) / 100);
+								} else {
+									$("#mrpQty").val(data.wsp);
+									$("#eachtotalvalue")
+											.val(
+													Math
+															.round((Number(data.wsp
+																	* $(
+																			"#qtyvalue")
+																			.val())) * 100) / 100);
+								}
+								$("#prodCode").val(data.id);
+								$("#subtotalvalue")
 										.val(
 												Math
-														.round((Number(data.mrp
-																* $("#qtyvalue")
-																		.val())) * 100) / 100);
-							} else {
-								$("#mrpQty").val(data.wsp);
-								$("#eachtotalvalue")
+														.round((Number($(
+																"#subtotalvalue")
+																.val()) + Number($(
+																"#eachtotalvalue")
+																.val())) * 100) / 100);
+								$("#discountValue")
 										.val(
 												Math
-														.round((Number(data.wsp
-																* $("#qtyvalue")
-																		.val())) * 100) / 100);
-							}
-							$("#prodCode").val(data.id);
-							$("#subtotalvalue")
-									.val(
-											Math
-													.round((Number($(
-															"#subtotalvalue")
-															.val()) + Number($(
-															"#eachtotalvalue")
-															.val())) * 100) / 100);
-							$("#discountValue")
-									.val(
-											Math
-													.round((Number($(
-															"#subtotalvalue")
-															.val())
-															* Number($(
-																	"#discount")
-																	.val()) / 100) * 100) / 100);
-							$("#taxAmount")
-									.val(
-											Math
-													.round((Number($(
-															"#subtotalvalue")
-															.val())
-															* Number($(
-																	"#taxTot")
-																	.val()) * 100) / 100)
-													/ Number(100));
-							$("#totalvalue")
-									.val(
-											Math
-													.round((Number($(
-															"#subtotalvalue")
-															.val())
-															- Number($(
-																	"#discountValue")
-																	.val())
-															+ Number($(
-																	"#taxAmount")
-																	.val())
-															+ Number($(
-																	"#transcharge")
-																	.val()) + Number($(
-															"#surcharge").val())) * 100) / 100);
-							var tot = $("#totalvalue").val();
-							var round = Math.round(tot);
-							if (tot > round) {
-								$("#roundvalue")
+														.round((Number($(
+																"#subtotalvalue")
+																.val())
+																* Number($(
+																		"#discount")
+																		.val()) / 100) * 100) / 100);
+								$("#taxAmount")
 										.val(
 												Math
-														.round((round + 1 - tot) * 100) / 100);
-							} else {
-								$("#roundvalue").val(
-										Math.round((round - tot) * 100) / 100);
-							}
+														.round((Number($(
+																"#subtotalvalue")
+																.val())
+																* Number($(
+																		"#taxTot")
+																		.val()) * 100) / 100)
+														/ Number(100));
+								$("#totalvalue")
+										.val(
+												Math
+														.round((Number($(
+																"#subtotalvalue")
+																.val())
+																- Number($(
+																		"#discountValue")
+																		.val())
+																+ Number($(
+																		"#taxAmount")
+																		.val())
+																+ Number($(
+																		"#transcharge")
+																		.val()) + Number($(
+																"#surcharge")
+																.val())) * 100) / 100);
+								var tot = $("#totalvalue").val();
+								var round = Math.round(tot);
+								if (tot > round) {
+									$("#roundvalue")
+											.val(
+													Math
+															.round((round + 1 - tot) * 100) / 100);
+								} else {
+									$("#roundvalue")
+											.val(
+													Math
+															.round((round - tot) * 100) / 100);
+								}
 
-							$("#grandtotal").val(
-									Number($("#totalvalue").val())
-											+ Number($("#roundvalue").val()));
+								$("#grandtotal")
+										.val(
+												Number($("#totalvalue").val())
+														+ Number($(
+																"#roundvalue")
+																.val()));
 
-							$("#productTable")
-									.append(
-											'<tbody><tr id="trRemove'+ind+'">'
-													+ '<td>'
-													+ k
-													+ '</td>'
-													+ '<td><input readonly="readonly" type="text" name="codevalue" value=\''
+								$("#productTable")
+										.append(
+												'<tbody><tr id="trRemove'+ind+'">'
+														+ '<td>'
+														+ k
+														+ '</td>'
+														+ '<td><input readonly="readonly" type="text" name="codevalue" value=\''
 													+ data.productCode
 													+ '\'><input readonly="readonly" type="hidden" name="productId" value=\''
 													+ data.productId
 													+ '\'><input readonly="readonly" type="hidden" name="purchaseProductDetId" value=\''
-													+ $("#prodCode").val()
-													+ '\'></td>'
-													+ '<td><input readonly="readonly" type="text" name="descvalue" value=\''
+														+ $("#salesbarH").val()
+														+ '\'></td>'
+														+ '<td><input readonly="readonly" type="text" name="descvalue" value=\''
 													+ data.productDesc
 													+ '\'></td>'
-													+ '<td><input readonly="readonly" type="text" name="qtyvalue" value=\''
-													+ $("#qty").val()
-													+ '\'></td>'
-													+ '<td><input readonly="readonly" type="text" name="mrpQty" value=\''
-													+ $("#mrpQty").val()
-													+ '\'></td>'
-													+ '<td><input readonly="readonly" type="text" name="eachtotalvalue" value=\''
-													+ $("#eachtotalvalue")
-															.val()
-													+ '\'></td>'
-													+ '<td>'
-													+ '<a href="#" onclick="removeProduct('
-													+ ind
-													+ ');"><img src="img/cross.png" height="16px" width="16px"></a>'
-													+ '</td>' + '</tr></tbody>');
-							ind++;
+														+ '<td><input readonly="readonly" type="text" name="qtyvalue" value=\''
+														+ $("#qtyvalue").val()
+														+ '\'></td>'
+														+ '<td><input readonly="readonly" type="text" name="mrpQty" value=\''
+														+ $("#mrpQty").val()
+														+ '\'></td>'
+														+ '<td><input readonly="readonly" type="text" name="eachtotalvalue" value=\''
+														+ $("#eachtotalvalue")
+																.val()
+														+ '\'></td>'
+														+ '<td>'
+														+ '<a href="#" onclick="removeProduct('
+														+ ind
+														+ ');"><img src="img/cross.png" height="16px" width="16px"></a>'
+														+ '</td>'
+														+ '</tr></tbody>');
+								ind++;
 
-						}
+							}
 
-					});
-			$("#pCode").val("");
-			$("#salesbar").val("");
-			$("#mrp").prop("disabled", true);
-			$("#wsp").prop("disabled", true);
-			$("#qty").val(0);
+						});
+				$("#pCode").val("");
+				$("#salesbar").val("");
+				$("#salesbar").prop("readonly", false);
+				$("#mrp").prop("disabled", true);
+				$("#wsp").prop("disabled", true);
+				$("#qty").prop("readonly", false);
+				$("#qty").val("");
+			}
 		}
 		function discountF() {
 			$("#discountValue").val(
@@ -1070,7 +1073,10 @@
 													url : "getSaleblePurchaseProductDetailsByProductCodeAndQuantity",
 													dataType : "json",
 													data : {
-														code : ui.item.value
+														code : ui.item.value,
+														date : $("#datepicker")
+																.val(),
+														qty : $("#qty").val()
 													},
 													success : function(data2) {
 														$(
@@ -1081,69 +1087,74 @@
 																		data2,
 																		function(
 																				item2) {
-																			if (item2.purchaseDate != 'Initial Inventory') {
-																				$(
-																						"#purchaseDetailsTable")
-																						.append(
-																								"<tbody>"
-																										+ "<tr>"
-																										+ "<td>"
-																										+ formatDate(item2.purchaseDate)
-																										+ "</td>"
-																										+ "<td>"
-																										+ item2.purchaseVendorName
-																										+ "</td>"
-																										+ "<td>"
-																										+ item2.lotNumber
-																										+ "</td>"
-																										+ "<td>"
-																										+ item2.mrp
-																										+ "</td>"
-																										+ "<td>"
-																										+ item2.wsp
-																										+ "</td>"
-																										+ "<td>"
-																										+ item2.remaining_quantity
-																										+ "</td>"
-																										+ "<td>"
-																										+ '<input type="button" onclick="chooseF('
-																										+ item2.id
-																										+ ');" value="Choose">'
-																										+ "</td>"
-																										+ "</tr>"
-																										+ "</tbody>");
-																			} else {
-																				$(
-																						"#purchaseDetailsTable")
-																						.append(
-																								"<tbody>"
-																										+ "<tr>"
-																										+ "<td>"
-																										+ item2.purchaseDate
-																										+ "</td>"
-																										+ "<td>"
-																										+ item2.purchaseVendorName
-																										+ "</td>"
-																										+ "<td>"
-																										+ item2.lotNumber
-																										+ "</td>"
-																										+ "<td>"
-																										+ item2.mrp
-																										+ "</td>"
-																										+ "<td>"
-																										+ item2.wsp
-																										+ "</td>"
-																										+ "<td>"
-																										+ item2.remaining_quantity
-																										+ "</td>"
-																										+ "<td>"
-																										+ '<input type="button" onclick="chooseF('
-																										+ item2.id
-																										+ ');" value="Choose">'
-																										+ "</td>"
-																										+ "</tr>"
-																										+ "</tbody>");
+																			if (item2.remaining_quantity >= $(
+																					"#qty")
+																					.val()) {
+																				if (item2.purchaseDate != 'Initial Inventory') {
+																					$(
+																							"#purchaseDetailsTable")
+																							.append(
+																									"<tbody>"
+																											+ "<tr>"
+																											+ "<td>"
+																											+ formatDate(item2.purchaseDate)
+																											+ "</td>"
+																											+ "<td>"
+																											+ item2.purchaseVendorName
+																											+ "</td>"
+																											+ "<td>"
+																											+ item2.lotNumber
+																											+ "</td>"
+																											+ "<td>"
+																											+ item2.mrp
+																											+ "</td>"
+																											+ "<td>"
+																											+ item2.wsp
+																											+ "</td>"
+																											+ "<td>"
+																											+ item2.remaining_quantity
+																											+ "</td>"
+																											+ "<td>"
+																											+ '<input type="button" onclick="chooseF('
+																											+ item2.id
+																											+ ');" value="Choose">'
+																											+ "</td>"
+																											+ "</tr>"
+																											+ "</tbody>");
+																				} else {
+																					$(
+																							"#purchaseDetailsTable")
+																							.append(
+																									"<tbody>"
+																											+ "<tr>"
+																											+ "<td>"
+																											+ item2.purchaseDate
+																											+ "</td>"
+																											+ "<td>"
+																											+ item2.purchaseVendorName
+																											+ "</td>"
+																											+ "<td>"
+																											+ item2.lotNumber
+																											+ "</td>"
+																											+ "<td>"
+																											+ item2.mrp
+																											+ "</td>"
+																											+ "<td>"
+																											+ item2.wsp
+																											+ "</td>"
+																											+ "<td>"
+																											+ item2.remaining_quantity
+																											+ "</td>"
+																											+ "<td>"
+																											+ '<input type="button" onclick="chooseF('
+																											+ item2.id
+																											+ ');" value="Choose">'
+																											+ "</td>"
+																											+ "</tr>"
+																											+ "</tbody>");
+																				}
 																			}
+
 																		});
 													}
 												});
@@ -1169,9 +1180,24 @@
 		function chooseF(purchaseProdDetIdForBarCode) {
 			//alert(purchaseProdDetIdForBarCode);
 			$("#salesbar").val(purchaseProdDetIdForBarCode);
+			$("#salesbarH").val(purchaseProdDetIdForBarCode);
 			$("#salesbar").prop("readonly", true);
 			$("#purchaseDetails").modal("hide");
-			$("#qty").prop("readonly", false);
+			$("#qty").prop("readonly", true);
+		}
+		function pcodeF() {
+			if ($("#qty").val() == 0 || $("#qty").val() == "") {
+				alert("Please select a valid quantity first");
+				$("#pCode").val("");
+				$("#qty").val("");
+			}
+		}
+		function salesbarF() {
+			if ($("#qty").val() == 0 || $("#qty").val() == "") {
+				alert("Please select a valid quantity first");
+				$("#salesbar").val("");
+				$("#qty").val("");
+			}
 		}
 	</script>
 </body>

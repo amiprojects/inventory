@@ -22,6 +22,7 @@ import com.kaanish.model.CustomerEntry;
 import com.kaanish.model.Department;
 import com.kaanish.model.JobAssignmentDetails;
 import com.kaanish.model.JobAssignmentProducts;
+import com.kaanish.model.JobRecievedDetails;
 import com.kaanish.model.JobStock;
 import com.kaanish.model.Module;
 import com.kaanish.model.PageList;
@@ -281,8 +282,8 @@ public class Ejb {
 				QtyUnit.class);
 		return q.getResultList();
 	}
-	
-	public void deleteUOMById(int id){
+
+	public void deleteUOMById(int id) {
 		em.remove(getQtyUnitById(id));
 	}
 
@@ -657,8 +658,8 @@ public class Ejb {
 	public void setJobAssignment(JobAssignmentDetails jobAssignmentDetails) {
 		em.persist(jobAssignmentDetails);
 	}
-	
-	public JobAssignmentDetails getJobAssignmentDetailsByID(int id){
+
+	public JobAssignmentDetails getJobAssignmentDetailsByID(int id) {
 		return em.find(JobAssignmentDetails.class, id);
 	}
 
@@ -741,13 +742,12 @@ public class Ejb {
 			JobAssignmentProducts jobAssignmentProducts) {
 		em.persist(jobAssignmentProducts);
 	}
-	
-	public void updateJobAssignmentProductDetails(JobAssignmentProducts jobAssignmentProducts ){
+
+	public void updateJobAssignmentProductDetails(
+			JobAssignmentProducts jobAssignmentProducts) {
 		em.merge(jobAssignmentProducts);
 
-		
 	}
-	
 
 	public List<JobAssignmentProducts> getJobAssignmentProductDetailsByproductId(
 			int id) {
@@ -818,14 +818,31 @@ public class Ejb {
 	}
 
 	public List<Purchase_Product_Details> getSaleblePurchaseProductDetailsByProductCodeAndQuantity(
-			String code) {
+			String code, Date date) {
+		List<Purchase_Product_Details> lst=new ArrayList<Purchase_Product_Details>();
+		
 		TypedQuery<Purchase_Product_Details> q = em
 				.createQuery(
-						"select c from Purchase_Product_Details c where  UPPER(c.productDetail.code) like :cd and c.remaining_quantity>0 and c.productDetail.isSaleble=:salable ORDER BY c.id ASC",
+						"select c from Purchase_Product_Details c where  UPPER(c.productDetail.code) like :cd and c.remaining_quantity>0 and c.productDetail.isSaleble=:salable and c.purchase_Entry.purchase_date<:date ORDER BY c.id ASC",
 						Purchase_Product_Details.class);
 		q.setParameter("salable", true);
 		q.setParameter("cd", "%" + code.toUpperCase() + "%");
-		return q.getResultList();
+		q.setParameter("date", date);
+		
+		lst=q.getResultList();
+		
+		TypedQuery<Purchase_Product_Details> q1 = em
+				.createQuery(
+						"select c from Purchase_Product_Details c where  UPPER(c.productDetail.code) like :cd and c.remaining_quantity>0 and c.productDetail.isSaleble=:salable and c.initialInventory=true ORDER BY c.id ASC",
+						Purchase_Product_Details.class);
+		q1.setParameter("salable", true);
+		q1.setParameter("cd", "%" + code.toUpperCase() + "%");
+		
+		for(Purchase_Product_Details ppd: q1.getResultList()){
+			lst.add(ppd);
+		}
+		
+		return lst;
 	}
 
 	public List<Purchase_Product_Details> getReadyPurchaseProductDetailsByQty() {
@@ -840,6 +857,12 @@ public class Ejb {
 	public Purchase_Product_Details getPurchaseProductDetailsById(int id) {
 		return em.find(Purchase_Product_Details.class, id);
 	}
+	
+	/*********************for job recieve*********************/
+	public void setJobRecieve(JobRecievedDetails jobRecievedDetails){
+		em.persist(jobRecievedDetails);
+	}
+	
 
 	/******************** for City *******************************/
 	public void setCity(City city) {
@@ -1123,14 +1146,13 @@ public class Ejb {
 		q.setParameter("nm", "%" + name.toUpperCase() + "%");
 		return q.getResultList();
 	}
-	
 
 	public List<ProductDetail> getSalebleProductsByQtyAndCode(String nm) {
 		TypedQuery<ProductDetail> query = em
 				.createQuery(
 						"select c from ProductDetail c where c.isSaleble=:sal AND c.readyGoodsStock.remainingQty>0 AND UPPER(c.code) like :codeName",
 						ProductDetail.class);
-		query.setParameter("codeName", nm.toUpperCase()+"%");
+		query.setParameter("codeName", "%" + nm.toUpperCase() + "%");
 		query.setParameter("sal", true);
 		return query.getResultList();
 	}

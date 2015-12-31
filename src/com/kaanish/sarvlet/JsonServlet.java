@@ -20,6 +20,7 @@ import com.kaanish.model.Department;
 import com.kaanish.model.QtyUnitConversionPK;
 import com.kaanish.model.QtyUnitType;
 import com.kaanish.model.SubDepartment;
+import com.kaanish.util.DateConverter;
 import com.kaanish.util.DepartmentCotractor;
 
 @WebServlet({ "/getcountry", "/addNewUOMtype", "/getUOMtype",
@@ -35,7 +36,8 @@ import com.kaanish.util.DepartmentCotractor;
 		"/getCityByStateByCityName", "/getVendorTypeById",
 		"/getProductbyProductCode",
 		"/getSaleblePurchaseProductDetailsByProductCodeAndQuantity",
-		"/getVendorsByVendorTypeJobberAndName", "/getProductsForSaleByCode","/deleteUOM" })
+		"/getVendorsByVendorTypeJobberAndName", "/getProductsForSaleByCode",
+		"/deleteUOM" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -220,8 +222,9 @@ public class JsonServlet extends HttpServlet {
 			case "getSaleblePurchaseProductDetailsByProductCodeAndQuantity":
 				pw = resp.getWriter();
 				pw.print(ejb
-						.getSaleblePurchaseProductDetailsByProductCodeAndQuantity(req
-								.getParameter("code")));
+						.getSaleblePurchaseProductDetailsByProductCodeAndQuantity(
+								req.getParameter("code"),
+								DateConverter.getDate(req.getParameter("date"))));
 				break;
 			case "getProductByDescription":
 				pw = resp.getWriter();
@@ -270,17 +273,21 @@ public class JsonServlet extends HttpServlet {
 						ejb.getAllQtyUnitByNameOrAbv(req.getParameter("name")));
 				break;
 			case "getProductsForSaleByCode":
-				resp.getWriter().print(ejb.getSalebleProductsByQtyAndCode(req.getParameter("codeParts")));
+				resp.getWriter().print(
+						ejb.getSalebleProductsByQtyAndCode(req
+								.getParameter("codeParts")));
 				break;
 			case "deleteUOM":
-				PrintWriter pw=new PrintWriter(resp.getOutputStream());
-				JsonGeneratorFactory fac=Json.createGeneratorFactory(null);
-				JsonGenerator gen1=fac.createGenerator(pw);
-				try{
+				PrintWriter pw = new PrintWriter(resp.getOutputStream());
+				JsonGeneratorFactory fac = Json.createGeneratorFactory(null);
+				JsonGenerator gen1 = fac.createGenerator(pw);
+				try {
 					ejb.deleteUOMById(Integer.parseInt(req.getParameter("id")));
-					gen1.writeStartObject().write("response","success").writeEnd().close();
-				}catch (Exception e) {
-					gen1.writeStartObject().write("response","failed").writeEnd().close();
+					gen1.writeStartObject().write("response", "success")
+							.writeEnd().close();
+				} catch (Exception e) {
+					gen1.writeStartObject().write("response", "failed")
+							.writeEnd().close();
 				}
 				break;
 			default:

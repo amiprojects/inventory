@@ -60,15 +60,7 @@ page[size="A4"] {
 }
 </style>
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
-<script type="text/javascript">
-	$(document).ready(
-			function() {
-				window.print();
-				window.open("barcodePrint.jsp?id=${param.id}", 'name',
-						'width=600,height=400');
 
-			});
-</script>
 </head>
 <body>
 	<c:if test="${!sessionScope['user'].equals('admin')}">
@@ -151,11 +143,11 @@ page[size="A4"] {
 					<c:forEach items="${purEntry.salesProductDetails}" var="ppdet">
 						<tr>
 							<td>${sl}</td>
-							<td>${ppdet.productDetail.description}</td>
+							<td>${ppdet.purchase_Product_Details.productDetail.description}</td>
 							<td>${ppdet.quantity}</td>
 							<c:set value="${tqty+ppdet.quantity}" var="tqty" />
 							<td>${ppdet.getSalesPrice()}</td>
-							<td>${ppdet.productDetail.qtyUnit.name}</td>
+							<td>${ppdet.purchase_Product_Details.productDetail.qtyUnit.name}</td>
 							<td>${ppdet.getSalesPrice()*ppdet.quantity}</td>
 							<c:set value="${gtot+ppdet.getSalesPrice()*ppdet.quantity}"
 								var="gtot" />
