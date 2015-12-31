@@ -60,6 +60,15 @@
 		$("#step8").hide();
 
 	});
+	
+	function viewInvoice(id){
+		window
+		.open(
+				"stockPurCha.jsp?id="+id,
+				'name', 'width=900,height=700');
+		
+	}
+	
 </script>
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
 <script src="js/jquery-ui/jquery-ui.js"></script>
@@ -357,11 +366,11 @@
 															<td><b>Agent</b></td>
 															<td>&nbsp;</td>
 
-															<!--  <td><b>Lot Number</b></td>
+															<td><b>Lot Number</b></td>
 															<td>&nbsp;</td>
 
 															<td><b>Barcode</b></td>
-															<td>&nbsp;</td> -->
+															<td>&nbsp;</td>
 
 															<td><b>Purchase challan number</b></td>
 
@@ -400,21 +409,20 @@
 
 
 
-																	<%-- <td><b>${purPro.serialNumbers.lotNo}</b></td>
-																<td>&nbsp;</td>
+																	<td><b>${purPro.lotNumber}</b></td>
+																	<td>&nbsp;</td>
 
-																<td><b>${purPro.purchase_Entry.id}/${purPro.serialNumbers.lotNo}/${purPro.serialNumbers.serialNumber}</b></td> 
-																<td>&nbsp;</td>  --%>
+																	<td><b>${purPro.id}/${purPro.lotNumber}/${purPro.productDetail.code}</b></td>
+																	<td>&nbsp;</td>
 
-																	<td><a href="stockPurCha.jsp?id=${purPro.id}"><b>${purPro.purchase_Entry.challanNumber}</b></a></td>
+																	<td><a href="#"
+																		onclick="viewInvoice(${purPro.purchase_Entry.id});"><b>${purPro.purchase_Entry.challanNumber}</b></a></td>
 																</tr>
 
 															</c:if>
 														</c:forEach>
 
 													</table>
-
-
 												</div>
 
 											</div>
@@ -492,54 +500,58 @@
 														<c:set var="mrprp"
 															value="${purSize>0?p.purchase_Product_Details.get(purSize-1).mrp:'0'}" />  --%>
 
-														<tr style="width: 100%">
-														
-															<c:forEach items="${salesPro}" var="sPro">
-															
-																<%-- <td><b> <fmt:formatDate value="${}" pattern="dd-MM-yyyy" />
-																</b></td> --%>
-																<td>&nbsp;</td>
 
-																<td><b>${sPro.salesPrice}</b></td>
 
-																<td>&nbsp;</td>
-																<td><b> </b></td>
+														<c:forEach items="${salesPro}" var="sPro">
+															<tr style="width: 100%">
 
-																<td>&nbsp;</td>
-
-																<td><b> <%-- <c:choose>
-																			<c:when test="${salesPro1.salesPrice== wspsps}"> ${mrprp}
- 																			</c:when>
-																			<c:when test="${salesPro1.salesPrice == mrprp}"> ${"MRP"}
- 																			</c:when>
-																			<c:otherwise>Errorr
- 																			</c:otherwise>
-																		</c:choose> --%>
+																<td><b> <fmt:formatDate
+																			value="${sPro.salesEntry.sales_date}"
+																			pattern="dd-MM-yyyy" />
 																</b></td>
 																<td>&nbsp;</td>
 
-																<td><b></b></td>
+																<td><b>${sPro.quantity}</b></td>
+																<!--  Quantity -->
+
+																<td>&nbsp;</td>
+																<td><b>
+																		${sPro.purchase_Product_Details.productDetail.qtyUnit.name}</b></td>
+																<!-- UOM -->
+
 																<td>&nbsp;</td>
 
-																<td><b></b></td>
+																<td><b> </b></td>
+																<!-- Sold in WSP/MRP   -->
+																<td>&nbsp;</td>
+
+																<td><b>${sPro.salesPrice}</b></td>
+																<!-- Cost -->
+																<td>&nbsp;</td>
+
+																<td><b>${sPro.salesPrice*sPro.quantity}</b></td>
+																<!-- Amount -->
 																<td>&nbsp;</td>
 
 
-																<td><b></b></td>
+																<td><b>${sPro.salesEntry.customer.name}</b></td>
+																<!-- Customer -->
 																<td>&nbsp;</td>
 
-																<td><b></b></td>
+																<td><b>${sPro.purchase_Product_Details.lotNumber}</b></td>
+																<!-- Lot -->
 																<td>&nbsp;</td>
 
-																<td><b></b></td>
+																<td><b>${sPro.purchase_Product_Details.id}/${sPro.purchase_Product_Details.lotNumber}/${sPro.purchase_Product_Details.productDetail.code}</b></td>
+																<!-- Barcode -->
 																<td>&nbsp;</td>
 
-																<td><b></b></td>
-																<td>&nbsp;</td>
+																<td><b>${sPro.salesEntry.challanNumber}</b></td>
+																<!-- Invoice -->
 
-																<td><b></b></td>
-															</c:forEach>
-														</tr>
+															</tr>
+														</c:forEach>
+
 
 
 
@@ -686,7 +698,10 @@
 												<table class="table">
 
 													<tr style="width: 100%">
-														<td><b>Date</b></td>
+														<td><b>Product Code</b></td>
+														<td>&nbsp;</td>
+
+														<td><b>Product Description</b></td>
 														<td>&nbsp;</td>
 
 														<td><b>Quantity</b></td>
@@ -697,22 +712,22 @@
 
 														<td>&nbsp;</td>
 
-														<td><b>A1 </b></td>
+														<td><b>${p.category.attrNmae1} </b></td>
 														<td>&nbsp;</td>
 
-														<td><b>A2 </b></td>
+														<td><b>${p.category.attrNmae2} </b></td>
 														<td>&nbsp;</td>
 
-														<td><b>A3 </b></td>
+														<td><b>${p.category.attrNmae3} </b></td>
 														<td>&nbsp;</td>
 
-														<td><b>A4 </b></td>
+														<td><b>${p.category.attrNmae4} </b></td>
 														<td>&nbsp;</td>
 
-														<td><b>A5 </b></td>
+														<td><b>${p.category.attrNmae5} </b></td>
 														<td>&nbsp;</td>
 
-														<td><b>A6 </b></td>
+														<td><b>${p.category.attrNmae6} </b></td>
 														<td>&nbsp;</td>
 
 
@@ -739,57 +754,62 @@
 
 													</tr>
 													<tr style="width: 100%">
-														<td><b>........</b></td>
-														<td>&nbsp;</td>
+														<c:forEach items="${purchasePro}" var="purProDsp">
+															<td><b>${purProDsp }</b></td>
+															<td>&nbsp;</td>
 
-														<td><b>........................y</b></td>
+															<td><b>${purProDsp}</b></td>
 
-														<td>&nbsp;</td>
+															<td>&nbsp;</td>
 
-														<td><b>......... </b></td>
+															<td><b>${purProDsp} </b></td>
 
-														<td>&nbsp;</td>
+															<td>&nbsp;</td>
 
-														<td><b>.....</b></td>
-														<td>&nbsp;</td>
+															<td><b>${purProDsp.attrValue1}</b></td>
+															<td>&nbsp;</td>
 
-														<td><b>..........</b></td>
-														<td>&nbsp;</td>
+															<td><b>${purProDsp.attrValue2}</b></td>
+															<td>&nbsp;</td>
 
-														<td><b>........</b></td>
-														<td>&nbsp;</td>
+															<td><b>${purProDsp.attrValue3}</b></td>
+															<td>&nbsp;</td>
 
-														<td><b>..........</b></td>
-														<td>&nbsp;</td>
+															<td><b>${purProDsp.attrValue4}</b></td>
+															<td>&nbsp;</td>
 
-														<td><b>...........</b></td>
-														<td>&nbsp;</td>
+															<td><b>${purProDsp.attrValue5}</b></td>
+															<td>&nbsp;</td>
 
-														<td><b>...............</b></td>
-														<td>&nbsp;</td>
+															<td><b> ${purProDsp.attrValue6}</b></td>
+															<td>&nbsp;</td>
 
-														<td><b>...............</b></td>
+															<td><b>${purProDsp>0?p.purchase_Product_Details.get(purSize-1).cost:'nill'}</b></td>
 
-														<td>&nbsp;</td>
+															<td>&nbsp;</td>
 
-														<td><b>..........</b></td>
-														<td>&nbsp;</td>
+															<td><b>${purProDsp>0?p.purchase_Product_Details.get(purSize-1).mrp:'nill'}</b></td>
+															<td>&nbsp;</td>
 
-														<td><b>........</b></td>
-														<td>&nbsp;</td>
+															<td><b>${purProDsp>0?p.purchase_Product_Details.get(purSize-1).wsp:'nill'}</b></td>
+															<td>&nbsp;</td>
 
-														<td><b>..........</b></td>
-														<td>&nbsp;</td>
+															<%-- <td><b>${purProDsp}</b></td>
+															<td>&nbsp;</td>
 
-														<td><b>...........</b></td>
-														<td>&nbsp;</td>
+															<td><b>${purProDsp}</b></td>
+															<td>&nbsp;</td>
 
-														<td><b>...............</b></td>
-														<td>&nbsp;</td>
+															<td><b>${purProDsp}</b></td>
+															<td>&nbsp;</td>
 
-														<td><b>...............</b></td>
+															
+															<td><b>${purProDsp}</b></td>
+															<td>&nbsp;</td>
 
+															<td><b>${purProDsp}</b></td> --%>
 
+														</c:forEach>
 													</tr>
 
 												</table>
