@@ -57,8 +57,7 @@
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
 
-			<c:if
-				test="${page.name.equals('TaxManagement')}">
+			<c:if test="${page.name.equals('TaxManagement')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
@@ -69,7 +68,7 @@
 			</script>
 		</c:if>
 	</c:if>
-	
+
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
@@ -79,14 +78,9 @@
 				<div class="container">
 					<div class="row">
 						<div class="masonary-grids">
-
-							<div class="breadcrumbs" style="height: 39px">
-								<ul>
-									<li><p
-											style="right: -704px; font-size: 20px; position: absolute;">
-											<b>Tax Management</b>
-										</p></li>
-								</ul>
+							<div class="breadcrumbs"
+								style="height: 50px; text-align: center;">
+								<h3 style="margin-top: 11px;">Tax Management</h3>
 							</div>
 							<div class="widget-area">
 								<ul class="nav nav-tabs">

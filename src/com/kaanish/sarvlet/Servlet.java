@@ -1386,8 +1386,11 @@ public class Servlet extends HttpServlet {
 						.getParameter("roundvalue")));
 				salesEntry.setTotalCost(Float.parseFloat(req
 						.getParameter("grandtotal")));
-				salesEntry.setVendor(ejb.getVendorById(Integer.parseInt(req
-						.getParameter("aId"))));
+				if(!req.getParameter("aId").equals("")){
+					salesEntry.setVendor(ejb.getVendorById(Integer.parseInt(req
+							.getParameter("aId"))));
+				}
+				
 				if (req.getParameter("wspORmrp").equals("mrpVal")) {
 					salesEntry.setMRP(true);
 				} else {

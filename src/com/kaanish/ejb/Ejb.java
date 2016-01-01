@@ -50,6 +50,7 @@ import com.kaanish.model.UserGroup;
 import com.kaanish.model.Users;
 import com.kaanish.model.Vendor;
 import com.kaanish.model.VendorType;
+import com.kaanish.util.DateConverter;
 import com.kaanish.util.DigitToWords;
 
 @Stateless
@@ -865,6 +866,27 @@ public class Ejb {
 
 	public Purchase_Product_Details getPurchaseProductDetailsById(int id) {
 		return em.find(Purchase_Product_Details.class, id);
+	}
+	
+	public Purchase_Product_Details getPurchaseProductDetailsByIdForSale(int id, String date) {
+		
+		
+		TypedQuery<Purchase_Product_Details> q=em.createQuery("select c from Purchase_Product_Details c where c.id=:id and c.remaining_quantity>0 and c.productDetail.isSaleble=true and c.purchase_Entry.purchase_date<:date",Purchase_Product_Details.class);
+		q.setParameter("id", id);
+		q.setParameter("date", DateConverter.getDate(date));
+		
+		if(q.getResultList().size()>0){
+			return q.getResultList().get(0);
+		}else{
+			TypedQuery<Purchase_Product_Details> q1=em.createQuery("select c from Purchase_Product_Details c where c.id=:id and c.remaining_quantity>0 and c.productDetail.isSaleble=true and c.initialInventory=true",Purchase_Product_Details.class);
+			q1.setParameter("id", id);
+			if(q1.getResultList().size()>0){
+				return q1.getResultList().get(0);
+			}else{
+				return null;
+			}
+		}
+		
 	}
 	
 	/*********************for job recieve*********************/
