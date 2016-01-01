@@ -1,0 +1,36 @@
+onkeypress="Javascript: if (event.keyCode==13) fnsearch();"
+
+function fnsearch() {
+			
+		}
+		
+		
+barcodeParts = $("[name='barcode']").val().split('/');
+			var purchaseProductId = barcodeParts[0];
+			$("#prodCode").val(purchaseProductId);
+			$
+					.ajax({
+						url : 'getProdDetByPurchaseProdDetailsId',
+						type : 'post',
+						dataType : "json",
+						data : {
+							id : purchaseProductId
+						},
+						success : function(data) {
+							$("#prodDesc").val(
+									"Remaining Quantity : "
+											+ data.remaining_quantity
+											+ "\nVendor Name : "
+											+ data.purchaseVendorName
+											+ "\nPurchase Date : "
+											+ data.purchaseDate);
+							$("#remQty").val(Number(data.remaining_quantity));
+							$("#uom").val(data.uom);
+							$("#prCode").val(data.productCode);
+							$("#prDesc").val(data.productDesc);
+						},
+						error : function(a, b, c) {
+							alert(b + ": " + c);
+						}
+					});
+		

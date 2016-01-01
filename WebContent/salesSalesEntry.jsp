@@ -246,9 +246,13 @@
 									<!-- <input type="hidden" name="descriptiondId" id="descriptionId"> -->
 									&nbsp; &nbsp; &nbsp;<b>Product with Barcode</b> <input
 										type="text" id="salesbar" name="salesbar"
-										onkeyup="salesbarF();"><input type="hidden"
-										id="salesbarH" name="salesbarH">
-									<button onclick="probar()" type="button">Go</button>
+										onkeyup="salesbarF();"
+										onkeypress="Javascript: if (event.keyCode==13) fnsearch();"><input
+										type="hidden" id="salesbarH" name="salesbarH"> &nbsp;
+									&nbsp; &nbsp;
+									<button onclick="resetF();" type="button">Reset</button>
+									&nbsp; &nbsp; &nbsp;
+									<button onclick="probar();" type="button">Go</button>
 
 								</div>
 								<div class="widget-area">
@@ -276,8 +280,8 @@
 													readonly="readonly"></td>
 												<td><input type="text" id="qtyvalue"
 													readonly="readonly" value="0"></td>
-												<td><input type="hidden" id="wspORmrp"> <input
-													type="text" id="mrpQty" readonly="readonly"></td>
+												<td><input type="hidden" id="wspORmrp" name="wspORmrp">
+													<input type="text" id="mrpQty" readonly="readonly"></td>
 												<td><input type="text" id="eachtotalvalue"
 													readonly="readonly"></td>
 											</tr>
@@ -1244,13 +1248,14 @@
 				$("#qty").val("");
 			}
 		}
-		function salesbarF() {
+
+		/* function salesbarF() {
 			if ($("#qty").val() == 0 || $("#qty").val() == "") {
 				alert("Please select a valid quantity first");
 				$("#salesbar").val("");
 				$("#qty").val("");
 			}
-		}
+		} */
 		function cancelF() {
 			$("#cancelOrNot").modal("show");
 		}
@@ -1362,9 +1367,194 @@
 						}
 
 					});
+				},
+				change : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+					}
+				},
+				select : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+					}
 				}
 			});
 		});
+		function resetF() {
+			$("#qty").val("");
+			$("#qty").prop("readonly", false);
+			$("#pCode").val("");
+			$("#salesbar").val("");
+			$("#salesbar").prop("readonly", false);
+		}
+		function fnsearch() {
+
+			if ($("#salesbar").val() == 0 || $("#salesbar").val() == "") {
+				alert("Please select a product or enter barcode.");
+			} else {
+				k = k + 1;
+				var countryName = $("#salesbar").val();
+				var countryArray = countryName.split('/');
+
+				for (var i = 0; i < countryArray.length; i++) {
+					countryArray[i];
+				}
+				var id = countryArray[0];
+				//var qty = Number($("#qty").val());
+
+				$
+						.ajax({
+							type : "post",
+							url : "getPurchaseProductDetailsByIdForSale",
+							data : {
+								id : id,
+								date : $("#datepicker").val()
+							},
+							dataType : "json",
+							success : function(data) {
+								if (data != null) {
+									$("#codevalue").val(data.productCode);
+									$("#productId").val(data.productId);
+									$("#descvalue").val(data.productDesc);
+									$("#qtyvalue").val(Number(1));
+									if ($("#wspORmrp").val() == 'mrpVal') {
+										$("#mrpQty").val(data.mrp);
+										$("#eachtotalvalue")
+												.val(
+														Math
+																.round((Number(data.mrp
+																		* $(
+																				"#qtyvalue")
+																				.val())) * 100) / 100);
+									} else {
+										$("#mrpQty").val(data.wsp);
+										$("#eachtotalvalue")
+												.val(
+														Math
+																.round((Number(data.wsp
+																		* $(
+																				"#qtyvalue")
+																				.val())) * 100) / 100);
+									}
+									$("#prodCode").val(data.id);
+									$("#subtotalvalue")
+											.val(
+													Math.round((Number($(
+															"#subtotalvalue")
+															.val()) + Number($(
+															"#eachtotalvalue")
+															.val())) * 100) / 100);
+									$("#discountValue")
+											.val(
+													Math
+															.round((Number($(
+																	"#subtotalvalue")
+																	.val())
+																	* Number($(
+																			"#discount")
+																			.val()) / 100) * 100) / 100);
+									$("#taxAmount")
+											.val(
+													Math
+															.round((Number($(
+																	"#subtotalvalue")
+																	.val())
+																	* Number($(
+																			"#taxTot")
+																			.val()) * 100) / 100)
+															/ Number(100));
+									$("#totalvalue")
+											.val(
+													Math
+															.round((Number($(
+																	"#subtotalvalue")
+																	.val())
+																	- Number($(
+																			"#discountValue")
+																			.val())
+																	+ Number($(
+																			"#taxAmount")
+																			.val())
+																	+ Number($(
+																			"#transcharge")
+																			.val()) + Number($(
+																	"#surcharge")
+																	.val())) * 100) / 100);
+									var tot = $("#totalvalue").val();
+									var round = Math.round(tot);
+									if (tot > round) {
+										$("#roundvalue")
+												.val(
+														Math
+																.round((round + 1 - tot) * 100) / 100);
+									} else {
+										$("#roundvalue")
+												.val(
+														Math
+																.round((round - tot) * 100) / 100);
+									}
+
+									$("#grandtotal").val(
+											Number($("#totalvalue").val())
+													+ Number($("#roundvalue")
+															.val()));
+
+									$("#productTable")
+											.append(
+													'<tbody><tr id="trRemove'+ind+'">'
+															+ '<td>'
+															+ k
+															+ '</td>'
+															+ '<td><input readonly="readonly" type="text" name="codevalue" value=\''
+														+ data.productCode
+														+ '\'><input readonly="readonly" type="hidden" name="productId" value=\''
+														+ data.productId
+														+ '\'><input readonly="readonly" type="hidden" name="purchaseProductDetId" value=\''
+															+ $("#salesbarH")
+																	.val()
+															+ '\'></td>'
+															+ '<td><input readonly="readonly" type="text" name="descvalue" value=\''
+														+ data.productDesc
+														+ '\'></td>'
+															+ '<td><input readonly="readonly" type="text" name="qtyvalue" value=\''
+															+ $("#qtyvalue")
+																	.val()
+															+ '\'></td>'
+															+ '<td><input readonly="readonly" type="text" name="mrpQty" value=\''
+															+ $("#mrpQty")
+																	.val()
+															+ '\'></td>'
+															+ '<td><input readonly="readonly" type="text" name="eachtotalvalue" value=\''
+															+ $(
+																	"#eachtotalvalue")
+																	.val()
+															+ '\'></td>'
+															+ '<td>'
+															+ '<a href="#" onclick="removeProduct('
+															+ ind
+															+ ');"><img src="img/cross.png" height="16px" width="16px"></a>'
+															+ '</td>'
+															+ '</tr></tbody>');
+									ind++;
+									$("#pCode").val("");
+									$("#salesbar").val("");
+									$("#salesbar").prop("readonly", false);
+									$("#mrp").prop("disabled", true);
+									$("#wsp").prop("disabled", true);
+									$("#qty").prop("readonly", false);
+									$("#qty").val("");
+								} else {
+									alert("no product found");
+								}
+
+							},
+							error : function(a, b, c) {
+								alert('invalid barcode');
+							}
+
+						});
+			}
+		}
 	</script>
 </body>
 

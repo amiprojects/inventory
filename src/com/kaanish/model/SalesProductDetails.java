@@ -20,7 +20,7 @@ public class SalesProductDetails implements Serializable {
 
 	private int id;
 	private int quantity;
-	private float salesPrice;
+	private float salesPrice;	
 
 	@ManyToOne
 	@JoinColumn(name = "salesEntryId")
@@ -73,5 +73,6 @@ public class SalesProductDetails implements Serializable {
 	public void setPurchase_Product_Details(Purchase_Product_Details purchase_Product_Details) {
 		this.purchase_Product_Details = purchase_Product_Details;
 	}
+
 
 }

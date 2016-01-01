@@ -35,6 +35,10 @@
 	letter-spacing: 0.3px;
 	padding-right: 20px;
 }
+
+.head_style{
+font-size: 17px;
+}
 </style>
 
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
@@ -100,15 +104,21 @@
 				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
 				<div class="row">
 					<div class="masonary-grids">
+ <div class="breadcrumbs" style="height: 50px; text-align: center;">
+									<h3 style="    margin-top: 11px;">Sales Entry</h3>
+									
+								</div>
 
 						<div class="col-md-12" style="height: 800px;">
 							<form class="sec" action="salesEntry" method="post">
 								<div class="row">
 									<div class="col-md-6">
-										<div class="widget-area" style="height: 250px;">
-											<div style="background-color: lightgrey;">
-												<h3>Bill To:</h3>
+										<div class="widget-area" style="height: 250px; padding: 4px 5px;">
+
+											<div style="background-color: lightgrey; padding: 3px 3px;">
+												<span class="head_style">Bill To:</span>
 											</div>
+											<div>
 											<table cellspacing="2">
 												<tr>
 													<td>Name :</td>
@@ -139,17 +149,18 @@
 														style="length: 40px;"></input></td>
 												</tr>
 											</table>
+											</div>
 										</div>
 									</div>
 
 									<div class="col-md-6">
-										<div class="widget-area" style="height: 250px;">
-											<div style="background-color: lightgrey;">
-												<h3>Invoice Details:</h3>
+										<div class="widget-area" style="height: 250px;     padding: 5px 3px; ">
+											<div style="background-color: lightgrey;     padding: 3px 3px;" >
+												<span class="head_style">Invoice Details:</span>
 											</div>
 
 
-											<div class="form-group">
+											<div class="form-group" style="padding-top: 18px;">
 
 												<label style="font-size: 15px" class="font">Sales
 													challan no. :</label>
@@ -187,12 +198,13 @@
 										</div>
 									</div>
 								</div>
-								<div class="widget-area">
+								<div class="widget-area" style="padding: 3px 3px;">
 									<div class='toast' style='display: none'>
 										<h3 id="msg">${requestScope['msg']}</h3>
 									</div>
-									<div style="background-color: lightgrey;">
-										<h3>Sale Product at:</h3>
+									<div style="background-color: lightgrey; padding: 3px 3px;">
+									
+										<span class="head_style">Sale Product at:</span>
 									</div>
 									<input type="radio" class="chk" name="saleAt" value="mrp"
 										id="mrp" style="display: none;" checked="checked"><label
