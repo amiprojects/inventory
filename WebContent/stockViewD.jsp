@@ -156,7 +156,7 @@
 									</div>
 									<div class="widget-area" style="width: 60%; height: 550px">
 
-										<h3>Stock View</h3>
+										<h3>Stock</h3>
 
 										<br>
 										<div

@@ -1013,10 +1013,13 @@
 			tt = display_c();
 		}
 		$(document).ready(function() {
-			display_ct();			
+			display_ct();
+
 			$("#dash").attr("id", "activeSubMenu");
 			$("#sDash").attr("style", "color: red;");
+
 			/* 	$(".carousal-sec").owlCarousel({
+
 				autoPlay : true,
 				stopOnHover : true,
 				goToFirstSpeed : 500,

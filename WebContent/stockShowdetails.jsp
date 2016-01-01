@@ -154,7 +154,7 @@
 										<div id="General" class="tab-pane fade active in">
 
 
-											<!-- .*******EL expression**********. -->
+
 											<c:set var="purSize"
 												value="${p.purchase_Product_Details.size()}" />
 											<c:set
@@ -179,13 +179,12 @@
 
 											<div style="width: 50%; float: left;">
 												<b>Image:</b>
-												<div style="width: 150px; height: 99px; overflow: hidden;">
-													<c:forEach items="${pImage}" var="image">
-														<img width="100" height="100" style="" alt="ProductImage"
-															src="data:image/jpeg;base64,${image.getImageAsString()}">
-													</c:forEach>
+												<div >
+													<c:if test="${pImage.size()>0}">
+														<img width="100" height="100" style="" alt="Product Image here"
+															src="data:image/jpeg;base64,${pImage.get(0).getImageAsString()}">
+													</c:if>
 												</div>
-
 											</div>
 											<div style="width: 100%; float: left;">
 												<hr width="100%" color="black">
@@ -238,18 +237,42 @@
 											<div>
 
 												<table width="100%">
+
 													<tr>
+
 														<td><h4>Inventory:</h4></td>
+
 													</tr>
+
 													<tr>
+
 														<td>&nbsp;</td>
+
 													</tr>
 													<tr style="width: 100%">
+
 														<td><b>In Stock:</b> &nbsp;&nbsp;${qty}</td>
+
 														<td>&nbsp;</td>
+
+
 														<c:set
 															value="${sessionScope['ejb'].getPurchase_Product_DetailsByProId(requestScope['proid1'])}"
 															var="prolst" />
+
+														<c:set var="sProduct"
+															value="${sessionScope['ejb'].getSales_Product_DetailsByProId(requestScope['proid1'])}" />
+
+														<c:set var="jpL"
+															value="${sessionScope['ejb'].getJobAssignmentProductDetailsByproductId(requestScope['proid1'])}" />
+
+
+														<%-- <c:set value="${sessionScope['ejb'].getJobAssignmentProductDetailsByproductId(requestScope['proid1'])}" var="jobQty" />
+															<c:set value="${jobQty.qty}" var="job"/>
+															<c:set value="${sessionScope['ejb'].getSales_Product_DetailsByProId(requestScope['proid1'])}" var="salesQty" />
+														<c:set value="${salesQty.quantity}" var="sales"/> --%>
+
+
 														<c:set value="${0}" var="initialQty" />
 														<c:set value="${0}" var="purQtyt" />
 														<c:forEach items="${prolst}" var="pro">
@@ -257,6 +280,7 @@
 																<c:when test="${pro.isInitialInventory()}">
 																	<c:set value="${pro.quantity}" var="initialQty" />
 																</c:when>
+
 																<c:otherwise>
 																	<c:set value="${purQtyt+pro.quantity}" var="purQtyt" />
 																</c:otherwise>
@@ -268,22 +292,50 @@
 
 														<td><b>Initial Inventory:</b>
 															&nbsp;&nbsp;${initialQty}</td>
-
 													</tr>
 													<tr>
 														<td>&nbsp;</td>
 													</tr>
+													<c:forEach items="${jpL}" var="jppL">
+														<c:set var="total" value="${total+jppL.qty}" />
+													</c:forEach>
 													<tr>
-														<td><b>In Jobwork:</b>&nbsp;&nbsp;</td>
+														<td><b>In Jobwork:</b>&nbsp;&nbsp;${total}</td>
 														<td>&nbsp;</td>
 
-														<td><b>Total Sold:</b> &nbsp;&nbsp;</td>
+														<c:forEach items="${sProduct}" var="sP">
+															<c:set var="sTotal" value="${sTotal+sP.quantity}" />
+														</c:forEach>
+
+														<td><b>Total Sold:</b> &nbsp;&nbsp;${sTotal}</td>
 
 													</tr>
-
 												</table>
-
 											</div>
+											
+											<hr width="100%">
+											<table>
+											<tr><td>To receive from jobber:</td><td></td></tr>
+											<tr><td></td></tr>
+											
+											
+											</table>
+											
+											
+											
+											
+											
+											
+											
+											
+											
+											
+											
+											
+											
+											
+											
+											
 										</div>
 
 										<!-- .......................................**********************Image****************************************************...................................... -->
@@ -406,9 +458,6 @@
 																	<td><b>${sessionScope['ejb'].getVendorById(purPro.purchase_Entry.agentId).name}
 																	</b></td>
 																	<td>&nbsp;</td>
-
-
-
 																	<td><b>${purPro.lotNumber}</b></td>
 																	<td>&nbsp;</td>
 
@@ -483,8 +532,8 @@
 															<td><b>Customer</b></td>
 															<td>&nbsp;</td>
 
-															<!-- <td><b>Agent</b></td>
-															<td>&nbsp;</td> -->
+															<td><b>Agent</b></td>
+															<td>&nbsp;</td>
 
 															<td><b>Lot Number</b></td>
 															<td>&nbsp;</td>
@@ -521,7 +570,21 @@
 
 																<td>&nbsp;</td>
 
-																<td><b> </b></td>
+
+																<td><c:choose>
+
+																		<c:when test="${sPro.salesEntry.MRP}">
+
+																			<b> MRP</b>
+
+																		</c:when>
+
+																		<c:otherwise>
+																			<b>WSP</b>
+																		</c:otherwise>
+
+																	</c:choose></td>
+
 																<!-- Sold in WSP/MRP   -->
 																<td>&nbsp;</td>
 
@@ -538,6 +601,11 @@
 																<!-- Customer -->
 																<td>&nbsp;</td>
 
+
+																<td><b>${sPro.salesEntry.vendor.name}</b></td>
+																<td>&nbsp;</td>
+
+
 																<td><b>${sPro.purchase_Product_Details.lotNumber}</b></td>
 																<!-- Lot -->
 																<td>&nbsp;</td>
@@ -548,7 +616,6 @@
 
 																<td><b>${sPro.salesEntry.challanNumber}</b></td>
 																<!-- Invoice -->
-
 															</tr>
 														</c:forEach>
 
@@ -628,8 +695,6 @@
 
 															<td><b>Status</b></td>
 															<td>&nbsp;</td>
-
-
 
 															<td><b>Job Challan number</b></td>
 
@@ -735,7 +800,10 @@
 														<td><b>Cost/unit</b></td>
 														<td>&nbsp;</td>
 
-														<td><b>Amount</b></td>
+														<td><b>wsp</b></td>
+														<td>&nbsp;</td>
+
+														<td><b>mrp</b></td>
 														<td>&nbsp;</td>
 
 														<td><b>Vendor</b></td>
@@ -745,80 +813,77 @@
 														<td>&nbsp;</td>
 
 														<td><b>Lot Number</b></td>
-														<td>&nbsp;</td>
 
 														<td><b>Barcode</b></td>
-														<td>&nbsp;</td>
+
 
 														<td><b>Purchase challan number</b></td>
 
 													</tr>
 													<tr style="width: 100%">
-														<c:forEach items="${purchasePro}" var="purProDsp">
-															<td><b>${purProDsp }</b></td>
-															<td>&nbsp;</td>
+														<c:forEach items="${purchasePro}" var="purPro1">
+															<c:if test="${!purPro1.isInitialInventory()}">
+																<td><b>${purPro1.productDetail.code}</b></td>
+																<td>&nbsp;</td>
 
-															<td><b>${purProDsp}</b></td>
+																<td><b>${purPro1.productDetail.description}</b></td>
 
-															<td>&nbsp;</td>
+																<td>&nbsp;</td>
 
-															<td><b>${purProDsp} </b></td>
+																<td><b>${purPro1.quantity}</b></td>
+																<td>&nbsp;</td>
 
-															<td>&nbsp;</td>
+																<td><b>${purPro1.productDetail.qtyUnit.name} </b></td>
 
-															<td><b>${purProDsp.attrValue1}</b></td>
-															<td>&nbsp;</td>
+																<td>&nbsp;</td>
 
-															<td><b>${purProDsp.attrValue2}</b></td>
-															<td>&nbsp;</td>
+																<td><b>${purPro1.attrValue1}</b></td>
+																<td>&nbsp;</td>
 
-															<td><b>${purProDsp.attrValue3}</b></td>
-															<td>&nbsp;</td>
+																<td><b>${purPro1.attrValue2}</b></td>
+																<td>&nbsp;</td>
 
-															<td><b>${purProDsp.attrValue4}</b></td>
-															<td>&nbsp;</td>
+																<td><b>${purPro1.attrValue3}</b></td>
+																<td>&nbsp;</td>
 
-															<td><b>${purProDsp.attrValue5}</b></td>
-															<td>&nbsp;</td>
+																<td><b>${purPro1.attrValue4}</b></td>
+																<td>&nbsp;</td>
 
-															<td><b> ${purProDsp.attrValue6}</b></td>
-															<td>&nbsp;</td>
+																<td><b>${purPro1.attrValue5}</b></td>
+																<td>&nbsp;</td>
 
-															<td><b>${purProDsp>0?p.purchase_Product_Details.get(purSize-1).cost:'nill'}</b></td>
+																<td><b> ${purPro1.attrValue6}</b></td>
+																<td>&nbsp;</td>
 
-															<td>&nbsp;</td>
+																<td><b>${purPro1.cost}</b></td>
+																<td>&nbsp;</td>
 
-															<td><b>${purProDsp>0?p.purchase_Product_Details.get(purSize-1).mrp:'nill'}</b></td>
-															<td>&nbsp;</td>
+																<td><b>${purPro1.wsp}</b></td>
+																<td>&nbsp;</td>
 
-															<td><b>${purProDsp>0?p.purchase_Product_Details.get(purSize-1).wsp:'nill'}</b></td>
-															<td>&nbsp;</td>
+																<td><b>${purPro1.mrp}</b></td>
 
-															<%-- <td><b>${purProDsp}</b></td>
-															<td>&nbsp;</td>
+																<td><b>${purPro1.purchase_Entry.vendor.name}</b></td>
+																<td>&nbsp;</td>
 
-															<td><b>${purProDsp}</b></td>
-															<td>&nbsp;</td>
+																<td><b>${sessionScope['ejb'].getVendorById(purPro1.purchase_Entry.agentId).name}</b></td>
+																<td>&nbsp;</td>
 
-															<td><b>${purProDsp}</b></td>
-															<td>&nbsp;</td>
+																<td><b>${purPro1.lotNumber}</b></td>
 
-															
-															<td><b>${purProDsp}</b></td>
-															<td>&nbsp;</td>
+																<td><b>${purPro1.id}/${purPro1.lotNumber}/${purPro1.productDetail.code}</b></td>
 
-															<td><b>${purProDsp}</b></td> --%>
+																<td><b>${purPro1.purchase_Entry.challanNumber}</b></td>
 
+
+
+
+															</c:if>
 														</c:forEach>
 													</tr>
 
 												</table>
-
-
 											</div>
-
-
-
 										</div>
 										<!-- ........................................................................************************************..............	 -->
 									</div>
