@@ -276,8 +276,8 @@
 													readonly="readonly"></td>
 												<td><input type="text" id="qtyvalue"
 													readonly="readonly" value="0"></td>
-												<td><input type="hidden" id="wspORmrp"> <input
-													type="text" id="mrpQty" readonly="readonly"></td>
+												<td><input type="hidden" id="wspORmrp" name="wspORmrp">
+													<input type="text" id="mrpQty" readonly="readonly"></td>
 												<td><input type="text" id="eachtotalvalue"
 													readonly="readonly"></td>
 											</tr>
@@ -1362,6 +1362,16 @@
 						}
 
 					});
+				},
+				change : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+					}
+				},
+				select : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+					}
 				}
 			});
 		});

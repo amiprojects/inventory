@@ -35,6 +35,7 @@ public class SalesEntry implements Serializable {
 	private String saleType;
 	private String challanNumber;
 	private int challanSuffix;
+	private boolean isMRP;
 	
 
 	@ManyToOne
@@ -195,6 +196,14 @@ public class SalesEntry implements Serializable {
 
 	public void setVendor(Vendor vendor) {
 		this.vendor = vendor;
+	}
+
+	public boolean isMRP() {
+		return isMRP;
+	}
+
+	public void setMRP(boolean isMRP) {
+		this.isMRP = isMRP;
 	}
 
 }

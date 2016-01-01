@@ -1388,6 +1388,11 @@ public class Servlet extends HttpServlet {
 						.getParameter("grandtotal")));
 				salesEntry.setVendor(ejb.getVendorById(Integer.parseInt(req
 						.getParameter("aId"))));
+				if (req.getParameter("wspORmrp").equals("mrpVal")) {
+					salesEntry.setMRP(true);
+				} else {
+					salesEntry.setMRP(false);
+				}
 				salesEntry.setCustomer(customerEntry);
 				ejb.setSalesEntry(salesEntry);
 
@@ -1732,8 +1737,6 @@ public class Servlet extends HttpServlet {
 				break;
 
 			/**************************************************************/
-
-			
 
 			case "uploadProductImage":
 				page = "addNewProductImage.jsp";
