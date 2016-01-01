@@ -297,7 +297,7 @@
 														<td>&nbsp;</td>
 													</tr>
 													<c:forEach items="${jpL}" var="jppL">
-														<c:set var="total" value="${total+jppL.qty}" />
+														<c:set var="total" value="${total+jppL.remaninQty}" />
 													</c:forEach>
 													<tr>
 														<td><b>In Jobwork:</b>&nbsp;&nbsp;${total}</td>
@@ -315,8 +315,10 @@
 											
 											<hr width="100%">
 											<table>
-											<tr><td>To receive from jobber:</td><td></td></tr>
-											<tr><td></td></tr>
+											<tr><td><b>To receive from jobber:&nbsp;&nbsp;</b>${total}</td></tr>
+											<tr><td>&nbsp;</td></tr>
+											
+											<tr><td><b>Available for sale:</b>&nbsp;&nbsp;${qty}</td></tr>
 											
 											
 											</table>
