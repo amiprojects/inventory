@@ -154,7 +154,7 @@
 										<div id="General" class="tab-pane fade active in">
 
 
-											<!-- .*******EL expression**********. -->
+
 											<c:set var="purSize"
 												value="${p.purchase_Product_Details.size()}" />
 											<c:set
@@ -179,13 +179,12 @@
 
 											<div style="width: 50%; float: left;">
 												<b>Image:</b>
-												<div style="width: 150px; height: 99px; overflow: hidden;">
-													<c:forEach items="${pImage}" var="image">
-														<img width="100" height="100" style="" alt="ProductImage"
-															src="data:image/jpeg;base64,${image.getImageAsString()}">
-													</c:forEach>
+												<div >
+													<c:if test="${pImage.size()>0}">
+														<img width="100" height="100" style="" alt="Product Image here"
+															src="data:image/jpeg;base64,${pImage.get(0).getImageAsString()}">
+													</c:if>
 												</div>
-
 											</div>
 											<div style="width: 100%; float: left;">
 												<hr width="100%" color="black">
@@ -238,20 +237,31 @@
 											<div>
 
 												<table width="100%">
+
 													<tr>
+
 														<td><h4>Inventory:</h4></td>
+
 													</tr>
+
 													<tr>
+
 														<td>&nbsp;</td>
+
 													</tr>
 													<tr style="width: 100%">
+
 														<td><b>In Stock:</b> &nbsp;&nbsp;${qty}</td>
+
 														<td>&nbsp;</td>
+
+
 														<c:set
 															value="${sessionScope['ejb'].getPurchase_Product_DetailsByProId(requestScope['proid1'])}"
 															var="prolst" />
 
-
+														<c:set var="sProduct"
+															value="${sessionScope['ejb'].getSales_Product_DetailsByProId(requestScope['proid1'])}" />
 
 														<c:set var="jpL"
 															value="${sessionScope['ejb'].getJobAssignmentProductDetailsByproductId(requestScope['proid1'])}" />
@@ -270,6 +280,7 @@
 																<c:when test="${pro.isInitialInventory()}">
 																	<c:set value="${pro.quantity}" var="initialQty" />
 																</c:when>
+
 																<c:otherwise>
 																	<c:set value="${purQtyt+pro.quantity}" var="purQtyt" />
 																</c:otherwise>
@@ -292,11 +303,39 @@
 														<td><b>In Jobwork:</b>&nbsp;&nbsp;${total}</td>
 														<td>&nbsp;</td>
 
-														<td><b>Total Sold:</b> &nbsp;&nbsp;${sales}</td>
+														<c:forEach items="${sProduct}" var="sP">
+															<c:set var="sTotal" value="${sTotal+sP.quantity}" />
+														</c:forEach>
+
+														<td><b>Total Sold:</b> &nbsp;&nbsp;${sTotal}</td>
 
 													</tr>
 												</table>
 											</div>
+											
+											<hr width="100%">
+											<table>
+											<tr><td>To receive from jobber:</td><td></td></tr>
+											<tr><td></td></tr>
+											
+											
+											</table>
+											
+											
+											
+											
+											
+											
+											
+											
+											
+											
+											
+											
+											
+											
+											
+											
 										</div>
 
 										<!-- .......................................**********************Image****************************************************...................................... -->
@@ -493,8 +532,8 @@
 															<td><b>Customer</b></td>
 															<td>&nbsp;</td>
 
-															<!-- <td><b>Agent</b></td>
-															<td>&nbsp;</td> -->
+															<td><b>Agent</b></td>
+															<td>&nbsp;</td>
 
 															<td><b>Lot Number</b></td>
 															<td>&nbsp;</td>
@@ -531,7 +570,21 @@
 
 																<td>&nbsp;</td>
 
-																<td><b> </b></td>
+
+																<td><c:choose>
+
+																		<c:when test="${sPro.salesEntry.MRP}">
+
+																			<b> MRP</b>
+
+																		</c:when>
+
+																		<c:otherwise>
+																			<b>WSP</b>
+																		</c:otherwise>
+
+																	</c:choose></td>
+
 																<!-- Sold in WSP/MRP   -->
 																<td>&nbsp;</td>
 
@@ -548,6 +601,11 @@
 																<!-- Customer -->
 																<td>&nbsp;</td>
 
+
+																<td><b>${sPro.salesEntry.vendor.name}</b></td>
+																<td>&nbsp;</td>
+
+
 																<td><b>${sPro.purchase_Product_Details.lotNumber}</b></td>
 																<!-- Lot -->
 																<td>&nbsp;</td>
@@ -558,7 +616,6 @@
 
 																<td><b>${sPro.salesEntry.challanNumber}</b></td>
 																<!-- Invoice -->
-
 															</tr>
 														</c:forEach>
 
@@ -638,8 +695,6 @@
 
 															<td><b>Status</b></td>
 															<td>&nbsp;</td>
-
-
 
 															<td><b>Job Challan number</b></td>
 
@@ -818,7 +873,7 @@
 
 																<td><b>${purPro1.id}/${purPro1.lotNumber}/${purPro1.productDetail.code}</b></td>
 
-																<td>${purPro1.purchase_Entry.challanNumber}</td>
+																<td><b>${purPro1.purchase_Entry.challanNumber}</b></td>
 
 
 

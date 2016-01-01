@@ -453,7 +453,7 @@ public class Servlet extends HttpServlet {
 				int flagg = 0;
 				List<ProductDetail> pro1 = ejb.getAllProductDetail();
 				for (ProductDetail pqu : pro1) {
-					if (pqu.getCode().equals(req.getParameter("productCode"))) {
+					if (pqu.getCode().equals(req.getParameter("productCode").toUpperCase())) {
 						flagg = 1;
 						break;
 					}
