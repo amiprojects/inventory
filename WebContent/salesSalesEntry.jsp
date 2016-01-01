@@ -246,7 +246,6 @@
 									<!-- <input type="hidden" name="descriptiondId" id="descriptionId"> -->
 									&nbsp; &nbsp; &nbsp;<b>Product with Barcode</b> <input
 										type="text" id="salesbar" name="salesbar"
-										onkeyup="salesbarF();"
 										onkeypress="Javascript: if (event.keyCode==13) fnsearch();"><input
 										type="hidden" id="salesbarH" name="salesbarH"> &nbsp;
 									&nbsp; &nbsp;
@@ -668,18 +667,11 @@
 
 	<script>
 		ind = 0;
+		var k = 0;
 		function removeProduct(a) {
 			$("#trRemove" + a).remove();
-			//$("#trRemoveH" + a).remove();
-			if (a == 0) {
-				$("#mrp").prop("disabled", false);
-				$("#wsp").prop("disabled", false);
-			} else {
-				$("#mrp").prop("disabled", true);
-				$("#wsp").prop("disabled", true);
-			}
 		}
-		var k = 0;
+
 		function probar() {
 			if ($("#qty").val() == 0 || $("#qty").val() == "") {
 				alert("Please enter a valid quantity");
@@ -1388,11 +1380,10 @@
 			$("#salesbar").prop("readonly", false);
 		}
 		function fnsearch() {
-
 			if ($("#salesbar").val() == 0 || $("#salesbar").val() == "") {
 				alert("Please select a product or enter barcode.");
 			} else {
-				k = k + 1;
+
 				var countryName = $("#salesbar").val();
 				var countryArray = countryName.split('/');
 
@@ -1413,6 +1404,7 @@
 							dataType : "json",
 							success : function(data) {
 								if (data != null) {
+									k = k + 1;
 									$("#codevalue").val(data.productCode);
 									$("#productId").val(data.productId);
 									$("#descvalue").val(data.productDesc);
@@ -1506,17 +1498,18 @@
 															+ k
 															+ '</td>'
 															+ '<td><input readonly="readonly" type="text" name="codevalue" value=\''
-														+ data.productCode
-														+ '\'><input readonly="readonly" type="hidden" name="productId" value=\''
-														+ data.productId
-														+ '\'><input readonly="readonly" type="hidden" name="purchaseProductDetId" value=\''
+												+ data.productCode
+												+ '\'><input readonly="readonly" type="hidden" name="productId" value=\''
+												+ data.productId
+												+ '\'><input readonly="readonly" type="hidden" name="purchaseProductDetId" value=\''
 															+ $("#salesbarH")
 																	.val()
 															+ '\'></td>'
 															+ '<td><input readonly="readonly" type="text" name="descvalue" value=\''
-														+ data.productDesc
-														+ '\'></td>'
-															+ '<td><input readonly="readonly" type="text" name="qtyvalue" value=\''
+												+ data.productDesc
+												+ '\'></td>'
+															+ '<td><input readonly="readonly" type="text" id="qtyVal'
+															+ '" name="qtyvalue" value=\''
 															+ $("#qtyvalue")
 																	.val()
 															+ '\'></td>'
@@ -1536,6 +1529,7 @@
 															+ '</td>'
 															+ '</tr></tbody>');
 									ind++;
+
 									$("#pCode").val("");
 									$("#salesbar").val("");
 									$("#salesbar").prop("readonly", false);
