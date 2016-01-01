@@ -290,14 +290,12 @@ $(document).ready(function(){
 						<div class="masonary-grids">
 							<div class="col-md-12">
 
-								<div class="breadcrumbs" style="height: 39px">
-									<ul>
-										<li><p
-												style="right: -422px; font-size: 20px; position: absolute;">
-												<b>Vendor Details</b>
-											</p></li>
-									</ul>
-								</div>
+								<div class="breadcrumbs"
+								style="height: 50px; text-align: center;">
+								<h3 style="margin-top: 11px;">Vendor Details</h3>
+
+
+							</div>
 
 								<div class="widget-area" style="width: 28%;">
 									<form role="form" class="sec">
