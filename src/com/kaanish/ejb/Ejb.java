@@ -680,7 +680,7 @@ public class Ejb {
 		q.setParameter("nm", "%" + name.toUpperCase() + "%");
 		return q.getResultList();
 	}
-	
+
 	public List<Vendor> getVendorsByVendorTypeSalesAgentAndName(String name) {
 		TypedQuery<Vendor> q = em
 				.createQuery(
@@ -829,8 +829,8 @@ public class Ejb {
 
 	public List<Purchase_Product_Details> getSaleblePurchaseProductDetailsByProductCodeAndQuantity(
 			String code, Date date) {
-		List<Purchase_Product_Details> lst=new ArrayList<Purchase_Product_Details>();
-		
+		List<Purchase_Product_Details> lst = new ArrayList<Purchase_Product_Details>();
+
 		TypedQuery<Purchase_Product_Details> q = em
 				.createQuery(
 						"select c from Purchase_Product_Details c where  UPPER(c.productDetail.code) like :cd and c.remaining_quantity>0 and c.productDetail.isSaleble=:salable and c.purchase_Entry.purchase_date<:date ORDER BY c.id ASC",
@@ -838,20 +838,20 @@ public class Ejb {
 		q.setParameter("salable", true);
 		q.setParameter("cd", "%" + code.toUpperCase() + "%");
 		q.setParameter("date", date);
-		
-		lst=q.getResultList();
-		
+
+		lst = q.getResultList();
+
 		TypedQuery<Purchase_Product_Details> q1 = em
 				.createQuery(
 						"select c from Purchase_Product_Details c where  UPPER(c.productDetail.code) like :cd and c.remaining_quantity>0 and c.productDetail.isSaleble=:salable and c.initialInventory=true ORDER BY c.id ASC",
 						Purchase_Product_Details.class);
 		q1.setParameter("salable", true);
 		q1.setParameter("cd", "%" + code.toUpperCase() + "%");
-		
-		for(Purchase_Product_Details ppd: q1.getResultList()){
+
+		for (Purchase_Product_Details ppd : q1.getResultList()) {
 			lst.add(ppd);
 		}
-		
+
 		return lst;
 	}
 
@@ -867,33 +867,38 @@ public class Ejb {
 	public Purchase_Product_Details getPurchaseProductDetailsById(int id) {
 		return em.find(Purchase_Product_Details.class, id);
 	}
-	
-	public Purchase_Product_Details getPurchaseProductDetailsByIdForSale(int id, String date) {
-		
-		
-		TypedQuery<Purchase_Product_Details> q=em.createQuery("select c from Purchase_Product_Details c where c.id=:id and c.remaining_quantity>0 and c.productDetail.isSaleble=true and c.purchase_Entry.purchase_date<:date",Purchase_Product_Details.class);
+
+	public Purchase_Product_Details getPurchaseProductDetailsByIdForSale(
+			int id, String date) {
+
+		TypedQuery<Purchase_Product_Details> q = em
+				.createQuery(
+						"select c from Purchase_Product_Details c where c.id=:id and c.remaining_quantity>0 and c.productDetail.isSaleble=true and c.purchase_Entry.purchase_date<:date",
+						Purchase_Product_Details.class);
 		q.setParameter("id", id);
 		q.setParameter("date", DateConverter.getDate(date));
-		
-		if(q.getResultList().size()>0){
+
+		if (q.getResultList().size() > 0) {
 			return q.getResultList().get(0);
-		}else{
-			TypedQuery<Purchase_Product_Details> q1=em.createQuery("select c from Purchase_Product_Details c where c.id=:id and c.remaining_quantity>0 and c.productDetail.isSaleble=true and c.initialInventory=true",Purchase_Product_Details.class);
+		} else {
+			TypedQuery<Purchase_Product_Details> q1 = em
+					.createQuery(
+							"select c from Purchase_Product_Details c where c.id=:id and c.remaining_quantity>0 and c.productDetail.isSaleble=true and c.initialInventory=true",
+							Purchase_Product_Details.class);
 			q1.setParameter("id", id);
-			if(q1.getResultList().size()>0){
+			if (q1.getResultList().size() > 0) {
 				return q1.getResultList().get(0);
-			}else{
+			} else {
 				return null;
 			}
 		}
-		
+
 	}
-	
-	/*********************for job recieve*********************/
-	public void setJobRecieve(JobRecievedDetails jobRecievedDetails){
+
+	/********************* for job recieve *********************/
+	public void setJobRecieve(JobRecievedDetails jobRecievedDetails) {
 		em.persist(jobRecievedDetails);
 	}
-	
 
 	/******************** for City *******************************/
 	public void setCity(City city) {
@@ -1465,8 +1470,16 @@ public class Ejb {
 		em.remove(getCustomerEntryById(id));
 	}
 
-	public void updateDepartment(CustomerEntry customerEntry) {
+	public void updateCustomer(CustomerEntry customerEntry) {
 		em.merge(customerEntry);
+	}
+
+	public List<CustomerEntry> getCustomerByPh(String ph) {
+		TypedQuery<CustomerEntry> q = em.createQuery(
+				"select c from CustomerEntry c where c.mobile like :ph",
+				CustomerEntry.class);
+		q.setParameter("ph", "%" + ph + "%");
+		return q.getResultList();
 	}
 
 	/******************************

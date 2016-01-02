@@ -59,9 +59,9 @@ import com.kaanish.util.Base64;
 import com.kaanish.util.DateConverter;
 
 @MultipartConfig
-@WebServlet({ "/login", "/logout", "/addTax", "/addTaxGroup", "/editTax",
-		"/deleteTax", "/editTaxGroup", "/deleteTaxGroup", "/stockDetailShow",
-		"/createDept", "/deleteDept", "/createSubDept", "/deleteSubDept",
+@WebServlet({ "/logout", "/addTax", "/addTaxGroup", "/editTax", "/deleteTax",
+		"/editTaxGroup", "/deleteTaxGroup", "/stockDetailShow", "/createDept",
+		"/deleteDept", "/createSubDept", "/deleteSubDept",
 		"/editproductSummary", "/createCategory", "/deleteCategory",
 		"/newVendorType", "/addCountry", "/addState", "/createProduct",
 		"/deleteCountry", "/addVendor", "/addUOM", "/editVendorType",
@@ -71,7 +71,8 @@ import com.kaanish.util.DateConverter;
 		"/updateVendor", "/purchaseSearchByDate", "/uploadProductImage",
 		"/deleteProductImage", "/jobAssignment", "/jobAssignSearchByDate",
 		"/salesEntry", "/createUserGroup", "/updateUserGroup", "/updateUser",
-		"/goStockView", "/jChallanSearch", "/jobRecieve", "/createNewUser" })
+		"/goStockView", "/jChallanSearch", "/jobRecieve", "/createNewUser",
+		"/changePass" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -79,8 +80,6 @@ public class Servlet extends HttpServlet {
 	private Ejb ejb;
 	private HttpSession httpSession;
 	private Date dt;
-	private String serverIp;
-	private int port;
 	private Users users;
 	private String page;
 	private String msg;
@@ -364,34 +363,37 @@ public class Servlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		/*
+		 * if(httpSession.getAttribute("user").equals("")){ System.exit(0); }
+		 */
+
 		url = req.getRequestURL().toString();
 		url = url.substring(url.lastIndexOf('/') + 1);
 		httpSession = req.getSession();
-		serverIp = req.getLocalAddr();
-		port = req.getLocalPort();
+
 		try {
 			switch (url) {
 
-			case "login":
-				page = "index.jsp";
-				String user = req.getParameter("usrName");
-				if (ejb.getCheckLogin(user, req.getParameter("password"))) {
-					httpSession.setAttribute("user", user);
-					httpSession.setAttribute("sip", serverIp);
-					httpSession.setAttribute("port", port);
-					page = "dashboard.jsp";
-					msg = "Login Successful.";
-				} else {
-					msg = "Invalid username/Password.";
-					httpSession.removeAttribute("user");
-				}
-				break;
 			case "logout":
 				page = "index.jsp";
 				httpSession.removeAttribute("user");
 				httpSession.removeAttribute("sip");
 				httpSession.removeAttribute("port");
 				msg = "Logout Successfull.";
+				break;
+
+			case "changePass":
+				page = "changePassword.jsp";
+				String user = (String) httpSession.getAttribute("user");
+				if (ejb.getCheckLogin(user, req.getParameter("curPassword"))) {
+					users = ejb.getUserById(user);
+					users.setPassword(req.getParameter("newPassword"));
+					ejb.updateUser(users);
+					msg = "Password changed successfully.";
+				} else {
+					msg = "Invalid current Password.";
+					// httpSession.removeAttribute("user");
+				}
 				break;
 
 			case "updateCompanyInfo":
@@ -453,7 +455,8 @@ public class Servlet extends HttpServlet {
 				int flagg = 0;
 				List<ProductDetail> pro1 = ejb.getAllProductDetail();
 				for (ProductDetail pqu : pro1) {
-					if (pqu.getCode().equals(req.getParameter("productCode").toUpperCase())) {
+					if (pqu.getCode().equals(
+							req.getParameter("productCode").toUpperCase())) {
 						flagg = 1;
 						break;
 					}
@@ -1358,13 +1361,15 @@ public class Servlet extends HttpServlet {
 			case "salesEntry":
 				page = "salesSalesEntry.jsp";
 
-				customerEntry = new CustomerEntry();
-				customerEntry.setName(req.getParameter("custName"));
-				customerEntry.setAddress(req.getParameter("addr"));
-				customerEntry.setCity(req.getParameter("city"));
-				customerEntry.setMobile(req.getParameter("phone"));
-				customerEntry.setVat_cst_no(req.getParameter("vatcst"));
-				ejb.setCustomerEntry(customerEntry);
+				if (req.getParameter("isExistingCust").equals("0")) {
+					customerEntry = new CustomerEntry();
+					customerEntry.setName(req.getParameter("custName"));
+					customerEntry.setAddress(req.getParameter("addr"));
+					customerEntry.setCity(req.getParameter("city"));
+					customerEntry.setMobile(req.getParameter("phone"));
+					customerEntry.setVat_cst_no(req.getParameter("vatcst"));
+					ejb.setCustomerEntry(customerEntry);
+				}
 
 				salesEntry = new SalesEntry();
 				dt = new Date();
@@ -1386,17 +1391,22 @@ public class Servlet extends HttpServlet {
 						.getParameter("roundvalue")));
 				salesEntry.setTotalCost(Float.parseFloat(req
 						.getParameter("grandtotal")));
-				if(!req.getParameter("aId").equals("")){
+				if (!req.getParameter("aId").equals("")) {
 					salesEntry.setVendor(ejb.getVendorById(Integer.parseInt(req
 							.getParameter("aId"))));
 				}
-				
+
 				if (req.getParameter("wspORmrp").equals("mrpVal")) {
 					salesEntry.setMRP(true);
 				} else {
 					salesEntry.setMRP(false);
 				}
-				salesEntry.setCustomer(customerEntry);
+				if (req.getParameter("isExistingCust").equals("0")) {
+					salesEntry.setCustomer(customerEntry);
+				} else {
+					salesEntry.setCustomer(ejb.getCustomerEntryById(Integer
+							.parseInt(req.getParameter("existingCustId"))));
+				}
 				ejb.setSalesEntry(salesEntry);
 
 				paymentDetails = new PaymentDetails();

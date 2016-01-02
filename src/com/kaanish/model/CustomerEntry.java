@@ -83,4 +83,11 @@ public class CustomerEntry implements Serializable {
 		this.vat_cst_no = vat_cst_no;
 	}
 
+	@Override
+	public String toString() {
+		return "{\"id\":\"" + id + "\"," + "\"vat_cst_no\":\"" + vat_cst_no
+				+ "\"," + "\"address\":\"" + address + "\"," + "\"city\":\""
+				+ city + "\"," + "\"mobile\":\""
+				+ mobile + "\", \"name\":\"" + name + "\"}";
+	}
 }
