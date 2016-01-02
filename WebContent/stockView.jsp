@@ -139,6 +139,7 @@
 													<c:forEach
 														items="${sessionScope['ejb'].getAllProductDetail()}"
 														var="amiProStock1">
+													 <c:if test="${amiProStock1.purchase_Product_Details.size()>0}"> 
 														<c:set var="qty" value="${amiProStock1.isSaleble()?sessionScope['ejb'].getReadyGoodsStocktDetailByProductId(amiProStock1.id).remainingQty:sessionScope['ejb'].getRawMaterialStocktDetailByProductId(amiProStock1.id).remainingQty}" />
 														<c:choose>
 														<c:when test="${qty==0}">
@@ -184,6 +185,7 @@
 														</c:otherwise>
 														</c:choose>
 														<c:set var="count" value="${count+1}" />
+												 	</c:if> 
 													</c:forEach>
 												</tbody>
 											

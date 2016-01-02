@@ -1641,19 +1641,36 @@
 				success : function(data) {
 					var qty = 0;
 					var rqty = 0;
-					$.each(data, function(index, value) {
-						$("#mrp111").val(value.mrp);
-						$("#wsp111").val(value.wsp);
-						$("#ucost111").val(value.cost);
-						$("#vName").val(value.purchaseVendorName);
-						$("#vAdress").val(value.purchaseVendorAddress);
-						$("#vCompany").val(value.purchaseVendorCompanyName);
-						$("#vPhone").val(value.purchaseVendorPhoneNumber);
-						rqty = rqty + Number(value.remaining_quantity)
-						qty = qty + Number(value.quantity);
-						$("#quantity0101").val(qty);
-						$("#RquantitY").val(rqty);
-					});
+					if(data.length>0){
+						$.each(data, function(index, value) {
+							$("#mrp111").val(value.mrp);
+							$("#wsp111").val(value.wsp);
+							$("#ucost111").val(value.cost);
+							$("#vName").val(value.purchaseVendorName);
+							$("#vAdress").val(value.purchaseVendorAddress);
+							$("#vCompany").val(value.purchaseVendorCompanyName);
+							$("#vPhone").val(value.purchaseVendorPhoneNumber);
+							rqty = rqty + Number(value.remaining_quantity)
+							qty = qty + Number(value.quantity);
+							$("#quantity0101").val(qty);
+							$("#RquantitY").val(rqty);
+						});
+					}else{
+						
+							$("#mrp111").val("");
+							$("#wsp111").val("");
+							$("#ucost111").val("");
+							$("#vName").val("");
+							$("#vAdress").val("");
+							$("#vCompany").val("");
+							$("#vPhone").val("");
+							//rqty = rqty + Number(value.remaining_quantity)
+							//qty = qty + Number(value.quantity);
+							$("#quantity0101").val("");
+							$("#RquantitY").val("");
+						
+					}
+					
 
 				}
 			});

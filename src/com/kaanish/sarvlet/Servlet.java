@@ -71,7 +71,7 @@ import com.kaanish.util.DateConverter;
 		"/updateVendor", "/purchaseSearchByDate", "/uploadProductImage",
 		"/deleteProductImage", "/jobAssignment", "/jobAssignSearchByDate",
 		"/salesEntry", "/createUserGroup", "/updateUserGroup", "/updateUser",
-		"/goStockView", "/jChallanSearch", "/jobRecieve", "/createNewUser" })
+		"/goStockView", "/jChallanSearch", "/jobRecieve", "/createNewUser","/goJobDetailShow" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -1723,7 +1723,19 @@ public class Servlet extends HttpServlet {
 				msg = "";
 
 				break;
-			/************************ * Stock*MuyltiSearch*************Ami ************/
+				/***************job*************show ***************/
+
+			case "goJobDetailShow":
+				page = "jobAssignView.jsp";
+				
+				
+				req.setAttribute("joId", req.getParameter("joId"));
+
+				msg = "";
+
+				break;
+				
+			/************************ *Stock*MuyltiSearch*************Ami ************/
 
 			case "goStockView":
 				page = "stockViewD.jsp";

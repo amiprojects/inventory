@@ -768,6 +768,14 @@ public class Ejb {
 		q.setParameter("id", id);
 		return q.getResultList();
 	}
+	
+
+	public JobAssignmentDetails getJobAssignmentById(
+			int id) {
+		
+		return em.find(JobAssignmentDetails.class, id);
+	}
+	
 
 	public List<JobAssignmentProducts> getAllJobAssignmentProductDetails() {
 		TypedQuery<JobAssignmentProducts> q = em.createQuery(
@@ -796,7 +804,7 @@ public class Ejb {
 			int id) {
 		TypedQuery<Purchase_Product_Details> q = em
 				.createQuery(
-						"select s from Purchase_Product_Details s where s.productDetail.id=:Id",
+						"select s from Purchase_Product_Details s where s.productDetail.id=:Id ORDER BY s.purchase_Entry.purchase_date DESC",
 						Purchase_Product_Details.class);
 		q.setParameter("Id", id);
 		return q.getResultList();
@@ -1445,7 +1453,7 @@ public class Ejb {
 	public List<SalesProductDetails> getSales_Product_DetailsByProId(int id) {
 		TypedQuery<SalesProductDetails> q = em
 				.createQuery(
-						"select s from SalesProductDetails s where s.purchase_Product_Details.productDetail.id=:Id",
+						"select s from SalesProductDetails s where s.purchase_Product_Details.productDetail.id=:Id ORDER BY s.salesEntry.sales_date DESC ",
 						SalesProductDetails.class);
 		q.setParameter("Id", id);
 		return q.getResultList();

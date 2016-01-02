@@ -51,6 +51,11 @@
 			</script>
 		</c:if>
 	</c:if>
+	
+	
+	
+	
+	
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
@@ -71,22 +76,7 @@
 								<div class="widget-area">
 									<form role="form" class="sec" action="jobAssignSearchByDate"
 										method="post">
-										<!-- <div class="row">
-											<div class="col-md-6">
-												<div class="form-group">
-													<label for="">Job Challan Number :</label> <input type=""
-														placeholder="Enter Challan Number" id=""
-														class="form-control">
-												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="form-group">
-													<label for="">Jobber Name :</label> <input type=""
-														placeholder="Enter Jobber Name :" id=""
-														class="form-control">
-												</div>
-											</div>
-										</div> -->
+										
 										<div class="row">
 											<div class="col-md-6">
 												<div class="form-group">
@@ -120,17 +110,7 @@
 												<th>Quantity</th>
 											</tr>
 										</thead>
-										<!-- <tbody>
-											<tr>
-												<td>1</td>
-												<td>---</td>
-												<td>---</td>
-												<td>---</td>
-												<td>---</td>
-												<td>---</td>
-												<td><img alt="" src="images/eye.png" height="25px"></td>
-											</tr>
-										</tbody> -->
+										
 										<c:set var="count" value="${1}" />
 										<c:forEach items="${requestScope['jobAssignList']}"
 											var="jobAssignByDate">
@@ -150,7 +130,18 @@
 														<c:set value="${totqty+proDet.qty}" var="totqty" />
 													</c:forEach>
 													<td>${totqty}</td>
-													<td><img alt="" src="images/eye.png" height="25px"></td>
+													<td>
+														<form action="goJobDetailShow" method="post"
+															id="JobDetails${jobAssignByDate.id}">
+															
+															<a href="#"
+																onclick="jobShowDetails('${jobAssignByDate.id}');"><input
+																type="hidden" value="${jobAssignByDate.id}" name="joId"><img
+																alt="" src="images/eye.png" height="25px"></a>
+														</form>
+													</td>
+
+
 												</tr>
 											</tbody>
 											<c:set var="count" value="${count+1}" />
@@ -195,6 +186,12 @@
 				dateFormat : "dd-mm-yy"
 			});
 		});
+	</script>
+	<script type="text/javascript">
+		function jobShowDetails(id) {
+			//alert(id);
+			$("#JobDetails" + id).submit();
+		}
 	</script>
 </body>
 
