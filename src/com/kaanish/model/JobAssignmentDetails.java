@@ -34,7 +34,9 @@ public class JobAssignmentDetails implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "jobberId")
+	
 	private Vendor vendor;
+
 	@OneToMany(mappedBy = "jobAssignmentDetails")
 	private List<JobAssignmentProducts> jobAssignmentProducts;
 
@@ -109,6 +111,5 @@ public class JobAssignmentDetails implements Serializable {
 	public void setChallanSuffix(int challanSuffix) {
 		this.challanSuffix = challanSuffix;
 	}
-
 
 }

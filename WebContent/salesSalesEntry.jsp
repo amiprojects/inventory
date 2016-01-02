@@ -136,7 +136,7 @@
 
 												<tr>
 													<td>Phone No. :</td>
-													<td><input type="text" name="phone" id="phone"
+													<td><input type="number" name="phone" id="phone"
 														style="length: 40px;"></input></td>
 												</tr>
 
@@ -150,7 +150,9 @@
 														id="agent" name="agent">&nbsp; Via Agent :</td>
 													<td><input type="text" name="agentName" id="agentName"
 														style="length: 40px;" readonly="readonly"></input><input
-														type="hidden" name="aId" id="aId"></td>
+														type="hidden" name="aId" id="aId"><input
+														type="hidden" name="isExistingCust" id="isExistingCust"><input
+														type="hidden" name="existingCustId" id="existingCustId"></td>
 												</tr>
 											</table>
 										</div>
@@ -625,6 +627,9 @@
 				alert("please enter customer city");
 			} else if ($("#phone").val() == "") {
 				alert("please enter customer phone no.");
+			} else if ($("#isAgent").val() == 'yes'
+					&& $("#agentName").val() == "") {
+				alert("please insert agent name");
 			} else {
 				//$("#datepicker2").val($("#datepicker").val());
 				var d = $("#datepicker").datepicker('getDate');
@@ -985,6 +990,7 @@
 			$("#payDetail").hide();
 			$("#description").hide();
 			$("#isAgent").val('no');
+			$("#isExistingCust").val(0);
 
 		});
 		function closePayment() {
@@ -1549,6 +1555,67 @@
 						});
 			}
 		}
+		$(function() {
+			$("#phone").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getCustomerByPh",
+						data : {
+							ph : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.mobile,
+									id : item.id,
+									name : item.name,
+									address : item.address,
+									city : item.city,
+									vat_cst_no : item.vat_cst_no
+								});
+							}));
+						}
+
+					});
+				},
+				change : function(event, ui) {
+					if (ui.item == null) {
+						$("#isExistingCust").val(0);
+						$("#existingCustId").val("");
+						/* $("#custName").val("");
+						$("#addr").val("");
+						$("#city").val("");
+						$("#vatcst").val(""); */
+					} else {
+						$("#isExistingCust").val(1);
+						$("#existingCustId").val(ui.item.id);
+						$("#custName").val(ui.item.name);
+						$("#addr").val(ui.item.address);
+						$("#city").val(ui.item.city);
+						$("#vatcst").val(ui.item.vat_cst_no);
+					}
+				},
+				select : function(event, ui) {
+					if (ui.item != null) {
+						$("#isExistingCust").val(1);
+						$("#existingCustId").val(ui.item.id);
+						$("#custName").val(ui.item.name);
+						$("#addr").val(ui.item.address);
+						$("#city").val(ui.item.city);
+						$("#vatcst").val(ui.item.vat_cst_no);
+					} else {
+						$("#isExistingCust").val(0);
+						$("#existingCustId").val("");
+						$("#custName").val("");
+						$("#addr").val("");
+						$("#city").val("");
+						$("#vatcst").val("");
+					}
+				}
+			});
+		});
 	</script>
 </body>
 

@@ -89,13 +89,13 @@
 	</div>
 	<!-- <a title="" class="slide-panel-btn"><i class="fa fa-gear fa-spin"></i></a> -->
 	<div class="dropdown profile">
-		<a title=""> <img src="images/resource/me.jpg" alt="" />${sessionScope['ejb'].getUserById(sessionScope['user']).name}<i
+		<a title=""> <!--  <img src="images/resource/me.jpg" alt="" /> -->${sessionScope['ejb'].getUserById(sessionScope['user']).name}<i
 			class="caret"></i>
 		</a>
 		<div class="profile drop-list">
 			<ul>
-				<li><a href="#" title=""><i class="fa fa-edit"></i> New
-						post</a></li>
+				<li><a href="changePassword.jsp" title="")><i
+						class="fa fa-edit"></i>Change Password</a></li>
 				<li><a href="#" title=""><i class="fa fa-wrench"></i>
 						Setting</a></li>
 				<li><a href="profile.html" title=""><i class="fa fa-user"></i>
