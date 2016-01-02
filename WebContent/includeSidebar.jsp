@@ -129,8 +129,8 @@
 
 		</div>
 		<p>
-			2015 Copyright AM Infotrix by <a href="http://www.aminfotrix.com"
-				title="">AMi</a>
+			2015 powered by  <a href="http://www.aminfotrix.com"
+				title="">AM Infotrix</a>
 		</p>
 	</div>
 	<!-- Menu Sec -->
