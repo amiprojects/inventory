@@ -22,6 +22,7 @@ import com.kaanish.model.CustomerEntry;
 import com.kaanish.model.Department;
 import com.kaanish.model.JobAssignmentDetails;
 import com.kaanish.model.JobAssignmentProducts;
+import com.kaanish.model.JobClass;
 import com.kaanish.model.JobRecievedDetails;
 import com.kaanish.model.JobStock;
 import com.kaanish.model.Module;
@@ -77,9 +78,20 @@ public class Ejb {
 		return DigitToWords.convertNumberToWords(number);
 	}
 
+	
+	/******************for security*********************/
 	public void backup() {
 
 	}
+	public void setJobClass(JobClass jobClass){
+		em.persist(jobClass);
+	}
+	public List<JobClass> getLastJobClass(){
+		TypedQuery<JobClass> q=em.createQuery("select c from JobClass c order by c.assignDate DESC",JobClass.class);
+		
+		return q.getResultList();
+	}
+	
 
 	/***************** for user **********************/
 	public void setUser(Users users) {

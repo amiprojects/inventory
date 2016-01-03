@@ -1,4 +1,23 @@
+<script src="js/jquery-ui/external/jquery/jquery.js"></script>
+<script src="js/jquery.jkey.js"></script>
+<script src="js/jquery-ui/jquery-ui.js"></script>
+<script>
 
+$(document).jkey('ctrl+shift+r',function(){
+  //alert('You pressed the ctrl+shift+r key.');
+});
+
+$(document).jkey('f5',function(){
+  //alert('You pressed the f5 key.');
+});
+
+$(document).ready(function() {
+    function disableBack() { window.history.forward() }
+
+    window.onload = disableBack();
+    window.onpageshow = function(evt) { if (evt.persisted) disableBack() }
+});
+</script>
 <aside class="sidebar" style="height: 100%; overflow-y: scroll;">
 	<div class="menu-sec">
 		<div id="menu-toogle" class="menus">
