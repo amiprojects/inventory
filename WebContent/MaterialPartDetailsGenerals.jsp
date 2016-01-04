@@ -296,12 +296,13 @@
 					<div class="row">
 						<div class="masonary-grids">
 
-							 <div class="breadcrumbs" style="height: 50px; text-align: center;">
-									<h3 style="    margin-top: 11px;">Product/Material</h3>
-												
-											
-								</div>
-							
+							<div class="breadcrumbs"
+								style="height: 50px; text-align: center;">
+								<h3 style="margin-top: 11px;">Product/Material</h3>
+
+
+							</div>
+
 							<div class="col-md-12">
 								<div class="widget-area" style="width: 40%; height: 536px;">
 									<!-- .........*****************************............ PRODUCT SEARCH PANAEL............***************************************-->
@@ -654,39 +655,6 @@
 
 					</div>
 
-
-					<!-- 
-					<div id="step67" class="modal fade" role="dialog"
-						style="top: 25px; right: 2px">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-
-									<h4 class="modal-title">Serial Number</h4>
-
-								</div>
-								<div class="modal-body">
-
-									<input type="hidden" name="id" value="" id="id1"> <span>Enter
-										Initial Serial Number: </span> <input type="text"
-										class="form-control" name="name" value="" id="1stSerial"><br>
-
-									<input type="hidden" name="id" value="" id="id1"> <span>Count:
-									</span> <input type="text" class="form-control" id="limit" readonly
-										name="increLimit">
-
-								</div>
-								<div class="modal-footer">
-									<button style="float: left;" onclick="incre();"
-										class="c-btn small green" type="button">Submit</button>
-									<button style="float: right;" class="c-btn small red"
-										type="button" id="close2">Close</button>
-								</div>
-							</div>
-
-						</div>
-					</div>
- -->
 					<div id="step1"
 						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial;">
 						<div id="bU"
@@ -698,7 +666,7 @@
 										<div>
 											<label for="exampleInputEmail1">Product Code:</label> <input
 												type="text" name="productCode2" id="productCode" required
-												class="form-control"><br>
+												class="form-control"><span class="status"></span>
 										</div>
 									</div>
 									<div class="col-md-6">
@@ -1641,41 +1609,92 @@
 				success : function(data) {
 					var qty = 0;
 					var rqty = 0;
-					if(data.length>0){
-						$.each(data, function(index, value) {
-							$("#mrp111").val(value.mrp);
-							$("#wsp111").val(value.wsp);
-							$("#ucost111").val(value.cost);
-							$("#vName").val(value.purchaseVendorName);
-							$("#vAdress").val(value.purchaseVendorAddress);
-							$("#vCompany").val(value.purchaseVendorCompanyName);
-							$("#vPhone").val(value.purchaseVendorPhoneNumber);
-							rqty = rqty + Number(value.remaining_quantity)
-							qty = qty + Number(value.quantity);
-							$("#quantity0101").val(qty);
-							$("#RquantitY").val(rqty);
-						});
-					}else{
-						
-							$("#mrp111").val("");
-							$("#wsp111").val("");
-							$("#ucost111").val("");
-							$("#vName").val("");
-							$("#vAdress").val("");
-							$("#vCompany").val("");
-							$("#vPhone").val("");
-							//rqty = rqty + Number(value.remaining_quantity)
-							//qty = qty + Number(value.quantity);
-							$("#quantity0101").val("");
-							$("#RquantitY").val("");
-						
+					if (data.length > 0) {
+						$.each(data,
+								function(index, value) {
+									$("#mrp111").val(value.mrp);
+									$("#wsp111").val(value.wsp);
+									$("#ucost111").val(value.cost);
+									$("#vName").val(value.purchaseVendorName);
+									$("#vAdress").val(
+											value.purchaseVendorAddress);
+									$("#vCompany").val(
+											value.purchaseVendorCompanyName);
+									$("#vPhone").val(
+											value.purchaseVendorPhoneNumber);
+									rqty = rqty
+											+ Number(value.remaining_quantity)
+									qty = qty + Number(value.quantity);
+									$("#quantity0101").val(qty);
+									$("#RquantitY").val(rqty);
+								});
+					} else {
+
+						$("#mrp111").val("");
+						$("#wsp111").val("");
+						$("#ucost111").val("");
+						$("#vName").val("");
+						$("#vAdress").val("");
+						$("#vCompany").val("");
+						$("#vPhone").val("");
+						//rqty = rqty + Number(value.remaining_quantity)
+						//qty = qty + Number(value.quantity);
+						$("#quantity0101").val("");
+						$("#RquantitY").val("");
+
 					}
-					
 
 				}
 			});
 
 		}
+	</script>
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							$(".productCode2")
+									.change(
+											function() {
+												var uname = $(this).val();
+												if (uname.length >= 3) {
+													$(".status")
+															.html(
+																	"<img src='images/loading.gif'><font color=gray> Checking availability...</font>");
+													$
+															.ajax({
+																type : "POST",
+																url : "checkPcode",
+																data : "productCode2="
+																		+ productCode2,
+																dataType : "json",
+																success : function(
+																		msg) {
+
+																	$(".status")
+																			.ajaxComplete(
+																					function(
+																							event,
+																							request,
+																							settings) {
+
+																						$(
+																								".status")
+																								.html(
+																										msg);
+
+																					});
+																}
+															});
+												} else {
+
+													$(".status")
+															.html(
+																	"<font color=red>Username should be <b>3</b> character long.</font>");
+												}
+
+											});
+						});
 	</script>
 
 
