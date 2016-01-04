@@ -68,7 +68,7 @@ import com.kaanish.util.DateConverter;
 		"/deleteProductImage", "/jobAssignment", "/jobAssignSearchByDate",
 		"/salesEntry", "/createUserGroup", "/updateUserGroup", "/updateUser",
 		"/goStockView", "/jChallanSearch", "/jobRecieve", "/createNewUser",
-		"/goJobDetailShow", "/purchaseView" })
+		"/goJobDetailShow", "/purchaseView", "/changePass" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
