@@ -193,12 +193,7 @@
 		</c:if>
 	</c:if>
 
-	<%-- <c:if test="${requestScope['print']==1}">
-		<script type="text/javascript">
-			window.open("barcodePrint.jsp?id=${requestScope['purDet']}",
-					'name', 'width=600,height=400');
-		</script>
-	</c:if> --%>
+	
 	<c:if test="${requestScope['purDetIdforPC']!=null}">
 		<script type="text/javascript">
 			var myWindow = window
@@ -632,17 +627,7 @@
 									<input type="text" id="pCode" name="pCode" class="form-control"
 										onchange="emptyForm();"><input type="hidden"
 										id="productCode" name="productCode">
-									<%-- <select class="form-control" name="productCode"
-										id="productCode" onchange="getProductDetailsByProductCode();"
-										required="required">
-										<option value="0">Select Product Code</option>
-										<c:forEach
-											items="${sessionScope['ejb'].getAllActiveProductDetail()}"
-											var="productDetail">
-											<option value="${productDetail.id}">${productDetail.code}</option>
-										</c:forEach>
-									</select>
-									<input type="hidden" id="pCode" name="pCode"> --%>
+									
 								</div>
 								<div class="col-md-5">Product Descripsion:</div>
 								<div class="col-md-7">

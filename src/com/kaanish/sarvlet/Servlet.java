@@ -67,7 +67,7 @@ import com.kaanish.util.DateConverter;
 		"/updateVendor", "/purchaseSearchByDate", "/uploadProductImage",
 		"/deleteProductImage", "/jobAssignment", "/jobAssignSearchByDate",
 		"/salesEntry", "/createUserGroup", "/updateUserGroup", "/updateUser",
-		"/goStockView", "/jChallanSearch", "/jobRecieve", "/createNewUser","/goJobDetailShow" })
+		"/goStockView", "/jChallanSearch", "/jobRecieve", "/createNewUser","/goJobDetailShow","/goProView" })
 
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
@@ -1520,8 +1520,20 @@ public class Servlet extends HttpServlet {
 
 				break;
 
-			/**************************************************************/
+			/*********************ProductMultiSearch*****************************************/
+			case "goProView":
+				page = "mtwo.jsp";
+				List<ProductDetail> amiProduct1 = ejb
+						.getProductDetailsByCodeDescriptionCategory(req
+								.getParameter("pCodeSearch").toUpperCase(), req
+								.getParameter("pDesSearch").toUpperCase(), req
+								.getParameter("pCatSearch").toUpperCase());
 
+				req.setAttribute("ami", amiProduct1);
+
+				msg = "";
+				break;
+				
 			case "uploadProductImage":
 				page = "addNewProductImage.jsp";
 				Part p1 = req.getPart("proImg");

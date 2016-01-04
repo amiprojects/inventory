@@ -131,7 +131,9 @@
 		}
 	}
 
-	
+	/* function increSerial() {
+		$("#step67").modal('show');
+	} */
 	function submitSumary() {
 
 		if ($("#productCode").val() == 0) {
@@ -161,17 +163,17 @@
 				alert("please select lot number");
 
 			}
-			else if (!$('#a10').attr("disabled") && $("#a10").val() == "") {
+			else if (!$('#a10').attr("readonly") && $("#a10").val() == "") {
 				alert("Please insert " + $("#sa1").html() + " value");
-			} else if (!$('#a20').attr("disabled") && $("#a20").val() == "") {
+			} else if (!$('#a20').attr("readonly") && $("#a20").val() == "") {
 				alert("Please insert " + $("#sa2").html() + " value");
-			} else if (!$('#a30').attr("disabled") && $("#a30").val() == "") {
+			} else if (!$('#a30').attr("readonly") && $("#a30").val() == "") {
 				alert("Please insert " + $("#sa3").html() + " value");
-			} else if (!$('#a40').attr("disabled") && $("#a40").val() == "") {
+			} else if (!$('#a40').attr("readonly") && $("#a40").val() == "") {
 				alert("Please insert " + $("#sa4").html() + " value");
-			} else if (!$('#a50').attr("disabled") && $("#a50").val() == "") {
+			} else if (!$('#a50').attr("readonly") && $("#a50").val() == "") {
 				alert("Please insert " + $("#sa5").html() + " value");
-			} else if (!$('#a60').attr("disabled") && $("#a60").val() == "") {
+			} else if (!$('#a60').attr("readonly") && $("#a60").val() == "") {
 				alert("Please insert " + $("#sa6").html() + " value");
 			}
 
@@ -277,7 +279,7 @@
 										</tr>
 									</table>
 									<div
-										style="overflow-y: scroll; overflow-x: scroll; height: 169px; border: 1px;">
+										style="overflow-y: scroll; overflow-x: scroll; height: 281px; border: 1px;">
 										<table class="table">
 											<c:set var="countt" value="${1}" />
 											
@@ -764,13 +766,13 @@
 									<div class="form-group">
 										<label for="" class="font">Maximum Retail Price :</label> <input
 											type="number" name="mrp" placeholder="" id="mrpO"
-											onkeyup="mrpF()"
+											onChange="this.value = wShow(this.value,$('#wspO').val())"
 											class="form-control">
 									</div>
 									<div class="form-group">
 										<label for="" class="font">Wholesale Price :</label> <input
-											type="number" name="wsp" 
-											onkeyup="wspF()"
+											type="number" name="wsp" readonly="readonly"
+											onChange="this.value = relationMW(this.value,$('#mrpO').val(),$('#ucO').val())"
 											placeholder="" id="wspO" class="form-control">
 									</div>
 								</div>
@@ -783,16 +785,60 @@
 
 									<div class="form-group">
 										<label for="" class="font">Per Unit Cost:</label> <input
-											 name="unitCost" type="number"
+											readonly="readonly" name="unitCost" type="number"
 											placeholder="" id="ucO"
-											onkeyup="rateF()"
+											onChange="this.value = relationWP(this.value,$('#wspO').val())"
 											class="form-control">
 
 									</div>
 
 								</div>
 
-						
+								<script type="text/javascript">
+									function wShow(value, max) {
+
+										if (parseFloat(value) > max) {
+
+											$("#wspO").prop("readonly", false);
+											return value;
+										} else {
+											alert("WSP is less or equal to MRP");
+											return "";
+										}
+
+									}
+								</script>
+
+								<script type="text/javascript">
+									function relationMW(value, max, min) {
+
+										if (parseFloat(value) > max) {
+											alert("WSP is less or equal to MRP");
+
+											return "";
+										} else if (parseFloat(value) < min) {
+											alert("WSP is greater or equal to cost per unit");
+											return "";
+										} else {
+											$("#ucO").prop("readonly", false);
+											return value;
+										}
+									}
+								</script>
+								<script type="text/javascript">
+									function relationWP(value, max) {
+
+										if (parseFloat(value) > max) {
+											alert("Per unit cost is less or equal to WSP");
+
+											return "";
+										} else {
+
+											return value;
+										}
+									}
+								</script>
+
 							</div>
 
 							<div id="divhide">
@@ -1530,54 +1576,10 @@
 
 		}
 		
-		</script>
-	<!-- 	*********************************************wsp mrp cost****************************************** -->
-	<script type="text/javascript">
-		function rateF() {
-			
-				if ($("#mrpO").val() == "") {
-					alert("Please insert MRP first...");
-					$("#ucO").val("");
-				} else if ($("#wspO").val() == "") {
-					alert("Please insert WSP first...");
-					$("#ucO").val("");
-				} else if ($("#ucO").val() > $("#wspO").val()) {
-					alert("Rate should be less than or equals to WSP.");
-					$("#ucO").val("");
-				} else if ($("#ucO").val() > $("#mrpO").val()) {
-					alert("Rate should be less than or equals to MRP.");
-					$("#ucO").val("");
-				}
-			}
-	
-		function wspF() {
-			
-				if ($("#mrpO").val() == "") {
-					alert("Please insert MRP first...");
-					$("#wspO").val("");
-				} else if ($("#ucO").val() > $("#wspO").val()) {
-					alert("Rate should be less than or equals to WSP.");
-					$("#wspO").val("");
-				} else if ($("#wspO").val() > $("#mrpO").val()) {
-					alert("WSP should be less than or equals to MRP.");
-					$("#wspO").val("");
-				}
-			}
-	
-		function mrpF() {
 		
-				if ($("#ucO").val() > $("#mrpO").val()) {
-					alert("Rate should be less than or equals to MRP.");
-					$("#mrpO").val("");
-				} else if ($("#wspO").val() > $("#mrpO").val()) {
-					alert("WSP should be less than or equals to MRP.");
-					$("#mrpO").val("");
-				}
-			}
-	
-		
-		</script>
+
 
 </body>
 
+/* <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT --> */
 </html>

@@ -114,7 +114,77 @@
 		}
 	}
 
-	
+	/* $("#next")
+			.click(
+					function() {
+						if (i < 8) {
+							$("#step" + (i - 1)).hide();
+							$("#menu" + (i - 1)).attr("style", "");
+
+							$("#step" + i).show();
+							$("#menu" + i)
+									.attr(
+											"style",
+											"color: red; font-weight: bolder; background-color: #A3DEDE; box-shadow: 1px 1px 1px 1px #507B8A");
+							i = i + 1;
+
+						}
+
+						if (i == 8) {
+							$("#finish").prop("disabled", false);
+							$("#pcodedisp").val($("#productCode").val());
+							$("#description1").val($("#description").val());
+							$("#upc ").val($("#universalProductCode").val());
+							$("#uom1").val($("#uomO").val());
+							$.ajax({
+								url : "getQtyUnit",
+								type : "post",
+								dataType : "json",
+								data : {
+									id : $("#uomO").val()
+								},
+								success : function(data) {
+									$("#uomnamedisplay").val(data.name);
+								}
+							});
+
+							$("#mrp1").val($("#mrpO").val());
+							$("#wsp").val($("#wspO").val());
+							$("#quantity111").val($("#quantity").val());
+
+							$("#ucost").val($("#ucO").val());
+							$("#date2").val($("#datepicker").val());
+							$("#ltnum").val($("#lotnO").val());
+							$("#att1").val($("#a10").val());
+							$("#att2").val($("#a20").val());
+							$("#att3").val($("#a30").val());
+							$("#att4").val($("#a40").val());
+							$("#att5").val($("#a50").val());
+							$("#att6").val($("#a60").val());
+							$("#lotnumberS").val($("#lotnO").val());
+
+						}
+
+					}); */
+
+	/* $("#prev")
+			.click(
+					function() { 
+						$("#finish").prop("disabled", true);
+						if (i > 2) {
+							$("#step" + (i - 1)).hide();
+							$("#menu" + (i - 1)).attr("style", "");
+
+							$("#step" + (i - 2)).show();
+							$("#menu" + (i - 2))
+									.attr(
+											"style",
+											"color: red; font-weight: bolder; background-color: #A3DEDE; box-shadow: 1px 1px 1px 1px #507B8A");
+							i = i - 1;
+						}
+
+					}); */
+
 	function prevF() {
 
 		$("#finish").prop("disabled", true);
@@ -131,7 +201,9 @@
 		}
 	}
 
-	
+	/* function increSerial() {
+		$("#step67").modal('show');
+	} */
 	function submitSumary() {
 
 		if ($("#productCode").val() == 0) {
@@ -161,17 +233,17 @@
 				alert("please select lot number");
 
 			}
-			else if (!$('#a10').attr("disabled") && $("#a10").val() == "") {
+			else if (!$('#a10').attr("readonly") && $("#a10").val() == "") {
 				alert("Please insert " + $("#sa1").html() + " value");
-			} else if (!$('#a20').attr("disabled") && $("#a20").val() == "") {
+			} else if (!$('#a20').attr("readonly") && $("#a20").val() == "") {
 				alert("Please insert " + $("#sa2").html() + " value");
-			} else if (!$('#a30').attr("disabled") && $("#a30").val() == "") {
+			} else if (!$('#a30').attr("readonly") && $("#a30").val() == "") {
 				alert("Please insert " + $("#sa3").html() + " value");
-			} else if (!$('#a40').attr("disabled") && $("#a40").val() == "") {
+			} else if (!$('#a40').attr("readonly") && $("#a40").val() == "") {
 				alert("Please insert " + $("#sa4").html() + " value");
-			} else if (!$('#a50').attr("disabled") && $("#a50").val() == "") {
+			} else if (!$('#a50').attr("readonly") && $("#a50").val() == "") {
 				alert("Please insert " + $("#sa5").html() + " value");
-			} else if (!$('#a60').attr("disabled") && $("#a60").val() == "") {
+			} else if (!$('#a60').attr("readonly") && $("#a60").val() == "") {
 				alert("Please insert " + $("#sa6").html() + " value");
 			}
 
@@ -247,24 +319,35 @@
 							<div class="col-md-12">
 								<div class="widget-area" style="width: 40%; height: 536px;">
 									<!-- .........*****************************............ PRODUCT SEARCH PANAEL............***************************************-->
-									<div class="form-group">
-											<form action="goProView" method="post">
-												<label for="" class="">Product Code: </label> <input
-													type="text" id="prodcode" name="pCodeSearch"
-													class="form-control"> <label class="">Product
-													Description: </label> <input type="text" id="prodesc"
-													name="pDesSearch" class="form-control"> <label
-													class="">Category: </label> <input type="text" id="deptcat"
-													name="pCatSearch" class="form-control">
+									<form action="MaterialPartDetailsGenerals.jsp" method="get">
+										<table>
+											<tr>
+												<td><b>Product code</b></td>
+												<td><input type="text" placeholder="Search by Code"
+													id="pCodeSearch" name="pCodeSearch"></td>
+												<td>&nbsp; <input type="submit" value="Search">
+												</td>
+											</tr>
+											<tr>
+												<td>&nbsp;&nbsp;&nbsp;</td>
+											</tr>
+										</table>
+									</form>
+									<form action="MaterialPartDetailsGeneralsDupli.jsp"
+										method="get">
+										<table>
+											<tr>
+												<td><b>Category</b></td>
+												<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
+													type="text" placeholder="Search by Category"
+													id="pCatSearch" name="pCatSearch"></td>
 
-												
-												<br> <input class="btn green btn-default" type="submit"
-													value="Search"> <a href="materialSearch.jsp"> <input
-													class="btn green btn-default" type="button"
-													value="Show All"></a>
-											</form>
-										</div>
+												<td>&nbsp; <input type="submit" value="Search">
+												</td>
+											</tr>
 
+										</table>
+									</form>
 									<!-- ************************************************endSearch*************************************************************** -->
 									<br> <br>
 									<table class="table">
@@ -277,13 +360,12 @@
 										</tr>
 									</table>
 									<div
-										style="overflow-y: scroll; overflow-x: scroll; height: 169px; border: 1px;">
+										style="overflow-y: scroll; overflow-x: scroll; height: 281px; border: 1px;">
 										<table class="table">
 											<c:set var="countt" value="${1}" />
-											
-												<c:forEach
-														items="${sessionScope['ejb'].getAllProductDetail()}"
-														var="productt">
+											<c:forEach
+												items="${param.pCodeSearch.equals(null)?sessionScope['ejb'].getAllProductDetail():sessionScope['ejb'].getAllProductByProductCode(param.pCodeSearch)}"
+												var="productt">
 
 												<tr>
 													<td align="left">${countt}</td>
@@ -595,9 +677,10 @@
 								<form action="#" method="get">
 									<div class="col-md-6">
 										<div>
-											<label for="exampleInputEmail1">Product Code:</label> <input 
+											<label for="exampleInputEmail1">Product Code:</label> <input onkeyup="dupliKey();"
+											onchange="dupliChange();"
 												type="text" name="productCode2" id="productCode" required 
-												class="form-control"> 
+												class="form-control"> <span class="status"></span> 
 										</div>
 									</div>
 									<div class="col-md-6">
@@ -764,13 +847,13 @@
 									<div class="form-group">
 										<label for="" class="font">Maximum Retail Price :</label> <input
 											type="number" name="mrp" placeholder="" id="mrpO"
-											onkeyup="mrpF()"
+											onChange="this.value = wShow(this.value,$('#wspO').val())"
 											class="form-control">
 									</div>
 									<div class="form-group">
 										<label for="" class="font">Wholesale Price :</label> <input
-											type="number" name="wsp" 
-											onkeyup="wspF()"
+											type="number" name="wsp" readonly="readonly"
+											onChange="this.value = relationMW(this.value,$('#mrpO').val(),$('#ucO').val())"
 											placeholder="" id="wspO" class="form-control">
 									</div>
 								</div>
@@ -783,16 +866,60 @@
 
 									<div class="form-group">
 										<label for="" class="font">Per Unit Cost:</label> <input
-											 name="unitCost" type="number"
+											readonly="readonly" name="unitCost" type="number"
 											placeholder="" id="ucO"
-											onkeyup="rateF()"
+											onChange="this.value = relationWP(this.value,$('#wspO').val())"
 											class="form-control">
 
 									</div>
 
 								</div>
 
-						
+								<script type="text/javascript">
+									function wShow(value, max) {
+
+										if (parseFloat(value) > max) {
+
+											$("#wspO").prop("readonly", false);
+											return value;
+										} else {
+											alert("WSP is less or equal to MRP");
+											return "";
+										}
+
+									}
+								</script>
+
+								<script type="text/javascript">
+									function relationMW(value, max, min) {
+
+										if (parseFloat(value) > max) {
+											alert("WSP is less or equal to MRP");
+
+											return "";
+										} else if (parseFloat(value) < min) {
+											alert("WSP is greater or equal to cost per unit");
+											return "";
+										} else {
+											$("#ucO").prop("readonly", false);
+											return value;
+										}
+									}
+								</script>
+								<script type="text/javascript">
+									function relationWP(value, max) {
+
+										if (parseFloat(value) > max) {
+											alert("Per unit cost is less or equal to WSP");
+
+											return "";
+										} else {
+
+											return value;
+										}
+									}
+								</script>
+
 							</div>
 
 							<div id="divhide">
@@ -1530,54 +1657,80 @@
 
 		}
 		
-		</script>
-	<!-- 	*********************************************wsp mrp cost****************************************** -->
-	<script type="text/javascript">
-		function rateF() {
+		function dupliKey() {
+			$.ajax({
+				url:"",
+				dataType:"json",
+				data:{
+					productCode4:$("#productCode")
+				},
+				success:function(data){
+					if(dala.length>0){
+						alert("product code already exist");
+					}
+				}
+			});
 			
-				if ($("#mrpO").val() == "") {
-					alert("Please insert MRP first...");
-					$("#ucO").val("");
-				} else if ($("#wspO").val() == "") {
-					alert("Please insert WSP first...");
-					$("#ucO").val("");
-				} else if ($("#ucO").val() > $("#wspO").val()) {
-					alert("Rate should be less than or equals to WSP.");
-					$("#ucO").val("");
-				} else if ($("#ucO").val() > $("#mrpO").val()) {
-					alert("Rate should be less than or equals to MRP.");
-					$("#ucO").val("");
-				}
-			}
-	
-		function wspF() {
 			
-				if ($("#mrpO").val() == "") {
-					alert("Please insert MRP first...");
-					$("#wspO").val("");
-				} else if ($("#ucO").val() > $("#wspO").val()) {
-					alert("Rate should be less than or equals to WSP.");
-					$("#wspO").val("");
-				} else if ($("#wspO").val() > $("#mrpO").val()) {
-					alert("WSP should be less than or equals to MRP.");
-					$("#wspO").val("");
-				}
-			}
-	
-		function mrpF() {
+			
+		}
+function dupliChange() {
+			
+			
+			
+			
+		}
 		
-				if ($("#ucO").val() > $("#mrpO").val()) {
-					alert("Rate should be less than or equals to MRP.");
-					$("#mrpO").val("");
-				} else if ($("#wspO").val() > $("#mrpO").val()) {
-					alert("WSP should be less than or equals to MRP.");
-					$("#mrpO").val("");
-				}
-			}
-	
 		
-		</script>
+	</script>
+	
+	
+	<!-- <script type="text/javascript">
+	function dupliFunc() {
+							$("#productCode")
+									.change(
+											function() {
+												var productCode2 = $(this).val();
+												if (productCode2.length != 0) {
+													$(".status")
+															.html(
+																	"<img src='images/loading.GIF'><font color=gray> Checking availability...</font>");
+													$
+															.ajax({
+																type : "POST",
+																url : "checkPcode",
+																data : {productCode2:$("#productCode")},
+																dataType : "json",
+																success : function(
+																		msg) {
+
+																	$(".status")
+																			.ajaxComplete(
+																					function(
+																							event,
+																							request,
+																							settings) {
+
+																						$(
+																								".status")
+																								.html(
+																										msg); 
+																					});
+																}
+															});
+												} else {
+
+													$(".status")
+															.html(
+																	"<font color=red>Product code  not null.</font>");
+												}
+
+											});
+						};
+	</script> -->
+
 
 </body>
 
+<!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
 </html>

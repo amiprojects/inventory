@@ -275,13 +275,6 @@
 															value="${sessionScope['ejb'].getJobAssignmentProductDetailsByproductId(requestScope['proid1'])}" />
 
 
-														<%-- <c:set value="${sessionScope['ejb'].getJobAssignmentProductDetailsByproductId(requestScope['proid1'])}" var="jobQty" />
-															
-															<c:set value="${jobQty.qty}" var="job"/>
-															
-															<c:set value="${sessionScope['ejb'].getSales_Product_DetailsByProId(requestScope['proid1'])}" var="salesQty" />
-														
-															<c:set value="${salesQty.quantity}" var="sales"/> --%>
 
 														<c:set value="${0}" var="total" />
 														<c:set value="${0}" var="sTotal" />
@@ -300,13 +293,15 @@
 														</c:forEach>
 
 														<td><b>Total Purchased:</b> &nbsp;&nbsp;${purQtyt}</td>
-
-
-													<td><b>Initial Inventory:</b> <c:choose>
-																<c:when test="${pro.InitialInventory}">
-														(during Some error given a test value:)	YES</c:when>
-																<c:otherwise>(during Some error given a test value:)NO</c:otherwise>
-															</c:choose></td> 
+														
+										
+														<td>
+													
+														<b>Initial Inventory:</b>
+														
+														${initialQty}</td>
+															
+															
 													</tr>
 
 													<c:forEach items="${jpL}" var="jppL">
@@ -314,7 +309,6 @@
 													</c:forEach>
 													<tr>
 														<td><b>In Jobwork:</b>&nbsp;&nbsp;${total}</td>
-
 
 														<c:forEach items="${sProduct}" var="sP">
 															<c:set var="sTotal" value="${sTotal+sP.quantity}" />
@@ -346,7 +340,7 @@
 											</table>
 										</div>
 
-										<!-- .......................................**********************Image****************************************************...................................... -->
+<!-- .......................................**********************Image****************************************************...................................... -->
 
 
 
@@ -363,7 +357,7 @@
 											</div>
 
 										</div>
-										<!-- .......................................*************************purchase************************************************...................................... -->
+		<!-- .......................................*************************purchase************************************************...................................... -->
 										<div id="purchase" class="tab-pane fade">
 											<div class="widget-area">
 
@@ -703,20 +697,65 @@
 														<td><b>UOM </b></td>
 
 
+														<c:choose>
+															<c:when test="${p.category.attrNmae1!=null}">
+																<td><b>${p.category.attrNmae1} </b></td>
+															</c:when>
+															<c:otherwise>
+																<td style="color: #e5ccb3"><b>Attribute1 </b></td>
+															</c:otherwise>
 
-														<td><b>${p.category.attrNmae1} </b></td>
+														</c:choose>
 
 
-														<td><b>${p.category.attrNmae2} </b></td>
+														<c:choose>
+															<c:when test="${p.category.attrNmae2!=null}">
+																<td><b>${p.category.attrNmae2} </b></td>
+															</c:when>
+															<c:otherwise>
+																<td style="color: #e5ccb3"><b>Attribute2 </b></td>
+															</c:otherwise>
+
+														</c:choose>
+
+														<c:choose>
+															<c:when test="${p.category.attrNmae3!=null}">
+																<td><b>${p.category.attrNmae3} </b></td>
+															</c:when>
+															<c:otherwise>
+																<td style="color: #e5ccb3"><b>Attribute3 </b></td>
+															</c:otherwise>
+
+														</c:choose>
+														<c:choose>
+															<c:when test="${p.category.attrNmae4!=null}">
+																<td><b>${p.category.attrNmae4} </b></td>
+															</c:when>
+															<c:otherwise>
+																<td style="color: #e5ccb3"><b>Attribute4 </b></td>
+															</c:otherwise>
+
+														</c:choose>
+														<c:choose>
+															<c:when test="${p.category.attrNmae5!=null}">
+																<td><b>${p.category.attrNmae5} </b></td>
+															</c:when>
+															<c:otherwise>
+																<td style="color: #e5ccb3"><b>Attribute5 </b></td>
+															</c:otherwise>
+
+														</c:choose>
+														<c:choose>
+															<c:when test="${p.category.attrNmae6!=null}">
+																<td><b>${p.category.attrNmae6} </b></td>
+															</c:when>
+															<c:otherwise>
+																<td style="color: #e5ccb3"><b>Attribute6 </b></td>
+															</c:otherwise>
+
+														</c:choose>
 
 
-														<td><b>${p.category.attrNmae3} </b></td>
-
-														<td><b>${p.category.attrNmae4} </b></td>
-
-														<td><b>${p.category.attrNmae5} </b></td>
-
-														<td><b>${p.category.attrNmae6} </b></td>
 
 														<td><b>Cost/unit</b></td>
 
@@ -749,9 +788,6 @@
 
 
 																<td><b>${purPro1.productDetail.description}</b></td>
-
-
-
 																<td><b>${purPro1.quantity}</b></td>
 
 
@@ -807,7 +843,7 @@
 												</table>
 											</div>
 										</div>
-										<!-- ........................................................................*****************End******************..............	 -->
+										<!-- ........................................................................*****************End******************..............-->
 									</div>
 									<a href="stockView.jsp"><button
 											class="btn blue btn-default" style="float: right">BACK</button></a>
@@ -824,5 +860,4 @@
 	<!-- main -->
 </body>
 
-<!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
 </html>

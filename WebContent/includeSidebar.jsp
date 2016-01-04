@@ -5,7 +5,7 @@
 
 			<div class="single-menu">
 				<h2 class="" id="dash">
-					<a title=""><span>Dashboards</span></a>
+					<a title=""><span>Dashboard</span></a>
 				</h2>
 				<div class="sub-menu" style="" id="dashSub">
 					<ul>
@@ -17,22 +17,20 @@
 
 			<div class="single-menu">
 				<h2 id="prodact">
-					<a href="#" title=""><span>Product/Material</span></a>
+					<a href="#" title=""><span>Product/Material module</span></a>
 				</h2>
 				<div class="sub-menu">
 					<ul>
 						<li><a id="sProduct" href="MaterialPartDetailsGenerals.jsp"
-							title="">Product/Material</a></li>
-						<!-- <li><a href="#" title="">Raw Product</a></li>
-						<li><a href="#" title="">Ready Product</a></li>
-						<li><a href="#" title="">Search</a></li> -->
+							title="">Product/Material </a></li>
+						
 					</ul>
 				</div>
 			</div>
 
 			<div class="single-menu">
 				<h2 id="purch">
-					<a title=""><span>Purchasing</span></a>
+					<a title=""><span>Purchase module</span></a>
 				</h2>
 				<div class="sub-menu">
 					<ul>
@@ -40,17 +38,15 @@
 							title="">Purchase Entry</a></li>
 						<li><a id="sPurchSearch" href="purchasingPurchaseSearch.jsp"
 							title="">Search Purchase Entry</a></li>
-						<!-- <li><a id="sPurchVendor" href="purchasingVendor.jsp" title="">Vendor</a></li> -->
-						<!-- <li><a id="sPurchVtype" href="purchasingVendorType.jsp"
-							title="">Vendor Type</a></li> -->
+						
 					</ul>
 				</div>
 			</div>
-			<%-- <c:if test="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"> --%>
+		
 
 			<div class="single-menu">
 				<h2 id="sales">
-					<a title=""><span>Sales</span></a>
+					<a title=""><span>Sales module</span></a>
 				</h2>
 				<div class="sub-menu">
 					<ul>
@@ -65,7 +61,7 @@
 
 			<div class="single-menu">
 				<h2 id="vendor">
-					<a title=""><span>Vendor</span></a>
+					<a title=""><span>Vendor module</span></a>
 				</h2>
 				<div class="sub-menu">
 					<ul>
@@ -76,7 +72,7 @@
 
 			<div class="single-menu">
 				<h2 id="stock">
-					<a title=""><span>Stock</span></a>
+					<a title=""><span>Stock module</span></a>
 				</h2>
 				<div class="sub-menu">
 					<ul>
@@ -88,7 +84,7 @@
 			</div>
 			<div class="single-menu">
 				<h2 id="jobs">
-					<a title=""><span>Jobs</span></a>
+					<a title=""><span>Jobs module</span></a>
 				</h2>
 				<div class="sub-menu">
 					<ul>
@@ -102,7 +98,7 @@
 			</div>
 			<div class="single-menu">
 				<h2 id="setup">
-					<a title=""><span>Setup</span></a>
+					<a title=""><span>Setup module</span></a>
 				</h2>
 				<div class="sub-menu">
 					<ul>
@@ -130,7 +126,7 @@
 		</div>
 		<p>
 			2015 powered by  <a href="http://www.aminfotrix.com"
-				title="">AM Infotrix</a>
+				title="">AM INFOTRIX</a>
 		</p>
 	</div>
 	<!-- Menu Sec -->
