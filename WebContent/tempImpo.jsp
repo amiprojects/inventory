@@ -113,3 +113,16 @@ $(function() {
 			}
 		});
 	});
+	
+<c:choose>
+		<c:when test="${pCode.initialInventory.equals(false)}">
+												<fmt:formatDate
+													value="${pCode.purchase_Entry.purchase_date}"
+													pattern="dd-MM-yy" />
+											</c:when>
+											<c:otherwise>Intial inventory</c:otherwise>
+										</c:choose>
+										
+<c:if test="${pEntryByD.vendor.vendorType.type=='Vendor'}">
+														<td>${pEntryByD.vendor.name}</td>
+													</c:if>

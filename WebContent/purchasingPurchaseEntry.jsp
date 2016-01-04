@@ -348,6 +348,7 @@
 												<th>#</th>
 												<th>Product code</th>
 												<th>Product Description</th>
+												<th>UOM</th>
 												<th>Rate</th>
 												<th>Qty</th>
 												<th>Amount</th>
@@ -446,8 +447,7 @@
 											<div style="float: right;">
 												<input type="button" class="btn green pull-right"
 													data-toggle="modal" value="Save" onclick="paymentDate();">
-												<input type="button"
-													onclick="cancelF();"
+												<input type="button" onclick="cancelF();"
 													class="btn btn-danger small" value="Cancel">
 											</div>
 										</div>
@@ -1241,6 +1241,8 @@
 										+ '</td><td>'
 										+ $("#pDesc").val()
 										+ '</td><td>'
+										+ $("#uom").val()
+										+ '</td><td>'
 										+ $("#rate").val()
 										+ '</td><td>'
 										+ $("#qty").val()
@@ -1673,7 +1675,7 @@
 			$("#cancelOrNot").modal("show");
 		}
 		$("#yesC").click(function() {
-			window.location='purchasingPurchaseEntry.jsp'
+			window.location = 'purchasingPurchaseEntry.jsp'
 		});
 		$("#noC").click(function() {
 			$("#cancelOrNot").modal("hide");

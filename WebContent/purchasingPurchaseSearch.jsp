@@ -125,9 +125,10 @@
 												<th>#</th>
 												<th>Purchase challan no.</th>
 												<th>Vendor Name</th>
+												<th>Agent Name</th>
 												<th>Vendor Bill no.</th>
 												<th>Purchase Date</th>
-												<th>Cost</th>
+												<th>Total Amount</th>
 												<th>Barcode</th>
 											</tr>
 										</thead>
@@ -139,7 +140,24 @@
 												<tr>
 													<td>${count}</td>
 													<td>${pEntryByD.challanNumber}</td>
-													<td>${pEntryByD.vendor.name}</td>
+													<c:if test="${pEntryByD.vendor.vendorType.type=='Vendor'}">
+														<td>${pEntryByD.vendor.name}</td>
+													</c:if>
+													<c:if test="${pEntryByD.vendor.vendorType.type!='Vendor'}">
+														<td>NIL</td>
+													</c:if>
+													<c:choose>
+														<c:when
+															test="${pEntryByD.vendor.vendorType.type=='Purchase Agent'}">
+															<td>${pEntryByD.vendor.name}</td>
+														</c:when>
+														<c:when test="${pEntryByD.agentId!=0}">
+															<td>${sessionScope['ejb'].getVendorById(pEntryByD.agentId).name}</td>
+														</c:when>
+														<c:otherwise>
+															<td>NIL</td>
+														</c:otherwise>
+													</c:choose>
 													<td>${pEntryByD.vendor_bill_no}</td>
 													<td><fmt:formatDate value="${pEntryByD.purchase_date}"
 															pattern="dd-MM-yy" /></td>
@@ -147,6 +165,15 @@
 													<td><a href="printBarcode.jsp?id=${pEntryByD.id}">
 															<img alt="click to view" src="Capture.PNG" height="20">
 													</a></td>
+													<td>
+														<form action="purchaseView" method="post"
+															id="pView${pEntryByD.id}">
+
+															<a href="#" onclick="purchaseViewF('${pEntryByD.id}');"><input
+																type="hidden" value="${pEntryByD.id}" name="pId"><img
+																alt="" src="images/eye.png" height="25px"></a>
+														</form>
+													</td>
 												</tr>
 											</tbody>
 											<c:set var="count" value="${count+1}" />
@@ -158,40 +185,44 @@
 					</div>
 				</div>
 			</div>
-			<!-- Content Sec -->
 		</div>
-		<!-- Page Container -->
+		<!-- Content Sec -->
+	</div>
+	<!-- Page Container -->
 
-		<!-- main -->
+	<!-- main -->
 
-		<!-- Script -->
-		<script type="text/javascript" src="js/modernizr.js"></script>
-		<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
-		<script type="text/javascript" src="js/script.js"></script>
-		<script type="text/javascript" src="js/bootstrap.js"></script>
-		<script type="text/javascript" src="js/enscroll.js"></script>
-		<script type="text/javascript" src="js/grid-filter.js"></script>
-		<script type="text/javascript">
-			$(document).ready(function() {
-				$("#purch").attr("id", "activeSubMenu");
-				$("#sPurchSearch").attr("style", "color: red;");
+	<!-- Script -->
+	<script type="text/javascript" src="js/modernizr.js"></script>
+	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+	<script type="text/javascript" src="js/script.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+	<script type="text/javascript" src="js/enscroll.js"></script>
+	<script type="text/javascript" src="js/grid-filter.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#purch").attr("id", "activeSubMenu");
+			$("#sPurchSearch").attr("style", "color: red;");
+		});
+	</script>
+	<script src="js/jquery-ui/jquery-ui.js"></script>
+	<script>
+		$(function() {
+			$("#datepicker").datepicker({
+				dateFormat : "dd-mm-yy"
 			});
-		</script>
-		<script src="js/jquery-ui/jquery-ui.js"></script>
-		<script>
-			$(function() {
-				$("#datepicker").datepicker({
-					dateFormat : "dd-mm-yy"
-				});
+		});
+	</script>
+	<script>
+		$(function() {
+			$("#datepicker1").datepicker({
+				dateFormat : "dd-mm-yy"
 			});
-		</script>
-		<script>
-			$(function() {
-				$("#datepicker1").datepicker({
-					dateFormat : "dd-mm-yy"
-				});
-			});
-		</script>
+		});
+		function purchaseViewF(id) {
+			$("#pView" + id).submit();
+		}
+	</script>
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->

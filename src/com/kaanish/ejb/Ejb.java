@@ -78,20 +78,22 @@ public class Ejb {
 		return DigitToWords.convertNumberToWords(number);
 	}
 
-	
-	/******************for security*********************/
+	/****************** for security *********************/
 	public void backup() {
 
 	}
-	public void setJobClass(JobClass jobClass){
+
+	public void setJobClass(JobClass jobClass) {
 		em.persist(jobClass);
 	}
-	public List<JobClass> getLastJobClass(){
-		TypedQuery<JobClass> q=em.createQuery("select c from JobClass c order by c.assignDate DESC",JobClass.class);
-		
+
+	public List<JobClass> getLastJobClass() {
+		TypedQuery<JobClass> q = em.createQuery(
+				"select c from JobClass c order by c.assignDate DESC",
+				JobClass.class);
+
 		return q.getResultList();
 	}
-	
 
 	/***************** for user **********************/
 	public void setUser(Users users) {
@@ -606,7 +608,7 @@ public class Ejb {
 			Date endDate) {
 		TypedQuery<Purchase_Entry> q = em
 				.createQuery(
-						"select c from Purchase_Entry c WHERE c.purchase_date BETWEEN :startDate AND :endDate",
+						"select c from Purchase_Entry c WHERE c.purchase_date BETWEEN :startDate AND :endDate ORDER BY c.id DESC",
 						Purchase_Entry.class);
 		q.setParameter("startDate", startDate);
 		q.setParameter("endDate", endDate);
@@ -780,14 +782,11 @@ public class Ejb {
 		q.setParameter("id", id);
 		return q.getResultList();
 	}
-	
 
-	public JobAssignmentDetails getJobAssignmentById(
-			int id) {
-		
+	public JobAssignmentDetails getJobAssignmentById(int id) {
+
 		return em.find(JobAssignmentDetails.class, id);
 	}
-	
 
 	public List<JobAssignmentProducts> getAllJobAssignmentProductDetails() {
 		TypedQuery<JobAssignmentProducts> q = em.createQuery(
