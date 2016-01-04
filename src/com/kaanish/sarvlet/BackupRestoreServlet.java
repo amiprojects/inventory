@@ -19,9 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.kaanish.ejb.Ejb;
 import com.kaanish.model.City;
 import com.kaanish.model.Country;
-import com.kaanish.model.Department;
+import com.kaanish.util.GetMacId;
 
-@WebServlet({"/backup","/restore"})
+@WebServlet({"/backup","/restore","/macid"})
 public class BackupRestoreServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -66,6 +66,9 @@ public class BackupRestoreServlet extends HttpServlet {
 			}
 			fis.close();
 			ois.close();
+			break;
+		case "macid":
+			resp.getWriter().println(GetMacId.getMacId());
 			break;
 
 		default:

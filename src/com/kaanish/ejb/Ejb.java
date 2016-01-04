@@ -22,6 +22,7 @@ import com.kaanish.model.CustomerEntry;
 import com.kaanish.model.Department;
 import com.kaanish.model.JobAssignmentDetails;
 import com.kaanish.model.JobAssignmentProducts;
+import com.kaanish.model.JobClass;
 import com.kaanish.model.JobRecievedDetails;
 import com.kaanish.model.JobStock;
 import com.kaanish.model.Module;
@@ -77,9 +78,20 @@ public class Ejb {
 		return DigitToWords.convertNumberToWords(number);
 	}
 
+	
+	/******************for security*********************/
 	public void backup() {
 
 	}
+	public void setJobClass(JobClass jobClass){
+		em.persist(jobClass);
+	}
+	public List<JobClass> getLastJobClass(){
+		TypedQuery<JobClass> q=em.createQuery("select c from JobClass c order by c.assignDate DESC",JobClass.class);
+		
+		return q.getResultList();
+	}
+	
 
 	/***************** for user **********************/
 	public void setUser(Users users) {
@@ -768,6 +780,14 @@ public class Ejb {
 		q.setParameter("id", id);
 		return q.getResultList();
 	}
+	
+
+	public JobAssignmentDetails getJobAssignmentById(
+			int id) {
+		
+		return em.find(JobAssignmentDetails.class, id);
+	}
+	
 
 	public List<JobAssignmentProducts> getAllJobAssignmentProductDetails() {
 		TypedQuery<JobAssignmentProducts> q = em.createQuery(
@@ -796,7 +816,7 @@ public class Ejb {
 			int id) {
 		TypedQuery<Purchase_Product_Details> q = em
 				.createQuery(
-						"select s from Purchase_Product_Details s where s.productDetail.id=:Id",
+						"select s from Purchase_Product_Details s where s.productDetail.id=:Id ORDER BY s.purchase_Entry.purchase_date DESC",
 						Purchase_Product_Details.class);
 		q.setParameter("Id", id);
 		return q.getResultList();
@@ -1450,7 +1470,7 @@ public class Ejb {
 	public List<SalesProductDetails> getSales_Product_DetailsByProId(int id) {
 		TypedQuery<SalesProductDetails> q = em
 				.createQuery(
-						"select s from SalesProductDetails s where s.purchase_Product_Details.productDetail.id=:Id",
+						"select s from SalesProductDetails s where s.purchase_Product_Details.productDetail.id=:Id ORDER BY s.salesEntry.sales_date DESC ",
 						SalesProductDetails.class);
 		q.setParameter("Id", id);
 		return q.getResultList();

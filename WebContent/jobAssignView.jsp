@@ -70,7 +70,9 @@
 </script>
 </head>
 <body>
-	
+	<c:set var="jobAssi"
+		value="${sessionScope['ejb'].getJobAssignmentById(requestScope['joId'])}" />
+
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
@@ -91,141 +93,190 @@
 
 							<div class="widget-area">
 								<div class="col-md-12">
-									<form role="form" class="sec" method="post" id=""
-										action="">
-										<div class="widget-area">
-											<div class="col-md-6">
-												
-												<div class="col-md-12">
-													<b class="font">Jobber Name :</b> 
-														<input readonly="readonly" type="text" placeholder=""
-														name="" id="" class="form-control">
-													
-												</div>
-												<div class="col-md-12">
 
-													&nbsp; &nbsp; &nbsp; <b class="font">Jobber Details :</b>
-													<textarea rows="5" cols="" id=""
-														class="form-control" readonly="readonly"></textarea>
+									<div class="widget-area">
+										<div class="col-md-6">
 
-												</div>
+											<div class="col-md-12">
+												<b class="font">Jobber Name :</b> <input readonly="readonly"
+													type="text" placeholder="" name="" id=""
+													class="form-control" value="${jobAssi.vendor.name}">
+
 											</div>
-											<div class="col-md-6">
-												<div class="form-group">
-													<label for="" class="font">Job Challan no :</label>
-													
-													<input readonly="readonly" type="text" placeholder=""
-														name="" id="" class="form-control">
+											<div class="col-md-12">
+
+												&nbsp; &nbsp; &nbsp; <b class="font">Jobber Details :</b>
+												<textarea rows="5" cols="" id="" class="form-control"
+													readonly="readonly">
+													Address: ${jobAssi.vendor.address}
+													Phone Number:${jobAssi.vendor.ph1}
+													Email Number:${jobAssi.vendor.email}
+													Company Name:${jobAssi.vendor.companyName}
 														
-													<input type="hidden" name="" 
-														id=""> <input type="hidden"
-														name="">
-												</div>
-												<div class="form-group">
+														</textarea>
 
-													<label for="" class="font">Asigned Date :</label> 
-													<input readonly="readonly" type="text" placeholder=""
-														name="" id="" class="form-control">
-												</div>
-												<div class="form-group">
-
-													<label for="" class="font">Final Submission Date :</label> 
-													<input readonly="readonly" type="text" placeholder=""
-														name="" id="" class="form-control">
-												</div>
-
-												
 											</div>
-											
 										</div>
-										
-										<table id=""
-											class=" table table-striped table-bordered">
-											<thead style="background-color: #F0F0F0;">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label for="" class="font">Job Challan no :</label> <input
+													readonly="readonly" type="text"
+													value="${jobAssi.challanNumber}" name="" id=""
+													class="form-control">
+
+
+											</div>
+											<div class="form-group">
+
+												<label for="" class="font">Asigned Date :</label> <input
+													readonly="readonly" type="text" placeholder=""
+													value=<fmt:formatDate
+																			value="${jobAssi.assignDate}"
+																			pattern="dd-MM-yyyy" />
+													name="" id="" class="form-control">
+											</div>
+											<div class="form-group">
+
+												<label for="" class="font">Final Submission Date :</label> <input
+													readonly="readonly" type="text" placeholder=""
+													value=<fmt:formatDate
+																			value="${jobAssi.estimatedCompletionDate}"
+																			pattern="dd-MM-yyyy" />
+													name="" id="" class="form-control">
+											</div>
+
+
+										</div>
+
+									</div>
+
+									<table id="" class=" table table-striped table-bordered">
+										<thead style="background-color: #F0F0F0;">
+											<tr>
+												<th>#</th>
+												<th>Product code</th>
+												<th>Product Description</th>
+												<th>Quantity</th>
+												<th>UOM</th>
+												<th>Work</th>
+												<th>Remaining Quantity</th>
+												<th>Status</th>
+
+											</tr>
+										</thead>
+										<c:set var="total" value="${total+jppL.remaninQty}" />
+										<tbody>
+
+											<c:set var="count" value="${1}" />
+											<c:forEach var="jobp"
+												items="${jobAssi.jobAssignmentProducts}">
 												<tr>
-													<th>#</th>
-													<th>Product code</th>
-													<th>Product Description</th>
-													<th>Quantity</th>
-													<th>UOM</th>
-													<th>Work</th>
-													<th>Remaining Quantity</th>
-													<th>Status</th>
-													
+													<td>${count}</td>
+													<td>${jobp.purchase_Product_Details.productDetail.code}</td>
+													<td>${jobp.purchase_Product_Details.productDetail.description}</td>
+													<td>${jobp.qty}</td>
+													<td>${jobp.purchase_Product_Details.productDetail.qtyUnit.name}</td>
+													<td>${jobp.workDescription}</td>
+													<td>${jobp.remaninQty}</td>
+													<c:choose>
+														<c:when test="${jobp.remaninQty==0}">
+															<td><b>Complete</b></td>
+														</c:when>
+														<c:otherwise>
+															<td><b>Process</b></td>
+														</c:otherwise>
+													</c:choose>
+													<c:set var="count" value="${count+1}" />
+													<c:set var="total" value="${total+jobp.qty}" />
+													<c:set var="totalt" value="${totalt+jobp.remaninQty}" />
 												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>1</td>
-													<td>er65</td>
-													<td>gfhg</td>
-													<td>56</td>
-													<td>kg</td>
-													<td></td>
-													<td>kg</td>
-													<td></td>
-												</tr>
-												
-												<tr>
-												    <td colspan="2">Total No. Of Items:</td>
-												    <td></td>
-												    <td colspan="2">Total Qty:</td>
-												    <td></td>
-												    <td colspan="1">Total Remaining:</td>
-												    <td></td>
-												</tr>
-											</tbody>
-										</table>
-										
-										
-										
-										<br>
-										
-									</form>
+											</c:forEach>
+
+
+											<tr>
+												<td colspan="2">Total No. Of Items:
+													<h4>${count-1}</h4>
+												</td>
+												<td></td>
+												<td colspan="2">Total Quantity:
+													<h4>${total}</h4>
+												</td>
+												<td></td>
+												<td colspan="1">Total Remaining:
+													<h4>${totalt}</h4>
+												</td>
+												<td></td>
+											</tr>
+										</tbody>
+									</table>
+
+
+
+									<br>
+
 
 								</div>
 							</div>
 							<div class="widget-area">
 								<div class="col-md-12">
-								 <div class="breadcrumbs"
-								style="height: 50px; text-align: center;">
-								<h3 style="margin-top: -13px; float:left;">Job Received Details:</h3>
+									<div class="breadcrumbs"
+										style="height: 50px; text-align: center;">
+										<h3 style="margin-top: -13px; float: left;">Job Received
+											Details:</h3>
 
 
-							</div>
-								    <table id=""
-											class=" table table-striped table-bordered">
-											<thead style="background-color: #F0F0F0;">
-												<tr>
-													<th>#</th>
-													<th>Product code</th>
-													<th>Product Description</th>
-													<th>Quantity</th>
-													<th>UOM</th>
-													<th>Work</th>
-													<th>Decsription</th>
-													<th>Status</th>
-													<th>Date</th>
-													
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>1</td>
-													<td>er65</td>
-													<td>gfhg</td>
-													<td>56</td>
-													<td>kg</td>
-													<td></td>
-													<td>kg</td>
-													<td></td>
-													<td></td>
-												</tr>
-												
-												
-											</tbody>
-										</table>
-								
+									</div>
+									<table id="" class=" table table-striped table-bordered">
+										<thead style="background-color: #F0F0F0;">
+											<tr>
+
+											
+												<th>Product code</th>
+												<th>Product Description</th>
+												<th>Receiving Quantity</th>
+												<th>UOM</th>
+												<th>Work</th>
+
+												<th>Status</th>
+												<th>Date</th>
+
+											</tr>
+										</thead>
+										<tbody>
+
+											
+											<c:forEach var="jobp"
+												items="${jobAssi.jobAssignmentProducts}">
+												<c:forEach var="jobPreci" items="${jobp.jobRecievedDetails}">
+													<tr>
+														
+														<td>${jobp.purchase_Product_Details.productDetail.code}</td>
+														<td>${jobp.purchase_Product_Details.productDetail.description}</td>
+														<td>${jobPreci.qtyRecieved}</td>
+														<td>${jobp.purchase_Product_Details.productDetail.qtyUnit.name}</td>
+														<td>${jobp.workDescription}</td>
+
+														<c:choose>
+															<c:when test="${jobp.remaninQty==0}">
+																<td><b>Complete</b></td>
+															</c:when>
+															<c:otherwise>
+																<td><b>Process</b></td>
+															</c:otherwise>
+														</c:choose>
+														<td><fmt:formatDate
+																value="${jobPreci.recievingDate}"
+																pattern="dd-MM-yyyy" /></td>
+													</tr>
+
+												</c:forEach>
+
+											</c:forEach>
+
+
+										</tbody>
+									</table>
+
 								</div>
 							</div>
 						</div>
@@ -237,14 +288,6 @@
 		<!-- Page Container -->
 	</div>
 	<!-- main -->
-
-
-
-
-
-	
-	
-	
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
 	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>

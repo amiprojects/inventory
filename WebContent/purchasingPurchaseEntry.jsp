@@ -37,8 +37,11 @@
 </style>
 
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
+
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 <script src="js/jquery-ui/jquery-ui.js"></script>
+
+
 <script>
 	$(function() {
 		var d = new Date();

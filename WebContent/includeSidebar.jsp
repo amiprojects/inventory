@@ -1,3 +1,4 @@
+<jsp:include page="include.jsp"/>
 <aside class="sidebar" style="height: 100%; overflow-y: scroll;">
 	<div class="menu-sec">
 		<div id="menu-toogle" class="menus">
@@ -128,8 +129,8 @@
 
 		</div>
 		<p>
-			2015 Copyright AM Infotrix by <a href="http://www.aminfotrix.com"
-				title="">AMi</a>
+			2015 powered by  <a href="http://www.aminfotrix.com"
+				title="">AM Infotrix</a>
 		</p>
 	</div>
 	<!-- Menu Sec -->
