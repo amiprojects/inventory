@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<script src="js/jquery-ui/external/jquery/jquery.js"></script>
+
 <script src="js/jquery.jkey.js"></script>
 <script>
 	$(document).jkey('ctrl+r', function() {
