@@ -202,8 +202,7 @@ font-size: 17px;
 									<div class='toast' style='display: none'>
 										<h3 id="msg">${requestScope['msg']}</h3>
 									</div>
-									<div style="background-color: lightgrey; padding: 3px 3px;">
-									
+									<div style="background-color: lightgrey; padding: 3px 3px;">									
 										<span class="head_style">Sale Product at:</span>
 									</div>
 									<input type="radio" class="chk" name="saleAt" value="mrp"

@@ -35,6 +35,10 @@
 	letter-spacing: 0.3px;
 	padding-right: 20px;
 }
+
+.head_style {
+	font-size: 17px;
+}
 </style>
 
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
@@ -112,9 +116,10 @@
 							<form class="sec" action="salesEntry" method="post">
 								<div class="row">
 									<div class="col-md-6">
-										<div class="widget-area" style="height: 270px;">
-											<div style="background-color: lightgrey;">
-												<h3>Bill To:</h3>
+										<div class="widget-area"
+											style="height: 270px; padding: 4px 5px;">
+											<div style="background-color: lightgrey; padding: 3px 3px;">
+												<span class="head_style">Bill To:</span>
 											</div>
 											<table cellspacing="2">
 												<tr>
@@ -154,17 +159,24 @@
 														type="hidden" name="isExistingCust" id="isExistingCust"><input
 														type="hidden" name="existingCustId" id="existingCustId"></td>
 												</tr>
+												<tr id="aDetailsDiv">
+													<td>Agent details :</td>
+													<td><textarea rows="" cols="" id="aDetail"
+															class="form-control" readonly="readonly"
+															style="width: 100%;"></textarea></td>
+												</tr>
 											</table>
 										</div>
 									</div>
 
 									<div class="col-md-6">
-										<div class="widget-area" style="height: 270px;">
-											<div style="background-color: lightgrey;">
-												<h3>Invoice Details:</h3>
+										<div class="widget-area"
+											style="height: 270px; padding: 5px 3px;">
+											<div style="background-color: lightgrey; padding: 3px 3px;"">
+												<span class="head_style">Invoice Details:</span>
 											</div>
 
-											<div class="form-group">
+											<div class="form-group" style="padding-top: 18px;">
 												<label style="font-size: 15px" class="font">Sales
 													challan no. :</label>
 												<c:set var="fy"
@@ -200,19 +212,13 @@
 											</div>
 										</div>
 									</div>
-									<div class="col-md-12" id="aDetailsDiv">
-										<div class="widget-area">
-											<textarea rows="5" cols="" id="aDetail" class="form-control"
-												readonly="readonly"></textarea>
-										</div>
-									</div>
 								</div>
-								<div class="widget-area">
+								<div class="widget-area" style="padding: 3px 3px;">
 									<div class='toast' style='display: none'>
 										<h3 id="msg">${requestScope['msg']}</h3>
 									</div>
-									<div style="background-color: lightgrey;">
-										<h3>Sale Product at:</h3>
+									<div style="background-color: lightgrey; padding: 3px 3px;">
+										<span class="head_style">Sale Product at:</span>
 									</div>
 									<input type="radio" class="chk" name="saleAt" value="mrp"
 										id="mrp" style="display: none;" checked="checked"><label

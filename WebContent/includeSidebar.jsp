@@ -1,4 +1,3 @@
-
 <aside class="sidebar" style="height: 100%; overflow-y: scroll;">
 	<div class="menu-sec">
 		<div id="menu-toogle" class="menus">

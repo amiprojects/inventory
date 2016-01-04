@@ -48,6 +48,7 @@
 		$("#sales").attr("id", "activeSubMenu");
 		$("#sSalesEntry").attr("style", "color: red;");
 		$("#wspORmrp").val('mrpVal');
+		$("#aDetailsDiv").hide();
 	});
 </script>
 <link rel="stylesheet" href="css/toast.css" type="text/css" />
@@ -101,11 +102,17 @@
 				<div class="row">
 					<div class="masonary-grids">
 
+						<div class="breadcrumbs" style="height: 50px; text-align: center;">
+							<h3 style="margin-top: 11px;">Sales Entry</h3>
+
+						</div>
+
+
 						<div class="col-md-12" style="height: 800px;">
 							<form class="sec" action="salesEntry" method="post">
 								<div class="row">
 									<div class="col-md-6">
-										<div class="widget-area" style="height: 250px;">
+										<div class="widget-area" style="height: 270px;">
 											<div style="background-color: lightgrey;">
 												<h3>Bill To:</h3>
 											</div>
@@ -129,7 +136,7 @@
 
 												<tr>
 													<td>Phone No. :</td>
-													<td><input type="text" name="phone" id="phone"
+													<td><input type="number" name="phone" id="phone"
 														style="length: 40px;"></input></td>
 												</tr>
 
@@ -138,19 +145,26 @@
 													<td><input type="text" name="vatcst" id="vatcst"
 														style="length: 40px;"></input></td>
 												</tr>
+												<tr>
+													<td><input type="checkbox" onclick="isAgentF();"
+														id="agent" name="agent">&nbsp; Via Agent :</td>
+													<td><input type="text" name="agentName" id="agentName"
+														style="length: 40px;" readonly="readonly"></input><input
+														type="hidden" name="aId" id="aId"><input
+														type="hidden" name="isExistingCust" id="isExistingCust"><input
+														type="hidden" name="existingCustId" id="existingCustId"></td>
+												</tr>
 											</table>
 										</div>
 									</div>
 
 									<div class="col-md-6">
-										<div class="widget-area" style="height: 250px;">
+										<div class="widget-area" style="height: 270px;">
 											<div style="background-color: lightgrey;">
 												<h3>Invoice Details:</h3>
 											</div>
 
-
 											<div class="form-group">
-
 												<label style="font-size: 15px" class="font">Sales
 													challan no. :</label>
 												<c:set var="fy"
@@ -186,6 +200,12 @@
 											</div>
 										</div>
 									</div>
+									<div class="col-md-12" id="aDetailsDiv">
+										<div class="widget-area">
+											<textarea rows="5" cols="" id="aDetail" class="form-control"
+												readonly="readonly"></textarea>
+										</div>
+									</div>
 								</div>
 								<div class="widget-area">
 									<div class='toast' style='display: none'>
@@ -202,11 +222,12 @@
 
 								</div>
 								<div class="widget-area">
-
-									<b>Quantity :</b> <input type="text" name="qty" id="qty"
-										onkeyup="checkQty();" value="0" style="width: 70px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-									<b>Product :</b> <select name="prodCode" id="prodCode"
+									<b>Quantity :</b> <input type="number" name="qty" id="qty"
+										style="width: 70px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<b>Product :</b><input type="text" id="pCode" name="pCode"
+										onkeyup="pcodeF();"><input type="hidden" id="pCodeId"
+										name="pCodeId">
+									<%-- <select name="prodCode" id="prodCode"
 										onchange="getProdDetByPurchaseProdDetId();"
 										required="required">
 										<option value="0">Select Product code</option>
@@ -223,11 +244,16 @@
 												</c:choose>)
 											</option>
 										</c:forEach>
-									</select><input type="hidden" id="remQty" name="remQty">
+									</select><input type="hidden" id="remQty" name="remQty"> --%>
 									<!-- <input type="hidden" name="descriptiondId" id="descriptionId"> -->
 									&nbsp; &nbsp; &nbsp;<b>Product with Barcode</b> <input
-										type="text" id="salesbar" name="salesbar">
-									<button onclick="probar()" type="button">Go</button>
+										type="text" id="salesbar" name="salesbar"
+										onkeypress="Javascript: if (event.keyCode==13) fnsearch();"><input
+										type="hidden" id="salesbarH" name="salesbarH"> &nbsp;
+									&nbsp; &nbsp;
+									<button onclick="resetF();" type="button">Reset</button>
+									&nbsp; &nbsp; &nbsp;
+									<button onclick="probar();" type="button">Go</button>
 
 								</div>
 								<div class="widget-area">
@@ -241,7 +267,7 @@
 												<th>Qty.</th>
 												<th id="mrpWSP">MRP/Qty</th>
 												<th>Total</th>
-												<th>Remove</th>
+												<th><b>X</b></th>
 											</tr>
 										</thead>
 										<tbody style="display: none;">
@@ -255,8 +281,8 @@
 													readonly="readonly"></td>
 												<td><input type="text" id="qtyvalue"
 													readonly="readonly" value="0"></td>
-												<td><input type="hidden" id="wspORmrp"> <input
-													type="text" id="mrpQty" readonly="readonly"></td>
+												<td><input type="hidden" id="wspORmrp" name="wspORmrp">
+													<input type="text" id="mrpQty" readonly="readonly"></td>
 												<td><input type="text" id="eachtotalvalue"
 													readonly="readonly"></td>
 											</tr>
@@ -358,8 +384,11 @@
 										</thead>
 									</table>
 									<div style="float: right;">
-										<input type="button" class="btn btn-info btn-sm"
-											data-toggle="modal" value="Save" onclick="paymentDate();">
+										<input type="button" onclick="cancelF();"
+											class="btn btn-danger small" value="Cancel"
+											data-toggle="modal"> <input type="button"
+											class="btn btn-info btn-sm" data-toggle="modal" value="Save"
+											onclick="paymentDate();">
 										<div id="saveSales" class="modal fade" role="dialog"
 											style="top: 25px;">
 											<div class="modal-dialog modal-lg">
@@ -469,7 +498,8 @@
 																				id="desc" name="desc"></textarea>
 																		</div>
 																	</div>
-																	<br>
+																	<br> <input type="hidden" name="isAgent"
+																		id="isAgent">
 																	<div class="breadcrumbs">
 																		<button type="button" class="btn green pull-right"
 																			onclick="submit();">Save</button>
@@ -495,8 +525,86 @@
 			</div>
 		</div>
 	</div>
+	<div id="purchaseDetails" class="modal fade" role="dialog"
+		style="top: 25px;">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						onclick="closeModal();">&times;</button>
+					<h4 class="modal-title">Purchase Details</h4>
+				</div>
+				<div class="modal-body">
+					<table id="stream_table" width="100%">
+						<thead>
+							<tr>
+								<th>Product code :</th>
+								<td colspan="2"><input type="text" readonly="readonly"
+									id="pCodeModal" class="form-control"></td>
+							</tr>
+							<tr>
+								<th>Description :</th>
+								<td colspan="2"><input type="text" readonly="readonly"
+									id="pDescModal" class="form-control"></td>
+							</tr>
+						</thead>
+					</table>
+					<table id="purchaseDetailsTable" class="table">
+						<thead>
+							<tr>
+								<th>Purchase Date</th>
+								<th>Vendor name</th>
+								<th>Lot No.</th>
+								<th>MRP</th>
+								<th>WSP</th>
+								<th>Remaining Qty.</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+				</div>
+			</div>
 
+		</div>
+	</div>
+	<div id="cancelOrNot" class="modal fade" role="dialog"
+		style="top: 25px;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<!-- <h4 class="modal-title">Modal Header</h4> -->
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="widget-area">
+							<div class="row">
+								<span>Do you want to cancel?</span>
+							</div>
+							<br>
+							<div class="row">
+								<button type="button" class="btn btn-success medium" id="yesP">Yes</button>
+								<button type="button" class="btn btn-danger medium" id="noP">No</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+				</div>
+			</div>
 
+		</div>
+	</div>
 	<script>
 		$(function() {
 			var d = new Date();
@@ -519,6 +627,9 @@
 				alert("please enter customer city");
 			} else if ($("#phone").val() == "") {
 				alert("please enter customer phone no.");
+			} else if ($("#isAgent").val() == 'yes'
+					&& $("#agentName").val() == "") {
+				alert("please insert agent name");
 			} else {
 				//$("#datepicker2").val($("#datepicker").val());
 				var d = $("#datepicker").datepicker('getDate');
@@ -560,167 +671,171 @@
 	</script>
 
 	<script>
-		function getProdDetByPurchaseProdDetId() {
-			$("#salesbar").val($("#prodCode").val());
-			/* $("#remQty").val("${pCode.remaining_quantity}");
-			if ($("#qty").val() > $("#remQty").val()) {
-				alert('Please enter less quantity than remaining');
-				$("#qty").val(0);
-			} */
-		}
-		/* function checkQty() {
-			if ($("#prodCode").val() == 0) {
-				alert('Please select product code first');
-				$("#qty").val(0);
-			} else {
-				if ($("#qty").val() > $("#remQty").val()) {
-					alert('Please enter less quantity than remaining');
-					$("#qty").val("");
-				}
-			}
-		} */
 		ind = 0;
+		var k = 0;
 		function removeProduct(a) {
 			$("#trRemove" + a).remove();
-			//$("#trRemoveH" + a).remove();
 		}
-		var k = 0;
+
 		function probar() {
-			k = k + 1;
-			var countryName = $("#salesbar").val();
-			var countryArray = countryName.split('/');
+			if ($("#qty").val() == 0 || $("#qty").val() == "") {
+				alert("Please enter a valid quantity");
+			} else if ($("#salesbar").val() == 0 || $("#salesbar").val() == "") {
+				alert("Please select a product or enter barcode.");
+			} else {
+				k = k + 1;
+				var countryName = $("#salesbar").val();
+				var countryArray = countryName.split('/');
 
-			for (var i = 0; i < countryArray.length; i++) {
-				countryArray[i];
-			}
-			var id = countryArray[0];
+				for (var i = 0; i < countryArray.length; i++) {
+					countryArray[i];
+				}
+				var id = countryArray[0];
+				var qty = Number($("#qty").val());
 
-			$
-					.ajax({
-						type : "post",
-						url : "getProdDetByPurchaseProdDetailsId",
-						data : {
-							id : id
-						},
-						dataType : "json",
-						success : function(data) {
-							$("#codevalue").val(data.productCode);
-							$("#productId").val(data.productId);
-							$("#descvalue").val(data.productDesc);
-							$("#qtyvalue").val(Number($("#qty").val()));
-							if ($("#wspORmrp").val() == 'mrpVal') {
-								$("#mrpQty").val(data.mrp);
-								$("#eachtotalvalue")
+				$
+						.ajax({
+							type : "post",
+							url : "getProdDetByPurchaseProdDetailsId",
+							data : {
+								id : id
+							},
+							dataType : "json",
+							success : function(data) {
+								$("#codevalue").val(data.productCode);
+								$("#productId").val(data.productId);
+								$("#descvalue").val(data.productDesc);
+								$("#qtyvalue").val(Number(qty));
+								if ($("#wspORmrp").val() == 'mrpVal') {
+									$("#mrpQty").val(data.mrp);
+									$("#eachtotalvalue")
+											.val(
+													Math
+															.round((Number(data.mrp
+																	* $(
+																			"#qtyvalue")
+																			.val())) * 100) / 100);
+								} else {
+									$("#mrpQty").val(data.wsp);
+									$("#eachtotalvalue")
+											.val(
+													Math
+															.round((Number(data.wsp
+																	* $(
+																			"#qtyvalue")
+																			.val())) * 100) / 100);
+								}
+								$("#prodCode").val(data.id);
+								$("#subtotalvalue")
 										.val(
 												Math
-														.round((Number(data.mrp
-																* $("#qtyvalue")
-																		.val())) * 100) / 100);
-							} else {
-								$("#mrpQty").val(data.wsp);
-								$("#eachtotalvalue")
+														.round((Number($(
+																"#subtotalvalue")
+																.val()) + Number($(
+																"#eachtotalvalue")
+																.val())) * 100) / 100);
+								$("#discountValue")
 										.val(
 												Math
-														.round((Number(data.wsp
-																* $("#qtyvalue")
-																		.val())) * 100) / 100);
-							}
-							$("#prodCode").val(data.id);
-							$("#subtotalvalue")
-									.val(
-											Math
-													.round((Number($(
-															"#subtotalvalue")
-															.val()) + Number($(
-															"#eachtotalvalue")
-															.val())) * 100) / 100);
-							$("#discountValue")
-									.val(
-											Math
-													.round((Number($(
-															"#subtotalvalue")
-															.val())
-															* Number($(
-																	"#discount")
-																	.val()) / 100) * 100) / 100);
-							$("#taxAmount")
-									.val(
-											Math
-													.round((Number($(
-															"#subtotalvalue")
-															.val())
-															* Number($(
-																	"#taxTot")
-																	.val()) * 100) / 100)
-													/ Number(100));
-							$("#totalvalue")
-									.val(
-											Math
-													.round((Number($(
-															"#subtotalvalue")
-															.val())
-															- Number($(
-																	"#discountValue")
-																	.val())
-															+ Number($(
-																	"#taxAmount")
-																	.val())
-															+ Number($(
-																	"#transcharge")
-																	.val()) + Number($(
-															"#surcharge").val())) * 100) / 100);
-							var tot = $("#totalvalue").val();
-							var round = Math.round(tot);
-							if (tot > round) {
-								$("#roundvalue")
+														.round((Number($(
+																"#subtotalvalue")
+																.val())
+																* Number($(
+																		"#discount")
+																		.val()) / 100) * 100) / 100);
+								$("#taxAmount")
 										.val(
 												Math
-														.round((round + 1 - tot) * 100) / 100);
-							} else {
-								$("#roundvalue").val(
-										Math.round((round - tot) * 100) / 100);
-							}
+														.round((Number($(
+																"#subtotalvalue")
+																.val())
+																* Number($(
+																		"#taxTot")
+																		.val()) * 100) / 100)
+														/ Number(100));
+								$("#totalvalue")
+										.val(
+												Math
+														.round((Number($(
+																"#subtotalvalue")
+																.val())
+																- Number($(
+																		"#discountValue")
+																		.val())
+																+ Number($(
+																		"#taxAmount")
+																		.val())
+																+ Number($(
+																		"#transcharge")
+																		.val()) + Number($(
+																"#surcharge")
+																.val())) * 100) / 100);
+								var tot = $("#totalvalue").val();
+								var round = Math.round(tot);
+								if (tot > round) {
+									$("#roundvalue")
+											.val(
+													Math
+															.round((round + 1 - tot) * 100) / 100);
+								} else {
+									$("#roundvalue")
+											.val(
+													Math
+															.round((round - tot) * 100) / 100);
+								}
 
-							$("#grandtotal").val(
-									Number($("#totalvalue").val())
-											+ Number($("#roundvalue").val()));
+								$("#grandtotal")
+										.val(
+												Number($("#totalvalue").val())
+														+ Number($(
+																"#roundvalue")
+																.val()));
 
-							$("#productTable")
-									.append(
-											'<tbody><tr id="trRemove'+ind+'">'
-													+ '<td>'
-													+ k
-													+ '</td>'
-													+ '<td><input readonly="readonly" type="text" name="codevalue" value=\''
+								$("#productTable")
+										.append(
+												'<tbody><tr id="trRemove'+ind+'">'
+														+ '<td>'
+														+ k
+														+ '</td>'
+														+ '<td><input readonly="readonly" type="text" name="codevalue" value=\''
 													+ data.productCode
 													+ '\'><input readonly="readonly" type="hidden" name="productId" value=\''
 													+ data.productId
 													+ '\'><input readonly="readonly" type="hidden" name="purchaseProductDetId" value=\''
-													+ $("#prodCode").val()
-													+ '\'></td>'
-													+ '<td><input readonly="readonly" type="text" name="descvalue" value=\''
+														+ $("#salesbarH").val()
+														+ '\'></td>'
+														+ '<td><input readonly="readonly" type="text" name="descvalue" value=\''
 													+ data.productDesc
 													+ '\'></td>'
-													+ '<td><input readonly="readonly" type="text" name="qtyvalue" value=\''
-													+ $("#qty").val()
-													+ '\'></td>'
-													+ '<td><input readonly="readonly" type="text" name="mrpQty" value=\''
-													+ $("#mrpQty").val()
-													+ '\'></td>'
-													+ '<td><input readonly="readonly" type="text" name="eachtotalvalue" value=\''
-													+ $("#eachtotalvalue")
-															.val()
-													+ '\'></td>'
-													+ '<td>'
-													+ '<a href="#" onclick="removeProduct('
-													+ ind
-													+ ');"><img src="img/cross.png" height="16px" width="16px"></a>'
-													+ '</td>' + '</tr></tbody>');
-							ind++;
+														+ '<td><input readonly="readonly" type="text" name="qtyvalue" value=\''
+														+ $("#qtyvalue").val()
+														+ '\'></td>'
+														+ '<td><input readonly="readonly" type="text" name="mrpQty" value=\''
+														+ $("#mrpQty").val()
+														+ '\'></td>'
+														+ '<td><input readonly="readonly" type="text" name="eachtotalvalue" value=\''
+														+ $("#eachtotalvalue")
+																.val()
+														+ '\'></td>'
+														+ '<td>'
+														+ '<a href="#" onclick="removeProduct('
+														+ ind
+														+ ');"><img src="img/cross.png" height="16px" width="16px"></a>'
+														+ '</td>'
+														+ '</tr></tbody>');
+								ind++;
 
-						}
+							}
 
-					});
+						});
+				$("#pCode").val("");
+				$("#salesbar").val("");
+				$("#salesbar").prop("readonly", false);
+				$("#mrp").prop("disabled", true);
+				$("#wsp").prop("disabled", true);
+				$("#qty").prop("readonly", false);
+				$("#qty").val("");
+			}
 		}
 		function discountF() {
 			$("#discountValue").val(
@@ -874,6 +989,8 @@
 		$(document).ready(function() {
 			$("#payDetail").hide();
 			$("#description").hide();
+			$("#isAgent").val('no');
+			$("#isExistingCust").val(0);
 
 		});
 		function closePayment() {
@@ -944,8 +1061,562 @@
 		function submit() {
 			document.getElementById("purchaseForm").submit();
 		}
-	</script>
+		$(function() {
+			$("#pCode")
+					.autocomplete(
+							{
+								source : function(req, resp) {
+									$
+											.ajax({
+												type : "post",
+												url : "getProductsForSaleByCode",
+												data : {
+													codeParts : req.term
+												},
+												dataType : "json",
+												success : function(data) {
+													resp($
+															.map(
+																	data,
+																	function(
+																			item) {
+																		return ({
+																			value : item.code,
+																			id : item.id,
+																			description : item.description
+																		});
+																	}));
+												},
 
+												error : function(a, b, c) {
+													alert(a + b + c);
+												}
+
+											});
+								},
+								change : function(event, ui) {
+									if (ui.item == null) {
+										$(this).val("");
+										$("#pCodeId").val("");
+										//getProductDetailsByProductCode(0);
+									} else {
+										$("#pCodeId").val(ui.item.id);
+										//getProductDetailsByProductCode(ui.item.id);
+									}
+								},
+								select : function(event, ui) {
+									if (ui.item != null) {
+										$("#pCodeId").val(ui.item.id);
+										//getProductDetailsByProductCode(ui.item.id);
+										$("#purchaseDetails").modal("show");
+										$("#pCodeModal").val(ui.item.value);
+										$("#pDescModal").val(
+												ui.item.description);
+
+										$
+												.ajax({
+													type : "post",
+													url : "getSaleblePurchaseProductDetailsByProductCodeAndQuantity",
+													dataType : "json",
+													data : {
+														code : ui.item.value,
+														date : $("#datepicker")
+																.val(),
+														qty : $("#qty").val()
+													},
+													success : function(data2) {
+														$(
+																"#purchaseDetailsTable tbody")
+																.empty();
+														$
+																.map(
+																		data2,
+																		function(
+																				item2) {
+																			if (item2.remaining_quantity >= Number($(
+																					"#qty")
+																					.val())) {
+																				if (item2.purchaseDate != 'Initial Inventory') {
+																					$(
+																							"#purchaseDetailsTable")
+																							.append(
+																									"<tbody id='viewAttr"+item2.id+"' title='"+item2.attrName1+" : "+item2.attrValue1+" , "+item2.attrName2+" : "+item2.attrValue2+" , "+item2.attrName3+" : "+item2.attrValue3+" , "+item2.attrName4+" : "+item2.attrValue4+" , "+item2.attrName5+" : "+item2.attrValue5+" , "+item2.attrName6+" : "+item2.attrValue6+"'>"
+																											+ "<tr>"
+																											+ "<td>"
+																											+ formatDate(item2.purchaseDate)
+																											+ "</td>"
+																											+ "<td>"
+																											+ item2.purchaseVendorName
+																											+ "</td>"
+																											+ "<td>"
+																											+ item2.lotNumber
+																											+ "</td>"
+																											+ "<td>"
+																											+ item2.mrp
+																											+ "</td>"
+																											+ "<td>"
+																											+ item2.wsp
+																											+ "</td>"
+																											+ "<td>"
+																											+ item2.remaining_quantity
+																											+ "</td>"
+																											+ "<td>"
+																											+ '<input type="button" onclick="chooseF('
+																											+ item2.id
+																											+ ');" value="Choose">'
+																											+ "</td>"
+																											+ "</tr>"
+																											+ "</tbody>");
+																				} else {
+																					$(
+																							"#purchaseDetailsTable")
+																							.append(
+																									"<tbody id='viewAttr"+item2.id+"' title='"+item2.attrName1+" : "+item2.attrValue1+" , "+item2.attrName2+" : "+item2.attrValue2+" , "+item2.attrName3+" : "+item2.attrValue3+" , "+item2.attrName4+" : "+item2.attrValue4+" , "+item2.attrName5+" : "+item2.attrValue5+" , "+item2.attrName6+" : "+item2.attrValue6+"'>"
+																											+ "<tr>"
+																											+ "<td>"
+																											+ item2.purchaseDate
+																											+ "</td>"
+																											+ "<td>"
+																											+ item2.purchaseVendorName
+																											+ "</td>"
+																											+ "<td>"
+																											+ item2.lotNumber
+																											+ "</td>"
+																											+ "<td>"
+																											+ item2.mrp
+																											+ "</td>"
+																											+ "<td>"
+																											+ item2.wsp
+																											+ "</td>"
+																											+ "<td>"
+																											+ item2.remaining_quantity
+																											+ "</td>"
+																											+ "<td>"
+																											+ '<input type="button" onclick="chooseF('
+																											+ item2.id
+																											+ ');" value="Choose">'
+																											+ "</td>"
+																											+ "</tr>"
+																											+ "</tbody>");
+																				}
+																			}
+																			$(
+																					"#viewAttr"
+																							+ item2.id)
+																					.tooltip(
+																							{
+																								track : true
+																							});
+
+																		});
+
+													}
+												});
+
+									} else {
+										$(this).val("");
+										$("#pCodeId").val("");
+										//getProductDetailsByProductCode(0);						
+									}
+
+								}
+							});
+		});
+
+		function formatDate(d) {
+			var dateparts = d.split(" ");
+			return dateparts[2] + "-" + dateparts[1] + "-" + dateparts[5];
+		}
+		function closeModal() {
+			$("#pCode").val("");
+			$("#pCodeId").val("");
+		}
+		function chooseF(purchaseProdDetIdForBarCode) {
+			//alert(purchaseProdDetIdForBarCode);
+			$("#salesbar").val(purchaseProdDetIdForBarCode);
+			$("#salesbarH").val(purchaseProdDetIdForBarCode);
+			$("#salesbar").prop("readonly", true);
+			$("#purchaseDetails").modal("hide");
+			$("#qty").prop("readonly", true);
+		}
+		function pcodeF() {
+			if ($("#qty").val() == 0 || $("#qty").val() == "") {
+				alert("Please select a valid quantity first");
+				$("#pCode").val("");
+				$("#qty").val("");
+			}
+		}
+
+		/* function salesbarF() {
+			if ($("#qty").val() == 0 || $("#qty").val() == "") {
+				alert("Please select a valid quantity first");
+				$("#salesbar").val("");
+				$("#qty").val("");
+			}
+		} */
+		function cancelF() {
+			$("#cancelOrNot").modal("show");
+		}
+		$("#yesP").click(function() {
+			window.location = 'salesSalesEntry.jsp';
+		});
+		$("#noP").click(function() {
+			$("#cancelOrNot").modal("hide");
+		});
+		function isAgentF() {
+			if ($('#agent').is(":checked")) {
+				$("#isAgent").val('yes');
+				$("#agentName").prop("readonly", false);
+			} else {
+				$("#isAgent").val('no');
+				$("#agentName").prop("readonly", true);
+				$("#aDetailsDiv").hide();
+				$("#agentName").val("");
+			}
+		}
+		$(function() {
+			$("#agentName")
+					.autocomplete(
+							{
+								source : function(req, resp) {
+									$
+											.ajax({
+												type : "post",
+												url : "getVendorsByVendorTypeSalesAgentAndName",
+												data : {
+													name : req.term
+												},
+												dataType : "json",
+												success : function(data) {
+													resp($.map(data, function(
+															item) {
+														return ({
+															value : item.name,
+															id : item.id
+														});
+													}));
+												},
+
+												error : function(a, b, c) {
+													alert(a + b + c);
+												}
+
+											});
+								},
+								change : function(event, ui) {
+									if (ui.item == null) {
+										$(this).val("");
+										$("#aName").val("");
+										$("#aId").val("");
+									} else {
+										$("#aId").val(ui.item.id);
+									}
+								},
+								select : function(event, ui) {
+									if (ui.item != null) {
+										$("#aId").val(ui.item.id);
+										$.ajax({
+											url : 'getSalesAgentDetailsById',
+											type : 'post',
+											dataType : "json",
+											data : {
+												id : ui.item.id
+											},
+											success : function(data) {
+												$("#aDetailsDiv").show();
+												$("#aDetail").val(
+														"Address :\n\t"
+																+ data.address
+																+ "\nPh1 : "
+																+ data.ph1
+																+ "\nPh2 : "
+																+ data.ph2);
+											},
+											error : function(a, b, c) {
+												alert(b + ": " + c);
+											}
+										});
+									} else {
+										$(this).val("");
+										$("#aId").val("");
+										$("#aName").val("");
+									}
+
+								}
+							});
+		});
+		$(function() {
+			$("#city").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getCityByName",
+						data : {
+							name : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.cityName,
+									id : item.id
+								});
+							}));
+						}
+
+					});
+				},
+				change : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+					}
+				},
+				select : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+					}
+				}
+			});
+		});
+		function resetF() {
+			$("#qty").val("");
+			$("#qty").prop("readonly", false);
+			$("#pCode").val("");
+			$("#salesbar").val("");
+			$("#salesbar").prop("readonly", false);
+		}
+		function fnsearch() {
+			if ($("#salesbar").val() == 0 || $("#salesbar").val() == "") {
+				alert("Please select a product or enter barcode.");
+			} else {
+
+				var countryName = $("#salesbar").val();
+				var countryArray = countryName.split('/');
+
+				for (var i = 0; i < countryArray.length; i++) {
+					countryArray[i];
+				}
+				var id = countryArray[0];
+				//var qty = Number($("#qty").val());
+
+				$
+						.ajax({
+							type : "post",
+							url : "getPurchaseProductDetailsByIdForSale",
+							data : {
+								id : id,
+								date : $("#datepicker").val()
+							},
+							dataType : "json",
+							success : function(data) {
+								if (data != null) {
+									k = k + 1;
+									$("#codevalue").val(data.productCode);
+									$("#productId").val(data.productId);
+									$("#descvalue").val(data.productDesc);
+									$("#qtyvalue").val(Number(1));
+									if ($("#wspORmrp").val() == 'mrpVal') {
+										$("#mrpQty").val(data.mrp);
+										$("#eachtotalvalue")
+												.val(
+														Math
+																.round((Number(data.mrp
+																		* $(
+																				"#qtyvalue")
+																				.val())) * 100) / 100);
+									} else {
+										$("#mrpQty").val(data.wsp);
+										$("#eachtotalvalue")
+												.val(
+														Math
+																.round((Number(data.wsp
+																		* $(
+																				"#qtyvalue")
+																				.val())) * 100) / 100);
+									}
+									$("#prodCode").val(data.id);
+									$("#subtotalvalue")
+											.val(
+													Math.round((Number($(
+															"#subtotalvalue")
+															.val()) + Number($(
+															"#eachtotalvalue")
+															.val())) * 100) / 100);
+									$("#discountValue")
+											.val(
+													Math
+															.round((Number($(
+																	"#subtotalvalue")
+																	.val())
+																	* Number($(
+																			"#discount")
+																			.val()) / 100) * 100) / 100);
+									$("#taxAmount")
+											.val(
+													Math
+															.round((Number($(
+																	"#subtotalvalue")
+																	.val())
+																	* Number($(
+																			"#taxTot")
+																			.val()) * 100) / 100)
+															/ Number(100));
+									$("#totalvalue")
+											.val(
+													Math
+															.round((Number($(
+																	"#subtotalvalue")
+																	.val())
+																	- Number($(
+																			"#discountValue")
+																			.val())
+																	+ Number($(
+																			"#taxAmount")
+																			.val())
+																	+ Number($(
+																			"#transcharge")
+																			.val()) + Number($(
+																	"#surcharge")
+																	.val())) * 100) / 100);
+									var tot = $("#totalvalue").val();
+									var round = Math.round(tot);
+									if (tot > round) {
+										$("#roundvalue")
+												.val(
+														Math
+																.round((round + 1 - tot) * 100) / 100);
+									} else {
+										$("#roundvalue")
+												.val(
+														Math
+																.round((round - tot) * 100) / 100);
+									}
+
+									$("#grandtotal").val(
+											Number($("#totalvalue").val())
+													+ Number($("#roundvalue")
+															.val()));
+
+									$("#productTable")
+											.append(
+													'<tbody><tr id="trRemove'+ind+'">'
+															+ '<td>'
+															+ k
+															+ '</td>'
+															+ '<td><input readonly="readonly" type="text" name="codevalue" value=\''
+												+ data.productCode
+												+ '\'><input readonly="readonly" type="hidden" name="productId" value=\''
+												+ data.productId
+												+ '\'><input readonly="readonly" type="hidden" name="purchaseProductDetId" value=\''
+															+ $("#salesbarH")
+																	.val()
+															+ '\'></td>'
+															+ '<td><input readonly="readonly" type="text" name="descvalue" value=\''
+												+ data.productDesc
+												+ '\'></td>'
+															+ '<td><input readonly="readonly" type="text" id="qtyVal'
+															+ '" name="qtyvalue" value=\''
+															+ $("#qtyvalue")
+																	.val()
+															+ '\'></td>'
+															+ '<td><input readonly="readonly" type="text" name="mrpQty" value=\''
+															+ $("#mrpQty")
+																	.val()
+															+ '\'></td>'
+															+ '<td><input readonly="readonly" type="text" name="eachtotalvalue" value=\''
+															+ $(
+																	"#eachtotalvalue")
+																	.val()
+															+ '\'></td>'
+															+ '<td>'
+															+ '<a href="#" onclick="removeProduct('
+															+ ind
+															+ ');"><img src="img/cross.png" height="16px" width="16px"></a>'
+															+ '</td>'
+															+ '</tr></tbody>');
+									ind++;
+
+									$("#pCode").val("");
+									$("#salesbar").val("");
+									$("#salesbar").prop("readonly", false);
+									$("#mrp").prop("disabled", true);
+									$("#wsp").prop("disabled", true);
+									$("#qty").prop("readonly", false);
+									$("#qty").val("");
+								} else {
+									alert("no product found");
+								}
+
+							},
+							error : function(a, b, c) {
+								alert('invalid barcode');
+							}
+
+						});
+			}
+		}
+		$(function() {
+			$("#phone").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getCustomerByPh",
+						data : {
+							ph : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.mobile,
+									id : item.id,
+									name : item.name,
+									address : item.address,
+									city : item.city,
+									vat_cst_no : item.vat_cst_no
+								});
+							}));
+						}
+
+					});
+				},
+				change : function(event, ui) {
+					if (ui.item == null) {
+						$("#isExistingCust").val(0);
+						$("#existingCustId").val("");
+						/* $("#custName").val("");
+						$("#addr").val("");
+						$("#city").val("");
+						$("#vatcst").val(""); */
+					} else {
+						$("#isExistingCust").val(1);
+						$("#existingCustId").val(ui.item.id);
+						$("#custName").val(ui.item.name);
+						$("#addr").val(ui.item.address);
+						$("#city").val(ui.item.city);
+						$("#vatcst").val(ui.item.vat_cst_no);
+					}
+				},
+				select : function(event, ui) {
+					if (ui.item != null) {
+						$("#isExistingCust").val(1);
+						$("#existingCustId").val(ui.item.id);
+						$("#custName").val(ui.item.name);
+						$("#addr").val(ui.item.address);
+						$("#city").val(ui.item.city);
+						$("#vatcst").val(ui.item.vat_cst_no);
+					} else {
+						$("#isExistingCust").val(0);
+						$("#existingCustId").val("");
+						$("#custName").val("");
+						$("#addr").val("");
+						$("#city").val("");
+						$("#vatcst").val("");
+					}
+				}
+			});
+		});
+	</script>
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
