@@ -67,7 +67,8 @@ import com.kaanish.util.DateConverter;
 		"/updateVendor", "/purchaseSearchByDate", "/uploadProductImage",
 		"/deleteProductImage", "/jobAssignment", "/jobAssignSearchByDate",
 		"/salesEntry", "/createUserGroup", "/updateUserGroup", "/updateUser",
-		"/goStockView", "/jChallanSearch", "/jobRecieve", "/createNewUser","/goJobDetailShow","/goProView" })
+		"/goStockView", "/jChallanSearch", "/jobRecieve", "/createNewUser",
+		"/goJobDetailShow", "/purchaseView","/goProView" })
 
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
@@ -113,8 +114,6 @@ public class Servlet extends HttpServlet {
 	private Users usr;
 	private SalesProductDetails salesProductDetails;
 
-	
-
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -125,8 +124,8 @@ public class Servlet extends HttpServlet {
 		url = req.getRequestURL().toString();
 		url = url.substring(url.lastIndexOf('/') + 1);
 		httpSession = req.getSession();
-		
-		if(httpSession.getAttribute("user")==null){
+
+		if (httpSession.getAttribute("user") == null) {
 			System.exit(0);
 		}
 
@@ -1235,6 +1234,15 @@ public class Servlet extends HttpServlet {
 				req.setAttribute("purEntryList", purEntryList);
 				break;
 
+			case "purchaseView":
+				page = "purchaseView.jsp";
+
+				req.setAttribute("pId", req.getParameter("pId"));
+
+				msg = "";
+
+				break;
+
 			case "jobAssignment":
 				page = "jobAssign.jsp";
 				jobAssignmentDetails = new JobAssignmentDetails();
@@ -1492,18 +1500,17 @@ public class Servlet extends HttpServlet {
 				msg = "";
 
 				break;
-				/***************job*************show ***************/
+			/*************** job*************show ***************/
 
 			case "goJobDetailShow":
 				page = "jobAssignView.jsp";
-				
-				
+
 				req.setAttribute("joId", req.getParameter("joId"));
 
 				msg = "";
 
 				break;
-				
+
 			/************************ *Stock*MuyltiSearch*************Ami ************/
 
 			case "goStockView":

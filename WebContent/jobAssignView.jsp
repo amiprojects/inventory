@@ -56,7 +56,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#jobs").attr("id", "activeSubMenu");
-		$("#jAssign").attr("style", "color: red;");
+		$("#jSearch").attr("style", "color: red;");
 	});
 </script>
 <link rel="stylesheet" href="css/toast.css" type="text/css" />
