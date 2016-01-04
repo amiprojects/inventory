@@ -256,7 +256,7 @@ public class JsonServlet extends HttpServlet {
 				break;
 			case "checkPcode":
 
-				resp.getWriter().print(ejb.getAllProductByProductCode(req.getParameter("productCode2")));
+				resp.getWriter().print(ejb.getAllProductByProductCode(req.getParameter("productCode4")));
 				break;
 
 			default:
