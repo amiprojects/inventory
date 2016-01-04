@@ -322,9 +322,7 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	/****************************************
-	 * * Product Search By Code
-	 *********************************************/
+	/************************Product detail Search By Code********************************************/
 
 	public List<ProductDetail> getAllProductByProductCode(String code) {
 		TypedQuery<ProductDetail> q = em.createQuery(
@@ -334,10 +332,22 @@ public class Ejb {
 
 		return q.getResultList();
 	}
+	/************************Product Search By Code********************************************/
 
-	/******************************
-	 * * Product Search By Category
-	 *************************************/
+	public ProductDetail getProductByProductCode(String code) {
+		TypedQuery<ProductDetail> q = em.createQuery(
+				"select c from ProductDetail c where UPPER(c.code) = :nm ",
+				ProductDetail.class);
+		q.setParameter("nm", code.toUpperCase() );
+
+		if (q.getResultList().size() > 0) {
+			return q.getResultList().get(0);
+		} else {
+			return null;
+
+	}
+	}
+	/*****************************Product Search By Category************************************/
 
 	public List<ProductDetail> getAllProductByCategory(String cat) {
 		TypedQuery<ProductDetail> q = em
@@ -362,6 +372,8 @@ public class Ejb {
 
 		return q.getResultList();
 	}
+	
+	
 
 	/*************************************************************************************************************************/
 

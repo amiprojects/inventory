@@ -233,6 +233,19 @@
 				alert("please select lot number");
 
 			}
+			else if (!$('#a10').attr("readonly") && $("#a10").val() == "") {
+				alert("Please insert " + $("#sa1").html() + " value");
+			} else if (!$('#a20').attr("readonly") && $("#a20").val() == "") {
+				alert("Please insert " + $("#sa2").html() + " value");
+			} else if (!$('#a30').attr("readonly") && $("#a30").val() == "") {
+				alert("Please insert " + $("#sa3").html() + " value");
+			} else if (!$('#a40').attr("readonly") && $("#a40").val() == "") {
+				alert("Please insert " + $("#sa4").html() + " value");
+			} else if (!$('#a50').attr("readonly") && $("#a50").val() == "") {
+				alert("Please insert " + $("#sa5").html() + " value");
+			} else if (!$('#a60').attr("readonly") && $("#a60").val() == "") {
+				alert("Please insert " + $("#sa6").html() + " value");
+			}
 
 			else {
 				$("#fs").submit();
@@ -664,9 +677,10 @@
 								<form action="#" method="get">
 									<div class="col-md-6">
 										<div>
-											<label for="exampleInputEmail1">Product Code:</label> <input
-												type="text" name="productCode2" id="productCode" required
-												class="form-control"><span class="status"></span>
+											<label for="exampleInputEmail1">Product Code:</label> <input onkeyup="dupliKey();"
+											onchange="dupliChange();"
+												type="text" name="productCode2" id="productCode" required 
+												class="form-control"> <span class="status"></span> 
 										</div>
 									</div>
 									<div class="col-md-6">
@@ -906,12 +920,6 @@
 									}
 								</script>
 
-
-
-
-
-
-
 							</div>
 
 							<div id="divhide">
@@ -1002,7 +1010,7 @@
 												</li>
 											</c:forEach>
 										</ul>
-										<!-- </div> -->
+										
 									</div>
 
 								</div>
@@ -1648,25 +1656,50 @@
 			});
 
 		}
+		
+		function dupliKey() {
+			$.ajax({
+				url:"",
+				dataType:"json",
+				data:{
+					productCode4:$("#productCode")
+				},
+				success:function(data){
+					if(dala.length>0){
+						alert("product code already exist");
+					}
+				}
+			});
+			
+			
+			
+		}
+function dupliChange() {
+			
+			
+			
+			
+		}
+		
+		
 	</script>
-	<script type="text/javascript">
-		$(document)
-				.ready(
-						function() {
-							$(".productCode2")
+	
+	
+	<!-- <script type="text/javascript">
+	function dupliFunc() {
+							$("#productCode")
 									.change(
 											function() {
-												var uname = $(this).val();
-												if (uname.length >= 3) {
+												var productCode2 = $(this).val();
+												if (productCode2.length != 0) {
 													$(".status")
 															.html(
-																	"<img src='images/loading.gif'><font color=gray> Checking availability...</font>");
+																	"<img src='images/loading.GIF'><font color=gray> Checking availability...</font>");
 													$
 															.ajax({
 																type : "POST",
 																url : "checkPcode",
-																data : "productCode2="
-																		+ productCode2,
+																data : {productCode2:$("#productCode")},
 																dataType : "json",
 																success : function(
 																		msg) {
@@ -1681,8 +1714,7 @@
 																						$(
 																								".status")
 																								.html(
-																										msg);
-
+																										msg); 
 																					});
 																}
 															});
@@ -1690,12 +1722,12 @@
 
 													$(".status")
 															.html(
-																	"<font color=red>Username should be <b>3</b> character long.</font>");
+																	"<font color=red>Product code  not null.</font>");
 												}
 
 											});
-						});
-	</script>
+						};
+	</script> -->
 
 
 </body>
