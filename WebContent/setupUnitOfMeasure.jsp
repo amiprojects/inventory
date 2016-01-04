@@ -27,21 +27,20 @@
 <!-- Responsive -->
 <link rel="stylesheet" href="css/toast.css" type="text/css" />
 
-
+<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 
 </head>
 <body>
 	<c:if test="${sessionScope['user']==null}">
 		<c:redirect url="index.jsp" />
 	</c:if>
-	
+
 	<c:if test="${!sessionScope['user'].equals('admin')}">
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
 
-			<c:if
-				test="${page.name.equals('Unit Of Measure')}">
+			<c:if test="${page.name.equals('Unit Of Measure')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
@@ -52,8 +51,8 @@
 			</script>
 		</c:if>
 	</c:if>
-	
-	
+
+
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
@@ -64,21 +63,22 @@
 					<div class="row">
 						<div class="masonary-grids">
 							<div class="col-md-12">
-								 <div class="breadcrumbs" style="height: 50px; text-align: center;">
-									<h3 style="    margin-top: 11px;">Unit Of Measurement</h3>
-												
-											
+								<div class="breadcrumbs"
+									style="height: 50px; text-align: center;">
+									<h3 style="margin-top: 11px;">Unit Of Measurement</h3>
+
+
 								</div>
 
 								<div class="widget-area" style="width: 30%">
 									<form role="form" class="sec" method="get"
 										action="setupUnitOfMeasure.jsp">
 										<div class="form-group">
-											<label for="" class="">Name/Abbreviation : </label> <input type="text"
-												id="searchUOMname" class="form-control" name="SearchName" placeholder="" id=""
-												class="">
+											<label for="" class="">Name/Abbreviation : </label> <input
+												type="text" id="searchUOMname" class="form-control"
+												name="SearchName" placeholder="" id="" class="">
 										</div>
-										
+
 										<input class="btn green btn-default" type="submit"
 											value="Search">
 
@@ -102,7 +102,8 @@
 												<c:set var="count" value="${1}" />
 												<c:forEach
 													items="${param.SearchName.equals(null)?sessionScope['ejb'].getAllQtyUnit():sessionScope['ejb'].getAllQtyUnitByNameOrAbv(param.SearchName)}"
-													var="unit"> <!-- if null then ?work or not null then :work -->
+													var="unit">
+													<!-- if null then ?work or not null then :work -->
 													<tr>
 														<td width="20%">${count}</td>
 														<td width="40%">${unit.name}</td>
@@ -122,7 +123,7 @@
 																		data-dismiss="modal">&times;</button>
 																	<h4 class="modal-title">Select UOM to which UOM is
 																		related</h4>
-																</div> 
+																</div>
 																<form action="addNewConversion" method="post"
 																	id="addNewConversion">
 																	<div class="modal-body">
@@ -198,8 +199,8 @@
 														data-target="#newUOM">New</button></a></li>
 											<!-- <li><a title=""><button type="submit"
 														class="btn btn-info btn-sm">Edit</button></a></li> -->
-											<li><a onclick="deleteUOM();" title=""><input type="submit"
-														class="btn btn-info btn-sm" value="Delete"></a></li>
+											<li><a onclick="deleteUOM();" title=""><input
+													type="submit" class="btn btn-info btn-sm" value="Delete"></a></li>
 										</ul>
 									</div>
 
@@ -381,40 +382,41 @@
 	</div>
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
-	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+
 	<script type="text/javascript" src="js/script.js"></script>
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="js/enscroll.js"></script>
 	<script type="text/javascript" src="js/grid-filter.js"></script>
 
 	<script type="text/javascript">
-	function deleteUOM(){
-		if($("#unitNameId").val()!=""){
-			y=confirm("do yo want to delete the UOM");
-			if(y){
-				$.ajax({
-					type:"post",
-					url:"deleteUOM",
-					data:{id:$("#unitNameId").val()},
-					dataType:"json",
-					success:function(data){
-						if(data.response=="success"){
-							alert('UOM deleted Successfully');
-							window.location="setupUnitOfMeasure.jsp";
-						}else if(data.response=="failed"){
-							alert('you can not delete UOM');
+		function deleteUOM() {
+			if ($("#unitNameId").val() != "") {
+				y = confirm("do yo want to delete the UOM");
+				if (y) {
+					$.ajax({
+						type : "post",
+						url : "deleteUOM",
+						data : {
+							id : $("#unitNameId").val()
+						},
+						dataType : "json",
+						success : function(data) {
+							if (data.response == "success") {
+								alert('UOM deleted Successfully');
+								window.location = "setupUnitOfMeasure.jsp";
+							} else if (data.response == "failed") {
+								alert('you can not delete UOM');
+							}
 						}
-					}
-				});
+					});
+				}
+
+			} else {
+				alert('please select UOM');
 			}
-			
-		}else{
-			alert('please select UOM');
+
 		}
-		
-	}
-	
-	
+
 		var unit1;
 		var unit2;
 

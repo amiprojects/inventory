@@ -35,19 +35,19 @@
 }
 </style>
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 </head>
 <body>
 	<c:if test="${sessionScope['user']==null}">
 		<c:redirect url="index.jsp" />
 	</c:if>
-	
+
 	<c:if test="${!sessionScope['user'].equals('admin')}">
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
 
-			<c:if
-				test="${page.name.equals('Discount')}">
+			<c:if test="${page.name.equals('Discount')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
@@ -67,11 +67,11 @@
 				<div class="row">
 					<div class="masonary-grids">
 
-						 <div class="breadcrumbs" style="height: 50px; text-align: center;">
-									<h3 style=" margin-top: 11px;">Sales Discount</h3>
-												
-											
-								</div>
+						<div class="breadcrumbs" style="height: 50px; text-align: center;">
+							<h3 style="margin-top: 11px;">Sales Discount</h3>
+
+
+						</div>
 
 						<br> <br>
 
@@ -209,7 +209,7 @@
 	</div>
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
-	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+
 	<script type="text/javascript" src="js/script.js"></script>
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="js/enscroll.js"></script>

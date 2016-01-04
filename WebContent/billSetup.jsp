@@ -35,6 +35,7 @@
 }
 </style>
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 </head>
 <body>
 	<c:if test="${sessionScope['user']==null}">
@@ -230,7 +231,7 @@
 
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
-	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+	
 	<script type="text/javascript" src="js/script.js"></script>
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="js/enscroll.js"></script>
