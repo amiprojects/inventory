@@ -126,10 +126,10 @@
 										<thead>
 											<tr>
 												<th>#</th>
-												<th>Purchase challan no.</th>
-												<th>Vendor Name</th>
+												<th>Sales challan no.</th>
+												<th>Customer Name</th>
 												<th>Vendor Bill no.</th>
-												<th>Purchase Date</th>
+												<th>Sales Date</th>
 												<th>Cost</th>
 												<th>Barcode</th>
 											</tr>
@@ -176,8 +176,8 @@
 	<script type="text/javascript" src="js/grid-filter.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$("#purch").attr("id", "activeSubMenu");
-			$("#sPurchSearch").attr("style", "color: red;");
+			$("#sales").attr("id", "activeSubMenu");
+			$("#sSalesSearch").attr("style", "color: red;");
 		});
 	</script>
 	<script src="js/jquery-ui/jquery-ui.js"></script>

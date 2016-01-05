@@ -362,7 +362,9 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	/************************ Product Search By Code ********************************************/
+	
+
+	/************************Product Search By Code********************************************/
 
 	public ProductDetail getProductByProductCode(String code) {
 		TypedQuery<ProductDetail> q = em.createQuery(
@@ -852,12 +854,24 @@ public class Ejb {
 
 	public List<Purchase_Product_Details> getPurchase_Product_DetailsByProId(
 			int id) {
+		List<Purchase_Product_Details> lst=new ArrayList<>();
 		TypedQuery<Purchase_Product_Details> q = em
 				.createQuery(
-						"select s from Purchase_Product_Details s where s.productDetail.id=:Id ORDER BY s.purchase_Entry.purchase_date DESC",
+						"select s from Purchase_Product_Details s where s.productDetail.id=:Id and s.initialInventory=:initialInventory",
 						Purchase_Product_Details.class);
 		q.setParameter("Id", id);
-		return q.getResultList();
+		q.setParameter("initialInventory", true);
+		lst=q.getResultList();
+		
+		TypedQuery<Purchase_Product_Details> q1 = em
+				.createQuery(
+						"select s from Purchase_Product_Details s where s.productDetail.id=:Id and s.initialInventory=:initialInventory ORDER BY s.purchase_Entry.purchase_date DESC",
+						Purchase_Product_Details.class);
+		q1.setParameter("Id", id);
+		q1.setParameter("initialInventory", false);
+		lst.addAll(q1.getResultList());
+		
+		return lst;
 	}
 
 	public List<Purchase_Product_Details> getPurchase_Product_DetailsByPurchaseEntryId(

@@ -22,6 +22,7 @@
 <link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
 <!-- Bootstrap -->
 <link rel="stylesheet" href="css/style.css" type="text/css" />
+
 <!-- Style -->
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
 <!-- Responsive -->
@@ -33,6 +34,10 @@
 	font-size: 12px;
 	letter-spacing: 0.3px;
 	padding-right: 20px;
+}
+
+.head_style {
+	font-size: 17px;
 }
 </style>
 
@@ -46,26 +51,30 @@
 	$(document).ready(function() {
 		$("#sales").attr("id", "activeSubMenu");
 		$("#sSalesReturn").attr("style", "color: red;");
-
+		$("#wspORmrp").val('mrpVal');
+		$("#aDetailsDiv").hide();
 	});
+</script>
+<link rel="stylesheet" href="css/toast.css" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+<script type="text/javascript">
+	if (getUrlVars()['jChallan'] != null) {
+		$('#msg').html("Invalid Challan number.");
+		$('.toast').fadeIn(400).delay(3000).fadeOut(400);
+	}
 </script>
 </head>
 <body>
-
-
-
-<!-- 
-"Replacement" will be done on 21/12/15.....Purchase return will same....as sales return.......after Click.......save A popup will asked to print challan............."
- -->
-
+	<c:if test="${sessionScope['user']==null}">
+		<c:redirect url="index.jsp" />
+	</c:if>
 
 	<c:if test="${!sessionScope['user'].equals('admin')}">
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
 
-			<c:if
-				test="${page.name.equals('Sales Return')}">
+			<c:if test="${page.name.equals('Sales Entry')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
@@ -77,10 +86,15 @@
 		</c:if>
 	</c:if>
 
-
-
-
-
+	<c:if test="${requestScope['purDetIdforPC']!=null}">
+		<script type="text/javascript">
+			var myWindow = window
+					.open(
+							"salesInvoiceForPrint.jsp?id=${requestScope['purDetIdforPC']}",
+							'name', 'width=600,height=400');
+			myWindow.print();
+		</script>
+	</c:if>
 
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
@@ -91,278 +105,465 @@
 				<div class="row">
 					<div class="masonary-grids">
 
-						
+						<div class="breadcrumbs" style="height: 50px; text-align: center;">
+							<h3 style="margin-top: 11px;">Sales Return</h3>
 
-							 <div class="breadcrumbs" style="height: 50px; text-align: center;">
-									<h3 style="    margin-top: 11px;">Sales Return</h3>
-												
-											
-								</div>
-							
+						</div>
 
 
-							<div class="row">
-								<div class="col-md-12">
-									<div class="widget-area">
-										<div class="col-md-4">
-											<p style="font-size: 20px; color: black">
-												<b></b> Enter Sales Challan Number
-											<p>
-										</div>
-										<div class="col-md-8">
-											<input type="text" class="form-control" width="10px"
-												name="cusname">
-										</div>
+						<div class="col-md-12" style="height: 800px;">
+							<form class="sec" action="salesEntry" method="post">
+								<div class="row">
+									<br> <br>
+									<div align="center" class="col-md-12">
 
-									</div>
-								</div>
-
-								<div class="col-md-6">
-									<div class="widget-area" style="height: 290px;">
-										<div style="background-color: lightgrey;">
-											<h3>Bill To:</h3>
-										</div>
-										<table cellspacing="2">
+										<table>
 											<tr>
-												<td>Name :</td>
-												
-											</tr>
-											<tr>
-												<td>&nbsp;</td>
-											</tr>
-											<tr>
-												<td>Address :</td>
-												
-											</tr>
-											<tr>
-												<td>&nbsp;</td>
-											</tr>
-											<tr>
-												<td>City :</td>
-												
-											</tr>
-											<tr>
-												<td>&nbsp;</td>
-											</tr>
-											<tr>
-												<td>Phone No. :</td>
-												
-											</tr>
-											<tr>
-												<td>&nbsp;</td>
-											</tr>
-											<tr>
-												<td>Vat No./CST No. :</td>
-											
+												<td><h4>Enter Sales Challan Id:</h4></td>
+												<td>&nbsp;&nbsp;</td>
+												<td width="380px"><input class="form-control"
+													type="text" id="jChallan" name="jChallan"></td>
+												<td>&nbsp;&nbsp;&nbsp;</td>
+												<td><button type="button" class="btn btn-info btn-sm"
+														onclick="jRec()">Go</button></td>
 											</tr>
 										</table>
+
+
+
+
+
+									</div>
+									<div class="col-md-6">
+										<div class="widget-area"
+											style="height: 270px; padding: 4px 5px;">
+											<div style="background-color: lightgrey; padding: 3px 3px;">
+												<span class="head_style">Bill To:</span>
+											</div>
+											<table>
+												<tr>
+													<td>&nbsp;</td>
+												</tr>
+												<tr>
+													<td>Customer Name :</td>
+													<td>&nbsp;</td>
+													<td><input type="text" name="custName" id="custName"
+														readonly="readonly" class="form-control"
+														style="align: center;"></td>
+												</tr>
+												<tr>
+													<td>&nbsp;</td>
+												</tr>
+												<tr>
+													<td>Customer Details :</td>
+													<td>&nbsp;</td>
+													<td><input type="text" name="addr" id="addr"
+														readonly="readonly" class="form-control"
+														style="length: 40px;" style="align:center;"></td>
+												</tr>
+												<tr>
+													<td>&nbsp;</td>
+												</tr>
+												<tr>
+													<td>Agent Name :</td>
+													<td>&nbsp;</td>
+													<td><input type="text" name="city" id="city"
+														readonly="readonly" class="form-control"
+														style="length: 40px;"></td>
+												</tr>
+												<tr>
+													<td>&nbsp;</td>
+												</tr>
+												<tr>
+													<td>Agent Details :</td>
+													<td>&nbsp;</td>
+													<td><input type="number" name="phone" id="phone"
+														readonly="readonly" class="form-control"
+														style="length: 40px;"></input></td>
+												</tr>
+
+
+											</table>
+										</div>
+									</div>
+
+									<div class="col-md-6">
+										<div class="widget-area"
+											style="height: 270px; padding: 5px 3px;">
+											<div style="background-color: lightgrey; padding: 3px 3px;"">
+												<span class="head_style">Invoice Details:</span>
+											</div>
+
+											<br> <br>
+											<div class="form-group">
+												<label style="font-size: 15px" class="font">Sales
+													Challan ID :</label> <input class="form-control" type="text"
+													name="salesDate" id="" readonly="readonly">
+
+											</div>
+
+
+
+											<div class="form-group">
+												<label style="font-size: 15px" class="font">Date :</label> <input
+													class="form-control" type="text" name="salesDate" id=""
+													readonly="readonly">
+
+											</div>
+										</div>
 									</div>
 								</div>
 
 
-								<div class="col-md-6">
-									<div class="widget-area" style="height: 290px;">
-										<div style="background-color: lightgrey;">
-											<h3>Invoice Details:</h3>
+								<div class="widget-area">
+									<table class="table table-striped table-bordered"
+										id="productTable">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>Product code</th>
+												<th>Product Description</th>
+												<th>Qty.</th>
+												<th id="mrpWSP">MRP/Qty</th>
+												<th>Total Price</th>
+												<th>Quantity Receive</th>
+
+
+											</tr>
+										</thead>
+										<tbody style="display: none;">
+											<!-- <tbody> -->
+											<tr>
+												<td>0</td>
+												<td><input type="text" id="codevalue"
+													readonly="readonly"><input type="text"
+													id="productId" readonly="readonly"></td>
+													
+												<td><input type="text" id="descvalue"
+													readonly="readonly"></td>
+													
+												<td><input type="text" id="qtyvalue"
+													readonly="readonly" value="0"></td>
+													
+												<td><input type="hidden" id="wspORmrp" name="wspORmrp">
+												
+													<input type="text" id="mrpQty" readonly="readonly"></td>
+												<td><input type="text" id="eachtotalvalue"
+													readonly="readonly"></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+
+								<div style="width: 40%; float: right;">
+									<input type="hidden" id="totalvalue" name="totalvalue"
+										value="0">
+									<table id="stream_table"
+										class="table table-striped table-bordered">
+										<thead>
+											<tr>
+												<td colspan="2" id="sub">Sub Total :</td>
+												<td><input type="number" class="form-control"
+													readonly="readonly" id="subtotalvalue" name="subtotalvalue"
+													value="0"></td>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td colspan="2">Discount (%) :</td>
+												<td><input type="number" class="form-control"
+													id="discount" name="discount" placeholder=""
+													onkeyup="discountF();"></td>
+											</tr>
+										</tbody>
+
+										<tbody>
+											<tr>
+												<td colspan="2" id="disc">Discount Value:</td>
+												<td><input type="number" class="form-control"
+													readonly="readonly" id="discountValue" name="discountValue"
+													value="0"></td>
+											</tr>
+
+										</tbody>
+										<tbody>
+											<tr>
+												<td><select class="form-control" id="taxGroup"
+													name="taxGroup" onchange="selectedTaxGroup();">
+														<option value="0">TAX type</option>
+														<c:forEach
+															items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
+															var="taxTypeGroup">
+															<option value="${taxTypeGroup.id}">${taxTypeGroup.name}</option>
+														</c:forEach>
+												</select></td>
+												<td>%</td>
+												<td><input type="text" class="form-control"
+													readonly="readonly" value="0" id="taxTot"></td>
+											</tr>
+										</tbody>
+										<tbody>
+											<tr>
+												<td colspan="2">Tax Amount :</td>
+												<td><input type="text" class="form-control"
+													readonly="readonly" value="0" id="taxAmount"></td>
+											</tr>
+										</tbody>
+										<tbody>
+											<tr>
+												<td colspan="2" id="trans">Transport charge :</td>
+												<td><input type="number" class="form-control" value="0"
+													id="transcharge" name="transcharge"
+													onkeyup="transchargeF();"></td>
+											</tr>
+										</tbody>
+
+										<tbody>
+											<tr>
+												<td colspan="2" id="sur">Surcharge :</td>
+												<td><input type="number" class="form-control" value="0"
+													id="surcharge" name="surcharge" onkeyup="surchargeF();"></td>
+											</tr>
+										</tbody>
+										<tbody>
+											<tr>
+												<td colspan="2" id="round">Round Of :</td>
+												<td><input type="number" class="form-control"
+													placeholder="" readonly="readonly" id="roundvalue"
+													name="roundvalue" value="0"></td>
+											</tr>
+										</tbody>
+										<thead>
+											<tr>
+												<td colspan="2" id="grand">Grand Total :</td>
+												<td><input type="number" class="form-control"
+													placeholder="0" readonly="readonly" id="grandtotal"
+													name="grandtotal"></td>
+											</tr>
+										</thead>
+									</table>
+									<div style="float: right;">
+										<input type="button" onclick="cancelF();"
+											class="btn btn-danger small" value="Cancel"
+											data-toggle="modal"> <input type="button"
+											class="btn btn-info btn-sm" data-toggle="modal" value="Save"
+											onclick="paymentDate();">
+										<div id="saveSales" class="modal fade" role="dialog"
+											style="top: 25px;">
+											<div class="modal-dialog modal-lg">
+												<div class="modal-content">
+													<div class="modal-header">
+														<button type="button" class="close" data-dismiss="modal"
+															onclick="closePayment();">&times;</button>
+														<h4 class="modal-title">Payment Details</h4>
+													</div>
+													<div class="modal-body">
+														<div class="row">
+															<div class="col-md-6">
+																<div class="widget-area">
+																	<div class="breadcrumbs">
+																		<ul>
+																			<li><a title="">Select Payment status : </a></li>
+																		</ul>
+																	</div>
+																	<br> <br> <br>
+																	<div class="row">
+																		<div class="col-md-5">Payment status :</div>
+																		<div class="col-md-7">
+																			<div class="sec">
+
+																				<select class="form-control" id="pstatus"
+																					name="pstatus" onchange="pStatusDiv()">
+																					<option value="-" selected="selected">---</option>
+																					<c:forEach
+																						items="${sessionScope['ejb'].getAllPaymentStatus()}"
+																						var="payStatus">
+																						<option value="${payStatus.status}">${payStatus.status}</option>
+																					</c:forEach>
+																				</select>
+																			</div>
+																		</div>
+																	</div>
+																	<div id="payDetail">
+																		<div class="breadcrumbs">
+																			<ul>
+																				<li><a title="">Payment Details : </a></li>
+																			</ul>
+																		</div>
+																		<br> <br> <br>
+																		<div class="row">
+																			<div class="sec" id="pTypeDiv">
+																				<div class="col-md-5">Payment type :</div>
+																				<div class="col-md-7">
+																					<select class="form-control" id="pType"
+																						name="pType" onchange="pTypeFunc()">
+																						<option value="-" selected="selected">---</option>
+																						<c:forEach
+																							items="${sessionScope['ejb'].getAllPaymentType()}"
+																							var="payType">
+																							<option value="${payType.getType()}">${payType.getType()}</option>
+																						</c:forEach>
+																					</select>
+																				</div>
+																			</div>
+																			<div id="pDate">
+																				<div class="col-md-5">Payment Date :</div>
+																				<div class="col-md-7">
+																					<input type="text" id="datepicker2"
+																						class="form-control" readonly="readonly">
+																				</div>
+																			</div>
+																			<div id="pAmount">
+																				<div class="col-md-5">Full Amount :</div>
+																				<div class="col-md-7">
+																					<input type="text" class="form-control"
+																						readonly="readonly" id="spAmount" name="spAmount">
+																				</div>
+																			</div>
+																			<div id="pPayAmount">
+																				<div class="col-md-5">Payment Amount :</div>
+																				<div class="col-md-7">
+																					<input type="text" class="form-control" value="0"
+																						id="spPaymentAmount" name="spPaymentAmount"
+																						onkeyup="spPaymentAmountFunc();">
+																				</div>
+																			</div>
+																			<div id="pDueAmount">
+																				<div class="col-md-5">Due Amount :</div>
+																				<div class="col-md-7">
+																					<input type="text" class="form-control"
+																						readonly="readonly" id="spDueAmount"
+																						name="spDueAmount">
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+
+															<div class="col-md-6" style="float: right;"
+																id="description">
+																<div class="widget-area">
+																	<div class="breadcrumbs">
+																		<ul>
+																			<li><a title="">Provide Description : </a></li>
+																		</ul>
+																	</div>
+																	<br> <br> <br>
+																	<div class="row">
+																		<div class="col-md-5">Description :</div>
+																		<div class="col-md-7">
+																			<textarea rows="" cols="" class="form-control"
+																				id="desc" name="desc"></textarea>
+																		</div>
+																	</div>
+																	<br> <input type="hidden" name="isAgent"
+																		id="isAgent">
+																	<div class="breadcrumbs">
+																		<button type="button" class="btn green pull-right"
+																			onclick="submit();">Save</button>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="modal-footer">
+														<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+													</div>
+												</div>
+											</div>
 										</div>
-
-
-										<div class="form-group">
-
-											<label style="font-size: 15px" class="font">Sales
-												challan no. :</label>
-											<%-- <c:set var="fy"
-												value="${sessionScope['ejb'].getCurrentFinancialYear()}" />
-											<c:set var="cno"
-												value="${sessionScope['ejb'].getLastSalesChallanNumber()+1}" />
-											<c:set var="csuf"
-												value="${sessionScope['ejb'].getLastSalesChallanSuffix()+1}" />
-											<c:set var="suf" value="INV" />
-											<c:set var="bs"
-												value="${sessionScope['ejb'].getLastBillSetupBySufix(suf)}" />
-											<fmt:formatNumber value="${cno}" var="lastChNo"
-												minIntegerDigits="4" groupingUsed="false" />
-											<fmt:formatNumber value="${csuf}" var="lastSuf"
-												minIntegerDigits="3" groupingUsed="false" />
-											<fmt:formatDate
-												value="${sessionScope['ejb'].getCurrentDateTime()}"
-												pattern="MM" var="yr" /> --%>
-											<input readonly="readonly" type="text" placeholder=""
-												name="challanNumber" class="form-control" value="">
-											<input type="hidden" name="challanNo" value="" id="challanNo">
-											<input type="hidden" name="cha\llanSuffix" value="">
-										</div>
-
-
-										<div class="form-group">
-											<label style="font-size: 15px" class="font">Date :</label> <input
-												class="form-control" type="text" name="date" id="datepicker"
-												readonly="readonly">
-
-										</div>
+										<!-- <button type="button" class="btn btn-info btn-lg"
+											data-toggle="modal" data-target="#" id="save">Save</button> -->
 									</div>
 								</div>
-							</div>
-
-							<div class="widget-area">
-								<b>Replaceable</b>&nbsp;&nbsp;&nbsp;<input value="ji"
-									id="replace" type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-								<b>Quantity :</b> <input type="text" name="qty" id="input1"
-									disabled="disabled" style="width: 70px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-								<b>Product :</b> <input type="text" name="descriptionName"
-									disabled="disabled" id="input2"> &nbsp; &nbsp; &nbsp;<b>Product
-									with Barcode</b> <input type="text" disabled="disabled" id="input3"
-									name="salesbar">
-
-
-
-							</div>
-
-
-							<div class="widget-area">
-								<table id="stream_table"
-									class="table table-striped table-bordered">
-									<thead>
-										<tr>
-											<th id="serial">#</th>
-											<th id="prodcode">Product code</th>
-											<th id="desc">Product Description</th>
-											<th id="desc">Quantity</th>
-											<th id="perqty">MRP/Qty</th>
-											<th id="total">Total</th>
-											<th id="total">Returning Quantity</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td><input type="checkbox"></td>
-											<td>..</td>
-											<td>...></td>
-											<td></td>
-											<td>..</td>
-											<td>..</td>
-											<td>..</td>
-
-
-
-										</tr>
-
-
-										<tr>
-											<td><input type="checkbox"></td>
-											<td>..</td>
-											<td>...></td>
-											<td></td>
-											<td>..</td>
-											<td>..</td>
-											<td>..</td>
-
-
-
-										</tr>
-										<tr>
-											<td><input type="checkbox"></td>
-											<td>..</td>
-											<td>...></td>
-											<td></td>
-											<td>..</td>
-											<td>..</td>
-											<td>..</td>
-
-
-
-										</tr>
-									</tbody>
-								</table>
-								
-								<button style="float: right;" class="btn btn-default small" type="button">Cash</button>&nbsp;&nbsp;
-							<a href="salesSalesEntry.jsp">	<button style="float: right;" class="btn btn-default small" type="button">Replace</button></a>
-							</div>
-
-							<div style="width: 40%; float: right;">
-								<table id="stream_table"
-									class="table table-striped table-bordered">
-									<thead>
-										<tr>
-											<td colspan="2" id="round">Round Of :</td>
-											<td><input type="number" class="form-control"
-												placeholder="" readonly="readonly" id="roundvalue"></td>
-										</tr>
-										<tr>
-											<td colspan="2" id="sub">Sub Total :</td>
-											<td><input type="number" class="form-control"
-												placeholder="0.0" readonly="readonly" id="subvalue"></td>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td colspan="2">Discount :<br> <input type="radio"
-												class="chk1" name="dis" id="percent" style="display: none;"><label
-												for="percent" style="top: -2px;"></label>% <input
-												type="radio" class="chk1" name="dis" id="flat"
-												style="display: none;"><label for="flat"
-												style="top: 7px;">&nbsp;</label>FLAT
-											</td>
-											<td><input type="number" class="form-control"
-												placeholder="" readonly="readonly"></td>
-										</tr>
-									</tbody>
-
-									<tbody>
-										<tr>
-											<td colspan="2" id="disc">Discount Value:</td>
-											<td><input type="number" class="form-control"
-												readonly="readonly" id="discount"></td>
-										</tr>
-
-									</tbody>
-									<tbody>
-										<tr>
-											<td colspan="2" id="trans">Transport charge :</td>
-											<td><input type="number" class="form-control"
-												id="transcharge"></td>
-										</tr>
-									</tbody>
-
-									<tbody>
-										<tr>
-											<td colspan="2" id="sur">Surcharge :</td>
-											<td><input type="number" class="form-control"
-												id="surcharge"></td>
-										</tr>
-									</tbody>
-
-									<thead>
-										<tr>
-											<td colspan="2" id="grand">Grand Total :</td>
-											<td><input type="number" class="form-control"
-												placeholder="0.0" readonly="readonly" id="grandtotal"></td>
-										</tr>
-									</thead>
-								</table>
-								<div style="float: right;">
-									<button type="button" class="btn btn-info btn-lg"
-										data-toggle="modal" data-target="#savePurchase" id="save">Save</button>
-								</div>
-							</div>
+							</form>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
+	<div id="purchaseDetails" class="modal fade" role="dialog"
+		style="top: 25px;">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						onclick="closeModal();">&times;</button>
+					<h4 class="modal-title">Purchase Details</h4>
+				</div>
+				<div class="modal-body">
+					<table id="stream_table" width="100%">
+						<thead>
+							<tr>
+								<th>Product code :</th>
+								<td colspan="2"><input type="text" readonly="readonly"
+									id="pCodeModal" class="form-control"></td>
+							</tr>
+							<tr>
+								<th>Description :</th>
+								<td colspan="2"><input type="text" readonly="readonly"
+									id="pDescModal" class="form-control"></td>
+							</tr>
+						</thead>
+					</table>
+					<table id="purchaseDetailsTable" class="table">
+						<thead>
+							<tr>
+								<th>Purchase Date</th>
+								<th>Vendor name</th>
+								<th>Lot No.</th>
+								<th>MRP</th>
+								<th>WSP</th>
+								<th>Remaining Qty.</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+				</div>
+			</div>
 
-	
-	<script>
-		$(function() {
-			$("#datepicker").datepicker({
-				dateFormat : "dd-mm-yy",
-				maxDate : 0
-			});
-		});
-	</script>
+		</div>
+	</div>
+	<div id="cancelOrNot" class="modal fade" role="dialog"
+		style="top: 25px;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<!-- <h4 class="modal-title">Modal Header</h4> -->
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="widget-area">
+							<div class="row">
+								<span>Do you want to cancel?</span>
+							</div>
+							<br>
+							<div class="row">
+								<button type="button" class="btn btn-success medium" id="yesP">Yes</button>
+								<button type="button" class="btn btn-danger medium" id="noP">No</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+				</div>
+			</div>
 
+		</div>
+	</div>
 
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
@@ -374,22 +575,20 @@
 
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 
-
-	<script type="text/javascript">
-		$('#replace').click(function() {
-			if ($('#replace').is(':checked')) {
-
-				$("#input1").prop("disabled", false);
-				$("#input2").prop("disabled", false);
-				$("#input3").prop("disabled", false);
+	<script>
+		$("input:radio[name=saleAt]").click(function() {
+			var value = $(this).val();
+			//alert(value);
+			if (value == "mrp") {
+				$("#mrpWSP").html("MRP/Qty");
+				$("#wspORmrp").val('mrpVal');
 			} else {
-
-				$("#input1").prop("disabled", true);
-				$("#input2").prop("disabled", true);
-				$("#input3").prop("disabled", true);
+				$("#mrpWSP").html("WSP/Qty");
+				$("#wspORmrp").val('wspVal');
 			}
 		});
 	</script>
+
 
 
 </body>

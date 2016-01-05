@@ -114,7 +114,6 @@
 		}
 	}
 
-	
 	function prevF() {
 
 		$("#finish").prop("disabled", true);
@@ -131,7 +130,6 @@
 		}
 	}
 
-	
 	function submitSumary() {
 
 		if ($("#productCode").val() == 0) {
@@ -160,8 +158,7 @@
 			} else if ($("#lotnumberS").val() == 0) {
 				alert("please select lot number");
 
-			}
-			else if (!$('#a10').attr("disabled") && $("#a10").val() == "") {
+			} else if (!$('#a10').attr("disabled") && $("#a10").val() == "") {
 				alert("Please insert " + $("#sa1").html() + " value");
 			} else if (!$('#a20').attr("disabled") && $("#a20").val() == "") {
 				alert("Please insert " + $("#sa2").html() + " value");
@@ -248,22 +245,19 @@
 								<div class="widget-area" style="width: 40%; height: 536px;">
 									<!-- .........*****************************............ PRODUCT SEARCH PANAEL............***************************************-->
 									<div class="form-group">
-											<form action="goProView" method="post">
-												<label for="" class="">Product Code: </label> <input
-													type="text" id="prodcode" name="pCodeSearch"
-													class="form-control"> <label class="">Product
-													Description: </label> <input type="text" id="prodesc"
-													name="pDesSearch" class="form-control"> <label
-													class="">Category: </label> <input type="text" id="deptcat"
-													name="pCatSearch" class="form-control">
-
-												
-												<br> <input class="btn green btn-default" type="submit"
-													value="Search"> <a href="materialSearch.jsp"> <input
-													class="btn green btn-default" type="button"
-													value="Show All"></a>
-											</form>
-										</div>
+										<form action="goProView" method="post">
+											<label for="" class="">Product Code: </label> <input
+												type="text" id="prodcode" name="pCodeSearch"
+												class="form-control"> <label class="">Product
+												Description: </label> <input type="text" id="prodesc"
+												name="pDesSearch" class="form-control"> <label
+												class="">Category: </label> <input type="text" id="deptcat"
+												name="pCatSearch" class="form-control"> <br> <input
+												class="btn green btn-default" type="submit" value="Search">
+											<a href="materialSearch.jsp"> <input
+												class="btn green btn-default" type="button" value="Show All"></a>
+										</form>
+									</div>
 
 									<!-- ************************************************endSearch*************************************************************** -->
 									<br> <br>
@@ -273,6 +267,7 @@
 											<th align="center">#</th>
 											<th align="center">Product Code</th>
 											<th align="right">Description</th>
+											<th align="right">Category</th>
 											<th align="right">view</th>
 										</tr>
 									</table>
@@ -280,15 +275,16 @@
 										style="overflow-y: scroll; overflow-x: scroll; height: 169px; border: 1px;">
 										<table class="table">
 											<c:set var="countt" value="${1}" />
-											
-												<c:forEach
-														items="${sessionScope['ejb'].getAllProductDetail()}"
-														var="productt">
+
+											<c:forEach
+												items="${sessionScope['ejb'].getAllProductDetail()}"
+												var="productt">
 
 												<tr>
 													<td align="left">${countt}</td>
 													<td align="left">${productt.code}</td>
 													<td align="center">${productt.description}</td>
+													<td align="center">${productt.category.name}</td>
 													<td align="center"><a href="#" id="abcdef"
 														onclick="viewProduct('${productt.id}');"> <img
 															alt="click to view" src="images/eye.png" height="20"></a></td>
@@ -320,7 +316,7 @@
 										<li class="active"><a data-toggle="tab" href="#general">General</a></li>
 										<li><a data-toggle="tab" href="#details">Details</a></li>
 										<li><a data-toggle="tab" href="#Custom">Attribute</a></li>
-										<li><a data-toggle="tab" href="#inventory">Inventory</a></li>
+										<li><a data-toggle="tab" href="#inventory">Pricing</a></li>
 									</ul>
 									<br>
 									<div class="tab-content">
@@ -438,23 +434,13 @@
 												<label>Universal Product Code:</label> <br> <input
 													readonly type="text" id="upcupc" class="form-control">
 												<br> <br>
-
-
-
-
 												<h4>
 													Is Saleable &nbsp; &nbsp;<input disabled type="checkbox"
 														id="salsal">
 												</h4>
 											</div>
-
-
-
 										</div>
-
-
 										<div id="inventory" class="tab-pane fade ">
-
 											<table>
 
 												<tr>
@@ -595,9 +581,10 @@
 								<form action="#" method="get">
 									<div class="col-md-6">
 										<div>
-											<label for="exampleInputEmail1">Product Code:</label> <input 
-												type="text" name="productCode2" id="productCode" required 
-												class="form-control"> 
+											<label for="exampleInputEmail1">Product Code:</label> <input
+												type="text" name="productCode2" id="productCode" required
+												onkeyup="codeKeyUp();" onchange="codeChange();"
+												class="form-control">
 										</div>
 									</div>
 									<div class="col-md-6">
@@ -626,8 +613,6 @@
 													var="qqty">
 													<option value="${qqty.id}">${qqty.name}</option>
 												</c:forEach>
-
-
 											</select>
 										</div>
 									</div>
@@ -763,37 +748,35 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="" class="font">Maximum Retail Price :</label> <input
-											type="number" name="mrp" placeholder="" id="mrpO"
-											onkeyup="mrpF()"
-											class="form-control">
+											type="text" name="mrp" placeholder="" id="mrpO"
+											onkeyup="mrpF()" class="form-control">
 									</div>
 									<div class="form-group">
 										<label for="" class="font">Wholesale Price :</label> <input
-											type="number" name="wsp" 
-											onkeyup="wspF()"
-											placeholder="" id="wspO" class="form-control">
+											type="text" name="wsp" onkeyup="wspF()" placeholder=""
+											id="wspO" class="form-control">
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="" class="font">Quantity:</label> <input
-											name="quantity" type="number" id="quantity"
+											name="quantity" type="text" pattern="\d*" id="quantity"
 											onkeyup="setLimit()" class="form-control">
 									</div>
 
 									<div class="form-group">
 										<label for="" class="font">Per Unit Cost:</label> <input
-											 name="unitCost" type="number"
-											placeholder="" id="ucO"
-											onkeyup="rateF()"
-											class="form-control">
+											name="unitCost" type="text" placeholder="" id="ucO"
+											onkeyup="rateF()" class="form-control">
 
 									</div>
 
 								</div>
 
-						
+
 							</div>
+
+
 
 							<div id="divhide">
 
@@ -852,7 +835,7 @@
 									<div class="tree-list"
 										style="overflow-y: scroll; overflow-y: scroll; height: 300px">
 
-										<!-- Listing directory ZendX from ZendFramework library -->
+
 
 										<ul id="tree">
 											<c:forEach items="${sessionScope['ejb'].getAllDepartments()}"
@@ -883,7 +866,7 @@
 												</li>
 											</c:forEach>
 										</ul>
-										
+
 									</div>
 
 								</div>
@@ -1244,7 +1227,7 @@
 				<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
 			</div>
 		</div>
-
+<input type="hidden" id="pcodeCheck">
 	</div>
 
 	<!-- Script -->
@@ -1275,6 +1258,39 @@
 	<script type="text/javascript" src="js/grid-filter.js"></script>
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 	<script type="text/javascript" src="js/abixTreeList.min.js"></script>
+	<script src="js/numericInput.min.js"></script>
+	
+	
+	
+		<script type="text/javascript">
+	function codeKeyUp(){
+		$("#pcodeCheck").val("");
+		$.ajax({
+			url:"checkPcode",
+			dataType:"json",
+			data:{productCode4:$("#productCode").val()},
+			success:function(data){
+			if(data.code!=""){
+				$("#pcodeCheck").val(data.code);
+			}
+		}
+			
+		});
+		
+		
+	}
+	
+	function codeChange(){
+		if($("#pcodeCheck").val()!=""){
+			alert("this product code already exist.");
+			$("#pcodeCheck").val("");
+			$("#productCode").val("");
+		}
+	}	
+	
+	
+	</script>
+
 	<script>
 		$(document).ready(function() {
 			$('#tree').abixTreeList();
@@ -1529,55 +1545,115 @@
 			});
 
 		}
-		
-		</script>
+	</script>
 	<!-- 	*********************************************wsp mrp cost****************************************** -->
 	<script type="text/javascript">
 		function rateF() {
-			
-				if ($("#mrpO").val() == "") {
-					alert("Please insert MRP first...");
-					$("#ucO").val("");
-				} else if ($("#wspO").val() == "") {
-					alert("Please insert WSP first...");
-					$("#ucO").val("");
-				} else if ($("#ucO").val() > $("#wspO").val()) {
-					alert("Rate should be less than or equals to WSP.");
-					$("#ucO").val("");
-				} else if ($("#ucO").val() > $("#mrpO").val()) {
-					alert("Rate should be less than or equals to MRP.");
-					$("#ucO").val("");
-				}
-			}
-	
-		function wspF() {
-			
-				if ($("#mrpO").val() == "") {
-					alert("Please insert MRP first...");
-					$("#wspO").val("");
-				} else if ($("#ucO").val() > $("#wspO").val()) {
-					alert("Rate should be less than or equals to WSP.");
-					$("#wspO").val("");
-				} else if ($("#wspO").val() > $("#mrpO").val()) {
-					alert("WSP should be less than or equals to MRP.");
-					$("#wspO").val("");
-				}
-			}
-	
-		function mrpF() {
-		
-				if ($("#ucO").val() > $("#mrpO").val()) {
-					alert("Rate should be less than or equals to MRP.");
-					$("#mrpO").val("");
-				} else if ($("#wspO").val() > $("#mrpO").val()) {
-					alert("WSP should be less than or equals to MRP.");
-					$("#mrpO").val("");
-				}
-			}
-	
-		
-		</script>
 
+			if ($("#mrpO").val() == "") {
+				alert("Please insert MRP first...");
+				$("#ucO").val("");
+			} else if ($("#wspO").val() == "") {
+				alert("Please insert WSP first...");
+				$("#ucO").val("");
+			} else if ($("#ucO").val() > $("#wspO").val()) {
+				alert("Rate should be less than or equals to WSP.");
+				$("#ucO").val("");
+			} else if ($("#ucO").val() > $("#mrpO").val()) {
+				alert("Rate should be less than or equals to MRP.");
+				$("#ucO").val("");
+			}
+		}
+
+		function wspF() {
+
+			if ($("#mrpO").val() == "") {
+				alert("Please insert MRP first...");
+				$("#wspO").val("");
+			} else if ($("#ucO").val() > $("#wspO").val()) {
+				alert("Rate should be less than or equals to WSP.");
+				$("#wspO").val("");
+			} else if ($("#wspO").val() > $("#mrpO").val()) {
+				alert("WSP should be less than or equals to MRP.");
+				$("#wspO").val("");
+			}
+		}
+
+		function mrpF() {
+
+			if ($("#ucO").val() > $("#mrpO").val()) {
+				alert("Rate should be less than or equals to MRP.");
+				$("#mrpO").val("");
+			} else if ($("#wspO").val() > $("#mrpO").val()) {
+				alert("WSP should be less than or equals to MRP.");
+				$("#mrpO").val("");
+			}
+		}
+	</script>
+	<!-- 	*********************************************Numeric Testing****************************************** -->
+
+	<script>
+		$(function() {
+
+			$("#quantity").numericInput({
+
+				allowFloat : false, // Accpets positive numbers (floating point)
+
+				allowNegative : false,
+			// Accpets positive or negative integer
+
+			});
+
+		});
+	</script>
+	
+	<script>
+		$(function() {
+
+			$("#mrpO").numericInput({
+
+				allowFloat : true, // Accpets positive numbers (floating point)
+
+				allowNegative : false,
+			// Accpets positive or negative integer
+
+			});
+
+		});
+	</script>
+	<script>
+		$(function() {
+
+			$("#wspO").numericInput({
+
+				allowFloat : true, // Accpets positive numbers (floating point)
+
+				allowNegative : false,
+			// Accpets positive or negative integer
+
+			});
+
+		});
+	</script>
+	<script>
+		$(function() {
+
+			$("#ucO").numericInput({
+
+				allowFloat : true, // Accpets positive numbers (floating point)
+
+				allowNegative : false,
+			// Accpets positive or negative integer
+
+			});
+
+		});
+	</script>
+	<!-- 	*********************************************************************************************************** -->
+
+	
+	
+	
 </body>
 
 </html>
