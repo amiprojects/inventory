@@ -91,203 +91,223 @@
 
 							</div>
 							<div class="col-md-12">
-								<form role="form" class="sec" method="post" id="purchaseForm"
-									action="">
-									<div class="widget-area">
-										<div class="col-md-6">
-											<div class="col-md-12">
-												&nbsp; &nbsp; &nbsp; <b class="font">Vendor Type :</b> <input
-													type="text" class="form-control" readonly="readonly"
-													name="vendorType" id="vendorType"
-													value="${purchaseSearchView.vendor.vendorType.type}">
-											</div>
-											<div class="col-md-12">
-												&nbsp; &nbsp; &nbsp; <b class="font">Vendor Name :</b> <input
-													type="text" class="form-control" id="vName" name="vName"
-													readonly="readonly"
-													value="${purchaseSearchView.vendor.name}">
-											</div>
-											<div class="col-md-12">
-												&nbsp; &nbsp; &nbsp; <b class="font">Vendor Details :</b>
-												<textarea rows="5" cols="" id="vDetail" class="form-control"
-													readonly="readonly">
+								<div class="widget-area">
+									<div class="col-md-6">
+										<div class="col-md-12">
+											&nbsp; &nbsp; &nbsp; <b class="font">Vendor Type :</b> <input
+												type="text" class="form-control" readonly="readonly"
+												name="vendorType" id="vendorType"
+												value="${purchaseSearchView.vendor.vendorType.type}">
+										</div>
+										<div class="col-md-12">
+											&nbsp; &nbsp; &nbsp; <b class="font">Vendor Name :</b> <input
+												type="text" class="form-control" id="vName" name="vName"
+												readonly="readonly"
+												value="${purchaseSearchView.vendor.name}">
+										</div>
+										<div class="col-md-12">
+											&nbsp; &nbsp; &nbsp; <b class="font">Vendor Details :</b>
+											<textarea rows="5" cols="" id="vDetail" class="form-control"
+												readonly="readonly">
 													Address : 
 														&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;${purchaseSearchView.vendor.address}
 													Ph1: ${purchaseSearchView.vendor.ph1}
 													Ph2: ${purchaseSearchView.vendor.ph2}
 													</textarea>
 
-											</div>
-											<div class="col-md-12">
-												<c:choose>
-													<c:when test="${purchaseSearchView.agentId==0}">
-														<input type="checkbox" id="agent" name="agent"
-															disabled="disabled">&nbsp;<span>Via Agent</span>
-													</c:when>
-													<c:otherwise>
-														<input type="checkbox" id="agent" name="agent"
-															disabled="disabled" checked="checked">&nbsp;<span>Via
-															Agent</span>
-													</c:otherwise>
-												</c:choose>
-											</div>
-											<div class="col-md-12" id="aNameDiv">
-												<label for="" class="font">Agent Name:</label>
-												<c:choose>
-													<c:when test="${purchaseSearchView.agentId!=0}">
-														<input class="form-control" type="text"
-															class="form-control" name="agentName" id="agentName"
-															readonly="readonly"
-															value="${sessionScope['ejb'].getVendorById(purchaseSearchView.agentId).getName()}">
-													</c:when>
-													<c:otherwise>
-														<input class="form-control" type="text"
-															class="form-control" name="agentName" id="agentName"
-															readonly="readonly">
-													</c:otherwise>
-												</c:choose>
-											</div>
 										</div>
-										<div class="col-md-6">
-											<div class="form-group">
-												<label for="" class="font">Vendor Bill no :</label> <input
-													type="text" placeholder="" id="vendorBillNo"
-													class="form-control" name="vendorBillNo"
-													readonly="readonly"
-													value="${purchaseSearchView.vendor_bill_no}">
-											</div>
-											<div class="form-group">
-												<label for="" class="font">Purchase challan no. :</label> <input
-													readonly="readonly" type="text" placeholder=""
-													name="challanNumber" class="form-control"
-													value="${purchaseSearchView.challanNumber}">
-											</div>
-											<div class="form-group">
-												<label for="" class="font">Purchase Date :</label> <input
-													type="text" id="datepicker" class="form-control"
-													name="purchaseDate" required="required" readonly="readonly"
-													value="<fmt:formatDate
+										<div class="col-md-12">
+											<c:choose>
+												<c:when test="${purchaseSearchView.agentId==0}">
+													<input type="checkbox" id="agent" name="agent"
+														disabled="disabled">&nbsp;<span>Via Agent</span>
+												</c:when>
+												<c:otherwise>
+													<input type="checkbox" id="agent" name="agent"
+														disabled="disabled" checked="checked">&nbsp;<span>Via
+														Agent</span>
+												</c:otherwise>
+											</c:choose>
+										</div>
+										<div class="col-md-12" id="aNameDiv">
+											<label for="" class="font">Agent Name:</label>
+											<c:choose>
+												<c:when test="${purchaseSearchView.agentId!=0}">
+													<input class="form-control" type="text"
+														class="form-control" name="agentName" id="agentName"
+														readonly="readonly"
+														value="${sessionScope['ejb'].getVendorById(purchaseSearchView.agentId).getName()}">
+												</c:when>
+												<c:otherwise>
+													<input class="form-control" type="text"
+														class="form-control" name="agentName" id="agentName"
+														readonly="readonly">
+												</c:otherwise>
+											</c:choose>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="" class="font">Vendor Bill no :</label> <input
+												type="text" placeholder="" id="vendorBillNo"
+												class="form-control" name="vendorBillNo" readonly="readonly"
+												value="${purchaseSearchView.vendor_bill_no}">
+										</div>
+										<div class="form-group">
+											<label for="" class="font">Purchase challan no. :</label> <input
+												readonly="readonly" type="text" placeholder=""
+												name="challanNumber" class="form-control"
+												value="${purchaseSearchView.challanNumber}">
+										</div>
+										<div class="form-group">
+											<label for="" class="font">Purchase Date :</label> <input
+												type="text" id="datepicker" class="form-control"
+												name="purchaseDate" required="required" readonly="readonly"
+												value="<fmt:formatDate
 																			value="${purchaseSearchView.purchase_date}"
 																			pattern="dd-MM-yyyy" />">
-											</div>
-											<div class="form-group" id="aDetailDiv">
-												<label for="" class="font">Agent Details:</label>
+										</div>
+										<div class="form-group" id="aDetailDiv">
+											<label for="" class="font">Agent Details:</label>
 
-												<c:choose>
-													<c:when test="${purchaseSearchView.agentId!=0}">
-														<textarea rows="5" cols="" class="form-control"
-															readonly="readonly" id="agentDet" name="agentDet">
+											<c:choose>
+												<c:when test="${purchaseSearchView.agentId!=0}">
+													<textarea rows="5" cols="" class="form-control"
+														readonly="readonly" id="agentDet" name="agentDet">
 															Address : 
 															&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;${sessionScope['ejb'].getVendorById(purchaseSearchView.agentId).address}
 															Ph1 : ${sessionScope['ejb'].getVendorById(purchaseSearchView.agentId).ph1}
 															Ph2 : ${sessionScope['ejb'].getVendorById(purchaseSearchView.agentId).ph2}
 															</textarea>
-													</c:when>
-													<c:otherwise>
-														<textarea rows="5" cols="" class="form-control"
-															readonly="readonly" id="agentDet" name="agentDet"></textarea>
-													</c:otherwise>
-												</c:choose>
+												</c:when>
+												<c:otherwise>
+													<textarea rows="5" cols="" class="form-control"
+														readonly="readonly" id="agentDet" name="agentDet"></textarea>
+												</c:otherwise>
+											</c:choose>
 
-											</div>
-										</div>
-										<div class='toast' style='display: none'>
-											<h3 id="msg">${requestScope['msg']}</h3>
 										</div>
 									</div>
+									<div class='toast' style='display: none'>
+										<h3 id="msg">${requestScope['msg']}</h3>
+									</div>
+								</div>
 
-									<table id="purProTable"
-										class="table table-striped table-bordered">
-										<thead style="background-color: #F0F0F0;">
+								<table id="" class="table table-striped table-bordered">
+									<thead style="background-color: #F0F0F0;">
+										<tr>
+											<th>#</th>
+											<th>Product code</th>
+											<th>Product Description</th>
+											<th>UOM</th>
+											<th>Rate</th>
+											<th>Qty</th>
+											<th>Amount</th>
+										</tr>
+									</thead>
+									<c:set var="i" value="${1}"></c:set>
+									<c:forEach var="purchaseProducts"
+										items="${purchaseSearchView.purchase_Product_Details}">
+										<tbody>
 											<tr>
-												<th>#</th>
-												<th>Product code</th>
-												<th>Product Description</th>
-												<th>UOM</th>
-												<th>Rate</th>
-												<th>Qty</th>
-												<th>Amount</th>
+												<td>${i}</td>
+												<td>${purchaseProducts.productDetail.code}</td>
+												<td>${purchaseProducts.productDetail.description}</td>
+												<td>${purchaseProducts.productDetail.qtyUnit.name}</td>
+												<td>${purchaseProducts.cost}</td>
+												<td>${purchaseProducts.quantity}</td>
+												<td>${purchaseProducts.quantity*purchaseProducts.cost}</td>
+											</tr>
+										</tbody>
+										<c:set var="i" value="${i+1}" />
+									</c:forEach>
+								</table>
+								<div style="width: 40%; float: right;">
+									<table id="stream_table"
+										class="table table-striped table-bordered">
+										<thead>
+											<tr>
+												<td colspan="2">Sub Total :</td>
+												<td><fmt:formatNumber var="subt"
+														value="${(100*(purchaseSearchView.totalCost-purchaseSearchView.sur_charge-purchaseSearchView.transport_cost))/(100+purchaseSearchView.tax_Type_Group.totalTaxValue)}"
+														maxFractionDigits="2" /><input type="text"
+													class="form-control" id="subTotal" value="${subt}"
+													readonly="readonly"></td>
 											</tr>
 										</thead>
-										<c:set var="i" value="${1}"></c:set>
-										<c:forEach var="purchaseProducts"
-											items="${purchaseSearchView.purchase_Product_Details}">
-											<tbody>
-												<tr>
-													<td>${i}</td>
-													<td>${purchaseProducts.productDetail.code}</td>
-													<td>${purchaseProducts.productDetail.description}</td>
-													<td>${purchaseProducts.productDetail.qtyUnit.name}</td>
-													<td>${purchaseProducts.cost}</td>
-													<td>${purchaseProducts.quantity}</td>
-													<td>${purchaseProducts.quantity*purchaseProducts.cost}</td>
-												</tr>
-											</tbody>
-											<c:set var="i" value="${i+1}" />
-										</c:forEach>
+										<tbody>
+											<tr>
+												<td>${purchaseSearchView.tax_Type_Group.name}</td>
+												<td>%</td>
+												<td><input type="text" class="form-control"
+													readonly="readonly"
+													value="${purchaseSearchView.tax_Type_Group.getTotalTaxValue()}"
+													id="taxTot"></td>
+											</tr>
+										</tbody>
+										<tbody>
+											<tr>
+												<td colspan="2">Tax Amount :</td>
+												<td><fmt:formatNumber var="subt"
+														value="${((100*(purchaseSearchView.totalCost-purchaseSearchView.sur_charge-purchaseSearchView.transport_cost))/(100+purchaseSearchView.tax_Type_Group.totalTaxValue))*purchaseSearchView.tax_Type_Group.totalTaxValue/100}"
+														maxFractionDigits="2" /><input type="text"
+													class="form-control" readonly="readonly" value="${subt}"
+													id="taxAmount"></td>
+											</tr>
+										</tbody>
+										<tbody>
+											<tr>
+												<td colspan="2">Transport charge :</td>
+												<td><input type="text" class="form-control"
+													name="transportCost" id="transportCost"
+													value="${purchaseSearchView.transport_cost}"
+													readonly="readonly"></td>
+											</tr>
+										</tbody>
+										<tbody>
+											<tr>
+												<td colspan="2">Surcharge :</td>
+												<td><input type="text" class="form-control"
+													id="surcharge" name="surcharge"
+													value="${purchaseSearchView.sur_charge}"
+													readonly="readonly"></td>
+											</tr>
+										</tbody>
+										<thead>
+											<tr>
+												<td colspan="2">Grand Total :</td>
+												<td><input type="text" class="form-control" id="gt"
+													placeholder="0" readonly="readonly"
+													value="${purchaseSearchView.totalCost}"></td>
+											</tr>
+										</thead>
 									</table>
-									<div style="width: 40%; float: right;">
-										<table id="stream_table"
-											class="table table-striped table-bordered">
-											<thead>
-												<tr>
-													<td colspan="2">Sub Total :</td>
-													<td><fmt:formatNumber var="subt"
-															value="${(100*(purchaseSearchView.totalCost-purchaseSearchView.sur_charge-purchaseSearchView.transport_cost))/(100+purchaseSearchView.tax_Type_Group.totalTaxValue)}"
-															maxFractionDigits="2" /><input type="text"
-														class="form-control" id="subTotal" value="${subt}"
-														readonly="readonly"></td>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>${purchaseSearchView.tax_Type_Group.name}</td>
-													<td>%</td>
-													<td><input type="text" class="form-control"
-														readonly="readonly"
-														value="${purchaseSearchView.tax_Type_Group.getTotalTaxValue()}"
-														id="taxTot"></td>
-												</tr>
-											</tbody>
-											<tbody>
-												<tr>
-													<td colspan="2">Tax Amount :</td>
-													<td><fmt:formatNumber var="subt"
-															value="${((100*(purchaseSearchView.totalCost-purchaseSearchView.sur_charge-purchaseSearchView.transport_cost))/(100+purchaseSearchView.tax_Type_Group.totalTaxValue))*purchaseSearchView.tax_Type_Group.totalTaxValue/100}"
-															maxFractionDigits="2" /><input type="text"
-														class="form-control" readonly="readonly" value="${subt}"
-														id="taxAmount"></td>
-												</tr>
-											</tbody>
-											<tbody>
-												<tr>
-													<td colspan="2">Transport charge :</td>
-													<td><input type="text" class="form-control"
-														name="transportCost" id="transportCost"
-														value="${purchaseSearchView.transport_cost}"
-														readonly="readonly"></td>
-												</tr>
-											</tbody>
-											<tbody>
-												<tr>
-													<td colspan="2">Surcharge :</td>
-													<td><input type="text" class="form-control"
-														id="surcharge" name="surcharge"
-														value="${purchaseSearchView.sur_charge}"
-														readonly="readonly"></td>
-												</tr>
-											</tbody>
-											<thead>
-												<tr>
-													<td colspan="2">Grand Total :</td>
-													<td><input type="text" class="form-control" id="gt"
-														placeholder="0" readonly="readonly"
-														value="${purchaseSearchView.totalCost}"></td>
-												</tr>
-											</thead>
-										</table>
-									</div>
-								</form>
+								</div>
+								<table id="" class="table table-striped table-bordered">
+									<thead style="background-color: #F0F0F0;">
+										<tr>
+											<th>#</th>
+											<th>Payment date</th>
+											<th>Payment method</th>
+											<th>Payment description</th>
+											<th>Amount</th>
+										</tr>
+									</thead>
+									<c:set var="j" value="${1}"></c:set>
+									<c:forEach var="paymentDetails"
+										items="${purchaseSearchView.paymentDetails}">
+										<tbody>
+											<tr>
+												<td>${j}</td>
+												<td>${paymentDetails.paymentDate}</td>
+												<td>${paymentDetails.paymentType.type}</td>
+												<td>${paymentDetails.description}</td>
+												<td>${paymentDetails.paidAmount}</td>
+											</tr>
+										</tbody>
+										<c:set var="j" value="${j+1}" />
+									</c:forEach>
+								</table>
 							</div>
 						</div>
 					</div>

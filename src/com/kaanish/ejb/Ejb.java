@@ -362,9 +362,7 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	
-
-	/************************Product Search By Code********************************************/
+	/************************ Product Search By Code ********************************************/
 
 	public ProductDetail getProductByProductCode(String code) {
 		TypedQuery<ProductDetail> q = em.createQuery(
@@ -656,6 +654,43 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<Purchase_Entry> getPurchaseEntryByChallanNo(String chNo) {
+		TypedQuery<Purchase_Entry> q = em
+				.createQuery(
+						"select c from Purchase_Entry c where c.challanNumber=:chNo ORDER BY c.id DESC",
+						Purchase_Entry.class);
+		q.setParameter("chNo", chNo);
+		return q.getResultList();
+	}
+
+	public List<Purchase_Entry> getPurchaseEntryByVendorName(String name) {
+		TypedQuery<Purchase_Entry> q = em
+				.createQuery(
+						"select c from Purchase_Entry c where c.vendor.vendorType.type='Vendor' and c.vendor.name=:name ORDER BY c.id DESC",
+						Purchase_Entry.class);
+		q.setParameter("name", name);
+		return q.getResultList();
+	}
+
+	public List<Purchase_Entry> getPurchaseEntryByAgentName(String name) {
+		TypedQuery<Purchase_Entry> q = em
+				.createQuery(
+						"select c from Purchase_Entry c where c.vendor.vendorType.type='Purchase Agent' and c.vendor.name=:name ORDER BY c.id DESC",
+						Purchase_Entry.class);
+		q.setParameter("name", name);
+		return q.getResultList();
+	}
+
+	/*public List<Purchase_Entry> getPurchaseEntryByProductCode(String name) {
+		TypedQuery<Purchase_Entry> q = em
+				.createQuery(
+						"select c.purchase_Entry from Purchase_Product_Details c where c.productDetail.code=:name group by c.purchase_Entry ORDER BY c.id DESC",
+						Purchase_Entry.class);
+		q.setParameter("name", name);
+		
+		return q.getResultList();
+	}*/
+
 	public int getLastPurchaseChallanNumber() {
 		TypedQuery<Purchase_Entry> q = em.createQuery(
 				"select c from Purchase_Entry c ORDER BY c.id DESC",
@@ -854,15 +889,15 @@ public class Ejb {
 
 	public List<Purchase_Product_Details> getPurchase_Product_DetailsByProId(
 			int id) {
-		List<Purchase_Product_Details> lst=new ArrayList<>();
+		List<Purchase_Product_Details> lst = new ArrayList<>();
 		TypedQuery<Purchase_Product_Details> q = em
 				.createQuery(
 						"select s from Purchase_Product_Details s where s.productDetail.id=:Id and s.initialInventory=:initialInventory",
 						Purchase_Product_Details.class);
 		q.setParameter("Id", id);
 		q.setParameter("initialInventory", true);
-		lst=q.getResultList();
-		
+		lst = q.getResultList();
+
 		TypedQuery<Purchase_Product_Details> q1 = em
 				.createQuery(
 						"select s from Purchase_Product_Details s where s.productDetail.id=:Id and s.initialInventory=:initialInventory ORDER BY s.purchase_Entry.purchase_date DESC",
@@ -870,7 +905,7 @@ public class Ejb {
 		q1.setParameter("Id", id);
 		q1.setParameter("initialInventory", false);
 		lst.addAll(q1.getResultList());
-		
+
 		return lst;
 	}
 

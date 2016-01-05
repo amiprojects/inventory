@@ -67,56 +67,97 @@
 
 								<div class="widget-area">
 									<form role="form" class="sec" action="purchaseSearchByDate">
-										<!-- <div class="row">
-											<div class="col-md-6">
-												<div class="form-group">
-													<label for="">Purchase challan no. :</label> <input type=""
-														placeholder="Enter Purchase Entry Number" id=""
-														class="form-control">
-												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="form-group">
-													<label for="">Vendor Bill no. :</label> <input type=""
-														placeholder="Enter Vendor SO :" id="" class="form-control">
-												</div>
-											</div>
-										</div> -->
 										<div class="row">
-											<div class="col-md-6">
+											<div class="col-md-5">
 												<div class="form-group">
-													<label for="">Search between two dates : (Start
-														Date)</label> <input type="text" placeholder="Enter First Date"
-														id="datepicker" class="form-control" name="fDate"
-														id="fDate">
+													<label for="" style="float: left;">Search between
+														two dates : (Start Date)</label> <input type="text"
+														placeholder="Enter First Date" id="datepicker"
+														class="form-control" name="fDate" id="fDate">
 												</div>
 											</div>
 
-											<div class="col-md-6">
+											<div class="col-md-5">
 												<div class="form-group">
-													<label for="">(End Date)</label> <input type="text"
-														placeholder="Enter last date" id="datepicker1"
+													<label for="" style="float: left;">(End Date)</label> <input
+														type="text" placeholder="Enter last date" id="datepicker1"
 														class="form-control" name="lDate" id="lDate">
 												</div>
 											</div>
+											<div class="col-md-2">
+												<button class="btn green pull-left"
+													style="margin-top: 25px;" type="submit">Search</button>
+											</div>
 										</div>
-										<!-- <div class="row">
+									</form>
+									<form role="form" class="sec"
+										action="purchaseSearchByPurchaseChallanNo">
+										<div class="row">
+											<div class="col-md-10">
+												<div class="form-group">
+													<label for="" style="float: left;">Purchase challan
+														no. :</label> <input type=""
+														placeholder="Enter Purchase Entry Number"
+														id="purChallanNo" name="purChallanNo" class="form-control">
+												</div>
+											</div>
+											<div class="col-md-2">
+												<button class="btn green pull-left"
+													style="margin-top: 25px;" type="submit">Search</button>
+											</div>
 
-											<div class="col-md-6">
+										</div>
+									</form>
+									<form role="form" class="sec"
+										action="purchaseSearchByProductCode">
+										<div class="row">
+											<div class="col-md-10">
 												<div class="form-group">
-													<label for="">Product code :</label> <input type=""
-														placeholder="Enter Product code" id=""
-														class="form-control">
+													<label for="" style="float: left;">Product code :</label> <input
+														type="" placeholder="Enter Product code" id="prodCode"
+														name="prodCode" class="form-control">
 												</div>
 											</div>
-											<div class="col-md-6">
+											<div class="col-md-2">
+												<button class="btn green pull-left"
+													style="margin-top: 25px;" type="submit">Search</button>
+											</div>
+
+										</div>
+									</form>
+									<form role="form" class="sec"
+										action="purchaseSearchByVendorName">
+										<div class="row">
+											<div class="col-md-10">
 												<div class="form-group">
-													<label for="">Vendor Name:</label> <input type=""
-														placeholder="Enter Vendor Name" id="" class="form-control">
+													<label for="" style="float: left;">Vendor Name :</label> <input
+														type="" placeholder="Enter Vendor Name" id="vendorName"
+														name="vendorName" class="form-control">
 												</div>
 											</div>
-										</div> -->
-										<button class="btn green pull-right" type="submit">Search</button>
+											<div class="col-md-2">
+												<button class="btn green pull-left"
+													style="margin-top: 25px;" type="submit">Search</button>
+											</div>
+
+										</div>
+									</form>
+									<form role="form" class="sec"
+										action="purchaseSearchByAgentName">
+										<div class="row">
+											<div class="col-md-10">
+												<div class="form-group">
+													<label for="" style="float: left;">Agent Name :</label> <input
+														type="" placeholder="Enter Agent Name" id="agentName"
+														name="agentName" class="form-control">
+												</div>
+											</div>
+											<div class="col-md-2">
+												<button class="btn green pull-left"
+													style="margin-top: 25px;" type="submit">Search</button>
+											</div>
+
+										</div>
 									</form>
 									<br> <br>
 									<table class="table">
