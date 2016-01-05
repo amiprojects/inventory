@@ -13,7 +13,7 @@ public class GetMacId {
 		try {
 				
 			ip = InetAddress.getLocalHost();
-			System.out.println("Current IP address : " + ip.getHostAddress());
+			//System.out.println("Current IP address : " + ip.getHostAddress());
 			
 			NetworkInterface network = NetworkInterface.getByInetAddress(ip);
 				
@@ -25,8 +25,8 @@ public class GetMacId {
 			for (int i = 0; i < mac.length; i++) {
 				sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));		
 			}
-			System.out.println(sb.toString());
-			System.out.println(new String(mac));
+			//System.out.println(sb.toString());
+			//System.out.println(new String(mac));
 			macid=sb.toString();
 				
 		} catch (UnknownHostException e) {

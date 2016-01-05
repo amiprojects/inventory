@@ -362,7 +362,7 @@
 												<div style="width: 100%; overflow-x: scroll">
 													<table class="table table-striped table-bordered">
 
-														<tr style="width: 100%">
+														<tr  style="width: 100%;">
 															<td><b>Date</b></td>
 
 

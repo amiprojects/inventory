@@ -103,7 +103,7 @@ $(document).ready(function(){
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#vendor").attr("id", "activeSubMenu");
-		$("#vVendor").attr("style", "color: #6a94ff;");
+		$("#vVendor").attr("style", "color: red;");
 	});
 
 	function bankButtonPrev() {
@@ -291,11 +291,11 @@ $(document).ready(function(){
 							<div class="col-md-12">
 
 								<div class="breadcrumbs"
-									style="height: 50px; text-align: center;">
-									<h3 style="margin-top: 11px;">Vendor Details</h3>
+								style="height: 50px; text-align: center;">
+								<h3 style="margin-top: 11px;">Vendor Details</h3>
 
 
-								</div>
+							</div>
 
 								<div class="widget-area" style="width: 28%;">
 									
@@ -353,20 +353,18 @@ $(document).ready(function(){
 													Account Info</a></li>
 											<li id="bAcc"><a data-toggle="tab" href="#bankAccount">Bank
 													Account info</a></li>
-											<li id="prts"><a data-toggle="tab" href="#part">Parts</a></li>
+										 <li id="prts"><a data-toggle="tab" href="#part">Parts</a></li> 
 										</ul>
 										<div class="tab-content">
 											<div id="bankAccount" class="tab-pane fade">
 												<div class="widget-area">
-													<h5 align="center">(* All the below fields are
-														optional)</h5>
-													<br>
+												<h5 align="center">(* All the below fields are optional)</h5><br>
 													<div class="col-md-3">
 														<b>Bank Name:</b>
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" name="bankName"
-															id="bankname">
+															id="bankname"  >
 													</div>
 													<br>
 													<div class="col-md-3">
@@ -374,7 +372,7 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" name="bankAccNo"
-															id="acno">
+															id="acno"  >
 													</div>
 													<br>
 													<div class="col-md-3">
@@ -382,16 +380,16 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" name="bankBranch"
-															id="branch">
+															id="branch"  >
 													</div>
 													<br>
 													<div class="col-md-3">
 														<b>City:</b>
 													</div>
 													<div class="col-md-9">
-														<input type="text" class="form-control" id="bankCity">
-														<input type="hidden" value=" " name="bankCity"
-															id="bankCityId">
+														<input type="text" class="form-control" id="bankCity"
+															 > <input type="hidden"
+															value=" " name="bankCity" id="bankCityId">
 													</div>
 													<br>
 													<div class="col-md-3">
@@ -399,7 +397,7 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" name="bankIFSC"
-															id="ifsc">
+															id="ifsc"  >
 													</div>
 													<br>
 													<div class="col-md-3">
@@ -407,7 +405,7 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" name="bankMICR"
-															id="micrno">
+															id="micrno"  >
 													</div>
 													<br>
 													<div class="col-md-3">
@@ -415,7 +413,7 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" name="bankRTGS"
-															id="rtgscd">
+															id="rtgscd"  >
 													</div>
 													<br>
 													<div class="col-md-3">
@@ -423,7 +421,7 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control"
-															name="bankCheckLebel" id="label"">
+															name="bankCheckLebel" id="label"  ">
 													</div>
 												</div>
 												<br>
@@ -443,109 +441,109 @@ $(document).ready(function(){
 											<div id="vendorAccount" class="tab-pane fade">
 												<div class="widget-area">
 													<div class="row">
-														<h5 align="center">(* All the below fields are
-															optional)</h5>
-														<br>
+													<h5 align="center">(* All the below fields are optional)</h5><br>
 														<div class="col-md-5">
-															<b>VAT no:</b>
+															<b>VAT no:</b> 
 														</div>
 														<div class="col-md-7">
 															<input type="text" class="form-control"
-																name="vendorVATno" id="vatno">
+																name="vendorVATno" id="vatno"  >
 														</div>
 													</div>
 
 													<div class="row">
 														<div class="col-md-5">
-															<b>VAT registration date:</b>
+															<b>VAT registration date:</b> 
 														</div>
 														<div class="col-md-7">
 															<input type="text" class="form-control"
-																name="vendorVATregDate" id="datepicker"
-																readonly="readonly">
+																name="vendorVATregDate"  
+																id="datepicker" readonly="readonly">
 														</div>
 													</div>
 
 													<div class="row">
 														<div class="col-md-5">
-															<b>CST no:</b>
+															<b>CST no:</b> 
 														</div>
 														<div class="col-md-7">
 															<input type="text" class="form-control"
-																name="vendorCSTno" id="cstno">
+																name="vendorCSTno" id="cstno"  >
 														</div>
 													</div>
 
 													<div class="row">
 														<div class="col-md-5">
-															<b>CST registration date:</b>
+															<b>CST registration date:</b> 
 														</div>
 														<div class="col-md-7">
 															<input type="text" class="form-control"
-																name="vendorCSTregDate" id="datepicker1"
-																readonly="readonly">
+																name="vendorCSTregDate"  
+																id="datepicker1" readonly="readonly">
 														</div>
 													</div>
 
 													<div class="row">
 														<div class="col-md-5">
-															<b>PAN no:</b>
+															<b>PAN no:</b> 
 														</div>
 														<div class="col-md-7">
 															<input type="text" class="form-control"
-																name="vendorPANno" id="pan">
+																name="vendorPANno" id="pan"  >
 														</div>
 													</div>
 
 													<div class="row">
 														<div class="col-md-5">
-															<b>Excise registration no:</b>
+															<b>Excise registration no:</b> 
 														</div>
 														<div class="col-md-7">
 															<input type="text" class="form-control"
-																name="vendorExciseRegNo" id="exciseno">
+																name="vendorExciseRegNo" id="exciseno"
+																 >
 														</div>
 													</div>
 
 													<div class="row">
 														<div class="col-md-5">
-															<b>Excise registration date:</b>
+															<b>Excise registration date:</b> 
 														</div>
 														<div class="col-md-7">
 															<input type="text" class="form-control"
-																name="vendorExciseRegDate" id="datepicker2"
-																readonly="readonly">
+																name="vendorExciseRegDate"  
+																id="datepicker2" readonly="readonly">
 														</div>
 													</div>
 
 													<div class="row">
 														<div class="col-md-5">
-															<b>Service tax registration no:</b>
+															<b>Service tax registration no:</b> 
 														</div>
 														<div class="col-md-7">
 															<input type="text" class="form-control"
-																name="vendorServiceTaxRegNo" id="servtaxno">
+																name="vendorServiceTaxRegNo" id="servtaxno"
+																 >
 														</div>
 													</div>
 
 													<div class="row">
 														<div class="col-md-5">
-															<b>Service tax registration date:</b>
+															<b>Service tax registration date:</b> 
 														</div>
 														<div class="col-md-7">
 															<input type="text" class="form-control"
-																name="vendorServiceTaxRegDate" id="datepicker3"
-																readonly="readonly">
+																name="vendorServiceTaxRegDate"  
+																id="datepicker3" readonly="readonly">
 														</div>
 													</div>
 													<div class="row">
 														<div class="col-md-5">
-															<b>Tax group id:</b>
+															<b>Tax group id:</b> 
 														</div>
 														<div class="col-md-7">
 															<select class="form-control" name="taxTypeGroupId"
 																id="taxgroup">
-																<option value="0">select a tax group</option>
+																<!-- <option value="0">select a tax group</option> -->
 																<c:forEach
 																	items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
 																	var="taxTypeGroup">
@@ -581,7 +579,7 @@ $(document).ready(function(){
 													<div class="col-md-9">
 														<input type="text" class="form-control"
 															name="vendorCompanyName" id="compname"
-															value="${vendor.companyName}">
+															 value="${vendor.companyName}">
 													</div>
 
 													<div class="col-md-3">
@@ -650,9 +648,7 @@ $(document).ready(function(){
 														name="vendorAddress" id="addr" required="required"
 														value="${vendor.address}"></textarea>
 													<div class="row">
-														<div class="col-md-3">
-															<b>City :</b>
-														</div>
+														<div class="col-md-3"><b>City :</b></div>
 														<div class="col-md-9">
 															<input type="text" class="form-control cityAuto"
 																name="vendorCity" required="required" id="vendorCity"
@@ -661,9 +657,7 @@ $(document).ready(function(){
 														</div>
 													</div>
 													<div class="row">
-														<div class="col-md-3">
-															<b>Pin code :</b>
-														</div>
+														<div class="col-md-3"><b>Pin code :</b></div>
 														<div class="col-md-9">
 															<input type="text" class="form-control" name="vendorPin"
 																id="pin" required="required" value="${vendor.pinCode}">
@@ -678,7 +672,7 @@ $(document).ready(function(){
 														onclick="addressButtonNext();">
 												</div>
 											</div>
-											<div id="part" class="tab-pane fade ">
+									<div id="part" class="tab-pane fade ">
 												<div class="widget-area">
 													<div class="breadcrumbs">
 														<ul>
@@ -749,7 +743,7 @@ $(document).ready(function(){
 												</div>
 												<br>
 
-											</div>
+											</div> 
 										</div>
 									</form>
 									<div class='toast' style='display: none'>
