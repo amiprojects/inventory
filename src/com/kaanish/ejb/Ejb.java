@@ -44,6 +44,7 @@ import com.kaanish.model.SalesEntry;
 import com.kaanish.model.SalesProductDetails;
 import com.kaanish.model.SerialNumber;
 import com.kaanish.model.State;
+import com.kaanish.model.Stoct;
 import com.kaanish.model.SubDepartment;
 import com.kaanish.model.Tax;
 import com.kaanish.model.Tax_Type_Group;
@@ -92,6 +93,16 @@ public class Ejb {
 				"select c from JobClass c order by c.assignDate DESC",
 				JobClass.class);
 
+		return q.getResultList();
+	}
+	
+	public void setStoct(Stoct s){
+		em.persist(s);
+	}
+
+	public List<Stoct> getAllStoct() {
+		TypedQuery<Stoct> q = em.createQuery(
+				"select c from Stoct c ORDER BY c.id DESC", Stoct.class);
 		return q.getResultList();
 	}
 
@@ -324,7 +335,7 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	/************************Product detail Search By Code********************************************/
+	/************************ Product detail Search By Code ********************************************/
 
 	public List<ProductDetail> getAllProductByProductCode(String code) {
 		TypedQuery<ProductDetail> q = em.createQuery(
@@ -334,22 +345,24 @@ public class Ejb {
 
 		return q.getResultList();
 	}
-	/************************Product Search By Code********************************************/
+
+	/************************ Product Search By Code ********************************************/
 
 	public ProductDetail getProductByProductCode(String code) {
 		TypedQuery<ProductDetail> q = em.createQuery(
 				"select c from ProductDetail c where UPPER(c.code) = :nm ",
 				ProductDetail.class);
-		q.setParameter("nm", code.toUpperCase() );
+		q.setParameter("nm", code.toUpperCase());
 
 		if (q.getResultList().size() > 0) {
 			return q.getResultList().get(0);
 		} else {
 			return null;
 
+		}
 	}
-	}
-	/*****************************Product Search By Category************************************/
+
+	/***************************** Product Search By Category ************************************/
 
 	public List<ProductDetail> getAllProductByCategory(String cat) {
 		TypedQuery<ProductDetail> q = em
@@ -374,8 +387,6 @@ public class Ejb {
 
 		return q.getResultList();
 	}
-	
-	
 
 	/*************************************************************************************************************************/
 

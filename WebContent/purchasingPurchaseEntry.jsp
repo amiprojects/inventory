@@ -193,7 +193,7 @@
 		</c:if>
 	</c:if>
 
-	
+
 	<c:if test="${requestScope['purDetIdforPC']!=null}">
 		<script type="text/javascript">
 			var myWindow = window
@@ -627,7 +627,7 @@
 									<input type="text" id="pCode" name="pCode" class="form-control"
 										onchange="emptyForm();"><input type="hidden"
 										id="productCode" name="productCode">
-									
+
 								</div>
 								<div class="col-md-5">Product Descripsion:</div>
 								<div class="col-md-7">
@@ -1071,43 +1071,46 @@
 
 		function rateF() {
 			if ($("#isSalable").val() == 'yes') {
-				if ($("#mrp").val() == "") {
-					alert("Please insert MRP first...");
-					$("#rate").val("");
-				} else if ($("#wsp").val() == "") {
-					alert("Please insert WSP first...");
-					$("#rate").val("");
-				} else if ($("#rate").val() > $("#wsp").val()) {
+				if ($("#wsp").val() != ""
+						&& Number($("#rate").val()) > Number($("#wsp").val())) {
 					alert("Rate should be less than or equals to WSP.");
 					$("#rate").val("");
-				} else if ($("#rate").val() > $("#mrp").val()) {
+				} else if ($("#mrp").val() != ""
+						&& Number($("#rate").val()) > Number($("#mrp").val())) {
 					alert("Rate should be less than or equals to MRP.");
 					$("#rate").val("");
-				}
-			}
-		}
-		function wspF() {
-			if ($("#isSalable").val() == 'yes') {
-				if ($("#mrp").val() == "") {
-					alert("Please insert MRP first...");
-					$("#wsp").val("");
-				} else if ($("#rate").val() > $("#wsp").val()) {
-					alert("Rate should be less than or equals to WSP.");
-					$("#wsp").val("");
-				} else if ($("#wsp").val() > $("#mrp").val()) {
-					alert("WSP should be less than or equals to MRP.");
-					$("#wsp").val("");
 				}
 			}
 		}
 		function mrpF() {
 			if ($("#isSalable").val() == 'yes') {
-				if ($("#rate").val() > $("#mrp").val()) {
+				if ($("#rate").val() == "") {
+					alert("Please insert Rate first...");
+					$("#mrp").val("");
+				} else if ($("#wsp").val() == "") {
+					alert("Please insert WSP first...");
+					$("#mrp").val("");
+				} else if (Number($("#rate").val()) > Number($("#mrp").val())) {
 					alert("Rate should be less than or equals to MRP.");
 					$("#mrp").val("");
-				} else if ($("#wsp").val() > $("#mrp").val()) {
+				} else if (Number($("#wsp").val()) > Number($("#mrp").val())) {
 					alert("WSP should be less than or equals to MRP.");
 					$("#mrp").val("");
+				}
+			}
+		}
+		function wspF() {
+			if ($("#isSalable").val() == 'yes') {
+				if ($("#rate").val() == "") {
+					alert("Please insert Rate first...");
+					$("#wsp").val("");
+				} else if (Number($("#rate").val()) > Number($("#wsp").val())) {
+					alert("Rate should be less than or equals to WSP.");
+					$("#wsp").val("");
+				} else if ($("#mrp").val() != ""
+						&& Number($("#wsp").val()) > Number($("#mrp").val())) {
+					alert("WSP should be less than or equals to MRP.");
+					$("#wsp").val("");
 				}
 			}
 		}
