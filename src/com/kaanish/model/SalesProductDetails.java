@@ -1,6 +1,7 @@
 package com.kaanish.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Entity;
@@ -8,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 @Cacheable(false)
@@ -30,6 +32,9 @@ public class SalesProductDetails implements Serializable {
 	@JoinColumn(name = "purchaseProductDetailsId")
 	private Purchase_Product_Details purchase_Product_Details;
 	
+	
+	@OneToMany(mappedBy = "salesProductDetails")
+	private List<SalesReturn> salesReturns;
 	
 	
 

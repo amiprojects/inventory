@@ -746,13 +746,14 @@
 
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="" class="font">Maximum Retail Price :</label> <input
-											type="text" name="mrp" placeholder="" id="mrpO"
-											onkeyup="mrpF()" class="form-control">
+										<label for="" class="font">Per Unit Cost:</label> <input
+											name="unitCost" type="text" placeholder="" id="ucO"
+											onchange="rateF()" class="form-control">
+
 									</div>
 									<div class="form-group">
 										<label for="" class="font">Wholesale Price :</label> <input
-											type="text" name="wsp" onkeyup="wspF()" placeholder=""
+											type="text" name="wsp" onchange="wspF()" placeholder=""
 											id="wspO" class="form-control">
 									</div>
 								</div>
@@ -763,11 +764,11 @@
 											onkeyup="setLimit()" class="form-control">
 									</div>
 
-									<div class="form-group">
-										<label for="" class="font">Per Unit Cost:</label> <input
-											name="unitCost" type="text" placeholder="" id="ucO"
-											onkeyup="rateF()" class="form-control">
 
+									<div class="form-group">
+										<label for="" class="font">Maximum Retail Price :</label> <input
+											type="text" name="mrp" placeholder="" id="mrpO"
+											onchange="mrpF()" class="form-control">
 									</div>
 
 								</div>
@@ -1226,7 +1227,7 @@
 				<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
 			</div>
 		</div>
-<input type="hidden" id="pcodeCheck">
+		<input type="hidden" id="pcodeCheck">
 	</div>
 
 	<!-- Script -->
@@ -1258,36 +1259,35 @@
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 	<script type="text/javascript" src="js/abixTreeList.min.js"></script>
 	<script src="js/numericInput.min.js"></script>
-	
-	
-	
-		<script type="text/javascript">
-	function codeKeyUp(){
-		$("#pcodeCheck").val("");
-		$.ajax({
-			url:"checkPcode",
-			dataType:"json",
-			data:{productCode4:$("#productCode").val()},
-			success:function(data){
-			if(data.code!=""){
-				$("#pcodeCheck").val(data.code);
+
+
+
+	<script type="text/javascript">
+		function codeKeyUp() {
+			$("#pcodeCheck").val("");
+			$.ajax({
+				url : "checkPcode",
+				dataType : "json",
+				data : {
+					productCode4 : $("#productCode").val()
+				},
+				success : function(data) {
+					if (data.code != "") {
+						$("#pcodeCheck").val(data.code);
+					}
+				}
+
+			});
+
+		}
+
+		function codeChange() {
+			if ($("#pcodeCheck").val() != "") {
+				alert("this product code already exist.");
+				$("#pcodeCheck").val("");
+				$("#productCode").val("");
 			}
 		}
-			
-		});
-		
-		
-	}
-	
-	function codeChange(){
-		if($("#pcodeCheck").val()!=""){
-			alert("this product code already exist.");
-			$("#pcodeCheck").val("");
-			$("#productCode").val("");
-		}
-	}	
-	
-	
 	</script>
 
 	<script>
@@ -1547,18 +1547,16 @@
 	</script>
 	<!-- 	*********************************************wsp mrp cost****************************************** -->
 	<script type="text/javascript">
+
+
 		function rateF() {
 
-			if ($("#mrpO").val() == "") {
-				alert("Please insert MRP first...");
+			if ($("#wspO").val() != ""
+					&& Number($("#ucO").val()) > Number($("#wspO").val())) {
+				alert("Rate should be less than or equals to wsp.");
 				$("#ucO").val("");
-			} else if ($("#wspO").val() == "") {
-				alert("Please insert WSP first...");
-				$("#ucO").val("");
-			} else if ($("#ucO").val() > $("#wspO").val()) {
-				alert("Rate should be less than or equals to WSP.");
-				$("#ucO").val("");
-			} else if ($("#ucO").val() > $("#mrpO").val()) {
+			} else if ($("#mrpO").val() != ""
+					&& Number($("#ucO").val()) > Number($("#mrpO").val())) {
 				alert("Rate should be less than or equals to MRP.");
 				$("#ucO").val("");
 			}
@@ -1566,13 +1564,14 @@
 
 		function wspF() {
 
-			if ($("#mrpO").val() == "") {
-				alert("Please insert MRP first...");
+			if ($("#ucO").val() == "") {
+				alert("Please insert Rate first...");
 				$("#wspO").val("");
-			} else if ($("#ucO").val() > $("#wspO").val()) {
-				alert("Rate should be less than or equals to WSP.");
+			} else if (Number($("#ucO").val()) > Number($("#wspO").val())) {
+				alert("WSP should be greater than or equals to Rate.");
 				$("#wspO").val("");
-			} else if ($("#wspO").val() > $("#mrpO").val()) {
+			} else if ($("#mrpO").val() != ""
+					&& Number($("#wspO").val()) > Number($("#mrpO").val())) {
 				alert("WSP should be less than or equals to MRP.");
 				$("#wspO").val("");
 			}
@@ -1580,15 +1579,22 @@
 
 		function mrpF() {
 
-			if ($("#ucO").val() > $("#mrpO").val()) {
-				alert("Rate should be less than or equals to MRP.");
+			if ($("#ucO").val() == "") {
+				alert("Please insert ucO first...");
 				$("#mrpO").val("");
-			} else if ($("#wspO").val() > $("#mrpO").val()) {
-				alert("WSP should be less than or equals to MRP.");
+			} else if ($("#wspO").val() == "") {
+				alert("Please insert WSP first...");
+				$("#mrpO").val("");
+			} else if (Number($("#ucO").val()) > Number($("#mrpO").val())) {
+				alert("MRP should be greater than or equals to Rate.");
+				$("#mrpO").val("");
+			} else if (Number($("#wspO").val()) > Number($("#mrpO").val())) {
+				alert("MRP should be greater than or equals to WSP.");
 				$("#mrpO").val("");
 			}
 		}
 	</script>
+
 	<!-- 	*********************************************Numeric Testing****************************************** -->
 
 	<script>
@@ -1605,7 +1611,7 @@
 
 		});
 	</script>
-	
+
 	<script>
 		$(function() {
 
@@ -1650,9 +1656,9 @@
 	</script>
 	<!-- 	*********************************************************************************************************** -->
 
-	
-	
-	
+
+
+
 </body>
 
 </html>
