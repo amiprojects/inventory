@@ -128,11 +128,6 @@
 														onclick="jRec()">Go</button></td>
 											</tr>
 										</table>
-
-
-
-
-
 									</div>
 									<div class="col-md-6">
 										<div class="widget-area"
@@ -181,8 +176,6 @@
 														readonly="readonly" class="form-control"
 														style="length: 40px;"></input></td>
 												</tr>
-
-
 											</table>
 										</div>
 									</div>
@@ -201,9 +194,6 @@
 													name="salesDate" id="" readonly="readonly">
 
 											</div>
-
-
-
 											<div class="form-group">
 												<label style="font-size: 15px" class="font">Date :</label> <input
 													class="form-control" type="text" name="salesDate" id=""

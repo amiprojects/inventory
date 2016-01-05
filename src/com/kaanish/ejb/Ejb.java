@@ -1555,6 +1555,28 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	
+	
+	
+	/*public List<Vendor> getAllVendorsByNameCity(
+			String code, String description, String name) {
+
+		TypedQuery<Vendor> q = em
+				.createQuery(
+						"select c from Vendor c where c.name=:name OR c.description=:description",
+						Vendor.class);
+		q.setParameter("code", code);
+		q.setParameter("description", description);
+		q.setParameter("name", name);
+		return q.getResultList();
+	}*/
+	
+	
+	
+	
+	
+	
+	
 	/******************************
 	 * Search Job Assignment Details by ChallanID
 	 ****************/

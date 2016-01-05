@@ -68,7 +68,7 @@ import com.kaanish.util.DateConverter;
 		"/deleteProductImage", "/jobAssignment", "/jobAssignSearchByDate",
 		"/salesEntry", "/createUserGroup", "/updateUserGroup", "/updateUser",
 		"/goStockView", "/jChallanSearch", "/jobRecieve", "/createNewUser",
-		"/goJobDetailShow", "/goProView", "/purchaseView", "/changePass" })
+		"/goJobDetailShow", "/goProView", "/purchaseView", "/changePass","/goSearchVendor" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -819,95 +819,50 @@ public class Servlet extends HttpServlet {
 					accountDetails.setBankRTGCnumber(req
 							.getParameter("bankRTGS"));
 					accountDetails.setBranch(req.getParameter("bankBranch"));
+					
+					
+					if(!req.getParameter("bankCity").equals("")){
 					accountDetails.setCity(ejb.getCityById(Integer.parseInt(req
 							.getParameter("bankCity"))));
+					}
+					
+					
 					accountDetails
 							.setCstNumber(req.getParameter("vendorCSTno"));
-					accountDetails.setCstRegistrationDate(DateConverter
-							.getDate(req.getParameter("vendorCSTregDate")));
-					accountDetails.setExciseRegistrationDate(DateConverter
-							.getDate(req.getParameter("vendorExciseRegDate")));
+					if(!req.getParameter("vendorCSTregDate").equals("")){
+						accountDetails.setCstRegistrationDate(DateConverter
+								.getDate(req.getParameter("vendorCSTregDate")));
+					}
+					if(!req.getParameter("vendorExciseRegDate").equals("")){
+						accountDetails.setCstRegistrationDate(DateConverter
+								.getDate(req.getParameter("vendorExciseRegDate")));
+					}if(!req.getParameter("vendorServiceTaxRegDate").equals("")){
+						accountDetails.setCstRegistrationDate(DateConverter
+								.getDate(req.getParameter("vendorServiceTaxRegDate")));
+					}if(!req.getParameter("vendorVATregDate").equals("")){
+						accountDetails.setCstRegistrationDate(DateConverter
+								.getDate(req.getParameter("vendorVATregDate")));
+					}
+					
+					
 					accountDetails.setExciseRegistrationNumber(req
 							.getParameter("vendorExciseRegNo"));
 					accountDetails
 							.setPanNumber(req.getParameter("vendorPANno"));
-					accountDetails.setServiceTaxRegistrationDate(DateConverter
-							.getDate(req
-									.getParameter("vendorServiceTaxRegDate")));
+					
 					accountDetails.setServiceTaxRegistrationNumber(req
 							.getParameter("vendorServiceTaxRegNo"));
 					accountDetails
 							.setVatNumber(req.getParameter("vendorVATno"));
-					accountDetails.setVatRegistrationDate(DateConverter
-							.getDate(req.getParameter("vendorVATregDate")));
+					
 
-					/*
-					 * if(req.getParameter("bankAccNo")==null){
-					 * accountDetails.setBankAccountNumber(" ");
-					 * 
-					 * } if(req.getParameter("bankCheckLebel")==null){
-					 * accountDetails.setBankChequeLable(" ");
-					 * 
-					 * } if(req.getParameter("bankIFSC")==null){
-					 * accountDetails.setBankIFSCnumber(" ");
-					 * 
-					 * } if(req.getParameter("bankMICR")==null){
-					 * accountDetails.setBankMICRnumber(" ");
-					 * 
-					 * } if(req.getParameter("bankName")==null){
-					 * accountDetails.setBankName(" ");
-					 * 
-					 * } if(req.getParameter("bankRTGS")==null){
-					 * accountDetails.setBankRTGCnumber(" ");
-					 * 
-					 * } if(req.getParameter("bankBranch")==null){
-					 * accountDetails.setBranch(" ");
-					 * 
-					 * } if(req.getParameter("bankCity")==null){
-					 * accountDetails.setCity(ejb.getCityById(Integer.parseInt(
-					 * " ")));
-					 * 
-					 * } if(req.getParameter("vendorCSTno")==null){
-					 * accountDetails.setCstNumber(" ");
-					 * 
-					 * } if(req.getParameter("vendorCSTregDate")==null){
-					 * accountDetails.setCstRegistrationDate(DateConverter
-					 * .getDate(""));
-					 * 
-					 * } if(req.getParameter("vendorExciseRegNo")==null){
-					 * accountDetails.setExciseRegistrationNumber(" ");
-					 * 
-					 * } if(req.getParameter("vendorExciseRegDate")==null){
-					 * accountDetails.setExciseRegistrationDate(DateConverter
-					 * .getDate(" "));
-					 * 
-					 * } if(req.getParameter("vendorPANno")==null){
-					 * accountDetails.setPanNumber(" ");
-					 * 
-					 * } if(req.getParameter("vendorServiceTaxRegNo")==null){
-					 * accountDetails.setServiceTaxRegistrationNumber(" ");
-					 * 
-					 * } if(req.getParameter("vendorServiceTaxRegDate")==null){
-					 * accountDetails.setServiceTaxRegistrationDate(
-					 * DateConverter .getDate(" "));
-					 * 
-					 * } if(req.getParameter("vendorVATno")==null){
-					 * accountDetails.setVatNumber(" ");
-					 * 
-					 * } if(req.getParameter("vendorVATregDate")==null){
-					 * accountDetails.setVatRegistrationDate(DateConverter
-					 * .getDate(" "));
-					 * 
-					 * } if(req.getParameter("taxTypeGroupId")==null){
-					 * accountDetails.setTax_Type_Group(ejb
-					 * .getTax_Type_GroupById(Integer.parseInt(" ")));
-					 * 
-					 * }
-					 */
+					
 
 					accountDetails.setTax_Type_Group(ejb
 							.getTax_Type_GroupById(Integer.parseInt(req
 									.getParameter("taxTypeGroupId"))));
+					
+					
 					accountDetails.setUsers(ejb
 							.getUserById((String) httpSession
 									.getAttribute("user")));
@@ -1524,6 +1479,15 @@ public class Servlet extends HttpServlet {
 
 				msg = "";
 
+				break;
+				
+				
+			case "goSearchVendor":
+				page ="purchasingVendorDupli.jsp";
+				//List<Vendor> vendorsBig=ejb.getAllVendorsByNameCity(req.getParameter("nameVendor"),req.getParameter("cityVendor"));
+				
+				//req.setAttribute("vBig", vendorsBig);
+				msg="";
 				break;
 
 			/********************* ProductMultiSearch *****************************************/
