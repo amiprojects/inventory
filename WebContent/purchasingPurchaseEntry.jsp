@@ -41,7 +41,6 @@
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 <script src="js/jquery-ui/jquery-ui.js"></script>
 
-
 <script>
 	$(function() {
 		var d = new Date();
@@ -1669,6 +1668,57 @@
 		});
 		$("#noC").click(function() {
 			$("#cancelOrNot").modal("hide");
+		});
+	</script>
+	<script src="js/numericInput.min.js"></script>
+	<script>
+		$(function() {
+
+			$("#rate").numericInput({
+
+				allowFloat : false, // Accpets positive numbers (floating point)
+
+				allowNegative : false,
+			// Accpets positive or negative integer
+
+			});
+
+		});
+		$(function() {
+
+			$("#qty").numericInput({
+
+				allowFloat : false, // Accpets positive numbers (floating point)
+
+				allowNegative : false,
+			// Accpets positive or negative integer
+
+			});
+
+		});
+		$(function() {
+
+			$("#wsp").numericInput({
+
+				allowFloat : false, // Accpets positive numbers (floating point)
+
+				allowNegative : false,
+			// Accpets positive or negative integer
+
+			});
+
+		});
+		$(function() {
+
+			$("#mrp").numericInput({
+
+				allowFloat : false, // Accpets positive numbers (floating point)
+
+				allowNegative : false,
+			// Accpets positive or negative integer
+
+			});
+
 		});
 	</script>
 </body>

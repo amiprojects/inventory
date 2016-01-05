@@ -1623,6 +1623,21 @@
 			});
 		});
 	</script>
+	<script src="js/numericInput.min.js"></script>
+	<script>
+		$(function() {
+
+			$("#qty").numericInput({
+
+				allowFloat : false, // Accpets positive numbers (floating point)
+
+				allowNegative : false,
+			// Accpets positive or negative integer
+
+			});
+
+		});
+	</script>
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
