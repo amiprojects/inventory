@@ -98,9 +98,9 @@
 
 										<div class="col-md-6">
 											<div class="form-group">
-												<label for="exampleInputEmail1">Products Code:</label> <input
-													type="text" value="${editpro.code}" name="productCode123"
-													class="form-control"><br>
+												<label for="exampleInputEmail1">Product Code:</label> <input
+													readonly="readonly" type="text" value="${editpro.code}"
+													name="productCode123" class="form-control"><br>
 											</div>
 											<div class="form-group">
 												<label for="exampleInputEmail1">Description:</label> <input

@@ -127,7 +127,7 @@
 													<td><input type="text" name="custName" id="custName"
 														style="align: center;"></input></td>
 												</tr>
-												<br>
+												
 												<tr>
 													<td>Address :</td>
 													<td><input type="text" name="addr" id="addr"
