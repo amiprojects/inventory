@@ -70,139 +70,142 @@
 				<div class="container">
 					<div class="row">
 						<div class="masonary-grids">
-							
-								 <div class="breadcrumbs" style="height: 50px; text-align: center;">
-									<h3 style="    margin-top: 11px;">Stock View</h3>
-												
-											
-								</div>
+
+							<div class="breadcrumbs"
+								style="height: 50px; text-align: center;">
+								<h3 style="margin-top: 11px;">Stock View</h3>
 
 
-								<div class="row">
-									<div class="widget-area" style="width: 40%; height: 550px">
-										<h3>Stock Search</h3>
-										<br> <br>
-										<div class="form-group">
-											<form action="goStockView" method="post">
-												<label for="" class="">Product Code: </label> <input
-													type="text" id="prodcode" name="pCodeSearch"
-													class="form-control"> <label class="">Product
-													Description: </label> <input type="text" id="prodesc"
-													name="pDesSearch" class="form-control"> <label
-													class="">Category: </label> <input type="text" id="deptcat"
-													name="pCatSearch" class="form-control">
-
-												
-												<br> <input class="btn green btn-default" type="submit"
-													value="Search"> <a href="stockView.jsp"> <input
-													class="btn green btn-default" type="button"
-													value="Show All"></a>
-											</form>
-										</div>
+							</div>
 
 
-
-
-										<br> <br>
-
-
-
+							<div class="row">
+								<div class="widget-area" style="width: 40%; height: 550px">
+									<h3>Stock Search</h3>
+									<br> <br>
+									<div class="form-group">
+										<form action="goStockView" method="post">
+											<label for="" class="">Product Code: </label> <input
+												type="text" id="prodcode" name="pCodeSearch"
+												class="form-control"> <label class="">Product
+												Description: </label> <input type="text" id="prodesc"
+												name="pDesSearch" class="form-control"> <label
+												class="">Category: </label> <input type="text" id="deptcat"
+												name="pCatSearch" class="form-control"> <br> <input
+												class="btn green btn-default" type="submit" value="Search">
+											<a href="stockView.jsp"> <input
+												class="btn green btn-default" type="button" value="Show All"></a>
+										</form>
 									</div>
-									<div class="widget-area" style="width: 60%; height: 550px">
-
-										<h3>Stock </h3>
-
-										<br>
-										<div
-											style="overflow-y: scroll; overflow-x: hidden; height: 470px">
-
-											<table id="stream_table"
-												class="table table-striped table-bordered">
-												<thead>
-													<tr>
-														<th>#</th>
-														<th>Product Code:</th>
-														<th>Product Description:</th>
-														<th>UOM</th>
-														<th>Quantity</th>
-														<th>WSP</th>
-														<th>MRP</th>
 
 
-														<th></th>
 
-													</tr>
-												</thead>
-												<tbody>
-													<c:set var="count" value="${1}" />
-													
-													<c:forEach
-														items="${sessionScope['ejb'].getAllProductDetail()}"
-														var="amiProStock1">
-													 <c:if test="${amiProStock1.purchase_Product_Details.size()>0}"> 
-														<c:set var="qty" value="${amiProStock1.isSaleble()?sessionScope['ejb'].getReadyGoodsStocktDetailByProductId(amiProStock1.id).remainingQty:sessionScope['ejb'].getRawMaterialStocktDetailByProductId(amiProStock1.id).remainingQty}" />
+
+									<br> <br>
+
+
+
+								</div>
+								<div class="widget-area" style="width: 60%; height: 550px">
+
+									<h3>Stock</h3>
+
+									<br>
+									<div
+										style="overflow-y: scroll; overflow-x: hidden; height: 470px">
+
+										<table id="stream_table"
+											class="table table-striped table-bordered">
+											<thead>
+												<tr>
+													<th>#</th>
+													<th>Product Code:</th>
+													<th>Product Description:</th>
+													<th>UOM</th>
+													<th>Quantity</th>
+													<th>WSP</th>
+													<th>MRP</th>
+
+
+													<th></th>
+
+												</tr>
+											</thead>
+											<tbody>
+												<c:set var="count" value="${1}" />
+
+												<c:forEach
+													items="${sessionScope['ejb'].getAllProductDetail()}"
+													var="amiProStock1">
+													<c:if
+														test="${amiProStock1.purchase_Product_Details.size()>0}">
+														<c:set var="qty"
+															value="${amiProStock1.isSaleble()?sessionScope['ejb'].getReadyGoodsStocktDetailByProductId(amiProStock1.id).remainingQty:sessionScope['ejb'].getRawMaterialStocktDetailByProductId(amiProStock1.id).remainingQty}" />
 														<c:choose>
-														<c:when test="${qty==0}">
-														<tr >
-															<td style="color: red ;">${count}</td>
-															<td style="color: red ;">${amiProStock1.code}</td>
-															<td style="color: red ;">${amiProStock1.description}</td>
-															<td style="color: red ;">${amiProStock1.qtyUnit.name}</td>
-															<td style="color: red ;">${qty}</td>
-															<c:set var="purSize"
-																value="${amiProStock1.purchase_Product_Details.size()}" />
-															<td style="color: red ;">${purSize>0?amiProStock1.purchase_Product_Details.get(purSize-1).wsp:'nill'}</td>
-															<td style="color: red ;">${purSize>0?amiProStock1.purchase_Product_Details.get(purSize-1).mrp:'nill'}</td>
-															<td style="color: red ;"><form action="stockDetailShow" method="post"
-																	id="StockDetails${amiProStock1.id}">
-																	<a href="#"
-																		onclick="showDetails('${amiProStock1.id}');"><input
-																		type="hidden" value="${amiProStock1.id}" name="proId"><img
-																		alt="" src="images/eye.png" height="25px"></a>
-																</form></td>
-														</tr>
-														</c:when>
-														<c:otherwise>
-														<tr>
-															<td>${count}</td>
-															<td>${amiProStock1.code}</td>
-															<td>${amiProStock1.description}</td>
-															<td>${amiProStock1.qtyUnit.name}</td>
-															<td>${qty}</td>
-															<c:set var="purSize"
-																value="${amiProStock1.purchase_Product_Details.size()}" />
-															<td>${purSize>0?amiProStock1.purchase_Product_Details.get(purSize-1).wsp:'nill'}</td>
-															<td>${purSize>0?amiProStock1.purchase_Product_Details.get(purSize-1).mrp:'nill'}</td>
-															<td><form action="stockDetailShow" method="post"
-																	id="StockDetails${amiProStock1.id}">
-																	<a href="#"
-																		onclick="showDetails('${amiProStock1.id}');"><input
-																		type="hidden" value="${amiProStock1.id}" name="proId"><img
-																		alt="" src="images/eye.png" height="25px"></a>
-																</form></td>
-														</tr>
-														
-														</c:otherwise>
+															<c:when test="${qty==0}">
+																<tr>
+																	<td style="color: red;">${count}</td>
+																	<td style="color: red;">${amiProStock1.code}</td>
+																	<td style="color: red;">${amiProStock1.description}</td>
+																	<td style="color: red;">${amiProStock1.qtyUnit.name}</td>
+																	<td style="color: red;">${qty}</td>
+																	<c:set var="purSize"
+																		value="${amiProStock1.purchase_Product_Details.size()}" />
+																	<td style="color: red;">${purSize>0?amiProStock1.purchase_Product_Details.get(purSize-1).wsp:'nill'}</td>
+																	<td style="color: red;">${purSize>0?amiProStock1.purchase_Product_Details.get(purSize-1).mrp:'nill'}</td>
+																	<td style="color: red;"><form
+																			action="stockDetailShow" method="post"
+																			id="StockDetails${amiProStock1.id}">
+																			<a href="#"
+																				onclick="showDetails('${amiProStock1.id}');"><input
+																				type="hidden" value="${amiProStock1.id}"
+																				name="proId"><img alt=""
+																				src="images/eye.png" height="25px"></a>
+																		</form></td>
+																</tr>
+															</c:when>
+															<c:otherwise>
+																<tr>
+																	<td>${count}</td>
+																	<td>${amiProStock1.code}</td>
+																	<td>${amiProStock1.description}</td>
+																	<td>${amiProStock1.qtyUnit.name}</td>
+																	<td>${qty}</td>
+																	<c:set var="purSize"
+																		value="${amiProStock1.purchase_Product_Details.size()}" />
+																	<td>${purSize>0?amiProStock1.purchase_Product_Details.get(purSize-1).wsp:'nill'}</td>
+																	<td>${purSize>0?amiProStock1.purchase_Product_Details.get(purSize-1).mrp:'nill'}</td>
+																	<td><form action="stockDetailShow" method="post"
+																			id="StockDetails${amiProStock1.id}">
+																			<a href="#"
+																				onclick="showDetails('${amiProStock1.id}');"><input
+																				type="hidden" value="${amiProStock1.id}"
+																				name="proId"><img alt=""
+																				src="images/eye.png" height="25px"></a>
+																		</form></td>
+																</tr>
+
+															</c:otherwise>
 														</c:choose>
 														<c:set var="count" value="${count+1}" />
-												 	</c:if> 
-													</c:forEach>
-												</tbody>
-											
-											</table>
-										</div>
+													</c:if>
+												</c:forEach>
+											</tbody>
 
+										</table>
 									</div>
+
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<!-- Content Sec -->
 		</div>
-		<!-- Page Container -->
-	
+		<!-- Content Sec -->
+	</div>
+	<!-- Page Container -->
+
 	<!-- main -->
 
 	<!-- Script -->
@@ -215,7 +218,7 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#stock").attr("id", "activeSubMenu");
-			$("#sStock").attr("style", "color: red;");
+			$("#sStock").attr("style", "color: #6a94ff;");
 			$("#step8").hide();
 
 		});

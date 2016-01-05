@@ -55,16 +55,15 @@
 	<c:if test="${sessionScope['user']==null}">
 		<c:redirect url="index.jsp" />
 	</c:if>
-	
-	
-	
+
+
+
 	<c:if test="${!sessionScope['user'].equals('admin')}">
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
 
-			<c:if
-				test="${page.name.equals('User')}">
+			<c:if test="${page.name.equals('User')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
@@ -84,17 +83,18 @@
 				<div class="container">
 					<div class="row">
 						<div class="masonary-grids">
-							
-
-								 <div class="breadcrumbs" style="height: 50px; text-align: center;">
-									<h3 style="    margin-top: 11px;">User</h3>
-												
-											
-								</div>
 
 
-								<div class="widget-area" style="width: 100%">
-<div class="col-md-12">
+							<div class="breadcrumbs"
+								style="height: 50px; text-align: center;">
+								<h3 style="margin-top: 11px;">User</h3>
+
+
+							</div>
+
+
+							<div class="widget-area" style="width: 100%">
+								<div class="col-md-12">
 									<div class="widget-area"
 										style="height: 500px; overflow: auto; width: 55%; float: left;">
 										<form action="createNewUser" method="post" id="createUser">
@@ -162,8 +162,8 @@
 												<c:if test="${!user.userId.equals('admin')}">
 													<li><a href="#" onclick="userEdit('${user.userId}');">${user.name}</a></li>
 												</c:if>
-												<div id="edit${user.userId}" class="modal fade" role="dialog"
-													style="top: 25px;">
+												<div id="edit${user.userId}" class="modal fade"
+													role="dialog" style="top: 25px;">
 													<div class="modal-dialog">
 														<div class="modal-content">
 															<div class="modal-header">
@@ -178,23 +178,24 @@
 																	<div class="col-md-12">
 																		<select class="form-control" name="ugid">
 																			<option value="0">Select a user group</option>
-																			<c:forEach																			
+																			<c:forEach
 																				items="${sessionScope['ejb'].getAllUserGroup()}"
 																				var="ug">
 																				<c:choose>
-																				<c:when test="${ug.id==user.userGroup.id}">
-																					<option value="${ug.id}" selected="selected">${ug.groupName}</option>
-																				</c:when>
-																				<c:otherwise>
-																				<option value="${ug.id}">${ug.groupName}</option>
-																				</c:otherwise>
-																			</c:choose>
-																				
+																					<c:when test="${ug.id==user.userGroup.id}">
+																						<option value="${ug.id}" selected="selected">${ug.groupName}</option>
+																					</c:when>
+																					<c:otherwise>
+																						<option value="${ug.id}">${ug.groupName}</option>
+																					</c:otherwise>
+																				</c:choose>
+
 																			</c:forEach>
 																		</select>
 																	</div>
 																	<div class="col-md-12">
-																		<input type="submit" class="btn green pull-right" value="Update">
+																		<input type="submit" class="btn green pull-right"
+																			value="Update">
 																	</div>
 																</form>
 															</div>
@@ -232,7 +233,7 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#setup").attr("id", "activeSubMenu");
-			$("#sSetupUser").attr("style", "color: red;");
+			$("#sSetupUser").attr("style", "color: #6a94ff;");
 		});
 
 		function submit1() {
@@ -258,7 +259,7 @@
 			}
 		}
 		function userEdit(id) {
-			$("#edit"+id).modal('show');
+			$("#edit" + id).modal('show');
 		}
 	</script>
 </body>

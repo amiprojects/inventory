@@ -1028,7 +1028,7 @@
 			display_ct();
 
 			$("#dash").attr("id", "activeSubMenu");
-			$("#sDash").attr("style", "color: red;");
+			$("#sDash").attr("style", "color: #6a94ff;");
 
 			/* 	$(".carousal-sec").owlCarousel({
 

@@ -250,15 +250,17 @@
 				<div class="container">
 					<div class="row">
 						<div class="masonary-grids">
-							
 
-								 <div class="breadcrumbs" style="height: 50px; text-align: center;">
-									<h3 style="    margin-top: 11px;">Department/Sub-Department/Category</h3>
-												
-											
-								</div>
-								
-								<div class="widget-area"><div class="col-md-12">
+
+							<div class="breadcrumbs"
+								style="height: 50px; text-align: center;">
+								<h3 style="margin-top: 11px;">Department/Sub-Department/Category</h3>
+
+
+							</div>
+
+							<div class="widget-area">
+								<div class="col-md-12">
 									<div class="widget-area" style="width: 70%">
 										<form action="#">
 											<input type="hidden" value="" id="status"> <input
@@ -320,7 +322,7 @@
 													var="dept">
 													<li>${dept.name}<a href="deleteDept?id=${dept.id}"><span
 															style="color: red;">X</span></a>
-														<ul>															
+														<ul>
 															<c:forEach
 																items="${sessionScope['ejb'].getAllSubDepartmentsByDepartmentId(dept.id)}"
 																var="subDept">
@@ -328,7 +330,7 @@
 																	href="deleteSubDept?id=${subDept.id}"><span
 																		style="color: red;">X</span></a>
 																	<ul>
-																		
+
 																		<c:forEach var="cat"
 																			items="${sessionScope['ejb'].getAllCategoryBySubDepartmentId(subDept.id)}">
 																			<li>${cat.name}<a
@@ -440,7 +442,7 @@
 	<script>
 		$(document).ready(function() {
 			$("#setup").attr("id", "activeSubMenu");
-			$("#sSetupDept").attr("style", "color: red;");
+			$("#sSetupDept").attr("style", "color: #6a94ff;");
 			$('#tree').abixTreeList();
 		});
 	</script>

@@ -56,7 +56,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#stock").attr("id", "activeSubMenu");
-		$("#sStock").attr("style", "color: red;");
+		$("#sStock").attr("style", "color: #6a94ff;");
 		$("#step8").hide();
 
 	});

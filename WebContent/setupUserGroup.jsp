@@ -68,10 +68,11 @@
 				<div class="container">
 					<div class="row">
 						<div class="masonary-grids">
-							 <div class="breadcrumbs" style="height: 50px; text-align: center;">
-									<h3 style="    margin-top: 11px;">User Group</h3>		
-											
-								</div>
+							<div class="breadcrumbs"
+								style="height: 50px; text-align: center;">
+								<h3 style="margin-top: 11px;">User Group</h3>
+
+							</div>
 
 							<div class="widget-area"
 								style="height: 500px; overflow: auto; width: 60%; float: left;">
@@ -194,7 +195,7 @@
 	<script>
 		$(document).ready(function() {
 			$("#setup").attr("id", "activeSubMenu");
-			$("#sSetupUgroup").attr("style", "color: red;");
+			$("#sSetupUgroup").attr("style", "color: #6a94ff;");
 			$('#tree').abixTreeList();
 		});
 		function viewUser(id) {

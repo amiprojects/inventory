@@ -41,7 +41,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#purch").attr("id", "activeSubMenu");
-		$("#sPurchVtype").attr("style", "color: red;");
+		$("#sPurchVtype").attr("style", "color: #6a94ff;");
 		if ($('#msg').html() != "") {
 			$('.toast').fadeIn(400).delay(3000).fadeOut(400);
 		}
@@ -57,8 +57,7 @@
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
 
-			<c:if
-				test="${page.name.equals('Vendor Management')}">
+			<c:if test="${page.name.equals('Vendor Management')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
@@ -78,15 +77,17 @@
 				<div class="container">
 					<div class="row">
 						<div class="masonary-grids">
-						
-						 <div class="breadcrumbs" style="height: 50px; text-align: center;">
-									<h3 style=" margin-top: 11px;">Purchasing Vendor Type</h3>
-												
-											
-								</div>
-						
-							
-								<div class="widget-area"><div class="col-md-12">
+
+							<div class="breadcrumbs"
+								style="height: 50px; text-align: center;">
+								<h3 style="margin-top: 11px;">Purchasing Vendor Type</h3>
+
+
+							</div>
+
+
+							<div class="widget-area">
+								<div class="col-md-12">
 									<form action="newVendorType" method="get">
 										<div class="col-md-10">
 											<div class="form-group">
