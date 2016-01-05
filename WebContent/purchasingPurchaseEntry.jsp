@@ -41,7 +41,6 @@
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 <script src="js/jquery-ui/jquery-ui.js"></script>
 
-
 <script>
 	$(function() {
 		var d = new Date();
@@ -93,7 +92,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#purch").attr("id", "activeSubMenu");
-		$("#sPurchEntry").attr("style", "color: red;");
+		$("#sPurchEntry").attr("style", "color: #6a94ff;");
 		$("#payDetail").hide();
 		$("#description").hide();
 	});
@@ -704,7 +703,7 @@
 								<div class="col-md-3">Rate:</div>
 								<div class="col-md-9">
 									<input type="number" class="form-control" name="rate" id="rate"
-										required="required" onkeyup="rateF();">
+										required="required" onchange="rateF();">
 								</div>
 							</div>
 						</div>
@@ -719,12 +718,12 @@
 								<div class="col-md-2">WSP:</div>
 								<div class="col-md-10">
 									<input type="number" class="form-control" id="wsp"
-										readonly="readonly" name="wsp" onkeyup="wspF();">
+										readonly="readonly" name="wsp" onchange="wspF();">
 								</div>
 								<div class="col-md-2">MRP:</div>
 								<div class="col-md-10">
 									<input type="number" class="form-control" id="mrp"
-										readonly="readonly" name="mrp" onkeyup="mrpF();">
+										readonly="readonly" name="mrp" onchange="mrpF();">
 								</div>
 							</div>
 						</div>
@@ -1082,6 +1081,23 @@
 				}
 			}
 		}
+
+		function wspF() {
+			if ($("#isSalable").val() == 'yes') {
+				if ($("#rate").val() == "") {
+					alert("Please insert Rate first...");
+					$("#wsp").val("");
+				} else if (Number($("#rate").val()) > Number($("#wsp").val())) {
+					alert("WSP should be greater than or equals to Rate.");
+					$("#wsp").val("");
+				} else if ($("#mrp").val() != ""
+						&& Number($("#wsp").val()) > Number($("#mrp").val())) {
+					alert("WSP should be less than or equals to MRP.");
+					$("#wsp").val("");
+				}
+			}
+		}
+
 		function mrpF() {
 			if ($("#isSalable").val() == 'yes') {
 				if ($("#rate").val() == "") {
@@ -1091,26 +1107,11 @@
 					alert("Please insert WSP first...");
 					$("#mrp").val("");
 				} else if (Number($("#rate").val()) > Number($("#mrp").val())) {
-					alert("Rate should be less than or equals to MRP.");
+					alert("MRP should be greater than or equals to Rate.");
 					$("#mrp").val("");
 				} else if (Number($("#wsp").val()) > Number($("#mrp").val())) {
-					alert("WSP should be less than or equals to MRP.");
+					alert("MRP should be greater than or equals to WSP.");
 					$("#mrp").val("");
-				}
-			}
-		}
-		function wspF() {
-			if ($("#isSalable").val() == 'yes') {
-				if ($("#rate").val() == "") {
-					alert("Please insert Rate first...");
-					$("#wsp").val("");
-				} else if (Number($("#rate").val()) > Number($("#wsp").val())) {
-					alert("Rate should be less than or equals to WSP.");
-					$("#wsp").val("");
-				} else if ($("#mrp").val() != ""
-						&& Number($("#wsp").val()) > Number($("#mrp").val())) {
-					alert("WSP should be less than or equals to MRP.");
-					$("#wsp").val("");
 				}
 			}
 		}
@@ -1667,6 +1668,57 @@
 		});
 		$("#noC").click(function() {
 			$("#cancelOrNot").modal("hide");
+		});
+	</script>
+	<script src="js/numericInput.min.js"></script>
+	<script>
+		$(function() {
+
+			$("#rate").numericInput({
+
+				allowFloat : false, // Accpets positive numbers (floating point)
+
+				allowNegative : false,
+			// Accpets positive or negative integer
+
+			});
+
+		});
+		$(function() {
+
+			$("#qty").numericInput({
+
+				allowFloat : false, // Accpets positive numbers (floating point)
+
+				allowNegative : false,
+			// Accpets positive or negative integer
+
+			});
+
+		});
+		$(function() {
+
+			$("#wsp").numericInput({
+
+				allowFloat : false, // Accpets positive numbers (floating point)
+
+				allowNegative : false,
+			// Accpets positive or negative integer
+
+			});
+
+		});
+		$(function() {
+
+			$("#mrp").numericInput({
+
+				allowFloat : false, // Accpets positive numbers (floating point)
+
+				allowNegative : false,
+			// Accpets positive or negative integer
+
+			});
+
 		});
 	</script>
 </body>

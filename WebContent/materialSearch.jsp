@@ -1298,7 +1298,7 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#prodact").attr("id", "activeSubMenu");
-			$("#sProduct").attr("style", "color: red;");
+			$("#sProduct").attr("style", "color: #6a94ff;");
 			$("#divshow").hide();
 			$("#divhide").show();
 			$("#isSalebi").hide();

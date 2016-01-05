@@ -50,7 +50,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#sales").attr("id", "activeSubMenu");
-		$("#sSalesReturn").attr("style", "color: red;");
+		$("#sSalesReturn").attr("style", "color: #6a94ff;");
 		$("#wspORmrp").val('mrpVal');
 		$("#aDetailsDiv").hide();
 	});
@@ -228,15 +228,15 @@
 												<td><input type="text" id="codevalue"
 													readonly="readonly"><input type="text"
 													id="productId" readonly="readonly"></td>
-													
+
 												<td><input type="text" id="descvalue"
 													readonly="readonly"></td>
-													
+
 												<td><input type="text" id="qtyvalue"
 													readonly="readonly" value="0"></td>
-													
+
 												<td><input type="hidden" id="wspORmrp" name="wspORmrp">
-												
+
 													<input type="text" id="mrpQty" readonly="readonly"></td>
 												<td><input type="text" id="eachtotalvalue"
 													readonly="readonly"></td>

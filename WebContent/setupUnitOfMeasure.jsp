@@ -557,7 +557,7 @@
 
 		$(document).ready(function() {
 			$("#setup").attr("id", "activeSubMenu");
-			$("#sSetupUOM").attr("style", "color: red;");
+			$("#sSetupUOM").attr("style", "color: #6a94ff;");
 			if ($('#msg').html() != "") {
 				$('.toast').fadeIn(400).delay(3000).fadeOut(400);
 			}

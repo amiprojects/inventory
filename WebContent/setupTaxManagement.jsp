@@ -40,7 +40,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("#sSetupTax").attr("style", "color: red;");
+		$("#sSetupTax").attr("style", "color: #6a94ff;");
 		$("#setup").attr("id", "activeSubMenu");
 		if ($('#msg').html() != "") {
 			$('.toast').fadeIn(400).delay(3000).fadeOut(400);

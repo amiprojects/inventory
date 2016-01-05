@@ -256,7 +256,7 @@
 	
 		$(document).ready(function() {
 			$("#setup").attr("id", "activeSubMenu");
-			$("#sSetupBill").attr("style", "color: red;");
+			$("#sSetupBill").attr("style", "color: #6a94ff;");
 		});
 		$(function() {
 			$("#datepicker").datepicker();

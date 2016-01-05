@@ -49,8 +49,7 @@
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
 
-			<c:if
-				test="${page.name.equals('Stock')}">
+			<c:if test="${page.name.equals('Stock')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
@@ -80,76 +79,79 @@
 									</ul>
 								</div>
 								<div class="row">
-								<div class="widget-area" style="width: 34%;">
-									<form role="form" class="sec">
-										<div class="form-group">
-											<label for="" class="">Product Code: </label> <input
-												type="text" placeholder="" id="prodcode" class="form-control">
-											<label for="" class="">Product Description: </label> <input
-												type="text" placeholder="" id="prodesc" class="form-control">
-												<label for="" class="">Department/Sub Department/Category: </label> <input
-												type="text" placeholder="" id="deptcat" class="form-control">
-												
+									<div class="widget-area" style="width: 34%;">
+										<form role="form" class="sec">
+											<div class="form-group">
+												<label for="" class="">Product Code: </label> <input
+													type="text" placeholder="" id="prodcode"
+													class="form-control"> <label for="" class="">Product
+													Description: </label> <input type="text" placeholder=""
+													id="prodesc" class="form-control"> <label for=""
+													class="">Department/Sub Department/Category: </label> <input
+													type="text" placeholder="" id="deptcat"
+													class="form-control">
+
+											</div>
+
+
+											<button class="btn green btn-default" type="submit">Search
+											</button>
+											<button class="btn green btn-default" type="submit">Show
+												All</button>
+										</form>
+										<br> <br>
+
+
+
+									</div>
+									<div class="widget-area" style="width: 66%">
+										<div class="breadcrumbs">
+											<ul>
+												<li><a title="">Stock View : </a></li>
+											</ul>
 										</div>
 
 
-										<button class="btn green btn-default" type="submit">Search
-										</button>
-										<button class="btn green btn-default" type="submit">Show All</button>
-									</form>
-									<br> <br>
-									
+
+										<table id="stream_table"
+											class="table table-striped table-bordered">
+											<thead>
+												<tr>
+													<th>#</th>
+													<th>Product Code:</th>
+													<th>Product Description:</th>
+													<th>Quantity</th>
+													<th>UOM</th>
+													<th>MRP</th>
+													<th>WSP</th>
+													<th></th>
+
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>13 Assassins</td>
+													<td>Takashi Miike</td>
+													<td>Takashi Miike</td>
+													<td>Takashi Miike</td>
+													<td>Takashi Miike</td>
+													<td>Takashi Miike</td>
+													<td></td>
+													<td><img alt="" src="images/eye.png" height="25px"></td>
+
+												</tr>
+											</tbody>
+										</table>
 
 
-								</div>
-								<div class="widget-area" style="width: 66%">
-									<div class="breadcrumbs">
-										<ul>
-											<li><a title="">Stock View : </a></li>
-										</ul>
 									</div>
-
-
-
-									<table id="stream_table"
-										class="table table-striped table-bordered">
-										<thead>
-											<tr>
-                                                <th>#</th>
-												<th>Product Code:</th>
-												<th>Product Description:</th>
-												<th>Quantity</th>
-												<th>UOM</th>
-												<th>MRP</th>
-												<th>WSP</th>
-												<th></th>
-												
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>13 Assassins</td>
-												<td>Takashi Miike</td>
-												<td>Takashi Miike</td>
-												<td>Takashi Miike</td>
-												<td>Takashi Miike</td>
-												<td>Takashi Miike</td>
-												<td></td>
-												<td><img alt="" src="images/eye.png" height="25px"></td>
-
-											</tr>
-										</tbody>
-									</table>
-
-
-								</div>
 								</div>
 								<div class="widget-area" style="width: 34%;">
 									<table class="table">
 										<tbody>
 											<tr>
 												<td>
-												    
+
 													<table cellspacing="0" cellpadding="1" width="304">
 														<tbody>
 															<tr style="">
@@ -159,12 +161,13 @@
 															</tr>
 														</tbody>
 													</table>
-													
+
 												</td>
 											</tr>
 											<tr>
 												<td>
-													<div style="width: 293px; height: 310px; overflow-x:none; overflow-y:scroll;">
+													<div
+														style="width: 293px; height: 310px; overflow-x: none; overflow-y: scroll;">
 														<table cellspacing="0" cellpadding="1" width="300">
 															<tbody>
 																<tr>
@@ -247,74 +250,77 @@
 											</tr>
 										</tbody>
 									</table>
+								</div>
+
+								<div class="" col-md-9" style="width: 300px; height: 250px;">
+									<div class="widget-area"
+										style="width: 100%; height: 20%; float: left;">
+										<label>Product Code</label> <label>Product Description</label>
 									</div>
-								 
-								 <div class=""col-md-9" style="width:300px;height:250px;">
-						         <div class="widget-area" style="width: 100%; height:20%; float:left;">
-						         <label>Product Code</label>
-						         <label>Product Description</label>
-						         </div>
-						         
-						         <div class="widget-area" style="width: 100%; height:80%; float:left; overflow-y:scroll;">
-						            <div style="width: 48%; height: 100%; float:left; overflow-x:scroll; overflow-y:none;">
-						                <ul>
-						                <li>789456123</li>
-                                        <li>789456123</li>     
-                                        <li>789456123</li>
-                                        <li>789456123</li>   
-                                        <li>789456123</li>
-                                        <li>789456123</li>   
-                                        <li>789456123</li>
-                                        <li>789456123</li>
-                                        <li>789456123</li>
-                                        <li>789456123</li>     
-                                        <li>789456123</li>
-                                        <li>789456123</li>   
-                                        <li>789456123</li>
-                                        <li>789456123</li>   
-                                        <li>789456123</li>
-                                        <li>789456123</li>
-                                        <li>789456123</li>
-                                        <li>789456123</li>     
-                                        <li>789456123</li>
-                                        <li>789456123</li>   
-                                        <li>789456123</li>
-                                        <li>789456123</li>   
-                                        <li>789456123</li>
-                                        <li>789456123</li>                                      
-                                        </ul>
-						            </div>
-						            <div style="width: 48%; height: 100%; float:left; overflow-x:scroll;overflow-y:none;">
-						            <ul>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            <li>466545644</li>
-						            </ul>
-						            
-						            </div>
-						         </div>	
-						       
-						         </div>		
-						         
-								
-								
+
+									<div class="widget-area"
+										style="width: 100%; height: 80%; float: left; overflow-y: scroll;">
+										<div
+											style="width: 48%; height: 100%; float: left; overflow-x: scroll; overflow-y: none;">
+											<ul>
+												<li>789456123</li>
+												<li>789456123</li>
+												<li>789456123</li>
+												<li>789456123</li>
+												<li>789456123</li>
+												<li>789456123</li>
+												<li>789456123</li>
+												<li>789456123</li>
+												<li>789456123</li>
+												<li>789456123</li>
+												<li>789456123</li>
+												<li>789456123</li>
+												<li>789456123</li>
+												<li>789456123</li>
+												<li>789456123</li>
+												<li>789456123</li>
+												<li>789456123</li>
+												<li>789456123</li>
+												<li>789456123</li>
+												<li>789456123</li>
+												<li>789456123</li>
+												<li>789456123</li>
+												<li>789456123</li>
+												<li>789456123</li>
+											</ul>
+										</div>
+										<div
+											style="width: 48%; height: 100%; float: left; overflow-x: scroll; overflow-y: none;">
+											<ul>
+												<li>466545644</li>
+												<li>466545644</li>
+												<li>466545644</li>
+												<li>466545644</li>
+												<li>466545644</li>
+												<li>466545644</li>
+												<li>466545644</li>
+												<li>466545644</li>
+												<li>466545644</li>
+												<li>466545644</li>
+												<li>466545644</li>
+												<li>466545644</li>
+												<li>466545644</li>
+												<li>466545644</li>
+												<li>466545644</li>
+												<li>466545644</li>
+												<li>466545644</li>
+												<li>466545644</li>
+												<li>466545644</li>
+												<li>466545644</li>
+											</ul>
+
+										</div>
+									</div>
+
+								</div>
+
+
+
 							</div>
 						</div>
 					</div>
@@ -336,7 +342,7 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#stock").attr("id", "activeSubMenu");
-			$("#sStock").attr("style", "color: red;");
+			$("#sStock").attr("style", "color: #6a94ff;");
 		});
 	</script>
 </body>

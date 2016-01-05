@@ -219,7 +219,7 @@
 	<script>
 		$(document).ready(function() {
 			$("#sales").attr("id", "activeSubMenu");
-			$("#sSalesDiscount").attr("style", "color: red;");
+			$("#sSalesDiscount").attr("style", "color: #6a94ff;");
 		});
 		$(function() {
 			$("#datepicker").datepicker();

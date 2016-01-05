@@ -350,7 +350,7 @@
 			$("#companyinfo").show();
 			$('#subBId').hide();
 			$("#companyLogo").hide();
-			$("#sSetupComp").attr("style", "color: red;");
+			$("#sSetupComp").attr("style", "color: #6a94ff;");
 		});
 		$(function() {
 			$("#datepicker").datepicker();

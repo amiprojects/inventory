@@ -177,7 +177,7 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#sales").attr("id", "activeSubMenu");
-			$("#sSalesSearch").attr("style", "color: red;");
+			$("#sSalesSearch").attr("style", "color: #6a94ff;");
 		});
 	</script>
 	<script src="js/jquery-ui/jquery-ui.js"></script>

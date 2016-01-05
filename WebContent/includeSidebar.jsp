@@ -1,4 +1,5 @@
-<jsp:include page="include.jsp"/>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<jsp:include page="include.jsp" />
 <aside class="sidebar" style="height: 100%; overflow-y: scroll;">
 	<div class="menu-sec">
 		<div id="menu-toogle" class="menus">
@@ -17,20 +18,20 @@
 
 			<div class="single-menu">
 				<h2 id="prodact">
-					<a href="#" title=""><span>Product/Material Module</span></a>
+					<a href="#" title=""><span>Product/Material module</span></a>
 				</h2>
 				<div class="sub-menu">
 					<ul>
 						<li><a id="sProduct" href="MaterialPartDetailsGenerals.jsp"
 							title="">Product/Material </a></li>
-						
+
 					</ul>
 				</div>
 			</div>
 
 			<div class="single-menu">
 				<h2 id="purch">
-					<a title=""><span>Purchase Module</span></a>
+					<a title=""><span>Purchase module</span></a>
 				</h2>
 				<div class="sub-menu">
 					<ul>
@@ -38,15 +39,15 @@
 							title="">Purchase Entry</a></li>
 						<li><a id="sPurchSearch" href="purchasingPurchaseSearch.jsp"
 							title="">Search Purchase Entry</a></li>
-						
+
 					</ul>
 				</div>
 			</div>
-		
+
 
 			<div class="single-menu">
 				<h2 id="sales">
-					<a title=""><span>Sales Module</span></a>
+					<a title=""><span>Sales module</span></a>
 				</h2>
 				<div class="sub-menu">
 					<ul>
@@ -61,7 +62,7 @@
 
 			<div class="single-menu">
 				<h2 id="vendor">
-					<a title=""><span>Vendor Module</span></a>
+					<a title=""><span>Vendor module</span></a>
 				</h2>
 				<div class="sub-menu">
 					<ul>
@@ -72,7 +73,7 @@
 
 			<div class="single-menu">
 				<h2 id="stock">
-					<a title=""><span>Stock Module</span></a>
+					<a title=""><span>Stock module</span></a>
 				</h2>
 				<div class="sub-menu">
 					<ul>
@@ -84,7 +85,7 @@
 			</div>
 			<div class="single-menu">
 				<h2 id="jobs">
-					<a title=""><span>Jobs Module</span></a>
+					<a title=""><span>Jobs module</span></a>
 				</h2>
 				<div class="sub-menu">
 					<ul>
@@ -98,7 +99,7 @@
 			</div>
 			<div class="single-menu">
 				<h2 id="setup">
-					<a title=""><span>Setup Module</span></a>
+					<a title=""><span>Setup module</span></a>
 				</h2>
 				<div class="sub-menu">
 					<ul>
@@ -119,14 +120,20 @@
 					</ul>
 				</div>
 			</div>
-
-
-
-
 		</div>
 		<p>
-			2015 powered by  <a href="http://www.aminfotrix.com"
-				title="">AM INFOTRIX</a>
+			<c:if test="${sessionScope['ejb'].is21Days()=='true'}">
+				<!-- background-color: #ff0000; color: #F0F0F0; -->
+				<div style="color: #ff0000;">
+					<h4>Validity will be ended on
+						${sessionScope['ejb'].getAllStoct().get(0).getEndDate()} . Please
+						contact to your vendor...</h4>
+				</div>
+			</c:if>
+		</p>
+		<p>
+			2015 powered by <a href="http://www.aminfotrix.com" title="">AM
+				INFOTRIX</a>
 		</p>
 	</div>
 	<!-- Menu Sec -->

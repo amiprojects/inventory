@@ -50,7 +50,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#sales").attr("id", "activeSubMenu");
-		$("#sSalesEntry").attr("style", "color: red;");
+		$("#sSalesEntry").attr("style", "color: #6a94ff;");
 		$("#wspORmrp").val('mrpVal');
 		$("#aDetailsDiv").hide();
 	});
@@ -127,7 +127,7 @@
 													<td><input type="text" name="custName" id="custName"
 														style="align: center;"></input></td>
 												</tr>
-												
+
 												<tr>
 													<td>Address :</td>
 													<td><input type="text" name="addr" id="addr"
@@ -1621,6 +1621,21 @@
 					}
 				}
 			});
+		});
+	</script>
+	<script src="js/numericInput.min.js"></script>
+	<script>
+		$(function() {
+
+			$("#qty").numericInput({
+
+				allowFloat : false, // Accpets positive numbers (floating point)
+
+				allowNegative : false,
+			// Accpets positive or negative integer
+
+			});
+
 		});
 	</script>
 </body>

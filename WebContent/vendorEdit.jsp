@@ -24,11 +24,11 @@
 		if ($('#msg').html() != "") {
 			$('.toast').fadeIn(400).delay(3000).fadeOut(400);
 		}
-		
+
 		$("#type").val($("#oldVendortypeID").val());
 	});
-	
-	function fillFields(){
+
+	function fillFields() {
 		$("#name").val("XYZ");
 		$("#compname").val("KK");
 		$("#phn1").val("23456789");
@@ -48,7 +48,7 @@
 		$("#exciseno").val();
 		$("#servtaxno").val();
 		$("#datepicker3").val();
-		$("#taxgroup").val();		
+		$("#taxgroup").val();
 		$("#bankname").val();
 		$("#acno").val();
 		$("#branch").val();
@@ -104,7 +104,7 @@ $(document).ready(function(){
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#purch").attr("id", "activeSubMenu");
-		$("#sPurchVendor").attr("style", "color: red;");
+		$("#sPurchVendor").attr("style", "color: #6a94ff;");
 	});
 
 	function bankButtonPrev() {
@@ -253,10 +253,10 @@ $(document).ready(function(){
 			maxDate : 0
 		});
 	});
-	
-	function submitVendorDetails(){
-		 $("#vendordetails").submit();
-	 }
+
+	function submitVendorDetails() {
+		$("#vendordetails").submit();
+	}
 </script>
 
 </head>
@@ -264,15 +264,14 @@ $(document).ready(function(){
 	<c:if test="${sessionScope['user']==null}">
 		<c:redirect url="index.jsp" />
 	</c:if>
-	
-	
+
+
 	<c:if test="${!sessionScope['user'].equals('admin')}">
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
 
-			<c:if
-				test="${page.name.equals('Vendor Management')}">
+			<c:if test="${page.name.equals('Vendor Management')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
@@ -283,9 +282,11 @@ $(document).ready(function(){
 			</script>
 		</c:if>
 	</c:if>
-	
-	<c:set var="vendor" value="${sessionScope['ejb'].getVendorById(param.id)}"/>
-	<c:set var="account" value="${sessionScope['ejb'].getAccountDetailsByVendorId(param.id)}"/>
+
+	<c:set var="vendor"
+		value="${sessionScope['ejb'].getVendorById(param.id)}" />
+	<c:set var="account"
+		value="${sessionScope['ejb'].getAccountDetailsByVendorId(param.id)}" />
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
@@ -295,22 +296,25 @@ $(document).ready(function(){
 				<div class="container">
 					<div class="row">
 						<div class="masonary-grids">
-							
-
-								 <div class="breadcrumbs" style="height: 50px; text-align: center;">
-									<h3 style="    margin-top: 11px;">Vendor Details</h3>
-												
-											
-								</div>
 
 
-								
-								<div class="widget-area" style="width: 72%">
+							<div class="breadcrumbs"
+								style="height: 50px; text-align: center;">
+								<h3 style="margin-top: 11px;">Vendor Details</h3>
+
+
+							</div>
+
+
+
+							<div class="widget-area" style="width: 72%">
 								<div class="col-md-12">
 									<%-- <p>${requestScope['msg']}</p> --%>
-									<form role="form" class="sec" action="updateVendor" method="post" id="vendordetails">
-									   <input type="hidden" value="${param.id}" name="vendoeId" id="vendorid">
-									   
+									<form role="form" class="sec" action="updateVendor"
+										method="post" id="vendordetails">
+										<input type="hidden" value="${param.id}" name="vendoeId"
+											id="vendorid">
+
 										<ul class="nav nav-tabs">
 											<li class="active" id="detl"><a data-toggle="tab"
 												href="#detail">Details</a></li>
@@ -328,24 +332,26 @@ $(document).ready(function(){
 														<b>Bank Name:</b>
 													</div>
 													<div class="col-md-9">
-														<input type="text" class="form-control" name="bankName" id="bankname"
-															required="required" value="${account.bankName}">
+														<input type="text" class="form-control" name="bankName"
+															id="bankname" required="required"
+															value="${account.bankName}">
 													</div>
 													<br>
 													<div class="col-md-3">
 														<b>A/C no.:</b>
 													</div>
 													<div class="col-md-9">
-														<input type="text" class="form-control" name="bankAccNo" id="acno"
-															required="required" value="${account.bankAccountNumber}">
+														<input type="text" class="form-control" name="bankAccNo"
+															id="acno" required="required"
+															value="${account.bankAccountNumber}">
 													</div>
 													<br>
 													<div class="col-md-3">
 														<b>Branch:</b>
 													</div>
 													<div class="col-md-9">
-														<input type="text" class="form-control" name="bankBranch" id="branch"
-															required="required" value="${account.branch}">
+														<input type="text" class="form-control" name="bankBranch"
+															id="branch" required="required" value="${account.branch}">
 													</div>
 													<br>
 													<div class="col-md-3">
@@ -353,32 +359,36 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" id="bankcity"
-															required="required"  value="${account.city.cityName}"> <input type="hidden"
-															value="${account.city.id}" name="bankCity" id="bankCityId">
+															required="required" value="${account.city.cityName}">
+														<input type="hidden" value="${account.city.id}"
+															name="bankCity" id="bankCityId">
 													</div>
 													<br>
 													<div class="col-md-3">
 														<b>IFSC no.:</b>
 													</div>
 													<div class="col-md-9">
-														<input type="text" class="form-control" name="bankIFSC" id="ifsc"
-															required="required" value="${account.bankIFSCnumber}">
+														<input type="text" class="form-control" name="bankIFSC"
+															id="ifsc" required="required"
+															value="${account.bankIFSCnumber}">
 													</div>
 													<br>
 													<div class="col-md-3">
 														<b>MICR no.:</b>
 													</div>
 													<div class="col-md-9">
-														<input type="text" class="form-control" name="bankMICR" id="micrno"
-															required="required" value="${account.bankMICRnumber}">
+														<input type="text" class="form-control" name="bankMICR"
+															id="micrno" required="required"
+															value="${account.bankMICRnumber}">
 													</div>
 													<br>
 													<div class="col-md-3">
 														<b>RTGS code:</b>
 													</div>
 													<div class="col-md-9">
-														<input type="text" class="form-control" name="bankRTGS" id="rtgscd"
-															required="required" value="${account.bankRTGCnumber}">
+														<input type="text" class="form-control" name="bankRTGS"
+															id="rtgscd" required="required"
+															value="${account.bankRTGCnumber}">
 													</div>
 													<br>
 													<div class="col-md-3">
@@ -393,10 +403,10 @@ $(document).ready(function(){
 												<div class="col-md-12">
 													<input class="btn green pull-left" type="button"
 														value="Previous" onclick="bankButtonPrev();">
-												
-													
+
+
 												</div>
-												
+
 											</div>
 											<div id="vendorAccount" class="tab-pane fade">
 												<div class="widget-area">
@@ -406,7 +416,8 @@ $(document).ready(function(){
 														</div>
 														<div class="col-md-7">
 															<input type="text" class="form-control"
-																name="vendorVATno" id="vatno" required="required" value="${account.vatNumber}">
+																name="vendorVATno" id="vatno" required="required"
+																value="${account.vatNumber}">
 														</div>
 													</div>
 
@@ -415,10 +426,12 @@ $(document).ready(function(){
 															<b>VAT registration date:</b>
 														</div>
 														<div class="col-md-7">
-														<fmt:formatDate value="${account.vatRegistrationDate}" var="vatregdate" pattern="dd-MM-yyyy"/>
+															<fmt:formatDate value="${account.vatRegistrationDate}"
+																var="vatregdate" pattern="dd-MM-yyyy" />
 															<input type="text" class="form-control"
 																name="vendorVATregDate" required="required"
-																id="datepicker" readonly="readonly"  value="${vatregdate}">
+																id="datepicker" readonly="readonly"
+																value="${vatregdate}">
 														</div>
 													</div>
 
@@ -428,7 +441,8 @@ $(document).ready(function(){
 														</div>
 														<div class="col-md-7">
 															<input type="text" class="form-control"
-																name="vendorCSTno" id="cstno" required="required" value="${account.cstNumber}">
+																name="vendorCSTno" id="cstno" required="required"
+																value="${account.cstNumber}">
 														</div>
 													</div>
 
@@ -437,10 +451,12 @@ $(document).ready(function(){
 															<b>CST registration date:</b>
 														</div>
 														<div class="col-md-7">
-														<fmt:formatDate value="${account.cstRegistrationDate}" var="cstregdate" pattern="dd-MM-yyyy"/>
+															<fmt:formatDate value="${account.cstRegistrationDate}"
+																var="cstregdate" pattern="dd-MM-yyyy" />
 															<input type="text" class="form-control"
 																name="vendorCSTregDate" required="required"
-																id="datepicker1" readonly="readonly" value="${cstregdate}">
+																id="datepicker1" readonly="readonly"
+																value="${cstregdate}">
 														</div>
 													</div>
 
@@ -450,7 +466,8 @@ $(document).ready(function(){
 														</div>
 														<div class="col-md-7">
 															<input type="text" class="form-control"
-																name="vendorPANno" id="pan" required="required" value="${account.panNumber}">
+																name="vendorPANno" id="pan" required="required"
+																value="${account.panNumber}">
 														</div>
 													</div>
 
@@ -460,7 +477,9 @@ $(document).ready(function(){
 														</div>
 														<div class="col-md-7">
 															<input type="text" class="form-control"
-																name="vendorExciseRegNo" id="exciseno" required="required" value="${account.exciseRegistrationNumber}">
+																name="vendorExciseRegNo" id="exciseno"
+																required="required"
+																value="${account.exciseRegistrationNumber}">
 														</div>
 													</div>
 
@@ -469,10 +488,12 @@ $(document).ready(function(){
 															<b>Excise registration date:</b>
 														</div>
 														<div class="col-md-7">
-														<fmt:formatDate value="${account.exciseRegistrationDate}" var="exciseregdate" pattern="dd-MM-yyyy"/>
+															<fmt:formatDate value="${account.exciseRegistrationDate}"
+																var="exciseregdate" pattern="dd-MM-yyyy" />
 															<input type="text" class="form-control"
 																name="vendorExciseRegDate" required="required"
-																id="datepicker2" readonly="readonly" value="${exciseregdate}">
+																id="datepicker2" readonly="readonly"
+																value="${exciseregdate}">
 														</div>
 													</div>
 
@@ -482,7 +503,9 @@ $(document).ready(function(){
 														</div>
 														<div class="col-md-7">
 															<input type="text" class="form-control"
-																name="vendorServiceTaxRegNo" id="servtaxno" required="required" value="${account.serviceTaxRegistrationNumber}">
+																name="vendorServiceTaxRegNo" id="servtaxno"
+																required="required"
+																value="${account.serviceTaxRegistrationNumber}">
 														</div>
 													</div>
 
@@ -491,10 +514,13 @@ $(document).ready(function(){
 															<b>Service tax registration date:</b>
 														</div>
 														<div class="col-md-7">
-														<fmt:formatDate value="${account.serviceTaxRegistrationDate}" var="serviceregdate" pattern="dd-MM-yyyy"/>
+															<fmt:formatDate
+																value="${account.serviceTaxRegistrationDate}"
+																var="serviceregdate" pattern="dd-MM-yyyy" />
 															<input type="text" class="form-control"
 																name="vendorServiceTaxRegDate" required="required"
-																id="datepicker3" readonly="readonly" value="${serviceregdate}">
+																id="datepicker3" readonly="readonly"
+																value="${serviceregdate}">
 														</div>
 													</div>
 													<div class="row">
@@ -502,7 +528,8 @@ $(document).ready(function(){
 															<b>Tax group id:</b>
 														</div>
 														<div class="col-md-7">
-															<select class="form-control" name="taxTypeGroupId" id="taxgroup" value="${account.tax_Type_Group}">
+															<select class="form-control" name="taxTypeGroupId"
+																id="taxgroup" value="${account.tax_Type_Group}">
 																<c:forEach
 																	items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
 																	var="taxTypeGroup">
@@ -528,8 +555,8 @@ $(document).ready(function(){
 														<b>Name:</b>
 													</div>
 													<div class="col-md-9">
-														<input type="text" class="form-control" name="vendorName" id="name"
-															required="required"  value="${vendor.name}">
+														<input type="text" class="form-control" name="vendorName"
+															id="name" required="required" value="${vendor.name}">
 													</div>
 													<br>
 													<div class="col-md-3">
@@ -537,47 +564,50 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control"
-															name="vendorCompanyName" id="compname" required="required"  value="${vendor.companyName}">
+															name="vendorCompanyName" id="compname"
+															required="required" value="${vendor.companyName}">
 													</div>
 
 													<div class="col-md-3">
 														<b>Ph No1:</b>
 													</div>
 													<div class="col-md-9">
-														<input type="text" class="form-control" name="vendorPh1" id="phn1"
-															required="required"  value="${vendor.ph1}">
+														<input type="text" class="form-control" name="vendorPh1"
+															id="phn1" required="required" value="${vendor.ph1}">
 													</div>
 
 													<div class="col-md-3">
 														<b>Ph No2:</b>
 													</div>
 													<div class="col-md-9">
-														<input type="text" class="form-control" name="vendorPh2" id="phn2"
-															required="required"  value="${vendor.ph2}">
+														<input type="text" class="form-control" name="vendorPh2"
+															id="phn2" required="required" value="${vendor.ph2}">
 													</div>
 
 													<div class="col-md-3">
 														<b>Email :</b>
 													</div>
 													<div class="col-md-9">
-														<input type="text" class="form-control" name="vendorMail" id="email"
-															required="required"  value="${vendor.email}">
+														<input type="text" class="form-control" name="vendorMail"
+															id="email" required="required" value="${vendor.email}">
 													</div>
 
 													<div class="col-md-3">
 														<b>Alias name :</b>
 													</div>
 													<div class="col-md-9">
-														<input type="text" class="form-control" name="vendorAlias" id="alias"
-															required="required"  value="${vendor.aliseName}">
+														<input type="text" class="form-control" name="vendorAlias"
+															id="alias" required="required"
+															value="${vendor.aliseName}">
 													</div>
 
 													<div class="col-md-3">
 														<b>Vendor type :</b>
 													</div>
 													<div class="col-md-9">
-													<input type="hidden" id="oldVendortypeID" value="${vendor.vendorType.id}">
-														<select class="form-control" name="vendorType" id="type">
+														<input type="hidden" id="oldVendortypeID"
+															value="${vendor.vendorType.id}"> <select
+															class="form-control" name="vendorType" id="type">
 															<c:forEach
 																items="${sessionScope['ejb'].getAllVendorType()}"
 																var="vType">
@@ -602,21 +632,22 @@ $(document).ready(function(){
 														</ul>
 													</div>
 													<textarea rows="" cols="" class="form-control"
-														name="vendorAddress" id="addr" required="required" >${vendor.address}</textarea>
+														name="vendorAddress" id="addr" required="required">${vendor.address}</textarea>
 													<div class="row">
 														<div class="col-md-3">City :</div>
 														<div class="col-md-9">
-															<input type="text" class="form-control cityAuto" id="vendorcity"
-																name="vendorCity" required="required"  value="${vendor.city.cityName}">
-															<input type="hidden" name="vendorCityId" value="${account.city.id}"
-																id="vendorCityId">
+															<input type="text" class="form-control cityAuto"
+																id="vendorcity" name="vendorCity" required="required"
+																value="${vendor.city.cityName}"> <input
+																type="hidden" name="vendorCityId"
+																value="${account.city.id}" id="vendorCityId">
 														</div>
 													</div>
 													<div class="row">
 														<div class="col-md-3">Pin code :</div>
 														<div class="col-md-9">
-															<input type="text" class="form-control" name="vendorPin" id="pin"
-																required="required"  value="${vendor.pinCode}">
+															<input type="text" class="form-control" name="vendorPin"
+																id="pin" required="required" value="${vendor.pinCode}">
 														</div>
 													</div>
 												</div>
@@ -626,7 +657,8 @@ $(document).ready(function(){
 														value="Previous" onclick="addressButtonPrev();"> <input
 														class="btn green pull-right" type="button" value="Next"
 														onclick="addressButtonNext();">
-												</div><br>
+												</div>
+												<br>
 											</div>
 											<div id="part" class="tab-pane fade ">
 												<div class="widget-area">
@@ -700,7 +732,9 @@ $(document).ready(function(){
 												<br>
 											</div>
 										</div>
-										<input type="button" class="btn green pull-left" type="submit" style="width: 100px;margin-top: 27px;" value="Submit" onclick="submitVendorDetails();">
+										<input type="button" class="btn green pull-left" type="submit"
+											style="width: 100px; margin-top: 27px;" value="Submit"
+											onclick="submitVendorDetails();">
 									</form>
 									<div class='toast' style='display: none'>
 										<h3 id="msg">${requestScope['msg']}</h3>

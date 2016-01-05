@@ -278,7 +278,7 @@
 
 	$(document).ready(function() {
 		$("#jobs").attr("id", "activeSubMenu");
-		$("#jR").attr("style", "color: red;");
+		$("#jR").attr("style", "color: #6a94ff;");
 		/* $("#jrecive").hide(); */
 
 		$("#qtyRe").val()

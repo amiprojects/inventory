@@ -170,7 +170,7 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#jobs").attr("id", "activeSubMenu");
-			$("#jSearch").attr("style", "color: red;");
+			$("#jSearch").attr("style", "color: #6a94ff;");
 		});
 	</script>
 	<script src="js/jquery-ui/jquery-ui.js"></script>
