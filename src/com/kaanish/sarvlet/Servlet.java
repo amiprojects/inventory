@@ -68,7 +68,9 @@ import com.kaanish.util.DateConverter;
 		"/deleteProductImage", "/jobAssignment", "/jobAssignSearchByDate",
 		"/salesEntry", "/createUserGroup", "/updateUserGroup", "/updateUser",
 		"/goStockView", "/jChallanSearch", "/jobRecieve", "/createNewUser",
-		"/goJobDetailShow", "/goProView", "/purchaseView", "/changePass" })
+		"/goJobDetailShow", "/goProView", "/purchaseView", "/changePass",
+		"/purchaseSearchByPurchaseChallanNo", "/purchaseSearchByVendorName",
+		"/purchaseSearchByAgentName", "/purchaseSearchByProductCode" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -1232,6 +1234,38 @@ public class Servlet extends HttpServlet {
 						DateConverter.getDate(req.getParameter("lDate")));
 				req.setAttribute("purEntryList", purEntryList);
 				break;
+
+			case "purchaseSearchByPurchaseChallanNo":
+				page = "purchasingPurchaseSearch.jsp";
+				List<Purchase_Entry> purEntryList1 = ejb
+						.getPurchaseEntryByChallanNo(req
+								.getParameter("purChallanNo"));
+				req.setAttribute("purEntryList", purEntryList1);
+				break;
+
+			case "purchaseSearchByVendorName":
+				page = "purchasingPurchaseSearch.jsp";
+				List<Purchase_Entry> purEntryList2 = ejb
+						.getPurchaseEntryByVendorName(req
+								.getParameter("vendorName"));
+				req.setAttribute("purEntryList", purEntryList2);
+				break;
+
+			case "purchaseSearchByAgentName":
+				page = "purchasingPurchaseSearch.jsp";
+				List<Purchase_Entry> purEntryList3 = ejb
+						.getPurchaseEntryByAgentName(req
+								.getParameter("agentName"));
+				req.setAttribute("purEntryList", purEntryList3);
+				break;
+
+			/*case "purchaseSearchByProductCode":
+				page = "purchasingPurchaseSearch.jsp";
+				List<Purchase_Entry> purEntryList4 = ejb
+						.getPurchaseEntryByProductCode(req
+								.getParameter("prodCode"));
+				req.setAttribute("purEntryList", purEntryList4);
+				break;*/
 
 			case "purchaseView":
 				page = "purchaseView.jsp";
