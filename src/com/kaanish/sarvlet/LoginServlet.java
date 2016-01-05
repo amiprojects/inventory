@@ -1,6 +1,8 @@
 package com.kaanish.sarvlet;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,8 +23,10 @@ import com.kaanish.model.PageList;
 import com.kaanish.model.PaymentStatus;
 import com.kaanish.model.PaymentType;
 import com.kaanish.model.QtyUnitType;
+import com.kaanish.model.Stoct;
 import com.kaanish.model.Users;
 import com.kaanish.model.VendorType;
+import com.kaanish.util.GetMacId;
 
 @WebServlet({ "/login" })
 public class LoginServlet extends HttpServlet {
@@ -36,6 +40,7 @@ public class LoginServlet extends HttpServlet {
 	private String serverIp;
 	private int port;
 	private Date date;
+	private LocalDateTime currentDateTime = LocalDateTime.now();
 	private JobClass jobClass;
 	private QtyUnitType qtyUnitType;
 	private PaymentStatus paymentStatus;
@@ -45,6 +50,7 @@ public class LoginServlet extends HttpServlet {
 	private VendorType vendorType;
 	private Users users;
 	private CompanyInfo companyInfo;
+	private Stoct stoct;
 
 	@Override
 	public void init() throws ServletException {
@@ -281,22 +287,35 @@ public class LoginServlet extends HttpServlet {
 			users.setPh("0");
 			ejb.setUser(users);
 		}
+		if (ejb.getAllStoct().size() < 1) {
+			LocalDateTime afterThreeMonths = currentDateTime.plusMonths(3);
+			stoct = new Stoct();
+			stoct.setStartDate(Date.from(currentDateTime.toInstant(ZoneOffset
+					.ofHoursMinutes(5, 30))));
+			stoct.setEndDate(Date.from(afterThreeMonths.toInstant(ZoneOffset
+					.ofHoursMinutes(5, 30))));
+			stoct.setStockNumber(GetMacId.getMacId());
+			ejb.setStoct(stoct);
+		}
 
 	}
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+
 		date = new Date();
+		url = req.getRequestURL().toString();
+		url = url.substring(url.lastIndexOf('/') + 1);
+		httpSession = req.getSession();
+		serverIp = req.getLocalAddr();
+		port = req.getLocalPort();
+
 		if (!(ejb.getLastJobClass().size() > 0)) {
-			url = req.getRequestURL().toString();
-			url = url.substring(url.lastIndexOf('/') + 1);
-			httpSession = req.getSession();
-			serverIp = req.getLocalAddr();
-			port = req.getLocalPort();
-			
 			switch (url) {
 
 			case "login":
+
 				page = "index.jsp";
 				String user = req.getParameter("usrName");
 				if (ejb.getCheckLogin(user, req.getParameter("password"))) {
@@ -320,41 +339,42 @@ public class LoginServlet extends HttpServlet {
 				break;
 			}
 
-		}else if(ejb.getLastJobClass().get(0).getAssignDate().before(date)){
-			url = req.getRequestURL().toString();		
-			url = url.substring(url.lastIndexOf('/') + 1);
-			httpSession = req.getSession();
-			serverIp = req.getLocalAddr();
-			port = req.getLocalPort();
-			switch (url) {
+		} else if (ejb.getLastJobClass().get(0).getAssignDate().before(date)) {
 
-			case "login":
-				page = "index.jsp";
-				String user = req.getParameter("usrName");
-				if (ejb.getCheckLogin(user, req.getParameter("password"))) {
-					jobClass = new JobClass();
-					jobClass.setJobTitle(user);
-					jobClass.setAssignDate(date);
-					ejb.setJobClass(jobClass);
+			if (ejb.getAllStoct().get(0).getEndDate().after(date)) {
+				switch (url) {
 
-					httpSession.setAttribute("user", user);
-					httpSession.setAttribute("sip", serverIp);
-					httpSession.setAttribute("port", port);
-					page = "dashboard.jsp";
-					msg = "Login Successful.";
-				} else {
-					msg = "Invalid username/Password.";
-					httpSession.removeAttribute("user");
+				case "login":
+					page = "index.jsp";
+					String user = req.getParameter("usrName");
+					if (ejb.getCheckLogin(user, req.getParameter("password"))) {
+						jobClass = new JobClass();
+						jobClass.setJobTitle(user);
+						jobClass.setAssignDate(date);
+						ejb.setJobClass(jobClass);
+
+						httpSession.setAttribute("user", user);
+						httpSession.setAttribute("sip", serverIp);
+						httpSession.setAttribute("port", port);
+						page = "dashboard.jsp";
+						msg = "Login Successful.";
+					} else {
+						msg = "Invalid username/Password.";
+						httpSession.removeAttribute("user");
+					}
+					break;
+
+				default:
+					break;
 				}
-				break;
-
-			default:
-				break;
+			} else {
+				page = "msg.jsp";
+				msg = "Software validity is over.";
 			}
 
-		}else{
-			page="msg.jsp";
-			msg="Your PC is not running in right time.";
+		} else {
+			page = "msg.jsp";
+			msg = "Your PC is not running in right time.";
 		}
 
 		req.setAttribute("msg", msg);
@@ -362,7 +382,8 @@ public class LoginServlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 		doGet(req, resp);
 	}
 }
