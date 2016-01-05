@@ -1,4 +1,5 @@
-<jsp:include page="include.jsp"/>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<jsp:include page="include.jsp" />
 <aside class="sidebar" style="height: 100%; overflow-y: scroll;">
 	<div class="menu-sec">
 		<div id="menu-toogle" class="menus">
@@ -23,7 +24,7 @@
 					<ul>
 						<li><a id="sProduct" href="MaterialPartDetailsGenerals.jsp"
 							title="">Product/Material </a></li>
-						
+
 					</ul>
 				</div>
 			</div>
@@ -38,11 +39,11 @@
 							title="">Purchase Entry</a></li>
 						<li><a id="sPurchSearch" href="purchasingPurchaseSearch.jsp"
 							title="">Search Purchase Entry</a></li>
-						
+
 					</ul>
 				</div>
 			</div>
-		
+
 
 			<div class="single-menu">
 				<h2 id="sales">
@@ -119,14 +120,20 @@
 					</ul>
 				</div>
 			</div>
-
-
-
-
 		</div>
 		<p>
-			2015 powered by  <a href="http://www.aminfotrix.com"
-				title="">AM INFOTRIX</a>
+			<c:if test="${sessionScope['ejb'].is21Days()=='true'}">
+				<!-- background-color: #ff0000; color: #F0F0F0; -->
+				<div style="color: #ff0000;">
+					<h4>Validity will be ended on
+						${sessionScope['ejb'].getAllStoct().get(0).getEndDate()} . Please
+						contact to your vendor...</h4>
+				</div>
+			</c:if>
+		</p>
+		<p>
+			2015 powered by <a href="http://www.aminfotrix.com" title="">AM
+				INFOTRIX</a>
 		</p>
 	</div>
 	<!-- Menu Sec -->

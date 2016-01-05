@@ -1,6 +1,8 @@
 package com.kaanish.ejb;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -95,8 +97,8 @@ public class Ejb {
 
 		return q.getResultList();
 	}
-	
-	public void setStoct(Stoct s){
+
+	public void setStoct(Stoct s) {
 		em.persist(s);
 	}
 
@@ -104,6 +106,20 @@ public class Ejb {
 		TypedQuery<Stoct> q = em.createQuery(
 				"select c from Stoct c ORDER BY c.id DESC", Stoct.class);
 		return q.getResultList();
+	}
+
+	public boolean is21Days() {
+		Date date = new Date();
+		LocalDateTime afterThreeMonths = LocalDateTime.ofInstant(getAllStoct()
+				.get(0).getEndDate().toInstant(), ZoneId.systemDefault());
+		LocalDateTime before21Days = afterThreeMonths.minusDays(21);
+		if (date.after(Date.from(before21Days.toInstant(ZoneOffset
+				.ofHoursMinutes(5, 30))))) {
+			return true;
+		} else {
+			return false;
+		}
+
 	}
 
 	/***************** for user **********************/

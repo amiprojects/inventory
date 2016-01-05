@@ -2,6 +2,7 @@ package com.kaanish.sarvlet;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Date;
@@ -357,7 +358,21 @@ public class LoginServlet extends HttpServlet {
 						httpSession.setAttribute("sip", serverIp);
 						httpSession.setAttribute("port", port);
 						page = "dashboard.jsp";
-						msg = "Login Successful.";
+
+						/*
+						 * LocalDateTime afterThreeMonths = LocalDateTime
+						 * .ofInstant(ejb.getAllStoct().get(0)
+						 * .getEndDate().toInstant(), ZoneId.systemDefault());
+						 * LocalDateTime before21Days = afterThreeMonths
+						 * .minusDays(21); if (date.after(Date.from(before21Days
+						 * .toInstant(ZoneOffset.ofHoursMinutes(5, 30))))) { msg
+						 * = "Validity will be ended on " +
+						 * ejb.getAllStoct().get(0).getEndDate() +
+						 * ". Please contact to your vendor..."; } else {
+						 */
+							msg = "Login Successful.";
+						/*}*/
+
 					} else {
 						msg = "Invalid username/Password.";
 						httpSession.removeAttribute("user");

@@ -32,6 +32,14 @@
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
 <!-- Responsive -->
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+<link rel="stylesheet" href="css/toast.css" type="text/css" />
+<!-- <script type="text/javascript">
+	$(document).ready(function() {
+		if ($('#msg').html() != "") {
+			$('.toast').fadeIn(400).delay(3000).fadeOut(400);
+		}
+	});
+</script> -->
 </head>
 <body>
 	<c:if test="${sessionScope['user']==null}">
@@ -92,6 +100,9 @@
 						<div class="top-margin">
 							<div class="row">
 								<div class="col-md-3">
+									<%-- <div class='toast' style="display: none; z-index: 99999999999;">
+										<h3 id="msg">${requestScope['msg']}</h3>
+									</div> --%>
 									<div class="stats-counter">
 										<h3>New Visits</h3>
 										<span>21,069</span> <i class="fa fa-clock-o green"></i>

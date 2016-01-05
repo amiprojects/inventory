@@ -1082,6 +1082,22 @@
 				}
 			}
 		}
+		function wspF() {
+			if ($("#isSalable").val() == 'yes') {
+				if ($("#rate").val() == "") {
+					alert("Please insert Rate first...");
+					$("#wsp").val("");
+				} else if (Number($("#rate").val()) > Number($("#wsp").val())) {
+					alert("WSP should be greater than or equals to Rate.");
+					$("#wsp").val("");
+				} else if ($("#mrp").val() != ""
+						&& Number($("#wsp").val()) > Number($("#mrp").val())) {
+					alert("WSP should be less than or equals to MRP.");
+					$("#wsp").val("");
+				}
+			}
+		}
+
 		function mrpF() {
 			if ($("#isSalable").val() == 'yes') {
 				if ($("#rate").val() == "") {
@@ -1091,26 +1107,11 @@
 					alert("Please insert WSP first...");
 					$("#mrp").val("");
 				} else if (Number($("#rate").val()) > Number($("#mrp").val())) {
-					alert("Rate should be less than or equals to MRP.");
+					alert("MRP should be greater than or equals to Rate.");
 					$("#mrp").val("");
 				} else if (Number($("#wsp").val()) > Number($("#mrp").val())) {
-					alert("WSP should be less than or equals to MRP.");
+					alert("MRP should be greater than or equals to WSP.");
 					$("#mrp").val("");
-				}
-			}
-		}
-		function wspF() {
-			if ($("#isSalable").val() == 'yes') {
-				if ($("#rate").val() == "") {
-					alert("Please insert Rate first...");
-					$("#wsp").val("");
-				} else if (Number($("#rate").val()) > Number($("#wsp").val())) {
-					alert("Rate should be less than or equals to WSP.");
-					$("#wsp").val("");
-				} else if ($("#mrp").val() != ""
-						&& Number($("#wsp").val()) > Number($("#mrp").val())) {
-					alert("WSP should be less than or equals to MRP.");
-					$("#wsp").val("");
 				}
 			}
 		}
