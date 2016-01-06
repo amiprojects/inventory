@@ -848,6 +848,42 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<JobAssignmentDetails> getJobAssignByChallanNo(String chNo) {
+		TypedQuery<JobAssignmentDetails> q = em
+				.createQuery(
+						"select c from JobAssignmentDetails c where UPPER(c.challanNumber)=:chNo ORDER BY c.id DESC",
+						JobAssignmentDetails.class);
+		q.setParameter("chNo", chNo.toUpperCase());
+		return q.getResultList();
+	}
+
+	public List<JobAssignmentDetails> getJobAssignByJobberName(String name) {
+		TypedQuery<JobAssignmentDetails> q = em
+				.createQuery(
+						"select c from JobAssignmentDetails c where c.vendor.vendorType.type='Jobber' and UPPER(c.vendor.name)=:name ORDER BY c.id DESC",
+						JobAssignmentDetails.class);
+		q.setParameter("name", name.toUpperCase());
+		return q.getResultList();
+	}
+
+	public List<JobAssignmentDetails> getJobAssignByProductCode(String name) {
+		List<JobAssignmentDetails> lst = new ArrayList<JobAssignmentDetails>();
+		Set<JobAssignmentDetails> hs = new HashSet<>();
+		TypedQuery<JobAssignmentProducts> q = em
+				.createQuery(
+						"select c from JobAssignmentProducts c where UPPER(c.purchase_Product_Details.productDetail.code)=:name ORDER BY c.id DESC",
+						JobAssignmentProducts.class);
+		q.setParameter("name", name.toUpperCase());
+
+		for (JobAssignmentProducts p : q.getResultList()) {
+			lst.add(p.getJobAssignmentDetails());
+		}
+		hs.addAll(lst);
+		lst.clear();
+		lst.addAll(hs);
+		return lst;
+	}
+
 	/***************** for Job Assignment Products ***********************/
 	public void setJobAssignmentProducts(
 			JobAssignmentProducts jobAssignmentProducts) {

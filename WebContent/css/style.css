@@ -323,7 +323,7 @@ body .no-padding {
 
 .toggle-menu:before {
     background: none repeat scroll 0 0 #f7f7f7;
-    content: "";
+    content: "ï�¥";
     font-family: fontawesome;
     font-size: 15px;
     height: 100%;
@@ -2768,7 +2768,7 @@ aside.fixed {
 
 .recent-mails-widget .filterform:before {
     color: #626262;
-    content: "";
+    content: "ï€‚";
     font-family: fontawesome;
     position: absolute;
     right: 10px;
@@ -4690,7 +4690,7 @@ content: attr(data-checked);
 }
 .twitter-profile:before {
     color: #f2f2f2;
-    content: "";
+    content: "ï‚™";
     font-family: fontawesome;
     font-size: 114px;
     left: 0;

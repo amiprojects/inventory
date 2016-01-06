@@ -68,9 +68,11 @@ import com.kaanish.util.DateConverter;
 		"/deleteProductImage", "/jobAssignment", "/jobAssignSearchByDate",
 		"/salesEntry", "/createUserGroup", "/updateUserGroup", "/updateUser",
 		"/goStockView", "/jChallanSearch", "/jobRecieve", "/createNewUser",
-		"/goJobDetailShow", "/goProView", "/purchaseView", "/changePass","/goSearchVendor",
-		"/purchaseSearchByPurchaseChallanNo", "/purchaseSearchByVendorName",
-		"/purchaseSearchByAgentName", "/purchaseSearchByProductCode" })
+		"/goJobDetailShow", "/goProView", "/purchaseView", "/changePass",
+		"/goSearchVendor", "/purchaseSearchByPurchaseChallanNo",
+		"/purchaseSearchByVendorName", "/purchaseSearchByAgentName",
+		"/purchaseSearchByProductCode", "/jobSearchByJobChallanNo",
+		"/jobSearchByProductCode", "/jobSearchByJobberName" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -793,7 +795,7 @@ public class Servlet extends HttpServlet {
 					accountDetails = new AccountDetails();
 					dt = new Date();
 
-					vendor.setName(req.getParameter("vendorName"));
+					vendor.setName(req.getParameter("vendorName").toUpperCase());
 					vendor.setLastModifiedDate(dt);
 					vendor.setAddress(req.getParameter("vendorAddress"));
 					vendor.setAliseName(req.getParameter("vendorAlias"));
@@ -821,50 +823,47 @@ public class Servlet extends HttpServlet {
 					accountDetails.setBankRTGCnumber(req
 							.getParameter("bankRTGS"));
 					accountDetails.setBranch(req.getParameter("bankBranch"));
-					
-					
-					if(!req.getParameter("bankCity").equals("")){
-					accountDetails.setCity(ejb.getCityById(Integer.parseInt(req
-							.getParameter("bankCity"))));
+
+					if (!req.getParameter("bankCity").equals("")) {
+						accountDetails.setCity(ejb.getCityById(Integer
+								.parseInt(req.getParameter("bankCity"))));
 					}
-					
-					
+
 					accountDetails
 							.setCstNumber(req.getParameter("vendorCSTno"));
-					if(!req.getParameter("vendorCSTregDate").equals("")){
+					if (!req.getParameter("vendorCSTregDate").equals("")) {
 						accountDetails.setCstRegistrationDate(DateConverter
 								.getDate(req.getParameter("vendorCSTregDate")));
 					}
-					if(!req.getParameter("vendorExciseRegDate").equals("")){
+					if (!req.getParameter("vendorExciseRegDate").equals("")) {
 						accountDetails.setCstRegistrationDate(DateConverter
-								.getDate(req.getParameter("vendorExciseRegDate")));
-					}if(!req.getParameter("vendorServiceTaxRegDate").equals("")){
-						accountDetails.setCstRegistrationDate(DateConverter
-								.getDate(req.getParameter("vendorServiceTaxRegDate")));
-					}if(!req.getParameter("vendorVATregDate").equals("")){
+								.getDate(req
+										.getParameter("vendorExciseRegDate")));
+					}
+					if (!req.getParameter("vendorServiceTaxRegDate").equals("")) {
+						accountDetails
+								.setCstRegistrationDate(DateConverter.getDate(req
+										.getParameter("vendorServiceTaxRegDate")));
+					}
+					if (!req.getParameter("vendorVATregDate").equals("")) {
 						accountDetails.setCstRegistrationDate(DateConverter
 								.getDate(req.getParameter("vendorVATregDate")));
 					}
-					
-					
+
 					accountDetails.setExciseRegistrationNumber(req
 							.getParameter("vendorExciseRegNo"));
 					accountDetails
 							.setPanNumber(req.getParameter("vendorPANno"));
-					
+
 					accountDetails.setServiceTaxRegistrationNumber(req
 							.getParameter("vendorServiceTaxRegNo"));
 					accountDetails
 							.setVatNumber(req.getParameter("vendorVATno"));
-					
-
-					
 
 					accountDetails.setTax_Type_Group(ejb
 							.getTax_Type_GroupById(Integer.parseInt(req
 									.getParameter("taxTypeGroupId"))));
-					
-					
+
 					accountDetails.setUsers(ejb
 							.getUserById((String) httpSession
 									.getAttribute("user")));
@@ -897,8 +896,8 @@ public class Servlet extends HttpServlet {
 					}
 				}
 				if (fm == 0) {
-					purchaseEntry.setVendor_bill_no(req
-							.getParameter("vendorBillNo"));
+					purchaseEntry.setVendor_bill_no(req.getParameter(
+							"vendorBillNo").toUpperCase());
 
 					dt = new Date();
 					purchaseEntry.setChallan_no(Integer.parseInt(req
@@ -1188,6 +1187,14 @@ public class Servlet extends HttpServlet {
 						DateConverter.getDate(req.getParameter("fDate")),
 						DateConverter.getDate(req.getParameter("lDate")));
 				req.setAttribute("purEntryList", purEntryList);
+				if (purEntryList.size() > 0) {
+					msg = "Your search for dated " + req.getParameter("fDate")
+							+ " to " + req.getParameter("lDate");
+				} else {
+					msg = "No result found for dated "
+							+ req.getParameter("fDate") + " to "
+							+ req.getParameter("lDate") + "...";
+				}
 				break;
 
 			case "purchaseSearchByPurchaseChallanNo":
@@ -1196,6 +1203,14 @@ public class Servlet extends HttpServlet {
 						.getPurchaseEntryByChallanNo(req
 								.getParameter("purChallanNo"));
 				req.setAttribute("purEntryList", purEntryList1);
+				if (purEntryList1.size() > 0) {
+					msg = "Your search for Purchase challan number : "
+							+ req.getParameter("purChallanNo").toUpperCase();
+				} else {
+					msg = "No result found for Purchase challan number : "
+							+ req.getParameter("purChallanNo").toUpperCase()
+							+ "...";
+				}
 				break;
 
 			case "purchaseSearchByVendorName":
@@ -1204,6 +1219,14 @@ public class Servlet extends HttpServlet {
 						.getPurchaseEntryByVendorName(req
 								.getParameter("vendorName"));
 				req.setAttribute("purEntryList", purEntryList2);
+				if (purEntryList2.size() > 0) {
+					msg = "Your search for Vendor name : "
+							+ req.getParameter("vendorName").toUpperCase();
+				} else {
+					msg = "No result found for Vendor name : "
+							+ req.getParameter("vendorName").toUpperCase()
+							+ "...";
+				}
 				break;
 
 			case "purchaseSearchByAgentName":
@@ -1212,6 +1235,14 @@ public class Servlet extends HttpServlet {
 						.getPurchaseEntryByAgentName(req
 								.getParameter("agentName"));
 				req.setAttribute("purEntryList", purEntryList3);
+				if (purEntryList3.size() > 0) {
+					msg = "Your search for Agent name : "
+							+ req.getParameter("agentName").toUpperCase();
+				} else {
+					msg = "No result found for Agent name : "
+							+ req.getParameter("agentName").toUpperCase()
+							+ "...";
+				}
 				break;
 
 			case "purchaseSearchByProductCode":
@@ -1220,6 +1251,14 @@ public class Servlet extends HttpServlet {
 						.getPurchaseEntryByProductCode(req
 								.getParameter("prodCode"));
 				req.setAttribute("purEntryList", purEntryList4);
+				if (purEntryList4.size() > 0) {
+					msg = "Your search for Product code : "
+							+ req.getParameter("prodCode").toUpperCase();
+				} else {
+					msg = "No result found for product code : "
+							+ req.getParameter("prodCode").toUpperCase()
+							+ "...";
+				}
 				break;
 
 			case "purchaseView":
@@ -1321,6 +1360,61 @@ public class Servlet extends HttpServlet {
 								.getParameter("fDate")), DateConverter
 								.getDate(req.getParameter("lDate")));
 				req.setAttribute("jobAssignList", jobAssignList);
+				if (jobAssignList.size() > 0) {
+					msg = "Your search for dated " + req.getParameter("fDate")
+							+ " to " + req.getParameter("lDate");
+				} else {
+					msg = "No result found for dated "
+							+ req.getParameter("fDate") + " to "
+							+ req.getParameter("lDate") + "...";
+				}
+				break;
+
+			case "jobSearchByJobChallanNo":
+				page = "jobAssignSearch.jsp";
+				List<JobAssignmentDetails> jobAssignList1 = ejb
+						.getJobAssignByChallanNo(req
+								.getParameter("jobChallanNo"));
+				req.setAttribute("jobAssignList", jobAssignList1);
+				if (jobAssignList1.size() > 0) {
+					msg = "Your search for Job challan number : "
+							+ req.getParameter("jobChallanNo").toUpperCase();
+				} else {
+					msg = "No result found for Job challan number : "
+							+ req.getParameter("jobChallanNo").toUpperCase()
+							+ "...";
+				}
+				break;
+
+			case "jobSearchByJobberName":
+				page = "jobAssignSearch.jsp";
+				List<JobAssignmentDetails> jobAssignList2 = ejb
+						.getJobAssignByJobberName(req
+								.getParameter("jobberName"));
+				req.setAttribute("jobAssignList", jobAssignList2);
+				if (jobAssignList2.size() > 0) {
+					msg = "Your search for Jobber name : "
+							+ req.getParameter("jobberName").toUpperCase();
+				} else {
+					msg = "No result found for jobber name : "
+							+ req.getParameter("jobberName").toUpperCase()
+							+ "...";
+				}
+				break;
+
+			case "jobSearchByProductCode":
+				page = "jobAssignSearch.jsp";
+				List<JobAssignmentDetails> jobAssignList3 = ejb
+						.getJobAssignByProductCode(req.getParameter("prodCode"));
+				req.setAttribute("jobAssignList", jobAssignList3);
+				if (jobAssignList3.size() > 0) {
+					msg = "Your search for Product code : "
+							+ req.getParameter("prodCode").toUpperCase();
+				} else {
+					msg = "No result found for product code : "
+							+ req.getParameter("prodCode").toUpperCase()
+							+ "...";
+				}
 				break;
 
 			case "addUOM":
@@ -1514,14 +1608,14 @@ public class Servlet extends HttpServlet {
 				msg = "";
 
 				break;
-				
-				
+
 			case "goSearchVendor":
-				page ="purchasingVendorDupli.jsp";
-				//List<Vendor> vendorsBig=ejb.getAllVendorsByNameCity(req.getParameter("nameVendor"),req.getParameter("cityVendor"));
-				
-				//req.setAttribute("vBig", vendorsBig);
-				msg="";
+				page = "purchasingVendorDupli.jsp";
+				// List<Vendor>
+				// vendorsBig=ejb.getAllVendorsByNameCity(req.getParameter("nameVendor"),req.getParameter("cityVendor"));
+
+				// req.setAttribute("vBig", vendorsBig);
+				msg = "";
 				break;
 
 			/********************* ProductMultiSearch *****************************************/
