@@ -64,171 +64,170 @@
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
 								<h3 style="margin-top: 11px;">Purchase Search</h3>
+							</div>
 
-								<div class="widget-area">
-									<form role="form" class="sec" action="purchaseSearchByDate">
-										<div class="row">
-											<div class="col-md-5">
-												<div class="form-group">
-													<label for="" style="float: left;">Search between
-														two dates : (Start Date)</label> <input type="text"
-														placeholder="Enter First Date" id="datepicker"
-														class="form-control" name="fDate" id="fDate">
-												</div>
-											</div>
-
-											<div class="col-md-5">
-												<div class="form-group">
-													<label for="" style="float: left;">(End Date)</label> <input
-														type="text" placeholder="Enter last date" id="datepicker1"
-														class="form-control" name="lDate" id="lDate">
-												</div>
-											</div>
-											<div class="col-md-2">
-												<button class="btn green pull-left"
-													style="margin-top: 25px;" type="submit">Search</button>
+							<div class="widget-area">
+								<form role="form" class="sec" action="purchaseSearchByDate">
+									<div class="row">
+										<div class="col-md-5">
+											<div class="form-group">
+												<label for="" style="float: left;">Search between
+													two dates : (Start Date)</label> <input type="text"
+													placeholder="Enter First Date" id="datepicker"
+													class="form-control" name="fDate" id="fDate">
 											</div>
 										</div>
-									</form>
-									<form role="form" class="sec"
-										action="purchaseSearchByPurchaseChallanNo">
-										<div class="row">
-											<div class="col-md-10">
-												<div class="form-group">
-													<label for="" style="float: left;">Purchase challan
-														no. :</label> <input type=""
-														placeholder="Enter Purchase Entry Number"
-														id="purChallanNo" name="purChallanNo" class="form-control">
-												</div>
-											</div>
-											<div class="col-md-2">
-												<button class="btn green pull-left"
-													style="margin-top: 25px;" type="submit">Search</button>
-											</div>
 
+										<div class="col-md-5">
+											<div class="form-group">
+												<label for="" style="float: left;">(End Date)</label> <input
+													type="text" placeholder="Enter last date" id="datepicker1"
+													class="form-control" name="lDate" id="lDate">
+											</div>
 										</div>
-									</form>
-									<form role="form" class="sec"
-										action="purchaseSearchByProductCode">
-										<div class="row">
-											<div class="col-md-10">
-												<div class="form-group">
-													<label for="" style="float: left;">Product code :</label> <input
-														type="" placeholder="Enter Product code" id="prodCode"
-														name="prodCode" class="form-control">
-												</div>
+										<div class="col-md-2">
+											<button class="btn green pull-left" style="margin-top: 25px;"
+												type="submit">Search</button>
+										</div>
+									</div>
+								</form>
+								<form role="form" class="sec"
+									action="purchaseSearchByPurchaseChallanNo">
+									<div class="row">
+										<div class="col-md-10">
+											<div class="form-group">
+												<label for="" style="float: left;">Purchase challan
+													no. :</label> <input type=""
+													placeholder="Enter Purchase challan Number"
+													id="purChallanNo" name="purChallanNo" class="form-control">
 											</div>
-											<div class="col-md-2">
-												<button class="btn green pull-left"
-													style="margin-top: 25px;" type="submit">Search</button>
-											</div>
+										</div>
+										<div class="col-md-2">
+											<button class="btn green pull-left" style="margin-top: 25px;"
+												type="submit">Search</button>
+										</div>
 
+									</div>
+								</form>
+								<form role="form" class="sec"
+									action="purchaseSearchByProductCode">
+									<div class="row">
+										<div class="col-md-10">
+											<div class="form-group">
+												<label for="" style="float: left;">Product code :</label> <input
+													type="" placeholder="Enter Product code" id="prodCode"
+													name="prodCode" class="form-control">
+											</div>
 										</div>
-									</form>
-									<form role="form" class="sec"
-										action="purchaseSearchByVendorName">
-										<div class="row">
-											<div class="col-md-10">
-												<div class="form-group">
-													<label for="" style="float: left;">Vendor Name :</label> <input
-														type="" placeholder="Enter Vendor Name" id="vendorName"
-														name="vendorName" class="form-control">
-												</div>
-											</div>
-											<div class="col-md-2">
-												<button class="btn green pull-left"
-													style="margin-top: 25px;" type="submit">Search</button>
-											</div>
+										<div class="col-md-2">
+											<button class="btn green pull-left" style="margin-top: 25px;"
+												type="submit">Search</button>
+										</div>
 
+									</div>
+								</form>
+								<form role="form" class="sec"
+									action="purchaseSearchByVendorName">
+									<div class="row">
+										<div class="col-md-10">
+											<div class="form-group">
+												<label for="" style="float: left;">Vendor Name :</label> <input
+													type="" placeholder="Enter Vendor Name" id="vendorName"
+													name="vendorName" class="form-control">
+											</div>
 										</div>
-									</form>
-									<form role="form" class="sec"
-										action="purchaseSearchByAgentName">
-										<div class="row">
-											<div class="col-md-10">
-												<div class="form-group">
-													<label for="" style="float: left;">Agent Name :</label> <input
-														type="" placeholder="Enter Agent Name" id="agentName"
-														name="agentName" class="form-control">
-												</div>
-											</div>
-											<div class="col-md-2">
-												<button class="btn green pull-left"
-													style="margin-top: 25px;" type="submit">Search</button>
-											</div>
+										<div class="col-md-2">
+											<button class="btn green pull-left" style="margin-top: 25px;"
+												type="submit">Search</button>
+										</div>
 
+									</div>
+								</form>
+								<form role="form" class="sec" action="purchaseSearchByAgentName">
+									<div class="row">
+										<div class="col-md-10">
+											<div class="form-group">
+												<label for="" style="float: left;">Agent Name :</label> <input
+													type="" placeholder="Enter Agent Name" id="agentName"
+													name="agentName" class="form-control">
+											</div>
 										</div>
-									</form>
-									<br> <br>
-									<table class="table">
-										<thead>
+										<div class="col-md-2">
+											<button class="btn green pull-left" style="margin-top: 25px;"
+												type="submit">Search</button>
+										</div>
+
+									</div>
+								</form>
+								<br> <br>
+								<table class="table">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Purchase challan no.</th>
+											<th>Vendor Name</th>
+											<th>Agent Name</th>
+											<th>Vendor Bill no.</th>
+											<th>Purchase Date</th>
+											<th>Total Amount</th>
+											<th>Barcode</th>
+										</tr>
+									</thead>
+
+									<c:set var="count" value="${1}" />
+									<c:forEach items="${requestScope['purEntryList']}"
+										var="pEntryByD">
+										<tbody>
 											<tr>
-												<th>#</th>
-												<th>Purchase challan no.</th>
-												<th>Vendor Name</th>
-												<th>Agent Name</th>
-												<th>Vendor Bill no.</th>
-												<th>Purchase Date</th>
-												<th>Total Amount</th>
-												<th>Barcode</th>
-											</tr>
-										</thead>
-
-										<c:set var="count" value="${1}" />
-										<c:forEach items="${requestScope['purEntryList']}"
-											var="pEntryByD">
-											<tbody>
-												<tr>
-													<td>${count}</td>
-													<td>${pEntryByD.challanNumber}</td>
-													<c:if test="${pEntryByD.vendor.vendorType.type=='Vendor'}">
+												<td>${count}</td>
+												<td>${pEntryByD.challanNumber}</td>
+												<c:if test="${pEntryByD.vendor.vendorType.type=='Vendor'}">
+													<td>${pEntryByD.vendor.name}</td>
+												</c:if>
+												<c:if test="${pEntryByD.vendor.vendorType.type!='Vendor'}">
+													<td>NIL</td>
+												</c:if>
+												<c:choose>
+													<c:when
+														test="${pEntryByD.vendor.vendorType.type=='Purchase Agent'}">
 														<td>${pEntryByD.vendor.name}</td>
-													</c:if>
-													<c:if test="${pEntryByD.vendor.vendorType.type!='Vendor'}">
+													</c:when>
+													<c:when test="${pEntryByD.agentId!=0}">
+														<td>${sessionScope['ejb'].getVendorById(pEntryByD.agentId).name}</td>
+													</c:when>
+													<c:otherwise>
 														<td>NIL</td>
-													</c:if>
-													<c:choose>
-														<c:when
-															test="${pEntryByD.vendor.vendorType.type=='Purchase Agent'}">
-															<td>${pEntryByD.vendor.name}</td>
-														</c:when>
-														<c:when test="${pEntryByD.agentId!=0}">
-															<td>${sessionScope['ejb'].getVendorById(pEntryByD.agentId).name}</td>
-														</c:when>
-														<c:otherwise>
-															<td>NIL</td>
-														</c:otherwise>
-													</c:choose>
-													<td>${pEntryByD.vendor_bill_no}</td>
-													<td><fmt:formatDate value="${pEntryByD.purchase_date}"
-															pattern="dd-MM-yy" /></td>
-													<td>${pEntryByD.totalCost}</td>
-													<td><a href="printBarcode.jsp?id=${pEntryByD.id}">
-															<img alt="click to view" src="Capture.PNG" height="20">
-													</a></td>
-													<td>
-														<form action="purchaseView" method="post"
-															id="pView${pEntryByD.id}">
+													</c:otherwise>
+												</c:choose>
+												<td>${pEntryByD.vendor_bill_no}</td>
+												<td><fmt:formatDate value="${pEntryByD.purchase_date}"
+														pattern="dd-MM-yy" /></td>
+												<td>${pEntryByD.totalCost}</td>
+												<td><a href="printBarcode.jsp?id=${pEntryByD.id}">
+														<img alt="click to view" src="Capture.PNG" height="20">
+												</a></td>
+												<td>
+													<form action="purchaseView" method="post"
+														id="pView${pEntryByD.id}">
 
-															<a href="#" onclick="purchaseViewF('${pEntryByD.id}');"><input
-																type="hidden" value="${pEntryByD.id}" name="pId"><img
-																alt="" src="images/eye.png" height="25px"></a>
-														</form>
-													</td>
-												</tr>
-											</tbody>
-											<c:set var="count" value="${count+1}" />
-										</c:forEach>
-									</table>
-								</div>
+														<a href="#" onclick="purchaseViewF('${pEntryByD.id}');"><input
+															type="hidden" value="${pEntryByD.id}" name="pId"><img
+															alt="" src="images/eye.png" height="25px"></a>
+													</form>
+												</td>
+											</tr>
+										</tbody>
+										<c:set var="count" value="${count+1}" />
+									</c:forEach>
+								</table>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<!-- Content Sec -->
 	</div>
+	<!-- Content Sec -->
 	<!-- Page Container -->
 
 	<!-- main -->

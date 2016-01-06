@@ -15,7 +15,7 @@ body {
 page[size="A4"] {
 	background: white;
 	width: 21.0cm;
-	height: 29.7cm;
+	height: 29.0cm;
 	display: block;
 	margin: 0 auto;
 	margin-bottom: 0.0cm;
@@ -60,7 +60,15 @@ page[size="A4"] {
 }
 </style>
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
-
+<c:if test="${param.print==1}">
+	<script type="text/javascript">
+	var myWindow =window
+				.open(
+						"barcodePrint.jsp?id=${param.id}&ip=${sessionScope['sip']}&port=${sessionScope['port']}",
+						'name', 'width=600,height=400');
+	myWindow.print();
+	</script>
+</c:if>
 </head>
 <body>
 	<c:if test="${!sessionScope['user'].equals('admin')}">
@@ -68,7 +76,7 @@ page[size="A4"] {
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
 
-			<c:if test="${page.name.equals('Sales Entry')}">
+			<c:if test="${page.name.equals('Purchase Entry')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
@@ -81,10 +89,10 @@ page[size="A4"] {
 	</c:if>
 	<c:set value="${sessionScope['ejb'].getCompanyInfo()}"
 		var="companyInfo" />
-	<c:set value="${sessionScope['ejb'].getSalesEntryById(param.id)}"
+	<c:set value="${sessionScope['ejb'].getPurchaseEntryById(param.id)}"
 		var="purEntry" />
 	<page id="print1" size="A4">
-	<h3 align="center">Sales Invoice</h3>
+	<h3 align="center">Purchase Challan</h3>
 	<table class="tg"
 		style="border: 1px solid; height: 1050px; width: 750px">
 		<tr style="height: 50px">
@@ -93,50 +101,32 @@ page[size="A4"] {
 				${companyInfo.addr}<br> EMail: ${companyInfo.email}<br>
 				Mobile: ${companyInfo.mobile}
 			</td>
-			<td class="tg-031e" colspan="2" style="width: 25%">Sales Invoice
-				no:</td>
-			<td class="tg-031e" colspan="2" style="width: 25%">${purEntry.challanNumber}</td>
+			<td class="tg-031e" colspan="2" style="width: 25%">Invoce:</td>
+			<td class="tg-031e" colspan="2" style="width: 25%">Dated:</td>
 		</tr>
 		<tr style="height: 50px">
-			<td class="tg-031e" colspan="2">Dated:</td>
-			<td class="tg-031e" colspan="2"><fmt:formatDate
-					value="${sessionScope['ejb'].getCurrentDateTime()}"
-					pattern="dd-MM-yyyy" /></td>
+			<td class="tg-031e" colspan="2">Delivery Note:</td>
+			<td class="tg-031e" colspan="2">Mode/Time of payment</td>
 		</tr>
 		<tr style="height: 50px">
-			<td class="tg-031e" colspan="2">Sales date :</td>
-			<td class="tg-031e" colspan="2"><fmt:formatDate
-					value="${purEntry.sales_date}" pattern="dd-MM-yyyy" /></td>
+			<td class="tg-031e" colspan="2">Supplier reference</td>
+			<td class="tg-031e" colspan="2">Other references</td>
 		</tr>
 		<tr style="height: 50px">
-			<td class="tg-031e" colspan="3" rowspan="4"><strong>Customer
-					Details:</strong> <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Name :</span>
-				${purEntry.customer.name} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>City
-					:</span> ${purEntry.customer.city} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Address
-					:<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			</span> ${purEntry.customer.address} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Ph
-					:</span> ${purEntry.customer.mobile}</td>
-			<td class="tg-031e" colspan="2">Mode of payment :</td>
-			<td class="tg-031e" colspan="2"><c:choose>
-					<c:when
-						test="${purEntry.paymentDetails.get(0).paymentType.type!=null}">${purEntry.paymentDetails.get(0).paymentType.type}</c:when>
-					<c:otherwise>NA</c:otherwise>
-				</c:choose></td>
+			<td class="tg-031e" colspan="3" rowspan="4">Buyer Cash</td>
+			<td class="tg-031e" colspan="2">Buyer's Oder No:</td>
+			<td class="tg-031e" colspan="2">Date:</td>
 		</tr>
 		<tr style="height: 50px">
-			<td class="tg-031e" colspan="2">Supplier reference(Agent Alias
-				name):</td>
-			<td class="tg-031e" colspan="2"><c:choose>
-					<c:when test="${purEntry.vendor!=null}">${purEntry.vendor.aliseName}</c:when>
-					<c:otherwise>NA</c:otherwise>
-				</c:choose></td>
+			<td class="tg-031e" colspan="2">Despatch Document No.</td>
+			<td class="tg-031e" colspan="2">Dated.</td>
 		</tr>
 		<tr style="height: 50px">
-			<td class="tg-031e" colspan="2"></td>
-			<td class="tg-031e" colspan="2"></td>
+			<td class="tg-031e" colspan="2">Despatch through</td>
+			<td class="tg-031e" colspan="2">Destination</td>
 		</tr>
 		<tr style="height: 50px">
-			<td class="tg-031e" colspan="4"></td>
+			<td class="tg-031e" colspan="4">Terms of Delivery</td>
 		</tr>
 		<tr>
 			<td class="tg-031e" colspan="7">
@@ -153,17 +143,16 @@ page[size="A4"] {
 					<c:set value="${1}" var="sl" />
 					<c:set value="${0}" var="tqty" />
 					<c:set value="${0}" var="gtot" />
-					<c:forEach items="${purEntry.salesProductDetails}" var="ppdet">
+					<c:forEach items="${purEntry.purchase_Product_Details}" var="ppdet">
 						<tr>
 							<td>${sl}</td>
-							<td>${ppdet.purchase_Product_Details.productDetail.description}</td>
+							<td>${ppdet.productDetail.description}</td>
 							<td>${ppdet.quantity}</td>
 							<c:set value="${tqty+ppdet.quantity}" var="tqty" />
-							<td>${ppdet.getSalesPrice()}</td>
-							<td>${ppdet.purchase_Product_Details.productDetail.qtyUnit.name}</td>
-							<td>${ppdet.getSalesPrice()*ppdet.quantity}</td>
-							<c:set value="${gtot+ppdet.getSalesPrice()*ppdet.quantity}"
-								var="gtot" />
+							<td>${ppdet.cost}</td>
+							<td>${ppdet.productDetail.qtyUnit.name}</td>
+							<td>${ppdet.cost*ppdet.quantity}</td>
+							<c:set value="${gtot+ppdet.cost*ppdet.quantity}" var="gtot" />
 						</tr>
 						<c:set value="${sl+1}" var="sl" />
 					</c:forEach>

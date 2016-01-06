@@ -53,8 +53,15 @@
 					<ul>
 						<li><a id="sSalesEntry" href="salesSalesEntry.jsp" title="">Sales
 								Entry</a></li>
+<<<<<<< HEAD
 						<!-- <li><a id="sSalesReturn" href="salesReturn.jsp" title="">Sales
 								Return</a></li> -->
+=======
+						<li><a id="sSalesReturn" href="salesReturn.jsp" title="">Sales
+								Return</a></li>
+						<!-- <li><a id="sSalesSearch" href="salesSearch.jsp" title="">Sales
+								Search</a></li> -->
+>>>>>>> refs/remotes/origin/master
 						<!-- <li><a id="sSalesDiscount" href="salesDiscount.jsp" title="">Discount</a></li> -->
 					</ul>
 				</div>

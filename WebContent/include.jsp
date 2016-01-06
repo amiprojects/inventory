@@ -9,7 +9,7 @@
 <script>
 	$(document).jkey('ctrl+r', function() {
 	});
-	$(document).jkey('ctrl++shift+r', function() {
+	$(document).jkey('ctrl+shift+r', function() {
 	});
 	$(document).jkey('f5', function() {
 	});
@@ -22,6 +22,8 @@
 	$(document).jkey('f12', function() {
 	});
 	$(document).jkey('f5', function() {
+	});
+	$(document).jkey('ctrl+shift+i', function() {
 	});
 
 	$(document).ready(function() {
@@ -44,8 +46,6 @@
 			return false;
 		}
 	}
-	
-
 </script>
 </head>
 <body>
