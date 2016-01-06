@@ -76,8 +76,6 @@ $("#id").modal("show");
 
 //Math.round((num) * 100) / 100
 
-//<h1>${sessionScope['user']}</h1>
-
 //autocomplete
 $(function() {
 		$("#bankCity").autocomplete({
@@ -126,3 +124,23 @@ $(function() {
 <c:if test="${pEntryByD.vendor.vendorType.type=='Vendor'}">
 														<td>${pEntryByD.vendor.name}</td>
 													</c:if>
+													
+//<fmt:formatNumber var="" value="" maxFractionDigits="2" />
+//<fmt:formatDate value="" pattern="dd-MM-yy" />
+
+//scroll table
+<link rel="stylesheet" href="css/scrollTable.css" type="text/css" />
+<table class="table table-fixedheader">
+									<thead>
+										<tr>
+											<th width="50%">#</th>
+											<th width="50%">Purchase challan no.</th>											
+										</tr>
+									</thead>
+									<tbody style="height: 300px;">									
+											<tr>
+												<td width="50%"></td>
+												<td width="50%"></td>									
+											</tr>
+									</tbody>
+								</table>

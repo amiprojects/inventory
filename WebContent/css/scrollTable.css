@@ -33,7 +33,7 @@ width for the table contents doesn't change (such as becoming narrower
 when a scrollbar is visible and wider when it is not).
 */
 table.table-fixedheader>tbody {
-	overflow-y: scroll;
+	overflow: auto;
 	height: 100px;
 }
 /*

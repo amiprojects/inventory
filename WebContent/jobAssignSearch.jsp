@@ -23,6 +23,7 @@
 <link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
 <!-- Bootstrap -->
 <link rel="stylesheet" href="css/style.css" type="text/css" />
+<link rel="stylesheet" href="css/scrollTable.css" type="text/css" />
 <!-- Style -->
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
 <!-- Responsive -->
@@ -52,11 +53,11 @@
 			</script>
 		</c:if>
 	</c:if>
-	
-	
-	
-	
-	
+
+
+
+
+
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
@@ -77,9 +78,9 @@
 								<div class="widget-area">
 									<form role="form" class="sec" action="jobAssignSearchByDate"
 										method="post">
-										
+
 										<div class="row">
-											<div class="col-md-6">
+											<div class="col-md-5">
 												<div class="form-group">
 													<label for="">Search between two dates : (Start
 														Date)</label> <input type="text" placeholder="Enter First Date"
@@ -88,65 +89,117 @@
 												</div>
 											</div>
 
-											<div class="col-md-6">
+											<div class="col-md-5">
 												<div class="form-group">
 													<label for="">(End Date)</label> <input type="text"
 														placeholder="Enter last date" id="datepicker1"
 														class="form-control" name="lDate" id="lDate">
 												</div>
 											</div>
+											<div class="col-md-2">
+												<button class="btn green pull-left"
+													style="margin-top: 25px;" type="submit">Search</button>
+											</div>
 										</div>
-
-										<button class="btn green pull-right" type="submit">Search</button>
 									</form>
-									<br> <br>
-									<table class="table">
+									<form role="form" class="sec" action="jobSearchByJobChallanNo"
+										method="post">
+										<div class="row">
+											<div class="col-md-10">
+												<div class="form-group">
+													<label for="" style="float: left;">Job challan no.
+														:</label> <input type="" placeholder="Enter Job challan Number"
+														id="jobChallanNo" name="jobChallanNo" class="form-control">
+												</div>
+											</div>
+											<div class="col-md-2">
+												<button class="btn green pull-left"
+													style="margin-top: 25px;" type="submit">Search</button>
+											</div>
+
+										</div>
+									</form>
+									<form role="form" class="sec" action="jobSearchByProductCode"
+										method="post">
+										<div class="row">
+											<div class="col-md-10">
+												<div class="form-group">
+													<label for="" style="float: left;">Product code :</label> <input
+														type="" placeholder="Enter Product code" id="prodCode"
+														name="prodCode" class="form-control">
+												</div>
+											</div>
+											<div class="col-md-2">
+												<button class="btn green pull-left"
+													style="margin-top: 25px;" type="submit">Search</button>
+											</div>
+										</div>
+									</form>
+									<form role="form" class="sec" action="jobSearchByJobberName"
+										method="post">
+										<div class="row">
+											<div class="col-md-10">
+												<div class="form-group">
+													<label for="" style="float: left;">Jober Name :</label> <input
+														type="" placeholder="Enter Jober Name" id="jobberName"
+														name="jobberName" class="form-control">
+												</div>
+											</div>
+											<div class="col-md-2">
+												<button class="btn green pull-left"
+													style="margin-top: 25px;" type="submit">Search</button>
+											</div>
+
+										</div>
+									</form>
+									<br>
+									<h3 align="center" style="color: #6a94ff;">${requestScope['msg']}</h3>
+									<br>
+									<table class="table table-fixedheader">
 										<thead>
 											<tr>
-												<th>#</th>
-												<th>Job Assigned No.</th>
-												<th>Assigned Date</th>
-												<th>Est. Submission Date</th>
-												<th>Number of Items</th>
-												<th>Quantity</th>
+												<th width="5%">#</th>
+												<th width="20%">Job Assigned No.</th>
+												<th width="15%">Assigned Date</th>
+												<th width="20%">Est. Submission Date</th>
+												<th width="15%">Number of Items</th>
+												<th width="15%">Quantity</th>
 											</tr>
 										</thead>
-										
-										<c:set var="count" value="${1}" />
-										<c:forEach items="${requestScope['jobAssignList']}"
-											var="jobAssignByDate">
-											<tbody>
+										<tbody style="height: 300px;">
+											<c:set var="count" value="${1}" />
+											<c:forEach items="${requestScope['jobAssignList']}"
+												var="jobAssignByDate">
+
 												<tr>
-													<td>${count}</td>
-													<td>${jobAssignByDate.challanNumber}</td>
-													<td><fmt:formatDate
+													<td width="5%">${count}</td>
+													<td width="20%">${jobAssignByDate.challanNumber}</td>
+													<td width="15%"><fmt:formatDate
 															value="${jobAssignByDate.assignDate}" pattern="dd-MM-yy" /></td>
-													<td><fmt:formatDate
+													<td width="20%"><fmt:formatDate
 															value="${jobAssignByDate.estimatedCompletionDate}"
 															pattern="dd-MM-yy" /></td>
-													<td>${jobAssignByDate.jobAssignmentProducts.size()}</td>
+													<td width="15%">${jobAssignByDate.jobAssignmentProducts.size()}</td>
 													<c:set value="${0}" var="totqty" />
 													<c:forEach items="${jobAssignByDate.jobAssignmentProducts}"
 														var="proDet">
 														<c:set value="${totqty+proDet.qty}" var="totqty" />
 													</c:forEach>
-													<td>${totqty}</td>
-													<td>
+													<td width="15%">${totqty}</td>
+													<td width="10%">
 														<form action="goJobDetailShow" method="post"
 															id="JobDetails${jobAssignByDate.id}">
-															
+
 															<a href="#"
 																onclick="jobShowDetails('${jobAssignByDate.id}');"><input
 																type="hidden" value="${jobAssignByDate.id}" name="joId"><img
 																alt="" src="images/eye.png" height="25px"></a>
 														</form>
 													</td>
-
-
 												</tr>
-											</tbody>
-											<c:set var="count" value="${count+1}" />
-										</c:forEach>
+												<c:set var="count" value="${count+1}" />
+											</c:forEach>
+										</tbody>
 									</table>
 								</div>
 							</div>
@@ -162,7 +215,7 @@
 
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
-	
+
 	<script type="text/javascript" src="js/script.js"></script>
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="js/enscroll.js"></script>

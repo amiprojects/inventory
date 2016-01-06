@@ -45,6 +45,7 @@
 			dateFormat : "dd-mm-yy",
 			maxDate : 0
 		});
+		$("#datepicker").datepicker('setDate', new Date());
 	});
 	$(function() {
 		$("#datepicker1").datepicker({
@@ -506,7 +507,7 @@
 		}
 
 		function checkQty() {
-			if ($("#qty").val() > $("#remQty").val()) {
+			if (Number($("#qty").val()) > Number($("#remQty").val())) {
 				alert('Please enter less quantity than remaining');
 				$("#qty").val("");
 			}

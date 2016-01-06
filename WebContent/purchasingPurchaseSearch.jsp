@@ -23,6 +23,7 @@
 <link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
 <!-- Bootstrap -->
 <link rel="stylesheet" href="css/style.css" type="text/css" />
+<link rel="stylesheet" href="css/scrollTable.css" type="text/css" />
 <!-- Style -->
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
 <!-- Responsive -->
@@ -67,7 +68,8 @@
 							</div>
 
 							<div class="widget-area">
-								<form role="form" class="sec" action="purchaseSearchByDate">
+								<form role="form" class="sec" action="purchaseSearchByDate"
+									method="post">
 									<div class="row">
 										<div class="col-md-5">
 											<div class="form-group">
@@ -92,7 +94,7 @@
 									</div>
 								</form>
 								<form role="form" class="sec"
-									action="purchaseSearchByPurchaseChallanNo">
+									action="purchaseSearchByPurchaseChallanNo" method="post">
 									<div class="row">
 										<div class="col-md-10">
 											<div class="form-group">
@@ -110,7 +112,7 @@
 									</div>
 								</form>
 								<form role="form" class="sec"
-									action="purchaseSearchByProductCode">
+									action="purchaseSearchByProductCode" method="post">
 									<div class="row">
 										<div class="col-md-10">
 											<div class="form-group">
@@ -123,11 +125,10 @@
 											<button class="btn green pull-left" style="margin-top: 25px;"
 												type="submit">Search</button>
 										</div>
-
 									</div>
 								</form>
 								<form role="form" class="sec"
-									action="purchaseSearchByVendorName">
+									action="purchaseSearchByVendorName" method="post">
 									<div class="row">
 										<div class="col-md-10">
 											<div class="form-group">
@@ -143,7 +144,8 @@
 
 									</div>
 								</form>
-								<form role="form" class="sec" action="purchaseSearchByAgentName">
+								<form role="form" class="sec" action="purchaseSearchByAgentName"
+									method="post">
 									<div class="row">
 										<div class="col-md-10">
 											<div class="form-group">
@@ -159,66 +161,69 @@
 
 									</div>
 								</form>
-								<br> <br>
-								<table class="table">
+								<br>
+								<h3 align="center" style="color: #6a94ff;">${requestScope['msg']}</h3>
+								<br>
+								<div style=""></div>
+								<table class="table table-fixedheader">
 									<thead>
 										<tr>
-											<th>#</th>
-											<th>Purchase challan no.</th>
-											<th>Vendor Name</th>
-											<th>Agent Name</th>
-											<th>Vendor Bill no.</th>
-											<th>Purchase Date</th>
-											<th>Total Amount</th>
-											<th>Barcode</th>
+											<th width="5%">#</th>
+											<th width="19%">Purchase challan no.</th>
+											<th width="12%">Vendor Name</th>
+											<th width="11%">Agent Name</th>
+											<th width="15%">Vendor Bill no.</th>
+											<th width="13%">Purchase Date</th>
+											<th width="12%">Total Amount</th>
+											<th width="8%">Barcode</th>
 										</tr>
 									</thead>
-
-									<c:set var="count" value="${1}" />
-									<c:forEach items="${requestScope['purEntryList']}"
-										var="pEntryByD">
-										<tbody>
+									<tbody style="height: 300px;">
+										<c:set var="count" value="${1}" />
+										<c:forEach items="${requestScope['purEntryList']}"
+											var="pEntryByD">
 											<tr>
-												<td>${count}</td>
-												<td>${pEntryByD.challanNumber}</td>
+												<td width="5%">${count}</td>
+												<td width="19%">${pEntryByD.challanNumber}</td>
 												<c:if test="${pEntryByD.vendor.vendorType.type=='Vendor'}">
-													<td>${pEntryByD.vendor.name}</td>
+													<td width="12%">${pEntryByD.vendor.name}</td>
 												</c:if>
 												<c:if test="${pEntryByD.vendor.vendorType.type!='Vendor'}">
-													<td>NIL</td>
+													<td width="12%">NIL</td>
 												</c:if>
 												<c:choose>
 													<c:when
 														test="${pEntryByD.vendor.vendorType.type=='Purchase Agent'}">
-														<td>${pEntryByD.vendor.name}</td>
+														<td width="11%">${pEntryByD.vendor.name}</td>
 													</c:when>
 													<c:when test="${pEntryByD.agentId!=0}">
-														<td>${sessionScope['ejb'].getVendorById(pEntryByD.agentId).name}</td>
+														<td width="11%">${sessionScope['ejb'].getVendorById(pEntryByD.agentId).name}</td>
 													</c:when>
 													<c:otherwise>
-														<td>NIL</td>
+														<td width="11%">NIL</td>
 													</c:otherwise>
 												</c:choose>
-												<td>${pEntryByD.vendor_bill_no}</td>
-												<td><fmt:formatDate value="${pEntryByD.purchase_date}"
-														pattern="dd-MM-yy" /></td>
-												<td>${pEntryByD.totalCost}</td>
-												<td><a href="printBarcode.jsp?id=${pEntryByD.id}">
-														<img alt="click to view" src="Capture.PNG" height="20">
+												<td width="15%">${pEntryByD.vendor_bill_no}</td>
+												<td width="13%"><fmt:formatDate
+														value="${pEntryByD.purchase_date}" pattern="dd-MM-yy" /></td>
+												<td width="12%">${pEntryByD.totalCost}</td>
+												<td width="8%"><a
+													href="printBarcode.jsp?id=${pEntryByD.id}"> <img
+														alt="click to view" src="Capture.PNG" height="20">
 												</a></td>
-												<td>
+												<td width="5%">
 													<form action="purchaseView" method="post"
 														id="pView${pEntryByD.id}">
-
 														<a href="#" onclick="purchaseViewF('${pEntryByD.id}');"><input
 															type="hidden" value="${pEntryByD.id}" name="pId"><img
 															alt="" src="images/eye.png" height="25px"></a>
 													</form>
 												</td>
 											</tr>
-										</tbody>
-										<c:set var="count" value="${count+1}" />
-									</c:forEach>
+
+											<c:set var="count" value="${count+1}" />
+										</c:forEach>
+									</tbody>
 								</table>
 							</div>
 						</div>
