@@ -82,7 +82,7 @@ page[size="A4"] {
 	<c:set value="${sessionScope['ejb'].getCompanyInfo()}"
 		var="companyInfo" />
 	<c:set value="${sessionScope['ejb'].getSalesEntryById(param.id)}"
-		var="purEntry"/>
+		var="purEntry" />
 	<page id="print1" size="A4">
 	<h3 align="center">Sales Invoice</h3>
 	<table class="tg"
@@ -93,41 +93,44 @@ page[size="A4"] {
 				${companyInfo.addr}<br> EMail: ${companyInfo.email}<br>
 				Mobile: ${companyInfo.mobile}
 			</td>
-			<td class="tg-031e" colspan="2" style="width: 25%">Invoce:</td>
-			<td class="tg-031e" colspan="2" style="width: 25%">Dated:</td>
+			<td class="tg-031e" colspan="2" style="width: 25%">Sales Invoice
+				no:</td>
+			<td class="tg-031e" colspan="2" style="width: 25%">${purEntry.challanNumber}</td>
 		</tr>
 		<tr style="height: 50px">
-			<td class="tg-031e" colspan="2">Delivery Note:</td>
-			<td class="tg-031e" colspan="2">Mode/Time of payment <%-- ${purEntry.paymentDetails.paymentType.type.get(0)} --%></td>
+			<td class="tg-031e" colspan="2">Dated:</td>
+			<td class="tg-031e" colspan="2"><fmt:formatDate
+					value="${sessionScope['ejb'].getCurrentDateTime()}"
+					pattern="dd-MM-yyyy" /></td>
 		</tr>
 		<tr style="height: 50px">
-			<td class="tg-031e" colspan="2"></td>
-			<td class="tg-031e" colspan="2"></td>
+			<td class="tg-031e" colspan="2">Sales date :</td>
+			<td class="tg-031e" colspan="2"><fmt:formatDate
+					value="${purEntry.sales_date}" pattern="dd-MM-yyyy" /></td>
 		</tr>
 		<tr style="height: 50px">
 			<td class="tg-031e" colspan="3" rowspan="4"><strong>Customer
 					Details:</strong> <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Name :</span>
 				${purEntry.customer.name} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>City
 					:</span> ${purEntry.customer.city} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Address
-					:</span> ${purEntry.customer.name} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Ph
+					:<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			</span> ${purEntry.customer.address} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Ph
 					:</span> ${purEntry.customer.mobile}</td>
-			<td class="tg-031e" colspan="2">Buyer's Oder No:</td>
-			<td class="tg-031e" colspan="2">Date:</td>
+			<td class="tg-031e" colspan="2">Mode of payment :</td>
+			<td class="tg-031e" colspan="2"><c:choose>
+					<c:when
+						test="${purEntry.paymentDetails.get(0).paymentType.type!=null}">${purEntry.paymentDetails.get(0).paymentType.type}</c:when>
+					<c:otherwise>NA</c:otherwise>
+				</c:choose></td>
 		</tr>
-		
-	<%--  <c:forEach items="${purEntry.paymentDetails}" var="kilo">
-						< c:set var="mege" value="${kilo.get(0)}"/>
-						<c:set var="giga" value="${mege.paymentType.type}"/>
-						
-						</c:forEach> --%>
-						<%-- <tr><td><h1>asdsad${purEntry.paymentDetails.get(0).paymentType.type}</h1></td></tr> --%>
-						
-						<c:if test="${purEntry.paymentDetails.size()>0}">
 		<tr style="height: 50px">
-			<td class="tg-031e" colspan="2">${purEntry.paymentDetails.get(0).paymentType.type}</td>
-			<td class="tg-031e" colspan="2"></td>
+			<td class="tg-031e" colspan="2">Supplier reference(Agent Alias
+				name):</td>
+			<td class="tg-031e" colspan="2"><c:choose>
+					<c:when test="${purEntry.vendor!=null}">${purEntry.vendor.aliseName}</c:when>
+					<c:otherwise>NA</c:otherwise>
+				</c:choose></td>
 		</tr>
-		</c:if>
 		<tr style="height: 50px">
 			<td class="tg-031e" colspan="2"></td>
 			<td class="tg-031e" colspan="2"></td>
@@ -144,11 +147,8 @@ page[size="A4"] {
 						<th>Description of goods</th>
 						<th>Quantity</th>
 						<th>Cost</th>
-						<th>Per</th><!-- {purEntry.paymentDetails.paymentType.type.get(0)} -->
+						<th>Per</th>
 						<th>Amount</th>
-						
-						
-						
 					</tr>
 					<c:set value="${1}" var="sl" />
 					<c:set value="${0}" var="tqty" />
@@ -177,7 +177,7 @@ page[size="A4"] {
 		</tr>
 		<tr style="height: 75px">
 			<td class="tg-031e" colspan="7"><span>Amount Chargeable
-					(in words)</span><br> <span>${sessionScope['ejb'].getNumberToWords('521421')}</span></td>
+					(in words)</span><br> <span>${sessionScope['ejb'].getNumberToWords(gtot)}</span></td>
 		</tr>
 		<tr style="height: 75px">
 			<td class="tg-031e" colspan="4"><strong>Declaration:</strong><br>We
