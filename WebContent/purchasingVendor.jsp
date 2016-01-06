@@ -353,7 +353,7 @@ $(document).ready(function(){
 													Account Info</a></li>
 											<li id="bAcc"><a data-toggle="tab" href="#bankAccount">Bank
 													Account info</a></li>
-											<li id="prts"><a data-toggle="tab" href="#part">Parts</a></li>
+											<!-- <li id="prts"><a data-toggle="tab" href="#part">Parts</a></li> -->
 										</ul>
 										<div class="tab-content">
 											<div id="bankAccount" class="tab-pane fade">
@@ -545,7 +545,7 @@ $(document).ready(function(){
 														<div class="col-md-7">
 															<select class="form-control" name="taxTypeGroupId"
 																id="taxgroup">
-																<option value="0">select a tax group</option>
+															<!-- 	<option value="0">select a tax group</option> -->
 																<c:forEach
 																	items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
 																	var="taxTypeGroup">
@@ -678,7 +678,7 @@ $(document).ready(function(){
 														onclick="addressButtonNext();">
 												</div>
 											</div>
-											<div id="part" class="tab-pane fade ">
+											<!-- <div id="part" class="tab-pane fade ">
 												<div class="widget-area">
 													<div class="breadcrumbs">
 														<ul>
@@ -749,7 +749,7 @@ $(document).ready(function(){
 												</div>
 												<br>
 
-											</div>
+											</div> -->
 										</div>
 									</form>
 									<div class='toast' style='display: none'>

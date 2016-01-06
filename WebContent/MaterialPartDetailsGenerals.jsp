@@ -265,13 +265,13 @@
 										<tr>
 											<th align="center">#</th>
 											<th align="center">Product Code</th>
-											<th align="right">Description</th>
+											<th align="left">Description</th>
 											<th align="right">Category</th>
 											<th align="right">view</th>
 										</tr>
 									</table>
 									<div
-										style="overflow-y: scroll; overflow-x: scroll; height: 169px; border: 1px;">
+										style="overflow-y: scroll; overflow-x: scroll; height: 155px; border: 1px;">
 										<table class="table">
 											<c:set var="countt" value="${1}" />
 

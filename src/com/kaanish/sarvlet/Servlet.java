@@ -1526,14 +1526,14 @@ public class Servlet extends HttpServlet {
 
 			/********************* ProductMultiSearch *****************************************/
 			case "goProView":
-				page = "mtwo.jsp";
+				page = "materialSearch.jsp";
 				List<ProductDetail> amiProduct1 = ejb
 						.getProductDetailsByCodeDescriptionCategory(req
 								.getParameter("pCodeSearch").toUpperCase(), req
 								.getParameter("pDesSearch").toUpperCase(), req
 								.getParameter("pCatSearch").toUpperCase());
 
-				req.setAttribute("ami", amiProduct1);
+				req.setAttribute("amii", amiProduct1);
 
 				msg = "";
 				break;

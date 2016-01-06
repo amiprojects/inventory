@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -114,7 +113,6 @@
 		}
 	}
 
-	
 	function prevF() {
 
 		$("#finish").prop("disabled", true);
@@ -131,9 +129,6 @@
 		}
 	}
 
-	/* function increSerial() {
-		$("#step67").modal('show');
-	} */
 	function submitSumary() {
 
 		if ($("#productCode").val() == 0) {
@@ -162,18 +157,17 @@
 			} else if ($("#lotnumberS").val() == 0) {
 				alert("please select lot number");
 
-			}
-			else if (!$('#a10').attr("readonly") && $("#a10").val() == "") {
+			} else if (!$('#a10').attr("disabled") && $("#a10").val() == "") {
 				alert("Please insert " + $("#sa1").html() + " value");
-			} else if (!$('#a20').attr("readonly") && $("#a20").val() == "") {
+			} else if (!$('#a20').attr("disabled") && $("#a20").val() == "") {
 				alert("Please insert " + $("#sa2").html() + " value");
-			} else if (!$('#a30').attr("readonly") && $("#a30").val() == "") {
+			} else if (!$('#a30').attr("disabled") && $("#a30").val() == "") {
 				alert("Please insert " + $("#sa3").html() + " value");
-			} else if (!$('#a40').attr("readonly") && $("#a40").val() == "") {
+			} else if (!$('#a40').attr("disabled") && $("#a40").val() == "") {
 				alert("Please insert " + $("#sa4").html() + " value");
-			} else if (!$('#a50').attr("readonly") && $("#a50").val() == "") {
+			} else if (!$('#a50').attr("disabled") && $("#a50").val() == "") {
 				alert("Please insert " + $("#sa5").html() + " value");
-			} else if (!$('#a60').attr("readonly") && $("#a60").val() == "") {
+			} else if (!$('#a60').attr("disabled") && $("#a60").val() == "") {
 				alert("Please insert " + $("#sa6").html() + " value");
 			}
 
@@ -250,22 +244,19 @@
 								<div class="widget-area" style="width: 40%; height: 536px;">
 									<!-- .........*****************************............ PRODUCT SEARCH PANAEL............***************************************-->
 									<div class="form-group">
-											<form action="goProView" method="post">
-												<label for="" class="">Product Code: </label> <input
-													type="text" id="prodcode" name="pCodeSearch"
-													class="form-control"> <label class="">Product
-													Description: </label> <input type="text" id="prodesc"
-													name="pDesSearch" class="form-control"> <label
-													class="">Category: </label> <input type="text" id="deptcat"
-													name="pCatSearch" class="form-control">
-
-												
-												<br> <input class="btn green btn-default" type="submit"
-													value="Search"> <a href="materialSearch.jsp"> <input
-													class="btn green btn-default" type="button"
-													value="Show All"></a>
-											</form>
-										</div>
+										<form action="goProView" method="post">
+											<label for="" class="">Product Code: </label> <input
+												type="text" id="prodcode" name="pCodeSearch"
+												class="form-control"> <label class="">Product
+												Description: </label> <input type="text" id="prodesc"
+												name="pDesSearch" class="form-control"> <label
+												class="">Category: </label> <input type="text" id="deptcat"
+												name="pCatSearch" class="form-control"> <br> <input
+												class="btn green btn-default" type="submit" value="Search">
+											<a href="materialSearch.jsp"> <input
+												class="btn green btn-default" type="button" value="Show All"></a>
+										</form>
+									</div>
 
 									<!-- ************************************************endSearch*************************************************************** -->
 									<br> <br>
@@ -274,25 +265,25 @@
 										<tr>
 											<th align="center">#</th>
 											<th align="center">Product Code</th>
-											<th align="right">Description</th>
+											<th align="left">Description</th>
+											<th align="right">Category</th>
 											<th align="right">view</th>
 										</tr>
 									</table>
 									<div
-										style="overflow-y: scroll; overflow-x: scroll; height: 281px; border: 1px;">
+										style="overflow-y: scroll; overflow-x: scroll; height: 155px; border: 1px;">
 										<table class="table">
 											<c:set var="countt" value="${1}" />
-											
-												<c:forEach
-														items="${sessionScope['ejb'].getAllProductDetail()}"
-														var="productt">
+
+											<c:forEach items="${requestScope['amii']}" var="am">
 
 												<tr>
 													<td align="left">${countt}</td>
-													<td align="left">${productt.code}</td>
-													<td align="center">${productt.description}</td>
+													<td align="left">${am.code}</td>
+					 								<td align="center">${am.description}</td>
+													<td align="center">${am.category.name}</td>
 													<td align="center"><a href="#" id="abcdef"
-														onclick="viewProduct('${productt.id}');"> <img
+														onclick="viewProduct('${am.id}');"> <img
 															alt="click to view" src="images/eye.png" height="20"></a></td>
 												</tr>
 												<c:set var="countt" value="${countt+1}" />
@@ -322,7 +313,7 @@
 										<li class="active"><a data-toggle="tab" href="#general">General</a></li>
 										<li><a data-toggle="tab" href="#details">Details</a></li>
 										<li><a data-toggle="tab" href="#Custom">Attribute</a></li>
-										<li><a data-toggle="tab" href="#inventory">Inventory</a></li>
+										<li><a data-toggle="tab" href="#inventory">Pricing</a></li>
 									</ul>
 									<br>
 									<div class="tab-content">
@@ -440,23 +431,13 @@
 												<label>Universal Product Code:</label> <br> <input
 													readonly type="text" id="upcupc" class="form-control">
 												<br> <br>
-
-
-
-
 												<h4>
 													Is Saleable &nbsp; &nbsp;<input disabled type="checkbox"
 														id="salsal">
 												</h4>
 											</div>
-
-
-
 										</div>
-
-
 										<div id="inventory" class="tab-pane fade ">
-
 											<table>
 
 												<tr>
@@ -597,9 +578,10 @@
 								<form action="#" method="get">
 									<div class="col-md-6">
 										<div>
-											<label for="exampleInputEmail1">Product Code:</label> <input 
-												type="text" name="productCode2" id="productCode" required 
-												class="form-control"> 
+											<label for="exampleInputEmail1">Product Code:</label> <input
+												type="text" name="productCode2" id="productCode" required
+												onkeyup="codeKeyUp();" onchange="codeChange();"
+												class="form-control">
 										</div>
 									</div>
 									<div class="col-md-6">
@@ -628,8 +610,6 @@
 													var="qqty">
 													<option value="${qqty.id}">${qqty.name}</option>
 												</c:forEach>
-
-
 											</select>
 										</div>
 									</div>
@@ -764,82 +744,37 @@
 
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="" class="font">Maximum Retail Price :</label> <input
-											type="number" name="mrp" placeholder="" id="mrpO"
-											onChange="this.value = wShow(this.value,$('#wspO').val())"
-											class="form-control">
+										<label for="" class="font">Per Unit Cost:</label> <input
+											name="unitCost" type="text" placeholder="" id="ucO"
+											onchange="rateF()" class="form-control">
+
 									</div>
 									<div class="form-group">
 										<label for="" class="font">Wholesale Price :</label> <input
-											type="number" name="wsp" readonly="readonly"
-											onChange="this.value = relationMW(this.value,$('#mrpO').val(),$('#ucO').val())"
-											placeholder="" id="wspO" class="form-control">
+											type="text" name="wsp" onchange="wspF()" placeholder=""
+											id="wspO" class="form-control">
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="" class="font">Quantity:</label> <input
-											name="quantity" type="number" id="quantity"
+											name="quantity" type="text" pattern="\d*" id="quantity"
 											onkeyup="setLimit()" class="form-control">
 									</div>
 
-									<div class="form-group">
-										<label for="" class="font">Per Unit Cost:</label> <input
-											readonly="readonly" name="unitCost" type="number"
-											placeholder="" id="ucO"
-											onChange="this.value = relationWP(this.value,$('#wspO').val())"
-											class="form-control">
 
+									<div class="form-group">
+										<label for="" class="font">Maximum Retail Price :</label> <input
+											type="text" name="mrp" placeholder="" id="mrpO"
+											onchange="mrpF()" class="form-control">
 									</div>
 
 								</div>
 
-								<script type="text/javascript">
-									function wShow(value, max) {
-
-										if (parseFloat(value) > max) {
-
-											$("#wspO").prop("readonly", false);
-											return value;
-										} else {
-											alert("WSP is less or equal to MRP");
-											return "";
-										}
-
-									}
-								</script>
-
-								<script type="text/javascript">
-									function relationMW(value, max, min) {
-
-										if (parseFloat(value) > max) {
-											alert("WSP is less or equal to MRP");
-
-											return "";
-										} else if (parseFloat(value) < min) {
-											alert("WSP is greater or equal to cost per unit");
-											return "";
-										} else {
-											$("#ucO").prop("readonly", false);
-											return value;
-										}
-									}
-								</script>
-								<script type="text/javascript">
-									function relationWP(value, max) {
-
-										if (parseFloat(value) > max) {
-											alert("Per unit cost is less or equal to WSP");
-
-											return "";
-										} else {
-
-											return value;
-										}
-									}
-								</script>
 
 							</div>
+
+
 
 							<div id="divhide">
 
@@ -898,7 +833,7 @@
 									<div class="tree-list"
 										style="overflow-y: scroll; overflow-y: scroll; height: 300px">
 
-										<!-- Listing directory ZendX from ZendFramework library -->
+
 
 										<ul id="tree">
 											<c:forEach items="${sessionScope['ejb'].getAllDepartments()}"
@@ -929,7 +864,7 @@
 												</li>
 											</c:forEach>
 										</ul>
-										
+
 									</div>
 
 								</div>
@@ -1290,7 +1225,7 @@
 				<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
 			</div>
 		</div>
-
+		<input type="hidden" id="pcodeCheck">
 	</div>
 
 	<!-- Script -->
@@ -1321,6 +1256,38 @@
 	<script type="text/javascript" src="js/grid-filter.js"></script>
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 	<script type="text/javascript" src="js/abixTreeList.min.js"></script>
+	<script src="js/numericInput.min.js"></script>
+
+
+
+	<script type="text/javascript">
+		function codeKeyUp() {
+			$("#pcodeCheck").val("");
+			$.ajax({
+				url : "checkPcode",
+				dataType : "json",
+				data : {
+					productCode4 : $("#productCode").val()
+				},
+				success : function(data) {
+					if (data.code != "") {
+						$("#pcodeCheck").val(data.code);
+					}
+				}
+
+			});
+
+		}
+
+		function codeChange() {
+			if ($("#pcodeCheck").val() != "") {
+				alert("this product code already exist.");
+				$("#pcodeCheck").val("");
+				$("#productCode").val("");
+			}
+		}
+	</script>
+
 	<script>
 		$(document).ready(function() {
 			$('#tree').abixTreeList();
@@ -1575,11 +1542,121 @@
 			});
 
 		}
-		
-		
+	</script>
+	<!-- 	*********************************************wsp mrp cost****************************************** -->
+	<script type="text/javascript">
+
+
+		function rateF() {
+
+			if ($("#wspO").val() != ""
+					&& Number($("#ucO").val()) > Number($("#wspO").val())) {
+				alert("Rate should be less than or equals to wsp.");
+				$("#ucO").val("");
+			} else if ($("#mrpO").val() != ""
+					&& Number($("#ucO").val()) > Number($("#mrpO").val())) {
+				alert("Rate should be less than or equals to MRP.");
+				$("#ucO").val("");
+			}
+		}
+
+		function wspF() {
+
+			if ($("#ucO").val() == "") {
+				alert("Please insert Rate first...");
+				$("#wspO").val("");
+			} else if (Number($("#ucO").val()) > Number($("#wspO").val())) {
+				alert("WSP should be greater than or equals to Rate.");
+				$("#wspO").val("");
+			} else if ($("#mrpO").val() != ""
+					&& Number($("#wspO").val()) > Number($("#mrpO").val())) {
+				alert("WSP should be less than or equals to MRP.");
+				$("#wspO").val("");
+			}
+		}
+
+		function mrpF() {
+
+			if ($("#ucO").val() == "") {
+				alert("Please insert ucO first...");
+				$("#mrpO").val("");
+			} else if ($("#wspO").val() == "") {
+				alert("Please insert WSP first...");
+				$("#mrpO").val("");
+			} else if (Number($("#ucO").val()) > Number($("#mrpO").val())) {
+				alert("MRP should be greater than or equals to Rate.");
+				$("#mrpO").val("");
+			} else if (Number($("#wspO").val()) > Number($("#mrpO").val())) {
+				alert("MRP should be greater than or equals to WSP.");
+				$("#mrpO").val("");
+			}
+		}
+	</script>
+
+	<!-- 	*********************************************Numeric Testing****************************************** -->
+
+	<script>
+		$(function() {
+
+			$("#quantity").numericInput({
+
+				allowFloat : false, // Accpets positive numbers (floating point)
+
+				allowNegative : false,
+			// Accpets positive or negative integer
+
+			});
+
+		});
+	</script>
+
+	<script>
+		$(function() {
+
+			$("#mrpO").numericInput({
+
+				allowFloat : true, // Accpets positive numbers (floating point)
+
+				allowNegative : false,
+			// Accpets positive or negative integer
+
+			});
+
+		});
+	</script>
+	<script>
+		$(function() {
+
+			$("#wspO").numericInput({
+
+				allowFloat : true, // Accpets positive numbers (floating point)
+
+				allowNegative : false,
+			// Accpets positive or negative integer
+
+			});
+
+		});
+	</script>
+	<script>
+		$(function() {
+
+			$("#ucO").numericInput({
+
+				allowFloat : true, // Accpets positive numbers (floating point)
+
+				allowNegative : false,
+			// Accpets positive or negative integer
+
+			});
+
+		});
+	</script>
+	<!-- 	*********************************************************************************************************** -->
+
+
 
 
 </body>
 
-/* <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT --> */
 </html>

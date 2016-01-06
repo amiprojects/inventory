@@ -116,7 +116,7 @@
 								<div class="row">
 									<br> <br>
 									<div align="center" class="col-md-12">
-
+										<form method="get">
 										<table>
 											<tr>
 												<td><h4>Enter Sales Challan Id:</h4></td>
@@ -124,10 +124,12 @@
 												<td width="380px"><input class="form-control"
 													type="text" id="jChallan" name="jChallan"></td>
 												<td>&nbsp;&nbsp;&nbsp;</td>
-												<td><button type="button" class="btn btn-info btn-sm"
+												<td><button type="submit" class="btn btn-info btn-sm"
 														onclick="jRec()">Go</button></td>
 											</tr>
 										</table>
+										
+										</form>
 									</div>
 									<div class="col-md-6">
 										<div class="widget-area"
@@ -458,13 +460,12 @@
 														</div>
 													</div>
 													<div class="modal-footer">
-														<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+														
 													</div>
 												</div>
 											</div>
 										</div>
-										<!-- <button type="button" class="btn btn-info btn-lg"
-											data-toggle="modal" data-target="#" id="save">Save</button> -->
+									
 									</div>
 								</div>
 							</form>
@@ -519,7 +520,7 @@
 					</table>
 				</div>
 				<div class="modal-footer">
-					<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+					
 				</div>
 			</div>
 

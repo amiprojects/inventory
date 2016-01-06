@@ -82,7 +82,7 @@ page[size="A4"] {
 	<c:set value="${sessionScope['ejb'].getCompanyInfo()}"
 		var="companyInfo" />
 	<c:set value="${sessionScope['ejb'].getSalesEntryById(param.id)}"
-		var="purEntry" />
+		var="purEntry"/>
 	<page id="print1" size="A4">
 	<h3 align="center">Sales Invoice</h3>
 	<table class="tg"
@@ -98,11 +98,11 @@ page[size="A4"] {
 		</tr>
 		<tr style="height: 50px">
 			<td class="tg-031e" colspan="2">Delivery Note:</td>
-			<td class="tg-031e" colspan="2">Mode/Time of payment</td>
+			<td class="tg-031e" colspan="2">Mode/Time of payment <%-- ${purEntry.paymentDetails.paymentType.type.get(0)} --%></td>
 		</tr>
 		<tr style="height: 50px">
-			<td class="tg-031e" colspan="2">Supplier reference</td>
-			<td class="tg-031e" colspan="2">Other references</td>
+			<td class="tg-031e" colspan="2"></td>
+			<td class="tg-031e" colspan="2"></td>
 		</tr>
 		<tr style="height: 50px">
 			<td class="tg-031e" colspan="3" rowspan="4"><strong>Customer
@@ -114,16 +114,26 @@ page[size="A4"] {
 			<td class="tg-031e" colspan="2">Buyer's Oder No:</td>
 			<td class="tg-031e" colspan="2">Date:</td>
 		</tr>
+		
+	<%--  <c:forEach items="${purEntry.paymentDetails}" var="kilo">
+						< c:set var="mege" value="${kilo.get(0)}"/>
+						<c:set var="giga" value="${mege.paymentType.type}"/>
+						
+						</c:forEach> --%>
+						<%-- <tr><td><h1>asdsad${purEntry.paymentDetails.get(0).paymentType.type}</h1></td></tr> --%>
+						
+						<c:if test="${purEntry.paymentDetails.size()>0}">
 		<tr style="height: 50px">
-			<td class="tg-031e" colspan="2">Despatch Document No.</td>
-			<td class="tg-031e" colspan="2">Dated.</td>
+			<td class="tg-031e" colspan="2">${purEntry.paymentDetails.get(0).paymentType.type}</td>
+			<td class="tg-031e" colspan="2"></td>
+		</tr>
+		</c:if>
+		<tr style="height: 50px">
+			<td class="tg-031e" colspan="2"></td>
+			<td class="tg-031e" colspan="2"></td>
 		</tr>
 		<tr style="height: 50px">
-			<td class="tg-031e" colspan="2">Despatch through</td>
-			<td class="tg-031e" colspan="2">Destination</td>
-		</tr>
-		<tr style="height: 50px">
-			<td class="tg-031e" colspan="4">Terms of Delivery</td>
+			<td class="tg-031e" colspan="4"></td>
 		</tr>
 		<tr>
 			<td class="tg-031e" colspan="7">
@@ -134,8 +144,11 @@ page[size="A4"] {
 						<th>Description of goods</th>
 						<th>Quantity</th>
 						<th>Cost</th>
-						<th>Per</th>
+						<th>Per</th><!-- {purEntry.paymentDetails.paymentType.type.get(0)} -->
 						<th>Amount</th>
+						
+						
+						
 					</tr>
 					<c:set value="${1}" var="sl" />
 					<c:set value="${0}" var="tqty" />
