@@ -22,7 +22,8 @@
 <link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
 <!-- Bootstrap -->
 <link rel="stylesheet" href="css/style.css" type="text/css" />
-
+<!-- TOAST -->
+<link rel="stylesheet" href="css/toast.css" type="text/css" />
 <!-- Style -->
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
 <!-- Responsive -->
@@ -112,438 +113,449 @@
 
 
 						<div class="col-md-12" style="height: 800px;">
-							<form class="sec" action="salesEntry" method="post">
-								<div class="row">
-									<br> <br>
-									<div align="center" class="col-md-12">
-										<form method="get">
-										<table>
-											<tr>
-												<td><h4>Enter Sales Challan Id:</h4></td>
-												<td>&nbsp;&nbsp;</td>
-												<td width="380px"><input class="form-control"
-													type="text" id="jChallan" name="jChallan"></td>
-												<td>&nbsp;&nbsp;&nbsp;</td>
-												<td><button type="submit" class="btn btn-info btn-sm"
-														onclick="jRec()">Go</button></td>
-											</tr>
+							<br> <br>
+							<div align="center" class="col-md-12">
+								<form method="get" action="goSalesReturn" id="sReturnF">
+									<table>
+										<tr>
+											<td><h4>Enter Sales Challan Id:</h4></td>
+											<td>&nbsp;&nbsp;</td>
+											<td width="380px"><input class="form-control"
+												type="text" id="challanNumber" name="challanNumber"></td>
+											<td>&nbsp;&nbsp;&nbsp;</td>
+											<td><button type="button" class="btn btn-info btn-sm"
+													onclick="sReturn()">Go</button></td>
+										</tr>
+									</table>
+								</form>
+							</div>
+							<div class='toast' style='display: none'>
+								<h3 id="msg">${requestScope['msg']}</h3>
+							</div>
+
+
+							<c:if test="${requestScope['amS']!=null}">
+								<div id="show">
+
+
+									<div class="row">
+										<div class="col-md-6">
+											<div class="widget-area"
+												style="height: 270px; padding: 4px 5px;">
+												<div style="background-color: lightgrey; padding: 3px 3px;">
+													<span class="head_style">Bill To:</span>
+												</div>
+												<table>
+												
+												<c:set value="${requestScope['amS']}" var="salre" />
+												
+												
+													<tr>
+														<td>&nbsp;</td>
+													</tr>
+													<tr>
+														<td>Customer Name :</td>
+														<td>&nbsp;</td>
+														<td><input type="text" name="custName" id="custName"
+															readonly="readonly" class="form-control" value="${salre.customer.name}"
+															style="align: center;"></td>
+													</tr>
+													<tr>
+														<td>&nbsp;</td>
+													</tr>
+													<tr>
+														<td>Customer mobile :</td>
+														<td>&nbsp;</td>
+														<td><input type="text" name="addr" id="addr"
+															readonly="readonly" class="form-control" value="${salre.customer.mobile}"
+															style="length: 40px;" style="align:center;"></td>
+													</tr>
+													<tr>
+														<td>&nbsp;</td>
+													</tr>
+													<tr>
+														<td>Agent Name :</td>
+														<td>&nbsp;</td>
+														<td><input type="text" name="city" id="city"   value="${salre.vendor.name}"
+															readonly="readonly" class="form-control"
+															style="length: 40px;"></td>
+													</tr>
+													<tr>
+														<td>&nbsp;</td>
+													</tr>
+													<tr>
+														<td>Agent phone number :</td>
+														<td>&nbsp;</td>
+														<td><input type="number" name="phone" id="phone"
+															readonly="readonly" class="form-control" value="${salre.vendor.ph1}"
+															style="length: 40px;"></input></td>
+													</tr>
+												</table>
+											</div>
+										</div>
+
+										<div class="col-md-6">
+											<div class="widget-area"
+												style="height: 270px; padding: 5px 3px;">
+												<div style="background-color: lightgrey; padding: 3px ;">
+													<span class="head_style">Invoice Details:</span>
+												</div>
+
+												<br> <br>
+												<div class="form-group">
+													<label style="font-size: 15px" class="font">Sales
+														Challan ID :</label> <input class="form-control" type="text"
+														value="${salre.challanNumber}"
+														name="salesDate" id="" readonly="readonly">
+
+												</div>
+												<div class="form-group">
+													<label style="font-size: 15px" class="font">Date :</label>
+													<input class="form-control" type="text" name="salesDate"
+												value=	<fmt:formatDate value="${salre.sales_date}"
+																		pattern="dd-MM-yyyy" />
+														id="" readonly="readonly">
+
+												</div>
+											</div>
+										</div>
+									</div>
+
+
+									<div class="widget-area">
+										<table class="table table-striped table-bordered"
+											id="productTable">
+											<thead>
+												<tr>
+													<th>#</th>
+													<th>Product code</th>
+													<th>Product Description</th>
+													<th>Qty.</th>
+													<th id="mrpWSP">MRP/Qty</th>
+													<th>Total Price</th>
+													<th>Quantity Receive</th>
+
+
+												</tr>
+											</thead>
+											<tbody style="display: none;">
+												<!-- <tbody> -->
+												<tr>
+													<td>0</td>
+													<td><input type="text" id="codevalue"
+														readonly="readonly"><input type="text"
+														id="productId" readonly="readonly"></td>
+
+													<td><input type="text" id="descvalue"
+														readonly="readonly"></td>
+
+													<td><input type="text" id="qtyvalue"
+														readonly="readonly" value="0"></td>
+
+													<td><input type="hidden" id="wspORmrp" name="wspORmrp">
+
+														<input type="text" id="mrpQty" readonly="readonly"></td>
+													<td><input type="text" id="eachtotalvalue"
+														readonly="readonly"></td>
+												</tr>
+											</tbody>
 										</table>
-										
-										</form>
-									</div>
-									<div class="col-md-6">
-										<div class="widget-area"
-											style="height: 270px; padding: 4px 5px;">
-											<div style="background-color: lightgrey; padding: 3px 3px;">
-												<span class="head_style">Bill To:</span>
-											</div>
-											<table>
-												<tr>
-													<td>&nbsp;</td>
-												</tr>
-												<tr>
-													<td>Customer Name :</td>
-													<td>&nbsp;</td>
-													<td><input type="text" name="custName" id="custName"
-														readonly="readonly" class="form-control"
-														style="align: center;"></td>
-												</tr>
-												<tr>
-													<td>&nbsp;</td>
-												</tr>
-												<tr>
-													<td>Customer Details :</td>
-													<td>&nbsp;</td>
-													<td><input type="text" name="addr" id="addr"
-														readonly="readonly" class="form-control"
-														style="length: 40px;" style="align:center;"></td>
-												</tr>
-												<tr>
-													<td>&nbsp;</td>
-												</tr>
-												<tr>
-													<td>Agent Name :</td>
-													<td>&nbsp;</td>
-													<td><input type="text" name="city" id="city"
-														readonly="readonly" class="form-control"
-														style="length: 40px;"></td>
-												</tr>
-												<tr>
-													<td>&nbsp;</td>
-												</tr>
-												<tr>
-													<td>Agent Details :</td>
-													<td>&nbsp;</td>
-													<td><input type="number" name="phone" id="phone"
-														readonly="readonly" class="form-control"
-														style="length: 40px;"></input></td>
-												</tr>
-											</table>
-										</div>
 									</div>
 
-									<div class="col-md-6">
-										<div class="widget-area"
-											style="height: 270px; padding: 5px 3px;">
-											<div style="background-color: lightgrey; padding: 3px 3px;"">
-												<span class="head_style">Invoice Details:</span>
-											</div>
+									<div style="width: 40%; float: right;">
+										<input type="hidden" id="totalvalue" name="totalvalue"
+											value="0">
+										<table id="stream_table"
+											class="table table-striped table-bordered">
+											<thead>
+												<tr>
+													<td colspan="2" id="sub">Sub Total :</td>
+													<td><input type="number" class="form-control"
+														readonly="readonly" id="subtotalvalue"
+														name="subtotalvalue" value="0"></td>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td colspan="2">Discount (%) :</td>
+													<td><input type="number" class="form-control"
+														id="discount" name="discount" placeholder=""
+														onkeyup="discountF();"></td>
+												</tr>
+											</tbody>
 
-											<br> <br>
-											<div class="form-group">
-												<label style="font-size: 15px" class="font">Sales
-													Challan ID :</label> <input class="form-control" type="text"
-													name="salesDate" id="" readonly="readonly">
+											<tbody>
+												<tr>
+													<td colspan="2" id="disc">Discount Value:</td>
+													<td><input type="number" class="form-control"
+														readonly="readonly" id="discountValue"
+														name="discountValue" value="0"></td>
+												</tr>
 
-											</div>
-											<div class="form-group">
-												<label style="font-size: 15px" class="font">Date :</label> <input
-													class="form-control" type="text" name="salesDate" id=""
-													readonly="readonly">
+											</tbody>
+											<tbody>
+												<tr>
+													<td><select class="form-control" id="taxGroup"
+														name="taxGroup" onchange="selectedTaxGroup();">
+															<option value="0">TAX type</option>
+															<c:forEach
+																items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
+																var="taxTypeGroup">
+																<option value="${taxTypeGroup.id}">${taxTypeGroup.name}</option>
+															</c:forEach>
+													</select></td>
+													<td>%</td>
+													<td><input type="text" class="form-control"
+														readonly="readonly" value="0" id="taxTot"></td>
+												</tr>
+											</tbody>
+											<tbody>
+												<tr>
+													<td colspan="2">Tax Amount :</td>
+													<td><input type="text" class="form-control"
+														readonly="readonly" value="0" id="taxAmount"></td>
+												</tr>
+											</tbody>
+											<tbody>
+												<tr>
+													<td colspan="2" id="trans">Transport charge :</td>
+													<td><input type="number" class="form-control"
+														value="0" id="transcharge" name="transcharge"
+														onkeyup="transchargeF();"></td>
+												</tr>
+											</tbody>
 
-											</div>
-										</div>
-									</div>
-								</div>
-
-
-								<div class="widget-area">
-									<table class="table table-striped table-bordered"
-										id="productTable">
-										<thead>
-											<tr>
-												<th>#</th>
-												<th>Product code</th>
-												<th>Product Description</th>
-												<th>Qty.</th>
-												<th id="mrpWSP">MRP/Qty</th>
-												<th>Total Price</th>
-												<th>Quantity Receive</th>
-
-
-											</tr>
-										</thead>
-										<tbody style="display: none;">
-											<!-- <tbody> -->
-											<tr>
-												<td>0</td>
-												<td><input type="text" id="codevalue"
-													readonly="readonly"><input type="text"
-													id="productId" readonly="readonly"></td>
-
-												<td><input type="text" id="descvalue"
-													readonly="readonly"></td>
-
-												<td><input type="text" id="qtyvalue"
-													readonly="readonly" value="0"></td>
-
-												<td><input type="hidden" id="wspORmrp" name="wspORmrp">
-
-													<input type="text" id="mrpQty" readonly="readonly"></td>
-												<td><input type="text" id="eachtotalvalue"
-													readonly="readonly"></td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-
-								<div style="width: 40%; float: right;">
-									<input type="hidden" id="totalvalue" name="totalvalue"
-										value="0">
-									<table id="stream_table"
-										class="table table-striped table-bordered">
-										<thead>
-											<tr>
-												<td colspan="2" id="sub">Sub Total :</td>
-												<td><input type="number" class="form-control"
-													readonly="readonly" id="subtotalvalue" name="subtotalvalue"
-													value="0"></td>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td colspan="2">Discount (%) :</td>
-												<td><input type="number" class="form-control"
-													id="discount" name="discount" placeholder=""
-													onkeyup="discountF();"></td>
-											</tr>
-										</tbody>
-
-										<tbody>
-											<tr>
-												<td colspan="2" id="disc">Discount Value:</td>
-												<td><input type="number" class="form-control"
-													readonly="readonly" id="discountValue" name="discountValue"
-													value="0"></td>
-											</tr>
-
-										</tbody>
-										<tbody>
-											<tr>
-												<td><select class="form-control" id="taxGroup"
-													name="taxGroup" onchange="selectedTaxGroup();">
-														<option value="0">TAX type</option>
-														<c:forEach
-															items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
-															var="taxTypeGroup">
-															<option value="${taxTypeGroup.id}">${taxTypeGroup.name}</option>
-														</c:forEach>
-												</select></td>
-												<td>%</td>
-												<td><input type="text" class="form-control"
-													readonly="readonly" value="0" id="taxTot"></td>
-											</tr>
-										</tbody>
-										<tbody>
-											<tr>
-												<td colspan="2">Tax Amount :</td>
-												<td><input type="text" class="form-control"
-													readonly="readonly" value="0" id="taxAmount"></td>
-											</tr>
-										</tbody>
-										<tbody>
-											<tr>
-												<td colspan="2" id="trans">Transport charge :</td>
-												<td><input type="number" class="form-control" value="0"
-													id="transcharge" name="transcharge"
-													onkeyup="transchargeF();"></td>
-											</tr>
-										</tbody>
-
-										<tbody>
-											<tr>
-												<td colspan="2" id="sur">Surcharge :</td>
-												<td><input type="number" class="form-control" value="0"
-													id="surcharge" name="surcharge" onkeyup="surchargeF();"></td>
-											</tr>
-										</tbody>
-										<tbody>
-											<tr>
-												<td colspan="2" id="round">Round Of :</td>
-												<td><input type="number" class="form-control"
-													placeholder="" readonly="readonly" id="roundvalue"
-													name="roundvalue" value="0"></td>
-											</tr>
-										</tbody>
-										<thead>
-											<tr>
-												<td colspan="2" id="grand">Grand Total :</td>
-												<td><input type="number" class="form-control"
-													placeholder="0" readonly="readonly" id="grandtotal"
-													name="grandtotal"></td>
-											</tr>
-										</thead>
-									</table>
-									<div style="float: right;">
-										<input type="button" onclick="cancelF();"
-											class="btn btn-danger small" value="Cancel"
-											data-toggle="modal"> <input type="button"
-											class="btn btn-info btn-sm" data-toggle="modal" value="Save"
-											onclick="paymentDate();">
-										<div id="saveSales" class="modal fade" role="dialog"
-											style="top: 25px;">
-											<div class="modal-dialog modal-lg">
-												<div class="modal-content">
-													<div class="modal-header">
-														<button type="button" class="close" data-dismiss="modal"
-															onclick="closePayment();">&times;</button>
-														<h4 class="modal-title">Payment Details</h4>
-													</div>
-													<div class="modal-body">
-														<div class="row">
-															<div class="col-md-6">
-																<div class="widget-area">
-																	<div class="breadcrumbs">
-																		<ul>
-																			<li><a title="">Select Payment status : </a></li>
-																		</ul>
-																	</div>
-																	<br> <br> <br>
-																	<div class="row">
-																		<div class="col-md-5">Payment status :</div>
-																		<div class="col-md-7">
-																			<div class="sec">
-
-																				<select class="form-control" id="pstatus"
-																					name="pstatus" onchange="pStatusDiv()">
-																					<option value="-" selected="selected">---</option>
-																					<c:forEach
-																						items="${sessionScope['ejb'].getAllPaymentStatus()}"
-																						var="payStatus">
-																						<option value="${payStatus.status}">${payStatus.status}</option>
-																					</c:forEach>
-																				</select>
-																			</div>
-																		</div>
-																	</div>
-																	<div id="payDetail">
+											<tbody>
+												<tr>
+													<td colspan="2" id="sur">Surcharge :</td>
+													<td><input type="number" class="form-control"
+														value="0" id="surcharge" name="surcharge"
+														onkeyup="surchargeF();"></td>
+												</tr>
+											</tbody>
+											<tbody>
+												<tr>
+													<td colspan="2" id="round">Round Of :</td>
+													<td><input type="number" class="form-control"
+														placeholder="" readonly="readonly" id="roundvalue"
+														name="roundvalue" value="0"></td>
+												</tr>
+											</tbody>
+											<thead>
+												<tr>
+													<td colspan="2" id="grand">Grand Total :</td>
+													<td><input type="number" class="form-control"
+														placeholder="0" readonly="readonly" id="grandtotal"
+														name="grandtotal"></td>
+												</tr>
+											</thead>
+										</table>
+										<div style="float: right;">
+											<input type="button" onclick="cancelF();"
+												class="btn btn-danger small" value="Cancel"
+												data-toggle="modal"> <input type="button"
+												class="btn btn-info btn-sm" data-toggle="modal" value="Save"
+												onclick="paymentDate();">
+											<div id="saveSales" class="modal fade" role="dialog"
+												style="top: 25px;">
+												<div class="modal-dialog modal-lg">
+													<div class="modal-content">
+														<div class="modal-header">
+															<button type="button" class="close" data-dismiss="modal"
+																onclick="closePayment();">&times;</button>
+															<h4 class="modal-title">Payment Details</h4>
+														</div>
+														<div class="modal-body">
+															<div class="row">
+																<div class="col-md-6">
+																	<div class="widget-area">
 																		<div class="breadcrumbs">
 																			<ul>
-																				<li><a title="">Payment Details : </a></li>
+																				<li><a title="">Select Payment status : </a></li>
 																			</ul>
 																		</div>
 																		<br> <br> <br>
 																		<div class="row">
-																			<div class="sec" id="pTypeDiv">
-																				<div class="col-md-5">Payment type :</div>
-																				<div class="col-md-7">
-																					<select class="form-control" id="pType"
-																						name="pType" onchange="pTypeFunc()">
+																			<div class="col-md-5">Payment status :</div>
+																			<div class="col-md-7">
+																				<div class="sec">
+
+																					<select class="form-control" id="pstatus"
+																						name="pstatus" onchange="pStatusDiv()">
 																						<option value="-" selected="selected">---</option>
 																						<c:forEach
-																							items="${sessionScope['ejb'].getAllPaymentType()}"
-																							var="payType">
-																							<option value="${payType.getType()}">${payType.getType()}</option>
+																							items="${sessionScope['ejb'].getAllPaymentStatus()}"
+																							var="payStatus">
+																							<option value="${payStatus.status}">${payStatus.status}</option>
 																						</c:forEach>
 																					</select>
 																				</div>
 																			</div>
-																			<div id="pDate">
-																				<div class="col-md-5">Payment Date :</div>
-																				<div class="col-md-7">
-																					<input type="text" id="datepicker2"
-																						class="form-control" readonly="readonly">
-																				</div>
+																		</div>
+																		<div id="payDetail">
+																			<div class="breadcrumbs">
+																				<ul>
+																					<li><a title="">Payment Details : </a></li>
+																				</ul>
 																			</div>
-																			<div id="pAmount">
-																				<div class="col-md-5">Full Amount :</div>
-																				<div class="col-md-7">
-																					<input type="text" class="form-control"
-																						readonly="readonly" id="spAmount" name="spAmount">
+																			<br> <br> <br>
+																			<div class="row">
+																				<div class="sec" id="pTypeDiv">
+																					<div class="col-md-5">Payment type :</div>
+																					<div class="col-md-7">
+																						<select class="form-control" id="pType"
+																							name="pType" onchange="pTypeFunc()">
+																							<option value="-" selected="selected">---</option>
+																							<c:forEach
+																								items="${sessionScope['ejb'].getAllPaymentType()}"
+																								var="payType">
+																								<option value="${payType.getType()}">${payType.getType()}</option>
+																							</c:forEach>
+																						</select>
+																					</div>
 																				</div>
-																			</div>
-																			<div id="pPayAmount">
-																				<div class="col-md-5">Payment Amount :</div>
-																				<div class="col-md-7">
-																					<input type="text" class="form-control" value="0"
-																						id="spPaymentAmount" name="spPaymentAmount"
-																						onkeyup="spPaymentAmountFunc();">
+																				<div id="pDate">
+																					<div class="col-md-5">Payment Date :</div>
+																					<div class="col-md-7">
+																						<input type="text" id="datepicker2"
+																							class="form-control" readonly="readonly">
+																					</div>
 																				</div>
-																			</div>
-																			<div id="pDueAmount">
-																				<div class="col-md-5">Due Amount :</div>
-																				<div class="col-md-7">
-																					<input type="text" class="form-control"
-																						readonly="readonly" id="spDueAmount"
-																						name="spDueAmount">
+																				<div id="pAmount">
+																					<div class="col-md-5">Full Amount :</div>
+																					<div class="col-md-7">
+																						<input type="text" class="form-control"
+																							readonly="readonly" id="spAmount" name="spAmount">
+																					</div>
+																				</div>
+																				<div id="pPayAmount">
+																					<div class="col-md-5">Payment Amount :</div>
+																					<div class="col-md-7">
+																						<input type="text" class="form-control" value="0"
+																							id="spPaymentAmount" name="spPaymentAmount"
+																							onkeyup="spPaymentAmountFunc();">
+																					</div>
+																				</div>
+																				<div id="pDueAmount">
+																					<div class="col-md-5">Due Amount :</div>
+																					<div class="col-md-7">
+																						<input type="text" class="form-control"
+																							readonly="readonly" id="spDueAmount"
+																							name="spDueAmount">
+																					</div>
 																				</div>
 																			</div>
 																		</div>
 																	</div>
 																</div>
-															</div>
 
-															<div class="col-md-6" style="float: right;"
-																id="description">
-																<div class="widget-area">
-																	<div class="breadcrumbs">
-																		<ul>
-																			<li><a title="">Provide Description : </a></li>
-																		</ul>
-																	</div>
-																	<br> <br> <br>
-																	<div class="row">
-																		<div class="col-md-5">Description :</div>
-																		<div class="col-md-7">
-																			<textarea rows="" cols="" class="form-control"
-																				id="desc" name="desc"></textarea>
+																<div class="col-md-6" style="float: right;"
+																	id="description">
+																	<div class="widget-area">
+																		<div class="breadcrumbs">
+																			<ul>
+																				<li><a title="">Provide Description : </a></li>
+																			</ul>
 																		</div>
-																	</div>
-																	<br> <input type="hidden" name="isAgent"
-																		id="isAgent">
-																	<div class="breadcrumbs">
-																		<button type="button" class="btn green pull-right"
-																			onclick="submit();">Save</button>
+																		<br> <br> <br>
+																		<div class="row">
+																			<div class="col-md-5">Description :</div>
+																			<div class="col-md-7">
+																				<textarea rows="" cols="" class="form-control"
+																					id="desc" name="desc"></textarea>
+																			</div>
+																		</div>
+																		<br> <input type="hidden" name="isAgent"
+																			id="isAgent">
+																		<div class="breadcrumbs">
+																			<button type="button" class="btn green pull-right"
+																				onclick="submit();">Save</button>
+																		</div>
 																	</div>
 																</div>
 															</div>
 														</div>
-													</div>
-													<div class="modal-footer">
-														
+														<div class="modal-footer"></div>
 													</div>
 												</div>
 											</div>
 										</div>
-									
 									</div>
 								</div>
-							</form>
+							</c:if>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<div id="purchaseDetails" class="modal fade" role="dialog"
-		style="top: 25px;">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						onclick="closeModal();">&times;</button>
-					<h4 class="modal-title">Purchase Details</h4>
+		<div id="purchaseDetails" class="modal fade" role="dialog"
+			style="top: 25px;">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							onclick="closeModal();">&times;</button>
+						<h4 class="modal-title">Purchase Details</h4>
+					</div>
+					<div class="modal-body">
+						<table id="stream_table" width="100%">
+							<thead>
+								<tr>
+									<th>Product code :</th>
+									<td colspan="2"><input type="text" readonly="readonly"
+										id="pCodeModal" class="form-control"></td>
+								</tr>
+								<tr>
+									<th>Description :</th>
+									<td colspan="2"><input type="text" readonly="readonly"
+										id="pDescModal" class="form-control"></td>
+								</tr>
+							</thead>
+						</table>
+						<table id="purchaseDetailsTable" class="table">
+							<thead>
+								<tr>
+									<th>Purchase Date</th>
+									<th>Vendor name</th>
+									<th>Lot No.</th>
+									<th>MRP</th>
+									<th>WSP</th>
+									<th>Remaining Qty.</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>-</td>
+									<td>-</td>
+									<td>-</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="modal-footer"></div>
 				</div>
-				<div class="modal-body">
-					<table id="stream_table" width="100%">
-						<thead>
-							<tr>
-								<th>Product code :</th>
-								<td colspan="2"><input type="text" readonly="readonly"
-									id="pCodeModal" class="form-control"></td>
-							</tr>
-							<tr>
-								<th>Description :</th>
-								<td colspan="2"><input type="text" readonly="readonly"
-									id="pDescModal" class="form-control"></td>
-							</tr>
-						</thead>
-					</table>
-					<table id="purchaseDetailsTable" class="table">
-						<thead>
-							<tr>
-								<th>Purchase Date</th>
-								<th>Vendor name</th>
-								<th>Lot No.</th>
-								<th>MRP</th>
-								<th>WSP</th>
-								<th>Remaining Qty.</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>-</td>
-								<td>-</td>
-								<td>-</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<div class="modal-footer">
-					
-				</div>
-			</div>
 
+			</div>
 		</div>
-	</div>
-	<div id="cancelOrNot" class="modal fade" role="dialog"
-		style="top: 25px;">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<!-- <h4 class="modal-title">Modal Header</h4> -->
-				</div>
-				<div class="modal-body">
-					<div class="row">
-						<div class="widget-area">
-							<div class="row">
-								<span>Do you want to cancel?</span>
-							</div>
-							<br>
-							<div class="row">
-								<button type="button" class="btn btn-success medium" id="yesP">Yes</button>
-								<button type="button" class="btn btn-danger medium" id="noP">No</button>
+		<div id="cancelOrNot" class="modal fade" role="dialog"
+			style="top: 25px;">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<!-- <h4 class="modal-title">Modal Header</h4> -->
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="widget-area">
+								<div class="row">
+									<span>Do you want to cancel?</span>
+								</div>
+								<br>
+								<div class="row">
+									<button type="button" class="btn btn-success medium" id="yesP">Yes</button>
+									<button type="button" class="btn btn-danger medium" id="noP">No</button>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -579,7 +591,32 @@
 			}
 		});
 	</script>
+	<script type="text/javascript">
+		function sReturn() {
+			$("#sReturnF").submit();
+			/* $("#jrecive").show(); */
 
+		}
+	</script>
+
+
+	<c:if test="${requestScope['msg']!=''}">
+		<script>
+			if ($('#msg').html() != "") {
+				$('.toast').fadeIn(400).delay(3000).fadeOut(400);
+			}
+		</script>
+	</c:if>
+
+	<c:if test="${requestScope['amS']==null}">
+		<script type="text/javascript">
+			if (getUrlVars()['challanNumber'] != null) {
+				alert("dfdf");
+				$('#msg').html("Invalid Challan number.");
+				$('.toast').fadeIn(400).delay(3000).fadeOut(400);
+			}
+		</script>
+	</c:if>
 
 
 </body>

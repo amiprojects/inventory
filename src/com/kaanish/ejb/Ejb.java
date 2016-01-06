@@ -1617,40 +1617,35 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	/*
-	 * public List<Vendor> getAllVendorsByNameCity( String code, String
-	 * description, String name) {
-	 * 
-	 * TypedQuery<Vendor> q = em .createQuery(
-	 * "select c from Vendor c where c.name=:name OR c.description=:description"
-	 * , Vendor.class); q.setParameter("code", code);
-	 * q.setParameter("description", description); q.setParameter("name", name);
-	 * return q.getResultList(); }
-	 */
+	
 
 	/******************************
 	 * Search Job Assignment Details by ChallanID
 	 ****************/
-	/*
-	 * public JobAssignmentDetails getJobAssignmentDetailsbyChallanNumber(String
-	 * challanNumber){ TypedQuery<JobAssignmentDetails> q = em .createQuery(
-	 * "select c from JobAssignmentDetails c where c.challanNumber=:challanNumber "
-	 * , JobAssignmentDetails.class); return q.getResultList(); /
-	 * ******************************************
-	 */// // *************find only use
-		// // fo4r
-		// // id**************////////////*****/
-	/*
-	 * public JobAssignmentDetails getJobAssignmentDetailsbyChallanNumber(String
-	 * challanNumber) { return em.find(JobAssignmentDetails.class,
-	 * challanNumber); }
-	 */
+	
 	public JobAssignmentDetails getJobAssignmentDetailsbyChallanNumber(
 			String challanNumber) {
 		TypedQuery<JobAssignmentDetails> q = em
 				.createQuery(
 						"select c from JobAssignmentDetails c where c.challanNumber=:challanNumber",
 						JobAssignmentDetails.class);
+		q.setParameter("challanNumber", challanNumber);
+		if (q.getResultList().size() > 0) {
+			return q.getResultList().get(0);
+		} else {
+			return null;
+		}
+
+	}
+	
+	/*****************************Search Sasles return by ChallanID ****************/
+	
+	public SalesEntry getSalestDetailsbyChallanNumber(
+			String challanNumber) {
+		TypedQuery<SalesEntry> q = em
+				.createQuery(
+						"select c from SalesEntry c where c.challanNumber=:challanNumber",
+						SalesEntry.class);
 		q.setParameter("challanNumber", challanNumber);
 		if (q.getResultList().size() > 0) {
 			return q.getResultList().get(0);

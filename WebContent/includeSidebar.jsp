@@ -53,11 +53,11 @@
 					<ul>
 						<li><a id="sSalesEntry" href="salesSalesEntry.jsp" title="">Sales
 								Entry</a></li>
-						<li><a id="sSalesReturn" href="salesReturn.jsp" title="">Sales
+					 <li><a id="sSalesReturn" href="salesReturn.jsp" title="">Sales
 								Return</a></li>
-						<!-- <li><a id="sSalesSearch" href="salesSearch.jsp" title="">Sales
-								Search</a></li> -->
-						<!-- <li><a id="sSalesDiscount" href="salesDiscount.jsp" title="">Discount</a></li> -->
+				 <li><a id="sSalesSearch" href="salesSearch.jsp" title="">Sales
+								Search</a></li> 
+			<!-- 	 <li><a id="sSalesDiscount" href="salesDiscount.jsp" title="">Discount</a></li>  -->
 					</ul>
 				</div>
 			</div>

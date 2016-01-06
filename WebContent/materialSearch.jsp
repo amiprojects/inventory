@@ -275,12 +275,18 @@
 										<table class="table">
 											<c:set var="countt" value="${1}" />
 
-											<c:forEach items="${requestScope['amii']}" var="am">
 
+											<c:if test="${requestScope['amii'].size()<=0}">
+
+												<script>
+													alert("No search result found");
+												</script>
+											</c:if>
+											<c:forEach items="${requestScope['amii']}" var="am">
 												<tr>
 													<td align="left">${countt}</td>
 													<td align="left">${am.code}</td>
-					 								<td align="center">${am.description}</td>
+													<td align="center">${am.description}</td>
 													<td align="center">${am.category.name}</td>
 													<td align="center"><a href="#" id="abcdef"
 														onclick="viewProduct('${am.id}');"> <img
@@ -915,34 +921,34 @@
 
 								<div class="col-md-6">
 									<div class="form-group">
-										<span id="sa1" style="font-size: 17px">Attribute 1:</span> <input
+										<span id="sa1" style="font-size: 17px">Attribute 1</span> <input
 											name="a1" type="text" disabled="disabled" id="a10"
 											class="form-control">
 									</div>
 									<div class="form-group">
-										<span id="sa2" style="font-size: 17px">Attribute 2:</span> <input
+										<span id="sa2" style="font-size: 17px">Attribute 2</span> <input
 											name="a2" type="text" disabled="disabled" id="a20"
 											class="form-control">
 									</div>
 									<div class="form-group">
-										<span id="sa3" style="font-size: 17px">Attribute 3:</span> <input
+										<span id="sa3" style="font-size: 17px">Attribute 3</span> <input
 											name="a3" type="text" id="a30" disabled="disabled"
 											class="form-control">
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
-										<span id="sa4" style="font-size: 17px">Attribute 4:</span> <input
+										<span id="sa4" style="font-size: 17px">Attribute 4</span> <input
 											name="a4" type="text" disabled="disabled" id="a40"
 											class="form-control">
 									</div>
 									<div class="form-group">
-										<span id="sa5" style="font-size: 17px">Attribute 5:</span> <input
+										<span id="sa5" style="font-size: 17px">Attribute 5</span> <input
 											name="a5" type="text" disabled="disabled" id="a50"
 											class="form-control">
 									</div>
 									<div class="form-group">
-										<span id="sa6" style="font-size: 17px">Attribute 6:</span> <input
+										<span id="sa6" style="font-size: 17px">Attribute 6</span> <input
 											name="a6" type="text" disabled="disabled" id="a60"
 											class="form-control">
 									</div>
@@ -1545,8 +1551,6 @@
 	</script>
 	<!-- 	*********************************************wsp mrp cost****************************************** -->
 	<script type="text/javascript">
-
-
 		function rateF() {
 
 			if ($("#wspO").val() != ""

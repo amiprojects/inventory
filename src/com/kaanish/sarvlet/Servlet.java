@@ -70,7 +70,7 @@ import com.kaanish.util.DateConverter;
 		"/goStockView", "/jChallanSearch", "/jobRecieve", "/createNewUser",
 		"/goJobDetailShow", "/goProView", "/purchaseView", "/changePass","/goSearchVendor",
 		"/purchaseSearchByPurchaseChallanNo", "/purchaseSearchByVendorName",
-		"/purchaseSearchByAgentName", "/purchaseSearchByProductCode" })
+		"/purchaseSearchByAgentName", "/purchaseSearchByProductCode", "/goSalesReturn" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -1655,6 +1655,18 @@ public class Servlet extends HttpServlet {
 
 				}
 				msg = "Job recieve saved successfully";
+
+				break;
+				
+			case "goSalesReturn":
+				page = "salesReturn.jsp";
+
+				salesEntry = ejb
+						.getSalestDetailsbyChallanNumber(req
+								.getParameter("challanNumber").trim());
+
+				req.setAttribute("amS", salesEntry);
+				msg = "";
 
 				break;
 
