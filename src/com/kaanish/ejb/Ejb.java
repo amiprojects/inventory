@@ -5,7 +5,10 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -657,39 +660,47 @@ public class Ejb {
 	public List<Purchase_Entry> getPurchaseEntryByChallanNo(String chNo) {
 		TypedQuery<Purchase_Entry> q = em
 				.createQuery(
-						"select c from Purchase_Entry c where c.challanNumber=:chNo ORDER BY c.id DESC",
+						"select c from Purchase_Entry c where UPPER(c.challanNumber)=:chNo ORDER BY c.id DESC",
 						Purchase_Entry.class);
-		q.setParameter("chNo", chNo);
+		q.setParameter("chNo", chNo.toUpperCase());
 		return q.getResultList();
 	}
 
 	public List<Purchase_Entry> getPurchaseEntryByVendorName(String name) {
 		TypedQuery<Purchase_Entry> q = em
 				.createQuery(
-						"select c from Purchase_Entry c where c.vendor.vendorType.type='Vendor' and c.vendor.name=:name ORDER BY c.id DESC",
+						"select c from Purchase_Entry c where c.vendor.vendorType.type='Vendor' and UPPER(c.vendor.name)=:name ORDER BY c.id DESC",
 						Purchase_Entry.class);
-		q.setParameter("name", name);
+		q.setParameter("name", name.toUpperCase());
 		return q.getResultList();
 	}
 
 	public List<Purchase_Entry> getPurchaseEntryByAgentName(String name) {
 		TypedQuery<Purchase_Entry> q = em
 				.createQuery(
-						"select c from Purchase_Entry c where c.vendor.vendorType.type='Purchase Agent' and c.vendor.name=:name ORDER BY c.id DESC",
+						"select c from Purchase_Entry c where c.vendor.vendorType.type='Purchase Agent' and UPPER(c.vendor.name)=:name ORDER BY c.id DESC",
 						Purchase_Entry.class);
-		q.setParameter("name", name);
+		q.setParameter("name", name.toUpperCase());
 		return q.getResultList();
 	}
 
-	/*public List<Purchase_Entry> getPurchaseEntryByProductCode(String name) {
-		TypedQuery<Purchase_Entry> q = em
+	public List<Purchase_Entry> getPurchaseEntryByProductCode(String name) {
+		List<Purchase_Entry> lst = new ArrayList<Purchase_Entry>();
+		Set<Purchase_Entry> hs = new HashSet<>();
+		TypedQuery<Purchase_Product_Details> q = em
 				.createQuery(
-						"select c.purchase_Entry from Purchase_Product_Details c where c.productDetail.code=:name group by c.purchase_Entry ORDER BY c.id DESC",
-						Purchase_Entry.class);
-		q.setParameter("name", name);
-		
-		return q.getResultList();
-	}*/
+						"select c from Purchase_Product_Details c where UPPER(c.productDetail.code)=:name ORDER BY c.id DESC",
+						Purchase_Product_Details.class);
+		q.setParameter("name", name.toUpperCase());
+
+		for (Purchase_Product_Details p : q.getResultList()) {
+			lst.add(p.getPurchase_Entry());
+		}
+		hs.addAll(lst);
+		lst.clear();
+		lst.addAll(hs);
+		return lst;
+	}
 
 	public int getLastPurchaseChallanNumber() {
 		TypedQuery<Purchase_Entry> q = em.createQuery(
@@ -940,20 +951,20 @@ public class Ejb {
 
 		TypedQuery<Purchase_Product_Details> q = em
 				.createQuery(
-						"select c from Purchase_Product_Details c where  UPPER(c.productDetail.code) like :cd and c.remaining_quantity>0 and c.productDetail.isSaleble=:salable and c.purchase_Entry.purchase_date<:date ORDER BY c.id ASC",
+						"select c from Purchase_Product_Details c where  UPPER(c.productDetail.code)=:cd and c.remaining_quantity>0 and c.productDetail.isSaleble=:salable and c.purchase_Entry.purchase_date<:date ORDER BY c.id ASC",
 						Purchase_Product_Details.class);
 		q.setParameter("salable", true);
-		q.setParameter("cd", "%" + code.toUpperCase() + "%");
+		q.setParameter("cd", code.toUpperCase());
 		q.setParameter("date", date);
 
 		lst = q.getResultList();
 
 		TypedQuery<Purchase_Product_Details> q1 = em
 				.createQuery(
-						"select c from Purchase_Product_Details c where  UPPER(c.productDetail.code) like :cd and c.remaining_quantity>0 and c.productDetail.isSaleble=:salable and c.initialInventory=true ORDER BY c.id ASC",
+						"select c from Purchase_Product_Details c where  UPPER(c.productDetail.code)=:cd and c.remaining_quantity>0 and c.productDetail.isSaleble=:salable and c.initialInventory=true ORDER BY c.id ASC",
 						Purchase_Product_Details.class);
 		q1.setParameter("salable", true);
-		q1.setParameter("cd", "%" + code.toUpperCase() + "%");
+		q1.setParameter("cd", code.toUpperCase());
 
 		for (Purchase_Product_Details ppd : q1.getResultList()) {
 			lst.add(ppd);
@@ -1606,28 +1617,17 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	
-	
-	
-	/*public List<Vendor> getAllVendorsByNameCity(
-			String code, String description, String name) {
+	/*
+	 * public List<Vendor> getAllVendorsByNameCity( String code, String
+	 * description, String name) {
+	 * 
+	 * TypedQuery<Vendor> q = em .createQuery(
+	 * "select c from Vendor c where c.name=:name OR c.description=:description"
+	 * , Vendor.class); q.setParameter("code", code);
+	 * q.setParameter("description", description); q.setParameter("name", name);
+	 * return q.getResultList(); }
+	 */
 
-		TypedQuery<Vendor> q = em
-				.createQuery(
-						"select c from Vendor c where c.name=:name OR c.description=:description",
-						Vendor.class);
-		q.setParameter("code", code);
-		q.setParameter("description", description);
-		q.setParameter("name", name);
-		return q.getResultList();
-	}*/
-	
-	
-	
-	
-	
-	
-	
 	/******************************
 	 * Search Job Assignment Details by ChallanID
 	 ****************/

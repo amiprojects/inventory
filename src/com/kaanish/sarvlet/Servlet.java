@@ -1214,13 +1214,13 @@ public class Servlet extends HttpServlet {
 				req.setAttribute("purEntryList", purEntryList3);
 				break;
 
-			/*case "purchaseSearchByProductCode":
+			case "purchaseSearchByProductCode":
 				page = "purchasingPurchaseSearch.jsp";
 				List<Purchase_Entry> purEntryList4 = ejb
 						.getPurchaseEntryByProductCode(req
 								.getParameter("prodCode"));
 				req.setAttribute("purEntryList", purEntryList4);
-				break;*/
+				break;
 
 			case "purchaseView":
 				page = "purchaseView.jsp";

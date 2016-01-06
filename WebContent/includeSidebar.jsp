@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%-- <jsp:include page="include.jsp" /> --%>
+<jsp:include page="include.jsp" />
 <aside class="sidebar" style="height: 100%; overflow-y: scroll;">
 	<div class="menu-sec">
 		<div id="menu-toogle" class="menus">
@@ -55,7 +55,9 @@
 								Entry</a></li>
 						<li><a id="sSalesReturn" href="salesReturn.jsp" title="">Sales
 								Return</a></li>
-						<li><a id="sSalesDiscount" href="salesDiscount.jsp" title="">Discount</a></li>
+						<!-- <li><a id="sSalesSearch" href="salesSearch.jsp" title="">Sales
+								Search</a></li> -->
+						<!-- <li><a id="sSalesDiscount" href="salesDiscount.jsp" title="">Discount</a></li> -->
 					</ul>
 				</div>
 			</div>

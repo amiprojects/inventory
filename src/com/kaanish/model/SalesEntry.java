@@ -206,4 +206,12 @@ public class SalesEntry implements Serializable {
 		this.isMRP = isMRP;
 	}
 
+	public List<PaymentDetails> getPaymentDetails() {
+		return paymentDetails;
+	}
+
+	public void setPaymentDetails(List<PaymentDetails> paymentDetails) {
+		this.paymentDetails = paymentDetails;
+	}
+
 }

@@ -63,28 +63,10 @@
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
 								<h3 style="margin-top: 11px;">Sales Search</h3>
-
-
 							</div>
-
 							<div class="widget-area">
 								<div class="col-md-12">
 									<form role="form" class="sec" action="purchaseSearchByDate">
-										<!-- <div class="row">
-											<div class="col-md-6">
-												<div class="form-group">
-													<label for="">Purchase challan no. :</label> <input type=""
-														placeholder="Enter Purchase Entry Number" id=""
-														class="form-control">
-												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="form-group">
-													<label for="">Vendor Bill no. :</label> <input type=""
-														placeholder="Enter Vendor SO :" id="" class="form-control">
-												</div>
-											</div>
-										</div> -->
 										<div class="row">
 											<div class="col-md-6">
 												<div class="form-group">
@@ -103,22 +85,6 @@
 												</div>
 											</div>
 										</div>
-										<!-- <div class="row">
-
-											<div class="col-md-6">
-												<div class="form-group">
-													<label for="">Product code :</label> <input type=""
-														placeholder="Enter Product code" id=""
-														class="form-control">
-												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="form-group">
-													<label for="">Vendor Name:</label> <input type=""
-														placeholder="Enter Vendor Name" id="" class="form-control">
-												</div>
-											</div>
-										</div> -->
 										<button class="btn green pull-right" type="submit">Search</button>
 									</form>
 									<br> <br>
@@ -128,10 +94,11 @@
 												<th>#</th>
 												<th>Sales challan no.</th>
 												<th>Customer Name</th>
+												<th>Agent Name</th>
 												<th>Vendor Bill no.</th>
 												<th>Sales Date</th>
-												<th>Cost</th>
-												<th>Barcode</th>
+												<th>Total Amount</th>
+												<!-- <th>Barcode</th> -->
 											</tr>
 										</thead>
 
@@ -142,14 +109,40 @@
 												<tr>
 													<td>${count}</td>
 													<td>${pEntryByD.challanNumber}</td>
-													<td>${pEntryByD.vendor.name}</td>
+													<c:if test="${pEntryByD.vendor.vendorType.type=='Vendor'}">
+														<td>${pEntryByD.vendor.name}</td>
+													</c:if>
+													<c:if test="${pEntryByD.vendor.vendorType.type!='Vendor'}">
+														<td>NIL</td>
+													</c:if>
+													<c:choose>
+														<c:when
+															test="${pEntryByD.vendor.vendorType.type=='Purchase Agent'}">
+															<td>${pEntryByD.vendor.name}</td>
+														</c:when>
+														<c:when test="${pEntryByD.agentId!=0}">
+															<td>${sessionScope['ejb'].getVendorById(pEntryByD.agentId).name}</td>
+														</c:when>
+														<c:otherwise>
+															<td>NIL</td>
+														</c:otherwise>
+													</c:choose>
 													<td>${pEntryByD.vendor_bill_no}</td>
 													<td><fmt:formatDate value="${pEntryByD.purchase_date}"
 															pattern="dd-MM-yy" /></td>
 													<td>${pEntryByD.totalCost}</td>
-													<td><a href="printBarcode.jsp?id=${pEntryByD.id}">
+													<%-- <td><a href="printBarcode.jsp?id=${pEntryByD.id}">
 															<img alt="click to view" src="Capture.PNG" height="20">
-													</a></td>
+													</a></td> --%>
+													<td>
+														<form action="purchaseView" method="post"
+															id="pView${pEntryByD.id}">
+
+															<a href="#" onclick="purchaseViewF('${pEntryByD.id}');"><input
+																type="hidden" value="${pEntryByD.id}" name="pId"><img
+																alt="" src="images/eye.png" height="25px"></a>
+														</form>
+													</td>
 												</tr>
 											</tbody>
 											<c:set var="count" value="${count+1}" />

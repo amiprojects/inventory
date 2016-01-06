@@ -299,9 +299,25 @@
 										<tbody>
 											<tr>
 												<td>${j}</td>
-												<td>${paymentDetails.paymentDate}</td>
-												<td>${paymentDetails.paymentType.type}</td>
-												<td>${paymentDetails.description}</td>
+												<td><fmt:formatDate
+														value="${paymentDetails.paymentDate}" pattern="dd-MM-yy" />
+												</td>
+												<c:choose>
+													<c:when test="${paymentDetails.paymentType.type!=null}">
+														<td>${paymentDetails.paymentType.type}</td>
+													</c:when>
+													<c:otherwise>
+														<td>NA</td>
+													</c:otherwise>
+												</c:choose>
+												<c:choose>
+													<c:when test="${paymentDetails.description!=null}">
+														<td>${paymentDetails.description}</td>
+													</c:when>
+													<c:otherwise>
+														<td>NIL</td>
+													</c:otherwise>
+												</c:choose>
 												<td>${paymentDetails.paidAmount}</td>
 											</tr>
 										</tbody>
