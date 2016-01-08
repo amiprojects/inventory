@@ -28,6 +28,9 @@
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
 <!-- Responsive -->
 <script type="text/javascript" src="js/jquery.min.js"></script>
+
+
+
 <!-- tost msg -->
 <link rel="stylesheet" href="css/toast.css" type="text/css" />
 
@@ -46,6 +49,23 @@
 		}
 	}
 </script>
+<!-- <script type="text/javascript">
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+
+			reader.onload = function(e) {
+				$('#image').attr('src', e.target.result).width(120).height(85);
+				str = e.target.result;
+				$("#proImage1").val(str.substring(str.lastIndexOf(',') + 1));
+
+			};
+
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
+</script> -->
+
 
 
 
@@ -271,14 +291,14 @@
 										</tr>
 									</table>
 									<div
-										style="overflow-y: scroll; overflow-x: scroll; height: 155px; border: 1px;">
+										style="overflow-y: scroll; overflow-x: scroll; height: 147px; border: 1px;">
 										<table class="table">
 											<c:set var="countt" value="${1}" />
 
 											<c:forEach
 												items="${sessionScope['ejb'].getAllProductDetail()}"
 												var="productt">
-												
+
 
 												<tr>
 													<td align="left">${countt}</td>
@@ -367,7 +387,7 @@
 												</a> <br> <br>
 
 												<div
-													style="position: absolute; width: 533px; height: 116px; top: 385px; left: 32px; overflow: scroll;">
+													style="position: absolute; width: 90%; height: 130px; top: 385px; left: 32px; overflow: scroll;">
 													<div id="peoImg"></div>
 												</div>
 											</div>
@@ -674,11 +694,21 @@
 									<img id="image" alt="" src="data:image/jpeg;base64,"
 										style="width: 100px; height: 50px;">
 								</div>
+
+
+								<input type="file" name="proImg" size="20"
+									onchange="readURL(this);"><br> <img id="image"
+									alt="" src=""><a href="javascript:void(take_snapshot())"><button class="btn blue btn-default"  type="button">Take Snapshot</button></a>
+								<div id="my_camera" style="width: 320px; height: 240px;"></div>
+								
+
+
+
 							</div>
-							<div id="companyLogo">
+							<!-- <div id="companyLogo">
 								<input type="file" name="proImg" size="60" id="image"
 									onchange="readURL(this);" value="">
-							</div>
+							</div> -->
 
 						</fieldset>
 					</div>
@@ -1548,8 +1578,6 @@
 	</script>
 	<!-- 	*********************************************wsp mrp cost****************************************** -->
 	<script type="text/javascript">
-
-
 		function rateF() {
 
 			if ($("#wspO").val() != ""
@@ -1657,7 +1685,25 @@
 	</script>
 	<!-- 	*********************************************************************************************************** -->
 
+<script type="text/javascript" src="js/webcam.js"></script>
+<script>
+Webcam.set({
+	width: 320,
+	height: 240,
+	image_format: 'jpeg',
+	jpeg_quality: 90
+});
+Webcam.attach('#my_camera');
 
+	function take_snapshot() {
+		Webcam
+				.snap(function(data_uri) {
+					$('#image').attr('src', data_uri).width(120).height(85);
+					str = data_uri;
+					$("#proImage1").val(str.substring(str.lastIndexOf(',') + 1));
+				});
+	}
+</script>
 
 
 </body>

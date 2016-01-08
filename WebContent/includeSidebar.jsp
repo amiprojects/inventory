@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%-- <jsp:include page="include.jsp" /> --%>
+<jsp:include page="include.jsp" /> 
 <aside class="sidebar" style="height: 100%; overflow-y: scroll;">
 	<div class="menu-sec">
 		<div id="menu-toogle" class="menus">
@@ -18,7 +18,7 @@
 
 			<div class="single-menu">
 				<h2 id="prodact">
-					<a href="#" title=""><span>Product/Material module</span></a>
+					<a href="#" title=""><span>Product/Material Module</span></a>
 				</h2>
 				<div class="sub-menu">
 					<ul>
@@ -31,7 +31,7 @@
 
 			<div class="single-menu">
 				<h2 id="purch">
-					<a title=""><span>Purchase module</span></a>
+					<a title=""><span>Purchase Module</span></a>
 				</h2>
 				<div class="sub-menu">
 					<ul>
@@ -47,24 +47,26 @@
 
 			<div class="single-menu">
 				<h2 id="sales">
-					<a title=""><span>Sales module</span></a>
+					<a title=""><span>Sales Module</span></a>
 				</h2>
 				<div class="sub-menu">
 					<ul>
 						<li><a id="sSalesEntry" href="salesSalesEntry.jsp" title="">Sales
 								Entry</a></li>
-					 <li><a id="sSalesReturn" href="salesReturn.jsp" title="">Sales
+				 <li><a id="sSalesReturn" href="salesReturn.jsp" title="">Sales
 								Return</a></li>
 				 <li><a id="sSalesSearch" href="salesSearch.jsp" title="">Sales
 								Search</a></li> 
-			<!-- 	 <li><a id="sSalesDiscount" href="salesDiscount.jsp" title="">Discount</a></li>  -->
+								
+	<!-- 	 <li><a id="sSalesDiscount" href="salesDiscount.jsp" title="">Discount</a></li> -->
+	
 					</ul>
 				</div>
 			</div>
 
 			<div class="single-menu">
 				<h2 id="vendor">
-					<a title=""><span>Vendor module</span></a>
+					<a title=""><span>Vendor Module</span></a>
 				</h2>
 				<div class="sub-menu">
 					<ul>
@@ -75,7 +77,7 @@
 
 			<div class="single-menu">
 				<h2 id="stock">
-					<a title=""><span>Stock module</span></a>
+					<a title=""><span>Stock Module</span></a>
 				</h2>
 				<div class="sub-menu">
 					<ul>
@@ -87,7 +89,7 @@
 			</div>
 			<div class="single-menu">
 				<h2 id="jobs">
-					<a title=""><span>Jobs module</span></a>
+					<a title=""><span>Jobs Module</span></a>
 				</h2>
 				<div class="sub-menu">
 					<ul>
@@ -101,7 +103,7 @@
 			</div>
 			<div class="single-menu">
 				<h2 id="setup">
-					<a title=""><span>Setup module</span></a>
+					<a title=""><span>Setup Module</span></a>
 				</h2>
 				<div class="sub-menu">
 					<ul>

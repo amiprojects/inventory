@@ -265,7 +265,6 @@
 	function qtySubtraction(g) {
 
 		if (Number($("#qtyRe" + g).val()) > Number($("#remainQtyRe" + g).html())) {
-			alert("bad");
 			$("#qtyRe" + g).val("0");
 		}
 	}

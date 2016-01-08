@@ -223,43 +223,66 @@
 
 
 									<div class="widget-area">
-										<table class="table table-striped table-bordered"
-											id="productTable">
+									
+									
+									<form action="goSalesReturn" method="post">
+												<input type="hidden" value="${requestScope['amS'].id}"
+													name="salesReID">
+										<table class="table table-striped table-bordered">
+											
 											<thead>
 												<tr>
 													<th>#</th>
 													<th>Product code</th>
 													<th>Product Description</th>
 													<th>Qty.</th>
-													<th id="mrpWSP">MRP/Qty</th>
+													<th><c:choose>
+
+																		<c:when test="${salre.MRP}">
+
+																			<b> MRP</b>
+
+																		</c:when>
+
+																		<c:otherwise>
+																			<b>WSP</b>
+																		</c:otherwise>
+
+																	</c:choose>/Qty</th>
 													<th>Total Price</th>
-													<th>Quantity Receive</th>
+													<th>Quantity Return</th>
+													<th>Amount Return</th>
+													<th>Drawback</th>
 
 
 												</tr>
 											</thead>
-											<tbody style="display: none;">
-												<!-- <tbody> -->
+												<c:set var="count" value="${1}" />
+												
+												<c:forEach items="${salre.salesProductDetails}"  var="srr">
+											<tbody>
 												<tr>
-													<td>0</td>
-													<td><input type="text" id="codevalue"
-														readonly="readonly"><input type="text"
-														id="productId" readonly="readonly"></td>
+											
+													<td>${count}</td>
+													<td>${srr.purchase_Product_Details.productDetail.code}</td>
+													<td>${srr.purchase_Product_Details.productDetail.description}</td>
+													<td id="qtty${srr.id}">${srr.quantity} </td>
+													<td id="qttyC${srr.id}"> 
+													${srr.purchase_Product_Details.cost}
+													</td>
+													<td>${srr.quantity*srr.purchase_Product_Details.cost} </td>
+													<td style="padding: 4px"><input id="rQtySa${srr.id}" type="text" class="form-control" style="width: 120px" name="rQtySa"onchange="qtySubtraction('${srr.id}')"> </td>
+													<td><input type="text" id="rQtyAm${srr.id}" class="form-control" style="width: 120px" name="rQtyAm" readonly="readonly" > </td>
+													<td style="padding: 4px"><input type="text" class="form-control" name="rQtyDe" style="width: 120px"></td>
 
-													<td><input type="text" id="descvalue"
-														readonly="readonly"></td>
-
-													<td><input type="text" id="qtyvalue"
-														readonly="readonly" value="0"></td>
-
-													<td><input type="hidden" id="wspORmrp" name="wspORmrp">
-
-														<input type="text" id="mrpQty" readonly="readonly"></td>
-													<td><input type="text" id="eachtotalvalue"
-														readonly="readonly"></td>
+													
 												</tr>
 											</tbody>
+											</c:forEach>
+											<c:set var="count" value="${count+1}" />
+											<c:set var="total" value="${total+jobp.qty}" />
 										</table>
+										</form>
 									</div>
 
 									<div style="width: 40%; float: right;">
@@ -277,9 +300,15 @@
 											</thead>
 											<tbody>
 												<tr>
-													<td colspan="2">Discount (%) :</td>
+													<td colspan="2">Discount (
+												
+												
+												<c:choose>
+												
+												<c:when test="${salre.isFlatDiscount()}">Flat</c:when>
+												<c:otherwise>%</c:otherwise></c:choose>) :</td>
 													<td><input type="number" class="form-control"
-														id="discount" name="discount" placeholder=""
+														id="discount" name="discount" value="${salre.discountValue}"
 														onkeyup="discountF();"></td>
 												</tr>
 											</tbody>
@@ -294,7 +323,7 @@
 
 											</tbody>
 											<tbody>
-												<tr>
+													<tr>
 													<td><select class="form-control" id="taxGroup"
 														name="taxGroup" onchange="selectedTaxGroup();">
 															<option value="0">TAX type</option>
@@ -320,8 +349,8 @@
 												<tr>
 													<td colspan="2" id="trans">Transport charge :</td>
 													<td><input type="number" class="form-control"
-														value="0" id="transcharge" name="transcharge"
-														onkeyup="transchargeF();"></td>
+														value="${salre.transportcCharge}" id="transcharge" name="transcharge"></td>
+														
 												</tr>
 											</tbody>
 
@@ -329,16 +358,16 @@
 												<tr>
 													<td colspan="2" id="sur">Surcharge :</td>
 													<td><input type="number" class="form-control"
-														value="0" id="surcharge" name="surcharge"
-														onkeyup="surchargeF();"></td>
+														value="${salre.surcharge}" id="surcharge" name="surcharge"></td>
+														
 												</tr>
 											</tbody>
 											<tbody>
 												<tr>
 													<td colspan="2" id="round">Round Of :</td>
-													<td><input type="number" class="form-control"
+													<td><input type="number" class="form-control" 
 														placeholder="" readonly="readonly" id="roundvalue"
-														name="roundvalue" value="0"></td>
+														name="roundvalue" value=""></td>
 												</tr>
 											</tbody>
 											<thead>
@@ -488,55 +517,7 @@
 				</div>
 			</div>
 		</div>
-		<div id="purchaseDetails" class="modal fade" role="dialog"
-			style="top: 25px;">
-			<div class="modal-dialog modal-lg">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"
-							onclick="closeModal();">&times;</button>
-						<h4 class="modal-title">Purchase Details</h4>
-					</div>
-					<div class="modal-body">
-						<table id="stream_table" width="100%">
-							<thead>
-								<tr>
-									<th>Product code :</th>
-									<td colspan="2"><input type="text" readonly="readonly"
-										id="pCodeModal" class="form-control"></td>
-								</tr>
-								<tr>
-									<th>Description :</th>
-									<td colspan="2"><input type="text" readonly="readonly"
-										id="pDescModal" class="form-control"></td>
-								</tr>
-							</thead>
-						</table>
-						<table id="purchaseDetailsTable" class="table">
-							<thead>
-								<tr>
-									<th>Purchase Date</th>
-									<th>Vendor name</th>
-									<th>Lot No.</th>
-									<th>MRP</th>
-									<th>WSP</th>
-									<th>Remaining Qty.</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>-</td>
-									<td>-</td>
-									<td>-</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					<div class="modal-footer"></div>
-				</div>
-
-			</div>
-		</div>
+		
 		<div id="cancelOrNot" class="modal fade" role="dialog"
 			style="top: 25px;">
 			<div class="modal-dialog">
@@ -578,7 +559,7 @@
 
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 
-	<script>
+	<!-- <script>
 		$("input:radio[name=saleAt]").click(function() {
 			var value = $(this).val();
 			//alert(value);
@@ -590,7 +571,7 @@
 				$("#wspORmrp").val('wspVal');
 			}
 		});
-	</script>
+	</script> -->
 	<script type="text/javascript">
 		function sReturn() {
 			$("#sReturnF").submit();
@@ -617,7 +598,27 @@
 			}
 		</script>
 	</c:if>
+<script type="text/javascript">
+function qtySubtraction(g) {
 
+
+ if (  Number($("#rQtySa" + g).val()) < Number($("#qtty" + g).html())) {
+	 $("#rQtyAm" + g).val(Number($("#rQtySa" + g).val())*Number($("#qttyC" + g).html())) 
+	 
+	 $("#sum")
+	} 
+
+else{
+	
+	alert("returning quanty is less than sasles quantity");
+	$("#rQtySa" + g).val("0");
+	 
+}
+ 
+}
+
+
+</script>
 
 </body>
 

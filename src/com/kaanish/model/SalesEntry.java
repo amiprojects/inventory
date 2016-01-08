@@ -36,6 +36,8 @@ public class SalesEntry implements Serializable {
 	private String challanNumber;
 	private int challanSuffix;
 	private boolean isMRP;
+	private boolean isFlatDiscount;
+	private float discountValue;
 	
 
 	@ManyToOne
@@ -214,4 +216,22 @@ public class SalesEntry implements Serializable {
 		this.paymentDetails = paymentDetails;
 	}
 
+	public boolean isFlatDiscount() {
+		return isFlatDiscount;
+	}
+
+	public void setFlatDiscount(boolean isFlatDiscount) {
+		this.isFlatDiscount = isFlatDiscount;
+	}
+
+	public float getDiscountValue() {
+		return discountValue;
+	}
+
+	public void setDiscountValue(float discountValue) {
+		this.discountValue = discountValue;
+	}
+
+	
+	
 }

@@ -35,7 +35,7 @@
 }
 </style>
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
-
+<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 </head>
 <body>
 <c:if test="${!sessionScope['user'].equals('admin')}">
@@ -76,18 +76,53 @@
 									<div align="center">
 										<form action="uploadProductImage" enctype="multipart/form-data" method="post">
 											<input type="hidden" value="${param.id}" name="id">
-											<h3 style="color: purple;">Image:</h3>
-											<input type="file" name="proImg" size="20"
-												onchange="readURL(this);"><br> <img id="image"
-												alt="" src=""> <br>
-											<br> <input class="btn green btn-default" type="submit"
-												value="Save">
+											
+											<input type="hidden" name="proImage1" id="proImage1" value="">
+											
+						
+						<div style="width:100%; float:left;">
+						
+						<!-- Choose -->			<div style="width:40%; float:left; height:262px;">	
+													<div align="left" >
+													
+													<h5>Upload From Computer</h5><br>
+														<center><input type="file" name="proImg" size="20"
+												onchange="readURL(this);"> </center></div> 
+												</div>
+												
+												<div style="width:20%; float:left;"> </div>
+												
+											<!-- Sanp --><div style="width:40%; float:right;">	
+											<div align="right" ><h5>Upload From Web Camp</h5><br><center><a href="javascript:void(take_snapshot())">
+											
+											<button class="btn blue btn-default"  type="button">Take Snapshot</button></a></center>
+							
+														<div id="my_camera" style="width: 320px; height: 240px;"></div>
+												</div>	</div>
+												
+												
+												
+												
+												
+						</div>		
+						
+									
+												
+										<!-- Show -->		<div style="width:50%; height:100px;margin-top: 27px;"><img id="image"
+												alt="" src=""></div>
+												
+												
+												
+									<!-- submit -->		<div > <input style="margin-top: 10%;" class="btn green btn-default" type="submit"
+												value="Save"> </div>
 										</form>
-										<div style=" overflow-x:scroll; overflow-y:hidden; width: 500px;">	
+										<br><br><br>
+										<div style="overflow-y: scroll;overflow-x:hidden; height: 300px" >
+										<div style=" overflow-x:scroll; overflow-y:hidden; width: 500px; ">	
 										<c:forEach items="${sessionScope['ejb'].getAllProductImageByProductId(param.id)}" var="img">
 									<div style="float: left;"><img width="100" height="100" style="" alt="" src="data:image/jpeg;base64,${img.getImageAsString()}"><br>
 									<a href="deleteProductImage?imageId=${img.id}&id=${param.id}">delete Image</a></div>
-										</c:forEach></div>
+										</c:forEach></div></div>
 										<div align="right">
 										<a href="MaterialPartDetailsGenerals.jsp"><button class="btn blue btn-default"  type="button">Back</button></a></div>
 									</div>
@@ -106,7 +141,7 @@
 
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
-	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+	
 	<script type="text/javascript" src="js/script.js"></script>
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="js/enscroll.js"></script>
@@ -121,6 +156,8 @@
 				reader.onload = function(e) {
 					$('#image').attr('src', e.target.result).width(120).height(
 							85);
+					var str = e.target.result;
+					$("#proImage1").val(str.substring(str.lastIndexOf(',') + 1));
 				};
 
 				reader.readAsDataURL(input.files[0]);
@@ -132,6 +169,29 @@
 			$("#prodact").attr("id", "activeSubMenu");
 			$("#sProduct").attr("style", "color: red;");	});
 		</script>
+		
+		
+		<script type="text/javascript" src="js/webcam.js"></script>
+<script>
+Webcam.set({
+	width: 320,
+	height: 240,
+	image_format: 'jpeg',
+	jpeg_quality: 90
+});
+Webcam.attach('#my_camera');
+
+	function take_snapshot() {
+		Webcam
+				.snap(function(data_uri) {
+					$('#image').attr('src', data_uri).width(120).height(85);
+					str = data_uri;
+					$("#proImage1").val(str.substring(str.lastIndexOf(',') + 1));
+				});
+	}
+</script>
+		
+		
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->

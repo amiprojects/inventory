@@ -23,6 +23,8 @@ public class SalesReturn implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date returnDate;
 	private String fault;
+	private float totalReCost;
+	private float roundOff;
 	
 	@ManyToOne
 	@JoinColumn(name = "salesProductsId")
@@ -66,6 +68,23 @@ public class SalesReturn implements Serializable {
 
 	public void setSalesProductDetails(SalesProductDetails salesProductDetails) {
 		this.salesProductDetails = salesProductDetails;
+	}
+
+	
+	public float getRoundOff() {
+		return roundOff;
+	}
+
+	public void setRoundOff(float roundOff) {
+		this.roundOff = roundOff;
+	}
+
+	public float getTotalReCost() {
+		return totalReCost;
+	}
+
+	public void setTotalReCost(float totalReCost) {
+		this.totalReCost = totalReCost;
 	}
 	
 	

@@ -311,14 +311,14 @@
 										</thead>
 										<tbody>
 											<tr>
-												<td colspan="2">Discount (%) :<!-- <br> <input type="radio"
-													class="chk1" name="dis" id="percent" style="display: none;"><label
-													for="percent" style="top: -2px;"></label>% <input
-													type="radio" class="chk1" name="dis" id="flat"
-													style="display: none;"><label for="flat"
-													style="top: 7px;">&nbsp;</label>FLAT -->
+												<td colspan="2">Discount &nbsp; <select name="disType"  >
+												
+												<option value="disFlat">Flat</option>
+												<option value="disPer">%</option>
+
+												</select>
 												</td>
-												<td><input type="number" class="form-control"
+												<td><input type="number" class="form-control" name="disValue"
 													id="discount" name="discount" placeholder=""
 													onkeyup="discountF();"></td>
 											</tr>
@@ -328,8 +328,8 @@
 											<tr>
 												<td colspan="2" id="disc">Discount Value:</td>
 												<td><input type="number" class="form-control"
-													readonly="readonly" id="discountValue" name="discountValue"
-													value="0"></td>
+													 readonly="readonly" id="discountValue"
+													name="discountValue" value="0"></td>
 											</tr>
 
 										</tbody>
@@ -675,6 +675,11 @@
 			}
 		});
 	</script>
+
+ 
+
+
+
 
 	<script>
 		ind = 0;

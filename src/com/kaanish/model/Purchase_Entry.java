@@ -36,6 +36,8 @@ public class Purchase_Entry implements Serializable {
 	private float sur_charge;
 	private float totalCost;
 	private int agentId;
+	private boolean isFlatDiscount;
+	private float discountValue;
 
 	@OneToMany(mappedBy = "purchase_Entry", cascade = CascadeType.ALL)
 	private List<Purchase_Product_Details> purchase_Product_Details;
@@ -193,4 +195,22 @@ public class Purchase_Entry implements Serializable {
 		this.agentId = agentId;
 	}
 
+	public boolean isFlatDiscount() {
+		return isFlatDiscount;
+	}
+
+	public void setFlatDiscount(boolean isFlatDiscount) {
+		this.isFlatDiscount = isFlatDiscount;
+	}
+
+	public float getDiscountValue() {
+		return discountValue;
+	}
+
+	public void setDiscountValue(float discountValue) {
+		this.discountValue = discountValue;
+	}
+
+	
+	
 }

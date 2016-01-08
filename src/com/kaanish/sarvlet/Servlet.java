@@ -1115,12 +1115,22 @@ public class Servlet extends HttpServlet {
 				} else {
 					salesEntry.setMRP(false);
 				}
+				if (req.getParameter("disType").equals("disFlat")) {
+					salesEntry.setFlatDiscount(true);
+				} else {
+					salesEntry.setFlatDiscount(false);
+				}
+				
+				
 				if (req.getParameter("isExistingCust").equals("0")) {
 					salesEntry.setCustomer(customerEntry);
 				} else {
 					salesEntry.setCustomer(ejb.getCustomerEntryById(Integer
 							.parseInt(req.getParameter("existingCustId"))));
 				}
+	
+				salesEntry.setDiscountValue(Float.parseFloat(req.getParameter("disValue")));
+				
 				ejb.setSalesEntry(salesEntry);
 
 				paymentDetails = new PaymentDetails();
@@ -1635,7 +1645,7 @@ public class Servlet extends HttpServlet {
 
 			case "uploadProductImage":
 				page = "addNewProductImage.jsp";
-				Part p1 = req.getPart("proImg");
+				/*Part p1 = req.getPart("proImg");
 				InputStream is = p1.getInputStream();
 				byte cont1[] = new byte[is.available()];
 				is.read(cont1);
@@ -1644,7 +1654,16 @@ public class Servlet extends HttpServlet {
 				ProductImage proimg = new ProductImage();
 				proimg.setProductDetail(productDetail);
 				proimg.setImage(cont1);
-				ejb.setProductImage(proimg);
+				ejb.setProductImage(proimg);*/
+				
+				String imgstr = req.getParameter("proImage1");
+				if((!imgstr.equals(""))){
+				productDetail = ejb.getProductDetailById(Integer.parseInt(req.getParameter("id")));
+				ProductImage proimg = new ProductImage();
+				proimg.setProductDetail(productDetail);
+				proimg.setImage(Base64.decode(imgstr));
+				ejb.setProductImage(proimg);}
+				
 				msg = "image added successfully";
 				break;
 			case "deleteProductImage":
