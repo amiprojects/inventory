@@ -93,24 +93,7 @@
 										</div>
 									</div>
 								</form>
-								<!-- <form role="form" class="sec"
-									action="purchaseSearchByPurchaseChallanNo" method="post">
-									<div class="row">
-										<div class="col-md-10">
-											<div class="form-group">
-												<label for="" style="float: left;">Purchase challan
-													no. :</label> <input type=""
-													placeholder="Enter Purchase challan Number"
-													id="purChallanNo" name="purChallanNo" class="form-control">
-											</div>
-										</div>
-										<div class="col-md-2">
-											<button class="btn green pull-left" style="margin-top: 25px;"
-												type="submit">Search</button>
-										</div>
-
-									</div>
-								</form> -->
+								
 								<form role="form" class="sec"
 									action="purchaseSearchByPurchaseChallanNo" method="post">
 									<div class="row">
@@ -266,10 +249,9 @@
 												<td width="13%"><fmt:formatDate
 														value="${pEntryByD.purchase_date}" pattern="dd-MM-yy" /></td>
 												<td width="12%">${pEntryByD.totalCost}</td>
-												<td width="8%"><a
-													href="printBarcode.jsp?id=${pEntryByD.id}"> <img
+												<td width="8%"> <img
 														alt="click to view" src="Capture.PNG" height="20">
-												</a></td>
+												</td>
 												<td width="5%">
 													<form action="purchaseView" method="post"
 														id="pView${pEntryByD.id}">

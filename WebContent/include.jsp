@@ -13,12 +13,12 @@
 	});
 	$(document).jkey('f5', function() {
 	});
-	
-/*  $(document).jkey('ctrl+c', function() {
+
+	/* $(document).jkey('ctrl+c', function() {
 	});
 	$(document).jkey('ctrl+v', function() {
-	});  */
-	
+	}); */
+
 	$(document).jkey('ctrl+x', function() {
 	});
 	$(document).jkey('f12', function() {
