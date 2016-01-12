@@ -272,13 +272,13 @@
 															<td>${srr.quantity*srr.purchase_Product_Details.cost}
 															</td>
 															<td style="padding: 4px"><input id="rQtySa${srr.id}"
-																type="text" class="form-control rQtySa"
-																style="width: 120px" name="rQtySa"
-																onchange="qtySubtraction('${srr.id}')"></td>
+																type="text" class="form-control" style="width: 120px"
+																name="rQtySa" onchange="qtySubtraction('${srr.id}')">
+															</td>
 
 
 															<td><input type="text" id="rQtyAm${srr.id}"
-																class="form-control rQtyAm" style="width: 120px"
+																value="0" class="form-control rQtyAm" style="width: 120px"
 																name="rQtyAm" readonly="readonly"></td>
 															<td style="padding: 4px"><input type="text"
 																class="form-control" name="rQtyDe" style="width: 120px"></td>
@@ -368,8 +368,8 @@
 												<tr>
 													<td colspan="2" id="trans">Transport charge :</td>
 													<td><input type="number" class="form-control"
-														value="${salre.transportcCharge}" id="transcharge"
-														name="transcharge"></td>
+														readonly="readonly" value="${salre.transportcCharge}"
+														id="transcharge" name="transcharge"></td>
 
 												</tr>
 											</tbody>
@@ -378,7 +378,8 @@
 												<tr>
 													<td colspan="2" id="sur">Surcharge :</td>
 													<td><input type="number" class="form-control"
-														value="${salre.surcharge}" id="surcharge" name="surcharge"></td>
+														readonly="readonly" value="${salre.surcharge}"
+														id="surcharge" name="surcharge"></td>
 
 												</tr>
 											</tbody>
@@ -388,6 +389,16 @@
 													<td><input type="number" class="form-control"
 														placeholder="" readonly="readonly" id="roundvalue"
 														name="roundvalue" value=""></td>
+												</tr>
+											</tbody>
+
+											<tbody>
+												<tr>
+													<td colspan="2" id="round">Due Amount :</td>
+													<td><input type="number" class="form-control"
+														placeholder="" readonly="readonly" id="dueAmount"
+														name="dueAmount"
+														value="${salre.totalCost-salre.paymentDetails.get(0).paidAmount}"></td>
 												</tr>
 											</tbody>
 											<thead>
@@ -402,13 +413,11 @@
 										<div style="float: right;">
 											<input type="button" onclick="cancelF();"
 												class="btn btn-danger small" value="Cancel"
-												data-toggle="modal"> 
-												
-												<input type="button"
+												data-toggle="modal"> <input type="button"
 												class="btn btn-info btn-sm" data-toggle="modal" value="Save"
 												onclick="paymentDate();">
-												
-												
+
+
 											<div id="saveSales" class="modal fade" role="dialog"
 												style="top: 25px;">
 
@@ -423,9 +432,26 @@
 															<div class="row">
 																<div class="col-md-6">
 																	<div class="widget-area">
-																		
-																		
-																		
+																		<div class="breadcrumbs">
+																			<ul>
+																				<li><a title="">Select Payment status : </a></li>
+																			</ul>
+																		</div>
+																		<br> <br> <br>
+																		<div class="sec" id="pTypeDiv">
+																			<div class="col-md-5">Payment type :</div>
+																			<div class="col-md-7">
+																				<select class="form-control" id="pType" name="pType"
+																					onchange="pTypeFunc()">
+																					<option value="-" selected="selected">---</option>
+																					<c:forEach
+																						items="${sessionScope['ejb'].getAllPaymentType()}"
+																						var="payType">
+																						<option value="${payType.getType()}">${payType.getType()}</option>
+																					</c:forEach>
+																				</select>
+																			</div>
+																		</div>
 																		<div id="payDetail">
 																			<div class="breadcrumbs">
 																				<ul>
@@ -434,7 +460,7 @@
 																			</div>
 																			<br> <br> <br>
 																			<div class="row">
-																				
+
 																				<div id="pDate">
 																					<div class="col-md-5">Payment Date :</div>
 																					<div class="col-md-7">
@@ -449,8 +475,8 @@
 																							readonly="readonly" id="spAmount" name="spAmount">
 																					</div>
 																				</div>
-																				
-																				
+
+
 																			</div>
 																		</div>
 																	</div>
@@ -557,7 +583,7 @@
 		</script>
 	</c:if>
 
-	<c:if test="${requestScope['amS']==null}">
+	<%-- <c:if test="${requestScope['amS']==null}">
 		<script type="text/javascript">
 			if (getUrlVars()['challanNumber'] != null) {
 				alert("dfdf");
@@ -565,30 +591,22 @@
 				$('.toast').fadeIn(400).delay(3000).fadeOut(400);
 			}
 		</script>
-	</c:if>
+	</c:if> --%>
+	
 	<script type="text/javascript">
-		$(document).ready(function() {
-			$(".rQtySa").each(function() {
-				$(this).change(function() {
-					var sum = 0;
-					$(".rQtyAm").each(function() {
-						sum += parseFloat(this.value);
-					});
-					$("#subtotalvalue").val(sum.toFixed(2));
-				});
-			});
-
-		});
-
 		function qtySubtraction(g) {
 
 			if (Number($("#rQtySa" + g).val()) <= Number($("#qtty" + g).html())) {
 				$("#rQtyAm" + g).val(
 						Number($("#rQtySa" + g).val())
 								* Number($("#qttyC" + g).html()));
-				/* $("#subtotalvalue").val(
-						Number($("#rQtyAm" + g).val())
-								+ Number($("#subtotalvalue").val())); */
+				
+				
+				var sum = 0;
+				$(".rQtyAm").each(function() {
+					sum += parseFloat(this.value);
+				});
+				$("#subtotalvalue").val(sum.toFixed(2));
 
 			}
 
@@ -596,6 +614,7 @@
 
 				alert("returning quanty is less than sasles quantity");
 				$("#rQtySa" + g).val("0");
+				$("#rQtyAm" + g).val("0");
 
 			}
 
@@ -625,20 +644,20 @@
 			$("#grandtotal").val(r.toFixed());
 
 			$("#roundvalue").val(
-					(Number(r) - Number($("#grandtotal").val())).toFixed(2));
+					(Number($("#grandtotal").val()) - Number(r)).toFixed(2));
 			/* $("#roundvalue").val(); */
+
+			$("#spAmount").val($("#grandtotal").val());
 		}
 	</script>
 
-<script type="text/javascript">
-function paymentDate(){
-	
-	$("#saveSales").modal("show");
-	
-	
-}
+	<script type="text/javascript">
+		function paymentDate() {
 
-</script>
+			$("#saveSales").modal("show");
+
+		}
+	</script>
 
 </body>
 
