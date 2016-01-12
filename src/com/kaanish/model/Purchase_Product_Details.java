@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 @Entity
 @Cacheable(false)
@@ -35,6 +36,8 @@ public class Purchase_Product_Details implements Serializable {
 	private String lotNumber;
 	private boolean initialInventory;
 	private boolean isReady;
+	@Transient
+	private int numberForBarcodePrint;
 
 	@OneToMany(mappedBy = "purchase_Product_Details")
 	private List<JobAssignmentProducts> jobAssignmentProducts;
@@ -301,4 +304,11 @@ public class Purchase_Product_Details implements Serializable {
 		this.salesProductDetails = salesProductDetails;
 	}
 
+	public int getNumberForBarcodePrint() {
+		return numberForBarcodePrint;
+	}
+
+	public void setNumberForBarcodePrint(int numberForBarcodePrint) {
+		this.numberForBarcodePrint = numberForBarcodePrint;
+	}
 }
