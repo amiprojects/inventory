@@ -105,18 +105,61 @@
 									<form role="form" class="sec" action="jobSearchByJobChallanNo"
 										method="post">
 										<div class="row">
-											<div class="col-md-10">
+											<div class="col-md-12">
 												<div class="form-group">
 													<label for="" style="float: left;">Job challan no.
-														:</label> <input type="" placeholder="Enter Job challan Number"
-														id="jobChallanNo" name="jobChallanNo" class="form-control">
+														:</label>
 												</div>
 											</div>
-											<div class="col-md-2">
-												<button class="btn green pull-left"
-													style="margin-top: 25px;" type="submit">Search</button>
+										</div>
+										<div class="row">
+											<div class="col-md-1"
+												style="margin-right: 0; padding-right: 0;">
+												<input type="text" class="form-control" readonly="readonly"
+													name="companyInitial"
+													value="${sessionScope['ejb'].getLastBillSetupBySufix('JOB').companyInitial}">
 											</div>
-
+											<div class="col-md-2" style="margin: 0; padding: 0;">
+												<select class="form-control" name="fynYear">
+													<c:forEach
+														items="${sessionScope['ejb'].getAllFinancialForJob()}"
+														var="fyr">
+														<option value="${fyr}">${fyr}</option>
+													</c:forEach>
+												</select>
+											</div>
+											<div class="col-md-2" style="margin: 0; padding: 0;">
+												<!-- <input type="text" class="form-control" name="month"> -->
+												<select name="month" class="form-control">
+													<option value="01">01</option>
+													<option value="02">02</option>
+													<option value="03">03</option>
+													<option value="04">04</option>
+													<option value="05">05</option>
+													<option value="06">06</option>
+													<option value="07">07</option>
+													<option value="08">08</option>
+													<option value="09">09</option>
+													<option value="10">10</option>
+													<option value="11">11</option>
+													<option value="12">12</option>
+												</select>
+											</div>
+											<div class="col-md-1" style="margin: 0; padding: 0;">
+												<input type="text" class="form-control" readonly="readonly"
+													name="billType"
+													value="${sessionScope['ejb'].getLastBillSetupBySufix('JOB').billType}">
+											</div>
+											<div class="col-md-2" style="margin: 0; padding: 0;">
+												<input type="text" class="form-control" name="autoNum">
+											</div>
+											<div class="col-md-2"
+												style="margin-left: 0; padding-left: 0;">
+												<input type="text" class="form-control" name="suffix">
+											</div>
+											<div class="col-md-2">
+												<button class="btn green pull-left" type="submit">Search</button>
+											</div>
 										</div>
 									</form>
 									<form role="form" class="sec" action="jobSearchByProductCode"
