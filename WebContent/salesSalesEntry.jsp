@@ -879,8 +879,15 @@
 												.val())
 												* Number($("#discount").val()) / 100) * 100) / 100);
 			} else {
-				$("#discountValue").val(
-						Math.round(Number($("#discount").val()) * 100) / 100);
+				if ($("#discount").val() > $("#subtotalvalue").val()) {
+					alert("Discount can not be greater than sub total value");
+					$("#discount").val("");
+				} else {
+					$("#discountValue")
+							.val(
+									Math
+											.round(Number($("#discount").val()) * 100) / 100);
+				}
 			}
 			$("#totalvalue").val(
 					Math.round((Number($("#subtotalvalue").val())
