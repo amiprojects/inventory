@@ -272,14 +272,14 @@
 															<td>${srr.quantity*srr.purchase_Product_Details.cost}
 															</td>
 															<td style="padding: 4px"><input id="rQtySa${srr.id}"
-																type="text" class="form-control" style="width: 120px"
-																name="rQtySa" onchange="qtySubtraction('${srr.id}')">
-															</td>
+																type="text" class="form-control rQtySa"
+																style="width: 120px" name="rQtySa"
+																onchange="qtySubtraction('${srr.id}')"></td>
 
 
 															<td><input type="text" id="rQtyAm${srr.id}"
-																class="form-control" style="width: 120px" name="rQtyAm"
-																readonly="readonly"></td>
+																class="form-control rQtyAm" style="width: 120px"
+																name="rQtyAm" readonly="readonly"></td>
 															<td style="padding: 4px"><input type="text"
 																class="form-control" name="rQtyDe" style="width: 120px"></td>
 
@@ -607,15 +607,28 @@
 		</script>
 	</c:if>
 	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".rQtySa").each(function() {
+				$(this).change(function() {
+					var sum = 0;
+					$(".rQtyAm").each(function() {
+						sum += parseFloat(this.value);
+					});
+					$("#subtotalvalue").val(sum.toFixed(2));
+				});
+			});
+
+		});
+
 		function qtySubtraction(g) {
 
 			if (Number($("#rQtySa" + g).val()) <= Number($("#qtty" + g).html())) {
 				$("#rQtyAm" + g).val(
 						Number($("#rQtySa" + g).val())
 								* Number($("#qttyC" + g).html()));
-				$("#subtotalvalue").val(
+				/* $("#subtotalvalue").val(
 						Number($("#rQtyAm" + g).val())
-								+ Number($("#subtotalvalue").val()));
+								+ Number($("#subtotalvalue").val())); */
 
 			}
 
@@ -651,8 +664,8 @@
 
 			$("#grandtotal").val(r.toFixed());
 
-			
-			$("#roundvalue").val((Number(r)-Number($("#grandtotal").val())).toFixed(2));
+			$("#roundvalue").val(
+					(Number(r) - Number($("#grandtotal").val())).toFixed(2));
 			/* $("#roundvalue").val(); */
 		}
 	</script>
