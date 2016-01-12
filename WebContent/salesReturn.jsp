@@ -600,14 +600,11 @@
 				$("#rQtyAm" + g).val(
 						Number($("#rQtySa" + g).val())
 								* Number($("#qttyC" + g).html()));
-				
-				
 				var sum = 0;
 				$(".rQtyAm").each(function() {
 					sum += parseFloat(this.value);
 				});
 				$("#subtotalvalue").val(sum.toFixed(2));
-
 			}
 
 			else {

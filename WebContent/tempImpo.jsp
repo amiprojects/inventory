@@ -144,3 +144,5 @@ $(function() {
 											</tr>
 									</tbody>
 								</table>
+								
+//if (!isNaN(this.value) && this.value.length != 0) {
