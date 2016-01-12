@@ -38,13 +38,12 @@
 
 </head>
 <body>
-<c:if test="${!sessionScope['user'].equals('admin')}">
+	<c:if test="${!sessionScope['user'].equals('admin')}">
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
 
-			<c:if
-				test="${page.name.equals('Purchase Entry')}">
+			<c:if test="${page.name.equals('Purchase Entry')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
@@ -75,47 +74,45 @@
 									</ul>
 								</div>
 								<div class="widget-area">
-									<table class="table table-striped table-bordered">
-
-										<thead>
-											<tr>
-												<th width="10%"></th>
-												<th width="15%">Sl No</th>
-
-												<th width="25%">Product Code</th>
-												<th width="25%">product Name</th>
-										</thead>
-
-
-
-										<tbody>
-											<tr>
-												<td width="10%" align="left"><input type="checkbox"></td>
-												<td width="25%" align="left">ahhhhhhs</td>
-												<td width="25%" align="left">ahhhhhhhhhs</td>
-												<td width="25%" align="left">ahhhhhhhhhs</td>
-
-											</tr>
-
-
-
-
-
-										</tbody>
-									</table>
-									<a href="barcodePrint.jsp"><button
-											class="btn btn-info btn-sm" style="float: right;" id="b1"
-											value="print">Print</button></a>
+									<form action="purchaseBarCode" method="post">
+										<table class="table table-striped table-bordered">
+											<thead>
+												<tr>
+													<th>Product Code</th>
+													<th>product Description</th>
+													<th>Qty</th>
+													<th>Select</th>
+													<th>Qty to print</th>
+											</thead>
+											<c:forEach var="purchaseProducts"
+												items="${sessionScope['ejb'].getPurchaseEntryById(param.id).purchase_Product_Details}">
+												<tbody>
+													<tr>
+														<td>${purchaseProducts.productDetail.code}</td>
+														<td>${purchaseProducts.productDetail.description}</td>
+														<td>${purchaseProducts.quantity}</td>
+														<td><input type="checkbox"
+															id="prodCheck${purchaseProducts.id}"
+															onclick="qtyPrF(${purchaseProducts.id});"><input
+															type="hidden" value="${purchaseProducts.id}"
+															name="prodCheck"></td>
+														<td><input type="number"
+															id="qtyPr${purchaseProducts.id}" class="form-control"
+															readonly="readonly" name="qtyProd" value="0"></td>
+													</tr>
+												</tbody>
+											</c:forEach>
+										</table>
+										<button type="submit" class="btn btn-info btn-lg"
+											style="float: right;" id="b1" value="print">Print</button>
+									</form>
 								</div>
-
-
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 
 
@@ -143,6 +140,19 @@
 				reader.readAsDataURL(input.files[0]);
 			}
 		}
+		function  qtyPrF(id) {
+			if($("#prodCheck"+id).is(":checked")){
+				$("#qtyPr"+id).prop("readonly", false);
+			}else{
+				$("#qtyPr"+id).prop("readonly", true);
+			}
+		}
+	</script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#purch").attr("id", "activeSubMenu");
+			$("#sPurchSearch").attr("style", "color: #6a94ff;");
+		});
 	</script>
 </body>
 

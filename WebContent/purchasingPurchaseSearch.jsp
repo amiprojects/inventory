@@ -266,9 +266,9 @@
 												<td width="13%"><fmt:formatDate
 														value="${pEntryByD.purchase_date}" pattern="dd-MM-yy" /></td>
 												<td width="12%">${pEntryByD.totalCost}</td>
-												<td width="8%"><a
-													href="printBarcode.jsp?id=${pEntryByD.id}"> <img
-														alt="click to view" src="Capture.PNG" height="20">
+												<td width="8%"><a href="#"
+													onclick="window.open('purchaseBarcodePrint.jsp?id=${pEntryByD.id}','mywindow','width=1100,height=500')">
+														<img alt="click to view" src="Capture.PNG" height="20">
 												</a></td>
 												<td width="5%">
 													<form action="purchaseView" method="post"

@@ -75,7 +75,7 @@ import com.kaanish.util.DateConverter;
 		"/jobSearchByProductCode", "/jobSearchByJobberName", "/goSalesReturn",
 		"/salesSearchByDate", "/salesSearchBySalesChallanNo",
 		"/salesSearchByAgentName", "/salesSearchByCustomerName",
-		"/salesSearchByProductCode", "/salesView" })
+		"/salesSearchByProductCode", "/salesView", "/purchaseBarCode" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -1131,7 +1131,7 @@ public class Servlet extends HttpServlet {
 				}
 
 				salesEntry.setDiscountValue(Float.parseFloat(req
-						.getParameter("disValue")));
+						.getParameter("discountValue")));
 
 				ejb.setSalesEntry(salesEntry);
 
@@ -1308,6 +1308,25 @@ public class Servlet extends HttpServlet {
 							+ req.getParameter("prodCode").toUpperCase()
 							+ "...";
 				}
+				break;
+
+			case "purchaseBarCode":
+				page = "purchaseBarcode.jsp";
+				String purProdDetIdLst[] = req.getParameterValues("prodCheck");
+				String qtyLst[] = req.getParameterValues("qtyProd");
+				List<Purchase_Product_Details> purProdDetLst = new ArrayList<Purchase_Product_Details>();
+				for (int q = 0; q < qtyLst.length; q++) {
+					if (qtyLst[q] != null || qtyLst[q] != "") {
+						Purchase_Product_Details ppd = ejb
+								.getPurchaseProductDetailsById(Integer
+										.parseInt(purProdDetIdLst[q]));
+						ppd.setNumberForBarcodePrint(Integer
+								.parseInt(qtyLst[q]));
+						purProdDetLst.add(ppd);
+						ppd = null;
+					}
+				}
+				req.setAttribute("purProdDetLst", purProdDetLst);
 				break;
 
 			case "purchaseView":
