@@ -72,8 +72,10 @@ import com.kaanish.util.DateConverter;
 		"/goSearchVendor", "/purchaseSearchByPurchaseChallanNo",
 		"/purchaseSearchByVendorName", "/purchaseSearchByAgentName",
 		"/purchaseSearchByProductCode", "/jobSearchByJobChallanNo",
-		"/jobSearchByProductCode", "/jobSearchByJobberName" , "/goSalesReturn" })
-
+		"/jobSearchByProductCode", "/jobSearchByJobberName", "/goSalesReturn",
+		"/salesSearchByDate", "/salesSearchBySalesChallanNo",
+		"/salesSearchByAgentName", "/salesSearchByCustomerName",
+		"/salesSearchByProductCode", "/salesView" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -1120,17 +1122,17 @@ public class Servlet extends HttpServlet {
 				} else {
 					salesEntry.setFlatDiscount(false);
 				}
-				
-				
+
 				if (req.getParameter("isExistingCust").equals("0")) {
 					salesEntry.setCustomer(customerEntry);
 				} else {
 					salesEntry.setCustomer(ejb.getCustomerEntryById(Integer
 							.parseInt(req.getParameter("existingCustId"))));
 				}
-	
-				salesEntry.setDiscountValue(Float.parseFloat(req.getParameter("disValue")));
-				
+
+				salesEntry.setDiscountValue(Float.parseFloat(req
+						.getParameter("disValue")));
+
 				ejb.setSalesEntry(salesEntry);
 
 				paymentDetails = new PaymentDetails();
@@ -1210,18 +1212,54 @@ public class Servlet extends HttpServlet {
 
 			case "purchaseSearchByPurchaseChallanNo":
 				page = "purchasingPurchaseSearch.jsp";
+
+				/*
+				 * List<Purchase_Entry> purEntryList1 = ejb
+				 * .getPurchaseEntryByChallanNo(req
+				 * .getParameter("purChallanNo"));
+				 */
+
 				List<Purchase_Entry> purEntryList1 = ejb
 						.getPurchaseEntryByChallanNo(req
-								.getParameter("purChallanNo"));
+								.getParameter("companyInitial")
+								+ "/"
+								+ req.getParameter("fynYear")
+								+ "/"
+								+ req.getParameter("month")
+								+ "/"
+								+ req.getParameter("billType")
+								+ "/"
+								+ req.getParameter("autoNum")
+								+ "/"
+								+ req.getParameter("suffix"));
+
 				req.setAttribute("purEntryList", purEntryList1);
+
 				if (purEntryList1.size() > 0) {
 					msg = "Your search for Purchase challan number : "
-							+ req.getParameter("purChallanNo").toUpperCase();
+							+ req.getParameter("companyInitial") + "/"
+							+ req.getParameter("fynYear") + "/"
+							+ req.getParameter("month") + "/"
+							+ req.getParameter("billType") + "/"
+							+ req.getParameter("autoNum") + "/"
+							+ req.getParameter("suffix");
 				} else {
 					msg = "No result found for Purchase challan number : "
-							+ req.getParameter("purChallanNo").toUpperCase()
-							+ "...";
+							+ req.getParameter("companyInitial") + "/"
+							+ req.getParameter("fynYear") + "/"
+							+ req.getParameter("month") + "/"
+							+ req.getParameter("billType") + "/"
+							+ req.getParameter("autoNum") + "/"
+							+ req.getParameter("suffix") + "...";
 				}
+
+				/*
+				 * if (purEntryList1.size() > 0) { msg =
+				 * "Your search for Purchase challan number : " +
+				 * req.getParameter("purChallanNo").toUpperCase(); } else { msg
+				 * = "No result found for Purchase challan number : " +
+				 * req.getParameter("purChallanNo").toUpperCase() + "..."; }
+				 */
 				break;
 
 			case "purchaseSearchByVendorName":
@@ -1383,22 +1421,56 @@ public class Servlet extends HttpServlet {
 
 			case "jobSearchByJobChallanNo":
 				page = "jobAssignSearch.jsp";
+
+				/*
+				 * List<JobAssignmentDetails> jobAssignList1 = ejb
+				 * .getJobAssignByChallanNo(req .getParameter("jobChallanNo"));
+				 */
+
 				List<JobAssignmentDetails> jobAssignList1 = ejb
 						.getJobAssignByChallanNo(req
-								.getParameter("jobChallanNo"));
+								.getParameter("companyInitial")
+								+ "/"
+								+ req.getParameter("fynYear")
+								+ "/"
+								+ req.getParameter("month")
+								+ "/"
+								+ req.getParameter("billType")
+								+ "/"
+								+ req.getParameter("autoNum")
+								+ "/"
+								+ req.getParameter("suffix"));
 				req.setAttribute("jobAssignList", jobAssignList1);
+
 				if (jobAssignList1.size() > 0) {
 					msg = "Your search for Job challan number : "
-							+ req.getParameter("jobChallanNo").toUpperCase();
+							+ req.getParameter("companyInitial") + "/"
+							+ req.getParameter("fynYear") + "/"
+							+ req.getParameter("month") + "/"
+							+ req.getParameter("billType") + "/"
+							+ req.getParameter("autoNum") + "/"
+							+ req.getParameter("suffix");
 				} else {
 					msg = "No result found for Job challan number : "
-							+ req.getParameter("jobChallanNo").toUpperCase()
-							+ "...";
+							+ req.getParameter("companyInitial") + "/"
+							+ req.getParameter("fynYear") + "/"
+							+ req.getParameter("month") + "/"
+							+ req.getParameter("billType") + "/"
+							+ req.getParameter("autoNum") + "/"
+							+ req.getParameter("suffix") + "...";
 				}
+
+				/*
+				 * if (jobAssignList1.size() > 0) { msg =
+				 * "Your search for Job challan number : " +
+				 * req.getParameter("jobChallanNo").toUpperCase(); } else { msg
+				 * = "No result found for Job challan number : " +
+				 * req.getParameter("jobChallanNo").toUpperCase() + "..."; }
+				 */
 				break;
 
 			case "jobSearchByJobberName":
-				page = "jobAssignSearch.jsp";
+				page = "jobAssignSearchByJobber.jsp";
 				List<JobAssignmentDetails> jobAssignList2 = ejb
 						.getJobAssignByJobberName(req
 								.getParameter("jobberName"));
@@ -1426,6 +1498,118 @@ public class Servlet extends HttpServlet {
 							+ req.getParameter("prodCode").toUpperCase()
 							+ "...";
 				}
+				break;
+
+			case "salesSearchByDate":
+				page = "salesSearch.jsp";
+
+				List<SalesEntry> salesEntryLst = ejb.getSalesEntryByDate(
+						DateConverter.getDate(req.getParameter("fDate")),
+						DateConverter.getDate(req.getParameter("lDate")));
+				req.setAttribute("salesEntryLst", salesEntryLst);
+
+				if (salesEntryLst.size() > 0) {
+					msg = "Your search for dated " + req.getParameter("fDate")
+							+ " to " + req.getParameter("lDate");
+				} else {
+					msg = "No result found for dated "
+							+ req.getParameter("fDate") + " to "
+							+ req.getParameter("lDate") + "...";
+				}
+
+				break;
+
+			case "salesSearchBySalesChallanNo":
+				page = "salesSearch.jsp";
+
+				List<SalesEntry> salesEntryLst1 = ejb
+						.getSalesEntryByChallanNo(req
+								.getParameter("companyInitial")
+								+ "/"
+								+ req.getParameter("fynYear")
+								+ "/"
+								+ req.getParameter("month")
+								+ "/"
+								+ req.getParameter("billType")
+								+ "/"
+								+ req.getParameter("autoNum")
+								+ "/"
+								+ req.getParameter("suffix"));
+				req.setAttribute("salesEntryLst", salesEntryLst1);
+
+				if (salesEntryLst1.size() > 0) {
+					msg = "Your search for Job challan number : "
+							+ req.getParameter("companyInitial") + "/"
+							+ req.getParameter("fynYear") + "/"
+							+ req.getParameter("month") + "/"
+							+ req.getParameter("billType") + "/"
+							+ req.getParameter("autoNum") + "/"
+							+ req.getParameter("suffix");
+				} else {
+					msg = "No result found for Job challan number : "
+							+ req.getParameter("companyInitial") + "/"
+							+ req.getParameter("fynYear") + "/"
+							+ req.getParameter("month") + "/"
+							+ req.getParameter("billType") + "/"
+							+ req.getParameter("autoNum") + "/"
+							+ req.getParameter("suffix") + "...";
+				}
+				break;
+
+			case "salesSearchByAgentName":
+				page = "salesSearch.jsp";
+				List<SalesEntry> salesEntryLst2 = ejb
+						.getSalesEntryByAgentName(req.getParameter("agentName"));
+				req.setAttribute("salesEntryLst", salesEntryLst2);
+				if (salesEntryLst2.size() > 0) {
+					msg = "Your search for Agent name : "
+							+ req.getParameter("agentName").toUpperCase();
+				} else {
+					msg = "No result found for Agent name : "
+							+ req.getParameter("agentName").toUpperCase()
+							+ "...";
+				}
+				break;
+
+			case "salesSearchByCustomerName":
+				page = "salesSearch.jsp";
+				List<SalesEntry> salesEntryLst3 = ejb
+						.getSalesEntryByCustomerName(req
+								.getParameter("custoName"));
+				req.setAttribute("salesEntryLst", salesEntryLst3);
+				if (salesEntryLst3.size() > 0) {
+					msg = "Your search for Customer name : "
+							+ req.getParameter("custoName").toUpperCase();
+				} else {
+					msg = "No result found for Customer name : "
+							+ req.getParameter("custoName").toUpperCase()
+							+ "...";
+				}
+				break;
+
+			case "salesSearchByProductCode":
+				page = "salesSearch.jsp";
+				List<SalesEntry> salesEntryLst4 = ejb
+						.getSalesEntriesByProductCode(req
+								.getParameter("prodCode"));
+				req.setAttribute("salesEntryLst", salesEntryLst4);
+				if (salesEntryLst4.size() > 0) {
+					msg = "Your search for Product code : "
+							+ req.getParameter("prodCode").toUpperCase();
+				} else {
+					msg = "No result found for product code : "
+							+ req.getParameter("prodCode").toUpperCase()
+							+ "...";
+				}
+				break;
+
+			case "salesView":
+				page = "salesView.jsp";
+
+				req.setAttribute("sId", req.getParameter("sId"));
+
+				msg = "";
+
 				break;
 
 			case "addUOM":
@@ -1645,25 +1829,26 @@ public class Servlet extends HttpServlet {
 
 			case "uploadProductImage":
 				page = "addNewProductImage.jsp";
-				/*Part p1 = req.getPart("proImg");
-				InputStream is = p1.getInputStream();
-				byte cont1[] = new byte[is.available()];
-				is.read(cont1);
-				productDetail = ejb.getProductDetailById(Integer.parseInt(req
-						.getParameter("id")));
-				ProductImage proimg = new ProductImage();
-				proimg.setProductDetail(productDetail);
-				proimg.setImage(cont1);
-				ejb.setProductImage(proimg);*/
-				
+				/*
+				 * Part p1 = req.getPart("proImg"); InputStream is =
+				 * p1.getInputStream(); byte cont1[] = new byte[is.available()];
+				 * is.read(cont1); productDetail =
+				 * ejb.getProductDetailById(Integer.parseInt(req
+				 * .getParameter("id"))); ProductImage proimg = new
+				 * ProductImage(); proimg.setProductDetail(productDetail);
+				 * proimg.setImage(cont1); ejb.setProductImage(proimg);
+				 */
+
 				String imgstr = req.getParameter("proImage1");
-				if((!imgstr.equals(""))){
-				productDetail = ejb.getProductDetailById(Integer.parseInt(req.getParameter("id")));
-				ProductImage proimg = new ProductImage();
-				proimg.setProductDetail(productDetail);
-				proimg.setImage(Base64.decode(imgstr));
-				ejb.setProductImage(proimg);}
-				
+				if ((!imgstr.equals(""))) {
+					productDetail = ejb.getProductDetailById(Integer
+							.parseInt(req.getParameter("id")));
+					ProductImage proimg = new ProductImage();
+					proimg.setProductDetail(productDetail);
+					proimg.setImage(Base64.decode(imgstr));
+					ejb.setProductImage(proimg);
+				}
+
 				msg = "image added successfully";
 				break;
 			case "deleteProductImage":
@@ -1771,13 +1956,12 @@ public class Servlet extends HttpServlet {
 				msg = "Job recieve saved successfully";
 
 				break;
-				
+
 			case "goSalesReturn":
 				page = "salesReturn.jsp";
 
-				salesEntry = ejb
-						.getSalestDetailsbyChallanNumber(req
-								.getParameter("challanNumber").trim());
+				salesEntry = ejb.getSalestDetailsbyChallanNumber(req
+						.getParameter("challanNumber").trim());
 
 				req.setAttribute("amS", salesEntry);
 				msg = "";

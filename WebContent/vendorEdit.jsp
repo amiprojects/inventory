@@ -103,8 +103,8 @@ $(document).ready(function(){
 </script> -->
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("#purch").attr("id", "activeSubMenu");
-		$("#sPurchVendor").attr("style", "color: #6a94ff;");
+		$("#vendor").attr("id", "activeSubMenu");
+		$("#vVendor").attr("style", "color: #6a94ff;");
 	});
 
 	function bankButtonPrev() {

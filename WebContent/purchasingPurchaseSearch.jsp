@@ -93,7 +93,7 @@
 										</div>
 									</div>
 								</form>
-								<form role="form" class="sec"
+								<!-- <form role="form" class="sec"
 									action="purchaseSearchByPurchaseChallanNo" method="post">
 									<div class="row">
 										<div class="col-md-10">
@@ -109,6 +109,51 @@
 												type="submit">Search</button>
 										</div>
 
+									</div>
+								</form> -->
+								<form role="form" class="sec"
+									action="purchaseSearchByPurchaseChallanNo" method="post">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="form-group">
+												<label for="" style="float: left;">Purchase challan
+													no. :</label>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-1"
+											style="margin-right: 0; padding-right: 0;">
+											<input type="text" class="form-control" readonly="readonly"
+												name="companyInitial"
+												value="${sessionScope['ejb'].getLastBillSetupBySufix('PUR').companyInitial}">
+										</div>
+										<div class="col-md-2" style="margin: 0; padding: 0;">
+											<select class="form-control" name="fynYear">
+												<c:forEach
+													items="${sessionScope['ejb'].getAllFinancialForPurchase()}"
+													var="fyr">
+													<option value="${fyr}">${fyr}</option>
+												</c:forEach>
+											</select>
+										</div>
+										<div class="col-md-2" style="margin: 0; padding: 0;">
+											<input type="text" class="form-control" name="month">
+										</div>
+										<div class="col-md-1" style="margin: 0; padding: 0;">
+											<input type="text" class="form-control" readonly="readonly"
+												name="billType"
+												value="${sessionScope['ejb'].getLastBillSetupBySufix('PUR').billType}">
+										</div>
+										<div class="col-md-2" style="margin: 0; padding: 0;">
+											<input type="text" class="form-control" name="autoNum">
+										</div>
+										<div class="col-md-2" style="margin-left: 0; padding-left: 0;">
+											<input type="text" class="form-control" name="suffix">
+										</div>
+										<div class="col-md-2">
+											<button class="btn green pull-left" type="submit">Search</button>
+										</div>
 									</div>
 								</form>
 								<form role="form" class="sec"

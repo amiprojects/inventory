@@ -689,7 +689,7 @@ public class Ejb {
 		Set<Purchase_Entry> hs = new HashSet<>();
 		TypedQuery<Purchase_Product_Details> q = em
 				.createQuery(
-						"select c from Purchase_Product_Details c where UPPER(c.productDetail.code)=:name ORDER BY c.id DESC",
+						"select c from Purchase_Product_Details c where UPPER(c.productDetail.code)=:name and c.purchase_Entry!=null ORDER BY c.id DESC",
 						Purchase_Product_Details.class);
 		q.setParameter("name", name.toUpperCase());
 
@@ -755,6 +755,18 @@ public class Ejb {
 	 * em.createQuery( "select c.vendor_bill_no from Purchase_Entry c",
 	 * String.class); return q.getResultList(); }
 	 */
+
+	public List<String> getAllFinancialForPurchase() {
+		List<String> lst = new ArrayList<String>();
+		HashSet<String> hash = new HashSet<String>();
+		for (Purchase_Entry pe : getAllPurchaseEntry()) {
+			lst.add(pe.getChallanNumber().split("/")[1]);
+		}
+		hash.addAll(lst);
+		lst.clear();
+		lst.addAll(hash);
+		return lst;
+	}
 
 	/***************** for Job Assignment ***********************/
 	public void setJobAssignment(JobAssignmentDetails jobAssignmentDetails) {
@@ -881,6 +893,25 @@ public class Ejb {
 		hs.addAll(lst);
 		lst.clear();
 		lst.addAll(hs);
+		return lst;
+	}
+
+	public List<JobAssignmentDetails> getAllJobassignmentDetails() {
+		TypedQuery<JobAssignmentDetails> q = em.createQuery(
+				"select c from JobAssignmentDetails c",
+				JobAssignmentDetails.class);
+		return q.getResultList();
+	}
+
+	public List<String> getAllFinancialForJob() {
+		List<String> lst = new ArrayList<String>();
+		HashSet<String> hash = new HashSet<String>();
+		for (JobAssignmentDetails jad : getAllJobassignmentDetails()) {
+			lst.add(jad.getChallanNumber().split("/")[1]);
+		}
+		hash.addAll(lst);
+		lst.clear();
+		lst.addAll(hash);
 		return lst;
 	}
 
@@ -1582,6 +1613,79 @@ public class Ejb {
 		}
 	}
 
+	public List<SalesEntry> getSalesEntryByDate(Date startDate, Date endDate) {
+		TypedQuery<SalesEntry> q = em
+				.createQuery(
+						"select c from SalesEntry c WHERE c.sales_date BETWEEN :startDate AND :endDate",
+						SalesEntry.class);
+		q.setParameter("startDate", startDate);
+		q.setParameter("endDate", endDate);
+		return q.getResultList();
+	}
+
+	public List<SalesEntry> getAllSalesEntries() {
+		TypedQuery<SalesEntry> q = em.createQuery("select c from SalesEntry c",
+				SalesEntry.class);
+		return q.getResultList();
+	}
+
+	public List<String> getAllFinancialForSales() {
+		List<String> lst = new ArrayList<String>();
+		HashSet<String> hash = new HashSet<String>();
+		for (SalesEntry se : getAllSalesEntries()) {
+			lst.add(se.getChallanNumber().split("/")[1]);
+		}
+		hash.addAll(lst);
+		lst.clear();
+		lst.addAll(hash);
+		return lst;
+	}
+
+	public List<SalesEntry> getSalesEntryByChallanNo(String chNo) {
+		TypedQuery<SalesEntry> q = em
+				.createQuery(
+						"select c from SalesEntry c where UPPER(c.challanNumber)=:chNo ORDER BY c.id DESC",
+						SalesEntry.class);
+		q.setParameter("chNo", chNo.toUpperCase());
+		return q.getResultList();
+	}
+
+	public List<SalesEntry> getSalesEntryByAgentName(String name) {
+		TypedQuery<SalesEntry> q = em.createQuery(
+				"select c from SalesEntry c where UPPER(c.vendor.name)=:name",
+				SalesEntry.class);
+		q.setParameter("name", name.toUpperCase());
+		return q.getResultList();
+	}
+
+	public List<SalesEntry> getSalesEntryByCustomerName(String name) {
+		TypedQuery<SalesEntry> q = em
+				.createQuery(
+						"select c from SalesEntry c where UPPER(c.customer.name)=:name",
+						SalesEntry.class);
+		q.setParameter("name", name.toUpperCase());
+		return q.getResultList();
+	}
+
+	public List<SalesEntry> getSalesEntriesByProductCode(String code) {
+		List<SalesEntry> lst = new ArrayList<SalesEntry>();
+		HashSet<SalesEntry> hs = new HashSet<SalesEntry>();
+		TypedQuery<SalesProductDetails> q = em
+				.createQuery(
+						"select c from SalesProductDetails c where UPPER(c.purchase_Product_Details.productDetail.code)=:code ORDER BY c.id DESC",
+						SalesProductDetails.class);
+
+		q.setParameter("code", code.toUpperCase());
+
+		for (SalesProductDetails s : q.getResultList()) {
+			lst.add(s.getSalesEntry());
+		}
+		hs.addAll(lst);
+		lst.clear();
+		lst.addAll(hs);
+		return lst;
+	}
+
 	/**************** SalesProductDetails *****************/
 
 	public void setSalesProductDetails(SalesProductDetails salesProductDetails) {
@@ -1653,12 +1757,10 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	
-
 	/******************************
 	 * Search Job Assignment Details by ChallanID
 	 ****************/
-	
+
 	public JobAssignmentDetails getJobAssignmentDetailsbyChallanNumber(
 			String challanNumber) {
 		TypedQuery<JobAssignmentDetails> q = em
@@ -1673,11 +1775,10 @@ public class Ejb {
 		}
 
 	}
-	
-	/*****************************Search Sasles return by ChallanID ****************/
-	
-	public SalesEntry getSalestDetailsbyChallanNumber(
-			String challanNumber) {
+
+	/***************************** Search Sasles return by ChallanID ****************/
+
+	public SalesEntry getSalestDetailsbyChallanNumber(String challanNumber) {
 		TypedQuery<SalesEntry> q = em
 				.createQuery(
 						"select c from SalesEntry c where c.challanNumber=:challanNumber",

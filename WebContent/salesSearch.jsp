@@ -66,9 +66,10 @@
 							</div>
 							<div class="widget-area">
 								<div class="col-md-12">
-									<form role="form" class="sec" action="purchaseSearchByDate">
+									<form role="form" class="sec" action="salesSearchByDate"
+										method="post">
 										<div class="row">
-											<div class="col-md-6">
+											<div class="col-md-5">
 												<div class="form-group">
 													<label for="">Search between two dates : (Start
 														Date)</label> <input type="text" placeholder="Enter First Date"
@@ -76,18 +77,118 @@
 														id="fDate">
 												</div>
 											</div>
-
-											<div class="col-md-6">
+											<div class="col-md-5">
 												<div class="form-group">
 													<label for="">(End Date)</label> <input type="text"
 														placeholder="Enter last date" id="datepicker1"
 														class="form-control" name="lDate" id="lDate">
 												</div>
 											</div>
+											<div class="col-md-2">
+												<button class="btn green pull-left"
+													style="margin-top: 25px;" type="submit">Search</button>
+											</div>
 										</div>
-										<button class="btn green pull-right" type="submit">Search</button>
 									</form>
-									<br> <br>
+									<form role="form" class="sec"
+										action="salesSearchBySalesChallanNo" method="post">
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label for="" style="float: left;">Sales challan
+														no. :</label>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-1"
+												style="margin-right: 0; padding-right: 0;">
+												<input type="text" class="form-control" readonly="readonly"
+													name="companyInitial"
+													value="${sessionScope['ejb'].getLastBillSetupBySufix('INV').companyInitial}">
+											</div>
+											<div class="col-md-2" style="margin: 0; padding: 0;">
+												<select class="form-control" name="fynYear">
+													<c:forEach
+														items="${sessionScope['ejb'].getAllFinancialForSales()}"
+														var="fyr">
+														<option value="${fyr}">${fyr}</option>
+													</c:forEach>
+												</select>
+											</div>
+											<div class="col-md-2" style="margin: 0; padding: 0;">
+												<input type="text" class="form-control" name="month">
+											</div>
+											<div class="col-md-1" style="margin: 0; padding: 0;">
+												<input type="text" class="form-control" readonly="readonly"
+													name="billType"
+													value="${sessionScope['ejb'].getLastBillSetupBySufix('INV').billType}">
+											</div>
+											<div class="col-md-2" style="margin: 0; padding: 0;">
+												<input type="text" class="form-control" name="autoNum">
+											</div>
+											<div class="col-md-2"
+												style="margin-left: 0; padding-left: 0;">
+												<input type="text" class="form-control" name="suffix">
+											</div>
+											<div class="col-md-2">
+												<button class="btn green pull-left" type="submit">Search</button>
+											</div>
+										</div>
+									</form>
+									<form role="form" class="sec" action="salesSearchByAgentName"
+										method="post">
+										<div class="row">
+											<div class="col-md-10">
+												<div class="form-group">
+													<label for="" style="float: left;">Agent Name :</label> <input
+														type="" placeholder="Enter Agent Name" id="agentName"
+														name="agentName" class="form-control">
+												</div>
+											</div>
+											<div class="col-md-2">
+												<button class="btn green pull-left"
+													style="margin-top: 25px;" type="submit">Search</button>
+											</div>
+
+										</div>
+									</form>
+									<form role="form" class="sec"
+										action="salesSearchByCustomerName" method="post">
+										<div class="row">
+											<div class="col-md-10">
+												<div class="form-group">
+													<label for="" style="float: left;">Customer Name :</label>
+													<input type="" placeholder="Enter Customer Name"
+														id="custoName" name="custoName" class="form-control">
+												</div>
+											</div>
+											<div class="col-md-2">
+												<button class="btn green pull-left"
+													style="margin-top: 25px;" type="submit">Search</button>
+											</div>
+
+										</div>
+									</form>
+									<form role="form" class="sec" action="salesSearchByProductCode"
+										method="post">
+										<div class="row">
+											<div class="col-md-10">
+												<div class="form-group">
+													<label for="" style="float: left;">Product code :</label> <input
+														type="" placeholder="Enter Product code" id="prodCode"
+														name="prodCode" class="form-control">
+												</div>
+											</div>
+											<div class="col-md-2">
+												<button class="btn green pull-left"
+													style="margin-top: 25px;" type="submit">Search</button>
+											</div>
+										</div>
+									</form>
+									<br>
+									<h3 align="center" style="color: #6a94ff;">${requestScope['msg']}</h3>
+									<br>
 									<table class="table">
 										<thead>
 											<tr>
@@ -95,7 +196,6 @@
 												<th>Sales challan no.</th>
 												<th>Customer Name</th>
 												<th>Agent Name</th>
-												<th>Vendor Bill no.</th>
 												<th>Sales Date</th>
 												<th>Total Amount</th>
 												<!-- <th>Barcode</th> -->
@@ -103,43 +203,30 @@
 										</thead>
 
 										<c:set var="count" value="${1}" />
-										<c:forEach items="${requestScope['purEntryList']}"
-											var="pEntryByD">
+										<c:forEach items="${requestScope['salesEntryLst']}"
+											var="sEntryByD">
 											<tbody>
 												<tr>
 													<td>${count}</td>
-													<td>${pEntryByD.challanNumber}</td>
-													<c:if test="${pEntryByD.vendor.vendorType.type=='Vendor'}">
-														<td>${pEntryByD.vendor.name}</td>
-													</c:if>
-													<c:if test="${pEntryByD.vendor.vendorType.type!='Vendor'}">
-														<td>NIL</td>
-													</c:if>
+													<td>${sEntryByD.challanNumber}</td>
+													<td>${sEntryByD.customer.name}</td>
 													<c:choose>
-														<c:when
-															test="${pEntryByD.vendor.vendorType.type=='Purchase Agent'}">
-															<td>${pEntryByD.vendor.name}</td>
-														</c:when>
-														<c:when test="${pEntryByD.agentId!=0}">
-															<td>${sessionScope['ejb'].getVendorById(pEntryByD.agentId).name}</td>
+														<c:when test="${sEntryByD.vendor==null}">
+															<td>NIL</td>
 														</c:when>
 														<c:otherwise>
-															<td>NIL</td>
+															<td>${sEntryByD.vendor.name}</td>
 														</c:otherwise>
 													</c:choose>
-													<td>${pEntryByD.vendor_bill_no}</td>
-													<td><fmt:formatDate value="${pEntryByD.purchase_date}"
+													<td><fmt:formatDate value="${sEntryByD.sales_date}"
 															pattern="dd-MM-yy" /></td>
-													<td>${pEntryByD.totalCost}</td>
-													<%-- <td><a href="printBarcode.jsp?id=${pEntryByD.id}">
-															<img alt="click to view" src="Capture.PNG" height="20">
-													</a></td> --%>
+													<td>${sEntryByD.totalCost}</td>
 													<td>
-														<form action="purchaseView" method="post"
-															id="pView${pEntryByD.id}">
+														<form action="salesView" method="post"
+															id="sView${sEntryByD.id}">
 
-															<a href="#" onclick="purchaseViewF('${pEntryByD.id}');"><input
-																type="hidden" value="${pEntryByD.id}" name="pId"><img
+															<a href="#" onclick="salesViewF('${sEntryByD.id}');"><input
+																type="hidden" value="${sEntryByD.id}" name="sId"><img
 																alt="" src="images/eye.png" height="25px"></a>
 														</form>
 													</td>
@@ -187,6 +274,9 @@
 				dateFormat : "dd-mm-yy"
 			});
 		});
+		function salesViewF(id) {
+			$("#sView" + id).submit();
+		}
 	</script>
 </body>
 

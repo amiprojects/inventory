@@ -311,15 +311,16 @@
 										</thead>
 										<tbody>
 											<tr>
-												<td colspan="2">Discount &nbsp; <select name="disType"  >
-												
-												<option value="disFlat">Flat</option>
-												<option value="disPer">%</option>
+												<td colspan="2">Discount &nbsp; <select name="disType"
+													id="disType" onchange="disTypeF();">
+
+														<option value="disFlat">Flat</option>
+														<option value="disPer">%</option>
 
 												</select>
 												</td>
-												<td><input type="number" class="form-control" name="disValue"
-													id="discount" name="discount" placeholder=""
+												<td><input type="number" class="form-control"
+													name="disValue" id="discount" placeholder=""
 													onkeyup="discountF();"></td>
 											</tr>
 										</tbody>
@@ -328,8 +329,8 @@
 											<tr>
 												<td colspan="2" id="disc">Discount Value:</td>
 												<td><input type="number" class="form-control"
-													 readonly="readonly" id="discountValue"
-													name="discountValue" value="0"></td>
+													readonly="readonly" id="discountValue" name="discountValue"
+													value="0"></td>
 											</tr>
 
 										</tbody>
@@ -676,7 +677,7 @@
 		});
 	</script>
 
- 
+
 
 
 
@@ -848,10 +849,39 @@
 				$("#qty").val("");
 			}
 		}
-		function discountF() {
-			$("#discountValue").val(
+		function disTypeF() {
+			$("#discount").val("");
+			$("#discountValue").val(0);
+			$("#totalvalue").val(
 					Math.round((Number($("#subtotalvalue").val())
-							* Number($("#discount").val()) / 100) * 100) / 100);
+							- Number($("#discountValue").val())
+							+ Number($("#taxAmount").val())
+							+ Number($("#transcharge").val()) + Number($(
+							"#surcharge").val())) * 100) / 100);
+			var tot = $("#totalvalue").val();
+			var round = Math.round(tot);
+			if (tot > round) {
+				$("#roundvalue").val(Math.round((round + 1 - tot) * 100) / 100);
+			} else {
+				$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
+			}
+
+			$("#grandtotal").val(
+					Number($("#totalvalue").val())
+							+ Number($("#roundvalue").val()));
+		}
+		function discountF() {
+			if ($("#disType").val() == 'disPer') {
+				$("#discountValue")
+						.val(
+								Math
+										.round((Number($("#subtotalvalue")
+												.val())
+												* Number($("#discount").val()) / 100) * 100) / 100);
+			} else {
+				$("#discountValue").val(
+						Math.round(Number($("#discount").val()) * 100) / 100);
+			}
 			$("#totalvalue").val(
 					Math.round((Number($("#subtotalvalue").val())
 							- Number($("#discountValue").val())
