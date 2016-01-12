@@ -402,11 +402,16 @@
 										<div style="float: right;">
 											<input type="button" onclick="cancelF();"
 												class="btn btn-danger small" value="Cancel"
-												data-toggle="modal"> <input type="button"
+												data-toggle="modal"> 
+												
+												<input type="button"
 												class="btn btn-info btn-sm" data-toggle="modal" value="Save"
 												onclick="paymentDate();">
+												
+												
 											<div id="saveSales" class="modal fade" role="dialog"
 												style="top: 25px;">
+
 												<div class="modal-dialog modal-lg">
 													<div class="modal-content">
 														<div class="modal-header">
@@ -418,29 +423,9 @@
 															<div class="row">
 																<div class="col-md-6">
 																	<div class="widget-area">
-																		<div class="breadcrumbs">
-																			<ul>
-																				<li><a title="">Select Payment status : </a></li>
-																			</ul>
-																		</div>
-																		<br> <br> <br>
-																		<div class="row">
-																			<div class="col-md-5">Payment status :</div>
-																			<div class="col-md-7">
-																				<div class="sec">
-
-																					<select class="form-control" id="pstatus"
-																						name="pstatus" onchange="pStatusDiv()">
-																						<option value="-" selected="selected">---</option>
-																						<c:forEach
-																							items="${sessionScope['ejb'].getAllPaymentStatus()}"
-																							var="payStatus">
-																							<option value="${payStatus.status}">${payStatus.status}</option>
-																						</c:forEach>
-																					</select>
-																				</div>
-																			</div>
-																		</div>
+																		
+																		
+																		
 																		<div id="payDetail">
 																			<div class="breadcrumbs">
 																				<ul>
@@ -449,20 +434,7 @@
 																			</div>
 																			<br> <br> <br>
 																			<div class="row">
-																				<div class="sec" id="pTypeDiv">
-																					<div class="col-md-5">Payment type :</div>
-																					<div class="col-md-7">
-																						<select class="form-control" id="pType"
-																							name="pType" onchange="pTypeFunc()">
-																							<option value="-" selected="selected">---</option>
-																							<c:forEach
-																								items="${sessionScope['ejb'].getAllPaymentType()}"
-																								var="payType">
-																								<option value="${payType.getType()}">${payType.getType()}</option>
-																							</c:forEach>
-																						</select>
-																					</div>
-																				</div>
+																				
 																				<div id="pDate">
 																					<div class="col-md-5">Payment Date :</div>
 																					<div class="col-md-7">
@@ -477,22 +449,8 @@
 																							readonly="readonly" id="spAmount" name="spAmount">
 																					</div>
 																				</div>
-																				<div id="pPayAmount">
-																					<div class="col-md-5">Payment Amount :</div>
-																					<div class="col-md-7">
-																						<input type="text" class="form-control" value="0"
-																							id="spPaymentAmount" name="spPaymentAmount"
-																							onkeyup="spPaymentAmountFunc();">
-																					</div>
-																				</div>
-																				<div id="pDueAmount">
-																					<div class="col-md-5">Due Amount :</div>
-																					<div class="col-md-7">
-																						<input type="text" class="form-control"
-																							readonly="readonly" id="spDueAmount"
-																							name="spDueAmount">
-																					</div>
-																				</div>
+																				
+																				
 																			</div>
 																		</div>
 																	</div>
@@ -524,7 +482,9 @@
 																</div>
 															</div>
 														</div>
-														<div class="modal-footer"></div>
+														<div class="modal-footer">
+															<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+														</div>
 													</div>
 												</div>
 											</div>
@@ -658,7 +618,15 @@
 		}
 	</script>
 
+<script type="text/javascript">
+function paymentDate(){
+	
+	$("#saveSales").modal("show");
+	
+	
+}
 
+</script>
 
 </body>
 
