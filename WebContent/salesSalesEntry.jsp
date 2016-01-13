@@ -879,7 +879,8 @@
 												.val())
 												* Number($("#discount").val()) / 100) * 100) / 100);
 			} else {
-				if ($("#discount").val() > $("#subtotalvalue").val()) {
+				if (Number($("#discount").val()) > Number($("#subtotalvalue")
+						.val())) {
 					alert("Discount can not be greater than sub total value");
 					$("#discount").val("");
 				} else {
