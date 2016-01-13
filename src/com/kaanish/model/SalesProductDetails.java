@@ -34,10 +34,8 @@ public class SalesProductDetails implements Serializable {
 	
 	
 	@OneToMany(mappedBy = "salesProductDetails")
-	private List<SalesReturn> salesReturns;
+	private List<SalesProductReturnDetail> SalesProductReturnDetail;
 	
-	
-
 	public int getId() {
 		return id;
 	}
@@ -77,6 +75,14 @@ public class SalesProductDetails implements Serializable {
 
 	public void setPurchase_Product_Details(Purchase_Product_Details purchase_Product_Details) {
 		this.purchase_Product_Details = purchase_Product_Details;
+	}
+
+	public List<SalesProductReturnDetail> getSalesProductReturnDetail() {
+		return SalesProductReturnDetail;
+	}
+
+	public void setSalesProductReturnDetail(List<SalesProductReturnDetail> salesProductReturnDetail) {
+		SalesProductReturnDetail = salesProductReturnDetail;
 	}
 
 

@@ -6,7 +6,6 @@ import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -47,6 +46,8 @@ import com.kaanish.model.RawMaterialsStock;
 import com.kaanish.model.ReadyGoodsStock;
 import com.kaanish.model.SalesEntry;
 import com.kaanish.model.SalesProductDetails;
+import com.kaanish.model.SalesProductReturnDetail;
+import com.kaanish.model.SalesReturn;
 import com.kaanish.model.SerialNumber;
 import com.kaanish.model.State;
 import com.kaanish.model.Stoct;
@@ -340,9 +341,7 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	/************************************************
-	 * AVIK for search UOM by name
-	 **************************************************/
+	/**********************************************search UOM by name************************************************/
 
 	public List<QtyUnit> getAllQtyUnitByNameOrAbv(String name) {
 		TypedQuery<QtyUnit> q = em
@@ -393,9 +392,7 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	/******************************
-	 * * Product Search By Description
-	 *************************************/
+	/******************************Product Search By Description************************************/
 
 	public List<ProductDetail> getAllProductByProductDescription(String des) {
 		TypedQuery<ProductDetail> q = em
@@ -1574,6 +1571,46 @@ public class Ejb {
 		em.merge(salesEntry);
 	}
 
+	public int getLastSalesReturnChallanNumber(){
+		TypedQuery<SalesReturn> q = em.createQuery(
+				"select c from SalesReturn c ORDER BY c.id DESC",
+				SalesReturn.class);
+		if (q.getResultList().size() > 0) {
+			return q.getResultList().get(0).getChallanNo();
+		} else {
+			return 0;
+		}
+		
+		
+	}
+	
+	public int getLastSalesRChallanSuffix() {
+		TypedQuery<SalesReturn> q = em.createQuery(
+				"select c from SalesReturn c ORDER BY c.id DESC",
+				SalesReturn.class);
+
+		if (q.getResultList().size() > 0) {
+			int s = q.getResultList().get(0).getChallanSuffix();
+			if (getLastBillSetupBySufix("SRINV").equals(null)) {
+				return s;
+			} else {
+				if (Integer.parseInt(getLastBillSetupBySufix("SRINV").getSufix()) < s) {
+					return s;
+				} else {
+					return Integer.parseInt(getLastBillSetupBySufix("SRINV")
+							.getSufix());
+				}
+			}
+		} else {
+			if (getLastBillSetupBySufix("SRINV").equals(null)) {
+				return 0;
+			} else {
+				return Integer.parseInt(getLastBillSetupBySufix("SRINV")
+						.getSufix());
+			}
+		}
+	}
+	
 	public int getLastSalesChallanNumber() {
 		TypedQuery<SalesEntry> q = em.createQuery(
 				"select c from SalesEntry c ORDER BY c.id DESC",
@@ -1776,7 +1813,7 @@ public class Ejb {
 
 	}
 
-	/***************************** Search Sasles return by ChallanID ****************/
+	/***************************** Search Sasles for return by ChallanID ****************/
 
 	public SalesEntry getSalestDetailsbyChallanNumber(String challanNumber) {
 		TypedQuery<SalesEntry> q = em
@@ -1791,5 +1828,20 @@ public class Ejb {
 		}
 
 	}
+	/*****************************Sasles return********************************************************/
+	
+	public void setSalesReturn(SalesReturn salesReturn) {
+		em.persist(salesReturn);
+	}
+	/***********************************************************SalesProductReturnDetails***********************/
+	
+	public void setSalesProductReturnDetails(SalesProductReturnDetail salesProductReturnDetail) {
+		em.persist(salesProductReturnDetail);
+	}
 
+	public SalesProductReturnDetail getSalesProductReturnDetailsById(int id) {
+		return em.find(SalesProductReturnDetail.class, id);
+	}
+	
+	
 }
