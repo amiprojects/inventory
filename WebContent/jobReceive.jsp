@@ -36,13 +36,13 @@
 	<c:if test="${sessionScope['user']==null}">
 		<c:redirect url="index.jsp" />
 	</c:if>
-	<c:if test="${!sessionScope['user'].equals('admin')}">
-
+	<c:if
+		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminKainat')}">
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
 
-			<c:if test="${page.name.equals('Job Assignment')}">
+			<c:if test="${page.name.equals('Job Recieve')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
@@ -104,8 +104,7 @@
 													<tr>
 														<c:set value="${requestScope['amj']}" var="jjjjj" />
 														<td><p style="font-size: 18px; color: black;">
-																Jobber Name:
-															</p></td>
+																Jobber Name:</p></td>
 
 														<td><p style="font-size: 17px; color: black;">
 																<b>${jjjjj.vendor.name}</b>
@@ -117,11 +116,13 @@
 													</tr>
 													<tr>
 														<td><p style="font-size: 18px; color: black;">
-																Jobber Details:
+																Jobber Details:</p> <br>
+															<p style="font-size: 17px; color: black;">
+																Email: <b>${jjjjj.vendor.email}</b>
 															</p> <br>
-															<p style="font-size: 17px; color: black;">Email:
-																<b>${jjjjj.vendor.email}</b></p> <br>
-															<p style="font-size: 17px; color: black;">Address:<b>${jjjjj.vendor.address}</b></p>
+															<p style="font-size: 17px; color: black;">
+																Address:<b>${jjjjj.vendor.address}</b>
+															</p>
 													</tr>
 												</table>
 
@@ -145,8 +146,7 @@
 													</tr>
 													<tr>
 														<td><p style="font-size: 18px; color: black;">
-																Assigned Date:
-															</p></td>
+																Assigned Date:</p></td>
 														<td>&nbsp;</td>
 														<td><p style="font-size: 17px; color: black;">
 																<b><fmt:formatDate value="${jjjjj.assignDate}"
@@ -302,8 +302,6 @@
 
 	}
 
-
-
 	function getUrlVars() {
 		var vars = {};
 		var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,
@@ -316,9 +314,9 @@
 
 <c:if test="${requestScope['msg']!=''}">
 	<script>
-	if($('#msg').html()!=""){
-		$('.toast').fadeIn(400).delay(3000).fadeOut(400);
-	}
+		if ($('#msg').html() != "") {
+			$('.toast').fadeIn(400).delay(3000).fadeOut(400);
+		}
 	</script>
 </c:if>
 

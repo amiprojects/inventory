@@ -30,27 +30,33 @@ public class BackupRestoreServlet extends HttpServlet {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 		String url = req.getRequestURL().toString();
 		url = url.substring(url.lastIndexOf('/') + 1);
+		// Date dt=new Date();
 		switch (url) {
 		case "backup":
 			List<Country> countries = ejb.getAllCountry();
-			FileOutputStream fos = new FileOutputStream("d:/Country.txt");
+			FileOutputStream fos = new FileOutputStream("backup/Country.txt");
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(countries);
 			oos.close();
 			fos.close();
 
 			List<City> cities = ejb.getAllCity();
-			FileOutputStream fos1 = new FileOutputStream("d:/City.txt");
+			FileOutputStream fos1 = new FileOutputStream("backup/City.txt");
 			ObjectOutputStream oos1 = new ObjectOutputStream(fos1);
 			oos1.writeObject(cities);
 			oos1.close();
 			fos1.close();
+			
+			
+			
 			break;
 		case "restore":
-			FileInputStream fis = new FileInputStream(new File("d:/Country.txt"));
+			FileInputStream fis = new FileInputStream(
+					new File("d:/Country.txt"));
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			List<Country> cont = new ArrayList<>();
 
@@ -61,12 +67,12 @@ public class BackupRestoreServlet extends HttpServlet {
 			}
 			for (Country c : cont) {
 				for (Country c1 : ejb.getAllCountry()) {
-					if (c1.getId()!=c.getId()) {
+					if (c1.getId() != c.getId()) {
 						ejb.setCountry(c);
 					}
 				}
 			}
-			
+
 			fis.close();
 			ois.close();
 			break;

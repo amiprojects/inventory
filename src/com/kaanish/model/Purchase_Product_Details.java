@@ -35,7 +35,6 @@ public class Purchase_Product_Details implements Serializable {
 	private String attrValue6;
 	private String lotNumber;
 	private boolean initialInventory;
-	private boolean isReady;
 	@Transient
 	private int numberForBarcodePrint;
 
@@ -209,9 +208,10 @@ public class Purchase_Product_Details implements Serializable {
 					+ "\"productCode\":\"" + productDetail.getCode() + "\","
 					+ "\"productId\":\"" + productDetail.getId() + "\","
 					+ "\"productDesc\":\"" + productDetail.getDescription()
-					+ "\"," + "\"purchaseDate\":\"" + "Initial Inventory"
-					+ "\"," + "\"purchaseVendorName\":\"" + "Initial Inventory"
-					+ "\"," + "\"attrName1\":\""
+					+ "\"," + "\"isRaw\":\"" + productDetail.isRaw() + "\","
+					+ "\"purchaseDate\":\"" + "Initial Inventory" + "\","
+					+ "\"purchaseVendorName\":\"" + "Initial Inventory" + "\","
+					+ "\"attrName1\":\""
 					+ productDetail.getCategory().getAttrNmae1() + "\","
 					+ "\"attrName2\":\""
 					+ productDetail.getCategory().getAttrNmae2() + "\","
@@ -231,6 +231,7 @@ public class Purchase_Product_Details implements Serializable {
 					+ "\"attrValue6\":\"" + attrValue6 + "\"}";
 		} else {
 			str = "{\"id\":\"" + id + "\"," + "\"mrp\":\"" + mrp + "\","
+					+ "\"isRaw\":\"" + productDetail.isRaw() + "\","
 					+ "\"wsp\":\"" + wsp + "\"," + "\"lotNumber\":\""
 					+ lotNumber + "\"," + "\"remaining_quantity\":\""
 					+ remaining_quantity + "\"," + "\"quantity\":\"" + quantity
@@ -269,14 +270,6 @@ public class Purchase_Product_Details implements Serializable {
 		}
 		return str;
 
-	}
-
-	public boolean isReady() {
-		return isReady;
-	}
-
-	public void setReady(boolean isReady) {
-		this.isReady = isReady;
 	}
 
 	public JobRecievedDetails getRecievedDetails() {

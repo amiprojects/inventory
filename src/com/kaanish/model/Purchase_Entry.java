@@ -39,6 +39,10 @@ public class Purchase_Entry implements Serializable {
 	private boolean isFlatDiscount;
 	private float discountValue;
 
+	@ManyToOne
+	@JoinColumn(name = "companyInfoId")
+	private CompanyInfo companyInfo;
+	
 	@OneToMany(mappedBy = "purchase_Entry", cascade = CascadeType.ALL)
 	private List<Purchase_Product_Details> purchase_Product_Details;
 	@ManyToOne
@@ -209,6 +213,14 @@ public class Purchase_Entry implements Serializable {
 
 	public void setDiscountValue(float discountValue) {
 		this.discountValue = discountValue;
+	}
+
+	public CompanyInfo getCompanyInfo() {
+		return companyInfo;
+	}
+
+	public void setCompanyInfo(CompanyInfo companyInfo) {
+		this.companyInfo = companyInfo;
 	}
 
 	

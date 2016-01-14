@@ -2,7 +2,6 @@ package com.kaanish.sarvlet;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Date;
@@ -49,8 +48,10 @@ public class LoginServlet extends HttpServlet {
 	private Module module;
 	private PageList pageList;
 	private VendorType vendorType;
-	private Users users;
-	private CompanyInfo companyInfo;
+	private Users usersKaanish;
+	private Users usersKainat;
+	private CompanyInfo companyInfoKaanish;
+	private CompanyInfo companyInfoKainat;
 	private Stoct stoct;
 
 	@Override
@@ -277,16 +278,30 @@ public class LoginServlet extends HttpServlet {
 		}
 
 		if (!ejb.isCompanyInfoExist()) {
-			companyInfo = new CompanyInfo();
-			ejb.setCompanyInfo(companyInfo);
+			companyInfoKaanish = new CompanyInfo();
+			companyInfoKaanish.setCompname("Kaanish Kouture");
+			ejb.setCompanyInfo(companyInfoKaanish);
+
+			companyInfoKainat = new CompanyInfo();
+			companyInfoKainat.setCompname("Kainat Kreation");
+			ejb.setCompanyInfo(companyInfoKainat);
 		}
 		if (ejb.getAllUsers().size() == 0) {
-			users = new Users();
-			users.setUserId("admin");
-			users.setPassword("admin");
-			users.setName("admin");
-			users.setPh("0");
-			ejb.setUser(users);
+			usersKaanish = new Users();
+			usersKaanish.setUserId("adminKaanish");
+			usersKaanish.setPassword("admin");
+			usersKaanish.setName("Kaanish Admin");
+			usersKaanish.setPh("0");
+			usersKaanish.setCompanyInfo(companyInfoKaanish);
+			ejb.setUser(usersKaanish);
+
+			usersKainat = new Users();
+			usersKainat.setUserId("adminKainat");
+			usersKainat.setPassword("admin");
+			usersKainat.setName("Kainat Admin");
+			usersKainat.setPh("0");
+			usersKainat.setCompanyInfo(companyInfoKainat);
+			ejb.setUser(usersKainat);
 		}
 		if (ejb.getAllStoct().size() < 1) {
 			LocalDateTime afterThreeMonths = currentDateTime.plusMonths(3);
@@ -370,8 +385,8 @@ public class LoginServlet extends HttpServlet {
 						 * ejb.getAllStoct().get(0).getEndDate() +
 						 * ". Please contact to your vendor..."; } else {
 						 */
-							msg = "Login Successful.";
-						/*}*/
+						msg = "Login Successful.";
+						/* } */
 
 					} else {
 						msg = "Invalid username/Password.";

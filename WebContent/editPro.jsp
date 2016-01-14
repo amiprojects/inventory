@@ -31,13 +31,6 @@
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <!-- tost msg -->
 <link rel="stylesheet" href="css/toast.css" type="text/css" />
-
-
-
-
-
-
-
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 
@@ -48,7 +41,8 @@
 	</c:if>
 
 
-	<c:if test="${!sessionScope['user'].equals('admin')}">
+	<c:if
+		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminKainat')}">
 
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"

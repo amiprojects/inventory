@@ -33,8 +33,11 @@ public class JobAssignmentDetails implements Serializable {
 	private Date estimatedCompletionDate;
 
 	@ManyToOne
+	@JoinColumn(name = "companyInfoId")
+	private CompanyInfo companyInfo;
+
+	@ManyToOne
 	@JoinColumn(name = "jobberId")
-	
 	private Vendor vendor;
 
 	@OneToMany(mappedBy = "jobAssignmentDetails")
@@ -76,7 +79,8 @@ public class JobAssignmentDetails implements Serializable {
 		return jobAssignmentProducts;
 	}
 
-	public void setJobAssignmentProducts(List<JobAssignmentProducts> jobAssignmentProducts) {
+	public void setJobAssignmentProducts(
+			List<JobAssignmentProducts> jobAssignmentProducts) {
 		this.jobAssignmentProducts = jobAssignmentProducts;
 	}
 
@@ -110,6 +114,14 @@ public class JobAssignmentDetails implements Serializable {
 
 	public void setChallanSuffix(int challanSuffix) {
 		this.challanSuffix = challanSuffix;
+	}
+
+	public CompanyInfo getCompanyInfo() {
+		return companyInfo;
+	}
+
+	public void setCompanyInfo(CompanyInfo companyInfo) {
+		this.companyInfo = companyInfo;
 	}
 
 }

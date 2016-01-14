@@ -238,6 +238,9 @@ public class Servlet extends HttpServlet {
 							.toUpperCase());
 					productDetail.setQtyUnit(ejb.getQtyUnitById(Integer
 							.parseInt(req.getParameter("uom"))));
+					System.out.println(req.getParameter("isRaw"));
+					productDetail.setRaw(Boolean.parseBoolean(req
+							.getParameter("isRaw")));
 					productDetail.setSaleble(Boolean.parseBoolean(req
 							.getParameter("isSalebi")));
 					productDetail.setCategory(ejb.getCategoryById(Integer
@@ -247,16 +250,27 @@ public class Servlet extends HttpServlet {
 
 					ejb.setProductDetail(productDetail);
 
-					if (Boolean.parseBoolean(req.getParameter("isSalebi"))) {
-						readyGoodsStock = new ReadyGoodsStock();
-						readyGoodsStock.setProductDetail(productDetail);
-						readyGoodsStock.setRemainingQty(0);
-						ejb.setReadyGoodsStockDetail(readyGoodsStock);
-					} else {
+					/*
+					 * if (Boolean.parseBoolean(req.getParameter("isSalebi"))) {
+					 * readyGoodsStock = new ReadyGoodsStock();
+					 * readyGoodsStock.setProductDetail(productDetail);
+					 * readyGoodsStock.setRemainingQty(0);
+					 * ejb.setReadyGoodsStockDetail(readyGoodsStock); } else {
+					 * rawMaterialsStock = new RawMaterialsStock();
+					 * rawMaterialsStock.setProductDetail(productDetail);
+					 * rawMaterialsStock.setRemainingQty(0);
+					 * ejb.setRawMaterialsStocktDetail(rawMaterialsStock); }
+					 */
+					if (Boolean.parseBoolean(req.getParameter("isRaw"))) {
 						rawMaterialsStock = new RawMaterialsStock();
 						rawMaterialsStock.setProductDetail(productDetail);
 						rawMaterialsStock.setRemainingQty(0);
 						ejb.setRawMaterialsStocktDetail(rawMaterialsStock);
+					} else {
+						readyGoodsStock = new ReadyGoodsStock();
+						readyGoodsStock.setProductDetail(productDetail);
+						readyGoodsStock.setRemainingQty(0);
+						ejb.setReadyGoodsStockDetail(readyGoodsStock);
 					}
 
 					if (req.getParameter("addini").equals("add")) {
@@ -287,7 +301,6 @@ public class Servlet extends HttpServlet {
 						purchaseProductDetails.setProductDetail(productDetail);
 						purchaseProductDetails.setLotNumber(req
 								.getParameter("lotnumberS"));
-						// purchaseProductDetails.setReady(true);
 
 						ejb.setPurchaseProductDetails(purchaseProductDetails);
 						serialNumber = new SerialNumber();
@@ -298,17 +311,22 @@ public class Servlet extends HttpServlet {
 
 						ejb.setSerialNumber(serialNumber);
 
-						if (productDetail.isSaleble()) {
-							readyGoodsStock = ejb
-									.getReadyGoodsStoctByProductId(productDetail
-											.getId());
-							readyGoodsStock
-									.setRemainingQty(readyGoodsStock
-											.getRemainingQty()
-											+ Integer.parseInt(req
-													.getParameter("qty1")));
-							ejb.updateReadyGoodsStockDetail(readyGoodsStock);
-						} else {
+						/*
+						 * if (productDetail.isSaleble()) { readyGoodsStock =
+						 * ejb .getReadyGoodsStoctByProductId(productDetail
+						 * .getId()); readyGoodsStock
+						 * .setRemainingQty(readyGoodsStock .getRemainingQty() +
+						 * Integer.parseInt(req .getParameter("qty1")));
+						 * ejb.updateReadyGoodsStockDetail(readyGoodsStock); }
+						 * else { rawMaterialsStock = ejb
+						 * .getRawMeterialStoctByProductId(productDetail
+						 * .getId()); rawMaterialsStock
+						 * .setRemainingQty(rawMaterialsStock .getRemainingQty()
+						 * + Integer.parseInt(req .getParameter("qty1")));
+						 * ejb.updateRawMaterialStockDetail(rawMaterialsStock);
+						 * }
+						 */
+						if (productDetail.isRaw()) {
 							rawMaterialsStock = ejb
 									.getRawMeterialStoctByProductId(productDetail
 											.getId());
@@ -318,6 +336,16 @@ public class Servlet extends HttpServlet {
 											+ Integer.parseInt(req
 													.getParameter("qty1")));
 							ejb.updateRawMaterialStockDetail(rawMaterialsStock);
+						} else {
+							readyGoodsStock = ejb
+									.getReadyGoodsStoctByProductId(productDetail
+											.getId());
+							readyGoodsStock
+									.setRemainingQty(readyGoodsStock
+											.getRemainingQty()
+											+ Integer.parseInt(req
+													.getParameter("qty1")));
+							ejb.updateReadyGoodsStockDetail(readyGoodsStock);
 						}
 
 					}
@@ -980,7 +1008,6 @@ public class Servlet extends HttpServlet {
 									.parseFloat(mrp[l]));
 							purchaseProductDetails.setWsp(Float
 									.parseFloat(wsp[l]));
-							purchaseProductDetails.setReady(true);
 						}
 
 						purchaseProductDetails.setQuantity(Integer

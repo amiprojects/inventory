@@ -70,6 +70,27 @@
 </script>
 </head>
 <body>
+	<c:if test="${sessionScope['user']==null}">
+		<c:redirect url="index.jsp" />
+	</c:if>
+	<c:if
+		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminKainat')}">
+		<c:forEach
+			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
+			var="page">
+
+			<c:if test="${page.name.equals('Job Search')}">
+				<c:set var="i" value="5" />
+			</c:if>
+		</c:forEach>
+		<c:if test="${i!=5}">
+			<script type="text/javascript">
+				alert('you have no permission to view this page');
+				window.location = "dashboard.jsp";
+			</script>
+		</c:if>
+	</c:if>
+
 	<c:set var="jobAssi"
 		value="${sessionScope['ejb'].getJobAssignmentById(requestScope['joId'])}" />
 
@@ -230,7 +251,7 @@
 										<thead style="background-color: #F0F0F0;">
 											<tr>
 
-											
+
 												<th>Product code</th>
 												<th>Product Description</th>
 												<th>Receiving Quantity</th>
@@ -244,12 +265,12 @@
 										</thead>
 										<tbody>
 
-											
+
 											<c:forEach var="jobp"
 												items="${jobAssi.jobAssignmentProducts}">
 												<c:forEach var="jobPreci" items="${jobp.jobRecievedDetails}">
 													<tr>
-														
+
 														<td>${jobp.purchase_Product_Details.productDetail.code}</td>
 														<td>${jobp.purchase_Product_Details.productDetail.description}</td>
 														<td>${jobPreci.qtyRecieved}</td>
@@ -264,8 +285,7 @@
 																<td><b>Process</b></td>
 															</c:otherwise>
 														</c:choose>
-														<td><fmt:formatDate
-																value="${jobPreci.recievingDate}"
+														<td><fmt:formatDate value="${jobPreci.recievingDate}"
 																pattern="dd-MM-yyyy" /></td>
 													</tr>
 

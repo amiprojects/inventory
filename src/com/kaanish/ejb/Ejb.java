@@ -1006,9 +1006,9 @@ public class Ejb {
 	public List<Purchase_Product_Details> getPurchaseProductDetailsByQty() {
 		TypedQuery<Purchase_Product_Details> q = em
 				.createQuery(
-						"select c from Purchase_Product_Details c where c.remaining_quantity>0 and c.productDetail.isSaleble=:salable ORDER BY c.id ASC",
+						"select c from Purchase_Product_Details c where c.remaining_quantity>0 and c.productDetail.isRaw=:raw ORDER BY c.id ASC",
 						Purchase_Product_Details.class);
-		q.setParameter("salable", false);
+		q.setParameter("raw", true);
 		return q.getResultList();
 	}
 
@@ -1369,13 +1369,23 @@ public class Ejb {
 	}
 
 	public List<ProductDetail> getSalebleProductsByQtyAndCode(String nm) {
+		List<ProductDetail> lst = new ArrayList<ProductDetail>();
+
 		TypedQuery<ProductDetail> query = em
 				.createQuery(
 						"select c from ProductDetail c where c.isSaleble=:sal AND c.readyGoodsStock.remainingQty>0 AND UPPER(c.code) like :codeName",
 						ProductDetail.class);
 		query.setParameter("codeName", "%" + nm.toUpperCase() + "%");
 		query.setParameter("sal", true);
-		return query.getResultList();
+		lst = query.getResultList();
+		TypedQuery<ProductDetail> q = em
+				.createQuery(
+						"select c from ProductDetail c where c.isSaleble=:sal AND c.rawMaterialsStock.remainingQty>0 AND UPPER(c.code) like :codeName",
+						ProductDetail.class);
+		q.setParameter("sal", true);
+		q.setParameter("codeName", "%" + nm.toUpperCase() + "%");
+		lst.addAll(q.getResultList());
+		return lst;
 	}
 
 	public List<ProductDetail> getProductDetailBydescription(String name) {

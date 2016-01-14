@@ -41,7 +41,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#purch").attr("id", "activeSubMenu");
-		$("#sPurchVtype").attr("style", "color: red;");
+		$("#sPurchVtype").attr("style", "color: #6a94ff;");
 		if ($('#msg').html() != "") {
 			$('.toast').fadeIn(400).delay(3000).fadeOut(400);
 		}
@@ -52,17 +52,42 @@
 	<c:if test="${sessionScope['user']==null}">
 		<c:redirect url="index.jsp" />
 	</c:if>
+	<c:if test="${!sessionScope['user'].equals('admin')}">
+		<c:forEach
+			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
+			var="page">
+
+			<c:if test="${page.name.equals('Vendor Management')}">
+				<c:set var="i" value="5" />
+			</c:if>
+		</c:forEach>
+		<c:if test="${i!=5}">
+			<script type="text/javascript">
+				alert('you have no permission to view this page');
+				window.location = "dashboard.jsp";
+			</script>
+		</c:if>
+	</c:if>
 	<div class="main" style="height: 664px;">
-		<%@include file="includeHeader.html"%>
+		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
-			<%@include file="includeSidebar.html"%>
+			<%@include file="includeSidebar.jsp"%>
 			<div class="content-sec"
 				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
 				<div class="container">
 					<div class="row">
 						<div class="masonary-grids">
-							<div class="col-md-8">
-								<div class="widget-area">
+
+							<div class="breadcrumbs"
+								style="height: 50px; text-align: center;">
+								<h3 style="margin-top: 11px;">Purchasing Vendor Type</h3>
+
+
+							</div>
+
+
+							<div class="widget-area">
+								<div class="col-md-12">
 									<form action="newVendorType" method="get">
 										<div class="col-md-10">
 											<div class="form-group">

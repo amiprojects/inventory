@@ -202,10 +202,8 @@
 	<c:if test="${sessionScope['user']==null}">
 		<c:redirect url="index.jsp" />
 	</c:if>
-
-
-	<c:if test="${!sessionScope['user'].equals('admin')}">
-
+	<c:if
+		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminKainat')}">
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
@@ -681,9 +679,11 @@
 
 								<input type="file" name="proImg" size="20"
 									onchange="readURL(this);"><br> <img id="image"
-									alt="" src=""><a href="javascript:void(take_snapshot())"><button class="btn blue btn-default"  type="button">Take Snapshot</button></a>
+									alt="" src=""><a href="javascript:void(take_snapshot())"><button
+										class="btn blue btn-default" type="button">Take
+										Snapshot</button></a>
 								<div id="my_camera" style="width: 320px; height: 240px;"></div>
-								
+
 
 
 
@@ -1668,25 +1668,24 @@
 	</script>
 	<!-- 	*********************************************************************************************************** -->
 
-<script type="text/javascript" src="js/webcam.js"></script>
-<script>
-Webcam.set({
-	width: 320,
-	height: 240,
-	image_format: 'jpeg',
-	jpeg_quality: 90
-});
-Webcam.attach('#my_camera');
+	<script type="text/javascript" src="js/webcam.js"></script>
+	<script>
+		Webcam.set({
+			width : 320,
+			height : 240,
+			image_format : 'jpeg',
+			jpeg_quality : 90
+		});
+		Webcam.attach('#my_camera');
 
-	function take_snapshot() {
-		Webcam
-				.snap(function(data_uri) {
-					$('#image').attr('src', data_uri).width(120).height(85);
-					str = data_uri;
-					$("#proImage1").val(str.substring(str.lastIndexOf(',') + 1));
-				});
-	}
-</script>
+		function take_snapshot() {
+			Webcam.snap(function(data_uri) {
+				$('#image').attr('src', data_uri).width(120).height(85);
+				str = data_uri;
+				$("#proImage1").val(str.substring(str.lastIndexOf(',') + 1));
+			});
+		}
+	</script>
 
 
 </body>

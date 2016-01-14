@@ -43,7 +43,8 @@
 		<c:redirect url="index.jsp" />
 	</c:if>
 
-	<c:if test="${!sessionScope['user'].equals('admin')}">
+	<c:if
+		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminKainat')}">
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
@@ -105,7 +106,8 @@
 																<label for="exampleInputEmail1">Company Name:</label> <input
 																	type="text" name="name" id="compname"
 																	placeholder="Enter Company Name" class="form-control"
-																	readonly="readonly" value="${compInfo.compname}"><br>
+																	readonly="readonly"
+																	value="${sessionScope['ejb'].getUserById(sessionScope['user']).getCompanyInfo().getCompname()}"><br>
 															</div>
 														</div>
 
