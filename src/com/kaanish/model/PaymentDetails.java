@@ -35,6 +35,18 @@ public class PaymentDetails implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "salesEntryId")
 	private SalesEntry salesEntry;
+	
+	public SalesReturn getSalesReturn() {
+		return salesReturn;
+	}
+
+	public void setSalesReturn(SalesReturn salesReturn) {
+		this.salesReturn = salesReturn;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "salesReEntryId")
+	private SalesReturn salesReturn;
 
 	@ManyToOne
 	@JoinColumn(name = "paymentTypeId")
