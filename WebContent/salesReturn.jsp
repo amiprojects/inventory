@@ -91,7 +91,7 @@
 		<script type="text/javascript">
 			var myWindow = window
 					.open(
-							"salesInvoiceForPrint.jsp?id=${requestScope['purDetIdforPC']}",
+							"salesReturnInvoiceForPrint.jsp?id=${requestScope['purDetIdforPC']}",
 							'name', 'width=600,height=400');
 			myWindow.print();
 		</script>

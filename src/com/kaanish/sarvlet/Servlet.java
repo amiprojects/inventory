@@ -1715,20 +1715,24 @@ public class Servlet extends HttpServlet {
 
 					salesProductReturnDetail = new SalesProductReturnDetail();
 
-					salesProductReturnDetail.setFault(p3[1]);
+					salesProductReturnDetail.setFault(p3[l]);
 					salesProductReturnDetail.setQtyReturn(Integer.parseInt(qty4[l]));
 					salesProductReturnDetail.setSalesProductDetails(
-							ejb.getSalesProductDetailsById(Integer.parseInt(salesProductDetailId[1])));
-					ejb.setSalesProductDetails(salesProductDetails);
+							ejb.getSalesProductDetailsById(Integer.parseInt(salesProductDetailId[l])));
+					
+					ejb.updateSalesProductDetails(salesProductDetails);
 
 					purchaseProductDetails = salesProductDetails.getPurchase_Product_Details();
 					purchaseProductDetails.setRemaining_quantity(
 							purchaseProductDetails.getRemaining_quantity() + Integer.parseInt(qty4[l]));
+					
 					ejb.updatePurchaseProductDetails(purchaseProductDetails);
 
 					readyGoodsStock = ejb
 							.getReadyGoodsStoctByProductId(purchaseProductDetails.getProductDetail().getId());
+					
 					readyGoodsStock.setRemainingQty(readyGoodsStock.getRemainingQty() + Integer.parseInt(qty4[l]));
+					
 					ejb.updateReadyGoodsStockDetail(readyGoodsStock);
 
 					readyGoodsStock = null;
