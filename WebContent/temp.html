@@ -1,0 +1,28 @@
+public List<CustomerEntry> getAllCustomerEntry() {
+		TypedQuery<CustomerEntry> q = em.createQuery(
+				"select c from CustomerEntry c", CustomerEntry.class);
+		return q.getResultList();
+	}
+	
+${sessionScope['ejb'].getUserById(sessionScope['user']).getCompanyInfo().getId()}
+
+<c:if test="${pEntryByD.companyInfo.id==compInfo.id}">
+
+<c:set var="compInfo"
+		value="${sessionScope['ejb'].getUserById(sessionScope['user']).getCompanyInfo()}" />
+								
+companyInfo = ejb.getUserById(
+						(String) httpSession.getAttribute("user"))
+						.getCompanyInfo();
+						
+rawMaterialsStock.setCompanyInfo(ejb
+								.getAllCompanyInfo().get(0));
+								
+								
+								
+	private RawMaterialsStock rawMaterialsStock;
+	private RawMaterialsStock rawMaterialsStockKaanish;
+	private RawMaterialsStock rawMaterialsStockKainat;
+	private ReadyGoodsStock readyGoodsStock;
+	private ReadyGoodsStock readyGoodsStockKaanish;
+	private ReadyGoodsStock readyGoodsStockKainat;

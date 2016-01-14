@@ -86,8 +86,10 @@ public class Ejb {
 	}
 
 	/****************** for security *********************/
-	public void backup() {
-
+	public List<JobClass> getAllJobClasses() {
+		TypedQuery<JobClass> q = em.createQuery("select c from JobClass c",
+				JobClass.class);
+		return q.getResultList();
 	}
 
 	public void setJobClass(JobClass jobClass) {
@@ -165,6 +167,14 @@ public class Ejb {
 	public List<UserGroup> getAllUserGroup() {
 		TypedQuery<UserGroup> q = em.createQuery("select c from UserGroup c",
 				UserGroup.class);
+		return q.getResultList();
+	}
+
+	public List<UserGroup> getAllUserGroupByCompany(int cId) {
+		TypedQuery<UserGroup> q = em.createQuery(
+				"select c from UserGroup c WHERE c.companyInfo.id=:cId",
+				UserGroup.class);
+		q.setParameter("cId", cId);
 		return q.getResultList();
 	}
 
@@ -341,7 +351,7 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	/**********************************************search UOM by name************************************************/
+	/********************************************** search UOM by name ************************************************/
 
 	public List<QtyUnit> getAllQtyUnitByNameOrAbv(String name) {
 		TypedQuery<QtyUnit> q = em
@@ -392,7 +402,7 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	/******************************Product Search By Description************************************/
+	/****************************** Product Search By Description ************************************/
 
 	public List<ProductDetail> getAllProductByProductDescription(String des) {
 		TypedQuery<ProductDetail> q = em
@@ -460,6 +470,12 @@ public class Ejb {
 			QtyUnitConversionPK qtyUnitConversionPK) {
 
 		return em.find(QtyUnitConversion.class, qtyUnitConversionPK);
+	}
+
+	public List<QtyUnitConversion> getAllQtyUnitConversion() {
+		TypedQuery<QtyUnitConversion> q = em.createQuery(
+				"select c from QtyUnitConversion c", QtyUnitConversion.class);
+		return q.getResultList();
 	}
 
 	/******************** qty Unit conversion PK **********************/
@@ -616,6 +632,12 @@ public class Ejb {
 		em.persist(accountDetails);
 	}
 
+	public List<AccountDetails> getAllAccountDetails() {
+		TypedQuery<AccountDetails> q = em.createQuery(
+				"select c from AccountDetails c", AccountDetails.class);
+		return q.getResultList();
+	}
+
 	public AccountDetails getAccountDetailsByVendorId(int id) {
 		TypedQuery<AccountDetails> q = em
 				.createQuery(
@@ -651,6 +673,18 @@ public class Ejb {
 						Purchase_Entry.class);
 		q.setParameter("startDate", startDate);
 		q.setParameter("endDate", endDate);
+		return q.getResultList();
+	}
+
+	public List<Purchase_Entry> getPurchaseEntryByDateAndCompany(
+			Date startDate, Date endDate, int cId) {
+		TypedQuery<Purchase_Entry> q = em
+				.createQuery(
+						"select c from Purchase_Entry c WHERE c.companyInfo.id=:cId AND c.purchase_date BETWEEN :startDate AND :endDate ORDER BY c.id DESC",
+						Purchase_Entry.class);
+		q.setParameter("startDate", startDate);
+		q.setParameter("endDate", endDate);
+		q.setParameter("cId", cId);
 		return q.getResultList();
 	}
 
@@ -711,14 +745,24 @@ public class Ejb {
 
 	}
 
+	public int getLastPurchaseChallanNumberByCompany(int cId) {
+		TypedQuery<Purchase_Entry> q = em
+				.createQuery(
+						"select c from Purchase_Entry c WHERE c.companyInfo.id=:cId ORDER BY c.id DESC",
+						Purchase_Entry.class);
+		q.setParameter("cId", cId);
+		if (q.getResultList().size() > 0) {
+			return q.getResultList().get(0).getChallan_no();
+		} else {
+			return 0;
+		}
+
+	}
+
 	public int getLastPurchaseChallanSuffix() {
 		TypedQuery<Purchase_Entry> q = em.createQuery(
 				"select c from Purchase_Entry c ORDER BY c.id DESC",
 				Purchase_Entry.class);
-		/*
-		 * if(q.getResultList().size()>0){ return
-		 * q.getResultList().get(0).getChallanSuffix(); } else{ return 0; }
-		 */
 		if (q.getResultList().size() > 0) {
 			int s = q.getResultList().get(0).getChallanSuffix();
 			if (getLastBillSetupBySufix("PUR").equals(null)) {
@@ -737,6 +781,36 @@ public class Ejb {
 			} else {
 				return Integer.parseInt(getLastBillSetupBySufix("PUR")
 						.getSufix());
+			}
+		}
+	}
+
+	public int getLastPurchaseChallanSuffixByCompany(int cId) {
+		TypedQuery<Purchase_Entry> q = em
+				.createQuery(
+						"select c from Purchase_Entry c WHERE c.companyInfo.id=:cId ORDER BY c.id DESC",
+						Purchase_Entry.class);
+		q.setParameter("cId", cId);
+		if (q.getResultList().size() > 0) {
+			int s = q.getResultList().get(0).getChallanSuffix();
+			if (getLastBillSetupBySufixAndCompanyId("PUR", cId).equals(null)) {
+				return s;
+			} else {
+				if (Integer.parseInt(getLastBillSetupBySufixAndCompanyId("PUR",
+						cId).getSufix()) < s) {
+					return s;
+				} else {
+					return Integer
+							.parseInt((getLastBillSetupBySufixAndCompanyId(
+									"PUR", cId).getSufix()));
+				}
+			}
+		} else {
+			if (getLastBillSetupBySufixAndCompanyId("PUR", cId).equals(null)) {
+				return 0;
+			} else {
+				return Integer.parseInt(getLastBillSetupBySufixAndCompanyId(
+						"PUR", cId).getSufix());
 			}
 		}
 	}
@@ -951,11 +1025,24 @@ public class Ejb {
 		em.persist(jobStock);
 	}
 
+	public List<JobStock> getAllJobStock() {
+		TypedQuery<JobStock> q = em.createQuery("select c from JobStock c",
+				JobStock.class);
+		return q.getResultList();
+	}
+
 	/***************** for purchase product details ***********************/
 
 	public void setPurchaseProductDetails(
 			Purchase_Product_Details purchaseProductDetails) {
 		em.persist(purchaseProductDetails);
+	}
+
+	public List<Purchase_Product_Details> getAllPurchase_Product_Details() {
+		TypedQuery<Purchase_Product_Details> q = em.createQuery(
+				"select c from Purchase_Product_Details c",
+				Purchase_Product_Details.class);
+		return q.getResultList();
 	}
 
 	public ProductDetail getProductDetailsById(int id) {
@@ -1003,9 +1090,9 @@ public class Ejb {
 	public List<Purchase_Product_Details> getPurchaseProductDetailsByQty() {
 		TypedQuery<Purchase_Product_Details> q = em
 				.createQuery(
-						"select c from Purchase_Product_Details c where c.remaining_quantity>0 and c.productDetail.isSaleble=:salable ORDER BY c.id ASC",
+						"select c from Purchase_Product_Details c where c.remaining_quantity>0 and c.productDetail.isRaw=:raw ORDER BY c.id ASC",
 						Purchase_Product_Details.class);
-		q.setParameter("salable", false);
+		q.setParameter("raw", true);
 		return q.getResultList();
 	}
 
@@ -1080,6 +1167,12 @@ public class Ejb {
 	/********************* for job recieve *********************/
 	public void setJobRecieve(JobRecievedDetails jobRecievedDetails) {
 		em.persist(jobRecievedDetails);
+	}
+
+	public List<JobRecievedDetails> getAllJobRecievedDetails() {
+		TypedQuery<JobRecievedDetails> q = em.createQuery(
+				"select c from JobRecievedDetails c", JobRecievedDetails.class);
+		return q.getResultList();
 	}
 
 	/******************** for City *******************************/
@@ -1366,13 +1459,23 @@ public class Ejb {
 	}
 
 	public List<ProductDetail> getSalebleProductsByQtyAndCode(String nm) {
+		List<ProductDetail> lst = new ArrayList<ProductDetail>();
+
 		TypedQuery<ProductDetail> query = em
 				.createQuery(
 						"select c from ProductDetail c where c.isSaleble=:sal AND c.readyGoodsStock.remainingQty>0 AND UPPER(c.code) like :codeName",
 						ProductDetail.class);
 		query.setParameter("codeName", "%" + nm.toUpperCase() + "%");
 		query.setParameter("sal", true);
-		return query.getResultList();
+		lst = query.getResultList();
+		TypedQuery<ProductDetail> q = em
+				.createQuery(
+						"select c from ProductDetail c where c.isSaleble=:sal AND c.rawMaterialsStock.remainingQty>0 AND UPPER(c.code) like :codeName",
+						ProductDetail.class);
+		q.setParameter("sal", true);
+		q.setParameter("codeName", "%" + nm.toUpperCase() + "%");
+		lst.addAll(q.getResultList());
+		return lst;
 	}
 
 	public List<ProductDetail> getProductDetailBydescription(String name) {
@@ -1405,6 +1508,12 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<ProductImage> getAllProductImage() {
+		TypedQuery<ProductImage> q = em.createQuery(
+				"select c from ProductImage c", ProductImage.class);
+		return q.getResultList();
+	}
+
 	/********************** for serial number ********************/
 	public void setSerialNumber(SerialNumber serialNumber) {
 		em.persist(serialNumber);
@@ -1425,12 +1534,33 @@ public class Ejb {
 		em.persist(billSetup);
 	}
 
+	public List<Bill_setup> getAllBillSetup() {
+		TypedQuery<Bill_setup> q = em.createQuery("select c from Bill_setup c",
+				Bill_setup.class);
+		return q.getResultList();
+	}
+
 	public Bill_setup getLastBillSetupBySufix(String billType) {
 		TypedQuery<Bill_setup> q = em
 				.createQuery(
 						"select s from Bill_setup s where s.billType=:btype order by s.id DESC",
 						Bill_setup.class);
 		q.setParameter("btype", billType);
+		if (q.getResultList().size() > 0) {
+			return q.getResultList().get(0);
+		} else {
+			return null;
+		}
+	}
+
+	public Bill_setup getLastBillSetupBySufixAndCompanyId(String billType,
+			int cId) {
+		TypedQuery<Bill_setup> q = em
+				.createQuery(
+						"select s from Bill_setup s where s.billType=:btype AND s.companyInfo.id=:cId order by s.id DESC",
+						Bill_setup.class);
+		q.setParameter("btype", billType);
+		q.setParameter("cId", cId);
 		if (q.getResultList().size() > 0) {
 			return q.getResultList().get(0);
 		} else {
@@ -1453,6 +1583,12 @@ public class Ejb {
 		TypedQuery<CompanyInfo> q = em.createQuery(
 				"Select c from CompanyInfo c", CompanyInfo.class);
 		return q.getResultList().size() > 0;
+	}
+
+	public List<CompanyInfo> getAllCompanyInfo() {
+		TypedQuery<CompanyInfo> q = em.createQuery(
+				"select c from CompanyInfo c", CompanyInfo.class);
+		return q.getResultList();
 	}
 
 	public CompanyInfo getCompanyInfo() {
@@ -1513,6 +1649,17 @@ public class Ejb {
 		return q.getResultList().get(0);
 	}
 
+	public RawMaterialsStock getRawMeterialStoctByProductAndCompanyId(int pId,
+			int cId) {
+		TypedQuery<RawMaterialsStock> q = em
+				.createQuery(
+						"select s from RawMaterialsStock s where s.productDetail.id=:pId AND s.companyInfo.id=:cId",
+						RawMaterialsStock.class);
+		q.setParameter("pId", pId);
+		q.setParameter("cId", cId);
+		return q.getResultList().get(0);
+	}
+
 	/********************* for ReadyGood Stock ************************/
 
 	public void setReadyGoodsStockDetail(ReadyGoodsStock readyGoodsStock) {
@@ -1553,6 +1700,17 @@ public class Ejb {
 		return q.getResultList().get(0);
 	}
 
+	public ReadyGoodsStock getReadyGoodStoctByProductAndCompanyId(int pId,
+			int cId) {
+		TypedQuery<ReadyGoodsStock> q = em
+				.createQuery(
+						"select s from ReadyGoodsStock s where s.productDetail.id=:pId AND s.companyInfo.id=:cId",
+						ReadyGoodsStock.class);
+		q.setParameter("pId", pId);
+		q.setParameter("cId", cId);
+		return q.getResultList().get(0);
+	}
+
 	/**************** SalesEntry *****************/
 
 	public void setSalesEntry(SalesEntry salesEntry) {
@@ -1571,7 +1729,7 @@ public class Ejb {
 		em.merge(salesEntry);
 	}
 
-	public int getLastSalesReturnChallanNumber(){
+	public int getLastSalesReturnChallanNumber() {
 		TypedQuery<SalesReturn> q = em.createQuery(
 				"select c from SalesReturn c ORDER BY c.id DESC",
 				SalesReturn.class);
@@ -1580,10 +1738,9 @@ public class Ejb {
 		} else {
 			return 0;
 		}
-		
-		
+
 	}
-	
+
 	public int getLastSalesRChallanSuffix() {
 		TypedQuery<SalesReturn> q = em.createQuery(
 				"select c from SalesReturn c ORDER BY c.id DESC",
@@ -1594,7 +1751,8 @@ public class Ejb {
 			if (getLastBillSetupBySufix("SRINV").equals(null)) {
 				return s;
 			} else {
-				if (Integer.parseInt(getLastBillSetupBySufix("SRINV").getSufix()) < s) {
+				if (Integer.parseInt(getLastBillSetupBySufix("SRINV")
+						.getSufix()) < s) {
 					return s;
 				} else {
 					return Integer.parseInt(getLastBillSetupBySufix("SRINV")
@@ -1610,7 +1768,7 @@ public class Ejb {
 			}
 		}
 	}
-	
+
 	public int getLastSalesChallanNumber() {
 		TypedQuery<SalesEntry> q = em.createQuery(
 				"select c from SalesEntry c ORDER BY c.id DESC",
@@ -1769,6 +1927,12 @@ public class Ejb {
 		em.merge(customerEntry);
 	}
 
+	public List<CustomerEntry> getAllCustomerEntry() {
+		TypedQuery<CustomerEntry> q = em.createQuery(
+				"select c from CustomerEntry c", CustomerEntry.class);
+		return q.getResultList();
+	}
+
 	public List<CustomerEntry> getCustomerByPh(String ph) {
 		TypedQuery<CustomerEntry> q = em.createQuery(
 				"select c from CustomerEntry c where c.mobile like :ph",
@@ -1828,8 +1992,9 @@ public class Ejb {
 		}
 
 	}
-	/*****************************Sasles return********************************************************/
-	
+
+	/***************************** Sasles return ********************************************************/
+
 	public void setSalesReturn(SalesReturn salesReturn) {
 		em.persist(salesReturn);
 	}
@@ -1848,6 +2013,5 @@ public class Ejb {
 	public SalesProductReturnDetail getSalesProductReturnDetailsById(int id) {
 		return em.find(SalesProductReturnDetail.class, id);
 	}
-	
-	
+
 }

@@ -1,12 +1,14 @@
 package com.kaanish.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 
 import com.kaanish.util.Base64;
 
@@ -40,8 +42,32 @@ public class CompanyInfo implements Serializable {
 	private String cstdate;
 	private String tindate;
 	private String servtaxdate;
-	
+
 	private int changeCount;
+
+	@OneToMany(mappedBy = "companyInfo")
+	private List<Users> users;
+
+	@OneToMany(mappedBy = "companyInfo")
+	private List<JobAssignmentDetails> jobAssignmentDetails;
+
+	@OneToMany(mappedBy = "companyInfo")
+	private List<Purchase_Entry> purchase_Entry;
+
+	@OneToMany(mappedBy = "companyInfo")
+	private List<SalesEntry> salesEntry;
+
+	@OneToMany(mappedBy = "companyInfo")
+	private List<RawMaterialsStock> rawMaterialsStocks;
+
+	@OneToMany(mappedBy = "companyInfo")
+	private List<ReadyGoodsStock> readyGoodsStocks;
+
+	@OneToMany(mappedBy = "companyInfo")
+	private List<Bill_setup> bill_setup;
+
+	@OneToMany(mappedBy = "companyInfo")
+	private List<UserGroup> userGroup;
 
 	public String getImageAsString() {
 		if (image == null) {
@@ -201,6 +227,71 @@ public class CompanyInfo implements Serializable {
 
 	public void setChangeCount(int changeCount) {
 		this.changeCount = changeCount;
+	}
+
+	public List<JobAssignmentDetails> getJobAssignmentDetails() {
+		return jobAssignmentDetails;
+	}
+
+	public void setJobAssignmentDetails(
+			List<JobAssignmentDetails> jobAssignmentDetails) {
+		this.jobAssignmentDetails = jobAssignmentDetails;
+	}
+
+	public List<Purchase_Entry> getPurchase_Entry() {
+		return purchase_Entry;
+	}
+
+	public void setPurchase_Entry(List<Purchase_Entry> purchase_Entry) {
+		this.purchase_Entry = purchase_Entry;
+	}
+
+	public List<SalesEntry> getSalesEntry() {
+		return salesEntry;
+	}
+
+	public void setSalesEntry(List<SalesEntry> salesEntry) {
+		this.salesEntry = salesEntry;
+	}
+
+	public List<Users> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<Users> users) {
+		this.users = users;
+	}
+
+	public List<RawMaterialsStock> getRawMaterialsStocks() {
+		return rawMaterialsStocks;
+	}
+
+	public void setRawMaterialsStocks(List<RawMaterialsStock> rawMaterialsStocks) {
+		this.rawMaterialsStocks = rawMaterialsStocks;
+	}
+
+	public List<ReadyGoodsStock> getReadyGoodsStocks() {
+		return readyGoodsStocks;
+	}
+
+	public void setReadyGoodsStocks(List<ReadyGoodsStock> readyGoodsStocks) {
+		this.readyGoodsStocks = readyGoodsStocks;
+	}
+
+	public List<Bill_setup> getBill_setup() {
+		return bill_setup;
+	}
+
+	public void setBill_setup(List<Bill_setup> bill_setup) {
+		this.bill_setup = bill_setup;
+	}
+
+	public List<UserGroup> getUserGroup() {
+		return userGroup;
+	}
+
+	public void setUserGroup(List<UserGroup> userGroup) {
+		this.userGroup = userGroup;
 	}
 
 }

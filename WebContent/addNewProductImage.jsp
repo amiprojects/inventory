@@ -38,7 +38,7 @@
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 </head>
 <body>
-<c:if test="${!sessionScope['user'].equals('admin')}">
+<c:if test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminKainat')}">
 
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"

@@ -28,6 +28,7 @@ public class ProductDetail implements Serializable {
 	private String code;
 	private String universalCode;
 	private boolean isSaleble;
+	private boolean isRaw;
 	private boolean isActive;
 	private String description;
 
@@ -37,9 +38,9 @@ public class ProductDetail implements Serializable {
 	@OneToMany(mappedBy = "productDetail")
 	private List<Purchase_Product_Details> purchase_Product_Details;
 
-	@OneToOne(cascade=CascadeType.ALL,mappedBy="productDetail")
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "productDetail")
 	private ReadyGoodsStock readyGoodsStock;
-	@OneToOne(cascade=CascadeType.ALL,mappedBy="productDetail")
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "productDetail")
 	private RawMaterialsStock rawMaterialsStock;
 
 	@ManyToOne
@@ -117,7 +118,8 @@ public class ProductDetail implements Serializable {
 		return purchase_Product_Details;
 	}
 
-	public void setPurchase_Product_Details(List<Purchase_Product_Details> purchase_Product_Details) {
+	public void setPurchase_Product_Details(
+			List<Purchase_Product_Details> purchase_Product_Details) {
 		this.purchase_Product_Details = purchase_Product_Details;
 	}
 
@@ -160,15 +162,22 @@ public class ProductDetail implements Serializable {
 
 	@Override
 	public String toString() {
-		return "{\"id\":\"" + id + "\"," + "\"name\":\"" + name + "\"," + "\"code\":\"" + code + "\","
-				+ "\"universalCode\":\"" + universalCode + "\"," + "\"isSaleble\":\"" + isSaleble + "\","
-				+ "\"isActive\":\"" + isActive + "\"," + "\"description\":\"" + description + "\"," + "\"qtyUnit\":\""
-				+ qtyUnit.getName() + "\"," + "\"category\":\"" + category.getName() + "\"," + "\"attrNmae1\":\""
-				+ category.getAttrNmae1() + "\"," + "\"attrNmae2\":\"" + category.getAttrNmae2() + "\","
-				+ "\"attrNmae3\":\"" + category.getAttrNmae3() + "\"," + "\"attrNmae4\":\"" + category.getAttrNmae4()
-				+ "\"," + "\"attrNmae5\":\"" + category.getAttrNmae5() + "\"," + "\"attrNmae6\":\""
-				+ category.getAttrNmae6() + "\",\"subDepartment\":\"" + category.getSubDepartment().getName()
-				+ "\",\"categoryId\":\"" + category.getId() + "\",\"Department\":\""
+		return "{\"id\":\"" + id + "\"," + "\"name\":\"" + name + "\","
+				+ "\"code\":\"" + code + "\"," + "\"universalCode\":\""
+				+ universalCode + "\"," + "\"isSaleble\":\"" + isSaleble
+				+ "\"," + "\"isActive\":\"" + isActive + "\","
+				+ "\"description\":\"" + description + "\"," + "\"qtyUnit\":\""
+				+ qtyUnit.getName() + "\"," + "\"category\":\""
+				+ category.getName() + "\"," + "\"attrNmae1\":\""
+				+ category.getAttrNmae1() + "\"," + "\"attrNmae2\":\""
+				+ category.getAttrNmae2() + "\"," + "\"attrNmae3\":\""
+				+ category.getAttrNmae3() + "\"," + "\"attrNmae4\":\""
+				+ category.getAttrNmae4() + "\"," + "\"attrNmae5\":\""
+				+ category.getAttrNmae5() + "\"," + "\"attrNmae6\":\""
+				+ category.getAttrNmae6() + "\",\"subDepartment\":\""
+				+ category.getSubDepartment().getName()
+				+ "\",\"categoryId\":\"" + category.getId()
+				+ "\",\"Department\":\""
 				+ category.getSubDepartment().getDepartment().getName() + "\"}";
 	}
 
@@ -178,5 +187,13 @@ public class ProductDetail implements Serializable {
 
 	public void setProductImages(List<ProductImage> productImages) {
 		this.productImages = productImages;
+	}
+
+	public boolean isRaw() {
+		return isRaw;
+	}
+
+	public void setRaw(boolean isRaw) {
+		this.isRaw = isRaw;
 	}
 }

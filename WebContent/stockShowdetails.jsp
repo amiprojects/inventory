@@ -79,10 +79,13 @@
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
 <script src="js/jquery-ui/jquery-ui.js"></script>
 
-
 </head>
 <body>
-	<c:if test="${!sessionScope['user'].equals('admin')}">
+	<c:if test="${sessionScope['user']==null}">
+		<c:redirect url="index.jsp" />
+	</c:if>
+	<c:if
+		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminKainat')}">
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">

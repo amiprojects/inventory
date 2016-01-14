@@ -69,8 +69,8 @@
 	<c:if test="${sessionScope['user']==null}">
 		<c:redirect url="index.jsp" />
 	</c:if>
-
-	<c:if test="${!sessionScope['user'].equals('admin')}">
+	<c:if
+		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminKainat')}">
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
@@ -561,6 +561,7 @@
 							<tr>
 								<th>Purchase Date</th>
 								<th>Vendor name</th>
+								<th>Raw/Ready</th>
 								<th>Lot No.</th>
 								<th>MRP</th>
 								<th>WSP</th>
@@ -1182,6 +1183,11 @@
 																		data2,
 																		function(
 																				item2) {
+																			if (item2.isRaw == 'true') {
+																				var rawORready = 'Raw';
+																			} else {
+																				var rawORready = 'Ready';
+																			}
 																			if (item2.remaining_quantity >= Number($(
 																					"#qty")
 																					.val())) {
@@ -1196,6 +1202,9 @@
 																											+ "</td>"
 																											+ "<td>"
 																											+ item2.purchaseVendorName
+																											+ "</td>"
+																											+ "<td>"
+																											+ rawORready
 																											+ "</td>"
 																											+ "<td>"
 																											+ item2.lotNumber
@@ -1227,6 +1236,9 @@
 																											+ "</td>"
 																											+ "<td>"
 																											+ item2.purchaseVendorName
+																											+ "</td>"
+																											+ "<td>"
+																											+ rawORready
 																											+ "</td>"
 																											+ "<td>"
 																											+ item2.lotNumber

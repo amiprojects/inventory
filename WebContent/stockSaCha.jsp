@@ -63,12 +63,16 @@ page[size="A4"] {
 
 </head>
 <body>
-	<c:if test="${!sessionScope['user'].equals('admin')}">
+	<c:if test="${sessionScope['user']==null}">
+		<c:redirect url="index.jsp" />
+	</c:if>
+	<c:if
+		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminKainat')}">
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
 
-			<c:if test="${page.name.equals('Sales Entry')}">
+			<c:if test="${page.name.equals('Stock')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>

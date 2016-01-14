@@ -39,6 +39,9 @@ public class SalesEntry implements Serializable {
 	private boolean isFlatDiscount;
 	private float discountValue;
 	
+	@ManyToOne
+	@JoinColumn(name = "companyInfoId")
+	private CompanyInfo companyInfo;
 
 	@ManyToOne
 	@JoinColumn(name = "salesAgentId")
@@ -232,6 +235,14 @@ public class SalesEntry implements Serializable {
 
 	public void setDiscountValue(float discountValue) {
 		this.discountValue = discountValue;
+	}
+
+	public CompanyInfo getCompanyInfo() {
+		return companyInfo;
+	}
+
+	public void setCompanyInfo(CompanyInfo companyInfo) {
+		this.companyInfo = companyInfo;
 	}
 
 	

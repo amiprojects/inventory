@@ -43,7 +43,8 @@
 		<c:redirect url="index.jsp" />
 	</c:if>
 
-	<c:if test="${!sessionScope['user'].equals('admin')}">
+	<c:if
+		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminKainat')}">
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
@@ -61,7 +62,8 @@
 	</c:if>
 
 
-	<c:set var="compInfo" value="${sessionScope['ejb'].getCompanyInfo()}" />
+	<c:set var="compInfo"
+		value="${sessionScope['ejb'].getUserById(sessionScope['user']).getCompanyInfo()}" />
 
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>

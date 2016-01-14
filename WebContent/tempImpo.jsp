@@ -146,3 +146,13 @@ $(function() {
 								</table>
 								
 //if (!isNaN(this.value) && this.value.length != 0) {
+
+$("input:radio[name=bar]").click(function() {
+			var value = $(this).val();
+			//alert(value);
+			if (value == "yesBar") {
+				$("#isBarPrint").val('yes');
+			} else {
+				$("#isBarPrint").val('no');
+			}
+		});

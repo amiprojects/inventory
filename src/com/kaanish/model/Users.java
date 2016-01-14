@@ -21,6 +21,10 @@ public class Users implements Serializable {
 	private String name;
 	private String ph;
 	private String password;
+	
+	@ManyToOne
+	@JoinColumn(name = "companyInfoId")
+	private CompanyInfo companyInfo;
 
 	@OneToMany(mappedBy = "users")
 	List<Tax> taxes;
@@ -115,6 +119,14 @@ public class Users implements Serializable {
 
 	public void setUserGroup(UserGroup userGroup) {
 		this.userGroup = userGroup;
+	}
+
+	public CompanyInfo getCompanyInfo() {
+		return companyInfo;
+	}
+
+	public void setCompanyInfo(CompanyInfo companyInfo) {
+		this.companyInfo = companyInfo;
 	}
 
 }

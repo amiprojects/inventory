@@ -159,6 +159,8 @@
 			alert("please select universal Product Code");
 		} else if ($("#uomnamedisplay").val() == "") {
 			alert("please select Unit of measurement");
+		} else if ($("#isRaw").val() == "") {
+			alert("please select Raw or Ready product");
 		} else if (!$("[name='same']").is(':checked')) {
 			alert("please select product Category");
 		} else if ($("#openn").is(':checked')) {
@@ -222,10 +224,8 @@
 	<c:if test="${sessionScope['user']==null}">
 		<c:redirect url="index.jsp" />
 	</c:if>
-
-
-	<c:if test="${!sessionScope['user'].equals('admin')}">
-
+	<c:if
+		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminKainat')}">
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
@@ -646,6 +646,12 @@
 							<h3>Products:</h3>
 
 							<p style="font-size: 14px; margin-right: 342px;">
+								<input type="radio" name="isReady" id="raw" onclick=""
+									value="raw">Raw &nbsp; <input type="radio"
+									name="isReady" id="ready" onclick="" value="ready">Ready
+							</p>
+
+							<p style="font-size: 14px; margin-right: 342px;">
 								<input type="checkbox" onclick="isSaledata()" id="salepart">This
 								Products is for sale:
 							</p>
@@ -698,9 +704,11 @@
 
 								<input type="file" name="proImg" size="20"
 									onchange="readURL(this);"><br> <img id="image"
-									alt="" src=""><a href="javascript:void(take_snapshot())"><button class="btn blue btn-default"  type="button">Take Snapshot</button></a>
+									alt="" src=""><a href="javascript:void(take_snapshot())"><button
+										class="btn blue btn-default" type="button">Take
+										Snapshot</button></a>
 								<div id="my_camera" style="width: 320px; height: 240px;"></div>
-								
+
 
 
 
@@ -1042,6 +1050,19 @@
 											<td>&nbsp;</td>
 										<tr>
 										<tr>
+											<td>Is Raw : <input type="hidden" name="isRaw"
+												id="isRaw"></td>
+											<td>
+												<div id="tick1">
+													<p style="font-size: 29px">&#10004;</p>
+												</div>
+												<div id="cross1">
+													<p style="font-size: 29px">&#10007;</p>
+												</div>
+											</td>
+
+										</tr>
+										<tr>
 											<td>Is Salable:</td>
 											<td>
 												<div id="tick">
@@ -1198,7 +1219,6 @@
 									</table>
 
 									<hr width="100%">
-
 								</form>
 							</fieldset>
 						</div>
@@ -1271,6 +1291,7 @@
 			$("#divhide").show();
 			$("#isSalebi").hide();
 			$("#addini").hide();
+			$("#tick1").hide();
 		});
 		$("#close").click(function() {
 			$("#newMP").modal("hide");
@@ -1685,25 +1706,37 @@
 	</script>
 	<!-- 	*********************************************************************************************************** -->
 
-<script type="text/javascript" src="js/webcam.js"></script>
-<script>
-Webcam.set({
-	width: 320,
-	height: 240,
-	image_format: 'jpeg',
-	jpeg_quality: 90
-});
-Webcam.attach('#my_camera');
+	<script type="text/javascript" src="js/webcam.js"></script>
+	<script>
+		Webcam.set({
+			width : 320,
+			height : 240,
+			image_format : 'jpeg',
+			jpeg_quality : 90
+		});
+		Webcam.attach('#my_camera');
 
-	function take_snapshot() {
-		Webcam
-				.snap(function(data_uri) {
-					$('#image').attr('src', data_uri).width(120).height(85);
-					str = data_uri;
-					$("#proImage1").val(str.substring(str.lastIndexOf(',') + 1));
-				});
-	}
-</script>
+		function take_snapshot() {
+			Webcam.snap(function(data_uri) {
+				$('#image').attr('src', data_uri).width(120).height(85);
+				str = data_uri;
+				$("#proImage1").val(str.substring(str.lastIndexOf(',') + 1));
+			});
+		}
+
+		$("input:radio[name=isReady]").click(function() {
+			var value = $(this).val();
+			if (value == "raw") {
+				$("#isRaw").val('true');
+				$("#tick1").show();
+				$("#cross1").hide();
+			} else {
+				$("#isRaw").val('false');
+				$("#tick1").hide();
+				$("#cross1").show();
+			}
+		});
+	</script>
 
 
 </body>

@@ -69,13 +69,13 @@
 	<c:if test="${sessionScope['user']==null}">
 		<c:redirect url="index.jsp" />
 	</c:if>
-
-	<c:if test="${!sessionScope['user'].equals('admin')}">
+	<c:if
+		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminKainat')}">
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
 
-			<c:if test="${page.name.equals('Sales Entry')}">
+			<c:if test="${page.name.equals('Sales Return')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
@@ -606,8 +606,6 @@
 			}
 		</script>
 	</c:if>
-
-
 
 	<script type="text/javascript">
 		function qtySubtraction(g) {
