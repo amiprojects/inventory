@@ -59,6 +59,8 @@
 			</script>
 		</c:if>
 	</c:if>
+	<c:set var="compInfo"
+		value="${sessionScope['ejb'].getUserById(sessionScope['user']).getCompanyInfo()}" />
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
@@ -98,7 +100,7 @@
 											Number&nbsp;&nbsp;/&nbsp;&nbsp;Suffix</h5>
 									</div>
 									<c:set
-										value="${sessionScope['ejb'].getLastBillSetupBySufix('PUR')}"
+										value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompanyId('PUR', compInfo.id)}"
 										var="pur" />
 									<div class="col-md-9">
 										<label>Present Setup:</label> <br>
@@ -152,7 +154,7 @@
 									</div>
 
 									<c:set
-										value="${sessionScope['ejb'].getLastBillSetupBySufix('INV')}"
+										value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompanyId('INV', compInfo.id)}"
 										var="inv" />
 									<div class="col-md-8">
 										<label>Present Setup:</label> <br>
@@ -183,7 +185,7 @@
 									</div>
 									<br> <br> <br>
 								</div>
-								
+
 								<div class="widget-area">
 									<div>
 										<h1>Sales Return Invoice Setup</h1>
@@ -200,27 +202,46 @@
 										<img src="img/th_1.jpg" height="33px" width="33px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 										<img src="img/th_1.jpg" height="33px" width="33px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 										<img src="img/th_1.jpg" height="33px" width="33px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<h5 style="text-align:left;">Company Name&nbsp;&nbsp;/&nbsp;&nbsp;Invoice Type&nbsp;&nbsp;/&nbsp;&nbsp;Year&nbsp;&nbsp;/&nbsp;&nbsp;Month&nbsp;&nbsp;/&nbsp;&nbsp;Auto Number&nbsp;&nbsp;/&nbsp;&nbsp;Suffix</h5>
+										<h5 style="text-align: left;">Company
+											Name&nbsp;&nbsp;/&nbsp;&nbsp;Invoice
+											Type&nbsp;&nbsp;/&nbsp;&nbsp;Year&nbsp;&nbsp;/&nbsp;&nbsp;Month&nbsp;&nbsp;/&nbsp;&nbsp;Auto
+											Number&nbsp;&nbsp;/&nbsp;&nbsp;Suffix</h5>
 									</div>
-									
-									<c:set value="${sessionScope['ejb'].getLastBillSetupBySufix('SRINV')}" var="inv"/>
+
+									<c:set
+										value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompanyId('SRINV', compInfo.id)}"
+										var="inv" />
 									<div class="col-md-8">
-										<label>Present Setup:</label> <br> 
-										<form action="addBillSetup" method="post" id="addRfsalesinvoice">
-										<input type="text" style="width: 50px" name="comname" id="scomnameR" readonly="readonly" value="${inv.companyInitial}"></input>
-										<input type="text" name="type" id="stype" readonly="readonly" value="SRINV" style="width: 50px"></input>
-										<input type="text" readonly="readonly" name="year" id="syear" style="width: 50px" value="15-16"></input>
-										<input type="text" readonly="readonly" name="month" id="smonth" style="width: 50px" value="12"></input>
-										<input type="text" readonly="readonly" name="autonum" id="sautonum" style="width: 50px" value="0091"></input>
-										<input type="text" name="suffix" id="ssuffixR" style="width: 50px" readonly="readonly" value="${inv.sufix}"></input>		
-										<div  id="salInvImgEditR" style="display: block;"><a href="#" onclick="editSalesRInvoice()"> <img src="img/edit.png"height="29px" width="29px"></a></div>
-										<div style="display: none;" id="salInvImgAddR"><a href="#" onclick="addSalesRInvoice();"> <img src="img/add.png"height="29px" width="29px"></a></div>
+										<label>Present Setup:</label> <br>
+										<form action="addBillSetup" method="post"
+											id="addRfsalesinvoice">
+											<input type="text" style="width: 50px" name="comname"
+												id="scomnameR" readonly="readonly"
+												value="${inv.companyInitial}"></input> <input type="text"
+												name="type" id="stype" readonly="readonly" value="SRINV"
+												style="width: 50px"></input> <input type="text"
+												readonly="readonly" name="year" id="syear"
+												style="width: 50px" value="15-16"></input> <input
+												type="text" readonly="readonly" name="month" id="smonth"
+												style="width: 50px" value="12"></input> <input type="text"
+												readonly="readonly" name="autonum" id="sautonum"
+												style="width: 50px" value="0091"></input> <input type="text"
+												name="suffix" id="ssuffixR" style="width: 50px"
+												readonly="readonly" value="${inv.sufix}"></input>
+											<div id="salInvImgEditR" style="display: block;">
+												<a href="#" onclick="editSalesRInvoice()"> <img
+													src="img/edit.png" height="29px" width="29px"></a>
+											</div>
+											<div style="display: none;" id="salInvImgAddR">
+												<a href="#" onclick="addSalesRInvoice();"> <img
+													src="img/add.png" height="29px" width="29px"></a>
+											</div>
 										</form>
 
 									</div>
 									<br> <br> <br>
 								</div>
-								
+
 								<div class="widget-area">
 									<div>
 										<h1>Jobber Challan</h1>
@@ -244,7 +265,7 @@
 									</div>
 
 									<c:set
-										value="${sessionScope['ejb'].getLastBillSetupBySufix('JOB')}"
+										value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompanyId('JOB', compInfo.id)}"
 										var="job" />
 									<div class="col-md-9">
 										<label>Present Setup:</label> <br>
@@ -298,7 +319,7 @@
 											Number&nbsp;&nbsp;/&nbsp;&nbsp;Suffix</h5>
 									</div>
 									<c:set
-										value="${sessionScope['ejb'].getLastBillSetupBySufix('ROAD')}"
+										value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompanyId('ROAD', compInfo.id)}"
 										var="road" />
 									<div class="col-md-9">
 										<label>Present Setup:</label> <br>
@@ -349,26 +370,25 @@
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="js/enscroll.js"></script>
 	<script type="text/javascript" src="js/grid-filter.js"></script>
-<script src="js/numericInput.min.js"></script>
+	<script src="js/numericInput.min.js"></script>
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 	<script>
+		function addPurchaseInvoice() {
+			$("#addpurchaseinvoice").submit();
+		}
 
-	function addPurchaseInvoice(){
-		$("#addpurchaseinvoice").submit();
-	}
-	
-	function addSalesInvoice(){
-		$("#addsalesinvoice").submit();
-	}
-	function addSalesRInvoice(){
-		$("#addRfsalesinvoice").submit();
-	}
-	function addJobberChallan(){
-		$("#addjobberchallan").submit();
-	}
-	function addRoadChallan(){
-		$("#addroadchallan").submit();
-	}
+		function addSalesInvoice() {
+			$("#addsalesinvoice").submit();
+		}
+		function addSalesRInvoice() {
+			$("#addRfsalesinvoice").submit();
+		}
+		function addJobberChallan() {
+			$("#addjobberchallan").submit();
+		}
+		function addRoadChallan() {
+			$("#addroadchallan").submit();
+		}
 
 		$(document).ready(function() {
 			$("#setup").attr("id", "activeSubMenu");
@@ -392,18 +412,18 @@
 			$('#ssuffix').attr("readonly", false);
 		}
 
-		function editSalesRInvoice(){
-			$("#salInvImgEditR").attr("style","display:none");
-			$("#salInvImgAddR").attr("style","display:block");
-			$('#scomnameR').attr("readonly",false);
-			$('#ssuffixR').attr("readonly",false);
+		function editSalesRInvoice() {
+			$("#salInvImgEditR").attr("style", "display:none");
+			$("#salInvImgAddR").attr("style", "display:block");
+			$('#scomnameR').attr("readonly", false);
+			$('#ssuffixR').attr("readonly", false);
 		}
-		
-		function editJobberChallan(){
-			$("#jobChaImgEdit").attr("style","display:none");
-			$("#jobChaImgAdd").attr("style","display:block");
-			$('#jcomname').attr("readonly",false);
-			$('#jsuffix').attr("readonly",false);
+
+		function editJobberChallan() {
+			$("#jobChaImgEdit").attr("style", "display:none");
+			$("#jobChaImgAdd").attr("style", "display:block");
+			$('#jcomname').attr("readonly", false);
+			$('#jsuffix').attr("readonly", false);
 		}
 
 		function editRoadChallan() {

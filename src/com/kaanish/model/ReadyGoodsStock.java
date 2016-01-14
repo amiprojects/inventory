@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -19,6 +20,10 @@ public class ReadyGoodsStock implements Serializable {
 	@GeneratedValue
 	private int id;
 	private int remainingQty;
+	
+	@ManyToOne
+	@JoinColumn(name = "companyInfoId")
+	private CompanyInfo companyInfo;
 
 	@OneToOne
 	@JoinColumn(name = "productId")
@@ -46,6 +51,14 @@ public class ReadyGoodsStock implements Serializable {
 
 	public void setProductDetail(ProductDetail productDetail) {
 		this.productDetail = productDetail;
+	}
+
+	public CompanyInfo getCompanyInfo() {
+		return companyInfo;
+	}
+
+	public void setCompanyInfo(CompanyInfo companyInfo) {
+		this.companyInfo = companyInfo;
 	}
 
 }

@@ -57,6 +57,18 @@ public class CompanyInfo implements Serializable {
 	@OneToMany(mappedBy = "companyInfo")
 	private List<SalesEntry> salesEntry;
 
+	@OneToMany(mappedBy = "companyInfo")
+	private List<RawMaterialsStock> rawMaterialsStocks;
+
+	@OneToMany(mappedBy = "companyInfo")
+	private List<ReadyGoodsStock> readyGoodsStocks;
+
+	@OneToMany(mappedBy = "companyInfo")
+	private List<Bill_setup> bill_setup;
+
+	@OneToMany(mappedBy = "companyInfo")
+	private List<UserGroup> userGroup;
+
 	public String getImageAsString() {
 		if (image == null) {
 			return "";
@@ -248,6 +260,38 @@ public class CompanyInfo implements Serializable {
 
 	public void setUsers(List<Users> users) {
 		this.users = users;
+	}
+
+	public List<RawMaterialsStock> getRawMaterialsStocks() {
+		return rawMaterialsStocks;
+	}
+
+	public void setRawMaterialsStocks(List<RawMaterialsStock> rawMaterialsStocks) {
+		this.rawMaterialsStocks = rawMaterialsStocks;
+	}
+
+	public List<ReadyGoodsStock> getReadyGoodsStocks() {
+		return readyGoodsStocks;
+	}
+
+	public void setReadyGoodsStocks(List<ReadyGoodsStock> readyGoodsStocks) {
+		this.readyGoodsStocks = readyGoodsStocks;
+	}
+
+	public List<Bill_setup> getBill_setup() {
+		return bill_setup;
+	}
+
+	public void setBill_setup(List<Bill_setup> bill_setup) {
+		this.bill_setup = bill_setup;
+	}
+
+	public List<UserGroup> getUserGroup() {
+		return userGroup;
+	}
+
+	public void setUserGroup(List<UserGroup> userGroup) {
+		this.userGroup = userGroup;
 	}
 
 }

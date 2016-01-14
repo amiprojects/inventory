@@ -7,7 +7,9 @@ import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -20,6 +22,10 @@ public class UserGroup implements Serializable {
 	@GeneratedValue
 	private int id;
 	private String groupName;
+	
+	@ManyToOne
+	@JoinColumn(name = "companyInfoId")
+	private CompanyInfo companyInfo;
 
 	@OneToMany(mappedBy = "userGroup")
 	private List<Users> users;
@@ -57,6 +63,14 @@ public class UserGroup implements Serializable {
 
 	public void setPageLists(List<PageList> pageLists) {
 		this.pageLists = pageLists;
+	}
+
+	public CompanyInfo getCompanyInfo() {
+		return companyInfo;
+	}
+
+	public void setCompanyInfo(CompanyInfo companyInfo) {
+		this.companyInfo = companyInfo;
 	}
 
 }

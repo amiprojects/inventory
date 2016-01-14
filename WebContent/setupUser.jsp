@@ -72,7 +72,8 @@
 			</script>
 		</c:if>
 	</c:if>
-	
+	<c:set var="compInfo"
+		value="${sessionScope['ejb'].getUserById(sessionScope['user']).getCompanyInfo()}" />
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
@@ -83,14 +84,10 @@
 					<div class="row">
 						<div class="masonary-grids">
 
-
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
 								<h3 style="margin-top: 11px;">User</h3>
-
-
 							</div>
-
 
 							<div class="widget-area" style="width: 100%">
 								<div class="col-md-12">
@@ -131,12 +128,11 @@
 												<input name="mobile" type="text" maxlength="10"
 													class="form-control">
 											</div>
-
-
 											<div class="col-md-12">
 												<select class="form-control" name="ugid">
 													<option value="0">Select a user group</option>
-													<c:forEach items="${sessionScope['ejb'].getAllUserGroup()}"
+													<c:forEach
+														items="${sessionScope['ejb'].getAllUserGroupByCompany(compInfo.id)}"
 														var="ug">
 														<option value="${ug.id}">${ug.groupName}</option>
 													</c:forEach>
@@ -158,55 +154,58 @@
 										<ul>
 											<c:forEach items="${sessionScope['ejb'].getAllUsers()}"
 												var="user">
-												<c:if test="${!user.userId.equals('admin')}">
-													<li><a href="#" onclick="userEdit('${user.userId}');">${user.name}</a></li>
-												</c:if>
-												<div id="edit${user.userId}" class="modal fade"
-													role="dialog" style="top: 25px;">
-													<div class="modal-dialog">
-														<div class="modal-content">
-															<div class="modal-header">
-																<button type="button" class="close" data-dismiss="modal">&times;</button>
-																<h4 class="modal-title">Modal Header</h4>
-															</div>
-															<div class="modal-body">
-																<form action="updateUser" method="post">
-																	<input type="hidden" value="${user.userId}"
-																		name="userId">
+												<c:if test="${user.companyInfo.id == compInfo.id}">
+													<c:if
+														test="${!(user.userId=='adminKaanish'||user.userId=='adminKainat')}">
+														<li><a href="#" onclick="userEdit('${user.userId}');">${user.name}</a></li>
+													</c:if>
+													<div id="edit${user.userId}" class="modal fade"
+														role="dialog" style="top: 25px;">
+														<div class="modal-dialog">
+															<div class="modal-content">
+																<div class="modal-header">
+																	<button type="button" class="close"
+																		data-dismiss="modal">&times;</button>
+																	<h4 class="modal-title">Modal Header</h4>
+																</div>
+																<div class="modal-body">
+																	<form action="updateUser" method="post">
+																		<input type="hidden" value="${user.userId}"
+																			name="userId">
 
-																	<div class="col-md-12">
-																		<select class="form-control" name="ugid">
-																			<option value="0">Select a user group</option>
-																			<c:forEach
-																				items="${sessionScope['ejb'].getAllUserGroup()}"
-																				var="ug">
-																				<c:choose>
-																					<c:when test="${ug.id==user.userGroup.id}">
-																						<option value="${ug.id}" selected="selected">${ug.groupName}</option>
-																					</c:when>
-																					<c:otherwise>
-																						<option value="${ug.id}">${ug.groupName}</option>
-																					</c:otherwise>
-																				</c:choose>
+																		<div class="col-md-12">
+																			<select class="form-control" name="ugid">
+																				<option value="0">Select a user group</option>
+																				<c:forEach
+																					items="${sessionScope['ejb'].getAllUserGroup()}"
+																					var="ug">
+																					<c:choose>
+																						<c:when test="${ug.id==user.userGroup.id}">
+																							<option value="${ug.id}" selected="selected">${ug.groupName}</option>
+																						</c:when>
+																						<c:otherwise>
+																							<option value="${ug.id}">${ug.groupName}</option>
+																						</c:otherwise>
+																					</c:choose>
 
-																			</c:forEach>
-																		</select>
-																	</div>
-																	<div class="col-md-12">
-																		<input type="submit" class="btn green pull-right"
-																			value="Update">
-																	</div>
-																</form>
+																				</c:forEach>
+																			</select>
+																		</div>
+																		<div class="col-md-12">
+																			<input type="submit" class="btn green pull-right"
+																				value="Update">
+																		</div>
+																	</form>
+																</div>
+																<div class="modal-footer">
+																	<button type="button" class="btn btn-default"
+																		data-dismiss="modal">Close</button>
+																</div>
 															</div>
-															<div class="modal-footer">
-																<button type="button" class="btn btn-default"
-																	data-dismiss="modal">Close</button>
-															</div>
+
 														</div>
-
 													</div>
-												</div>
-
+												</c:if>
 											</c:forEach>
 										</ul>
 									</div>

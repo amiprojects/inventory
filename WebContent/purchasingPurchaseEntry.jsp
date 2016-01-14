@@ -204,6 +204,8 @@
 		</script>
 	</c:if>
 
+	<c:set var="compInfo"
+		value="${sessionScope['ejb'].getUserById(sessionScope['user']).getCompanyInfo()}" />
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
@@ -294,12 +296,12 @@
 												<c:set var="fy"
 													value="${sessionScope['ejb'].getCurrentFinancialYear()}" />
 												<c:set var="cno"
-													value="${sessionScope['ejb'].getLastPurchaseChallanNumber()+1}" />
+													value="${sessionScope['ejb'].getLastPurchaseChallanNumberByCompany(compInfo.id)+1}" />
 												<c:set var="csuf"
-													value="${sessionScope['ejb'].getLastPurchaseChallanSuffix()+1}" />
+													value="${sessionScope['ejb'].getLastPurchaseChallanSuffixByCompany(compInfo.id)+1}" />
 												<c:set var="suf" value="PUR" />
 												<c:set var="bs"
-													value="${sessionScope['ejb'].getLastBillSetupBySufix(suf)}" />
+													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompanyId(suf, compInfo.id)}" />
 												<fmt:formatNumber value="${cno}" var="lastChNo"
 													minIntegerDigits="4" groupingUsed="false" />
 												<fmt:formatNumber value="${csuf}" var="lastSuf"
@@ -1377,6 +1379,12 @@
 			$("#vDetail").val("");
 			if ($("#vendorType").val() == 0) {
 				$("#agent").prop("disabled", "disabled");
+				$("#agent").prop("checked", false);
+				$("#isAgent").val('no');
+				$("#aNameDiv").hide();
+				$("#aDetailDiv").hide();
+				$("#agentName").val(0);
+				$("#agentDet").val("");
 			}
 			$.ajax({
 				url : "getVendorTypeById",
@@ -1390,6 +1398,12 @@
 							$("#agent").removeProp("disabled");
 						} else {
 							$("#agent").prop("disabled", "disabled");
+							$("#agent").prop("checked", false);
+							$("#isAgent").val('no');
+							$("#aNameDiv").hide();
+							$("#aDetailDiv").hide();
+							$("#agentName").val(0);
+							$("#agentDet").val("");
 						}
 					}
 				},

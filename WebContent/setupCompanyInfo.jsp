@@ -62,7 +62,8 @@
 	</c:if>
 
 
-	<c:set var="compInfo" value="${sessionScope['ejb'].getCompanyInfo()}" />
+	<c:set var="compInfo"
+		value="${sessionScope['ejb'].getUserById(sessionScope['user']).getCompanyInfo()}" />
 
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
@@ -106,8 +107,7 @@
 																<label for="exampleInputEmail1">Company Name:</label> <input
 																	type="text" name="name" id="compname"
 																	placeholder="Enter Company Name" class="form-control"
-																	readonly="readonly"
-																	value="${sessionScope['ejb'].getUserById(sessionScope['user']).getCompanyInfo().getCompname()}"><br>
+																	readonly="readonly" value="${compInfo.compname}"><br>
 															</div>
 														</div>
 

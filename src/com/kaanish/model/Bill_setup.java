@@ -7,6 +7,8 @@ import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -25,6 +27,10 @@ public class Bill_setup implements Serializable {
 	private String finantialYear;
 	private String month;
 	private String companyInitial;
+
+	@ManyToOne
+	@JoinColumn(name = "companyInfoId")
+	private CompanyInfo companyInfo;
 
 	@OneToMany(mappedBy = "bill_setup")
 	private List<Purchase_Entry> purchase_Entries;
@@ -94,6 +100,14 @@ public class Bill_setup implements Serializable {
 
 	public void setCompanyInitial(String companyInitial) {
 		this.companyInitial = companyInitial;
+	}
+
+	public CompanyInfo getCompanyInfo() {
+		return companyInfo;
+	}
+
+	public void setCompanyInfo(CompanyInfo companyInfo) {
+		this.companyInfo = companyInfo;
 	}
 
 }
