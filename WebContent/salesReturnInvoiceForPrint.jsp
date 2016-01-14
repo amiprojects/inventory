@@ -81,8 +81,8 @@ page[size="A4"] {
 	</c:if>
 	<c:set value="${sessionScope['ejb'].getCompanyInfo()}"
 		var="companyInfo" />
-	<c:set value="${sessionScope['ejb'].getSalesEntryById(param.id)}"
-		var="purEntry" />
+	<c:set value="${sessionScope['ejb'].getSalesReturnDetailsById(param.id)}"
+		var="salesReturn" />
 	<page id="print1" size="A4">
 	<h3 align="center">Sales Invoice</h3>
 	<table class="tg"
@@ -93,9 +93,9 @@ page[size="A4"] {
 				${companyInfo.addr}<br> EMail: ${companyInfo.email}<br>
 				Mobile: ${companyInfo.mobile}
 			</td>
-			<td class="tg-031e" colspan="2" style="width: 25%">Sales Invoice
+			<td class="tg-031e" colspan="2" style="width: 25%">Sales Return Invoice
 				no:</td>
-			<td class="tg-031e" colspan="2" style="width: 25%">${purEntry.challanNumber}</td>
+			<td class="tg-031e" colspan="2" style="width: 25%">${salesReturn.challanNumber}</td>
 		</tr>
 		<tr style="height: 50px">
 			<td class="tg-031e" colspan="2">Dated:</td>
@@ -104,9 +104,8 @@ page[size="A4"] {
 					pattern="dd-MM-yyyy" /></td>
 		</tr>
 		<tr style="height: 50px">
-			<td class="tg-031e" colspan="2">Sales date :</td>
-			<td class="tg-031e" colspan="2"><fmt:formatDate
-					value="${purEntry.sales_date}" pattern="dd-MM-yyyy" /></td>
+			<td class="tg-031e" colspan="2">Sales Return date :</td>
+			<td class="tg-031e" colspan="2"><fmt:formatDate	value="${purEntry.sales_date}" pattern="dd-MM-yyyy" /></td>
 		</tr>
 		<tr style="height: 50px">
 			<td class="tg-031e" colspan="3" rowspan="4"><strong>Customer
@@ -145,24 +144,27 @@ page[size="A4"] {
 					<tr>
 						<th>Sl No</th>
 						<th>Description of goods</th>
-						<th>Quantity</th>
+						<th>Returning Quantity</th>
 						<th>Cost</th>
 						<th>Per</th>
 						<th>Amount</th>
 					</tr>
+					
 					<c:set value="${1}" var="sl" />
 					<c:set value="${0}" var="tqty" />
 					<c:set value="${0}" var="gtot" />
-					<c:forEach items="${purEntry.salesProductDetails}" var="ppdet">
+					
+					<c:forEach items="${salesReturn.SalesProductReturnDetail}" var="ppdet">
+					
 						<tr>
 							<td>${sl}</td>
-							<td>${ppdet.purchase_Product_Details.productDetail.description}</td>
-							<td>${ppdet.quantity}</td>
-							<c:set value="${tqty+ppdet.quantity}" var="tqty" />
-							<td>${ppdet.getSalesPrice()}</td>
-							<td>${ppdet.purchase_Product_Details.productDetail.qtyUnit.name}</td>
-							<td>${ppdet.getSalesPrice()*ppdet.quantity}</td>
-							<c:set value="${gtot+ppdet.getSalesPrice()*ppdet.quantity}"
+							<td>${ppdet.salesProductDetails.purchase_Product_Details.productDetail.description}</td>
+							<td>${ppdet.qtyReturn}</td>
+							<c:set value="${tqty+ppdet.qtyReturn}" var="tqty" />
+							<td>${ppdet.salesProductDetails.getSalesPrice()}</td>
+							<td>${ppdet.salesProductDetails.purchase_Product_Details.productDetail.qtyUnit.name}</td>
+							<td>${ppdet.salesProductDetails.getSalesPrice()*ppdet.qtyReturn}</td>
+							<c:set value="${gtot+ppdet.salesProductDetails.getSalesPrice()*ppdet.qtyReturn}"
 								var="gtot" />
 						</tr>
 						<c:set value="${sl+1}" var="sl" />

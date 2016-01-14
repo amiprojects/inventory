@@ -44,6 +44,8 @@ public class SalesEntry implements Serializable {
 	@JoinColumn(name = "salesAgentId")
 	private Vendor vendor;
 
+	@OneToMany(mappedBy = "salesEntry")
+	private List<SalesReturn> salesReturn;
 
 	@ManyToOne
 	@JoinColumn(name = "customerId")

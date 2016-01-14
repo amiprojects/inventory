@@ -3,6 +3,7 @@ package com.kaanish.sarvlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -14,12 +15,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.kaanish.ejb.Ejb;
+import com.kaanish.model.AccountDetails;
 import com.kaanish.model.Department;
 import com.kaanish.model.QtyUnitConversionPK;
 import com.kaanish.model.QtyUnitType;
 import com.kaanish.model.SubDepartment;
+import com.kaanish.model.Vendor;
 import com.kaanish.util.DateConverter;
 import com.kaanish.util.DepartmentCotractor;
 
@@ -32,7 +36,7 @@ import com.kaanish.util.DepartmentCotractor;
 		"/getCityByStateByCityName", "/getVendorTypeById", "/getProductbyProductCode",
 		"/getSaleblePurchaseProductDetailsByProductCodeAndQuantity", "/getVendorsByVendorTypeJobberAndName",
 		"/getProductsForSaleByCode", "/deleteUOM", "/getVendorsByVendorTypeSalesAgentAndName",
-		"/getSalesAgentDetailsById", "/getPurchaseProductDetailsByIdForSale", "/getCustomerByPh", "/checkPcode" })
+		"/getSalesAgentDetailsById", "/getPurchaseProductDetailsByIdForSale", "/getCustomerByPh", "/checkPcode","/addVendorbyjson" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -258,6 +262,105 @@ public class JsonServlet extends HttpServlet {
 
 				resp.getWriter().print(ejb.getProductByProductCode(req.getParameter("productCode4")));
 				break;
+				
+				
+				
+			case "addVendorbyjson":
+				resp.setContentType("application/json");
+				JsonGeneratorFactory jsg=Json.createGeneratorFactory(null);
+				JsonGenerator gen2=jsg.createGenerator(resp.getOutputStream());
+				HttpSession httpSession=req.getSession();
+				
+				
+
+					Vendor vendor =new Vendor();				
+					
+					List<Vendor> vend = ejb.getAllVendors();
+					int counter2 = 0;
+					for (Vendor ven : vend) {
+
+						if (ven.getEmail().equals(req.getParameter("vendorMail"))
+
+								|| ven.getPh1().equals(req.getParameter("vendorPh1"))) {
+
+							counter2 = 1;
+							break;
+						}
+					}
+					if (counter2 == 0) {
+						
+						
+						vendor = new Vendor();
+						AccountDetails accountDetails = new AccountDetails();
+						Date dt = new Date();
+
+						vendor.setName(req.getParameter("vendorName").toUpperCase());
+						vendor.setLastModifiedDate(dt);
+						vendor.setAddress(req.getParameter("vendorAddress"));
+						vendor.setAliseName(req.getParameter("vendorAlias"));
+						vendor.setCity(ejb.getCityById(Integer.parseInt(req.getParameter("vendorCityId"))));
+						vendor.setCompanyName(req.getParameter("vendorCompanyName"));
+						vendor.setEmail(req.getParameter("vendorMail"));
+						vendor.setPh1(req.getParameter("vendorPh1"));
+						vendor.setPh2(req.getParameter("vendorPh2"));
+						vendor.setPinCode(req.getParameter("vendorPin"));
+						vendor.setVendorType(ejb.getVendorTypeById(Integer.parseInt(req.getParameter("vendorType"))));
+						vendor.setUsers(ejb.getUserById((String) httpSession.getAttribute("user")));
+
+						accountDetails.setBankAccountNumber(req.getParameter("bankAccNo"));
+						accountDetails.setBankChequeLable(req.getParameter("bankCheckLebel"));
+						accountDetails.setBankIFSCnumber(req.getParameter("bankIFSC"));
+						accountDetails.setBankMICRnumber(req.getParameter("bankMICR"));
+						accountDetails.setBankName(req.getParameter("bankName"));
+						accountDetails.setBankRTGCnumber(req.getParameter("bankRTGS"));
+						accountDetails.setBranch(req.getParameter("bankBranch"));
+
+						if (!req.getParameter("bankCity").equals("")) {
+							accountDetails.setCity(ejb.getCityById(Integer.parseInt(req.getParameter("bankCity"))));
+						}
+
+						accountDetails.setCstNumber(req.getParameter("vendorCSTno"));
+						if (!req.getParameter("vendorCSTregDate").equals("")) {
+							accountDetails
+									.setCstRegistrationDate(DateConverter.getDate(req.getParameter("vendorCSTregDate")));
+						}
+						if (!req.getParameter("vendorExciseRegDate").equals("")) {
+							accountDetails
+									.setCstRegistrationDate(DateConverter.getDate(req.getParameter("vendorExciseRegDate")));
+						}
+						if (!req.getParameter("vendorServiceTaxRegDate").equals("")) {
+							accountDetails.setCstRegistrationDate(
+									DateConverter.getDate(req.getParameter("vendorServiceTaxRegDate")));
+						}
+						if (!req.getParameter("vendorVATregDate").equals("")) {
+							accountDetails
+									.setCstRegistrationDate(DateConverter.getDate(req.getParameter("vendorVATregDate")));
+						}
+
+						accountDetails.setExciseRegistrationNumber(req.getParameter("vendorExciseRegNo"));
+						accountDetails.setPanNumber(req.getParameter("vendorPANno"));
+
+						accountDetails.setServiceTaxRegistrationNumber(req.getParameter("vendorServiceTaxRegNo"));
+						accountDetails.setVatNumber(req.getParameter("vendorVATno"));
+
+						accountDetails.setTax_Type_Group(
+								ejb.getTax_Type_GroupById(Integer.parseInt(req.getParameter("taxTypeGroupId"))));
+
+						accountDetails.setUsers(ejb.getUserById((String) httpSession.getAttribute("user")));
+						accountDetails.setVendor(vendor);
+
+						ejb.setVendor(vendor);
+						ejb.setAccountDetails(accountDetails);
+
+						/*msg = "vendor added successfully;";*/
+						gen2.writeStartObject().write("result","vendor added successfully").writeEnd().close();
+
+					} else {
+						/*msg = "Duplicate vendor Entry";*/
+						gen2.writeStartObject().write("result","Duplicate vendor Entry").writeEnd().close();
+					}
+				break;
+				
 
 			default:
 				break;

@@ -1833,6 +1833,12 @@ public class Ejb {
 	public void setSalesReturn(SalesReturn salesReturn) {
 		em.persist(salesReturn);
 	}
+	
+	public SalesReturn getSalesReturnDetailsById(int id) {
+		return em.find(SalesReturn.class, id);
+	}
+	
+	
 	/***********************************************************SalesProductReturnDetails***********************/
 	
 	public void setSalesProductReturnDetails(SalesProductReturnDetail salesProductReturnDetail) {

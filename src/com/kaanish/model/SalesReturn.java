@@ -8,6 +8,8 @@ import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -37,6 +39,11 @@ public class SalesReturn implements Serializable {
 
 	@OneToMany(mappedBy = "salesReturn")
 	private List<PaymentDetails> paymentDetails;
+	
+	@ManyToOne
+	@JoinColumn(name = "salesEntryID")
+	private SalesEntry salesEntry;
+	
 
 	public int getId() {
 		return id;
@@ -116,6 +123,14 @@ public class SalesReturn implements Serializable {
 
 	public void setSalesProductReturnDetail(List<SalesProductReturnDetail> salesProductReturnDetail) {
 		SalesProductReturnDetail = salesProductReturnDetail;
+	}
+
+	public SalesEntry getSalesEntry() {
+		return salesEntry;
+	}
+
+	public void setSalesEntry(SalesEntry salesEntry) {
+		this.salesEntry = salesEntry;
 	}
 
 }

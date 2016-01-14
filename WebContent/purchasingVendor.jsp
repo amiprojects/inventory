@@ -343,7 +343,7 @@ $(document).ready(function(){
 									</div>
 								</div>
 								<div class="widget-area" style="width: 72%">
-									<%-- <p>${requestScope['msg']}</p> --%>
+									
 									<form role="form" class="sec" action="addVendor" method="post">
 										<ul class="nav nav-tabs">
 											<li class="active" id="detl"><a data-toggle="tab"

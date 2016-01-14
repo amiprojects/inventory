@@ -1721,6 +1721,7 @@ public class Servlet extends HttpServlet {
 							ejb.getSalesProductDetailsById(Integer.parseInt(salesProductDetailId[l])));
 					
 					ejb.updateSalesProductDetails(salesProductDetails);
+					
 
 					purchaseProductDetails = salesProductDetails.getPurchase_Product_Details();
 					purchaseProductDetails.setRemaining_quantity(
@@ -1739,9 +1740,13 @@ public class Servlet extends HttpServlet {
 					purchaseProductDetails = null;
 
 				}
+				
+				salesReturn.setSalesEntry(salesEntry);
 				req.setAttribute("purDetIdforPC", salesReturn.getId());
 
+				
 				msg = "sales Return Succeessful";
+				
 				break;
 
 			default:
