@@ -676,6 +676,18 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<Purchase_Entry> getPurchaseEntryByDateAndCompany(
+			Date startDate, Date endDate, int cId) {
+		TypedQuery<Purchase_Entry> q = em
+				.createQuery(
+						"select c from Purchase_Entry c WHERE c.companyInfo.id=:cId AND c.purchase_date BETWEEN :startDate AND :endDate ORDER BY c.id DESC",
+						Purchase_Entry.class);
+		q.setParameter("startDate", startDate);
+		q.setParameter("endDate", endDate);
+		q.setParameter("cId", cId);
+		return q.getResultList();
+	}
+
 	public List<Purchase_Entry> getPurchaseEntryByChallanNo(String chNo) {
 		TypedQuery<Purchase_Entry> q = em
 				.createQuery(

@@ -1267,9 +1267,15 @@ public class Servlet extends HttpServlet {
 
 			case "purchaseSearchByDate":
 				page = "purchasingPurchaseSearch.jsp";
-				List<Purchase_Entry> purEntryList = ejb.getPurchaseEntryByDate(
-						DateConverter.getDate(req.getParameter("fDate")),
-						DateConverter.getDate(req.getParameter("lDate")));
+				List<Purchase_Entry> purEntryList = ejb
+						.getPurchaseEntryByDateAndCompany(
+								DateConverter
+										.getDate(req.getParameter("fDate")),
+								DateConverter.getDate(req.getParameter("lDate")),
+								ejb.getUserById(
+										(String) httpSession
+												.getAttribute("user"))
+										.getCompanyInfo().getId());
 				req.setAttribute("purEntryList", purEntryList);
 				if (purEntryList.size() > 0) {
 					msg = "Your search for dated " + req.getParameter("fDate")
