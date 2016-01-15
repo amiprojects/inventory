@@ -63,7 +63,6 @@
 					<div class="row">
 						<div class="masonary-grids">
 
-
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
 								<h3 style="margin-top: 11px;">Purchase Search</h3>
@@ -226,47 +225,45 @@
 										<c:set var="count" value="${1}" />
 										<c:forEach items="${requestScope['purEntryList']}"
 											var="pEntryByD">
-											<c:if test="${pEntryByD.companyInfo.id==compInfo.id}">
-												<tr>
-													<td width="5%">${count}</td>
-													<td width="19%">${pEntryByD.challanNumber}</td>
-													<c:if test="${pEntryByD.vendor.vendorType.type=='Vendor'}">
-														<td width="12%">${pEntryByD.vendor.name}</td>
-													</c:if>
-													<c:if test="${pEntryByD.vendor.vendorType.type!='Vendor'}">
-														<td width="12%">NIL</td>
-													</c:if>
-													<c:choose>
-														<c:when
-															test="${pEntryByD.vendor.vendorType.type=='Purchase Agent'}">
-															<td width="11%">${pEntryByD.vendor.name}</td>
-														</c:when>
-														<c:when test="${pEntryByD.agentId!=0}">
-															<td width="11%">${sessionScope['ejb'].getVendorById(pEntryByD.agentId).name}</td>
-														</c:when>
-														<c:otherwise>
-															<td width="11%">NIL</td>
-														</c:otherwise>
-													</c:choose>
-													<td width="15%">${pEntryByD.vendor_bill_no}</td>
-													<td width="13%"><fmt:formatDate
-															value="${pEntryByD.purchase_date}" pattern="dd-MM-yy" /></td>
-													<td width="12%">${pEntryByD.totalCost}</td>
-													<td width="8%"><a href="#"
-														onclick="window.open('purchaseBarcodePrint.jsp?id=${pEntryByD.id}','mywindow','width=1100,height=500')">
-															<img alt="click to view" src="Capture.PNG" height="20">
-													</a></td>
-													<td width="5%">
-														<form action="purchaseView" method="post"
-															id="pView${pEntryByD.id}">
-															<a href="#" onclick="purchaseViewF('${pEntryByD.id}');"><input
-																type="hidden" value="${pEntryByD.id}" name="pId"><img
-																alt="" src="images/eye.png" height="25px"></a>
-														</form>
-													</td>
-												</tr>
-												<c:set var="count" value="${count+1}" />
-											</c:if>
+											<tr>
+												<td width="5%">${count}</td>
+												<td width="19%">${pEntryByD.challanNumber}</td>
+												<c:if test="${pEntryByD.vendor.vendorType.type=='Vendor'}">
+													<td width="12%">${pEntryByD.vendor.name}</td>
+												</c:if>
+												<c:if test="${pEntryByD.vendor.vendorType.type!='Vendor'}">
+													<td width="12%">NIL</td>
+												</c:if>
+												<c:choose>
+													<c:when
+														test="${pEntryByD.vendor.vendorType.type=='Purchase Agent'}">
+														<td width="11%">${pEntryByD.vendor.name}</td>
+													</c:when>
+													<c:when test="${pEntryByD.agentId!=0}">
+														<td width="11%">${sessionScope['ejb'].getVendorById(pEntryByD.agentId).name}</td>
+													</c:when>
+													<c:otherwise>
+														<td width="11%">NIL</td>
+													</c:otherwise>
+												</c:choose>
+												<td width="15%">${pEntryByD.vendor_bill_no}</td>
+												<td width="13%"><fmt:formatDate
+														value="${pEntryByD.purchase_date}" pattern="dd-MM-yy" /></td>
+												<td width="12%">${pEntryByD.totalCost}</td>
+												<td width="8%"><a href="#"
+													onclick="window.open('purchaseBarcodePrint.jsp?id=${pEntryByD.id}','mywindow','width=1100,height=500')">
+														<img alt="click to view" src="Capture.PNG" height="20">
+												</a></td>
+												<td width="5%">
+													<form action="purchaseView" method="post"
+														id="pView${pEntryByD.id}">
+														<a href="#" onclick="purchaseViewF('${pEntryByD.id}');"><input
+															type="hidden" value="${pEntryByD.id}" name="pId"><img
+															alt="" src="images/eye.png" height="25px"></a>
+													</form>
+												</td>
+											</tr>
+											<c:set var="count" value="${count+1}" />
 										</c:forEach>
 									</tbody>
 								</table>

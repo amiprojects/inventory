@@ -67,6 +67,7 @@ public class Ejb {
 	private EntityManager em;
 	@Inject
 	private HttpSession httpSession;
+	private int cId;
 
 	public Date getCurrentDateTime() {
 		return new Date();
@@ -261,11 +262,10 @@ public class Ejb {
 				"select c from QtyUnitType c", QtyUnitType.class);
 		return q.getResultList();
 	}
-	
+
 	public List<QtyUnit> getUOMByUOMTypeId(int id) {
 		TypedQuery<QtyUnit> q = em
-				.createQuery(
-						"select c from QtyUnit c where c.QtyUnit.id=:Id",
+				.createQuery("select c from QtyUnit c where c.QtyUnit.id=:Id",
 						QtyUnit.class);
 		q.setParameter("Id", id);
 		return q.getResultList();
@@ -612,12 +612,11 @@ public class Ejb {
 		q.setParameter("name", "%" + nm.toUpperCase() + "%");
 		return q.getResultList();
 	}
-	
+
 	public List<Vendor> getVendorsByVendorTypeId(int id) {
-		TypedQuery<Vendor> q = em
-				.createQuery(
-						"select c from Vendor c where c.vendorType.id=:Id",
-						Vendor.class);
+		TypedQuery<Vendor> q = em.createQuery(
+				"select c from Vendor c where c.vendorType.id=:Id",
+				Vendor.class);
 		q.setParameter("Id", id);
 		return q.getResultList();
 	}
@@ -724,6 +723,19 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<Purchase_Entry> getPurchaseEntryByVendorNameAndCompany(
+			String name) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<Purchase_Entry> q = em
+				.createQuery(
+						"select c from Purchase_Entry c where c.companyInfo.id=:cId AND c.vendor.vendorType.type='Vendor' and UPPER(c.vendor.name)=:name ORDER BY c.id DESC",
+						Purchase_Entry.class);
+		q.setParameter("name", name.toUpperCase());
+		q.setParameter("cId", cId);
+		return q.getResultList();
+	}
+
 	public List<Purchase_Entry> getPurchaseEntryByAgentName(String name) {
 		TypedQuery<Purchase_Entry> q = em
 				.createQuery(
@@ -731,6 +743,41 @@ public class Ejb {
 						Purchase_Entry.class);
 		q.setParameter("name", name.toUpperCase());
 		return q.getResultList();
+	}
+
+	public List<Purchase_Entry> getPurchaseEntryByAgentNameAndCompany(
+			String name) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<Purchase_Entry> q = em
+				.createQuery(
+						"select c from Purchase_Entry c where c.companyInfo.id=:cId AND c.vendor.vendorType.type='Purchase Agent' and UPPER(c.vendor.name)=:name ORDER BY c.id DESC",
+						Purchase_Entry.class);
+		q.setParameter("name", name.toUpperCase());
+		q.setParameter("cId", cId);
+		return q.getResultList();
+	}
+
+	public List<Purchase_Entry> getPurchaseEntryByProductCodeAndCompany(
+			String name) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		List<Purchase_Entry> lst = new ArrayList<Purchase_Entry>();
+		Set<Purchase_Entry> hs = new HashSet<>();
+		TypedQuery<Purchase_Product_Details> q = em
+				.createQuery(
+						"select c from Purchase_Product_Details c where c.purchase_Entry.companyInfo.id=:cId AND UPPER(c.productDetail.code)=:name and c.purchase_Entry!=null ORDER BY c.id DESC",
+						Purchase_Product_Details.class);
+		q.setParameter("name", name.toUpperCase());
+		q.setParameter("cId", cId);
+
+		for (Purchase_Product_Details p : q.getResultList()) {
+			lst.add(p.getPurchase_Entry());
+		}
+		hs.addAll(lst);
+		lst.clear();
+		lst.addAll(hs);
+		return lst;
 	}
 
 	public List<Purchase_Entry> getPurchaseEntryByProductCode(String name) {
@@ -909,7 +956,21 @@ public class Ejb {
 		} else {
 			return 0;
 		}
+	}
 
+	public int getLastJobChallanNumberByCompany() {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<JobAssignmentDetails> q = em
+				.createQuery(
+						"select c from JobAssignmentDetails c where c.companyInfo.id=:cId ORDER BY c.id DESC",
+						JobAssignmentDetails.class);
+		q.setParameter("cId", cId);
+		if (q.getResultList().size() > 0) {
+			return q.getResultList().get(0).getChallan_no();
+		} else {
+			return 0;
+		}
 	}
 
 	public int getLastJobChallanSuffix() {
@@ -924,7 +985,7 @@ public class Ejb {
 				if (Integer.parseInt(getLastBillSetupBySufix("JOB").getSufix()) < s) {
 					return s;
 				} else {
-					return Integer.parseInt(getLastBillSetupBySufix("PUR")
+					return Integer.parseInt(getLastBillSetupBySufix("JOB")
 							.getSufix());
 				}
 			}
@@ -938,14 +999,49 @@ public class Ejb {
 		}
 	}
 
-	public List<JobAssignmentDetails> getJobAssignmentByDate(Date startDate,
-			Date endDate) {
+	public int getLastJobChallanSuffixByCompany() {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
 		TypedQuery<JobAssignmentDetails> q = em
 				.createQuery(
-						"select c from JobAssignmentDetails c WHERE c.assignDate BETWEEN :startDate AND :endDate",
+						"select c from JobAssignmentDetails c where c.companyInfo.id=:cId ORDER BY c.id DESC",
+						JobAssignmentDetails.class);
+		q.setParameter("cId", cId);
+		if (q.getResultList().size() > 0) {
+			int s = q.getResultList().get(0).getChallanSuffix();
+			if (getLastBillSetupBySufixAndCompany("JOB").equals(null)) {
+				return s;
+			} else {
+				if (Integer.parseInt(getLastBillSetupBySufixAndCompany("JOB")
+						.getSufix()) < s) {
+					return s;
+				} else {
+					return Integer.parseInt(getLastBillSetupBySufixAndCompany(
+							"JOB").getSufix());
+				}
+			}
+		} else {
+			if (getLastBillSetupBySufixAndCompany("JOB").equals(null)) {
+				return 0;
+			} else {
+				return Integer
+						.parseInt(getLastBillSetupBySufixAndCompany("JOB")
+								.getSufix());
+			}
+		}
+	}
+
+	public List<JobAssignmentDetails> getJobAssignmentByDate(Date startDate,
+			Date endDate) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<JobAssignmentDetails> q = em
+				.createQuery(
+						"select c from JobAssignmentDetails c WHERE c.companyInfo.id=:cId AND c.assignDate BETWEEN :startDate AND :endDate",
 						JobAssignmentDetails.class);
 		q.setParameter("startDate", startDate);
 		q.setParameter("endDate", endDate);
+		q.setParameter("cId", cId);
 		return q.getResultList();
 	}
 
@@ -959,23 +1055,28 @@ public class Ejb {
 	}
 
 	public List<JobAssignmentDetails> getJobAssignByJobberName(String name) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
 		TypedQuery<JobAssignmentDetails> q = em
 				.createQuery(
-						"select c from JobAssignmentDetails c where c.vendor.vendorType.type='Jobber' and UPPER(c.vendor.name)=:name ORDER BY c.id DESC",
+						"select c from JobAssignmentDetails c where c.companyInfo.id=:cId AND c.vendor.vendorType.type='Jobber' and UPPER(c.vendor.name)=:name ORDER BY c.id DESC",
 						JobAssignmentDetails.class);
 		q.setParameter("name", name.toUpperCase());
+		q.setParameter("cId", cId);
 		return q.getResultList();
 	}
 
 	public List<JobAssignmentDetails> getJobAssignByProductCode(String name) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
 		List<JobAssignmentDetails> lst = new ArrayList<JobAssignmentDetails>();
 		Set<JobAssignmentDetails> hs = new HashSet<>();
 		TypedQuery<JobAssignmentProducts> q = em
 				.createQuery(
-						"select c from JobAssignmentProducts c where UPPER(c.purchase_Product_Details.productDetail.code)=:name ORDER BY c.id DESC",
+						"select c from JobAssignmentProducts c where c.jobAssignmentDetails.companyInfo.id=:cId AND UPPER(c.purchase_Product_Details.productDetail.code)=:name ORDER BY c.id DESC",
 						JobAssignmentProducts.class);
 		q.setParameter("name", name.toUpperCase());
-
+		q.setParameter("cId", cId);
 		for (JobAssignmentProducts p : q.getResultList()) {
 			lst.add(p.getJobAssignmentDetails());
 		}
@@ -1023,6 +1124,19 @@ public class Ejb {
 						"select c from JobAssignmentProducts c where c.purchase_Product_Details.productDetail.id=:id",
 						JobAssignmentProducts.class);
 		q.setParameter("id", id);
+		return q.getResultList();
+	}
+
+	public List<JobAssignmentProducts> getJobAssignmentProductDetailsByproductIdAndCompany(
+			int id) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<JobAssignmentProducts> q = em
+				.createQuery(
+						"select c from JobAssignmentProducts c where c.jobAssignmentDetails.companyInfo.id=:cId AND c.purchase_Product_Details.productDetail.id=:id",
+						JobAssignmentProducts.class);
+		q.setParameter("id", id);
+		q.setParameter("cId", cId);
 		return q.getResultList();
 	}
 
@@ -1089,6 +1203,32 @@ public class Ejb {
 		return lst;
 	}
 
+	public List<Purchase_Product_Details> getPurchase_Product_DetailsByProductIdAndCompany(
+			int id) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		List<Purchase_Product_Details> lst = new ArrayList<>();
+		TypedQuery<Purchase_Product_Details> q = em
+				.createQuery(
+						"select s from Purchase_Product_Details s where s.companyInfo.id=:cId AND s.productDetail.id=:Id and s.initialInventory=:initialInventory",
+						Purchase_Product_Details.class);
+		q.setParameter("Id", id);
+		q.setParameter("initialInventory", true);
+		q.setParameter("cId", cId);
+		lst = q.getResultList();
+
+		TypedQuery<Purchase_Product_Details> q1 = em
+				.createQuery(
+						"select s from Purchase_Product_Details s where s.companyInfo.id=:cId AND s.productDetail.id=:Id and s.initialInventory=:initialInventory ORDER BY s.purchase_Entry.purchase_date DESC",
+						Purchase_Product_Details.class);
+		q1.setParameter("Id", id);
+		q1.setParameter("initialInventory", false);
+		q1.setParameter("cId", cId);
+		lst.addAll(q1.getResultList());
+
+		return lst;
+	}
+
 	public List<Purchase_Product_Details> getPurchase_Product_DetailsByPurchaseEntryId(
 			int id) throws Throwable {
 		finalize();
@@ -1114,26 +1254,42 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<Purchase_Product_Details> getPurchaseProductDetailsByQtyAndCompany() {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<Purchase_Product_Details> q = em
+				.createQuery(
+						"select c from Purchase_Product_Details c where c.companyInfo.id=:cId AND c.remaining_quantity>0 and c.productDetail.isRaw=:raw ORDER BY c.id ASC",
+						Purchase_Product_Details.class);
+		q.setParameter("raw", true);
+		q.setParameter("cId", cId);
+		return q.getResultList();
+	}
+
 	public List<Purchase_Product_Details> getSaleblePurchaseProductDetailsByProductCodeAndQuantity(
 			String code, Date date) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
 		List<Purchase_Product_Details> lst = new ArrayList<Purchase_Product_Details>();
 
 		TypedQuery<Purchase_Product_Details> q = em
 				.createQuery(
-						"select c from Purchase_Product_Details c where  UPPER(c.productDetail.code)=:cd and c.remaining_quantity>0 and c.productDetail.isSaleble=:salable and c.purchase_Entry.purchase_date<:date ORDER BY c.id ASC",
+						"select c from Purchase_Product_Details c where c.companyInfo.id=:cId AND UPPER(c.productDetail.code)=:cd and c.remaining_quantity>0 and c.productDetail.isSaleble=:salable and c.purchase_Entry.purchase_date<:date ORDER BY c.id ASC",
 						Purchase_Product_Details.class);
 		q.setParameter("salable", true);
 		q.setParameter("cd", code.toUpperCase());
 		q.setParameter("date", date);
+		q.setParameter("cId", cId);
 
 		lst = q.getResultList();
 
 		TypedQuery<Purchase_Product_Details> q1 = em
 				.createQuery(
-						"select c from Purchase_Product_Details c where  UPPER(c.productDetail.code)=:cd and c.remaining_quantity>0 and c.productDetail.isSaleble=:salable and c.initialInventory=true ORDER BY c.id ASC",
+						"select c from Purchase_Product_Details c where c.companyInfo.id=:cId AND UPPER(c.productDetail.code)=:cd and c.remaining_quantity>0 and c.productDetail.isSaleble=:salable and c.initialInventory=true ORDER BY c.id ASC",
 						Purchase_Product_Details.class);
 		q1.setParameter("salable", true);
 		q1.setParameter("cd", code.toUpperCase());
+		q1.setParameter("cId", cId);
 
 		for (Purchase_Product_Details ppd : q1.getResultList()) {
 			lst.add(ppd);
@@ -1453,6 +1609,26 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<ProductDetail> getAllProductDetailByCompany() {
+		Users usr = getUserById((String) httpSession.getAttribute("user"));
+		TypedQuery<ProductDetail> q = em.createQuery(
+				"select c from ProductDetail c", ProductDetail.class);
+		List<ProductDetail> listpro = new ArrayList<ProductDetail>();
+		HashSet<ProductDetail> hash = new HashSet<ProductDetail>();
+		for (ProductDetail pd : q.getResultList()) {
+			for (Purchase_Product_Details ppd : pd
+					.getPurchase_Product_Details()) {
+				if (ppd.getCompanyInfo().equals(usr.getCompanyInfo())) {
+					listpro.add(ppd.getProductDetail());
+				}
+			}
+		}
+		hash.addAll(listpro);
+		listpro.clear();
+		listpro.addAll(hash);
+		return listpro;
+	}
+
 	public List<ProductDetail> getAllActiveProductDetail() {
 		TypedQuery<ProductDetail> q = em.createQuery(
 				"select c from ProductDetail c where c.isActive=true",
@@ -1476,21 +1652,25 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	public List<ProductDetail> getSalebleProductsByQtyAndCode(String nm) {
+	public List<ProductDetail> getSalebleProductsByQtyAndCodeAndCompany(
+			String nm) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
 		List<ProductDetail> lst = new ArrayList<ProductDetail>();
-
 		TypedQuery<ProductDetail> query = em
 				.createQuery(
-						"select c from ProductDetail c where c.isSaleble=:sal AND c.readyGoodsStock.remainingQty>0 AND UPPER(c.code) like :codeName",
+						"select c from ProductDetail c where c.readyGoodsStock.companyInfo.id=:cId AND c.isSaleble=:sal AND c.readyGoodsStock.remainingQty>0 AND UPPER(c.code) like :codeName",
 						ProductDetail.class);
 		query.setParameter("codeName", "%" + nm.toUpperCase() + "%");
 		query.setParameter("sal", true);
+		query.setParameter("cId", cId);
 		lst = query.getResultList();
 		TypedQuery<ProductDetail> q = em
 				.createQuery(
-						"select c from ProductDetail c where c.isSaleble=:sal AND c.rawMaterialsStock.remainingQty>0 AND UPPER(c.code) like :codeName",
+						"select c from ProductDetail c where c.rawMaterialsStock.companyInfo.id=:cId AND c.isSaleble=:sal AND c.rawMaterialsStock.remainingQty>0 AND UPPER(c.code) like :codeName",
 						ProductDetail.class);
 		q.setParameter("sal", true);
+		q.setParameter("cId", cId);
 		q.setParameter("codeName", "%" + nm.toUpperCase() + "%");
 		lst.addAll(q.getResultList());
 		return lst;
@@ -1573,6 +1753,22 @@ public class Ejb {
 
 	public Bill_setup getLastBillSetupBySufixAndCompanyId(String billType,
 			int cId) {
+		TypedQuery<Bill_setup> q = em
+				.createQuery(
+						"select s from Bill_setup s where s.billType=:btype AND s.companyInfo.id=:cId order by s.id DESC",
+						Bill_setup.class);
+		q.setParameter("btype", billType);
+		q.setParameter("cId", cId);
+		if (q.getResultList().size() > 0) {
+			return q.getResultList().get(0);
+		} else {
+			return null;
+		}
+	}
+
+	public Bill_setup getLastBillSetupBySufixAndCompany(String billType) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
 		TypedQuery<Bill_setup> q = em
 				.createQuery(
 						"select s from Bill_setup s where s.billType=:btype AND s.companyInfo.id=:cId order by s.id DESC",
@@ -1796,7 +1992,21 @@ public class Ejb {
 		} else {
 			return 0;
 		}
+	}
 
+	public int getLastSalesChallanNumberByCompany() {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<SalesEntry> q = em
+				.createQuery(
+						"select c from SalesEntry c where c.companyInfo.id=:cId ORDER BY c.id DESC",
+						SalesEntry.class);
+		q.setParameter("cId", cId);
+		if (q.getResultList().size() > 0) {
+			return q.getResultList().get(0).getChallanNo();
+		} else {
+			return 0;
+		}
 	}
 
 	public int getLastSalesChallanSuffix() {
@@ -1826,13 +2036,49 @@ public class Ejb {
 		}
 	}
 
-	public List<SalesEntry> getSalesEntryByDate(Date startDate, Date endDate) {
+	public int getLastSalesChallanSuffixByCompany() {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
 		TypedQuery<SalesEntry> q = em
 				.createQuery(
-						"select c from SalesEntry c WHERE c.sales_date BETWEEN :startDate AND :endDate",
+						"select c from SalesEntry c where c.companyInfo.id=:cId ORDER BY c.id DESC",
+						SalesEntry.class);
+		q.setParameter("cId", cId);
+
+		if (q.getResultList().size() > 0) {
+			int s = q.getResultList().get(0).getChallanSuffix();
+			if (getLastBillSetupBySufixAndCompanyId("INV", cId).equals(null)) {
+				return s;
+			} else {
+				if (Integer.parseInt(getLastBillSetupBySufixAndCompanyId("INV",
+						cId).getSufix()) < s) {
+					return s;
+				} else {
+					return Integer
+							.parseInt(getLastBillSetupBySufixAndCompanyId(
+									"INV", cId).getSufix());
+				}
+			}
+		} else {
+			if (getLastBillSetupBySufixAndCompanyId("INV", cId).equals(null)) {
+				return 0;
+			} else {
+				return Integer.parseInt(getLastBillSetupBySufixAndCompanyId(
+						"INV", cId).getSufix());
+			}
+		}
+	}
+
+	public List<SalesEntry> getSalesEntryByDate(Date startDate, Date endDate) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<SalesEntry> q = em
+				.createQuery(
+						"select c from SalesEntry c WHERE c.companyInfo.id=:cId AND c.sales_date BETWEEN :startDate AND :endDate",
 						SalesEntry.class);
 		q.setParameter("startDate", startDate);
 		q.setParameter("endDate", endDate);
+		q.setParameter("cId", cId);
 		return q.getResultList();
 	}
 
@@ -1864,32 +2110,41 @@ public class Ejb {
 	}
 
 	public List<SalesEntry> getSalesEntryByAgentName(String name) {
-		TypedQuery<SalesEntry> q = em.createQuery(
-				"select c from SalesEntry c where UPPER(c.vendor.name)=:name",
-				SalesEntry.class);
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<SalesEntry> q = em
+				.createQuery(
+						"select c from SalesEntry c where c.companyInfo.id=:cId AND UPPER(c.vendor.name)=:name",
+						SalesEntry.class);
 		q.setParameter("name", name.toUpperCase());
+		q.setParameter("cId", cId);
 		return q.getResultList();
 	}
 
 	public List<SalesEntry> getSalesEntryByCustomerName(String name) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
 		TypedQuery<SalesEntry> q = em
 				.createQuery(
-						"select c from SalesEntry c where UPPER(c.customer.name)=:name",
+						"select c from SalesEntry c where c.companyInfo.id=:cId AND UPPER(c.customer.name)=:name",
 						SalesEntry.class);
 		q.setParameter("name", name.toUpperCase());
+		q.setParameter("cId", cId);
 		return q.getResultList();
 	}
 
 	public List<SalesEntry> getSalesEntriesByProductCode(String code) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
 		List<SalesEntry> lst = new ArrayList<SalesEntry>();
 		HashSet<SalesEntry> hs = new HashSet<SalesEntry>();
 		TypedQuery<SalesProductDetails> q = em
 				.createQuery(
-						"select c from SalesProductDetails c where UPPER(c.purchase_Product_Details.productDetail.code)=:code ORDER BY c.id DESC",
+						"select c from SalesProductDetails c where c.salesEntry.companyInfo.id=:cId AND UPPER(c.purchase_Product_Details.productDetail.code)=:code ORDER BY c.id DESC",
 						SalesProductDetails.class);
 
 		q.setParameter("code", code.toUpperCase());
-
+		q.setParameter("cId", cId);
 		for (SalesProductDetails s : q.getResultList()) {
 			lst.add(s.getSalesEntry());
 		}
@@ -1924,6 +2179,19 @@ public class Ejb {
 						"select s from SalesProductDetails s where s.purchase_Product_Details.productDetail.id=:Id ORDER BY s.salesEntry.sales_date DESC ",
 						SalesProductDetails.class);
 		q.setParameter("Id", id);
+		return q.getResultList();
+	}
+
+	public List<SalesProductDetails> getSales_Product_DetailsByProductIdAndCompany(
+			int id) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<SalesProductDetails> q = em
+				.createQuery(
+						"select s from SalesProductDetails s where s.salesEntry.companyInfo.id=:cId AND s.purchase_Product_Details.productDetail.id=:Id ORDER BY s.salesEntry.sales_date DESC ",
+						SalesProductDetails.class);
+		q.setParameter("Id", id);
+		q.setParameter("cId", cId);
 		return q.getResultList();
 	}
 
@@ -1965,7 +2233,8 @@ public class Ejb {
 
 	public List<ProductDetail> getProductDetailsByCodeDescriptionCategory(
 			String code, String description, String name) {
-
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
 		TypedQuery<ProductDetail> q = em
 				.createQuery(
 						"select c from ProductDetail c where c.code=:code OR c.description=:description OR c.category.name=:name ",
@@ -1973,7 +2242,20 @@ public class Ejb {
 		q.setParameter("code", code);
 		q.setParameter("description", description);
 		q.setParameter("name", name);
-		return q.getResultList();
+		List<ProductDetail> listpro = new ArrayList<ProductDetail>();
+		HashSet<ProductDetail> hash = new HashSet<ProductDetail>();
+		for (ProductDetail pd : q.getResultList()) {
+			for (Purchase_Product_Details ppd : pd
+					.getPurchase_Product_Details()) {
+				if (ppd.getCompanyInfo().getId() == cId) {
+					listpro.add(ppd.getProductDetail());
+				}
+			}
+		}
+		hash.addAll(listpro);
+		listpro.clear();
+		listpro.addAll(hash);
+		return listpro;
 	}
 
 	/******************************
@@ -1992,7 +2274,23 @@ public class Ejb {
 		} else {
 			return null;
 		}
+	}
 
+	public JobAssignmentDetails getJobAssignmentDetailsbyChallanNumberAndCompany(
+			String challanNumber) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<JobAssignmentDetails> q = em
+				.createQuery(
+						"select c from JobAssignmentDetails c where c.companyInfo.id=:cId AND c.challanNumber=:challanNumber",
+						JobAssignmentDetails.class);
+		q.setParameter("challanNumber", challanNumber);
+		q.setParameter("cId", cId);
+		if (q.getResultList().size() > 0) {
+			return q.getResultList().get(0);
+		} else {
+			return null;
+		}
 	}
 
 	/***************************** Search Sasles for return by ChallanID ****************/
@@ -2016,15 +2314,15 @@ public class Ejb {
 	public void setSalesReturn(SalesReturn salesReturn) {
 		em.persist(salesReturn);
 	}
-	
+
 	public SalesReturn getSalesReturnDetailsById(int id) {
 		return em.find(SalesReturn.class, id);
 	}
-	
-	
-	/***********************************************************SalesProductReturnDetails***********************/
-	
-	public void setSalesProductReturnDetails(SalesProductReturnDetail salesProductReturnDetail) {
+
+	/*********************************************************** SalesProductReturnDetails ***********************/
+
+	public void setSalesProductReturnDetails(
+			SalesProductReturnDetail salesProductReturnDetail) {
 		em.persist(salesProductReturnDetail);
 	}
 

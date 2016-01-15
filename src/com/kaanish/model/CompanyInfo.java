@@ -46,6 +46,9 @@ public class CompanyInfo implements Serializable {
 	private int changeCount;
 
 	@OneToMany(mappedBy = "companyInfo")
+	private List<Purchase_Product_Details> purchase_Product_Details;
+
+	@OneToMany(mappedBy = "companyInfo")
 	private List<Users> users;
 
 	@OneToMany(mappedBy = "companyInfo")
@@ -292,6 +295,14 @@ public class CompanyInfo implements Serializable {
 
 	public void setUserGroup(List<UserGroup> userGroup) {
 		this.userGroup = userGroup;
+	}
+
+	public List<Purchase_Product_Details> getPurchase_Product_Details() {
+		return purchase_Product_Details;
+	}
+
+	public void setPurchase_Product_Details(List<Purchase_Product_Details> purchase_Product_Details) {
+		this.purchase_Product_Details = purchase_Product_Details;
 	}
 
 }

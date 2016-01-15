@@ -329,7 +329,9 @@ public class Servlet extends HttpServlet {
 						purchaseProductDetails.setProductDetail(productDetail);
 						purchaseProductDetails.setLotNumber(req
 								.getParameter("lotnumberS"));
-
+						purchaseProductDetails.setCompanyInfo(ejb.getUserById(
+								(String) httpSession.getAttribute("user"))
+								.getCompanyInfo());
 						ejb.setPurchaseProductDetails(purchaseProductDetails);
 						serialNumber = new SerialNumber();
 						serialNumber.setLotNo(req.getParameter("lotnumberS")
@@ -946,7 +948,9 @@ public class Servlet extends HttpServlet {
 
 			case "purchaseEntry":
 				page = "purchasingPurchaseEntry.jsp";
-
+				companyInfo = ejb.getUserById(
+						(String) httpSession.getAttribute("user"))
+						.getCompanyInfo();
 				purchaseEntry = new Purchase_Entry();
 				paymentDetails = new PaymentDetails();
 
@@ -1055,6 +1059,7 @@ public class Servlet extends HttpServlet {
 								.parseInt(cost[l]));
 						purchaseProductDetails.setPurchase_Entry(purchaseEntry);
 						purchaseProductDetails.setLotNumber(lot[l]);
+						purchaseProductDetails.setCompanyInfo(companyInfo);
 						ejb.setPurchaseProductDetails(purchaseProductDetails);
 						/*
 						 * int lq = Integer.parseInt(qty[l]); if
@@ -1092,23 +1097,12 @@ public class Servlet extends HttpServlet {
 						 * 
 						 * serialNumber = null; } } }
 						 */
-						if (req.getParameter("isSalable").equals("yes")) {
-							readyGoodsStock = ejb
-									.getReadyGoodsStoctByProductId(purchaseProductDetails
-											.getProductDetail().getId());
-							readyGoodsStock.setProductDetail(ejb
-									.getProductDetailsById(Integer
-											.parseInt(productId[l])));
-							readyGoodsStock.setRemainingQty(readyGoodsStock
-									.getRemainingQty()
-									+ Integer.parseInt(qty[l]));
-							ejb.updateReadyGoodsStockDetail(readyGoodsStock);
-							readyGoodsStock = null;
-						} else {
-							// rawMaterialsStock = new RawMaterialsStock();
+						if (purchaseProductDetails.getProductDetail().isRaw()) {
 							rawMaterialsStock = ejb
-									.getRawMeterialStoctByProductId(purchaseProductDetails
-											.getProductDetail().getId());
+									.getRawMeterialStoctByProductAndCompanyId(
+											purchaseProductDetails
+													.getProductDetail().getId(),
+											companyInfo.getId());
 							rawMaterialsStock.setProductDetail(ejb
 									.getProductDetailsById(Integer
 											.parseInt(productId[l])));
@@ -1117,8 +1111,21 @@ public class Servlet extends HttpServlet {
 									+ Integer.parseInt(qty[l]));
 							ejb.updateRawMaterialStockDetail(rawMaterialsStock);
 							rawMaterialsStock = null;
+						} else {
+							readyGoodsStock = ejb
+									.getReadyGoodStoctByProductAndCompanyId(
+											purchaseProductDetails
+													.getProductDetail().getId(),
+											companyInfo.getId());
+							readyGoodsStock.setProductDetail(ejb
+									.getProductDetailsById(Integer
+											.parseInt(productId[l])));
+							readyGoodsStock.setRemainingQty(readyGoodsStock
+									.getRemainingQty()
+									+ Integer.parseInt(qty[l]));
+							ejb.updateReadyGoodsStockDetail(readyGoodsStock);
+							readyGoodsStock = null;
 						}
-
 						purchaseProductDetails = null;
 					}
 					if (req.getParameter("isBarPrint").equals("yes")) {
@@ -1139,6 +1146,9 @@ public class Servlet extends HttpServlet {
 
 			case "salesEntry":
 				page = "salesSalesEntry.jsp";
+				companyInfo = ejb.getUserById(
+						(String) httpSession.getAttribute("user"))
+						.getCompanyInfo();
 
 				if (req.getParameter("isExistingCust").equals("0")) {
 					customerEntry = new CustomerEntry();
@@ -1170,6 +1180,7 @@ public class Servlet extends HttpServlet {
 						.getParameter("roundvalue")));
 				salesEntry.setTotalCost(Float.parseFloat(req
 						.getParameter("grandtotal")));
+				salesEntry.setCompanyInfo(companyInfo);
 				if (!req.getParameter("aId").equals("")) {
 					salesEntry.setVendor(ejb.getVendorById(Integer.parseInt(req
 							.getParameter("aId"))));
@@ -1246,14 +1257,31 @@ public class Servlet extends HttpServlet {
 
 					ejb.updatePurchaseProductDetails(purchaseProductDetails);
 
-					readyGoodsStock = ejb
-							.getReadyGoodsStoctByProductId(purchaseProductDetails
-									.getProductDetail().getId());
+					if (purchaseProductDetails.getProductDetail().isRaw()) {
+						rawMaterialsStock = ejb
+								.getRawMeterialStoctByProductAndCompanyId(
+										purchaseProductDetails
+												.getProductDetail().getId(),
+										companyInfo.getId());
 
-					readyGoodsStock.setRemainingQty(readyGoodsStock
-							.getRemainingQty() - Integer.parseInt(qtyvalue[l]));
+						rawMaterialsStock.setRemainingQty(rawMaterialsStock
+								.getRemainingQty()
+								- Integer.parseInt(qtyvalue[l]));
 
-					ejb.updateReadyGoodsStockDetail(readyGoodsStock);
+						ejb.updateRawMaterialStockDetail(rawMaterialsStock);
+					} else {
+						readyGoodsStock = ejb
+								.getReadyGoodStoctByProductAndCompanyId(
+										purchaseProductDetails
+												.getProductDetail().getId(),
+										companyInfo.getId());
+
+						readyGoodsStock.setRemainingQty(readyGoodsStock
+								.getRemainingQty()
+								- Integer.parseInt(qtyvalue[l]));
+
+						ejb.updateReadyGoodsStockDetail(readyGoodsStock);
+					}
 
 					readyGoodsStock = null;
 					purchaseProductDetails = null;
@@ -1342,7 +1370,7 @@ public class Servlet extends HttpServlet {
 			case "purchaseSearchByVendorName":
 				page = "purchasingPurchaseSearch.jsp";
 				List<Purchase_Entry> purEntryList2 = ejb
-						.getPurchaseEntryByVendorName(req
+						.getPurchaseEntryByVendorNameAndCompany(req
 								.getParameter("vendorName"));
 				req.setAttribute("purEntryList", purEntryList2);
 				if (purEntryList2.size() > 0) {
@@ -1358,7 +1386,7 @@ public class Servlet extends HttpServlet {
 			case "purchaseSearchByAgentName":
 				page = "purchasingPurchaseSearch.jsp";
 				List<Purchase_Entry> purEntryList3 = ejb
-						.getPurchaseEntryByAgentName(req
+						.getPurchaseEntryByAgentNameAndCompany(req
 								.getParameter("agentName"));
 				req.setAttribute("purEntryList", purEntryList3);
 				if (purEntryList3.size() > 0) {
@@ -1374,7 +1402,7 @@ public class Servlet extends HttpServlet {
 			case "purchaseSearchByProductCode":
 				page = "purchasingPurchaseSearch.jsp";
 				List<Purchase_Entry> purEntryList4 = ejb
-						.getPurchaseEntryByProductCode(req
+						.getPurchaseEntryByProductCodeAndCompany(req
 								.getParameter("prodCode"));
 				req.setAttribute("purEntryList", purEntryList4);
 				if (purEntryList4.size() > 0) {
@@ -1419,7 +1447,9 @@ public class Servlet extends HttpServlet {
 				page = "jobAssign.jsp";
 				jobAssignmentDetails = new JobAssignmentDetails();
 				dt = new Date();
-
+				companyInfo = ejb.getUserById(
+						(String) httpSession.getAttribute("user"))
+						.getCompanyInfo();
 				jobAssignmentDetails.setAssignDate(DateConverter.getDate(req
 						.getParameter("assignedDate")));
 				jobAssignmentDetails.setEstimatedCompletionDate(DateConverter
@@ -1433,6 +1463,7 @@ public class Servlet extends HttpServlet {
 				jobAssignmentDetails.setEntryDate(dt);
 				jobAssignmentDetails.setVendor(ejb.getVendorById(Integer
 						.parseInt(req.getParameter("jName"))));
+				jobAssignmentDetails.setCompanyInfo(companyInfo);
 
 				ejb.setJobAssignment(jobAssignmentDetails);
 
@@ -1471,8 +1502,9 @@ public class Servlet extends HttpServlet {
 					ejb.updatePurchaseProductDetails(purchaseProductDetails);
 
 					rawMaterialsStock = ejb
-							.getRawMeterialStoctByProductId(purchaseProductDetails
-									.getProductDetail().getId());
+							.getRawMeterialStoctByProductAndCompanyId(
+									purchaseProductDetails.getProductDetail()
+											.getId(), companyInfo.getId());
 					rawMaterialsStock.setRemainingQty(rawMaterialsStock
 							.getRemainingQty() - Integer.parseInt(qtyH[l]));
 					ejb.updateRawMaterialStockDetail(rawMaterialsStock);
@@ -1490,7 +1522,7 @@ public class Servlet extends HttpServlet {
 				page = "jobReceive.jsp";
 
 				jobAssignmentDetails = ejb
-						.getJobAssignmentDetailsbyChallanNumber(req
+						.getJobAssignmentDetailsbyChallanNumberAndCompany(req
 								.getParameter("jChallan"));
 
 				req.setAttribute("amj", jobAssignmentDetails);
@@ -2123,7 +2155,6 @@ public class Servlet extends HttpServlet {
 									.parseInt(salesProductDetailId[l])));
 
 					ejb.updateSalesProductDetails(salesProductDetails);
-					
 
 					purchaseProductDetails = salesProductDetails
 							.getPurchase_Product_Details();
@@ -2147,13 +2178,12 @@ public class Servlet extends HttpServlet {
 					purchaseProductDetails = null;
 
 				}
-				
+
 				salesReturn.setSalesEntry(salesEntry);
 				req.setAttribute("purDetIdforPC", salesReturn.getId());
 
-				
 				msg = "sales Return Succeessful";
-				
+
 				break;
 
 			default:

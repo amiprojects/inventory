@@ -297,12 +297,13 @@
 													</select>
 												</div>
 												<div class="col-md-1">
-												
-												<b class="font">&nbsp;&nbsp; </b> <a onclick="addAgentDetails()"
-													title="Add New Agent."> <img style="margin-top: 4px;"
-													height="30px" width="30px" alt="" src="img/add.png">
-												</a>
-												
+
+													<b class="font">&nbsp;&nbsp; </b> <a
+														onclick="addAgentDetails()" title="Add New Agent."> <img
+														style="margin-top: 4px;" height="30px" width="30px" alt=""
+														src="img/add.png">
+													</a>
+
 												</div>
 
 
@@ -627,7 +628,6 @@
 
 
 	<div id="addV" class="modal fade" role="dialog" style="top: 25px;">
-
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -979,9 +979,9 @@
 			</div>
 		</div>
 	</div>
-	
-	
-	
+
+
+
 	<div id="addA" class="modal fade" role="dialog" style="top: 25px;">
 
 		<div class="modal-dialog modal-lg">
@@ -1040,7 +1040,8 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" id="bankCity6">
-										<input type="hidden" value="" name="bankCity6" id="bankCityId26">
+										<input type="hidden" value="" name="bankCity6"
+											id="bankCityId26">
 									</div>
 									<br>
 									<div class="col-md-3">
@@ -1104,7 +1105,8 @@
 										</div>
 										<div class="col-md-7">
 											<input type="text" class="form-control"
-												name="vendorVATregDate2" id="datepickerA2" readonly="readonly">
+												name="vendorVATregDate2" id="datepickerA2"
+												readonly="readonly">
 										</div>
 									</div>
 
@@ -1124,13 +1126,14 @@
 										</div>
 										<div class="col-md-7">
 											<input type="text" class="form-control"
-												name="vendorCSTregDate2" id="datepickerB2" readonly="readonly">
+												name="vendorCSTregDate2" id="datepickerB2"
+												readonly="readonly">
 										</div>
 									</div>
 
 									<div class="row">
 										<div class="col-md-5">
-										
+
 											<b>PAN no:</b>
 										</div>
 										<div class="col-md-7">
@@ -1263,14 +1266,12 @@
 									<div class="col-md-9">
 
 										<select class="form-control" name="vendorType2"
-											id="idvendorType2"
-											>
+											id="idvendorType2">
 											<c:forEach items="${sessionScope['ejb'].getAllVendorType()}"
 												var="vType">
 
 												<c:choose>
-													<c:when
-														test="${vType.type.equals('Purchase Agent')}">
+													<c:when test="${vType.type.equals('Purchase Agent')}">
 														<option value="${vType.id}" selected="selected">${vType.type}</option>
 
 													</c:when>
@@ -1282,7 +1283,7 @@
 								</div>
 								<br>
 								<div class="col-md-12">
-									
+
 									<input class="btn green pull-right" type="button" value="Next"
 										onclick="detailButtonNext2();">
 								</div>
@@ -1792,7 +1793,7 @@
 					}
 				});
 			} else {
-				alert("please select one product-code");
+				alert("please select purchase agent");
 				$("#agentName").val(0);
 				$("#agentDet").val("");
 			}
@@ -2483,7 +2484,6 @@
 			$("#addV").modal("show");
 
 		}
-		
 
 		function bankButtonPrev() {
 			$("#bAcc").removeAttr("class");
@@ -2534,16 +2534,14 @@
 			$("#vendorAccount").attr("class", "tab-pane fade active in");
 		}
 	</script>
-	
+
 	<script>
 		function addAgentDetails() {
 
 			$("#addA").modal("show");
 
 		}
-		
 
-		
 		function bankButtonPrev2() {
 			$("#bAcc2").removeAttr("class");
 			$("#bankAccount2").attr("class", "tab-pane fade");
@@ -2664,7 +2662,7 @@
 			});
 		});
 	</script>
-	
+
 	<script type="text/javascript">
 		$(function() {
 			$("#bankCity6").autocomplete({
@@ -2784,10 +2782,10 @@
 			});
 		}
 	</script>
-	
+
 	<script type="text/javascript">
 		function submitform2() {
-			
+
 			var dataa2 = {
 				vendorName2 : $("#idName2").val(),
 				vendorAddress2 : $("#idAdd2").val(),
@@ -2818,35 +2816,44 @@
 				vendorServiceTaxRegDate2 : $("#datepickerD2").val(),
 				vendorPANno2 : $("#idvendorPANno2").val()
 			};
-$.ajax({
-				url : "addAgen",
-				dataType : "json",
-				data : dataa2,
-				type : "post",
-				success : function(data2) {
-					alert(data2.result);
-					$("#addA").modal('hide');
-				},
-				complete : function() {
-					$.ajax({
-						url:"getVendorByType",
-						data:{id:$("#idvendorType2").val()},
-						dataType:"json",
-						success:function(data){
-							$("#agentName").empty();
-							$("#agentName").append('<option value="0">Select Agent name</option>');
-							$.map(data,function(item){
-								$("#agentName").append('<option value="'+item.id+'">'+item.name+'</option>');								
-							});
+			$
+					.ajax({
+						url : "addAgen",
+						dataType : "json",
+						data : dataa2,
+						type : "post",
+						success : function(data2) {
+							alert(data2.result);
+							$("#addA").modal('hide');
+						},
+						complete : function() {
+							$
+									.ajax({
+										url : "getVendorByType",
+										data : {
+											id : $("#idvendorType2").val()
+										},
+										dataType : "json",
+										success : function(data) {
+											$("#agentName").empty();
+											$("#agentName")
+													.append(
+															'<option value="0">Select Agent name</option>');
+											$.map(data, function(item) {
+												$("#agentName").append(
+														'<option value="'+item.id+'">'
+																+ item.name
+																+ '</option>');
+											});
+										}
+									});
 						}
-					});
-				}
 
-			}); 
+					});
 		}
 	</script>
-	
-	
+
+
 	<script>
 		$(function() {
 			$("#datepickerA").datepicker({
@@ -2898,8 +2905,8 @@ $.ajax({
 
 		});
 	</script>
-	
-	
+
+
 	<script>
 		$(function() {
 			$("#datepickerA2").datepicker({
@@ -2951,8 +2958,8 @@ $.ajax({
 
 		});
 	</script>
-	
-	
+
+
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->

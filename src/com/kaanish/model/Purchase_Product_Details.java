@@ -37,6 +37,10 @@ public class Purchase_Product_Details implements Serializable {
 	private boolean initialInventory;
 	@Transient
 	private int numberForBarcodePrint;
+	
+	@ManyToOne
+	@JoinColumn(name = "companyInfoId")
+	private CompanyInfo companyInfo;
 
 	@OneToMany(mappedBy = "purchase_Product_Details")
 	private List<JobAssignmentProducts> jobAssignmentProducts;
@@ -303,5 +307,13 @@ public class Purchase_Product_Details implements Serializable {
 
 	public void setNumberForBarcodePrint(int numberForBarcodePrint) {
 		this.numberForBarcodePrint = numberForBarcodePrint;
+	}
+
+	public CompanyInfo getCompanyInfo() {
+		return companyInfo;
+	}
+
+	public void setCompanyInfo(CompanyInfo companyInfo) {
+		this.companyInfo = companyInfo;
 	}
 }

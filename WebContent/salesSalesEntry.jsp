@@ -182,12 +182,12 @@
 												<c:set var="fy"
 													value="${sessionScope['ejb'].getCurrentFinancialYear()}" />
 												<c:set var="cno"
-													value="${sessionScope['ejb'].getLastSalesChallanNumber()+1}" />
+													value="${sessionScope['ejb'].getLastSalesChallanNumberByCompany()+1}" />
 												<c:set var="csuf"
-													value="${sessionScope['ejb'].getLastSalesChallanSuffix()+1}" />
+													value="${sessionScope['ejb'].getLastSalesChallanSuffixByCompany()+1}" />
 												<c:set var="suf" value="INV" />
 												<c:set var="bs"
-													value="${sessionScope['ejb'].getLastBillSetupBySufix(suf)}" />
+													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompany(suf)}" />
 												<fmt:formatNumber value="${cno}" var="lastChNo"
 													minIntegerDigits="4" groupingUsed="false" />
 												<fmt:formatNumber value="${csuf}" var="lastSuf"
