@@ -39,18 +39,17 @@
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
 
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+
+
+<script src="js/jquery-ui/jquery-ui.js"></script>
+
 <script>
 	$(function() {
 		$(document).tooltip();
 	});
 </script>
-<style>
-/* label {
-    display: inline-block;
-    width: 5em;
-  } */
-</style>
-<script src="js/jquery-ui/jquery-ui.js"></script>
+
+
 
 <script>
 	$(function() {
@@ -256,13 +255,13 @@
 													</c:forEach>
 												</select>
 											</div>
-											<div class="col-md-10">
+											<div class="col-md-11">
 												&nbsp; &nbsp; &nbsp; <b class="font">Vendor Name :</b> <input
 													type="text" class="form-control" id="vName" name="vName"
 													required="required" onchange="emptyVender();"><input
 													type="hidden" id="vId" name="vId">
 											</div>
-											<div class="col-md-2">
+											<div class="col-md-1">
 												<b class="font">&nbsp;&nbsp; </b> <a onclick="addVendor()"
 													title="Add New Vendor."> <img style="margin-top: 4px;"
 													height="30px" width="30px" alt="" src="img/add.png">
@@ -270,11 +269,7 @@
 											</div>
 
 											<div class="col-md-12">
-												<!-- <div class="breadcrumbs">
-														<ul>
-															<li><a title="" class="font">Vendor Details :</a></li>
-														</ul>
-													</div> -->
+
 												&nbsp; &nbsp; &nbsp; <b class="font">Vendor Details :</b>
 												<textarea rows="5" cols="" id="vDetail" class="form-control"
 													readonly="readonly"></textarea>
@@ -286,19 +281,32 @@
 													Agent</span>
 											</div>
 											<div class="col-md-12" id="aNameDiv">
-												<label for="" class="font">Agent Name:</label>
-												<!-- <input
+												<div class="col-md-11">
+													<label for="" class="font">Agent Name:</label>
+													<!-- <input
 															type="text" class="form-control" name="agentName"
 															id="agentName"> -->
-												<select class="form-control" id="agentName" name="agentName"
-													onchange="getAgentDetail();">
-													<option value="0">Select Agent name</option>
-													<c:forEach
-														items="${sessionScope['ejb'].getVendorsByVendorTypeJobber('Purchase Agent')}"
-														var="agents">
-														<option value="${agents.id}">${agents.name}</option>
-													</c:forEach>
-												</select>
+													<select class="form-control" id="agentName"
+														name="agentName" onchange="getAgentDetail();">
+														<option value="0">Select Agent name</option>
+														<c:forEach
+															items="${sessionScope['ejb'].getVendorsByVendorTypeJobber('Purchase Agent')}"
+															var="agents">
+															<option value="${agents.id}">${agents.name}</option>
+														</c:forEach>
+													</select>
+												</div>
+												<div class="col-md-1">
+												
+												<b class="font">&nbsp;&nbsp; </b> <a onclick="addAgentDetails()"
+													title="Add New Agent."> <img style="margin-top: 4px;"
+													height="30px" width="30px" alt="" src="img/add.png">
+												</a>
+												
+												</div>
+
+
+
 											</div>
 										</div>
 										<div class="col-md-6">
@@ -626,7 +634,7 @@
 					<button type="button" class="close" data-dismiss="modal"
 						onclick="closePayment();">&times;</button>
 					<center>
-						<h3 class="modal-title">Vendor add</h3>
+						<h3 class="modal-title">Vendor/Agent</h3>
 					</center>
 				</div>
 				<div class="modal-body">
@@ -676,7 +684,7 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" id="bankCity">
-										<input type="hidden" value=" " name="bankCity" id="bankCityId">
+										<input type="hidden" value="" name="bankCity" id="bankCityId">
 									</div>
 									<br>
 									<div class="col-md-3">
@@ -708,7 +716,7 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="bankCheckLebel"
-											id="idbankCheckLebel"">
+											id="idbankCheckLebel">
 									</div>
 								</div>
 								<br>
@@ -896,19 +904,24 @@
 										<b>Vendor type :</b>
 									</div>
 									<div class="col-md-9">
+
 										<select class="form-control" name="vendorType"
 											id="idvendorType" value="${vendor.vendorType}"
 											disabled="disabled">
 
 											<option value="0">Select Vendor Type</option>
+
 											<c:forEach items="${sessionScope['ejb'].getAllVendorType()}"
 												var="vType">
+
 												<c:choose>
 													<c:when
 														test="${vType.type.equals('Vendor') || vType.type.equals('Purchase Agent')}">
 														<option value="${vType.id}">${vType.type}</option>
+
 													</c:when>
 												</c:choose>
+
 											</c:forEach>
 										</select>
 									</div>
@@ -956,6 +969,359 @@
 										value="Previous" onclick="addressButtonPrev();"> <input
 										class="btn green pull-right" type="button" value="Next"
 										onclick="addressButtonNext();">
+								</div>
+							</div>
+
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer"></div>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+	<div id="addA" class="modal fade" role="dialog" style="top: 25px;">
+
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						onclick="closePayment();">&times;</button>
+					<center>
+						<h3 class="modal-title">Vendor/Agent</h3>
+					</center>
+				</div>
+				<div class="modal-body">
+					<form role="form" class="sec" action="addAgen" id="addAgena"
+						method="post">
+						<ul class="nav nav-tabs">
+							<li class="active" id="detl2"><a data-toggle="tab"
+								href="#detail2">Details</a></li>
+							<li id="addr2"><a data-toggle="tab" href="#address2">Address</a></li>
+							<li id="vAcc2"><a data-toggle="tab" href="#vendorAccount2">Vendor
+									Account Info</a></li>
+							<li id="bAcc2"><a data-toggle="tab" href="#bankAccount2">Bank
+									Account info</a></li>
+							<!-- <li id="prts"><a data-toggle="tab" href="#part">Parts</a></li> -->
+						</ul>
+						<div class="tab-content">
+							<div id="bankAccount2" class="tab-pane fade">
+								<div class="widget-area">
+									<h5 align="center">(* All the below fields are optional)</h5>
+									<br>
+									<div class="col-md-3">
+										<b>Bank Name:</b>
+									</div>
+									<div class="col-md-9">
+										<input type="text" class="form-control" name="bankName2"
+											id="idbankName2">
+									</div>
+									<br>
+									<div class="col-md-3">
+										<b>A/C no:</b>
+									</div>
+									<div class="col-md-9">
+										<input type="text" class="form-control" name="bankAccNo2"
+											id="acno2">
+									</div>
+									<br>
+									<div class="col-md-3">
+										<b>Branch:</b>
+									</div>
+									<div class="col-md-9">
+										<input type="text" class="form-control" name="bankBranch2"
+											id="idbankBranch2">
+									</div>
+									<br>
+									<div class="col-md-3">
+										<b>City:</b>
+									</div>
+									<div class="col-md-9">
+										<input type="text" class="form-control" id="bankCity6">
+										<input type="hidden" value="" name="bankCity6" id="bankCityId26">
+									</div>
+									<br>
+									<div class="col-md-3">
+										<b>IFSC no:</b>
+									</div>
+									<div class="col-md-9">
+										<input type="text" class="form-control" name="bankIFSC2"
+											id="idbankIFSC2">
+									</div>
+									<br>
+									<div class="col-md-3">
+										<b>MICR no:</b>
+									</div>
+									<div class="col-md-9">
+										<input type="text" class="form-control" name="bankMICR2"
+											id="idbankMICR2">
+									</div>
+									<br>
+									<div class="col-md-3">
+										<b>RTGS code:</b>
+									</div>
+									<div class="col-md-9">
+										<input type="text" class="form-control" name="bankRTGS2"
+											id="idbankRTGS2">
+									</div>
+									<br>
+									<div class="col-md-3">
+										<b>Check lebel:</b>
+									</div>
+									<div class="col-md-9">
+										<input type="text" class="form-control" name="bankCheckLebel2"
+											id="idbankCheckLebel2">
+									</div>
+								</div>
+								<br>
+								<div class="col-md-12">
+									<input class="btn green pull-left" type="button"
+										value="Previous" onclick="bankButtonPrev2();"> <input
+										class="btn green pull-right" type="button" value="Finish"
+										onclick="submitform2();">
+								</div>
+
+							</div>
+							<div id="vendorAccount2" class="tab-pane fade">
+								<div class="widget-area">
+									<div class="row">
+										<h5 align="center">(* All the below fields are optional)</h5>
+										<br>
+										<div class="col-md-5">
+											<b>VAT no:</b>
+										</div>
+										<div class="col-md-7">
+											<input type="text" class="form-control" name="vendorVATno2"
+												id="idvendorVATno2">
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="col-md-5">
+											<b>VAT registration date:</b>
+										</div>
+										<div class="col-md-7">
+											<input type="text" class="form-control"
+												name="vendorVATregDate2" id="datepickerA2" readonly="readonly">
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="col-md-5">
+											<b>CST no:</b>
+										</div>
+										<div class="col-md-7">
+											<input type="text" class="form-control" name="vendorCSTno2"
+												id="idvendorCSTno2">
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="col-md-5">
+											<b>CST registration date:</b>
+										</div>
+										<div class="col-md-7">
+											<input type="text" class="form-control"
+												name="vendorCSTregDate2" id="datepickerB2" readonly="readonly">
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="col-md-5">
+										
+											<b>PAN no:</b>
+										</div>
+										<div class="col-md-7">
+											<input type="text" class="form-control" name="vendorPANno2"
+												id="idvendorPANno2">
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="col-md-5">
+											<b>Excise registration no:</b>
+										</div>
+										<div class="col-md-7">
+											<input type="text" class="form-control"
+												name="vendorExciseRegNo2" id="idvendorExciseRegNo2">
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="col-md-5">
+											<b>Excise registration date:</b>
+										</div>
+										<div class="col-md-7">
+											<input type="text" class="form-control"
+												name="vendorExciseRegDate2" id="datepickerC2"
+												readonly="readonly">
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="col-md-5">
+											<b>Service tax registration no:</b>
+										</div>
+										<div class="col-md-7">
+											<input type="text" class="form-control"
+												name="vendorServiceTaxRegNo2" id="idvendorServiceTaxRegNo2">
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="col-md-5">
+											<b>Service tax registration date:</b>
+										</div>
+										<div class="col-md-7">
+											<input type="text" class="form-control"
+												name="vendorServiceTaxRegDate2" id="datepickerD2"
+												readonly="readonly">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-5">
+											<b>Tax group id:</b>
+										</div>
+										<div class="col-md-7">
+											<select class="form-control" name="taxTypeGroupId2"
+												id="taxgroup2">
+												<!-- 	<option value="0">select a tax group</option> -->
+												<c:forEach
+													items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
+													var="taxTypeGroup">
+													<option value="${taxTypeGroup.id}">${taxTypeGroup.name}</option>
+												</c:forEach>
+											</select>
+										</div>
+									</div>
+								</div>
+								<br>
+								<div class="col-md-12">
+									<input type="button" value="Next" class="btn green pull-right"
+										onclick="vendorButtonNext2();"> <input type="button"
+										value="Previous" class="btn green pull-left"
+										onclick="vendorButtonPrev2();">
+								</div>
+							</div>
+
+							<div id="detail2" class="tab-pane fade active in">
+								<div class="widget-area">
+
+									<div class="col-md-3">
+										<b>Name:</b>
+									</div>
+									<div class="col-md-9">
+										<input type="text" class="form-control" name="vendorName2"
+											id="idName2" required="required">
+									</div>
+									<br>
+									<div class="col-md-3">
+										<b>Company Name:</b>
+									</div>
+									<div class="col-md-9">
+										<input type="text" class="form-control"
+											name="vendorCompanyName2" id="idvendorCompanyName2">
+									</div>
+
+									<div class="col-md-3">
+										<b>Ph No1:</b>
+									</div>
+									<div class="col-md-9">
+										<input type="text" class="form-control" name="vendorPh12"
+											id="iphone2" required="required">
+									</div>
+
+									<div class="col-md-3">
+										<b>Ph No2:</b>
+									</div>
+									<div class="col-md-9">
+										<input type="text" class="form-control" name="vendorPh22"
+											id="idvendorPh22" required="required">
+									</div>
+
+									<div class="col-md-3">
+										<b>Email :</b>
+									</div>
+									<div class="col-md-9">
+										<input type="text" class="form-control" name="vendorMail2"
+											id="idvendorMail2" required="required">
+									</div>
+
+									<div class="col-md-3">
+										<b>Alias name :</b>
+									</div>
+									<div class="col-md-9">
+										<input type="text" class="form-control" name="vendorAlias2"
+											id="idvendorAlias2" required="required">
+									</div>
+
+									<div class="col-md-3">
+										<b>Vendor type :</b>
+									</div>
+									<div class="col-md-9">
+
+										<select class="form-control" name="vendorType2"
+											id="idvendorType2"
+											>
+											<c:forEach items="${sessionScope['ejb'].getAllVendorType()}"
+												var="vType">
+
+												<c:choose>
+													<c:when
+														test="${vType.type.equals('Purchase Agent')}">
+														<option value="${vType.id}" selected="selected">${vType.type}</option>
+
+													</c:when>
+												</c:choose>
+
+											</c:forEach>
+										</select>
+									</div>
+								</div>
+								<br>
+								<div class="col-md-12">
+									
+									<input class="btn green pull-right" type="button" value="Next"
+										onclick="detailButtonNext2();">
+								</div>
+							</div>
+							<div id="address2" class="tab-pane fade ">
+								<div class="widget-area">
+									<div class="breadcrumbs">
+										<ul>
+											<li><a title="" class="font"><h6>Address</h6></a></li>
+										</ul>
+									</div>
+									<textarea rows="" cols="" class="form-control"
+										name="vendorAddress2" id="idAdd2" required="required"></textarea>
+									<div class="row">
+										<div class="col-md-3">
+											<b>City :</b>
+										</div>
+										<div class="col-md-9">
+											<input type="text" class="form-control cityAuto"
+												name="vendorCity2" required="required" id="vendorCity2">
+											<input type="hidden" name="vendorCityId2" id="vendorCityId2">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-3">
+											<b>Pin code :</b>
+										</div>
+										<div class="col-md-9">
+											<input type="text" class="form-control" name="vendorPin2"
+												id="idvendorPin2" required="required">
+										</div>
+									</div>
+								</div>
+								<br>
+								<div class="col-md-12">
+									<input class="btn green pull-left" type="button"
+										value="Previous" onclick="addressButtonPrev2();"> <input
+										class="btn green pull-right" type="button" value="Next"
+										onclick="addressButtonNext2();">
 								</div>
 							</div>
 
@@ -1760,6 +2126,7 @@
 				$("#agentName").val(0);
 				$("#agentDet").val("");
 			}
+
 			$.ajax({
 				url : "getVendorTypeById",
 				data : {
@@ -2116,6 +2483,7 @@
 			$("#addV").modal("show");
 
 		}
+		
 
 		function bankButtonPrev() {
 			$("#bAcc").removeAttr("class");
@@ -2164,6 +2532,65 @@
 			$("#address").attr("class", "tab-pane fade");
 			$("#vAcc").attr("class", "active");
 			$("#vendorAccount").attr("class", "tab-pane fade active in");
+		}
+	</script>
+	
+	<script>
+		function addAgentDetails() {
+
+			$("#addA").modal("show");
+
+		}
+		
+
+		
+		function bankButtonPrev2() {
+			$("#bAcc2").removeAttr("class");
+			$("#bankAccount2").attr("class", "tab-pane fade");
+			$("#vAcc2").attr("class", "active");
+			$("#vendorAccount2").attr("class", "tab-pane fade active in");
+		}
+
+		function vendorButtonPrev2() {
+			$("#vAcc2").removeAttr("class");
+			$("#vendorAccount2").attr("class", "tab-pane fade");
+			$("#addr2").attr("class", "active");
+			$("#address2").attr("class", "tab-pane fade active in");
+		}
+
+		function vendorButtonNext2() {
+			$("#vAcc2").removeAttr("class");
+			$("#vendorAccount2").attr("class", "tab-pane fade");
+			$("#bAcc2").attr("class", "active");
+			$("#bankAccount2").attr("class", "tab-pane fade active in");
+		}
+
+		function detailButtonPrev2() {
+			$("#detl2").removeAttr("class");
+			$("#detail2").attr("class", "tab-pane fade");
+			$("#vAcc2").attr("class", "active");
+			$("#vendorAccount2").attr("class", "tab-pane fade active in");
+		}
+
+		function detailButtonNext2() {
+			$("#detl2").removeAttr("class");
+			$("#detail2").attr("class", "tab-pane fade");
+			$("#addr2").attr("class", "active");
+			$("#address2").attr("class", "tab-pane fade active in");
+		}
+
+		function addressButtonPrev2() {
+			$("#addr2").removeAttr("class");
+			$("#address2").attr("class", "tab-pane fade");
+			$("#detl2").attr("class", "active");
+			$("#detail2").attr("class", "tab-pane fade active in");
+		}
+
+		function addressButtonNext2() {
+			$("#addr2").removeAttr("class");
+			$("#address2").attr("class", "tab-pane fade");
+			$("#vAcc2").attr("class", "active");
+			$("#vendorAccount2").attr("class", "tab-pane fade active in");
 		}
 	</script>
 
@@ -2237,6 +2664,77 @@
 			});
 		});
 	</script>
+	
+	<script type="text/javascript">
+		$(function() {
+			$("#bankCity6").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getCityByName",
+						data : {
+							name : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.cityName,
+									id : item.id
+								});
+							}));
+						}
+
+					});
+				},
+				change : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#bankCityId26").val("");
+					} else {
+						$("#bankCityId26").val(ui.item.id);
+					}
+				},
+				select : function(event, ui) {
+					$("#bankCityId26").val(ui.item.id);
+				}
+			});
+		});
+		$(function() {
+			$("#vendorCity2").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getCityByName",
+						data : {
+							name : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.cityName,
+									id : item.id
+								});
+							}));
+						}
+
+					});
+				},
+				change : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#vendorCityId2").val("");
+					} else {
+						$("#vendorCityId2").val(ui.item.id);
+					}
+				},
+				select : function(event, ui) {
+					$("#vendorCityId2").val(ui.item.id);
+				}
+			});
+		});
+	</script>
 
 	<script type="text/javascript">
 		function submitform1() {
@@ -2286,6 +2784,69 @@
 			});
 		}
 	</script>
+	
+	<script type="text/javascript">
+		function submitform2() {
+			
+			var dataa2 = {
+				vendorName2 : $("#idName2").val(),
+				vendorAddress2 : $("#idAdd2").val(),
+				vendorAlias2 : $("#idvendorAlias2").val(),
+				vendorCityId2 : $("#vendorCityId2").val(),
+				vendorCompanyName2 : $("#idvendorCompanyName2").val(),
+				vendorMail2 : $("#idvendorMail2").val(),
+				vendorPh12 : $("#iphone2").val(),
+				vendorPh22 : $("#idvendorPh22").val(),
+				vendorPin2 : $("#idvendorPin2").val(),
+				vendorType2 : $("#idvendorType2").val(),
+				bankAccNo2 : $("#idbankAccNo2").val(),
+				bankName2 : $("#idbankName2").val(),
+				bankCheckLebel2 : $("#idbankCheckLebel2").val(),
+				bankIFSC2 : $("#idbankIFSC2").val(),
+				bankMICR2 : $("#idbankMICR2").val(),
+				bankRTGS2 : $("#idbankRTGS2").val(),
+				bankBranch2 : $("#idbankBranch2").val(),
+				taxTypeGroupId2 : $("#taxgroup2").val(),
+				bankCity6 : $("#bankCityId26").val(),
+				vendorCSTno2 : $("#idvendorCSTno2").val(),
+				vendorCSTregDate2 : $("#datepickerB2").val(),
+				vendorExciseRegNo2 : $("#idvendorExciseRegNo2").val(),
+				vendorExciseRegDate2 : $("#datepickerC2").val(),
+				vendorVATno2 : $("#idvendorVATno2").val(),
+				vendorVATregDate2 : $("#datepickerA2").val(),
+				vendorServiceTaxRegNo2 : $("#idvendorServiceTaxRegNo2").val(),
+				vendorServiceTaxRegDate2 : $("#datepickerD2").val(),
+				vendorPANno2 : $("#idvendorPANno2").val()
+			};
+$.ajax({
+				url : "addAgen",
+				dataType : "json",
+				data : dataa2,
+				type : "post",
+				success : function(data2) {
+					alert(data2.result);
+					$("#addA").modal('hide');
+				},
+				complete : function() {
+					$.ajax({
+						url:"getVendorByType",
+						data:{id:$("#idvendorType2").val()},
+						dataType:"json",
+						success:function(data){
+							$("#agentName").empty();
+							$("#agentName").append('<option value="0">Select Agent name</option>');
+							$.map(data,function(item){
+								$("#agentName").append('<option value="'+item.id+'">'+item.name+'</option>');								
+							});
+						}
+					});
+				}
+
+			}); 
+		}
+	</script>
+	
+	
 	<script>
 		$(function() {
 			$("#datepickerA").datepicker({
@@ -2337,6 +2898,61 @@
 
 		});
 	</script>
+	
+	
+	<script>
+		$(function() {
+			$("#datepickerA2").datepicker({
+				dateFormat : "dd-mm-yy",
+				maxDate : 0
+			});
+		});
+
+		$(function() {
+			$("#datepickerB2").datepicker({
+				dateFormat : "dd-mm-yy",
+				maxDate : 0
+			});
+		});
+		$(function() {
+			$("#datepickerC2").datepicker({
+				dateFormat : "dd-mm-yy",
+				maxDate : 0
+			});
+		});
+		$(function() {
+			$("#datepickerD2").datepicker({
+				dateFormat : "dd-mm-yy",
+				maxDate : 0
+			});
+		});
+
+		$(function() {
+
+			$("#iphone2").numericInput({
+
+				allowFloat : false,
+
+				allowNegative : false,
+
+			});
+
+		});
+
+		$(function() {
+
+			$("#idvendorPh22").numericInput({
+
+				allowFloat : false,
+
+				allowNegative : false,
+
+			});
+
+		});
+	</script>
+	
+	
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->

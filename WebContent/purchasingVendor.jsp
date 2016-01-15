@@ -388,7 +388,7 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" id="bankCity">
-														<input type="hidden" value=" " name="bankCity"
+														<input type="hidden" value="" name="bankCity"
 															id="bankCityId">
 													</div>
 													<br>

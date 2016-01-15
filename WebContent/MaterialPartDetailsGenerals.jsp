@@ -382,8 +382,7 @@
 
 												<a href="#" id="proImg">
 													<button id="sooImage" class="btn btn-info btn-sm"
-														style="position: absolute; left: 391px; top: 326px;">
-														Add Multiple Product Image</button>
+														style="float: right;">Add Multiple Product Image</button>
 												</a> <br> <br>
 
 												<div
@@ -622,12 +621,12 @@
 											id="universalProductCode" required placeholder=""
 											class="form-control"><br>
 									</div>
-									<div class="col-md-6">
+									<div class="col-md-5">
 										<div>
 											<label for="exampleInputPassword1">Unit Of
 												Measurement:</label> <select required name="uom" id="uomO"
 												onchange="uomFunction()" class="form-control"
-												style="width: 250px; height: 34px">
+												style="width: 205px; height: 34px">
 												<option value="0">select an UOM</option>
 												<c:forEach items="${sessionScope['ejb'].getAllQtyUnit()}"
 													var="qqty">
@@ -635,6 +634,13 @@
 												</c:forEach>
 											</select>
 										</div>
+									</div>
+									<div class="col-md-1">
+										<b class="font">&nbsp;&nbsp; </b> <a onclick="addUOM()"
+											title="Add New unit of measurement"> <img
+											style="margin-top: 4px;" height="30px" width="30px" alt=""
+											src="img/add.png">
+										</a>
 									</div>
 
 								</form>
@@ -645,15 +651,12 @@
 
 							<h3>Products:</h3>
 
-							<p style="font-size: 14px; margin-right: 342px;">
+							<p style="font-size: 20px; margin-right: 342px;">
 								<input type="radio" name="isReady" id="raw" onclick=""
-									value="raw">Raw &nbsp; <input type="radio"
+									value="raw">Raw &nbsp; &nbsp; &nbsp;<input type="radio"
 									name="isReady" id="ready" onclick="" value="ready">Ready
-							</p>
-
-							<p style="font-size: 14px; margin-right: 342px;">
-								<input type="checkbox" onclick="isSaledata()" id="salepart">This
-								Products is for sale:
+								&nbsp;&nbsp;&nbsp; <input type="checkbox" onclick="isSaledata()"
+									id="salepart">This Products is for sale
 							</p>
 
 							<hr width="100%">
@@ -864,7 +867,11 @@
 							<div class="col-md-6">
 								<div class="widget-area" align="left">
 									<h2 class="widget-title">
-										<strong>Tree</strong> List
+										<strong>Tree</strong> List <!-- <a onclick="addCat()"
+											title="Add New Category"> <img
+											style="margin-top: 4px;" height="30px" width="30px" alt=""
+											src="img/add.png">
+										</a> -->
 									</h2>
 									<p>
 										<a href="#" id="tree-expand-all">Expand all</a> | <a href="#"
@@ -1281,7 +1288,70 @@
 		<input type="hidden" id="pcodeCheck">
 	</div>
 
+	<div id="addUoM" class="modal fade" role="dialog" style="top: 25px;">
+
+		<form action="addUOMjson" method="post">
+
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">New Unit of Measurements :</h4>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-3">Select UOM type :</div>
+							<div class="col-md-7">
+								<select class="form-control" id="qtyUnitTypeIduom"
+									name="qtyUnitTypeIduom">
+									
+									<c:forEach items="${sessionScope['ejb'].getAllQtyUnitTypes()}"
+										var="qtyUnitType">
+										<option value="${qtyUnitType.id}">${qtyUnitType.name}</option>
+									</c:forEach>
+								</select>
+							</div>
+
+						</div>
+						<div class="row">
+							<div class="col-md-3">Abbreviation :</div>
+							<div class="col-md-9">
+								<input type="text" required name="abbreviationuom"
+									id="abbreviationuom" class="form-control">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3">Name UOM :</div>
+							<div class="col-md-9">
+								<input type="text" id="nameuom" required name="nameuom"
+									class="form-control">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3">UOM Description :</div>
+							<div class="col-md-9">
+								<textarea rows="" cols="" name="descriptionuom" id="descriptionuom"
+									class="form-control"></textarea>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<input type="button" class="btn btn-default"
+							onclick="submitform1()" value="Submit">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					</div>
+				</div>
+			</div>
+		</form>
+
+
+	</div>
+
 	<!-- Script -->
+
+
+
+
 
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -1737,6 +1807,60 @@
 			}
 		});
 	</script>
+	<script type="text/javascript">
+		function addUOM() {
+			$("#addUoM").modal("show");
+
+		}
+	</script>
+
+	<script type="text/javascript">
+		function submitform1() {
+
+			var dataa2 = {
+				descriptionuom : $("#descriptionuom").val(),
+				nameuom : $("#nameuom").val(),
+				abbreviationuom : $("#abbreviationuom").val(),
+				qtyUnitTypeIduom : $("#qtyUnitTypeIduom").val()
+
+			};
+			$
+					.ajax({
+						url : "addUOMjson",
+						dataType : "json",
+						data : dataa2,
+						type : "post",
+						success : function(data2) {
+							alert(data2.result);
+							$("#addUoM").modal('hide');
+						},
+						complete : function() {
+							$
+									.ajax({
+										url : "getuomByType",
+										data : {
+											id : $("#qtyUnitTypeIduom").val()
+										},
+										dataType : "json",
+										success : function(data) {
+											$("#uomO").empty();
+											$("#uomO")
+													.append(
+															'<option value="0">select an UOM</option>');
+											$.map(data, function(item) {
+												$("#uomO").append(
+														'<option value="'+item.id+'">'
+																+ item.name
+																+ '</option>');
+											});
+										}
+									});
+						}
+
+					});
+		}
+	</script>
+
 
 
 </body>
