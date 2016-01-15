@@ -40,16 +40,16 @@
 
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 <script>
-  $(function() {
-    $( document ).tooltip();
-  });
-  </script>
-  <style>
-  label {
+	$(function() {
+		$(document).tooltip();
+	});
+</script>
+<style>
+/* label {
     display: inline-block;
     width: 5em;
-  }
-  </style>
+  } */
+</style>
 <script src="js/jquery-ui/jquery-ui.js"></script>
 
 <script>
@@ -256,16 +256,16 @@
 													</c:forEach>
 												</select>
 											</div>
-											<div class="col-md-11">
-												&nbsp; &nbsp; &nbsp; <b class="font">Vendor Name :</b> <input 
+											<div class="col-md-10">
+												&nbsp; &nbsp; &nbsp; <b class="font">Vendor Name :</b> <input
 													type="text" class="form-control" id="vName" name="vName"
 													required="required" onchange="emptyVender();"><input
 													type="hidden" id="vId" name="vId">
 											</div>
-											<div class="col-md-1">
-												<b class="font">&nbsp;&nbsp; </b> <a onclick="addVendor()" title="Add New Vendor.">
-													<img style="margin-top: 4px;" height="30px" width="30px"
-													alt="" src="img/add.png">
+											<div class="col-md-2">
+												<b class="font">&nbsp;&nbsp; </b> <a onclick="addVendor()"
+													title="Add New Vendor."> <img style="margin-top: 4px;"
+													height="30px" width="30px" alt="" src="img/add.png">
 												</a>
 											</div>
 
@@ -625,7 +625,9 @@
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
 						onclick="closePayment();">&times;</button>
-				<center><h3 class="modal-title" >Vendor add</h3></center>
+					<center>
+						<h3 class="modal-title">Vendor add</h3>
+					</center>
 				</div>
 				<div class="modal-body">
 					<form role="form" class="sec" action="addVendorbyjson" id="addVen"
@@ -895,10 +897,18 @@
 									</div>
 									<div class="col-md-9">
 										<select class="form-control" name="vendorType"
-											id="idvendorType" value="${vendor.vendorType}">
+											id="idvendorType" value="${vendor.vendorType}"
+											disabled="disabled">
+
+											<option value="0">Select Vendor Type</option>
 											<c:forEach items="${sessionScope['ejb'].getAllVendorType()}"
 												var="vType">
-												<option value="${vType.id}">${vType.type}</option>
+												<c:choose>
+													<c:when
+														test="${vType.type.equals('Vendor') || vType.type.equals('Purchase Agent')}">
+														<option value="${vType.id}">${vType.type}</option>
+													</c:when>
+												</c:choose>
 											</c:forEach>
 										</select>
 									</div>
@@ -1740,6 +1750,7 @@
 		function getVendorNameByType() {
 			$("#vName").val("");
 			$("#vDetail").val("");
+			$("#idvendorType").val($("#vendorType").val());
 			if ($("#vendorType").val() == 0) {
 				$("#agent").prop("disabled", "disabled");
 				$("#agent").prop("checked", false);
@@ -2306,10 +2317,9 @@
 
 			$("#iphone").numericInput({
 
-				allowFloat : false, 
+				allowFloat : false,
 
 				allowNegative : false,
-			
 
 			});
 
@@ -2319,11 +2329,9 @@
 
 			$("#idvendorPh2").numericInput({
 
-				allowFloat : false, 
+				allowFloat : false,
 
 				allowNegative : false,
-				
-			
 
 			});
 
