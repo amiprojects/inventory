@@ -102,16 +102,13 @@
 		</c:if>
 	</c:if>
 	<c:set var="purchasePro"
-		value="${sessionScope['ejb'].getPurchase_Product_DetailsByProId(requestScope['proid1'])}" />
+		value="${sessionScope['ejb'].getPurchase_Product_DetailsByProductIdAndCompany(requestScope['proid1'])}" />
 
 	<c:set var="salesPro"
-		value="${sessionScope['ejb'].getSales_Product_DetailsByProId(requestScope['proid1'])}" />
+		value="${sessionScope['ejb'].getSales_Product_DetailsByProductIdAndCompany(requestScope['proid1'])}" />
 
 	<c:set var="jobProList"
 		value="${sessionScope['ejb'].getJobAssignmentProductDetailsByproductId(requestScope['proid1'])}" />
-
-
-
 
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
@@ -127,8 +124,6 @@
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
 								<h3 style="margin-top: 11px;">Stock Show Details</h3>
-
-
 							</div>
 
 
@@ -365,7 +360,7 @@
 												<div style="width: 100%; overflow-x: scroll">
 													<table class="table table-striped table-bordered">
 
-														<tr  style="width: 100%;">
+														<tr style="width: 100%;">
 															<td><b>Date</b></td>
 
 

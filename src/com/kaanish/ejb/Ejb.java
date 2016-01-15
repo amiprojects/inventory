@@ -262,11 +262,10 @@ public class Ejb {
 				"select c from QtyUnitType c", QtyUnitType.class);
 		return q.getResultList();
 	}
-	
+
 	public List<QtyUnit> getUOMByUOMTypeId(int id) {
 		TypedQuery<QtyUnit> q = em
-				.createQuery(
-						"select c from QtyUnit c where c.QtyUnit.id=:Id",
+				.createQuery("select c from QtyUnit c where c.QtyUnit.id=:Id",
 						QtyUnit.class);
 		q.setParameter("Id", id);
 		return q.getResultList();
@@ -613,12 +612,11 @@ public class Ejb {
 		q.setParameter("name", "%" + nm.toUpperCase() + "%");
 		return q.getResultList();
 	}
-	
+
 	public List<Vendor> getVendorsByVendorTypeId(int id) {
-		TypedQuery<Vendor> q = em
-				.createQuery(
-						"select c from Vendor c where c.vendorType.id=:Id",
-						Vendor.class);
+		TypedQuery<Vendor> q = em.createQuery(
+				"select c from Vendor c where c.vendorType.id=:Id",
+				Vendor.class);
 		q.setParameter("Id", id);
 		return q.getResultList();
 	}
@@ -1192,6 +1190,32 @@ public class Ejb {
 		return lst;
 	}
 
+	public List<Purchase_Product_Details> getPurchase_Product_DetailsByProductIdAndCompany(
+			int id) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		List<Purchase_Product_Details> lst = new ArrayList<>();
+		TypedQuery<Purchase_Product_Details> q = em
+				.createQuery(
+						"select s from Purchase_Product_Details s where s.companyInfo.id=:cId AND s.productDetail.id=:Id and s.initialInventory=:initialInventory",
+						Purchase_Product_Details.class);
+		q.setParameter("Id", id);
+		q.setParameter("initialInventory", true);
+		q.setParameter("cId", cId);
+		lst = q.getResultList();
+
+		TypedQuery<Purchase_Product_Details> q1 = em
+				.createQuery(
+						"select s from Purchase_Product_Details s where s.companyInfo.id=:cId AND s.productDetail.id=:Id and s.initialInventory=:initialInventory ORDER BY s.purchase_Entry.purchase_date DESC",
+						Purchase_Product_Details.class);
+		q1.setParameter("Id", id);
+		q1.setParameter("initialInventory", false);
+		q1.setParameter("cId", cId);
+		lst.addAll(q1.getResultList());
+
+		return lst;
+	}
+
 	public List<Purchase_Product_Details> getPurchase_Product_DetailsByPurchaseEntryId(
 			int id) throws Throwable {
 		finalize();
@@ -1570,6 +1594,26 @@ public class Ejb {
 		TypedQuery<ProductDetail> q = em.createQuery(
 				"select c from ProductDetail c", ProductDetail.class);
 		return q.getResultList();
+	}
+
+	public List<ProductDetail> getAllProductDetailByCompany() {
+		Users usr = getUserById((String) httpSession.getAttribute("user"));
+		TypedQuery<ProductDetail> q = em.createQuery(
+				"select c from ProductDetail c", ProductDetail.class);
+		List<ProductDetail> listpro = new ArrayList<ProductDetail>();
+		HashSet<ProductDetail> hash = new HashSet<ProductDetail>();
+		for (ProductDetail pd : q.getResultList()) {
+			for (Purchase_Product_Details ppd : pd
+					.getPurchase_Product_Details()) {
+				if (ppd.getCompanyInfo().equals(usr.getCompanyInfo())) {
+					listpro.add(ppd.getProductDetail());
+				}
+			}
+		}
+		hash.addAll(listpro);
+		listpro.clear();
+		listpro.addAll(hash);
+		return listpro;
 	}
 
 	public List<ProductDetail> getAllActiveProductDetail() {
@@ -2125,6 +2169,19 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<SalesProductDetails> getSales_Product_DetailsByProductIdAndCompany(
+			int id) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<SalesProductDetails> q = em
+				.createQuery(
+						"select s from SalesProductDetails s where s.salesEntry.companyInfo.id=:cId AND s.purchase_Product_Details.productDetail.id=:Id ORDER BY s.salesEntry.sales_date DESC ",
+						SalesProductDetails.class);
+		q.setParameter("Id", id);
+		q.setParameter("cId", cId);
+		return q.getResultList();
+	}
+
 	/**************** Customer *****************/
 
 	public void setCustomerEntry(CustomerEntry customerEntry) {
@@ -2163,7 +2220,8 @@ public class Ejb {
 
 	public List<ProductDetail> getProductDetailsByCodeDescriptionCategory(
 			String code, String description, String name) {
-
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
 		TypedQuery<ProductDetail> q = em
 				.createQuery(
 						"select c from ProductDetail c where c.code=:code OR c.description=:description OR c.category.name=:name ",
@@ -2171,7 +2229,20 @@ public class Ejb {
 		q.setParameter("code", code);
 		q.setParameter("description", description);
 		q.setParameter("name", name);
-		return q.getResultList();
+		List<ProductDetail> listpro = new ArrayList<ProductDetail>();
+		HashSet<ProductDetail> hash = new HashSet<ProductDetail>();
+		for (ProductDetail pd : q.getResultList()) {
+			for (Purchase_Product_Details ppd : pd
+					.getPurchase_Product_Details()) {
+				if (ppd.getCompanyInfo().getId() == cId) {
+					listpro.add(ppd.getProductDetail());
+				}
+			}
+		}
+		hash.addAll(listpro);
+		listpro.clear();
+		listpro.addAll(hash);
+		return listpro;
 	}
 
 	/******************************

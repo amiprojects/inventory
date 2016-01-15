@@ -136,7 +136,7 @@
 												<c:set var="count" value="${1}" />
 
 												<c:forEach
-													items="${sessionScope['ejb'].getAllProductDetail()}"
+													items="${sessionScope['ejb'].getAllProductDetailByCompany()}"
 													var="amiProStock1">
 													<c:if
 														test="${amiProStock1.purchase_Product_Details.size()>0}">
