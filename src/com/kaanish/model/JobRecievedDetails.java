@@ -23,6 +23,7 @@ public class JobRecievedDetails implements Serializable {
 	private int qtyRecieved;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date recievingDate;
+	private boolean isComplete;
 
 	@ManyToOne
 	@JoinColumn(name = "jobAssignmentProductsId")
@@ -69,6 +70,14 @@ public class JobRecievedDetails implements Serializable {
 
 	public void setPurchase_Product_Details(Purchase_Product_Details purchase_Product_Details) {
 		this.purchase_Product_Details = purchase_Product_Details;
+	}
+
+	public boolean isComplete() {
+		return isComplete;
+	}
+
+	public void setComplete(boolean isComplete) {
+		this.isComplete = isComplete;
 	}
 
 }

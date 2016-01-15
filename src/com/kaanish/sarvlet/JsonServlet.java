@@ -362,6 +362,7 @@ public class JsonServlet extends HttpServlet {
 					}
 				break;
 				/****************************AgentShorcut**************/
+				
 			case "addAgen":
 				resp.setContentType("application/json");
 				JsonGeneratorFactory jsg2=Json.createGeneratorFactory(null);
@@ -464,9 +465,11 @@ public class JsonServlet extends HttpServlet {
 				
 				
 			case "getuomByType":
-				resp.getWriter().print(ejb.getUOMByUOMTypeId(Integer.parseInt(req.getParameter("id"))));
+				resp.getWriter().print(ejb.getAllQtyUnit());
 				break;
 				/**********************************************/
+				
+				
 			case "addUOMjson":
 				resp.setContentType("application/json");
 				JsonGeneratorFactory jsg22=Json.createGeneratorFactory(null);
@@ -496,6 +499,14 @@ public class JsonServlet extends HttpServlet {
 				} else {
 					gen222.writeStartObject().write("result","Duplicate UOM Entry").writeEnd().close();
 				}
+				
+				break;
+				
+			case "addCatejson":
+				resp.setContentType("application/json");
+				JsonGeneratorFactory jsg222=Json.createGeneratorFactory(null);
+				JsonGenerator gen2222=jsg222.createGenerator(resp.getOutputStream());
+				
 				
 				break;
 				

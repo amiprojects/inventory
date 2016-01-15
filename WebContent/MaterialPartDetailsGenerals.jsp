@@ -273,10 +273,10 @@
 												class="">Category: </label> <input type="text" id="deptcat"
 												name="pCatSearch" class="form-control"> <br> <input
 												class="btn green btn-default" type="submit" value="Search">
-											<a href="materialSearch.jsp"> <input
+											<a href="MaterialPartDetailsGenerals.jsp"> <input
 												class="btn green btn-default" type="button" value="Show All"></a>
 										</form>
-									</div>
+									</div> 
 
 									<!-- ************************************************endSearch*************************************************************** -->
 									<br> <br>
@@ -867,11 +867,10 @@
 							<div class="col-md-6">
 								<div class="widget-area" align="left">
 									<h2 class="widget-title">
-										<strong>Tree</strong> List <!-- <a onclick="addCat()"
-											title="Add New Category"> <img
-											style="margin-top: 4px;" height="30px" width="30px" alt=""
-											src="img/add.png">
-										</a> -->
+										<strong>Tree</strong> List &nbsp; &nbsp; <a onclick="addCat()"
+											title="Add New Category"> <img style="margin-top: 4px;"
+											height="30px" width="30px" alt="" src="img/add.png">
+										</a>
 									</h2>
 									<p>
 										<a href="#" id="tree-expand-all">Expand all</a> | <a href="#"
@@ -1304,7 +1303,7 @@
 							<div class="col-md-7">
 								<select class="form-control" id="qtyUnitTypeIduom"
 									name="qtyUnitTypeIduom">
-									
+
 									<c:forEach items="${sessionScope['ejb'].getAllQtyUnitTypes()}"
 										var="qtyUnitType">
 										<option value="${qtyUnitType.id}">${qtyUnitType.name}</option>
@@ -1330,8 +1329,8 @@
 						<div class="row">
 							<div class="col-md-3">UOM Description :</div>
 							<div class="col-md-9">
-								<textarea rows="" cols="" name="descriptionuom" id="descriptionuom"
-									class="form-control"></textarea>
+								<textarea rows="" cols="" name="descriptionuom"
+									id="descriptionuom" class="form-control"></textarea>
 							</div>
 						</div>
 					</div>
@@ -1346,6 +1345,71 @@
 
 
 	</div>
+
+	<div id="addCatJ" class="modal fade" role="dialog" style="top: 25px;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">New Unit of Measurements :</h4>
+				</div>
+				<div class="modal-body">
+					<form action="#">
+						<input type="hidden" value="" id="status"> <input
+							type="hidden" value="" id="id">
+						<div class="widget-area" style="width: 60%">
+							<div class='toast' style='display: none'>
+								<h3 id="msg">${requestScope['msg']}</h3>
+							</div>
+							<div class="breadcrumbs">
+								<ul>
+									<li>Add Department</li>
+								</ul>
+							</div>
+							<span>Department name: </span> <input type="text" id="dName"
+								class="form-control"> <span>Parent</span>&nbsp; <input
+								type="radio" name="parent" value="y">&nbsp;Y &nbsp;<input
+								type="radio" name="parent" value="n" checked="checked">&nbsp;N
+							<br> <span>Parent name: </span><span id="perentOfSubDept"></span>
+							<input type="text" class="form-control" id="prnt"
+								disabled="disabled"><br>
+						</div>
+						<div class="widget-area">
+							<label for="" class="font">Attribute 1:</label><input type="text"
+								class="form-control" placeholder="" disabled="disabled"
+								id="attr1" onchange="attr1F();"><label for=""
+								class="font">Attribute 2:</label><input type="text"
+								class="form-control" placeholder="" disabled="disabled"
+								id="attr2" onchange="attr2F();"><label for=""
+								class="font">Attribute 3:</label><input type="text"
+								class="form-control" placeholder="" disabled="disabled"
+								id="attr3" onchange="attr3F();"><label for=""
+								class="font">Attribute 4:</label><input type="text"
+								class="form-control" placeholder="" disabled="disabled"
+								id="attr4" onchange="attr4F();"><label for=""
+								class="font">Attribute 5:</label><input type="text"
+								class="form-control" placeholder="" disabled="disabled"
+								id="attr5" onchange="attr5F();"><label for=""
+								class="font">Attribute 6:</label><input type="text"
+								class="form-control" placeholder="" disabled="disabled"
+								id="attr6" onchange="attr6F();">
+
+							<center>
+								<input type="button" value="submit" onclick="addBtn()"
+									class="btn green pull-right">
+							</center>
+						</div>
+					</form>
+				</div>
+
+				<div class="modal-footer"></div>
+
+			</div>
+		</div>
+
+	</div>
+
+
 
 	<!-- Script -->
 
@@ -1810,7 +1874,10 @@
 	<script type="text/javascript">
 		function addUOM() {
 			$("#addUoM").modal("show");
+		}
 
+		function addCat() {
+			$("#addCatJ").modal("show");
 		}
 	</script>
 
@@ -1861,7 +1928,211 @@
 		}
 	</script>
 
+	<script>
+		$("input:radio[name=parent]").click(function() {
+			var value = $(this).val();
+			//alert(value);
+			if (value == "y") {
+				$("#prnt").prop("disabled", false);
+			} else {
+				$("#prnt").prop("disabled", true);
+			}
+		});
 
+		$(function() {
+			$("#datepicker").datepicker();
+		});
+		function addDept() {
+			$("#createDept").modal('show');
+		}
+		function createSubDept(id) {
+			$("#createSubDept" + id).modal('show');
+		}
+		function createCategory(id) {
+			$("#createCategory" + id).modal('show');
+		}
+		function createProduct(id) {
+			$("#createProduct" + id).modal('show');
+		}
+		function attr1F() {
+			$("#attr2").prop("disabled", false);
+			$("#attr1").prop("disabled", true);
+		}
+		function attr2F() {
+			$("#attr3").prop("disabled", false);
+			$("#attr2").prop("disabled", true);
+		}
+		function attr3F() {
+			$("#attr4").prop("disabled", false);
+			$("#attr3").prop("disabled", true);
+		}
+		function attr4F() {
+			$("#attr5").prop("disabled", false);
+			$("#attr4").prop("disabled", true);
+		}
+		function attr5F() {
+			$("#attr6").prop("disabled", false);
+			$("#attr5").prop("disabled", true);
+		}
+		function attr6F() {
+			$("#attr6").prop("disabled", true);
+		}
+	</script>
+
+	<script type="text/javascript">
+		$(function() {
+			$("#prnt").autocomplete(
+					{
+						source : function(req, resp) {
+							$.ajax({
+								url : "getAllDepartments",
+								dataType : "json",
+								data : {
+									name : req.term
+								},
+								success : function(data) {
+									resp($.map(data, function(item) {
+										return {
+											value : item.name,
+											id : item.id,
+											status : item.status,
+											pname : item.pName
+										}
+									}));
+								}
+							});
+						},
+						change : function(event, ui) {
+							if (ui.item == null) {
+								$(this).val("");
+								$("#id").val("");
+								$('#status').val("");
+								$("#perentOfSubDept").html("");
+								$("#attr1").prop("disabled", true);
+								$("#attr2").prop("disabled", true);
+								$("#attr3").prop("disabled", true);
+								$("#attr4").prop("disabled", true);
+								$("#attr5").prop("disabled", true);
+								$("#attr6").prop("disabled", true);
+							} else {
+								$("#id").val(ui.item.id);
+								$('#status').val(ui.item.status);
+								if (ui.item.status == "2") {
+									$("#perentOfSubDept").html(
+											'Perent Department: '
+													+ ui.item.pname);
+									$("#attr1").prop("disabled", false);
+
+								} else {
+									$("#perentOfSubDept").html("");
+									$("#attr1").prop("disabled", true);
+									$("#attr2").prop("disabled", true);
+									$("#attr3").prop("disabled", true);
+									$("#attr4").prop("disabled", true);
+									$("#attr5").prop("disabled", true);
+									$("#attr6").prop("disabled", true);
+								}
+							}
+						},
+						select : function(event, ui) {
+							if (ui.item == null) {
+								$(this).val("");
+								$("#id").val("");
+								$('#status').val("");
+								$("#attr1").prop("disabled", true);
+								$("#attr2").prop("disabled", true);
+								$("#attr3").prop("disabled", true);
+								$("#attr4").prop("disabled", true);
+								$("#attr5").prop("disabled", true);
+								$("#attr6").prop("disabled", true);
+							} else {
+								$("#id").val(ui.item.id);
+								$('#status').val(ui.item.status);
+								if (ui.item.status == "2") {
+									$("#perentOfSubDept").html(
+											'Perent Department: '
+													+ ui.item.pname);
+									$("#attr1").prop("disabled", false);
+												} else {
+									$("#perentOfSubDept").html("");
+									$("#attr1").prop("disabled", true);
+									$("#attr2").prop("disabled", true);
+									$("#attr3").prop("disabled", true);
+									$("#attr4").prop("disabled", true);
+									$("#attr5").prop("disabled", true);
+									$("#attr6").prop("disabled", true);
+								}
+							}
+						}
+					});
+		});
+		function addBtn() {
+			if ($("#dName").val() != "") {
+				if ($('input[name=parent]:checked').val() == 'n') {
+					$.ajax({
+						type : "post",
+						url : "createDept",
+						data : {
+							name : $("#dName").val()
+						},
+						success : function(data) {
+							$("#dName").val("");
+						}
+					});
+				} else if ($("#prnt").val() != "") {
+					if ($('#status').val() == "1") {
+						$.ajax({
+							type : "post",
+							url : "createSubDept",
+							data : {
+								name : $("#dName").val(),
+								deptId : $("#id").val()
+							},
+							success : function(data) {
+								$("#dName").val("");
+								$("#prnt").val("");
+							}
+						});
+					} else if ($('#status').val() == "2") {
+						if ($("#attr1").val() != 0 || $("#attr2").val() != 0
+								|| $("#attr3").val() != 0
+								|| $("#attr4").val() != 0
+								|| $("#attr5").val() != 0
+								|| $("#attr6").val() != 0) {
+							$.ajax({
+								type : "post",
+								url : "createCategory",
+								data : {
+									name : $("#dName").val(),
+									subDeptId : $("#id").val(),
+									attr1 : $("#attr1").val(),
+									attr2 : $("#attr2").val(),
+									attr3 : $("#attr3").val(),
+									attr4 : $("#attr4").val(),
+									attr5 : $("#attr5").val(),
+									attr6 : $("#attr6").val()
+								},
+								success : function(data) {
+									$("#dName").val("");
+									$("#prnt").val("");
+
+								}
+							});
+						} else {
+							alert("Please insert atleast one attribute");
+						}
+					} else {
+						alert("invalid denomination.");
+					}
+				} else {
+					alert("Please enter parent name");
+				}
+			} else {
+				alert("Please enter Department name")
+			}
+
+		}
+	</script>
 
 </body>
 
