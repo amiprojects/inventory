@@ -149,12 +149,12 @@
 												<c:set var="fy"
 													value="${sessionScope['ejb'].getCurrentFinancialYear()}" />
 												<c:set var="cno"
-													value="${sessionScope['ejb'].getLastJobChallanNumber()+1}" />
+													value="${sessionScope['ejb'].getLastJobChallanNumberByCompany()+1}" />
 												<c:set var="csuf"
-													value="${sessionScope['ejb'].getLastJobChallanSuffix()+1}" />
+													value="${sessionScope['ejb'].getLastJobChallanSuffixByCompany()+1}" />
 												<c:set var="suf" value="JOB" />
 												<c:set var="bs"
-													value="${sessionScope['ejb'].getLastBillSetupBySufix(suf)}" />
+													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompany(suf)}" />
 												<fmt:formatNumber value="${cno}" var="lastChNo"
 													minIntegerDigits="4" groupingUsed="false" />
 												<fmt:formatNumber value="${csuf}" var="lastSuf"
@@ -300,7 +300,7 @@
 								onchange="getProdDetByPurchaseProdDetId();" required="required">
 								<option value="0">Select Product code</option>
 								<c:forEach
-									items="${sessionScope['ejb'].getPurchaseProductDetailsByQty()}"
+									items="${sessionScope['ejb'].getPurchaseProductDetailsByQtyAndCompany()}"
 									var="pCode">
 									<option value="${pCode.id}">${pCode.productDetail.code}&nbsp;(<c:choose>
 											<c:when test="${pCode.initialInventory.equals(false)}">

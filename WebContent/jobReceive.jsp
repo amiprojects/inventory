@@ -65,16 +65,12 @@
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
 								<h3 style="margin-top: 11px;">Job Receive</h3>
-
 							</div>
-
-
 						</div>
 						<div class="col-md-12">
 							<div class="widget-area">
-
 								<div class="col-md-12">
-									<form id="jobform" action="jChallanSearch" method="get">
+									<form id="jobform" action="jChallanSearch" method="post">
 										<table>
 											<tr>
 												<td><h4>Enter Jobber Challan Id:</h4></td>

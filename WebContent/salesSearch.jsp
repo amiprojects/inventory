@@ -105,7 +105,7 @@
 												style="margin-right: 0; padding-right: 0;">
 												<input type="text" class="form-control" readonly="readonly"
 													name="companyInitial"
-													value="${sessionScope['ejb'].getLastBillSetupBySufix('INV').companyInitial}">
+													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompany('INV').companyInitial}">
 											</div>
 											<div class="col-md-2" style="margin: 0; padding: 0;">
 												<select class="form-control" name="fynYear">
@@ -136,7 +136,7 @@
 											<div class="col-md-1" style="margin: 0; padding: 0;">
 												<input type="text" class="form-control" readonly="readonly"
 													name="billType"
-													value="${sessionScope['ejb'].getLastBillSetupBySufix('INV').billType}">
+													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompany('INV').billType}">
 											</div>
 											<div class="col-md-2" style="margin: 0; padding: 0;">
 												<input type="text" class="form-control" name="autoNum">

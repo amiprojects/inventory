@@ -241,7 +241,7 @@ public class JsonServlet extends HttpServlet {
 				resp.getWriter().print(ejb.getAllQtyUnitByNameOrAbv(req.getParameter("name")));
 				break;
 			case "getProductsForSaleByCode":
-				resp.getWriter().print(ejb.getSalebleProductsByQtyAndCode(req.getParameter("codeParts")));
+				resp.getWriter().print(ejb.getSalebleProductsByQtyAndCodeAndCompany(req.getParameter("codeParts")));
 				break;
 			case "deleteUOM":
 				PrintWriter pw = new PrintWriter(resp.getOutputStream());

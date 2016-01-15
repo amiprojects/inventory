@@ -36,7 +36,8 @@
 		<c:redirect url="index.jsp" />
 	</c:if>
 
-	<c:if test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminKainat')}">
+	<c:if
+		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminKainat')}">
 
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
@@ -117,7 +118,7 @@
 												style="margin-right: 0; padding-right: 0;">
 												<input type="text" class="form-control" readonly="readonly"
 													name="companyInitial"
-													value="${sessionScope['ejb'].getLastBillSetupBySufix('JOB').companyInitial}">
+													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompany('JOB').companyInitial}">
 											</div>
 											<div class="col-md-2" style="margin: 0; padding: 0;">
 												<select class="form-control" name="fynYear">
@@ -148,7 +149,7 @@
 											<div class="col-md-1" style="margin: 0; padding: 0;">
 												<input type="text" class="form-control" readonly="readonly"
 													name="billType"
-													value="${sessionScope['ejb'].getLastBillSetupBySufix('JOB').billType}">
+													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompany('JOB').billType}">
 											</div>
 											<div class="col-md-2" style="margin: 0; padding: 0;">
 												<input type="text" class="form-control" name="autoNum">
