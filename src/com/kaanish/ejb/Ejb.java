@@ -261,6 +261,15 @@ public class Ejb {
 				"select c from QtyUnitType c", QtyUnitType.class);
 		return q.getResultList();
 	}
+	
+	public List<QtyUnit> getUOMByUOMTypeId(int id) {
+		TypedQuery<QtyUnit> q = em
+				.createQuery(
+						"select c from QtyUnit c where c.QtyUnit.id=:Id",
+						QtyUnit.class);
+		q.setParameter("Id", id);
+		return q.getResultList();
+	}
 
 	/************** for payment status ***************/
 	public void setPaymentStatus(PaymentStatus paymentStatus) {
@@ -601,6 +610,15 @@ public class Ejb {
 						Vendor.class);
 		q.setParameter("Id", id);
 		q.setParameter("name", "%" + nm.toUpperCase() + "%");
+		return q.getResultList();
+	}
+	
+	public List<Vendor> getVendorsByVendorTypeId(int id) {
+		TypedQuery<Vendor> q = em
+				.createQuery(
+						"select c from Vendor c where c.vendorType.id=:Id",
+						Vendor.class);
+		q.setParameter("Id", id);
 		return q.getResultList();
 	}
 

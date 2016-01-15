@@ -20,6 +20,7 @@ import javax.servlet.http.HttpSession;
 import com.kaanish.ejb.Ejb;
 import com.kaanish.model.AccountDetails;
 import com.kaanish.model.Department;
+import com.kaanish.model.QtyUnit;
 import com.kaanish.model.QtyUnitConversionPK;
 import com.kaanish.model.QtyUnitType;
 import com.kaanish.model.SubDepartment;
@@ -36,7 +37,7 @@ import com.kaanish.util.DepartmentCotractor;
 		"/getCityByStateByCityName", "/getVendorTypeById", "/getProductbyProductCode",
 		"/getSaleblePurchaseProductDetailsByProductCodeAndQuantity", "/getVendorsByVendorTypeJobberAndName",
 		"/getProductsForSaleByCode", "/deleteUOM", "/getVendorsByVendorTypeSalesAgentAndName",
-		"/getSalesAgentDetailsById", "/getPurchaseProductDetailsByIdForSale", "/getCustomerByPh", "/checkPcode","/addVendorbyjson" })
+		"/getSalesAgentDetailsById", "/getPurchaseProductDetailsByIdForSale", "/getCustomerByPh", "/checkPcode","/addVendorbyjson","/addAgen","/getVendorByType","/addUOMjson","/getuomByType" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -360,8 +361,144 @@ public class JsonServlet extends HttpServlet {
 						gen2.writeStartObject().write("result","Duplicate vendor Entry").writeEnd().close();
 					}
 				break;
+				/****************************AgentShorcut**************/
+			case "addAgen":
+				resp.setContentType("application/json");
+				JsonGeneratorFactory jsg2=Json.createGeneratorFactory(null);
+				JsonGenerator gen22=jsg2.createGenerator(resp.getOutputStream());
+				HttpSession httpSession2=req.getSession();
+				
 				
 
+					Vendor vendor2 =new Vendor();				
+					
+					List<Vendor> vend2 = ejb.getAllVendors();
+					int counter22 = 0;
+					for (Vendor ven2 : vend2) {
+
+						if (ven2.getEmail().equals(req.getParameter("vendorMail2"))
+
+								|| ven2.getPh1().equals(req.getParameter("vendorPh12"))) {
+
+							counter22 = 1;
+							break;
+						}
+					}
+					if (counter22 == 0) {
+						
+						
+						vendor2 = new Vendor();
+						AccountDetails accountDetails2 = new AccountDetails();
+						Date dt2 = new Date();
+
+						vendor2.setName(req.getParameter("vendorName2").toUpperCase());
+						vendor2.setLastModifiedDate(dt2);
+						vendor2.setAddress(req.getParameter("vendorAddress2"));
+						vendor2.setAliseName(req.getParameter("vendorAlias2"));
+						vendor2.setCity(ejb.getCityById(Integer.parseInt(req.getParameter("vendorCityId2"))));
+						vendor2.setCompanyName(req.getParameter("vendorCompanyName2"));
+						vendor2.setEmail(req.getParameter("vendorMail2"));
+						vendor2.setPh1(req.getParameter("vendorPh12"));
+						vendor2.setPh2(req.getParameter("vendorPh22"));
+						vendor2.setPinCode(req.getParameter("vendorPin2"));
+						vendor2.setVendorType(ejb.getVendorTypeById(Integer.parseInt(req.getParameter("vendorType2"))));
+						vendor2.setUsers(ejb.getUserById((String) httpSession2.getAttribute("user")));
+
+						accountDetails2.setBankAccountNumber(req.getParameter("bankAccNo2"));
+						accountDetails2.setBankChequeLable(req.getParameter("bankCheckLebel2"));
+						accountDetails2.setBankIFSCnumber(req.getParameter("bankIFSC2"));
+						accountDetails2.setBankMICRnumber(req.getParameter("bankMICR2"));
+						accountDetails2.setBankName(req.getParameter("bankName2"));
+						accountDetails2.setBankRTGCnumber(req.getParameter("bankRTGS2"));
+						accountDetails2.setBranch(req.getParameter("bankBranch2"));
+
+						if (!req.getParameter("bankCity6").equals("")) {
+							accountDetails2.setCity(ejb.getCityById(Integer.parseInt(req.getParameter("bankCity6"))));
+						}
+
+						accountDetails2.setCstNumber(req.getParameter("vendorCSTno2"));
+						if (!req.getParameter("vendorCSTregDate2").equals("")) {
+							accountDetails2
+									.setCstRegistrationDate(DateConverter.getDate(req.getParameter("vendorCSTregDate2")));
+						}
+						if (!req.getParameter("vendorExciseRegDate2").equals("")) {
+							accountDetails2
+									.setCstRegistrationDate(DateConverter.getDate(req.getParameter("vendorExciseRegDate2")));
+						}
+						if (!req.getParameter("vendorServiceTaxRegDate2").equals("")) {
+							accountDetails2.setCstRegistrationDate(
+									DateConverter.getDate(req.getParameter("vendorServiceTaxRegDate2")));
+						}
+						if (!req.getParameter("vendorVATregDate2").equals("")) {
+							accountDetails2
+									.setCstRegistrationDate(DateConverter.getDate(req.getParameter("vendorVATregDate2")));
+						}
+
+						accountDetails2.setExciseRegistrationNumber(req.getParameter("vendorExciseRegNo2"));
+						accountDetails2.setPanNumber(req.getParameter("vendorPANno2"));
+
+						accountDetails2.setServiceTaxRegistrationNumber(req.getParameter("vendorServiceTaxRegNo2"));
+						accountDetails2.setVatNumber(req.getParameter("vendorVATno2"));
+
+						accountDetails2.setTax_Type_Group(
+								ejb.getTax_Type_GroupById(Integer.parseInt(req.getParameter("taxTypeGroupId2"))));
+
+						accountDetails2.setUsers(ejb.getUserById((String) httpSession2.getAttribute("user")));
+						accountDetails2.setVendor(vendor2);
+
+						ejb.setVendor(vendor2);
+						ejb.setAccountDetails(accountDetails2);
+
+						/*msg = "vendor added successfully;";*/
+						gen22.writeStartObject().write("result","Agent added successfully").writeEnd().close();
+
+					} else {
+						/*msg = "Duplicate vendor Entry";*/
+						gen22.writeStartObject().write("result","Duplicate Agent Entry").writeEnd().close();
+					}
+				break;
+				/*************Ajax form drop down**********************/
+			case "getVendorByType":
+				resp.getWriter().print(ejb.getVendorsByVendorTypeId(Integer.parseInt(req.getParameter("id"))));
+				break;
+				
+				
+			case "getuomByType":
+				resp.getWriter().print(ejb.getUOMByUOMTypeId(Integer.parseInt(req.getParameter("id"))));
+				break;
+				/**********************************************/
+			case "addUOMjson":
+				resp.setContentType("application/json");
+				JsonGeneratorFactory jsg22=Json.createGeneratorFactory(null);
+				JsonGenerator gen222=jsg22.createGenerator(resp.getOutputStream());
+				
+				QtyUnit qtyUnit = new QtyUnit();
+				int flagg = 0;
+				for (QtyUnit qut : ejb.getAllQtyUnit()) {
+					if ((qut.getName().equalsIgnoreCase(
+							req.getParameter("nameuom")) || (qut.getAbbreviation()
+							.equalsIgnoreCase(req.getParameter("abbreviationuom"))))) {
+						flagg = 1;
+						break;
+					}
+				}
+				if (flagg == 0) {
+					qtyUnit = new QtyUnit();
+					qtyUnit.setName(req.getParameter("nameuom").toUpperCase());
+					qtyUnit.setAbbreviation(req.getParameter("abbreviationuom")
+							.toUpperCase());
+					qtyUnit.setDescription(req.getParameter("descriptionuom")
+							.toUpperCase());
+					qtyUnit.setQtyUnitType(ejb.getQtyUnitTypeById(Integer
+							.parseInt(req.getParameter("qtyUnitTypeIduom"))));
+					ejb.setQtyUnit(qtyUnit);
+					gen222.writeStartObject().write("result","UOM added successfully").writeEnd().close();
+				} else {
+					gen222.writeStartObject().write("result","Duplicate UOM Entry").writeEnd().close();
+				}
+				
+				break;
+				
 			default:
 				break;
 			}
