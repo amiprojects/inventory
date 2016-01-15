@@ -39,18 +39,15 @@
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
 
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+
+ 
+<script src="js/jquery-ui/jquery-ui.js"></script>
+
 <script>
   $(function() {
     $( document ).tooltip();
   });
   </script>
-  <style>
-  label {
-    display: inline-block;
-    width: 5em;
-  }
-  </style>
-<script src="js/jquery-ui/jquery-ui.js"></script>
 
 <script>
 	$(function() {
@@ -270,11 +267,7 @@
 											</div>
 
 											<div class="col-md-12">
-												<!-- <div class="breadcrumbs">
-														<ul>
-															<li><a title="" class="font">Vendor Details :</a></li>
-														</ul>
-													</div> -->
+												
 												&nbsp; &nbsp; &nbsp; <b class="font">Vendor Details :</b>
 												<textarea rows="5" cols="" id="vDetail" class="form-control"
 													readonly="readonly"></textarea>
@@ -894,11 +887,11 @@
 										<b>Vendor type :</b>
 									</div>
 									<div class="col-md-9">
-										<select class="form-control" name="vendorType"
+										<select class="form-control" name="vendorType"  disabled="disabled"
 											id="idvendorType" value="${vendor.vendorType}">
 											<c:forEach items="${sessionScope['ejb'].getAllVendorType()}"
 												var="vType">
-												<option value="${vType.id}">${vType.type}</option>
+												<option value="${vType.id}" >${vType.type}</option>
 											</c:forEach>
 										</select>
 									</div>
@@ -1749,6 +1742,8 @@
 				$("#agentName").val(0);
 				$("#agentDet").val("");
 			}
+			
+			
 			$.ajax({
 				url : "getVendorTypeById",
 				data : {
