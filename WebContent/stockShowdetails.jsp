@@ -108,7 +108,7 @@
 		value="${sessionScope['ejb'].getSales_Product_DetailsByProductIdAndCompany(requestScope['proid1'])}" />
 
 	<c:set var="jobProList"
-		value="${sessionScope['ejb'].getJobAssignmentProductDetailsByproductId(requestScope['proid1'])}" />
+		value="${sessionScope['ejb'].getJobAssignmentProductDetailsByproductIdAndCompany(requestScope['proid1'])}" />
 
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>

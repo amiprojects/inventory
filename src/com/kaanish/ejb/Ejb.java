@@ -1127,6 +1127,19 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<JobAssignmentProducts> getJobAssignmentProductDetailsByproductIdAndCompany(
+			int id) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<JobAssignmentProducts> q = em
+				.createQuery(
+						"select c from JobAssignmentProducts c where c.jobAssignmentDetails.companyInfo.id=:cId AND c.purchase_Product_Details.productDetail.id=:id",
+						JobAssignmentProducts.class);
+		q.setParameter("id", id);
+		q.setParameter("cId", cId);
+		return q.getResultList();
+	}
+
 	public JobAssignmentDetails getJobAssignmentById(int id) {
 
 		return em.find(JobAssignmentDetails.class, id);
