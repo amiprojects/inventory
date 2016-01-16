@@ -370,7 +370,7 @@
 										<thead style="background-color: #F0F0F0;">
 											<tr>
 												<th>#</th>
-												<th>Product code</th>
+												<th>Designer Number</th>
 												<th>Product Description</th>
 												<th>UOM</th>
 												<th>Rate</th>
@@ -443,7 +443,7 @@
 												class="table table-striped table-bordered">
 												<thead style="background-color: #F0F0F0;">
 													<tr>
-														<th>Product code id</th>
+														<th>Designer Number id</th>
 														<th>Attribute1</th>
 														<th>Atribute2</th>
 														<th>Atribute3</th>
@@ -1366,7 +1366,7 @@
 								<div class="col-md-12">
 									<br>
 								</div>
-								<div class="col-md-5">Product-Code:</div>
+								<div class="col-md-5">Designer Number:</div>
 								<div class="col-md-7">
 									<input type="text" id="pCode" name="pCode" class="form-control"
 										onchange="emptyForm();"><input type="hidden"
@@ -1718,7 +1718,7 @@
 				$("#attr6").val("");
 				$("#lotText").val("");
 			} else {
-				alert("please select one product-code");
+				alert("please select one Designer Number:");
 				$("#wsp").val("");
 				$("#mrp").val("");
 				$("#rate").val("");
@@ -1938,7 +1938,7 @@
 		var i = 1;
 		function anotherShow() {
 			if ($("#productCode").val() == 0) {
-				alert("please select Product code");
+				alert("please select Designer Number:");
 			} else if ($("#qty").val() == "") {
 				alert("please insert quantity");
 			} else if ($("#rate").val() == "") {

@@ -45,7 +45,7 @@ import com.kaanish.util.DepartmentCotractor;
 		"/deleteUOM", "/getVendorsByVendorTypeSalesAgentAndName",
 		"/getSalesAgentDetailsById", "/getPurchaseProductDetailsByIdForSale",
 		"/getCustomerByPh", "/checkPcode", "/addVendorbyjson", "/addAgen",
-		"/getVendorByType", "/addUOMjson", "/getuomByType" })
+		"/getVendorByType", "/addUOMjson", "/getuomByType", "/getDeptjson", "/getSubByDepjson", "/getCatBySubjson", })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -574,10 +574,9 @@ public class JsonServlet extends HttpServlet {
 				break;
 
 			case "getuomByType":
-				resp.getWriter().print(
-						ejb.getUOMByUOMTypeId(Integer.parseInt(req
-								.getParameter("id"))));
+				resp.getWriter().print(ejb.getAllQtyUnit());
 				break;
+				
 			/**********************************************/
 			case "addUOMjson":
 				resp.setContentType("application/json");
@@ -617,6 +616,25 @@ public class JsonServlet extends HttpServlet {
 
 				break;
 
+			case "getDeptjson":
+				resp.getWriter().print(ejb.getAllDepartments());
+				break;
+
+				
+			case "getSubByDepjson":
+				resp.getWriter().print(
+						ejb.getAllSubDepartmentsByDepartmentId(Integer.parseInt(req
+								.getParameter("id"))));
+				break;
+				
+												
+			case "getCatBySubjson":
+				resp.getWriter().print(
+						ejb.getAllCategoryBySubDepartmentId(Integer.parseInt(req
+								.getParameter("id"))));
+				break;
+
+			
 			default:
 				break;
 			}

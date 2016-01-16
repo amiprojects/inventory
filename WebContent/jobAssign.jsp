@@ -194,7 +194,7 @@
 										<thead style="background-color: #F0F0F0;">
 											<tr>
 												<th>#</th>
-												<th>Product code</th>
+												<th>Designer Number</th>
 												<th>Product Description</th>
 												<th>Quantity</th>
 												<th>UOM</th>
@@ -295,10 +295,10 @@
 				<div class="modal-body">
 					<div class="row">
 						<div class="col-md-6">
-							<span>Product Code :</span> <select class="form-control"
+							<span>Designer Number:</span> <select class="form-control"
 								name="prodCode" id="prodCode"
 								onchange="getProdDetByPurchaseProdDetId();" required="required">
-								<option value="0">Select Product code</option>
+								<option value="0">Select Designer Number:</option>
 								<c:forEach
 									items="${sessionScope['ejb'].getPurchaseProductDetailsByQtyAndCompany()}"
 									var="pCode">
@@ -470,7 +470,7 @@
 					}
 				});
 			} else {
-				alert("please select product code");
+				alert("please select Designer Number");
 				$("#prodDesc").val("");
 			}
 		}

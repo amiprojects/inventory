@@ -268,7 +268,7 @@
 										<thead>
 											<tr>
 												<th>#</th>
-												<th>Product code</th>
+												<th>Designer Number</th>
 												<th>Product Description</th>
 												<th>Qty.</th>
 												<th id="mrpWSP">MRP/Qty</th>
@@ -545,7 +545,7 @@
 					<table id="stream_table" width="100%">
 						<thead>
 							<tr>
-								<th>Product code :</th>
+								<th>Designer Number:</th>
 								<td colspan="2"><input type="text" readonly="readonly"
 									id="pCodeModal" class="form-control"></td>
 							</tr>

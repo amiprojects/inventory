@@ -198,7 +198,7 @@
 									<thead style="background-color: #F0F0F0;">
 										<tr>
 											<th>#</th>
-											<th>Product code</th>
+											<th>Designer Number:</th>
 											<th>Product Description</th>
 											<th>UOM</th>
 											<th>Rate</th>
