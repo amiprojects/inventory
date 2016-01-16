@@ -267,8 +267,9 @@ public class JsonServlet extends HttpServlet {
 				break;
 			case "getPurchasebyPro":
 				pw = resp.getWriter();
-				pw.print(ejb.getPurchase_Product_DetailsByProId(Integer
-						.parseInt(req.getParameter("id"))));
+				pw.print(ejb
+						.getInitialPurchase_Product_DetailsByProductIdAndCompany(Integer
+								.parseInt(req.getParameter("id"))));
 				break;
 			case "getQtyUnitConversion":
 				pw = resp.getWriter();
@@ -333,7 +334,7 @@ public class JsonServlet extends HttpServlet {
 				JsonGenerator gen2 = jsg
 						.createGenerator(resp.getOutputStream());
 				HttpSession httpSession = req.getSession();
-				
+
 				Vendor vendor = new Vendor();
 
 				List<Vendor> vend = ejb.getAllVendors();

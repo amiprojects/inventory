@@ -253,7 +253,49 @@ $(document).ready(function(){
 		});
 	});
 </script>
+<!-- <script>
+	$(function() {
 
+		$("#phn1").numericInput({
+
+			allowFloat : true, // Accpets positive numbers (floating point)
+
+			allowNegative : false,
+		// Accpets positive or negative integer
+
+		});
+
+	});
+</script>
+<script>
+	$(function() {
+
+		$("#phn2").numericInput({
+
+			allowFloat : true, // Accpets positive numbers (floating point)
+
+			allowNegative : false,
+		// Accpets positive or negative integer
+
+		});
+
+	});
+</script>
+<script type="text/javascript">
+	function check() {
+		var email_x = document.getElementById("email").value;
+		filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+		if (filter.test(email.value)) {
+
+			return true;
+		} else {
+
+			alert("valid email id: abc@pqr.com");
+			document.getElementById("email").value = "";
+			return false;
+		}
+	}
+</script> -->
 </head>
 <body>
 	<c:if test="${sessionScope['user']==null}">
@@ -296,8 +338,8 @@ $(document).ready(function(){
 								</div>
 
 								<div class="widget-area" style="width: 28%;">
-									
-										<div class="form-group">
+
+									<!-- <div class="form-group">
 											<form action="goSearchVendor" method="post">
 												<label for="" class="">Vendor name </label> <input
 													type="text" id="prodcode" name="pCodeSearch"
@@ -309,9 +351,9 @@ $(document).ready(function(){
 													class="btn green btn-default" type="button"
 													value="Show All"></a>
 											</form>
-										</div>
-										
-									
+										</div> -->
+
+
 									<br> <br>
 									<div style="overflow-x: auto;">
 										<table class="table">
@@ -341,7 +383,7 @@ $(document).ready(function(){
 									</div>
 								</div>
 								<div class="widget-area" style="width: 72%">
-									
+
 									<form role="form" class="sec" action="addVendor" method="post">
 										<ul class="nav nav-tabs">
 											<li class="active" id="detl"><a data-toggle="tab"
@@ -543,7 +585,7 @@ $(document).ready(function(){
 														<div class="col-md-7">
 															<select class="form-control" name="taxTypeGroupId"
 																id="taxgroup">
-															<!-- 	<option value="0">select a tax group</option> -->
+																<!-- 	<option value="0">select a tax group</option> -->
 																<c:forEach
 																	items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
 																	var="taxTypeGroup">

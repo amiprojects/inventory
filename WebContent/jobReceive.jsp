@@ -71,7 +71,7 @@
 							<div class="widget-area">
 								<div class="col-md-12">
 									<form id="jobform" action="jChallanSearch" method="post">
-										<table>
+										<!-- <table>
 											<tr>
 												<td><h4>Enter Jobber Challan Id:</h4></td>
 												<td>&nbsp;&nbsp;</td>
@@ -81,12 +81,75 @@
 												<td><button type="button" class="btn btn-info btn-sm"
 														onclick="jRec()">Go</button></td>
 											</tr>
-										</table>
+										</table> -->
+
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label for="" style="float: left;">Job challan no.
+														:</label>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-1"
+												style="margin-right: 0; padding-right: 0;">
+												<input type="text" class="form-control" readonly="readonly"
+													name="companyInitial"
+													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompany('JOB').companyInitial}">
+											</div>
+											<div class="col-md-2" style="margin: 0; padding: 0;">
+												<select class="form-control" name="fynYear">
+													<c:forEach
+														items="${sessionScope['ejb'].getAllFinancialForJob()}"
+														var="fyr">
+														<option value="${fyr}">${fyr}</option>
+													</c:forEach>
+												</select>
+											</div>
+											<div class="col-md-2" style="margin: 0; padding: 0;">
+												<!-- <input type="text" class="form-control" name="month"> -->
+												<select name="month" class="form-control">
+													<option value="01">01</option>
+													<option value="02">02</option>
+													<option value="03">03</option>
+													<option value="04">04</option>
+													<option value="05">05</option>
+													<option value="06">06</option>
+													<option value="07">07</option>
+													<option value="08">08</option>
+													<option value="09">09</option>
+													<option value="10">10</option>
+													<option value="11">11</option>
+													<option value="12">12</option>
+												</select>
+											</div>
+											<div class="col-md-1" style="margin: 0; padding: 0;">
+												<input type="text" class="form-control" readonly="readonly"
+													name="billType"
+													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompany('JOB').billType}">
+											</div>
+											<div class="col-md-2" style="margin: 0; padding: 0;">
+												<input type="text" class="form-control" name="autoNum">
+											</div>
+											<div class="col-md-2"
+												style="margin-left: 0; padding-left: 0;">
+												<input type="text" class="form-control" name="suffix">
+											</div>
+											<div class="col-md-2">
+												<button type="button" class="btn btn-info btn-sm"
+													onclick="jRec()">Go</button>
+											</div>
+										</div>
+
 									</form>
 									<br> <br>
-									<div class='toast' style='display: none'>
+									<%-- <div class='toast' style='display: none'>
 										<h3 id="msg">${requestScope['msg']}</h3>
-									</div>
+									</div> --%>
+									<hr width="100%">
+
+									<h3 align="center" style="color: #6a94ff;" id="msg">${requestScope['msg']}</h3>
 
 									<hr width="100%">
 								</div>
@@ -278,6 +341,11 @@
 
 		$("#qtyRe").val()
 
+	});
+	$(document).ready(function() {
+		if ($('#msg').html() == "error: null") {
+			$('#msg').html("Wrong challan number...");
+		}
 	});
 
 	$(function() {

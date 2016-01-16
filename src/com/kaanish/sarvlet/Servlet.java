@@ -1521,12 +1521,47 @@ public class Servlet extends HttpServlet {
 			case "jChallanSearch":
 				page = "jobReceive.jsp";
 
-				jobAssignmentDetails = ejb
-						.getJobAssignmentDetailsbyChallanNumberAndCompany(req
-								.getParameter("jChallan"));
+				JobAssignmentDetails jobAssignListr = ejb
+						.getJobAssignmentDetailsbyChallanNumber(req
+								.getParameter("companyInitial")
+								+ "/"
+								+ req.getParameter("fynYear")
+								+ "/"
+								+ req.getParameter("month")
+								+ "/"
+								+ req.getParameter("billType")
+								+ "/"
+								+ req.getParameter("autoNum")
+								+ "/"
+								+ req.getParameter("suffix"));
 
-				req.setAttribute("amj", jobAssignmentDetails);
-				msg = "";
+				req.setAttribute("amj", jobAssignListr);
+
+				if (!jobAssignListr.equals(null)) {
+					msg = "Your search for Job challan number : "
+							+ req.getParameter("companyInitial") + "/"
+							+ req.getParameter("fynYear") + "/"
+							+ req.getParameter("month") + "/"
+							+ req.getParameter("billType") + "/"
+							+ req.getParameter("autoNum") + "/"
+							+ req.getParameter("suffix");
+				} else {
+					msg = "No result found for Job challan number : "
+							+ req.getParameter("companyInitial") + "/"
+							+ req.getParameter("fynYear") + "/"
+							+ req.getParameter("month") + "/"
+							+ req.getParameter("billType") + "/"
+							+ req.getParameter("autoNum") + "/"
+							+ req.getParameter("suffix") + "...";
+				}
+
+				/*
+				 * jobAssignmentDetails = ejb
+				 * .getJobAssignmentDetailsbyChallanNumberAndCompany(req
+				 * .getParameter("jChallan"));
+				 * 
+				 * req.setAttribute("amj", jobAssignmentDetails); msg = "";
+				 */
 
 				break;
 

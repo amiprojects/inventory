@@ -322,7 +322,7 @@ $(document).ready(function(){
 													Account Info</a></li>
 											<li id="bAcc"><a data-toggle="tab" href="#bankAccount">Bank
 													Account info</a></li>
-											<li id="prts"><a data-toggle="tab" href="#part">Parts</a></li>
+											<!-- <li id="prts"><a data-toggle="tab" href="#part">Parts</a></li> -->
 										</ul>
 										<div class="tab-content">
 											<div id="bankAccount" class="tab-pane fade">
@@ -659,7 +659,7 @@ $(document).ready(function(){
 												</div>
 												<br>
 											</div>
-											<div id="part" class="tab-pane fade ">
+											<!-- <div id="part" class="tab-pane fade ">
 												<div class="widget-area">
 													<div class="breadcrumbs">
 														<ul>
@@ -729,7 +729,7 @@ $(document).ready(function(){
 													</table>
 												</div>
 												<br>
-											</div>
+											</div> -->
 										</div>
 										<input type="button" class="btn green pull-left" type="submit"
 											style="width: 100px; margin-top: 27px;" value="Submit"

@@ -72,8 +72,6 @@
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
 								<h3 style="margin-top: 11px;">Job Assign Search</h3>
-
-
 							</div>
 							<div class="col-md-12">
 								<div class="widget-area">

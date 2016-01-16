@@ -154,32 +154,37 @@
 
 										<!-- .......................................**********************General****************************************************...................................... -->
 
-
+										<c:set var="compInfo"
+											value="${sessionScope['ejb'].getUserById(sessionScope['user']).getCompanyInfo()}" />
 
 										<div id="General" class="tab-pane fade active in">
-
-
-
-											<c:set var="purSize"
-												value="${p.purchase_Product_Details.size()}" />
+											<c:set var="purSize" value="${0}" />
+											<c:forEach items="${p.purchase_Product_Details}"
+												var="purProByProd">
+												<c:if test="${purProByProd.companyInfo.id==compInfo.id}">
+													<c:set var="purSize" value="${purSize+1}" />
+												</c:if>
+											</c:forEach>
+											<%-- <c:set var="purSize"
+												value="${sessionScope['ejb'].getPurchaseProductDetailsByProductIdAndCompany(requestScope['proid1']).size()}" /> --%>
 											<c:set
 												value="${sessionScope['ejb'].getAllProductImageByProductId(requestScope['proid1'])}"
 												var="pImage" />
 											<c:set var="qty"
-												value="${p.isSaleble()?sessionScope['ejb'].getReadyGoodsStocktDetailByProductId(p.id).remainingQty:sessionScope['ejb'].getRawMaterialStocktDetailByProductId(p.id).remainingQty}" />
+												value="${p.isRaw()?sessionScope['ejb'].getRawMaterialStocktDetailByProductIdAndCompany(p.id).remainingQty:sessionScope['ejb'].getReadyGoodsStocktDetailByProductIdAndCompany(p.id).remainingQty}" />
 											<c:set var="purqty"
-												value="${sessionScope['ejb'].getReadyGoodsStocktDetailByProductId(p.id).remainingQty}" />
+												value="${sessionScope['ejb'].getReadyGoodsStocktDetailByProductIdAndCompany(p.id).remainingQty}" />
 											<br> <br>
 											<div style="width: 50%; float: left;">
 												<b>Product Code:</b>&nbsp;&nbsp;${p.code} <br> <br>
 												<b>Product Description:</b>&nbsp;${p.description}<br> <br>
 												<b>UOM:</b>&nbsp;&nbsp;&nbsp;&nbsp;${p.qtyUnit.name}<br>
 												<br> <b>Latest Cost Price:</b>
-												&nbsp;${purSize>0?p.purchase_Product_Details.get(purSize-1).cost:'nill'}
+												&nbsp;${purSize>0?sessionScope['ejb'].getPurchaseProductDetailsByProductIdAndCompany(requestScope['proid1']).get(purSize-1).cost:'nill'}
 												<br> <br> <b>Latest WSP:</b>
-												&nbsp;${purSize>0?p.purchase_Product_Details.get(purSize-1).wsp:'nill'}
+												&nbsp;${purSize>0?sessionScope['ejb'].getPurchaseProductDetailsByProductIdAndCompany(requestScope['proid1']).get(purSize-1).wsp:'nill'}
 												<br> <br> <b>Latest MRP:</b>
-												&nbsp;${purSize>0?p.purchase_Product_Details.get(purSize-1).mrp:'nill'}
+												&nbsp;${purSize>0?sessionScope['ejb'].getPurchaseProductDetailsByProductIdAndCompany(requestScope['proid1']).get(purSize-1).mrp:'nill'}
 											</div>
 
 											<div style="width: 50%; float: left;">
@@ -263,14 +268,14 @@
 
 
 														<c:set
-															value="${sessionScope['ejb'].getPurchase_Product_DetailsByProId(requestScope['proid1'])}"
+															value="${sessionScope['ejb'].getPurchaseProductDetailsByProductIdAndCompany(requestScope['proid1'])}"
 															var="prolst" />
 
 														<c:set var="sProduct"
-															value="${sessionScope['ejb'].getSales_Product_DetailsByProId(requestScope['proid1'])}" />
+															value="${sessionScope['ejb'].getSales_Product_DetailsByProductIdAndCompany(requestScope['proid1'])}" />
 
 														<c:set var="jpL"
-															value="${sessionScope['ejb'].getJobAssignmentProductDetailsByproductId(requestScope['proid1'])}" />
+															value="${sessionScope['ejb'].getJobAssignmentProductDetailsByproductIdAndCompany(requestScope['proid1'])}" />
 
 
 
@@ -328,10 +333,12 @@
 												</tr>
 
 												<tr>
-													<td><b>Available for sale:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${qty}</td>
+													<td><b>Available for sale:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+														<c:choose>
+															<c:when test="${p.isSaleble()}">${qty}</c:when>
+															<c:otherwise>0</c:otherwise>
+														</c:choose></td>
 												</tr>
-
-
 											</table>
 										</div>
 

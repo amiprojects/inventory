@@ -1229,6 +1229,20 @@ public class Ejb {
 		return lst;
 	}
 
+	public List<Purchase_Product_Details> getInitialPurchase_Product_DetailsByProductIdAndCompany(
+			int id) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<Purchase_Product_Details> q = em
+				.createQuery(
+						"select s from Purchase_Product_Details s where s.companyInfo.id=:cId AND s.productDetail.id=:Id and s.initialInventory=:initialInventory",
+						Purchase_Product_Details.class);
+		q.setParameter("Id", id);
+		q.setParameter("initialInventory", true);
+		q.setParameter("cId", cId);
+		return q.getResultList();
+	}
+
 	public List<Purchase_Product_Details> getPurchase_Product_DetailsByPurchaseEntryId(
 			int id) throws Throwable {
 		finalize();
@@ -1336,6 +1350,19 @@ public class Ejb {
 			}
 		}
 
+	}
+
+	public List<Purchase_Product_Details> getPurchaseProductDetailsByProductIdAndCompany(
+			int pId) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<Purchase_Product_Details> q = em
+				.createQuery(
+						"select c from Purchase_Product_Details c where c.companyInfo.id=:cId AND c.productDetail.id=:pId",
+						Purchase_Product_Details.class);
+		q.setParameter("cId", cId);
+		q.setParameter("pId", pId);
+		return q.getResultList();
 	}
 
 	/********************* for job recieve *********************/
@@ -1840,6 +1867,19 @@ public class Ejb {
 		return q.getResultList().size() > 0 ? q.getResultList().get(0) : null;
 	}
 
+	public RawMaterialsStock getRawMaterialStocktDetailByProductIdAndCompany(
+			int id) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<RawMaterialsStock> q = em
+				.createQuery(
+						"select c from RawMaterialsStock c where c.companyInfo.id=:cId AND c.productDetail.id=:ID",
+						RawMaterialsStock.class);
+		q.setParameter("ID", id);
+		q.setParameter("cId", cId);
+		return q.getResultList().size() > 0 ? q.getResultList().get(0) : null;
+	}
+
 	public void deleteRawMaterialStockDetailById(int id) {
 		em.remove(getProductDetailById(id));
 	}
@@ -1893,6 +1933,18 @@ public class Ejb {
 				"select c from ReadyGoodsStock c where c.productDetail.id=:ID",
 				ReadyGoodsStock.class);
 		q.setParameter("ID", id);
+		return q.getResultList().size() > 0 ? q.getResultList().get(0) : null;
+	}
+
+	public ReadyGoodsStock getReadyGoodsStocktDetailByProductIdAndCompany(int id) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<ReadyGoodsStock> q = em
+				.createQuery(
+						"select c from ReadyGoodsStock c where c.companyInfo.id=:cId AND c.productDetail.id=:ID",
+						ReadyGoodsStock.class);
+		q.setParameter("ID", id);
+		q.setParameter("cId", cId);
 		return q.getResultList().size() > 0 ? q.getResultList().get(0) : null;
 	}
 
