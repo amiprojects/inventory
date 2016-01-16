@@ -45,7 +45,7 @@ import com.kaanish.util.DepartmentCotractor;
 		"/deleteUOM", "/getVendorsByVendorTypeSalesAgentAndName",
 		"/getSalesAgentDetailsById", "/getPurchaseProductDetailsByIdForSale",
 		"/getCustomerByPh", "/checkPcode", "/addVendorbyjson", "/addAgen",
-		"/getVendorByType", "/addUOMjson", "/getuomByType" })
+		"/getVendorByType", "/addUOMjson", "/getuomByType", "/getDeptjson", "/getSubByDepjson", "/getCatBySubjson", })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -615,14 +615,25 @@ public class JsonServlet extends HttpServlet {
 
 				break;
 
-			case "addCatejson":
-				resp.setContentType("application/json");
-				JsonGeneratorFactory jsg222=Json.createGeneratorFactory(null);
-				JsonGenerator gen2222=jsg222.createGenerator(resp.getOutputStream());
-				
-				
+			case "getDeptjson":
+				resp.getWriter().print(ejb.getAllDepartments());
 				break;
 
+				
+			case "getSubByDepjson":
+				resp.getWriter().print(
+						ejb.getAllSubDepartmentsByDepartmentId(Integer.parseInt(req
+								.getParameter("id"))));
+				break;
+				
+												
+			case "getCatBySubjson":
+				resp.getWriter().print(
+						ejb.getAllCategoryBySubDepartmentId(Integer.parseInt(req
+								.getParameter("id"))));
+				break;
+
+			
 			default:
 				break;
 			}

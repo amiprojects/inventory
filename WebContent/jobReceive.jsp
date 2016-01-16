@@ -173,8 +173,7 @@
 																<tr style="color: black; background-color: #f4f4f0">
 																	<th style="text-align: center" width="5%">#</th>
 
-																	<th width="15%" style="text-align: center">Product
-																		Code</th>
+																	<th width="15%" style="text-align: center">Designer Number</th>
 																	<th width="15%" style="text-align: center">Product
 																		Description</th>
 																	<th width="10%" style="text-align: center">Quantity</th>

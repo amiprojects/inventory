@@ -182,8 +182,8 @@
 										<div class="row">
 											<div class="col-md-10">
 												<div class="form-group">
-													<label for="" style="float: left;">Product code :</label> <input
-														type="" placeholder="Enter Product code" id="prodCode"
+													<label for="" style="float: left;">Designer Number :</label> <input
+														type="" placeholder="Enter Designer Number" id="prodCode"
 														name="prodCode" class="form-control">
 												</div>
 											</div>

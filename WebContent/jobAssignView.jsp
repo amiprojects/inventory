@@ -175,7 +175,7 @@
 										<thead style="background-color: #F0F0F0;">
 											<tr>
 												<th>#</th>
-												<th>Product code</th>
+												<th>Designer Number</th>
 												<th>Product Description</th>
 												<th>Quantity</th>
 												<th>UOM</th>
@@ -252,7 +252,7 @@
 											<tr>
 
 
-												<th>Product code</th>
+												<th>Designer Number</th>
 												<th>Product Description</th>
 												<th>Receiving Quantity</th>
 												<th>UOM</th>
@@ -369,7 +369,7 @@
 					}
 				});
 			} else {
-				alert("please select product code");
+				alert("please select Designer Number");
 				$("#prodDesc").val("");
 			}
 		}
@@ -421,7 +421,7 @@
 		function anotherShow() {
 
 			if ($("#prodCode").val() == 0) {
-				alert("please select product code");
+				alert("please select Designer Number");
 			} else if ($("#qty").val() == "") {
 				alert("please insert Quantity");
 			} else if ($("#work").val() == "") {

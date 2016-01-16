@@ -152,11 +152,11 @@
 	function submitSumary() {
 
 		if ($("#productCode").val() == 0) {
-			alert("please select ProductCode");
+			alert("please select Designer Number:");
 		} else if ($("#description").val() == "") {
 			alert("please select Description");
 		} else if ($("#universalProductCode").val() == "") {
-			alert("please select universal Product Code");
+			alert("please select Designer's Design number:");
 		} else if ($("#uomnamedisplay").val() == "") {
 			alert("please select Unit of measurement");
 		} else if ($("#isRaw").val() == "") {
@@ -265,10 +265,10 @@
 									<!-- .........*****************************............ PRODUCT SEARCH PANAEL............***************************************-->
 									<div class="form-group">
 										<form action="goProView" method="post">
-											<label for="" class="">Product Code: </label> <input
+											<label for="" class="">Designer Number: </label> <input
 												type="text" id="prodcode" name="pCodeSearch"
-												class="form-control"> <label class="">Product
-												Description: </label> <input type="text" id="prodesc"
+												class="form-control"> <label class="">Designer's
+												Design number: </label> <input type="text" id="prodesc"
 												name="pDesSearch" class="form-control"> <label
 												class="">Category: </label> <input type="text" id="deptcat"
 												name="pCatSearch" class="form-control"> <br> <input
@@ -276,7 +276,7 @@
 											<a href="MaterialPartDetailsGenerals.jsp"> <input
 												class="btn green btn-default" type="button" value="Show All"></a>
 										</form>
-									</div> 
+									</div>
 
 									<!-- ************************************************endSearch*************************************************************** -->
 									<br> <br>
@@ -284,7 +284,7 @@
 
 										<tr>
 											<th align="center">#</th>
-											<th align="center">Product Code</th>
+											<th align="center">Designer Number:</th>
 											<th align="left">Description</th>
 											<th align="right">Category</th>
 											<th align="right">view</th>
@@ -344,7 +344,7 @@
 										<div id="general" class="tab-pane fade active in">
 											<div class="row">
 												<div class="col-md-3">
-													<label>Products Code:</label>
+													<label>Designer Number:</label>
 												</div>
 												<div class="col-md-5">
 													<input id="pp1" type="text" readonly="readonly"
@@ -450,7 +450,7 @@
 
 											<div class="col-md-12">
 
-												<label>Universal Product Code:</label> <br> <input
+												<label>Designer's Design number:</label> <br> <input
 													readonly type="text" id="upcupc" class="form-control">
 												<br> <br>
 												<h4>
@@ -600,7 +600,7 @@
 								<form action="#" method="get">
 									<div class="col-md-6">
 										<div>
-											<label for="exampleInputEmail1">Product Code:</label> <input
+											<label for="exampleInputEmail1">Designer Number:</label> <input
 												type="text" name="productCode2" id="productCode" required
 												onkeyup="codeKeyUp();" onchange="codeChange();"
 												class="form-control">
@@ -616,8 +616,8 @@
 									</div>
 
 									<div class="col-md-6">
-										<label for="exampleInputEmail1">Universal Product
-											Code:</label> <input type="text" name="universalProductCode"
+										<label for="exampleInputEmail1">Designer's Design
+											number:</label> <input type="text" name="universalProductCode"
 											id="universalProductCode" required placeholder=""
 											class="form-control"><br>
 									</div>
@@ -867,10 +867,10 @@
 							<div class="col-md-6">
 								<div class="widget-area" align="left">
 									<h2 class="widget-title">
-										<strong>Tree</strong> List &nbsp; &nbsp; <a onclick="addCat()"
+										<strong>Tree</strong> List &nbsp; &nbsp; <!-- <a onclick="addCat()"
 											title="Add New Category"> <img style="margin-top: 4px;"
 											height="30px" width="30px" alt="" src="img/add.png">
-										</a>
+										</a> -->
 									</h2>
 									<p>
 										<a href="#" id="tree-expand-all">Expand all</a> | <a href="#"
@@ -1020,7 +1020,7 @@
 									</h4>
 									<table>
 										<tr>
-											<td>Code:</td>
+											<td>Designer Number:</td>
 											<td><input id="pcodedisp" name="productCode" type="text"
 												class="form-control " readonly></td>
 										</tr>
@@ -1036,7 +1036,7 @@
 											<td>&nbsp;</td>
 										<tr>
 										<tr>
-											<td>Universal Product Code:</td>
+											<td>Designer's Design number:</td>
 											<td><input type="text" class="form-control " readonly
 												name="upc" id="upc"></td>
 										<tr>
@@ -1469,7 +1469,7 @@
 
 		function codeChange() {
 			if ($("#pcodeCheck").val() != "") {
-				alert("this product code already exist.");
+				alert("this designer number: already exist.");
 				$("#pcodeCheck").val("");
 				$("#productCode").val("");
 			}
@@ -1980,6 +1980,7 @@
 	</script>
 
 	<script type="text/javascript">
+		var str = "";
 		$(function() {
 			$("#prnt").autocomplete(
 					{
@@ -2053,7 +2054,7 @@
 											'Perent Department: '
 													+ ui.item.pname);
 									$("#attr1").prop("disabled", false);
-												} else {
+								} else {
 									$("#perentOfSubDept").html("");
 									$("#attr1").prop("disabled", true);
 									$("#attr2").prop("disabled", true);
@@ -2099,25 +2100,112 @@
 								|| $("#attr4").val() != 0
 								|| $("#attr5").val() != 0
 								|| $("#attr6").val() != 0) {
-							$.ajax({
-								type : "post",
-								url : "createCategory",
-								data : {
-									name : $("#dName").val(),
-									subDeptId : $("#id").val(),
-									attr1 : $("#attr1").val(),
-									attr2 : $("#attr2").val(),
-									attr3 : $("#attr3").val(),
-									attr4 : $("#attr4").val(),
-									attr5 : $("#attr5").val(),
-									attr6 : $("#attr6").val()
-								},
-								success : function(data) {
-									$("#dName").val("");
-									$("#prnt").val("");
+							$
+									.ajax({
+										type : "post",
+										url : "createCategory",
+										data : {
+											name : $("#dName").val(),
+											subDeptId : $("#id").val(),
+											attr1 : $("#attr1").val(),
+											attr2 : $("#attr2").val(),
+											attr3 : $("#attr3").val(),
+											attr4 : $("#attr4").val(),
+											attr5 : $("#attr5").val(),
+											attr6 : $("#attr6").val()
+										},
+										success : function(data) {
+											$("#dName").val("");
+											$("#prnt").val("");
 
-								}
-							});
+											$
+													.ajax({
+														url : "getDeptjson",
+														dataType : "json",
+														type : "post",
+														success : function(
+																dataD) {
+															str = str + "<ul>";
+															$
+																	.map(
+																			dataD,
+																			function(
+																					itemD) {
+
+																				str = str
+																						+ "<li>"
+																						+ itemD.name;
+																				$
+																						.ajax({
+																							url : "getSubByDepjson",
+																							data : {
+																								id : itemD.id
+																							},
+																							dataType : "json",
+																							success : function(
+																									dataS) {
+																								str = str
+																										+ "<ul>";
+
+																								$
+																										.map(
+																												dataS,
+																												function(
+																														itemS) {
+																													str = str
+																															+ "<li>"
+																															+ itemS.name;
+																													$
+																															.ajax({
+																																url : "getCatBySubjson",
+																																dataC : {
+																																	id : itemS.id
+																																},
+																																dataType : "json",
+																																success : function(
+																																		dataC) {
+																																	str = str
+																																			+ "<ul>";
+																																	$
+																																			.map(
+																																					dataC,
+																																					function(
+																																							itemC) {
+																																						str = str
+																																								+ "<li>"
+																																								+ itemC.name
+																																								+ "</li>";
+																																					});
+
+																																	str = str
+																																			+ "</ul>";
+																																	alert(str);
+																																}
+																															});
+																													str = str
+																															+ "</li>"
+
+																												});
+
+																								str = str
+																										+ "</ul>";
+																							}
+																						});
+																				str = str
+																						+ "</li>";
+																			});
+															str = str + "</ul>";
+
+														},
+														complete : function() {
+
+															alert(str);
+														}
+
+													});
+
+										}
+									});
 						} else {
 							alert("Please insert atleast one attribute");
 						}

@@ -152,11 +152,11 @@
 	function submitSumary() {
 
 		if ($("#productCode").val() == 0) {
-			alert("please select ProductCode");
+			alert("please select Designer Number");
 		} else if ($("#description").val() == "") {
 			alert("please select Description");
 		} else if ($("#universalProductCode").val() == "") {
-			alert("please select universal Product Code");
+			alert("please select Designer's Design number:");
 		} else if ($("#uomnamedisplay").val() == "") {
 			alert("please select Unit of measurement");
 		} else if ($("#isRaw").val() == "") {
@@ -265,10 +265,9 @@
 									<!-- .........*****************************............ PRODUCT SEARCH PANAEL............***************************************-->
 									<div class="form-group">
 										<form action="goProView" method="post">
-											<label for="" class="">Product Code: </label> <input
+											<label for="" class="">Designer Number: </label> <input
 												type="text" id="prodcode" name="pCodeSearch"
-												class="form-control"> <label class="">Product
-												Description: </label> <input type="text" id="prodesc"
+												class="form-control"> <label class="">Designer's Design number: </label> <input type="text" id="prodesc"
 												name="pDesSearch" class="form-control"> <label
 												class="">Category: </label> <input type="text" id="deptcat"
 												name="pCatSearch" class="form-control"> <br> <input
@@ -284,7 +283,7 @@
 
 										<tr>
 											<th align="center">#</th>
-											<th align="center">Product Code</th>
+											<th align="center">Designer Number</th>
 											<th align="left">Description</th>
 											<th align="right">Category</th>
 											<th align="right">view</th>
@@ -347,7 +346,7 @@
 										<div id="general" class="tab-pane fade active in">
 											<div class="row">
 												<div class="col-md-3">
-													<label>Products Code:</label>
+													<label>Designer Number:</label>
 												</div>
 												<div class="col-md-5">
 													<input id="pp1" type="text" readonly="readonly"
@@ -453,7 +452,7 @@
 
 											<div class="col-md-12">
 
-												<label>Universal Product Code:</label> <br> <input
+												<label>Designer's Design number:</label> <br> <input
 													readonly type="text" id="upcupc" class="form-control">
 												<br> <br>
 												<h4>
@@ -603,7 +602,7 @@
 								<form action="#" method="get">
 									<div class="col-md-6">
 										<div>
-											<label for="exampleInputEmail1">Product Code:</label> <input
+											<label for="exampleInputEmail1">Designer Number:</label> <input
 												type="text" name="productCode2" id="productCode" required
 												onkeyup="codeKeyUp();" onchange="codeChange();"
 												class="form-control">
@@ -619,8 +618,7 @@
 									</div>
 
 									<div class="col-md-6">
-										<label for="exampleInputEmail1">Universal Product
-											Code:</label> <input type="text" name="universalProductCode"
+										<label for="exampleInputEmail1">Designer's Design number:</label> <input type="text" name="universalProductCode"
 											id="universalProductCode" required placeholder=""
 											class="form-control"><br>
 									</div>
@@ -1023,7 +1021,7 @@
 									</h4>
 									<table>
 										<tr>
-											<td>Code:</td>
+											<td>Designer Number:</td>
 											<td><input id="pcodedisp" name="productCode" type="text"
 												class="form-control " readonly></td>
 										</tr>
@@ -1039,7 +1037,7 @@
 											<td>&nbsp;</td>
 										<tr>
 										<tr>
-											<td>Universal Product Code:</td>
+											<td>Designer's Design number:</td>
 											<td><input type="text" class="form-control " readonly
 												name="upc" id="upc"></td>
 										<tr>
@@ -1472,7 +1470,7 @@
 
 		function codeChange() {
 			if ($("#pcodeCheck").val() != "") {
-				alert("this product code already exist.");
+				alert("this designer number already exist.");
 				$("#pcodeCheck").val("");
 				$("#productCode").val("");
 			}
