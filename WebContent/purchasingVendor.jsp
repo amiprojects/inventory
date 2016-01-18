@@ -431,7 +431,7 @@ $(document).ready(function(){
 													<div class="col-md-9">
 														<input type="text" class="form-control" id="bankCity">
 														<input type="hidden" value="" name="bankCity"
-															id="bankCityId">
+															id="bankCityId" autocomplete="off">
 													</div>
 													<br>
 													<div class="col-md-3">
@@ -696,7 +696,7 @@ $(document).ready(function(){
 														<div class="col-md-9">
 															<input type="text" class="form-control cityAuto"
 																name="vendorCity" required="required" id="vendorCity"
-																value="${vendor.city}"> <input type="hidden"
+																value="${vendor.city}" autocomplete="off"> <input type="hidden"
 																name="vendorCityId" id="vendorCityId">
 														</div>
 													</div>

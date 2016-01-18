@@ -317,7 +317,7 @@
 	<script type="text/javascript" src="js/grid-filter.js"></script>
 
 	<script src="js/jquery-ui/jquery-ui.js"></script>
-	<script>
+	<!-- <script>
 		function submitForm() {
 			if ($("#jName").val() == 0) {
 				alert("please select jobber name");
@@ -564,7 +564,7 @@
 		$("#noC").click(function() {
 			$("#cancelOrNot").modal("hide");
 		});
-	</script>
+	</script> -->
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->

@@ -78,7 +78,8 @@ import com.kaanish.util.DateConverter;
 		"/salesSearchByDate", "/salesSearchBySalesChallanNo",
 		"/salesSearchByAgentName", "/salesSearchByCustomerName",
 		"/salesSearchByProductCode", "/salesView", "/purchaseBarCode",
-		"/salesReturnServlet" })
+		"/salesReturnServlet", "/purchaseSearchAll", "/salesSearchAll",
+		"/jobSearchAll" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -1415,6 +1416,18 @@ public class Servlet extends HttpServlet {
 				}
 				break;
 
+			case "purchaseSearchAll":
+				page = "purchasingPurchaseSearch.jsp";
+				List<Purchase_Entry> purEntryListA = ejb
+						.getAllPurchaseEntryByCompany();
+				req.setAttribute("purEntryList", purEntryListA);
+				if (purEntryListA.size() > 0) {
+					msg = "All Purchase List";
+				} else {
+					msg = "No result found...";
+				}
+				break;
+
 			case "purchaseBarCode":
 				page = "purchaseBarcode.jsp";
 				String purProdDetIdLst[] = req.getParameterValues("prodCheck");
@@ -1663,6 +1676,18 @@ public class Servlet extends HttpServlet {
 				}
 				break;
 
+			case "jobSearchAll":
+				page = "jobAssignSearch.jsp";
+				List<JobAssignmentDetails> jobAssignListA = ejb
+						.getAllJobassignmentDetailsByCompany();
+				req.setAttribute("jobAssignList", jobAssignListA);
+				if (jobAssignListA.size() > 0) {
+					msg = "All Job Assign List";
+				} else {
+					msg = "No result found...";
+				}
+				break;
+
 			case "salesSearchByDate":
 				page = "salesSearch.jsp";
 
@@ -1763,6 +1788,18 @@ public class Servlet extends HttpServlet {
 					msg = "No result found for product code : "
 							+ req.getParameter("prodCode").toUpperCase()
 							+ "...";
+				}
+				break;
+
+			case "salesSearchAll":
+				page = "salesSearch.jsp";
+				List<SalesEntry> salesEntryLstA = ejb
+						.getAllSalesEntriesByCompany();
+				req.setAttribute("salesEntryLst", salesEntryLstA);
+				if (salesEntryLstA.size() > 0) {
+					msg = "All Sales List";
+				} else {
+					msg = "No result found...";
 				}
 				break;
 

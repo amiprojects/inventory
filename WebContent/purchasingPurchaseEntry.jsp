@@ -54,10 +54,15 @@
 <script>
 	$(function() {
 		var d = new Date();
-		var n = d.getFullYear();
+		var m = d.getMonth();
+		if (m > 3) {
+			var n = d.getFullYear();
+		} else {
+			var n = d.getFullYear() - 1;
+		}
 		$("#datepicker").datepicker({
 			dateFormat : "dd-mm-yy",
-			minDate : new Date(n, 0, 1),
+			minDate : new Date(n, 3, 1),
 			maxDate : 0
 		});
 		$("#datepicker").datepicker('setDate', new Date());
@@ -120,7 +125,9 @@
 			alert('Please select Payment status...');
 			$("#payDetail").hide();
 			$("#description").hide();
+			$("#pType").val("-");
 		} else if (val == 'Not Paid') {
+			$("#pType").val("-");
 			$("#pPayAmount").hide();
 			$("#pAmount").hide();
 			$("#pDate").hide();
@@ -133,6 +140,7 @@
 					Math.round((Number($("#spAmount").val()) - Number($(
 							"#spPaymentAmount").val())) * 100) / 100);
 		} else if (val == 'Full Paid') {
+			$("#pType").val("-");
 			$("#pPayAmount").hide();
 			$("#pDueAmount").hide();
 			$("#pAmount").show();
@@ -145,6 +153,7 @@
 					Math.round((Number($("#spAmount").val()) - Number($(
 							"#spPaymentAmount").val())) * 100) / 100);
 		} else if (val == 'Semi Paid') {
+			$("#pType").val("-");
 			$("#pPayAmount").show();
 			$("#pDueAmount").show();
 			$("#pAmount").show();
@@ -269,8 +278,7 @@
 												</a>
 											</div>
 
-											<div class="col-md-12">
-
+											<div class="col-md-12" style="margin-top: 15px;">
 												&nbsp; &nbsp; &nbsp; <b class="font">Vendor Details :</b>
 												<textarea rows="5" cols="" id="vDetail" class="form-control"
 													readonly="readonly"></textarea>
@@ -304,11 +312,7 @@
 														style="margin-top: 4px;" height="30px" width="30px" alt=""
 														src="img/add.png">
 													</a>
-
 												</div>
-
-
-
 											</div>
 										</div>
 										<div class="col-md-6">
@@ -464,9 +468,9 @@
 										</div>
 										<div class="row">
 											<div style="float: left;">
-												&nbsp; &nbsp; <span><b>Bar code :</b> &nbsp; </span> <input
-													type="radio" name="bar" value="yesBar" checked="checked">&nbsp;
-												Yes <input type="radio" name="bar" value="noBar">&nbsp;
+												&nbsp; &nbsp; <span><b>Print Barcode :</b> &nbsp; </span> <input
+													type="radio" name="bar" value="yesBar">&nbsp; Yes <input
+													type="radio" name="bar" value="noBar" checked="checked">&nbsp;
 												No
 											</div>
 											<div style="float: right;">
@@ -859,7 +863,7 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorName"
-											id="idName" >
+											id="idName">
 									</div>
 									<br>
 									<div class="col-md-3">
@@ -875,7 +879,7 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorPh1"
-											id="iphone" >
+											id="iphone">
 									</div>
 
 									<div class="col-md-3">
@@ -883,7 +887,7 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorPh2"
-											id="idvendorPh2" >
+											id="idvendorPh2">
 									</div>
 
 									<div class="col-md-3">
@@ -891,7 +895,7 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorMail"
-											id="idvendorMail" >
+											id="idvendorMail">
 									</div>
 
 									<div class="col-md-3">
@@ -899,7 +903,7 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorAlias"
-											id="idvendorAlias" >
+											id="idvendorAlias">
 									</div>
 
 									<div class="col-md-3">
@@ -1193,7 +1197,7 @@
 										<div class="col-md-7">
 											<select class="form-control" name="taxTypeGroupId2"
 												id="taxgroup2">
-										<option value="0">select a tax group</option> 
+												<option value="0">select a tax group</option>
 												<c:forEach
 													items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
 													var="taxTypeGroup">
@@ -1268,8 +1272,8 @@
 									</div>
 									<div class="col-md-9">
 
-										<select class="form-control" name="vendorType2" disabled="disabled"
-											id="idvendorType2">
+										<select class="form-control" name="vendorType2"
+											disabled="disabled" id="idvendorType2">
 											<c:forEach items="${sessionScope['ejb'].getAllVendorType()}"
 												var="vType">
 
@@ -1603,7 +1607,7 @@
 	<script>
 		$(document).ready(function() {
 			$("#isSalable").val('no');
-			$("#isBarPrint").val('yes');
+			$("#isBarPrint").val('no');
 			$("#isSerial").val('no');
 			$("#isLot").val('yes');
 			$("#isAgent").val('no');
@@ -2739,7 +2743,7 @@
 
 	<script type="text/javascript">
 		function submitform1() {
-			
+
 			if ($("#idName").val() == 0) {
 				alert("please select  name");
 			} else if ($("#idvendorCompanyName").val() == "") {
@@ -2760,60 +2764,58 @@
 				alert("please select pin code");
 			} else if ($("#service").val() == "") {
 				alert("please select Service Tax");
-			} 
-			else {
-			
-			
-			var dataa1 = {
-				vendorName : $("#idName").val(),
-				vendorAddress : $("#idAdd").val(),
-				vendorAlias : $("#idvendorAlias").val(),
-				vendorCityId : $("#vendorCityId").val(),
-				vendorCompanyName : $("#idvendorCompanyName").val(),
-				vendorMail : $("#idvendorMail").val(),
-				vendorPh1 : $("#iphone").val(),
-				vendorPh2 : $("#idvendorPh2").val(),
-				vendorPin : $("#idvendorPin").val(),
-				vendorType : $("#idvendorType").val(),
-				bankAccNo : $("#idbankAccNo").val(),
-				bankName : $("#idbankName").val(),
-				bankCheckLebel : $("#idbankCheckLebel").val(),
-				bankIFSC : $("#idbankIFSC").val(),
-				bankMICR : $("#idbankMICR").val(),
-				bankRTGS : $("#idbankRTGS").val(),
-				bankBranch : $("#idbankBranch").val(),
-				taxTypeGroupId : $("#taxgroup").val(),
-				bankCity : $("#bankCityId").val(),
-				vendorCSTno : $("#idvendorCSTno").val(),
-				vendorCSTregDate : $("#datepickerB").val(),
-				vendorExciseRegNo : $("#idvendorExciseRegNo").val(),
-				vendorExciseRegDate : $("#datepickerC").val(),
-				vendorVATno : $("#idvendorVATno").val(),
-				vendorVATregDate : $("#datepickerA").val(),
-				vendorServiceTaxRegNo : $("#idvendorServiceTaxRegNo").val(),
-				vendorServiceTaxRegDate : $("#datepickerD").val(),
-				vendorPANno : $("#idvendorPANno").val()
-			};
-			$.ajax({
-				url : "addVendorbyjson",
-				dataType : "json",
-				data : dataa1,
-				type : "post",
-				success : function(data1) {
-					alert(data1.result);
-					$("#addV").modal('hide');
-				},
-				error : function(a, b, c) {
+			} else {
 
-				}
+				var dataa1 = {
+					vendorName : $("#idName").val(),
+					vendorAddress : $("#idAdd").val(),
+					vendorAlias : $("#idvendorAlias").val(),
+					vendorCityId : $("#vendorCityId").val(),
+					vendorCompanyName : $("#idvendorCompanyName").val(),
+					vendorMail : $("#idvendorMail").val(),
+					vendorPh1 : $("#iphone").val(),
+					vendorPh2 : $("#idvendorPh2").val(),
+					vendorPin : $("#idvendorPin").val(),
+					vendorType : $("#idvendorType").val(),
+					bankAccNo : $("#idbankAccNo").val(),
+					bankName : $("#idbankName").val(),
+					bankCheckLebel : $("#idbankCheckLebel").val(),
+					bankIFSC : $("#idbankIFSC").val(),
+					bankMICR : $("#idbankMICR").val(),
+					bankRTGS : $("#idbankRTGS").val(),
+					bankBranch : $("#idbankBranch").val(),
+					taxTypeGroupId : $("#taxgroup").val(),
+					bankCity : $("#bankCityId").val(),
+					vendorCSTno : $("#idvendorCSTno").val(),
+					vendorCSTregDate : $("#datepickerB").val(),
+					vendorExciseRegNo : $("#idvendorExciseRegNo").val(),
+					vendorExciseRegDate : $("#datepickerC").val(),
+					vendorVATno : $("#idvendorVATno").val(),
+					vendorVATregDate : $("#datepickerA").val(),
+					vendorServiceTaxRegNo : $("#idvendorServiceTaxRegNo").val(),
+					vendorServiceTaxRegDate : $("#datepickerD").val(),
+					vendorPANno : $("#idvendorPANno").val()
+				};
+				$.ajax({
+					url : "addVendorbyjson",
+					dataType : "json",
+					data : dataa1,
+					type : "post",
+					success : function(data1) {
+						alert(data1.result);
+						$("#addV").modal('hide');
+					},
+					error : function(a, b, c) {
 
-			});
+					}
+
+				});
 			}
 		}
 	</script>
 
 	<script type="text/javascript">
-	var agentId;
+		var agentId;
 		function submitform2() {
 			if ($("#idName2").val() == 0) {
 				alert("please select  name");
@@ -2835,75 +2837,81 @@
 				alert("please select pin code");
 			} else if ($("#service2").val() == "") {
 				alert("please select Service Tax");
-			} 
-			else {
-			var dataa2 = {
-				vendorName2 : $("#idName2").val(),
-				vendorAddress2 : $("#idAdd2").val(),
-				vendorAlias2 : $("#idvendorAlias2").val(),
-				vendorCityId2 : $("#vendorCityId2").val(),
-				vendorCompanyName2 : $("#idvendorCompanyName2").val(),
-				vendorMail2 : $("#idvendorMail2").val(),
-				vendorPh12 : $("#iphone2").val(),
-				vendorPh22 : $("#idvendorPh22").val(),
-				vendorPin2 : $("#idvendorPin2").val(),
-				vendorType2 : $("#idvendorType2").val(),
-				bankAccNo2 : $("#idbankAccNo2").val(),
-				bankName2 : $("#idbankName2").val(),
-				bankCheckLebel2 : $("#idbankCheckLebel2").val(),
-				bankIFSC2 : $("#idbankIFSC2").val(),
-				bankMICR2 : $("#idbankMICR2").val(),
-				bankRTGS2 : $("#idbankRTGS2").val(),
-				bankBranch2 : $("#idbankBranch2").val(),
-				taxTypeGroupId2 : $("#taxgroup2").val(),
-				bankCity6 : $("#bankCityId26").val(),
-				vendorCSTno2 : $("#idvendorCSTno2").val(),
-				vendorCSTregDate2 : $("#datepickerB2").val(),
-				vendorExciseRegNo2 : $("#idvendorExciseRegNo2").val(),
-				vendorExciseRegDate2 : $("#datepickerC2").val(),
-				vendorVATno2 : $("#idvendorVATno2").val(),
-				vendorVATregDate2 : $("#datepickerA2").val(),
-				vendorServiceTaxRegNo2 : $("#idvendorServiceTaxRegNo2").val(),
-				vendorServiceTaxRegDate2 : $("#datepickerD2").val(),
-				vendorPANno2 : $("#idvendorPANno2").val()
-			};
-			$
-					.ajax({
-						url : "addAgen",
-						dataType : "json",
-						data : dataa2,
-						type : "post",
-						success : function(data2) {
-							agentId=data2.vendorid;
-							alert(data2.result);
-							$("#addA").modal('hide');
-						},
-						complete : function() {
-							$
-									.ajax({
-										url : "getVendorByType",
-										data : {
-											id : $("#idvendorType2").val()
-										},
-										dataType : "json",
-										success : function(data) {
-											$("#agentName").empty();
-											$("#agentName")
-													.append(
-															'<option value="0">Select Agent name</option>');
-											$.map(data, function(item) {
-												$("#agentName").append(
-														'<option value="'+item.id+'">'
-																+ item.name
-																+ '</option>');
-											});
-										},complete:function(){
-											$("#agentName").val(agentId);
+			} else {
+				var dataa2 = {
+					vendorName2 : $("#idName2").val(),
+					vendorAddress2 : $("#idAdd2").val(),
+					vendorAlias2 : $("#idvendorAlias2").val(),
+					vendorCityId2 : $("#vendorCityId2").val(),
+					vendorCompanyName2 : $("#idvendorCompanyName2").val(),
+					vendorMail2 : $("#idvendorMail2").val(),
+					vendorPh12 : $("#iphone2").val(),
+					vendorPh22 : $("#idvendorPh22").val(),
+					vendorPin2 : $("#idvendorPin2").val(),
+					vendorType2 : $("#idvendorType2").val(),
+					bankAccNo2 : $("#idbankAccNo2").val(),
+					bankName2 : $("#idbankName2").val(),
+					bankCheckLebel2 : $("#idbankCheckLebel2").val(),
+					bankIFSC2 : $("#idbankIFSC2").val(),
+					bankMICR2 : $("#idbankMICR2").val(),
+					bankRTGS2 : $("#idbankRTGS2").val(),
+					bankBranch2 : $("#idbankBranch2").val(),
+					taxTypeGroupId2 : $("#taxgroup2").val(),
+					bankCity6 : $("#bankCityId26").val(),
+					vendorCSTno2 : $("#idvendorCSTno2").val(),
+					vendorCSTregDate2 : $("#datepickerB2").val(),
+					vendorExciseRegNo2 : $("#idvendorExciseRegNo2").val(),
+					vendorExciseRegDate2 : $("#datepickerC2").val(),
+					vendorVATno2 : $("#idvendorVATno2").val(),
+					vendorVATregDate2 : $("#datepickerA2").val(),
+					vendorServiceTaxRegNo2 : $("#idvendorServiceTaxRegNo2")
+							.val(),
+					vendorServiceTaxRegDate2 : $("#datepickerD2").val(),
+					vendorPANno2 : $("#idvendorPANno2").val()
+				};
+				$
+						.ajax({
+							url : "addAgen",
+							dataType : "json",
+							data : dataa2,
+							type : "post",
+							success : function(data2) {
+								agentId = data2.vendorid;
+								alert(data2.result);
+								$("#addA").modal('hide');
+							},
+							complete : function() {
+								$
+										.ajax({
+											url : "getVendorByType",
+											data : {
+												id : $("#idvendorType2").val()
+											},
+											dataType : "json",
+											success : function(data) {
+												$("#agentName").empty();
+												$("#agentName")
+														.append(
+																'<option value="0">Select Agent name</option>');
+												$
+														.map(
+																data,
+																function(item) {
+																	$(
+																			"#agentName")
+																			.append(
+																					'<option value="'+item.id+'">'
+																							+ item.name
+																							+ '</option>');
+																});
+											},
+											complete : function() {
+												$("#agentName").val(agentId);
 											}
-									});
-						}
+										});
+							}
 
-					});
+						});
 			}
 		}
 	</script>
@@ -3011,6 +3019,30 @@
 
 			});
 
+		});
+		$(function() {
+
+			$("#transportCost").numericInput({
+
+				allowFloat : true,
+
+				allowNegative : false,
+
+			});
+			$("#surcharge").numericInput({
+
+				allowFloat : true,
+
+				allowNegative : false,
+
+			});
+			$("#spPaymentAmount").numericInput({
+
+				allowFloat : true,
+
+				allowNegative : false,
+
+			});
 		});
 	</script>
 

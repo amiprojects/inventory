@@ -41,8 +41,16 @@
 <script src="js/jquery-ui/jquery-ui.js"></script>
 <script>
 	$(function() {
+		var d = new Date();
+		var m = d.getMonth();
+		if (m > 3) {
+			var n = d.getFullYear();
+		} else {
+			var n = d.getFullYear() - 1;
+		}
 		$("#datepicker").datepicker({
 			dateFormat : "dd-mm-yy",
+			minDate : new Date(n, 3, 1),
 			maxDate : 0
 		});
 		$("#datepicker").datepicker('setDate', new Date());
@@ -120,8 +128,8 @@
 											<div class="col-md-12">
 												<b class="font">Jobber Name :</b> <input type="text"
 													class="form-control" id="jId" name="jId"
-													onchange="emptyForm();"> <input type="hidden"
-													id="jName" name="jName">
+													onchange="emptyForm();" autocomplete="off"> <input
+													type="hidden" id="jName" name="jName">
 												<%-- <select class="form-control" name="jName" id="jName"
 														onchange="getDetailsByJobberName();" required="required">
 														<option value="0">Select Jobber Name</option>
