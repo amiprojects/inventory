@@ -77,7 +77,7 @@
 												<label for="" style="float: left;">Search between
 													two dates : (Start Date)</label> <input type="text"
 													placeholder="Enter First Date" id="datepicker"
-													class="form-control" name="fDate" id="fDate">
+													class="form-control" name="fDate" id="fDate" autocomplete="off">
 											</div>
 										</div>
 
