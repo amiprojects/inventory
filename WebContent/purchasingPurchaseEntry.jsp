@@ -264,8 +264,9 @@
 											</div>
 											<div class="col-md-1">
 												<b class="font">&nbsp;&nbsp; </b> <a onclick="addVendor()"
-													title="Add New Vendor."> <img style="margin-top: 4px;"
-													height="30px" width="30px" alt="" src="img/add.png">
+													title="Add New Vendor."> <img
+													style="margin-top: 4px; cursor: pointer" height="30px"
+													width="30px" alt="" src="img/add.png">
 												</a>
 											</div>
 
@@ -301,8 +302,8 @@
 
 													<b class="font">&nbsp;&nbsp; </b> <a
 														onclick="addAgentDetails()" title="Add New Agent."> <img
-														style="margin-top: 4px;" height="30px" width="30px" alt=""
-														src="img/add.png">
+														style="margin-top: 4px; cursor: pointer" height="30px"
+														width="30px" alt="" src="img/add.png">
 													</a>
 
 												</div>
@@ -655,7 +656,7 @@
 						<div class="tab-content">
 							<div id="bankAccount" class="tab-pane fade">
 								<div class="widget-area">
-									<h5 align="center">(* All the below fields are optional)</h5>
+									<h5 align="center">(All the below fields are optional)</h5>
 									<br>
 									<div class="col-md-3">
 										<b>Bank Name:</b>
@@ -733,7 +734,7 @@
 							<div id="vendorAccount" class="tab-pane fade">
 								<div class="widget-area">
 									<div class="row">
-										<h5 align="center">(* All the below fields are optional)</h5>
+										<h5 align="center">(All the below fields are optional)</h5>
 										<br>
 										<div class="col-md-5">
 											<b>VAT no:</b>
@@ -879,7 +880,7 @@
 									</div>
 
 									<div class="col-md-3">
-										<b>Ph No2:</b>
+										<b>Ph No2:(optional)</b>
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorPh2"
@@ -891,7 +892,7 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorMail"
-											id="idvendorMail">
+											style="text-transform: none;" id="idvendorMail">
 									</div>
 
 									<div class="col-md-3">
@@ -945,20 +946,29 @@
 
 										<div class="col-md-9">
 											<textarea rows="" cols="" class="form-control"
-												name="vendorAddress" id="idAdd" required="required"></textarea>
+												name="vendorAddress" id="idAdd"></textarea>
 										</div>
 									</div>
+									<br>
 									<div class="row">
 										<div class="col-md-3">
 											<b>City :</b>
 										</div>
-										<div class="col-md-9">
+										<div class="col-md-8">
 											<input type="text" class="form-control cityAuto"
 												name="vendorCity" required="required" id="vendorCity"
 												autocomplete="off"> <input type="hidden"
 												name="vendorCityId" id="vendorCityId" autocomplete="off">
 										</div>
+										<div class="col-md-1">
+											<a onclick="addCitySC()" title="Add New City"> <img
+												style="margin-top: 4px; cursor: pointer" height="30px"
+												width="30px" alt="" src="img/add.png">
+											</a>
+
+										</div>
 									</div>
+									<br>
 									<div class="row">
 										<div class="col-md-3">
 											<b>Pin code :</b>
@@ -1094,7 +1104,7 @@
 							<div id="vendorAccount2" class="tab-pane fade">
 								<div class="widget-area">
 									<div class="row">
-										<h5 align="center">(* All the below fields are optional)</h5>
+										<h5 align="center">(All the below fields are optional)</h5>
 										<br>
 										<div class="col-md-5">
 											<b>VAT no:</b>
@@ -1243,7 +1253,7 @@
 									</div>
 
 									<div class="col-md-3">
-										<b>Ph No2:</b>
+										<b>Ph No2:(optional)</b>
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorPh22"
@@ -1255,7 +1265,8 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorMail2"
-											id="idvendorMail2" required="required">
+											style="text-transform: none;" id="idvendorMail2"
+											required="required">
 									</div>
 
 									<div class="col-md-3">
@@ -1299,10 +1310,12 @@
 									<div class="row">
 										<div class="col-md-3">
 											<b>Adress :</b>
-										</div><div class="col-md-9">
-									<textarea rows="" cols="" class="form-control"
-										name="vendorAddress2" id="idAdd2" required="required"></textarea>
-									<div class="row"></div></div>
+										</div>
+										<div class="col-md-9">
+											<textarea rows="" cols="" class="form-control"
+												name="vendorAddress2" id="idAdd2" required="required"></textarea>
+											<div class="row"></div>
+										</div>
 										<div class="col-md-3">
 											<b>City :</b>
 										</div>
@@ -1442,8 +1455,7 @@
 							<div class="row">
 								<div class="col-md-3">Quantity:</div>
 								<div class="col-md-9">
-									<input type="number" class="form-control" name="qty" id="qty"
-										required="required">
+									<input type="number" class="form-control" name="qty" id="qty">
 								</div>
 								<div class="col-md-3">UOM:</div>
 								<div class="col-md-9">
@@ -1595,6 +1607,203 @@
 
 		</div>
 	</div>
+
+
+
+	<div id="addCitySC" class="modal fade" role="dialog" style="top: 25px;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="breadcrumbs" style="height: 50px; text-align: center;">
+							<h3 style="margin-top: 11px;">Country/State/City</h3>
+
+						</div>
+
+						<div class="widget-area" style="width: 33%;">
+							<form action="addJsonCountry" class="sec">
+								<h3>Country</h3>
+								<input class="btn green pull-left" type="button"
+									onclick="countryPopup();" value="Add Country">
+								<div id="createCountry" style="top: 25px; position: absolute;">
+									<div class="modal-dialog" style="z-index: 1">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" onclick="closed();">&times;</button>
+												<h4 class="modal-title">Country Ctreation</h4>
+											</div>
+											<div class="modal-body">
+												<div class="row">
+													<div class="col-md-1">Name:</div>
+													<div class="col-md-10">
+														<input id="creConName" type="text" class="form-control"
+															name="name" onkeyup="crecontxt();">
+													</div>
+													<div class="col-md-1">
+														<input id="creConbtn" class="btn green pull-right"
+															type="button" value="Add" disabled="disabled"
+															onclick="submitformcountry();">
+													</div>
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</form>
+							<%-- <div class="widget-area"
+								style="overflow-y: scroll; height: 350px;">
+								<ul>
+									<c:forEach items="${sessionScope['ejb'].getAllCountry()}"
+										var="contry">
+										<li>${contry.countryName}</li>
+									</c:forEach>
+								</ul>
+							</div> --%>
+						</div>
+
+						<div class="widget-area" style="width: 34%;">
+							<form action="#" class="sec">
+								<h3>State</h3>
+								<input class="btn green pull-left" type="button"
+									onclick="statePopup();" value="Add State">
+								<div id="createState" style="top: 25px; position: absolute;">
+									<div class="modal-dialog" style="z-index: 1">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" onclick="closed();">&times;</button>
+												<h4 class="modal-title">State Ctreation</h4>
+											</div>
+											<div class="modal-body">
+												<div class="row">
+													<div class="col-md-1">Name:</div>
+													<div class="col-md-11">
+														<input type="text" class="form-control" name="name"
+															id="stateName" onkeyup="stateNameKeyUp();">
+													</div>
+												</div>
+												<br>
+												<div class="row">
+													<div class="col-md-4">The State Belongs to :</div>
+													<div class="col-md-6">
+														<input id="country" type="text" name="name"
+															class="form-control"> <input id="countryId"
+															type="hidden" name="id">
+													</div>
+													<div class="col-md-2">
+														<input id="countryForStatebtn" type="button"
+															onclick="methodState()" value="create"
+															disabled="disabled" class="btn green pull-right">
+													</div>
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</form>
+							<%-- 	<br> <br> <span><b>Select Country:</b></span><select
+								class="form-control" name="countryid" style="width: 150px;"
+								onchange="stateDispByCountry();">
+								<option value="0">select country</option>
+								<c:forEach items="${sessionScope['ejb'].getAllCountry()}"
+									var="contry">
+									<option value="${contry.id}">${contry.countryName}</option>
+								</c:forEach>
+							</select>
+							<div class="widget-area"
+								style="overflow-y: scroll; height: 292px;" id="states">
+								<ul>
+									<!-- ***************************state List here displayed******************* -->
+								</ul>
+							</div> --%>
+						</div>
+
+
+						<div class="widget-area" style="width: 33%;">
+							<h3>City</h3>
+							<input class="btn green pull-left" type="button"
+								onclick="cityPopup();" value="Add City">
+							<div id="createCity"
+								style="top: 25px; left: 25px; position: absolute;">
+								<div class="modal-dialog"
+									style="z-index: 1; float: left; width: 200%;">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" onclick="closed();">&times;</button>
+											<h4 class="modal-title">City Ctreation</h4>
+										</div>
+										<div class="modal-body">
+											<form action="addCity" class="sec">
+												<div class="row">
+													<div class="col-md-1">Name:</div>
+													<div class="col-md-11">
+														<input type="text" class="form-control" name="name"
+															id="cityName" onkeyup="cityNameKeyUp();">
+													</div>
+												</div>
+												<br> <b>The City Belongs to :</b>
+												<div class="row">
+													<div class="col-md-2">Country:</div>
+													<div class="col-md-10">
+														<input id="country1" type="text" name="country1"
+															class="form-control">
+													</div>
+
+													<div class="col-md-2">State:</div>
+
+													<div class="col-md-8">
+														<input id="state" type="text" name="name"
+															class="form-control" disabled="disabled"> <input
+															id="stateId" type="hidden" name="id">
+													</div>
+
+													<div class="col-md-2">
+														<input id="cityAddbtn" type="submit" value="create"
+															disabled="disabled" class="btn green pull-right">
+													</div>
+												</div>
+											</form>
+										</div>
+										<div class="modal-footer"></div>
+									</div>
+								</div>
+							</div>
+							<%-- <br> <br> <span><b>Select Country:</b></span><select
+								class="form-control" name="countryid3"
+								onchange="getStateList();">
+								<option value="0">select country</option>
+								<c:forEach items="${sessionScope['ejb'].getAllCountry()}"
+									var="contry">
+									<option value="${contry.id}">${contry.countryName}</option>
+								</c:forEach>
+							</select> <span><b>Select State:</b></span><select class="form-control"
+								name="sateid" id="statelist1" onchange="getCityList();">
+								<!-- ********************state option**************************** -->
+							</select>
+							<div class="widget-area"
+								style="overflow-y: scroll; height: 233px;" id="cityList">
+								<ul>
+
+								</ul>
+							</div> --%>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
 	<script type="text/javascript" src="js/script.js"></script>
@@ -2487,6 +2696,7 @@
 		function addVendor() {
 
 			$("#addV").modal("show");
+			$("#header").show();
 
 		}
 
@@ -2544,7 +2754,7 @@
 		function addAgentDetails() {
 
 			$("#addA").modal("show");
-
+			$("#header").show();
 		}
 
 		function bankButtonPrev2() {
@@ -2741,7 +2951,11 @@
 
 	<script type="text/javascript">
 		function submitform1() {
-
+			var vID;
+			var vvName;
+			var vvphone1;
+			var vvphone2;
+			var vvadres;
 			if ($("#idName").val() == 0) {
 				alert("please select  name");
 			} else if ($("#idvendorCompanyName").val() == "") {
@@ -2801,10 +3015,21 @@
 					type : "post",
 					success : function(data1) {
 						alert(data1.result);
+						vID = data1.vid;
+						vvName = data1.vname;
+						vvphone1 = data1.vph1;
+						vvphone2 = data1.vph2;
+						vvadres = data1.vvadd;
 						$("#addV").modal('hide');
 					},
-					error : function(a, b, c) {
 
+					complete : function() {
+
+						$("#vName").val(vvName);
+						$("#vId").val(vID);
+						$("#vDetail").val(
+								"\nAddress :" + vvadres + "\nPhone1 : "
+										+ vvphone1 + "\nPhone2 : " + vvphone2);
 					}
 
 				});
@@ -2874,7 +3099,7 @@
 							data : dataa2,
 							type : "post",
 							success : function(data2) {
-								agentId = data2.vendorid;
+								agentId = data2.vendorid;///show for current update
 								alert(data2.result);
 								$("#addA").modal('hide');
 							},
@@ -2905,7 +3130,7 @@
 											},
 											complete : function() {
 												$("#agentName").val(agentId);
-											}
+											}///show for current update
 										});
 							}
 
@@ -3019,6 +3244,327 @@
 
 		});
 	</script>
+
+	<script>
+		function addCitySC() {
+			$("#addCitySC").modal("show");
+		}
+
+		function submitformcountry() {
+
+			var datom = {
+				name : $("#creConName").val()
+			}
+
+			$.ajax({
+				url : "addJsonCountry",
+				dataType : "json",
+				data : datom,
+				type : "post",
+				success : function(dat) {
+					alert(dat.result);
+					$("#createCountry").hide();
+				}
+			});
+		}
+
+		function methodState() {
+			var countryVar;
+			var delta = {
+				name : $("#country").val(),
+				id : $("#countryId").val()
+			}
+
+			$.ajax({
+				url : "addJsonState",
+				dataType : "json",
+				data : delta,
+				type : "post",
+				success : function(dat) {
+					alert(dat.result);
+					$("#createState").hide();
+				}
+			});
+		}
+	</script>
+	<script>
+		$(document).ready(function() {
+
+			$("#createCountry").hide();
+			$("#createState").hide();
+			$("#createCity").hide();
+		});
+
+		function crecontxt() {
+			if ($('#creConName').val() != "") {
+				$('#creConbtn').prop("disabled", false);
+			} else {
+				$('#creConbtn').prop("disabled", true);
+			}
+		}
+		function stateNameKeyUp() {
+			if ($('#stateName').val() != "") {
+				$('#stateNameBtn').prop("disabled", false);
+			} else {
+				$('#stateNameBtn').prop("disabled", true);
+			}
+		}
+		$(function() {
+			$("#country").autocomplete({
+				source : function(request, response) {
+					$.ajax({
+						url : "getcountry",
+						dataType : "json",
+						data : {
+							term : request.term
+						},
+						success : function(data) {
+							response($.map(data, function(item) {
+								return {
+									value : item.countryName,
+									id : item.id
+								}
+							}));
+						}
+					});
+				},
+				change : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$('#countryForStatebtn').prop("disabled", true);
+					} else {
+						$("#countryId").val(ui.item.id);
+						$('#countryForStatebtn').prop("disabled", false);
+					}
+				},
+				select : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$('#countryForStatebtn').prop("disabled", true);
+					} else {
+						$("#countryId").val(ui.item.id);
+						$('#countryForStatebtn').prop("disabled", false);
+					}
+				}
+			});
+		});
+		function cityPopup() {
+			$("#createCity").show();
+		}
+		function statePopup() {
+			$("#createState").show();
+		}
+		function countryPopup() {
+			$("#createCountry").show();
+
+		}
+		function closed() {
+			$("#createCountry").hide();
+			$("#createState").hide();
+			$("#createCity").hide();
+		}
+
+		function stateDispByCountry() {
+			var a = $('[name="countryid"]').val();
+			if (a != 0) {
+				$.ajax({
+					url : "getStateByCountry",
+					dataType : "json",
+					data : {
+						"id" : a
+					},
+					success : function(data) {
+						$("#states ul").empty();
+						$.each(data, function(index, value) {
+							$("#states ul").append(
+									'<li>' + value.stateName + '</li>');
+						});
+					}
+				});
+			} else {
+				$("#states ul").empty();
+				alert("select a country.");
+			}
+		}
+
+		function getStateList() {
+			var a = $("[name='countryid3']").val();
+			if (a != 0) {
+				$.ajax({
+					url : "getStateByCountry",
+					dataType : "json",
+					data : {
+						"id" : a
+					},
+					success : function(data) {
+						$("#statelist1").empty();
+						$("#statelist1").append(
+								'<option value="0">select state</option>');
+						$.map(data, function(item) {
+							$("#statelist1").append(
+									'<option value="'+item.id+'">'
+											+ item.stateName + '</option>');
+						});
+					}
+				});
+
+			} else {
+				$("#statelist1").empty();
+			}
+		}
+		function getCityList() {
+			var a = $('[name="sateid"]').val();//state id
+			if (a != 0) {
+				$.ajax({
+					type : "post",
+					url : "getCity",
+					data : {
+						id : a
+					},
+					dataType : "json",
+					success : function(data) {
+						$("#cityList ul").empty();
+						$.each(data, function(index, val) {
+							$("#cityList ul").append(
+									'<li>' + val.cityName + '</li>');
+						});
+					}
+				});
+			} else {
+				alert("please select a state");
+			}
+
+		}
+		/**********************************for city add pupose******************************/
+		$(function() {
+			$("#country1")
+					.autocomplete(
+							{
+								source : function(request, response) {
+									$
+											.ajax({
+												url : "getcountry",
+												dataType : "json",
+												data : {
+													term : request.term
+												},
+												success : function(data) {
+													response($
+															.map(
+																	data,
+																	function(
+																			item) {
+																		return {
+																			value : item.countryName,
+																			id : item.id
+																		}
+																	}));
+												}
+											});
+								},
+								change : function(event, ui) {
+									if (ui.item == null) {
+										$(this).val("");
+										$("#state").val("");
+										$("#state").prop("disabled", true);
+									} else {
+										$("#state").prop("disabled", false);
+										$("#state")
+												.autocomplete(
+														{
+															source : function(
+																	request,
+																	response) {
+																$
+																		.ajax({
+																			url : "getStateByCountryByStateName",
+																			dataType : "json",
+																			data : {
+																				name : request.term,
+																				cid : ui.item.id
+																			},
+																			success : function(
+																					data) {
+																				response($
+																						.map(
+																								data,
+																								function(
+																										item) {
+																									return {
+																										value : item.stateName,
+																										id : item.id
+																									}
+																								}));
+																			}
+																		});
+															},
+															select : function(
+																	event, ui) {
+																$("#stateId")
+																		.val(
+																				ui.item.id);
+																if ($(
+																		"#cityName")
+																		.val() != "") {
+																	$(
+																			"#cityAddbtn")
+																			.prop(
+																					"disabled",
+																					false);
+																}
+
+															},
+															change : function(
+																	event, ui) {
+																if (ui.item == null) {
+																	$(this)
+																			.val(
+																					"");
+																	$(
+																			"#stateId")
+																			.val(
+																					"");
+																	$(
+																			"#cityAddbtn")
+																			.prop(
+																					"disabled",
+																					true);
+																} else {
+																	$(
+																			"#stateId")
+																			.val(
+																					ui.item.id);
+																	if ($(
+																			"#cityName")
+																			.val() != "") {
+																		$(
+																				"#cityAddbtn")
+																				.prop(
+																						"disabled",
+																						false);
+																	}
+																}
+															}
+														});
+									}
+								},
+								select : function(event, ui) {
+									if (ui.item != null) {
+										$("#state").prop("disabled", false);
+									}
+								}
+							});
+		});
+		function cityNameKeyUp() {
+			if ($("#cityName").val() != "" && $("#stateId").val() != "") {
+				$("#cityAddbtn").prop("disabled", false);
+			} else {
+				$("#cityAddbtn").prop("disabled", true);
+			}
+		}
+	</script>
+
+
 
 
 </body>

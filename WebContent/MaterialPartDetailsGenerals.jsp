@@ -868,7 +868,7 @@
 								<div class="widget-area" align="left">
 									<h2 class="widget-title">
 										<strong>Tree</strong> List &nbsp; &nbsp;
-										<!-- <a onclick="addCat()"
+									<!--  <a onclick="addCat()"
 											title="Add New Category"> <img style="margin-top: 4px;"
 											height="30px" width="30px" alt="" src="img/add.png">
 										</a> -->
