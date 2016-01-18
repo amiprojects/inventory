@@ -310,7 +310,7 @@
 			var dt = $("#datepicker").datepicker('getDate');
 			var dt1 = $("#datepicker1").datepicker('getDate');
 			if ($("#datepicker1").val() != "" && dt >= dt1) {
-				alert("End date must be later than start date...");
+				alert("Start date must be before than end date...");
 				$("#datepicker").val("");
 			}
 		}
