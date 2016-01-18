@@ -258,8 +258,9 @@
 											<div class="col-md-11">
 												&nbsp; &nbsp; &nbsp; <b class="font">Vendor Name :</b> <input
 													type="text" class="form-control" id="vName" name="vName"
-													required="required" onchange="emptyVender();"><input
-													type="hidden" id="vId" name="vId">
+													required="required" onchange="emptyVender();"
+													autocomplete="off"><input type="hidden" id="vId"
+													name="vId">
 											</div>
 											<div class="col-md-1">
 												<b class="font">&nbsp;&nbsp; </b> <a onclick="addVendor()"
@@ -418,7 +419,7 @@
 													<td colspan="2">Transport charge :</td>
 													<td><input type="text" class="form-control"
 														name="transportCost" id="transportCost" onkeyup="gtot();"
-														value="0"></td>
+														value="0" autocomplete="off"></td>
 												</tr>
 											</tbody>
 											<tbody>
@@ -949,8 +950,9 @@
 										</div>
 										<div class="col-md-9">
 											<input type="text" class="form-control cityAuto"
-												name="vendorCity" required="required" id="vendorCity">
-											<input type="hidden" name="vendorCityId" id="vendorCityId">
+												name="vendorCity" required="required" id="vendorCity"
+												autocomplete="off"> <input type="hidden"
+												name="vendorCityId" id="vendorCityId" autocomplete="off">
 										</div>
 									</div>
 									<div class="row">
@@ -1039,7 +1041,7 @@
 										<b>City:</b>
 									</div>
 									<div class="col-md-9">
-										<input type="text" class="form-control" id="bankCity6">
+										<input type="text" class="form-control" id="bankCity6" autocomplete="off">
 										<input type="hidden" value="" name="bankCity6"
 											id="bankCityId26">
 									</div>
@@ -1369,7 +1371,7 @@
 								<div class="col-md-5">Designer Number:</div>
 								<div class="col-md-7">
 									<input type="text" id="pCode" name="pCode" class="form-control"
-										onchange="emptyForm();"><input type="hidden"
+										onchange="emptyForm();" autocomplete="off"><input type="hidden"
 										id="productCode" name="productCode">
 
 								</div>
