@@ -136,7 +136,7 @@
 												<tr>
 													<td>City :</td>
 													<td><input type="text" name="city" id="city"
-														style="length: 40px;"></input></td>
+														style="length: 40px;" autocomplete="off"></input></td>
 												</tr>
 
 												<tr>

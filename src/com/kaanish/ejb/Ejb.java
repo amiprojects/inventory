@@ -1642,7 +1642,7 @@ public class Ejb {
 				"select c from ProductDetail c", ProductDetail.class);
 		List<ProductDetail> listpro = new ArrayList<ProductDetail>();
 		HashSet<ProductDetail> hash = new HashSet<ProductDetail>();
-		for (ProductDetail pd : q.getResultList()) {
+		for (ProductDetail pd : getAllProductDetail()) {
 			for (Purchase_Product_Details ppd : pd
 					.getPurchase_Product_Details()) {
 				if (ppd.getCompanyInfo().equals(usr.getCompanyInfo())) {

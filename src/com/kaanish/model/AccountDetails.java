@@ -231,13 +231,16 @@ public class AccountDetails implements Serializable{
 	 * "\"taxTotal\":\"" + tax_Type_Group.getTotalTaxValue() + "\"}";
 	 */
 
+	/*" + "\"cityId\":\"" + city.getId() + "\",\"city\":\""
+	+ city.getCityName() + "\",
+*/	
+	
 	@Override
 	public String toString() {
 		return "{\"bankAccountNumber\":\"" + bankAccountNumber + "\", " + "\"bankChequeLable\":\"" + bankChequeLable
 				+ "\", " + "\"bankIFSCnumber\":\"" + bankIFSCnumber + "\", " + "\"bankMICRnumber\":\"" + bankMICRnumber
 				+ "\", " + "\"bankName\":\"" + bankName + "\", " + "\"bankRTGCnumber\":\"" + bankRTGCnumber + "\", "
-				+ "\"branch\":\"" + branch + "\", " + "\"cityId\":\"" + city.getId() + "\",\"city\":\""
-				+ city.getCityName() + "\", " + "\"cstNumber\":\"" + cstNumber + "\"," + "\"cstRegistrationDate\":\""
+				+ "\"branch\":\"" + branch + "\",  " + "\"cstNumber\":\"" + cstNumber + "\"," + "\"cstRegistrationDate\":\""
 				+ cstRegistrationDate + "\"," + "\"exciseRegistrationDate\":\"" + exciseRegistrationDate + "\","
 				+ "\"id\":\"" + id + "\"," + "\"panNumber\":\"" + panNumber + "\","
 				+ "\"serviceTaxRegistrationDate\":\"" + serviceTaxRegistrationDate + "\","

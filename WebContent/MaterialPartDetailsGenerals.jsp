@@ -267,11 +267,11 @@
 										<form action="goProView" method="post">
 											<label for="" class="">Designer Number: </label> <input
 												type="text" id="prodcode" name="pCodeSearch"
-												class="form-control"> <label class="">Designer's
-												Design number: </label> <input type="text" id="prodesc"
-												name="pDesSearch" class="form-control"> <label
-												class="">Category: </label> <input type="text" id="deptcat"
-												name="pCatSearch" class="form-control"> <br> <input
+												class="form-control"> <label class="">Description:
+											</label> <input type="text" id="prodesc" name="pDesSearch"
+												class="form-control"> <label class="">Category:
+											</label> <input type="text" id="deptcat" name="pCatSearch"
+												class="form-control"> <br> <input
 												class="btn green btn-default" type="submit" value="Search">
 											<a href="MaterialPartDetailsGenerals.jsp"> <input
 												class="btn green btn-default" type="button" value="Show All"></a>
@@ -296,7 +296,7 @@
 											<c:set var="countt" value="${1}" />
 
 											<c:forEach
-												items="${sessionScope['ejb'].getAllProductDetailByCompany()}"
+												items="${sessionScope['ejb'].getAllProductDetail()}"
 												var="productt">
 
 
@@ -601,7 +601,7 @@
 									<div class="col-md-6">
 										<div>
 											<label for="exampleInputEmail1">Designer Number:</label> <input
-												type="text" name="productCode2" id="productCode" required
+												type="text" name="productCode2" id="productCode" 
 												onkeyup="codeKeyUp();" onchange="codeChange();"
 												class="form-control">
 										</div>
@@ -609,7 +609,7 @@
 									<div class="col-md-6">
 										<div>
 											<label for="exampleInputPassword1">Description:</label> <input
-												type="text" name="description" id="description" required
+												type="text" name="description" id="description"
 												class="form-control"><br>
 										</div>
 
@@ -618,7 +618,7 @@
 									<div class="col-md-6">
 										<label for="exampleInputEmail1">Designer's Design
 											number:</label> <input type="text" name="universalProductCode"
-											id="universalProductCode" required placeholder=""
+											id="universalProductCode"  placeholder=""
 											class="form-control"><br>
 									</div>
 									<div class="col-md-5">
@@ -867,7 +867,8 @@
 							<div class="col-md-6">
 								<div class="widget-area" align="left">
 									<h2 class="widget-title">
-										<strong>Tree</strong> List &nbsp; &nbsp; <!-- <a onclick="addCat()"
+										<strong>Tree</strong> List &nbsp; &nbsp;
+										<!-- <a onclick="addCat()"
 											title="Add New Category"> <img style="margin-top: 4px;"
 											height="30px" width="30px" alt="" src="img/add.png">
 										</a> -->

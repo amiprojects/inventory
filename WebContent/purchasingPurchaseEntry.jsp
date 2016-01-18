@@ -258,8 +258,9 @@
 											<div class="col-md-11">
 												&nbsp; &nbsp; &nbsp; <b class="font">Vendor Name :</b> <input
 													type="text" class="form-control" id="vName" name="vName"
-													required="required" onchange="emptyVender();"><input
-													type="hidden" id="vId" name="vId">
+													required="required" onchange="emptyVender();"
+													autocomplete="off"><input type="hidden" id="vId"
+													name="vId">
 											</div>
 											<div class="col-md-1">
 												<b class="font">&nbsp;&nbsp; </b> <a onclick="addVendor()"
@@ -418,7 +419,7 @@
 													<td colspan="2">Transport charge :</td>
 													<td><input type="text" class="form-control"
 														name="transportCost" id="transportCost" onkeyup="gtot();"
-														value="0"></td>
+														value="0" autocomplete="off"></td>
 												</tr>
 											</tbody>
 											<tbody>
@@ -426,7 +427,7 @@
 													<td colspan="2">Surcharge :</td>
 													<td><input type="text" class="form-control"
 														id="surcharge" name="surcharge" onkeyup="gtot();"
-														value="0"></td>
+														value="0" autocomplete="off"></td>
 												</tr>
 											</tbody>
 											<thead>
@@ -552,7 +553,8 @@
 																				<div class="col-md-7">
 																					<input type="text" class="form-control" value="0"
 																						id="spPaymentAmount" name="spPaymentAmount"
-																						onkeyup="spPaymentAmountFunc();">
+																						onkeyup="spPaymentAmountFunc();"
+																						autocomplete="off">
 																				</div>
 																			</div>
 																			<div id="pDueAmount">
@@ -857,7 +859,7 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorName"
-											id="idName" required="required">
+											id="idName" >
 									</div>
 									<br>
 									<div class="col-md-3">
@@ -873,7 +875,7 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorPh1"
-											id="iphone" required="required">
+											id="iphone" >
 									</div>
 
 									<div class="col-md-3">
@@ -881,7 +883,7 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorPh2"
-											id="idvendorPh2" required="required">
+											id="idvendorPh2" >
 									</div>
 
 									<div class="col-md-3">
@@ -889,7 +891,7 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorMail"
-											id="idvendorMail" required="required">
+											id="idvendorMail" >
 									</div>
 
 									<div class="col-md-3">
@@ -897,7 +899,7 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorAlias"
-											id="idvendorAlias" required="required">
+											id="idvendorAlias" >
 									</div>
 
 									<div class="col-md-3">
@@ -949,8 +951,9 @@
 										</div>
 										<div class="col-md-9">
 											<input type="text" class="form-control cityAuto"
-												name="vendorCity" required="required" id="vendorCity">
-											<input type="hidden" name="vendorCityId" id="vendorCityId">
+												name="vendorCity" required="required" id="vendorCity"
+												autocomplete="off"> <input type="hidden"
+												name="vendorCityId" id="vendorCityId" autocomplete="off">
 										</div>
 									</div>
 									<div class="row">
@@ -1009,7 +1012,7 @@
 						<div class="tab-content">
 							<div id="bankAccount2" class="tab-pane fade">
 								<div class="widget-area">
-									<h5 align="center">(* All the below fields are optional)</h5>
+									<h5 align="center">(All the below fields are optional)</h5>
 									<br>
 									<div class="col-md-3">
 										<b>Bank Name:</b>
@@ -1039,9 +1042,9 @@
 										<b>City:</b>
 									</div>
 									<div class="col-md-9">
-										<input type="text" class="form-control" id="bankCity6">
-										<input type="hidden" value="" name="bankCity6"
-											id="bankCityId26">
+										<input type="text" class="form-control" id="bankCity6"
+											autocomplete="off"> <input type="hidden" value=""
+											name="bankCity6" id="bankCityId26">
 									</div>
 									<br>
 									<div class="col-md-3">
@@ -1190,7 +1193,7 @@
 										<div class="col-md-7">
 											<select class="form-control" name="taxTypeGroupId2"
 												id="taxgroup2">
-												<!-- 	<option value="0">select a tax group</option> -->
+										<option value="0">select a tax group</option> 
 												<c:forEach
 													items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
 													var="taxTypeGroup">
@@ -1265,7 +1268,7 @@
 									</div>
 									<div class="col-md-9">
 
-										<select class="form-control" name="vendorType2"
+										<select class="form-control" name="vendorType2" disabled="disabled"
 											id="idvendorType2">
 											<c:forEach items="${sessionScope['ejb'].getAllVendorType()}"
 												var="vType">
@@ -1369,8 +1372,8 @@
 								<div class="col-md-5">Designer Number:</div>
 								<div class="col-md-7">
 									<input type="text" id="pCode" name="pCode" class="form-control"
-										onchange="emptyForm();"><input type="hidden"
-										id="productCode" name="productCode">
+										onchange="emptyForm();" autocomplete="off"><input
+										type="hidden" id="productCode" name="productCode">
 
 								</div>
 								<div class="col-md-5">Product Descripsion:</div>
@@ -2736,6 +2739,31 @@
 
 	<script type="text/javascript">
 		function submitform1() {
+			
+			if ($("#idName").val() == 0) {
+				alert("please select  name");
+			} else if ($("#idvendorCompanyName").val() == "") {
+				alert("please select Company Name");
+			} else if ($("#iphone").val() == "") {
+				alert("please select Ph No1");
+			} else if ($("#idvendorMail").val() == "") {
+				alert("please select email");
+			} else if ($("#idvendorAlias").val() == "") {
+				alert("please select Alias name");
+			} else if ($("#cityname").val() == "") {
+				alert("please select cityname");
+			} else if ($("#idAdd").val() == "") {
+				alert("please select Adress");
+			} else if ($("#vendorCity").val() == "") {
+				alert("please select vendor city");
+			} else if ($("#idvendorPin").val() == "") {
+				alert("please select pin code");
+			} else if ($("#service").val() == "") {
+				alert("please select Service Tax");
+			} 
+			else {
+			
+			
 			var dataa1 = {
 				vendorName : $("#idName").val(),
 				vendorAddress : $("#idAdd").val(),
@@ -2780,12 +2808,35 @@
 				}
 
 			});
+			}
 		}
 	</script>
 
 	<script type="text/javascript">
+	var agentId;
 		function submitform2() {
-
+			if ($("#idName2").val() == 0) {
+				alert("please select  name");
+			} else if ($("#idvendorCompanyName2").val() == "") {
+				alert("please select Company Name");
+			} else if ($("#iphone2").val() == "") {
+				alert("please select Ph No1");
+			} else if ($("#idvendorMail2").val() == "") {
+				alert("please select email");
+			} else if ($("#idvendorAlias2").val() == "") {
+				alert("please select Alias name");
+			} else if ($("#cityname2").val() == "") {
+				alert("please select cityname");
+			} else if ($("#idAdd2").val() == "") {
+				alert("please select Adress");
+			} else if ($("#vendorCity2").val() == "") {
+				alert("please select vendor city");
+			} else if ($("#idvendorPin2").val() == "") {
+				alert("please select pin code");
+			} else if ($("#service2").val() == "") {
+				alert("please select Service Tax");
+			} 
+			else {
 			var dataa2 = {
 				vendorName2 : $("#idName2").val(),
 				vendorAddress2 : $("#idAdd2").val(),
@@ -2823,6 +2874,7 @@
 						data : dataa2,
 						type : "post",
 						success : function(data2) {
+							agentId=data2.vendorid;
 							alert(data2.result);
 							$("#addA").modal('hide');
 						},
@@ -2845,11 +2897,14 @@
 																+ item.name
 																+ '</option>');
 											});
-										}
+										},complete:function(){
+											$("#agentName").val(agentId);
+											}
 									});
 						}
 
 					});
+			}
 		}
 	</script>
 
