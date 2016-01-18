@@ -557,6 +557,7 @@ public class JsonServlet extends HttpServlet {
 					/* msg = "vendor added successfully;"; */
 					gen22.writeStartObject()
 							.write("result", "Agent added successfully")
+							.write("vendorid",vendor2.getId())
 							.writeEnd().close();
 
 				} else {

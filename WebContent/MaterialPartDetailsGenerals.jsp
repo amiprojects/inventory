@@ -601,7 +601,7 @@
 									<div class="col-md-6">
 										<div>
 											<label for="exampleInputEmail1">Designer Number:</label> <input
-												type="text" name="productCode2" id="productCode" required
+												type="text" name="productCode2" id="productCode" 
 												onkeyup="codeKeyUp();" onchange="codeChange();"
 												class="form-control">
 										</div>
@@ -609,7 +609,7 @@
 									<div class="col-md-6">
 										<div>
 											<label for="exampleInputPassword1">Description:</label> <input
-												type="text" name="description" id="description" required
+												type="text" name="description" id="description"
 												class="form-control"><br>
 										</div>
 
@@ -618,7 +618,7 @@
 									<div class="col-md-6">
 										<label for="exampleInputEmail1">Designer's Design
 											number:</label> <input type="text" name="universalProductCode"
-											id="universalProductCode" required placeholder=""
+											id="universalProductCode"  placeholder=""
 											class="form-control"><br>
 									</div>
 									<div class="col-md-5">
