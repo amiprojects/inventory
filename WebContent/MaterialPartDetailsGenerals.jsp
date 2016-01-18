@@ -296,7 +296,7 @@
 											<c:set var="countt" value="${1}" />
 
 											<c:forEach
-												items="${sessionScope['ejb'].getAllProductDetailByCompany()}"
+												items="${sessionScope['ejb'].getAllProductDetail()}"
 												var="productt">
 
 

@@ -267,7 +267,7 @@
 										<form action="goProView" method="post">
 											<label for="" class="">Designer Number: </label> <input
 												type="text" id="prodcode" name="pCodeSearch"
-												class="form-control"> <label class="">Designer's Design number: </label> <input type="text" id="prodesc"
+												class="form-control"> <label class="">Description: </label> <input type="text" id="prodesc"
 												name="pDesSearch" class="form-control"> <label
 												class="">Category: </label> <input type="text" id="deptcat"
 												name="pCatSearch" class="form-control"> <br> <input

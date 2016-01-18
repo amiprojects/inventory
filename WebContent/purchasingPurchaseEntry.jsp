@@ -427,7 +427,7 @@
 													<td colspan="2">Surcharge :</td>
 													<td><input type="text" class="form-control"
 														id="surcharge" name="surcharge" onkeyup="gtot();"
-														value="0"></td>
+														value="0" autocomplete="off"></td>
 												</tr>
 											</tbody>
 											<thead>
@@ -553,7 +553,8 @@
 																				<div class="col-md-7">
 																					<input type="text" class="form-control" value="0"
 																						id="spPaymentAmount" name="spPaymentAmount"
-																						onkeyup="spPaymentAmountFunc();">
+																						onkeyup="spPaymentAmountFunc();"
+																						autocomplete="off">
 																				</div>
 																			</div>
 																			<div id="pDueAmount">
