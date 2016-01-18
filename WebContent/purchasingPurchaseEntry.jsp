@@ -2812,6 +2812,7 @@
 	</script>
 
 	<script type="text/javascript">
+	var agentId;
 		function submitform2() {
 			if ($("#idName2").val() == 0) {
 				alert("please select  name");
@@ -2872,6 +2873,7 @@
 						data : dataa2,
 						type : "post",
 						success : function(data2) {
+							agentId=data2.vendorid;
 							alert(data2.result);
 							$("#addA").modal('hide');
 						},
@@ -2894,7 +2896,9 @@
 																+ item.name
 																+ '</option>');
 											});
-										}
+										},complete:function(){
+											$("#agentName").val(agentId);
+											}
 									});
 						}
 
