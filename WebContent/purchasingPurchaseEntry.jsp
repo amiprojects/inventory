@@ -1768,7 +1768,7 @@
 													</div>
 
 													<div class="col-md-2">
-														<input id="cityAddbtn" type="submit" value="create"
+														<input id="cityAddbtn" type="button" value="create" onclick="methodCityA()"
 															disabled="disabled" class="btn green pull-right">
 													</div>
 												</div>
@@ -3320,6 +3320,43 @@
 				}
 			});
 		}
+		function methodCityA(){
+			
+			var countryVar;
+			var deltab = {
+				name : $("#cityName").val(),
+				id : $("#stateId").val(),
+				country1 : $("#country1").val(),
+				name :$("#state").val()
+			}
+
+			$.ajax({
+				url : "addJsonCity",
+				dataType : "json",
+				data : deltab,
+				type : "post",
+				success : function(datt) {
+					alert(datt.result);
+					cityid69 = datt.cityAid;
+					cityname69 = datt.cityAname;
+					
+					$("#createCity").hide();
+					$("#addCitySC").hide();
+				},
+				
+				complete : function() {
+					
+				$("#vendorCity").val(cityname69);
+				$("#vendorCityId").val(cityid69);
+				}
+			});
+			
+			
+		}
+		
+		
+		
+		
 	</script>
 	<script>
 		$(document).ready(function() {

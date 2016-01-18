@@ -570,7 +570,7 @@ public class JsonServlet extends HttpServlet {
 				resp.setContentType("application/json");
 				JsonGeneratorFactory cityA = Json.createGeneratorFactory(null);
 				JsonGenerator cityAj = cityA.createGenerator(resp.getOutputStream());
-
+				City city = new City();
 				List<City> cities = ejb.getCityByState(Integer.parseInt(req
 						.getParameter("id")));
 				int flag2 = 0;
@@ -582,14 +582,15 @@ public class JsonServlet extends HttpServlet {
 					}
 				}
 				if (flag2 == 0) {
-					City city = new City();
+					
 					city.setCityName(req.getParameter("name").toUpperCase());
 					city.setState(ejb.getStateById(Integer.parseInt(req
 							.getParameter("id"))));
 
 					ejb.setCity(city);
 				
-				cityAj.writeStartObject().write("result", "City added successfully").writeEnd().close();
+				cityAj.writeStartObject().write("result", "City added successfully").write("cityAid", city.getId())
+				.write("cityAname", city.getCityName()).writeEnd().close();
 			} else {
 				cityAj.writeStartObject().write("result", "Duplicate City Entry").writeEnd().close();
 			}
