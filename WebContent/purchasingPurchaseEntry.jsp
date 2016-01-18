@@ -857,7 +857,7 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorName"
-											id="idName" required="required">
+											id="idName" >
 									</div>
 									<br>
 									<div class="col-md-3">
@@ -873,7 +873,7 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorPh1"
-											id="iphone" required="required">
+											id="iphone" >
 									</div>
 
 									<div class="col-md-3">
@@ -881,7 +881,7 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorPh2"
-											id="idvendorPh2" required="required">
+											id="idvendorPh2" >
 									</div>
 
 									<div class="col-md-3">
@@ -889,7 +889,7 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorMail"
-											id="idvendorMail" required="required">
+											id="idvendorMail" >
 									</div>
 
 									<div class="col-md-3">
@@ -897,7 +897,7 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorAlias"
-											id="idvendorAlias" required="required">
+											id="idvendorAlias" >
 									</div>
 
 									<div class="col-md-3">
@@ -1009,7 +1009,7 @@
 						<div class="tab-content">
 							<div id="bankAccount2" class="tab-pane fade">
 								<div class="widget-area">
-									<h5 align="center">(* All the below fields are optional)</h5>
+									<h5 align="center">(All the below fields are optional)</h5>
 									<br>
 									<div class="col-md-3">
 										<b>Bank Name:</b>
@@ -1190,7 +1190,7 @@
 										<div class="col-md-7">
 											<select class="form-control" name="taxTypeGroupId2"
 												id="taxgroup2">
-												<!-- 	<option value="0">select a tax group</option> -->
+										<option value="0">select a tax group</option> 
 												<c:forEach
 													items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
 													var="taxTypeGroup">
@@ -1265,7 +1265,7 @@
 									</div>
 									<div class="col-md-9">
 
-										<select class="form-control" name="vendorType2"
+										<select class="form-control" name="vendorType2" disabled="disabled"
 											id="idvendorType2">
 											<c:forEach items="${sessionScope['ejb'].getAllVendorType()}"
 												var="vType">
@@ -2736,6 +2736,31 @@
 
 	<script type="text/javascript">
 		function submitform1() {
+			
+			if ($("#idName").val() == 0) {
+				alert("please select  name");
+			} else if ($("#idvendorCompanyName").val() == "") {
+				alert("please select Company Name");
+			} else if ($("#iphone").val() == "") {
+				alert("please select Ph No1");
+			} else if ($("#idvendorMail").val() == "") {
+				alert("please select email");
+			} else if ($("#idvendorAlias").val() == "") {
+				alert("please select Alias name");
+			} else if ($("#cityname").val() == "") {
+				alert("please select cityname");
+			} else if ($("#idAdd").val() == "") {
+				alert("please select Adress");
+			} else if ($("#vendorCity").val() == "") {
+				alert("please select vendor city");
+			} else if ($("#idvendorPin").val() == "") {
+				alert("please select pin code");
+			} else if ($("#service").val() == "") {
+				alert("please select Service Tax");
+			} 
+			else {
+			
+			
 			var dataa1 = {
 				vendorName : $("#idName").val(),
 				vendorAddress : $("#idAdd").val(),
@@ -2780,12 +2805,34 @@
 				}
 
 			});
+			}
 		}
 	</script>
 
 	<script type="text/javascript">
 		function submitform2() {
-
+			if ($("#idName2").val() == 0) {
+				alert("please select  name");
+			} else if ($("#idvendorCompanyName2").val() == "") {
+				alert("please select Company Name");
+			} else if ($("#iphone2").val() == "") {
+				alert("please select Ph No1");
+			} else if ($("#idvendorMail2").val() == "") {
+				alert("please select email");
+			} else if ($("#idvendorAlias2").val() == "") {
+				alert("please select Alias name");
+			} else if ($("#cityname2").val() == "") {
+				alert("please select cityname");
+			} else if ($("#idAdd2").val() == "") {
+				alert("please select Adress");
+			} else if ($("#vendorCity2").val() == "") {
+				alert("please select vendor city");
+			} else if ($("#idvendorPin2").val() == "") {
+				alert("please select pin code");
+			} else if ($("#service2").val() == "") {
+				alert("please select Service Tax");
+			} 
+			else {
 			var dataa2 = {
 				vendorName2 : $("#idName2").val(),
 				vendorAddress2 : $("#idAdd2").val(),
@@ -2850,6 +2897,7 @@
 						}
 
 					});
+			}
 		}
 	</script>
 
