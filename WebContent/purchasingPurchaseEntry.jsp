@@ -427,7 +427,7 @@
 													<td colspan="2">Surcharge :</td>
 													<td><input type="text" class="form-control"
 														id="surcharge" name="surcharge" onkeyup="gtot();"
-														value="0"></td>
+														value="0" autocomplete="off"></td>
 												</tr>
 											</tbody>
 											<thead>
@@ -553,7 +553,8 @@
 																				<div class="col-md-7">
 																					<input type="text" class="form-control" value="0"
 																						id="spPaymentAmount" name="spPaymentAmount"
-																						onkeyup="spPaymentAmountFunc();">
+																						onkeyup="spPaymentAmountFunc();"
+																						autocomplete="off">
 																				</div>
 																			</div>
 																			<div id="pDueAmount">
@@ -1041,9 +1042,9 @@
 										<b>City:</b>
 									</div>
 									<div class="col-md-9">
-										<input type="text" class="form-control" id="bankCity6" autocomplete="off">
-										<input type="hidden" value="" name="bankCity6"
-											id="bankCityId26">
+										<input type="text" class="form-control" id="bankCity6"
+											autocomplete="off"> <input type="hidden" value=""
+											name="bankCity6" id="bankCityId26">
 									</div>
 									<br>
 									<div class="col-md-3">
@@ -1371,8 +1372,8 @@
 								<div class="col-md-5">Designer Number:</div>
 								<div class="col-md-7">
 									<input type="text" id="pCode" name="pCode" class="form-control"
-										onchange="emptyForm();" autocomplete="off"><input type="hidden"
-										id="productCode" name="productCode">
+										onchange="emptyForm();" autocomplete="off"><input
+										type="hidden" id="productCode" name="productCode">
 
 								</div>
 								<div class="col-md-5">Product Descripsion:</div>

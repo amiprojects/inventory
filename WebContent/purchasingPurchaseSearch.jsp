@@ -85,7 +85,7 @@
 											<div class="form-group">
 												<label for="" style="float: left;">(End Date)</label> <input
 													type="text" placeholder="Enter last date" id="datepicker1"
-													class="form-control" name="lDate" id="lDate">
+													class="form-control" name="lDate" id="lDate" autocomplete="off">
 											</div>
 										</div>
 										<div class="col-md-2">
@@ -160,7 +160,7 @@
 										<div class="col-md-10">
 											<div class="form-group">
 												<label for="" style="float: left;">Designer Number:</label> <input
-													type="" placeholder="Enter Designer Number: id="prodCode"
+													type="" placeholder="Enter Designer Number" id="prodCode"
 													name="prodCode" class="form-control">
 											</div>
 										</div>
