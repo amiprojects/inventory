@@ -1,1 +1,19 @@
- autocomplete="off"
+ case "salesSearchAll":
+				page = "salesSearch.jsp";
+				List<SalesEntry> salesEntryLstA = ejb
+						.getAllSalesEntriesByCompany();
+				req.setAttribute("salesEntryLst", salesEntryLstA);
+				if (salesEntryLstA.size() > 0) {
+					msg = "All Sales List";
+				} else {
+					msg = "No result found...";
+				}
+				break;
+				
+				
+cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<SalesEntry> q = em.createQuery(
+				"select c from SalesEntry c WHERE c.companyInfo.id=:cId",
+				SalesEntry.class);
+		q.setParameter("cId", cId);

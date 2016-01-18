@@ -86,7 +86,7 @@
 													<label for="">Search between two dates : (Start
 														Date)</label> <input type="text" placeholder="Enter First Date"
 														id="datepicker" class="form-control" name="fDate"
-														id="fDate">
+														id="fDate" autocomplete="off">
 												</div>
 											</div>
 
@@ -94,7 +94,7 @@
 												<div class="form-group">
 													<label for="">(End Date)</label> <input type="text"
 														placeholder="Enter last date" id="datepicker1"
-														class="form-control" name="lDate" id="lDate">
+														class="form-control" name="lDate" id="lDate" autocomplete="off">
 												</div>
 											</div>
 											<div class="col-md-2">

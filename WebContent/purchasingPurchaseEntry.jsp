@@ -54,10 +54,15 @@
 <script>
 	$(function() {
 		var d = new Date();
-		var n = d.getFullYear();
+		var m = d.getMonth();
+		if (m > 3) {
+			var n = d.getFullYear();
+		} else {
+			var n = d.getFullYear() - 1;
+		}
 		$("#datepicker").datepicker({
 			dateFormat : "dd-mm-yy",
-			minDate : new Date(n, 0, 1),
+			minDate : new Date(n, 3, 1),
 			maxDate : 0
 		});
 		$("#datepicker").datepicker('setDate', new Date());
@@ -120,7 +125,9 @@
 			alert('Please select Payment status...');
 			$("#payDetail").hide();
 			$("#description").hide();
+			$("#pType").val("-");
 		} else if (val == 'Not Paid') {
+			$("#pType").val("-");
 			$("#pPayAmount").hide();
 			$("#pAmount").hide();
 			$("#pDate").hide();
@@ -133,6 +140,7 @@
 					Math.round((Number($("#spAmount").val()) - Number($(
 							"#spPaymentAmount").val())) * 100) / 100);
 		} else if (val == 'Full Paid') {
+			$("#pType").val("-");
 			$("#pPayAmount").hide();
 			$("#pDueAmount").hide();
 			$("#pAmount").show();
@@ -145,6 +153,7 @@
 					Math.round((Number($("#spAmount").val()) - Number($(
 							"#spPaymentAmount").val())) * 100) / 100);
 		} else if (val == 'Semi Paid') {
+			$("#pType").val("-");
 			$("#pPayAmount").show();
 			$("#pDueAmount").show();
 			$("#pAmount").show();
@@ -270,8 +279,7 @@
 												</a>
 											</div>
 
-											<div class="col-md-12">
-
+											<div class="col-md-12" style="margin-top: 15px;">
 												&nbsp; &nbsp; &nbsp; <b class="font">Vendor Details :</b>
 												<textarea rows="5" cols="" id="vDetail" class="form-control"
 													readonly="readonly"></textarea>
@@ -305,11 +313,7 @@
 														style="margin-top: 4px; cursor: pointer" height="30px"
 														width="30px" alt="" src="img/add.png">
 													</a>
-
 												</div>
-
-
-
 											</div>
 										</div>
 										<div class="col-md-6">
@@ -465,9 +469,9 @@
 										</div>
 										<div class="row">
 											<div style="float: left;">
-												&nbsp; &nbsp; <span><b>Bar code :</b> &nbsp; </span> <input
-													type="radio" name="bar" value="yesBar" checked="checked">&nbsp;
-												Yes <input type="radio" name="bar" value="noBar">&nbsp;
+												&nbsp; &nbsp; <span><b>Print Barcode :</b> &nbsp; </span> <input
+													type="radio" name="bar" value="yesBar">&nbsp; Yes <input
+													type="radio" name="bar" value="noBar" checked="checked">&nbsp;
 												No
 											</div>
 											<div style="float: right;">
@@ -893,6 +897,7 @@
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorMail"
 											style="text-transform: none;" id="idvendorMail">
+
 									</div>
 
 									<div class="col-md-3">
@@ -1814,7 +1819,7 @@
 	<script>
 		$(document).ready(function() {
 			$("#isSalable").val('no');
-			$("#isBarPrint").val('yes');
+			$("#isBarPrint").val('no');
 			$("#isSerial").val('no');
 			$("#isLot").val('yes');
 			$("#isAgent").val('no');
@@ -2956,6 +2961,7 @@
 			var vvphone1;
 			var vvphone2;
 			var vvadres;
+
 			if ($("#idName").val() == 0) {
 				alert("please select  name");
 			} else if ($("#idvendorCompanyName").val() == "") {
@@ -3015,6 +3021,7 @@
 					type : "post",
 					success : function(data1) {
 						alert(data1.result);
+
 						vID = data1.vid;
 						vvName = data1.vname;
 						vvphone1 = data1.vph1;
@@ -3030,6 +3037,7 @@
 						$("#vDetail").val(
 								"\nAddress :" + vvadres + "\nPhone1 : "
 										+ vvphone1 + "\nPhone2 : " + vvphone2);
+
 					}
 
 				});
@@ -3099,6 +3107,7 @@
 							data : dataa2,
 							type : "post",
 							success : function(data2) {
+
 								agentId = data2.vendorid;///show for current update
 								alert(data2.result);
 								$("#addA").modal('hide');
@@ -3131,6 +3140,7 @@
 											complete : function() {
 												$("#agentName").val(agentId);
 											}///show for current update
+
 										});
 							}
 
@@ -3242,6 +3252,30 @@
 
 			});
 
+		});
+		$(function() {
+
+			$("#transportCost").numericInput({
+
+				allowFloat : true,
+
+				allowNegative : false,
+
+			});
+			$("#surcharge").numericInput({
+
+				allowFloat : true,
+
+				allowNegative : false,
+
+			});
+			$("#spPaymentAmount").numericInput({
+
+				allowFloat : true,
+
+				allowNegative : false,
+
+			});
 		});
 	</script>
 

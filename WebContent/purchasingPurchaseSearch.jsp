@@ -69,6 +69,15 @@
 							</div>
 
 							<div class="widget-area">
+								<form role="form" class="sec" action="purchaseSearchAll"
+									method="post">
+									<div class="row">
+										<div class="col-md-12">
+											<button class="btn green pull-right" type="submit" style="margin-right: 63px;">Show
+												All</button>
+										</div>
+									</div>
+								</form>
 								<form role="form" class="sec" action="purchaseSearchByDate"
 									method="post">
 									<div class="row">
@@ -77,7 +86,8 @@
 												<label for="" style="float: left;">Search between
 													two dates : (Start Date)</label> <input type="text"
 													placeholder="Enter First Date" id="datepicker"
-													class="form-control" name="fDate" id="fDate" autocomplete="off">
+													class="form-control" name="fDate" id="fDate"
+													autocomplete="off" onchange="dateSet();">
 											</div>
 										</div>
 
@@ -85,7 +95,8 @@
 											<div class="form-group">
 												<label for="" style="float: left;">(End Date)</label> <input
 													type="text" placeholder="Enter last date" id="datepicker1"
-													class="form-control" name="lDate" id="lDate" autocomplete="off">
+													class="form-control" name="lDate" id="lDate"
+													autocomplete="off" onchange="checkDate();">
 											</div>
 										</div>
 										<div class="col-md-2">
@@ -159,9 +170,9 @@
 									<div class="row">
 										<div class="col-md-10">
 											<div class="form-group">
-												<label for="" style="float: left;">Designer Number:</label> <input
-													type="" placeholder="Enter Designer Number" id="prodCode"
-													name="prodCode" class="form-control">
+												<label for="" style="float: left;">Designer Number:</label>
+												<input type="" placeholder="Enter Designer Number"
+													id="prodCode" name="prodCode" class="form-control">
 											</div>
 										</div>
 										<div class="col-md-2">
@@ -296,16 +307,32 @@
 	<script>
 		$(function() {
 			$("#datepicker").datepicker({
-				dateFormat : "dd-mm-yy"
+				dateFormat : "dd-mm-yy",
+				maxDate : 0
+			});
+			$("#datepicker1").datepicker({
+				dateFormat : "dd-mm-yy",
+				maxDate : 0
 			});
 		});
 	</script>
 	<script>
-		$(function() {
-			$("#datepicker1").datepicker({
-				dateFormat : "dd-mm-yy"
-			});
-		});
+		function dateSet() {
+			var dt = $("#datepicker").datepicker('getDate');
+			var dt1 = $("#datepicker1").datepicker('getDate');
+			if ($("#datepicker1").val() != "" && dt >= dt1) {
+				alert("Start date must be before than end date...");
+				$("#datepicker").val("");
+			}
+		}
+		function checkDate() {
+			var d = $("#datepicker").datepicker('getDate');
+			var d1 = $("#datepicker1").datepicker('getDate');
+			if ($("#datepicker").val() != "" && d >= d1) {
+				alert("End date must be later than start date...");
+				$("#datepicker1").val("");
+			}
+		}
 		function purchaseViewF(id) {
 			$("#pView" + id).submit();
 		}

@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.kaanish.ejb.Ejb;
+import com.kaanish.model.Bill_setup;
 import com.kaanish.model.CompanyInfo;
 import com.kaanish.model.JobClass;
 import com.kaanish.model.Module;
@@ -53,6 +54,7 @@ public class LoginServlet extends HttpServlet {
 	private CompanyInfo companyInfoKaanish;
 	private CompanyInfo companyInfoKainat;
 	private Stoct stoct;
+	private Bill_setup bill_setup;
 
 	@Override
 	public void init() throws ServletException {
@@ -312,6 +314,91 @@ public class LoginServlet extends HttpServlet {
 					.ofHoursMinutes(5, 30))));
 			stoct.setStockNumber(GetMacId.getMacId());
 			ejb.setStoct(stoct);
+		}
+		if (ejb.getAllBillSetup().size() == 0) {
+			companyInfoKaanish = ejb.getUserById("adminKaanish")
+					.getCompanyInfo();
+			companyInfoKainat = ejb.getUserById("adminKainat").getCompanyInfo();
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("PUR");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfoKaanish);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("PUR");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfoKainat);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("INV");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfoKaanish);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("INV");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfoKainat);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+			
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("SRINV");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfoKaanish);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("SRINV");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfoKainat);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("JOB");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfoKaanish);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("JOB");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfoKainat);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("ROAD");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfoKaanish);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("ROAD");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfoKainat);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
 		}
 
 	}

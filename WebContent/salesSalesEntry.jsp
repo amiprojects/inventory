@@ -142,7 +142,7 @@
 												<tr>
 													<td>Phone No. :</td>
 													<td><input type="number" name="phone" id="phone"
-														style="length: 40px;"></input></td>
+														style="length: 40px;" autocomplete="off"></input></td>
 												</tr>
 
 												<tr>
@@ -231,8 +231,8 @@
 									<b>Quantity :</b> <input type="number" name="qty" id="qty"
 										style="width: 70px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									<b>Product :</b><input type="text" id="pCode" name="pCode"
-										onkeyup="pcodeF();"><input type="hidden" id="pCodeId"
-										name="pCodeId">
+										onkeyup="pcodeF();" autocomplete="off"><input
+										type="hidden" id="pCodeId" name="pCodeId">
 									<%-- <select name="prodCode" id="prodCode"
 										onchange="getProdDetByPurchaseProdDetId();"
 										required="required">
@@ -321,7 +321,7 @@
 												</td>
 												<td><input type="number" class="form-control"
 													name="disValue" id="discount" placeholder=""
-													onkeyup="discountF();"></td>
+													onkeyup="discountF();" autocomplete="off"></td>
 											</tr>
 										</tbody>
 
@@ -362,7 +362,7 @@
 												<td colspan="2" id="trans">Transport charge :</td>
 												<td><input type="number" class="form-control" value="0"
 													id="transcharge" name="transcharge"
-													onkeyup="transchargeF();"></td>
+													onkeyup="transchargeF();" autocomplete="off"></td>
 											</tr>
 										</tbody>
 
@@ -370,7 +370,8 @@
 											<tr>
 												<td colspan="2" id="sur">Surcharge :</td>
 												<td><input type="number" class="form-control" value="0"
-													id="surcharge" name="surcharge" onkeyup="surchargeF();"></td>
+													id="surcharge" name="surcharge" onkeyup="surchargeF();"
+													autocomplete="off"></td>
 											</tr>
 										</tbody>
 										<tbody>
@@ -473,7 +474,8 @@
 																				<div class="col-md-7">
 																					<input type="text" class="form-control" value="0"
 																						id="spPaymentAmount" name="spPaymentAmount"
-																						onkeyup="spPaymentAmountFunc();">
+																						onkeyup="spPaymentAmountFunc();"
+																						autocomplete="off">
 																				</div>
 																			</div>
 																			<div id="pDueAmount">
@@ -616,10 +618,15 @@
 	<script>
 		$(function() {
 			var d = new Date();
-			var n = d.getFullYear();
+			var m = d.getMonth();
+			if (m > 3) {
+				var n = d.getFullYear();
+			} else {
+				var n = d.getFullYear() - 1;
+			}
 			$("#datepicker").datepicker({
 				dateFormat : "dd-mm-yy",
-				minDate : new Date(n, 0, 1),
+				minDate : new Date(n, 3, 1),
 				maxDate : 0
 			});
 			$("#datepicker").datepicker('setDate', new Date());

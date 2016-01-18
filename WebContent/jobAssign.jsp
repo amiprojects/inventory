@@ -41,8 +41,16 @@
 <script src="js/jquery-ui/jquery-ui.js"></script>
 <script>
 	$(function() {
+		var d = new Date();
+		var m = d.getMonth();
+		if (m > 3) {
+			var n = d.getFullYear();
+		} else {
+			var n = d.getFullYear() - 1;
+		}
 		$("#datepicker").datepicker({
 			dateFormat : "dd-mm-yy",
+			minDate : new Date(n, 3, 1),
 			maxDate : 0
 		});
 		$("#datepicker").datepicker('setDate', new Date());
@@ -120,8 +128,8 @@
 											<div class="col-md-12">
 												<b class="font">Jobber Name :</b> <input type="text"
 													class="form-control" id="jId" name="jId"
-													onchange="emptyForm();"> <input type="hidden"
-													id="jName" name="jName">
+													onchange="emptyForm();" autocomplete="off"> <input
+													type="hidden" id="jName" name="jName">
 												<%-- <select class="form-control" name="jName" id="jName"
 														onchange="getDetailsByJobberName();" required="required">
 														<option value="0">Select Jobber Name</option>
@@ -444,7 +452,14 @@
 		});
 
 		function getProdDetByPurchaseProdDetId() {
+			$("#qty").val('');
+			$("#work").val('');
+
+			
 			if ($("#prodCode").val() != 0) {
+				
+				
+				
 				$.ajax({
 					url : 'getProdDetByPurchaseProdDetailsId',
 					type : 'post',
@@ -467,6 +482,11 @@
 					},
 					error : function(a, b, c) {
 						alert(b + ": " + c);
+					},complete:function(){
+						if(!(document.getElementById("trRemove" + $("#prodCode").val()) === null)){
+							$("#qty").val(Number($("#remQty").val())-Number($("#trRemove" + $("#prodCode").val()+" :nth-child(4)").html()));
+							$("#work").val($("#trRemove" + $("#prodCode").val()+" :nth-child(6)").html());;
+						}
 					}
 				});
 			} else {
@@ -479,38 +499,50 @@
 			barcodeParts = $("[name='barcode']").val().split('/');
 			var purchaseProductId = barcodeParts[0];
 			$("#prodCode").val(purchaseProductId);
-			$
-					.ajax({
-						url : 'getProdDetByPurchaseProdDetailsId',
-						type : 'post',
-						dataType : "json",
-						data : {
-							id : purchaseProductId
-						},
-						success : function(data) {
-							$("#prodDesc").val(
-									"Remaining Quantity : "
-											+ data.remaining_quantity
-											+ "\nVendor Name : "
-											+ data.purchaseVendorName
-											+ "\nPurchase Date : "
-											+ data.purchaseDate);
-							$("#remQty").val(Number(data.remaining_quantity));
-							$("#uom").val(data.uom);
-							$("#prCode").val(data.productCode);
-							$("#prDesc").val(data.productDesc);
-						},
-						error : function(a, b, c) {
-							alert(b + ": " + c);
-						}
-					});
+			
+			$.ajax({
+				url : 'getProdDetByPurchaseProdDetailsId',
+				type : 'post',
+				dataType : "json",
+				data : {
+					id : $("#prodCode").val()
+				},
+				success : function(data) {
+					$("#prodDesc").val(
+							"Remaining Quantity : "
+									+ data.remaining_quantity
+									+ "\nVendor Name : "
+									+ data.purchaseVendorName
+									+ "\nPurchase Date : "
+									+ data.purchaseDate);
+					$("#remQty").val(Number(data.remaining_quantity));
+					$("#uom").val(data.uom);
+					$("#prCode").val(data.productCode);
+					$("#prDesc").val(data.productDesc);
+				},
+				error : function(a, b, c) {
+					alert(b + ": " + c);
+				},complete:function(){
+					if(!(document.getElementById("trRemove" + $("#prodCode").val()) === null)){
+						$("#qty").val(Number($("#remQty").val())-Number($("#trRemove" + $("#prodCode").val()+" :nth-child(4)").html()));
+						$("#work").val($("#trRemove" + $("#prodCode").val()+" :nth-child(6)").html());;
+					}
+				}
+			});
 
 		}
 
 		function checkQty() {
-			if (Number($("#qty").val()) > Number($("#remQty").val())) {
-				alert('Please enter less quantity than remaining');
-				$("#qty").val("");
+			if(!(document.getElementById("trRemove" + $("#prodCode").val()) === null)){
+				if (Number(Number($("#qty").val())+Number($("#trRemove" + $("#prodCode").val()+" :nth-child(4)").html())) > Number($("#remQty").val())) {
+					alert('Please enter less quantity than remaining');
+					$("#qty").val("");
+				}				
+			}else{
+				if (Number($("#qty").val()) > Number($("#remQty").val())) {
+					alert('Please enter less quantity than remaining');
+					$("#qty").val("");
+				}
 			}
 		}
 		ind = 0;
@@ -530,42 +562,55 @@
 			} else {
 
 				$("#another").modal("show");
-				$("#purProTable")
-						.append(
-								'<tbody><tr id="trRemove'+ind+'"><td>'
-										+ i
-										+ '</td><td>'
-										+ $("#prCode").val()
-										+ '</td><td>'
-										+ $("#prDesc").val()
-										+ '</td><td>'
-										+ $("#qty").val()
-										+ '</td><td>'
-										+ $("#uom").val()
-										+ '</td><td>'
-										+ $("#work").val()
-										+ '</td><td>'
-										+ '<a href="#" onclick="removeProduct('
-										+ ind
-										+ ');"><img src="img/cross.png" height="16px" width="16px"></a>'
-										+ '</td></tr></tbody>');
+				if(document.getElementById("trRemove" + $("#prodCode").val()) === null){
+					$("#purProTable")
+					.append(
+							'<tbody><tr id="trRemove'+$("#prodCode").val()+'"><td>'
+									+ i
+									+ '</td><td>'
+									+ $("#prCode").val()
+									+ '</td><td>'
+									+ $("#prDesc").val()
+									+ '</td><td>'
+									+ $("#qty").val()
+									+ '</td><td>'
+									+ $("#uom").val()
+									+ '</td><td>'
+									+ $("#work").val()
+									+ '</td><td>'
+									+ '<a href="#" onclick="removeProduct('
+									+ $("#prodCode").val()
+									+ ');"><img src="img/cross.png" height="16px" width="16px"></a>'
+									+ '</td></tr></tbody>');
+				}else{
+					$("#trRemove" + $("#prodCode").val()+" :nth-child(4)").html(Number($("#qty").val())+Number($("#trRemove" + $("#prodCode").val()+" :nth-child(4)").html()));
+					$("#trRemove" + $("#prodCode").val()+" :nth-child(6)").html($("#work").val());
+				}
+				
 				i++;
 				$("#totProd").val(Number($("#totProd").val()) + Number(1));
 				$("#totQty").val(
 						Number($("#totQty").val()) + Number($("#qty").val()));
+				
+				if(document.getElementById("trRemoveH" + $("#prodCode").val()) === null){
+					$("#hiddenTable")
+					.append(
+							'<tbody><tr id="trRemoveH'+$("#prodCode").val()+'">'
+									+ '<td><input type="text" name="pProdDetIdH" value=\''
+									+ $("#prodCode").val()
+									+ '\'></td>'
+									+ '<td><input type="text" name="qtyH" value=\''
+									+ $("#qty").val()
+									+ '\'></td>'
+									+ '<td><input type="text" name="workH" value=\''
+									+ $("#work").val() + '\'></td>'
+									+ '</tr></tbody>');
+				}else{
+					$("#trRemoveH" + $("#prodCode").val()+" :nth-child(2)").html(Number($("#trRemove" + $("#prodCode").val()+" :nth-child(4)").html()));
+					$("#trRemoveH" + $("#prodCode").val()+" :nth-child(6)").html($("#work").val());
+				}
 
-				$("#hiddenTable")
-						.append(
-								'<tbody><tr id="trRemoveH'+ind+'">'
-										+ '<td><input type="text" name="pProdDetIdH" value=\''
-										+ $("#prodCode").val()
-										+ '\'></td>'
-										+ '<td><input type="text" name="qtyH" value=\''
-										+ $("#qty").val()
-										+ '\'></td>'
-										+ '<td><input type="text" name="workH" value=\''
-										+ $("#work").val() + '\'></td>'
-										+ '</tr></tbody>');
+				
 				ind++;
 				$("#prodDesc").val("");
 				$("#qty").val("");

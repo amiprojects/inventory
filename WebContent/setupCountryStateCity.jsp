@@ -156,7 +156,7 @@
 														<div class="col-md-4">The State Belongs to :</div>
 														<div class="col-md-6">
 															<input id="country" type="text" name="name"
-																class="form-control"> <input id="countryId"
+																class="form-control" autocomplete="off"> <input id="countryId"
 																type="hidden" name="id">
 														</div>
 														<div class="col-md-2">

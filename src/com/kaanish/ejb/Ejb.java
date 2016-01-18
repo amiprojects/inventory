@@ -886,6 +886,16 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<Purchase_Entry> getAllPurchaseEntryByCompany() {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<Purchase_Entry> q = em.createQuery(
+				"select c from Purchase_Entry c where c.companyInfo.id=:cId",
+				Purchase_Entry.class);
+		q.setParameter("cId", cId);
+		return q.getResultList();
+	}
+
 	/*
 	 * public List<String> getAllVendorBillNumber() { TypedQuery<String> q =
 	 * em.createQuery( "select c.vendor_bill_no from Purchase_Entry c",
@@ -1090,6 +1100,17 @@ public class Ejb {
 		TypedQuery<JobAssignmentDetails> q = em.createQuery(
 				"select c from JobAssignmentDetails c",
 				JobAssignmentDetails.class);
+		return q.getResultList();
+	}
+
+	public List<JobAssignmentDetails> getAllJobassignmentDetailsByCompany() {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<JobAssignmentDetails> q = em
+				.createQuery(
+						"select c from JobAssignmentDetails c WHERE c.companyInfo.id=:cId",
+						JobAssignmentDetails.class);
+		q.setParameter("cId", cId);
 		return q.getResultList();
 	}
 
@@ -2137,6 +2158,16 @@ public class Ejb {
 	public List<SalesEntry> getAllSalesEntries() {
 		TypedQuery<SalesEntry> q = em.createQuery("select c from SalesEntry c",
 				SalesEntry.class);
+		return q.getResultList();
+	}
+
+	public List<SalesEntry> getAllSalesEntriesByCompany() {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<SalesEntry> q = em.createQuery(
+				"select c from SalesEntry c WHERE c.companyInfo.id=:cId",
+				SalesEntry.class);
+		q.setParameter("cId", cId);
 		return q.getResultList();
 	}
 
