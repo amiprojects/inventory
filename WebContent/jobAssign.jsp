@@ -588,7 +588,7 @@
 			} else {
 
 				$("#another").modal("show");
-				if(document.getElementById("trRemove" + $("#prodCode").val()) === null){
+				/* if(document.getElementById("trRemove" + $("#prodCode").val()) === null){ */
 					$("#purProTable")
 					.append(
 							'<tbody><tr id="trRemove'+$("#prodCode").val()+'"><td>'
@@ -608,17 +608,17 @@
 									+ $("#prodCode").val()
 									+ ');"><img src="img/cross.png" height="16px" width="16px"></a>'
 									+ '</td></tr></tbody>');
-				}else{
+				/* }else{
 					$("#trRemove" + $("#prodCode").val()+" :nth-child(4)").html(Number($("#qty").val())+Number($("#trRemove" + $("#prodCode").val()+" :nth-child(4)").html()));
 					$("#trRemove" + $("#prodCode").val()+" :nth-child(6)").html($("#work").val());
-				}
+				} */
 				
 				i++;
 				$("#totProd").val(Number($("#totProd").val()) + Number(1));
 				$("#totQty").val(
 						Number($("#totQty").val()) + Number($("#qty").val()));
 				
-				if(document.getElementById("trRemoveH" + $("#prodCode").val()) === null){
+				/* if(document.getElementById("trRemoveH" + $("#prodCode").val()) === null){ */
 					$("#hiddenTable")
 					.append(
 							'<tbody><tr id="trRemoveH'+$("#prodCode").val()+'">'
@@ -631,13 +631,13 @@
 									+ '<td><input type="text" name="workH" value=\''
 									+ $("#work").val() + '\'></td>'
 									+ '</tr></tbody>');
-				}else{
+				/* }else{
 					$("#trRemoveH" + $("#prodCode").val()+" :nth-child(2)").html('<input type="text" name="qtyH" value=\''
 							+ Number($("#trRemove" + $("#prodCode").val()+" :nth-child(4)").html())
 							+ '\'>');
 					$("#trRemoveH" + $("#prodCode").val()+" :nth-child(3)").html('<input type="text" name="workH" value=\''
 							+ $("#work").val() + '\'>');
-				}
+				} */
 
 				
 				ind++;
