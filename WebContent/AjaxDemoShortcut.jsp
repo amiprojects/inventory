@@ -444,21 +444,8 @@
 					type : "post",
 					success : function(data1) {
 						alert(data1.result);
-						vID = data1.vid;
-						vvName = data1.vname;
-						vvphone1 = data1.vph1;
-						vvphone2 = data1.vph2;
-						vvadres = data1.vvadd;
+						
 						$("#addV").modal('hide');
-					},
-
-					complete : function() {
-
-						$("#vName").val(vvName);
-						$("#vId").val(vID);
-						$("#vDetail").val(
-								"\nAddress :" + vvadres + "\nPhone1 : "
-										+ vvphone1 + "\nPhone2 : " + vvphone2);
 					}
 
 				});

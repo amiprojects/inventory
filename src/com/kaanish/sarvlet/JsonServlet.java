@@ -20,14 +20,22 @@ import javax.servlet.http.HttpSession;
 import com.kaanish.ejb.Ejb;
 import com.kaanish.model.AccountDetails;
 import com.kaanish.model.City;
+import com.kaanish.model.CompanyInfo;
 import com.kaanish.model.Country;
 import com.kaanish.model.Department;
+import com.kaanish.model.ProductDetail;
+import com.kaanish.model.ProductImage;
+import com.kaanish.model.Purchase_Product_Details;
 import com.kaanish.model.QtyUnit;
 import com.kaanish.model.QtyUnitConversionPK;
 import com.kaanish.model.QtyUnitType;
+import com.kaanish.model.RawMaterialsStock;
+import com.kaanish.model.ReadyGoodsStock;
+import com.kaanish.model.SerialNumber;
 import com.kaanish.model.State;
 import com.kaanish.model.SubDepartment;
 import com.kaanish.model.Vendor;
+import com.kaanish.util.Base64;
 import com.kaanish.util.DateConverter;
 import com.kaanish.util.DepartmentCotractor;
 
@@ -42,7 +50,7 @@ import com.kaanish.util.DepartmentCotractor;
 		"/getProductsForSaleByCode", "/deleteUOM", "/getVendorsByVendorTypeSalesAgentAndName",
 		"/getSalesAgentDetailsById", "/getPurchaseProductDetailsByIdForSale", "/getCustomerByPh", "/checkPcode",
 		"/addVendorbyjson", "/addAgen", "/getVendorByType", "/addUOMjson", "/getuomByType", "/getDeptjson",
-		"/getSubByDepjson", "/getCatBySubjson", "/addJsonCity", "/addJsonState", "/addJsonCountry" })
+		"/getSubByDepjson", "/getCatBySubjson", "/addJsonCity", "/addJsonState", "/addJsonCountry" ,"/productSumaryJson" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -546,14 +554,14 @@ public class JsonServlet extends HttpServlet {
 				int flag1 = 0;
 				for (State st : sList) {
 					if (st.getStateName().equals(
-							req.getParameter("name").toUpperCase())) {
+							req.getParameter("nameqaz").toUpperCase())) {
 						flag1 = 1;
 						break;
 					}
 				}
 				if (flag1 == 0) {
 					State state = new State();
-					state.setStateName(req.getParameter("name").toUpperCase());
+					state.setStateName(req.getParameter("nameqaz").toUpperCase());
 					state.setCountry(ejb.getCountryById(Integer.parseInt(req
 							.getParameter("id"))));
 					ejb.setState(state);
@@ -576,14 +584,14 @@ public class JsonServlet extends HttpServlet {
 				int flag2 = 0;
 				for (City c : cities) {
 					if (c.getCityName().equals(
-							req.getParameter("name").toUpperCase())) {
+							req.getParameter("namezxc").toUpperCase())) {
 						flag2 = 1;
 						break;
 					}
 				}
 				if (flag2 == 0) {
 					
-					city.setCityName(req.getParameter("name").toUpperCase());
+					city.setCityName(req.getParameter("namezxc").toUpperCase());
 					city.setState(ejb.getStateById(Integer.parseInt(req
 							.getParameter("id"))));
 
@@ -594,6 +602,179 @@ public class JsonServlet extends HttpServlet {
 			} else {
 				cityAj.writeStartObject().write("result", "Duplicate City Entry").writeEnd().close();
 			}
+				
+				
+				
+				
+			case "productSumaryJson":
+				ProductDetail	productDetail = new ProductDetail();
+				Purchase_Product_Details purchaseProductDetails = new Purchase_Product_Details();
+				ReadyGoodsStock readyGoodsStock = new ReadyGoodsStock();
+				RawMaterialsStock rawMaterialsStock = new RawMaterialsStock();
+				SerialNumber serialNumber = new SerialNumber();
+				CompanyInfo companyInfo=new CompanyInfo();
+				HttpSession httpSession1 = req.getSession();
+				companyInfo = ejb.getUserById(
+						(String) httpSession1.getAttribute("user"))
+						.getCompanyInfo();
+
+				int flaggq = 0;
+				List<ProductDetail> pro1 = ejb.getAllProductDetail();
+				for (ProductDetail pqu : pro1) {
+					if (pqu.getCode().equals(
+							req.getParameter("productCode").toUpperCase())) {
+						flagg = 1;
+						break;
+					}
+
+				}
+				if (flaggq == 0) {
+					
+					productDetail.setCode(req.getParameter("productCode")
+							.toUpperCase());
+					productDetail.setDescription(req
+							.getParameter("description").toUpperCase());
+					productDetail.setUniversalCode(req.getParameter("upc")
+							.toUpperCase());
+					productDetail.setQtyUnit(ejb.getQtyUnitById(Integer
+							.parseInt(req.getParameter("uom"))));
+					System.out.println(req.getParameter("isRaw"));
+					productDetail.setRaw(Boolean.parseBoolean(req
+							.getParameter("isRaw")));
+					productDetail.setSaleble(Boolean.parseBoolean(req
+							.getParameter("isSalebi")));
+					productDetail.setCategory(ejb.getCategoryById(Integer
+							.parseInt(req.getParameter("catagoryId"))));
+					productDetail.setActive(true);
+					ejb.setProductDetail(productDetail);
+
+					/*
+					 * if (Boolean.parseBoolean(req.getParameter("isSalebi"))) {
+					 * readyGoodsStock = new ReadyGoodsStock();
+					 * readyGoodsStock.setProductDetail(productDetail);
+					 * readyGoodsStock.setRemainingQty(0);
+					 * ejb.setReadyGoodsStockDetail(readyGoodsStock); } else {
+					 * rawMaterialsStock = new RawMaterialsStock();
+					 * rawMaterialsStock.setProductDetail(productDetail);
+					 * rawMaterialsStock.setRemainingQty(0);
+					 * ejb.setRawMaterialsStocktDetail(rawMaterialsStock); }
+					 */
+					if (Boolean.parseBoolean(req.getParameter("isRaw"))) {
+						
+						rawMaterialsStock.setProductDetail(productDetail);
+						rawMaterialsStock.setRemainingQty(0);
+						rawMaterialsStock.setCompanyInfo(ejb
+								.getAllCompanyInfo().get(0));
+						ejb.setRawMaterialsStocktDetail(rawMaterialsStock);
+
+						rawMaterialsStock = null;
+
+						rawMaterialsStock = new RawMaterialsStock();
+						rawMaterialsStock.setProductDetail(productDetail);
+						rawMaterialsStock.setRemainingQty(0);
+						rawMaterialsStock.setCompanyInfo(ejb
+								.getAllCompanyInfo().get(1));
+						ejb.setRawMaterialsStocktDetail(rawMaterialsStock);
+					} else {
+						
+						readyGoodsStock.setProductDetail(productDetail);
+						readyGoodsStock.setRemainingQty(0);
+						readyGoodsStock.setCompanyInfo(ejb.getAllCompanyInfo()
+								.get(0));
+						ejb.setReadyGoodsStockDetail(readyGoodsStock);
+
+						readyGoodsStock = null;
+
+						readyGoodsStock = new ReadyGoodsStock();
+						readyGoodsStock.setProductDetail(productDetail);
+						readyGoodsStock.setRemainingQty(0);
+						readyGoodsStock.setCompanyInfo(ejb.getAllCompanyInfo()
+								.get(1));
+						ejb.setReadyGoodsStockDetail(readyGoodsStock);
+					}
+
+					if (req.getParameter("addini").equals("add")) {
+
+						purchaseProductDetails.setMrp(Float.parseFloat(req
+								.getParameter("mrp1")));
+						purchaseProductDetails.setWsp(Float.parseFloat(req
+								.getParameter("wsp1")));
+						purchaseProductDetails.setQuantity(Integer.parseInt(req
+								.getParameter("qty1")));
+						purchaseProductDetails.setCost(Float.parseFloat(req
+								.getParameter("ucost")));
+						purchaseProductDetails.setAttrValue1(req
+								.getParameter("att1"));
+						purchaseProductDetails.setAttrValue2(req
+								.getParameter("att2"));
+						purchaseProductDetails.setAttrValue3(req
+								.getParameter("att3"));
+						purchaseProductDetails.setAttrValue4(req
+								.getParameter("att4"));
+						purchaseProductDetails.setAttrValue5(req
+								.getParameter("att5"));
+						purchaseProductDetails.setAttrValue6(req
+								.getParameter("att6"));
+						purchaseProductDetails.setRemaining_quantity(Integer
+								.parseInt(req.getParameter("qty1")));
+						purchaseProductDetails.setInitialInventory(true);
+						purchaseProductDetails.setProductDetail(productDetail);
+						purchaseProductDetails.setLotNumber(req
+								.getParameter("lotnumberS"));
+						purchaseProductDetails.setCompanyInfo(ejb.getUserById(
+								(String) httpSession1.getAttribute("user"))
+								.getCompanyInfo());
+						ejb.setPurchaseProductDetails(purchaseProductDetails);
+						
+						serialNumber.setLotNo(req.getParameter("lotnumberS")
+								.toUpperCase());
+						serialNumber
+								.setPurchase_Product_Details(purchaseProductDetails);
+
+						ejb.setSerialNumber(serialNumber);
+
+						
+						if (productDetail.isRaw()) {
+							rawMaterialsStock = ejb
+									.getRawMeterialStoctByProductAndCompanyId(
+											productDetail.getId(),
+											companyInfo.getId());
+							rawMaterialsStock
+									.setRemainingQty(rawMaterialsStock
+											.getRemainingQty()
+											+ Integer.parseInt(req
+													.getParameter("qty1")));
+							ejb.updateRawMaterialStockDetail(rawMaterialsStock);
+						} else {
+							readyGoodsStock = ejb
+									.getReadyGoodStoctByProductAndCompanyId(
+											productDetail.getId(),
+											companyInfo.getId());
+							readyGoodsStock
+									.setRemainingQty(readyGoodsStock
+											.getRemainingQty()
+											+ Integer.parseInt(req
+													.getParameter("qty1")));
+							ejb.updateReadyGoodsStockDetail(readyGoodsStock);
+						}
+
+					}
+
+					String imgstr = req.getParameter("proImage1");
+
+					ProductImage proimg = new ProductImage();
+					proimg.setProductDetail(productDetail);
+					proimg.setImage(Base64.decode(imgstr));
+					ejb.setProductImage(proimg);
+
+					
+				} else {
+					
+				}
+
+				break;
+				
+				
 				
 
 			default:
