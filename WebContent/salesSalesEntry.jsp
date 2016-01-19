@@ -811,40 +811,74 @@
 																"#roundvalue")
 																.val()));
 
-								$("#productTable")
-										.append(
-												'<tbody><tr id="trRemove'+ind+'">'
-														+ '<td>'
-														+ k
-														+ '</td>'
-														+ '<td><input readonly="readonly" type="text" name="codevalue" value=\''
+								if (document.getElementById("trRemove"
+										+ $("#salesbarH").val()) === null) {
+									$("#productTable")
+											.append(
+													'<tbody><tr id="trRemove'
+															+ $("#salesbarH")
+																	.val()
+															+ '">'
+															+ '<td>'
+															+ k
+															+ '</td>'
+															+ '<td><input readonly="readonly" type="text" name="codevalue" value=\''
 													+ data.productCode
 													+ '\'><input readonly="readonly" type="hidden" name="productId" value=\''
 													+ data.productId
 													+ '\'><input readonly="readonly" type="hidden" name="purchaseProductDetId" value=\''
-														+ $("#salesbarH").val()
-														+ '\'></td>'
-														+ '<td><input readonly="readonly" type="text" name="descvalue" value=\''
+															+ $("#salesbarH")
+																	.val()
+															+ '\'></td>'
+															+ '<td><input readonly="readonly" type="text" name="descvalue" value=\''
 													+ data.productDesc
 													+ '\'></td>'
-														+ '<td><input readonly="readonly" type="text" name="qtyvalue" value=\''
-														+ $("#qtyvalue").val()
-														+ '\'></td>'
-														+ '<td><input readonly="readonly" type="text" name="mrpQty" value=\''
-														+ $("#mrpQty").val()
-														+ '\'></td>'
-														+ '<td><input readonly="readonly" type="text" name="eachtotalvalue" value=\''
-														+ $("#eachtotalvalue")
-																.val()
-														+ '\'></td>'
-														+ '<td>'
-														+ '<a href="#" onclick="removeProduct('
-														+ ind
-														+ ');"><img src="img/cross.png" height="16px" width="16px"></a>'
-														+ '</td>'
-														+ '</tr></tbody>');
-								ind++;
-
+															+ '<td><input readonly="readonly" type="text" name="qtyvalue" value=\''
+															+ $("#qtyvalue")
+																	.val()
+															+ '\'></td>'
+															+ '<td><input readonly="readonly" type="text" name="mrpQty" value=\''
+															+ $("#mrpQty")
+																	.val()
+															+ '\'></td>'
+															+ '<td><input readonly="readonly" type="text" name="eachtotalvalue" value=\''
+															+ $(
+																	"#eachtotalvalue")
+																	.val()
+															+ '\'></td>'
+															+ '<td>'
+															+ '<a href="#" onclick="removeProduct('
+															+ $("#salesbarH")
+																	.val()
+															+ ');"><img src="img/cross.png" height="16px" width="16px"></a>'
+															+ '</td>'
+															+ '</tr></tbody>');
+									//ind++;
+								} else {
+									k = k - 1;
+									var Q = Number(Number($("#qtyvalue").val())
+											+ Number($(
+													"#trRemove"
+															+ $("#salesbarH")
+																	.val()
+															+ " :nth-child(4) input[type=text]")
+													.val()))
+									$(
+											"#trRemove" + $("#salesbarH").val()
+													+ " :nth-child(4)")
+											.html(
+													'<input readonly="readonly" type="text" name="qtyvalue" value=\''
+											+ Q
+											+ '\'>');
+									$(
+											"#trRemove" + $("#salesbarH").val()
+													+ " :nth-child(6)").html(
+											'<input readonly="readonly" type="text" name="eachtotalvalue" value=\''
+													+ Number($(
+															"#eachtotalvalue")
+															.val()
+															* Q) + '\'>');
+								}
 							}
 
 						});
@@ -1460,6 +1494,7 @@
 
 				var countryName = $("#salesbar").val();
 				var countryArray = countryName.split('/');
+				$("#salesbarH").val($("#salesbar").val());
 
 				for (var i = 0; i < countryArray.length; i++) {
 					countryArray[i];
@@ -1565,45 +1600,82 @@
 													+ Number($("#roundvalue")
 															.val()));
 
-									$("#productTable")
-											.append(
-													'<tbody><tr id="trRemove'+ind+'">'
-															+ '<td>'
-															+ k
-															+ '</td>'
-															+ '<td><input readonly="readonly" type="text" name="codevalue" value=\''
+									if (document.getElementById("trRemove"
+											+ $("#salesbarH").val()) === null) {
+										$("#productTable")
+												.append(
+														'<tbody><tr id="trRemove'
+																+ $(
+																		"#salesbarH")
+																		.val()
+																+ '">'
+																+ '<td>'
+																+ k
+																+ '</td>'
+																+ '<td><input readonly="readonly" type="text" name="codevalue" value=\''
 												+ data.productCode
 												+ '\'><input readonly="readonly" type="hidden" name="productId" value=\''
 												+ data.productId
 												+ '\'><input readonly="readonly" type="hidden" name="purchaseProductDetId" value=\''
-															+ $("#salesbarH")
-																	.val()
-															+ '\'></td>'
-															+ '<td><input readonly="readonly" type="text" name="descvalue" value=\''
+																+ $(
+																		"#salesbarH")
+																		.val()
+																+ '\'></td>'
+																+ '<td><input readonly="readonly" type="text" name="descvalue" value=\''
 												+ data.productDesc
 												+ '\'></td>'
-															+ '<td><input readonly="readonly" type="text" id="qtyVal'
-															+ '" name="qtyvalue" value=\''
-															+ $("#qtyvalue")
-																	.val()
-															+ '\'></td>'
-															+ '<td><input readonly="readonly" type="text" name="mrpQty" value=\''
-															+ $("#mrpQty")
-																	.val()
-															+ '\'></td>'
-															+ '<td><input readonly="readonly" type="text" name="eachtotalvalue" value=\''
-															+ $(
-																	"#eachtotalvalue")
-																	.val()
-															+ '\'></td>'
-															+ '<td>'
-															+ '<a href="#" onclick="removeProduct('
-															+ ind
-															+ ');"><img src="img/cross.png" height="16px" width="16px"></a>'
-															+ '</td>'
-															+ '</tr></tbody>');
-									ind++;
-
+																+ '<td><input readonly="readonly" type="text" id="qtyVal'
+																+ '" name="qtyvalue" value=\''
+																+ $("#qtyvalue")
+																		.val()
+																+ '\'></td>'
+																+ '<td><input readonly="readonly" type="text" name="mrpQty" value=\''
+																+ $("#mrpQty")
+																		.val()
+																+ '\'></td>'
+																+ '<td><input readonly="readonly" type="text" name="eachtotalvalue" value=\''
+																+ $(
+																		"#eachtotalvalue")
+																		.val()
+																+ '\'></td>'
+																+ '<td>'
+																+ '<a href="#" onclick="removeProduct('
+																+ ind
+																+ ');"><img src="img/cross.png" height="16px" width="16px"></a>'
+																+ '</td>'
+																+ '</tr></tbody>');
+										//ind++;
+									} else {
+										k = k - 1;
+										var Q = Number(Number($("#qtyvalue")
+												.val())
+												+ Number($(
+														"#trRemove"
+																+ $(
+																		"#salesbarH")
+																		.val()
+																+ " :nth-child(4) input[type=text]")
+														.val()))
+										$(
+												"#trRemove"
+														+ $("#salesbarH").val()
+														+ " :nth-child(4)")
+												.html(
+														'<input readonly="readonly" type="text" name="qtyvalue" value=\''
+												+ Q
+												+ '\'>');
+										$(
+												"#trRemove"
+														+ $("#salesbarH").val()
+														+ " :nth-child(6)")
+												.html(
+														'<input readonly="readonly" type="text" name="eachtotalvalue" value=\''
+																+ Number($(
+																		"#eachtotalvalue")
+																		.val()
+																		* Q)
+																+ '\'>');
+									}
 									$("#pCode").val("");
 									$("#salesbar").val("");
 									$("#salesbar").prop("readonly", false);

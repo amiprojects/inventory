@@ -110,12 +110,9 @@
 					<div class="row">
 						<div class="masonary-grids">
 
-
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
 								<h3 style="margin-top: 11px;">Job Assignment</h3>
-
-
 							</div>
 
 							<!-- <div class="widget-area"> -->
@@ -454,11 +451,12 @@
 		function getProdDetByPurchaseProdDetId() {
 			$("#qty").val('');
 			$("#work").val('');
-
 			
-			if ($("#prodCode").val() != 0) {
-				
-				
+			var remQ = 0;
+			var vNm = "";
+			var pDt = new Date();
+			
+			if ($("#prodCode").val() != 0) {						
 				
 				$.ajax({
 					url : 'getProdDetByPurchaseProdDetailsId',
@@ -475,6 +473,9 @@
 										+ data.purchaseVendorName
 										+ "\nPurchase Date : "
 										+ data.purchaseDate);
+						remQ=data.remaining_quantity;
+						vNm=data.purchaseVendorName;
+						pDt=data.purchaseDate;
 						$("#remQty").val(Number(data.remaining_quantity));
 						$("#uom").val(data.uom);
 						$("#prCode").val(data.productCode);
@@ -484,8 +485,16 @@
 						alert(b + ": " + c);
 					},complete:function(){
 						if(!(document.getElementById("trRemove" + $("#prodCode").val()) === null)){
+							remQ=remQ-Number($("#trRemove" + $("#prodCode").val()+" :nth-child(4)").html());
+							$("#prodDesc").val(
+									"Remaining Quantity : "
+											+ remQ
+											+ "\nVendor Name : "
+											+ vNm
+											+ "\nPurchase Date : "
+											+ pDt);
 							$("#qty").val(Number($("#remQty").val())-Number($("#trRemove" + $("#prodCode").val()+" :nth-child(4)").html()));
-							$("#work").val($("#trRemove" + $("#prodCode").val()+" :nth-child(6)").html());;
+							$("#work").val($("#trRemove" + $("#prodCode").val()+" :nth-child(6)").html());
 						}
 					}
 				});
@@ -495,6 +504,12 @@
 			}
 		}
 		function fnsearch() {
+			$("#qty").val('');
+			$("#work").val('');
+			
+			var remQ = 0;
+			var vNm = "";
+			var pDt = new Date();
 
 			barcodeParts = $("[name='barcode']").val().split('/');
 			var purchaseProductId = barcodeParts[0];
@@ -606,8 +621,11 @@
 									+ $("#work").val() + '\'></td>'
 									+ '</tr></tbody>');
 				}else{
-					$("#trRemoveH" + $("#prodCode").val()+" :nth-child(2)").html(Number($("#trRemove" + $("#prodCode").val()+" :nth-child(4)").html()));
-					$("#trRemoveH" + $("#prodCode").val()+" :nth-child(6)").html($("#work").val());
+					$("#trRemoveH" + $("#prodCode").val()+" :nth-child(2)").html('<input type="text" name="qtyH" value=\''
+							+ Number($("#trRemove" + $("#prodCode").val()+" :nth-child(4)").html())
+							+ '\'>');
+					$("#trRemoveH" + $("#prodCode").val()+" :nth-child(3)").html('<input type="text" name="workH" value=\''
+							+ $("#work").val() + '\'>');
 				}
 
 				
