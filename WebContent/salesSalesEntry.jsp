@@ -695,6 +695,38 @@
 		var k = 0;
 		function removeProduct(a) {
 			$("#trRemove" + a).remove();
+
+			var sum = 0;
+			$(".eachtotalvalue").each(function() {
+				sum += parseFloat(this.value);
+			});
+			$("#subtotalvalue").val(sum.toFixed(2));
+			
+			/* $("#subtotalvalue").val(
+					Math.round((Number($("#subtotalvalue").val()) + Number($(
+							"#eachtotalvalue").val())) * 100) / 100); */
+			discountF();
+			$("#taxAmount").val(
+					Math.round((Number($("#subtotalvalue").val())
+							* Number($("#taxTot").val()) * 100) / 100)
+							/ Number(100));
+			$("#totalvalue").val(
+					Math.round((Number($("#subtotalvalue").val())
+							- Number($("#discountValue").val())
+							+ Number($("#taxAmount").val())
+							+ Number($("#transcharge").val()) + Number($(
+							"#surcharge").val())) * 100) / 100);
+			var tot = $("#totalvalue").val();
+			var round = Math.round(tot);
+			if (tot > round) {
+				$("#roundvalue").val(Math.round((round + 1 - tot) * 100) / 100);
+			} else {
+				$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
+			}
+
+			$("#grandtotal").val(
+					Number($("#totalvalue").val())
+							+ Number($("#roundvalue").val()));
 		}
 
 		function probar() {
@@ -754,15 +786,7 @@
 																.val()) + Number($(
 																"#eachtotalvalue")
 																.val())) * 100) / 100);
-								$("#discountValue")
-										.val(
-												Math
-														.round((Number($(
-																"#subtotalvalue")
-																.val())
-																* Number($(
-																		"#discount")
-																		.val()) / 100) * 100) / 100);
+								discountF();
 								$("#taxAmount")
 										.val(
 												Math
@@ -841,7 +865,7 @@
 															+ $("#mrpQty")
 																	.val()
 															+ '\'></td>'
-															+ '<td><input readonly="readonly" type="text" name="eachtotalvalue" value=\''
+															+ '<td><input readonly="readonly" type="text" class="eachtotalvalue" name="eachtotalvalue" value=\''
 															+ $(
 																	"#eachtotalvalue")
 																	.val()
@@ -862,7 +886,7 @@
 															+ $("#salesbarH")
 																	.val()
 															+ " :nth-child(4) input[type=text]")
-													.val()))
+													.val()));
 									$(
 											"#trRemove" + $("#salesbarH").val()
 													+ " :nth-child(4)")
@@ -1229,9 +1253,24 @@
 																			} else {
 																				var rawORready = 'Ready';
 																			}
-																			if (item2.remaining_quantity >= Number($(
+
+																			if (!(document
+																					.getElementById("trRemove"
+																							+ item2.id) === null)) {
+																				rv = $(
+																						"#trRemove"
+																								+ item2.id
+																								+ " :nth-child(4) input[type=text]")
+																						.val();
+																			} else {
+																				rv = 0;
+																			}
+																			var remQ = item2.remaining_quantity
+																					- Number(rv);
+
+																			if (item2.remaining_quantity >= (Number($(
 																					"#qty")
-																					.val())) {
+																					.val()) + Number(rv))) {
 																				if (item2.purchaseDate != 'Initial Inventory') {
 																					$(
 																							"#purchaseDetailsTable")
@@ -1257,7 +1296,7 @@
 																											+ item2.wsp
 																											+ "</td>"
 																											+ "<td>"
-																											+ item2.remaining_quantity
+																											+ remQ
 																											+ "</td>"
 																											+ "<td>"
 																											+ '<input type="button" onclick="chooseF('
@@ -1291,7 +1330,7 @@
 																											+ item2.wsp
 																											+ "</td>"
 																											+ "<td>"
-																											+ item2.remaining_quantity
+																											+ remQ
 																											+ "</td>"
 																											+ "<td>"
 																											+ '<input type="button" onclick="chooseF('
@@ -1545,15 +1584,7 @@
 															.val()) + Number($(
 															"#eachtotalvalue")
 															.val())) * 100) / 100);
-									$("#discountValue")
-											.val(
-													Math
-															.round((Number($(
-																	"#subtotalvalue")
-																	.val())
-																	* Number($(
-																			"#discount")
-																			.val()) / 100) * 100) / 100);
+									discountF();
 									$("#taxAmount")
 											.val(
 													Math
@@ -1633,14 +1664,16 @@
 																+ $("#mrpQty")
 																		.val()
 																+ '\'></td>'
-																+ '<td><input readonly="readonly" type="text" name="eachtotalvalue" value=\''
+																+ '<td><input readonly="readonly" type="text" class="eachtotalvalue" name="eachtotalvalue" value=\''
 																+ $(
 																		"#eachtotalvalue")
 																		.val()
 																+ '\'></td>'
 																+ '<td>'
 																+ '<a href="#" onclick="removeProduct('
-																+ ind
+																+ $(
+																		"#salesbarH")
+																		.val()
 																+ ');"><img src="img/cross.png" height="16px" width="16px"></a>'
 																+ '</td>'
 																+ '</tr></tbody>');
@@ -1655,7 +1688,7 @@
 																		"#salesbarH")
 																		.val()
 																+ " :nth-child(4) input[type=text]")
-														.val()))
+														.val()));
 										$(
 												"#trRemove"
 														+ $("#salesbarH").val()

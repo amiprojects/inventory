@@ -3563,9 +3563,31 @@
 			$("#header").show();
 		});
 		ind = 0;
-		function removeProduct(a) {
+		function removeProduct(a) {			
+			n1= $(
+					"#trRemove"
+					+ a
+					+ " :nth-child(7)")
+			.html();
+			n2= $("#subTotal").val();
+			/* var Q = Number(n2)-Number(n1);
+			alert(Q); */
+			$("#subTotal").val(Number(n2)-Number(n1));
+			
 			$("#trRemove" + a).remove();
 			$("#trRemoveH" + a).remove();
+			
+			/* $("#subTotal").val(
+					Number($("#subTotal").val()) + Number($("#qty").val())
+							* Number($("#rate").val())); */
+			$("#taxAmount").val(
+					Number($("#subTotal").val())
+							* Number($("#taxTot").val()) / Number(100));
+			$("#gt").val(
+					Math.round((Number($("#subTotal").val())
+							+ Number($("#taxAmount").val())
+							+ Number($("#transportCost").val()) + Number($(
+							"#surcharge").val())) * 100) / 100);
 		}
 		var i = 1;
 		function anotherShow() {
@@ -3621,6 +3643,14 @@
 				$("#subTotal").val(
 						Number($("#subTotal").val()) + Number($("#qty").val())
 								* Number($("#rate").val()));
+				$("#taxAmount").val(
+						Number($("#subTotal").val())
+								* Number($("#taxTot").val()) / Number(100));
+				$("#gt").val(
+						Math.round((Number($("#subTotal").val())
+								+ Number($("#taxAmount").val())
+								+ Number($("#transportCost").val()) + Number($(
+								"#surcharge").val())) * 100) / 100);
 				//$("#qty").val("");
 				i++;
 
@@ -3671,14 +3701,7 @@
 										+ '\'></td>'
 										+ '</tr></tbody>');
 				ind++;
-				$("#taxAmount").val(
-						Number($("#subTotal").val())
-								* Number($("#taxTot").val()) / Number(100));
-				$("#gt").val(
-						Math.round((Number($("#subTotal").val())
-								+ Number($("#taxAmount").val())
-								+ Number($("#transportCost").val()) + Number($(
-								"#surcharge").val())) * 100) / 100);
+				
 				$("#dept").val("");
 				$("#subDept").val("");
 				$("#cat").val("");

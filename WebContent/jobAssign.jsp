@@ -343,7 +343,7 @@
 						type="hidden" id="uom" name="uom"> <span>Describe
 						Work :</span>
 					<textarea rows="5" cols="" id="work" name="work"
-						class="form-control" required></textarea>
+						class="form-control" required style="text-transform: none;"></textarea>
 				</div>
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" value="Add"
@@ -530,6 +530,9 @@
 									+ data.purchaseVendorName
 									+ "\nPurchase Date : "
 									+ data.purchaseDate);
+					remQ=data.remaining_quantity;
+					vNm=data.purchaseVendorName;
+					pDt=data.purchaseDate;
 					$("#remQty").val(Number(data.remaining_quantity));
 					$("#uom").val(data.uom);
 					$("#prCode").val(data.productCode);
@@ -539,6 +542,14 @@
 					alert(b + ": " + c);
 				},complete:function(){
 					if(!(document.getElementById("trRemove" + $("#prodCode").val()) === null)){
+						remQ=remQ-Number($("#trRemove" + $("#prodCode").val()+" :nth-child(4)").html());
+						$("#prodDesc").val(
+								"Remaining Quantity : "
+										+ remQ
+										+ "\nVendor Name : "
+										+ vNm
+										+ "\nPurchase Date : "
+										+ pDt);
 						$("#qty").val(Number($("#remQty").val())-Number($("#trRemove" + $("#prodCode").val()+" :nth-child(4)").html()));
 						$("#work").val($("#trRemove" + $("#prodCode").val()+" :nth-child(6)").html());;
 					}
