@@ -2809,12 +2809,7 @@
 
  function submitSumary() {
 
-	 if ($("#openn").is(':checked')) {
-		 alert("check");
-	 }
-	 else{
-		 alert("not checked");
-	 }
+	
 	 
 		if ($("#productCodeAMI").val() == 0) {
 			alert("please select Designer Number:");
@@ -2893,6 +2888,9 @@
 							alert(data1.result);
 							
 							$("#addDesineN").modal('hide');
+							$("#descriptionAMI").val("");
+							$("#productCodeAMI").val("");
+							$("#universalProductCode").val("");
 						}
 
 					});
@@ -2931,6 +2929,11 @@
 						alert(data1.result);
 						
 						$("#addDesineN").modal('hide');
+						
+					$("#descriptionAMI").val("");
+					$("#productCodeAMI").val("");
+					$("#universalProductCode").val("");
+					
 					}
 
 				});

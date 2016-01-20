@@ -385,7 +385,8 @@
 
 														<td><input type="text" class="form-control"
 															id="discount" name="discount" readonly="readonly"
-															value="<fmt:formatNumber value="${dis}" maxFractionDigits="2" />"></td>
+															value="<fmt:formatNumber value="${dis}" maxFractionDigits="2" />">
+															</td>
 													</tr>
 
 												</tbody>
@@ -437,12 +438,11 @@
 														<td><input type="text" class="form-control"
 															readonly="readonly" value="${salre.surcharge}"
 															id="surcharge" name="surcharge"></td>
-
 													</tr>
 												</tbody>
 												<tbody>
 													<tr>
-														<td colspan="2" id="round">Round Of :</td>
+														<td colspan="2" id="round">Round Off :</td>
 														<td><input type="text" class="form-control"
 															readonly="readonly" id="roundvalue" name="roundvalue"
 															value=""></td>
@@ -639,7 +639,12 @@
 												* Number($("#discount").val()) / 100) * 100) / 100);
 			} else {
 
-				$("#discountValue2").val($("#discount").val());
+				$("#discountValue2").val(
+						
+				
+				
+				
+				);
 
 			}
 
@@ -655,7 +660,7 @@
 			$("#grandtotal").val(r.toFixed());
 
 			$("#roundvalue").val(
-					(Number(r) - Number($("#grandtotal").val())).toFixed(2));
+					(Number($("#grandtotal").val())).toFixed(2)-Number(r));
 			/* $("#roundvalue").val(); */
 
 			$("#spAmount").val($("#grandtotal").val());
@@ -667,6 +672,7 @@
 		function paymentDate() {
 
 			$("#saveSales").modal("show");
+			alert("${salre.surcharge}");
 
 		}
 	</script>
