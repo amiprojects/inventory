@@ -36,13 +36,9 @@
 		<div class="login">
 			<div class="login-form">
 				<h5>
-					<strong>Change Password</strong>
+					<strong>Reset Password</strong>
 				</h5>
-				<form action="changePass" method="post" id="changePassForm">
-					<fieldset>
-						<input type="password" placeholder="Current Password"
-							name="curPassword" /><i class="fa fa-unlock-alt"></i>
-					</fieldset>
+				<form action="resetPass" method="post" id="resetPassForm">
 					<fieldset>
 						<input type="password" placeholder="New Password"
 							name="newPassword" id="newPassword" /><i
@@ -55,7 +51,8 @@
 					</fieldset>
 					<!-- <label><input type="checkbox" />Remember me</label> -->
 					<input type="button" class="blue" onclick="submitForm();"
-						value="Update" align="right" style="float: right;">
+						value="Update" align="right" style="float: right;"> <input
+						type="hidden" value="${requestScope['uId']}" name="uId">
 				</form>
 			</div>
 			<span>Copyright © 2015 AMi</span>
@@ -69,9 +66,9 @@
 <script type="text/javascript">
 	function submitForm() {
 		if ($("#newPassword").val() != $("#conNewPassword").val()) {
-			alert("New Password Mismatch...");
+			alert("Password Mismatch...");
 		} else {
-			$("#changePassForm").submit();
+			$("#resetPassForm").submit();
 		}
 	}
 </script>

@@ -585,7 +585,7 @@ $(document).ready(function(){
 														<div class="col-md-7">
 															<select class="form-control" name="taxTypeGroupId"
 																id="taxgroup">
-																<!-- 	<option value="0">select a tax group</option> -->
+																<option value="0">select a tax group</option>
 																<c:forEach
 																	items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
 																	var="taxTypeGroup">

@@ -21,7 +21,11 @@ public class Users implements Serializable {
 	private String name;
 	private String ph;
 	private String password;
-	
+
+	@OneToMany(mappedBy = "users")
+	private
+	List<SecurityAnswers> securityAnswers;
+
 	@ManyToOne
 	@JoinColumn(name = "companyInfoId")
 	private CompanyInfo companyInfo;
@@ -127,6 +131,14 @@ public class Users implements Serializable {
 
 	public void setCompanyInfo(CompanyInfo companyInfo) {
 		this.companyInfo = companyInfo;
+	}
+
+	public List<SecurityAnswers> getSecurityAnswers() {
+		return securityAnswers;
+	}
+
+	public void setSecurityAnswers(List<SecurityAnswers> securityAnswers) {
+		this.securityAnswers = securityAnswers;
 	}
 
 }

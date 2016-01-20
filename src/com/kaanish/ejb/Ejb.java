@@ -48,6 +48,9 @@ import com.kaanish.model.SalesEntry;
 import com.kaanish.model.SalesProductDetails;
 import com.kaanish.model.SalesProductReturnDetail;
 import com.kaanish.model.SalesReturn;
+import com.kaanish.model.SecurityAnswers;
+import com.kaanish.model.SecurityQuestionGroup;
+import com.kaanish.model.SequrityQuestions;
 import com.kaanish.model.SerialNumber;
 import com.kaanish.model.State;
 import com.kaanish.model.Stoct;
@@ -129,9 +132,96 @@ public class Ejb {
 
 	}
 
+	/***************** for Security Questions group **********************/
+	public void setSecurityQueGroup(SecurityQuestionGroup questionGroup) {
+		em.persist(questionGroup);
+	}
+
+	public void updateSecurityQuestionsGroup(SecurityQuestionGroup questionGroup) {
+		em.merge(questionGroup);
+	}
+
+	public SecurityQuestionGroup getSecurityQuestionGroupById(int id) {
+		return em.find(SecurityQuestionGroup.class, id);
+	}
+
+	public List<SecurityQuestionGroup> getAllSecurityQuestionGroups() {
+		TypedQuery<SecurityQuestionGroup> q = em.createQuery(
+				"select c from SecurityQuestionGroup c",
+				SecurityQuestionGroup.class);
+		return q.getResultList();
+	}
+
+	public SecurityQuestionGroup getSecurityQueGroupByGroupName(String name) {
+		TypedQuery<SecurityQuestionGroup> q = em.createQuery(
+				"select c from SecurityQuestionGroup c where c.name=:name",
+				SecurityQuestionGroup.class);
+		q.setParameter("name", name);
+		return q.getResultList().get(0);
+	}
+
+	public void deleteSecurityQuestionGroup(int id) {
+		em.remove(getSecurityQuestionGroupById(id));
+	}
+
+	/***************** for Security Questions **********************/
+	public void setSecurityQue(SequrityQuestions question) {
+		em.persist(question);
+	}
+
+	public void updateSecurityQuestion(SequrityQuestions question) {
+		em.merge(question);
+	}
+
+	public SequrityQuestions getSecurityQuestionById(int id) {
+		return em.find(SequrityQuestions.class, id);
+	}
+
+	public List<SequrityQuestions> getAllSecurityQuestions() {
+		TypedQuery<SequrityQuestions> q = em.createQuery(
+				"select c from SequrityQuestions c", SequrityQuestions.class);
+		return q.getResultList();
+	}
+
+	public List<SequrityQuestions> getSecurityQuestionsByGroup(String name) {
+		TypedQuery<SequrityQuestions> q = em
+				.createQuery(
+						"select c from SequrityQuestions c where c.securityQuestionGroup.name=:name",
+						SequrityQuestions.class);
+		q.setParameter("name", name);
+		return q.getResultList();
+	}
+
+	/***************** for Security Answers **********************/
+	public void setSecurityAns(SecurityAnswers securityAnswers) {
+		em.persist(securityAnswers);
+	}
+
+	public void updateSecurityAns(SecurityAnswers securityAnswers) {
+		em.merge(securityAnswers);
+	}
+
+	public SecurityAnswers getSecurityAnsById(int id) {
+		return em.find(SecurityAnswers.class, id);
+	}
+
+	public List<SecurityAnswers> getAllSecurityAnswers() {
+		TypedQuery<SecurityAnswers> q = em.createQuery(
+				"select c from SecurityAnswers c", SecurityAnswers.class);
+		return q.getResultList();
+	}
+
+	public List<SecurityAnswers> getAllSecurityAnswerByUserId(String usrId) {
+		TypedQuery<SecurityAnswers> q = em.createQuery(
+				"select c from SecurityAnswers c where c.users.userId=:usrId",
+				SecurityAnswers.class);
+		q.setParameter("usrId", usrId);
+		return q.getResultList();
+	}
+
 	/***************** for user **********************/
 	public void setUser(Users users) {
-		em.merge(users);
+		em.persist(users);
 	}
 
 	public Users getUserById(String id) {

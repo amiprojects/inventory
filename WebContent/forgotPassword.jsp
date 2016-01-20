@@ -36,26 +36,15 @@
 		<div class="login">
 			<div class="login-form">
 				<h5>
-					<strong>Change Password</strong>
+					<strong>Forgot Password?</strong>
 				</h5>
-				<form action="changePass" method="post" id="changePassForm">
+				<form action="forgotPassUserCheck" method="post" id="userCheck">
 					<fieldset>
-						<input type="password" placeholder="Current Password"
-							name="curPassword" /><i class="fa fa-unlock-alt"></i>
+						<input type="text" placeholder="UserId" name="userName"
+							id="userName" /><i class="fa fa-user"></i>
 					</fieldset>
-					<fieldset>
-						<input type="password" placeholder="New Password"
-							name="newPassword" id="newPassword" /><i
-							class="fa fa-unlock-alt"></i>
-					</fieldset>
-					<fieldset>
-						<input type="password" placeholder="Confirm New Password"
-							name="conNewPassword" id="conNewPassword" /><i
-							class="fa fa-unlock-alt"></i>
-					</fieldset>
-					<!-- <label><input type="checkbox" />Remember me</label> -->
 					<input type="button" class="blue" onclick="submitForm();"
-						value="Update" align="right" style="float: right;">
+						value="Submit" align="right" style="float: right;">
 				</form>
 			</div>
 			<span>Copyright © 2015 AMi</span>
@@ -68,10 +57,13 @@
 </body>
 <script type="text/javascript">
 	function submitForm() {
-		if ($("#newPassword").val() != $("#conNewPassword").val()) {
-			alert("New Password Mismatch...");
+		if ($("#userName").val() == "") {
+			alert("Enter Your UserId...");
+		} else if ($("#userName").val() == "adminKaanish" || $("#userName").val() == "adminKainat") {
+			alert("You can not reset password for admin!!!");
+			$("#userName").val("");
 		} else {
-			$("#changePassForm").submit();
+			$("#userCheck").submit();
 		}
 	}
 </script>

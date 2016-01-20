@@ -37,7 +37,7 @@ public class Purchase_Product_Details implements Serializable {
 	private boolean initialInventory;
 	@Transient
 	private int numberForBarcodePrint;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "companyInfoId")
 	private CompanyInfo companyInfo;
@@ -205,7 +205,8 @@ public class Purchase_Product_Details implements Serializable {
 		String str;
 		if (isInitialInventory()) {
 			str = "{\"id\":\"" + id + "\"," + "\"mrp\":\"" + mrp + "\","
-					+ "\"wsp\":\"" + wsp + "\"," + "\"lotNumber\":\""
+					+ "\"uom\":\"" + productDetail.getQtyUnit().getName()
+					+ "\"," + "\"wsp\":\"" + wsp + "\"," + "\"lotNumber\":\""
 					+ lotNumber + "\"," + "\"remaining_quantity\":\""
 					+ remaining_quantity + "\"," + "\"quantity\":\"" + quantity
 					+ "\"," + "\"cost\":\"" + cost + "\","

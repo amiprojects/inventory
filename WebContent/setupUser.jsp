@@ -138,6 +138,43 @@
 													</c:forEach>
 												</select>
 											</div>
+
+											<div class="col-md-12">
+												<select class="form-control" name="sqId1">
+													<option value="0">Select any Security Question
+														from group1</option>
+													<c:forEach
+														items="${sessionScope['ejb'].getSecurityQuestionsByGroup('First')}"
+														var="sq1">
+														<option value="${sq1.id}">${sq1.question}</option>
+													</c:forEach>
+												</select>
+											</div>
+											<div class="col-md-4">
+												<span>Answer:</span>
+											</div>
+											<div class="col-md-8">
+												<input name="ans1" type="text" class="form-control">
+											</div>
+
+											<div class="col-md-12">
+												<select class="form-control" name="sqId2">
+													<option value="0">Select any Security Question
+														from group2</option>
+													<c:forEach
+														items="${sessionScope['ejb'].getSecurityQuestionsByGroup('Favourite')}"
+														var="sq2">
+														<option value="${sq2.id}">${sq2.question}</option>
+													</c:forEach>
+												</select>
+											</div>
+											<div class="col-md-4">
+												<span>Answer:</span>
+											</div>
+											<div class="col-md-8">
+												<input name="ans2" type="text" class="form-control">
+											</div>
+
 											<div class="col-md-12">
 												<input name="name" onclick="submit1();" type="button"
 													class="btn green pull-right" value="Create">

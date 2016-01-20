@@ -695,6 +695,38 @@
 		var k = 0;
 		function removeProduct(a) {
 			$("#trRemove" + a).remove();
+
+			var sum = 0;
+			$(".eachtotalvalue").each(function() {
+				sum += parseFloat(this.value);
+			});
+			$("#subtotalvalue").val(sum.toFixed(2));
+			
+			/* $("#subtotalvalue").val(
+					Math.round((Number($("#subtotalvalue").val()) + Number($(
+							"#eachtotalvalue").val())) * 100) / 100); */
+			discountF();
+			$("#taxAmount").val(
+					Math.round((Number($("#subtotalvalue").val())
+							* Number($("#taxTot").val()) * 100) / 100)
+							/ Number(100));
+			$("#totalvalue").val(
+					Math.round((Number($("#subtotalvalue").val())
+							- Number($("#discountValue").val())
+							+ Number($("#taxAmount").val())
+							+ Number($("#transcharge").val()) + Number($(
+							"#surcharge").val())) * 100) / 100);
+			var tot = $("#totalvalue").val();
+			var round = Math.round(tot);
+			if (tot > round) {
+				$("#roundvalue").val(Math.round((round + 1 - tot) * 100) / 100);
+			} else {
+				$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
+			}
+
+			$("#grandtotal").val(
+					Number($("#totalvalue").val())
+							+ Number($("#roundvalue").val()));
 		}
 
 		function probar() {
@@ -754,15 +786,7 @@
 																.val()) + Number($(
 																"#eachtotalvalue")
 																.val())) * 100) / 100);
-								$("#discountValue")
-										.val(
-												Math
-														.round((Number($(
-																"#subtotalvalue")
-																.val())
-																* Number($(
-																		"#discount")
-																		.val()) / 100) * 100) / 100);
+								discountF();
 								$("#taxAmount")
 										.val(
 												Math
@@ -811,40 +835,74 @@
 																"#roundvalue")
 																.val()));
 
-								$("#productTable")
-										.append(
-												'<tbody><tr id="trRemove'+ind+'">'
-														+ '<td>'
-														+ k
-														+ '</td>'
-														+ '<td><input readonly="readonly" type="text" name="codevalue" value=\''
+								if (document.getElementById("trRemove"
+										+ $("#salesbarH").val()) === null) {
+									$("#productTable")
+											.append(
+													'<tbody><tr id="trRemove'
+															+ $("#salesbarH")
+																	.val()
+															+ '">'
+															+ '<td>'
+															+ k
+															+ '</td>'
+															+ '<td><input readonly="readonly" type="text" name="codevalue" value=\''
 													+ data.productCode
 													+ '\'><input readonly="readonly" type="hidden" name="productId" value=\''
 													+ data.productId
 													+ '\'><input readonly="readonly" type="hidden" name="purchaseProductDetId" value=\''
-														+ $("#salesbarH").val()
-														+ '\'></td>'
-														+ '<td><input readonly="readonly" type="text" name="descvalue" value=\''
+															+ $("#salesbarH")
+																	.val()
+															+ '\'></td>'
+															+ '<td><input readonly="readonly" type="text" name="descvalue" value=\''
 													+ data.productDesc
 													+ '\'></td>'
-														+ '<td><input readonly="readonly" type="text" name="qtyvalue" value=\''
-														+ $("#qtyvalue").val()
-														+ '\'></td>'
-														+ '<td><input readonly="readonly" type="text" name="mrpQty" value=\''
-														+ $("#mrpQty").val()
-														+ '\'></td>'
-														+ '<td><input readonly="readonly" type="text" name="eachtotalvalue" value=\''
-														+ $("#eachtotalvalue")
-																.val()
-														+ '\'></td>'
-														+ '<td>'
-														+ '<a href="#" onclick="removeProduct('
-														+ ind
-														+ ');"><img src="img/cross.png" height="16px" width="16px"></a>'
-														+ '</td>'
-														+ '</tr></tbody>');
-								ind++;
-
+															+ '<td><input readonly="readonly" type="text" name="qtyvalue" value=\''
+															+ $("#qtyvalue")
+																	.val()
+															+ '\'></td>'
+															+ '<td><input readonly="readonly" type="text" name="mrpQty" value=\''
+															+ $("#mrpQty")
+																	.val()
+															+ '\'></td>'
+															+ '<td><input readonly="readonly" type="text" class="eachtotalvalue" name="eachtotalvalue" value=\''
+															+ $(
+																	"#eachtotalvalue")
+																	.val()
+															+ '\'></td>'
+															+ '<td>'
+															+ '<a href="#" onclick="removeProduct('
+															+ $("#salesbarH")
+																	.val()
+															+ ');"><img src="img/cross.png" height="16px" width="16px"></a>'
+															+ '</td>'
+															+ '</tr></tbody>');
+									//ind++;
+								} else {
+									k = k - 1;
+									var Q = Number(Number($("#qtyvalue").val())
+											+ Number($(
+													"#trRemove"
+															+ $("#salesbarH")
+																	.val()
+															+ " :nth-child(4) input[type=text]")
+													.val()));
+									$(
+											"#trRemove" + $("#salesbarH").val()
+													+ " :nth-child(4)")
+											.html(
+													'<input readonly="readonly" type="text" name="qtyvalue" value=\''
+											+ Q
+											+ '\'>');
+									$(
+											"#trRemove" + $("#salesbarH").val()
+													+ " :nth-child(6)").html(
+											'<input readonly="readonly" type="text" name="eachtotalvalue" value=\''
+													+ Number($(
+															"#eachtotalvalue")
+															.val()
+															* Q) + '\'>');
+								}
 							}
 
 						});
@@ -1195,9 +1253,24 @@
 																			} else {
 																				var rawORready = 'Ready';
 																			}
-																			if (item2.remaining_quantity >= Number($(
+
+																			if (!(document
+																					.getElementById("trRemove"
+																							+ item2.id) === null)) {
+																				rv = $(
+																						"#trRemove"
+																								+ item2.id
+																								+ " :nth-child(4) input[type=text]")
+																						.val();
+																			} else {
+																				rv = 0;
+																			}
+																			var remQ = item2.remaining_quantity
+																					- Number(rv);
+
+																			if (item2.remaining_quantity >= (Number($(
 																					"#qty")
-																					.val())) {
+																					.val()) + Number(rv))) {
 																				if (item2.purchaseDate != 'Initial Inventory') {
 																					$(
 																							"#purchaseDetailsTable")
@@ -1223,7 +1296,7 @@
 																											+ item2.wsp
 																											+ "</td>"
 																											+ "<td>"
-																											+ item2.remaining_quantity
+																											+ remQ
 																											+ "</td>"
 																											+ "<td>"
 																											+ '<input type="button" onclick="chooseF('
@@ -1257,7 +1330,7 @@
 																											+ item2.wsp
 																											+ "</td>"
 																											+ "<td>"
-																											+ item2.remaining_quantity
+																											+ remQ
 																											+ "</td>"
 																											+ "<td>"
 																											+ '<input type="button" onclick="chooseF('
@@ -1460,6 +1533,7 @@
 
 				var countryName = $("#salesbar").val();
 				var countryArray = countryName.split('/');
+				$("#salesbarH").val($("#salesbar").val());
 
 				for (var i = 0; i < countryArray.length; i++) {
 					countryArray[i];
@@ -1510,15 +1584,7 @@
 															.val()) + Number($(
 															"#eachtotalvalue")
 															.val())) * 100) / 100);
-									$("#discountValue")
-											.val(
-													Math
-															.round((Number($(
-																	"#subtotalvalue")
-																	.val())
-																	* Number($(
-																			"#discount")
-																			.val()) / 100) * 100) / 100);
+									discountF();
 									$("#taxAmount")
 											.val(
 													Math
@@ -1565,45 +1631,84 @@
 													+ Number($("#roundvalue")
 															.val()));
 
-									$("#productTable")
-											.append(
-													'<tbody><tr id="trRemove'+ind+'">'
-															+ '<td>'
-															+ k
-															+ '</td>'
-															+ '<td><input readonly="readonly" type="text" name="codevalue" value=\''
+									if (document.getElementById("trRemove"
+											+ $("#salesbarH").val()) === null) {
+										$("#productTable")
+												.append(
+														'<tbody><tr id="trRemove'
+																+ $(
+																		"#salesbarH")
+																		.val()
+																+ '">'
+																+ '<td>'
+																+ k
+																+ '</td>'
+																+ '<td><input readonly="readonly" type="text" name="codevalue" value=\''
 												+ data.productCode
 												+ '\'><input readonly="readonly" type="hidden" name="productId" value=\''
 												+ data.productId
 												+ '\'><input readonly="readonly" type="hidden" name="purchaseProductDetId" value=\''
-															+ $("#salesbarH")
-																	.val()
-															+ '\'></td>'
-															+ '<td><input readonly="readonly" type="text" name="descvalue" value=\''
+																+ $(
+																		"#salesbarH")
+																		.val()
+																+ '\'></td>'
+																+ '<td><input readonly="readonly" type="text" name="descvalue" value=\''
 												+ data.productDesc
 												+ '\'></td>'
-															+ '<td><input readonly="readonly" type="text" id="qtyVal'
-															+ '" name="qtyvalue" value=\''
-															+ $("#qtyvalue")
-																	.val()
-															+ '\'></td>'
-															+ '<td><input readonly="readonly" type="text" name="mrpQty" value=\''
-															+ $("#mrpQty")
-																	.val()
-															+ '\'></td>'
-															+ '<td><input readonly="readonly" type="text" name="eachtotalvalue" value=\''
-															+ $(
-																	"#eachtotalvalue")
-																	.val()
-															+ '\'></td>'
-															+ '<td>'
-															+ '<a href="#" onclick="removeProduct('
-															+ ind
-															+ ');"><img src="img/cross.png" height="16px" width="16px"></a>'
-															+ '</td>'
-															+ '</tr></tbody>');
-									ind++;
-
+																+ '<td><input readonly="readonly" type="text" id="qtyVal'
+																+ '" name="qtyvalue" value=\''
+																+ $("#qtyvalue")
+																		.val()
+																+ '\'></td>'
+																+ '<td><input readonly="readonly" type="text" name="mrpQty" value=\''
+																+ $("#mrpQty")
+																		.val()
+																+ '\'></td>'
+																+ '<td><input readonly="readonly" type="text" class="eachtotalvalue" name="eachtotalvalue" value=\''
+																+ $(
+																		"#eachtotalvalue")
+																		.val()
+																+ '\'></td>'
+																+ '<td>'
+																+ '<a href="#" onclick="removeProduct('
+																+ $(
+																		"#salesbarH")
+																		.val()
+																+ ');"><img src="img/cross.png" height="16px" width="16px"></a>'
+																+ '</td>'
+																+ '</tr></tbody>');
+										//ind++;
+									} else {
+										k = k - 1;
+										var Q = Number(Number($("#qtyvalue")
+												.val())
+												+ Number($(
+														"#trRemove"
+																+ $(
+																		"#salesbarH")
+																		.val()
+																+ " :nth-child(4) input[type=text]")
+														.val()));
+										$(
+												"#trRemove"
+														+ $("#salesbarH").val()
+														+ " :nth-child(4)")
+												.html(
+														'<input readonly="readonly" type="text" name="qtyvalue" value=\''
+												+ Q
+												+ '\'>');
+										$(
+												"#trRemove"
+														+ $("#salesbarH").val()
+														+ " :nth-child(6)")
+												.html(
+														'<input readonly="readonly" type="text" name="eachtotalvalue" value=\''
+																+ Number($(
+																		"#eachtotalvalue")
+																		.val()
+																		* Q)
+																+ '\'>');
+									}
 									$("#pCode").val("");
 									$("#salesbar").val("");
 									$("#salesbar").prop("readonly", false);
