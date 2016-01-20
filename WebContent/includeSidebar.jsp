@@ -11,7 +11,7 @@
 				<div class="sub-menu" style="" id="dashSub">
 					<ul>
 						<li><a id="sDash" href="dashboard.jsp" title="">Dashboard</a></li>
-						<li><a href="#" title="">Dashboard</a></li>
+					
 					</ul>
 				</div>
 			</div>

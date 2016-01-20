@@ -355,13 +355,13 @@ $(document).ready(function(){
 
 
 									<br> <br>
-									<div style="overflow-x: auto;">
+									<div style="overflow: scroll; height: 500px ">
 										<table class="table">
 											<thead>
 												<tr>
 													<th>#</th>
 													<th>Name</th>
-													<th>Number</th>
+													<th>Phone Number</th>
 													<th></th>
 												</tr>
 											</thead>
@@ -371,7 +371,7 @@ $(document).ready(function(){
 													var="vendor">
 													<tr>
 														<td>${c}</td>
-														<td>${vendor.companyName}</td>
+														<td>${vendor.name}</td>
 														<td>${vendor.ph1}</td>
 														<td><a href="vendorEdit.jsp?id=${vendor.id}"><img
 																alt="click to view" src="images/eye.png" height="20"></a></td>

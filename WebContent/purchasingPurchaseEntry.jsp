@@ -1389,19 +1389,18 @@
 									<br>
 								</div>
 								<div class="col-md-5">Designer Number:</div>
-								<div class="col-md-7">
+								<div class="col-md-6">
 									<input type="text" id="pCode" name="pCode" class="form-control"
 										onchange="emptyForm();" autocomplete="off"><input
 										type="hidden" id="productCode" name="productCode">
 
 								</div>
-								<!-- <div class="col-md-1">
-									 <a href="MaterialPartDetailsGenerals.jsp"
-										title="Add New Product"> <img
-										style="margin-top: 4px; cursor: pointer" height="27px"
+							 <div class="col-md-1">
+									 <a onclick="addDesineNo()" title="Add New Product"> <img
+										style="margin-top: 4px; cursor: pointer;margin-left: -23px;" height="27px"
 										width="27px" alt="" src="img/add.png">
 									</a>
-								</div> -->
+								</div>
 								<div class="col-md-5">Product Descripsion:</div>
 								<div class="col-md-7">
 									<input type="text" class="form-control" name="pDesc" id="pDesc"
@@ -2264,7 +2263,7 @@
 										<tr>
 											<td>Unit of Measurement:</td>
 											<td><input type="hidden" class="form-control " readonly
-												name="uom" id="uom1"> <input type="text"
+												name="uom78" id="uom1"> <input type="text"
 												class="form-control " readonly name="uom"
 												id="uomnamedisplay"></td>
 
@@ -2294,7 +2293,7 @@
 												</div>
 												<div id="cross">
 													<p style="font-size: 29px">
-														&#10007; <input type="text" class="form-control" readonly
+														&#10007; <input type="hidden" class="form-control" readonly
 															id="isSalebi" name="isSalebi" value="false">
 													</p>
 												</div>
@@ -2320,7 +2319,7 @@
 									<table>
 										<tr>
 
-											<td><input type="text" id="addini" class="form-control"
+											<td><input type="hidden" id="addini" class="form-control"
 												readonly name="addini" value="false"></td>
 										</tr>
 										<tr>
@@ -2501,6 +2500,7 @@
 
 		</div>
 	</div>
+
 <div id="addUoM" class="modal fade" role="dialog" style="top: 25px;">
 
 		<form action="addUOMjson" method="post">
@@ -2807,11 +2807,18 @@
 		}
 	}
 
-	/* function submitSumary() {
+ function submitSumary() {
 
+	 if ($("#openn").is(':checked')) {
+		 alert("check");
+	 }
+	 else{
+		 alert("not checked");
+	 }
+	 
 		if ($("#productCodeAMI").val() == 0) {
 			alert("please select Designer Number:");
-		} else if ($("#description").val() == "") {
+		} else if ($("#description1").val() == "") {
 			alert("please select Description");
 		} else if ($("#universalProductCode").val() == "") {
 			alert("please select Designer's Design number:");
@@ -2852,53 +2859,83 @@
 			}
 
 			else {
-				
+				var dataa1 = {
+						productCode : $("#pcodedisp").val(),
+						description : $("#description1").val(),
+						upc : $("#upc").val(),
+						uom : $("#uom1").val(),
+						isRaw : $("#isRaw").val(),
+						isSalebi : $("#isSalebi").val(),
+						catagoryId : $("#catagoryId").val(),
+						addini : $("#addini").val(),
+						mrp1 : $("#mrp1").val(),
+						wsp1 : $("#wspAMI").val(),
+						qty1 : $("#quantity111").val(),
+						ucost : $("#ucost").val(),
+						att1 : $("#att1").val(),
+						att2 : $("#att2").val(),
+						att3 : $("#att3").val(),
+						att4 : $("#att4").val(),
+						att5 : $("#att5").val(),
+						att6 : $("#att6").val(),
+						lotnumberS : $("#lotnumberS").val(),
+						proImage1 : $("#proImage1").val(),
+						addini : $("#addini").val(),
+						
+						
+					};
+					$.ajax({
+						url : "productSumaryJson",
+						dataType : "json",
+						data : dataa1,
+						type : "post",
+						success : function(data1) {
+							alert(data1.result);
+							
+							$("#addDesineN").modal('hide');
+						}
+
+					});
 			}
 		} else {
-			var dataa1 = {
+			
+			var dataa1 = {					
 					productCode : $("#pcodedisp").val(),
 					description : $("#description1").val(),
 					upc : $("#upc").val(),
-					vendorCityId : $("#vendorCityId").val(),
-					vendorCompanyName : $("#idvendorCompanyName").val(),
-					vendorMail : $("#idvendorMail").val(),
-					vendorPh1 : $("#iphone").val(),
-					vendorPh2 : $("#idvendorPh2").val(),
-					vendorPin : $("#idvendorPin").val(),
-					vendorType : $("#idvendorType").val(),
-					bankAccNo : $("#idbankAccNo").val(),
-					bankName : $("#idbankName").val(),
-					bankCheckLebel : $("#idbankCheckLebel").val(),
-					bankIFSC : $("#idbankIFSC").val(),
-					bankMICR : $("#idbankMICR").val(),
-					bankRTGS : $("#idbankRTGS").val(),
-					bankBranch : $("#idbankBranch").val(),
-					taxTypeGroupId : $("#taxgroup").val(),
-					bankCity : $("#bankCityId").val(),
-					vendorCSTno : $("#idvendorCSTno").val(),
-					vendorCSTregDate : $("#datepickerB").val(),
-					vendorExciseRegNo : $("#idvendorExciseRegNo").val(),
-					vendorExciseRegDate : $("#datepickerC").val(),
-					vendorVATno : $("#idvendorVATno").val(),
-					vendorVATregDate : $("#datepickerA").val(),
-					vendorServiceTaxRegNo : $("#idvendorServiceTaxRegNo").val(),
-					vendorServiceTaxRegDate : $("#datepickerD").val(),
-					vendorPANno : $("#idvendorPANno").val()
+					uom : $("#uom1").val(),
+					isRaw : $("#isRaw").val(),
+					isSalebi : $("#isSalebi").val(),
+					catagoryId : $("#catagoryId").val(),
+					mrp1 : $("#mrp1").val(),
+					wsp1 : $("#wspAMI").val(),
+					qty1 : $("#quantity111").val(),
+					ucost : $("#ucost").val(),
+					att1 : $("#att1").val(),
+					att2 : $("#att2").val(),
+					att3 : $("#att3").val(),
+					att4 : $("#att4").val(),
+					att5 : $("#att5").val(),
+					att6 : $("#att6").val(),
+					lotnumberS : $("#lotnumberS").val(),
+					proImage1 : $("#proImage1").val(),
+					addini : $("#addini").val(),
+					
 				};
 				$.ajax({
-					url : "addVendorbyjson",
+				 url : "productSumaryJson",
 					dataType : "json",
 					data : dataa1,
 					type : "post",
 					success : function(data1) {
 						alert(data1.result);
 						
-						$("#addV").modal('hide');
+						$("#addDesineN").modal('hide');
 					}
 
 				});
 			}
-		} */
+		} 
 
 	
 
@@ -3090,7 +3127,7 @@
 	</script>
 	<!-- 	*********************************************************************************************************** -->
 
-	<!-- <script type="text/javascript" src="js/webcam.js"></script>
+	 <script type="text/javascript" src="js/webcam.js"></script>
 	<script>
 		Webcam.set({
 			width : 320,
@@ -3120,7 +3157,7 @@
 				$("#cross1").show();
 			}
 		});
-	</script> -->
+	</script> 
 	<script type="text/javascript">
 		function addUOM() {
 			$("#addUoM").modal("show");

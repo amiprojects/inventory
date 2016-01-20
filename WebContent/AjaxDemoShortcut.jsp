@@ -1,456 +1,367 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel</title>
+<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+<link
+	href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700,900'
+	rel='stylesheet' type='text/css' />
+<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700'
+	rel='stylesheet' type='text/css' />
+<link rel="stylesheet" href="bootstrapcdn.css">
+<script src="maxcdn.bootstrapcdn.js"></script>
+
+<style>
+.font {
+	color: #777777;
+	float: left;
+	font-family: Roboto;
+	font-size: 12px;
+	letter-spacing: 0.3px;
+	padding-right: 20px;
+}
+</style>
+
+<!-- Styles -->
+<link rel="stylesheet" href="font-awesome-4.2.0/css/font-awesome.css"
+	type="text/css" />
+<!-- Font Awesome -->
+<link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
+<!-- Bootstrap -->
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+<!-- Style -->
+<link rel="stylesheet" href="css/responsive.css" type="text/css" />
+<!-- Responsive -->
+
 </head>
 <body>
+	<c:if test="${sessionScope['user']==null}">
+		<c:redirect url="index.jsp" />
+	</c:if>
+	<c:if
+		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminKainat')}">
+		<c:forEach
+			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
+			var="page">
 
+			<c:if test="${page.name.equals('Stock')}">
+				<c:set var="i" value="5" />
+			</c:if>
+		</c:forEach>
+		<c:if test="${i!=5}">
+			<script type="text/javascript">
+				alert('you have no permission to view this page');
+				window.location = "dashboard.jsp";
+			</script>
+		</c:if>
+	</c:if>
 
+	<div class="main" style="height: 664px;">
+		<%@include file="includeHeader.jsp"%>
+		<div class="page-container menu-left" style="height: 100%;">
+			<%@include file="includeSidebar.jsp"%>
+			<div class="content-sec"
+				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
+				<div class="container">
+					<div class="row">
+						<div class="masonary-grids">
 
+							<div class="breadcrumbs"
+								style="height: 50px; text-align: center;">
+								<h3 style="margin-top: 11px;">Stock View</h3>
 
-<div id="addV" class="modal fade" role="dialog" style="top: 25px;">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						onclick="closePayment();">&times;</button>
-					<center>
-						<h3 class="modal-title">Vendor/Agent</h3>
-					</center>
-				</div>
-				<div class="modal-body">
-					<form role="form" class="sec" action="addVendorbyjson" id="addVen"
-						method="post">
-						<ul class="nav nav-tabs">
-							<li class="active" id="detl"><a data-toggle="tab"
-								href="#detail">Details</a></li>
-							<li id="addr"><a data-toggle="tab" href="#address">Address</a></li>
-							<li id="vAcc"><a data-toggle="tab" href="#vendorAccount">Vendor
-									Account Info</a></li>
-							<li id="bAcc"><a data-toggle="tab" href="#bankAccount">Bank
-									Account info</a></li>
-							<!-- <li id="prts"><a data-toggle="tab" href="#part">Parts</a></li> -->
-						</ul>
-						<div class="tab-content">
-							<div id="bankAccount" class="tab-pane fade">
-								<div class="widget-area">
-									<h5 align="center">(All the below fields are optional)</h5>
-									<br>
-									<div class="col-md-3">
-										<b>Bank Name:</b>
-									</div>
-									<div class="col-md-9">
-										<input type="text" class="form-control" name="bankName"
-											id="idbankName">
-									</div>
-									<br>
-									<div class="col-md-3">
-										<b>A/C no:</b>
-									</div>
-									<div class="col-md-9">
-										<input type="text" class="form-control" name="bankAccNo"
-											id="acno">
-									</div>
-									<br>
-									<div class="col-md-3">
-										<b>Branch:</b>
-									</div>
-									<div class="col-md-9">
-										<input type="text" class="form-control" name="bankBranch"
-											id="idbankBranch">
-									</div>
-									<br>
-									<div class="col-md-3">
-										<b>City:</b>
-									</div>
-									<div class="col-md-9">
-										<input type="text" class="form-control" id="bankCity">
-										<input type="hidden" value="" name="bankCity" id="bankCityId">
-									</div>
-									<br>
-									<div class="col-md-3">
-										<b>IFSC no:</b>
-									</div>
-									<div class="col-md-9">
-										<input type="text" class="form-control" name="bankIFSC"
-											id="idbankIFSC">
-									</div>
-									<br>
-									<div class="col-md-3">
-										<b>MICR no:</b>
-									</div>
-									<div class="col-md-9">
-										<input type="text" class="form-control" name="bankMICR"
-											id="idbankMICR">
-									</div>
-									<br>
-									<div class="col-md-3">
-										<b>RTGS code:</b>
-									</div>
-									<div class="col-md-9">
-										<input type="text" class="form-control" name="bankRTGS"
-											id="idbankRTGS">
-									</div>
-									<br>
-									<div class="col-md-3">
-										<b>Check lebel:</b>
-									</div>
-									<div class="col-md-9">
-										<input type="text" class="form-control" name="bankCheckLebel"
-											id="idbankCheckLebel">
-									</div>
-								</div>
-								<br>
-								<div class="col-md-12">
-									<input class="btn green pull-left" type="button"
-										value="Previous" onclick="bankButtonPrev();"> <input
-										class="btn green pull-right" type="button" value="Finish"
-										onclick="submitform1();">
-								</div>
 
 							</div>
-							<div id="vendorAccount" class="tab-pane fade">
-								<div class="widget-area">
-									<div class="row">
-										<h5 align="center">(All the below fields are optional)</h5>
-										<br>
-										<div class="col-md-5">
-											<b>VAT no:</b>
-										</div>
-										<div class="col-md-7">
-											<input type="text" class="form-control" name="vendorVATno"
-												id="idvendorVATno">
-										</div>
+
+
+							<div class="row">
+								<div class="widget-area" style="width: 40%; height: 550px">
+									<h3>Stock Search</h3>
+									<br> <br>
+									<div class="form-group">
+										<form action="goStockView" method="post">
+											<label for="" class="">Designer Number: </label> <input
+												type="text" id="prodcode" name="pCodeSearch"
+												class="form-control"> <label class="">Product
+												Description: </label> <input type="text" id="prodesc"
+												name="pDesSearch" class="form-control"> <label
+												class="">Category: </label> <input type="text" id="deptcat"
+												name="pCatSearch" class="form-control"> <br> <input
+												class="btn green btn-default" type="submit" value="Search">
+											<a href="stockView.jsp"> <input
+												class="btn green btn-default" type="button" value="Show All"></a>
+										</form>
 									</div>
 
-									<div class="row">
-										<div class="col-md-5">
-											<b>VAT registration date:</b>
-										</div>
-										<div class="col-md-7">
-											<input type="text" class="form-control"
-												name="vendorVATregDate" id="datepickerA" readonly="readonly">
-										</div>
-									</div>
 
-									<div class="row">
-										<div class="col-md-5">
-											<b>CST no:</b>
-										</div>
-										<div class="col-md-7">
-											<input type="text" class="form-control" name="vendorCSTno"
-												id="idvendorCSTno">
-										</div>
-									</div>
 
-									<div class="row">
-										<div class="col-md-5">
-											<b>CST registration date:</b>
-										</div>
-										<div class="col-md-7">
-											<input type="text" class="form-control"
-												name="vendorCSTregDate" id="datepickerB" readonly="readonly">
-										</div>
-									</div>
 
-									<div class="row">
-										<div class="col-md-5">
-											<b>PAN no:</b>
-										</div>
-										<div class="col-md-7">
-											<input type="text" class="form-control" name="vendorPANno"
-												id="idvendorPANno">
-										</div>
-									</div>
+									<br> <br>
 
-									<div class="row">
-										<div class="col-md-5">
-											<b>Excise registration no:</b>
-										</div>
-										<div class="col-md-7">
-											<input type="text" class="form-control"
-												name="vendorExciseRegNo" id="idvendorExciseRegNo">
-										</div>
-									</div>
 
-									<div class="row">
-										<div class="col-md-5">
-											<b>Excise registration date:</b>
-										</div>
-										<div class="col-md-7">
-											<input type="text" class="form-control"
-												name="vendorExciseRegDate" id="datepickerC"
-												readonly="readonly">
-										</div>
-									</div>
 
-									<div class="row">
-										<div class="col-md-5">
-											<b>Service tax registration no:</b>
-										</div>
-										<div class="col-md-7">
-											<input type="text" class="form-control"
-												name="vendorServiceTaxRegNo" id="idvendorServiceTaxRegNo">
-										</div>
-									</div>
-
-									<div class="row">
-										<div class="col-md-5">
-											<b>Service tax registration date:</b>
-										</div>
-										<div class="col-md-7">
-											<input type="text" class="form-control"
-												name="vendorServiceTaxRegDate" id="datepickerD"
-												readonly="readonly">
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-5">
-											<b>Tax group id:</b>
-										</div>
-										<div class="col-md-7">
-											<select class="form-control" name="taxTypeGroupId"
-												id="taxgroup">
-												<!-- 	<option value="0">select a tax group</option> -->
-												<c:forEach
-													items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
-													var="taxTypeGroup">
-													<option value="${taxTypeGroup.id}">${taxTypeGroup.name}</option>
-												</c:forEach>
-											</select>
-										</div>
-									</div>
 								</div>
-								<br>
-								<div class="col-md-12">
-									<input type="button" value="Next" class="btn green pull-right"
-										onclick="vendorButtonNext();"> <input type="button"
-										value="Previous" class="btn green pull-left"
-										onclick="vendorButtonPrev();">
+								<div class="widget-area" style="width: 60%; height: 550px">
+
+									<h3>Stock</h3>
+
+									<br>
+
+
+									<table id="myTable01"
+										class="table table-striped table-bordered">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>Designer Number:</th>
+												<th>Product Description:</th>
+												<th>UOM</th>
+												<th>Quantity</th>
+												<th>WSP</th>
+												<th>MRP</th>
+
+
+												<th></th>
+
+											</tr>
+										</thead>
+										<tbody>
+
+
+											<tr>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+
+											</tr>
+											<tr>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+
+											</tr>
+											<tr>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+
+											</tr>
+											<tr>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+
+											</tr>
+											<tr>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+
+											</tr>
+											<tr>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+
+											</tr>
+
+
+
+											<tr>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+
+											</tr>
+											<tr>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+
+											</tr>
+
+											<tr>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+
+											</tr>
+											<tr>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+
+											</tr>
+
+
+											<tr>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+
+											</tr>
+											<tr>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+
+											</tr>
+											<tr>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+
+											</tr>
+											<tr>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+
+											</tr>
+
+										</tbody>
+
+										<tfoot>
+											<tr>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+												<td>........</td>
+											</tr>
+										</tfoot>
+
+									</table>
+
+
 								</div>
 							</div>
-
-							<div id="detail" class="tab-pane fade active in">
-								<div class="widget-area">
-
-									<div class="col-md-3">
-										<b>Name:</b>
-									</div>
-									<div class="col-md-9">
-										<input type="text" class="form-control" name="vendorName"
-											id="idName">
-									</div>
-									<br>
-									<div class="col-md-3">
-										<b>Company Name:</b>
-									</div>
-									<div class="col-md-9">
-										<input type="text" class="form-control"
-											name="vendorCompanyName" id="idvendorCompanyName">
-									</div>
-
-									<div class="col-md-3">
-										<b>Ph No1:</b>
-									</div>
-									<div class="col-md-9">
-										<input type="text" class="form-control" name="vendorPh1"
-											id="iphone">
-									</div>
-
-									<div class="col-md-3">
-										<b>Ph No2:(optional)</b>
-									</div>
-									<div class="col-md-9">
-										<input type="text" class="form-control" name="vendorPh2"
-											id="idvendorPh2">
-									</div>
-
-									<div class="col-md-3">
-										<b>Email :</b>
-									</div>
-									<div class="col-md-9">
-										<input type="text" class="form-control" name="vendorMail"
-											style="text-transform: none;" id="idvendorMail">
-									</div>
-
-									<div class="col-md-3">
-										<b>Alias name :</b>
-									</div>
-									<div class="col-md-9">
-										<input type="text" class="form-control" name="vendorAlias"
-											id="idvendorAlias">
-									</div>
-
-									<div class="col-md-3">
-										<b>Vendor type :</b>
-									</div>
-									<div class="col-md-9">
-
-										<select class="form-control" name="vendorType"
-											id="idvendorType" value="${vendor.vendorType}"
-											disabled="disabled">
-
-											<option value="0">Select Vendor Type</option>
-
-											<c:forEach items="${sessionScope['ejb'].getAllVendorType()}"
-												var="vType">
-
-												<c:choose>
-													<c:when
-														test="${vType.type.equals('Vendor') || vType.type.equals('Purchase Agent')}">
-														<option value="${vType.id}">${vType.type}</option>
-
-													</c:when>
-												</c:choose>
-
-											</c:forEach>
-										</select>
-									</div>
-								</div>
-								<br>
-								<div class="col-md-12">
-									<!-- <input class="btn green pull-left" type="button"
-														value="Previous" onclick="detailButtonPrev();"> -->
-									<input class="btn green pull-right" type="button" value="Next"
-										onclick="detailButtonNext();">
-								</div>
-							</div>
-							<div id="address" class="tab-pane fade ">
-								<div class="widget-area">
-									<div class="row">
-										<div class="col-md-3">
-											<b>Address :</b>
-										</div>
-
-										<div class="col-md-9">
-											<textarea rows="" cols="" class="form-control"
-												name="vendorAddress" id="idAdd"></textarea>
-										</div>
-									</div>
-									<br>
-									<div class="row">
-										<div class="col-md-3">
-											<b>City :</b>
-										</div>
-										<div class="col-md-8">
-											<input type="text" class="form-control cityAuto"
-												name="vendorCity" required="required" id="vendorCity"
-												autocomplete="off"> <input type="hidden"
-												name="vendorCityId" id="vendorCityId" autocomplete="off">
-										</div>
-										<div class="col-md-1">
-											<a onclick="addCitySC()" title="Add New City"> <img
-												style="margin-top: 4px; cursor: pointer" height="30px"
-												width="30px" alt="" src="img/add.png">
-											</a>
-
-										</div>
-									</div>
-									<br>
-									<div class="row">
-										<div class="col-md-3">
-											<b>Pin code :</b>
-										</div>
-										<div class="col-md-9">
-											<input type="text" class="form-control" name="vendorPin"
-												id="idvendorPin" required="required">
-										</div>
-									</div>
-								</div>
-								<br>
-								<div class="col-md-12">
-									<input class="btn green pull-left" type="button"
-										value="Previous" onclick="addressButtonPrev();"> <input
-										class="btn green pull-right" type="button" value="Next"
-										onclick="addressButtonNext();">
-								</div>
-							</div>
-
 						</div>
-					</form>
+					</div>
 				</div>
-				<div class="modal-footer"></div>
 			</div>
 		</div>
+		<!-- Content Sec -->
 	</div>
+	<!-- Page Container -->
 
+	<!-- main -->
 
-<script type="text/javascript">
-		function submitform1() {
-			var vID;
-			var vvName;
-			var vvphone1;
-			var vvphone2;
-			var vvadres;
-			if ($("#idName").val() == 0) {
-				alert("please select  name");
-			} else if ($("#idvendorCompanyName").val() == "") {
-				alert("please select Company Name");
-			} else if ($("#iphone").val() == "") {
-				alert("please select Ph No1");
-			} else if ($("#idvendorMail").val() == "") {
-				alert("please select email");
-			} else if ($("#idvendorAlias").val() == "") {
-				alert("please select Alias name");
-			} else if ($("#cityname").val() == "") {
-				alert("please select cityname");
-			} else if ($("#idAdd").val() == "") {
-				alert("please select Adress");
-			} else if ($("#vendorCity").val() == "") {
-				alert("please select vendor city");
-			} else if ($("#idvendorPin").val() == "") {
-				alert("please select pin code");
-			} else if ($("#service").val() == "") {
-				alert("please select Service Tax");
-			} else {
+	<!-- Script -->
+	<script type="text/javascript" src="js/modernizr.js"></script>
 
-				var dataa1 = {
-					vendorName : $("#idName").val(),
-					vendorAddress : $("#idAdd").val(),
-					vendorAlias : $("#idvendorAlias").val(),
-					vendorCityId : $("#vendorCityId").val(),
-					vendorCompanyName : $("#idvendorCompanyName").val(),
-					vendorMail : $("#idvendorMail").val(),
-					vendorPh1 : $("#iphone").val(),
-					vendorPh2 : $("#idvendorPh2").val(),
-					vendorPin : $("#idvendorPin").val(),
-					vendorType : $("#idvendorType").val(),
-					bankAccNo : $("#idbankAccNo").val(),
-					bankName : $("#idbankName").val(),
-					bankCheckLebel : $("#idbankCheckLebel").val(),
-					bankIFSC : $("#idbankIFSC").val(),
-					bankMICR : $("#idbankMICR").val(),
-					bankRTGS : $("#idbankRTGS").val(),
-					bankBranch : $("#idbankBranch").val(),
-					taxTypeGroupId : $("#taxgroup").val(),
-					bankCity : $("#bankCityId").val(),
-					vendorCSTno : $("#idvendorCSTno").val(),
-					vendorCSTregDate : $("#datepickerB").val(),
-					vendorExciseRegNo : $("#idvendorExciseRegNo").val(),
-					vendorExciseRegDate : $("#datepickerC").val(),
-					vendorVATno : $("#idvendorVATno").val(),
-					vendorVATregDate : $("#datepickerA").val(),
-					vendorServiceTaxRegNo : $("#idvendorServiceTaxRegNo").val(),
-					vendorServiceTaxRegDate : $("#datepickerD").val(),
-					vendorPANno : $("#idvendorPANno").val()
-				};
-				$.ajax({
-					url : "addVendorbyjson",
-					dataType : "json",
-					data : dataa1,
-					type : "post",
-					success : function(data1) {
-						alert(data1.result);
-						
-						$("#addV").modal('hide');
-					}
+	<script type="text/javascript" src="js/script.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+	<script type="text/javascript" src="js/enscroll.js"></script>
+	<script type="text/javascript" src="js/grid-filter.js"></script>
+	<script type="text/javascript" src="js/jquery.fixedheadertable.js"></script>
+	<script type="text/javascript" src="js/jquery.fixedheadertable.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#stock").attr("id", "activeSubMenu");
+			$("#sStock").attr("style", "color: #6a94ff;");
+			$("#step8").hide();
 
-				});
-			}
+		});
+		function showDetails(id) {
+			//alert(id);
+			$("#StockDetails" + id).submit();
 		}
+
+		function viewPage() {
+			window.location = 'productDisplay.jsp';
+		}
+	</script>
+
+	<script>
+		$(document).ready(function() {
+
+			$('#myTable01').fixedHeaderTable({
+				footer : true,
+				cloneHeadToFoot : true,
+				altClass : 'odd',
+				autoShow : true
+			});
+		});
 	</script>
 
 
@@ -458,23 +369,7 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </body>
+
+<!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
 </html>

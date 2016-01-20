@@ -607,13 +607,19 @@ public class JsonServlet extends HttpServlet {
 				
 				
 			case "productSumaryJson":
+				
+				resp.setContentType("application/json");
+				JsonGeneratorFactory jasonF = Json.createGeneratorFactory(null);
+				JsonGenerator jsonG = jasonF.createGenerator(resp.getOutputStream());
+				HttpSession httpSession1 = req.getSession();
+				
 				ProductDetail	productDetail = new ProductDetail();
 				Purchase_Product_Details purchaseProductDetails = new Purchase_Product_Details();
 				ReadyGoodsStock readyGoodsStock = new ReadyGoodsStock();
 				RawMaterialsStock rawMaterialsStock = new RawMaterialsStock();
 				SerialNumber serialNumber = new SerialNumber();
 				CompanyInfo companyInfo=new CompanyInfo();
-				HttpSession httpSession1 = req.getSession();
+				
 				companyInfo = ejb.getUserById(
 						(String) httpSession1.getAttribute("user"))
 						.getCompanyInfo();
@@ -636,7 +642,7 @@ public class JsonServlet extends HttpServlet {
 							.getParameter("description").toUpperCase());
 					productDetail.setUniversalCode(req.getParameter("upc")
 							.toUpperCase());
-					productDetail.setQtyUnit(ejb.getQtyUnitById(Integer
+				productDetail.setQtyUnit(ejb.getQtyUnitById(Integer
 							.parseInt(req.getParameter("uom"))));
 					System.out.println(req.getParameter("isRaw"));
 					productDetail.setRaw(Boolean.parseBoolean(req
@@ -768,9 +774,11 @@ public class JsonServlet extends HttpServlet {
 					ejb.setProductImage(proimg);
 
 					
+					jsonG.writeStartObject().write("result", "State added successfully").writeEnd().close();
 				} else {
-					
+					jsonG.writeStartObject().write("result", "Duplicate State Entry").writeEnd().close();
 				}
+
 
 				break;
 				
