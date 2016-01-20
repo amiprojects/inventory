@@ -235,6 +235,10 @@ public class AccountDetails implements Serializable{
 	+ city.getCityName() + "\",
 */	
 	
+	/*"\"," + "\"tax_Type_Group\":\""
+	+ tax_Type_Group.getId() + "\", " + "\"taxTotal\":\""
+	+ tax_Type_Group.getTotalTaxValue() +*/
+	
 	@Override
 	public String toString() {
 		return "{\"bankAccountNumber\":\"" + bankAccountNumber + "\", " + "\"bankChequeLable\":\"" + bankChequeLable
@@ -246,9 +250,7 @@ public class AccountDetails implements Serializable{
 				+ "\"serviceTaxRegistrationDate\":\"" + serviceTaxRegistrationDate + "\","
 				+ "\"serviceTaxRegistrationNumber\":\"" + serviceTaxRegistrationNumber + "\"," +  "\"users\":\""
 				+ users + "\"," + "\"vatNumber\":\"" + vatNumber + "\"," + "\"vatRegistrationDate\":\""
-				+ vatRegistrationDate + "\","+ "\"vendorId\":\"" + vendor.getId() + "\", \"vendorName\":\"" + vendor.getName() + "\"," + "\"tax_Type_Group\":\""
-				+ tax_Type_Group.getId() + "\", " + "\"taxTotal\":\""
-				+ tax_Type_Group.getTotalTaxValue() + "\"}";
+				+ vatRegistrationDate + "\","+ "\"vendorId\":\"" + vendor.getId() + "\", \"vendorName\":\"" + vendor.getName() +  "\"}";
 	}
 
 }

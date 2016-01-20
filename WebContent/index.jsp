@@ -50,7 +50,7 @@
 					<!-- <label><input type="checkbox" />Remember me</label> -->
 					<button type="submit" class="blue">LOG IN</button>
 				</form>
-				<a href="#" title="">Forgot Password?</a>
+				<a href="forgotPassword.jsp" title="">Forgot Password?</a>
 			</div>
 			<span>Copyright © 2015 AMi</span>
 		</div>

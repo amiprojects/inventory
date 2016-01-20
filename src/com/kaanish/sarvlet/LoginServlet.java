@@ -24,6 +24,8 @@ import com.kaanish.model.PageList;
 import com.kaanish.model.PaymentStatus;
 import com.kaanish.model.PaymentType;
 import com.kaanish.model.QtyUnitType;
+import com.kaanish.model.SecurityQuestionGroup;
+import com.kaanish.model.SequrityQuestions;
 import com.kaanish.model.Stoct;
 import com.kaanish.model.Users;
 import com.kaanish.model.VendorType;
@@ -55,6 +57,8 @@ public class LoginServlet extends HttpServlet {
 	private CompanyInfo companyInfoKainat;
 	private Stoct stoct;
 	private Bill_setup bill_setup;
+	private SecurityQuestionGroup securityQuestionGroup;
+	private SequrityQuestions securityQuestions;
 
 	@Override
 	public void init() throws ServletException {
@@ -288,7 +292,7 @@ public class LoginServlet extends HttpServlet {
 			companyInfoKainat.setCompname("Kainat Kreation");
 			ejb.setCompanyInfo(companyInfoKainat);
 		}
-		if (ejb.getAllUsers().size() == 0) {
+		if (ejb.getAllUsers().size() < 2) {
 			usersKaanish = new Users();
 			usersKaanish.setUserId("adminKaanish");
 			usersKaanish.setPassword("admin");
@@ -305,6 +309,91 @@ public class LoginServlet extends HttpServlet {
 			usersKainat.setCompanyInfo(companyInfoKainat);
 			ejb.setUser(usersKainat);
 		}
+		if (ejb.getAllBillSetup().size() < 10) {
+			/*companyInfoKaanish = ejb.getUserById("adminKaanish")
+					.getCompanyInfo();
+			companyInfoKainat = ejb.getUserById("adminKainat").getCompanyInfo();*/
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("PUR");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfoKaanish);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("PUR");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfoKainat);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("INV");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfoKaanish);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("INV");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfoKainat);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("SRINV");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfoKaanish);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("SRINV");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfoKainat);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("JOB");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfoKaanish);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("JOB");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfoKainat);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("ROAD");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfoKaanish);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("ROAD");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfoKainat);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+		}
 		if (ejb.getAllStoct().size() < 1) {
 			LocalDateTime afterThreeMonths = currentDateTime.plusMonths(3);
 			stoct = new Stoct();
@@ -315,90 +404,89 @@ public class LoginServlet extends HttpServlet {
 			stoct.setStockNumber(GetMacId.getMacId());
 			ejb.setStoct(stoct);
 		}
-		if (ejb.getAllBillSetup().size() == 0) {
-			companyInfoKaanish = ejb.getUserById("adminKaanish")
-					.getCompanyInfo();
-			companyInfoKainat = ejb.getUserById("adminKainat").getCompanyInfo();
+		if (ejb.getAllSecurityQuestionGroups().size() < 2) {
+			securityQuestionGroup = new SecurityQuestionGroup();
+			securityQuestionGroup.setName("First");
+			ejb.setSecurityQueGroup(securityQuestionGroup);
+			securityQuestionGroup = null;
 
-			bill_setup = new Bill_setup();
-			bill_setup.setBillType("PUR");
-			bill_setup.setCompanyInitial("KK");
-			bill_setup.setSufix("000");
-			bill_setup.setCompanyInfo(companyInfoKaanish);
-			ejb.setBillSetup(bill_setup);
-			bill_setup = null;
+			securityQuestionGroup = new SecurityQuestionGroup();
+			securityQuestionGroup.setName("Favourite");
+			ejb.setSecurityQueGroup(securityQuestionGroup);
+			securityQuestionGroup = null;
+		}
+		if (ejb.getAllSecurityQuestions().size() < 10) {
+			securityQuestions = new SequrityQuestions();
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("First"));
+			securityQuestions.setQuestion("What is the place you borned?");
+			ejb.setSecurityQue(securityQuestions);
+			securityQuestions = null;
 
-			bill_setup = new Bill_setup();
-			bill_setup.setBillType("PUR");
-			bill_setup.setCompanyInitial("KK");
-			bill_setup.setSufix("000");
-			bill_setup.setCompanyInfo(companyInfoKainat);
-			ejb.setBillSetup(bill_setup);
-			bill_setup = null;
+			securityQuestions = new SequrityQuestions();
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("First"));
+			securityQuestions.setQuestion("What is your first friend's name?");
+			ejb.setSecurityQue(securityQuestions);
+			securityQuestions = null;
 
-			bill_setup = new Bill_setup();
-			bill_setup.setBillType("INV");
-			bill_setup.setCompanyInitial("KK");
-			bill_setup.setSufix("000");
-			bill_setup.setCompanyInfo(companyInfoKaanish);
-			ejb.setBillSetup(bill_setup);
-			bill_setup = null;
+			securityQuestions = new SequrityQuestions();
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("First"));
+			securityQuestions.setQuestion("What is your first teacher's name?");
+			ejb.setSecurityQue(securityQuestions);
+			securityQuestions = null;
 
-			bill_setup = new Bill_setup();
-			bill_setup.setBillType("INV");
-			bill_setup.setCompanyInitial("KK");
-			bill_setup.setSufix("000");
-			bill_setup.setCompanyInfo(companyInfoKainat);
-			ejb.setBillSetup(bill_setup);
-			bill_setup = null;
-			
-			bill_setup = new Bill_setup();
-			bill_setup.setBillType("SRINV");
-			bill_setup.setCompanyInitial("KK");
-			bill_setup.setSufix("000");
-			bill_setup.setCompanyInfo(companyInfoKaanish);
-			ejb.setBillSetup(bill_setup);
-			bill_setup = null;
+			securityQuestions = new SequrityQuestions();
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("First"));
+			securityQuestions
+					.setQuestion("What is the name of your first school?");
+			ejb.setSecurityQue(securityQuestions);
+			securityQuestions = null;
 
-			bill_setup = new Bill_setup();
-			bill_setup.setBillType("SRINV");
-			bill_setup.setCompanyInitial("KK");
-			bill_setup.setSufix("000");
-			bill_setup.setCompanyInfo(companyInfoKainat);
-			ejb.setBillSetup(bill_setup);
-			bill_setup = null;
+			securityQuestions = new SequrityQuestions();
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("First"));
+			securityQuestions.setQuestion("What is your pet's name?");
+			ejb.setSecurityQue(securityQuestions);
+			securityQuestions = null;
 
-			bill_setup = new Bill_setup();
-			bill_setup.setBillType("JOB");
-			bill_setup.setCompanyInitial("KK");
-			bill_setup.setSufix("000");
-			bill_setup.setCompanyInfo(companyInfoKaanish);
-			ejb.setBillSetup(bill_setup);
-			bill_setup = null;
+			securityQuestions = new SequrityQuestions();
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("Favourite"));
+			securityQuestions.setQuestion("What is your favourite food?");
+			ejb.setSecurityQue(securityQuestions);
+			securityQuestions = null;
 
-			bill_setup = new Bill_setup();
-			bill_setup.setBillType("JOB");
-			bill_setup.setCompanyInitial("KK");
-			bill_setup.setSufix("000");
-			bill_setup.setCompanyInfo(companyInfoKainat);
-			ejb.setBillSetup(bill_setup);
-			bill_setup = null;
+			securityQuestions = new SequrityQuestions();
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("Favourite"));
+			securityQuestions.setQuestion("What is your favourite movie?");
+			ejb.setSecurityQue(securityQuestions);
+			securityQuestions = null;
 
-			bill_setup = new Bill_setup();
-			bill_setup.setBillType("ROAD");
-			bill_setup.setCompanyInitial("KK");
-			bill_setup.setSufix("000");
-			bill_setup.setCompanyInfo(companyInfoKaanish);
-			ejb.setBillSetup(bill_setup);
-			bill_setup = null;
+			securityQuestions = new SequrityQuestions();
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("Favourite"));
+			securityQuestions.setQuestion("Who is your favourite person?");
+			ejb.setSecurityQue(securityQuestions);
+			securityQuestions = null;
 
-			bill_setup = new Bill_setup();
-			bill_setup.setBillType("ROAD");
-			bill_setup.setCompanyInitial("KK");
-			bill_setup.setSufix("000");
-			bill_setup.setCompanyInfo(companyInfoKainat);
-			ejb.setBillSetup(bill_setup);
-			bill_setup = null;
+			securityQuestions = new SequrityQuestions();
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("Favourite"));
+			securityQuestions.setQuestion("Who is your favourite player?");
+			ejb.setSecurityQue(securityQuestions);
+			securityQuestions = null;
+
+			securityQuestions = new SequrityQuestions();
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("Favourite"));
+			securityQuestions
+					.setQuestion("Who is your favourite Actor/Actress?");
+			ejb.setSecurityQue(securityQuestions);
+			securityQuestions = null;
 		}
 
 	}

@@ -44,6 +44,7 @@ import com.kaanish.model.SalesEntry;
 import com.kaanish.model.SalesProductDetails;
 import com.kaanish.model.SalesProductReturnDetail;
 import com.kaanish.model.SalesReturn;
+import com.kaanish.model.SecurityAnswers;
 import com.kaanish.model.SerialNumber;
 import com.kaanish.model.State;
 import com.kaanish.model.SubDepartment;
@@ -79,7 +80,8 @@ import com.kaanish.util.DateConverter;
 		"/salesSearchByAgentName", "/salesSearchByCustomerName",
 		"/salesSearchByProductCode", "/salesView", "/purchaseBarCode",
 		"/salesReturnServlet", "/purchaseSearchAll", "/salesSearchAll",
-		"/jobSearchAll" })
+		"/jobSearchAll", "/forgotPassUserCheck", "/forgotPassVarify",
+		"/resetPass" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -125,6 +127,7 @@ public class Servlet extends HttpServlet {
 	private SalesProductDetails salesProductDetails;
 	private SalesReturn salesReturn;
 	private SalesProductReturnDetail salesProductReturnDetail;
+	private SecurityAnswers securityAnswers;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -138,7 +141,11 @@ public class Servlet extends HttpServlet {
 		httpSession = req.getSession();
 
 		if (httpSession.getAttribute("user") == null) {
-			System.exit(0);
+			if (!(url.equals("forgotPassUserCheck")
+					|| url.equals("forgotPassVarify") || url
+						.equals("resetPass"))) {
+				System.exit(0);
+			}
 		}
 
 		try {
@@ -153,17 +160,46 @@ public class Servlet extends HttpServlet {
 				break;
 
 			case "changePass":
-				page = "changePassword.jsp";
 				String user = (String) httpSession.getAttribute("user");
 				if (ejb.getCheckLogin(user, req.getParameter("curPassword"))) {
 					users = ejb.getUserById(user);
 					users.setPassword(req.getParameter("newPassword"));
 					ejb.updateUser(users);
 					msg = "Password changed successfully.";
+					page = "index.jsp";
 				} else {
 					msg = "Invalid current Password.";
+					page = "changePassword.jsp";
 					// httpSession.removeAttribute("user");
 				}
+				break;
+			case "forgotPassUserCheck":
+				int uChk = 0;
+				for (Users u : ejb.getAllUsers()) {
+					if (u.getUserId().equals(req.getParameter("userName"))) {
+						uChk = 1;
+					}
+				}
+				if (uChk == 1) {
+					page = "forgotPasswordVarification.jsp";
+					req.setAttribute("userName", req.getParameter("userName"));
+					msg = "";
+				} else {
+					page = "forgotPassword.jsp";
+					msg = "UserId does not exist...";
+				}
+				break;
+			case "forgotPassVarify":
+				page = "forgotPasswordReset.jsp";
+				msg = "";
+				req.setAttribute("uId", req.getParameter("uId"));
+				break;
+			case "resetPass":
+				page = "index.jsp";
+				usr = ejb.getUserById(req.getParameter("uId"));
+				usr.setPassword(req.getParameter("newPassword"));
+				ejb.updateUser(usr);
+				msg = "Password reset is successfull...";
 				break;
 
 			case "updateCompanyInfo":
@@ -927,9 +963,11 @@ public class Servlet extends HttpServlet {
 					accountDetails
 							.setVatNumber(req.getParameter("vendorVATno"));
 
+					if (!req.getParameter("taxTypeGroupId").equals("0")) {
 					accountDetails.setTax_Type_Group(ejb
 							.getTax_Type_GroupById(Integer.parseInt(req
 									.getParameter("taxTypeGroupId"))));
+					}
 
 					accountDetails.setUsers(ejb
 							.getUserById((String) httpSession
@@ -2124,6 +2162,27 @@ public class Servlet extends HttpServlet {
 							(String) httpSession.getAttribute("user"))
 							.getCompanyInfo());
 					ejb.setUser(usr);
+
+					securityAnswers = new SecurityAnswers();
+					securityAnswers.setUsers(usr);
+					securityAnswers.setSequrityQuestions(ejb
+							.getSecurityQuestionById(Integer.parseInt(req
+									.getParameter("sqId1"))));
+					securityAnswers.setAnswer(req.getParameter("ans1")
+							.toUpperCase());
+					ejb.setSecurityAns(securityAnswers);
+					securityAnswers = null;
+
+					securityAnswers = new SecurityAnswers();
+					securityAnswers.setUsers(usr);
+					securityAnswers.setSequrityQuestions(ejb
+							.getSecurityQuestionById(Integer.parseInt(req
+									.getParameter("sqId2"))));
+					securityAnswers.setAnswer(req.getParameter("ans2")
+							.toUpperCase());
+					ejb.setSecurityAns(securityAnswers);
+					securityAnswers = null;
+
 					msg = "User Added Successfully";
 				} else {
 					msg = "User mobile/id already exists";

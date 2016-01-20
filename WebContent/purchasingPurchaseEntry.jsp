@@ -3905,7 +3905,7 @@
 														+ "\nPhone2 : "
 														+ ui.item.ph2);
 
-										$
+										/* $
 												.ajax({
 													type : "post",
 													url : "getAccountDetails",
@@ -3950,7 +3950,7 @@
 														alert(b + " error: "
 																+ c);
 													}
-												});
+												}); */
 									}
 								}
 							});
