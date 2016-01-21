@@ -229,11 +229,15 @@
 										<thead>
 											<tr>
 												<td colspan="2">Sub Total :</td>
-												<td><fmt:formatNumber var="subt"
+												<td>
+													<%-- <fmt:formatNumber var="subt"
 														value="${(100*(purchaseSearchView.totalCost-purchaseSearchView.sur_charge-purchaseSearchView.transport_cost-purchaseSearchView.roundOf))/(100+purchaseSearchView.tax_Type_Group.totalTaxValue)}"
-														maxFractionDigits="2" /><input type="text"
+														maxFractionDigits="2" /> --%> <fmt:formatNumber var="subt"
+														value="${purchaseSearchView.subTotal}"
+														maxFractionDigits="2" /> <input type="text"
 													class="form-control" id="subTotal" value="${subt}"
-													readonly="readonly"></td>
+													readonly="readonly">
+												</td>
 											</tr>
 										</thead>
 										<tbody>
@@ -249,11 +253,15 @@
 										<tbody>
 											<tr>
 												<td colspan="2">Tax Amount :</td>
-												<td><fmt:formatNumber var="subt"
+												<td>
+													<%-- <fmt:formatNumber var="subt"
 														value="${((100*(purchaseSearchView.totalCost-purchaseSearchView.sur_charge-purchaseSearchView.transport_cost-purchaseSearchView.roundOf))/(100+purchaseSearchView.tax_Type_Group.totalTaxValue))*purchaseSearchView.tax_Type_Group.totalTaxValue/100}"
-														maxFractionDigits="2" /><input type="text"
+														maxFractionDigits="2" /> --%> <fmt:formatNumber var="subt"
+														value="${purchaseSearchView.taxAmount}"
+														maxFractionDigits="2" /> <input type="text"
 													class="form-control" readonly="readonly" value="${subt}"
-													id="taxAmount"></td>
+													id="taxAmount">
+												</td>
 											</tr>
 										</tbody>
 										<tbody>
@@ -275,14 +283,15 @@
 											</tr>
 										</tbody>
 										<tbody>
-												<tr>
-													<td colspan="2" id="round">Round Of :</td>
-													<td><input type="hidden" id="totalvalue"
-														name="totalvalue" value="0"><input type="number"
-														class="form-control" placeholder="" readonly="readonly"
-														id="roundvalue" name="roundvalue" value="${purchaseSearchView.roundOf}"></td>
-												</tr>
-											</tbody>
+											<tr>
+												<td colspan="2" id="round">Round Of :</td>
+												<td><input type="hidden" id="totalvalue"
+													name="totalvalue" value="0"><input type="number"
+													class="form-control" placeholder="" readonly="readonly"
+													id="roundvalue" name="roundvalue"
+													value="${purchaseSearchView.roundOf}"></td>
+											</tr>
+										</tbody>
 										<thead>
 											<tr>
 												<td colspan="2">Grand Total :</td>

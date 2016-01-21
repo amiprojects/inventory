@@ -231,7 +231,7 @@
 										</tr>
 									</thead>
 									<c:set var="i" value="${1}"></c:set>
-									<c:set var="subTotal" value="0"></c:set>
+									<%-- <c:set var="subTotal" value="0"></c:set> --%>
 									<c:forEach var="salesProducts"
 										items="${salesSearchView.salesProductDetails}">
 										<tbody>
@@ -244,14 +244,14 @@
 													<c:when test="${salesSearchView.isMRP()==true}">
 														<td>${salesProducts.purchase_Product_Details.mrp}</td>
 														<td>${salesProducts.quantity*salesProducts.purchase_Product_Details.mrp}</td>
-														<c:set var="subTotal"
-															value="${subTotal+salesProducts.quantity*salesProducts.purchase_Product_Details.mrp}"></c:set>
+														<%-- <c:set var="subTotal"
+															value="${subTotal+salesProducts.quantity*salesProducts.purchase_Product_Details.mrp}"></c:set> --%>
 													</c:when>
 													<c:otherwise>
 														<td>${salesProducts.purchase_Product_Details.wsp}</td>
 														<td>${salesProducts.quantity*salesProducts.purchase_Product_Details.wsp}</td>
-														<c:set var="subTotal"
-															value="${subTotal+salesProducts.quantity*salesProducts.purchase_Product_Details.wsp}"></c:set>
+														<%-- <c:set var="subTotal"
+															value="${subTotal+salesProducts.quantity*salesProducts.purchase_Product_Details.wsp}"></c:set> --%>
 													</c:otherwise>
 												</c:choose>
 											</tr>
@@ -267,9 +267,13 @@
 									<thead>
 										<tr>
 											<td colspan="2" id="sub">Sub Total :</td>
-											<td><input type="number" class="form-control"
+											<td>
+												<%-- <input type="number" class="form-control"
 												readonly="readonly" id="subtotalvalue" name="subtotalvalue"
-												value="${subTotal}"></td>
+												value="${subTotal}"> --%> <input type="number"
+												class="form-control" readonly="readonly" id="subtotalvalue"
+												name="subtotalvalue" value="${salesSearchView.subTotal}">
+											</td>
 										</tr>
 									</thead>
 									<tbody>
@@ -283,8 +287,10 @@
 														</c:when>
 														<c:otherwise>
 															<option value="disPer">%</option>
+															<%-- <c:set var="dis"
+																value="${salesSearchView.discountValue*100/subTotal}"></c:set> --%>
 															<c:set var="dis"
-																value="${salesSearchView.discountValue*100/subTotal}"></c:set>
+																value="${salesSearchView.discountValue*100/salesSearchView.subTotal}"></c:set>
 														</c:otherwise>
 													</c:choose>
 											</select>
@@ -321,10 +327,14 @@
 									<tbody>
 										<tr>
 											<td colspan="2">Tax Amount :</td>
-											<td><input type="text" class="form-control"
+											<td>
+												<%-- <input type="text" class="form-control"
 												readonly="readonly"
 												value="${subTotal*salesSearchView.tax_Type_Group.getTotalTaxValue()/100}"
-												id="taxAmount"></td>
+												id="taxAmount"> --%>
+												<input type="text" class="form-control" readonly="readonly"
+												value="${salesSearchView.taxAmount}" id="taxAmount">
+											</td>
 										</tr>
 									</tbody>
 									<tbody>
