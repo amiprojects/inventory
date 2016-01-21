@@ -1254,7 +1254,7 @@ public class Servlet extends HttpServlet {
 				}
 
 				salesEntry.setDiscountValue(Float.parseFloat(req
-						.getParameter("disValue")));
+						.getParameter("discountValue")));
 				ejb.setSalesEntry(salesEntry);
 
 				paymentDetails = new PaymentDetails();
