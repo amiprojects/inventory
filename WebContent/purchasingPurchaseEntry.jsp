@@ -1826,7 +1826,7 @@
 		</div>
 	</div>
 	<div id="addDesineN" class="modal fade" role="dialog"
-		style="top: 160px; left: 528px;">
+		style="top: 1px; left: 96px;">
 		<div class="modal-dialog">
 			<div class="modal-content">
 
@@ -2716,7 +2716,6 @@
 				$("#nottrack").hide();
 				$("#trackkDiv").show();
 				$("#addini").val($("[name='do']:checked").val());
-
 			} else {
 				$("#divshow").hide();
 				$("#divhide").show();
@@ -2813,12 +2812,6 @@
 
 		function submitSumary() {
 
-			if ($("#openn").is(':checked')) {
-				alert("check");
-			} else {
-				alert("not checked");
-			}
-
 			if ($("#productCodeAMI").val() == 0) {
 				alert("please select Designer Number:");
 			} else if ($("#description1").val() == "") {
@@ -2895,6 +2888,9 @@
 							alert(data1.result);
 
 							$("#addDesineN").modal('hide');
+							$("#descriptionAMI").val("");
+							$("#productCodeAMI").val("");
+							$("#universalProductCode").val("");
 						}
 
 					});
@@ -2933,6 +2929,11 @@
 						alert(data1.result);
 
 						$("#addDesineN").modal('hide');
+
+						$("#descriptionAMI").val("");
+						$("#productCodeAMI").val("");
+						$("#universalProductCode").val("");
+
 					}
 
 				});

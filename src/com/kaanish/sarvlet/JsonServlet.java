@@ -774,9 +774,9 @@ public class JsonServlet extends HttpServlet {
 					ejb.setProductImage(proimg);
 
 					
-					jsonG.writeStartObject().write("result", "State added successfully").writeEnd().close();
+					jsonG.writeStartObject().write("result", "Product added successfully").writeEnd().close();
 				} else {
-					jsonG.writeStartObject().write("result", "Duplicate State Entry").writeEnd().close();
+					jsonG.writeStartObject().write("result", "Duplicate Product Entry").writeEnd().close();
 				}
 
 
