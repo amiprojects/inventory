@@ -1813,8 +1813,8 @@
 		</div>
 	</div>
 <div id="addDesineN" class="modal fade" role="dialog"
-		style="top: 160px;
-        left: 528px;">
+		style="top: 1px;
+    left: 96px;">
 		<div class="modal-dialog">
 			<div class="modal-content">
 

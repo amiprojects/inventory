@@ -319,8 +319,6 @@
 
 																<input type="hidden" name="salesProductDetailsID"
 																value="${srr.id}">
-
-
 															</td>
 															<td>${srr.purchase_Product_Details.productDetail.description}</td>
 															<td id="qtty${srr.id}">${srr.quantity}</td>
@@ -340,7 +338,7 @@
 															<td style="padding: 4px"><input type="text"
 																class="form-control" name="rQtyDe" style="width: 120px"></td>
 
-
+									<c:set value="${tota+srr.quantity*srr.purchase_Product_Details.cost}" var="tota" />
 														</tr>
 													</tbody>
 
@@ -349,8 +347,17 @@
 												<c:set var="count" value="${count+1}" />
 
 											</table>
-
+											
+											<input type="hidden" value="${tota}" id="totalCostSales">
 										</div>
+
+
+<!-- <script type="text/javascript">
+
+var abc=Number($("#subtotalvalue").val())*Number($("#discount").val())/Number($("#totalCostSales").val());
+
+
+</script> -->
 
 										<div style="width: 40%; float: right;">
 											<input type="hidden" id="totalvalue" name="totalvalue"
@@ -639,12 +646,7 @@
 												* Number($("#discount").val()) / 100) * 100) / 100);
 			} else {
 
-				$("#discountValue2").val(
-						
-				
-				
-				
-				);
+				$("#discountValue2").val(Math.round(Number($("#subtotalvalue").val())*Number($("#discount").val())/Number($("#totalCostSales").val())));
 
 			}
 
@@ -659,8 +661,8 @@
 
 			$("#grandtotal").val(r.toFixed());
 
-			$("#roundvalue").val(
-					(Number($("#grandtotal").val())).toFixed(2)-Number(r));
+			$("#roundvalue").val((
+					(Number($("#grandtotal").val()))-Number(r)).toFixed(2));
 			/* $("#roundvalue").val(); */
 
 			$("#spAmount").val($("#grandtotal").val());
