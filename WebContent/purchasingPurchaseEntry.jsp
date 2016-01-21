@@ -849,8 +849,8 @@
 										</div>
 										<div class="col-md-7">
 											<select class="form-control" name="taxTypeGroupId"
-												id="taxgroup">
-												<!-- 	<option value="0">select a tax group</option> -->
+												id="taxgroupV">
+												<option value="0">select a tax group</option>
 												<c:forEach
 													items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
 													var="taxTypeGroup">
@@ -4561,8 +4561,6 @@
 				alert("please select vendor city");
 			} else if ($("#idvendorPin").val() == "") {
 				alert("please select pin code");
-			} else if ($("#service").val() == "") {
-				alert("please select Service Tax");
 			} else {
 
 				var dataa1 = {
@@ -4583,7 +4581,7 @@
 					bankMICR : $("#idbankMICR").val(),
 					bankRTGS : $("#idbankRTGS").val(),
 					bankBranch : $("#idbankBranch").val(),
-					taxTypeGroupId : $("#taxgroup").val(),
+					taxTypeGroupId : $("#taxgroupV").val(),
 					bankCity : $("#bankCityId").val(),
 					vendorCSTno : $("#idvendorCSTno").val(),
 					vendorCSTregDate : $("#datepickerB").val(),
