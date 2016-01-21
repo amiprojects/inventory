@@ -380,9 +380,9 @@
 												<th>#</th>
 												<th>Designer Number</th>
 												<th>Product Description</th>
+												<th>Qty</th>
 												<th>UOM</th>
 												<th>Rate</th>
-												<th>Qty</th>
 												<th>Amount</th>
 												<th>Remove</th>
 											</tr>
@@ -3601,17 +3601,17 @@
 		});
 		ind = 0;
 		function removeProduct(a) {
-			/* n1 = $("#trRemove" + a + " :nth-child(7)").html();
+			n1 = $("#trRemove" + a + " :nth-child(7)").html();
 			n2 = $("#subTotal").val();
 			$("#subTotal").val(
 			Math.round((Number(n2) - Number(n1)) * 100) / 100);
-			 */
+			
 
-			var sum = 0;
+			/* var sum = 0;
 			$(".trRemove:nth-child(7)").each(function() {
 				sum += parseFloat(this.value);
 			});
-			$("#subTotal").val(sum.toFixed(2));
+			$("#subTotal").val(sum.toFixed(2)); */
 
 			$("#trRemove" + a).remove();
 			$("#trRemoveH" + a).remove();
@@ -3675,11 +3675,11 @@
 										+ '</td><td>'
 										+ $("#pDesc").val()
 										+ '</td><td>'
+										+ $("#qty").val()
+										+ '</td><td>'
 										+ $("#uom").val()
 										+ '</td><td>'
 										+ $("#rate").val()
-										+ '</td><td>'
-										+ $("#qty").val()
 										+ '</td><td>'
 										+ Number($("#qty").val())
 										* Number($("#rate").val())
