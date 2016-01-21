@@ -32,6 +32,8 @@ public class SalesEntry implements Serializable {
 	private float transportcCharge;
 	private float totalCost;
 	private float roundOf;
+	private float subTotal;
+	private float taxAmount;
 	private String saleType;
 	private String challanNumber;
 	private int challanSuffix;
@@ -243,6 +245,22 @@ public class SalesEntry implements Serializable {
 
 	public void setCompanyInfo(CompanyInfo companyInfo) {
 		this.companyInfo = companyInfo;
+	}
+
+	public float getSubTotal() {
+		return subTotal;
+	}
+
+	public void setSubTotal(float subTotal) {
+		this.subTotal = subTotal;
+	}
+
+	public float getTaxAmount() {
+		return taxAmount;
+	}
+
+	public void setTaxAmount(float taxAmount) {
+		this.taxAmount = taxAmount;
 	}
 
 	

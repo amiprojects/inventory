@@ -35,6 +35,9 @@ public class Purchase_Entry implements Serializable {
 	private float transport_cost;
 	private float sur_charge;
 	private float totalCost;
+	private float roundOf;
+	private float subTotal;
+	private float taxAmount;
 	private int agentId;
 	private boolean isFlatDiscount;
 	private float discountValue;
@@ -221,6 +224,30 @@ public class Purchase_Entry implements Serializable {
 
 	public void setCompanyInfo(CompanyInfo companyInfo) {
 		this.companyInfo = companyInfo;
+	}
+
+	public float getRoundOf() {
+		return roundOf;
+	}
+
+	public void setRoundOf(float roundOf) {
+		this.roundOf = roundOf;
+	}
+
+	public float getSubTotal() {
+		return subTotal;
+	}
+
+	public void setSubTotal(float subTotal) {
+		this.subTotal = subTotal;
+	}
+
+	public float getTaxAmount() {
+		return taxAmount;
+	}
+
+	public void setTaxAmount(float taxAmount) {
+		this.taxAmount = taxAmount;
 	}
 
 	

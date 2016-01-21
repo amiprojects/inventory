@@ -354,7 +354,7 @@
 											<tr>
 												<td colspan="2">Tax Amount :</td>
 												<td><input type="text" class="form-control"
-													readonly="readonly" value="0" id="taxAmount"></td>
+													readonly="readonly" value="0" id="taxAmount" name="taxAmount"></td>
 											</tr>
 										</tbody>
 										<tbody>
@@ -701,7 +701,7 @@
 				sum += parseFloat(this.value);
 			});
 			$("#subtotalvalue").val(sum.toFixed(2));
-			
+
 			/* $("#subtotalvalue").val(
 					Math.round((Number($("#subtotalvalue").val()) + Number($(
 							"#eachtotalvalue").val())) * 100) / 100); */

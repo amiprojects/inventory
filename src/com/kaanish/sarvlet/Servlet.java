@@ -964,9 +964,9 @@ public class Servlet extends HttpServlet {
 							.setVatNumber(req.getParameter("vendorVATno"));
 
 					if (!req.getParameter("taxTypeGroupId").equals("0")) {
-					accountDetails.setTax_Type_Group(ejb
-							.getTax_Type_GroupById(Integer.parseInt(req
-									.getParameter("taxTypeGroupId"))));
+						accountDetails.setTax_Type_Group(ejb
+								.getTax_Type_GroupById(Integer.parseInt(req
+										.getParameter("taxTypeGroupId"))));
 					}
 
 					accountDetails.setUsers(ejb
@@ -1031,9 +1031,15 @@ public class Servlet extends HttpServlet {
 					purchaseEntry.setTax_Type_Group(ejb
 							.getTax_Type_GroupById(Integer.parseInt(req
 									.getParameter("taxGroup"))));
+					purchaseEntry.setSubTotal(Float.parseFloat(req
+							.getParameter("subTotal")));
+					purchaseEntry.setTaxAmount(Float.parseFloat(req
+							.getParameter("taxAmount")));
 					purchaseEntry.setCompanyInfo(ejb.getUserById(
 							(String) httpSession.getAttribute("user"))
 							.getCompanyInfo());
+					purchaseEntry.setRoundOf(Float.parseFloat(req
+							.getParameter("roundvalue")));
 					if (req.getParameter("isAgent").equals("yes")) {
 						purchaseEntry.setAgentId(Integer.parseInt(req
 								.getParameter("agentName")));
@@ -1094,8 +1100,8 @@ public class Servlet extends HttpServlet {
 
 						purchaseProductDetails.setRemaining_quantity(Integer
 								.parseInt(qty[l]));
-						purchaseProductDetails.setCost(Integer
-								.parseInt(cost[l]));
+						purchaseProductDetails.setCost(Float
+								.parseFloat(cost[l]));
 						purchaseProductDetails.setPurchase_Entry(purchaseEntry);
 						purchaseProductDetails.setLotNumber(lot[l]);
 						purchaseProductDetails.setCompanyInfo(companyInfo);
@@ -1211,6 +1217,10 @@ public class Servlet extends HttpServlet {
 						.getParameter("salesDate")));
 				salesEntry.setTax_Type_Group(ejb.getTax_Type_GroupById(Integer
 						.parseInt(req.getParameter("taxGroup"))));
+				salesEntry.setSubTotal(Float.parseFloat(req
+						.getParameter("subtotalvalue")));
+				salesEntry.setTaxAmount(Float.parseFloat(req
+						.getParameter("taxAmount")));
 				salesEntry.setTransportcCharge(Float.parseFloat(req
 						.getParameter("transcharge")));
 				salesEntry.setSurcharge(Float.parseFloat(req
@@ -1244,7 +1254,7 @@ public class Servlet extends HttpServlet {
 				}
 
 				salesEntry.setDiscountValue(Float.parseFloat(req
-						.getParameter("disValue")));
+						.getParameter("discountValue")));
 				ejb.setSalesEntry(salesEntry);
 
 				paymentDetails = new PaymentDetails();
