@@ -41,6 +41,7 @@ import com.kaanish.model.Purchase_Entry;
 import com.kaanish.model.Purchase_Product_Details;
 import com.kaanish.model.QtyUnit;
 import com.kaanish.model.QtyUnitConversion;
+import com.kaanish.model.QtyUnitConversionPK;
 import com.kaanish.util.GetMacId;
 
 @WebServlet({ "/backup", "/restore", "/macid" })
@@ -248,6 +249,15 @@ public class BackupRestoreServlet extends HttpServlet {
 			oos23.writeObject(pQtyUnitConversion);
 			oos23.close();
 			fos23.close();
+
+			List<QtyUnitConversionPK> pQtyUnitConversionPK = ejb
+					.getAllQtyUnitConversionPK();
+			FileOutputStream fos24 = new FileOutputStream(
+					"backup/QtyUnitConversionPK.txt");
+			ObjectOutputStream oos24 = new ObjectOutputStream(fos24);
+			oos24.writeObject(pQtyUnitConversionPK);
+			oos24.close();
+			fos24.close();
 
 			break;
 

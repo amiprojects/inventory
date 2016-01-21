@@ -570,6 +570,12 @@ public class Ejb {
 
 		return em.find(QtyUnitConversion.class, qtyUnitConversionPK);
 	}
+	
+	public List<QtyUnitConversionPK> getAllQtyUnitConversionPK() {
+		TypedQuery<QtyUnitConversionPK> q = em.createQuery(
+				"select c from QtyUnitConversionPK c", QtyUnitConversionPK.class);
+		return q.getResultList();
+	}
 
 	public List<QtyUnitConversion> getAllQtyUnitConversion() {
 		TypedQuery<QtyUnitConversion> q = em.createQuery(

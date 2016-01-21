@@ -80,14 +80,16 @@
 	function paymentDate() {
 		if ($("#vendorType").val() == 0) {
 			alert("please select Vendor type");
-		} else if ($("#datepicker").val() == "") {
-			alert("please select Purchase entry date");
 		} else if ($("#vName").val() == "") {
 			alert("please enter Vendor name");
 		} else if ($("#vendorBillNo").val() == "") {
 			alert("please enter Vendor bill no.");
 		} else if ($("#isAgent").val() == 'yes' && $("#agentName").val() == 0) {
 			alert("please select agent name");
+		} else if ($("#datepicker").val() == "") {
+			alert("please select Purchase entry date");
+		} else if (i == 1) {
+			alert("please enter product to purchase");
 		} else {
 			//$("#datepicker2").val($("#datepicker").val());
 			var d = $("#datepicker").datepicker('getDate');
@@ -393,7 +395,8 @@
 												<tr>
 													<td colspan="2">Sub Total :</td>
 													<td><input type="text" class="form-control"
-														id="subTotal" value="0" readonly="readonly"></td>
+														id="subTotal" value="0" readonly="readonly"
+														name="subTotal"></td>
 												</tr>
 											</thead>
 											<tbody>
@@ -416,7 +419,8 @@
 												<tr>
 													<td colspan="2">Tax Amount :</td>
 													<td><input type="text" class="form-control"
-														readonly="readonly" value="0" id="taxAmount"></td>
+														readonly="readonly" value="0" id="taxAmount"
+														name="taxAmount"></td>
 												</tr>
 											</tbody>
 											<tbody>
@@ -433,6 +437,15 @@
 													<td><input type="text" class="form-control"
 														id="surcharge" name="surcharge" onkeyup="gtot();"
 														value="0" autocomplete="off"></td>
+												</tr>
+											</tbody>
+											<tbody>
+												<tr>
+													<td colspan="2" id="round">Round Of :</td>
+													<td><input type="hidden" id="totalvalue"
+														name="totalvalue" value="0"><input type="number"
+														class="form-control" placeholder="" readonly="readonly"
+														id="roundvalue" name="roundvalue" value="0"></td>
 												</tr>
 											</tbody>
 											<thead>
@@ -1395,10 +1408,10 @@
 										type="hidden" id="productCode" name="productCode">
 
 								</div>
-							 <div class="col-md-1">
-									 <a onclick="addDesineNo()" title="Add New Product"> <img
-										style="margin-top: 4px; cursor: pointer;margin-left: -23px;" height="27px"
-										width="27px" alt="" src="img/add.png">
+								<div class="col-md-1">
+									<a onclick="addDesineNo()" title="Add New Product"> <img
+										style="margin-top: 4px; cursor: pointer; margin-left: -23px;"
+										height="27px" width="27px" alt="" src="img/add.png">
 									</a>
 								</div>
 								<div class="col-md-5">Product Descripsion:</div>
@@ -1812,9 +1825,8 @@
 
 		</div>
 	</div>
-<div id="addDesineN" class="modal fade" role="dialog"
-		style="top: 160px;
-        left: 528px;">
+	<div id="addDesineN" class="modal fade" role="dialog"
+		style="top: 160px; left: 528px;">
 		<div class="modal-dialog">
 			<div class="modal-content">
 
@@ -1873,9 +1885,10 @@
 									<div class="col-md-6">
 										<div>
 											<label for="exampleInputEmail1">Designer Number:</label> <input
-												type="text" name="productCode2" id="productCodeAMI" 
+												type="text" name="productCode2" id="productCodeAMI"
 												onkeyup="codeKeyUp();" onchange="codeChange();"
-												class="form-control"><input type="hidden" id="pcodeCheck">
+												class="form-control"><input type="hidden"
+												id="pcodeCheck">
 										</div>
 									</div>
 									<div class="col-md-6">
@@ -1890,8 +1903,7 @@
 									<div class="col-md-6">
 										<label for="exampleInputEmail1">Designer's Design
 											number:</label> <input type="text" name="universalProductCode"
-											id="universalProductCode"  placeholder=""
-											class="form-control"><br>
+											id="universalProductCode" placeholder="" class="form-control"><br>
 									</div>
 									<div class="col-md-5">
 										<div>
@@ -1936,7 +1948,7 @@
 
 
 
-						
+
 
 
 					</div>
@@ -1997,7 +2009,7 @@
 
 
 
-							
+
 
 
 							<div id="divshow">
@@ -2084,7 +2096,7 @@
 								<div class="widget-area" align="left">
 									<h2 class="widget-title">
 										<strong>Tree</strong> List &nbsp; &nbsp;
-									<!--  <a onclick="addCat()"
+										<!--  <a onclick="addCat()"
 											title="Add New Category"> <img style="margin-top: 4px;"
 											height="30px" width="30px" alt="" src="img/add.png">
 										</a> -->
@@ -2293,8 +2305,8 @@
 												</div>
 												<div id="cross">
 													<p style="font-size: 29px">
-														&#10007; <input type="hidden" class="form-control" readonly
-															id="isSalebi" name="isSalebi" value="false">
+														&#10007; <input type="hidden" class="form-control"
+															readonly id="isSalebi" name="isSalebi" value="false">
 													</p>
 												</div>
 											</td>
@@ -2319,8 +2331,8 @@
 									<table>
 										<tr>
 
-											<td><input type="hidden" id="addini" class="form-control"
-												readonly name="addini" value="false"></td>
+											<td><input type="hidden" id="addini"
+												class="form-control" readonly name="addini" value="false"></td>
 										</tr>
 										<tr>
 											<td>&nbsp;</td>
@@ -2501,7 +2513,7 @@
 		</div>
 	</div>
 
-<div id="addUoM" class="modal fade" role="dialog" style="top: 25px;">
+	<div id="addUoM" class="modal fade" role="dialog" style="top: 25px;">
 
 		<form action="addUOMjson" method="post">
 
@@ -2559,7 +2571,7 @@
 
 
 	</div>
-	
+
 
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
@@ -2569,29 +2581,29 @@
 	<script type="text/javascript" src="js/grid-filter.js"></script>
 	<script src="js/numericInput.min.js"></script>
 	<script type="text/javascript">
-	function addDesineNo(){
-		
-		$("#addDesineN").modal('show');
-		
-	}
-	
-	
+		function addDesineNo() {
+
+			$("#addDesineN").modal('show');
+
+		}
 	</script>
 	<script type="text/javascript">
-	function readURL(input) {
-		if (input.files && input.files[0]) {
-			var reader = new FileReader();
+		function readURL(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
 
-			reader.onload = function(e) {
-				$('#image').attr('src', e.target.result).width(120).height(85);
-				var str = e.target.result;
-				$("#proImage1").val(str.substring(str.lastIndexOf(',') + 1));
-			};
+				reader.onload = function(e) {
+					$('#image').attr('src', e.target.result).width(120).height(
+							85);
+					var str = e.target.result;
+					$("#proImage1")
+							.val(str.substring(str.lastIndexOf(',') + 1));
+				};
 
-			reader.readAsDataURL(input.files[0]);
+				reader.readAsDataURL(input.files[0]);
+			}
 		}
-	}
-</script>
+	</script>
 	<script type="text/javascript">
 		function codeKeyUp() {
 			$("#pcodeCheck").val("");
@@ -2619,9 +2631,8 @@
 			}
 		}
 	</script>
-	
+
 	<script type="text/javascript">
-	
 		function submitform11() {
 
 			var dataa2 = {
@@ -2667,199 +2678,191 @@
 					});
 		}
 	</script>
-	
+
 	<script type="text/javascript">
-							$('#salepart').click(
-									function() {
+		$('#salepart').click(function() {
 
-										if ($('#salepart').is(':checked')) {
-											$("#cross").hide();
-											$("#tick").show();
-											$("#isSalebi").val(
-													$('#salepart').is(
-															':checked'));
-										} else {
+			if ($('#salepart').is(':checked')) {
+				$("#cross").hide();
+				$("#tick").show();
+				$("#isSalebi").val($('#salepart').is(':checked'));
+			} else {
 
-											$("#tick").hide();
-											$("#cross").show();
-											$("#isSalebi").val(
-													$('#barCode')
-															.is(':checked'));
-										}
-									});
-						</script>
-						<script type="text/javascript">
-								$(document).ready(function() {
-									$("#divshow").hide();
-									$("#divhide").show();
-									$("#AttiDiv").hide();
-									$("#skip").show();
-									$("#showhide").show();
-									$("#nottrack").show();
-									$("#trackkDiv").hide();
-								});
-								function openn1() {
+				$("#tick").hide();
+				$("#cross").show();
+				$("#isSalebi").val($('#barCode').is(':checked'));
+			}
+		});
+	</script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#divshow").hide();
+			$("#divhide").show();
+			$("#AttiDiv").hide();
+			$("#skip").show();
+			$("#showhide").show();
+			$("#nottrack").show();
+			$("#trackkDiv").hide();
+		});
+		function openn1() {
 
-									if ($("[name='do']:checked").val() == "add") {
-										$("#showhide").hide();
+			if ($("[name='do']:checked").val() == "add") {
+				$("#showhide").hide();
 
-										$("#divshow").show();
-										$("#divhide").hide();
-										$("#AttiDiv").show();
-										$("#skip").hide();
-										$("#nottrack").hide();
-										$("#trackkDiv").show();
-										$("#addini").val(
-												$("[name='do']:checked").val());
+				$("#divshow").show();
+				$("#divhide").hide();
+				$("#AttiDiv").show();
+				$("#skip").hide();
+				$("#nottrack").hide();
+				$("#trackkDiv").show();
+				$("#addini").val($("[name='do']:checked").val());
 
-									} else {
-										$("#divshow").hide();
-										$("#divhide").show();
-										$("#skip").show();
-										$("#showhide").show();
-										$("#AttiDiv").hide();
-										$("#nottrack").show();
-										$("#trackkDiv").hide();
-										$("#addini").val(
-												$("[name='do']:checked").val());
-									}
-
-								}
-							</script>
-							
-							
-							<script>
-	var i = 2;
-	var x = "";
-
-	$(document).ready(function() {
-		$("#step2").hide();
-		$("#step3").hide();
-		$("#step4").hide();
-		$("#step5").hide();
-		$("#step6").hide();
-		$("#step7").hide();
-	});
-	function nextF() {
-
-		if (i < 8) {
-			$("#step" + (i - 1)).hide();
-			$("#menu" + (i - 1)).attr("style", "");
-
-			$("#step" + i).show();
-			$("#menu" + i)
-					.attr(
-							"style",
-							"color: red; font-weight: bolder; background-color: #A3DEDE; box-shadow: 1px 1px 1px 1px #507B8A");
-			i = i + 1;
-
-		}
-
-		if (i == 8) {
-			$("#finish").prop("disabled", false);
-			$("#pcodedisp").val($("#productCodeAMI").val());
-			$("#description1").val($("#descriptionAMI").val());
-			$("#upc ").val($("#universalProductCode").val());
-			$("#uom1").val($("#uomO").val());
-			$.ajax({
-				url : "getQtyUnit",
-				type : "post",
-				dataType : "json",
-				data : {
-					id : $("#uomO").val()
-				},
-				success : function(data) {
-					$("#uomnamedisplay").val(data.name);
-				}
-			});
-
-			$("#mrp1").val($("#mrpO").val());
-			$("#wspAMI").val($("#wspO").val());
-			$("#quantity111").val($("#quantity").val());
-
-			$("#ucost").val($("#ucO").val());
-			$("#date2").val($("#datepicker").val());
-			$("#ltnum").val($("#lotnO").val());
-			$("#att1").val($("#a10").val());
-			$("#att2").val($("#a20").val());
-			$("#att3").val($("#a30").val());
-			$("#att4").val($("#a40").val());
-			$("#att5").val($("#a50").val());
-			$("#att6").val($("#a60").val());
-			$("#lotnumberS").val($("#lotnO").val());
-
-		}
-	}
-
-	function prevF() {
-
-		$("#finish").prop("disabled", true);
-		if (i > 2) {
-			$("#step" + (i - 1)).hide();
-			$("#menu" + (i - 1)).attr("style", "");
-
-			$("#step" + (i - 2)).show();
-			$("#menu" + (i - 2))
-					.attr(
-							"style",
-							"color: red; font-weight: bolder; background-color: #A3DEDE; box-shadow: 1px 1px 1px 1px #507B8A");
-			i = i - 1;
-		}
-	}
-
- function submitSumary() {
-
-	 if ($("#openn").is(':checked')) {
-		 alert("check");
-	 }
-	 else{
-		 alert("not checked");
-	 }
-	 
-		if ($("#productCodeAMI").val() == 0) {
-			alert("please select Designer Number:");
-		} else if ($("#description1").val() == "") {
-			alert("please select Description");
-		} else if ($("#universalProductCode").val() == "") {
-			alert("please select Designer's Design number:");
-		} else if ($("#uomnamedisplay").val() == "") {
-			alert("please select Unit of measurement");
-		} else if ($("#isRaw").val() == "") {
-			alert("please select Raw or Ready product");
-		} else if (!$("[name='same']").is(':checked')) {
-			alert("please select product Category");
-		} else if ($("#openn").is(':checked')) {
-
-			if ($("#quantity").val() == 0) {
-				alert("please select quantity");
-			} else if ($("#mrpO").val() == 0) {
-
-				alert("please select MRP");
-
-			} else if ($("#wspO").val() == 0) {
-				alert("please select WSP");
-			} else if ($("#ucO").val() == 0) {
-				alert("please select per unit cost");
-
-			} else if ($("#lotnumberS").val() == 0) {
-				alert("please select lot number");
-
-			} else if (!$('#a10').attr("disabled") && $("#a10").val() == "") {
-				alert("Please insert " + $("#sa1").html() + " value");
-			} else if (!$('#a20').attr("disabled") && $("#a20").val() == "") {
-				alert("Please insert " + $("#sa2").html() + " value");
-			} else if (!$('#a30').attr("disabled") && $("#a30").val() == "") {
-				alert("Please insert " + $("#sa3").html() + " value");
-			} else if (!$('#a40').attr("disabled") && $("#a40").val() == "") {
-				alert("Please insert " + $("#sa4").html() + " value");
-			} else if (!$('#a50').attr("disabled") && $("#a50").val() == "") {
-				alert("Please insert " + $("#sa5").html() + " value");
-			} else if (!$('#a60').attr("disabled") && $("#a60").val() == "") {
-				alert("Please insert " + $("#sa6").html() + " value");
+			} else {
+				$("#divshow").hide();
+				$("#divhide").show();
+				$("#skip").show();
+				$("#showhide").show();
+				$("#AttiDiv").hide();
+				$("#nottrack").show();
+				$("#trackkDiv").hide();
+				$("#addini").val($("[name='do']:checked").val());
 			}
 
-			else {
-				var dataa1 = {
+		}
+	</script>
+
+
+	<script>
+		var i = 2;
+		var x = "";
+
+		$(document).ready(function() {
+			$("#step2").hide();
+			$("#step3").hide();
+			$("#step4").hide();
+			$("#step5").hide();
+			$("#step6").hide();
+			$("#step7").hide();
+		});
+		function nextF() {
+
+			if (i < 8) {
+				$("#step" + (i - 1)).hide();
+				$("#menu" + (i - 1)).attr("style", "");
+
+				$("#step" + i).show();
+				$("#menu" + i)
+						.attr(
+								"style",
+								"color: red; font-weight: bolder; background-color: #A3DEDE; box-shadow: 1px 1px 1px 1px #507B8A");
+				i = i + 1;
+
+			}
+
+			if (i == 8) {
+				$("#finish").prop("disabled", false);
+				$("#pcodedisp").val($("#productCodeAMI").val());
+				$("#description1").val($("#descriptionAMI").val());
+				$("#upc ").val($("#universalProductCode").val());
+				$("#uom1").val($("#uomO").val());
+				$.ajax({
+					url : "getQtyUnit",
+					type : "post",
+					dataType : "json",
+					data : {
+						id : $("#uomO").val()
+					},
+					success : function(data) {
+						$("#uomnamedisplay").val(data.name);
+					}
+				});
+
+				$("#mrp1").val($("#mrpO").val());
+				$("#wspAMI").val($("#wspO").val());
+				$("#quantity111").val($("#quantity").val());
+
+				$("#ucost").val($("#ucO").val());
+				$("#date2").val($("#datepicker").val());
+				$("#ltnum").val($("#lotnO").val());
+				$("#att1").val($("#a10").val());
+				$("#att2").val($("#a20").val());
+				$("#att3").val($("#a30").val());
+				$("#att4").val($("#a40").val());
+				$("#att5").val($("#a50").val());
+				$("#att6").val($("#a60").val());
+				$("#lotnumberS").val($("#lotnO").val());
+
+			}
+		}
+
+		function prevF() {
+
+			$("#finish").prop("disabled", true);
+			if (i > 2) {
+				$("#step" + (i - 1)).hide();
+				$("#menu" + (i - 1)).attr("style", "");
+
+				$("#step" + (i - 2)).show();
+				$("#menu" + (i - 2))
+						.attr(
+								"style",
+								"color: red; font-weight: bolder; background-color: #A3DEDE; box-shadow: 1px 1px 1px 1px #507B8A");
+				i = i - 1;
+			}
+		}
+
+		function submitSumary() {
+
+			if ($("#openn").is(':checked')) {
+				alert("check");
+			} else {
+				alert("not checked");
+			}
+
+			if ($("#productCodeAMI").val() == 0) {
+				alert("please select Designer Number:");
+			} else if ($("#description1").val() == "") {
+				alert("please select Description");
+			} else if ($("#universalProductCode").val() == "") {
+				alert("please select Designer's Design number:");
+			} else if ($("#uomnamedisplay").val() == "") {
+				alert("please select Unit of measurement");
+			} else if ($("#isRaw").val() == "") {
+				alert("please select Raw or Ready product");
+			} else if (!$("[name='same']").is(':checked')) {
+				alert("please select product Category");
+			} else if ($("#openn").is(':checked')) {
+
+				if ($("#quantity").val() == 0) {
+					alert("please select quantity");
+				} else if ($("#mrpO").val() == 0) {
+
+					alert("please select MRP");
+
+				} else if ($("#wspO").val() == 0) {
+					alert("please select WSP");
+				} else if ($("#ucO").val() == 0) {
+					alert("please select per unit cost");
+
+				} else if ($("#lotnumberS").val() == 0) {
+					alert("please select lot number");
+
+				} else if (!$('#a10').attr("disabled") && $("#a10").val() == "") {
+					alert("Please insert " + $("#sa1").html() + " value");
+				} else if (!$('#a20').attr("disabled") && $("#a20").val() == "") {
+					alert("Please insert " + $("#sa2").html() + " value");
+				} else if (!$('#a30').attr("disabled") && $("#a30").val() == "") {
+					alert("Please insert " + $("#sa3").html() + " value");
+				} else if (!$('#a40').attr("disabled") && $("#a40").val() == "") {
+					alert("Please insert " + $("#sa4").html() + " value");
+				} else if (!$('#a50').attr("disabled") && $("#a50").val() == "") {
+					alert("Please insert " + $("#sa5").html() + " value");
+				} else if (!$('#a60').attr("disabled") && $("#a60").val() == "") {
+					alert("Please insert " + $("#sa6").html() + " value");
+				}
+
+				else {
+					var dataa1 = {
 						productCode : $("#pcodedisp").val(),
 						description : $("#description1").val(),
 						upc : $("#upc").val(),
@@ -2881,8 +2884,7 @@
 						lotnumberS : $("#lotnumberS").val(),
 						proImage1 : $("#proImage1").val(),
 						addini : $("#addini").val(),
-						
-						
+
 					};
 					$.ajax({
 						url : "productSumaryJson",
@@ -2891,15 +2893,15 @@
 						type : "post",
 						success : function(data1) {
 							alert(data1.result);
-							
+
 							$("#addDesineN").modal('hide');
 						}
 
 					});
-			}
-		} else {
-			
-			var dataa1 = {					
+				}
+			} else {
+
+				var dataa1 = {
 					productCode : $("#pcodedisp").val(),
 					description : $("#description1").val(),
 					upc : $("#upc").val(),
@@ -2920,30 +2922,27 @@
 					lotnumberS : $("#lotnumberS").val(),
 					proImage1 : $("#proImage1").val(),
 					addini : $("#addini").val(),
-					
+
 				};
 				$.ajax({
-				 url : "productSumaryJson",
+					url : "productSumaryJson",
 					dataType : "json",
 					data : dataa1,
 					type : "post",
 					success : function(data1) {
 						alert(data1.result);
-						
+
 						$("#addDesineN").modal('hide');
 					}
 
 				});
 			}
-		} 
+		}
 
-	
+		/* function */
+	</script>
 
-	
-	/* function */
-</script>
-
-<script>
+	<script>
 		function catProblem(a) {
 			$("#catagoryId").val(a);
 			$.ajax({
@@ -3019,7 +3018,7 @@
 
 
 
-<script type="text/javascript">
+	<script type="text/javascript">
 		function rateF2() {
 
 			if ($("#wspO").val() != ""
@@ -3127,7 +3126,7 @@
 	</script>
 	<!-- 	*********************************************************************************************************** -->
 
-	 <script type="text/javascript" src="js/webcam.js"></script>
+	<script type="text/javascript" src="js/webcam.js"></script>
 	<script>
 		Webcam.set({
 			width : 320,
@@ -3157,7 +3156,7 @@
 				$("#cross1").show();
 			}
 		});
-	</script> 
+	</script>
 	<script type="text/javascript">
 		function addUOM() {
 			$("#addUoM").modal("show");
@@ -3600,31 +3599,42 @@
 			$("#header").show();
 		});
 		ind = 0;
-		function removeProduct(a) {			
-			n1= $(
-					"#trRemove"
-					+ a
-					+ " :nth-child(7)")
-			.html();
-			n2= $("#subTotal").val();
-			/* var Q = Number(n2)-Number(n1);
-			alert(Q); */
-			$("#subTotal").val(Number(n2)-Number(n1));
-			
+		function removeProduct(a) {
+			/* n1 = $("#trRemove" + a + " :nth-child(7)").html();
+			n2 = $("#subTotal").val();
+			$("#subTotal").val(
+			Math.round((Number(n2) - Number(n1)) * 100) / 100);
+			 */
+
+			var sum = 0;
+			$(".trRemove:nth-child(7)").each(function() {
+				sum += parseFloat(this.value);
+			});
+			$("#subTotal").val(sum.toFixed(2));
+
 			$("#trRemove" + a).remove();
 			$("#trRemoveH" + a).remove();
-			
-			/* $("#subTotal").val(
-					Number($("#subTotal").val()) + Number($("#qty").val())
-							* Number($("#rate").val())); */
-			$("#taxAmount").val(
-					Number($("#subTotal").val())
-							* Number($("#taxTot").val()) / Number(100));
-			$("#gt").val(
+			$("#taxAmount")
+					.val(
+							Math
+									.round((Number($("#subTotal").val())
+											* Number($("#taxTot").val()) / Number(100)) * 100) / 100);
+
+			/* $("#gt").val(
+					Math.round((Number($("#subTotal").val())
+							+ Number($("#taxAmount").val())
+							+ Number($("#transportCost").val()) + Number($(
+							"#surcharge").val())) * 100) / 100); */
+			$("#totalvalue").val(
 					Math.round((Number($("#subTotal").val())
 							+ Number($("#taxAmount").val())
 							+ Number($("#transportCost").val()) + Number($(
 							"#surcharge").val())) * 100) / 100);
+			var tot = $("#totalvalue").val();
+			var round = Math.round(tot);
+			$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
+			$("#gt").val(Math.round((round) * 100) / 100);
+
 		}
 		var i = 1;
 		function anotherShow() {
@@ -3657,7 +3667,7 @@
 				//$("#amount").val(Number($("#qty").val()) * Number($("#rate").val()));
 				$("#purProTable")
 						.append(
-								'<tbody><tr id="trRemove'+ind+'"><td>'
+								'<tbody><tr class="trRemove" id="trRemove'+ind+'"><td>'
 										+ i
 										+ '</td><td>'
 										+ $("#pCode").val()
@@ -3678,16 +3688,28 @@
 										+ ');"><img src="img/cross.png" height="16px" width="16px"></a>'
 										+ '</td></tr></tbody>');
 				$("#subTotal").val(
-						Number($("#subTotal").val()) + Number($("#qty").val())
-								* Number($("#rate").val()));
-				$("#taxAmount").val(
-						Number($("#subTotal").val())
-								* Number($("#taxTot").val()) / Number(100));
-				$("#gt").val(
+						Math.round((Number($("#subTotal").val()) + Number($(
+								"#qty").val())
+								* Number($("#rate").val())) * 100) / 100);
+				$("#taxAmount")
+						.val(
+								Math
+										.round((Number($("#subTotal").val())
+												* Number($("#taxTot").val()) / Number(100)) * 100) / 100);
+				/* $("#gt").val(
+						Math.round((Number($("#subTotal").val())
+								+ Number($("#taxAmount").val())
+								+ Number($("#transportCost").val()) + Number($(
+								"#surcharge").val())) * 100) / 100); */
+				$("#totalvalue").val(
 						Math.round((Number($("#subTotal").val())
 								+ Number($("#taxAmount").val())
 								+ Number($("#transportCost").val()) + Number($(
 								"#surcharge").val())) * 100) / 100);
+				var tot = $("#totalvalue").val();
+				var round = Math.round(tot);
+				$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
+				$("#gt").val(Math.round((round) * 100) / 100);
 				//$("#qty").val("");
 				i++;
 
@@ -3738,7 +3760,7 @@
 										+ '\'></td>'
 										+ '</tr></tbody>');
 				ind++;
-				
+
 				$("#dept").val("");
 				$("#subDept").val("");
 				$("#cat").val("");
@@ -3854,11 +3876,21 @@
 				$("#taxGroup").val(0).prop("selected", true);
 				$("#taxTot").val('0');
 				$("#taxAmount").val('0');
-				$("#gt").val(
+				/* $("#gt").val(
+						Math.round((Number($("#subTotal").val())
+								+ Number($("#taxAmount").val())
+								+ Number($("#transportCost").val()) + Number($(
+								"#surcharge").val())) * 100) / 100); */
+
+				$("#totalvalue").val(
 						Math.round((Number($("#subTotal").val())
 								+ Number($("#taxAmount").val())
 								+ Number($("#transportCost").val()) + Number($(
 								"#surcharge").val())) * 100) / 100);
+				var tot = $("#totalvalue").val();
+				var round = Math.round(tot);
+				$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
+				$("#gt").val(Math.round((round) * 100) / 100);
 			}
 		}
 
@@ -3903,7 +3935,21 @@
 												true);
 										$("#taxTot").val('0');
 										$("#taxAmount").val('0');
-										$("#gt")
+										/* $("#gt")
+												.val(
+														Math
+																.round((Number($(
+																		"#subTotal")
+																		.val())
+																		+ Number($(
+																				"#taxAmount")
+																				.val())
+																		+ Number($(
+																				"#transportCost")
+																				.val()) + Number($(
+																		"#surcharge")
+																		.val())) * 100) / 100); */
+										$("#totalvalue")
 												.val(
 														Math
 																.round((Number($(
@@ -3917,6 +3963,16 @@
 																				.val()) + Number($(
 																		"#surcharge")
 																		.val())) * 100) / 100);
+										var tot = $("#totalvalue").val();
+										var round = Math.round(tot);
+										$("#roundvalue")
+												.val(
+														Math
+																.round((round - tot) * 100) / 100);
+										$("#gt")
+												.val(
+														Math
+																.round((round) * 100) / 100);
 									} else {
 										$("#vId").val(ui.item.id)
 										$("#vDetail").val(
@@ -3964,7 +4020,7 @@
 																		Number($(
 																				"#subTotal")
 																				.val())
-																				* Number($(
+										 * Number($(
 																						"#taxTot")
 																						.val())
 																				/ Number(100));
@@ -4003,11 +4059,30 @@
 							dataType : "json",
 							success : function(data) {
 								$("#taxTot").val(data.taxtot);
-								$("#taxAmount").val(
-										Number($("#subTotal").val())
-												* Number($("#taxTot").val())
-												/ Number(100));
-								$("#gt")
+								$("#taxAmount")
+										.val(
+												Math
+														.round((Number($(
+																"#subTotal")
+																.val())
+																* Number($(
+																		"#taxTot")
+																		.val()) / Number(100)) * 100) / 100);
+								/* $("#gt")
+										.val(
+												Math
+														.round((Number($(
+																"#subTotal")
+																.val())
+																+ Number($(
+																		"#taxAmount")
+																		.val())
+																+ Number($(
+																		"#transportCost")
+																		.val()) + Number($(
+																"#surcharge")
+																.val())) * 100) / 100); */
+								$("#totalvalue")
 										.val(
 												Math
 														.round((Number($(
@@ -4021,6 +4096,11 @@
 																		.val()) + Number($(
 																"#surcharge")
 																.val())) * 100) / 100);
+								var tot = $("#totalvalue").val();
+								var round = Math.round(tot);
+								$("#roundvalue").val(
+										Math.round((round - tot) * 100) / 100);
+								$("#gt").val(Math.round((round) * 100) / 100);
 							},
 							error : function(a, b, c) {
 								alert(c);
@@ -4029,28 +4109,55 @@
 			} else {
 				$("#taxTot").val('0');
 				$("#taxAmount").val('0');
-				$("#gt").val(
+				/* $("#gt").val(
+						Math.round((Number($("#subTotal").val())
+								+ Number($("#taxAmount").val())
+								+ Number($("#transportCost").val()) + Number($(
+								"#surcharge").val())) * 100) / 100); */
+				$("#totalvalue").val(
 						Math.round((Number($("#subTotal").val())
 								+ Number($("#taxAmount").val())
 								+ Number($("#transportCost").val()) + Number($(
 								"#surcharge").val())) * 100) / 100);
+				var tot = $("#totalvalue").val();
+				var round = Math.round(tot);
+				$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
+				$("#gt").val(Math.round((round) * 100) / 100);
 			}
 
 		}
 		function gtot() {
 			if (($("#transportCost").val() != "")
 					|| ($("#surcharge").val() != "")) {
-				$("#gt").val(
+				/* $("#gt").val(
+						Math.round((Number($("#subTotal").val())
+								+ Number($("#taxAmount").val())
+								+ Number($("#transportCost").val()) + Number($(
+								"#surcharge").val())) * 100) / 100); */
+				$("#totalvalue").val(
 						Math.round((Number($("#subTotal").val())
 								+ Number($("#taxAmount").val())
 								+ Number($("#transportCost").val()) + Number($(
 								"#surcharge").val())) * 100) / 100);
+				var tot = $("#totalvalue").val();
+				var round = Math.round(tot);
+				$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
+				$("#gt").val(Math.round((round) * 100) / 100);
 			} else {
-				$("#gt").val(
+				/* $("#gt").val(
+						Math.round((Number($("#subTotal").val())
+								+ Number($("#taxAmount").val())
+								+ Number($("#transportCost").val()) + Number($(
+								"#surcharge").val())) * 100) / 100); */
+				$("#totalvalue").val(
 						Math.round((Number($("#subTotal").val())
 								+ Number($("#taxAmount").val())
 								+ Number($("#transportCost").val()) + Number($(
 								"#surcharge").val())) * 100) / 100);
+				var tot = $("#totalvalue").val();
+				var round = Math.round(tot);
+				$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
+				$("#gt").val(Math.round((round) * 100) / 100);
 			}
 		}
 		function submit() {
@@ -4119,7 +4226,7 @@
 			$("#cancelOrNot").modal("hide");
 		});
 	</script>
-	
+
 	<script>
 		$(function() {
 
@@ -5109,13 +5216,9 @@
 
 		}
 	</script>
-<script>
-
-
-
-
-
-</script>
+	<script>
+		
+	</script>
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
