@@ -4687,7 +4687,7 @@
 							type : "post",
 							success : function(data2) {
 
-								agentId = data2.vendorid;///show for current update
+								agentId = data2.vendorid;
 								alert(data2.result);
 								$("#addA").modal('hide');
 							},
@@ -4700,6 +4700,9 @@
 											},
 											dataType : "json",
 											success : function(data) {
+												
+												
+												
 												$("#agentName").empty();
 												$("#agentName")
 														.append(
@@ -4718,6 +4721,7 @@
 											},
 											complete : function() {
 												$("#agentName").val(agentId);
+										
 											}///show for current update
 
 										});
