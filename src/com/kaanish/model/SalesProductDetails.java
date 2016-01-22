@@ -23,6 +23,7 @@ public class SalesProductDetails implements Serializable {
 	private int id;
 	private int quantity;
 	private float salesPrice;	
+	private int salesReQty;
 
 	@ManyToOne
 	@JoinColumn(name = "salesEntryId")
@@ -52,6 +53,13 @@ public class SalesProductDetails implements Serializable {
 		this.quantity = quantity;
 	}
 
+	public int getSalesReQty() {
+		return salesReQty;
+	}
+
+	public void setSalesReQty(int salesReQty) {
+		this.salesReQty = salesReQty;
+	}
 
 	public SalesEntry getSalesEntry() {
 		return salesEntry;

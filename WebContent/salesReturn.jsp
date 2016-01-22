@@ -287,7 +287,8 @@
 														<th>#</th>
 														<th>Product code</th>
 														<th>Product Description</th>
-														<th>Qty.</th>
+														<th>Quantity</th>
+														<th>Remaining Quantity</th>
 														<th><c:choose>
 																<c:when test="${salre.MRP}">
 
@@ -322,23 +323,27 @@
 															</td>
 															<td>${srr.purchase_Product_Details.productDetail.description}</td>
 															<td id="qtty${srr.id}">${srr.quantity}</td>
+															<td id="qtttyR${srr.id}">${srr.salesReQty}</td>
 															<td id="qttyC${srr.id}">
 																${srr.purchase_Product_Details.cost}</td>
 															<td>${srr.quantity*srr.purchase_Product_Details.cost}
 															</td>
 															<td style="padding: 4px"><input id="rQtySa${srr.id}"
-																type="text" class="form-control" style="width: 120px"
-																name="rQtySa" onchange="qtySubtraction('${srr.id}')">
-															</td>
+																value="0" type="text" class="form-control"
+																style="width: 120px" name="rQtySa"
+																onchange="qtySubtraction('${srr.id}')"></td>
 
 
 															<td><input type="text" id="rQtyAm${srr.id}"
 																value="0" class="form-control rQtyAm"
 																style="width: 120px" name="rQtyAm" readonly="readonly"></td>
+																
 															<td style="padding: 4px"><input type="text"
-																class="form-control" name="rQtyDe" style="width: 120px"></td>
+															class="form-control" name="rQtyDe" style="width: 120px"></td>
 
-									<c:set value="${tota+srr.quantity*srr.purchase_Product_Details.cost}" var="tota" />
+															<c:set
+																value="${tota+srr.quantity*srr.purchase_Product_Details.cost}"
+																var="tota" />
 														</tr>
 													</tbody>
 
@@ -347,18 +352,9 @@
 												<c:set var="count" value="${count+1}" />
 
 											</table>
-											
+
 											<input type="hidden" value="${tota}" id="totalCostSales">
 										</div>
-
-
-<!-- <script type="text/javascript">
-
-var abc=Number($("#subtotalvalue").val())*Number($("#discount").val())/Number($("#totalCostSales").val());
-
-
-</script> -->
-
 										<div style="width: 40%; float: right;">
 											<input type="hidden" id="totalvalue" name="totalvalue"
 												value="0">
@@ -393,13 +389,10 @@ var abc=Number($("#subtotalvalue").val())*Number($("#discount").val())/Number($(
 														<td><input type="text" class="form-control"
 															id="discount" name="discount" readonly="readonly"
 															value="<fmt:formatNumber value="${dis}" maxFractionDigits="2" />">
-															</td>
+														</td>
 													</tr>
 
 												</tbody>
-
-
-
 												<tbody>
 													<tr>
 														<td colspan="2" id="disc">Discount Value:</td>
@@ -617,7 +610,7 @@ var abc=Number($("#subtotalvalue").val())*Number($("#discount").val())/Number($(
 	<script type="text/javascript">
 		function qtySubtraction(g) {
 
-			if (Number($("#rQtySa" + g).val()) <= Number($("#qtty" + g).html())) {
+			if (Number($("#rQtySa" + g).val()) <= Number($("#qtty" + g).html())-Number($("#qtttyR" + g).html())) {
 				$("#rQtyAm" + g).val(
 						Number($("#rQtySa" + g).val())
 								* Number($("#qttyC" + g).html()));
@@ -638,15 +631,16 @@ var abc=Number($("#subtotalvalue").val())*Number($("#discount").val())/Number($(
 
 			if ($("#disType option:selected").val() == 'disPer') {
 
-				$("#discountValue2")
-						.val(
-								Math
-										.round((Number($("#subtotalvalue")
-												.val())
-												* Number($("#discount").val()) / 100) * 100) / 100);
+				$("#discountValue2").val(
+						(Number($("#subtotalvalue").val())
+								* Number($("#discount").val()) / 100)
+								.toFixed(2));
 			} else {
 
-				$("#discountValue2").val(Math.round(Number($("#subtotalvalue").val())*Number($("#discount").val())/Number($("#totalCostSales").val())));
+				$("#discountValue2").val(
+						(Number($("#subtotalvalue").val())
+								* Number($("#discount").val()) / Number($(
+								"#totalCostSales").val())).toFixed(2));
 
 			}
 
@@ -659,11 +653,21 @@ var abc=Number($("#subtotalvalue").val())*Number($("#discount").val())/Number($(
 					- Number($("#discountValue2").val())
 					+ Number($("#surcharge").val());
 
-			$("#grandtotal").val(r.toFixed());
+			/* $("#grandtotal").val(r.toFixed()); */
 
-			$("#roundvalue").val((
-					(Number($("#grandtotal").val()))-Number(r)).toFixed(2));
+			var round = Math.round(r);
+
+			/* $("#roundvalue").val((
+					(Number($("#grandtotal").val()))-Number(r)).toFixed(2)); */
 			/* $("#roundvalue").val(); */
+			if (r > round) {
+				$("#roundvalue").val(Math.round((round + 1 - r) * 100) / 100);
+			} else {
+				$("#roundvalue").val(Math.round((round - r) * 100) / 100);
+			}
+
+			$("#grandtotal").val(
+					(Number(r) - Number($("#roundvalue").val())).toFixed());
 
 			$("#spAmount").val($("#grandtotal").val());
 

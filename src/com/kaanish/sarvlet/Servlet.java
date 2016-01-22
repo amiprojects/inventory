@@ -1519,11 +1519,11 @@ public class Servlet extends HttpServlet {
 								+ "/"
 								+ req.getParameter("autoNum")
 								+ "/"
-								+ req.getParameter("suffix"));				
+								+ req.getParameter("suffix"));
 
 				if (purEntryListR.size() > 0) {
 					req.setAttribute("pId", purEntryListR.get(0).getId());
-					
+
 					msg = "Your search for Purchase challan number : "
 							+ req.getParameter("companyInitial") + "/"
 							+ req.getParameter("fynYear") + "/"
@@ -2329,10 +2329,12 @@ public class Servlet extends HttpServlet {
 					salesProductReturnDetail.setFault(p3[l]);
 					salesProductReturnDetail.setQtyReturn(Integer
 							.parseInt(qty4[l]));
-					salesProductReturnDetail.setSalesProductDetails(ejb
-							.getSalesProductDetailsById(Integer
-									.parseInt(salesProductDetailId[l])));
-
+					salesProductDetails
+							.setSalesReQty(Integer.parseInt(qty4[l]));
+					salesProductReturnDetail
+							.setSalesProductDetails(salesProductDetails);
+					salesProductDetails.setSalesReQty(salesProductDetails
+							.getSalesReQty() + Integer.parseInt(qty4[l]));
 					ejb.updateSalesProductDetails(salesProductDetails);
 
 					purchaseProductDetails = salesProductDetails
@@ -2352,7 +2354,7 @@ public class Servlet extends HttpServlet {
 							.getRemainingQty() + Integer.parseInt(qty4[l]));
 
 					ejb.updateReadyGoodsStockDetail(readyGoodsStock);
-
+					ejb.setSalesProductReturnDetails(salesProductReturnDetail);
 					readyGoodsStock = null;
 					purchaseProductDetails = null;
 
