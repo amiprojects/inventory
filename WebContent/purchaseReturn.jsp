@@ -299,10 +299,37 @@
 												value="${purchaseSearchView.vendor_bill_no}">
 										</div>
 										<div class="form-group">
-											<label for="" class="font">Purchase challan no. :</label> <input
+											<label for="" class="font">Reference Purchase challan no. :</label> <input
 												readonly="readonly" type="text" placeholder=""
 												name="challanNumber" class="form-control"
 												value="${purchaseSearchView.challanNumber}">
+										</div>
+										<div class="form-group">
+
+											<label for="" class="font">Purchase Return challan
+												no. :</label>
+											<c:set var="fy"
+												value="${sessionScope['ejb'].getCurrentFinancialYear()}" />
+											<c:set var="cno"
+												value="${sessionScope['ejb'].getLastPurchaseChallanNumberByCompany(compInfo.id)+1}" />
+											<c:set var="csuf"
+												value="${sessionScope['ejb'].getLastPurchaseReturnChallanSuffix()+1}" />
+											<c:set var="suf" value="RPUR" />
+											<c:set var="bs"
+												value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompanyId(suf, compInfo.id)}" />
+											<fmt:formatNumber value="${cno}" var="lastChNo"
+												minIntegerDigits="4" groupingUsed="false" />
+											<fmt:formatNumber value="${csuf}" var="lastSuf"
+												minIntegerDigits="3" groupingUsed="false" />
+											<fmt:formatDate
+												value="${sessionScope['ejb'].getCurrentDateTime()}"
+												pattern="MM" var="yr" />
+											<input readonly="readonly" type="text" placeholder=""
+												name="challanNumber" class="form-control"
+												value="${bs.companyInitial}/${fy}/${yr}/${bs.billType}/${lastChNo}/${lastSuf}">
+											<input type="hidden" name="challanNo" value="${lastChNo}"
+												id="challanNo"> <input type="hidden"
+												name="challanSuffix" value="${lastSuf}">
 										</div>
 										<div class="form-group col-md-6"
 											style="margin: 0; padding: 0;">
@@ -353,6 +380,7 @@
 											<th>Designer Number:</th>
 											<th>Product Description</th>
 											<th>Qty</th>
+											<th>Remaining Qty</th>
 											<th>UOM</th>
 											<th>Rate</th>
 											<th>Amount</th>
@@ -369,6 +397,7 @@
 												<td>${i}</td>
 												<td>${purchaseProducts.productDetail.code}</td>
 												<td>${purchaseProducts.productDetail.description}</td>
+												<td>${purchaseProducts.quantity}</td>
 												<td id="qty${purchaseProducts.id}">${purchaseProducts.quantity}</td>
 												<td>${purchaseProducts.productDetail.qtyUnit.name}</td>
 												<td id="cost${purchaseProducts.id}">${purchaseProducts.cost}</td>
@@ -736,7 +765,6 @@
 
 		function paymentDate() {
 			var count = $('#productList tbody').length;
-			alert($("#datepicker1").val());
 			if (count < 1) {
 				alert("No product found to return.");
 			} else {

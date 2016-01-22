@@ -25,6 +25,7 @@ public class Purchase_Product_Details implements Serializable {
 	private float cost;
 	private int remaining_quantity;
 	private int quantity;
+	private int totalReturningQty;
 	private float mrp;
 	private float wsp;
 	private String attrValue1;
@@ -37,6 +38,13 @@ public class Purchase_Product_Details implements Serializable {
 	private boolean initialInventory;
 	@Transient
 	private int numberForBarcodePrint;
+
+	@OneToMany(mappedBy = "purchaseProductDetails")
+	private List<PurchaseReturnProductDetails> purchaseReturnProductDetails;
+
+	@ManyToOne
+	@JoinColumn(name = "purchaseReturnId")
+	private PurchaseReturn purchaseReturn;
 
 	@ManyToOne
 	@JoinColumn(name = "companyInfoId")
@@ -317,4 +325,13 @@ public class Purchase_Product_Details implements Serializable {
 	public void setCompanyInfo(CompanyInfo companyInfo) {
 		this.companyInfo = companyInfo;
 	}
+
+	public int getTotalReturningQty() {
+		return totalReturningQty;
+	}
+
+	public void setTotalReturningQty(int totalReturningQty) {
+		this.totalReturningQty = totalReturningQty;
+	}
+
 }

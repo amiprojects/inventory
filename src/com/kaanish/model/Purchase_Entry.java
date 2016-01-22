@@ -42,10 +42,13 @@ public class Purchase_Entry implements Serializable {
 	private boolean isFlatDiscount;
 	private float discountValue;
 
+	@OneToMany(mappedBy = "purchaseEntry")
+	private List<PurchaseReturn> purchaseReturn;
+
 	@ManyToOne
 	@JoinColumn(name = "companyInfoId")
 	private CompanyInfo companyInfo;
-	
+
 	@OneToMany(mappedBy = "purchase_Entry", cascade = CascadeType.ALL)
 	private List<Purchase_Product_Details> purchase_Product_Details;
 	@ManyToOne
@@ -134,7 +137,8 @@ public class Purchase_Entry implements Serializable {
 		return purchase_Product_Details;
 	}
 
-	public void setPurchase_Product_Details(List<Purchase_Product_Details> purchase_Product_Details) {
+	public void setPurchase_Product_Details(
+			List<Purchase_Product_Details> purchase_Product_Details) {
 		this.purchase_Product_Details = purchase_Product_Details;
 	}
 
@@ -250,6 +254,12 @@ public class Purchase_Entry implements Serializable {
 		this.taxAmount = taxAmount;
 	}
 
-	
-	
+	public List<PurchaseReturn> getPurchaseReturn() {
+		return purchaseReturn;
+	}
+
+	public void setPurchaseReturn(List<PurchaseReturn> purchaseReturn) {
+		this.purchaseReturn = purchaseReturn;
+	}
+
 }

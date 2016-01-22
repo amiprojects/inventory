@@ -27,6 +27,10 @@ public class PaymentDetails implements Serializable {
 	private Date paymentDate;
 	private float totalAmount;
 	private float paidAmount;
+	
+	@ManyToOne
+	@JoinColumn(name = "purchaseReturnId")
+	private PurchaseReturn purchaseReturn;
 
 	@ManyToOne
 	@JoinColumn(name = "purchaseEntryId")
@@ -126,6 +130,14 @@ public class PaymentDetails implements Serializable {
 
 	public void setSalesEntry(SalesEntry salesEntry) {
 		this.salesEntry = salesEntry;
+	}
+
+	public PurchaseReturn getPurchaseReturn() {
+		return purchaseReturn;
+	}
+
+	public void setPurchaseReturn(PurchaseReturn purchaseReturn) {
+		this.purchaseReturn = purchaseReturn;
 	}
 
 }
