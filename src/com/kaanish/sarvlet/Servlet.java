@@ -81,7 +81,7 @@ import com.kaanish.util.DateConverter;
 		"/salesSearchByProductCode", "/salesView", "/purchaseBarCode",
 		"/salesReturnServlet", "/purchaseSearchAll", "/salesSearchAll",
 		"/jobSearchAll", "/forgotPassUserCheck", "/forgotPassVarify",
-		"/resetPass" })
+		"/resetPass", "/purchaseSearchForReturn" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -1502,6 +1502,44 @@ public class Servlet extends HttpServlet {
 
 				msg = "";
 
+				break;
+
+			case "purchaseSearchForReturn":
+				page = "purchaseReturn.jsp";
+
+				List<Purchase_Entry> purEntryListR = ejb
+						.getPurchaseEntryByChallanNo(req
+								.getParameter("companyInitial")
+								+ "/"
+								+ req.getParameter("fynYear")
+								+ "/"
+								+ req.getParameter("month")
+								+ "/"
+								+ req.getParameter("billType")
+								+ "/"
+								+ req.getParameter("autoNum")
+								+ "/"
+								+ req.getParameter("suffix"));				
+
+				if (purEntryListR.size() > 0) {
+					req.setAttribute("pId", purEntryListR.get(0).getId());
+					
+					msg = "Your search for Purchase challan number : "
+							+ req.getParameter("companyInitial") + "/"
+							+ req.getParameter("fynYear") + "/"
+							+ req.getParameter("month") + "/"
+							+ req.getParameter("billType") + "/"
+							+ req.getParameter("autoNum") + "/"
+							+ req.getParameter("suffix");
+				} else {
+					msg = "No result found for Purchase challan number : "
+							+ req.getParameter("companyInitial") + "/"
+							+ req.getParameter("fynYear") + "/"
+							+ req.getParameter("month") + "/"
+							+ req.getParameter("billType") + "/"
+							+ req.getParameter("autoNum") + "/"
+							+ req.getParameter("suffix") + "...";
+				}
 				break;
 
 			case "jobAssignment":

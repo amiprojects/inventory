@@ -200,9 +200,9 @@
 											<th>#</th>
 											<th>Designer Number:</th>
 											<th>Product Description</th>
-											<th>UOM</th>
-											<th>Rate</th>
 											<th>Qty</th>
+											<th>UOM</th>											
+											<th>Rate</th>											
 											<th>Amount</th>
 										</tr>
 									</thead>
@@ -214,9 +214,9 @@
 												<td>${i}</td>
 												<td>${purchaseProducts.productDetail.code}</td>
 												<td>${purchaseProducts.productDetail.description}</td>
-												<td>${purchaseProducts.productDetail.qtyUnit.name}</td>
-												<td>${purchaseProducts.cost}</td>
 												<td>${purchaseProducts.quantity}</td>
+												<td>${purchaseProducts.productDetail.qtyUnit.name}</td>
+												<td>${purchaseProducts.cost}</td>												
 												<td>${purchaseProducts.quantity*purchaseProducts.cost}</td>
 											</tr>
 										</tbody>
@@ -256,10 +256,10 @@
 												<td>
 													<%-- <fmt:formatNumber var="subt"
 														value="${((100*(purchaseSearchView.totalCost-purchaseSearchView.sur_charge-purchaseSearchView.transport_cost-purchaseSearchView.roundOf))/(100+purchaseSearchView.tax_Type_Group.totalTaxValue))*purchaseSearchView.tax_Type_Group.totalTaxValue/100}"
-														maxFractionDigits="2" /> --%> <fmt:formatNumber var="subt"
+														maxFractionDigits="2" /> --%> <fmt:formatNumber var="ta"
 														value="${purchaseSearchView.taxAmount}"
 														maxFractionDigits="2" /> <input type="text"
-													class="form-control" readonly="readonly" value="${subt}"
+													class="form-control" readonly="readonly" value="${ta}"
 													id="taxAmount">
 												</td>
 											</tr>
