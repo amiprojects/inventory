@@ -139,7 +139,7 @@
 
 
 
-							<c:if test="${requestScope['amS']!=null}">
+					<c:if test="${requestScope['amS']!=null}">
 								<div id="show">
 
 									<form action="salesReturnServlet" method="post"

@@ -24,6 +24,8 @@ public class CustomerEntry implements Serializable {
 	private String address;
 	private String city;
 
+	
+	
 	@OneToMany(mappedBy = "customer")
 	private List<SalesEntry> salesEntries;
 

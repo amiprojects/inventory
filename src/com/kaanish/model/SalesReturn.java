@@ -22,10 +22,10 @@ public class SalesReturn implements Serializable {
 	@Id
 	@GeneratedValue
 	private int id;
-	/* private int qtyReturn; */
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date returnDate;
-	/* private String fault; */
+	
 
 	private float totalReCost;
 	private float roundOff;
@@ -33,6 +33,8 @@ public class SalesReturn implements Serializable {
 	private String challanNumber;
 	private int challanSuffix;
 	private String referenceSalesChallan;
+	
+	
 
 	@OneToMany(mappedBy = "salesReturn")
 	private List<SalesProductReturnDetail> SalesProductReturnDetail;

@@ -1075,7 +1075,7 @@ public class Servlet extends HttpServlet {
 							ejb.getCustomerEntryById(Integer.parseInt(req.getParameter("existingCustId"))));
 				}
 
-				salesEntry.setDiscountValue(Float.parseFloat(req.getParameter("discountValue")));
+				salesEntry.setDiscountValue(Float.parseFloat(req.getParameter("disValue")));
 				ejb.setSalesEntry(salesEntry);
 
 				paymentDetails = new PaymentDetails();
@@ -1891,13 +1891,16 @@ public class Servlet extends HttpServlet {
 				String salesProductDetailId[] = req.getParameterValues("salesProductDetailsID");
 
 				for (int l = 0; l < p3.length; l++) {
+					System.out.println("Return qty: "+Integer.parseInt(qty4[l]));
+					
+					
 					salesProductDetails = ejb.getSalesProductDetailsById(Integer.parseInt(salesProductDetailId[l]));
 
 					salesProductReturnDetail = new SalesProductReturnDetail();
 					
 					salesProductReturnDetail.setFault(p3[l]);
 					salesProductReturnDetail.setQtyReturn(Integer.parseInt(qty4[l]));
-					salesProductDetails.setSalesReQty(Integer.parseInt(qty4[l]));
+					//salesProductDetails.setSalesReQty(Integer.parseInt(qty4[l]));
 					salesProductReturnDetail.setSalesProductDetails(salesProductDetails);
 					salesProductDetails.setSalesReQty(salesProductDetails.getSalesReQty()+Integer.parseInt(qty4[l]));
 					ejb.updateSalesProductDetails(salesProductDetails);
