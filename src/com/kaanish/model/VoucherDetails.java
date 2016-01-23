@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,12 +22,14 @@ public class VoucherDetails implements Serializable {
 	@Id
 	@GeneratedValue
 	private int id;
-	private String name;
+	private float value;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date voucherDate;
 	
 	private boolean isCredit;
+	
+	
 	
 	@OneToOne
 	@JoinColumn(name = "salesEntryId")
@@ -40,7 +43,98 @@ public class VoucherDetails implements Serializable {
 	@JoinColumn(name = "purchase_EntryId")
 	private Purchase_Entry purchase_Entry;
 	
+	@OneToOne
+	@JoinColumn(name = "purchaseReturnId")
+	private PurchaseReturn purchaseReturn;
 	
+	
+	@ManyToOne
+	@JoinColumn(name = "voucherAssignId")
+	private VoucherAssign voucherAssign;
+	
+	@ManyToOne
+	@JoinColumn(name = "usersId")
+	private Users users;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public float getValue() {
+		return value;
+	}
+
+	public void setValue(float value) {
+		this.value = value;
+	}
+
+	public Date getVoucherDate() {
+		return voucherDate;
+	}
+
+	public void setVoucherDate(Date voucherDate) {
+		this.voucherDate = voucherDate;
+	}
+
+	public boolean isCredit() {
+		return isCredit;
+	}
+
+	public void setCredit(boolean isCredit) {
+		this.isCredit = isCredit;
+	}
+
+	public SalesEntry getSalesEntry() {
+		return salesEntry;
+	}
+
+	public void setSalesEntry(SalesEntry salesEntry) {
+		this.salesEntry = salesEntry;
+	}
+
+	public SalesReturn getSalesReturn() {
+		return salesReturn;
+	}
+
+	public void setSalesReturn(SalesReturn salesReturn) {
+		this.salesReturn = salesReturn;
+	}
+
+	public Purchase_Entry getPurchase_Entry() {
+		return purchase_Entry;
+	}
+
+	public void setPurchase_Entry(Purchase_Entry purchase_Entry) {
+		this.purchase_Entry = purchase_Entry;
+	}
+
+	public PurchaseReturn getPurchaseReturn() {
+		return purchaseReturn;
+	}
+
+	public void setPurchaseReturn(PurchaseReturn purchaseReturn) {
+		this.purchaseReturn = purchaseReturn;
+	}
+
+	public VoucherAssign getVoucherAssign() {
+		return voucherAssign;
+	}
+
+	public void setVoucherAssign(VoucherAssign voucherAssign) {
+		this.voucherAssign = voucherAssign;
+	}
+
+	public Users getUsers() {
+		return users;
+	}
+
+	public void setUsers(Users users) {
+		this.users = users;
+	}
 	
 	
 }

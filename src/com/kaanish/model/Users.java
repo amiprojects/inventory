@@ -26,6 +26,8 @@ public class Users implements Serializable {
 	private
 	List<SecurityAnswers> securityAnswers;
 
+	
+
 	@ManyToOne
 	@JoinColumn(name = "companyInfoId")
 	private CompanyInfo companyInfo;
@@ -40,6 +42,13 @@ public class Users implements Serializable {
 	private List<AccountDetails> accountDetails;
 	@OneToMany(mappedBy = "users")
 	private List<Purchase_Entry> purchase_Entries;
+	
+	@OneToMany(mappedBy = "users")
+	private List<VoucherDetails> voucherDetails;
+	
+	@OneToMany(mappedBy = "users")
+	private List<SalesReturn> SalesReturn;
+	
 
 	@ManyToOne
 	@JoinColumn(name = "userGroupId")
@@ -140,5 +149,19 @@ public class Users implements Serializable {
 	public void setSecurityAnswers(List<SecurityAnswers> securityAnswers) {
 		this.securityAnswers = securityAnswers;
 	}
+	public List<VoucherDetails> getVoucherDetails() {
+		return voucherDetails;
+	}
 
+	public void setVoucherDetails(List<VoucherDetails> voucherDetails) {
+		this.voucherDetails = voucherDetails;
+	}
+
+	public List<SalesReturn> getSalesReturn() {
+		return SalesReturn;
+	}
+
+	public void setSalesReturn(List<SalesReturn> salesReturn) {
+		SalesReturn = salesReturn;
+	}
 }

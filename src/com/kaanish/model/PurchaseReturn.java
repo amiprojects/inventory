@@ -5,12 +5,14 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -41,6 +43,9 @@ public class PurchaseReturn implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "purchaseEntryID")
 	private Purchase_Entry purchaseEntry;
+	
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "purchaseReturn")
+	private VoucherDetails voucherDetails;
 
 	public int getId() {
 		return id;
@@ -129,6 +134,14 @@ public class PurchaseReturn implements Serializable {
 	public void setPurchaseReturnProductDetails(
 			List<PurchaseReturnProductDetails> purchaseReturnProductDetails) {
 		this.purchaseReturnProductDetails = purchaseReturnProductDetails;
+	}
+
+	public VoucherDetails getVoucherDetails() {
+		return voucherDetails;
+	}
+
+	public void setVoucherDetails(VoucherDetails voucherDetails) {
+		this.voucherDetails = voucherDetails;
 	}
 
 }

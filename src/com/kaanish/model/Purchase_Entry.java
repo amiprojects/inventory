@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -69,6 +70,9 @@ public class Purchase_Entry implements Serializable {
 	@OneToMany(mappedBy = "purchase_Entry", cascade = CascadeType.ALL)
 	private List<PaymentDetails> paymentDetails;
 
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "purchase_Entry")
+	private VoucherDetails voucherDetails;
+	
 	public int getId() {
 		return id;
 	}
@@ -260,6 +264,14 @@ public class Purchase_Entry implements Serializable {
 
 	public void setPurchaseReturn(List<PurchaseReturn> purchaseReturn) {
 		this.purchaseReturn = purchaseReturn;
+	}
+
+	public VoucherDetails getVoucherDetails() {
+		return voucherDetails;
+	}
+
+	public void setVoucherDetails(VoucherDetails voucherDetails) {
+		this.voucherDetails = voucherDetails;
 	}
 
 }

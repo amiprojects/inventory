@@ -253,12 +253,13 @@ public class LoginServlet extends HttpServlet {
 			}
 
 		}
-		if (ejb.getAllPaymentType().size() < 3) {
+		if (ejb.getAllPaymentType().size() < 4) {
 
 			List<String> str = new ArrayList<>();
 			str.add("Cash");
 			str.add("Cheque");
 			str.add("Bank Transfer");
+			str.add("Voucher");
 
 			for (String s : str) {
 				paymentType = new PaymentType();

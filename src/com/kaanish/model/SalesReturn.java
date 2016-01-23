@@ -5,12 +5,14 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -26,7 +28,7 @@ public class SalesReturn implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date returnDate;
 	
-
+	
 	private float totalReCost;
 	private float roundOff;
 	private int challanNo;
@@ -45,6 +47,13 @@ public class SalesReturn implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "salesEntryID")
 	private SalesEntry salesEntry;
+	
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "salesReturn")
+	private VoucherDetails VoucherDetails;
+	
+	@ManyToOne
+	@JoinColumn(name = "usersId")
+	private Users users;
 	
 
 	public int getId() {
@@ -134,5 +143,19 @@ public class SalesReturn implements Serializable {
 	public void setSalesEntry(SalesEntry salesEntry) {
 		this.salesEntry = salesEntry;
 	}
+	public VoucherDetails getVoucherDetails() {
+		return VoucherDetails;
+	}
 
+	public void setVoucherDetails(VoucherDetails voucherDetails) {
+		VoucherDetails = voucherDetails;
+	}
+
+	public Users getUsers() {
+		return users;
+	}
+
+	public void setUsers(Users users) {
+		this.users = users;
+	}
 }

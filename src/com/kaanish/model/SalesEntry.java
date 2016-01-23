@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -65,15 +66,11 @@ public class SalesEntry implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "taxtypeId")
 	private Tax_Type_Group tax_Type_Group;
+	
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "salesEntry")
+	private VoucherDetails VoucherDetails;
 
-	public Date getEntry_Date() {
-		return entry_Date;
-	}
-
-	public void setEntry_Date(Date entry_Date) {
-		this.entry_Date = entry_Date;
-	}
-
+	
 	@ManyToOne
 	@JoinColumn(name = "bill_setupId")
 	private Bill_setup bill_setup;
@@ -94,13 +91,23 @@ public class SalesEntry implements Serializable {
 		this.challanNo = challanNo;
 	}
 
-	/*public Date getEntry_Date() {
-		return Entry_Date;
+	
+
+	public List<SalesReturn> getSalesReturn() {
+		return salesReturn;
 	}
 
-	public void setEntry_Date(Date entry_Date) {
-		Entry_Date = entry_Date;
-	}*/
+	public void setSalesReturn(List<SalesReturn> salesReturn) {
+		this.salesReturn = salesReturn;
+	}
+
+	public VoucherDetails getVoucherDetails() {
+		return VoucherDetails;
+	}
+
+	public void setVoucherDetails(VoucherDetails voucherDetails) {
+		VoucherDetails = voucherDetails;
+	}
 
 	public Date getSales_date() {
 		return sales_date;
@@ -261,6 +268,13 @@ public class SalesEntry implements Serializable {
 
 	public void setTaxAmount(float taxAmount) {
 		this.taxAmount = taxAmount;
+	}
+	public Date getEntry_Date() {
+		return entry_Date;
+	}
+
+	public void setEntry_Date(Date entry_Date) {
+		this.entry_Date = entry_Date;
 	}
 
 	
