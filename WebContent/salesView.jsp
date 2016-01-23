@@ -290,7 +290,7 @@
 															<%-- <c:set var="dis"
 																value="${salesSearchView.discountValue*100/subTotal}"></c:set> --%>
 															<c:set var="dis"
-																value="${salesSearchView.discountValue*100/salesSearchView.subTotal}"></c:set>
+																value="${salesSearchView.subTotal*salesSearchView.discountValue/100}"></c:set>
 														</c:otherwise>
 													</c:choose>
 											</select>
@@ -298,7 +298,7 @@
 											<td><input type="number" class="form-control"
 												name="disValue" id="discount" placeholder=""
 												readonly="readonly"
-												value="<fmt:formatNumber value="${dis}" maxFractionDigits="2" />"></td>
+												value="<fmt:formatNumber value="${salesSearchView.discountValue}" maxFractionDigits="2" />"></td>
 										</tr>
 									</tbody>
 
@@ -307,7 +307,7 @@
 											<td colspan="2" id="disc">Discount Value:</td>
 											<td><input type="number" class="form-control"
 												readonly="readonly" id="discountValue" name="discountValue"
-												value="${salesSearchView.discountValue}"></td>
+												value="${dis}"></td>
 										</tr>
 
 									</tbody>
@@ -331,9 +331,9 @@
 												<%-- <input type="text" class="form-control"
 												readonly="readonly"
 												value="${subTotal*salesSearchView.tax_Type_Group.getTotalTaxValue()/100}"
-												id="taxAmount"> --%>
-												<input type="text" class="form-control" readonly="readonly"
-												value="${salesSearchView.taxAmount}" id="taxAmount">
+												id="taxAmount"> --%> <input type="text" class="form-control"
+												readonly="readonly" value="${salesSearchView.taxAmount}"
+												id="taxAmount">
 											</td>
 										</tr>
 									</tbody>

@@ -309,10 +309,12 @@ public class LoginServlet extends HttpServlet {
 			usersKainat.setCompanyInfo(companyInfoKainat);
 			ejb.setUser(usersKainat);
 		}
-		if (ejb.getAllBillSetup().size() < 10) {
-			/*companyInfoKaanish = ejb.getUserById("adminKaanish")
-					.getCompanyInfo();
-			companyInfoKainat = ejb.getUserById("adminKainat").getCompanyInfo();*/
+		if (ejb.getAllBillSetup().size() < 12) {
+			/*
+			 * companyInfoKaanish = ejb.getUserById("adminKaanish")
+			 * .getCompanyInfo(); companyInfoKainat =
+			 * ejb.getUserById("adminKainat").getCompanyInfo();
+			 */
 
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("PUR");
@@ -324,6 +326,22 @@ public class LoginServlet extends HttpServlet {
 
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("PUR");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfoKainat);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("RPUR");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfoKaanish);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("RPUR");
 			bill_setup.setCompanyInitial("KK");
 			bill_setup.setSufix("000");
 			bill_setup.setCompanyInfo(companyInfoKainat);

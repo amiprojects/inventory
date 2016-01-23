@@ -36,6 +36,7 @@ import com.kaanish.model.PaymentStatus;
 import com.kaanish.model.PaymentType;
 import com.kaanish.model.ProductDetail;
 import com.kaanish.model.ProductImage;
+import com.kaanish.model.PurchaseReturn;
 import com.kaanish.model.Purchase_Entry;
 import com.kaanish.model.Purchase_Product_Details;
 import com.kaanish.model.QtyUnit;
@@ -570,10 +571,11 @@ public class Ejb {
 
 		return em.find(QtyUnitConversion.class, qtyUnitConversionPK);
 	}
-	
+
 	public List<QtyUnitConversionPK> getAllQtyUnitConversionPK() {
 		TypedQuery<QtyUnitConversionPK> q = em.createQuery(
-				"select c from QtyUnitConversionPK c", QtyUnitConversionPK.class);
+				"select c from QtyUnitConversionPK c",
+				QtyUnitConversionPK.class);
 		return q.getResultList();
 	}
 
@@ -1008,6 +1010,56 @@ public class Ejb {
 		lst.clear();
 		lst.addAll(hash);
 		return lst;
+	}
+
+	/***************** for Purchase Return ***********************/
+	public void setPurchaseReturn(PurchaseReturn purchaseReturn) {
+		em.persist(purchaseReturn);
+	}
+
+	public PurchaseReturn getPurchaseReturnById(int id) {
+		return em.find(PurchaseReturn.class, id);
+	}
+
+	public int getLastPurchaseReturnChallanNumberByCompany(int cId) {
+		TypedQuery<PurchaseReturn> q = em
+				.createQuery(
+						"select c from PurchaseReturn c WHERE c.companyInfo.id=:cId ORDER BY c.id DESC",
+						PurchaseReturn.class);
+		q.setParameter("cId", cId);
+		if (q.getResultList().size() > 0) {
+			return q.getResultList().get(0).getChallanNo();
+		} else {
+			return 0;
+		}
+
+	}
+
+	public int getLastPurchaseReturnChallanSuffix() {
+		TypedQuery<PurchaseReturn> q = em.createQuery(
+				"select c from PurchaseReturn c ORDER BY c.id DESC",
+				PurchaseReturn.class);
+		if (q.getResultList().size() > 0) {
+			int s = q.getResultList().get(0).getChallanSuffix();
+			if (getLastBillSetupBySufix("RPUR").equals(null)) {
+				return s;
+			} else {
+				if (Integer
+						.parseInt(getLastBillSetupBySufix("RPUR").getSufix()) < s) {
+					return s;
+				} else {
+					return Integer.parseInt(getLastBillSetupBySufix("RPUR")
+							.getSufix());
+				}
+			}
+		} else {
+			if (getLastBillSetupBySufix("RPUR").equals(null)) {
+				return 0;
+			} else {
+				return Integer.parseInt(getLastBillSetupBySufix("RPUR")
+						.getSufix());
+			}
+		}
 	}
 
 	/***************** for Job Assignment ***********************/

@@ -162,3 +162,6 @@ $("input:radio[name=bar]").click(function() {
 				$("#isBarPrint").val('no');
 			}
 		});
+		
+var count = $('#purProTable tbody').length;
+		alert(count);
