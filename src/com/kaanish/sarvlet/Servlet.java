@@ -1064,7 +1064,7 @@ public class Servlet extends HttpServlet {
 					voucherDetails.setValue(Float.parseFloat(req
 							.getParameter("spDueAmount")));
 					voucherDetails.setVoucherDate(DateConverter.getDate(req
-							.getParameter("paymentDate")));
+							.getParameter("payDate")));
 					voucherDetails.setUsers(ejb
 							.getUserById((String) httpSession
 									.getAttribute("user")));
@@ -1303,7 +1303,7 @@ public class Servlet extends HttpServlet {
 				voucherDetails.setValue(Float.parseFloat(req
 						.getParameter("spDueAmount")));
 				voucherDetails.setVoucherDate(DateConverter.getDate(req
-						.getParameter("paymentDate")));
+						.getParameter("payDate")));
 				voucherDetails.setUsers(ejb.getUserById(httpSession
 						.getAttribute("user").toString()));
 				voucherDetails.setVoucherAssign(voucherAssign);
