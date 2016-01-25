@@ -1208,8 +1208,9 @@ public class Servlet extends HttpServlet {
 					customerEntry.setVat_cst_no(req.getParameter("vatcst"));
 					
 					voucherAssign = new VoucherAssign();
-					voucherAssign.setCustomerEntry(customerEntry);
-				
+					voucherAssign.setCustomerEntry(customerEntry);		
+					
+					voucherAssign.setVoucherDetailsNumber(customerEntry.getId());				
 					
 					ejb.setCustomerEntry(customerEntry);
 				}
@@ -1242,7 +1243,6 @@ public class Servlet extends HttpServlet {
 				salesEntry.setCompanyInfo(companyInfo);
 				
 				
-				
 				if (!req.getParameter("aId").equals("")) {
 					salesEntry.setVendor(ejb.getVendorById(Integer.parseInt(req
 							.getParameter("aId"))));
@@ -1271,6 +1271,23 @@ public class Servlet extends HttpServlet {
 
 				ejb.setSalesEntry(salesEntry);
 
+				
+voucherDetails=new VoucherDetails();
+				
+				voucherDetails.setSalesEntry(salesEntry);
+				
+				voucherDetails.setCredit(false);
+				
+				voucherDetails.setValue(Float.parseFloat(req.getParameter("spDueAmount")));
+				voucherDetails.setVoucherDate(DateConverter.getDate(req
+						.getParameter("salesDate")));
+				voucherDetails.setUsers(ejb.getUserById(httpSession
+						.getAttribute("user").toString()));
+				
+				ejb.setVoucherDetails(voucherDetails);
+				
+				
+				
 				paymentDetails = new PaymentDetails();
 				paymentDetails.setPaymentDate(DateConverter.getDate(req
 						.getParameter("salesDate")));
