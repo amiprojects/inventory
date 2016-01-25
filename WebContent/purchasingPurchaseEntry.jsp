@@ -555,7 +555,7 @@
 																				<div class="col-md-5">Payment Date :</div>
 																				<div class="col-md-7">
 																					<input type="text" id="datepicker2"
-																						class="form-control" readonly="readonly" name="paymentDate">
+																						class="form-control" readonly="readonly" name="payDate">
 																				</div>
 																			</div>
 																			<div id="pAmount">

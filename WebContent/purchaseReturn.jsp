@@ -237,139 +237,142 @@
 
 										<hr width="100%">
 									</div>
-									<div class="col-md-6">
-										<div class="col-md-12">
-											&nbsp; &nbsp; &nbsp; <b class="font">Vendor Type :</b> <input
-												type="text" class="form-control" readonly="readonly"
-												name="vendorType" id="vendorType"
-												value="${purchaseSearchView.vendor.vendorType.type}">
-										</div>
-										<div class="col-md-12">
-											&nbsp; &nbsp; &nbsp; <b class="font">Vendor Name :</b> <input
-												type="text" class="form-control" id="vName" name="vName"
-												readonly="readonly"
-												value="${purchaseSearchView.vendor.name}">
-										</div>
-										<div class="col-md-12">
-											&nbsp; &nbsp; &nbsp; <b class="font">Vendor Details :</b>
-											<textarea rows="5" cols="" id="vDetail" class="form-control"
-												readonly="readonly">
+									<form role="form" class="sec" action="purchaseReturn"
+										method="post">
+										<div class="col-md-6">
+											<div class="col-md-12">
+												&nbsp; &nbsp; &nbsp; <b class="font">Vendor Type :</b> <input
+													type="text" class="form-control" readonly="readonly"
+													name="vendorType" id="vendorType"
+													value="${purchaseSearchView.vendor.vendorType.type}">
+											</div>
+											<div class="col-md-12">
+												&nbsp; &nbsp; &nbsp; <b class="font">Vendor Name :</b> <input
+													type="text" class="form-control" id="vName" name="vName"
+													readonly="readonly"
+													value="${purchaseSearchView.vendor.name}">
+											</div>
+											<div class="col-md-12">
+												&nbsp; &nbsp; &nbsp; <b class="font">Vendor Details :</b>
+												<textarea rows="5" cols="" id="vDetail" class="form-control"
+													readonly="readonly">
 													Address : 
 														&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;${purchaseSearchView.vendor.address}
 													Ph1: ${purchaseSearchView.vendor.ph1}
 													Ph2: ${purchaseSearchView.vendor.ph2}
 													</textarea>
 
+											</div>
+											<div class="col-md-12">
+												<c:choose>
+													<c:when test="${purchaseSearchView.agentId==0}">
+														<input type="checkbox" id="agent" name="agent"
+															disabled="disabled">&nbsp;<span>Via Agent</span>
+													</c:when>
+													<c:otherwise>
+														<input type="checkbox" id="agent" name="agent"
+															disabled="disabled" checked="checked">&nbsp;<span>Via
+															Agent</span>
+													</c:otherwise>
+												</c:choose>
+											</div>
+											<div class="col-md-12" id="aNameDiv">
+												<label for="" class="font">Agent Name:</label>
+												<c:choose>
+													<c:when test="${purchaseSearchView.agentId!=0}">
+														<input class="form-control" type="text"
+															class="form-control" name="agentName" id="agentName"
+															readonly="readonly"
+															value="${sessionScope['ejb'].getVendorById(purchaseSearchView.agentId).getName()}">
+													</c:when>
+													<c:otherwise>
+														<input class="form-control" type="text"
+															class="form-control" name="agentName" id="agentName"
+															readonly="readonly">
+													</c:otherwise>
+												</c:choose>
+											</div>
 										</div>
-										<div class="col-md-12">
-											<c:choose>
-												<c:when test="${purchaseSearchView.agentId==0}">
-													<input type="checkbox" id="agent" name="agent"
-														disabled="disabled">&nbsp;<span>Via Agent</span>
-												</c:when>
-												<c:otherwise>
-													<input type="checkbox" id="agent" name="agent"
-														disabled="disabled" checked="checked">&nbsp;<span>Via
-														Agent</span>
-												</c:otherwise>
-											</c:choose>
-										</div>
-										<div class="col-md-12" id="aNameDiv">
-											<label for="" class="font">Agent Name:</label>
-											<c:choose>
-												<c:when test="${purchaseSearchView.agentId!=0}">
-													<input class="form-control" type="text"
-														class="form-control" name="agentName" id="agentName"
-														readonly="readonly"
-														value="${sessionScope['ejb'].getVendorById(purchaseSearchView.agentId).getName()}">
-												</c:when>
-												<c:otherwise>
-													<input class="form-control" type="text"
-														class="form-control" name="agentName" id="agentName"
-														readonly="readonly">
-												</c:otherwise>
-											</c:choose>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group">
-											<label for="" class="font">Vendor Bill no :</label> <input
-												type="text" placeholder="" id="vendorBillNo"
-												class="form-control" name="vendorBillNo" readonly="readonly"
-												value="${purchaseSearchView.vendor_bill_no}">
-										</div>
-										<div class="form-group">
-											<label for="" class="font">Reference Purchase challan
-												no. :</label> <input readonly="readonly" type="text" placeholder=""
-												name="challanNumber" class="form-control"
-												value="${purchaseSearchView.challanNumber}">
-										</div>
-										<div class="form-group">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label for="" class="font">Vendor Bill no :</label> <input
+													type="text" placeholder="" id="vendorBillNo"
+													class="form-control" name="vendorBillNo"
+													readonly="readonly"
+													value="${purchaseSearchView.vendor_bill_no}">
+											</div>
+											<div class="form-group">
+												<label for="" class="font">Reference Purchase
+													challan no. :</label> <input readonly="readonly" type="text"
+													placeholder="" name="challanNumber" class="form-control"
+													value="${purchaseSearchView.challanNumber}">
+											</div>
+											<div class="form-group">
 
-											<label for="" class="font">Purchase Return challan
-												no. :</label>
-											<c:set var="fy"
-												value="${sessionScope['ejb'].getCurrentFinancialYear()}" />
-											<c:set var="cno"
-												value="${sessionScope['ejb'].getLastPurchaseChallanNumberByCompany(compInfo.id)+1}" />
-											<c:set var="csuf"
-												value="${sessionScope['ejb'].getLastPurchaseReturnChallanSuffix()+1}" />
-											<c:set var="suf" value="RPUR" />
-											<c:set var="bs"
-												value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompanyId(suf, compInfo.id)}" />
-											<fmt:formatNumber value="${cno}" var="lastChNo"
-												minIntegerDigits="4" groupingUsed="false" />
-											<fmt:formatNumber value="${csuf}" var="lastSuf"
-												minIntegerDigits="3" groupingUsed="false" />
-											<fmt:formatDate
-												value="${sessionScope['ejb'].getCurrentDateTime()}"
-												pattern="MM" var="yr" />
-											<input readonly="readonly" type="text" placeholder=""
-												name="challanNumber" class="form-control"
-												value="${bs.companyInitial}/${fy}/${yr}/${bs.billType}/${lastChNo}/${lastSuf}">
-											<input type="hidden" name="challanNo" value="${lastChNo}"
-												id="challanNo"> <input type="hidden"
-												name="challanSuffix" value="${lastSuf}">
-										</div>
-										<div class="form-group col-md-6"
-											style="margin: 0; padding: 0;">
-											<label for="" class="font">Purchase Date :</label> <input
-												type="text" id="datepicker" class="form-control"
-												name="purchaseDate" required="required" readonly="readonly"
-												value="<fmt:formatDate
+												<label for="" class="font">Purchase Return challan
+													no. :</label>
+												<c:set var="fy"
+													value="${sessionScope['ejb'].getCurrentFinancialYear()}" />
+												<c:set var="cno"
+													value="${sessionScope['ejb'].getLastPurchaseChallanNumberByCompany(compInfo.id)+1}" />
+												<c:set var="csuf"
+													value="${sessionScope['ejb'].getLastPurchaseReturnChallanSuffix()+1}" />
+												<c:set var="suf" value="RPUR" />
+												<c:set var="bs"
+													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompanyId(suf, compInfo.id)}" />
+												<fmt:formatNumber value="${cno}" var="lastChNo"
+													minIntegerDigits="4" groupingUsed="false" />
+												<fmt:formatNumber value="${csuf}" var="lastSuf"
+													minIntegerDigits="3" groupingUsed="false" />
+												<fmt:formatDate
+													value="${sessionScope['ejb'].getCurrentDateTime()}"
+													pattern="MM" var="yr" />
+												<input readonly="readonly" type="text" placeholder=""
+													name="challanNumber" class="form-control"
+													value="${bs.companyInitial}/${fy}/${yr}/${bs.billType}/${lastChNo}/${lastSuf}">
+												<input type="hidden" name="challanNo" value="${lastChNo}"
+													id="challanNo"> <input type="hidden"
+													name="challanSuffix" value="${lastSuf}">
+											</div>
+											<div class="form-group col-md-6"
+												style="margin: 0; padding: 0;">
+												<label for="" class="font">Purchase Date :</label> <input
+													type="text" id="datepicker" class="form-control"
+													name="purchaseDate" required="required" readonly="readonly"
+													value="<fmt:formatDate
 																			value="${purchaseSearchView.purchase_date}"
 																			pattern="dd-MM-yyyy" />">
-										</div>
-										<div class="form-group col-md-6"
-											style="margin: 0; padding: 0;">
-											<label for="" class="font">Return Date :</label> <input
-												type="text" id="datepicker1" class="form-control"
-												name="purchaseDate" required="required" readonly="readonly"
-												value="<fmt:formatDate
+											</div>
+											<div class="form-group col-md-6"
+												style="margin: 0; padding: 0;">
+												<label for="" class="font">Return Date :</label> <input
+													type="text" id="datepicker1" class="form-control"
+													name="purchaseDate" required="required" readonly="readonly"
+													value="<fmt:formatDate
 																			value="${purchaseSearchView.purchase_date}"
 																			pattern="dd-MM-yyyy" />">
-										</div>
-										<div class="form-group" id="aDetailDiv">
-											<label for="" class="font">Agent Details:</label>
+											</div>
+											<div class="form-group" id="aDetailDiv">
+												<label for="" class="font">Agent Details:</label>
 
-											<c:choose>
-												<c:when test="${purchaseSearchView.agentId!=0}">
-													<textarea rows="5" cols="" class="form-control"
-														readonly="readonly" id="agentDet" name="agentDet">
+												<c:choose>
+													<c:when test="${purchaseSearchView.agentId!=0}">
+														<textarea rows="5" cols="" class="form-control"
+															readonly="readonly" id="agentDet" name="agentDet">
 															Address : 
 															&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;${sessionScope['ejb'].getVendorById(purchaseSearchView.agentId).address}
 															Ph1 : ${sessionScope['ejb'].getVendorById(purchaseSearchView.agentId).ph1}
 															Ph2 : ${sessionScope['ejb'].getVendorById(purchaseSearchView.agentId).ph2}
 															</textarea>
-												</c:when>
-												<c:otherwise>
-													<textarea rows="5" cols="" class="form-control"
-														readonly="readonly" id="agentDet" name="agentDet"></textarea>
-												</c:otherwise>
-											</c:choose>
+													</c:when>
+													<c:otherwise>
+														<textarea rows="5" cols="" class="form-control"
+															readonly="readonly" id="agentDet" name="agentDet"></textarea>
+													</c:otherwise>
+												</c:choose>
 
+											</div>
 										</div>
-									</div>
 								</div>
 
 								<table id="productList"
@@ -520,6 +523,133 @@
 										</div>
 									</div>
 								</div>
+								<div id="savePurchase" class="modal fade" role="dialog"
+									style="top: 25px;">
+									<div class="modal-dialog modal-lg">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal"
+													onclick="closePayment();">&times;</button>
+												<h4 class="modal-title">Payment Details</h4>
+											</div>
+											<div class="modal-body">
+												<div class="row">
+													<div class="col-md-6">
+														<div class="widget-area">
+															<%-- <div class="breadcrumbs">
+									<ul>
+										<li><a title="">Select Payment status : </a></li>
+									</ul>
+								</div>
+								<br> <br> <br>
+								<div class="row">
+									<div class="col-md-5">Payment status :</div>
+									<div class="col-md-7">
+										<div class="sec">
+
+											<select class="form-control" id="pstatus" name="pstatus"
+												onchange="pStatusDiv()">
+												<option value="-" selected="selected">---</option>
+												<c:forEach
+													items="${sessionScope['ejb'].getAllPaymentStatus()}"
+													var="payStatus">
+													<option value="${payStatus.status}">${payStatus.status}</option>
+												</c:forEach>
+											</select>
+										</div>
+									</div>
+								</div> --%>
+															<div id="payDetail">
+																<div class="breadcrumbs">
+																	<ul>
+																		<li><a title="">Payment Details : </a></li>
+																	</ul>
+																</div>
+																<br> <br> <br>
+																<div class="row">
+																	<div class="sec" id="pTypeDiv">
+																		<div class="col-md-5">Payment type :</div>
+																		<div class="col-md-7">
+																			<select class="form-control" id="pType" name="pType"
+																				onchange="pTypeFunc()">
+																				<option value="-" selected="selected">---</option>
+																				<c:forEach
+																					items="${sessionScope['ejb'].getAllPaymentType()}"
+																					var="payType">
+																					<option value="${payType.getType()}">${payType.getType()}</option>
+																				</c:forEach>
+																			</select>
+																		</div>
+																	</div>
+																	<div id="pDate">
+																		<div class="col-md-5">Payment Date :</div>
+																		<div class="col-md-7">
+																			<input type="text" id="datepicker2"
+																				class="form-control" readonly="readonly">
+																		</div>
+																	</div>
+																	<div id="pAmount">
+																		<div class="col-md-5">
+																			<!-- Full  -->
+																			Amount :
+																		</div>
+																		<div class="col-md-7">
+																			<input type="text" class="form-control"
+																				readonly="readonly" id="spAmount" name="spAmount">
+																		</div>
+																	</div>
+																	<!-- <div id="pPayAmount">
+											<div class="col-md-5">Payment Amount :</div>
+											<div class="col-md-7">
+												<input type="text" class="form-control" value="0"
+													id="spPaymentAmount" name="spPaymentAmount"
+													onkeyup="spPaymentAmountFunc();" autocomplete="off">
+											</div>
+										</div>
+										<div id="pDueAmount">
+											<div class="col-md-5">Due Amount :</div>
+											<div class="col-md-7">
+												<input type="text" class="form-control" readonly="readonly"
+													id="spDueAmount" name="spDueAmount">
+											</div>
+										</div> -->
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="col-md-6" style="float: right;"
+														id="description">
+														<div class="widget-area">
+															<div class="breadcrumbs">
+																<ul>
+																	<li><a title="">Provide Description : </a></li>
+																</ul>
+															</div>
+															<br> <br> <br>
+															<div class="row">
+																<div class="col-md-5">Description :</div>
+																<div class="col-md-7">
+																	<textarea rows="" cols="" class="form-control"
+																		id="desc" name="desc"></textarea>
+																</div>
+															</div>
+															<br>
+															<div class="breadcrumbs">
+																<button type="button" class="btn green pull-right"
+																	onclick="submit();">Save</button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="modal-footer">
+												<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+											</div>
+										</div>
+									</div>
+								</div>
+								
 								<%-- <table id="" class="table table-striped table-bordered">
 									<thead style="background-color: #F0F0F0;">
 										<tr>
@@ -561,6 +691,7 @@
 										<c:set var="j" value="${j+1}" />
 									</c:forEach>
 								</table> --%>
+								
 							</div>
 						</div>
 					</div>
@@ -568,132 +699,6 @@
 			</div>
 		</div>
 		<!-- Content Sec -->
-	</div>
-
-	<div id="savePurchase" class="modal fade" role="dialog"
-		style="top: 25px;">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						onclick="closePayment();">&times;</button>
-					<h4 class="modal-title">Payment Details</h4>
-				</div>
-				<div class="modal-body">
-					<div class="row">
-						<div class="col-md-6">
-							<div class="widget-area">
-								<%-- <div class="breadcrumbs">
-									<ul>
-										<li><a title="">Select Payment status : </a></li>
-									</ul>
-								</div>
-								<br> <br> <br>
-								<div class="row">
-									<div class="col-md-5">Payment status :</div>
-									<div class="col-md-7">
-										<div class="sec">
-
-											<select class="form-control" id="pstatus" name="pstatus"
-												onchange="pStatusDiv()">
-												<option value="-" selected="selected">---</option>
-												<c:forEach
-													items="${sessionScope['ejb'].getAllPaymentStatus()}"
-													var="payStatus">
-													<option value="${payStatus.status}">${payStatus.status}</option>
-												</c:forEach>
-											</select>
-										</div>
-									</div>
-								</div> --%>
-								<div id="payDetail">
-									<div class="breadcrumbs">
-										<ul>
-											<li><a title="">Payment Details : </a></li>
-										</ul>
-									</div>
-									<br> <br> <br>
-									<div class="row">
-										<div class="sec" id="pTypeDiv">
-											<div class="col-md-5">Payment type :</div>
-											<div class="col-md-7">
-												<select class="form-control" id="pType" name="pType"
-													onchange="pTypeFunc()">
-													<option value="-" selected="selected">---</option>
-													<c:forEach
-														items="${sessionScope['ejb'].getAllPaymentType()}"
-														var="payType">
-														<option value="${payType.getType()}">${payType.getType()}</option>
-													</c:forEach>
-												</select>
-											</div>
-										</div>
-										<div id="pDate">
-											<div class="col-md-5">Payment Date :</div>
-											<div class="col-md-7">
-												<input type="text" id="datepicker2" class="form-control"
-													readonly="readonly">
-											</div>
-										</div>
-										<div id="pAmount">
-											<div class="col-md-5">
-												<!-- Full  -->
-												Amount :
-											</div>
-											<div class="col-md-7">
-												<input type="text" class="form-control" readonly="readonly"
-													id="spAmount" name="spAmount">
-											</div>
-										</div>
-										<!-- <div id="pPayAmount">
-											<div class="col-md-5">Payment Amount :</div>
-											<div class="col-md-7">
-												<input type="text" class="form-control" value="0"
-													id="spPaymentAmount" name="spPaymentAmount"
-													onkeyup="spPaymentAmountFunc();" autocomplete="off">
-											</div>
-										</div>
-										<div id="pDueAmount">
-											<div class="col-md-5">Due Amount :</div>
-											<div class="col-md-7">
-												<input type="text" class="form-control" readonly="readonly"
-													id="spDueAmount" name="spDueAmount">
-											</div>
-										</div> -->
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div class="col-md-6" style="float: right;" id="description">
-							<div class="widget-area">
-								<div class="breadcrumbs">
-									<ul>
-										<li><a title="">Provide Description : </a></li>
-									</ul>
-								</div>
-								<br> <br> <br>
-								<div class="row">
-									<div class="col-md-5">Description :</div>
-									<div class="col-md-7">
-										<textarea rows="" cols="" class="form-control" id="desc"
-											name="desc"></textarea>
-									</div>
-								</div>
-								<br>
-								<div class="breadcrumbs">
-									<button type="button" class="btn green pull-right"
-										onclick="submit();">Save</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
-				</div>
-			</div>
-		</div>
 	</div>
 
 	<div id="cancelOrNot" class="modal fade" role="dialog"

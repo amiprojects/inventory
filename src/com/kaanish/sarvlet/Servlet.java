@@ -1065,10 +1065,14 @@ public class Servlet extends HttpServlet {
 							.getParameter("spDueAmount")));
 					voucherDetails.setVoucherDate(DateConverter.getDate(req
 							.getParameter("paymentDate")));
+					voucherDetails.setUsers(ejb
+							.getUserById((String) httpSession
+									.getAttribute("user")));
+					voucherDetails.setPurchase_Entry(purchaseEntry);
 					ejb.setVoucherDetails(voucherDetails);
 
 					paymentDetails.setPaymentDate(DateConverter.getDate(req
-							.getParameter("paymentDate")));
+							.getParameter("payDate")));
 					paymentDetails.setTotalAmount(Float.parseFloat(req
 							.getParameter("spAmount")));
 					paymentDetails.setPaidAmount(Float.parseFloat(req
@@ -1308,7 +1312,7 @@ public class Servlet extends HttpServlet {
 
 				paymentDetails = new PaymentDetails();
 				paymentDetails.setPaymentDate(DateConverter.getDate(req
-						.getParameter("paymentDate")));
+						.getParameter("payDate")));
 				paymentDetails.setTotalAmount(Float.parseFloat(req
 						.getParameter("spAmount")));
 				paymentDetails.setPaidAmount(Float.parseFloat(req
