@@ -981,15 +981,6 @@ public class Servlet extends HttpServlet {
 					ejb.setVendor(vendor);
 					ejb.setAccountDetails(accountDetails);
 
-					voucherAssign = new VoucherAssign();
-					voucherAssign.setVendor(vendor);
-					// voucherAssign.setVoucherDetailsNumber(vendor.getId());
-					ejb.setVoucherAssign(voucherAssign);
-
-					voucherDetails = new VoucherDetails();
-					voucherDetails.setVoucherAssign(voucherAssign);
-					ejb.setVoucherDetails(voucherDetails);
-
 					msg = "vendor added successfully;";
 
 				} else {
@@ -1048,6 +1039,8 @@ public class Servlet extends HttpServlet {
 							.getParameter("subTotal")));
 					purchaseEntry.setTaxAmount(Float.parseFloat(req
 							.getParameter("taxAmount")));
+					purchaseEntry.setDueAmount(Float.parseFloat(req
+							.getParameter("spDueAmount")));
 					purchaseEntry.setCompanyInfo(ejb.getUserById(
 							(String) httpSession.getAttribute("user"))
 							.getCompanyInfo());
@@ -1059,8 +1052,23 @@ public class Servlet extends HttpServlet {
 					}
 					ejb.setPurchaseEntry(purchaseEntry);
 
+					voucherAssign = new VoucherAssign();
+					voucherAssign.setVendor(ejb.getVendorById(Integer
+							.parseInt(req.getParameter("vId"))));
+					voucherAssign.setVoucherDetailsNumber(vendor.getPh1());
+					ejb.setVoucherAssign(voucherAssign);
+
+					voucherDetails = new VoucherDetails();
+					voucherDetails.setVoucherAssign(voucherAssign);
+					voucherDetails.setCredit(true);
+					voucherDetails.setValue(Float.parseFloat(req
+							.getParameter("spDueAmount")));
+					voucherDetails.setVoucherDate(DateConverter.getDate(req
+							.getParameter("paymentDate")));
+					ejb.setVoucherDetails(voucherDetails);
+
 					paymentDetails.setPaymentDate(DateConverter.getDate(req
-							.getParameter("purchaseDate")));
+							.getParameter("paymentDate")));
 					paymentDetails.setTotalAmount(Float.parseFloat(req
 							.getParameter("spAmount")));
 					paymentDetails.setPaidAmount(Float.parseFloat(req
@@ -1291,7 +1299,7 @@ public class Servlet extends HttpServlet {
 				voucherDetails.setValue(Float.parseFloat(req
 						.getParameter("spDueAmount")));
 				voucherDetails.setVoucherDate(DateConverter.getDate(req
-						.getParameter("salesDate")));
+						.getParameter("paymentDate")));
 				voucherDetails.setUsers(ejb.getUserById(httpSession
 						.getAttribute("user").toString()));
 				voucherDetails.setVoucherAssign(voucherAssign);
@@ -1300,7 +1308,7 @@ public class Servlet extends HttpServlet {
 
 				paymentDetails = new PaymentDetails();
 				paymentDetails.setPaymentDate(DateConverter.getDate(req
-						.getParameter("salesDate")));
+						.getParameter("paymentDate")));
 				paymentDetails.setTotalAmount(Float.parseFloat(req
 						.getParameter("spAmount")));
 				paymentDetails.setPaidAmount(Float.parseFloat(req

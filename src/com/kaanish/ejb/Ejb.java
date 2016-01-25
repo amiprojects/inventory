@@ -2562,23 +2562,31 @@ public class Ejb {
 	public SalesProductReturnDetail getSalesProductReturnDetailsById(int id) {
 		return em.find(SalesProductReturnDetail.class, id);
 	}
-/****************VoucherDetails******************************************************************/
-	public void setVoucherDetails(VoucherDetails voucherDetails  ){
+
+	/**************** VoucherDetails ******************************************************************/
+	public void setVoucherDetails(VoucherDetails voucherDetails) {
 		em.persist(voucherDetails);
 	}
-	
-	public VoucherDetails getVoucherDetailsById(int id ){
+
+	public VoucherDetails getVoucherDetailsById(int id) {
 		return em.find(VoucherDetails.class, id);
 	}
 	
-	/****************VoucherAssign******************************************************************/
-	public void setVoucherAssign(VoucherAssign voucherAssign  ){
+	/**************** VoucherAssign ******************************************************************/
+	public void setVoucherAssign(VoucherAssign voucherAssign) {
 		em.persist(voucherAssign);
 	}
-	
-	public VoucherAssign getVoucherAssignById(int id ){
+
+	public VoucherAssign getVoucherAssignById(int id) {
 		return em.find(VoucherAssign.class, id);
 	}
-	
-	
+
+	public VoucherAssign getVoucherAssignByVendorId(int id) {
+		TypedQuery<VoucherAssign> q = em.createQuery(
+				"select c from VoucherAssign c where c.vendor.id=:id",
+				VoucherAssign.class);
+		q.setParameter("id", id);
+		return q.getResultList().get(0);
+	}
+
 }
