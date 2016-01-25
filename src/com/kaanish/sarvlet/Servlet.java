@@ -983,8 +983,12 @@ public class Servlet extends HttpServlet {
 
 					voucherAssign = new VoucherAssign();
 					voucherAssign.setVendor(vendor);
-					voucherAssign.setVoucherDetailsNumber(vendor.getId());
-					
+					// voucherAssign.setVoucherDetailsNumber(vendor.getId());
+					ejb.setVoucherAssign(voucherAssign);
+
+					voucherDetails = new VoucherDetails();
+					voucherDetails.setVoucherAssign(voucherAssign);
+					ejb.setVoucherDetails(voucherDetails);
 
 					msg = "vendor added successfully;";
 
@@ -1211,11 +1215,15 @@ public class Servlet extends HttpServlet {
 					customerEntry.setCity(req.getParameter("city"));
 					customerEntry.setMobile(req.getParameter("phone"));
 					customerEntry.setVat_cst_no(req.getParameter("vatcst"));
+					ejb.setCustomerEntry(customerEntry);
 
 					voucherAssign = new VoucherAssign();
 					voucherAssign.setCustomerEntry(customerEntry);
 
-					ejb.setCustomerEntry(customerEntry);
+					voucherAssign.setVoucherDetailsNumber(customerEntry
+							.getMobile());
+					ejb.setVoucherAssign(voucherAssign);
+
 				}
 
 				salesEntry = new SalesEntry();
@@ -1273,6 +1281,22 @@ public class Servlet extends HttpServlet {
 						.getParameter("disValue")));
 
 				ejb.setSalesEntry(salesEntry);
+
+				voucherDetails = new VoucherDetails();
+
+				voucherDetails.setSalesEntry(salesEntry);
+
+				voucherDetails.setCredit(false);
+
+				voucherDetails.setValue(Float.parseFloat(req
+						.getParameter("spDueAmount")));
+				voucherDetails.setVoucherDate(DateConverter.getDate(req
+						.getParameter("salesDate")));
+				voucherDetails.setUsers(ejb.getUserById(httpSession
+						.getAttribute("user").toString()));
+				voucherDetails.setVoucherAssign(voucherAssign);
+
+				ejb.setVoucherDetails(voucherDetails);
 
 				paymentDetails = new PaymentDetails();
 				paymentDetails.setPaymentDate(DateConverter.getDate(req

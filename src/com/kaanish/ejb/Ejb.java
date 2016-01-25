@@ -62,6 +62,8 @@ import com.kaanish.model.UserGroup;
 import com.kaanish.model.Users;
 import com.kaanish.model.Vendor;
 import com.kaanish.model.VendorType;
+import com.kaanish.model.VoucherAssign;
+import com.kaanish.model.VoucherDetails;
 import com.kaanish.util.DateConverter;
 import com.kaanish.util.DigitToWords;
 
@@ -2560,5 +2562,23 @@ public class Ejb {
 	public SalesProductReturnDetail getSalesProductReturnDetailsById(int id) {
 		return em.find(SalesProductReturnDetail.class, id);
 	}
-
+/****************VoucherDetails******************************************************************/
+	public void setVoucherDetails(VoucherDetails voucherDetails  ){
+		em.persist(voucherDetails);
+	}
+	
+	public VoucherDetails getVoucherDetailsById(int id ){
+		return em.find(VoucherDetails.class, id);
+	}
+	
+	/****************VoucherAssign******************************************************************/
+	public void setVoucherAssign(VoucherAssign voucherAssign  ){
+		em.persist(voucherAssign);
+	}
+	
+	public VoucherAssign getVoucherAssignById(int id ){
+		return em.find(VoucherAssign.class, id);
+	}
+	
+	
 }

@@ -16,19 +16,19 @@ import javax.persistence.OneToOne;
 public class VoucherAssign implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue
 	private int id;
-	private int voucherDetailsNumber;
-	
+	private String voucherDetailsNumber;
+
 	@OneToMany(mappedBy = "voucherAssign")
 	private List<VoucherDetails> voucherDetails;
-	
+
 	@OneToOne
 	@JoinColumn(name = "customerEntryId")
 	private CustomerEntry customerEntry;
-	
+
 	@OneToOne
 	@JoinColumn(name = "vendorId")
 	private Vendor vendor;
@@ -41,11 +41,11 @@ public class VoucherAssign implements Serializable {
 		this.id = id;
 	}
 
-	public int getVoucherDetailsNumber() {
+	public String getVoucherDetailsNumber() {
 		return voucherDetailsNumber;
 	}
 
-	public void setVoucherDetailsNumber(int voucherDetailsNumber) {
+	public void setVoucherDetailsNumber(String voucherDetailsNumber) {
 		this.voucherDetailsNumber = voucherDetailsNumber;
 	}
 
@@ -72,6 +72,5 @@ public class VoucherAssign implements Serializable {
 	public void setVendor(Vendor vendor) {
 		this.vendor = vendor;
 	}
-	
-	
+
 }
