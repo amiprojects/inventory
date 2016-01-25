@@ -54,6 +54,8 @@ import com.kaanish.model.UserGroup;
 import com.kaanish.model.Users;
 import com.kaanish.model.Vendor;
 import com.kaanish.model.VendorType;
+import com.kaanish.model.VoucherAssign;
+import com.kaanish.model.VoucherDetails;
 import com.kaanish.util.Base64;
 import com.kaanish.util.DateConverter;
 
@@ -128,6 +130,8 @@ public class Servlet extends HttpServlet {
 	private SalesReturn salesReturn;
 	private SalesProductReturnDetail salesProductReturnDetail;
 	private SecurityAnswers securityAnswers;
+	private VoucherAssign voucherAssign;
+	private VoucherDetails voucherDetails;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -1202,6 +1206,11 @@ public class Servlet extends HttpServlet {
 					customerEntry.setCity(req.getParameter("city"));
 					customerEntry.setMobile(req.getParameter("phone"));
 					customerEntry.setVat_cst_no(req.getParameter("vatcst"));
+					
+					voucherAssign = new VoucherAssign();
+					voucherAssign.setCustomerEntry(customerEntry);
+				
+					
 					ejb.setCustomerEntry(customerEntry);
 				}
 
@@ -1229,7 +1238,11 @@ public class Servlet extends HttpServlet {
 						.getParameter("roundvalue")));
 				salesEntry.setTotalCost(Float.parseFloat(req
 						.getParameter("grandtotal")));
+				salesEntry.setDueAmount(Float.parseFloat(req.getParameter("spDueAmount")));
 				salesEntry.setCompanyInfo(companyInfo);
+				
+				
+				
 				if (!req.getParameter("aId").equals("")) {
 					salesEntry.setVendor(ejb.getVendorById(Integer.parseInt(req
 							.getParameter("aId"))));

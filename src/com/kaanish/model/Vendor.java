@@ -63,7 +63,7 @@ public class Vendor implements Serializable {
 	private List<AccountDetails> accountDetails;
 
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "vendor")
-	private VoucherAssign voucherDetails;
+	private VoucherAssign voucherAssign;
 	
 	public List<Purchase_Entry> getPurchaseEntry() {
 		return purchaseEntry;
@@ -194,16 +194,6 @@ public class Vendor implements Serializable {
 		this.jobAssignmentDetails = jobAssignmentDetails;
 	}
 
-	@Override
-	public String toString() {
-		return "{\"id\":\"" + id + "\", " + "\"name\":\"" + name + "\", "
-				+ "\"companyName\":\"" + companyName + "\", " + "\"ph1\":\""
-				+ ph1 + "\", " + "\"ph2\":\"" + ph2 + "\", " + "\"address\":\""
-				+ address + "\", " + "\"pinCode\":\"" + pinCode + "\", "
-				+ "\"email\":\"" + email + "\", " + "\"city\":\""
-				+ city.getCityName() + "\"}";
-	}
-
 	public List<JobAssignmentProducts> getJobAssignmentProducts() {
 		return jobAssignmentProducts;
 	}
@@ -220,5 +210,17 @@ public class Vendor implements Serializable {
 	public void setSalesEntry(List<SalesEntry> salesEntry) {
 		this.salesEntry = salesEntry;
 	}
+	
+	@Override
+	public String toString() {
+		return "{\"id\":\"" + id + "\", " + "\"name\":\"" + name + "\", "
+				+ "\"companyName\":\"" + companyName + "\", " + "\"ph1\":\""
+				+ ph1 + "\", " + "\"ph2\":\"" + ph2 + "\", " + "\"address\":\""
+				+ address + "\", " + "\"pinCode\":\"" + pinCode + "\", "
+				+ "\"email\":\"" + email + "\", " + "\"city\":\""
+				+ city.getCityName() + "\"}";
+	}
+
+	
 
 }

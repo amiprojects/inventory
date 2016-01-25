@@ -32,4 +32,46 @@ public class VoucherAssign implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "vendorId")
 	private Vendor vendor;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getVoucherDetailsNumber() {
+		return voucherDetailsNumber;
+	}
+
+	public void setVoucherDetailsNumber(String voucherDetailsNumber) {
+		this.voucherDetailsNumber = voucherDetailsNumber;
+	}
+
+	public List<VoucherDetails> getVoucherDetails() {
+		return voucherDetails;
+	}
+
+	public void setVoucherDetails(List<VoucherDetails> voucherDetails) {
+		this.voucherDetails = voucherDetails;
+	}
+
+	public CustomerEntry getCustomerEntry() {
+		return customerEntry;
+	}
+
+	public void setCustomerEntry(CustomerEntry customerEntry) {
+		this.customerEntry = customerEntry;
+	}
+
+	public Vendor getVendor() {
+		return vendor;
+	}
+
+	public void setVendor(Vendor vendor) {
+		this.vendor = vendor;
+	}
+	
+	
 }

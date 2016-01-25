@@ -32,7 +32,7 @@ public class CustomerEntry implements Serializable {
 	private List<SalesEntry> salesEntries;
 	
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "customerEntry")
-	private VoucherAssign voucherDetails;
+	private VoucherAssign voucherAssign;
 
 	public int getId() {
 		return id;
@@ -88,6 +88,16 @@ public class CustomerEntry implements Serializable {
 
 	public void setVat_cst_no(String vat_cst_no) {
 		this.vat_cst_no = vat_cst_no;
+	}
+
+	
+
+	public VoucherAssign getVoucherAssign() {
+		return voucherAssign;
+	}
+
+	public void setVoucherAssign(VoucherAssign voucherAssign) {
+		this.voucherAssign = voucherAssign;
 	}
 
 	@Override
