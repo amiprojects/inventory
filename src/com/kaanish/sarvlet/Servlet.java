@@ -202,7 +202,7 @@ public class Servlet extends HttpServlet {
 				page = "index.jsp";
 				usr = ejb.getUserById(req.getParameter("uId"));
 				usr.setPassword(req.getParameter("newPassword"));
-				ejb.updateUser(usr);
+				ejb.updateUser(usr); 
 				msg = "Password reset is successfull...";
 				break;
 
