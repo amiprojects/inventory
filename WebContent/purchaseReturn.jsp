@@ -299,8 +299,8 @@
 												value="${purchaseSearchView.vendor_bill_no}">
 										</div>
 										<div class="form-group">
-											<label for="" class="font">Reference Purchase challan no. :</label> <input
-												readonly="readonly" type="text" placeholder=""
+											<label for="" class="font">Reference Purchase challan
+												no. :</label> <input readonly="readonly" type="text" placeholder=""
 												name="challanNumber" class="form-control"
 												value="${purchaseSearchView.challanNumber}">
 										</div>
@@ -398,7 +398,7 @@
 												<td>${purchaseProducts.productDetail.code}</td>
 												<td>${purchaseProducts.productDetail.description}</td>
 												<td>${purchaseProducts.quantity}</td>
-												<td id="qty${purchaseProducts.id}">${purchaseProducts.quantity}</td>
+												<td id="qty${purchaseProducts.id}">${purchaseProducts.quantity-purchaseProducts.totalReturningQty}</td>
 												<td>${purchaseProducts.productDetail.qtyUnit.name}</td>
 												<td id="cost${purchaseProducts.id}">${purchaseProducts.cost}</td>
 												<td>${purchaseProducts.quantity*purchaseProducts.cost}</td>
@@ -414,6 +414,31 @@
 										<c:set var="i" value="${i+1}" />
 									</c:forEach>
 								</table>
+
+								<table class="table table-striped table-bordered">
+
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Item Detail</th>
+											<th>Return Date</th>
+											<th>Return Quantity</th>
+											<th>Reference Voucher No</th>
+										</tr>
+									</thead>
+
+									<tbody>
+										<tr>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+									</tbody>
+
+								</table>
+
 								<div style="width: 40%; float: right;">
 									<table id="stream_table"
 										class="table table-striped table-bordered">

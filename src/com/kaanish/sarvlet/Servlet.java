@@ -981,6 +981,11 @@ public class Servlet extends HttpServlet {
 					ejb.setVendor(vendor);
 					ejb.setAccountDetails(accountDetails);
 
+					voucherAssign = new VoucherAssign();
+					voucherAssign.setVendor(vendor);
+					voucherAssign.setVoucherDetailsNumber(vendor.getId());
+					
+
 					msg = "vendor added successfully;";
 
 				} else {
@@ -1206,11 +1211,10 @@ public class Servlet extends HttpServlet {
 					customerEntry.setCity(req.getParameter("city"));
 					customerEntry.setMobile(req.getParameter("phone"));
 					customerEntry.setVat_cst_no(req.getParameter("vatcst"));
-					
+
 					voucherAssign = new VoucherAssign();
 					voucherAssign.setCustomerEntry(customerEntry);
-				
-					
+
 					ejb.setCustomerEntry(customerEntry);
 				}
 
@@ -1238,11 +1242,10 @@ public class Servlet extends HttpServlet {
 						.getParameter("roundvalue")));
 				salesEntry.setTotalCost(Float.parseFloat(req
 						.getParameter("grandtotal")));
-				salesEntry.setDueAmount(Float.parseFloat(req.getParameter("spDueAmount")));
+				salesEntry.setDueAmount(Float.parseFloat(req
+						.getParameter("spDueAmount")));
 				salesEntry.setCompanyInfo(companyInfo);
-				
-				
-				
+
 				if (!req.getParameter("aId").equals("")) {
 					salesEntry.setVendor(ejb.getVendorById(Integer.parseInt(req
 							.getParameter("aId"))));
@@ -1266,8 +1269,8 @@ public class Servlet extends HttpServlet {
 							.parseInt(req.getParameter("existingCustId"))));
 				}
 
-
-				salesEntry.setDiscountValue(Float.parseFloat(req.getParameter("disValue")));
+				salesEntry.setDiscountValue(Float.parseFloat(req
+						.getParameter("disValue")));
 
 				ejb.setSalesEntry(salesEntry);
 
@@ -2335,20 +2338,24 @@ public class Servlet extends HttpServlet {
 
 				for (int l = 0; l < p3.length; l++) {
 
-					System.out.println("Return qty: "+Integer.parseInt(qty4[l]));
-					
-					
-					salesProductDetails = ejb.getSalesProductDetailsById(Integer.parseInt(salesProductDetailId[l]));
+					System.out.println("Return qty: "
+							+ Integer.parseInt(qty4[l]));
 
+					salesProductDetails = ejb
+							.getSalesProductDetailsById(Integer
+									.parseInt(salesProductDetailId[l]));
 
 					salesProductReturnDetail = new SalesProductReturnDetail();
 
 					salesProductReturnDetail.setFault(p3[l]);
 
-					salesProductReturnDetail.setQtyReturn(Integer.parseInt(qty4[l]));
-					//salesProductDetails.setSalesReQty(Integer.parseInt(qty4[l]));
-					salesProductReturnDetail.setSalesProductDetails(salesProductDetails);
-					salesProductDetails.setSalesReQty(salesProductDetails.getSalesReQty()+Integer.parseInt(qty4[l]));
+					salesProductReturnDetail.setQtyReturn(Integer
+							.parseInt(qty4[l]));
+					// salesProductDetails.setSalesReQty(Integer.parseInt(qty4[l]));
+					salesProductReturnDetail
+							.setSalesProductDetails(salesProductDetails);
+					salesProductDetails.setSalesReQty(salesProductDetails
+							.getSalesReQty() + Integer.parseInt(qty4[l]));
 
 					ejb.updateSalesProductDetails(salesProductDetails);
 

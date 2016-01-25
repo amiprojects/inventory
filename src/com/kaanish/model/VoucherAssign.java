@@ -20,7 +20,7 @@ public class VoucherAssign implements Serializable {
 	@Id
 	@GeneratedValue
 	private int id;
-	private String voucherDetailsNumber;
+	private int voucherDetailsNumber;
 	
 	@OneToMany(mappedBy = "voucherAssign")
 	private List<VoucherDetails> voucherDetails;
@@ -41,11 +41,11 @@ public class VoucherAssign implements Serializable {
 		this.id = id;
 	}
 
-	public String getVoucherDetailsNumber() {
+	public int getVoucherDetailsNumber() {
 		return voucherDetailsNumber;
 	}
 
-	public void setVoucherDetailsNumber(String voucherDetailsNumber) {
+	public void setVoucherDetailsNumber(int voucherDetailsNumber) {
 		this.voucherDetailsNumber = voucherDetailsNumber;
 	}
 

@@ -326,7 +326,6 @@
 													required="required">
 											</div>
 											<div class="form-group">
-
 												<label for="" class="font">Purchase challan no. :</label>
 												<c:set var="fy"
 													value="${sessionScope['ejb'].getCurrentFinancialYear()}" />

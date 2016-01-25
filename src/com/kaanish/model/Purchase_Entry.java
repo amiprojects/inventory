@@ -42,6 +42,7 @@ public class Purchase_Entry implements Serializable {
 	private int agentId;
 	private boolean isFlatDiscount;
 	private float discountValue;
+	private float dueAmount;
 
 	@OneToMany(mappedBy = "purchaseEntry")
 	private List<PurchaseReturn> purchaseReturn;
@@ -272,6 +273,14 @@ public class Purchase_Entry implements Serializable {
 
 	public void setVoucherDetails(VoucherDetails voucherDetails) {
 		this.voucherDetails = voucherDetails;
+	}
+
+	public float getDueAmount() {
+		return dueAmount;
+	}
+
+	public void setDueAmount(float dueAmount) {
+		this.dueAmount = dueAmount;
 	}
 
 }
