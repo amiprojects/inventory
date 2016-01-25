@@ -334,4 +334,12 @@ public class Purchase_Product_Details implements Serializable {
 		this.totalReturningQty = totalReturningQty;
 	}
 
+	public PurchaseReturn getPurchaseReturn() {
+		return purchaseReturn;
+	}
+
+	public void setPurchaseReturn(PurchaseReturn purchaseReturn) {
+		this.purchaseReturn = purchaseReturn;
+	}
+
 }

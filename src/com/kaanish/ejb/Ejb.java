@@ -37,6 +37,7 @@ import com.kaanish.model.PaymentType;
 import com.kaanish.model.ProductDetail;
 import com.kaanish.model.ProductImage;
 import com.kaanish.model.PurchaseReturn;
+import com.kaanish.model.PurchaseReturnProductDetails;
 import com.kaanish.model.Purchase_Entry;
 import com.kaanish.model.Purchase_Product_Details;
 import com.kaanish.model.QtyUnit;
@@ -1062,6 +1063,12 @@ public class Ejb {
 						.getSufix());
 			}
 		}
+	}
+
+	/***************** for Purchase Product Return Details ***********************/
+	public void setPurchaseProdReturnDetails(
+			PurchaseReturnProductDetails purchaseReturnProductDetails) {
+		em.persist(purchaseReturnProductDetails);
 	}
 
 	/***************** for Job Assignment ***********************/
@@ -2571,7 +2578,7 @@ public class Ejb {
 	public VoucherDetails getVoucherDetailsById(int id) {
 		return em.find(VoucherDetails.class, id);
 	}
-	
+
 	/**************** VoucherAssign ******************************************************************/
 	public void setVoucherAssign(VoucherAssign voucherAssign) {
 		em.persist(voucherAssign);

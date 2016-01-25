@@ -41,7 +41,7 @@ public class SalesEntry implements Serializable {
 	private boolean isMRP;
 	private boolean isFlatDiscount;
 	private float discountValue;
-	private float dueAmount;
+	//private float dueAmount;
 	
 	@ManyToOne
 	@JoinColumn(name = "companyInfoId")
@@ -278,13 +278,13 @@ public class SalesEntry implements Serializable {
 		this.entry_Date = entry_Date;
 	}
 
-	public float getDueAmount() {
+	/*public float getDueAmount() {
 		return dueAmount;
 	}
 
 	public void setDueAmount(float dueAmount) {
 		this.dueAmount = dueAmount;
-	}
+	}*/
 
 	
 	
