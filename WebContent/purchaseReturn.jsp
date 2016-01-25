@@ -299,12 +299,13 @@
 													type="text" placeholder="" id="vendorBillNo"
 													class="form-control" name="vendorBillNo"
 													readonly="readonly"
-													value="${purchaseSearchView.vendor_bill_no}">
+													value="${purchaseSearchView.vendor_bill_no}"> <input
+													type="hidden" name="peId" value="${purchaseSearchView.id}">
 											</div>
 											<div class="form-group">
 												<label for="" class="font">Reference Purchase
 													challan no. :</label> <input readonly="readonly" type="text"
-													placeholder="" name="challanNumber" class="form-control"
+													placeholder="" name="REFchallanNumber" class="form-control"
 													value="${purchaseSearchView.challanNumber}">
 											</div>
 											<div class="form-group">
@@ -347,7 +348,7 @@
 												style="margin: 0; padding: 0;">
 												<label for="" class="font">Return Date :</label> <input
 													type="text" id="datepicker1" class="form-control"
-													name="purchaseDate" required="required" readonly="readonly"
+													name="returnDate" required="required" readonly="readonly"
 													value="<fmt:formatDate
 																			value="${purchaseSearchView.purchase_date}"
 																			pattern="dd-MM-yyyy" />">
@@ -398,7 +399,10 @@
 										<tbody>
 											<tr>
 												<td>${i}</td>
-												<td>${purchaseProducts.productDetail.code}</td>
+												<td>${purchaseProducts.productDetail.code}<input
+													type="hidden" name="purProductDetailsID"
+													value="${purchaseProducts.id}">
+												</td>
 												<td>${purchaseProducts.productDetail.description}</td>
 												<td>${purchaseProducts.quantity}</td>
 												<td id="qty${purchaseProducts.id}">${purchaseProducts.quantity-purchaseProducts.totalReturningQty}</td>
@@ -406,12 +410,14 @@
 												<td id="cost${purchaseProducts.id}">${purchaseProducts.cost}</td>
 												<td>${purchaseProducts.quantity*purchaseProducts.cost}</td>
 												<td><input type="text" class="form-control"
-													id="rQty${purchaseProducts.id}"
-													onkeyup="changeNcheck('${purchaseProducts.id}');"></td>
+													id="rQty${purchaseProducts.id}" name="rQty"
+													onkeyup="changeNcheck('${purchaseProducts.id}');" value="0"
+													autocomplete="off"></td>
 												<td><input type="text" readonly="readonly"
 													class="form-control rAmount"
 													id="rAmount${purchaseProducts.id}"></td>
-												<td><input type="text" class="form-control"></td>
+												<td><input type="text" class="form-control"
+													name="drawBack"></td>
 											</tr>
 										</tbody>
 										<c:set var="i" value="${i+1}" />
@@ -499,16 +505,21 @@
 										<tbody>
 											<tr>
 												<td colspan="2" id="due">Due Amount :</td>
-												<td><input type="text" class="form-control"
+												<td>
+													<%-- <input type="text" class="form-control"
 													readonly="readonly" id="dueAmount" name="dueAmount"
-													value="${purchaseSearchView.totalCost-purchaseSearchView.paymentDetails.get(0).paidAmount}"></td>
+													value="${purchaseSearchView.totalCost-purchaseSearchView.paymentDetails.get(0).paidAmount}"> --%>
+													<input type="text" class="form-control" readonly="readonly"
+													id="dueAmount" name="dueAmount"
+													value="${purchaseSearchView.getVoucherDetails().getValue()}">
+												</td>
 											</tr>
 										</tbody>
 										<thead>
 											<tr>
 												<td colspan="2">Grand Total :</td>
 												<td><input type="text" class="form-control" id="gt"
-													placeholder="0" readonly="readonly"
+													name="gTotal" placeholder="0" readonly="readonly"
 													value="${purchaseSearchView.transport_cost+purchaseSearchView.sur_charge}"></td>
 											</tr>
 										</thead>
@@ -523,6 +534,7 @@
 										</div>
 									</div>
 								</div>
+
 								<div id="savePurchase" class="modal fade" role="dialog"
 									style="top: 25px;">
 									<div class="modal-dialog modal-lg">
@@ -585,7 +597,8 @@
 																		<div class="col-md-5">Payment Date :</div>
 																		<div class="col-md-7">
 																			<input type="text" id="datepicker2"
-																				class="form-control" readonly="readonly">
+																				class="form-control" readonly="readonly"
+																				name="payDate">
 																		</div>
 																	</div>
 																	<div id="pAmount">
@@ -649,7 +662,8 @@
 										</div>
 									</div>
 								</div>
-								
+								</form>
+
 								<%-- <table id="" class="table table-striped table-bordered">
 									<thead style="background-color: #F0F0F0;">
 										<tr>
@@ -691,7 +705,6 @@
 										<c:set var="j" value="${j+1}" />
 									</c:forEach>
 								</table> --%>
-								
 							</div>
 						</div>
 					</div>
@@ -767,7 +780,7 @@
 
 			else {
 
-				alert("Returning quantity should be less than Purchased quantity...");
+				alert("Returning quantity should be less than Remaining quantity...");
 				$("#rQty" + id).val("0");
 				$("#rAmount" + id).val("0");
 				var sum = 0;
