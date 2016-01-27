@@ -2447,12 +2447,39 @@ public class Servlet extends HttpServlet {
 			case "goSalesReturn":
 				page = "salesReturn.jsp";
 
-				salesEntry = ejb.getSalestDetailsbyChallanNumber(req
-						.getParameter("challanNumber").trim());
+				List<SalesEntry> saleEntryListR = ejb
+						.getSalesEntryDByChallanNo(req
+								.getParameter("companyInitial")
+								+ "/"
+								+ req.getParameter("fynYear")
+								+ "/"
+								+ req.getParameter("month")
+								+ "/"
+								+ req.getParameter("billType")
+								+ "/"
+								+ req.getParameter("autoNum")
+								+ "/"
+								+ req.getParameter("suffix"));
 
-				req.setAttribute("amS", salesEntry);
-				msg = "";
+				if (saleEntryListR.size() > 0) {
+					req.setAttribute("amS", saleEntryListR.get(0));
 
+					msg = "Your search for Sales challan number : "
+							+ req.getParameter("companyInitial") + "/"
+							+ req.getParameter("fynYear") + "/"
+							+ req.getParameter("month") + "/"
+							+ req.getParameter("billType") + "/"
+							+ req.getParameter("autoNum") + "/"
+							+ req.getParameter("suffix");
+				} else {
+					msg = "No result found for Sales challan number : "
+							+ req.getParameter("companyInitial") + "/"
+							+ req.getParameter("fynYear") + "/"
+							+ req.getParameter("month") + "/"
+							+ req.getParameter("billType") + "/"
+							+ req.getParameter("autoNum") + "/"
+							+ req.getParameter("suffix") + "...";
+				}
 				break;
 
 			case "salesReturnServlet":
@@ -2460,6 +2487,10 @@ public class Servlet extends HttpServlet {
 				salesReturn = new SalesReturn();
 
 				salesReturn.setChallanNumber(req.getParameter("challanNumber"));
+				
+				salesEntry = ejb.getSalesEntryById(Integer.parseInt(req.getParameter("salesentryid")));
+				
+				salesReturn.setSalesEntry(salesEntry);
 
 				salesReturn.setRoundOff(Float.parseFloat(req
 						.getParameter("roundvalue")));
@@ -2477,15 +2508,24 @@ public class Servlet extends HttpServlet {
 				paymentDetails.setPaymentDate(DateConverter.getDate(req
 						.getParameter("payDate")));
 
-				paymentDetails.setPaidAmount(Float.parseFloat(req
-						.getParameter("spAmount")));
+				
 				paymentDetails.setDescription(req.getParameter("desc"));
 				paymentDetails.setSalesReturn(salesReturn);
 				paymentDetails.setPaymentType(ejb.getPaymentTypeByType(req
 						.getParameter("pType")));
+				
+				
 
 				ejb.setPaymentDetails(paymentDetails);
-
+				
+				voucherDetails=new VoucherDetails();
+				voucherDetails.setCredit(true);
+				voucherDetails.setValue(Float.parseFloat(req.getParameter("tbv")));
+				
+				voucherDetails.setVoucherAssign(ejb.getVoucherAssignByCustomerId(Integer.parseInt(req.getParameter("customerId"))));
+				voucherDetails.setSalesReturn(salesReturn);
+				
+					ejb.setVoucherDetails(voucherDetails);
 				String p3[] = req.getParameterValues("rQtyDe");
 				String qty4[] = req.getParameterValues("rQtySa");
 				String salesProductDetailId[] = req
@@ -2532,6 +2572,9 @@ public class Servlet extends HttpServlet {
 
 					ejb.updateReadyGoodsStockDetail(readyGoodsStock);
 					ejb.setSalesProductReturnDetails(salesProductReturnDetail);
+					
+					
+					
 					readyGoodsStock = null;
 					purchaseProductDetails = null;
 

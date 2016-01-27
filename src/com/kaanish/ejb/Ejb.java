@@ -2548,6 +2548,17 @@ public class Ejb {
 		}
 
 	}
+	
+	
+	
+	public List<SalesEntry> getSalesEntryDByChallanNo(String chNo) {
+		TypedQuery<SalesEntry> q = em
+				.createQuery(
+						"select c from SalesEntry c where UPPER(c.challanNumber)=:chNo ORDER BY c.id DESC",
+						SalesEntry.class);
+		q.setParameter("chNo", chNo.toUpperCase());
+		return q.getResultList();
+	}
 
 	/***************************** Sasles return ********************************************************/
 
@@ -2595,5 +2606,14 @@ public class Ejb {
 		q.setParameter("id", id);
 		return q.getResultList().get(0);
 	}
-
+	public VoucherAssign getVoucherAssignByCustomerId(int id) {
+		TypedQuery<VoucherAssign> q = em.createQuery(
+				"select c from VoucherAssign c where c.customerEntry.id=:id",
+				VoucherAssign.class);
+		q.setParameter("id", id);
+		return q.getResultList().get(0);
+	}
+	
+	
+	
 }
