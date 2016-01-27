@@ -227,6 +227,7 @@ public class Vendor implements Serializable {
 				+ city.getCityName() + "\"}";
 	}
 
+
 	public List<SampleDesignCostSheet> getSampleDesignCostSheets() {
 		return sampleDesignCostSheets;
 	}
@@ -241,6 +242,14 @@ public class Vendor implements Serializable {
 
 	public void setJobsForDesignCostSheets(List<JobsForDesignCostSheet> jobsForDesignCostSheets) {
 		this.jobsForDesignCostSheets = jobsForDesignCostSheets;
+	}
+
+	public VoucherAssign getVoucherAssign() {
+		return voucherAssign;
+	}
+
+	public void setVoucherAssign(VoucherAssign voucherAssign) {
+		this.voucherAssign = voucherAssign;
 	}
 
 	

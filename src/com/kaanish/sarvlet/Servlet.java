@@ -208,7 +208,7 @@ public class Servlet extends HttpServlet {
 				page = "index.jsp";
 				usr = ejb.getUserById(req.getParameter("uId"));
 				usr.setPassword(req.getParameter("newPassword"));
-				ejb.updateUser(usr); 
+				ejb.updateUser(usr);
 				msg = "Password reset is successfull...";
 				break;
 
@@ -1060,12 +1060,19 @@ public class Servlet extends HttpServlet {
 					}
 					ejb.setPurchaseEntry(purchaseEntry);
 
-					voucherAssign = new VoucherAssign();
-					vendor = ejb.getVendorById(Integer.parseInt(req
-							.getParameter("vId")));
-					voucherAssign.setVendor(vendor);
-					voucherAssign.setVoucherDetailsNumber(vendor.getPh1());
-					ejb.setVoucherAssign(voucherAssign);
+					if (ejb.getVoucherAssignByVendorId(
+							Integer.parseInt(req.getParameter("vId"))).equals(
+							null)) {
+						voucherAssign = new VoucherAssign();
+						vendor = ejb.getVendorById(Integer.parseInt(req
+								.getParameter("vId")));
+						voucherAssign.setVendor(vendor);
+						voucherAssign.setVoucherDetailsNumber(vendor.getPh1());
+						ejb.setVoucherAssign(voucherAssign);
+					} else {
+						voucherAssign = ejb.getVoucherAssignByVendorId(Integer
+								.parseInt(req.getParameter("vId")));
+					}
 
 					voucherDetails = new VoucherDetails();
 					voucherDetails.setVoucherAssign(voucherAssign);

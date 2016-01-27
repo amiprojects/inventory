@@ -18,40 +18,39 @@ import javax.persistence.TemporalType;
 public class VoucherDetails implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue
 	private int id;
 	private float value;
-	
+	private float totalDebitNote;
+	private float totalCreditNote;
+
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date voucherDate;
-	
+
 	private boolean isCredit;
-	
-	
-	
+
 	@OneToOne
 	@JoinColumn(name = "salesEntryId")
 	private SalesEntry salesEntry;
-	
+
 	@OneToOne
 	@JoinColumn(name = "salesReturnId")
 	private SalesReturn salesReturn;
-	
+
 	@OneToOne
 	@JoinColumn(name = "purchase_EntryId")
 	private Purchase_Entry purchase_Entry;
-	
+
 	@OneToOne
 	@JoinColumn(name = "purchaseReturnId")
 	private PurchaseReturn purchaseReturn;
-	
-	
+
 	@ManyToOne
 	@JoinColumn(name = "voucherAssignId")
 	private VoucherAssign voucherAssign;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "usersId")
 	private Users users;
@@ -135,6 +134,21 @@ public class VoucherDetails implements Serializable {
 	public void setUsers(Users users) {
 		this.users = users;
 	}
-	
-	
+
+	public float getTotalDebitNote() {
+		return totalDebitNote;
+	}
+
+	public void setTotalDebitNote(float totalDebitNote) {
+		this.totalDebitNote = totalDebitNote;
+	}
+
+	public float getTotalCreditNote() {
+		return totalCreditNote;
+	}
+
+	public void setTotalCreditNote(float totalCreditNote) {
+		this.totalCreditNote = totalCreditNote;
+	}
+
 }

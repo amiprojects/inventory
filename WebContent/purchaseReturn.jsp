@@ -62,6 +62,7 @@
 		$("#description").hide();
 		$("#pstatus").val('-');
 		$("#pType").val('-');
+		$("#AMi2").hide();
 	}
 	/* function pStatusDiv() {
 		var val = $('[name="pstatus"]').val();
@@ -118,22 +119,22 @@
 				Math.round((Number($("#spAmount").val()) - Number($(
 						"#spPaymentAmount").val())) * 100) / 100);
 	}*/
-	$(document).ready(function() {
-		$("#AMi2").hide();
-	});
 	function pTypeFunc() {
 		$("#description").show();
 		var val = $('[name="pType"]').val();
 		if (val == '-') {
 			alert('Please select Payment Type...');
 			$("#description").hide();
-		}
-
-		var val = $('[name="pType"]').val();
-		//alert(val);
-		if (val == 'Voucher') {
-			$("#cVouDetails").modal("show");
+			$("#AMi2").hide();
+		} else if (val == 'Voucher') {
+			/* $("#cVouDetails").modal("show"); */
 			$("#AMi2").show();
+		} else if (val == 'Cash') {
+			$("#AMi2").hide();
+		} else if (val == 'Cheque') {
+			$("#AMi2").hide();
+		} else if (val == 'Bank Transfer') {
+			$("#AMi2").hide();
 		}
 	}
 	function plzClose() {
@@ -489,7 +490,7 @@
 													readonly="readonly" value="0" id="taxAmount"></td>
 											</tr>
 										</tbody>
-										<%-- <tbody>
+										<tbody>
 											<tr>
 												<td colspan="2">Transport charge :</td>
 												<td><input type="text" class="form-control"
@@ -506,7 +507,7 @@
 													value="${purchaseSearchView.sur_charge}"
 													readonly="readonly"></td>
 											</tr>
-										</tbody> --%>
+										</tbody>
 										<tbody>
 											<tr>
 												<td colspan="2" id="round">Round Of :</td>
@@ -516,25 +517,24 @@
 													id="roundvalue" name="roundvalue" value="0"></td>
 											</tr>
 										</tbody>
-										<tbody>
+										<%-- <tbody>
 											<tr>
 												<td colspan="2" id="due">Due Amount :</td>
 												<td>
-													<%-- <input type="text" class="form-control"
+													<input type="text" class="form-control"
 													readonly="readonly" id="dueAmount" name="dueAmount"
-													value="${purchaseSearchView.totalCost-purchaseSearchView.paymentDetails.get(0).paidAmount}"> --%>
+													value="${purchaseSearchView.totalCost-purchaseSearchView.paymentDetails.get(0).paidAmount}">
 													<input type="text" class="form-control" readonly="readonly"
 													id="dueAmount" name="dueAmount"
 													value="${purchaseSearchView.getVoucherDetails().getValue()}">
 												</td>
 											</tr>
-										</tbody>
+										</tbody> --%>
 										<thead>
 											<tr>
 												<td colspan="2">Grand Total :</td>
 												<td><input type="text" class="form-control" id="gt"
-													name="gTotal" placeholder="0" readonly="readonly"
-													value="${purchaseSearchView.transport_cost+purchaseSearchView.sur_charge}"></td>
+													name="gTotal" placeholder="0" readonly="readonly" value="0"></td>
 											</tr>
 										</thead>
 									</table>
@@ -624,36 +624,58 @@
 																			<input type="text" class="form-control"
 																				readonly="readonly" id="spAmount" name="spAmount">
 																		</div>
+<<<<<<< HEAD
+=======
 																	</div>
 																	<div id="AMi2">
 																		<div>
 																			<div class="col-md-5">Total Credit Note :</div>
 																			<div class="col-md-7">
-																				<input type="text" id="tcn" name="payDate"
-																					class="form-control" readonly="readonly">
+																				<c:set value="${0}" var="totCr" />
+																				<c:set value="${0}" var="totDb" />
+																				<c:forEach
+																					items="${purchaseSearchView.vendor.voucherAssign.voucherDetails}"
+																					var="vDet">
+																					<%-- <c:set value="${totCr+vDet.value}" var="totCr" /> --%>
+																					<c:choose>
+																						<c:when test="${vDet.isCredit().equals(true)}">
+																							<c:set value="${totCr+vDet.value}" var="totCr" />
+																						</c:when>
+																						<c:otherwise>
+																							<c:set value="${totDb+vDet.value}" var="totDb" />
+																						</c:otherwise>
+																					</c:choose>
+																				</c:forEach>
+																				<c:set value="${totCr-totDb}" var="totCr" />
+																				<input type="text" id="totalCredit"
+																					name="totalCredit" class="form-control"
+																					readonly="readonly" value="${totCr}">
 																			</div>
 																		</div>
-																		<div>
+																		<!-- <div>
 																			<div class="col-md-5">Total Bill VAlue :</div>
 																			<div class="col-md-7">
 																				<input type="text" class="form-control"
 																					readonly="readonly" id="spAmount" name="spAmount">
 																			</div>
-																		</div>
+																		</div> -->
 																		<div>
-																			<div class="col-md-5">Amount Deduction :</div>
+																			<div class="col-md-5">
+																				<span id="dORc">Final Debit/Credit :</span>
+																			</div>
 																			<div class="col-md-7">
-																				<input type="text" class="form-control"
-																					readonly="readonly" id="spAmount" name="spAmount">
+																				<input type="text" class="form-control" id="finalDC"
+																					name="finalDC" readonly="readonly">
 																			</div>
 																		</div>
-																		<div>
+																		<!-- <div>
 																			<div class="col-md-5">Payment Date :</div>
 																			<div class="col-md-7">
 																				<input type="text" id="datepicker" name="payDate"
 																					class="form-control" readonly="readonly">
 																			</div>
-																		</div>
+																		</div> -->
+>>>>>>> refs/remotes/origin/master
 																	</div>
 																	<!-- <div id="pPayAmount">
 											<div class="col-md-5">Payment Amount :</div>
@@ -785,20 +807,22 @@
 				</div>
 			</div>
 
+<<<<<<< HEAD
+=======
 		</div>
 	</div>
 
-	<div id="cVouDetails" class="modal fade" role="dialog"
+	<!-- <div id="cVouDetails" class="modal fade" role="dialog"
 		style="top: 25px;">
 
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">Customer Vouture Details</h4>
+					<h4 class="modal-title">Vendor Credit Note Details</h4>
 				</div>
 				<div class="modal-body">
-					<h2>Customer: Mr Sairas Mistri</h2>
+					<h2>Vendor: Mr Sairas Mistri</h2>
 					<div class="row">
 						<table class="table table-striped table-bordered">
 
@@ -815,7 +839,7 @@
 								<tr>
 
 									<td>1</td>
-									<td>vou/123/256</td>
+									<td>---</td>
 									<td>23</td>
 
 
@@ -824,7 +848,7 @@
 								<tr>
 
 									<td>2</td>
-									<td>vou/123/256</td>
+									<td>---</td>
 									<td>23</td>
 
 
@@ -832,7 +856,7 @@
 								<tr>
 
 									<td>3</td>
-									<td>vou/123/256</td>
+									<td>----</td>
 									<td>23</td>
 
 
@@ -844,7 +868,7 @@
 
 								<tr>
 									<td>&nbsp;</td>
-									<td colspan="2">Total Cost</td>
+									<td colspan="2">Total Credit Note :</td>
 								</tr>
 
 							</tfoot>
@@ -857,8 +881,9 @@
 				</div>
 			</div>
 			<div class="modal-footer"></div>
+>>>>>>> refs/remotes/origin/master
 		</div>
-	</div>
+	</div> -->
 
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
@@ -883,11 +908,14 @@
 								Math
 										.round((Number($("#subTotal").val())
 												* Number($("#taxTot").val()) / Number(100)) * 100) / 100);
-				$("#totalvalue").val(
+				/* $("#totalvalue").val(
 						Math.round((Number($("#subTotal").val())
 								+ Number($("#taxAmount").val())
 								+ Number($("#transportCost").val()) + Number($(
-								"#surcharge").val())) * 100) / 100);
+								"#surcharge").val())) * 100) / 100); */
+				$("#totalvalue").val(
+						Math.round((Number($("#subTotal").val()) + Number($(
+								"#taxAmount").val())) * 100) / 100);
 				var tot = $("#totalvalue").val();
 				var round = Math.round(tot);
 				$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
@@ -909,11 +937,14 @@
 								Math
 										.round((Number($("#subTotal").val())
 												* Number($("#taxTot").val()) / Number(100)) * 100) / 100);
-				$("#totalvalue").val(
+				/* $("#totalvalue").val(
 						Math.round((Number($("#subTotal").val())
 								+ Number($("#taxAmount").val())
 								+ Number($("#transportCost").val()) + Number($(
-								"#surcharge").val())) * 100) / 100);
+								"#surcharge").val())) * 100) / 100); */
+				$("#totalvalue").val(
+						Math.round((Number($("#subTotal").val()) + Number($(
+								"#taxAmount").val())) * 100) / 100);
 				var tot = $("#totalvalue").val();
 				var round = Math.round(tot);
 				$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
@@ -939,6 +970,19 @@
 				$("#datepicker2").datepicker('setDate', new Date());
 				$("#savePurchase").modal("show");
 				$("#spAmount").val(Number($("#gt").val()));
+
+				if (Number($("#spAmount").val()) > Number($("#totalCredit")
+						.val())) {
+					$("#dORc").html("Final Debit :");
+					$("#finalDC").val(
+							(Number($("#spAmount").val()) - Number($(
+									"#totalCredit").val())).toFixed(2));
+				} else {
+					$("#dORc").html("Final Credit :");
+					$("#finalDC").val(
+							(Number($("#totalCredit").val()) - Number($(
+									"#spAmount").val())).toFixed(2));
+				}
 			}
 		}
 
