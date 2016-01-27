@@ -2584,16 +2584,24 @@ public class Ejb {
 		em.persist(voucherAssign);
 	}
 
+	public void updateVoucherAssign(VoucherAssign voucherAssign) {
+		em.merge(voucherAssign);
+	}
+
 	public VoucherAssign getVoucherAssignById(int id) {
 		return em.find(VoucherAssign.class, id);
 	}
 
-	public VoucherAssign getVoucherAssignByVendorId(int id) {
+	public List<VoucherAssign> getVoucherAssignByVendorId(int id) {
 		TypedQuery<VoucherAssign> q = em.createQuery(
 				"select c from VoucherAssign c where c.vendor.id=:id",
 				VoucherAssign.class);
 		q.setParameter("id", id);
-		return q.getResultList().get(0);
+		/*
+		 * if (q.getResultList().size() > 0) { return q.getResultList().get(0);
+		 * } else { return null; }
+		 */
+		return q.getResultList();
 	}
 
 }

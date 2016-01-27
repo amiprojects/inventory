@@ -129,7 +129,7 @@
 			alert('Please select Payment Type...');
 			$("#description").hide();
 			$("#AMi2").hide();
-		} else if (val == 'Voucher') {
+		} else if (val == 'Credit Note') {
 			/* $("#cVouDetails").modal("show"); */
 			$("#AMi2").show();
 		} else if (val == 'Cash') {
@@ -267,7 +267,9 @@
 												&nbsp; &nbsp; &nbsp; <b class="font">Vendor Name :</b> <input
 													type="text" class="form-control" id="vName" name="vName"
 													readonly="readonly"
-													value="${purchaseSearchView.vendor.name}">
+													value="${purchaseSearchView.vendor.name}"><input
+													type="hidden" value="${purchaseSearchView.vendor.id}"
+													id="vId" name="vId">
 											</div>
 											<div class="col-md-12">
 												&nbsp; &nbsp; &nbsp; <b class="font">Vendor Details :</b>
@@ -398,7 +400,7 @@
 									<thead style="background-color: #F0F0F0;">
 										<tr>
 											<th>#</th>
-											<th>Designer Number:</th>
+											<th>Product Code</th>
 											<th>Product Description</th>
 											<th>Qty</th>
 											<th>Remaining Qty</th>
@@ -446,22 +448,65 @@
 									<thead>
 										<tr>
 											<th>#</th>
-											<th>Item Detail</th>
 											<th>Return Date</th>
-											<th>Return Quantity</th>
-											<th>Reference Voucher No</th>
+											<th>Purchase Return challan no.</th>
+											<th>Product Code</th>
+											<th>Product Description</th>
+											<th>Returning Qty</th>
+											<th>Drawback</th>
 										</tr>
 									</thead>
 
-									<tbody>
-										<tr>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-										</tr>
-									</tbody>
+									<c:set var="j" value="${1}"></c:set>
+									<c:forEach var="purchaseReturn"
+										items="${purchaseSearchView.purchaseReturn}">
+										<%-- <c:if
+											test="${purchaseReturn.purchaseReturnProductDetails.qtyReturn!=0}"></c:if> --%>
+										<tbody>
+											<tr>
+												<td>${j}</td>
+												<td><fmt:formatDate
+														value="${purchaseReturn.returnDate}" pattern="dd-MM-yy" />
+												</td>
+												<td>${purchaseReturn.challanNumber}</td>
+												<td><c:forEach var="purchaseReturnProd"
+														items="${purchaseReturn.purchaseReturnProductDetails}">
+														<%-- <c:if test="${purchaseReturnProd.qtyReturn!=0}"> --%>
+													${purchaseReturnProd.purchaseProductDetails.productDetail.code}
+														<hr>
+														<%-- </c:if> --%>
+													</c:forEach> <%-- ${purchaseReturn.purchaseEntry.purchase_Product_Details.get(0).productDetail.code} --%>
+												</td>
+												<td><c:forEach var="purchaseReturnProd"
+														items="${purchaseReturn.purchaseReturnProductDetails}">
+														<%-- <c:if test="${purchaseReturnProd.qtyReturn!=0}"> --%>
+													${purchaseReturnProd.purchaseProductDetails.productDetail.description}
+														<hr>
+														<%-- </c:if> --%>
+													</c:forEach></td>
+												<%-- <td>
+													${purchaseReturn.purchaseEntry.purchase_Product_Details.get(0).productDetail.description}
+												</td> --%>
+												<td><c:forEach var="purchaseReturnProd"
+														items="${purchaseReturn.purchaseReturnProductDetails}">
+														<%-- <c:if test="${purchaseReturnProd.qtyReturn!=0}"> --%>
+													${purchaseReturnProd.qtyReturn}
+														<hr>
+														<%-- </c:if> --%>
+													</c:forEach> <%-- ${purchaseReturn.purchaseEntry.purchase_Product_Details.get(0).productDetail.code} --%>
+												</td>
+												<td><c:forEach var="purchaseReturnProd"
+														items="${purchaseReturn.purchaseReturnProductDetails}">
+														<%-- <c:if test="${purchaseReturnProd.qtyReturn!=0}"> --%>
+													${purchaseReturnProd.fault}
+														<hr>
+														<%-- </c:if> --%>
+													</c:forEach> <%-- ${purchaseReturn.purchaseEntry.purchase_Product_Details.get(0).productDetail.code} --%>
+												</td>
+											</tr>
+										</tbody>
+										<c:set var="j" value="${j+1}" />
+									</c:forEach>
 
 								</table>
 
@@ -604,7 +649,9 @@
 																				<c:forEach
 																					items="${sessionScope['ejb'].getAllPaymentType()}"
 																					var="payType">
-																					<option value="${payType.getType()}">${payType.getType()}</option>
+																					<c:if test="${payType.getType()!='Debit Note'}">
+																						<option value="${payType.getType()}">${payType.getType()}</option>
+																					</c:if>
 																				</c:forEach>
 																			</select>
 																		</div>
@@ -896,7 +943,9 @@
 								* Number($("#cost" + id).html()));
 				var sum = 0;
 				$(".rAmount").each(function() {
-					sum += parseFloat(this.value);
+					if (!isNaN(this.value) && this.value.length != 0) {
+						sum += parseFloat(this.value);
+					}
 				});
 				$("#subTotal").val(sum.toFixed(2));
 				$("#taxAmount")

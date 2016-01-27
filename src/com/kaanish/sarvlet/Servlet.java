@@ -1059,8 +1059,7 @@ public class Servlet extends HttpServlet {
 					ejb.setPurchaseEntry(purchaseEntry);
 
 					if (ejb.getVoucherAssignByVendorId(
-							Integer.parseInt(req.getParameter("vId"))).equals(
-							null)) {
+							Integer.parseInt(req.getParameter("vId"))).size() == 0) {
 						voucherAssign = new VoucherAssign();
 						vendor = ejb.getVendorById(Integer.parseInt(req
 								.getParameter("vId")));
@@ -1068,14 +1067,17 @@ public class Servlet extends HttpServlet {
 						voucherAssign.setVoucherDetailsNumber(vendor.getPh1());
 						ejb.setVoucherAssign(voucherAssign);
 					} else {
-						voucherAssign = ejb.getVoucherAssignByVendorId(Integer
-								.parseInt(req.getParameter("vId")));
+						voucherAssign = ejb.getVoucherAssignByVendorId(
+								Integer.parseInt(req.getParameter("vId"))).get(
+								0);
 					}
 
 					voucherDetails = new VoucherDetails();
 					voucherDetails.setVoucherAssign(voucherAssign);
 					voucherDetails.setCredit(true);
 					voucherDetails.setValue(Float.parseFloat(req
+							.getParameter("spDueAmount")));
+					voucherDetails.setTotalCreditNote(Float.parseFloat(req
 							.getParameter("spDueAmount")));
 					voucherDetails.setVoucherDate(DateConverter.getDate(req
 							.getParameter("payDate")));
@@ -1268,13 +1270,16 @@ public class Servlet extends HttpServlet {
 
 			case "purchaseReturn":
 				page = "purchaseReturn.jsp";
+
 				companyInfo = ejb.getUserById(
 						(String) httpSession.getAttribute("user"))
 						.getCompanyInfo();
 				purchaseEntry = ejb.getPurchaseEntryById(Integer.parseInt(req
 						.getParameter("peId")));
-				purchaseReturn = new PurchaseReturn();
+				voucherAssign = ejb.getVoucherAssignByVendorId(
+						Integer.parseInt(req.getParameter("vId"))).get(0);
 
+				purchaseReturn = new PurchaseReturn();
 				purchaseReturn.setChallanNumber(req
 						.getParameter("challanNumber"));
 				purchaseReturn.setPurchaseEntry(purchaseEntry);
@@ -1290,8 +1295,26 @@ public class Servlet extends HttpServlet {
 						.getParameter("gTotal")));
 				purchaseReturn.setReferencePurchaseChallan(req
 						.getParameter("REFchallanNumber"));
-
+				purchaseReturn.setPurchaseEntry(purchaseEntry);
 				ejb.setPurchaseReturn(purchaseReturn);
+
+				if (req.getParameter("pType").equals("Credit Note")) {
+					voucherDetails = new VoucherDetails();
+					voucherDetails.setVoucherAssign(voucherAssign);
+					voucherDetails.setCredit(false);
+					voucherDetails.setValue(Float.parseFloat(req
+							.getParameter("spAmount")));
+					voucherDetails.setTotalCreditNote(Float.parseFloat(req
+							.getParameter("totalCredit"))
+							- Float.parseFloat(req.getParameter("spAmount")));
+					voucherDetails.setVoucherDate(DateConverter.getDate(req
+							.getParameter("payDate")));
+					voucherDetails.setUsers(ejb
+							.getUserById((String) httpSession
+									.getAttribute("user")));
+					voucherDetails.setPurchaseReturn(purchaseReturn);
+					ejb.setVoucherDetails(voucherDetails);
+				}
 
 				paymentDetails = new PaymentDetails();
 				paymentDetails.setPaymentDate(DateConverter.getDate(req
@@ -1362,8 +1385,6 @@ public class Servlet extends HttpServlet {
 					}
 
 				}
-
-				purchaseReturn.setPurchaseEntry(purchaseEntry);
 				req.setAttribute("purRetIdforPC", purchaseReturn.getId());
 				msg = "Purchase Return Succeessful";
 
