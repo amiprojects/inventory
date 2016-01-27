@@ -221,6 +221,14 @@ public class Vendor implements Serializable {
 				+ city.getCityName() + "\"}";
 	}
 
+	public VoucherAssign getVoucherAssign() {
+		return voucherAssign;
+	}
+
+	public void setVoucherAssign(VoucherAssign voucherAssign) {
+		this.voucherAssign = voucherAssign;
+	}
+
 	
 
 }
