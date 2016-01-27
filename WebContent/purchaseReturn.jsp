@@ -118,9 +118,6 @@
 				Math.round((Number($("#spAmount").val()) - Number($(
 						"#spPaymentAmount").val())) * 100) / 100);
 	}*/
-	$(document).ready(function() {
-		$("#AMi2").hide();
-	});
 	function pTypeFunc() {
 		$("#description").show();
 		var val = $('[name="pType"]').val();
@@ -128,17 +125,6 @@
 			alert('Please select Payment Type...');
 			$("#description").hide();
 		}
-
-		var val = $('[name="pType"]').val();
-		//alert(val);
-		if (val == 'Voucher') {
-			$("#cVouDetails").modal("show");
-			$("#AMi2").show();
-		}
-	}
-	function plzClose() {
-		$("#cVouDetails").modal('hide');
-
 	}
 </script>
 </head>
@@ -489,7 +475,7 @@
 													readonly="readonly" value="0" id="taxAmount"></td>
 											</tr>
 										</tbody>
-										<%-- <tbody>
+										<tbody>
 											<tr>
 												<td colspan="2">Transport charge :</td>
 												<td><input type="text" class="form-control"
@@ -506,7 +492,7 @@
 													value="${purchaseSearchView.sur_charge}"
 													readonly="readonly"></td>
 											</tr>
-										</tbody> --%>
+										</tbody>
 										<tbody>
 											<tr>
 												<td colspan="2" id="round">Round Of :</td>
@@ -623,36 +609,6 @@
 																		<div class="col-md-7">
 																			<input type="text" class="form-control"
 																				readonly="readonly" id="spAmount" name="spAmount">
-																		</div>
-																	</div>
-																	<div id="AMi2">
-																		<div>
-																			<div class="col-md-5">Total Credit Note :</div>
-																			<div class="col-md-7">
-																				<input type="text" id="tcn" name="payDate"
-																					class="form-control" readonly="readonly">
-																			</div>
-																		</div>
-																		<div>
-																			<div class="col-md-5">Total Bill VAlue :</div>
-																			<div class="col-md-7">
-																				<input type="text" class="form-control"
-																					readonly="readonly" id="spAmount" name="spAmount">
-																			</div>
-																		</div>
-																		<div>
-																			<div class="col-md-5">Amount Deduction :</div>
-																			<div class="col-md-7">
-																				<input type="text" class="form-control"
-																					readonly="readonly" id="spAmount" name="spAmount">
-																			</div>
-																		</div>
-																		<div>
-																			<div class="col-md-5">Payment Date :</div>
-																			<div class="col-md-7">
-																				<input type="text" id="datepicker" name="payDate"
-																					class="form-control" readonly="readonly">
-																			</div>
 																		</div>
 																	</div>
 																	<!-- <div id="pPayAmount">
@@ -785,78 +741,6 @@
 				</div>
 			</div>
 
-		</div>
-	</div>
-
-	<div id="cVouDetails" class="modal fade" role="dialog"
-		style="top: 25px;">
-
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">Customer Vouture Details</h4>
-				</div>
-				<div class="modal-body">
-					<h2>Customer: Mr Sairas Mistri</h2>
-					<div class="row">
-						<table class="table table-striped table-bordered">
-
-							<thead>
-								<tr>
-									<th>#</th>
-									<th>Date</th>
-									<th>Amount</th>
-
-								</tr>
-							</thead>
-
-							<tbody>
-								<tr>
-
-									<td>1</td>
-									<td>vou/123/256</td>
-									<td>23</td>
-
-
-								</tr>
-
-								<tr>
-
-									<td>2</td>
-									<td>vou/123/256</td>
-									<td>23</td>
-
-
-								</tr>
-								<tr>
-
-									<td>3</td>
-									<td>vou/123/256</td>
-									<td>23</td>
-
-
-								</tr>
-
-
-							</tbody>
-							<tfoot>
-
-								<tr>
-									<td>&nbsp;</td>
-									<td colspan="2">Total Cost</td>
-								</tr>
-
-							</tfoot>
-
-						</table>
-						<input type="button" class="btn green pull-right"
-							style="float: right;" value="what?" onclick="plzClose()">
-
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer"></div>
 		</div>
 	</div>
 

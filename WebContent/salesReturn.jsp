@@ -52,18 +52,12 @@
 	$(document).ready(function() {
 		$("#sales").attr("id", "activeSubMenu");
 		$("#sSalesReturn").attr("style", "color: #6a94ff;");
-		$("#wspORmrp").val('mrpVal');
-		$("#aDetailsDiv").hide();
+		
 	});
 </script>
 <link rel="stylesheet" href="css/toast.css" type="text/css" />
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
-<!-- <script type="text/javascript">
-	if (getUrlVars()['jChallan'] != null) {
-		$('#msg').html("Invalid Challan number.");
-		$('.toast').fadeIn(400).delay(3000).fadeOut(400);
-	}
-</script> -->
+
 </head>
 <body>
 	<c:if test="${sessionScope['user']==null}">
@@ -254,10 +248,9 @@
 												<div class="form-group" style="width: 50%; float: left">
 													<label style="font-size: 15px" class="font">Sale
 														Date :</label> <input class="form-control" type="text"
-														name="salesDate"
-														value=<fmt:formatDate value="${salre.sales_date}"
-																		pattern="dd-MM-yyyy" />
-														id="salesDate" readonly="readonly">
+														
+														value="<fmt:formatDate value="${salre.sales_date}" pattern="dd-MM-yyyy" />"
+														name="salesDate" id="datepickerQu" readonly="readonly">
 
 												</div>
 
@@ -465,14 +458,14 @@
 												</tr>
 											</tbody>
 
-											<tbody>
+											<%-- <tbody>
 												<tr>
 													<td colspan="2" id="sur">Surcharge :</td>
 													<td><input type="text" class="form-control"
 														readonly="readonly" value="${salre.surcharge}"
 														id="surcharge" name="surcharge"></td>
 												</tr>
-											</tbody>
+											</tbody>--%>
 											<tbody>
 												<tr>
 													<td colspan="2" id="round">Round Off :</td>
@@ -480,16 +473,16 @@
 														readonly="readonly" id="roundvalue" name="roundvalue"
 														value=""></td>
 												</tr>
-											</tbody>
+											</tbody> 
 
-											<tbody>
+											<%-- <tbody>
 												<tr>
 													<td colspan="2" id="round">Due Amount :</td>
 													<td><input type="text" class="form-control"
 														readonly="readonly" id="dueAmount" name="dueAmount"
-														value="${salre.totalCost-salre.paymentDetails.get(0).paidAmount}"></td>
+														value="${salre.getVoucherDetails().getValue()}"></td>
 												</tr>
-											</tbody>
+											</tbody> --%>
 											<thead>
 												<tr>
 													<td colspan="2" id="grand">Grand Total :</td>
@@ -571,12 +564,37 @@
 																					</div>
 
 																				</div>
+																				
+																				
+																				
+																				
 																				<div id="AMi2">
+																				<c:set value="${0}" var="totCr" />
+																				<c:set value="${0}" var="totDb" />
+																				<c:forEach items="${salre.customer.voucherAssign.voucherDetails}" var="k">
+																				<c:choose>
+																				<c:when test="${k.isCredit().equals(true)}">
+																				
+																				<c:set var="totCr" value="${totCr+k.value}" />
+																				
+																				</c:when>
+																				<c:otherwise>
+																				<c:set var="totDb" value="${totDb+k.value}" />
+																				
+																				</c:otherwise>
+																				
+																				</c:choose>
+																				</c:forEach>
+																				<c:set value="${totDb-totCr}" var="totDb" />
+																				
+																				
+																				
+																				
 																					<div >
-																						<div class="col-md-5">Total Credit Note :</div>
-																						<div class="col-md-7">
-																							<input type="text" id="tcn" name="tcn" value="0"
-																								class="form-control" readonly="readonly">
+																						<div class="col-md-5">Total debit Note :</div>
+																 						<div class="col-md-7">
+																							<input type="text" id="tcn" name="tcn" 
+																								class="form-control" readonly="readonly" value="${totDb}">
 																						</div>
 																					</div>
 																					<div >
@@ -590,7 +608,7 @@
 																					<div >
 																						<div class="col-md-5">Amount Deduction :</div>
 																						<div class="col-md-7">
-																							<input type="text" class="form-control"
+																							<input type="text" class="form-control" readonly="readonly"
 																								 id="aDed" name="aDed">
 																						</div>
 																					</div>
@@ -713,7 +731,7 @@
 									</div>
 								</form>
 							</div>
-							</c:if> 
+							 </c:if>  
 						</div>
 					</div>
 				</div>
@@ -790,11 +808,8 @@
 			$("#taxAmount2").val(
 					Number($("#taxTot").val())
 							* Number($("#subtotalvalue").val()) / 100);
-			var r = Number($("#subtotalvalue").val())
-					+ Number($("#transcharge").val())
-					+ Number($("#taxAmount2").val())
-					- Number($("#discountValue2").val())
-					+ Number($("#surcharge").val());
+			var r = Number($("#subtotalvalue").val())+Number($("#taxAmount2").val())-Number($("#discountValue2").val());
+				
 
 			/* $("#grandtotal").val(r.toFixed()); */
 
@@ -810,7 +825,7 @@
 			}
 
 			$("#grandtotal").val(
-					(Number(r) - Number($("#roundvalue").val())).toFixed()-Number($("#dueAmount").val()));
+					(Number(r) - Number($("#roundvalue").val())).toFixed());
 
 			$("#spAmount").val($("#grandtotal").val());
 
@@ -822,6 +837,7 @@
 
 			$("#saveSales").modal("show");
 			$("#tbv").val($("#grandtotal").val());
+			$("#aDed").val(Number($("#tbv").val())-Number($("#tcn").val()));
 
 		}
 	</script>
@@ -851,7 +867,7 @@
 		}
 	</script>
 
-	<script>
+	<script type="text/javascript">
 	$( document ).ready(function() {
 		$("#AMi1").show();
 		$("#AMi2").hide();
@@ -892,9 +908,9 @@
 		}
 		
 		
-		$(function() {
-			var dte = $("#salesDate").val();
-			var d = dte.split("-");
+	 $(function() {
+			var dte = $("#datepickerQu").val();
+			var d = dte.split('-');
 			var n = d[2];
 			var m = d[1];
 			var dt = d[0];
@@ -904,9 +920,9 @@
 				maxDate : 0
 			});
 			$("#datepicker22").datepicker('setDate', new Date());
-		});
+		}); 
 		
-		$(function() {
+	 	$(function() {
 			var d = $("#datepicker22").datepicker('getDate');
 			var n = d.getFullYear();
 			var m = d.getMonth();
@@ -932,8 +948,14 @@
 			});
 			$("#datepickerA").datepicker('setDate', new Date());
 			
-		});
+		}); 
 		
+		/* $(function() {
+			$("#datepickerQu").datepicker({
+				dateFormat : "dd-mm-yy",
+				maxDate : 0
+			});
+		}); */
 		
 	</script>
 	

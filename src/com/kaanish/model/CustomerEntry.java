@@ -99,6 +99,7 @@ public class CustomerEntry implements Serializable {
 	public void setVoucherAssign(VoucherAssign voucherAssign) {
 		this.voucherAssign = voucherAssign;
 	}
+	
 
 	@Override
 	public String toString() {
