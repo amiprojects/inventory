@@ -139,7 +139,7 @@
 
 
 
-							<%-- <c:if test="${requestScope['amS']!=null}"> --%>
+						<c:if test="${requestScope['amS']!=null}"> 
 
 							<div id="show">
 
@@ -263,7 +263,7 @@
 
 												<div class="form-group" style="width: 50%; float: left">
 													<label style="font-size: 15px" class="font">Return
-														Date :</label> <input class="form-control" type="text"
+														Date :</label> <input class="form-control" type="text" 
 														name="salesReturnDate" id="datepicker22"
 														readonly="readonly">
 
@@ -493,7 +493,7 @@
 											<thead>
 												<tr>
 													<td colspan="2" id="grand">Grand Total :</td>
-													<td><input type="text" class="form-control"
+													<td><input type="text" class="form-control" onchange="crditno()"
 														readonly="readonly" id="grandtotal" name="grandtotal"></td>
 												</tr>
 											</thead>
@@ -557,7 +557,7 @@
 																					<div>
 																						<div class="col-md-5">Payment Date :</div>
 																						<div class="col-md-7">
-																							<input type="text" id="datepicker" name="payDate"
+																							<input type="text" id="datepickerA" name="payDate"
 																								class="form-control" readonly="readonly">
 																						</div>
 																					</div>
@@ -565,7 +565,7 @@
 																						<div class="col-md-5">Full Amount :</div>
 																						<div class="col-md-7">
 																							<input type="text" class="form-control"
-																								readonly="readonly" id="spAmount"
+																								readonly="readonly" id="spAmount1"
 																								name="spAmount">
 																						</div>
 																					</div>
@@ -575,7 +575,7 @@
 																					<div >
 																						<div class="col-md-5">Total Credit Note :</div>
 																						<div class="col-md-7">
-																							<input type="text" id="tcn" name="payDate"
+																							<input type="text" id="tcn" name="tcn" value="0"
 																								class="form-control" readonly="readonly">
 																						</div>
 																					</div>
@@ -583,22 +583,21 @@
 																						<div class="col-md-5">Total Bill VAlue :</div>
 																						<div class="col-md-7">
 																							<input type="text" class="form-control"
-																								readonly="readonly" id="spAmount"
-																								name="spAmount">
+																								readonly="readonly" id="tbv" 
+																								name="tbv">
 																						</div>
 																					</div>
 																					<div >
 																						<div class="col-md-5">Amount Deduction :</div>
 																						<div class="col-md-7">
 																							<input type="text" class="form-control"
-																								readonly="readonly" id="spAmount"
-																								name="spAmount">
+																								 id="aDed" name="aDed">
 																						</div>
 																					</div>
 																					<div>
 																						<div class="col-md-5">Payment Date :</div>
 																						<div class="col-md-7">
-																							<input type="text" id="datepicker" name="payDate"
+																							<input type="text" id="datepickerB" name="payDate"
 																								class="form-control" readonly="readonly">
 																						</div>
 																					</div>
@@ -650,7 +649,7 @@
 															<h4 class="modal-title">Customer Vouture Details</h4>
 														</div>
 														<div class="modal-body">
-															<h2>Customer: Mr Sairas Mistri</h2>
+															<h2>Customer: ${salre.customer.name}</h2>
 															<div class="row">
 																<table class="table table-striped table-bordered">
 
@@ -700,7 +699,7 @@
 
 																</table>
 																<input type="button" class="btn green pull-right" style="float: right;"
-																	value="what?" onclick="plzClose()">
+																	value="Back" onclick="plzClose()">
 
 															</div>
 														</div>
@@ -714,7 +713,7 @@
 									</div>
 								</form>
 							</div>
-							<%-- </c:if> for developing purpose it will temporaly close--%>
+							</c:if> 
 						</div>
 					</div>
 				</div>
@@ -811,7 +810,7 @@
 			}
 
 			$("#grandtotal").val(
-					(Number(r) - Number($("#roundvalue").val())).toFixed());
+					(Number(r) - Number($("#roundvalue").val())).toFixed()-Number($("#dueAmount").val()));
 
 			$("#spAmount").val($("#grandtotal").val());
 
@@ -822,6 +821,7 @@
 		function paymentDate() {
 
 			$("#saveSales").modal("show");
+			$("#tbv").val($("#grandtotal").val());
 
 		}
 	</script>
@@ -835,7 +835,7 @@
 		});
 	</script>
 
-	<script>
+	<!-- <script>
 		$(function() {
 			$("#datepicker22").datepicker({
 				dateFormat : "dd-mm-yy",
@@ -844,7 +844,7 @@
 			$("#datepicker22").datepicker('setDate', new Date());
 		});
 	</script>
-
+ -->
 	<script type="text/javascript">
 		function submitRet() {
 			$("#salesReturnForm").submit();
@@ -858,19 +858,85 @@
 	});
 		function pTypeFunc() {
 			var val = $('[name="pType"]').val();
-		 alert(val);
+		
 			if (val == '40') {
 				$("#cVouDetails").modal("show");
 				$("#AMi1").hide();
 				$("#AMi2").show();
 			}
+			
+			else if(val == '37'){
+				$("#AMi1").show();
+				$("#AMi2").hide();
+				
+			}
+			
+			else if(val == '38'){
+				
+				$("#AMi1").show();
+				$("#AMi2").hide();
+			}
+			
+			else if(val == '39'){
+				$("#AMi1").show();
+				$("#AMi2").hide();
+				
+			}
+			
+			
 		}
 
 		function plzClose() {
 			$("#cVouDetails").modal('hide');
 
 		}
+		
+		
+		$(function() {
+			var dte = $("#salesDate").val();
+			var d = dte.split("-");
+			var n = d[2];
+			var m = d[1];
+			var dt = d[0];
+			$("#datepicker22").datepicker({
+				dateFormat : "dd-mm-yy",
+				minDate : new Date(n, m - 1, dt),
+				maxDate : 0
+			});
+			$("#datepicker22").datepicker('setDate', new Date());
+		});
+		
+		$(function() {
+			var d = $("#datepicker22").datepicker('getDate');
+			var n = d.getFullYear();
+			var m = d.getMonth();
+			var dt = d.getDate();
+			$("#datepickerB").datepicker({
+				dateFormat : "dd-mm-yy",
+				minDate : new Date(n, m, dt),
+				maxDate : 0
+			});
+			$("#datepickerB").datepicker('setDate', new Date());
+			
+		});
+		
+		$(function() {
+			var d = $("#datepicker22").datepicker('getDate');
+			var n = d.getFullYear();
+			var m = d.getMonth();
+			var dt = d.getDate();
+			$("#datepickerA").datepicker({
+				dateFormat : "dd-mm-yy",
+				minDate : new Date(n, m, dt),
+				maxDate : 0
+			});
+			$("#datepickerA").datepicker('setDate', new Date());
+			
+		});
+		
+		
 	</script>
+	
 
 </body>
 
