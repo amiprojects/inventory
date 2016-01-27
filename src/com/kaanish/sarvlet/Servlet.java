@@ -1043,8 +1043,10 @@ public class Servlet extends HttpServlet {
 							.getParameter("subTotal")));
 					purchaseEntry.setTaxAmount(Float.parseFloat(req
 							.getParameter("taxAmount")));
-					/*purchaseEntry.setDueAmount(Float.parseFloat(req
-							.getParameter("spDueAmount")));*/
+					/*
+					 * purchaseEntry.setDueAmount(Float.parseFloat(req
+					 * .getParameter("spDueAmount")));
+					 */
 					purchaseEntry.setCompanyInfo(ejb.getUserById(
 							(String) httpSession.getAttribute("user"))
 							.getCompanyInfo());
@@ -1054,10 +1056,12 @@ public class Servlet extends HttpServlet {
 						purchaseEntry.setAgentId(Integer.parseInt(req
 								.getParameter("agentName")));
 					}
+					ejb.setPurchaseEntry(purchaseEntry);
 
 					voucherAssign = new VoucherAssign();
-					voucherAssign.setVendor(ejb.getVendorById(Integer
-							.parseInt(req.getParameter("vId"))));
+					vendor = ejb.getVendorById(Integer.parseInt(req
+							.getParameter("vId")));
+					voucherAssign.setVendor(vendor);
 					voucherAssign.setVoucherDetailsNumber(vendor.getPh1());
 					ejb.setVoucherAssign(voucherAssign);
 
@@ -1406,8 +1410,10 @@ public class Servlet extends HttpServlet {
 						.getParameter("roundvalue")));
 				salesEntry.setTotalCost(Float.parseFloat(req
 						.getParameter("grandtotal")));
-				/*salesEntry.setDueAmount(Float.parseFloat(req
-						.getParameter("spDueAmount")));*/
+				/*
+				 * salesEntry.setDueAmount(Float.parseFloat(req
+				 * .getParameter("spDueAmount")));
+				 */
 				salesEntry.setCompanyInfo(companyInfo);
 
 				if (!req.getParameter("aId").equals("")) {

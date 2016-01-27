@@ -35,7 +35,7 @@ public class Vendor implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastModifiedDate;
 
-	@OneToMany(mappedBy = "vendor")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "vendor")
 	private List<JobAssignmentDetails> jobAssignmentDetails;
 
 	@OneToMany(mappedBy = "vendor")
