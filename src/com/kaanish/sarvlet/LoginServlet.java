@@ -259,7 +259,9 @@ public class LoginServlet extends HttpServlet {
 			str.add("Cash");
 			str.add("Cheque");
 			str.add("Bank Transfer");
-			str.add("Voucher");
+			// str.add("Voucher");
+			str.add("Credit Note");
+			str.add("Debit Note");
 
 			for (String s : str) {
 				paymentType = new PaymentType();
@@ -518,6 +520,7 @@ public class LoginServlet extends HttpServlet {
 		url = req.getRequestURL().toString();
 		url = url.substring(url.lastIndexOf('/') + 1);
 		httpSession = req.getSession();
+		httpSession.setMaxInactiveInterval(3600);
 		serverIp = req.getLocalAddr();
 		port = req.getLocalPort();
 
