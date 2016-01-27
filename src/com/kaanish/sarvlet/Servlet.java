@@ -29,6 +29,7 @@ import com.kaanish.model.JobAssignmentDetails;
 import com.kaanish.model.JobAssignmentProducts;
 import com.kaanish.model.JobRecievedDetails;
 import com.kaanish.model.JobStock;
+import com.kaanish.model.JobTypes;
 import com.kaanish.model.PageList;
 import com.kaanish.model.PaymentDetails;
 import com.kaanish.model.ProductDetail;
@@ -85,7 +86,7 @@ import com.kaanish.util.DateConverter;
 		"/salesSearchByProductCode", "/salesView", "/purchaseBarCode",
 		"/salesReturnServlet", "/purchaseSearchAll", "/salesSearchAll",
 		"/jobSearchAll", "/forgotPassUserCheck", "/forgotPassVarify",
-		"/resetPass", "/purchaseSearchForReturn", "/purchaseReturn" })
+		"/resetPass", "/purchaseSearchForReturn", "/purchaseReturn","/setJobTypes","/updateJob" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -136,6 +137,7 @@ public class Servlet extends HttpServlet {
 	private VoucherDetails voucherDetails;
 	private PurchaseReturn purchaseReturn;
 	private PurchaseReturnProductDetails purchaseReturnProductDetails;
+	private JobTypes jobTypes;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -2535,6 +2537,48 @@ public class Servlet extends HttpServlet {
 
 				msg = "sales Return Succeessful";
 
+				break;
+			case "setJobTypes":
+				page="jobSetup.jsp";
+				flag=0;
+				for(JobTypes jt:ejb.getAllJobTypes()){
+					if(jt.getJobName().equalsIgnoreCase(req.getParameter("name"))){
+						flag=1;
+						break;
+					}
+				}
+				if(flag==0){
+					jobTypes=new JobTypes();
+					jobTypes.setJobName(req.getParameter("name").toUpperCase());
+					jobTypes.setJobDescription(req.getParameter("jobDesc"));
+					
+					ejb.setJobTypes(jobTypes);
+					msg="Job Type Added successfully.";
+				}else{
+					msg="You can not Add duplicate job name.";
+				}
+				
+				break;
+			case "updateJob":
+				page="jobSetup.jsp";
+				jobTypes=ejb.getJobTypeById(Integer.parseInt(req.getParameter("id")));
+				flag=0;
+				for(JobTypes jt:ejb.getAllJobTypes()){
+					if(jt.getJobName().equalsIgnoreCase(req.getParameter("name")) && !jobTypes.getJobName().equalsIgnoreCase(req.getParameter("name"))){
+						flag=1;
+						break;
+					}
+				}
+				if(flag==0){
+					
+					jobTypes.setJobName(req.getParameter("name").toUpperCase());
+					jobTypes.setJobDescription(req.getParameter("jobDesc"));
+					
+					ejb.updateJobTypes(jobTypes);
+					msg="Job Type updated successfully.";
+				}else{
+					msg="You can not update duplicate job name.";
+				}
 				break;
 
 			default:

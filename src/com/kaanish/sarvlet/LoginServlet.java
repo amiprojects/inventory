@@ -268,13 +268,14 @@ public class LoginServlet extends HttpServlet {
 			}
 
 		}
-		if (ejb.getAllVendorType().size() < 4) {
+		if (ejb.getAllVendorType().size() < 5) {
 
 			List<String> str = new ArrayList<>();
 			str.add("Vendor");
 			str.add("Sales Agent");
 			str.add("Purchase Agent");
 			str.add("Jobber");
+			str.add("Designer");
 
 			for (String s : str) {
 				vendorType = new VendorType();
