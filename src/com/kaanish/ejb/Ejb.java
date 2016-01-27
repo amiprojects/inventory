@@ -29,6 +29,7 @@ import com.kaanish.model.JobAssignmentProducts;
 import com.kaanish.model.JobClass;
 import com.kaanish.model.JobRecievedDetails;
 import com.kaanish.model.JobStock;
+import com.kaanish.model.JobTypes;
 import com.kaanish.model.Module;
 import com.kaanish.model.PageList;
 import com.kaanish.model.PaymentDetails;
@@ -454,7 +455,9 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	/********************************************** search UOM by name ************************************************/
+	/**********************************************
+	 * search UOM by name
+	 ************************************************/
 
 	public List<QtyUnit> getAllQtyUnitByNameOrAbv(String name) {
 		TypedQuery<QtyUnit> q = em
@@ -466,7 +469,9 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	/************************ Product detail Search By Code ********************************************/
+	/************************
+	 * Product detail Search By Code
+	 ********************************************/
 
 	public List<ProductDetail> getAllProductByProductCode(String code) {
 		TypedQuery<ProductDetail> q = em.createQuery(
@@ -477,7 +482,9 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	/************************ Product Search By Code ********************************************/
+	/************************
+	 * Product Search By Code
+	 ********************************************/
 
 	public ProductDetail getProductByProductCode(String code) {
 		TypedQuery<ProductDetail> q = em.createQuery(
@@ -493,7 +500,9 @@ public class Ejb {
 		}
 	}
 
-	/***************************** Product Search By Category ************************************/
+	/*****************************
+	 * Product Search By Category
+	 ************************************/
 
 	public List<ProductDetail> getAllProductByCategory(String cat) {
 		TypedQuery<ProductDetail> q = em
@@ -505,7 +514,9 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	/****************************** Product Search By Description ************************************/
+	/******************************
+	 * Product Search By Description
+	 ************************************/
 
 	public List<ProductDetail> getAllProductByProductDescription(String des) {
 		TypedQuery<ProductDetail> q = em
@@ -1065,7 +1076,9 @@ public class Ejb {
 		}
 	}
 
-	/***************** for Purchase Product Return Details ***********************/
+	/*****************
+	 * for Purchase Product Return Details
+	 ***********************/
 	public void setPurchaseProdReturnDetails(
 			PurchaseReturnProductDetails purchaseReturnProductDetails) {
 		em.persist(purchaseReturnProductDetails);
@@ -1816,8 +1829,8 @@ public class Ejb {
 
 	public List<ProductDetail> getAllProductDetailByCompany() {
 		Users usr = getUserById((String) httpSession.getAttribute("user"));
-		TypedQuery<ProductDetail> q = em.createQuery(
-				"select c from ProductDetail c", ProductDetail.class);
+		// TypedQuery<ProductDetail> q =
+		// em.createQuery("select c from ProductDetail c", ProductDetail.class);
 		List<ProductDetail> listpro = new ArrayList<ProductDetail>();
 		HashSet<ProductDetail> hash = new HashSet<ProductDetail>();
 		for (ProductDetail pd : getAllProductDetail()) {
@@ -2533,7 +2546,9 @@ public class Ejb {
 		}
 	}
 
-	/***************************** Search Sasles for return by ChallanID ****************/
+	/*****************************
+	 * Search Sasles for return by ChallanID
+	 ****************/
 
 	public SalesEntry getSalestDetailsbyChallanNumber(String challanNumber) {
 		TypedQuery<SalesEntry> q = em
@@ -2549,7 +2564,9 @@ public class Ejb {
 
 	}
 
-	/***************************** Sasles return ********************************************************/
+	/*****************************
+	 * Sasles return
+	 ********************************************************/
 
 	public void setSalesReturn(SalesReturn salesReturn) {
 		em.persist(salesReturn);
@@ -2604,4 +2621,22 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	/*************************** for jobtypes ******************************/
+	public void setJobTypes(JobTypes jobTypes) {
+		em.persist(jobTypes);
+	}
+
+	public JobTypes getJobTypeById(int id) {
+		return em.find(JobTypes.class, id);
+	}
+
+	public void updateJobTypes(JobTypes jobTypes) {
+		em.merge(jobTypes);
+	}
+
+	public List<JobTypes> getAllJobTypes() {
+		TypedQuery<JobTypes> q = em.createQuery("select c from JobTypes c",
+				JobTypes.class);
+		return q.getResultList();
+	}
 }

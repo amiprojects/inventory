@@ -65,6 +65,12 @@ public class Vendor implements Serializable {
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "vendor")
 	private VoucherAssign voucherAssign;
 	
+	@OneToMany(mappedBy="vendor")
+	private List<SampleDesignCostSheet> sampleDesignCostSheets;
+	
+	@OneToMany(mappedBy="vendor")
+	private List<JobsForDesignCostSheet> jobsForDesignCostSheets;
+	
 	public List<Purchase_Entry> getPurchaseEntry() {
 		return purchaseEntry;
 	}
@@ -219,6 +225,23 @@ public class Vendor implements Serializable {
 				+ address + "\", " + "\"pinCode\":\"" + pinCode + "\", "
 				+ "\"email\":\"" + email + "\", " + "\"city\":\""
 				+ city.getCityName() + "\"}";
+	}
+
+
+	public List<SampleDesignCostSheet> getSampleDesignCostSheets() {
+		return sampleDesignCostSheets;
+	}
+
+	public void setSampleDesignCostSheets(List<SampleDesignCostSheet> sampleDesignCostSheets) {
+		this.sampleDesignCostSheets = sampleDesignCostSheets;
+	}
+
+	public List<JobsForDesignCostSheet> getJobsForDesignCostSheets() {
+		return jobsForDesignCostSheets;
+	}
+
+	public void setJobsForDesignCostSheets(List<JobsForDesignCostSheet> jobsForDesignCostSheets) {
+		this.jobsForDesignCostSheets = jobsForDesignCostSheets;
 	}
 
 	public VoucherAssign getVoucherAssign() {

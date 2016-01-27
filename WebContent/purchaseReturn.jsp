@@ -119,9 +119,6 @@
 				Math.round((Number($("#spAmount").val()) - Number($(
 						"#spPaymentAmount").val())) * 100) / 100);
 	}*/
-	$(document).ready(function() {
-		$("#AMi2").hide();
-	});
 	function pTypeFunc() {
 		$("#description").show();
 		var val = $('[name="pType"]').val();
@@ -142,6 +139,7 @@
 	}
 	function plzClose() {
 		$("#cVouDetails").modal('hide');
+
 	}
 </script>
 </head>
@@ -537,7 +535,7 @@
 													readonly="readonly" value="0" id="taxAmount"></td>
 											</tr>
 										</tbody>
-										<%-- <tbody>
+										<tbody>
 											<tr>
 												<td colspan="2">Transport charge :</td>
 												<td><input type="text" class="form-control"
@@ -554,7 +552,7 @@
 													value="${purchaseSearchView.sur_charge}"
 													readonly="readonly"></td>
 											</tr>
-										</tbody> --%>
+										</tbody>
 										<tbody>
 											<tr>
 												<td colspan="2" id="round">Round Of :</td>
@@ -673,6 +671,8 @@
 																			<input type="text" class="form-control"
 																				readonly="readonly" id="spAmount" name="spAmount">
 																		</div>
+<<<<<<< HEAD
+=======
 																	</div>
 																	<div id="AMi2">
 																		<div>
@@ -722,6 +722,7 @@
 																					class="form-control" readonly="readonly">
 																			</div>
 																		</div> -->
+>>>>>>> refs/remotes/origin/master
 																	</div>
 																	<!-- <div id="pPayAmount">
 											<div class="col-md-5">Payment Amount :</div>
@@ -853,6 +854,8 @@
 				</div>
 			</div>
 
+<<<<<<< HEAD
+=======
 		</div>
 	</div>
 
@@ -925,6 +928,7 @@
 				</div>
 			</div>
 			<div class="modal-footer"></div>
+>>>>>>> refs/remotes/origin/master
 		</div>
 	</div> -->
 

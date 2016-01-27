@@ -71,6 +71,14 @@ public class Purchase_Product_Details implements Serializable {
 	@OneToMany(mappedBy = "purchase_Product_Details", cascade = CascadeType.PERSIST)
 	private List<SalesProductDetails> salesProductDetails;
 
+	public List<PurchaseReturnProductDetails> getPurchaseReturnProductDetails() {
+		return purchaseReturnProductDetails;
+	}
+
+	public void setPurchaseReturnProductDetails(List<PurchaseReturnProductDetails> purchaseReturnProductDetails) {
+		this.purchaseReturnProductDetails = purchaseReturnProductDetails;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -203,8 +211,7 @@ public class Purchase_Product_Details implements Serializable {
 		return jobAssignmentProducts;
 	}
 
-	public void setJobAssignmentProducts(
-			List<JobAssignmentProducts> jobAssignmentProducts) {
+	public void setJobAssignmentProducts(List<JobAssignmentProducts> jobAssignmentProducts) {
 		this.jobAssignmentProducts = jobAssignmentProducts;
 	}
 
@@ -212,74 +219,42 @@ public class Purchase_Product_Details implements Serializable {
 	public String toString() {
 		String str;
 		if (isInitialInventory()) {
-			str = "{\"id\":\"" + id + "\"," + "\"mrp\":\"" + mrp + "\","
-					+ "\"uom\":\"" + productDetail.getQtyUnit().getName()
-					+ "\"," + "\"wsp\":\"" + wsp + "\"," + "\"lotNumber\":\""
-					+ lotNumber + "\"," + "\"remaining_quantity\":\""
-					+ remaining_quantity + "\"," + "\"quantity\":\"" + quantity
-					+ "\"," + "\"cost\":\"" + cost + "\","
-					+ "\"productCode\":\"" + productDetail.getCode() + "\","
-					+ "\"productId\":\"" + productDetail.getId() + "\","
-					+ "\"productDesc\":\"" + productDetail.getDescription()
-					+ "\"," + "\"isRaw\":\"" + productDetail.isRaw() + "\","
-					+ "\"purchaseDate\":\"" + "Initial Inventory" + "\","
-					+ "\"purchaseVendorName\":\"" + "Initial Inventory" + "\","
-					+ "\"attrName1\":\""
-					+ productDetail.getCategory().getAttrNmae1() + "\","
-					+ "\"attrName2\":\""
-					+ productDetail.getCategory().getAttrNmae2() + "\","
-					+ "\"attrName3\":\""
-					+ productDetail.getCategory().getAttrNmae3() + "\","
-					+ "\"attrName4\":\""
-					+ productDetail.getCategory().getAttrNmae4() + "\","
-					+ "\"attrName5\":\""
-					+ productDetail.getCategory().getAttrNmae5() + "\","
-					+ "\"attrName6\":\""
-					+ productDetail.getCategory().getAttrNmae6() + "\","
-					+ "\"attrValue1\":\"" + attrValue1 + "\","
-					+ "\"attrValue2\":\"" + attrValue2 + "\","
-					+ "\"attrValue3\":\"" + attrValue3 + "\","
-					+ "\"attrValue4\":\"" + attrValue4 + "\","
-					+ "\"attrValue5\":\"" + attrValue5 + "\","
+			str = "{\"id\":\"" + id + "\"," + "\"mrp\":\"" + mrp + "\"," + "\"uom\":\""
+					+ productDetail.getQtyUnit().getName() + "\"," + "\"wsp\":\"" + wsp + "\"," + "\"lotNumber\":\""
+					+ lotNumber + "\"," + "\"remaining_quantity\":\"" + remaining_quantity + "\"," + "\"quantity\":\""
+					+ quantity + "\"," + "\"cost\":\"" + cost + "\"," + "\"productCode\":\"" + productDetail.getCode()
+					+ "\"," + "\"productId\":\"" + productDetail.getId() + "\"," + "\"productDesc\":\""
+					+ productDetail.getDescription() + "\"," + "\"isRaw\":\"" + productDetail.isRaw() + "\","
+					+ "\"purchaseDate\":\"" + "Initial Inventory" + "\"," + "\"purchaseVendorName\":\""
+					+ "Initial Inventory" + "\"," + "\"attrName1\":\"" + productDetail.getCategory().getAttrNmae1()
+					+ "\"," + "\"attrName2\":\"" + productDetail.getCategory().getAttrNmae2() + "\","
+					+ "\"attrName3\":\"" + productDetail.getCategory().getAttrNmae3() + "\"," + "\"attrName4\":\""
+					+ productDetail.getCategory().getAttrNmae4() + "\"," + "\"attrName5\":\""
+					+ productDetail.getCategory().getAttrNmae5() + "\"," + "\"attrName6\":\""
+					+ productDetail.getCategory().getAttrNmae6() + "\"," + "\"attrValue1\":\"" + attrValue1 + "\","
+					+ "\"attrValue2\":\"" + attrValue2 + "\"," + "\"attrValue3\":\"" + attrValue3 + "\","
+					+ "\"attrValue4\":\"" + attrValue4 + "\"," + "\"attrValue5\":\"" + attrValue5 + "\","
 					+ "\"attrValue6\":\"" + attrValue6 + "\"}";
 		} else {
-			str = "{\"id\":\"" + id + "\"," + "\"mrp\":\"" + mrp + "\","
-					+ "\"isRaw\":\"" + productDetail.isRaw() + "\","
-					+ "\"wsp\":\"" + wsp + "\"," + "\"lotNumber\":\""
-					+ lotNumber + "\"," + "\"remaining_quantity\":\""
-					+ remaining_quantity + "\"," + "\"quantity\":\"" + quantity
-					+ "\"," + "\"cost\":\"" + cost + "\"," + "\"attrName1\":\""
-					+ productDetail.getCategory().getAttrNmae1() + "\","
-					+ "\"attrName2\":\""
-					+ productDetail.getCategory().getAttrNmae2() + "\","
-					+ "\"attrName3\":\""
-					+ productDetail.getCategory().getAttrNmae3() + "\","
-					+ "\"attrName4\":\""
-					+ productDetail.getCategory().getAttrNmae4() + "\","
-					+ "\"attrName5\":\""
-					+ productDetail.getCategory().getAttrNmae5() + "\","
-					+ "\"attrName6\":\""
-					+ productDetail.getCategory().getAttrNmae6() + "\","
-					+ "\"attrValue1\":\"" + attrValue1 + "\","
-					+ "\"attrValue2\":\"" + attrValue2 + "\","
-					+ "\"attrValue3\":\"" + attrValue3 + "\","
-					+ "\"attrValue4\":\"" + attrValue4 + "\","
-					+ "\"attrValue5\":\"" + attrValue5 + "\","
-					+ "\"attrValue6\":\"" + attrValue6 + "\","
-					+ "\"purchaseVendorName\":\""
-					+ purchase_Entry.getVendor().getName() + "\","
-					+ "\"purchaseDate\":\"" + purchase_Entry.getPurchase_date()
-					+ "\"," + "\"uom\":\""
-					+ productDetail.getQtyUnit().getName() + "\","
-					+ "\"productCode\":\"" + productDetail.getCode() + "\","
-					+ "\"productId\":\"" + productDetail.getId() + "\","
-					+ "\"productDesc\":\"" + productDetail.getDescription()
-					+ "\"," + "\"purchaseVendorAddress\":\""
-					+ purchase_Entry.getVendor().getAddress() + "\","
-					+ "\"purchaseVendorCompanyName\":\""
-					+ purchase_Entry.getVendor().getCompanyName() + "\","
-					+ "\"purchaseVendorPhoneNumber\":\""
-					+ purchase_Entry.getVendor().getPh1() + "\"}";
+			str = "{\"id\":\"" + id + "\"," + "\"mrp\":\"" + mrp + "\"," + "\"isRaw\":\"" + productDetail.isRaw()
+					+ "\"," + "\"wsp\":\"" + wsp + "\"," + "\"lotNumber\":\"" + lotNumber + "\","
+					+ "\"remaining_quantity\":\"" + remaining_quantity + "\"," + "\"quantity\":\"" + quantity + "\","
+					+ "\"cost\":\"" + cost + "\"," + "\"attrName1\":\"" + productDetail.getCategory().getAttrNmae1()
+					+ "\"," + "\"attrName2\":\"" + productDetail.getCategory().getAttrNmae2() + "\","
+					+ "\"attrName3\":\"" + productDetail.getCategory().getAttrNmae3() + "\"," + "\"attrName4\":\""
+					+ productDetail.getCategory().getAttrNmae4() + "\"," + "\"attrName5\":\""
+					+ productDetail.getCategory().getAttrNmae5() + "\"," + "\"attrName6\":\""
+					+ productDetail.getCategory().getAttrNmae6() + "\"," + "\"attrValue1\":\"" + attrValue1 + "\","
+					+ "\"attrValue2\":\"" + attrValue2 + "\"," + "\"attrValue3\":\"" + attrValue3 + "\","
+					+ "\"attrValue4\":\"" + attrValue4 + "\"," + "\"attrValue5\":\"" + attrValue5 + "\","
+					+ "\"attrValue6\":\"" + attrValue6 + "\"," + "\"purchaseVendorName\":\""
+					+ purchase_Entry.getVendor().getName() + "\"," + "\"purchaseDate\":\""
+					+ purchase_Entry.getPurchase_date() + "\"," + "\"uom\":\"" + productDetail.getQtyUnit().getName()
+					+ "\"," + "\"productCode\":\"" + productDetail.getCode() + "\"," + "\"productId\":\""
+					+ productDetail.getId() + "\"," + "\"productDesc\":\"" + productDetail.getDescription() + "\","
+					+ "\"purchaseVendorAddress\":\"" + purchase_Entry.getVendor().getAddress() + "\","
+					+ "\"purchaseVendorCompanyName\":\"" + purchase_Entry.getVendor().getCompanyName() + "\","
+					+ "\"purchaseVendorPhoneNumber\":\"" + purchase_Entry.getVendor().getPh1() + "\"}";
 		}
 		return str;
 
@@ -305,8 +280,7 @@ public class Purchase_Product_Details implements Serializable {
 		return salesProductDetails;
 	}
 
-	public void setSalesProductDetails(
-			List<SalesProductDetails> salesProductDetails) {
+	public void setSalesProductDetails(List<SalesProductDetails> salesProductDetails) {
 		this.salesProductDetails = salesProductDetails;
 	}
 

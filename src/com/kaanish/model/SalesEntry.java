@@ -69,7 +69,7 @@ public class SalesEntry implements Serializable {
 	private Tax_Type_Group tax_Type_Group;
 	
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "salesEntry")
-	private VoucherDetails VoucherDetails;
+	private VoucherDetails voucherDetails;
 
 	
 	@ManyToOne
@@ -102,12 +102,14 @@ public class SalesEntry implements Serializable {
 		this.salesReturn = salesReturn;
 	}
 
+
+
 	public VoucherDetails getVoucherDetails() {
-		return VoucherDetails;
+		return voucherDetails;
 	}
 
 	public void setVoucherDetails(VoucherDetails voucherDetails) {
-		VoucherDetails = voucherDetails;
+		this.voucherDetails = voucherDetails;
 	}
 
 	public Date getSales_date() {
