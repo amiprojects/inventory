@@ -49,6 +49,9 @@ public class ProductDetail implements Serializable {
 
 	@OneToMany(mappedBy = "productDetail", cascade = CascadeType.ALL)
 	private List<ProductImage> productImages;
+	
+	@OneToMany(mappedBy="productDetail")
+	private List<ProductsForDesignCostSheet> productsForDesignCostSheets;
 
 	public int getId() {
 		return id;
@@ -196,4 +199,13 @@ public class ProductDetail implements Serializable {
 	public void setRaw(boolean isRaw) {
 		this.isRaw = isRaw;
 	}
+
+	public List<ProductsForDesignCostSheet> getProductsForDesignCostSheets() {
+		return productsForDesignCostSheets;
+	}
+
+	public void setProductsForDesignCostSheets(List<ProductsForDesignCostSheet> productsForDesignCostSheets) {
+		this.productsForDesignCostSheets = productsForDesignCostSheets;
+	}
+
 }

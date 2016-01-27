@@ -99,6 +99,7 @@
 						<li><a id="jSearch" href="jobAssignSearch.jsp" title="">Job
 								Assignment Search</a></li>
 						<li><a id="jR" href="jobReceive.jsp" title="">Job Receive</a></li>
+						<li><a id="designCostSheet" href="designCostSheet.jsp" title="">Sample Job for CostSheet</a></li>
 					</ul>
 				</div>
 			</div>
@@ -121,7 +122,8 @@
 						<li><a id="sSetupCity" href="setupCountryStateCity.jsp"
 							title="">Country/State/City</a></li>
 						<li><a id="sSetupBill" href="billSetup.jsp" title="">Bill
-								Setup</a>
+								Setup</a></li>
+								<li><a id="jobSetup" href="jobSetup.jsp" title="">Job Setup</a></li>
 					</ul>
 				</div>
 			</div>

@@ -34,6 +34,12 @@ public class QtyUnit implements Serializable {
 
 	@OneToMany(mappedBy = "qtyUnit")
 	private List<ProductDetail> productDetails;
+	
+	@OneToMany(mappedBy="qtyUnit")
+	private List<ProductsForDesignCostSheet> productsForDesignCostSheets;
+	
+	@OneToMany(mappedBy="qtyUnit")
+	private List<JobsForDesignCostSheet> jobsForDesignCostSheets;
 
 	public int getId() {
 		return id;
@@ -95,6 +101,22 @@ public class QtyUnit implements Serializable {
 	public String toString() {
 		return "{\"id\":\"" + id + "\", " + "\"name\":\"" + name + "\", " + "\"abbreviation\":\"" + abbreviation
 				+ "\", " + "\"description\":\"" + description + "\"}";
+	}
+
+	public List<ProductsForDesignCostSheet> getProductsForDesignCostSheets() {
+		return productsForDesignCostSheets;
+	}
+
+	public void setProductsForDesignCostSheets(List<ProductsForDesignCostSheet> productsForDesignCostSheets) {
+		this.productsForDesignCostSheets = productsForDesignCostSheets;
+	}
+
+	public List<JobsForDesignCostSheet> getJobsForDesignCostSheets() {
+		return jobsForDesignCostSheets;
+	}
+
+	public void setJobsForDesignCostSheets(List<JobsForDesignCostSheet> jobsForDesignCostSheets) {
+		this.jobsForDesignCostSheets = jobsForDesignCostSheets;
 	}
 
 }
