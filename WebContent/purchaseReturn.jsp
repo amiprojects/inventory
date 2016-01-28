@@ -706,7 +706,7 @@
 																		</div> -->
 																		<div>
 																			<div class="col-md-5">
-																				<span id="dORc">Final Debit/Credit :</span>
+																				<span id="dORc">Final Debit/Credit Note :</span>
 																			</div>
 																			<div class="col-md-7">
 																				<input type="text" class="form-control" id="finalDC"

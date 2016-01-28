@@ -618,25 +618,9 @@
 																				<div>
 																					<div class="col-md-5">Current Credit Note :</div>
 																					<div class="col-md-7">
-																						<c:set value="${0}" var="totCr" />
-																						<c:set value="${0}" var="totDb" />
-																						<c:forEach
-																							items="${purchaseSearchView.vendor.voucherAssign.voucherDetails}"
-																							var="vDet">
-																							<%-- <c:set value="${totCr+vDet.value}" var="totCr" /> --%>
-																							<c:choose>
-																								<c:when test="${vDet.isCredit().equals(true)}">
-																									<c:set value="${totCr+vDet.value}" var="totCr" />
-																								</c:when>
-																								<c:otherwise>
-																									<c:set value="${totDb+vDet.value}" var="totDb" />
-																								</c:otherwise>
-																							</c:choose>
-																						</c:forEach>
-																						<c:set value="${totCr-totDb}" var="totCr" />
 																						<input type="text" id="totalCredit"
 																							name="totalCredit" class="form-control"
-																							readonly="readonly" value="${totCr}">
+																							readonly="readonly" value="0">
 																					</div>
 																				</div>
 																				<div>

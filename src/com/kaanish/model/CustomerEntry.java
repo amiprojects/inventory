@@ -26,11 +26,9 @@ public class CustomerEntry implements Serializable {
 	private String address;
 	private String city;
 
-	
-	
 	@OneToMany(mappedBy = "customer")
 	private List<SalesEntry> salesEntries;
-	
+
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "customerEntry")
 	private VoucherAssign voucherAssign;
 
@@ -90,8 +88,6 @@ public class CustomerEntry implements Serializable {
 		this.vat_cst_no = vat_cst_no;
 	}
 
-	
-
 	public VoucherAssign getVoucherAssign() {
 		return voucherAssign;
 	}
@@ -99,13 +95,35 @@ public class CustomerEntry implements Serializable {
 	public void setVoucherAssign(VoucherAssign voucherAssign) {
 		this.voucherAssign = voucherAssign;
 	}
-	
 
 	@Override
 	public String toString() {
-		return "{\"id\":\"" + id + "\"," + "\"vat_cst_no\":\"" + vat_cst_no
-				+ "\"," + "\"address\":\"" + address + "\"," + "\"city\":\""
-				+ city + "\"," + "\"mobile\":\""
-				+ mobile + "\", \"name\":\"" + name + "\"}";
+		if (voucherAssign != null) {
+			if (voucherAssign.getVoucherDetails().size() != 0) {
+				return "{\"id\":\""
+						+ id
+						+ "\", "
+						+ "\"currentDebitNote\":\""
+						+ voucherAssign
+								.getVoucherDetails()
+								.get(voucherAssign.getVoucherDetails().size() - 1)
+								.getTotalDebitNote() + "\","
+						+ "\"vat_cst_no\":\"" + vat_cst_no + "\","
+						+ "\"address\":\"" + address + "\"," + "\"city\":\""
+						+ city + "\"," + "\"mobile\":\"" + mobile
+						+ "\", \"name\":\"" + name + "\"}";
+			} else {
+				return "{\"id\":\"" + id + "\"," + "\"vat_cst_no\":\""
+						+ vat_cst_no + "\"," + "\"address\":\"" + address
+						+ "\"," + "\"city\":\"" + city + "\","
+						+ "\"mobile\":\"" + mobile + "\", \"name\":\"" + name
+						+ "\"}";
+			}
+		} else {
+			return "{\"id\":\"" + id + "\"," + "\"vat_cst_no\":\"" + vat_cst_no
+					+ "\"," + "\"address\":\"" + address + "\","
+					+ "\"city\":\"" + city + "\"," + "\"mobile\":\"" + mobile
+					+ "\", \"name\":\"" + name + "\"}";
+		}
 	}
 }
