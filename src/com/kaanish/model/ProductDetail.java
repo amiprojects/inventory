@@ -170,7 +170,8 @@ public class ProductDetail implements Serializable {
 				+ universalCode + "\"," + "\"isSaleble\":\"" + isSaleble
 				+ "\"," + "\"isActive\":\"" + isActive + "\","
 				+ "\"description\":\"" + description + "\"," + "\"qtyUnit\":\""
-				+ qtyUnit.getName() + "\"," + "\"category\":\""
+				+ qtyUnit.getName() + "\","+ "\"qtyUnitId\":\""
+				+ qtyUnit.getId() + "\"," + "\"category\":\""
 				+ category.getName() + "\"," + "\"attrNmae1\":\""
 				+ category.getAttrNmae1() + "\"," + "\"attrNmae2\":\""
 				+ category.getAttrNmae2() + "\"," + "\"attrNmae3\":\""
