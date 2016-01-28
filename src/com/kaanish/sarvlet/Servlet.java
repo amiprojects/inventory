@@ -1242,6 +1242,13 @@ public class Servlet extends HttpServlet {
 				voucherDetails.setValue(Float.parseFloat(req.getParameter("spDueAmount")));
 				voucherDetails.setVoucherDate(DateConverter.getDate(req.getParameter("payDate")));
 				voucherDetails.setUsers(ejb.getUserById(httpSession.getAttribute("user").toString()));
+				/*if (ejb.getLastVoucherDetailsbyCustomerId(Integer.parseInt(req.getParameter("existingCustId"))).size()>0) {
+					voucherDetails.setTotalDebitNote(ejb.getLastVoucherDetailsbyCustomerId(Integer.parseInt(req.getParameter("existingCustId"))).get(ejb.getLastVoucherDetailsbyCustomerId(Integer.parseInt(req.getParameter("existingCustId"))).size()-1).getTotalDebitNote()+Float.parseFloat(req.getParameter("spDueAmount")));
+				}
+				else{
+					voucherDetails.setTotalDebitNote(Float.parseFloat(req.getParameter("spDueAmount")));
+				}*/
+				
 				voucherDetails.setVoucherAssign(voucherAssign);
 
 				ejb.setVoucherDetails(voucherDetails);
@@ -2041,7 +2048,7 @@ public class Servlet extends HttpServlet {
 							+ req.getParameter("billType") + "/" + req.getParameter("autoNum") + "/"
 							+ req.getParameter("suffix") + "...";
 				}
-				break;
+				break; 
 
 			case "salesReturnServlet":
 				page = "salesReturn.jsp";

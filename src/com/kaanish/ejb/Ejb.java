@@ -2325,12 +2325,22 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<VoucherDetails> getLastVoucherDetailsbyCustomerId(int id) {
+		TypedQuery<VoucherDetails> q = em
+				.createQuery(
+						"select s from VoucherDetails s where s.voucherAssign.customerEntry.id=:Id ORDER BY s.voucherAssign.customerEntry.id DESC ",
+						VoucherDetails.class);
+		q.setParameter("Id", id);
+		return q.getResultList();
+	}
+
 	public List<SalesEntry> getAllSalesEntries() {
 		TypedQuery<SalesEntry> q = em.createQuery("select c from SalesEntry c",
 				SalesEntry.class);
 		return q.getResultList();
 	}
-
+	
+	
 	public List<SalesEntry> getAllSalesEntriesByCompany() {
 		cId = getUserById((String) httpSession.getAttribute("user"))
 				.getCompanyInfo().getId();

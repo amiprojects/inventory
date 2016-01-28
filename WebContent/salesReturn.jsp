@@ -139,8 +139,9 @@
 									<div class="row">
 										<div class="col-md-12">
 											<div class="form-group">
-												<label for="" style="float: left;">Sales challan no.:</label>
-													
+												<label for="" style="float: left;">Sales challan
+													no.:</label>
+
 											</div>
 										</div>
 									</div>
@@ -403,7 +404,7 @@
 																value="0" class="form-control rQtyAm"
 																style="width: 120px" name="rQtyAm" readonly="readonly"></td>
 
-															<td style="padding: 4px"><input type="text"
+															<td style="padding: 4px"><input type="text" id="drabackIid"
 																class="form-control" name="rQtyDe" style="width: 120px"></td>
 
 															<c:set
@@ -427,25 +428,65 @@
 												<thead>
 													<tr>
 														<th>#</th>
-														<th>Item Detail</th>
-														<th>Return Date</th>
-														<th>Return Quantity</th>
-														<th>Reference Voucher No</th>
+											<th>Return Date</th>
+											<th>Purchase Return challan no.</th>
+											<th>Product Code</th>
+											<th>Product Description</th>
+											<th>Returning Qty</th>
+											<th>Drawback</th>
 													</tr>
+													
+													
+													
 												</thead>
 
-												<tbody>
-													<tr>
+												<c:set var="j" value="${1}"></c:set>
+												<c:forEach var="salesReturn"
+													items="${salre.salesReturn}">
 
-														<td></td>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td></td>
-
-													</tr>
-
-												</tbody>
+													<tbody>
+											<tr>
+												<td>${j}</td>
+												<td><fmt:formatDate
+														value="${salesReturn.returnDate}" pattern="dd-MM-yy" />
+												</td>
+												<td>${salesReturn.challanNumber}</td>
+												<td><c:forEach var="salesReturnProd"
+														items="${salesReturn.salesProductReturnDetail}">
+														
+													${salesReturnProd.salesProductDetails.purchase_Product_Details.productDetail.code}
+														<hr>
+														
+													</c:forEach> 
+												</td>
+												<td><c:forEach var="salesReturnProd"
+														items="${salesReturn.salesProductReturnDetail}">
+														
+													${salesReturnProd.salesProductDetails.purchase_Product_Details.productDetail.description}
+														<hr>
+														
+													</c:forEach></td>
+												
+												<td><c:forEach var="salesReturnProd"
+														items="${salesReturn.salesProductReturnDetail}">
+														
+													${salesReturnProd.qtyReturn}
+														<hr>
+														
+													</c:forEach> 
+												</td>
+												<td><c:forEach var="salesReturnProd"
+														items="${salesReturn.salesProductReturnDetail}">
+														
+													${salesReturnProd.fault}
+														<hr>
+														
+													</c:forEach> 
+												</td>
+											</tr>
+										</tbody>
+										<c:set var="j" value="${j+1}" />
+									</c:forEach>
 
 											</table>
 
@@ -563,8 +604,8 @@
 													<div class="modal-dialog modal-lg">
 														<div class="modal-content">
 															<div class="modal-header">
-																<button type="button" class="close" data-dismiss="modal"
-																	onclick="closePayment();">&times;</button>
+																<button type="button" class="close" data-dismiss="modal">&times;</button>
+																	
 																<h4 class="modal-title">Payment Details</h4>
 															</div>
 															<div class="modal-body">
@@ -580,19 +621,17 @@
 																			<div class="sec" id="pTypeDiv">
 																				<div class="col-md-5">Payment type :</div>
 																				<div class="col-md-7">
-																					<select class="form-control" id="pType"
-																						name="pType" onchange="pTypeFunc()">
-																						<option value="-" selected="selected">Select
-																							Payment Type</option>
-
-																						<c:forEach
-																							items="${sessionScope['ejb'].getAllPaymentType()}"
-																							var="payType">
-																							<option value="${payType.id}">${payType.getType()}</option>
-																						</c:forEach>
-
-
-																					</select>
+																					<select class="form-control" id="pType" name="pType" disabled="disabled"
+																				onchange="pTypeFunc()">
+																				
+																				<c:forEach
+																					items="${sessionScope['ejb'].getAllPaymentType()}"
+																					var="payType">
+																					<c:if test="${payType.getType()=='Debit Note'}">
+																						<option value="${payType.getType()}">${payType.getType()}</option>
+																					</c:if>
+																				</c:forEach>
+																			</select>
 																				</div>
 																			</div>
 																			<div id="payDetail">
@@ -604,25 +643,7 @@
 																				<br> <br> <br>
 
 																				<div class="row">
-																					<div id="AMi1">
-																						<div>
-																							<div class="col-md-5">Payment Date :</div>
-																							<div class="col-md-7">
-																								<input type="text" id="datepickerA"
-																									name="payDate" class="form-control"
-																									readonly="readonly">
-																							</div>
-																						</div>
-																						<div id="pAmount">
-																							<div class="col-md-5">Full Amount :</div>
-																							<div class="col-md-7">
-																								<input type="text" class="form-control"
-																									readonly="readonly" id="spAmount1"
-																									name="spAmount">
-																							</div>
-																						</div>
-
-																					</div>
+																					
 
 
 
@@ -886,18 +907,12 @@
 
 			var round = Math.round(r);
 
-			/* $("#roundvalue").val((
-					(Number($("#grandtotal").val()))-Number(r)).toFixed(2)); */
-			/* $("#roundvalue").val(); */
-			if (r > round) {
-				$("#roundvalue").val(Math.round((round + 1 - r) * 100) / 100);
-			} else {
-				$("#roundvalue").val(Math.round((round - r) * 100) / 100);
-			}
+			var vita = Math.round((round - r) * 100) / 100;
 
-			$("#grandtotal").val(
-					(Number(r) - Number($("#roundvalue").val())).toFixed());
+			$("#grandtotal").val((Number(r) - Number(vita)).toFixed());
 
+			$("#roundvalue").val(
+					(Number(r) - Number($("#grandtotal").val())).toFixed(2));
 			$("#spAmount").val($("#grandtotal").val());
 
 		}
@@ -906,10 +921,15 @@
 	<script type="text/javascript">
 		function paymentDate() {
 
+			if ($("#rQtySa307").val() == 0) {
+				alert("please enter returning quantity");
+			} else if ($("#drabackIid").val() == "") {
+				alert("please enter the draw back");
+			} else {
 			$("#saveSales").modal("show");
 			$("#tbv").val($("#grandtotal").val());
 			$("#aDed").val(Number($("#tbv").val()) - Number($("#tcn").val()));
-
+			}
 		}
 	</script>
 	<script>
@@ -922,31 +942,21 @@
 		});
 	</script>
 
-	<!-- <script>
-		$(function() {
-			$("#datepicker22").datepicker({
-				dateFormat : "dd-mm-yy",
-				minDate : 0
-			});
-			$("#datepicker22").datepicker('setDate', new Date());
-		});
-	</script>-->
+	
 	<script type="text/javascript">
 		function submitRet() {
 			$("#salesReturnForm").submit();
 		}
 	</script>
 
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$("#AMi1").show();
-			$("#AMi2").hide();
-		});
-		function pTypeFunc() {
+	
+		
+	<!-- /* 	function pTypeFunc() {
+			var val = $('[name="pType"]').val();
 			var val = $('[name="pType"]').val();
 
 			if (val == '40') {
-				$("#cVouDetails").modal("show");
+				 $("#cVouDetails").modal("show"); 
 				$("#AMi1").hide();
 				$("#AMi2").show();
 			}
@@ -969,7 +979,8 @@
 
 			}
 
-		}
+		} */ -->
+		<script type="text/javascript">
 
 		function plzClose() {
 			$("#cVouDetails").modal('hide');
@@ -977,7 +988,7 @@
 		}
 
 		$(function() {
-			if($(document).find("#datepickerQu").length>0){
+			if ($(document).find("#datepickerQu").length > 0) {
 				var dte = $("#datepickerQu").val();
 				var d = dte.split('-');
 				var n = d[2];
@@ -990,46 +1001,40 @@
 				});
 				$("#datepicker22").datepicker('setDate', new Date());
 			}
-			
-			
+
 		});
 
 		$(function() {
-			if($(document).find("#datepicker22").length>0){
-			var d = $("#datepicker22").datepicker('getDate');
-			var n = d.getFullYear();
-			var m = d.getMonth();
-			var dt = d.getDate();
-			$("#datepickerB").datepicker({
-				dateFormat : "dd-mm-yy",
-				minDate : new Date(n, m, dt),
-				maxDate : 0
-			});
-			$("#datepickerB").datepicker('setDate', new Date());
+			if ($(document).find("#datepicker22").length > 0) {
+				var d = $("#datepicker22").datepicker('getDate');
+				var n = d.getFullYear();
+				var m = d.getMonth();
+				var dt = d.getDate();
+				$("#datepickerB").datepicker({
+					dateFormat : "dd-mm-yy",
+					minDate : new Date(n, m, dt),
+					maxDate : 0
+				});
+				$("#datepickerB").datepicker('setDate', new Date());
 			}
 		});
 
 		$(function() {
-			if($(document).find("#datepicker22").length>0){
-			var d = $("#datepicker22").datepicker('getDate');
-			var n = d.getFullYear();
-			var m = d.getMonth();
-			var dt = d.getDate();
-			$("#datepickerA").datepicker({
-				dateFormat : "dd-mm-yy",
-				minDate : new Date(n, m, dt),
-				maxDate : 0
-			});
-			$("#datepickerA").datepicker('setDate', new Date());
+			if ($(document).find("#datepicker22").length > 0) {
+				var d = $("#datepicker22").datepicker('getDate');
+				var n = d.getFullYear();
+				var m = d.getMonth();
+				var dt = d.getDate();
+				$("#datepickerA").datepicker({
+					dateFormat : "dd-mm-yy",
+					minDate : new Date(n, m, dt),
+					maxDate : 0
+				});
+				$("#datepickerA").datepicker('setDate', new Date());
 			}
 		});
 
-		/* $(function() {
-			$("#datepickerQu").datepicker({
-				dateFormat : "dd-mm-yy",
-				maxDate : 0
-			});
-		}); */
+		
 	</script>
 
 
