@@ -39,7 +39,7 @@ public class SalesReturn implements Serializable {
 	
 
 	@OneToMany(mappedBy = "salesReturn")
-	private List<SalesProductReturnDetail> SalesProductReturnDetail;
+	private List<SalesProductReturnDetail> salesProductReturnDetail;
 
 	@OneToMany(mappedBy = "salesReturn")
 	private List<PaymentDetails> paymentDetails;
@@ -128,12 +128,14 @@ public class SalesReturn implements Serializable {
 		this.referenceSalesChallan = referenceSalesChallan;
 	}
 
+	
+
 	public List<SalesProductReturnDetail> getSalesProductReturnDetail() {
-		return SalesProductReturnDetail;
+		return salesProductReturnDetail;
 	}
 
 	public void setSalesProductReturnDetail(List<SalesProductReturnDetail> salesProductReturnDetail) {
-		SalesProductReturnDetail = salesProductReturnDetail;
+		this.salesProductReturnDetail = salesProductReturnDetail;
 	}
 
 	public SalesEntry getSalesEntry() {

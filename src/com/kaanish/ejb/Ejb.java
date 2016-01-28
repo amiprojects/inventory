@@ -723,7 +723,7 @@ public class Ejb {
 	public List<Vendor> getVendorsByVendorTypeIdByName(int id, String nm) {
 		TypedQuery<Vendor> q = em
 				.createQuery(
-						"select c from Vendor c where c.vendorType.id=:Id AND UPPER(c.name) LIKE :name",
+						"select c from Vendor c where c.vendorType.id=:Id AND UPPER(c.name) LIKE :name ORDER BY c.id ASC",
 						Vendor.class);
 		q.setParameter("Id", id);
 		q.setParameter("name", "%" + nm.toUpperCase() + "%");
@@ -2336,12 +2336,23 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<VoucherDetails> getLastVoucherDetailsbyCustomerId(int id) {
+		TypedQuery<VoucherDetails> q = em
+				.createQuery(
+
+						"select s from VoucherDetails s where s.voucherAssign.customerEntry.id=:Id ORDER BY s.id ASC",
+						VoucherDetails.class);
+		q.setParameter("Id", id);
+		return q.getResultList();
+	}
+
 	public List<SalesEntry> getAllSalesEntries() {
 		TypedQuery<SalesEntry> q = em.createQuery("select c from SalesEntry c",
 				SalesEntry.class);
 		return q.getResultList();
 	}
-
+	
+	
 	public List<SalesEntry> getAllSalesEntriesByCompany() {
 		cId = getUserById((String) httpSession.getAttribute("user"))
 				.getCompanyInfo().getId();
@@ -2574,9 +2585,7 @@ public class Ejb {
 		}
 
 	}
-	
-	
-	
+
 	public List<SalesEntry> getSalesEntryDByChallanNo(String chNo) {
 		TypedQuery<SalesEntry> q = em
 				.createQuery(
@@ -2618,6 +2627,15 @@ public class Ejb {
 		return em.find(VoucherDetails.class, id);
 	}
 
+	public List<VoucherDetails> getVoucherDetailsByVendorId(int id) {
+		TypedQuery<VoucherDetails> q = em
+				.createQuery(
+						"select c from VoucherDetails c where c.voucherAssign.vendor.id=:id",
+						VoucherDetails.class);
+		q.setParameter("id", id);
+		return q.getResultList();
+	}
+
 	/**************** VoucherAssign ******************************************************************/
 	public void setVoucherAssign(VoucherAssign voucherAssign) {
 		em.persist(voucherAssign);
@@ -2650,7 +2668,6 @@ public class Ejb {
 		q.setParameter("id", id);
 		return q.getResultList().get(0);
 	}
-
 
 	/*************************** for jobtypes ******************************/
 	public void setJobTypes(JobTypes jobTypes) {
