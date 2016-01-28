@@ -1490,7 +1490,7 @@ public class Servlet extends HttpServlet {
 						.getParameter("disValue")));
 
 				ejb.setSalesEntry(salesEntry);
-
+			if	(!req.getParameter("pstatus").equals("Full Paid")){
 				voucherDetails = new VoucherDetails();
 				voucherDetails.setSalesEntry(salesEntry);
 				voucherDetails.setCredit(false);
@@ -1521,6 +1521,7 @@ public class Servlet extends HttpServlet {
 
 				voucherDetails.setVoucherAssign(voucherAssign);
 				ejb.setVoucherDetails(voucherDetails);
+			}
 
 				paymentDetails = new PaymentDetails();
 				paymentDetails.setPaymentDate(DateConverter.getDate(req

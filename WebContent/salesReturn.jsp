@@ -315,7 +315,7 @@
 													<div class="form-group">
 														<label style="font-size: 15px" class="font">
 															Reference Number:</label> <input class="form-control" type="text"
-															value="Sales Challan number" name="saslesRChallanRId"
+															value="${salre.challanNumber}" name="saslesRChallanRId"
 															id="saslesChallanId" readonly="readonly">
 
 													</div>
@@ -441,9 +441,6 @@
 														<th>Returning Qty</th>
 														<th>Drawback</th>
 													</tr>
-
-
-
 												</thead>
 
 												<c:set var="j" value="${1}"></c:set>
@@ -864,7 +861,8 @@
 	<script type="text/javascript">
 		function qtySubtraction(g) {
 
-			if (Number($("#rQtySa" + g).val()) <= Number($("#qtttyR" + g).html())
+			if (Number($("#rQtySa" + g).val()) <= Number($("#qtttyR" + g)
+					.html())
 					- Number($("#qtttyR" + g).html())) {
 				$("#rQtyAm" + g).val(
 						Number($("#rQtySa" + g).val())
