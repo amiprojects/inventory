@@ -141,7 +141,7 @@
 													<c:if
 														test="${amiProStock1.purchase_Product_Details.size()>0}">
 														<c:set var="qty"
-															value="${amiProStock1.isSaleble()?sessionScope['ejb'].getReadyGoodsStocktDetailByProductId(amiProStock1.id).remainingQty:sessionScope['ejb'].getRawMaterialStocktDetailByProductId(amiProStock1.id).remainingQty}" />
+															value="${amiProStock1.isSaleble()?sessionScope['ejb'].getReadyGoodsStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty:sessionScope['ejb'].getRawMaterialStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty}" />
 														<c:choose>
 															<c:when test="${qty==0}">
 																<tr>

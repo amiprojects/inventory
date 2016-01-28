@@ -317,7 +317,7 @@
 													<div class="form-group">
 														<label style="font-size: 15px" class="font">
 															Reference Number:</label> <input class="form-control" type="text"
-															value="Sales Challan number" name="saslesRChallanRId"
+															value="${salre.challanNumber}" name="saslesRChallanRId"
 															id="saslesChallanId" readonly="readonly">
 
 													</div>
@@ -434,7 +434,7 @@
 													<tr>
 														<th>#</th>
 											<th>Return Date</th>
-											<th>Purchase Return challan no.</th>
+											<th>Sales Return challan no.</th>
 											<th>Product Code</th>
 											<th>Product Description</th>
 											<th>Returning Qty</th>

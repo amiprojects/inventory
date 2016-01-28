@@ -189,7 +189,7 @@
 												<%-- 	<c:forEach items="${requestScope['ami']}" var="amiProStock"> --%>
 												<c:forEach items="${requestScope['ami']}" var="amiProStock">
 													<c:set var="qty"
-														value="${amiProStock.isSaleble()?sessionScope['ejb'].getReadyGoodsStocktDetailByProductId(amiProStock.id).remainingQty:sessionScope['ejb'].getRawMaterialStocktDetailByProductId(amiProStock.id).remainingQty}" />
+														value="${amiProStock.isSaleble()?sessionScope['ejb'].getReadyGoodsStocktDetailByProductIdAndCompany(amiProStock.id).remainingQty:sessionScope['ejb'].getRawMaterialStocktDetailByProductIdAndCompany(amiProStock.id).remainingQty}" />
 													<c:choose>
 														<c:when test="${qty==0}">
 															<tr>

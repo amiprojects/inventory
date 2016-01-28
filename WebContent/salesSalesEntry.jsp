@@ -422,15 +422,17 @@
 																		<div class="col-md-5">Payment status :</div>
 																		<div class="col-md-7">
 																			<div class="sec">
-
 																				<select class="form-control" id="pstatus"
 																					name="pstatus" onchange="pStatusDiv()">
 																					<option value="-" selected="selected">---</option>
-																					<c:forEach
-																						items="${sessionScope['ejb'].getAllPaymentStatus()}"
-																						var="payStatus">
-																						<option value="${payStatus.status}">${payStatus.status}</option>
-																					</c:forEach>
+																						<c:forEach
+																					items="${sessionScope['ejb'].getAllPaymentType()}"
+																					var="payType">
+																					<c:if test="${payType.getType()!='Debit Note' && payType.getType()!='Credit Note'}">
+																						<option value="${payType.getType()}">${payType.getType()}</option>
+																					</c:if>
+																				</c:forEach> 
+																
 																				</select>
 																			</div>
 																		</div>
