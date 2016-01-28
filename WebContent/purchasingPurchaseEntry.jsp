@@ -645,7 +645,8 @@
 																					</div>
 																					<div class="col-md-7">
 																						<input type="text" class="form-control"
-																							id="finalDC" name="finalDC" readonly="readonly">
+																							id="finalDC" name="finalDC" readonly="readonly"
+																							value="0">
 																					</div>
 																				</div>
 																			</div>
@@ -3986,7 +3987,8 @@
 																			addr : item.address,
 																			id : item.id,
 																			ph1 : item.ph1,
-																			ph2 : item.ph2
+																			ph2 : item.ph2,
+																			currentCreditNote : item.currentCreditNote
 																		});
 																	}));
 												}
@@ -4001,6 +4003,7 @@
 												true);
 										$("#taxTot").val('0');
 										$("#taxAmount").val('0');
+										$("#totalCredit").val('0');
 										/* $("#gt")
 												.val(
 														Math
@@ -4047,6 +4050,8 @@
 														+ ui.item.ph1
 														+ "\nPhone2 : "
 														+ ui.item.ph2);
+										$("#totalCredit").val(
+												ui.item.currentCreditNote);
 									}
 
 								},
