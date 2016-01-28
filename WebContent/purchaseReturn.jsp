@@ -137,10 +137,10 @@
 			$("#AMi2").hide();
 		}
 	}
-	function plzClose() {
+	/* function plzClose() {
 		$("#cVouDetails").modal('hide');
 
-	}
+	} */
 </script>
 </head>
 <body>
@@ -671,12 +671,10 @@
 																			<input type="text" class="form-control"
 																				readonly="readonly" id="spAmount" name="spAmount">
 																		</div>
-<<<<<<< HEAD
-=======
 																	</div>
 																	<div id="AMi2">
 																		<div>
-																			<div class="col-md-5">Total Credit Note :</div>
+																			<div class="col-md-5">Current Credit Note :</div>
 																			<div class="col-md-7">
 																				<c:set value="${0}" var="totCr" />
 																				<c:set value="${0}" var="totDb" />
@@ -722,7 +720,6 @@
 																					class="form-control" readonly="readonly">
 																			</div>
 																		</div> -->
->>>>>>> refs/remotes/origin/master
 																	</div>
 																	<!-- <div id="pPayAmount">
 											<div class="col-md-5">Payment Amount :</div>
@@ -853,9 +850,6 @@
 					<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
 				</div>
 			</div>
-
-<<<<<<< HEAD
-=======
 		</div>
 	</div>
 
@@ -928,7 +922,6 @@
 				</div>
 			</div>
 			<div class="modal-footer"></div>
->>>>>>> refs/remotes/origin/master
 		</div>
 	</div> -->
 
@@ -1003,6 +996,7 @@
 		}
 
 		function paymentDate() {
+			$("#AMi2").hide();
 			var count = $('#productList tbody').length;
 			if (count < 1) {
 				alert("No product found to return.");

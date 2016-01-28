@@ -139,8 +139,9 @@
 									<div class="row">
 										<div class="col-md-12">
 											<div class="form-group">
-												<label for="" style="float: left;">Sales challan no.:</label>
-													
+												<label for="" style="float: left;">Sales challan
+													no.:</label>
+
 											</div>
 										</div>
 									</div>
@@ -648,9 +649,6 @@
 																						</c:forEach>
 																						<c:set value="${totDb-totCr}" var="totDb" />
 
-
-
-
 																						<div>
 																							<div class="col-md-5">Total debit Note :</div>
 																							<div class="col-md-7">
@@ -977,7 +975,7 @@
 		}
 
 		$(function() {
-			if($(document).find("#datepickerQu").length>0){
+			if ($(document).find("#datepickerQu").length > 0) {
 				var dte = $("#datepickerQu").val();
 				var d = dte.split('-');
 				var n = d[2];
@@ -990,37 +988,36 @@
 				});
 				$("#datepicker22").datepicker('setDate', new Date());
 			}
-			
-			
+
 		});
 
 		$(function() {
-			if($(document).find("#datepicker22").length>0){
-			var d = $("#datepicker22").datepicker('getDate');
-			var n = d.getFullYear();
-			var m = d.getMonth();
-			var dt = d.getDate();
-			$("#datepickerB").datepicker({
-				dateFormat : "dd-mm-yy",
-				minDate : new Date(n, m, dt),
-				maxDate : 0
-			});
-			$("#datepickerB").datepicker('setDate', new Date());
+			if ($(document).find("#datepicker22").length > 0) {
+				var d = $("#datepicker22").datepicker('getDate');
+				var n = d.getFullYear();
+				var m = d.getMonth();
+				var dt = d.getDate();
+				$("#datepickerB").datepicker({
+					dateFormat : "dd-mm-yy",
+					minDate : new Date(n, m, dt),
+					maxDate : 0
+				});
+				$("#datepickerB").datepicker('setDate', new Date());
 			}
 		});
 
 		$(function() {
-			if($(document).find("#datepicker22").length>0){
-			var d = $("#datepicker22").datepicker('getDate');
-			var n = d.getFullYear();
-			var m = d.getMonth();
-			var dt = d.getDate();
-			$("#datepickerA").datepicker({
-				dateFormat : "dd-mm-yy",
-				minDate : new Date(n, m, dt),
-				maxDate : 0
-			});
-			$("#datepickerA").datepicker('setDate', new Date());
+			if ($(document).find("#datepicker22").length > 0) {
+				var d = $("#datepicker22").datepicker('getDate');
+				var n = d.getFullYear();
+				var m = d.getMonth();
+				var dt = d.getDate();
+				$("#datepickerA").datepicker({
+					dateFormat : "dd-mm-yy",
+					minDate : new Date(n, m, dt),
+					maxDate : 0
+				});
+				$("#datepickerA").datepicker('setDate', new Date());
 			}
 		});
 

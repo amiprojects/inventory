@@ -2563,9 +2563,7 @@ public class Ejb {
 		}
 
 	}
-	
-	
-	
+
 	public List<SalesEntry> getSalesEntryDByChallanNo(String chNo) {
 		TypedQuery<SalesEntry> q = em
 				.createQuery(
@@ -2607,6 +2605,15 @@ public class Ejb {
 		return em.find(VoucherDetails.class, id);
 	}
 
+	public List<VoucherDetails> getVoucherDetailsByVendorId(int id) {
+		TypedQuery<VoucherDetails> q = em
+				.createQuery(
+						"select c from VoucherDetails c where c.voucherAssign.vendor.id=:id",
+						VoucherDetails.class);
+		q.setParameter("id", id);
+		return q.getResultList();
+	}
+
 	/**************** VoucherAssign ******************************************************************/
 	public void setVoucherAssign(VoucherAssign voucherAssign) {
 		em.persist(voucherAssign);
@@ -2639,7 +2646,6 @@ public class Ejb {
 		q.setParameter("id", id);
 		return q.getResultList().get(0);
 	}
-
 
 	/*************************** for jobtypes ******************************/
 	public void setJobTypes(JobTypes jobTypes) {
