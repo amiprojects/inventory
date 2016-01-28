@@ -64,13 +64,13 @@ public class Vendor implements Serializable {
 
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "vendor")
 	private VoucherAssign voucherAssign;
-	
-	@OneToMany(mappedBy="vendor")
+
+	@OneToMany(mappedBy = "vendor")
 	private List<SampleDesignCostSheet> sampleDesignCostSheets;
-	
-	@OneToMany(mappedBy="vendor")
+
+	@OneToMany(mappedBy = "vendor")
 	private List<JobsForDesignCostSheet> jobsForDesignCostSheets;
-	
+
 	public List<Purchase_Entry> getPurchaseEntry() {
 		return purchaseEntry;
 	}
@@ -216,23 +216,41 @@ public class Vendor implements Serializable {
 	public void setSalesEntry(List<SalesEntry> salesEntry) {
 		this.salesEntry = salesEntry;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "{\"id\":\"" + id + "\", " + "\"name\":\"" + name + "\", "
-				+ "\"companyName\":\"" + companyName + "\", " + "\"ph1\":\""
-				+ ph1 + "\", " + "\"ph2\":\"" + ph2 + "\", " + "\"address\":\""
-				+ address + "\", " + "\"pinCode\":\"" + pinCode + "\", "
-				+ "\"email\":\"" + email + "\", " + "\"city\":\""
-				+ city.getCityName() + "\"}";
-	}
+		if (voucherAssign != null) {
+			return "{\"id\":\""
+					+ id
+					+ "\", "
+					+ "\"currentCreditNote\":\""
+					+ voucherAssign.getVoucherDetails()
+							.get(voucherAssign.getVoucherDetails().size() - 1)
+							.getTotalCreditNote() + "\", " + "\"name\":\""
+					+ name + "\", " + "\"companyName\":\"" + companyName
+					+ "\", " + "\"ph1\":\"" + ph1 + "\", " + "\"ph2\":\"" + ph2
+					+ "\", " + "\"address\":\"" + address + "\", "
+					+ "\"pinCode\":\"" + pinCode + "\", " + "\"email\":\""
+					+ email + "\", " + "\"city\":\"" + city.getCityName()
+					+ "\"}";
+		} else {
+			return "{\"id\":\"" + id + "\", " + "\"currentCreditNote\":\"" + 0
+					+ "\", " + "\"name\":\"" + name + "\", "
+					+ "\"companyName\":\"" + companyName + "\", "
+					+ "\"ph1\":\"" + ph1 + "\", " + "\"ph2\":\"" + ph2 + "\", "
+					+ "\"address\":\"" + address + "\", " + "\"pinCode\":\""
+					+ pinCode + "\", " + "\"email\":\"" + email + "\", "
+					+ "\"city\":\"" + city.getCityName() + "\"}";
+		}
 
+	}
 
 	public List<SampleDesignCostSheet> getSampleDesignCostSheets() {
 		return sampleDesignCostSheets;
 	}
 
-	public void setSampleDesignCostSheets(List<SampleDesignCostSheet> sampleDesignCostSheets) {
+	public void setSampleDesignCostSheets(
+			List<SampleDesignCostSheet> sampleDesignCostSheets) {
 		this.sampleDesignCostSheets = sampleDesignCostSheets;
 	}
 
@@ -240,7 +258,8 @@ public class Vendor implements Serializable {
 		return jobsForDesignCostSheets;
 	}
 
-	public void setJobsForDesignCostSheets(List<JobsForDesignCostSheet> jobsForDesignCostSheets) {
+	public void setJobsForDesignCostSheets(
+			List<JobsForDesignCostSheet> jobsForDesignCostSheets) {
 		this.jobsForDesignCostSheets = jobsForDesignCostSheets;
 	}
 
@@ -251,7 +270,5 @@ public class Vendor implements Serializable {
 	public void setVoucherAssign(VoucherAssign voucherAssign) {
 		this.voucherAssign = voucherAssign;
 	}
-
-	
 
 }
