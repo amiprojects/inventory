@@ -1456,10 +1456,6 @@ public class Servlet extends HttpServlet {
 						.getParameter("roundvalue")));
 				salesEntry.setTotalCost(Float.parseFloat(req
 						.getParameter("grandtotal")));
-				/*
-				 * salesEntry.setDueAmount(Float.parseFloat(req
-				 * .getParameter("spDueAmount")));
-				 */
 				salesEntry.setCompanyInfo(companyInfo);
 
 				if (!req.getParameter("aId").equals("")) {
