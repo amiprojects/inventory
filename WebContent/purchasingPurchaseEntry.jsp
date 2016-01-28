@@ -112,12 +112,14 @@
 		$("#sPurchEntry").attr("style", "color: #6a94ff;");
 		$("#payDetail").hide();
 		$("#description").hide();
+		$("#AMi2").hide();
 	});
 	function closePayment() {
 		$("#payDetail").hide();
 		$("#description").hide();
 		$("#pstatus").val('-');
 		$("#pType").val('-');
+		$("#AMi2").hide();
 	}
 	function pStatusDiv() {
 		var val = $('[name="pstatus"]').val();
@@ -127,6 +129,7 @@
 			alert('Please select Payment status...');
 			$("#payDetail").hide();
 			$("#description").hide();
+			$("#AMi2").hide();
 			$("#pType").val("-");
 		} else if (val == 'Not Paid') {
 			$("#pType").val("-");
@@ -141,6 +144,11 @@
 			$("#spDueAmount").val(
 					Math.round((Number($("#spAmount").val()) - Number($(
 							"#spPaymentAmount").val())) * 100) / 100);
+
+			$("#AMi2").show();
+			$("#finalDC").val(
+					Math.round((Number($("#spDueAmount").val()) + Number($(
+							"#totalCredit").val())) * 100) / 100);
 		} else if (val == 'Full Paid') {
 			$("#pType").val("-");
 			$("#pPayAmount").hide();
@@ -149,6 +157,7 @@
 			$("#pDate").show();
 			$("#pTypeDiv").show();
 			$("#description").hide();
+			$("#AMi2").hide();
 			$("#spAmount").val(Number($("#gt").val()));
 			$("#spPaymentAmount").val(Number($("#gt").val()));
 			$("#spDueAmount").val(
@@ -167,12 +176,31 @@
 			$("#spDueAmount").val(
 					Math.round((Number($("#spAmount").val()) - Number($(
 							"#spPaymentAmount").val())) * 100) / 100);
+
+			$("#AMi2").show();
+			$("#finalDC").val(
+					Math.round((Number($("#spDueAmount").val()) + Number($(
+							"#totalCredit").val())) * 100) / 100);
 		}
 	}
 	function spPaymentAmountFunc() {
-		$("#spDueAmount").val(
-				Math.round((Number($("#spAmount").val()) - Number($(
-						"#spPaymentAmount").val())) * 100) / 100);
+		if (Number($("#spPaymentAmount").val()) > Number($("#spAmount").val())) {
+			alert("Payment amount can not be greater than full amount...");
+			$("#spPaymentAmount").val(Number($("#gt").val()));
+			$("#spDueAmount").val(
+					Math.round((Number($("#spAmount").val()) - Number($(
+							"#spPaymentAmount").val())) * 100) / 100);
+			$("#finalDC").val(
+					Math.round((Number($("#spDueAmount").val()) + Number($(
+							"#totalCredit").val())) * 100) / 100);
+		} else {
+			$("#spDueAmount").val(
+					Math.round((Number($("#spAmount").val()) - Number($(
+							"#spPaymentAmount").val())) * 100) / 100);
+			$("#finalDC").val(
+					Math.round((Number($("#spDueAmount").val()) + Number($(
+							"#totalCredit").val())) * 100) / 100);
+		}
 	}
 	function pTypeFunc() {
 		$("#description").show();
@@ -546,7 +574,10 @@
 																						<c:forEach
 																							items="${sessionScope['ejb'].getAllPaymentType()}"
 																							var="payType">
-																							<option value="${payType.getType()}">${payType.getType()}</option>
+																							<c:if
+																								test="${payType.getType()!='Debit Note' && payType.getType()!='Credit Note'}">
+																								<option value="${payType.getType()}">${payType.getType()}</option>
+																							</c:if>
 																						</c:forEach>
 																					</select>
 																				</div>
@@ -555,7 +586,8 @@
 																				<div class="col-md-5">Payment Date :</div>
 																				<div class="col-md-7">
 																					<input type="text" id="datepicker2"
-																						class="form-control" readonly="readonly" name="payDate">
+																						class="form-control" readonly="readonly"
+																						name="payDate">
 																				</div>
 																			</div>
 																			<div id="pAmount">
@@ -580,6 +612,41 @@
 																					<input type="text" class="form-control"
 																						readonly="readonly" id="spDueAmount"
 																						name="spDueAmount">
+																				</div>
+																			</div>
+																			<div id="AMi2">
+																				<div>
+																					<div class="col-md-5">Current Credit Note :</div>
+																					<div class="col-md-7">
+																						<c:set value="${0}" var="totCr" />
+																						<c:set value="${0}" var="totDb" />
+																						<c:forEach
+																							items="${purchaseSearchView.vendor.voucherAssign.voucherDetails}"
+																							var="vDet">
+																							<%-- <c:set value="${totCr+vDet.value}" var="totCr" /> --%>
+																							<c:choose>
+																								<c:when test="${vDet.isCredit().equals(true)}">
+																									<c:set value="${totCr+vDet.value}" var="totCr" />
+																								</c:when>
+																								<c:otherwise>
+																									<c:set value="${totDb+vDet.value}" var="totDb" />
+																								</c:otherwise>
+																							</c:choose>
+																						</c:forEach>
+																						<c:set value="${totCr-totDb}" var="totCr" />
+																						<input type="text" id="totalCredit"
+																							name="totalCredit" class="form-control"
+																							readonly="readonly" value="${totCr}">
+																					</div>
+																				</div>
+																				<div>
+																					<div class="col-md-5">
+																						<span id="dORc">Final Credit Note :</span>
+																					</div>
+																					<div class="col-md-7">
+																						<input type="text" class="form-control"
+																							id="finalDC" name="finalDC" readonly="readonly">
+																					</div>
 																				</div>
 																			</div>
 																		</div>
@@ -3603,8 +3670,7 @@
 			n1 = $("#trRemove" + a + " :nth-child(7)").html();
 			n2 = $("#subTotal").val();
 			$("#subTotal").val(
-			Math.round((Number(n2) - Number(n1)) * 100) / 100);
-			
+					Math.round((Number(n2) - Number(n1)) * 100) / 100);
 
 			/* var sum = 0;
 			$(".trRemove:nth-child(7)").each(function() {
@@ -4699,9 +4765,7 @@
 											},
 											dataType : "json",
 											success : function(data) {
-												
-												
-												
+
 												$("#agentName").empty();
 												$("#agentName")
 														.append(
@@ -4720,7 +4784,7 @@
 											},
 											complete : function() {
 												$("#agentName").val(agentId);
-										
+
 											}///show for current update
 
 										});

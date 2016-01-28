@@ -670,9 +670,6 @@
 																						</c:forEach>
 																						<c:set value="${totDb-totCr}" var="totDb" />
 
-
-
-
 																						<div>
 																							<div class="col-md-5">Total debit Note :</div>
 																							<div class="col-md-7">
