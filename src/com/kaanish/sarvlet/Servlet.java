@@ -1075,40 +1075,45 @@ public class Servlet extends HttpServlet {
 								0);
 					}
 
-					voucherDetails = new VoucherDetails();
-					voucherDetails.setVoucherAssign(voucherAssign);
-					voucherDetails.setCredit(true);
-					voucherDetails.setValue(Float.parseFloat(req
-							.getParameter("spDueAmount")));
-					voucherDetails.setTotalCreditNote(Float.parseFloat(req
-							.getParameter("finalDC")));
-					System.out.println(ejb.getVoucherDetailsByVendorId(
-							Integer.parseInt(req.getParameter("vId"))).size());
-					if (ejb.getVoucherDetailsByVendorId(
-							Integer.parseInt(req.getParameter("vId"))).size() == 0) {
-						voucherDetails.setTotalCreditNote(Float.parseFloat(req
+					if (!req.getParameter("pstatus").equals("Full Paid")) {
+						voucherDetails = new VoucherDetails();
+						voucherDetails.setVoucherAssign(voucherAssign);
+						voucherDetails.setCredit(true);
+						voucherDetails.setValue(Float.parseFloat(req
 								.getParameter("spDueAmount")));
-					} else {
-						float totalCreditNote = ejb
-								.getVoucherDetailsByVendorId(
-										Integer.parseInt(req
-												.getParameter("vId")))
-								.get(ejb.getVoucherDetailsByVendorId(
-										Integer.parseInt(req
-												.getParameter("vId"))).size() - 1)
-								.getTotalCreditNote();
-						voucherDetails
-								.setTotalCreditNote(Float.parseFloat(req
-										.getParameter("spDueAmount"))
-										+ totalCreditNote);
+						voucherDetails.setTotalCreditNote(Float.parseFloat(req
+								.getParameter("finalDC")));
+						System.out.println(ejb.getVoucherDetailsByVendorId(
+								Integer.parseInt(req.getParameter("vId")))
+								.size());
+						if (ejb.getVoucherDetailsByVendorId(
+								Integer.parseInt(req.getParameter("vId")))
+								.size() == 0) {
+							voucherDetails
+									.setTotalCreditNote(Float.parseFloat(req
+											.getParameter("spDueAmount")));
+						} else {
+							float totalCreditNote = ejb
+									.getVoucherDetailsByVendorId(
+											Integer.parseInt(req
+													.getParameter("vId")))
+									.get(ejb.getVoucherDetailsByVendorId(
+											Integer.parseInt(req
+													.getParameter("vId")))
+											.size() - 1).getTotalCreditNote();
+							voucherDetails
+									.setTotalCreditNote(Float.parseFloat(req
+											.getParameter("spDueAmount"))
+											+ totalCreditNote);
+						}
+						voucherDetails.setVoucherDate(DateConverter.getDate(req
+								.getParameter("payDate")));
+						voucherDetails.setUsers(ejb
+								.getUserById((String) httpSession
+										.getAttribute("user")));
+						voucherDetails.setPurchase_Entry(purchaseEntry);
+						ejb.setVoucherDetails(voucherDetails);
 					}
-					voucherDetails.setVoucherDate(DateConverter.getDate(req
-							.getParameter("payDate")));
-					voucherDetails.setUsers(ejb
-							.getUserById((String) httpSession
-									.getAttribute("user")));
-					voucherDetails.setPurchase_Entry(purchaseEntry);
-					ejb.setVoucherDetails(voucherDetails);
 
 					paymentDetails.setPaymentDate(DateConverter.getDate(req
 							.getParameter("payDate")));
@@ -1489,11 +1494,12 @@ public class Servlet extends HttpServlet {
 				voucherDetails = new VoucherDetails();
 				voucherDetails.setSalesEntry(salesEntry);
 				voucherDetails.setCredit(false);
-				voucherDetails.setValue(Float.parseFloat(req.getParameter("spDueAmount")));
-				voucherDetails.setVoucherDate(DateConverter.getDate(req.getParameter("payDate")));
-				voucherDetails.setUsers(ejb.getUserById(httpSession.getAttribute("user").toString()));
-				
-			
+				voucherDetails.setValue(Float.parseFloat(req
+						.getParameter("spDueAmount")));
+				voucherDetails.setVoucherDate(DateConverter.getDate(req
+						.getParameter("payDate")));
+				voucherDetails.setUsers(ejb.getUserById(httpSession
+						.getAttribute("user").toString()));
 
 				if (req.getParameter("isExistingCust").equals("0")) {
 					voucherDetails.setTotalDebitNote(Float.parseFloat(req
@@ -1512,10 +1518,11 @@ public class Servlet extends HttpServlet {
 											.size() - 1).getTotalDebitNote()
 									+ Float.parseFloat(req
 											.getParameter("spDueAmount")));
-				} 
+				}
 
-				else{
-					voucherDetails.setTotalDebitNote(Float.parseFloat(req.getParameter("spDueAmount")));
+				else {
+					voucherDetails.setTotalDebitNote(Float.parseFloat(req
+							.getParameter("spDueAmount")));
 
 				}
 

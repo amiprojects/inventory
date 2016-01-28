@@ -220,19 +220,31 @@ public class Vendor implements Serializable {
 	@Override
 	public String toString() {
 		if (voucherAssign != null) {
-			return "{\"id\":\""
-					+ id
-					+ "\", "
-					+ "\"currentCreditNote\":\""
-					+ voucherAssign.getVoucherDetails()
-							.get(voucherAssign.getVoucherDetails().size() - 1)
-							.getTotalCreditNote() + "\", " + "\"name\":\""
-					+ name + "\", " + "\"companyName\":\"" + companyName
-					+ "\", " + "\"ph1\":\"" + ph1 + "\", " + "\"ph2\":\"" + ph2
-					+ "\", " + "\"address\":\"" + address + "\", "
-					+ "\"pinCode\":\"" + pinCode + "\", " + "\"email\":\""
-					+ email + "\", " + "\"city\":\"" + city.getCityName()
-					+ "\"}";
+			if (voucherAssign.getVoucherDetails().size()!=0) {
+				return "{\"id\":\""
+						+ id
+						+ "\", "
+						+ "\"currentCreditNote\":\""
+						+ voucherAssign
+								.getVoucherDetails()
+								.get(voucherAssign.getVoucherDetails().size() - 1)
+								.getTotalCreditNote() + "\", " + "\"name\":\""
+						+ name + "\", " + "\"companyName\":\"" + companyName
+						+ "\", " + "\"ph1\":\"" + ph1 + "\", " + "\"ph2\":\""
+						+ ph2 + "\", " + "\"address\":\"" + address + "\", "
+						+ "\"pinCode\":\"" + pinCode + "\", " + "\"email\":\""
+						+ email + "\", " + "\"city\":\"" + city.getCityName()
+						+ "\"}";
+			} else {
+				return "{\"id\":\"" + id + "\", " + "\"currentCreditNote\":\""
+						+ 0 + "\", " + "\"name\":\"" + name + "\", "
+						+ "\"companyName\":\"" + companyName + "\", "
+						+ "\"ph1\":\"" + ph1 + "\", " + "\"ph2\":\"" + ph2
+						+ "\", " + "\"address\":\"" + address + "\", "
+						+ "\"pinCode\":\"" + pinCode + "\", " + "\"email\":\""
+						+ email + "\", " + "\"city\":\"" + city.getCityName()
+						+ "\"}";
+			}
 		} else {
 			return "{\"id\":\"" + id + "\", " + "\"currentCreditNote\":\"" + 0
 					+ "\", " + "\"name\":\"" + name + "\", "

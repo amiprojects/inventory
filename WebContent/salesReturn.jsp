@@ -26,8 +26,8 @@
 <link rel="stylesheet" href="css/toast.css" type="text/css" />
 <!-- Style -->
 <link rel="stylesheet" href="css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="css/fixedHeader.dataTables.min.css">
-    
+<link rel="stylesheet" href="css/fixedHeader.dataTables.min.css">
+
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
 <!-- Responsive -->
 <style>
@@ -43,9 +43,7 @@
 .head_style {
 	font-size: 17px;
 }
-
-	
-	</style>
+</style>
 
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
 
@@ -351,7 +349,8 @@
 
 											<input type="hidden" value="${requestScope['amS'].id}"
 												name="salesReID">
-											<table class="table table-striped table-bordered" id="example" cellspacing="0" width="100%" >
+											<table class="table table-striped table-bordered"
+												id="example" cellspacing="0" width="100%">
 
 												<thead>
 													<tr>
@@ -394,7 +393,7 @@
 															</td>
 															<td>${srr.purchase_Product_Details.productDetail.description}</td>
 															<td id="qtty${srr.id}">${srr.quantity}</td>
-															<td id="qtttyR${srr.id}">${srr.salesReQty}</td>
+															<td id="qtttyR${srr.id}">${srr.quantity-srr.salesReQty}</td>
 															<td id="qttyC${srr.id}">
 																${srr.purchase_Product_Details.cost}</td>
 															<td>${srr.quantity*srr.purchase_Product_Details.cost}
@@ -409,8 +408,9 @@
 																value="0" class="form-control rQtyAm"
 																style="width: 120px" name="rQtyAm" readonly="readonly"></td>
 
-															<td style="padding: 4px"><input type="text" id="drabackIid"
-																class="form-control" name="rQtyDe" style="width: 120px"></td>
+															<td style="padding: 4px"><input type="text"
+																id="drabackIid" class="form-control" name="rQtyDe"
+																style="width: 120px"></td>
 
 															<c:set
 																value="${tota+srr.quantity*srr.purchase_Product_Details.cost}"
@@ -428,70 +428,67 @@
 
 
 
-											<table class="table table-striped table-bordered" id="example" cellspacing="0" width="100%">
+											<table class="table table-striped table-bordered"
+												id="example" cellspacing="0" width="100%">
 
 												<thead>
 													<tr>
 														<th>#</th>
-											<th>Return Date</th>
-											<th>Purchase Return challan no.</th>
-											<th>Product Code</th>
-											<th>Product Description</th>
-											<th>Returning Qty</th>
-											<th>Drawback</th>
+														<th>Return Date</th>
+														<th>Purchase Return challan no.</th>
+														<th>Product Code</th>
+														<th>Product Description</th>
+														<th>Returning Qty</th>
+														<th>Drawback</th>
 													</tr>
-													
-													
-													
+
+
+
 												</thead>
 
 												<c:set var="j" value="${1}"></c:set>
-												<c:forEach var="salesReturn"
-													items="${salre.salesReturn}">
+												<c:forEach var="salesReturn" items="${salre.salesReturn}">
 
 													<tbody>
-											<tr>
-												<td>${j}</td>
-												<td><fmt:formatDate
-														value="${salesReturn.returnDate}" pattern="dd-MM-yy" />
-												</td>
-												<td>${salesReturn.challanNumber}</td>
-												<td><c:forEach var="salesReturnProd"
-														items="${salesReturn.salesProductReturnDetail}">
+														<tr>
+															<td>${j}</td>
+															<td><fmt:formatDate
+																	value="${salesReturn.returnDate}" pattern="dd-MM-yy" />
+															</td>
+															<td>${salesReturn.challanNumber}</td>
+															<td><c:forEach var="salesReturnProd"
+																	items="${salesReturn.salesProductReturnDetail}">
 														
 													${salesReturnProd.salesProductDetails.purchase_Product_Details.productDetail.code}
 														<hr>
-														
-													</c:forEach> 
-												</td>
-												<td><c:forEach var="salesReturnProd"
-														items="${salesReturn.salesProductReturnDetail}">
+
+																</c:forEach></td>
+															<td><c:forEach var="salesReturnProd"
+																	items="${salesReturn.salesProductReturnDetail}">
 														
 													${salesReturnProd.salesProductDetails.purchase_Product_Details.productDetail.description}
 														<hr>
-														
-													</c:forEach></td>
-												
-												<td><c:forEach var="salesReturnProd"
-														items="${salesReturn.salesProductReturnDetail}">
+
+																</c:forEach></td>
+
+															<td><c:forEach var="salesReturnProd"
+																	items="${salesReturn.salesProductReturnDetail}">
 														
 													${salesReturnProd.qtyReturn}
 														<hr>
-														
-													</c:forEach> 
-												</td>
-												<td><c:forEach var="salesReturnProd"
-														items="${salesReturn.salesProductReturnDetail}">
+
+																</c:forEach></td>
+															<td><c:forEach var="salesReturnProd"
+																	items="${salesReturn.salesProductReturnDetail}">
 														
 													${salesReturnProd.fault}
 														<hr>
-														
-													</c:forEach> 
-												</td>
-											</tr>
-										</tbody>
-										<c:set var="j" value="${j+1}" />
-									</c:forEach>
+
+																</c:forEach></td>
+														</tr>
+													</tbody>
+													<c:set var="j" value="${j+1}" />
+												</c:forEach>
 
 											</table>
 
@@ -610,7 +607,7 @@
 														<div class="modal-content">
 															<div class="modal-header">
 																<button type="button" class="close" data-dismiss="modal">&times;</button>
-																	
+
 																<h4 class="modal-title">Payment Details</h4>
 															</div>
 															<div class="modal-body">
@@ -626,17 +623,18 @@
 																			<div class="sec" id="pTypeDiv">
 																				<div class="col-md-5">Payment type :</div>
 																				<div class="col-md-7">
-																					<select class="form-control" id="pType" name="pType" disabled="disabled"
-																				onchange="pTypeFunc()">
-																				
-																				<c:forEach
-																					items="${sessionScope['ejb'].getAllPaymentType()}"
-																					var="payType">
-																					<c:if test="${payType.getType()=='Debit Note'}">
-																						<option value="${payType.getType()}">${payType.getType()}</option>
-																					</c:if>
-																				</c:forEach>
-																			</select>
+																					<select class="form-control" id="pType"
+																						name="pType" disabled="disabled"
+																						onchange="pTypeFunc()">
+
+																						<c:forEach
+																							items="${sessionScope['ejb'].getAllPaymentType()}"
+																							var="payType">
+																							<c:if test="${payType.getType()=='Debit Note'}">
+																								<option value="${payType.getType()}">${payType.getType()}</option>
+																							</c:if>
+																						</c:forEach>
+																					</select>
 																				</div>
 																			</div>
 																			<div id="payDetail">
@@ -648,7 +646,7 @@
 																				<br> <br> <br>
 
 																				<div class="row">
-																				
+
 																					<div id="AMi2">
 																						<c:set value="${0}" var="totCr" />
 																						<c:set value="${0}" var="totDb" />
@@ -682,11 +680,16 @@
 																							<div class="col-md-5">Total Bill Value :</div>
 																							<div class="col-md-7">
 																								<input type="text" class="form-control"
-																									readonly="readonly" id="tbv" name="tbv">
+																									readonly="readonly" id="tbv" name="tbv"
+																									value="0">
 																							</div>
 																						</div>
 																						<div>
-																							<div class="col-md-5">Amount Deduction :</div>
+																							<div class="col-md-5">
+																								<span id="dORc">Final Debit/Credit Note :
+																								</span>
+																								<!--  Amount Deduction : -->
+																							</div>
 																							<div class="col-md-7">
 																								<input type="text" class="form-control"
 																									readonly="readonly" id="aDed" name="aDed">
@@ -838,7 +841,7 @@
 	<script type="text/javascript" src="js/enscroll.js"></script>
 	<script type="text/javascript" src="js/grid-filter.js"></script>
 	<script src="js/jquery.dataTables.min.js"></script>
-    <script src="js/dataTables.fixedHeader.min.js"></script>
+	<script src="js/dataTables.fixedHeader.min.js"></script>
 
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 
@@ -861,7 +864,7 @@
 	<script type="text/javascript">
 		function qtySubtraction(g) {
 
-			if (Number($("#rQtySa" + g).val()) <= Number($("#qtty" + g).html())
+			if (Number($("#rQtySa" + g).val()) <= Number($("#qtttyR" + g).html())
 					- Number($("#qtttyR" + g).html())) {
 				$("#rQtyAm" + g).val(
 						Number($("#rQtySa" + g).val())
@@ -903,14 +906,14 @@
 					+ Number($("#taxAmount2").val())
 					- Number($("#discountValue2").val());
 			$("#grandtotal").val(Math.floor(r));
-			
-			var va=Math.floor(r);
-			var vi=(r-va).toFixed(2);
+
+			var va = Math.floor(r);
+			var vi = (r - va).toFixed(2);
 			$("#roundvalue").val(vi);
-				}
-		
-		function cancelF(){
-		
+		}
+
+		function cancelF() {
+
 			alert(Math.floor(2.9));
 		}
 	</script>
@@ -923,9 +926,20 @@
 			} else if ($("#drabackIid").val() == "") {
 				alert("please enter the draw back");
 			} else {
-			$("#saveSales").modal("show");
-			$("#tbv").val($("#grandtotal").val());
-			$("#aDed").val(Number($("#tbv").val()) - Number($("#tcn").val()));
+				$("#saveSales").modal("show");
+				$("#tbv").val($("#grandtotal").val());
+				//$("#aDed").val(Number($("#tbv").val()) - Number($("#tcn").val()));
+				if (Number($("#tcn").val()) > Number($("#tbv").val())) {
+					$("#dORc").html("Final Debit Note :");
+					$("#aDed").val(
+							(Number($("#tcn").val()) - Number($("#tbv").val()))
+									.toFixed(2));
+				} else {
+					$("#dORc").html("Final Credit Note :");
+					$("#aDed").val(
+							(Number($("#tbv").val()) - Number($("#tcn").val()))
+									.toFixed(2));
+				}
 			}
 		}
 	</script>
@@ -939,19 +953,17 @@
 		});
 	</script>
 
-	
+
 	<script type="text/javascript">
 		function submitRet() {
 			$("#salesReturnForm").submit();
 		}
 	</script>
 
-	
-		
-	
-		<script type="text/javascript">
 
-		
+
+
+	<script type="text/javascript">
 		$(function() {
 			if ($(document).find("#datepickerQu").length > 0) {
 				var dte = $("#datepickerQu").val();
@@ -998,8 +1010,6 @@
 				$("#datepickerA").datepicker('setDate', new Date());
 			}
 		});
-
-		
 	</script>
 
 
