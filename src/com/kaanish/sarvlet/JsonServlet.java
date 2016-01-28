@@ -51,7 +51,7 @@ import com.kaanish.util.DepartmentCotractor;
 		"/getSalesAgentDetailsById", "/getPurchaseProductDetailsByIdForSale", "/getCustomerByPh", "/checkPcode",
 		"/addVendorbyjson", "/addAgen", "/getVendorByType", "/addUOMjson", "/getuomByType", "/getDeptjson",
 		"/getSubByDepjson", "/getCatBySubjson", "/addJsonCity", "/addJsonState", "/addJsonCountry",
-		"/productSumaryJson" })
+		"/productSumaryJson", "/getVendorsByNameAndType" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -365,7 +365,6 @@ public class JsonServlet extends HttpServlet {
 					ejb.setVendor(vendor);
 					ejb.setAccountDetails(accountDetails);
 
-					
 					gen2.writeStartObject().write("result", "vendor added successfully").write("vid", vendor.getId())
 							.write("vname", vendor.getName()).write("vvadd", vendor.getAddress())
 							.write("vph1", vendor.getPh1()).write("vph2", vendor.getPh2()).writeEnd().close();
@@ -456,21 +455,17 @@ public class JsonServlet extends HttpServlet {
 								ejb.getTax_Type_GroupById(Integer.parseInt(req.getParameter("taxTypeGroupId2"))));
 					}
 
-					
-
 					accountDetails2.setUsers(ejb.getUserById((String) httpSession2.getAttribute("user")));
 					accountDetails2.setVendor(vendor2);
 
 					ejb.setVendor(vendor2);
 					ejb.setAccountDetails(accountDetails2);
 
-					
 					gen22.writeStartObject().write("result", "Agent added successfully")
-							.write("vendorid", vendor2.getId())
-							.writeEnd().close();
+							.write("vendorid", vendor2.getId()).writeEnd().close();
 
 				} else {
-					
+
 					gen22.writeStartObject().write("result", "Duplicate Agent Entry").writeEnd().close();
 				}
 				break;
@@ -737,7 +732,9 @@ public class JsonServlet extends HttpServlet {
 				}
 
 				break;
-
+			case "getVendorsByNameAndType":
+				resp.getWriter().print(ejb.getVendorByTypeAndName(req.getParameter("type"), req.getParameter("name")));
+				break;
 			default:
 				break;
 			}
