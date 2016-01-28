@@ -159,7 +159,7 @@
 														style="length: 40px;" readonly="readonly"></input><input
 														type="hidden" name="aId" id="aId"><input
 														type="hidden" name="isExistingCust" id="isExistingCust"><input
-														type="hidden" name="existingCustId" id="existingCustId"></td>
+														type="hidden" name="existingCustId" value="" id="existingCustId"></td>
 												</tr>
 												<tr id="aDetailsDiv">
 													<td>Agent details :</td>
@@ -483,7 +483,7 @@
 																			<div id="pDueAmount">
 																				<div class="col-md-5">Due Amount :</div>
 																				<div class="col-md-7">
-																					<input type="text" class="form-control"
+																					<input type="text" class="form-control" value="0"
 																						readonly="readonly" id="spDueAmount"
 																						name="spDueAmount">
 																				</div>

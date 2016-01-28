@@ -25,6 +25,9 @@
 <!-- TOAST -->
 <link rel="stylesheet" href="css/toast.css" type="text/css" />
 <!-- Style -->
+<link rel="stylesheet" href="css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="css/fixedHeader.dataTables.min.css">
+    
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
 <!-- Responsive -->
 <style>
@@ -40,7 +43,9 @@
 .head_style {
 	font-size: 17px;
 }
-</style>
+
+	
+	</style>
 
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
 
@@ -346,7 +351,7 @@
 
 											<input type="hidden" value="${requestScope['amS'].id}"
 												name="salesReID">
-											<table class="table table-striped table-bordered">
+											<table class="table table-striped table-bordered" id="example" cellspacing="0" width="100%" >
 
 												<thead>
 													<tr>
@@ -423,7 +428,7 @@
 
 
 
-											<table class="table table-striped table-bordered">
+											<table class="table table-striped table-bordered" id="example" cellspacing="0" width="100%">
 
 												<thead>
 													<tr>
@@ -643,11 +648,7 @@
 																				<br> <br> <br>
 
 																				<div class="row">
-																					
-
-
-
-
+																				
 																					<div id="AMi2">
 																						<c:set value="${0}" var="totCr" />
 																						<c:set value="${0}" var="totDb" />
@@ -740,7 +741,7 @@
 													</div>
 												</div>
 
-												<div id="cVouDetails" class="modal fade" role="dialog"
+												<%-- <div id="cVouDetails" class="modal fade" role="dialog"
 													style="top: 25px;">
 
 													<div class="modal-dialog modal-lg">
@@ -803,15 +804,15 @@
 
 																	</table>
 																	<input type="button" class="btn green pull-right"
-																		style="float: right;" value="Back"
-																		onclick="plzClose()">
+																		style="float: right;" value="Back">
+																		
 
 																</div>
 															</div>
 														</div>
 														<div class="modal-footer"></div>
 													</div>
-												</div>
+												</div> --%>
 
 
 											</div>
@@ -839,6 +840,8 @@
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="js/enscroll.js"></script>
 	<script type="text/javascript" src="js/grid-filter.js"></script>
+	<script src="js/jquery.dataTables.min.js"></script>
+    <script src="js/dataTables.fixedHeader.min.js"></script>
 
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 
@@ -902,19 +905,16 @@
 			var r = Number($("#subtotalvalue").val())
 					+ Number($("#taxAmount2").val())
 					- Number($("#discountValue2").val());
-
-			/* $("#grandtotal").val(r.toFixed()); */
-
-			var round = Math.round(r);
-
-			var vita = Math.round((round - r) * 100) / 100;
-
-			$("#grandtotal").val((Number(r) - Number(vita)).toFixed());
-
-			$("#roundvalue").val(
-					(Number(r) - Number($("#grandtotal").val())).toFixed(2));
-			$("#spAmount").val($("#grandtotal").val());
-
+			$("#grandtotal").val(Math.floor(r));
+			
+			var va=Math.floor(r);
+			var vi=(r-va).toFixed(2);
+			$("#roundvalue").val(vi);
+				}
+		
+		function cancelF(){
+		
+			alert(Math.floor(2.9));
 		}
 	</script>
 
@@ -951,42 +951,10 @@
 
 	
 		
-	<!-- /* 	function pTypeFunc() {
-			var val = $('[name="pType"]').val();
-			var val = $('[name="pType"]').val();
-
-			if (val == '40') {
-				 $("#cVouDetails").modal("show"); 
-				$("#AMi1").hide();
-				$("#AMi2").show();
-			}
-
-			else if (val == '37') {
-				$("#AMi1").show();
-				$("#AMi2").hide();
-
-			}
-
-			else if (val == '38') {
-
-				$("#AMi1").show();
-				$("#AMi2").hide();
-			}
-
-			else if (val == '39') {
-				$("#AMi1").show();
-				$("#AMi2").hide();
-
-			}
-
-		} */ -->
+	
 		<script type="text/javascript">
 
-		function plzClose() {
-			$("#cVouDetails").modal('hide');
-
-		}
-
+		
 		$(function() {
 			if ($(document).find("#datepickerQu").length > 0) {
 				var dte = $("#datepickerQu").val();

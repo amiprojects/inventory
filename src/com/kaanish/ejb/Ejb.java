@@ -2328,7 +2328,7 @@ public class Ejb {
 	public List<VoucherDetails> getLastVoucherDetailsbyCustomerId(int id) {
 		TypedQuery<VoucherDetails> q = em
 				.createQuery(
-						"select s from VoucherDetails s where s.voucherAssign.customerEntry.id=:Id ORDER BY s.voucherAssign.customerEntry.id DESC ",
+						"select s from VoucherDetails s where s.voucherAssign.customerEntry.id=:Id ORDER BY s.id ASC",
 						VoucherDetails.class);
 		q.setParameter("Id", id);
 		return q.getResultList();
