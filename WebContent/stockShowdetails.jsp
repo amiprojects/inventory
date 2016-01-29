@@ -263,10 +263,6 @@
 													<tr style="width: 100%">
 
 														<td><b>In Stock:</b> &nbsp;&nbsp;${qty}</td>
-
-
-
-
 														<c:set
 															value="${sessionScope['ejb'].getPurchaseProductDetailsByProductIdAndCompany(requestScope['proid1'])}"
 															var="prolst" />

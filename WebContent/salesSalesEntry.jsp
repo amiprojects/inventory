@@ -156,11 +156,10 @@
 													<td><input type="checkbox" onclick="isAgentF();"
 														id="agent" name="agent">&nbsp; Via Agent :</td>
 													<td><input type="text" name="agentName" id="agentName"
-														style="length: 40px;" readonly="readonly"></input><input
+														style="length: 30px;" readonly="readonly"></input><input
 														type="hidden" name="aId" id="aId"><input
 														type="hidden" name="isExistingCust" id="isExistingCust"><input
-														type="hidden" name="existingCustId" value=""
-														id="existingCustId"></td>
+														type="hidden" name="existingCustId" value="" id="existingCustId"></td>
 												</tr>
 												<tr id="aDetailsDiv">
 													<td>Agent details :</td>
@@ -424,6 +423,7 @@
 																		<div class="col-md-5">Payment status :</div>
 																		<div class="col-md-7">
 																			<div class="sec">
+
 																				<select class="form-control" id="pstatus"
 																					name="pstatus" onchange="pStatusDiv()">
 																					<option value="-" selected="selected">---</option>
@@ -448,10 +448,9 @@
 																				<div class="col-md-5">Payment type :</div>
 																				<div class="col-md-7">
 																					<select class="form-control" id="pstatus"
-																						name="pstatus" onchange="pStatusDiv()">
+																						name="pType" onchange="pTypeFunc()">
 																						<option value="-" selected="selected">---</option>
-																						<c:forEach
-																							items="${sessionScope['ejb'].getAllPaymentType()}"
+																						<c:forEach items="${sessionScope['ejb'].getAllPaymentType()}"
 																							var="payType">
 																							<c:if
 																								test="${payType.getType()!='Debit Note' && payType.getType()!='Credit Note'}">

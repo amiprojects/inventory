@@ -15,7 +15,7 @@ body {
 page[size="A4"] {
 	background: white;
 	width: 21.0cm;
-	height: 29.7cm;
+	height: 29.0cm;
 	display: block;
 	margin: 0 auto;
 	margin-bottom: 0.0cm;
@@ -60,31 +60,43 @@ page[size="A4"] {
 }
 </style>
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
-
+<%-- <c:if test="${param.print==1}">
+	<script type="text/javascript">
+		var myWindow = window
+				.open(
+						"barcodePrint.jsp?id=${param.id}&ip=${sessionScope['sip']}&port=${sessionScope['port']}",
+						'name', 'width=600,height=400');
+		myWindow.print();
+	</script>
+</c:if> --%>
 </head>
 <body>
-	<%-- <c:if test="${!sessionScope['user'].equals('admin')}">
+	<c:if test="${sessionScope['user']==null}">
+		<c:redirect url="index.jsp" />
+	</c:if>
+	<c:if
+		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminKainat')}">
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
 
-			<c:if test="${page.name.equals('Sales Entry')}">
+			<c:if test="${page.name.equals('Purchase Entry')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
 		<c:if test="${i!=5}">
 			<script type="text/javascript">
 				alert('you have no permission to view this page');
-				window.location = "dashboard.jsp"; 
-			</script> 
+				window.location = "dashboard.jsp";
+			</script>
 		</c:if>
-	</c:if> --%>
+	</c:if>
 	<c:set value="${sessionScope['ejb'].getCompanyInfo()}"
 		var="companyInfo" />
-	<c:set value="${sessionScope['ejb'].getSalesReturnDetailsById(param.id)}"
-		var="salesReturn" />
+	<c:set value="${sessionScope['ejb'].getPurchaseReturnById(param.id)}"
+		var="purEntry" />
 	<page id="print1" size="A4">
-	<h3 align="center">Sales Return Challan</h3>
+	<h3 align="center">Purchase Challan</h3>
 	<table class="tg"
 		style="border: 1px solid; height: 1050px; width: 750px">
 		<tr style="height: 50px">
@@ -93,28 +105,51 @@ page[size="A4"] {
 				${companyInfo.addr}<br> EMail: ${companyInfo.email}<br>
 				Mobile: ${companyInfo.mobile}
 			</td>
-			<td class="tg-031e" colspan="2" style="width: 25%">Sales Return Invoice
-				no:${salesReturn.challanNumber}</td>
-			<td class="tg-031e" colspan="2" style="width: 25%">Dated:<fmt:formatDate
+			<td class="tg-031e" colspan="2" style="width: 25%">Purchase
+				Return Challan no:</td>
+			<td class="tg-031e" colspan="2" style="width: 25%">${purEntry.challanNumber}</td>
+		</tr>
+		<tr style="height: 50px">
+			<td class="tg-031e" colspan="2">Refference Challan No.:</td>
+			<td class="tg-031e" colspan="2">${purEntry.referencePurchaseChallan}</td>
+		</tr>
+		<tr style="height: 50px">
+			<%-- <td class="tg-031e" colspan="2">Dated:</td>
+			<td class="tg-031e" colspan="2"><fmt:formatDate
 					value="${sessionScope['ejb'].getCurrentDateTime()}"
-					pattern="dd-MM-yyyy" /></td>
+					pattern="dd-MM-yyyy" /></td> --%>
+
+
+			<td class="tg-031e" colspan="2">Return date:</td>
+			<td class="tg-031e" colspan="2"><fmt:formatDate
+					value="${purEntry.returnDate}" pattern="dd-MM-yyyy" /></td>
 		</tr>
 		<tr style="height: 50px">
-			<td class="tg-031e" colspan="2"></td>
-			<td class="tg-031e" colspan="2"></td>
+			<td class="tg-031e" colspan="3" rowspan="4"><strong> <c:choose>
+						<c:when
+							test="${purEntry.purchaseEntry.vendor.vendorType.type=='Vendor'}">Vendor
+					Details:</c:when>
+						<c:when
+							test="${purEntry.purchaseEntry.vendor.vendorType.type=='Purchase Agent'}">Vendor
+					Details:</c:when>
+						<c:otherwise>Vendor/Agent
+					Details:</c:otherwise>
+					</c:choose>
+			</strong> <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Name :</span>
+				${purEntry.purchaseEntry.vendor.name} <br>
+				&nbsp;&nbsp;&nbsp;&nbsp;<span>City :</span>
+				${purEntry.purchaseEntry.vendor.city.cityName} <br>
+				&nbsp;&nbsp;&nbsp;&nbsp;<span>Address :<br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			</span> ${purEntry.purchaseEntry.vendor.address} <br>
+				&nbsp;&nbsp;&nbsp;&nbsp;<span>Ph1 :</span>
+				${purEntry.purchaseEntry.vendor.ph1} <br>
+				&nbsp;&nbsp;&nbsp;&nbsp;<span>Ph2 :</span>
+				${purEntry.purchaseEntry.vendor.ph2}</td>
+			<td class="tg-031e" colspan="2">Vendor bill No:</td>
+			<td class="tg-031e" colspan="2">${purEntry.purchaseEntry.vendor_bill_no}</td>
 		</tr>
 		<tr style="height: 50px">
-			<td class="tg-031e" colspan="2">Sales Return date :</td>
-			<td class="tg-031e" colspan="2"><fmt:formatDate	value="${salesReturn.sales_date}" pattern="dd-MM-yyyy" /></td>
-		</tr>
-		<tr style="height: 50px">
-			<td class="tg-031e" colspan="3" rowspan="4"><strong>Customer
-					Details:</strong> <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Name :</span>
-				${purEntry.customer.name} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>City
-					:</span> ${purEntry.customer.city} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Address
-					:<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			</span> ${purEntry.customer.address} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Ph
-					:</span> ${purEntry.customer.mobile}</td>
 			<td class="tg-031e" colspan="2">Mode of payment :</td>
 			<td class="tg-031e" colspan="2"><c:choose>
 					<c:when
@@ -125,14 +160,7 @@ page[size="A4"] {
 		<tr style="height: 50px">
 			<td class="tg-031e" colspan="2">Supplier reference(Agent Alias
 				name):</td>
-			<td class="tg-031e" colspan="2"><c:choose>
-					<c:when test="${purEntry.vendor!=null}">${purEntry.vendor.aliseName}</c:when>
-					<c:otherwise>NA</c:otherwise>
-				</c:choose></td>
-		</tr>
-		<tr style="height: 50px">
-			<td class="tg-031e" colspan="2"></td>
-			<td class="tg-031e" colspan="2"></td>
+			<td class="tg-031e" colspan="2">${purEntry.purchaseEntry.vendor.aliseName}</td>
 		</tr>
 		<tr style="height: 50px">
 			<td class="tg-031e" colspan="4"></td>
@@ -143,28 +171,27 @@ page[size="A4"] {
 					style="height: auto; width: 750px; border-color: white; margin-left: -6px; margin-right: -4px; margin-top: -11px;">
 					<tr>
 						<th>Sl No</th>
-						<th>Description of returning goods</th>
-						<th>Returning Quantity</th>
+						<th>Description of goods</th>
+						<th>Quantity</th>
 						<th>Cost</th>
 						<th>Per</th>
 						<th>Amount</th>
 					</tr>
-					
 					<c:set value="${1}" var="sl" />
 					<c:set value="${0}" var="tqty" />
 					<c:set value="${0}" var="gtot" />
-					
-					<c:forEach items="${salesReturn.SalesProductReturnDetail}" var="ppdet">
-					
+					<c:forEach items="${purEntry.purchaseReturnProductDetails}"
+						var="ppdet">
 						<tr>
 							<td>${sl}</td>
-							<td>${ppdet.salesProductDetails.purchase_Product_Details.productDetail.description}</td>
+							<td>${ppdet.purchaseProductDetails.productDetail.description}</td>
 							<td>${ppdet.qtyReturn}</td>
 							<c:set value="${tqty+ppdet.qtyReturn}" var="tqty" />
-							<td>${ppdet.salesProductDetails.getSalesPrice()}</td>
-							<td>${ppdet.salesProductDetails.purchase_Product_Details.productDetail.qtyUnit.name}</td>
-							<td>${ppdet.salesProductDetails.getSalesPrice()*ppdet.qtyReturn}</td>
-							<c:set value="${gtot+ppdet.salesProductDetails.getSalesPrice()*ppdet.qtyReturn}"
+							<td>${ppdet.purchaseProductDetails.cost}</td>
+							<td>${ppdet.purchaseProductDetails.productDetail.qtyUnit.name}</td>
+							<td>${ppdet.purchaseProductDetails.cost*ppdet.qtyReturn}</td>
+							<c:set
+								value="${ppdet.purchaseProductDetails.cost*ppdet.qtyReturn}"
 								var="gtot" />
 						</tr>
 						<c:set value="${sl+1}" var="sl" />

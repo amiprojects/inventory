@@ -91,7 +91,9 @@ import com.kaanish.util.DateConverter;
 		"/salesReturnServlet", "/purchaseSearchAll", "/salesSearchAll",
 		"/jobSearchAll", "/forgotPassUserCheck", "/forgotPassVarify",
 		"/resetPass", "/purchaseSearchForReturn", "/purchaseReturn",
-		"/setJobTypes", "/updateJob", "/sampleJobCost" })
+		"/setJobTypes", "/updateJob", "/sampleJobCost","/allPurchaseReport",
+		"/purchaseReportByProductCode", "/purchaseReportByVendorName",
+		"/purchaseReportByDate", "/purchaseReportByAgentName" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -513,36 +515,61 @@ public class Servlet extends HttpServlet {
 				vendor.setPinCode(req.getParameter("vendorPin"));
 				vendor.setVendorType(ejb.getVendorTypeById(Integer.parseInt(req
 						.getParameter("vendorType"))));
+				if (!req.getParameter("vendorCityId").equals("")) {
 				vendor.setCity(ejb.getCityById(Integer.parseInt(req
 						.getParameter("vendorCityId"))));
+				}
 
 				accountDetails = ejb.getAccountDetailsByVendorId(Integer
 						.parseInt(req.getParameter("vendoeId")));// vender
 																	// id
 
 				accountDetails.setVatNumber(req.getParameter("vendorVATno"));
-				accountDetails.setVatRegistrationDate(DateConverter.getDate(req
-						.getParameter("vendorVATregDate")));
+				
+				if (!req.getParameter("vendorVATregDate").equals("")) {
+					accountDetails.setCstRegistrationDate(DateConverter
+							.getDate(req.getParameter("vendorVATregDate")));
+				}
+
 				accountDetails.setCstNumber(req.getParameter("vendorCSTno"));
-				accountDetails.setCstRegistrationDate(DateConverter.getDate(req
-						.getParameter("vendorVATregDate")));
+				if (!req.getParameter("vendorCSTregDate").equals("")) {
+					accountDetails.setCstRegistrationDate(DateConverter
+							.getDate(req.getParameter("vendorCSTregDate")));
+				}
+
 				accountDetails.setPanNumber(req.getParameter("vendorPANno"));
 				accountDetails.setExciseRegistrationNumber(req
 						.getParameter("vendorExciseRegNo"));
-				accountDetails.setExciseRegistrationDate(DateConverter
-						.getDate(req.getParameter("vendorExciseRegDate")));
+				
+				if (!req.getParameter("vendorExciseRegDate").equals("")) {
+					accountDetails.setCstRegistrationDate(DateConverter
+							.getDate(req
+									.getParameter("vendorExciseRegDate")));
+				}
+
 				accountDetails.setServiceTaxRegistrationNumber(req
 						.getParameter("vendorServiceTaxRegNo"));
-				accountDetails.setServiceTaxRegistrationDate(DateConverter
-						.getDate(req.getParameter("vendorServiceTaxRegDate")));
+				
+				if (!req.getParameter("vendorServiceTaxRegDate").equals("")) {
+					accountDetails
+							.setCstRegistrationDate(DateConverter.getDate(req
+									.getParameter("vendorServiceTaxRegDate")));
+				}
+
 				accountDetails.setBankName(req.getParameter("bankName"));
 				accountDetails.setBankAccountNumber(req
 						.getParameter("bankAccNo"));
 				accountDetails.setBranch(req.getParameter("bankBranch"));
-				accountDetails.setCity(ejb.getCityById(Integer.parseInt(req
-						.getParameter("bankCity"))));
+				if (!req.getParameter("bankCity").equals("")) {
+					accountDetails.setCity(ejb.getCityById(Integer
+							.parseInt(req.getParameter("bankCity"))));
+				}
+
+
 				accountDetails.setBankIFSCnumber(req.getParameter("bankIFSC"));
+				
 				accountDetails.setBankMICRnumber(req.getParameter("bankMICR"));
+				
 				accountDetails.setBankRTGCnumber(req.getParameter("bankRTGS"));
 				ejb.updateVendor(vendor);
 				ejb.updateAccountDetails(accountDetails);
@@ -1643,6 +1670,28 @@ public class Servlet extends HttpServlet {
 				}
 				break;
 
+			case "purchaseReportByDate":
+				page = "reportPurchaseReport.jsp";
+				List<Purchase_Entry> purEntryListRp = ejb
+						.getPurchaseEntryByDateAndCompany(
+								DateConverter
+										.getDate(req.getParameter("fDate")),
+								DateConverter.getDate(req.getParameter("lDate")),
+								ejb.getUserById(
+										(String) httpSession
+												.getAttribute("user"))
+										.getCompanyInfo().getId());
+				req.setAttribute("purEntryList", purEntryListRp);
+				if (purEntryListRp.size() > 0) {
+					msg = "Your search for dated " + req.getParameter("fDate")
+							+ " to " + req.getParameter("lDate");
+				} else {
+					msg = "No result found for dated "
+							+ req.getParameter("fDate") + " to "
+							+ req.getParameter("lDate") + "...";
+				}
+				break;
+
 			case "purchaseSearchByPurchaseChallanNo":
 				page = "purchasingPurchaseSearch.jsp";
 
@@ -1711,6 +1760,22 @@ public class Servlet extends HttpServlet {
 				}
 				break;
 
+			case "purchaseReportByVendorName":
+				page = "reportPurchaseReport.jsp";
+				List<Purchase_Entry> purEntryList2R = ejb
+						.getPurchaseEntryByVendorNameAndCompany(req
+								.getParameter("vendorName"));
+				req.setAttribute("purEntryList", purEntryList2R);
+				if (purEntryList2R.size() > 0) {
+					msg = "Your search for Vendor name : "
+							+ req.getParameter("vendorName").toUpperCase();
+				} else {
+					msg = "No result found for Vendor name : "
+							+ req.getParameter("vendorName").toUpperCase()
+							+ "...";
+				}
+				break;
+
 			case "purchaseSearchByAgentName":
 				page = "purchasingPurchaseSearch.jsp";
 				List<Purchase_Entry> purEntryList3 = ejb
@@ -1718,6 +1783,21 @@ public class Servlet extends HttpServlet {
 								.getParameter("agentName"));
 				req.setAttribute("purEntryList", purEntryList3);
 				if (purEntryList3.size() > 0) {
+					msg = "Your search for Agent name : "
+							+ req.getParameter("agentName").toUpperCase();
+				} else {
+					msg = "No result found for Agent name : "
+							+ req.getParameter("agentName").toUpperCase()
+							+ "...";
+				}
+				break;
+			case "purchaseReportByAgentName":
+				page = "reportPurchaseReport.jsp";
+				List<Purchase_Entry> purEntryList3R = ejb
+						.getPurchaseEntryByAgentNameAndCompany(req
+								.getParameter("agentName"));
+				req.setAttribute("purEntryList", purEntryList3R);
+				if (purEntryList3R.size() > 0) {
 					msg = "Your search for Agent name : "
 							+ req.getParameter("agentName").toUpperCase();
 				} else {
@@ -1743,6 +1823,22 @@ public class Servlet extends HttpServlet {
 				}
 				break;
 
+			case "purchaseReportByProductCode":
+				page = "reportPurchaseReport.jsp";
+				List<Purchase_Entry> purEntryList4R = ejb
+						.getPurchaseEntryByProductCodeAndCompany(req
+								.getParameter("prodCode"));
+				req.setAttribute("purEntryList", purEntryList4R);
+				if (purEntryList4R.size() > 0) {
+					msg = "Your search for Product code : "
+							+ req.getParameter("prodCode").toUpperCase();
+				} else {
+					msg = "No result found for product code : "
+							+ req.getParameter("prodCode").toUpperCase()
+							+ "...";
+				}
+				break;
+
 			case "purchaseSearchAll":
 				page = "purchasingPurchaseSearch.jsp";
 				List<Purchase_Entry> purEntryListA = ejb
@@ -1753,6 +1849,18 @@ public class Servlet extends HttpServlet {
 				} else {
 					msg = "No result found...";
 				}
+				break;
+
+			case "allPurchaseReport":
+				page = "reportPurchaseReport.jsp";
+				List<Purchase_Entry> purEntryListAR = ejb
+						.getAllPurchaseEntryByCompany();
+				req.setAttribute("purEntryList", purEntryListAR);
+				msg="";
+				/*
+				 * if (purEntryListAR.size() > 0) { msg = "All Purchase List"; }
+				 * else { msg = "No result found..."; }
+				 */
 				break;
 
 			case "purchaseBarCode":
@@ -2679,7 +2787,7 @@ public class Servlet extends HttpServlet {
 				}
 
 				salesReturn.setSalesEntry(salesEntry);
-				req.setAttribute("purDetIdforPC", salesReturn.getId());
+				req.setAttribute("salRetDetIdforPC", salesReturn.getId());
 
 				msg = "sales Return Succeessful";
 
