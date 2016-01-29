@@ -155,14 +155,16 @@
 	<script type="text/javascript" src="js/grid-filter.js"></script>
 
 	<script src="js/jquery-ui/jquery-ui.js"></script>
-	<script>
-		$(document).ready(function() {
-			$("#dash").attr("id", "activeSubMenu");
-			$("#sDash").attr("style", "color: #6a94ff;");
-		});
-		$(function() {
-			$("#datepicker").datepicker();
-		});
+
+	
+	<script type="text/javascript">
+	$(document).ready(function() {
+		$("#reports").attr("id", "activeSubMenu");
+		$("#report").attr("style", "color: #6a94ff;");
+	});
+	$(function() {
+		$("#datepicker").datepicker();
+	});
 	</script>
 	<script type="text/javascript">
 		function random_num(field, interval, range) {
@@ -202,15 +204,7 @@
 			document.getElementById('reportrange').innerHTML = x1;
 			tt = display_c();
 		}
-		$(document).ready(function() {
-			display_ct();
-
-			$("#dash").attr("id", "activeSubMenu");
-			$("#sDash").attr("style", "color: #6a94ff;");
-
-			
-
-		});
+		
 	</script>
 </body>
 

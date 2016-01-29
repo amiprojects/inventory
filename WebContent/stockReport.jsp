@@ -42,8 +42,9 @@
 </style>
 <style>
 	div.dataTables_wrapper {
-        width: 60%;
+        width: 80%;
         margin: 0 auto;
+       
     }
 	table{
 	width:100% !important;
@@ -62,37 +63,18 @@
 	</style>
   </head>
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
-<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
-<script src="js/jquery-ui/jquery-ui.js"></script>
-<script>
-	$(function() {
-		$("#datepicker").datepicker({
-			dateFormat : "dd-mm-yy",
-			maxDate : 0
-		});
-	});
-	$(function() {
-		$("#datepicker1").datepicker({
-			dateFormat : "dd-mm-yy",
-			minDate : 0
-		});
-	});
-</script>
+
+
+
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("#jobs").attr("id", "activeSubMenu");
-		$("#jSearch").attr("style", "color: #6a94ff;");
+		$("#reports").attr("id", "activeSubMenu");
+		$("#report").attr("style", "color: #6a94ff;");
 	});
 </script>
 <link rel="stylesheet" href="css/toast.css" type="text/css" />
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
-<script type="text/javascript">
-	$(document).ready(function() {
-		if ($('#msg').html() != "") {
-			$('.toast').fadeIn(400).delay(3000).fadeOut(400);
-		}
-	});
-</script>
+
 </head>
 <body>
 	<c:if test="${sessionScope['user']==null}">
@@ -143,17 +125,14 @@
     <table  class="table table-bordered" id="example" cellspacing="0" width="100%">
         <thead>
             <tr>
-              <th>
+              <th align="right">
                 Name
-                <div>
-                  <input type="text">
-                </div>
-              </th>
-              <th>Position</th>
-              <th>Office</th>
-              <th>Age</th>
-              <th>Start date</th>
-              <th>Salary</th>
+                 </th>
+              <th align="right">Position</th>
+              <th align="right">Office</th>
+              <th align="right">Age</th>
+              <th align="right">Start date</th>
+              <th align="right">Salary</th>
             </tr>
         </thead>
  
