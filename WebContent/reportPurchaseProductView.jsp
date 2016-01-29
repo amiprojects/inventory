@@ -61,71 +61,126 @@
 				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
 				<div class="container">
 					<div class="row">
-						<div class="breadcrumbs" style="height: 50px; text-align: center;">
-							<h3 style="margin-top: 11px;">Purchase Report</h3>
-						</div>
+						<div class="masonary-grids">
 
-						<div class="widget-area">
-							<ul class="nav nav-tabs">
-								<li class="active"><a data-toggle="tab" href="#byProd">By
-										Product</a></li>
-								<li><a data-toggle="tab" href="#byVendor">By Vendor</a></li>
-								<li><a data-toggle="tab" href="#byAgent">By Agent</a></li>
-							</ul>
-							<div class="tab-content">
-								<div id="byProd" class="tab-pane fade active in">
-									<table class="table">
-										<thead>
+							<div class="breadcrumbs"
+								style="height: 50px; text-align: center;">
+								<h3 style="margin-top: 11px;">Purchase Report</h3>
+							</div>
+
+							<div class="widget-area">
+								<c:set var="prod"
+									value="${sessionScope['ejb'].getProductDetailById(requestScope['pId'])}" />
+								<table id="stream_table"
+									class="table table-striped table-bordered" style="width: 30%;">
+									<thead>
+										<tr>
+											<th style="text-align: right;">Product Code :</th>
+											<td>${prod.code}</td>
+										</tr>
+									</thead>
+									<thead>
+										<tr>
+											<th style="text-align: right;">Product Description :</th>
+											<td>${prod.description}</td>
+										</tr>
+									</thead>
+									<thead>
+										<tr>
+											<th style="text-align: right;">UOM :</th>
+											<td>${prod.qtyUnit.name}</td>
+										</tr>
+									</thead>
+									<thead>
+										<tr>
+											<th style="text-align: right;">Total Qty (Purchased) :</th>
+											<td><c:set var="totPurQty" value="${0}"></c:set> <c:forEach
+													var="proedPurDet" items="${prod.purchase_Product_Details}">
+													<c:if test="${proedPurDet.purchase_Entry!=null}">
+														<c:set var="totPurQty"
+															value="${totPurQty+proedPurDet.quantity-proedPurDet.totalReturningQty}"></c:set>
+													</c:if>
+												</c:forEach> ${totPurQty}</td>
+										</tr>
+									</thead>
+								</table>
+
+								<br>
+								<hr style="width: 100%;">
+								<br>
+
+
+								<table id="stream_table"
+									class="table table-striped table-bordered">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Purchase Date</th>
+											<th>Vendor Name</th>
+											<th>Agent Name</th>
+											<th>Purchase challan no.</th>
+											<th>Vendor Bill no.</th>
+											<th>Sub Total</th>
+											<th>Tax Amount</th>
+											<th>Transport Cost</th>
+											<th>Surcharge</th>
+											<th>RoundOf</th>
+											<th>Grand Total</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody style="height: 300px;">
+										<c:set var="count" value="${1}" />
+										<c:forEach
+											items="${sessionScope['ejb'].getAllPurchaseEntryByCompany()}"
+											var="pEntryByD">
 											<tr>
-												<th>#</th>
-												<th>Product Code</th>
-												<th>Product Description</th>
-												<th>Total Qty (Purchased)</th>
-												<th>UOM</th>
+												<td>${count}</td>
+												<td><fmt:formatDate value="${pEntryByD.purchase_date}"
+														pattern="dd-MM-yy" /></td>
+												<c:if test="${pEntryByD.vendor.vendorType.type=='Vendor'}">
+													<td>${pEntryByD.vendor.name}</td>
+												</c:if>
+												<c:if test="${pEntryByD.vendor.vendorType.type!='Vendor'}">
+													<td>NIL</td>
+												</c:if>
+												<c:choose>
+													<c:when
+														test="${pEntryByD.vendor.vendorType.type=='Purchase Agent'}">
+														<td>${pEntryByD.vendor.name}</td>
+													</c:when>
+													<c:when test="${pEntryByD.agentId!=0}">
+														<td>${sessionScope['ejb'].getVendorById(pEntryByD.agentId).name}</td>
+													</c:when>
+													<c:otherwise>
+														<td>NIL</td>
+													</c:otherwise>
+												</c:choose>
+												<td>${pEntryByD.challanNumber}</td>
+												<td>${pEntryByD.vendor_bill_no}</td>
+												<td>${pEntryByD.subTotal}</td>
+												<td>${pEntryByD.taxAmount}</td>
+												<td>${pEntryByD.transport_cost}</td>
+												<td>${pEntryByD.sur_charge}</td>
+												<td>${pEntryByD.roundOf}</td>
+												<td>${pEntryByD.totalCost}</td>
+												<td><form action="purchaseReportView" method="post"
+														id="pView${pEntryByD.id}">
+														<a href="#" onclick="purchaseViewF('${pEntryByD.id}');"><input
+															type="hidden" value="${pEntryByD.id}" name="pId"><img
+															alt="" src="images/eye.png" height="25px"></a>
+													</form></td>
 											</tr>
-										</thead>
-										<tbody style="height: 300px;">
-											<c:set var="count" value="${1}" />
-											<c:forEach
-												items="${sessionScope['ejb'].getAllProductDetailByCompany()}"
-												var="prod">
-												<tr>
-													<td>${count}</td>
-													<td>${prod.code}</td>
-													<td>${prod.description}</td>
-													<td><c:set var="totPurQty" value="${0}"></c:set> <c:forEach
-															var="proedPurDet"
-															items="${prod.purchase_Product_Details}">
-															<c:if test="${proedPurDet.purchase_Entry!=null}">
-																<c:set var="totPurQty"
-																	value="${totPurQty+proedPurDet.quantity-proedPurDet.totalReturningQty}"></c:set>
-															</c:if>
-														</c:forEach> ${totPurQty}</td>
-													<td>${prod.qtyUnit.name}</td>
-													<td>
-														<form action="purchaseProductView" method="post"
-															id="pView${prod.id}">
-															<a href="#" onclick="purchaseViewF('${prod.id}');"><input
-																type="hidden" value="${prod.id}" name="pId"><input
-																type="hidden" value="${prod.code}" name="prodCode"><img
-																alt="" src="images/eye.png" height="25px"></a>
-														</form>
-													</td>
-												</tr>
-												<c:set var="count" value="${count+1}" />
-											</c:forEach>
-										</tbody>
-									</table>
-								</div>
-								<div id="byVendor" class="tab-pane fade ">Vendor</div>
-								<div id="byAgent" class="tab-pane fade ">Agent</div>
+											<c:set var="count" value="${count+1}" />
+										</c:forEach>
+									</tbody>
+								</table>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 	<!-- Content Sec -->
 	<!-- Page Container -->

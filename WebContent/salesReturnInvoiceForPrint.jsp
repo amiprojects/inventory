@@ -63,7 +63,11 @@ page[size="A4"] {
 
 </head>
 <body>
-	<%-- <c:if test="${!sessionScope['user'].equals('admin')}">
+	<c:if test="${sessionScope['user']==null}">
+		<c:redirect url="index.jsp" />
+	</c:if>
+	<c:if
+		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminKainat')}">
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
@@ -75,16 +79,16 @@ page[size="A4"] {
 		<c:if test="${i!=5}">
 			<script type="text/javascript">
 				alert('you have no permission to view this page');
-				window.location = "dashboard.jsp"; 
-			</script> 
+				window.location = "dashboard.jsp";
+			</script>
 		</c:if>
-	</c:if> --%>
+	</c:if>
 	<c:set value="${sessionScope['ejb'].getCompanyInfo()}"
 		var="companyInfo" />
 	<c:set value="${sessionScope['ejb'].getSalesReturnDetailsById(param.id)}"
 		var="salesReturn" />
 	<page id="print1" size="A4">
-	<h3 align="center">Sales Return Challan</h3>
+	<h3 align="center">Sales Return Invoice</h3>
 	<table class="tg"
 		style="border: 1px solid; height: 1050px; width: 750px">
 		<tr style="height: 50px">
@@ -94,31 +98,31 @@ page[size="A4"] {
 				Mobile: ${companyInfo.mobile}
 			</td>
 			<td class="tg-031e" colspan="2" style="width: 25%">Sales Return Invoice
-				no:${salesReturn.challanNumber}</td>
+				no:<br> ${salesReturn.challanNumber}</td>
 			<td class="tg-031e" colspan="2" style="width: 25%">Dated:<fmt:formatDate
 					value="${sessionScope['ejb'].getCurrentDateTime()}"
 					pattern="dd-MM-yyyy" /></td>
 		</tr>
 		<tr style="height: 50px">
-			<td class="tg-031e" colspan="2"></td>
-			<td class="tg-031e" colspan="2"></td>
+			<td class="tg-031e" colspan="2">Reference Invoice No.</td>
+			<td class="tg-031e" colspan="2">${salesReturn.referenceSalesChallan}</td>
 		</tr>
 		<tr style="height: 50px">
 			<td class="tg-031e" colspan="2">Sales Return date :</td>
-			<td class="tg-031e" colspan="2"><fmt:formatDate	value="${salesReturn.sales_date}" pattern="dd-MM-yyyy" /></td>
+			<td class="tg-031e" colspan="2"><fmt:formatDate	value="${salesReturn.returnDate}" pattern="dd-MM-yyyy" /></td>
 		</tr>
 		<tr style="height: 50px">
 			<td class="tg-031e" colspan="3" rowspan="4"><strong>Customer
 					Details:</strong> <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Name :</span>
-				${purEntry.customer.name} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>City
-					:</span> ${purEntry.customer.city} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Address
+				${salesReturn.salesEntry.customer.name} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>City
+					:</span> ${salesReturn.salesEntry.customer.city} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Address
 					:<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			</span> ${purEntry.customer.address} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Ph
-					:</span> ${purEntry.customer.mobile}</td>
+			</span> ${salesReturn.salesEntry.customer.address} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Ph
+					:</span> ${salesReturn.salesEntry.customer.mobile}</td>
 			<td class="tg-031e" colspan="2">Mode of payment :</td>
 			<td class="tg-031e" colspan="2"><c:choose>
 					<c:when
-						test="${purEntry.paymentDetails.get(0).paymentType.type!=null}">${purEntry.paymentDetails.get(0).paymentType.type}</c:when>
+						test="${salesReturn.paymentDetails.get(0).paymentType.type!=null}">${salesReturn.paymentDetails.get(0).paymentType.type}</c:when>
 					<c:otherwise>NA</c:otherwise>
 				</c:choose></td>
 		</tr>
@@ -126,7 +130,7 @@ page[size="A4"] {
 			<td class="tg-031e" colspan="2">Supplier reference(Agent Alias
 				name):</td>
 			<td class="tg-031e" colspan="2"><c:choose>
-					<c:when test="${purEntry.vendor!=null}">${purEntry.vendor.aliseName}</c:when>
+					<c:when test="${salesReturn.salesEntry.vendor!=null}">${salesReturn.salesEntry.vendor.aliseName}</c:when>
 					<c:otherwise>NA</c:otherwise>
 				</c:choose></td>
 		</tr>
@@ -154,7 +158,7 @@ page[size="A4"] {
 					<c:set value="${0}" var="tqty" />
 					<c:set value="${0}" var="gtot" />
 					
-					<c:forEach items="${salesReturn.SalesProductReturnDetail}" var="ppdet">
+					<c:forEach items="${salesReturn.salesProductReturnDetail}" var="ppdet">
 					
 						<tr>
 							<td>${sl}</td>
