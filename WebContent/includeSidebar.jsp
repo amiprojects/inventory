@@ -99,7 +99,8 @@
 						<li><a id="jSearch" href="jobAssignSearch.jsp" title="">Job
 								Assignment Search</a></li>
 						<li><a id="jR" href="jobReceive.jsp" title="">Job Receive</a></li>
-						<li><a id="designCostSheet" href="designCostSheet.jsp" title="">Sample Job for CostSheet</a></li>
+						<li><a id="designCostSheet" href="designCostSheet.jsp"
+							title="">Sample Job for CostSheet</a></li>
 					</ul>
 				</div>
 			</div>
@@ -123,20 +124,19 @@
 							title="">Country/State/City</a></li>
 						<li><a id="sSetupBill" href="billSetup.jsp" title="">Bill
 								Setup</a></li>
-								<li><a id="jobSetup" href="jobSetup.jsp" title="">Job Setup</a></li>
+						<li><a id="jobSetup" href="jobSetup.jsp" title="">Job
+								Setup</a></li>
 					</ul>
 				</div>
 			</div>
-			
+
 			<div class="single-menu">
-				<h2 id="jobs">
+				<h2 id="reports">
 					<a title=""><span>Reports</span></a>
 				</h2>
 				<div class="sub-menu">
 					<ul>
 						<li><a id="report" href="report.jsp" title="">Report</a></li>
-						
-						
 					</ul>
 				</div>
 			</div>
