@@ -63,7 +63,7 @@ page[size="A4"] {
 
 </head>
 <body>
-	<c:if test="${!sessionScope['user'].equals('admin')}">
+	<%-- <c:if test="${!sessionScope['user'].equals('admin')}">
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
@@ -75,16 +75,16 @@ page[size="A4"] {
 		<c:if test="${i!=5}">
 			<script type="text/javascript">
 				alert('you have no permission to view this page');
-				window.location = "dashboard.jsp";
-			</script>
+				window.location = "dashboard.jsp"; 
+			</script> 
 		</c:if>
-	</c:if>
+	</c:if> --%>
 	<c:set value="${sessionScope['ejb'].getCompanyInfo()}"
 		var="companyInfo" />
 	<c:set value="${sessionScope['ejb'].getSalesReturnDetailsById(param.id)}"
 		var="salesReturn" />
 	<page id="print1" size="A4">
-	<h3 align="center">Sales Invoice</h3>
+	<h3 align="center">Sales Return Challan</h3>
 	<table class="tg"
 		style="border: 1px solid; height: 1050px; width: 750px">
 		<tr style="height: 50px">
@@ -94,18 +94,18 @@ page[size="A4"] {
 				Mobile: ${companyInfo.mobile}
 			</td>
 			<td class="tg-031e" colspan="2" style="width: 25%">Sales Return Invoice
-				no:</td>
-			<td class="tg-031e" colspan="2" style="width: 25%">${salesReturn.challanNumber}</td>
-		</tr>
-		<tr style="height: 50px">
-			<td class="tg-031e" colspan="2">Dated:</td>
-			<td class="tg-031e" colspan="2"><fmt:formatDate
+				no:${salesReturn.challanNumber}</td>
+			<td class="tg-031e" colspan="2" style="width: 25%">Dated:<fmt:formatDate
 					value="${sessionScope['ejb'].getCurrentDateTime()}"
 					pattern="dd-MM-yyyy" /></td>
 		</tr>
 		<tr style="height: 50px">
+			<td class="tg-031e" colspan="2"></td>
+			<td class="tg-031e" colspan="2"></td>
+		</tr>
+		<tr style="height: 50px">
 			<td class="tg-031e" colspan="2">Sales Return date :</td>
-			<td class="tg-031e" colspan="2"><fmt:formatDate	value="${purEntry.sales_date}" pattern="dd-MM-yyyy" /></td>
+			<td class="tg-031e" colspan="2"><fmt:formatDate	value="${salesReturn.sales_date}" pattern="dd-MM-yyyy" /></td>
 		</tr>
 		<tr style="height: 50px">
 			<td class="tg-031e" colspan="3" rowspan="4"><strong>Customer
@@ -143,7 +143,7 @@ page[size="A4"] {
 					style="height: auto; width: 750px; border-color: white; margin-left: -6px; margin-right: -4px; margin-top: -11px;">
 					<tr>
 						<th>Sl No</th>
-						<th>Description of goods</th>
+						<th>Description of returning goods</th>
 						<th>Returning Quantity</th>
 						<th>Cost</th>
 						<th>Per</th>

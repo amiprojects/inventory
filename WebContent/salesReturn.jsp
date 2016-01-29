@@ -84,11 +84,11 @@
 		</c:if>
 	</c:if>
 
-	<c:if test="${requestScope['purDetIdforPC']!=null}">
+	<c:if test="${requestScope['salRetDetIdforPC']!=null}">
 		<script type="text/javascript">
 			var myWindow = window
 					.open(
-							"salesReturnInvoiceForPrint.jsp?id=${requestScope['purDetIdforPC']}",
+							"salesReturnInvoiceForPrint.jsp?id=${requestScope['salRetDetIdforPC']}",
 							'name', 'width=600,height=400');
 			myWindow.print();
 		</script>

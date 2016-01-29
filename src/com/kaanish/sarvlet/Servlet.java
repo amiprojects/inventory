@@ -2666,7 +2666,7 @@ public class Servlet extends HttpServlet {
 				}
 
 				salesReturn.setSalesEntry(salesEntry);
-				req.setAttribute("purDetIdforPC", salesReturn.getId());
+				req.setAttribute("salRetDetIdforPC", salesReturn.getId());
 
 				msg = "sales Return Succeessful";
 
