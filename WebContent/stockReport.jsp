@@ -22,11 +22,12 @@
 <link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
 <!-- Bootstrap -->
 
- <link rel="stylesheet" href=style.css>
-    <link rel="stylesheet" href="css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="css/fixedHeader.dataTables.min.css">
-    
+<link rel="stylesheet" href=style.css>
+<link rel="stylesheet" href="css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="css/fixedHeader.dataTables.min.css">
+
 <link rel="stylesheet" href="css/style.css" type="text/css" />
+
 <!-- Style -->
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
 <!-- Responsive -->
@@ -41,27 +42,31 @@
 }
 </style>
 <style>
-	div.dataTables_wrapper {
-        width: 80%;
-        margin: 0 auto;
-       
-    }
-	table{
-	width:100% !important;
+div.dataTables_wrapper {
+	width: 80%;
+	margin: 0 auto;
+}
 
-	}
-	th{
-		width:16.66%!important;
-	}
-	tbody{
-		width:100%!important;
-	}
-	td{
-		width:16.66% !important;
-		text-align: center !important;
-	}
-	</style>
-  </head>
+table {
+	width: 100% !important;
+}
+
+th {
+	width: 16.66% !important;
+	text-align: center !important;
+}
+
+tbody {
+	width: 100% !important;
+}
+
+td {
+	width: 16.66% !important;
+	text-align: center !important;
+}
+</style>
+
+</head>
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
 
 
@@ -86,7 +91,7 @@
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
 
-			<c:if test="${page.name.equals('Job Search')}">
+			<c:if test="${page.name.equals('Stock')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
@@ -98,8 +103,7 @@
 		</c:if>
 	</c:if>
 
-	<c:set var="jobAssi"
-		value="${sessionScope['ejb'].getJobAssignmentById(requestScope['joId'])}" />
+
 
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
@@ -119,170 +123,191 @@
 
 							<div class="widget-area">
 								<div class="col-md-12">
-								
-  
-  
-    <table  class="table table-bordered" id="example" cellspacing="0" width="100%">
-        <thead>
-            <tr>
-              <th align="right">
-                Name
-                 </th>
-              <th align="right">Position</th>
-              <th align="right">Office</th>
-              <th align="right">Age</th>
-              <th align="right">Start date</th>
-              <th align="right">Salary</th>
-            </tr>
-        </thead>
- 
-        <tbody>
-            <tr>
-                <td>Tiger Nixon</td>
-                <td>System Architect</td>
-                <td>Edinburgh</td>
-                <td>61</td>
-                <td>2011/04/25</td>
-                <td>$320,800</td>
-            </tr>
-            <tr>
-                <td>Garrett Winters</td>
-                <td>Accountant</td>
-                <td>Tokyo</td>
-                <td>63</td>
-                <td>2011/07/25</td>
-                <td>$170,750</td>
-            </tr>
-            <tr>
-                <td>Ashton Cox</td>
-                <td>Junior Technical Author</td>
-                <td>San Francisco</td>
-                <td>66</td>
-                <td>2009/01/12</td>
-                <td>$86,000</td>
-            </tr>
-            <tr>
-                <td>Cedric Kelly</td>
-                <td>Senior Javascript Developer</td>
-                <td>Edinburgh</td>
-                <td>22</td>
-                <td>2012/03/29</td>
-                <td>$433,060</td>
-            </tr>
-            <tr>
-                <td>Airi Satou</td>
-                <td>Accountant</td>
-                <td>Tokyo</td>
-                <td>33</td>
-                <td>2008/11/28</td>
-                <td>$162,700</td>
-            </tr>
-            <tr>
-                <td>Brielle Williamson</td>
-                <td>Integration Specialist</td>
-                <td>New York</td>
-                <td>61</td>
-                <td>2012/12/02</td>
-                <td>$372,000</td>
-            </tr>
-            <tr>
-                <td>Herrod Chandler</td>
-                <td>Sales Assistant</td>
-                <td>San Francisco</td>
-                <td>59</td>
-                <td>2012/08/06</td>
-                <td>$137,500</td>
-            </tr>
-            <tr>
-                <td>Rhona Davidson</td>
-                <td>Integration Specialist</td>
-                <td>Tokyo</td>
-                <td>55</td>
-                <td>2010/10/14</td>
-                <td>$327,900</td>
-            </tr>
-            <tr>
-                <td>Colleen Hurst</td>
-                <td>Javascript Developer</td>
-                <td>San Francisco</td>
-                <td>39</td>
-                <td>2009/09/15</td>
-                <td>$205,500</td>
-            </tr>
-            <tr>
-                <td>Sonya Frost</td>
-                <td>Software Engineer</td>
-                <td>Edinburgh</td>
-                <td>23</td>
-                <td>2008/12/13</td>
-                <td>$103,600</td>
-            </tr>
-            <tr>
-                <td>Jena Gaines</td>
-                <td>Office Manager</td>
-                <td>London</td>
-                <td>30</td>
-                <td>2008/12/19</td>
-                <td>$90,560</td>
-            </tr>
-            <tr>
-                <td>Quinn Flynn</td>
-                <td>Support Lead</td>
-                <td>Edinburgh</td>
-                <td>22</td>
-                <td>2013/03/03</td>
-                <td>$342,000</td>
-            </tr>
-            <tr>
-                <td>Charde Marshall</td>
-                <td>Regional Director</td>
-                <td>San Francisco</td>
-                <td>36</td>
-                <td>2008/10/16</td>
-                <td>$470,600</td>
-            </tr>
-            <tr>
-                <td>Haley Kennedy</td>
-                <td>Senior Marketing Designer</td>
-                <td>London</td>
-                <td>43</td>
-                <td>2012/12/18</td>
-                <td>$313,500</td>
-            </tr>
-            <tr>
-                <td>Tatyana Fitzpatrick</td>
-                <td>Regional Director</td>
-                <td>London</td>
-                <td>19</td>
-                <td>2010/03/17</td>
-                <td>$385,750</td>
-            </tr>
-            <tr>
-                <td>Michael Silva</td>
-                <td>Marketing Designer</td>
-                <td>London</td>
-                <td>66</td>
-                <td>2012/11/27</td>
-                <td>$198,500</td>
-            </tr>
-            <tr>
-                <td>Paul Byrd</td>
-                <td>Chief Financial Officer (CFO)</td>
-                <td>New York</td>
-                <td>64</td>
-                <td>2010/06/09</td>
-                <td>$725,000</td>
-            </tr>
-        </tbody>
-    </table>
-   
 
 
-								
-								
-					</div>
+
+
+
+									<ul class="nav nav-tabs">
+										<li class="active"><a data-toggle="tab" href="#aStock">Ageing
+												Stock</a></li>
+										<li><a data-toggle="tab" href="#pStock">Product Stock</a></li>
+										<!-- <li><a data-toggle="tab" href="#cStock">Critical Stock</a></li> -->
+
+									</ul>
+									<div class="tab-content">
+
+										<!-- .......................................**********************General****************************************************...................................... -->
+
+
+										<div id="aStock" class="tab-pane fade active in">
+
+											<br>
+											<br>
+											<table class="table table-bordered" id="example"
+												cellspacing="0" width="100%">
+												<thead>
+													<tr>
+
+														<th style="text-align: center;" colspan="3">Item
+															Details</th>
+														<th style="text-align: center;">Total</th>
+														<th style="text-align: center;"><45</th>
+														<th style="text-align: center;">45 to 90</th>
+														<th style="text-align: center;">>90</th>
+
+													</tr>
+													<tr>
+
+														<th>Product Code</th>
+														<th>WSP</th>
+														<th>MRP</th>
+														<th>Quantity</th>
+														<th>Quantity</th>
+														<th>Quantity</th>
+														<th>Quantity</th>
+													</tr>
+												</thead>
+
+												<tbody>
+													<c:forEach
+														items="${sessionScope['ejb'].getAllProductDetailByCompany()}"
+														var="amiProStock1">
+														<c:set var="qty"
+															value="${amiProStock1.isSaleble()?sessionScope['ejb'].getReadyGoodsStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty:sessionScope['ejb'].getRawMaterialStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty}" />
+														<tr>
+															<td>${amiProStock1.code}</td>
+
+															<c:set var="purSize"
+																value="${amiProStock1.purchase_Product_Details.size()}" />
+
+															<td>${purSize>0?amiProStock1.purchase_Product_Details.get(purSize-1).wsp:'nill'}</td>
+
+															<td>${purSize>0?amiProStock1.purchase_Product_Details.get(purSize-1).mrp:'nill'}</td>
+															<td>${qty}</td>
+															<c:set value="${0}" var="remainqt" />
+
+															<c:forEach
+																items="${sessionScope['ejb'].getAgeingPurProductDetailsLes45daysbyproId(amiProStock1.id)}"
+																var="rem">
+																<c:set var="remainqt"
+																	value="${remainqt+rem.remaining_quantity}" />
+
+															</c:forEach>
+															<td>${remainqt}</td>
+															<c:set value="${0}" var="remainqtt" />
+
+															<c:forEach
+																items="${sessionScope['ejb'].getAgeingPurProductDetailsBet45and90daysbyproId(amiProStock1.id)}"
+																var="rem1">
+
+																<c:set var="remainqtt"
+																	value="${remainqtt+rem1.remaining_quantity}" />
+
+															</c:forEach>
+															<td>${remainqtt}</td>
+															<c:set value="${0}" var="remainqttt" />
+
+															<c:forEach
+																items="${sessionScope['ejb'].getAgeingPurProductDetailsGre90daysbyproId(amiProStock1.id)}"
+																var="rem2">
+
+																<c:set var="remainqttt"
+																	value="${remainqttt+rem2.remaining_quantity}" />
+
+															</c:forEach>
+															<td>${remainqttt}</td>
+
+
+														</tr>
+													</c:forEach>
+												</tbody>
+
+											</table>
+
+
+
+
+										</div>
+										
+										<div id="pStock" class="tab-pane fade">
+											<br>
+											<br>
+											<table class="table table-bordered" id="e1" cellspacing="0"
+												width="100%">
+
+												<thead>
+													<tr>
+													<tr>
+														<th>#</th>
+														<th>Designer Number:</th>
+														<th>Product Description:</th>
+														<th>UOM</th>
+														<th>Quantity</th>
+														<th>WSP</th>
+														<th>MRP</th>
+
+
+
+													</tr>
+
+												</thead>
+
+												<tbody>
+												
+												<c:set var="count" value="${1}" />
+
+												<c:forEach
+													items="${sessionScope['ejb'].getAllProductDetailByCompany()}"
+													var="amiPro">
+													<c:if
+														test="${amiPro.purchase_Product_Details.size()>0}">
+														<c:set var="qty"
+															value="${amiPro.isSaleble()?sessionScope['ejb'].getReadyGoodsStocktDetailByProductIdAndCompany(amiPro.id).remainingQty:sessionScope['ejb'].getRawMaterialStocktDetailByProductIdAndCompany(amiPro.id).remainingQty}" />
+														<c:choose>
+															<c:when test="${qty==0}">
+																<tr>
+																	<td style="color: red;">${count}</td>
+																	<td style="color: red;">${amiPro.code}</td>
+																	<td style="color: red;">${amiPro.description}</td>
+																	<td style="color: red;">${amiPro.qtyUnit.name}</td>
+																	<td style="color: red;">${qty}</td>
+																	<c:set var="purSizeq"
+																		value="${amiPro.purchase_Product_Details.size()}" />
+																	<td style="color: red;">${purSizeq>0?amiProStock1.purchase_Product_Details.get(purSizeq-1).wsp:'nill'}</td>
+																	<td style="color: red;">${purSizeq>0?amiProStock1.purchase_Product_Details.get(purSizeq-1).mrp:'nill'}</td>
+																	
+																</tr>
+															</c:when>
+															<c:otherwise>
+																<tr>
+																	<td>${count}</td>
+																	<td>${amiPro.code}</td>
+																	<td>${amiPro.description}</td>
+																	<td>${amiPro.qtyUnit.name}</td>
+																	<td>${qty}</td>
+																	<c:set var="purSize"
+																		value="${amiPro.purchase_Product_Details.size()}" />
+																	<td>${purSizeq>0?amiProStock1.purchase_Product_Details.get(purSize-1).wsp:'nill'}</td>
+																	<td>${purSizeq>0?amiProStock1.purchase_Product_Details.get(purSize-1).mrp:'nill'}</td>
+																	
+																</tr>
+
+															</c:otherwise>
+														</c:choose>
+														<c:set var="count" value="${count+1}" />
+													</c:if>
+												</c:forEach>
+												
+												
+												</tbody>
+											</table>
+
+										</div>
+									</div>
+								</div>
 							</div>
-					</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -298,39 +323,92 @@
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="js/enscroll.js"></script>
 	<script type="text/javascript" src="js/grid-filter.js"></script>
-	 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="js/jquery.dataTables.min.js"></script>
-    <script src="js/dataTables.fixedHeader.min.js"></script>
+	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="js/jquery.dataTables.min.js"></script>
+	<script src="js/dataTables.fixedHeader.min.js"></script>
 
 	<script src="js/jquery-ui/jquery-ui.js"></script>
-<script>
-$(document).ready(function() {
-    $('#example').DataTable( {
-        "scrollY": 200,
-        "scrollX": true
-    } );
-} );
+	<script>
+		$(document).ready(function() {
+			$('#example').DataTable({
+				"scrollY" : 200,
+				"scrollX" : true
+			});
+		});
 
-  $(document).ready(function() {
-    
-    $.extend( true, $.fn.dataTable.defaults, {
-      
-      //fixedHeader: true
-      
-    });
-    
-    var table = $('#example').DataTable({
-      
-      fixedHeader: true
-      
-    });
-    
-    $('#example input').on( 'click', function (e) {
-      e.stopPropagation();
-    });
-} );
+		$(document).ready(function() {
 
-</script>
+			$.extend(true, $.fn.dataTable.defaults, {
+
+			//fixedHeader: true
+
+			});
+
+			var table = $('#example').DataTable({
+
+				fixedHeader : true
+
+			});
+
+			$('#example input').on('click', function(e) {
+				e.stopPropagation();
+			});
+		});
+	</script>
+	<script>
+		$(document).ready(function() {
+			$('#e2').DataTable({
+				"scrollY" : 200,
+				"scrollX" : true
+			});
+		});
+
+		$(document).ready(function() {
+
+			$.extend(true, $.fn.dataTable.defaults, {
+
+			//fixedHeader: true
+
+			});
+
+			var table = $('#e2').DataTable({
+
+				fixedHeader : true
+
+			});
+
+			$('#e2 input').on('click', function(e) {
+				e.stopPropagation();
+			});
+		});
+	</script>
+	<script>
+		$(document).ready(function() {
+			$('#e1').DataTable({
+				"scrollY" : 200,
+				"scrollX" : true
+			});
+		});
+
+		$(document).ready(function() {
+
+			$.extend(true, $.fn.dataTable.defaults, {
+
+			//fixedHeader: true
+
+			});
+
+			var table = $('#e1').DataTable({
+
+				fixedHeader : true
+
+			});
+
+			$('#e1 input').on('click', function(e) {
+				e.stopPropagation();
+			});
+		});
+	</script>
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->

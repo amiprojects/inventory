@@ -507,36 +507,61 @@ public class Servlet extends HttpServlet {
 				vendor.setPinCode(req.getParameter("vendorPin"));
 				vendor.setVendorType(ejb.getVendorTypeById(Integer.parseInt(req
 						.getParameter("vendorType"))));
+				if (!req.getParameter("vendorCityId").equals("")) {
 				vendor.setCity(ejb.getCityById(Integer.parseInt(req
 						.getParameter("vendorCityId"))));
+				}
 
 				accountDetails = ejb.getAccountDetailsByVendorId(Integer
 						.parseInt(req.getParameter("vendoeId")));// vender
 																	// id
 
 				accountDetails.setVatNumber(req.getParameter("vendorVATno"));
-				accountDetails.setVatRegistrationDate(DateConverter.getDate(req
-						.getParameter("vendorVATregDate")));
+				
+				if (!req.getParameter("vendorVATregDate").equals("")) {
+					accountDetails.setCstRegistrationDate(DateConverter
+							.getDate(req.getParameter("vendorVATregDate")));
+				}
+
 				accountDetails.setCstNumber(req.getParameter("vendorCSTno"));
-				accountDetails.setCstRegistrationDate(DateConverter.getDate(req
-						.getParameter("vendorVATregDate")));
+				if (!req.getParameter("vendorCSTregDate").equals("")) {
+					accountDetails.setCstRegistrationDate(DateConverter
+							.getDate(req.getParameter("vendorCSTregDate")));
+				}
+
 				accountDetails.setPanNumber(req.getParameter("vendorPANno"));
 				accountDetails.setExciseRegistrationNumber(req
 						.getParameter("vendorExciseRegNo"));
-				accountDetails.setExciseRegistrationDate(DateConverter
-						.getDate(req.getParameter("vendorExciseRegDate")));
+				
+				if (!req.getParameter("vendorExciseRegDate").equals("")) {
+					accountDetails.setCstRegistrationDate(DateConverter
+							.getDate(req
+									.getParameter("vendorExciseRegDate")));
+				}
+
 				accountDetails.setServiceTaxRegistrationNumber(req
 						.getParameter("vendorServiceTaxRegNo"));
-				accountDetails.setServiceTaxRegistrationDate(DateConverter
-						.getDate(req.getParameter("vendorServiceTaxRegDate")));
+				
+				if (!req.getParameter("vendorServiceTaxRegDate").equals("")) {
+					accountDetails
+							.setCstRegistrationDate(DateConverter.getDate(req
+									.getParameter("vendorServiceTaxRegDate")));
+				}
+
 				accountDetails.setBankName(req.getParameter("bankName"));
 				accountDetails.setBankAccountNumber(req
 						.getParameter("bankAccNo"));
 				accountDetails.setBranch(req.getParameter("bankBranch"));
-				accountDetails.setCity(ejb.getCityById(Integer.parseInt(req
-						.getParameter("bankCity"))));
+				if (!req.getParameter("bankCity").equals("")) {
+					accountDetails.setCity(ejb.getCityById(Integer
+							.parseInt(req.getParameter("bankCity"))));
+				}
+
+
 				accountDetails.setBankIFSCnumber(req.getParameter("bankIFSC"));
+				
 				accountDetails.setBankMICRnumber(req.getParameter("bankMICR"));
+				
 				accountDetails.setBankRTGCnumber(req.getParameter("bankRTGS"));
 				ejb.updateVendor(vendor);
 				ejb.updateAccountDetails(accountDetails);
