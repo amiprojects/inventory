@@ -1435,6 +1435,9 @@ public class Servlet extends HttpServlet {
 							.getMobile());
 					ejb.setVoucherAssign(voucherAssign);
 
+				} else {
+					voucherAssign = ejb.getVoucherAssignByCustomerId(Integer
+							.parseInt(req.getParameter("existingCustId")));
 				}
 
 				salesEntry = new SalesEntry();
@@ -1490,38 +1493,39 @@ public class Servlet extends HttpServlet {
 						.getParameter("disValue")));
 
 				ejb.setSalesEntry(salesEntry);
-			if	(!req.getParameter("pstatus").equals("Full Paid")){
-				voucherDetails = new VoucherDetails();
-				voucherDetails.setSalesEntry(salesEntry);
-				voucherDetails.setCredit(false);
-				voucherDetails.setValue(Float.parseFloat(req
-						.getParameter("spDueAmount")));
-				voucherDetails.setVoucherDate(DateConverter.getDate(req
-						.getParameter("payDate")));
-				voucherDetails.setUsers(ejb.getUserById(httpSession
-						.getAttribute("user").toString()));
-
-				if (!req.getParameter("existingCustId").equals("")) {
-					List<VoucherDetails> vDetails = ejb
-							.getLastVoucherDetailsbyCustomerId(Integer
-									.parseInt(req
-											.getParameter("existingCustId")));
-					voucherDetails
-							.setTotalDebitNote(vDetails.size() > 0 ? vDetails
-									.get(vDetails.size() - 1)
-									.getTotalDebitNote()
-									: 0 + Float.parseFloat(req
-											.getParameter("spDueAmount")));
-				}
-
-				else {
-					voucherDetails.setTotalDebitNote(Float.parseFloat(req
+				if (!req.getParameter("pstatus").equals("Full Paid")) {
+					voucherDetails = new VoucherDetails();
+					voucherDetails.setSalesEntry(salesEntry);
+					voucherDetails.setCredit(false);
+					voucherDetails.setValue(Float.parseFloat(req
 							.getParameter("spDueAmount")));
-				}
+					voucherDetails.setVoucherDate(DateConverter.getDate(req
+							.getParameter("payDate")));
+					voucherDetails.setUsers(ejb.getUserById(httpSession
+							.getAttribute("user").toString()));
 
-				voucherDetails.setVoucherAssign(voucherAssign);
-				ejb.setVoucherDetails(voucherDetails);
-			}
+					if (!req.getParameter("existingCustId").equals("")) {
+						List<VoucherDetails> vDetails = ejb
+								.getLastVoucherDetailsbyCustomerId(Integer.parseInt(req
+										.getParameter("existingCustId")));
+						voucherDetails
+								.setTotalDebitNote(vDetails.size() > 0 ? vDetails
+										.get(vDetails.size() - 1)
+										.getTotalDebitNote()
+										+ Float.parseFloat(req
+												.getParameter("spDueAmount"))
+										: 0 + Float.parseFloat(req
+												.getParameter("spDueAmount")));
+					}
+
+					else {
+						voucherDetails.setTotalDebitNote(Float.parseFloat(req
+								.getParameter("spDueAmount")));
+					}
+
+					voucherDetails.setVoucherAssign(voucherAssign);
+					ejb.setVoucherDetails(voucherDetails);
+				}
 
 				paymentDetails = new PaymentDetails();
 				paymentDetails.setPaymentDate(DateConverter.getDate(req

@@ -365,6 +365,11 @@ public class Ejb {
 		q.setParameter("Id", id);
 		return q.getResultList();
 	}
+	
+	public List<QtyUnit> getAllUOM() {
+		TypedQuery<QtyUnit> q = em.createQuery("select c from QtyUnit c",QtyUnit.class);
+		return q.getResultList();
+	}
 
 	/************** for payment status ***************/
 	public void setPaymentStatus(PaymentStatus paymentStatus) {
@@ -733,6 +738,12 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<Vendor> getVendorByTypeAndName(String type,String name){
+		TypedQuery<Vendor> q=em.createQuery("select c from Vendor c where UPPER(c.name) like :name and UPPER(c.vendorType.type)=:type",Vendor.class);
+		q.setParameter("name", "%"+name.toUpperCase()+"%");
+		q.setParameter("type", type.toUpperCase());
+		return q.getResultList();
+	}
 	/******************** for vendor type *******************************/
 	public void setVendorType(VendorType vendorType) {
 		em.persist(vendorType);

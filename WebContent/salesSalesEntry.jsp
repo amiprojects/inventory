@@ -143,8 +143,8 @@
 													<td>Phone No. :</td>
 													<td><input type="number" name="phone" id="phone"
 														style="length: 40px;" autocomplete="off"></input></td>
-														
-														
+
+
 												</tr>
 
 												<tr>
@@ -159,7 +159,7 @@
 														style="length: 30px;" readonly="readonly"></input><input
 														type="hidden" name="aId" id="aId"><input
 														type="hidden" name="isExistingCust" id="isExistingCust"><input
-														type="hidden" name="existingCustId" v id="existingCustId"></td>
+														type="hidden" name="existingCustId" value="" id="existingCustId"></td>
 												</tr>
 												<tr id="aDetailsDiv">
 													<td>Agent details :</td>
@@ -356,7 +356,8 @@
 											<tr>
 												<td colspan="2">Tax Amount :</td>
 												<td><input type="text" class="form-control"
-													readonly="readonly" value="0" id="taxAmount" name="taxAmount"></td>
+													readonly="readonly" value="0" id="taxAmount"
+													name="taxAmount"></td>
 											</tr>
 										</tbody>
 										<tbody>
@@ -446,16 +447,17 @@
 																			<div class="sec" id="pTypeDiv">
 																				<div class="col-md-5">Payment type :</div>
 																				<div class="col-md-7">
-																					<select class="form-control" id="pType"
-																						name="pType" onchange="pTypeFunc()">
+																					<select class="form-control" id="pstatus"
+																						name="pstatus" onchange="pStatusDiv()">
 																						<option value="-" selected="selected">---</option>
-																						<c:forEach
-																					items="${sessionScope['ejb'].getAllPaymentType()}"
-																					var="payType">
-																					<c:if test="${payType.getType()!='Debit Note' && payType.getType()!='Credit Note'}">
-																						<option value="${payType.getType()}">${payType.getType()}</option>
-																					</c:if>
-																				</c:forEach> 
+																						<c:forEach items="${sessionScope['ejb'].getAllPaymentType()}"
+																							var="payType">
+																							<c:if
+																								test="${payType.getType()!='Debit Note' && payType.getType()!='Credit Note'}">
+																								<option value="${payType.getType()}">${payType.getType()}</option>
+																							</c:if>
+																						</c:forEach>
+
 																					</select>
 																				</div>
 																			</div>
@@ -463,7 +465,8 @@
 																				<div class="col-md-5">Payment Date :</div>
 																				<div class="col-md-7">
 																					<input type="text" id="datepicker2"
-																						class="form-control" readonly="readonly" name="payDate">
+																						class="form-control" readonly="readonly"
+																						name="payDate">
 																				</div>
 																			</div>
 																			<div id="pAmount">
@@ -488,6 +491,26 @@
 																					<input type="text" class="form-control" value="0"
 																						readonly="readonly" id="spDueAmount"
 																						name="spDueAmount">
+																				</div>
+																			</div>
+																			<div id="AMi2">
+																				<div>
+																					<div class="col-md-5">Current Debit Note :</div>
+																					<div class="col-md-7">
+																						<input type="text" id="totalDebit"
+																							name="totalDebit" class="form-control"
+																							readonly="readonly" value="0">
+																					</div>
+																				</div>
+																				<div>
+																					<div class="col-md-5">
+																						<span id="dORc">Final Debit Note :</span>
+																					</div>
+																					<div class="col-md-7">
+																						<input type="text" class="form-control"
+																							id="finalDC" name="finalDC" readonly="readonly"
+																							value="0">
+																					</div>
 																				</div>
 																			</div>
 																		</div>
@@ -1110,6 +1133,7 @@
 			$("#description").hide();
 			$("#isAgent").val('no');
 			$("#isExistingCust").val(0);
+			$("#AMi2").hide();
 
 		});
 		function closePayment() {
@@ -1117,6 +1141,7 @@
 			$("#description").hide();
 			$("#pstatus").val('-');
 			$("#pType").val('-');
+			$("#AMi2").hide();
 		}
 		function pStatusDiv() {
 			var val = $('[name="pstatus"]').val();
@@ -1126,6 +1151,8 @@
 				alert('Please select Payment status...');
 				$("#payDetail").hide();
 				$("#description").hide();
+				$("#AMi2").hide();
+				$("#pType").val("-");
 			} else if (val == 'Not Paid') {
 				$("#pPayAmount").hide();
 				$("#pAmount").hide();
@@ -1138,6 +1165,11 @@
 				$("#spDueAmount").val(
 						Number($("#spAmount").val())
 								- Number($("#spPaymentAmount").val()));
+
+				$("#AMi2").show();
+				$("#finalDC").val(
+						Math.round((Number($("#spDueAmount").val()) + Number($(
+								"#totalDebit").val())) * 100) / 100);
 			} else if (val == 'Full Paid') {
 				$("#pPayAmount").hide();
 				$("#pDueAmount").hide();
@@ -1145,6 +1177,7 @@
 				$("#pDate").show();
 				$("#pTypeDiv").show();
 				$("#description").hide();
+				$("#AMi2").hide();
 				$("#spAmount").val(Number($("#grandtotal").val()));
 				$("#spPaymentAmount").val(Number($("#grandtotal").val()));
 				$("#spDueAmount").val(
@@ -1162,13 +1195,40 @@
 				$("#spDueAmount").val(
 						Number($("#spAmount").val())
 								- Number($("#spPaymentAmount").val()));
+
+				$("#AMi2").show();
+				$("#finalDC").val(
+						Math.round((Number($("#spDueAmount").val()) + Number($(
+								"#totalDebit").val())) * 100) / 100);
 			}
 		}
-		function spPaymentAmountFunc() {
+		/* function spPaymentAmountFunc() {
 			$("#spDueAmount").val(
 					Number($("#spAmount").val())
 							- Number($("#spPaymentAmount").val()));
+		} */
+
+		function spPaymentAmountFunc() {
+			if (Number($("#spPaymentAmount").val()) > Number($("#spAmount")
+					.val())) {
+				alert("Payment amount can not be greater than full amount...");
+				$("#spPaymentAmount").val(Number($("#gt").val()));
+				$("#spDueAmount").val(
+						Math.round((Number($("#spAmount").val()) - Number($(
+								"#spPaymentAmount").val())) * 100) / 100);
+				$("#finalDC").val(
+						Math.round((Number($("#spDueAmount").val()) + Number($(
+								"#totalDebit").val())) * 100) / 100);
+			} else {
+				$("#spDueAmount").val(
+						Math.round((Number($("#spAmount").val()) - Number($(
+								"#spPaymentAmount").val())) * 100) / 100);
+				$("#finalDC").val(
+						Math.round((Number($("#spDueAmount").val()) + Number($(
+								"#totalDebit").val())) * 100) / 100);
+			}
 		}
+
 		function pTypeFunc() {
 			$("#description").show();
 			var val = $('[name="pType"]').val();
@@ -1750,7 +1810,8 @@
 									name : item.name,
 									address : item.address,
 									city : item.city,
-									vat_cst_no : item.vat_cst_no
+									vat_cst_no : item.vat_cst_no,
+									currentDebitNote : item.currentDebitNote
 								});
 							}));
 						}
@@ -1765,6 +1826,8 @@
 						$("#addr").val("");
 						$("#city").val("");
 						$("#vatcst").val(""); */
+
+						$("#totalDebit").val('0');
 					} else {
 						$("#isExistingCust").val(1);
 						$("#existingCustId").val(ui.item.id);
@@ -1772,6 +1835,8 @@
 						$("#addr").val(ui.item.address);
 						$("#city").val(ui.item.city);
 						$("#vatcst").val(ui.item.vat_cst_no);
+						
+						$("#totalDebit").val(ui.item.currentDebitNote);
 					}
 				},
 				select : function(event, ui) {

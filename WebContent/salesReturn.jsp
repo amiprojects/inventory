@@ -862,8 +862,7 @@
 		function qtySubtraction(g) {
 
 			if (Number($("#rQtySa" + g).val()) <= Number($("#qtttyR" + g)
-					.html())
-					- Number($("#qtttyR" + g).html())) {
+					.html())) {
 				$("#rQtyAm" + g).val(
 						Number($("#rQtySa" + g).val())
 								* Number($("#qttyC" + g).html()));
