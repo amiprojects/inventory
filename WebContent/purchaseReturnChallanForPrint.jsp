@@ -96,7 +96,7 @@ page[size="A4"] {
 	<c:set value="${sessionScope['ejb'].getPurchaseReturnById(param.id)}"
 		var="purEntry" />
 	<page id="print1" size="A4">
-	<h3 align="center">Purchase Challan</h3>
+	<h3 align="center">Purchase Return Challan</h3>
 	<table class="tg"
 		style="border: 1px solid; height: 1050px; width: 750px">
 		<tr style="height: 50px">
@@ -106,8 +106,10 @@ page[size="A4"] {
 				Mobile: ${companyInfo.mobile}
 			</td>
 			<td class="tg-031e" colspan="2" style="width: 25%">Purchase
-				Return Challan no:</td>
-			<td class="tg-031e" colspan="2" style="width: 25%">${purEntry.challanNumber}</td>
+				Return Challan no: <br>${purEntry.challanNumber}</td>
+			<td class="tg-031e" colspan="2" style="width: 25%">Dated: <fmt:formatDate
+					value="${sessionScope['ejb'].getCurrentDateTime()}"
+					pattern="dd-MM-yyyy" /></td>
 		</tr>
 		<tr style="height: 50px">
 			<td class="tg-031e" colspan="2">Refference Challan No.:</td>

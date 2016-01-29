@@ -89,7 +89,8 @@ import com.kaanish.util.DateConverter;
 		"/resetPass", "/purchaseSearchForReturn", "/purchaseReturn",
 		"/setJobTypes", "/updateJob", "/allPurchaseReport",
 		"/purchaseReportByProductCode", "/purchaseReportByVendorName",
-		"/purchaseReportByDate", "/purchaseReportByAgentName" })
+		"/purchaseReportByDate", "/purchaseReportByAgentName",
+		"/purchaseProductView","/purchaseReportView" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -1822,7 +1823,7 @@ public class Servlet extends HttpServlet {
 				List<Purchase_Entry> purEntryListAR = ejb
 						.getAllPurchaseEntryByCompany();
 				req.setAttribute("purEntryList", purEntryListAR);
-				msg="";
+				msg = "";
 				/*
 				 * if (purEntryListAR.size() > 0) { msg = "All Purchase List"; }
 				 * else { msg = "No result found..."; }
@@ -1852,6 +1853,27 @@ public class Servlet extends HttpServlet {
 				page = "purchaseView.jsp";
 
 				req.setAttribute("pId", req.getParameter("pId"));
+
+				msg = "";
+
+				break;
+				
+			case "purchaseReportView":
+				page = "reportPurchaseView.jsp";
+
+				req.setAttribute("pId", req.getParameter("pId"));
+
+				msg = "";
+
+				break;
+
+			case "purchaseProductView":
+				page = "reportPurchaseProductView.jsp";
+
+				req.setAttribute("pId", req.getParameter("pId"));
+				req.setAttribute("purEntryList", ejb
+						.getPurchaseEntryByProductCodeAndCompany(req
+								.getParameter("prodCode")));
 
 				msg = "";
 

@@ -186,9 +186,28 @@ page[size="A4"] {
 						<c:set value="${sl+1}" var="sl" />
 					</c:forEach>
 					<tr>
-						<td colspan="2">Total</td>
+						<td colspan="5" align="right">Tax Amount
+							(${purEntry.tax_Type_Group.getTotalTaxValue()}%) :</td>
+						<td>${purEntry.taxAmount}</td>
+					</tr>
+					<tr>
+						<td colspan="5" align="right">Transport Charge :</td>
+						<td>${purEntry.transport_cost}</td>
+					</tr>
+					<tr>
+						<td colspan="5" align="right">Surcharge :</td>
+						<td>${purEntry.sur_charge}</td>
+					</tr>
+					<tr>
+						<td colspan="5" align="right">RoundOf :</td>
+						<td>${purEntry.roundOf}</td>
+					</tr>
+					<tr>
+						<td colspan="2" align="right">Total Quantity :</td>
 						<td>${tqty}</td>
-						<td>${gtot}</td>
+						<td colspan="2" align="right">Grand Total :</td>
+						<td>${purEntry.totalCost}<%-- ${gtot} --%>
+						</td>
 					</tr>
 				</table>
 			</td>
