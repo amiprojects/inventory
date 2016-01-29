@@ -171,7 +171,8 @@
 															alt="" src="images/eye.png" height="25px"></a>
 													</form></td>
 											</tr>
-											<c:set var="count" value="${count+1}" />
+											<c:set var="count" value="${count+1}
+											" />
 										</c:forEach>
 									</tbody>
 								</table>
