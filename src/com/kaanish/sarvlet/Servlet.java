@@ -2791,10 +2791,10 @@ public class Servlet extends HttpServlet {
 					jobsForDesignCostSheet.setQty(Integer.parseInt(jobqty[lc]));
 					jobsForDesignCostSheet.setRate(Float.parseFloat(jobrate[lc]));
 					jobsForDesignCostSheet.setAmmount(Float.parseFloat(jobamount[lc]));
-					jobsForDesignCostSheet.setQtyUnit(ejb.getQtyUnitById(Integer.parseInt(jobqtyUnitId[lc])));
+					//jobsForDesignCostSheet.setQtyUnit(ejb.getQtyUnitById(Integer.parseInt(jobqtyUnitId[lc])));
 					jobsForDesignCostSheet.setVendor(ejb.getVendorById(Integer.parseInt(req.getParameter("designerId"))));
 					jobsForDesignCostSheet.setSampleDesignCostSheet(sampleDesignCostSheet);
-					jobsForDesignCostSheet.set
+					//jobsForDesignCostSheet.set
 					
 					ejb.setJobsForDesignCostSheet(jobsForDesignCostSheet);
 					jobsForDesignCostSheet=null;
