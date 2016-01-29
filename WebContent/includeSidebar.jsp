@@ -127,6 +127,19 @@
 					</ul>
 				</div>
 			</div>
+			
+			<div class="single-menu">
+				<h2 id="jobs">
+					<a title=""><span>Reports</span></a>
+				</h2>
+				<div class="sub-menu">
+					<ul>
+						<li><a id="report" href="report.jsp" title="">Report</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
 		</div>
 		<p>
 			<c:if test="${sessionScope['ejb'].is21Days()=='true'}">
