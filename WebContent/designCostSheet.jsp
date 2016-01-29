@@ -118,7 +118,7 @@
 							<!-- <div class="widget-area"> -->
 							<div class="col-md-12">
 								<form role="form" class="sec" method="post" id="jobForm"
-									action="#">
+									action="sampleJobCost">
 									<div class="widget-area">
 										<div class="col-md-6">
 											<div class="col-md-12"></div>
@@ -143,19 +143,30 @@
 											</div>
 										</div>
 										<div class="col-md-6">
-											<div class="form-group">
-												<label for="" class="font">Design Descripton :</label>
+										<div class="col-md-12">
+										<div class="form-group">
+												<label class="font" for="designDescription">Design Descripton :</label>
 
-												<textarea rows="" cols="" name="designDescription"></textarea>
+												<textarea class="form-control" rows="" cols="" name="designDescription"></textarea>
 
 											</div>
+										</div>
+										<div class="col-md-12">
 											<div class="form-group">
-
-												<label for="" class="font">Qty :</label> <input
-													type="number" name="qty" value="1">
+												<label for="qty" class="font">Qty :</label> <input
+													type="number" name="qty" class="form-control" value="1">
 											</div>
+										</div>
+											
+											
+											<div class="form-group" style="width:50%; height:100px;margin-top: 27px;"><img id="image"
+												alt="" src=""></div>
 
-											<br> <input type="file" name="productImage">
+											<br>
+											<div class="form-group">
+											 <input type="file" onchange="readURL(this);" name="productImage">
+											 <input type="hidden" name="proImage1" id="proImage1" value="">
+											 </div>
 										</div>
 										<div class='toast' style='display: none'>
 											<h3 id="msg">${requestScope['msg']}</h3>
@@ -168,7 +179,7 @@
 												<th>#</th>
 												<th>Product code</th>
 												<th>Product Description</th>
-												<th>Quantity</th>
+												<th>Quantity</th>												
 												<th>UOM</th>
 												<th>rate</th>
 												<th>Amount</th>
@@ -184,6 +195,7 @@
 											<tr>
 												<th>#</th>
 												<th>Job Name</th>
+												<th>Product Code</th>
 												<th>Qty</th>
 												<th>UOM</th>
 												<th>Rate</th>
@@ -192,9 +204,20 @@
 											</tr>
 										</thead>
 									</table>
+									
 									<a href="#" onclick="addJobs();"><img src="img/add.png"
-										height="20px" style="float: right;"></a> <br> <input
-										type="submit" value="Submit" class="btn green pull-right">
+										height="20px" style="float: right;"></a> <br>
+										<div class="col-md-12">
+									<div class="form-group" style="float: right;">
+
+												<label for="surcharge" class="font">Surcharge :</label> <input
+													type="number" name="surcharge" value="0.00">
+											</div>
+									</div>
+										<div class="col-md-12">
+									<div class="form-group">
+										 <input	type="submit" value="Submit" class="btn green pull-right">
+										 </div></div>
 								</form>
 
 							</div>
@@ -253,6 +276,16 @@
 										<td><label for="rate" class="font">Product Rate :</label></td>
 										<td><input type="number" id="rate"></td>
 									</tr>
+									<tr>
+										<td><label for="rate" class="font">Select Job :</label></td>
+										<td>
+										
+										<c:forEach items="${sessionScope['ejb'].getAllJobTypes()}" var="job">
+											<input type="checkbox" name="jobName" value="${job.id}"><span id="jobName${job.id}">${job.jobName}</span><br>
+										</c:forEach>
+										
+										</td>
+									</tr>
 								</table>
 
 								<div class="form-group">
@@ -272,70 +305,8 @@
 		</div>
 	</div>
 	
-	<!--************************ for jobs add ******************************-->
 	
-<div id="addJobs" class="modal fade" role="dialog"
-		style="top: 25px;">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<!-- <h4 class="modal-title">Modal Header</h4> -->
-				</div>
-				<div class="modal-body">
-					<div class="row">
-						<div class="widget-area">
-							<div class="row">
-								<span>Add Jobs</span>
-							</div>
-							<br>
-							<div class="row">
-								<table>
-									<tr>
-										<td><label for="jobName" class="font">Job Name :</label></td>
-										<td><select name="jobName" id="jobName" onchange="selectJob();">
-										<option value="0">select an Job Name</option>
-										<c:forEach items="${sessionScope['ejb'].getAllJobTypes()}" var="job">
-											<option id="jobName${job.id}" value="${job.id}">${job.jobName}</option>
-										</c:forEach>
-										</select></td>
-									</tr>									
-									<tr>
-										<td><label for="jobQty" class="font">Product Qty
-												:</label></td>
-										<td><input type="number" id="jobQty" value="0"></td>
-									</tr>
-									<tr>
-										<td><label for="jobUOM" class="font">UOM :</label></td>
-										<td><select name="jobUOM" id="jobUOM">
-										<option value="0">select an UOM</option>
-										<c:forEach items="${sessionScope['ejb'].getAllUOM()}" var="uom">
-											<option id="uom${uom.id}" value="${uom.id}">${uom.name}</option>
-										</c:forEach>
-										</select></td>
-									</tr>
-									<tr>
-										<td><label for="rate" class="font">Job Rate :</label></td>
-										<td><input type="number" id="jobrate" value="0"></td>
-									</tr>
-								</table>
 
-								<div class="form-group">
-									<input type="button" class="btn btn-success medium" id="yesC"
-										value="Add" onclick="addJobRow();">
-								</div>
-
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
-				</div>
-			</div>
-
-		</div>
-	</div>
 </body>
 <!-- Script -->
 <script type="text/javascript" src="js/modernizr.js"></script>
@@ -399,10 +370,31 @@
 
 	function addProductRow() {
 		$("#addProduct").modal("hide");
-		if($(document).find("#proTable"+$("#proId").val()).length>0){
+		if($(document).find("#proTable"+$("#proId").val()).length>0){			
 			$("#proTable"+$("#proId").val()+" td:nth-child(4)").html(Number($("#proTable"+$("#proId").val()+" td:nth-child(4)").html())+Number($("#proQty").val()));
 			$("#proTable"+$("#proId").val()+" td:nth-child(6)").html($("#rate").val());
-			$("#proTable"+$("#proId").val()+" td:nth-child(7)").html(Number($("#proTable"+$("#proId").val()+" td:nth-child(7)").html())+Number($("#proQty").val()) * Number($("#rate").val()));
+			$("#proTable"+$("#proId").val()+" td:nth-child(7)").html(Number($("#proTable"+$("#proId").val()+" td:nth-child(6)").html())+Number($("#proQty").val()) * Number($("#rate").val()));
+			
+			$('[name="jobName"]:checked').each(function() {
+				
+				 $("#jobs").append(
+							'<tbody id="jobRow'+$(this).val()+$("#proId").val()+'"><tr>'
+							+ '<td>#<input type="hidden" value="'+$("#proId").val()+'" name="proId"><input type="hidden" value="'+$(this).val()+'" name="jobId"></td>'
+							+ '<td>'+$("#jobName"+$(this).val()).html()+'</td>'
+									+ '<td>'+$("#proCode").val() + '</td>'
+									+ '<td><input type="number" id="rate1'+$(this).val()+$("#proId").val()+'" onchange="calAnount(\''+$(this).val()+$("#proId").val()+'\');" value="0" name="jobqty"></td>'
+									+ '<td>'+$("#proUOM").val()+'</td>'
+									+ '<td><input type="number" id="qtu1'+$(this).val()+$("#proId").val()+'" onchange="calAnount(\''+$(this).val()+$("#proId").val()+'\');" value="0" name="jobRate"></td>'
+									+ '<td><input type="text" name="totalAmount" readonly="readonly" id="amount'+$(this).val()+$("#proId").val()+'"></td>'
+									+ '<td><a href="#" onclick="removeJobRow(\''+$(this).val()+$("#proId").val()+'\');">remove</a></td>'
+									+ '</tr>'
+									+ '</tbody>');
+					$("#jobQty").val("0");
+					$("#jobrate").val("0");
+					$("#jobName").val("0");
+					$("#jobUOM").val("0");
+		        });
+			
 		}else{
 			$("#products").append(
 					'<tbody id="proTable'+$("#proId").val()+'">' + '<tr>' + '<td>#</td>' + '<td>'
@@ -413,6 +405,26 @@
 							+ $("#rate").val() + '</td>' + '<td>'
 							+ Number($("#proQty").val()) * Number($("#rate").val())
 							+ '</td>' + '<td><a href="#" onclick="removeProductRow(\''+$("#proId").val()+'\');">remove</a></td>' + '</tr>' + '</tbody>');
+		
+			 $('[name="jobName"]:checked').each(function() {
+				
+				 $("#jobs").append(
+							'<tbody id="jobRow'+$(this).val()+$("#proId").val()+'"><tr>'
+							+ '<td>#<input type="hidden" value="'+$("#proId").val()+'" name="proId"><input type="hidden" value="'+$(this).val()+'" name="jobId"></td>'
+							+ '<td>'+$("#jobName"+$(this).val()).html()+'</td>'
+									+ '<td>'+$("#proCode").val() + '</td>'
+									+ '<td><input type="number" id="rate1'+$(this).val()+$("#proId").val()+'" onchange="calAnount(\''+$(this).val()+$("#proId").val()+'\');" value="0" name="jobqty"></td>'
+									+ '<td>'+$("#proUOM").val()+'</td>'
+									+ '<td><input type="number" id="qtu1'+$(this).val()+$("#proId").val()+'" onchange="calAnount(\''+$(this).val()+$("#proId").val()+'\');" value="0" name="jobRate"></td>'
+									+ '<td><input type="text" name="totalAmount" readonly="readonly" id="amount'+$(this).val()+$("#proId").val()+'"></td>'
+									+ '<td><a href="#" onclick="removeJobRow(\''+$(this).val()+$("#proId").val()+'\');">remove</a></td>'
+									+ '</tr>'
+									+ '</tbody>');
+					$("#jobQty").val("0");
+					$("#jobrate").val("0");
+					$("#jobName").val("0");
+					$("#jobUOM").val("0");
+		        });
 		}
 		
 		$("#proCode").val("");
@@ -422,61 +434,17 @@
 		$("#UOMid").val("");
 		$("#proQty").val("");
 		$("#rate").val("");
+		$("#productForJob").val("0");
+	}
+	
+	function calAnount(a){
+		$("#amount"+a).val(Number($("#qtu1"+a).val())*Number($("#rate1"+a).val()));
 	}
 	
 	function removeProductRow(id){
 		$("#proTable"+id).remove();
 	}
 
-	/******************for jobs*************/
-	function addJobs() {
-		$("#addJobs").modal('show');		
-	}
-	
-	function selectJob(){
-		var jobid=$("#jobName").val();
-		if($(document).find("#jobRow"+jobid).length>0){
-			$("#jobrate").prop("readonly",true);
-			$("#jobUOM").prop("disabled",true);
-			$("#jobrate").val($("#jobRow"+jobid+" td:nth-child(5)").html());
-			$("#jobUOM").val($("#jobRow"+jobid+" td:nth-child(1) [name='uomid']").val());
-		}else{
-			$("#jobrate").val("0");
-			$("#jobrate").prop("readonly",false);
-			$("#jobUOM").prop("disabled",false);
-		}
-	}
-	
-	function addJobRow(){
-		if($(document).find("#jobRow"+$("#jobName").val()).length>0){
-			if($("#jobQty").val()=="0" || $("#jobrate").val()=="0" || $("#jobName").val()=="0" || $("#jobUOM").val()==0){
-				alert('please fill all the field');
-			}else{
-				$("#addJobs").modal('hide');
-				var amount=Number($("#jobrate").val())*Number($("#jobQty").val());
-				$("#jobRow"+$("#jobName").val()+" td:nth-child(6)").html(Number($("#jobRow"+$("#jobName").val()+" td:nth-child(6)").html())+amount);
-				$("#jobRow"+$("#jobName").val()+" td:nth-child(3)").html(Number($("#jobRow"+$("#jobName").val()+" td:nth-child(3)").html())+Number($("#jobQty").val()));
-			}
-		}else{
-			if($("#jobQty").val()=="0" || $("#jobrate").val()=="0" || $("#jobName").val()=="0" || $("#jobUOM").val()==0){
-				alert('please fill all the field');
-			}else{
-				$("#addJobs").modal('hide');
-				var amount=Number($("#jobrate").val())*Number($("#jobQty").val());
-				$("#jobs").append(
-						'<tbody id="jobRow'+$("#jobName").val()+'">' + '<tr>' + '<td>#<input type="hidden" value="'+$("#jobName").val()+'" name="jobid"><input type="hidden" value="'+$("#jobUOM").val()+'" name="uomid"><input type="hidden" value="'+$("#jobQty").val()+'" name="jobproqty"><input type="hidden" value="'+$("#jobrate").val()+'" name="jobrate"><input type="hidden" value="'+amount+'" name="jobamount"></td>'
-						+ '<td>'+$("#jobName"+$("#jobName").val()).html()+'</td>'
-								+ '<td>'+$("#jobQty").val()+'</td>' + '<td>'+$("#uom"+$("#jobUOM").val()).html()+'</td>' + '<td>'+$("#jobrate").val()+'</td>'
-								+ '<td>'+amount+'</td>' + '<td><a href="#" onclick="removeJobRow(\''+$("#jobName").val()+'\');">remove</a></td>' + '</tr>'
-								+ '</tbody>');
-				$("#jobQty").val("");
-				$("#jobrate").val("");
-				$("#jobName").val("0");
-				$("#jobUOM").val("0");
-			}
-		}		
-	}
-	
 	function removeJobRow(id){
 		$("#jobRow"+id).remove();
 	}
@@ -529,5 +497,19 @@
 				}
 
 			});
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+
+			reader.onload = function(e) {
+				$('#image').attr('src', e.target.result).width(120).height(
+						85);
+				var str = e.target.result;
+				$("#proImage1").val(str.substring(str.lastIndexOf(',') + 1));
+			};
+
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
 </script>
 </html>

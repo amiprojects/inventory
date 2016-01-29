@@ -25,15 +25,18 @@ import com.kaanish.model.CompanyInfo;
 import com.kaanish.model.Country;
 import com.kaanish.model.CustomerEntry;
 import com.kaanish.model.Department;
+import com.kaanish.model.DesignImage;
 import com.kaanish.model.JobAssignmentDetails;
 import com.kaanish.model.JobAssignmentProducts;
 import com.kaanish.model.JobRecievedDetails;
 import com.kaanish.model.JobStock;
 import com.kaanish.model.JobTypes;
+import com.kaanish.model.JobsForDesignCostSheet;
 import com.kaanish.model.PageList;
 import com.kaanish.model.PaymentDetails;
 import com.kaanish.model.ProductDetail;
 import com.kaanish.model.ProductImage;
+import com.kaanish.model.ProductsForDesignCostSheet;
 import com.kaanish.model.PurchaseReturn;
 import com.kaanish.model.PurchaseReturnProductDetails;
 import com.kaanish.model.Purchase_Entry;
@@ -47,6 +50,7 @@ import com.kaanish.model.SalesEntry;
 import com.kaanish.model.SalesProductDetails;
 import com.kaanish.model.SalesProductReturnDetail;
 import com.kaanish.model.SalesReturn;
+import com.kaanish.model.SampleDesignCostSheet;
 import com.kaanish.model.SecurityAnswers;
 import com.kaanish.model.SerialNumber;
 import com.kaanish.model.State;
@@ -87,7 +91,7 @@ import com.kaanish.util.DateConverter;
 		"/salesReturnServlet", "/purchaseSearchAll", "/salesSearchAll",
 		"/jobSearchAll", "/forgotPassUserCheck", "/forgotPassVarify",
 		"/resetPass", "/purchaseSearchForReturn", "/purchaseReturn",
-		"/setJobTypes", "/updateJob" })
+		"/setJobTypes", "/updateJob", "/sampleJobCost" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -139,6 +143,11 @@ public class Servlet extends HttpServlet {
 	private PurchaseReturn purchaseReturn;
 	private PurchaseReturnProductDetails purchaseReturnProductDetails;
 	private JobTypes jobTypes;
+	private SampleDesignCostSheet sampleDesignCostSheet;
+	private JobsForDesignCostSheet jobsForDesignCostSheet;
+	private ProductsForDesignCostSheet productsForDesignCostSheet;
+	private DesignImage designImage;
+	
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -2721,6 +2730,85 @@ public class Servlet extends HttpServlet {
 				} else {
 					msg = "You can not update duplicate job name.";
 				}
+				break;
+				
+			case "sampleJobCost":
+				page="designCostSheet.jsp";
+				sampleDesignCostSheet=new SampleDesignCostSheet();
+				
+				sampleDesignCostSheet.setDesignDescription(req.getParameter("designDescription"));
+				sampleDesignCostSheet.setDesignNumber(req.getParameter("designNo"));
+				sampleDesignCostSheet.setQty(Integer.parseInt(req.getParameter("qty")));
+				sampleDesignCostSheet.setSurcharge(Float.parseFloat(req.getParameter("surcharge")));
+				sampleDesignCostSheet.setVendor(ejb.getVendorById(Integer.parseInt(req.getParameter("designerId"))));
+				
+				ejb.setSampleDesignCostSheet(sampleDesignCostSheet);
+				
+				String[] designImageContent=req.getParameterValues("proImage1");
+				for(int lc=0;lc<designImageContent.length;lc++){
+					designImage=new DesignImage();
+					designImage.setImage(Base64.decode(designImageContent[lc]));
+					designImage.setDesignCostSheet(sampleDesignCostSheet);
+					
+					ejb.setDesignImage(designImage);
+				}
+				
+				float jobtotal=0.0F;
+				float prototal=0.0F;
+				
+				String[] productid=req.getParameterValues("productId");
+				String[] proqty=req.getParameterValues("qty");
+				String[] prorate=req.getParameterValues("rate");
+				String[] proamount=req.getParameterValues("amount");
+				String[] proqtyUnitId=req.getParameterValues("qtyUnitId");
+				
+				for(int lc=0;lc<productid.length;lc++){
+					productsForDesignCostSheet=new ProductsForDesignCostSheet();
+					
+					productsForDesignCostSheet.setProductDetail(ejb.getProductDetailById(Integer.parseInt(productid[lc])));
+					productsForDesignCostSheet.setQty(Integer.parseInt(proqty[lc]));
+					productsForDesignCostSheet.setRate(Float.parseFloat(prorate[lc]));
+					productsForDesignCostSheet.setAmmount(Float.parseFloat(proamount[lc]));
+					productsForDesignCostSheet.setQtyUnit(ejb.getQtyUnitById(Integer.parseInt(proqtyUnitId[lc])));
+					productsForDesignCostSheet.setSampleDesignCostSheet(sampleDesignCostSheet);
+					
+					ejb.setProductsForDesignCostSheet(productsForDesignCostSheet);
+					productsForDesignCostSheet=null;
+					
+					prototal=prototal+Float.parseFloat(prorate[lc]);
+				}
+				
+				String[] jobid=req.getParameterValues("jobId");
+				String[] jobProid=req.getParameterValues("proId");
+				String[] jobqty=req.getParameterValues("jobqty");
+				String[] jobrate=req.getParameterValues("jobRate");
+				String[] jobamount=req.getParameterValues("totalAmount");
+				
+				for(int lc=0;lc<productid.length;lc++){
+					jobsForDesignCostSheet=new JobsForDesignCostSheet();
+					
+					jobsForDesignCostSheet.setJobTypes(ejb.getJobTypeById(Integer.parseInt(jobid[lc])));
+					jobsForDesignCostSheet.setQty(Integer.parseInt(jobqty[lc]));
+					jobsForDesignCostSheet.setRate(Float.parseFloat(jobrate[lc]));
+					jobsForDesignCostSheet.setAmmount(Float.parseFloat(jobamount[lc]));
+					jobsForDesignCostSheet.setQtyUnit(ejb.getQtyUnitById(Integer.parseInt(jobqtyUnitId[lc])));
+					jobsForDesignCostSheet.setVendor(ejb.getVendorById(Integer.parseInt(req.getParameter("designerId"))));
+					jobsForDesignCostSheet.setSampleDesignCostSheet(sampleDesignCostSheet);
+					jobsForDesignCostSheet.set
+					
+					ejb.setJobsForDesignCostSheet(jobsForDesignCostSheet);
+					jobsForDesignCostSheet=null;
+					
+					jobtotal=jobtotal+Float.parseFloat(jobamount[lc]);
+				}
+				
+				sampleDesignCostSheet.setTotalJobcost(jobtotal);
+				sampleDesignCostSheet.setTotalProductcost(prototal);
+				sampleDesignCostSheet.setGrandTotal(jobtotal+prototal+sampleDesignCostSheet.getSurcharge());
+				
+				ejb.updateSampleDesignCostSheet(sampleDesignCostSheet);
+				
+				msg="your request hasbeen successfully processed";
 				break;
 
 			default:

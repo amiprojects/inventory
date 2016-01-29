@@ -32,6 +32,9 @@ public class JobsForDesignCostSheet implements Serializable {
 	@ManyToOne@JoinColumn(name="jobType")
 	private JobTypes jobTypes;
 	
+	@ManyToOne@JoinColumn(name="productforsampleid")
+	private ProductsForDesignCostSheet productsForDesignCostSheet;
+	
 	
 	public int getId() {
 		return id;
@@ -80,5 +83,11 @@ public class JobsForDesignCostSheet implements Serializable {
 	}
 	public void setJobTypes(JobTypes jobTypes) {
 		this.jobTypes = jobTypes;
+	}
+	public ProductsForDesignCostSheet getProductsForDesignCostSheet() {
+		return productsForDesignCostSheet;
+	}
+	public void setProductsForDesignCostSheet(ProductsForDesignCostSheet productsForDesignCostSheet) {
+		this.productsForDesignCostSheet = productsForDesignCostSheet;
 	}
 }

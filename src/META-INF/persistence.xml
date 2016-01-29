@@ -4,6 +4,7 @@
 		<jta-data-source>jdbc/__kaanish</jta-data-source>
 		<properties>
 			<property name="javax.persistence.schema-generation.database.action" value="create"/>
+			<property name="javax.persistence.schema-generation.create-database-schemas" value="true"/>
 		</properties>
 	</persistence-unit>
 </persistence>

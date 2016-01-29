@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -32,13 +33,13 @@ public class SampleDesignCostSheet implements Serializable {
 	@ManyToOne@JoinColumn(name="designerId")
 	private Vendor vendor;
 
-	@OneToMany(mappedBy = "designCostSheet")
+	@OneToMany(mappedBy = "designCostSheet",cascade=CascadeType.ALL)
 	private List<DesignImage> designImages;
 	
-	@OneToMany(mappedBy="sampleDesignCostSheet")
+	@OneToMany(mappedBy="sampleDesignCostSheet",cascade=CascadeType.ALL)
 	private List<ProductsForDesignCostSheet> productsForDesignCostSheets;
 	
-	@OneToMany(mappedBy="sampleDesignCostSheet")
+	@OneToMany(mappedBy="sampleDesignCostSheet",cascade=CascadeType.ALL)
 	private List<JobsForDesignCostSheet> jobsForDesignCostSheets;
 
 

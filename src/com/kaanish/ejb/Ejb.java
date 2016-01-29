@@ -24,12 +24,14 @@ import com.kaanish.model.CompanyInfo;
 import com.kaanish.model.Country;
 import com.kaanish.model.CustomerEntry;
 import com.kaanish.model.Department;
+import com.kaanish.model.DesignImage;
 import com.kaanish.model.JobAssignmentDetails;
 import com.kaanish.model.JobAssignmentProducts;
 import com.kaanish.model.JobClass;
 import com.kaanish.model.JobRecievedDetails;
 import com.kaanish.model.JobStock;
 import com.kaanish.model.JobTypes;
+import com.kaanish.model.JobsForDesignCostSheet;
 import com.kaanish.model.Module;
 import com.kaanish.model.PageList;
 import com.kaanish.model.PaymentDetails;
@@ -37,6 +39,7 @@ import com.kaanish.model.PaymentStatus;
 import com.kaanish.model.PaymentType;
 import com.kaanish.model.ProductDetail;
 import com.kaanish.model.ProductImage;
+import com.kaanish.model.ProductsForDesignCostSheet;
 import com.kaanish.model.PurchaseReturn;
 import com.kaanish.model.PurchaseReturnProductDetails;
 import com.kaanish.model.Purchase_Entry;
@@ -51,6 +54,7 @@ import com.kaanish.model.SalesEntry;
 import com.kaanish.model.SalesProductDetails;
 import com.kaanish.model.SalesProductReturnDetail;
 import com.kaanish.model.SalesReturn;
+import com.kaanish.model.SampleDesignCostSheet;
 import com.kaanish.model.SecurityAnswers;
 import com.kaanish.model.SecurityQuestionGroup;
 import com.kaanish.model.SequrityQuestions;
@@ -2687,5 +2691,61 @@ public class Ejb {
 				JobTypes.class);
 		return q.getResultList();
 	}
-
+	
+	/*************************** for SampleDesignCostSheet *********************/
+	public void setSampleDesignCostSheet(SampleDesignCostSheet sample){
+		em.persist(sample);
+	}
+	public void updateSampleDesignCostSheet(SampleDesignCostSheet sample){
+		em.merge(sample);
+	}
+	public SampleDesignCostSheet getSampleDesignCostSheetById(int id){
+		return em.find(SampleDesignCostSheet.class, id);
+	}
+	public List<SampleDesignCostSheet> getAllSampleDesignCostSheet(){
+		TypedQuery<SampleDesignCostSheet> q=em.createQuery("select c from SampleDesignCostSheet c", SampleDesignCostSheet.class);
+		return q.getResultList();
+	}
+	/*************************** for ProductsForDesignCostSheet *********************/
+	public void setProductsForDesignCostSheet(ProductsForDesignCostSheet sample){
+		em.persist(sample);
+	}
+	public void updateProductsForDesignCostSheet(ProductsForDesignCostSheet sample){
+		em.merge(sample);
+	}
+	public ProductsForDesignCostSheet getProductsForDesignCostSheetById(int id){
+		return em.find(ProductsForDesignCostSheet.class, id);
+	}
+	public List<ProductsForDesignCostSheet> getAllProductsForDesignCostSheet(){
+		TypedQuery<ProductsForDesignCostSheet> q=em.createQuery("select c from ProductsForDesignCostSheet c", ProductsForDesignCostSheet.class);
+		return q.getResultList();
+	}
+	/*************************** for JobsForDesignCostSheet *********************/
+	public void setJobsForDesignCostSheet(JobsForDesignCostSheet sample){
+		em.persist(sample);
+	}
+	public void updateJobsForDesignCostSheet(JobsForDesignCostSheet sample){
+		em.merge(sample);
+	}
+	public JobsForDesignCostSheet getJobsForDesignCostSheetById(int id){
+		return em.find(JobsForDesignCostSheet.class, id);
+	}
+	public List<JobsForDesignCostSheet> getAllJobsForDesignCostSheet(){
+		TypedQuery<JobsForDesignCostSheet> q=em.createQuery("select c from JobsForDesignCostSheet c", JobsForDesignCostSheet.class);
+		return q.getResultList();
+	}
+	/*************************** for DesignImage *********************/
+	public void setDesignImage(DesignImage sample){
+		em.persist(sample);
+	}
+	public void updateDesignImage(DesignImage sample){
+		em.merge(sample);
+	}
+	public DesignImage getDesignImageById(int id){
+		return em.find(DesignImage.class, id);
+	}
+	public List<DesignImage> getAllDesignImage(){
+		TypedQuery<DesignImage> q=em.createQuery("select c from DesignImage c", DesignImage.class);
+		return q.getResultList();
+	}
 }
