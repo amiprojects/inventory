@@ -2511,35 +2511,36 @@ public class Servlet extends HttpServlet {
 					productsForDesignCostSheet.setSampleDesignCostSheet(sampleDesignCostSheet);
 
 					ejb.setProductsForDesignCostSheet(productsForDesignCostSheet);
-					productsForDesignCostSheet = null;
+					
 
 					prototal = prototal + Float.parseFloat(prorate[lc]);
-				}
+				
 
-				String[] jobid = req.getParameterValues("jobId");
-				String[] jobProid = req.getParameterValues("proId");
-				String[] jobqty = req.getParameterValues("jobqty");
-				String[] jobrate = req.getParameterValues("jobRate");
-				String[] jobamount = req.getParameterValues("totalAmount");
+				String[] jobid = req.getParameterValues("jobId"+productid[lc]);
+				String[] jobqty = req.getParameterValues("jobqty"+productid[lc]);
+				String[] jobrate = req.getParameterValues("jobRate"+productid[lc]);
+				String[] jobamount = req.getParameterValues("totalAmount"+productid[lc]);
 
-				for (int lc = 0; lc < productid.length; lc++) {
+				for (int lc1 = 0; lc1 < jobid.length; lc1++) {
 					jobsForDesignCostSheet = new JobsForDesignCostSheet();
-
-					jobsForDesignCostSheet.setJobTypes(ejb.getJobTypeById(Integer.parseInt(jobid[lc])));
-					jobsForDesignCostSheet.setQty(Integer.parseInt(jobqty[lc]));
-					jobsForDesignCostSheet.setRate(Float.parseFloat(jobrate[lc]));
-					jobsForDesignCostSheet.setAmmount(Float.parseFloat(jobamount[lc]));
-					// jobsForDesignCostSheet.setQtyUnit(ejb.getQtyUnitById(Integer.parseInt(jobqtyUnitId[lc])));
+					
+					jobsForDesignCostSheet.setJobTypes(ejb.getJobTypeById(Integer.parseInt(jobid[lc1])));
+					jobsForDesignCostSheet.setQty(Integer.parseInt(jobqty[lc1]));
+					jobsForDesignCostSheet.setRate(Float.parseFloat(jobrate[lc1]));
+					jobsForDesignCostSheet.setAmmount(Float.parseFloat(jobamount[lc1]));
+					jobsForDesignCostSheet.setQtyUnit(ejb.getQtyUnitById(Integer.parseInt(proqtyUnitId[lc])));
 					jobsForDesignCostSheet
 							.setVendor(ejb.getVendorById(Integer.parseInt(req.getParameter("designerId"))));
 					jobsForDesignCostSheet.setSampleDesignCostSheet(sampleDesignCostSheet);
-					// jobsForDesignCostSheet.set
+					jobsForDesignCostSheet.setProductsForDesignCostSheet(productsForDesignCostSheet);
 
 					ejb.setJobsForDesignCostSheet(jobsForDesignCostSheet);
 					jobsForDesignCostSheet = null;
 
-					jobtotal = jobtotal + Float.parseFloat(jobamount[lc]);
+					jobtotal = jobtotal + Float.parseFloat(jobamount[lc1]);
 				}
+				productsForDesignCostSheet = null;
+			}
 
 				sampleDesignCostSheet.setTotalJobcost(jobtotal);
 				sampleDesignCostSheet.setTotalProductcost(prototal);
