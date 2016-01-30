@@ -88,7 +88,7 @@
 					</ul>
 				</div>
 			</div>
-			<!-- <div class="single-menu">
+			<div class="single-menu">
 				<h2 id="jobs">
 					<a title=""><span>Jobs Module</span></a>
 				</h2>
@@ -103,7 +103,7 @@
 							title="">Sample Job for CostSheet</a></li>
 					</ul>
 				</div>
-			</div> -->
+			</div>
 			<div class="single-menu">
 				<h2 id="setup">
 					<a title=""><span>Setup Module</span></a>
