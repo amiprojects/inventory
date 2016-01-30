@@ -435,7 +435,7 @@
 												<td>${purchaseProducts.productDetail.qtyUnit.name}</td>
 												<td id="cost${purchaseProducts.id}">${purchaseProducts.cost}</td>
 												<td>${purchaseProducts.quantity*purchaseProducts.cost}</td>
-												<td><input type="text" class="form-control"
+												<td><input type="text" class="form-control rQty"
 													id="rQty${purchaseProducts.id}" name="rQty"
 													onkeyup="changeNcheck('${purchaseProducts.id}');" value="0"
 													autocomplete="off"></td>
@@ -1007,7 +1007,15 @@
 		function paymentDate() {
 			$("#AMi2").hide();
 			var count = $('#productList tbody').length;
-			if (count < 1) {
+
+			var chk = 0;
+			$(".rQty").each(function() {
+				if (this.value != 0 && this.value != "") {
+					chk = chk + 1;
+				}
+			});
+
+			if (count < 1 || chk < 1) {
 				alert("No product found to return.");
 			} else {
 				var d = $("#datepicker1").datepicker('getDate');

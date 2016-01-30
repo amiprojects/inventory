@@ -171,10 +171,43 @@ page[size="A4"] {
 						</tr>
 						<c:set value="${sl+1}" var="sl" />
 					</c:forEach>
-					<tr>
+					<%-- <tr>
 						<td colspan="2">Total</td>
 						<td>${tqty}</td>
 						<td>${gtot}</td>
+					</tr> --%>
+					<tr>
+						<td colspan="5" align="right">Discount Value <c:set var="dis"
+								value="${purEntry.isFlatDiscount()?'Flat':'%'}" />
+							(${purEntry.discountValue}(${dis})) :
+						</td>
+						<td><c:set var="disVal"
+								value="${purEntry.isFlatDiscount()?purEntry.discountValue:purEntry.subTotal*purEntry.discountValue/100}" />
+							${disVal}</td>
+					</tr>
+					<tr>
+						<td colspan="5" align="right">Tax Amount
+							(${purEntry.tax_Type_Group.getTotalTaxValue()}%) :</td>
+						<td>${purEntry.taxAmount}</td>
+					</tr>
+					<tr>
+						<td colspan="5" align="right">Transport Charge :</td>
+						<td>${purEntry.transportcCharge}</td>
+					</tr>
+					<tr>
+						<td colspan="5" align="right">Surcharge :</td>
+						<td>${purEntry.surcharge}</td>
+					</tr>
+					<tr>
+						<td colspan="5" align="right">RoundOf :</td>
+						<td>${purEntry.roundOf}</td>
+					</tr>
+					<tr>
+						<td colspan="2" align="right">Total Quantity :</td>
+						<td>${tqty}</td>
+						<td colspan="2" align="right">Grand Total :</td>
+						<td>${purEntry.totalCost}<%-- ${gtot} --%>
+						</td>
 					</tr>
 				</table>
 			</td>
