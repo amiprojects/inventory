@@ -212,22 +212,6 @@ page[size="A4"] {
 				</table>
 			</td>
 		</tr>
-		<tr>
-			<td colspan="6" align="left">Return Details :</td>
-		</tr>
-		<c:set value="${1}" var="slno" />
-		<%-- <c:forEach items="${purEntry.purchaseReturn}" var="pret">
-			<tr>
-				<td>${slno}</td>
-				<td>${pret.productDetail.description}</td>
-				<td>${pret.quantity}</td>
-				<c:set value="${tqty+ppdet.quantity}" var="tqty" />
-				<td>${pret.cost}</td>
-				<td>${pret.productDetail.qtyUnit.name}</td>
-				<td>${pret.cost*ppdet.quantity}</td>
-			</tr>
-			<c:set value="${slno+1}" var="slno" />
-		</c:forEach> --%>
 		<tr style="height: 75px">
 			<td class="tg-031e" colspan="7"><span>Amount Chargeable
 					(in words)</span><br> <span>${sessionScope['ejb'].getNumberToWords(gtot)}</span></td>

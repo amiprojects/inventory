@@ -186,14 +186,76 @@ page[size="A4"] {
 						</tr>
 						<c:set value="${sl+1}" var="sl" />
 					</c:forEach>
-					<tr>
+					<%-- <tr>
 						<td colspan="2">Total</td>
 						<td>${tqty}</td>
 						<td>${gtot}</td>
+					</tr> --%>
+					<tr>
+						<td colspan="5" align="right">Tax Amount
+							(${purEntry.tax_Type_Group.getTotalTaxValue()}%) :</td>
+						<td>${purEntry.taxAmount}</td>
+					</tr>
+					<tr>
+						<td colspan="5" align="right">Transport Charge :</td>
+						<td>${purEntry.transport_cost}</td>
+					</tr>
+					<tr>
+						<td colspan="5" align="right">Surcharge :</td>
+						<td>${purEntry.sur_charge}</td>
+					</tr>
+					<tr>
+						<td colspan="5" align="right">RoundOf :</td>
+						<td>${purEntry.roundOf}</td>
+					</tr>
+					<tr>
+						<td colspan="2" align="right">Total Quantity :</td>
+						<td>${tqty}</td>
+						<td colspan="2" align="right">Grand Total :</td>
+						<td>${purEntry.totalCost}<%-- ${gtot} --%>
+						</td>
 					</tr>
 				</table>
 			</td>
 		</tr>
+		<c:if test="${purEntry.purchaseReturn.size()!=0}">
+			<tr>
+				<td colspan="6" align="left">Return Details :</td>
+			</tr>
+			<tr>
+				<th>#</th>
+				<th>Return Date</th>
+				<th>Purchase Return challan no.</th>
+				<th>Product Code</th>
+				<th>Product Description</th>
+				<th>Returning Qty</th>
+			</tr>
+			<c:set value="${1}" var="slno" />
+			<c:forEach items="${purEntry.purchaseReturn}" var="pret">
+				<tr>
+					<td>${slno}</td>
+					<td><fmt:formatDate value="${pret.returnDate}"
+							pattern="dd-MM-yy" /> <%-- ${pret.returnDate} --%></td>
+					<td>${pret.challanNumber}</td>
+					<td><c:forEach var="purchaseReturnProd"
+							items="${pret.purchaseReturnProductDetails}">
+						${purchaseReturnProd.purchaseProductDetails.productDetail.code}
+						<br>
+						</c:forEach></td>
+					<td><c:forEach var="purchaseReturnProd"
+							items="${pret.purchaseReturnProductDetails}">
+						${purchaseReturnProd.purchaseProductDetails.productDetail.description}
+						<br>
+						</c:forEach></td>
+					<td><c:forEach var="purchaseReturnProd"
+							items="${pret.purchaseReturnProductDetails}">
+						${purchaseReturnProd.qtyReturn}
+						<br>
+						</c:forEach></td>
+				</tr>
+				<c:set value="${slno+1}" var="slno" />
+			</c:forEach>
+		</c:if>
 		<tr style="height: 75px">
 			<td class="tg-031e" colspan="7"><span>Amount Chargeable
 					(in words)</span><br> <span>${sessionScope['ejb'].getNumberToWords(gtot)}</span></td>
