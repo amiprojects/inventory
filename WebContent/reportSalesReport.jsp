@@ -122,34 +122,33 @@
 										<thead>
 											<tr>
 												<th>#</th>
-												<th>Vendor Name</th>
-												<th>Company Name</th>
-												<th>Phone1</th>
-												<th>Phone2</th>
+												<th>Customer Name</th>
+												<th>Phone</th>
+												<th>City</th>
+												<th>Address</th>
 											</tr>
 										</thead>
 										<tbody style="height: 300px;">
 											<c:set var="count" value="${1}" />
-											<c:forEach items="${sessionScope['ejb'].getAllVendors()}"
+											<c:forEach
+												items="${sessionScope['ejb'].getAllCustomerEntry()}"
 												var="vendor">
-												<c:if test="${vendor.vendorType.type=='Vendor'}">
-													<tr>
-														<td>${count}</td>
-														<td>${vendor.name}</td>
-														<td>${vendor.companyName}</td>
-														<td>${vendor.ph1}</td>
-														<td>${vendor.ph2}</td>
-														<td>
-															<form action="purchaseReportByVendorName" method="post"
-																id="pView${vendor.id}">
-																<a href="#" onclick="purchaseViewF('${vendor.id}');"><input
-																	type="hidden" value="${vendor.id}" name="pId"><input
-																	type="hidden" value="${vendor.name}" name="vendorName"><img
-																	alt="" src="images/eye.png" height="25px"></a>
-															</form>
-														</td>
-													</tr>
-												</c:if>
+												<tr>
+													<td>${count}</td>
+													<td>${vendor.name}</td>
+													<td>${vendor.mobile}</td>
+													<td>${vendor.city}</td>
+													<td>${vendor.address}</td>
+													<td>
+														<form action="salesReportByCustomerName" method="post"
+															id="pView${vendor.id}">
+															<a href="#" onclick="purchaseViewF('${vendor.id}');"><input
+																type="hidden" value="${vendor.id}" name="pId"><input
+																type="hidden" value="${vendor.name}" name="custoName"><img
+																alt="" src="images/eye.png" height="25px"></a>
+														</form>
+													</td>
+												</tr>
 												<c:set var="count" value="${count+1}" />
 											</c:forEach>
 										</tbody>

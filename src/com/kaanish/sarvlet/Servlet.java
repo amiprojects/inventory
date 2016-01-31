@@ -84,7 +84,7 @@ import com.kaanish.util.DateConverter;
 		"/purchaseSearchForReturn", "/purchaseReturn", "/setJobTypes", "/updateJob", "/sampleJobCost",
 		"/allPurchaseReport", "/purchaseReportByProductCode", "/purchaseReportByVendorName", "/purchaseReportByDate",
 		"/purchaseReportByAgentName", "/purchaseProductView", "/purchaseReportView", "/salesProductView",
-		"/salesReportView" })
+		"/salesReportView", "/salesReportByCustomerName" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -1808,6 +1808,19 @@ public class Servlet extends HttpServlet {
 				List<SalesEntry> salesEntryLst3 = ejb.getSalesEntryByCustomerName(req.getParameter("custoName"));
 				req.setAttribute("salesEntryLst", salesEntryLst3);
 				if (salesEntryLst3.size() > 0) {
+					msg = "Your search for Customer name : " + req.getParameter("custoName").toUpperCase();
+				} else {
+					msg = "No result found for Customer name : " + req.getParameter("custoName").toUpperCase() + "...";
+				}
+				break;
+
+			case "salesReportByCustomerName":
+				page = "reportSalesCustomerView.jsp";
+				List<SalesEntry> salesEntryLst3R = ejb.getSalesEntryByCustomerName(req.getParameter("custoName"));
+				//req.setAttribute("salesEntryLst", salesEntryLst3R);
+				req.setAttribute("purEntryList", salesEntryLst3R);
+				req.setAttribute("pId", req.getParameter("pId"));
+				if (salesEntryLst3R.size() > 0) {
 					msg = "Your search for Customer name : " + req.getParameter("custoName").toUpperCase();
 				} else {
 					msg = "No result found for Customer name : " + req.getParameter("custoName").toUpperCase() + "...";

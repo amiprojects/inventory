@@ -1,8 +1,12 @@
-case "purchaseReportView":
-				page = "reportPurchaseView.jsp";
-
+case "purchaseReportByVendorName":
+				page = "reportPurchaseVendorView.jsp";
+				List<Purchase_Entry> purEntryList2R = ejb
+						.getPurchaseEntryByVendorNameAndCompany(req.getParameter("vendorName"));
+				req.setAttribute("purEntryList", purEntryList2R);
 				req.setAttribute("pId", req.getParameter("pId"));
-
-				msg = "";
-
+				if (purEntryList2R.size() > 0) {
+					msg = "Your search for Vendor name : " + req.getParameter("vendorName").toUpperCase();
+				} else {
+					msg = "No result found for Vendor name : " + req.getParameter("vendorName").toUpperCase() + "...";
+				}
 				break;
