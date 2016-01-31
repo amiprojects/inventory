@@ -343,14 +343,14 @@
 
 					});
 				},
-				change : function(event, ui) {
+				/* change : function(event, ui) {
 					if (ui.item == null) {
 						$(this).val("");
 						$("#prodCode").val("");						
 					} else {
 						$("#prodCode").val(ui.item.code);
 					}
-				},
+				}, */
 				select : function(event, ui) {
 					if (ui.item == null) {
 						$(this).val("");
