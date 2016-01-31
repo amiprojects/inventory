@@ -1,12 +1,1 @@
-case "purchaseReportByAgentName":
-				page = "reportPurchaseAgentView.jsp";
-				List<Purchase_Entry> purEntryList3R = ejb
-						.getPurchaseEntryByAgentNameAndCompany(req.getParameter("agentName"));
-				req.setAttribute("purEntryList", purEntryList3R);
-				req.setAttribute("pId", req.getParameter("pId"));
-				if (purEntryList3R.size() > 0) {
-					msg = "Your search for Agent name : " + req.getParameter("agentName").toUpperCase();
-				} else {
-					msg = "No result found for Agent name : " + req.getParameter("agentName").toUpperCase() + "...";
-				}
-				break;
+prodCode

@@ -1127,7 +1127,7 @@ public class Servlet extends HttpServlet {
 					msg = "No result found for Purchase challan number : " + req.getParameter("companyInitial") + "/"
 							+ req.getParameter("fynYear") + "/" + req.getParameter("month") + "/"
 							+ req.getParameter("billType") + "/" + req.getParameter("autoNum") + "/"
-							+ req.getParameter("suffix") + "...";
+							+ req.getParameter("suffix");
 				}
 				break;
 
@@ -1427,7 +1427,7 @@ public class Servlet extends HttpServlet {
 					msg = "No result found for Purchase challan number : " + req.getParameter("companyInitial") + "/"
 							+ req.getParameter("fynYear") + "/" + req.getParameter("month") + "/"
 							+ req.getParameter("billType") + "/" + req.getParameter("autoNum") + "/"
-							+ req.getParameter("suffix") + "...";
+							+ req.getParameter("suffix");
 				}
 
 				/*
@@ -1435,7 +1435,7 @@ public class Servlet extends HttpServlet {
 				 * "Your search for Purchase challan number : " +
 				 * req.getParameter("purChallanNo").toUpperCase(); } else { msg
 				 * = "No result found for Purchase challan number : " +
-				 * req.getParameter("purChallanNo").toUpperCase() + "..."; }
+				 * req.getParameter("purChallanNo").toUpperCase(); }
 				 */
 				break;
 
@@ -1447,7 +1447,7 @@ public class Servlet extends HttpServlet {
 				if (purEntryList2.size() > 0) {
 					msg = "Your search for Vendor name : " + req.getParameter("vendorName").toUpperCase();
 				} else {
-					msg = "No result found for Vendor name : " + req.getParameter("vendorName").toUpperCase() + "...";
+					msg = "No result found for Vendor name : " + req.getParameter("vendorName").toUpperCase();
 				}
 				break;
 
@@ -1460,7 +1460,7 @@ public class Servlet extends HttpServlet {
 				if (purEntryList2R.size() > 0) {
 					msg = "Your search for Vendor name : " + req.getParameter("vendorName").toUpperCase();
 				} else {
-					msg = "No result found for Vendor name : " + req.getParameter("vendorName").toUpperCase() + "...";
+					msg = "No result found for Vendor name : " + req.getParameter("vendorName").toUpperCase();
 				}
 				break;
 
@@ -1472,7 +1472,7 @@ public class Servlet extends HttpServlet {
 				if (purEntryList3.size() > 0) {
 					msg = "Your search for Agent name : " + req.getParameter("agentName").toUpperCase();
 				} else {
-					msg = "No result found for Agent name : " + req.getParameter("agentName").toUpperCase() + "...";
+					msg = "No result found for Agent name : " + req.getParameter("agentName").toUpperCase();
 				}
 				break;
 			case "purchaseReportByAgentName":
@@ -1484,7 +1484,7 @@ public class Servlet extends HttpServlet {
 				if (purEntryList3R.size() > 0) {
 					msg = "Your search for Agent name : " + req.getParameter("agentName").toUpperCase();
 				} else {
-					msg = "No result found for Agent name : " + req.getParameter("agentName").toUpperCase() + "...";
+					msg = "No result found for Agent name : " + req.getParameter("agentName").toUpperCase();
 				}
 				break;
 
@@ -1496,7 +1496,7 @@ public class Servlet extends HttpServlet {
 				if (purEntryList4.size() > 0) {
 					msg = "Your search for Product code : " + req.getParameter("prodCode").toUpperCase();
 				} else {
-					msg = "No result found for product code : " + req.getParameter("prodCode").toUpperCase() + "...";
+					msg = "No result found for product code : " + req.getParameter("prodCode").toUpperCase();
 				}
 				break;
 
@@ -1508,7 +1508,7 @@ public class Servlet extends HttpServlet {
 				if (purEntryList4R.size() > 0) {
 					msg = "Your search for Product code : " + req.getParameter("prodCode").toUpperCase();
 				} else {
-					msg = "No result found for product code : " + req.getParameter("prodCode").toUpperCase() + "...";
+					msg = "No result found for product code : " + req.getParameter("prodCode").toUpperCase();
 				}
 				break;
 
@@ -1657,7 +1657,7 @@ public class Servlet extends HttpServlet {
 					msg = "No result found for Job challan number : " + req.getParameter("companyInitial") + "/"
 							+ req.getParameter("fynYear") + "/" + req.getParameter("month") + "/"
 							+ req.getParameter("billType") + "/" + req.getParameter("autoNum") + "/"
-							+ req.getParameter("suffix") + "...";
+							+ req.getParameter("suffix");
 				}
 
 				/*
@@ -1707,7 +1707,7 @@ public class Servlet extends HttpServlet {
 					msg = "No result found for Job challan number : " + req.getParameter("companyInitial") + "/"
 							+ req.getParameter("fynYear") + "/" + req.getParameter("month") + "/"
 							+ req.getParameter("billType") + "/" + req.getParameter("autoNum") + "/"
-							+ req.getParameter("suffix") + "...";
+							+ req.getParameter("suffix");
 				}
 
 				/*
@@ -1715,7 +1715,7 @@ public class Servlet extends HttpServlet {
 				 * "Your search for Job challan number : " +
 				 * req.getParameter("jobChallanNo").toUpperCase(); } else { msg
 				 * = "No result found for Job challan number : " +
-				 * req.getParameter("jobChallanNo").toUpperCase() + "..."; }
+				 * req.getParameter("jobChallanNo").toUpperCase(); }
 				 */
 				break;
 
@@ -1727,7 +1727,7 @@ public class Servlet extends HttpServlet {
 				if (jobAssignList2.size() > 0) {
 					msg = "Your search for Jobber name : " + req.getParameter("jobberName").toUpperCase();
 				} else {
-					msg = "No result found for jobber name : " + req.getParameter("jobberName").toUpperCase() + "...";
+					msg = "No result found for jobber name : " + req.getParameter("jobberName").toUpperCase();
 				}
 				break;
 
@@ -1738,7 +1738,7 @@ public class Servlet extends HttpServlet {
 				if (jobAssignList3.size() > 0) {
 					msg = "Your search for Product code : " + req.getParameter("prodCode").toUpperCase();
 				} else {
-					msg = "No result found for product code : " + req.getParameter("prodCode").toUpperCase() + "...";
+					msg = "No result found for product code : " + req.getParameter("prodCode").toUpperCase();
 				}
 				break;
 
@@ -1788,7 +1788,7 @@ public class Servlet extends HttpServlet {
 					msg = "No result found for Job challan number : " + req.getParameter("companyInitial") + "/"
 							+ req.getParameter("fynYear") + "/" + req.getParameter("month") + "/"
 							+ req.getParameter("billType") + "/" + req.getParameter("autoNum") + "/"
-							+ req.getParameter("suffix") + "...";
+							+ req.getParameter("suffix");
 				}
 				break;
 
@@ -1799,7 +1799,7 @@ public class Servlet extends HttpServlet {
 				if (salesEntryLst2.size() > 0) {
 					msg = "Your search for Agent name : " + req.getParameter("agentName").toUpperCase();
 				} else {
-					msg = "No result found for Agent name : " + req.getParameter("agentName").toUpperCase() + "...";
+					msg = "No result found for Agent name : " + req.getParameter("agentName").toUpperCase();
 				}
 				break;
 
@@ -1812,7 +1812,7 @@ public class Servlet extends HttpServlet {
 				if (salesEntryLst2R.size() > 0) {
 					msg = "Your search for Agent name : " + req.getParameter("agentName").toUpperCase();
 				} else {
-					msg = "No result found for Agent name : " + req.getParameter("agentName").toUpperCase() + "...";
+					msg = "No result found for Agent name : " + req.getParameter("agentName").toUpperCase();
 				}
 				break;
 
@@ -1823,7 +1823,7 @@ public class Servlet extends HttpServlet {
 				if (salesEntryLst3.size() > 0) {
 					msg = "Your search for Customer name : " + req.getParameter("custoName").toUpperCase();
 				} else {
-					msg = "No result found for Customer name : " + req.getParameter("custoName").toUpperCase() + "...";
+					msg = "No result found for Customer name : " + req.getParameter("custoName").toUpperCase();
 				}
 				break;
 
@@ -1836,7 +1836,7 @@ public class Servlet extends HttpServlet {
 				if (salesEntryLst3R.size() > 0) {
 					msg = "Your search for Customer name : " + req.getParameter("custoName").toUpperCase();
 				} else {
-					msg = "No result found for Customer name : " + req.getParameter("custoName").toUpperCase() + "...";
+					msg = "No result found for Customer name : " + req.getParameter("custoName").toUpperCase();
 				}
 				break;
 
@@ -1847,7 +1847,7 @@ public class Servlet extends HttpServlet {
 				if (salesEntryLst4.size() > 0) {
 					msg = "Your search for Product code : " + req.getParameter("prodCode").toUpperCase();
 				} else {
-					msg = "No result found for product code : " + req.getParameter("prodCode").toUpperCase() + "...";
+					msg = "No result found for product code : " + req.getParameter("prodCode").toUpperCase();
 				}
 				break;
 
@@ -2228,7 +2228,7 @@ public class Servlet extends HttpServlet {
 					msg = "No result found for Sales challan number : " + req.getParameter("companyInitial") + "/"
 							+ req.getParameter("fynYear") + "/" + req.getParameter("month") + "/"
 							+ req.getParameter("billType") + "/" + req.getParameter("autoNum") + "/"
-							+ req.getParameter("suffix") + "...";
+							+ req.getParameter("suffix");
 				}
 				break;
 
