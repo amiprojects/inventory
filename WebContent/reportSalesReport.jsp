@@ -169,7 +169,7 @@
 											<c:set var="count" value="${1}" />
 											<c:forEach items="${sessionScope['ejb'].getAllVendors()}"
 												var="vendor">
-												<c:if test="${vendor.vendorType.type=='Purchase Agent'}">
+												<c:if test="${vendor.vendorType.type=='Sales Agent'}">
 													<tr>
 														<td>${count}</td>
 														<td>${vendor.name}</td>
@@ -177,7 +177,7 @@
 														<td>${vendor.ph1}</td>
 														<td>${vendor.ph2}</td>
 														<td>
-															<form action="purchaseReportByAgentName" method="post"
+															<form action="salesReportByAgentName" method="post"
 																id="pView${vendor.id}">
 																<a href="#" onclick="purchaseViewF('${vendor.id}');"><input
 																	type="hidden" value="${vendor.id}" name="pId"><input
