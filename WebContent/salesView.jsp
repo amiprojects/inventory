@@ -259,6 +259,68 @@
 										<c:set var="i" value="${i+1}" />
 									</c:forEach>
 								</table>
+
+								<table class="table table-striped table-bordered" id="example"
+									cellspacing="0" width="100%">
+
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Return Date</th>
+											<th>Purchase Return challan no.</th>
+											<th>Product Code</th>
+											<th>Product Description</th>
+											<th>Returning Qty</th>
+											<th>Drawback</th>
+										</tr>
+									</thead>
+
+									<c:set var="j" value="${1}"></c:set>
+									<c:forEach var="salesReturn"
+										items="${salesSearchView.salesReturn}">
+
+										<tbody>
+											<tr>
+												<td>${j}</td>
+												<td><fmt:formatDate value="${salesReturn.returnDate}"
+														pattern="dd-MM-yy" /></td>
+												<td>${salesReturn.challanNumber}</td>
+												<td><c:forEach var="salesReturnProd"
+														items="${salesReturn.salesProductReturnDetail}">
+														
+													${salesReturnProd.salesProductDetails.purchase_Product_Details.productDetail.code}
+														<hr>
+
+													</c:forEach></td>
+												<td><c:forEach var="salesReturnProd"
+														items="${salesReturn.salesProductReturnDetail}">
+														
+													${salesReturnProd.salesProductDetails.purchase_Product_Details.productDetail.description}
+														<hr>
+
+													</c:forEach></td>
+
+												<td><c:forEach var="salesReturnProd"
+														items="${salesReturn.salesProductReturnDetail}">
+														
+													${salesReturnProd.qtyReturn}
+														<hr>
+
+													</c:forEach></td>
+												<td><c:forEach var="salesReturnProd"
+														items="${salesReturn.salesProductReturnDetail}">
+														
+													${salesReturnProd.fault}
+														<hr>
+
+													</c:forEach></td>
+											</tr>
+										</tbody>
+										<c:set var="j" value="${j+1}" />
+									</c:forEach>
+
+								</table>
+
 							</div>
 							<div style="width: 40%; float: right;">
 								<input type="hidden" id="totalvalue" name="totalvalue" value="0">

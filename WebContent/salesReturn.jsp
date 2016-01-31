@@ -917,7 +917,6 @@
 
 	<script type="text/javascript">
 		function paymentDate() {
-			$("#AMi2").hide();
 			var count = $('#example tbody').length;
 
 			var chk = 0;
