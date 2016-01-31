@@ -100,11 +100,8 @@
 
 									</div>
 
-
-
-
 									<div class="col-md-4">
-										<a href="#">
+										<a href="reportSalesReport.jsp">
 											<div class="stats-counter">
 												<img alt="Sales Report" src="img/salesReport.jpg"
 													style="height: 179px; width: 330px;"> <i
