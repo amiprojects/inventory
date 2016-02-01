@@ -94,6 +94,7 @@
 												<img alt="Purchase Report" src="img/purchaseReport.jpg"
 													style="height: 179px; width: 330px;"> <i
 													class="fa fa-user red"></i>
+
 												<h4 style="color: red">Purchase Report</h4>
 											</div>
 										</a>
@@ -103,6 +104,7 @@
 									<div class="col-md-4">
 										<a href="reportSalesReport.jsp">
 											<div class="stats-counter">
+
 												<img alt="Sales Report" src="img/salesReport.jpg"
 													style="height: 179px; width: 330px;"> <i
 													class="fa fa-user red"></i>
