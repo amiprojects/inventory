@@ -381,6 +381,96 @@
 				}
 			});
 		});
+
+		$(function() {
+			$("#vendorName").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getVendorsByVendorTypeVendorAndName",
+						data : {
+							name : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.name,
+									id : item.id
+								});
+							}));
+						},
+
+						error : function(a, b, c) {
+							alert(a + b + c);
+						}
+
+					});
+				},
+				/* change : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#vendorName").val("");
+					} else {
+						$("#vendorName").val(ui.item.name);
+					}
+				}, */
+				select : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#vendorName").val("");
+					} else {
+						$("#vendorName").val(ui.item.name);
+					}
+
+				}
+			});
+		});
+
+		$(function() {
+			$("#agentName").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getVendorsByVendorTypeVendorAndName",
+						data : {
+							name : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.name,
+									id : item.id
+								});
+							}));
+						},
+
+						error : function(a, b, c) {
+							alert(a + b + c);
+						}
+
+					});
+				},
+				/* change : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#agentName").val("");
+					} else {
+						$("#agentName").val(ui.item.name);
+					}
+				}, */
+				select : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#agentName").val("");
+					} else {
+						$("#agentName").val(ui.item.name);
+					}
+
+				}
+			});
+		});
 	</script>
 </body>
 
