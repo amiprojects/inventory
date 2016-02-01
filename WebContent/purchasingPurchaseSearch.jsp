@@ -172,7 +172,7 @@
 											<div class="form-group">
 												<label for="" style="float: left;">Product Code:</label> <input
 													type="" placeholder="Enter Designer Number" id="prodCode"
-													name="prodCode" class="form-control">
+													name="prodCode" class="form-control" autocomplete="off">
 											</div>
 										</div>
 										<div class="col-md-2">
@@ -336,6 +336,141 @@
 		function purchaseViewF(id) {
 			$("#pView" + id).submit();
 		}
+
+		$(function() {
+			$("#prodCode").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getProductbyProductCode",
+						data : {
+							code : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.code,
+									id : item.id
+								});
+							}));
+						},
+
+						error : function(a, b, c) {
+							alert(a + b + c);
+						}
+
+					});
+				},
+				/* change : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#prodCode").val("");
+					} else {
+						$("#prodCode").val(ui.item.code);
+					}
+				}, */
+				select : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#prodCode").val("");
+					} else {
+						$("#prodCode").val(ui.item.code);
+					}
+
+				}
+			});
+		});
+
+		$(function() {
+			$("#vendorName").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getVendorsByVendorTypeVendorAndName",
+						data : {
+							name : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.name,
+									id : item.id
+								});
+							}));
+						},
+
+						error : function(a, b, c) {
+							alert(a + b + c);
+						}
+
+					});
+				},
+				/* change : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#vendorName").val("");
+					} else {
+						$("#vendorName").val(ui.item.name);
+					}
+				}, */
+				select : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#vendorName").val("");
+					} else {
+						$("#vendorName").val(ui.item.name);
+					}
+
+				}
+			});
+		});
+
+		$(function() {
+			$("#agentName").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getVendorsByVendorTypeVendorAndName",
+						data : {
+							name : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.name,
+									id : item.id
+								});
+							}));
+						},
+
+						error : function(a, b, c) {
+							alert(a + b + c);
+						}
+
+					});
+				},
+				/* change : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#agentName").val("");
+					} else {
+						$("#agentName").val(ui.item.name);
+					}
+				}, */
+				select : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#agentName").val("");
+					} else {
+						$("#agentName").val(ui.item.name);
+					}
+
+				}
+			});
+		});
 	</script>
 </body>
 

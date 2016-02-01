@@ -17,6 +17,17 @@
 			</div>
 
 			<div class="single-menu">
+				<h2 id="reports">
+					<a title=""><span>Reports</span></a>
+				</h2>
+				<div class="sub-menu">
+					<ul>
+						<li><a id="report" href="report.jsp" title="">Report</a></li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="single-menu">
 				<h2 id="prodact">
 					<a href="#" title=""><span>Product/Material Module</span></a>
 				</h2>
@@ -88,7 +99,9 @@
 					</ul>
 				</div>
 			</div>
-			<div class="single-menu">
+
+		 <div class="single-menu">
+
 				<h2 id="jobs">
 					<a title=""><span>Jobs Module</span></a>
 				</h2>
@@ -126,17 +139,6 @@
 								Setup</a></li>
 						<li><a id="jobSetup" href="jobSetup.jsp" title="">Job
 								Setup</a></li>
-					</ul>
-				</div>
-			</div>
-
-			<div class="single-menu">
-				<h2 id="reports">
-					<a title=""><span>Reports</span></a>
-				</h2>
-				<div class="sub-menu">
-					<ul>
-						<li><a id="report" href="report.jsp" title="">Report</a></li>
 					</ul>
 				</div>
 			</div>

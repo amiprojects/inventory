@@ -467,8 +467,7 @@
 									<c:set var="j" value="${1}"></c:set>
 									<c:forEach var="purchaseReturn"
 										items="${purchaseSearchView.purchaseReturn}">
-										<%-- <c:if
-											test="${purchaseReturn.purchaseReturnProductDetails.qtyReturn!=0}"></c:if> --%>
+
 										<tbody>
 											<tr>
 												<td>${j}</td>
@@ -477,44 +476,30 @@
 												</td>
 												<td>${purchaseReturn.challanNumber}</td>
 												<td><c:forEach var="purchaseReturnProd"
-														items="${purchaseReturn.purchaseReturnProductDetails}">
-														<%-- <c:if test="${purchaseReturnProd.qtyReturn!=0}"> --%>
+														items="${purchaseReturn.purchaseReturnProductDetails}">														
 													${purchaseReturnProd.purchaseProductDetails.productDetail.code}
 														<hr>
-														<%-- </c:if> --%>
-													</c:forEach> <%-- ${purchaseReturn.purchaseEntry.purchase_Product_Details.get(0).productDetail.code} --%>
-												</td>
+													</c:forEach></td>
 												<td><c:forEach var="purchaseReturnProd"
-														items="${purchaseReturn.purchaseReturnProductDetails}">
-														<%-- <c:if test="${purchaseReturnProd.qtyReturn!=0}"> --%>
+														items="${purchaseReturn.purchaseReturnProductDetails}">														
 													${purchaseReturnProd.purchaseProductDetails.productDetail.description}
 														<hr>
-														<%-- </c:if> --%>
 													</c:forEach></td>
-												<%-- <td>
-													${purchaseReturn.purchaseEntry.purchase_Product_Details.get(0).productDetail.description}
-												</td> --%>
 												<td><c:forEach var="purchaseReturnProd"
-														items="${purchaseReturn.purchaseReturnProductDetails}">
-														<%-- <c:if test="${purchaseReturnProd.qtyReturn!=0}"> --%>
+														items="${purchaseReturn.purchaseReturnProductDetails}">														
 													${purchaseReturnProd.qtyReturn}
 														<hr>
-														<%-- </c:if> --%>
-													</c:forEach> <%-- ${purchaseReturn.purchaseEntry.purchase_Product_Details.get(0).productDetail.code} --%>
-												</td>
+													</c:forEach></td>
 												<td><c:forEach var="purchaseReturnProd"
 														items="${purchaseReturn.purchaseReturnProductDetails}">
 														<%-- <c:if test="${purchaseReturnProd.qtyReturn!=0}"> --%>
 													${purchaseReturnProd.fault}
 														<hr>
-														<%-- </c:if> --%>
-													</c:forEach> <%-- ${purchaseReturn.purchaseEntry.purchase_Product_Details.get(0).productDetail.code} --%>
-												</td>
+													</c:forEach></td>
 											</tr>
 										</tbody>
 										<c:set var="j" value="${j+1}" />
 									</c:forEach>
-
 								</table>
 
 								<div style="width: 40%; float: right;">

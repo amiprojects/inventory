@@ -214,7 +214,7 @@ page[size="A4"] {
 				</table>
 			</td>
 		</tr>
-		<c:if test="${salesReturn.salesEntry.salesReturn.size()!=0}">
+		<%-- <c:if test="${salesReturn.salesEntry.salesReturn.size()!=0}">
 			<tr>
 				<td colspan="6" align="left">Previous Return Details :</td>
 			</tr>
@@ -231,7 +231,7 @@ page[size="A4"] {
 				<tr>
 					<td>${slno}</td>
 					<td><fmt:formatDate value="${pret.returnDate}"
-							pattern="dd-MM-yy" /> <%-- ${pret.returnDate} --%></td>
+							pattern="dd-MM-yy" /> ${pret.returnDate}</td>
 					<td>${pret.challanNumber}</td>
 					<td><c:forEach var="purchaseReturnProd"
 							items="${pret.salesProductReturnDetail}">
@@ -251,7 +251,7 @@ page[size="A4"] {
 				</tr>
 				<c:set value="${slno+1}" var="slno" />
 			</c:forEach>
-		</c:if>
+		</c:if> --%>
 		<tr style="height: 75px">
 			<td class="tg-031e" colspan="7"><span>Amount Chargeable
 					(in words)</span><br> <span>${sessionScope['ejb'].getNumberToWords(gtot)}</span></td>

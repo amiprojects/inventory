@@ -23,6 +23,7 @@
 <link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
 <!-- Bootstrap -->
 <link rel="stylesheet" href="css/style.css" type="text/css" />
+<link rel="stylesheet" href="css/scrollTable.css" type="text/css" />
 <!-- Style -->
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
 <!-- Responsive -->
@@ -39,7 +40,7 @@
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
 
-			<c:if test="${page.name.equals('Sales Entry')}">
+			<c:if test="${page.name.equals('Sales Search')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
@@ -50,6 +51,8 @@
 			</script>
 		</c:if>
 	</c:if>
+	<c:set var="compInfo"
+		value="${sessionScope['ejb'].getUserById(sessionScope['user']).getCompanyInfo()}" />
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
@@ -58,206 +61,136 @@
 				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
 				<div class="container">
 					<div class="row">
-						<div class="masonary-grids">
+						<div class="breadcrumbs" style="height: 50px; text-align: center;">
+							<h3 style="margin-top: 11px;">Sales Report</h3>
+						</div>
 
-							<div class="breadcrumbs"
-								style="height: 50px; text-align: center;">
-								<h3 style="margin-top: 11px;">Sales Report</h3>
-							</div>
-							<div class="widget-area">
-								<div class="col-md-12">
-									<form role="form" class="sec" action="salesSearchAll"
-										method="post">
-										<div class="row">
-											<div class="col-md-12">
-												<button class="btn green pull-right" type="submit"
-													style="margin-right: 63px;">Show All</button>
-											</div>
-										</div>
-									</form>
-									<form role="form" class="sec" action="salesSearchByDate"
-										method="post">
-										<div class="row">
-											<div class="col-md-5">
-												<div class="form-group">
-													<label for="">Search between two dates : (Start
-														Date)</label> <input type="text" placeholder="Enter First Date"
-														id="datepicker" class="form-control" name="fDate"
-														id="fDate" autocomplete="off" onchange="dateSet();">
-												</div>
-											</div>
-											<div class="col-md-5">
-												<div class="form-group">
-													<label for="">(End Date)</label> <input type="text"
-														placeholder="Enter last date" id="datepicker1"
-														class="form-control" name="lDate" id="lDate"
-														autocomplete="off" onchange="checkDate();">
-												</div>
-											</div>
-											<div class="col-md-2">
-												<button class="btn green pull-left"
-													style="margin-top: 25px;" type="submit">Search</button>
-											</div>
-										</div>
-									</form>
-									<form role="form" class="sec"
-										action="salesSearchBySalesChallanNo" method="post">
-										<div class="row">
-											<div class="col-md-12">
-												<div class="form-group">
-													<label for="" style="float: left;">Sales challan
-														no. :</label>
-												</div>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-md-1"
-												style="margin-right: 0; padding-right: 0;">
-												<input type="text" class="form-control" readonly="readonly"
-													name="companyInitial"
-													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompany('INV').companyInitial}">
-											</div>
-											<div class="col-md-2" style="margin: 0; padding: 0;">
-												<select class="form-control" name="fynYear">
-													<c:forEach
-														items="${sessionScope['ejb'].getAllFinancialForSales()}"
-														var="fyr">
-														<option value="${fyr}">${fyr}</option>
-													</c:forEach>
-												</select>
-											</div>
-											<div class="col-md-2" style="margin: 0; padding: 0;">
-												<!-- <input type="text" class="form-control" name="month"> -->
-												<select name="month" class="form-control">
-													<option value="01">01</option>
-													<option value="02">02</option>
-													<option value="03">03</option>
-													<option value="04">04</option>
-													<option value="05">05</option>
-													<option value="06">06</option>
-													<option value="07">07</option>
-													<option value="08">08</option>
-													<option value="09">09</option>
-													<option value="10">10</option>
-													<option value="11">11</option>
-													<option value="12">12</option>
-												</select>
-											</div>
-											<div class="col-md-1" style="margin: 0; padding: 0;">
-												<input type="text" class="form-control" readonly="readonly"
-													name="billType"
-													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompany('INV').billType}">
-											</div>
-											<div class="col-md-2" style="margin: 0; padding: 0;">
-												<input type="text" class="form-control" name="autoNum">
-											</div>
-											<div class="col-md-2"
-												style="margin-left: 0; padding-left: 0;">
-												<input type="text" class="form-control" name="suffix">
-											</div>
-											<div class="col-md-2">
-												<button class="btn green pull-left" type="submit">Search</button>
-											</div>
-										</div>
-									</form>
-									<form role="form" class="sec" action="salesSearchByAgentName"
-										method="post">
-										<div class="row">
-											<div class="col-md-10">
-												<div class="form-group">
-													<label for="" style="float: left;">Agent Name :</label> <input
-														type="" placeholder="Enter Agent Name" id="agentName"
-														name="agentName" class="form-control">
-												</div>
-											</div>
-											<div class="col-md-2">
-												<button class="btn green pull-left"
-													style="margin-top: 25px;" type="submit">Search</button>
-											</div>
-
-										</div>
-									</form>
-									<form role="form" class="sec"
-										action="salesSearchByCustomerName" method="post">
-										<div class="row">
-											<div class="col-md-10">
-												<div class="form-group">
-													<label for="" style="float: left;">Customer Name :</label>
-													<input type="" placeholder="Enter Customer Name"
-														id="custoName" name="custoName" class="form-control">
-												</div>
-											</div>
-											<div class="col-md-2">
-												<button class="btn green pull-left"
-													style="margin-top: 25px;" type="submit">Search</button>
-											</div>
-
-										</div>
-									</form>
-									<form role="form" class="sec" action="salesSearchByProductCode"
-										method="post">
-										<div class="row">
-											<div class="col-md-10">
-												<div class="form-group">
-													<label for="" style="float: left;">Product code :</label> <input
-														type="" placeholder="Enter Product code" id="prodCode"
-														name="prodCode" class="form-control">
-												</div>
-											</div>
-											<div class="col-md-2">
-												<button class="btn green pull-left"
-													style="margin-top: 25px;" type="submit">Search</button>
-											</div>
-										</div>
-									</form>
-									<br>
-									<h3 align="center" style="color: #6a94ff;">${requestScope['msg']}</h3>
-									<br>
+						<div class="widget-area">
+							<ul class="nav nav-tabs">
+								<li class="active"><a data-toggle="tab" href="#byProd">By
+										Product</a></li>
+								<li><a data-toggle="tab" href="#byCustomer">By Customer</a></li>
+								<li><a data-toggle="tab" href="#byAgent">By Agent</a></li>
+							</ul>
+							<div class="tab-content">
+								<div id="byProd" class="tab-pane fade active in">
 									<table class="table">
 										<thead>
 											<tr>
 												<th>#</th>
-												<th>Sales challan no.</th>
-												<th>Customer Name</th>
-												<th>Agent Name</th>
-												<th>Sales Date</th>
-												<th>Total Amount</th>
-												<!-- <th>Barcode</th> -->
+												<th>Product Code</th>
+												<th>Product Description</th>
+												<th>Total Qty (Sold)</th>
+												<th>UOM</th>
 											</tr>
 										</thead>
-
-										<c:set var="count" value="${1}" />
-										<c:forEach items="${requestScope['salesEntryLst']}"
-											var="sEntryByD">
-											<tbody>
+										<tbody style="height: 300px;">
+											<c:set var="count" value="${1}" />
+											<c:forEach
+												items="${sessionScope['ejb'].getAllProductDetailByAssendingProduct()}"
+												var="prod">
 												<tr>
 													<td>${count}</td>
-													<td>${sEntryByD.challanNumber}</td>
-													<td>${sEntryByD.customer.name}</td>
-													<c:choose>
-														<c:when test="${sEntryByD.vendor==null}">
-															<td>NIL</td>
-														</c:when>
-														<c:otherwise>
-															<td>${sEntryByD.vendor.name}</td>
-														</c:otherwise>
-													</c:choose>
-													<td><fmt:formatDate value="${sEntryByD.sales_date}"
-															pattern="dd-MM-yy" /></td>
-													<td>${sEntryByD.totalCost}</td>
+													<td>${prod.code}</td>
+													<td>${prod.description}</td>
+													<td><c:set var="totPurQty" value="${0}"></c:set> <c:forEach
+															var="proedPurDet"
+															items="${sessionScope['ejb'].getSales_Product_DetailsByProductIdAndCompany(prod.id)}">
+															<c:if test="${proedPurDet.salesEntry!=null}">
+																<c:set var="totPurQty"
+																	value="${totPurQty+proedPurDet.quantity-proedPurDet.salesReQty}"></c:set>
+															</c:if>
+														</c:forEach> ${totPurQty}</td>
+													<td>${prod.qtyUnit.name}</td>
 													<td>
-														<form action="salesView" method="post"
-															id="sView${sEntryByD.id}">
-
-															<a href="#" onclick="salesViewF('${sEntryByD.id}');"><input
-																type="hidden" value="${sEntryByD.id}" name="sId"><img
+														<form action="salesProductView" method="post"
+															id="pView${prod.id}">
+															<a href="#" onclick="purchaseViewF('${prod.id}');"><input
+																type="hidden" value="${prod.id}" name="pId"><input
+																type="hidden" value="${prod.code}" name="prodCode"><img
 																alt="" src="images/eye.png" height="25px"></a>
 														</form>
 													</td>
 												</tr>
-											</tbody>
-											<c:set var="count" value="${count+1}" />
-										</c:forEach>
+												<c:set var="count" value="${count+1}" />
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
+								<div id="byCustomer" class="tab-pane fade ">
+									<table class="table">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>Customer Name</th>
+												<th>Phone</th>
+												<th>City</th>
+												<th>Sub Total</th>
+											</tr>
+										</thead>
+										<tbody style="height: 300px;">
+											<c:set var="count" value="${1}" />
+											<c:forEach
+												items="${sessionScope['ejb'].getAllCustomerEntryByAssendingMaxSale()}"
+												var="vendor">
+												<tr>
+													<td>${count}</td>
+													<td>${vendor.name}</td>
+													<td>${vendor.mobile}</td>
+													<td>${vendor.city}</td>
+													<td>${vendor.getTotSale()}</td>
+													<td>
+														<form action="salesReportByCustomerName" method="post"
+															id="pView${vendor.id}">
+															<a href="#" onclick="purchaseViewF('${vendor.id}');"><input
+																type="hidden" value="${vendor.id}" name="pId"><input
+																type="hidden" value="${vendor.name}" name="custoName"><img
+																alt="" src="images/eye.png" height="25px"></a>
+														</form>
+													</td>
+												</tr>
+												<c:set var="count" value="${count+1}" />
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
+								<div id="byAgent" class="tab-pane fade ">
+									<table class="table">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>Agent Name</th>
+												<th>Company Name</th>
+												<th>Phone</th>
+												<th>Sub Total</th>
+											</tr>
+										</thead>
+										<tbody style="height: 300px;">
+											<c:set var="count" value="${1}" />
+											<c:forEach
+												items="${sessionScope['ejb'].getAllAgentsByAssendingMaxSale()}"
+												var="vendor">
+												<c:if test="${vendor.vendorType.type=='Sales Agent'}">
+													<tr>
+														<td>${count}</td>
+														<td>${vendor.name}</td>
+														<td>${vendor.companyName}</td>
+														<td>${vendor.ph1}</td>
+														<td>${vendor.getTotSale()}</td>
+														<td>
+															<form action="salesReportByAgentName" method="post"
+																id="pView${vendor.id}">
+																<a href="#" onclick="purchaseViewF('${vendor.id}');"><input
+																	type="hidden" value="${vendor.id}" name="pId"><input
+																	type="hidden" value="${vendor.name}" name="agentName"><img
+																	alt="" src="images/eye.png" height="25px"></a>
+															</form>
+														</td>
+													</tr>
+												</c:if>
+												<c:set var="count" value="${count+1}" />
+											</c:forEach>
+										</tbody>
 									</table>
 								</div>
 							</div>
@@ -265,10 +198,12 @@
 					</div>
 				</div>
 			</div>
-			<!-- Content Sec -->
 		</div>
-		<!-- Page Container -->
 	</div>
+	</div>
+	<!-- Content Sec -->
+	<!-- Page Container -->
+
 	<!-- main -->
 
 	<!-- Script -->
@@ -288,19 +223,16 @@
 	<script>
 		$(function() {
 			$("#datepicker").datepicker({
-				dateFormat : "dd-mm-yy"
+				dateFormat : "dd-mm-yy",
+				maxDate : 0
+			});
+			$("#datepicker1").datepicker({
+				dateFormat : "dd-mm-yy",
+				maxDate : 0
 			});
 		});
 	</script>
 	<script>
-		$(function() {
-			$("#datepicker1").datepicker({
-				dateFormat : "dd-mm-yy"
-			});
-		});
-		function salesViewF(id) {
-			$("#sView" + id).submit();
-		}
 		function dateSet() {
 			var dt = $("#datepicker").datepicker('getDate');
 			var dt1 = $("#datepicker1").datepicker('getDate');
@@ -316,6 +248,9 @@
 				alert("End date must be later than start date...");
 				$("#datepicker1").val("");
 			}
+		}
+		function purchaseViewF(id) {
+			$("#pView" + id).submit();
 		}
 	</script>
 </body>

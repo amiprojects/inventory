@@ -65,42 +65,36 @@
 
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
-								<h3 style="margin-top: 11px;">Purchase Report By Agent</h3>
+								<h3 style="margin-top: 11px;">Sales Report By Customer</h3>
 							</div>
 
 							<div class="widget-area">
 								<c:set var="vendor"
-									value="${sessionScope['ejb'].getVendorById(requestScope['pId'])}" />
+									value="${sessionScope['ejb'].getCustomerEntryById(requestScope['pId'])}" />
 								<table id="stream_table"
 									class="table table-striped table-bordered" style="width: 30%;">
 									<thead>
 										<tr>
-											<th style="text-align: right;">Vendor Name :</th>
+											<th style="text-align: right;">Customer Name :</th>
 											<td>${vendor.name}</td>
 										</tr>
 									</thead>
 									<thead>
 										<tr>
-											<th style="text-align: right;">Company Name :</th>
-											<td>${vendor.companyName}</td>
+											<th style="text-align: right;">Phone :</th>
+											<td>${vendor.mobile}</td>
 										</tr>
 									</thead>
 									<thead>
 										<tr>
-											<th style="text-align: right;">Phone1 :</th>
-											<td>${vendor.ph1}</td>
-										</tr>
-									</thead>
-									<thead>
-										<tr>
-											<th style="text-align: right;">Phone2 :</th>
-											<td>${vendor.ph2}</td>
+											<th style="text-align: right;">City :</th>
+											<td>${vendor.city}</td>
 										</tr>
 									</thead>
 									<thead>
 										<tr>
 											<th style="text-align: right;">Sub Total :</th>
-											<td>${vendor.getTotPurchase()}</td>
+											<td>${vendor.getTotSale()}</td>
 										</tr>
 									</thead>
 								</table>
@@ -115,13 +109,13 @@
 									<thead>
 										<tr>
 											<th>#</th>
-											<th>Purchase Date</th>
-											<th>Vendor Name</th>
+											<th>Sales Date</th>
+											<th>Customer Name</th>
 											<th>Agent Name</th>
-											<th>Purchase challan no.</th>
-											<th>Vendor Bill no.</th>
-											<!-- <th>Qty</th> -->
+											<th>Sales Invoice no.</th>
+											<!-- <th>Vendor Bill no.</th> -->
 											<th>Sub Total</th>
+											<th>Discount Value</th>
 											<th>Tax Amount</th>
 											<th>Transport Cost</th>
 											<th>Surcharge</th>
@@ -136,36 +130,30 @@
 											var="pEntryByD">
 											<tr>
 												<td>${count}</td>
-												<td><fmt:formatDate value="${pEntryByD.purchase_date}"
+												<td><fmt:formatDate value="${pEntryByD.sales_date}"
 														pattern="dd-MM-yy" /></td>
-												<c:if test="${pEntryByD.vendor.vendorType.type=='Vendor'}">
-													<td>${pEntryByD.vendor.name}</td>
-												</c:if>
-												<c:if test="${pEntryByD.vendor.vendorType.type!='Vendor'}">
-													<td>NIL</td>
-												</c:if>
+												<td>${pEntryByD.customer.name}</td>
 												<c:choose>
-													<c:when
-														test="${pEntryByD.vendor.vendorType.type=='Purchase Agent'}">
+													<c:when test="${pEntryByD.vendor!=null}">
 														<td>${pEntryByD.vendor.name}</td>
-													</c:when>
-													<c:when test="${pEntryByD.agentId!=0}">
-														<td>${sessionScope['ejb'].getVendorById(pEntryByD.agentId).name}</td>
 													</c:when>
 													<c:otherwise>
 														<td>NIL</td>
 													</c:otherwise>
 												</c:choose>
 												<td>${pEntryByD.challanNumber}</td>
-												<td>${pEntryByD.vendor_bill_no}</td>
-												<!-- <td>Qty</td> -->
+												<%-- <td>${pEntryByD.vendor_bill_no}</td> --%>
 												<td>${pEntryByD.subTotal}</td>
-												<td>${pEntryByD.taxAmount}</td>
-												<td>${pEntryByD.transport_cost}</td>
-												<td>${pEntryByD.sur_charge}</td>
+												<td><c:set var="disVal"
+														value="${pEntryByD.isFlatDiscount()?pEntryByD.discountValue:pEntryByD.subTotal*pEntryByD.discountValue/100}" />
+													${disVal}</td>
+												<td><fmt:formatNumber var="taxAmount"
+														value="${pEntryByD.taxAmount}" maxFractionDigits="2" />${taxAmount}</td>
+												<td>${pEntryByD.transportcCharge}</td>
+												<td>${pEntryByD.surcharge}</td>
 												<td>${pEntryByD.roundOf}</td>
 												<td>${pEntryByD.totalCost}</td>
-												<td><form action="purchaseReportView" method="post"
+												<td><form action="salesReportView" method="post"
 														id="pView${pEntryByD.id}">
 														<a href="#" onclick="purchaseViewF('${pEntryByD.id}');"><input
 															type="hidden" value="${pEntryByD.id}" name="pId"><img

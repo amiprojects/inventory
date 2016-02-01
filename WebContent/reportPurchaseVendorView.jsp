@@ -97,6 +97,12 @@
 											<td>${vendor.ph2}</td>
 										</tr>
 									</thead>
+									<thead>
+										<tr>
+											<th style="text-align: right;">Sub Total :</th>
+											<td>${vendor.getTotPurchase()}</td>
+										</tr>
+									</thead>
 								</table>
 
 								<br>

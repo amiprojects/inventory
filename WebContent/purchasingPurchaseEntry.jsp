@@ -405,7 +405,7 @@
 										<thead style="background-color: #F0F0F0;">
 											<tr>
 												<th>#</th>
-												<th>Designer Number</th>
+												<th>Product Code</th>
 												<th>Product Description</th>
 												<th>Qty</th>
 												<th>UOM</th>
@@ -1452,7 +1452,7 @@
 								<div class="col-md-12">
 									<br>
 								</div>
-								<div class="col-md-5">Designer Number:</div>
+								<div class="col-md-5">Product Code:</div>
 								<div class="col-md-6">
 									<input type="text" id="pCode" name="pCode" class="form-control"
 										onchange="emptyForm();" autocomplete="off"><input
@@ -1935,7 +1935,7 @@
 								<form action="#" method="get">
 									<div class="col-md-6">
 										<div>
-											<label for="exampleInputEmail1">Designer Number:</label> <input
+											<label for="exampleInputEmail1">Product Code:</label> <input
 												type="text" name="productCode2" id="productCodeAMI"
 												onkeyup="codeKeyUp();" onchange="codeChange();"
 												class="form-control"><input type="hidden"
@@ -2300,7 +2300,7 @@
 									</h4>
 									<table>
 										<tr>
-											<td>Designer Number:</td>
+											<td>Product Code:</td>
 											<td><input id="pcodedisp" name="productCode" type="text"
 												class="form-control " readonly></td>
 										</tr>
@@ -2864,7 +2864,7 @@
 		function submitSumary() {
 
 			if ($("#productCodeAMI").val() == 0) {
-				alert("please select Designer Number:");
+				alert("please select Product Code:");
 			} else if ($("#description1").val() == "") {
 				alert("please select Description");
 			} else if ($("#universalProductCode").val() == "") {
@@ -3438,7 +3438,7 @@
 				$("#attr6").val("");
 				$("#lotText").val("");
 			} else {
-				alert("please select one Designer Number:");
+				alert("please select one Product Code:");
 				$("#wsp").val("");
 				$("#mrp").val("");
 				$("#rate").val("");
@@ -3690,7 +3690,7 @@
 		var i = 1;
 		function anotherShow() {
 			if ($("#productCode").val() == 0) {
-				alert("please select Designer Number:");
+				alert("please select Product Code:");
 			} else if ($("#qty").val() == "") {
 				alert("please insert quantity");
 			} else if ($("#rate").val() == "") {

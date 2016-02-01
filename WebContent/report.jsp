@@ -91,22 +91,21 @@
 									<div class="col-md-4">
 										<a href="reportPurchaseReport.jsp">
 											<div class="stats-counter">
-												<img alt="Purchase Report" src="images/"
+												<img alt="Purchase Report" src="img/purchaseReport.jpg"
 													style="height: 179px; width: 330px;"> <i
 													class="fa fa-user red"></i>
+
 												<h4 style="color: red">Purchase Report</h4>
 											</div>
 										</a>
 
 									</div>
 
-
-
-
 									<div class="col-md-4">
-										<a href="#">
+										<a href="reportSalesReport.jsp">
 											<div class="stats-counter">
-												<img alt="Sales Report" src="images/"
+
+												<img alt="Sales Report" src="img/salesReport.jpg"
 													style="height: 179px; width: 330px;"> <i
 													class="fa fa-user red"></i>
 												<h4 style="color: red">Sales Report</h4>
@@ -123,7 +122,7 @@
 									<div class="col-md-4">
 										<a href="stockReport.jsp">
 											<div class="stats-counter">
-												<img alt="sales Entry" src="images/stockReport.JPG"
+												<img alt="sales Entry" src="img/stockReport.jpg"
 													style="height: 179px; width: 330px;"> <i
 													class="fa fa-user red"></i>
 												<h4 style="color: red">Stock Report</h4>

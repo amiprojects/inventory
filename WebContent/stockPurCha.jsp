@@ -236,6 +236,7 @@ page[size="A4"] {
 					<td>${slno}</td>
 					<td><fmt:formatDate value="${pret.returnDate}"
 							pattern="dd-MM-yy" /> <%-- ${pret.returnDate} --%></td>
+
 					<td>${pret.challanNumber}</td>
 					<td><c:forEach var="purchaseReturnProd"
 							items="${pret.purchaseReturnProductDetails}">
