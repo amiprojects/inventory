@@ -32,6 +32,20 @@ public class CustomerEntry implements Serializable {
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "customerEntry")
 	private VoucherAssign voucherAssign;
 
+	public float getTotSale() {
+		float totSale = 0F;
+		float totPur = 0F;
+		float totRet = 0F;
+		for (SalesEntry salesEntry : salesEntries) {
+			for (SalesProductDetails spd : salesEntry.getSalesProductDetails()) {
+				totPur = totPur + spd.getQuantity() * spd.getSalesPrice();
+				totRet = totRet + spd.getSalesReQty() * spd.getSalesPrice();
+			}
+		}
+		totSale = totSale + totPur - totRet;
+		return totSale;
+	}
+
 	public int getId() {
 		return id;
 	}

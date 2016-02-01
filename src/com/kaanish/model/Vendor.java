@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 @Cacheable(false)
@@ -70,6 +71,35 @@ public class Vendor implements Serializable {
 
 	@OneToMany(mappedBy = "vendor")
 	private List<JobsForDesignCostSheet> jobsForDesignCostSheets;
+
+	public float getTotPurchase() {
+		float totPurchase = 0F;
+		float totPur = 0F;
+		float totRet = 0F;
+		for (Purchase_Entry purEntry : getPurchaseEntry()) {
+			for (Purchase_Product_Details ppd : purEntry
+					.getPurchase_Product_Details()) {
+				totPur = totPur + ppd.getQuantity() * ppd.getCost();
+				totRet = totRet + ppd.getTotalReturningQty() * ppd.getCost();
+			}
+		}
+		totPurchase = totPurchase + totPur - totRet;
+		return totPurchase;
+	}
+
+	public float getTotSale() {
+		float totSale = 0F;
+		float totPur = 0F;
+		float totRet = 0F;
+		for (SalesEntry salesEntry : salesEntry) {
+			for (SalesProductDetails spd : salesEntry.getSalesProductDetails()) {
+				totPur = totPur + spd.getQuantity() * spd.getSalesPrice();
+				totRet = totRet + spd.getSalesReQty() * spd.getSalesPrice();
+			}
+		}
+		totSale = totSale + totPur - totRet;
+		return totSale;
+	}
 
 	public List<Purchase_Entry> getPurchaseEntry() {
 		return purchaseEntry;
@@ -220,7 +250,7 @@ public class Vendor implements Serializable {
 	@Override
 	public String toString() {
 		if (voucherAssign != null) {
-			if (voucherAssign.getVoucherDetails().size()!=0) {
+			if (voucherAssign.getVoucherDetails().size() != 0) {
 				return "{\"id\":\""
 						+ id
 						+ "\", "

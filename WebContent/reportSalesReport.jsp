@@ -80,14 +80,14 @@
 												<th>#</th>
 												<th>Product Code</th>
 												<th>Product Description</th>
-												<th>Total Qty (Purchased)</th>
+												<th>Total Qty (Sold)</th>
 												<th>UOM</th>
 											</tr>
 										</thead>
 										<tbody style="height: 300px;">
 											<c:set var="count" value="${1}" />
 											<c:forEach
-												items="${sessionScope['ejb'].getAllProductDetail()}"
+												items="${sessionScope['ejb'].getAllProductDetailByAssendingProduct()}"
 												var="prod">
 												<tr>
 													<td>${count}</td>
@@ -95,10 +95,10 @@
 													<td>${prod.description}</td>
 													<td><c:set var="totPurQty" value="${0}"></c:set> <c:forEach
 															var="proedPurDet"
-															items="${prod.purchase_Product_Details}">
-															<c:if test="${proedPurDet.purchase_Entry!=null}">
+															items="${sessionScope['ejb'].getSales_Product_DetailsByProductIdAndCompany(prod.id)}">
+															<c:if test="${proedPurDet.salesEntry!=null}">
 																<c:set var="totPurQty"
-																	value="${totPurQty+proedPurDet.quantity-proedPurDet.totalReturningQty}"></c:set>
+																	value="${totPurQty+proedPurDet.quantity-proedPurDet.salesReQty}"></c:set>
 															</c:if>
 														</c:forEach> ${totPurQty}</td>
 													<td>${prod.qtyUnit.name}</td>
@@ -125,20 +125,20 @@
 												<th>Customer Name</th>
 												<th>Phone</th>
 												<th>City</th>
-												<th>Address</th>
+												<th>Sub Total</th>
 											</tr>
 										</thead>
 										<tbody style="height: 300px;">
 											<c:set var="count" value="${1}" />
 											<c:forEach
-												items="${sessionScope['ejb'].getAllCustomerEntry()}"
+												items="${sessionScope['ejb'].getAllCustomerEntryByAssendingMaxSale()}"
 												var="vendor">
 												<tr>
 													<td>${count}</td>
 													<td>${vendor.name}</td>
 													<td>${vendor.mobile}</td>
 													<td>${vendor.city}</td>
-													<td>${vendor.address}</td>
+													<td>${vendor.getTotSale()}</td>
 													<td>
 														<form action="salesReportByCustomerName" method="post"
 															id="pView${vendor.id}">
@@ -161,13 +161,14 @@
 												<th>#</th>
 												<th>Agent Name</th>
 												<th>Company Name</th>
-												<th>Phone1</th>
-												<th>Phone2</th>
+												<th>Phone</th>
+												<th>Sub Total</th>
 											</tr>
 										</thead>
 										<tbody style="height: 300px;">
 											<c:set var="count" value="${1}" />
-											<c:forEach items="${sessionScope['ejb'].getAllVendors()}"
+											<c:forEach
+												items="${sessionScope['ejb'].getAllAgentsByAssendingMaxSale()}"
 												var="vendor">
 												<c:if test="${vendor.vendorType.type=='Sales Agent'}">
 													<tr>
@@ -175,7 +176,7 @@
 														<td>${vendor.name}</td>
 														<td>${vendor.companyName}</td>
 														<td>${vendor.ph1}</td>
-														<td>${vendor.ph2}</td>
+														<td>${vendor.getTotSale()}</td>
 														<td>
 															<form action="salesReportByAgentName" method="post"
 																id="pView${vendor.id}">

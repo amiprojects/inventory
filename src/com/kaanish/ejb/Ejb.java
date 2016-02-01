@@ -725,6 +725,31 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<Vendor> getAllVendorsByAssendingMaxPurchase(String type) {
+		List<Vendor> vendors = new ArrayList<Vendor>();
+		TypedQuery<Vendor> q = em.createQuery(
+				"select c from Vendor c where UPPER(c.vendorType.type)=:type",
+				Vendor.class);
+		q.setParameter("type", type.toUpperCase());
+
+		vendors = q.getResultList();
+		vendors.sort((Vendor v2, Vendor v1) -> Float.compare(
+				v1.getTotPurchase(), v2.getTotPurchase()));
+		return vendors;
+	}
+
+	public List<Vendor> getAllAgentsByAssendingMaxSale() {
+		List<Vendor> vendors = new ArrayList<Vendor>();
+		TypedQuery<Vendor> q = em.createQuery(
+				"select c from Vendor c where c.vendorType.type='Sales Agent'",
+				Vendor.class);
+
+		vendors = q.getResultList();
+		vendors.sort((Vendor v2, Vendor v1) -> Float.compare(v1.getTotSale(),
+				v2.getTotSale()));
+		return vendors;
+	}
+
 	public List<Vendor> getVendorsByVendorTypeIdByName(int id, String nm) {
 		TypedQuery<Vendor> q = em
 				.createQuery(
@@ -1865,6 +1890,13 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<ProductDetail> getAllProductDetailByAssendingProduct() {
+		TypedQuery<ProductDetail> q = em.createQuery(
+				"select c from ProductDetail c ORDER BY c.code ASC",
+				ProductDetail.class);
+		return q.getResultList();
+	}
+
 	public List<ProductDetail> getAllProductDetailByCompany() {
 		Users usr = getUserById((String) httpSession.getAttribute("user"));
 		// TypedQuery<ProductDetail> q =
@@ -2567,6 +2599,17 @@ public class Ejb {
 		TypedQuery<CustomerEntry> q = em.createQuery(
 				"select c from CustomerEntry c", CustomerEntry.class);
 		return q.getResultList();
+	}
+
+	public List<CustomerEntry> getAllCustomerEntryByAssendingMaxSale() {
+		List<CustomerEntry> cList = new ArrayList<CustomerEntry>();
+		TypedQuery<CustomerEntry> q = em.createQuery(
+				"select c from CustomerEntry c", CustomerEntry.class);
+
+		cList = q.getResultList();
+		cList.sort((CustomerEntry v2, CustomerEntry v1) -> Float.compare(
+				v1.getTotSale(), v2.getTotSale()));
+		return cList;
 	}
 
 	public List<CustomerEntry> getCustomerByPh(String ph) {

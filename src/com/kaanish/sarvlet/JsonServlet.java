@@ -595,7 +595,11 @@ public class JsonServlet extends HttpServlet {
 
 					gen22.writeStartObject()
 							.write("result", "Agent added successfully")
-							.write("vendorid", vendor2.getId()).writeEnd()
+							.write("vendorid", vendor2.getId())
+							.write("vendorName", vendor2.getName())
+							.write("vendorAddress", vendor2.getAddress())
+							.write("vendorPh1", vendor2.getPh1())
+							.write("vendorPh2", vendor2.getPh2()).writeEnd()
 							.close();
 
 				} else {
