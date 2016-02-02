@@ -72,13 +72,13 @@
 									<div class="col-md-6">
 										<div class="main-title">
 											<h1>Report</h1>
-											<h5>Welcome back</h5>
-											<span><i class="fa fa-map-marker"></i>India</span>
+											<!-- <h5>Welcome back</h5>
+											<span><i class="fa fa-map-marker"></i>India</span> -->
 										</div>
 									</div>
 									<div class="col-md-6">
-										<div id="reportrange" class="date-range">20/0/116 -
-											12:24:6</div>
+										<!-- <div id="reportrange" class="date-range">20/0/116 -
+											12:24:6</div> -->
 									</div>
 								</div>
 							</div>

@@ -143,30 +143,35 @@
 											</div>
 										</div>
 										<div class="col-md-6">
-										<div class="col-md-12">
-										<div class="form-group">
-												<label class="font" for="designDescription">Design Descripton :</label>
+											<div class="col-md-12">
+												<div class="form-group">
+													<label class="font" for="designDescription">Design
+														Descripton :</label>
 
-												<textarea class="form-control" rows="" cols="" name="designDescription"></textarea>
+													<textarea class="form-control" rows="" cols=""
+														name="designDescription"></textarea>
 
+												</div>
 											</div>
-										</div>
-										<div class="col-md-12">
-											<div class="form-group">
-												<label for="qty" class="font">Qty :</label> <input
-													type="number" name="qty" class="form-control" value="1">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label for="qty" class="font">Qty :</label> <input
+														type="number" name="qty" class="form-control" value="1">
+												</div>
 											</div>
-										</div>
-											
-											
-											<div class="form-group" style="width:50%; height:100px;margin-top: 27px;"><img id="image"
-												alt="" src=""></div>
+
+
+											<div class="form-group"
+												style="width: 50%; height: 100px; margin-top: 27px;">
+												<img id="image" alt="" src="">
+											</div>
 
 											<br>
 											<div class="form-group">
-											 <input type="file" onchange="readURL(this);" name="productImage">
-											 <input type="hidden" name="proImage1" id="proImage1" value="">
-											 </div>
+												<input type="file" onchange="readURL(this);"
+													name="productImage"> <input type="hidden"
+													name="proImage1" id="proImage1" value="">
+											</div>
 										</div>
 										<div class='toast' style='display: none'>
 											<h3 id="msg">${requestScope['msg']}</h3>
@@ -179,7 +184,7 @@
 												<th>#</th>
 												<th>Product code</th>
 												<th>Product Description</th>
-												<th>Quantity</th>												
+												<th>Quantity</th>
 												<th>UOM</th>
 												<th>rate</th>
 												<th>Amount</th>
@@ -204,20 +209,24 @@
 											</tr>
 										</thead>
 									</table>
-									
+
 									<a href="#" onclick="addJobs();"><img src="img/add.png"
 										height="20px" style="float: right;"></a> <br>
-										<div class="col-md-12">
-									<div class="form-group" style="float: right;">
+									<div class="col-md-12">
+										<div class="form-group" style="float: right;">
 
-												<label for="surcharge" class="font">Surcharge :</label> <input
-													type="number" name="surcharge" value="0.00">
-											</div>
+											<label for="surcharge" class="font">Surcharge :</label> <input
+												type="number" name="surcharge" value="0.00"> <br>
+											<label for="surcharge" class="font">GrandTotal :</label> <input
+												type="number" name="surcharge" value="0.00">
+										</div>
 									</div>
-										<div class="col-md-12">
-									<div class="form-group">
-										 <input	type="submit" value="Submit" class="btn green pull-right">
-										 </div></div>
+									<div class="col-md-12">
+										<div class="form-group">
+											<input type="submit" value="Submit"
+												class="btn green pull-right">
+										</div>
+									</div>
 								</form>
 
 							</div>
@@ -278,13 +287,12 @@
 									</tr>
 									<tr>
 										<td><label for="rate" class="font">Select Job :</label></td>
-										<td>
-										
-										<c:forEach items="${sessionScope['ejb'].getAllJobTypes()}" var="job">
-											<input type="checkbox" name="jobName" value="${job.id}"><span id="jobName${job.id}">${job.jobName}</span><br>
-										</c:forEach>
-										
-										</td>
+										<td><c:forEach
+												items="${sessionScope['ejb'].getAllJobTypes()}" var="job">
+												<input type="checkbox" name="jobName" value="${job.id}">
+												<span id="jobName${job.id}">${job.jobName}</span>
+												<br>
+											</c:forEach></td>
 									</tr>
 								</table>
 
@@ -304,8 +312,8 @@
 
 		</div>
 	</div>
-	
-	
+
+
 
 </body>
 <!-- Script -->
@@ -323,112 +331,233 @@
 	function addProduct() {
 		$("#addProduct").modal("show");
 	}
-	$("#proCode").autocomplete({
-		source : function(req, resp) {
-			$.ajax({
-				type : "post",
-				url : "getProductbyProductCode",
-				data : {
-					code : req.term
+	$("#proCode").autocomplete(
+			{
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getProductbyProductCode",
+						data : {
+							code : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.code,
+									id : item.id,
+									description : item.description,
+									qtyUnitId : item.qtyUnitId,
+									qtyUnitName : item.qtyUnit
+								});
+							}));
+						}
+					});
 				},
-				dataType : "json",
-				success : function(data) {
-					resp($.map(data, function(item) {
-						return ({
-							value : item.code,
-							id : item.id,
-							description : item.description,
-							qtyUnitId : item.qtyUnitId,
-							qtyUnitName : item.qtyUnit
-						});
-					}));
+				change : function(evt, ui) {
+					if (ui.item == null) {
+						$("#proCode").val("");
+						$("#proId").val("");
+						$("#proDesc").val("");
+						$("#proUOM").val("");
+						$("#UOMid").val("");
+						$("#rate").val("");
+					}
+				},
+				select : function(evt, ui) {
+					$("#rate").prop("readonly", false);
+					if ($(document).find("#proTable" + ui.item.id).length > 0) {
+						$("#rate")
+								.val(
+										$(
+												"#proTable" + ui.item.id
+														+ " td:nth-child(6)")
+												.html());
+						$("#rate").prop("readonly", true);
+					}
+					$("#proId").val(ui.item.id);
+					$("#proDesc").val(ui.item.description);
+					$("#proUOM").val(ui.item.qtyUnitName);
+					$("#UOMid").val(ui.item.qtyUnitId);
 				}
 			});
-		},
-		change : function(evt, ui) {
-			if (ui.item == null) {
-				$("#proCode").val("");
-				$("#proId").val("");
-				$("#proDesc").val("");
-				$("#proUOM").val("");
-				$("#UOMid").val("");
-				$("#rate").val("");
-			}
-		},
-		select : function(evt, ui) {
-			$("#rate").prop("readonly",false);
-			if($(document).find("#proTable"+ui.item.id).length>0){
-				$("#rate").val($("#proTable"+ui.item.id+" td:nth-child(6)").html());
-				$("#rate").prop("readonly",true);
-			}
-			$("#proId").val(ui.item.id);
-			$("#proDesc").val(ui.item.description);
-			$("#proUOM").val(ui.item.qtyUnitName);
-			$("#UOMid").val(ui.item.qtyUnitId);
-		}
-	});
 
 	function addProductRow() {
 		$("#addProduct").modal("hide");
-		if($(document).find("#proTable"+$("#proId").val()).length>0){			
-			$("#proTable"+$("#proId").val()+" td:nth-child(4)").html(Number($("#proTable"+$("#proId").val()+" td:nth-child(4)").html())+Number($("#proQty").val()));
-			$("#proTable"+$("#proId").val()+" td:nth-child(6)").html($("#rate").val());
-			$("#proTable"+$("#proId").val()+" td:nth-child(7)").html(Number($("#proTable"+$("#proId").val()+" td:nth-child(6)").html())+Number($("#proQty").val()) * Number($("#rate").val()));
-			
-			$('[name="jobName"]:checked').each(function() {
-				if($(document).find("#jobRow"+$(this).val()+$("#proId").val()).length==0){
-				
-					 $("#jobs").append(
-								'<tbody id="jobRow'+$(this).val()+$("#proId").val()+'"><tr>'
-								+ '<td>#<input type="hidden" value="'+$("#proId").val()+'" name="proId"><input type="hidden" value="'+$(this).val()+'" name="jobId"></td>'
-								+ '<td>'+$("#jobName"+$(this).val()).html()+'</td>'
-										+ '<td>'+$("#proCode").val() + '</td>'
-										+ '<td><input type="number" id="rate1'+$(this).val()+$("#proId").val()+'" onchange="calAnount(\''+$(this).val()+$("#proId").val()+'\');" value="0" name="jobqty"></td>'
-										+ '<td>'+$("#proUOM").val()+'</td>'
-										+ '<td><input type="number" id="qtu1'+$(this).val()+$("#proId").val()+'" onchange="calAnount(\''+$(this).val()+$("#proId").val()+'\');" value="0" name="jobRate"></td>'
-										+ '<td><input type="text" name="totalAmount" value="0" readonly="readonly" id="amount'+$(this).val()+$("#proId").val()+'"></td>'
-										+ '<td><a href="#" onclick="removeJobRow(\''+$(this).val()+$("#proId").val()+'\');">remove</a></td>'
-										+ '</tr>'
-										+ '</tbody>');
-						$("#jobQty").val("0");
-						$("#jobrate").val("0");
-						$("#jobName").val("0");
-						$("#jobUOM").val("0");
-				}
-		        });
-			
-		}else{
+		if ($(document).find("#proTable" + $("#proId").val()).length > 0) {
+			$("#proTable" + $("#proId").val() + " td:nth-child(4)").html(
+					Number($(
+							"#proTable" + $("#proId").val()
+									+ " td:nth-child(4)").html())
+							+ Number($("#proQty").val()));
+			$("#proTable" + $("#proId").val() + " td:nth-child(6)").html(
+					$("#rate").val());
+			$("#proTable" + $("#proId").val() + " td:nth-child(7)").html(
+					Number($(
+							"#proTable" + $("#proId").val()
+									+ " td:nth-child(6)").html())
+							+ Number($("#proQty").val())
+							* Number($("#rate").val()));
+
+			$('[name="jobName"]:checked')
+					.each(
+							function() {
+								if ($(document).find(
+										"#jobRow" + $(this).val()
+												+ $("#proId").val()).length == 0) {
+
+									$("#jobs")
+											.append(
+													'<tbody id="jobRow'
+															+ $(this).val()
+															+ $("#proId").val()
+															+ '"><tr>'
+															+ '<td>#<input type="hidden" value="'
+															+ $("#proId").val()
+															+ '" name="proId"><input type="hidden" value="'
+															+ $(this).val()
+															+ '" name="jobId"></td>'
+															+ '<td>'
+															+ $(
+																	"#jobName"
+																			+ $(
+																					this)
+																					.val())
+																	.html()
+															+ '</td>'
+															+ '<td>'
+															+ $("#proCode")
+																	.val()
+															+ '</td>'
+															+ '<td><input type="number" id="rate1'
+															+ $(this).val()
+															+ $("#proId").val()
+															+ '" onchange="calAnount(\''
+															+ $(this).val()
+															+ $("#proId").val()
+															+ '\');" value="0" name="jobqty"></td>'
+															+ '<td>'
+															+ $("#proUOM")
+																	.val()
+															+ '</td>'
+															+ '<td><input type="number" id="qtu1'
+															+ $(this).val()
+															+ $("#proId").val()
+															+ '" onchange="calAnount(\''
+															+ $(this).val()
+															+ $("#proId").val()
+															+ '\');" value="0" name="jobRate"></td>'
+															+ '<td><input type="text" name="totalAmount" value="0" readonly="readonly" id="amount'
+															+ $(this).val()
+															+ $("#proId").val()
+															+ '"></td>'
+															+ '<td><a href="#" onclick="removeJobRow(\''
+															+ $(this).val()
+															+ $("#proId").val()
+															+ '\');">remove</a></td>'
+															+ '</tr>'
+															+ '</tbody>');
+									$("#jobQty").val("0");
+									$("#jobrate").val("0");
+									$("#jobName").val("0");
+									$("#jobUOM").val("0");
+								}
+							});
+
+		} else {
 			$("#products").append(
-					'<tbody id="proTable'+$("#proId").val()+'">' + '<tr>' + '<td>#</td>' + '<td>'
-							+'<input type="hidden" name="productId" value="'+$("#proId").val()+'"><input type="hidden" name="qty" value="'+$("#proQty").val()+'"><input type="hidden" name="rate" value="'+$("#rate").val()+'"><input type="hidden" name="amount" value="'+Number($("#proQty").val()) * Number($("#rate").val())+'"><input type="hidden" name="qtyUnitId" value="'+$("#UOMid").val()+'">'+$("#proCode").val() + '</td>' + '<td>'
-							+ $("#proDesc").val() + '</td>' + '<td>'
-							+ $("#proQty").val() + '</td>' + '<td>'
+					'<tbody id="proTable'
+							+ $("#proId").val()
+							+ '">'
+							+ '<tr>'
+							+ '<td>#</td>'
+							+ '<td>'
+							+ '<input type="hidden" name="productId" value="'
+							+ $("#proId").val()
+							+ '"><input type="hidden" name="qty" value="'
+							+ $("#proQty").val()
+							+ '"><input type="hidden" name="rate" value="'
+							+ $("#rate").val()
+							+ '"><input type="hidden" name="amount" value="'
+							+ Number($("#proQty").val())
+									* Number($("#rate").val())
+							+ '"><input type="hidden" name="qtyUnitId" value="'
+							+ $("#UOMid").val() + '">' + $("#proCode").val()
+							+ '</td>' + '<td>' + $("#proDesc").val() + '</td>'
+							+ '<td>' + $("#proQty").val() + '</td>' + '<td>'
 							+ $("#proUOM").val() + '</td>' + '<td>'
 							+ $("#rate").val() + '</td>' + '<td>'
-							+ Number($("#proQty").val()) * Number($("#rate").val())
-							+ '</td>' + '<td><a href="#" onclick="removeProductRow(\''+$("#proId").val()+'\');">remove</a></td>' + '</tr>' + '</tbody>');
-		
-			 $('[name="jobName"]:checked').each(function() {
-				
-				 $("#jobs").append(
-							'<tbody id="jobRow'+$(this).val()+$("#proId").val()+'"><tr>'
-							+ '<td>#<input type="hidden" value="'+$(this).val()+'" name="jobId'+$("#proId").val()+'"></td>'
-							+ '<td>'+$("#jobName"+$(this).val()).html()+'</td>'
-									+ '<td>'+$("#proCode").val() + '</td>'
-									+ '<td><input type="number" id="rate1'+$(this).val()+$("#proId").val()+'" onchange="calAnount(\''+$(this).val()+$("#proId").val()+'\');" value="0" name="jobqty'+$("#proId").val()+'"></td>'
-									+ '<td>'+$("#proUOM").val()+'</td>'
-									+ '<td><input type="number" id="qtu1'+$(this).val()+$("#proId").val()+'" onchange="calAnount(\''+$(this).val()+$("#proId").val()+'\');" value="0" name="jobRate'+$("#proId").val()+'"></td>'
-									+ '<td><input type="text" value="0" name="totalAmount'+$("#proId").val()+'" readonly="readonly" id="amount'+$(this).val()+$("#proId").val()+'"></td>'
-									+ '<td><a href="#" onclick="removeJobRow(\''+$(this).val()+$("#proId").val()+'\');">remove</a></td>'
-									+ '</tr>'
-									+ '</tbody>');
-					$("#jobQty").val("0");
-					$("#jobrate").val("0");
-					$("#jobName").val("0");
-					$("#jobUOM").val("0");
-		        });
+							+ Number($("#proQty").val())
+							* Number($("#rate").val()) + '</td>'
+							+ '<td><a href="#" onclick="removeProductRow(\''
+							+ $("#proId").val() + '\');">remove</a></td>'
+							+ '</tr>' + '</tbody>');
+
+			$('[name="jobName"]:checked')
+					.each(
+							function() {
+
+								$("#jobs")
+										.append(
+												'<tbody id="jobRow'
+														+ $(this).val()
+														+ $("#proId").val()
+														+ '"><tr>'
+														+ '<td>#<input type="hidden" value="'
+														+ $(this).val()
+														+ '" name="jobId'
+														+ $("#proId").val()
+														+ '"></td>'
+														+ '<td>'
+														+ $(
+																"#jobName"
+																		+ $(
+																				this)
+																				.val())
+																.html()
+														+ '</td>'
+														+ '<td>'
+														+ $("#proCode").val()
+														+ '</td>'
+														+ '<td><input type="number" id="rate1'
+														+ $(this).val()
+														+ $("#proId").val()
+														+ '" onchange="calAnount(\''
+														+ $(this).val()
+														+ $("#proId").val()
+														+ '\');" value="0" name="jobqty'
+														+ $("#proId").val()
+														+ '"></td>'
+														+ '<td>'
+														+ $("#proUOM").val()
+														+ '</td>'
+														+ '<td><input type="number" id="qtu1'
+														+ $(this).val()
+														+ $("#proId").val()
+														+ '" onchange="calAnount(\''
+														+ $(this).val()
+														+ $("#proId").val()
+														+ '\');" value="0" name="jobRate'
+														+ $("#proId").val()
+														+ '"></td>'
+														+ '<td><input type="text" value="0" name="totalAmount'
+														+ $("#proId").val()
+														+ '" readonly="readonly" id="amount'
+														+ $(this).val()
+														+ $("#proId").val()
+														+ '"></td>'
+														+ '<td><a href="#" onclick="removeJobRow(\''
+														+ $(this).val()
+														+ $("#proId").val()
+														+ '\');">remove</a></td>'
+														+ '</tr>' + '</tbody>');
+								$("#jobQty").val("0");
+								$("#jobrate").val("0");
+								$("#jobName").val("0");
+								$("#jobUOM").val("0");
+							});
 		}
-		
+
 		$("#proCode").val("");
 		$("#proId").val("");
 		$("#proDesc").val("");
@@ -438,17 +567,18 @@
 		$("#rate").val("");
 		$("#productForJob").val("0");
 	}
-	
-	function calAnount(a){
-		$("#amount"+a).val(Number($("#qtu1"+a).val())*Number($("#rate1"+a).val()));
-	}
-	
-	function removeProductRow(id){
-		$("#proTable"+id).remove();
+
+	function calAnount(a) {
+		$("#amount" + a).val(
+				Number($("#qtu1" + a).val()) * Number($("#rate1" + a).val()));
 	}
 
-	function removeJobRow(id){
-		$("#jobRow"+id).remove();
+	function removeProductRow(id) {
+		$("#proTable" + id).remove();
+	}
+
+	function removeJobRow(id) {
+		$("#jobRow" + id).remove();
 	}
 
 	/****************for Designer*****************/
@@ -504,8 +634,7 @@
 			var reader = new FileReader();
 
 			reader.onload = function(e) {
-				$('#image').attr('src', e.target.result).width(120).height(
-						85);
+				$('#image').attr('src', e.target.result).width(120).height(85);
 				var str = e.target.result;
 				$("#proImage1").val(str.substring(str.lastIndexOf(',') + 1));
 			};

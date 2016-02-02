@@ -112,7 +112,7 @@
 </header>
 <script type="text/javascript">
 function criticalStockService(){
-	setTimeout(getCritcalStock(), 30000);
+	//setTimeout(getCritcalStock(), 30000);
 }
 var l=0;
 function getCritcalStock(){
@@ -132,7 +132,7 @@ function getCritcalStock(){
 			}
 		},
 		complete:function(){
-			criticalStockService();
+			//criticalStockService();
 		}
 	});	
 	

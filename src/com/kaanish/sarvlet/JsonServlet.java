@@ -61,8 +61,8 @@ import com.kaanish.util.DepartmentCotractor;
 		"/getSubByDepjson", "/getCatBySubjson", "/addJsonCity",
 		"/addJsonState", "/addJsonCountry", "/productSumaryJson",
 		"/getVendorsByNameAndType", "/getVendorsByVendorTypeVendorAndName",
-		"/getVendorsByVendorTypePurchaseAgentAndName", "/getCustomerByName","/getCriticalStock" })
-
+		"/getVendorsByVendorTypePurchaseAgentAndName", "/getCustomerByName",
+		"/getCriticalStock" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -962,23 +962,27 @@ public class JsonServlet extends HttpServlet {
 						ejb.getVendorByTypeAndName(req.getParameter("type"),
 								req.getParameter("name")));
 				break;
-				
+
 			case "getCriticalStock":
-				JsonGeneratorFactory factory1=Json.createGeneratorFactory(null);
-				JsonGenerator generator=factory1.createGenerator(resp.getOutputStream());
+				JsonGeneratorFactory factory1 = Json
+						.createGeneratorFactory(null);
+				JsonGenerator generator = factory1.createGenerator(resp
+						.getOutputStream());
 				generator.writeStartArray();
-				
-				for(ProductDetail pd:ejb.getAllProductDetail()){
-					if(pd.getReadyGoodsStock().getRemainingQty()<10){
-						generator.writeStartObject().write("productId",pd.getId())
-						.write("productCode",pd.getCode())
-						.write("productDescription",pd.getDescription())						
-						.writeEnd();						
+
+				for (ProductDetail pd : ejb.getAllProductDetail()) {
+					if ((pd.isRaw()?pd.getRawMaterialsStock().getRemainingQty():pd.getReadyGoodsStock().getRemainingQty()) < 10) {
+						generator
+								.writeStartObject()
+								.write("productId", pd.getId())
+								.write("productCode", pd.getCode())
+								.write("productDescription",
+										pd.getDescription()).writeEnd();
 					}
 				}
 				generator.writeEnd().close();
 				break;
-				
+
 			default:
 				break;
 			}

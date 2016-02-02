@@ -60,7 +60,31 @@ page[size="A4"] {
 }
 </style>
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
-<c:if test="${param.print==1}">
+<script type="text/javascript">
+Url = {
+	    get get(){
+	        var vars= {};
+	        if(window.location.search.length!==0)
+	            window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value){
+	                key=decodeURIComponent(key);
+	                if(typeof vars[key]==="undefined") {vars[key]= decodeURIComponent(value);}
+	                else {vars[key]= [].concat(vars[key], decodeURIComponent(value));}
+	            });
+	        return vars;
+	    }
+	};
+$(document).ready(function(){
+	if(Url.get.print==1){
+		var myWindow = window
+		.open(
+				"barcodePrint.jsp?id=${param.id}&ip=${sessionScope['sip']}&port=${sessionScope['port']}",
+				'name', 'width=600,height=400');
+myWindow.print();
+	}
+});
+</script>
+
+<%-- <c:if test="${param.print==1}">
 	<script type="text/javascript">
 		var myWindow = window
 				.open(
@@ -68,7 +92,7 @@ page[size="A4"] {
 						'name', 'width=600,height=400');
 		myWindow.print();
 	</script>
-</c:if>
+</c:if> --%>
 </head>
 <body>
 	<c:if test="${sessionScope['user']==null}">
