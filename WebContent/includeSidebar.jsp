@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
- <%-- <jsp:include page="include.jsp" />  --%>
+<%-- <jsp:include page="include.jsp" />  --%>
 <aside class="sidebar" style="height: 100%; overflow-y: scroll;">
 	<div class="menu-sec">
 		<div id="menu-toogle" class="menus">
@@ -100,7 +100,7 @@
 				</div>
 			</div>
 
-		 <div class="single-menu">
+			<div class="single-menu">
 
 				<h2 id="jobs">
 					<a title=""><span>Jobs Module</span></a>
@@ -113,7 +113,7 @@
 								Assignment Search</a></li>
 						<li><a id="jR" href="jobReceive.jsp" title="">Job Receive</a></li>
 						<li><a id="designCostSheet" href="designCostSheet.jsp"
-							title="">Sample Job for CostSheet</a></li>
+							title="">Sample Job CostSheet</a></li>
 					</ul>
 				</div>
 			</div>

@@ -112,7 +112,7 @@
 
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
-								<h3 style="margin-top: 11px;">Sample Job For Cost Sheet</h3>
+								<h3 style="margin-top: 11px;">Sample Job Cost Sheet</h3>
 							</div>
 
 							<!-- <div class="widget-area"> -->
@@ -156,7 +156,8 @@
 											<div class="col-md-12">
 												<div class="form-group">
 													<label for="qty" class="font">Qty :</label> <input
-														type="number" name="qty" class="form-control" value="1">
+														type="number" name="qty" class="form-control" value="1"
+														readonly="readonly">
 												</div>
 											</div>
 
@@ -210,18 +211,16 @@
 										</thead>
 									</table>
 
-									<a href="#" onclick="addJobs();"><img src="img/add.png"
-										height="20px" style="float: right;"></a> <br>
+									<br>
 									<div class="col-md-12">
 										<div class="form-group" style="float: right;">
-
 											<label for="surcharge" class="font">Surcharge :</label> <input
 												type="number" name="surcharge" value="0.00" id="surcharge"
-												onkeyup="surchargeF();"> <br> <label for=""
-												class="font">GrandTotal :</label> <input type="number"
-												name="gtot" value="0.00" readonly="readonly" id="gtot">
-											<input type="hidden" name="gt" value="0.00"
-												readonly="readonly" id="gt">
+												onkeyup="surchargeF();" autocomplete="off"> <br>
+											<label for="" class="font">GrandTotal :</label> <input
+												type="number" name="gtot" value="0.00" readonly="readonly"
+												id="gtot"> <input type="hidden" name="gt"
+												value="0.00" readonly="readonly" id="gt">
 										</div>
 									</div>
 									<div class="col-md-12">
@@ -564,9 +563,12 @@
 		$("#gt").val(
 				Number($("#gt").val()) + Number($("#proQty").val())
 						* Number($("#rate").val()));
+		var sum = 0;
+		$(".eachtotalvalue").each(function() {
+			sum += parseFloat(this.value);
+		});
 		$("#gtot").val(
-				Number($("#gtot").val()) + Number($("#proQty").val())
-						* Number($("#rate").val())
+				Number($("#gt").val()) + Number(sum.toFixed(2))
 						+ Number($("#surcharge").val()));
 
 		$("#proCode").val("");
