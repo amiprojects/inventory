@@ -26,6 +26,8 @@ public class Users implements Serializable {
 	private
 	List<SecurityAnswers> securityAnswers;
 
+	@OneToMany(mappedBy = "users")
+	private List<NotificationView> notificationView;
 	
 
 	@ManyToOne

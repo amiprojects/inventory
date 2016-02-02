@@ -32,6 +32,11 @@ public class ProductDetail implements Serializable {
 	private boolean isActive;
 	private String description;
 
+	
+	
+	@OneToMany(mappedBy = "productDetail")
+	private List<NotificationDetails> notificationDetails;
+	
 	@ManyToOne
 	@JoinColumn(name = "categoryId")
 	private Category category;
@@ -207,6 +212,14 @@ public class ProductDetail implements Serializable {
 
 	public void setProductsForDesignCostSheets(List<ProductsForDesignCostSheet> productsForDesignCostSheets) {
 		this.productsForDesignCostSheets = productsForDesignCostSheets;
+	}
+
+	public List<NotificationDetails> getNotificationDetails() {
+		return notificationDetails;
+	}
+
+	public void setNotificationDetails(List<NotificationDetails> notificationDetails) {
+		this.notificationDetails = notificationDetails;
 	}
 
 }
