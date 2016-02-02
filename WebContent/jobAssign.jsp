@@ -120,7 +120,7 @@
 									<div class="col-md-4">
 										<a href="jobAssignForOngoingJobs.jsp">
 											<div class="stats-counter">
-												<img alt="sales Entry" src="images/jobs.PNG"
+												<img alt="on going job" src="img/ongoing.png"
 												style="height: 179px; width: 330px;"> <i
 													class="fa fa-user red"></i>
 												<h4 style="color: red">For Ongoing Job</h4>
