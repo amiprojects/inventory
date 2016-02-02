@@ -70,6 +70,9 @@ public class Purchase_Product_Details implements Serializable {
 
 	@OneToMany(mappedBy = "purchase_Product_Details", cascade = CascadeType.PERSIST)
 	private List<SalesProductDetails> salesProductDetails;
+	
+	@OneToMany(mappedBy="purchase_Product_Details")
+	private List<JobPlanProductStock> jobPlanProductStocks;
 
 	public List<PurchaseReturnProductDetails> getPurchaseReturnProductDetails() {
 		return purchaseReturnProductDetails;
@@ -314,6 +317,14 @@ public class Purchase_Product_Details implements Serializable {
 
 	public void setPurchaseReturn(PurchaseReturn purchaseReturn) {
 		this.purchaseReturn = purchaseReturn;
+	}
+
+	public List<JobPlanProductStock> getJobPlanProductStocks() {
+		return jobPlanProductStocks;
+	}
+
+	public void setJobPlanProductStocks(List<JobPlanProductStock> jobPlanProductStocks) {
+		this.jobPlanProductStocks = jobPlanProductStocks;
 	}
 
 }

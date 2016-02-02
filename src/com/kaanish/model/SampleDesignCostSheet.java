@@ -41,7 +41,9 @@ public class SampleDesignCostSheet implements Serializable {
 	
 	@OneToMany(mappedBy="sampleDesignCostSheet",cascade=CascadeType.ALL)
 	private List<JobsForDesignCostSheet> jobsForDesignCostSheets;
-
+	
+	@OneToMany(mappedBy="designCostSheet",cascade=CascadeType.ALL)
+	private List<JobPlan> jobPlans;
 
 	public int getId() {
 		return id;
@@ -145,6 +147,14 @@ public class SampleDesignCostSheet implements Serializable {
 
 	public void setJobsForDesignCostSheets(List<JobsForDesignCostSheet> jobsForDesignCostSheets) {
 		this.jobsForDesignCostSheets = jobsForDesignCostSheets;
+	}
+
+	public List<JobPlan> getJobPlans() {
+		return jobPlans;
+	}
+
+	public void setJobPlans(List<JobPlan> jobPlans) {
+		this.jobPlans = jobPlans;
 	}
 
 	
