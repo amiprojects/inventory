@@ -28,6 +28,8 @@ import com.kaanish.model.DesignImage;
 import com.kaanish.model.JobAssignmentDetails;
 import com.kaanish.model.JobAssignmentProducts;
 import com.kaanish.model.JobClass;
+import com.kaanish.model.JobPlan;
+import com.kaanish.model.JobPlanProductStock;
 import com.kaanish.model.JobRecievedDetails;
 import com.kaanish.model.JobStock;
 import com.kaanish.model.JobTypes;
@@ -2578,6 +2580,41 @@ public class Ejb {
 
 	public List<DesignImage> getAllDesignImage() {
 		TypedQuery<DesignImage> q = em.createQuery("select c from DesignImage c", DesignImage.class);
+		return q.getResultList();
+	}
+	/*************************** for JobPlan *********************/
+	public void setJobPlan(JobPlan sample) {
+		em.persist(sample);
+	}
+
+	public void updateJobPlan(JobPlan sample) {
+		em.merge(sample);
+	}
+
+	public JobPlan getJobPlanById(int id) {
+		return em.find(JobPlan.class, id);
+	}
+
+	public List<JobPlan> getAllJobPlan() {
+		TypedQuery<JobPlan> q = em.createQuery("select c from JobPlan c", JobPlan.class);
+		return q.getResultList();
+	}
+	
+	/*************************** for JobPlanProductStockProductStock *********************/
+	public void setJobPlanProductStock(JobPlanProductStock sample) {
+		em.persist(sample);
+	}
+
+	public void updateJobPlanProductStock(JobPlanProductStock sample) {
+		em.merge(sample);
+	}
+
+	public JobPlanProductStock getJobPlanProductStockById(int id) {
+		return em.find(JobPlanProductStock.class, id);
+	}
+
+	public List<JobPlanProductStock> getAllJobPlanProductStock() {
+		TypedQuery<JobPlanProductStock> q = em.createQuery("select c from JobPlanProductStock c", JobPlanProductStock.class);
 		return q.getResultList();
 	}
 

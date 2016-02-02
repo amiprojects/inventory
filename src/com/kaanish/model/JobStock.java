@@ -20,7 +20,7 @@ public class JobStock implements Serializable {
 	private float remainingQty;
 	private float cost;
 
-	@OneToOne
+	@OneToOne(mappedBy="jobStock")
 	private JobAssignmentProducts jobAssignmentProducts;
 
 	public int getId() {

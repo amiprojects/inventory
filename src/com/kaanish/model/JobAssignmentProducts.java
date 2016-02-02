@@ -46,6 +46,10 @@ public class JobAssignmentProducts implements Serializable {
 	@JoinColumn(name = "jobStockId")
 	private JobStock jobStock;
 
+	@ManyToOne
+	@JoinColumn(name = "jobPlanProStockId")
+	private JobPlanProductStock jobPlanProductStock;
+
 	public int getId() {
 		return id;
 	}
@@ -61,7 +65,6 @@ public class JobAssignmentProducts implements Serializable {
 	public void setQty(int qty) {
 		this.qty = qty;
 	}
-	
 
 	public int getRemaninQty() {
 		return remaninQty;
@@ -125,5 +128,13 @@ public class JobAssignmentProducts implements Serializable {
 
 	public void setWorkDescription(String workDescription) {
 		this.workDescription = workDescription;
+	}
+
+	public JobPlanProductStock getJobPlanProductStock() {
+		return jobPlanProductStock;
+	}
+
+	public void setJobPlanProductStock(JobPlanProductStock jobPlanProductStock) {
+		this.jobPlanProductStock = jobPlanProductStock;
 	}
 }
