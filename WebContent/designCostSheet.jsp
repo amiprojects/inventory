@@ -216,9 +216,12 @@
 										<div class="form-group" style="float: right;">
 
 											<label for="surcharge" class="font">Surcharge :</label> <input
-												type="number" name="surcharge" value="0.00"> <br>
-											<label for="surcharge" class="font">GrandTotal :</label> <input
-												type="number" name="surcharge" value="0.00">
+												type="number" name="surcharge" value="0.00" id="surcharge"
+												onkeyup="surchargeF();"> <br> <label for=""
+												class="font">GrandTotal :</label> <input type="number"
+												name="gtot" value="0.00" readonly="readonly" id="gtot">
+											<input type="hidden" name="gt" value="0.00"
+												readonly="readonly" id="gt">
 										</div>
 									</div>
 									<div class="col-md-12">
@@ -542,7 +545,7 @@
 														+ '"></td>'
 														+ '<td><input type="text" value="0" name="totalAmount'
 														+ $("#proId").val()
-														+ '" readonly="readonly" id="amount'
+														+ '" readonly="readonly" class="eachtotalvalue" id="amount'
 														+ $(this).val()
 														+ $("#proId").val()
 														+ '"></td>'
@@ -557,6 +560,14 @@
 								$("#jobUOM").val("0");
 							});
 		}
+		//error
+		$("#gt").val(
+				Number($("#gt").val()) + Number($("#proQty").val())
+						* Number($("#rate").val()));
+		$("#gtot").val(
+				Number($("#gtot").val()) + Number($("#proQty").val())
+						* Number($("#rate").val())
+						+ Number($("#surcharge").val()));
 
 		$("#proCode").val("");
 		$("#proId").val("");
@@ -566,19 +577,62 @@
 		$("#proQty").val("");
 		$("#rate").val("");
 		$("#productForJob").val("0");
+
 	}
 
 	function calAnount(a) {
 		$("#amount" + a).val(
 				Number($("#qtu1" + a).val()) * Number($("#rate1" + a).val()));
+
+		//error
+		var sum = 0;
+		$(".eachtotalvalue").each(function() {
+			sum += parseFloat(this.value);
+		});
+		$("#gtot").val(
+				Number($("#gt").val()) + Number(sum.toFixed(2))
+						+ Number($("#surcharge").val()));
 	}
 
 	function removeProductRow(id) {
+		//error
+		n1 = $("#proTable" + id + " td:nth-child(7)").html();
 		$("#proTable" + id).remove();
+
+		$("#gt").val(
+				Math.round((Number($("#gt").val()) - Number(n1)) * 100) / 100);
+
+		var sum = 0;
+		$(".eachtotalvalue").each(function() {
+			sum += parseFloat(this.value);
+		});
+		$("#gtot").val(
+				Number($("#gt").val()) + Number(sum.toFixed(2))
+						+ Number($("#surcharge").val()));
 	}
 
 	function removeJobRow(id) {
+		//error
 		$("#jobRow" + id).remove();
+
+		var sum = 0;
+		$(".eachtotalvalue").each(function() {
+			sum += parseFloat(this.value);
+		});
+		$("#gtot").val(
+				Number($("#gt").val()) + Number(sum.toFixed(2))
+						+ Number($("#surcharge").val()));
+	}
+
+	function surchargeF() {
+		//error
+		var sum = 0;
+		$(".eachtotalvalue").each(function() {
+			sum += parseFloat(this.value);
+		});
+		$("#gtot").val(
+				Number($("#gt").val()) + Number(sum.toFixed(2))
+						+ Number($("#surcharge").val()));
 	}
 
 	/****************for Designer*****************/

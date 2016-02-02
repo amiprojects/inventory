@@ -31,6 +31,7 @@ import com.kaanish.model.QtyUnitConversionPK;
 import com.kaanish.model.QtyUnitType;
 import com.kaanish.model.RawMaterialsStock;
 import com.kaanish.model.ReadyGoodsStock;
+import com.kaanish.model.SampleDesignCostSheet;
 import com.kaanish.model.SerialNumber;
 import com.kaanish.model.State;
 import com.kaanish.model.SubDepartment;
@@ -39,21 +40,29 @@ import com.kaanish.util.Base64;
 import com.kaanish.util.DateConverter;
 import com.kaanish.util.DepartmentCotractor;
 
-@WebServlet({ "/getcountry", "/addNewUOMtype", "/getUOMtype", "/getAllDepartments", "/getProductByDescription",
-		"/getStateByCountry", "/getStateByCountryByStateName", "/getCity", "/getCityByName", "/getQtyUnit",
-		"/getQtyUnitConversion", "/getVendorByVendorType", "/getQtyConversion", "/getVendorByVendorId",
-		"/getAccountByVendorId", "/getTaxGroupById", "/getproductPro", "/getPurchasebyPro", "/getAccountDetails",
-		"/getProductDetailById", "/getCategoryById", "/getProductImageByProductid", "/getJobberDetailsByName",
-		"/getProdDetByPurchaseProdDetailsId", "/getStateByCityName", "/getAllQtyUnitByNameOrAbv", "/getAgentDetails",
-		"/getCityByStateByCityName", "/getVendorTypeById", "/getProductbyProductCode",
-		"/getSaleblePurchaseProductDetailsByProductCodeAndQuantity", "/getVendorsByVendorTypeJobberAndName",
-		"/getProductsForSaleByCode", "/deleteUOM", "/getVendorsByVendorTypeSalesAgentAndName",
-		"/getSalesAgentDetailsById", "/getPurchaseProductDetailsByIdForSale", "/getCustomerByPh", "/checkPcode",
-		"/addVendorbyjson", "/addAgen", "/getVendorByType", "/addUOMjson", "/getuomByType", "/getDeptjson",
-		"/getSubByDepjson", "/getCatBySubjson", "/addJsonCity", "/addJsonState", "/addJsonCountry",
-		"/productSumaryJson", "/getVendorsByNameAndType", "/getVendorsByVendorTypeVendorAndName",
-		"/getVendorsByVendorTypePurchaseAgentAndName", "/getCustomerByName", "/getCriticalStock" })
-
+@WebServlet({ "/getcountry", "/addNewUOMtype", "/getUOMtype",
+		"/getAllDepartments", "/getProductByDescription", "/getStateByCountry",
+		"/getStateByCountryByStateName", "/getCity", "/getCityByName",
+		"/getQtyUnit", "/getQtyUnitConversion", "/getVendorByVendorType",
+		"/getQtyConversion", "/getVendorByVendorId", "/getAccountByVendorId",
+		"/getTaxGroupById", "/getproductPro", "/getPurchasebyPro",
+		"/getAccountDetails", "/getProductDetailById", "/getCategoryById",
+		"/getProductImageByProductid", "/getJobberDetailsByName",
+		"/getProdDetByPurchaseProdDetailsId", "/getStateByCityName",
+		"/getAllQtyUnitByNameOrAbv", "/getAgentDetails",
+		"/getCityByStateByCityName", "/getVendorTypeById",
+		"/getProductbyProductCode",
+		"/getSaleblePurchaseProductDetailsByProductCodeAndQuantity",
+		"/getVendorsByVendorTypeJobberAndName", "/getProductsForSaleByCode",
+		"/deleteUOM", "/getVendorsByVendorTypeSalesAgentAndName",
+		"/getSalesAgentDetailsById", "/getPurchaseProductDetailsByIdForSale",
+		"/getCustomerByPh", "/checkPcode", "/addVendorbyjson", "/addAgen",
+		"/getVendorByType", "/addUOMjson", "/getuomByType", "/getDeptjson",
+		"/getSubByDepjson", "/getCatBySubjson", "/addJsonCity",
+		"/addJsonState", "/addJsonCountry", "/productSumaryJson",
+		"/getVendorsByNameAndType", "/getVendorsByVendorTypeVendorAndName",
+		"/getVendorsByVendorTypePurchaseAgentAndName", "/getCustomerByName",
+		"/getCriticalStock", "/getSampleDesignCostSheetByDesignNumber" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -64,7 +73,8 @@ public class JsonServlet extends HttpServlet {
 	private String name;
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 		String url = req.getRequestURL().toString();
 		url = url.substring(url.lastIndexOf('/') + 1);
 		resp.setContentType("application/json");
@@ -78,7 +88,8 @@ public class JsonServlet extends HttpServlet {
 
 			case "addNewUOMtype":
 				pw = new PrintWriter(resp.getOutputStream());
-				JsonGeneratorFactory factory = Json.createGeneratorFactory(null);
+				JsonGeneratorFactory factory = Json
+						.createGeneratorFactory(null);
 				JsonGenerator gen = factory.createGenerator(pw);
 				qtyUnitType = new QtyUnitType();
 				name = req.getParameter("typeName");
@@ -92,9 +103,11 @@ public class JsonServlet extends HttpServlet {
 				if (flag == 0) {
 					qtyUnitType.setName(name);
 					ejb.setQtyUnitType(qtyUnitType);
-					gen.writeStartObject().write("response", "success").writeEnd().close();
+					gen.writeStartObject().write("response", "success")
+							.writeEnd().close();
 				} else {
-					gen.writeStartObject().write("response", "already exist").writeEnd().close();
+					gen.writeStartObject().write("response", "already exist")
+							.writeEnd().close();
 				}
 				break;
 
@@ -130,84 +143,119 @@ public class JsonServlet extends HttpServlet {
 
 			case "getStateByCountry":
 				pw = resp.getWriter();
-				pw.print(ejb.getAllStatesByCountryId(Integer.parseInt(req.getParameter("id"))));
+				pw.print(ejb.getAllStatesByCountryId(Integer.parseInt(req
+						.getParameter("id"))));
 				break;
 
 			case "getVendorByVendorType":
 				pw = resp.getWriter();
-				pw.print(ejb.getVendorsByVendorTypeIdByName(Integer.parseInt(req.getParameter("id")),
+				pw.print(ejb.getVendorsByVendorTypeIdByName(
+						Integer.parseInt(req.getParameter("id")),
 						req.getParameter("term")));
 				break;
 
 			case "getVendorTypeById":
-				resp.getWriter().print(ejb.getVendorTypeById(Integer.parseInt(req.getParameter("id"))));
+				resp.getWriter().print(
+						ejb.getVendorTypeById(Integer.parseInt(req
+								.getParameter("id"))));
 				break;
 
 			case "getVendorsByVendorTypeJobberAndName":
-				resp.getWriter().print(ejb.getVendorsByVendorTypeJobberAndName(req.getParameter("name")));
+				resp.getWriter().print(
+						ejb.getVendorsByVendorTypeJobberAndName(req
+								.getParameter("name")));
 				break;
 			case "getVendorsByVendorTypeVendorAndName":
-				resp.getWriter().print(ejb.getVendorsByVendorTypeVendorAndName(req.getParameter("name")));
+				resp.getWriter().print(
+						ejb.getVendorsByVendorTypeVendorAndName(req
+								.getParameter("name")));
 				break;
 
 			case "getVendorsByVendorTypePurchaseAgentAndName":
-				resp.getWriter().print(ejb.getVendorsByVendorTypePurchaseAgentAndName(req.getParameter("name")));
+				resp.getWriter().print(
+						ejb.getVendorsByVendorTypePurchaseAgentAndName(req
+								.getParameter("name")));
 				break;
 
 			case "getVendorsByVendorTypeSalesAgentAndName":
-				resp.getWriter().print(ejb.getVendorsByVendorTypeSalesAgentAndName(req.getParameter("name")));
+				resp.getWriter().print(
+						ejb.getVendorsByVendorTypeSalesAgentAndName(req
+								.getParameter("name")));
 				break;
 
 			case "getSalesAgentDetailsById":
-				resp.getWriter().print(ejb.getVendorById(Integer.parseInt(req.getParameter("id"))));
+				resp.getWriter().print(
+						ejb.getVendorById(Integer.parseInt(req
+								.getParameter("id"))));
 				break;
 
 			case "getAccountDetails":
-				resp.getWriter().print(ejb.getAccountDetailsByVendorId(Integer.parseInt(req.getParameter("id"))));
+				resp.getWriter().print(
+						ejb.getAccountDetailsByVendorId(Integer.parseInt(req
+								.getParameter("id"))));
 				break;
 			case "getTaxGroupById":
-				resp.getWriter().print(ejb.getTax_Type_GroupById(Integer.parseInt(req.getParameter("id"))));
+				resp.getWriter().print(
+						ejb.getTax_Type_GroupById(Integer.parseInt(req
+								.getParameter("id"))));
 				break;
 			case "getProductDetailById":
-				resp.getWriter().print(ejb.getProductDetailsById(Integer.parseInt(req.getParameter("id"))));
+				resp.getWriter().print(
+						ejb.getProductDetailsById(Integer.parseInt(req
+								.getParameter("id"))));
 				break;
 			case "getJobberDetailsByName":
-				resp.getWriter().print(ejb.getVendorById(Integer.parseInt(req.getParameter("id"))));
+				resp.getWriter().print(
+						ejb.getVendorById(Integer.parseInt(req
+								.getParameter("id"))));
 				break;
 			case "getProdDetByPurchaseProdDetailsId":
-				resp.getWriter().print(ejb.getPurchaseProductDetailsById(Integer.parseInt(req.getParameter("id"))));
+				resp.getWriter().print(
+						ejb.getPurchaseProductDetailsById(Integer.parseInt(req
+								.getParameter("id"))));
 				break;
 			case "getCategoryById":
-				resp.getWriter().print(ejb.getCategoryById(Integer.parseInt(req.getParameter("id"))));
+				resp.getWriter().print(
+						ejb.getCategoryById(Integer.parseInt(req
+								.getParameter("id"))));
 				break;
 
 			case "getAgentDetails":
-				resp.getWriter().print(ejb.getVendorById(Integer.parseInt(req.getParameter("id"))));
+				resp.getWriter().print(
+						ejb.getVendorById(Integer.parseInt(req
+								.getParameter("id"))));
 				break;
 
 			case "getVendorByVendorId":
-				resp.getWriter().print(ejb.getVendorById(Integer.parseInt(req.getParameter("id"))));
+				resp.getWriter().print(
+						ejb.getVendorById(Integer.parseInt(req
+								.getParameter("id"))));
 
 				break;
 
 			case "getAccountByVendorId":
-				resp.getWriter().print(ejb.getAccountDetailsByVendorId(Integer.parseInt(req.getParameter("id"))));
+				resp.getWriter().print(
+						ejb.getAccountDetailsByVendorId(Integer.parseInt(req
+								.getParameter("id"))));
 				;
 				break;
 
 			case "getStateByCountryByStateName":
 				pw = resp.getWriter();
-				pw.print(ejb.getStateByName(req.getParameter("name"), Integer.parseInt(req.getParameter("cid"))));
+				pw.print(ejb.getStateByName(req.getParameter("name"),
+						Integer.parseInt(req.getParameter("cid"))));
 				break;
 
 			case "getCityByStateByCityName":
 				pw = resp.getWriter();
-				pw.print(ejb.getCityByNameAjax(req.getParameter("name1"), Integer.parseInt(req.getParameter("cid1"))));
+				pw.print(ejb.getCityByNameAjax(req.getParameter("name1"),
+						Integer.parseInt(req.getParameter("cid1"))));
 				break;
 
 			case "getCity":
 				pw = resp.getWriter();
-				pw.print(ejb.getCityByState(Integer.parseInt(req.getParameter("id"))));
+				pw.print(ejb.getCityByState(Integer.parseInt(req
+						.getParameter("id"))));
 				break;
 
 			case "getCityByName":
@@ -226,33 +274,41 @@ public class JsonServlet extends HttpServlet {
 
 			case "getProductbyProductCode":
 				pw = resp.getWriter();
-				pw.print(ejb.getAllProductByProductCode(req.getParameter("code")));
+				pw.print(ejb.getAllProductByProductCode(req
+						.getParameter("code")));
 				break;
 			case "getSaleblePurchaseProductDetailsByProductCodeAndQuantity":
 				pw = resp.getWriter();
-				pw.print(ejb.getSaleblePurchaseProductDetailsByProductCodeAndQuantity(req.getParameter("code"),
-						DateConverter.getDate(req.getParameter("date"))));
+				pw.print(ejb
+						.getSaleblePurchaseProductDetailsByProductCodeAndQuantity(
+								req.getParameter("code"),
+								DateConverter.getDate(req.getParameter("date"))));
 				break;
 			case "getProductByDescription":
 				pw = resp.getWriter();
-				pw.print(ejb.getProductDetailByCode(req.getParameter("descriptionName")));
+				pw.print(ejb.getProductDetailByCode(req
+						.getParameter("descriptionName")));
 				break;
 			case "getQtyUnit":
 				pw = resp.getWriter();
-				pw.print(ejb.getQtyUnitById(Integer.parseInt(req.getParameter("id"))));
+				pw.print(ejb.getQtyUnitById(Integer.parseInt(req
+						.getParameter("id"))));
 				break;
 			case "getproductPro":
 				pw = resp.getWriter();
-				pw.print(ejb.getProductDetailById(Integer.parseInt(req.getParameter("id"))));
+				pw.print(ejb.getProductDetailById(Integer.parseInt(req
+						.getParameter("id"))));
 				break;
 			case "getPurchasebyPro":
 				pw = resp.getWriter();
-				pw.print(ejb.getInitialPurchase_Product_DetailsByProductIdAndCompany(
-						Integer.parseInt(req.getParameter("id"))));
+				pw.print(ejb
+						.getInitialPurchase_Product_DetailsByProductIdAndCompany(Integer
+								.parseInt(req.getParameter("id"))));
 				break;
 			case "getQtyUnitConversion":
 				pw = resp.getWriter();
-				pw.print(ejb.getAllQtyUnitConversionByQtyUnitId(Integer.parseInt(req.getParameter("id"))));
+				pw.print(ejb.getAllQtyUnitConversionByQtyUnitId(Integer
+						.parseInt(req.getParameter("id"))));
 				break;
 			case "getQtyConversion":
 				pw = resp.getWriter();
@@ -263,16 +319,22 @@ public class JsonServlet extends HttpServlet {
 				break;
 
 			case "getProductImageByProductid":
-				resp.getWriter().print(ejb.getAllProductImageByProductId(Integer.parseInt(req.getParameter("id"))));
+				resp.getWriter().print(
+						ejb.getAllProductImageByProductId(Integer.parseInt(req
+								.getParameter("id"))));
 				break;
 			case "getStateByCityName":
-				resp.getWriter().print(ejb.getStateByCityName(req.getParameter("nm")));
+				resp.getWriter().print(
+						ejb.getStateByCityName(req.getParameter("nm")));
 				break;
 			case "getAllQtyUnitByNameOrAbv":
-				resp.getWriter().print(ejb.getAllQtyUnitByNameOrAbv(req.getParameter("name")));
+				resp.getWriter().print(
+						ejb.getAllQtyUnitByNameOrAbv(req.getParameter("name")));
 				break;
 			case "getProductsForSaleByCode":
-				resp.getWriter().print(ejb.getSalebleProductsByQtyAndCodeAndCompany(req.getParameter("codeParts")));
+				resp.getWriter().print(
+						ejb.getSalebleProductsByQtyAndCodeAndCompany(req
+								.getParameter("codeParts")));
 				break;
 			case "deleteUOM":
 				PrintWriter pw = new PrintWriter(resp.getOutputStream());
@@ -280,24 +342,31 @@ public class JsonServlet extends HttpServlet {
 				JsonGenerator gen1 = fac.createGenerator(pw);
 				try {
 					ejb.deleteUOMById(Integer.parseInt(req.getParameter("id")));
-					gen1.writeStartObject().write("response", "success").writeEnd().close();
+					gen1.writeStartObject().write("response", "success")
+							.writeEnd().close();
 				} catch (Exception e) {
-					gen1.writeStartObject().write("response", "failed").writeEnd().close();
+					gen1.writeStartObject().write("response", "failed")
+							.writeEnd().close();
 				}
 				break;
 			case "getPurchaseProductDetailsByIdForSale":
-				resp.getWriter().print(ejb.getPurchaseProductDetailsByIdForSale(
-						Integer.parseInt(req.getParameter("id")), req.getParameter("date")));
+				resp.getWriter().print(
+						ejb.getPurchaseProductDetailsByIdForSale(
+								Integer.parseInt(req.getParameter("id")),
+								req.getParameter("date")));
 				break;
 			case "checkPcode":
 
-				resp.getWriter().print(ejb.getProductByProductCode(req.getParameter("productCode4")));
+				resp.getWriter().print(
+						ejb.getProductByProductCode(req
+								.getParameter("productCode4")));
 				break;
 
 			case "addVendorbyjson":
 				resp.setContentType("application/json");
 				JsonGeneratorFactory jsg = Json.createGeneratorFactory(null);
-				JsonGenerator gen2 = jsg.createGenerator(resp.getOutputStream());
+				JsonGenerator gen2 = jsg
+						.createGenerator(resp.getOutputStream());
 				HttpSession httpSession = req.getSession();
 
 				Vendor vendor = new Vendor();
@@ -309,7 +378,7 @@ public class JsonServlet extends HttpServlet {
 
 					if (ven.getEmail().equals(req.getParameter("vendorMail"))
 
-							|| ven.getPh1().equals(req.getParameter("vendorPh1"))) {
+					|| ven.getPh1().equals(req.getParameter("vendorPh1"))) {
 
 						counter2 = 1;
 						break;
@@ -325,75 +394,101 @@ public class JsonServlet extends HttpServlet {
 					vendor.setLastModifiedDate(dt);
 					vendor.setAddress(req.getParameter("vendorAddress"));
 					vendor.setAliseName(req.getParameter("vendorAlias"));
-					vendor.setCity(ejb.getCityById(Integer.parseInt(req.getParameter("vendorCityId"))));
+					vendor.setCity(ejb.getCityById(Integer.parseInt(req
+							.getParameter("vendorCityId"))));
 					vendor.setCompanyName(req.getParameter("vendorCompanyName"));
 					vendor.setEmail(req.getParameter("vendorMail"));
 					vendor.setPh1(req.getParameter("vendorPh1"));
 					vendor.setPh2(req.getParameter("vendorPh2"));
 					vendor.setPinCode(req.getParameter("vendorPin"));
-					vendor.setVendorType(ejb.getVendorTypeById(Integer.parseInt(req.getParameter("vendorType"))));
-					vendor.setUsers(ejb.getUserById((String) httpSession.getAttribute("user")));
+					vendor.setVendorType(ejb.getVendorTypeById(Integer
+							.parseInt(req.getParameter("vendorType"))));
+					vendor.setUsers(ejb.getUserById((String) httpSession
+							.getAttribute("user")));
 
-					accountDetails.setBankAccountNumber(req.getParameter("bankAccNo"));
-					accountDetails.setBankChequeLable(req.getParameter("bankCheckLebel"));
-					accountDetails.setBankIFSCnumber(req.getParameter("bankIFSC"));
-					accountDetails.setBankMICRnumber(req.getParameter("bankMICR"));
+					accountDetails.setBankAccountNumber(req
+							.getParameter("bankAccNo"));
+					accountDetails.setBankChequeLable(req
+							.getParameter("bankCheckLebel"));
+					accountDetails.setBankIFSCnumber(req
+							.getParameter("bankIFSC"));
+					accountDetails.setBankMICRnumber(req
+							.getParameter("bankMICR"));
 					accountDetails.setBankName(req.getParameter("bankName"));
-					accountDetails.setBankRTGCnumber(req.getParameter("bankRTGS"));
+					accountDetails.setBankRTGCnumber(req
+							.getParameter("bankRTGS"));
 					accountDetails.setBranch(req.getParameter("bankBranch"));
 
 					if (!req.getParameter("bankCity").equals("")) {
-						accountDetails.setCity(ejb.getCityById(Integer.parseInt(req.getParameter("bankCity"))));
+						accountDetails.setCity(ejb.getCityById(Integer
+								.parseInt(req.getParameter("bankCity"))));
 					}
 
-					accountDetails.setCstNumber(req.getParameter("vendorCSTno"));
+					accountDetails
+							.setCstNumber(req.getParameter("vendorCSTno"));
 					if (!req.getParameter("vendorCSTregDate").equals("")) {
-						accountDetails
-								.setCstRegistrationDate(DateConverter.getDate(req.getParameter("vendorCSTregDate")));
+						accountDetails.setCstRegistrationDate(DateConverter
+								.getDate(req.getParameter("vendorCSTregDate")));
 					}
 					if (!req.getParameter("vendorExciseRegDate").equals("")) {
-						accountDetails
-								.setCstRegistrationDate(DateConverter.getDate(req.getParameter("vendorExciseRegDate")));
+						accountDetails.setCstRegistrationDate(DateConverter
+								.getDate(req
+										.getParameter("vendorExciseRegDate")));
 					}
 					if (!req.getParameter("vendorServiceTaxRegDate").equals("")) {
-						accountDetails.setCstRegistrationDate(
-								DateConverter.getDate(req.getParameter("vendorServiceTaxRegDate")));
+						accountDetails
+								.setCstRegistrationDate(DateConverter.getDate(req
+										.getParameter("vendorServiceTaxRegDate")));
 					}
 					if (!req.getParameter("vendorVATregDate").equals("")) {
-						accountDetails
-								.setCstRegistrationDate(DateConverter.getDate(req.getParameter("vendorVATregDate")));
+						accountDetails.setCstRegistrationDate(DateConverter
+								.getDate(req.getParameter("vendorVATregDate")));
 					}
 
-					accountDetails.setExciseRegistrationNumber(req.getParameter("vendorExciseRegNo"));
-					accountDetails.setPanNumber(req.getParameter("vendorPANno"));
+					accountDetails.setExciseRegistrationNumber(req
+							.getParameter("vendorExciseRegNo"));
+					accountDetails
+							.setPanNumber(req.getParameter("vendorPANno"));
 
-					accountDetails.setServiceTaxRegistrationNumber(req.getParameter("vendorServiceTaxRegNo"));
-					accountDetails.setVatNumber(req.getParameter("vendorVATno"));
+					accountDetails.setServiceTaxRegistrationNumber(req
+							.getParameter("vendorServiceTaxRegNo"));
+					accountDetails
+							.setVatNumber(req.getParameter("vendorVATno"));
 
 					if (!req.getParameter("taxTypeGroupId").equals("0")) {
-						accountDetails.setTax_Type_Group(
-								ejb.getTax_Type_GroupById(Integer.parseInt(req.getParameter("taxTypeGroupId"))));
+						accountDetails.setTax_Type_Group(ejb
+								.getTax_Type_GroupById(Integer.parseInt(req
+										.getParameter("taxTypeGroupId"))));
 					}
-					accountDetails.setUsers(ejb.getUserById((String) httpSession.getAttribute("user")));
+					accountDetails.setUsers(ejb
+							.getUserById((String) httpSession
+									.getAttribute("user")));
 					accountDetails.setVendor(vendor);
 
 					ejb.setVendor(vendor);
 					ejb.setAccountDetails(accountDetails);
 
-					gen2.writeStartObject().write("result", "vendor added successfully").write("vid", vendor.getId())
-							.write("vname", vendor.getName()).write("vvadd", vendor.getAddress())
-							.write("vph1", vendor.getPh1()).write("vph2", vendor.getPh2()).writeEnd().close();
+					gen2.writeStartObject()
+							.write("result", "vendor added successfully")
+							.write("vid", vendor.getId())
+							.write("vname", vendor.getName())
+							.write("vvadd", vendor.getAddress())
+							.write("vph1", vendor.getPh1())
+							.write("vph2", vendor.getPh2()).writeEnd().close();
 
 				} else {
 
-					gen2.writeStartObject().write("result", "Duplicate vendor Entry").writeEnd().close();
+					gen2.writeStartObject()
+							.write("result", "Duplicate vendor Entry")
+							.writeEnd().close();
 				}
 				break;
 			/**************************** AgentShorcut **************/
 			case "addAgen":
 				resp.setContentType("application/json");
 				JsonGeneratorFactory jsg2 = Json.createGeneratorFactory(null);
-				JsonGenerator gen22 = jsg2.createGenerator(resp.getOutputStream());
+				JsonGenerator gen22 = jsg2.createGenerator(resp
+						.getOutputStream());
 				HttpSession httpSession2 = req.getSession();
 
 				Vendor vendor2 = new Vendor();
@@ -404,7 +499,7 @@ public class JsonServlet extends HttpServlet {
 
 					if (ven2.getEmail().equals(req.getParameter("vendorMail2"))
 
-							|| ven2.getPh1().equals(req.getParameter("vendorPh12"))) {
+					|| ven2.getPh1().equals(req.getParameter("vendorPh12"))) {
 
 						counter22 = 1;
 						break;
@@ -416,79 +511,111 @@ public class JsonServlet extends HttpServlet {
 					AccountDetails accountDetails2 = new AccountDetails();
 					Date dt2 = new Date();
 
-					vendor2.setName(req.getParameter("vendorName2").toUpperCase());
+					vendor2.setName(req.getParameter("vendorName2")
+							.toUpperCase());
 					vendor2.setLastModifiedDate(dt2);
 					vendor2.setAddress(req.getParameter("vendorAddress2"));
 					vendor2.setAliseName(req.getParameter("vendorAlias2"));
-					vendor2.setCity(ejb.getCityById(Integer.parseInt(req.getParameter("vendorCityId2"))));
-					vendor2.setCompanyName(req.getParameter("vendorCompanyName2"));
+					vendor2.setCity(ejb.getCityById(Integer.parseInt(req
+							.getParameter("vendorCityId2"))));
+					vendor2.setCompanyName(req
+							.getParameter("vendorCompanyName2"));
 					vendor2.setEmail(req.getParameter("vendorMail2"));
 					vendor2.setPh1(req.getParameter("vendorPh12"));
 					vendor2.setPh2(req.getParameter("vendorPh22"));
 					vendor2.setPinCode(req.getParameter("vendorPin2"));
-					vendor2.setVendorType(ejb.getVendorTypeById(Integer.parseInt(req.getParameter("vendorType2"))));
-					vendor2.setUsers(ejb.getUserById((String) httpSession2.getAttribute("user")));
+					vendor2.setVendorType(ejb.getVendorTypeById(Integer
+							.parseInt(req.getParameter("vendorType2"))));
+					vendor2.setUsers(ejb.getUserById((String) httpSession2
+							.getAttribute("user")));
 
-					accountDetails2.setBankAccountNumber(req.getParameter("bankAccNo2"));
-					accountDetails2.setBankChequeLable(req.getParameter("bankCheckLebel2"));
-					accountDetails2.setBankIFSCnumber(req.getParameter("bankIFSC2"));
-					accountDetails2.setBankMICRnumber(req.getParameter("bankMICR2"));
+					accountDetails2.setBankAccountNumber(req
+							.getParameter("bankAccNo2"));
+					accountDetails2.setBankChequeLable(req
+							.getParameter("bankCheckLebel2"));
+					accountDetails2.setBankIFSCnumber(req
+							.getParameter("bankIFSC2"));
+					accountDetails2.setBankMICRnumber(req
+							.getParameter("bankMICR2"));
 					accountDetails2.setBankName(req.getParameter("bankName2"));
-					accountDetails2.setBankRTGCnumber(req.getParameter("bankRTGS2"));
+					accountDetails2.setBankRTGCnumber(req
+							.getParameter("bankRTGS2"));
 					accountDetails2.setBranch(req.getParameter("bankBranch2"));
 
 					if (!req.getParameter("bankCity6").equals("")) {
-						accountDetails2.setCity(ejb.getCityById(Integer.parseInt(req.getParameter("bankCity6"))));
+						accountDetails2.setCity(ejb.getCityById(Integer
+								.parseInt(req.getParameter("bankCity6"))));
 					}
 
-					accountDetails2.setCstNumber(req.getParameter("vendorCSTno2"));
+					accountDetails2.setCstNumber(req
+							.getParameter("vendorCSTno2"));
 					if (!req.getParameter("vendorCSTregDate2").equals("")) {
 						accountDetails2
-								.setCstRegistrationDate(DateConverter.getDate(req.getParameter("vendorCSTregDate2")));
+								.setCstRegistrationDate(DateConverter.getDate(req
+										.getParameter("vendorCSTregDate2")));
 					}
 					if (!req.getParameter("vendorExciseRegDate2").equals("")) {
-						accountDetails2.setCstRegistrationDate(
-								DateConverter.getDate(req.getParameter("vendorExciseRegDate2")));
+						accountDetails2.setCstRegistrationDate(DateConverter
+								.getDate(req
+										.getParameter("vendorExciseRegDate2")));
 					}
-					if (!req.getParameter("vendorServiceTaxRegDate2").equals("")) {
-						accountDetails2.setCstRegistrationDate(
-								DateConverter.getDate(req.getParameter("vendorServiceTaxRegDate2")));
+					if (!req.getParameter("vendorServiceTaxRegDate2")
+							.equals("")) {
+						accountDetails2
+								.setCstRegistrationDate(DateConverter.getDate(req
+										.getParameter("vendorServiceTaxRegDate2")));
 					}
 					if (!req.getParameter("vendorVATregDate2").equals("")) {
 						accountDetails2
-								.setCstRegistrationDate(DateConverter.getDate(req.getParameter("vendorVATregDate2")));
+								.setCstRegistrationDate(DateConverter.getDate(req
+										.getParameter("vendorVATregDate2")));
 					}
 
-					accountDetails2.setExciseRegistrationNumber(req.getParameter("vendorExciseRegNo2"));
-					accountDetails2.setPanNumber(req.getParameter("vendorPANno2"));
+					accountDetails2.setExciseRegistrationNumber(req
+							.getParameter("vendorExciseRegNo2"));
+					accountDetails2.setPanNumber(req
+							.getParameter("vendorPANno2"));
 
-					accountDetails2.setServiceTaxRegistrationNumber(req.getParameter("vendorServiceTaxRegNo2"));
-					accountDetails2.setVatNumber(req.getParameter("vendorVATno2"));
+					accountDetails2.setServiceTaxRegistrationNumber(req
+							.getParameter("vendorServiceTaxRegNo2"));
+					accountDetails2.setVatNumber(req
+							.getParameter("vendorVATno2"));
 
 					if (!req.getParameter("taxTypeGroupId2").equals("0")) {
-						accountDetails2.setTax_Type_Group(
-								ejb.getTax_Type_GroupById(Integer.parseInt(req.getParameter("taxTypeGroupId2"))));
+						accountDetails2.setTax_Type_Group(ejb
+								.getTax_Type_GroupById(Integer.parseInt(req
+										.getParameter("taxTypeGroupId2"))));
 					}
 
-					accountDetails2.setUsers(ejb.getUserById((String) httpSession2.getAttribute("user")));
+					accountDetails2.setUsers(ejb
+							.getUserById((String) httpSession2
+									.getAttribute("user")));
 					accountDetails2.setVendor(vendor2);
 
 					ejb.setVendor(vendor2);
 					ejb.setAccountDetails(accountDetails2);
 
-					gen22.writeStartObject().write("result", "Agent added successfully")
-							.write("vendorid", vendor2.getId()).write("vendorName", vendor2.getName())
-							.write("vendorAddress", vendor2.getAddress()).write("vendorPh1", vendor2.getPh1())
-							.write("vendorPh2", vendor2.getPh2()).writeEnd().close();
+					gen22.writeStartObject()
+							.write("result", "Agent added successfully")
+							.write("vendorid", vendor2.getId())
+							.write("vendorName", vendor2.getName())
+							.write("vendorAddress", vendor2.getAddress())
+							.write("vendorPh1", vendor2.getPh1())
+							.write("vendorPh2", vendor2.getPh2()).writeEnd()
+							.close();
 
 				} else {
 
-					gen22.writeStartObject().write("result", "Duplicate Agent Entry").writeEnd().close();
+					gen22.writeStartObject()
+							.write("result", "Duplicate Agent Entry")
+							.writeEnd().close();
 				}
 				break;
 			/************* Ajax form drop down **********************/
 			case "getVendorByType":
-				resp.getWriter().print(ejb.getVendorsByVendorTypeId(Integer.parseInt(req.getParameter("id"))));
+				resp.getWriter().print(
+						ejb.getVendorsByVendorTypeId(Integer.parseInt(req
+								.getParameter("id"))));
 				break;
 
 			case "getuomByType":
@@ -499,13 +626,16 @@ public class JsonServlet extends HttpServlet {
 			case "addUOMjson":
 				resp.setContentType("application/json");
 				JsonGeneratorFactory jsg22 = Json.createGeneratorFactory(null);
-				JsonGenerator gen222 = jsg22.createGenerator(resp.getOutputStream());
+				JsonGenerator gen222 = jsg22.createGenerator(resp
+						.getOutputStream());
 
 				QtyUnit qtyUnit = new QtyUnit();
 				int flagg = 0;
 				for (QtyUnit qut : ejb.getAllQtyUnit()) {
-					if ((qut.getName().equalsIgnoreCase(req.getParameter("nameuom"))
-							|| (qut.getAbbreviation().equalsIgnoreCase(req.getParameter("abbreviationuom"))))) {
+					if ((qut.getName().equalsIgnoreCase(
+							req.getParameter("nameuom")) || (qut
+							.getAbbreviation().equalsIgnoreCase(req
+							.getParameter("abbreviationuom"))))) {
 						flagg = 1;
 						break;
 					}
@@ -513,14 +643,20 @@ public class JsonServlet extends HttpServlet {
 				if (flagg == 0) {
 					qtyUnit = new QtyUnit();
 					qtyUnit.setName(req.getParameter("nameuom").toUpperCase());
-					qtyUnit.setAbbreviation(req.getParameter("abbreviationuom").toUpperCase());
-					qtyUnit.setDescription(req.getParameter("descriptionuom").toUpperCase());
-					qtyUnit.setQtyUnitType(
-							ejb.getQtyUnitTypeById(Integer.parseInt(req.getParameter("qtyUnitTypeIduom"))));
+					qtyUnit.setAbbreviation(req.getParameter("abbreviationuom")
+							.toUpperCase());
+					qtyUnit.setDescription(req.getParameter("descriptionuom")
+							.toUpperCase());
+					qtyUnit.setQtyUnitType(ejb.getQtyUnitTypeById(Integer
+							.parseInt(req.getParameter("qtyUnitTypeIduom"))));
 					ejb.setQtyUnit(qtyUnit);
-					gen222.writeStartObject().write("result", "UOM added successfully").writeEnd().close();
+					gen222.writeStartObject()
+							.write("result", "UOM added successfully")
+							.writeEnd().close();
 				} else {
-					gen222.writeStartObject().write("result", "Duplicate UOM Entry").writeEnd().close();
+					gen222.writeStartObject()
+							.write("result", "Duplicate UOM Entry").writeEnd()
+							.close();
 				}
 
 				break;
@@ -530,23 +666,28 @@ public class JsonServlet extends HttpServlet {
 				break;
 
 			case "getSubByDepjson":
-				resp.getWriter()
-						.print(ejb.getAllSubDepartmentsByDepartmentId(Integer.parseInt(req.getParameter("id"))));
+				resp.getWriter().print(
+						ejb.getAllSubDepartmentsByDepartmentId(Integer
+								.parseInt(req.getParameter("id"))));
 				break;
 
 			case "getCatBySubjson":
-				resp.getWriter().print(ejb.getAllCategoryBySubDepartmentId(Integer.parseInt(req.getParameter("id"))));
+				resp.getWriter().print(
+						ejb.getAllCategoryBySubDepartmentId(Integer
+								.parseInt(req.getParameter("id"))));
 				break;
 
 			case "addJsonCountry":
 				resp.setContentType("application/json");
 				JsonGeneratorFactory jjss = Json.createGeneratorFactory(null);
-				JsonGenerator genn = jjss.createGenerator(resp.getOutputStream());
+				JsonGenerator genn = jjss.createGenerator(resp
+						.getOutputStream());
 
 				int flagg1 = 0;
 				List<Country> cuty = ejb.getAllCountry();
 				for (Country coty : cuty) {
-					if (coty.getCountryName().equals(req.getParameter("name").toUpperCase())) {
+					if (coty.getCountryName().equals(
+							req.getParameter("name").toUpperCase())) {
 						flagg1 = 1;
 						break;
 					}
@@ -554,12 +695,17 @@ public class JsonServlet extends HttpServlet {
 				}
 				if (flagg1 == 0) {
 					Country country = new Country();
-					country.setCountryName(req.getParameter("name").toUpperCase());
+					country.setCountryName(req.getParameter("name")
+							.toUpperCase());
 					ejb.setCountry(country);
 
-					genn.writeStartObject().write("result", "Country added successfully").writeEnd().close();
+					genn.writeStartObject()
+							.write("result", "Country added successfully")
+							.writeEnd().close();
 				} else {
-					genn.writeStartObject().write("result", "Duplicate Country Entry").writeEnd().close();
+					genn.writeStartObject()
+							.write("result", "Duplicate Country Entry")
+							.writeEnd().close();
 				}
 
 				break;
@@ -567,25 +713,34 @@ public class JsonServlet extends HttpServlet {
 			case "addJsonState":
 				resp.setContentType("application/json");
 				JsonGeneratorFactory stateA = Json.createGeneratorFactory(null);
-				JsonGenerator stateG = stateA.createGenerator(resp.getOutputStream());
+				JsonGenerator stateG = stateA.createGenerator(resp
+						.getOutputStream());
 
-				List<State> sList = ejb.getAllStatesByCountryId(Integer.parseInt(req.getParameter("id")));
+				List<State> sList = ejb.getAllStatesByCountryId(Integer
+						.parseInt(req.getParameter("id")));
 				int flag1 = 0;
 				for (State st : sList) {
-					if (st.getStateName().equals(req.getParameter("nameqaz").toUpperCase())) {
+					if (st.getStateName().equals(
+							req.getParameter("nameqaz").toUpperCase())) {
 						flag1 = 1;
 						break;
 					}
 				}
 				if (flag1 == 0) {
 					State state = new State();
-					state.setStateName(req.getParameter("nameqaz").toUpperCase());
-					state.setCountry(ejb.getCountryById(Integer.parseInt(req.getParameter("id"))));
+					state.setStateName(req.getParameter("nameqaz")
+							.toUpperCase());
+					state.setCountry(ejb.getCountryById(Integer.parseInt(req
+							.getParameter("id"))));
 					ejb.setState(state);
 
-					stateG.writeStartObject().write("result", "State added successfully").writeEnd().close();
+					stateG.writeStartObject()
+							.write("result", "State added successfully")
+							.writeEnd().close();
 				} else {
-					stateG.writeStartObject().write("result", "Duplicate State Entry").writeEnd().close();
+					stateG.writeStartObject()
+							.write("result", "Duplicate State Entry")
+							.writeEnd().close();
 				}
 
 				break;
@@ -593,12 +748,15 @@ public class JsonServlet extends HttpServlet {
 			case "addJsonCity":
 				resp.setContentType("application/json");
 				JsonGeneratorFactory cityA = Json.createGeneratorFactory(null);
-				JsonGenerator cityAj = cityA.createGenerator(resp.getOutputStream());
+				JsonGenerator cityAj = cityA.createGenerator(resp
+						.getOutputStream());
 				City city = new City();
-				List<City> cities = ejb.getCityByState(Integer.parseInt(req.getParameter("id")));
+				List<City> cities = ejb.getCityByState(Integer.parseInt(req
+						.getParameter("id")));
 				int flag2 = 0;
 				for (City c : cities) {
-					if (c.getCityName().equals(req.getParameter("namezxc").toUpperCase())) {
+					if (c.getCityName().equals(
+							req.getParameter("namezxc").toUpperCase())) {
 						flag2 = 1;
 						break;
 					}
@@ -606,21 +764,28 @@ public class JsonServlet extends HttpServlet {
 				if (flag2 == 0) {
 
 					city.setCityName(req.getParameter("namezxc").toUpperCase());
-					city.setState(ejb.getStateById(Integer.parseInt(req.getParameter("id"))));
+					city.setState(ejb.getStateById(Integer.parseInt(req
+							.getParameter("id"))));
 
 					ejb.setCity(city);
 
-					cityAj.writeStartObject().write("result", "City added successfully").write("cityAid", city.getId())
-							.write("cityAname", city.getCityName()).writeEnd().close();
+					cityAj.writeStartObject()
+							.write("result", "City added successfully")
+							.write("cityAid", city.getId())
+							.write("cityAname", city.getCityName()).writeEnd()
+							.close();
 				} else {
-					cityAj.writeStartObject().write("result", "Duplicate City Entry").writeEnd().close();
+					cityAj.writeStartObject()
+							.write("result", "Duplicate City Entry").writeEnd()
+							.close();
 				}
 
 			case "productSumaryJson":
 
 				resp.setContentType("application/json");
 				JsonGeneratorFactory jasonF = Json.createGeneratorFactory(null);
-				JsonGenerator jsonG = jasonF.createGenerator(resp.getOutputStream());
+				JsonGenerator jsonG = jasonF.createGenerator(resp
+						.getOutputStream());
 				HttpSession httpSession1 = req.getSession();
 
 				ProductDetail productDetail = new ProductDetail();
@@ -630,12 +795,15 @@ public class JsonServlet extends HttpServlet {
 				SerialNumber serialNumber = new SerialNumber();
 				CompanyInfo companyInfo = new CompanyInfo();
 
-				companyInfo = ejb.getUserById((String) httpSession1.getAttribute("user")).getCompanyInfo();
+				companyInfo = ejb.getUserById(
+						(String) httpSession1.getAttribute("user"))
+						.getCompanyInfo();
 
 				int flaggq = 0;
 				List<ProductDetail> pro1 = ejb.getAllProductDetail();
 				for (ProductDetail pqu : pro1) {
-					if (pqu.getCode().equals(req.getParameter("productCode").toUpperCase())) {
+					if (pqu.getCode().equals(
+							req.getParameter("productCode").toUpperCase())) {
 						flagg = 1;
 						break;
 					}
@@ -643,14 +811,21 @@ public class JsonServlet extends HttpServlet {
 				}
 				if (flaggq == 0) {
 
-					productDetail.setCode(req.getParameter("productCode").toUpperCase());
-					productDetail.setDescription(req.getParameter("description").toUpperCase());
-					productDetail.setUniversalCode(req.getParameter("upc").toUpperCase());
-					productDetail.setQtyUnit(ejb.getQtyUnitById(Integer.parseInt(req.getParameter("uom"))));
+					productDetail.setCode(req.getParameter("productCode")
+							.toUpperCase());
+					productDetail.setDescription(req
+							.getParameter("description").toUpperCase());
+					productDetail.setUniversalCode(req.getParameter("upc")
+							.toUpperCase());
+					productDetail.setQtyUnit(ejb.getQtyUnitById(Integer
+							.parseInt(req.getParameter("uom"))));
 					System.out.println(req.getParameter("isRaw"));
-					productDetail.setRaw(Boolean.parseBoolean(req.getParameter("isRaw")));
-					productDetail.setSaleble(Boolean.parseBoolean(req.getParameter("isSalebi")));
-					productDetail.setCategory(ejb.getCategoryById(Integer.parseInt(req.getParameter("catagoryId"))));
+					productDetail.setRaw(Boolean.parseBoolean(req
+							.getParameter("isRaw")));
+					productDetail.setSaleble(Boolean.parseBoolean(req
+							.getParameter("isSalebi")));
+					productDetail.setCategory(ejb.getCategoryById(Integer
+							.parseInt(req.getParameter("catagoryId"))));
 					productDetail.setActive(true);
 					ejb.setProductDetail(productDetail);
 
@@ -669,7 +844,8 @@ public class JsonServlet extends HttpServlet {
 
 						rawMaterialsStock.setProductDetail(productDetail);
 						rawMaterialsStock.setRemainingQty(0);
-						rawMaterialsStock.setCompanyInfo(ejb.getAllCompanyInfo().get(0));
+						rawMaterialsStock.setCompanyInfo(ejb
+								.getAllCompanyInfo().get(0));
 						ejb.setRawMaterialsStocktDetail(rawMaterialsStock);
 
 						rawMaterialsStock = null;
@@ -677,13 +853,15 @@ public class JsonServlet extends HttpServlet {
 						rawMaterialsStock = new RawMaterialsStock();
 						rawMaterialsStock.setProductDetail(productDetail);
 						rawMaterialsStock.setRemainingQty(0);
-						rawMaterialsStock.setCompanyInfo(ejb.getAllCompanyInfo().get(1));
+						rawMaterialsStock.setCompanyInfo(ejb
+								.getAllCompanyInfo().get(1));
 						ejb.setRawMaterialsStocktDetail(rawMaterialsStock);
 					} else {
 
 						readyGoodsStock.setProductDetail(productDetail);
 						readyGoodsStock.setRemainingQty(0);
-						readyGoodsStock.setCompanyInfo(ejb.getAllCompanyInfo().get(0));
+						readyGoodsStock.setCompanyInfo(ejb.getAllCompanyInfo()
+								.get(0));
 						ejb.setReadyGoodsStockDetail(readyGoodsStock);
 
 						readyGoodsStock = null;
@@ -691,46 +869,72 @@ public class JsonServlet extends HttpServlet {
 						readyGoodsStock = new ReadyGoodsStock();
 						readyGoodsStock.setProductDetail(productDetail);
 						readyGoodsStock.setRemainingQty(0);
-						readyGoodsStock.setCompanyInfo(ejb.getAllCompanyInfo().get(1));
+						readyGoodsStock.setCompanyInfo(ejb.getAllCompanyInfo()
+								.get(1));
 						ejb.setReadyGoodsStockDetail(readyGoodsStock);
 					}
 
 					if (req.getParameter("addini").equals("add")) {
 
-						purchaseProductDetails.setMrp(Float.parseFloat(req.getParameter("mrp1")));
-						purchaseProductDetails.setWsp(Float.parseFloat(req.getParameter("wsp1")));
-						purchaseProductDetails.setQuantity(Integer.parseInt(req.getParameter("qty1")));
-						purchaseProductDetails.setCost(Float.parseFloat(req.getParameter("ucost")));
-						purchaseProductDetails.setAttrValue1(req.getParameter("att1"));
-						purchaseProductDetails.setAttrValue2(req.getParameter("att2"));
-						purchaseProductDetails.setAttrValue3(req.getParameter("att3"));
-						purchaseProductDetails.setAttrValue4(req.getParameter("att4"));
-						purchaseProductDetails.setAttrValue5(req.getParameter("att5"));
-						purchaseProductDetails.setAttrValue6(req.getParameter("att6"));
-						purchaseProductDetails.setRemaining_quantity(Integer.parseInt(req.getParameter("qty1")));
+						purchaseProductDetails.setMrp(Float.parseFloat(req
+								.getParameter("mrp1")));
+						purchaseProductDetails.setWsp(Float.parseFloat(req
+								.getParameter("wsp1")));
+						purchaseProductDetails.setQuantity(Integer.parseInt(req
+								.getParameter("qty1")));
+						purchaseProductDetails.setCost(Float.parseFloat(req
+								.getParameter("ucost")));
+						purchaseProductDetails.setAttrValue1(req
+								.getParameter("att1"));
+						purchaseProductDetails.setAttrValue2(req
+								.getParameter("att2"));
+						purchaseProductDetails.setAttrValue3(req
+								.getParameter("att3"));
+						purchaseProductDetails.setAttrValue4(req
+								.getParameter("att4"));
+						purchaseProductDetails.setAttrValue5(req
+								.getParameter("att5"));
+						purchaseProductDetails.setAttrValue6(req
+								.getParameter("att6"));
+						purchaseProductDetails.setRemaining_quantity(Integer
+								.parseInt(req.getParameter("qty1")));
 						purchaseProductDetails.setInitialInventory(true);
 						purchaseProductDetails.setProductDetail(productDetail);
-						purchaseProductDetails.setLotNumber(req.getParameter("lotnumberS"));
-						purchaseProductDetails.setCompanyInfo(
-								ejb.getUserById((String) httpSession1.getAttribute("user")).getCompanyInfo());
+						purchaseProductDetails.setLotNumber(req
+								.getParameter("lotnumberS"));
+						purchaseProductDetails.setCompanyInfo(ejb.getUserById(
+								(String) httpSession1.getAttribute("user"))
+								.getCompanyInfo());
 						ejb.setPurchaseProductDetails(purchaseProductDetails);
 
-						serialNumber.setLotNo(req.getParameter("lotnumberS").toUpperCase());
-						serialNumber.setPurchase_Product_Details(purchaseProductDetails);
+						serialNumber.setLotNo(req.getParameter("lotnumberS")
+								.toUpperCase());
+						serialNumber
+								.setPurchase_Product_Details(purchaseProductDetails);
 
 						ejb.setSerialNumber(serialNumber);
 
 						if (productDetail.isRaw()) {
-							rawMaterialsStock = ejb.getRawMeterialStoctByProductAndCompanyId(productDetail.getId(),
-									companyInfo.getId());
-							rawMaterialsStock.setRemainingQty(
-									rawMaterialsStock.getRemainingQty() + Integer.parseInt(req.getParameter("qty1")));
+							rawMaterialsStock = ejb
+									.getRawMeterialStoctByProductAndCompanyId(
+											productDetail.getId(),
+											companyInfo.getId());
+							rawMaterialsStock
+									.setRemainingQty(rawMaterialsStock
+											.getRemainingQty()
+											+ Integer.parseInt(req
+													.getParameter("qty1")));
 							ejb.updateRawMaterialStockDetail(rawMaterialsStock);
 						} else {
-							readyGoodsStock = ejb.getReadyGoodStoctByProductAndCompanyId(productDetail.getId(),
-									companyInfo.getId());
-							readyGoodsStock.setRemainingQty(
-									readyGoodsStock.getRemainingQty() + Integer.parseInt(req.getParameter("qty1")));
+							readyGoodsStock = ejb
+									.getReadyGoodStoctByProductAndCompanyId(
+											productDetail.getId(),
+											companyInfo.getId());
+							readyGoodsStock
+									.setRemainingQty(readyGoodsStock
+											.getRemainingQty()
+											+ Integer.parseInt(req
+													.getParameter("qty1")));
 							ejb.updateReadyGoodsStockDetail(readyGoodsStock);
 						}
 
@@ -743,14 +947,20 @@ public class JsonServlet extends HttpServlet {
 					proimg.setImage(Base64.decode(imgstr));
 					ejb.setProductImage(proimg);
 
-					jsonG.writeStartObject().write("result", "Product added successfully").writeEnd().close();
+					jsonG.writeStartObject()
+							.write("result", "Product added successfully")
+							.writeEnd().close();
 				} else {
-					jsonG.writeStartObject().write("result", "Duplicate Product Entry").writeEnd().close();
+					jsonG.writeStartObject()
+							.write("result", "Duplicate Product Entry")
+							.writeEnd().close();
 				}
 
 				break;
 			case "getVendorsByNameAndType":
-				resp.getWriter().print(ejb.getVendorByTypeAndName(req.getParameter("type"), req.getParameter("name")));
+				resp.getWriter().print(
+						ejb.getVendorByTypeAndName(req.getParameter("type"),
+								req.getParameter("name")));
 				break;
 
 			case "getCriticalStock":
@@ -761,7 +971,9 @@ public class JsonServlet extends HttpServlet {
 				generator.writeStartArray();
 
 				for (ProductDetail pd : ejb.getAllProductDetail()) {
-					if ((pd.isRaw()?pd.getRawMaterialsStock().getRemainingQty():pd.getReadyGoodsStock().getRemainingQty()) < 10) {
+					if ((pd.isRaw() ? pd.getRawMaterialsStock()
+							.getRemainingQty() : pd.getReadyGoodsStock()
+							.getRemainingQty()) < 10) {
 						generator
 								.writeStartObject()
 								.write("productId", pd.getId())
@@ -773,6 +985,23 @@ public class JsonServlet extends HttpServlet {
 				generator.writeEnd().close();
 				break;
 
+			case "getSampleDesignCostSheetByDesignNumber":
+				JsonGeneratorFactory factoryD = Json
+						.createGeneratorFactory(null);
+				JsonGenerator generatorD = factoryD.createGenerator(resp
+						.getOutputStream());
+				generatorD.writeStartArray();
+
+				for (SampleDesignCostSheet sdcs : ejb
+						.getSampleDesignCostSheetByDesignNumber(req
+								.getParameter("dNo"))) {
+					generatorD.writeStartObject().write("dId", sdcs.getId())
+							.write("dNumber", sdcs.getDesignNumber())
+							.writeEnd();
+				}
+				generatorD.writeEnd().close();
+				break;
+
 			default:
 				break;
 			}
@@ -782,7 +1011,8 @@ public class JsonServlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 		doGet(req, resp);
 	}
 }

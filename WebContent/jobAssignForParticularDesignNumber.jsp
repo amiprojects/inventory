@@ -175,8 +175,8 @@
 											<div class="form-group">
 
 												<label for="" class="font">Design No. :</label> <input
-													type="text" class="form-control" name=""
-													required="required" id="">
+													type="text" class="form-control" name="dNo"
+													required="required" id="dNo">
 											</div>
 
 											<div class="form-group">
@@ -246,7 +246,7 @@
 											<input type="text" readonly="readonly" class="form-control"
 												id="totQty" name="totQty" value="0">
 										</div>
-									</div>									
+									</div>
 									<br>
 									<div class="row">
 										<div class="col-md-3">
@@ -427,6 +427,35 @@
 
 			});
 
+		});
+
+		$(function() {
+			$("#dNo").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getSampleDesignCostSheetByDesignNumber",
+						data : {
+							dNo : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.dNumber,
+									id : item.dId
+								});
+							}));
+						}
+
+					});
+				},
+				change : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+					}
+				}
+			});
 		});
 	</script>
 </body>
