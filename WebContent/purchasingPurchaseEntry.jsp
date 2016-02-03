@@ -436,7 +436,8 @@
 																var="taxTypeGroup">
 																<option value="${taxTypeGroup.id}">${taxTypeGroup.name}</option>
 															</c:forEach>
-													</select></td>
+													</select>
+													</td>
 													<td>%</td>
 													<td><input type="text" class="form-control"
 														readonly="readonly" value="0" id="taxTot"></td>
@@ -5271,6 +5272,10 @@
 		}
 	</script>
 	<script>
+	function addTaxNo(){
+		
+		
+	}
 		
 	</script>
 </body>
