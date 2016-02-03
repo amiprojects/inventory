@@ -99,7 +99,7 @@
 
 									</div>
 
-									<div class="col-md-4">
+									<!-- <div class="col-md-4">
 										<a href="jobAssignForOnlyProduct.jsp">
 											<div class="stats-counter">
 
@@ -110,10 +110,7 @@
 											</div>
 										</a>
 
-									</div>
-
-
-									<div class="col-md-4"></div>
+									</div> -->
 
 
 
