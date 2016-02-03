@@ -14,17 +14,17 @@ import javax.persistence.OneToMany;
 @Entity
 @Cacheable(false)
 public class JobPlanProductStock implements Serializable {
-
+//purchase product wise
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
 	private int id;
 	private int qty;
-	private int remainingQty;
-	private int jobCycle;
-	private float totalJobCost;
-	private boolean isUndergoingProcess;
-	private boolean isComplete;
+	private int remainingQty;//same as qty
+	private int jobCycle;//0
+	private float totalJobCost;//0
+	private boolean isUndergoingProcess;//false
+	private boolean isComplete;//false
 
 	@ManyToOne
 	@JoinColumn(name = "planId")

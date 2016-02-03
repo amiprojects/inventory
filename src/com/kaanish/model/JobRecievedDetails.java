@@ -16,7 +16,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Cacheable(false)
 public class JobRecievedDetails implements Serializable {
-
+//job assignment product
 	private static final long serialVersionUID = 1L;
 	@Id@GeneratedValue
 	private int id;

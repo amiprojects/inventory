@@ -18,7 +18,7 @@ import javax.persistence.OneToOne;
 @Entity
 @Cacheable(false)
 public class JobAssignmentProducts implements Serializable {
-
+//job plan product stock wise
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue

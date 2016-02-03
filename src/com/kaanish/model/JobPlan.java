@@ -27,10 +27,10 @@ public class JobPlan implements Serializable {
 	private String description;
 	private int qty;
 	private float estimatedCost;//sample cost * qty
-	private float totalJobExpanse;
+	private float totalJobExpanse;//0
 	private float totalProductCost;
 	private float totalExpanse;
-	private boolean isComplete;
+	private boolean isComplete;//false
 
 	@ManyToOne
 	@JoinColumn(name = "costSheetId")
