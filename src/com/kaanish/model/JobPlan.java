@@ -26,7 +26,7 @@ public class JobPlan implements Serializable {
 	private Date planDate;
 	private String description;
 	private int qty;
-	private float estimatedCost;
+	private float estimatedCost;//sample cost * qty
 	private float totalJobExpanse;
 	private float totalProductCost;
 	private float totalExpanse;
