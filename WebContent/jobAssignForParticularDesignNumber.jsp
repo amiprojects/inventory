@@ -183,7 +183,8 @@
 											<div class="form-group">
 
 												<label for="" class="font">Qty :</label> <input type="text"
-													class="form-control" name="" required="required" id="">
+													class="form-control" name="qty" required="required"
+													id="qty">
 											</div>
 
 											<!-- <br> <input type="button" class="btn green pull-right"
@@ -214,8 +215,8 @@
 											</tr>
 										</thead>
 									</table>
-									<a href="#" onclick="addProduct();"><img src="img/add.png"
-										height="20px" style="float: right;"></a>
+									<!-- <a href="#" onclick="addProduct();"><img src="img/add.png"
+										height="20px" style="float: right;"></a> -->
 									<h3>List of jobs</h3>
 									<table id="jobs" class="table table-striped table-bordered">
 										<thead style="background-color: #F0F0F0;">
@@ -416,18 +417,6 @@
 		});
 		$("#noC").click(function() {
 			$("#cancelOrNot").modal("hide");
-		});
-		$(function() {
-
-			$("#qty").numericInput({
-
-				allowFloat : false, // Accpets positive numbers (floating point)
-
-				allowNegative : false,
-			// Accpets positive or negative integer
-
-			});
-
 		});
 
 		$(function() {

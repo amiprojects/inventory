@@ -112,7 +112,8 @@
 
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
-								<h3 style="margin-top: 11px;">Job Assignment</h3>
+								<h3 style="margin-top: 11px;">Job Assignment For Only
+									Product</h3>
 							</div>
 
 							<!-- <div class="widget-area"> -->
@@ -451,53 +452,76 @@
 		function getProdDetByPurchaseProdDetId() {
 			$("#qty").val('');
 			$("#work").val('');
-			
+
 			var remQ = 0;
 			var vNm = "";
 			var pDt = new Date();
-			
-			if ($("#prodCode").val() != 0) {						
-				
-				$.ajax({
-					url : 'getProdDetByPurchaseProdDetailsId',
-					type : 'post',
-					dataType : "json",
-					data : {
-						id : $("#prodCode").val()
-					},
-					success : function(data) {
-						$("#prodDesc").val(
-								"Remaining Quantity : "
-										+ data.remaining_quantity
-										+ "\nVendor Name : "
-										+ data.purchaseVendorName
-										+ "\nPurchase Date : "
-										+ data.purchaseDate);
-						remQ=data.remaining_quantity;
-						vNm=data.purchaseVendorName;
-						pDt=data.purchaseDate;
-						$("#remQty").val(Number(data.remaining_quantity));
-						$("#uom").val(data.uom);
-						$("#prCode").val(data.productCode);
-						$("#prDesc").val(data.productDesc);
-					},
-					error : function(a, b, c) {
-						alert(b + ": " + c);
-					},complete:function(){
-						if(!(document.getElementById("trRemove" + $("#prodCode").val()) === null)){
-							remQ=remQ-Number($("#trRemove" + $("#prodCode").val()+" :nth-child(4)").html());
-							$("#prodDesc").val(
-									"Remaining Quantity : "
-											+ remQ
-											+ "\nVendor Name : "
-											+ vNm
-											+ "\nPurchase Date : "
-											+ pDt);
-							$("#qty").val(Number($("#remQty").val())-Number($("#trRemove" + $("#prodCode").val()+" :nth-child(4)").html()));
-							$("#work").val($("#trRemove" + $("#prodCode").val()+" :nth-child(6)").html());
-						}
-					}
-				});
+
+			if ($("#prodCode").val() != 0) {
+
+				$
+						.ajax({
+							url : 'getProdDetByPurchaseProdDetailsId',
+							type : 'post',
+							dataType : "json",
+							data : {
+								id : $("#prodCode").val()
+							},
+							success : function(data) {
+								$("#prodDesc").val(
+										"Remaining Quantity : "
+												+ data.remaining_quantity
+												+ "\nVendor Name : "
+												+ data.purchaseVendorName
+												+ "\nPurchase Date : "
+												+ data.purchaseDate);
+								remQ = data.remaining_quantity;
+								vNm = data.purchaseVendorName;
+								pDt = data.purchaseDate;
+								$("#remQty").val(
+										Number(data.remaining_quantity));
+								$("#uom").val(data.uom);
+								$("#prCode").val(data.productCode);
+								$("#prDesc").val(data.productDesc);
+							},
+							error : function(a, b, c) {
+								alert(b + ": " + c);
+							},
+							complete : function() {
+								if (!(document.getElementById("trRemove"
+										+ $("#prodCode").val()) === null)) {
+									remQ = remQ
+											- Number($(
+													"#trRemove"
+															+ $("#prodCode")
+																	.val()
+															+ " :nth-child(4)")
+													.html());
+									$("#prodDesc").val(
+											"Remaining Quantity : " + remQ
+													+ "\nVendor Name : " + vNm
+													+ "\nPurchase Date : "
+													+ pDt);
+									$("#qty")
+											.val(
+													Number($("#remQty").val())
+															- Number($(
+																	"#trRemove"
+																			+ $(
+																					"#prodCode")
+																					.val()
+																			+ " :nth-child(4)")
+																	.html()));
+									$("#work").val(
+											$(
+													"#trRemove"
+															+ $("#prodCode")
+																	.val()
+															+ " :nth-child(6)")
+													.html());
+								}
+							}
+						});
 			} else {
 				alert("please select Designer Number");
 				$("#prodDesc").val("");
@@ -506,7 +530,7 @@
 		function fnsearch() {
 			$("#qty").val('');
 			$("#work").val('');
-			
+
 			var remQ = 0;
 			var vNm = "";
 			var pDt = new Date();
@@ -514,57 +538,81 @@
 			barcodeParts = $("[name='barcode']").val().split('/');
 			var purchaseProductId = barcodeParts[0];
 			$("#prodCode").val(purchaseProductId);
-			
-			$.ajax({
-				url : 'getProdDetByPurchaseProdDetailsId',
-				type : 'post',
-				dataType : "json",
-				data : {
-					id : $("#prodCode").val()
-				},
-				success : function(data) {
-					$("#prodDesc").val(
-							"Remaining Quantity : "
-									+ data.remaining_quantity
-									+ "\nVendor Name : "
-									+ data.purchaseVendorName
-									+ "\nPurchase Date : "
-									+ data.purchaseDate);
-					remQ=data.remaining_quantity;
-					vNm=data.purchaseVendorName;
-					pDt=data.purchaseDate;
-					$("#remQty").val(Number(data.remaining_quantity));
-					$("#uom").val(data.uom);
-					$("#prCode").val(data.productCode);
-					$("#prDesc").val(data.productDesc);
-				},
-				error : function(a, b, c) {
-					alert(b + ": " + c);
-				},complete:function(){
-					if(!(document.getElementById("trRemove" + $("#prodCode").val()) === null)){
-						remQ=remQ-Number($("#trRemove" + $("#prodCode").val()+" :nth-child(4)").html());
-						$("#prodDesc").val(
-								"Remaining Quantity : "
-										+ remQ
-										+ "\nVendor Name : "
-										+ vNm
-										+ "\nPurchase Date : "
-										+ pDt);
-						$("#qty").val(Number($("#remQty").val())-Number($("#trRemove" + $("#prodCode").val()+" :nth-child(4)").html()));
-						$("#work").val($("#trRemove" + $("#prodCode").val()+" :nth-child(6)").html());;
-					}
-				}
-			});
+
+			$
+					.ajax({
+						url : 'getProdDetByPurchaseProdDetailsId',
+						type : 'post',
+						dataType : "json",
+						data : {
+							id : $("#prodCode").val()
+						},
+						success : function(data) {
+							$("#prodDesc").val(
+									"Remaining Quantity : "
+											+ data.remaining_quantity
+											+ "\nVendor Name : "
+											+ data.purchaseVendorName
+											+ "\nPurchase Date : "
+											+ data.purchaseDate);
+							remQ = data.remaining_quantity;
+							vNm = data.purchaseVendorName;
+							pDt = data.purchaseDate;
+							$("#remQty").val(Number(data.remaining_quantity));
+							$("#uom").val(data.uom);
+							$("#prCode").val(data.productCode);
+							$("#prDesc").val(data.productDesc);
+						},
+						error : function(a, b, c) {
+							alert(b + ": " + c);
+						},
+						complete : function() {
+							if (!(document.getElementById("trRemove"
+									+ $("#prodCode").val()) === null)) {
+								remQ = remQ
+										- Number($(
+												"#trRemove"
+														+ $("#prodCode").val()
+														+ " :nth-child(4)")
+												.html());
+								$("#prodDesc").val(
+										"Remaining Quantity : " + remQ
+												+ "\nVendor Name : " + vNm
+												+ "\nPurchase Date : " + pDt);
+								$("#qty")
+										.val(
+												Number($("#remQty").val())
+														- Number($(
+																"#trRemove"
+																		+ $(
+																				"#prodCode")
+																				.val()
+																		+ " :nth-child(4)")
+																.html()));
+								$("#work").val(
+										$(
+												"#trRemove"
+														+ $("#prodCode").val()
+														+ " :nth-child(6)")
+												.html());
+								;
+							}
+						}
+					});
 
 		}
 
 		function checkQty() {
-			if(!(document.getElementById("trRemove" + $("#prodCode").val()) === null)){
-				if (Number(Number($("#qty").val())+Number($("#trRemove" + $("#prodCode").val()+" :nth-child(4)").html())) > Number($("#remQty").val())) {
+			if (!(document.getElementById("trRemove" + $("#prodCode").val()) === null)) {
+				if (Number(Number($("#qty").val())
+						+ Number($(
+								"#trRemove" + $("#prodCode").val()
+										+ " :nth-child(4)").html())) > Number($(
+						"#remQty").val())) {
 					alert('Please enter less quantity than remaining');
 					$("#qty").val("");
-				}				
-			}else{
+				}
+			} else {
 				if (Number($("#qty").val()) > Number($("#remQty").val())) {
 					alert('Please enter less quantity than remaining');
 					$("#qty").val("");
@@ -589,48 +637,52 @@
 
 				$("#another").modal("show");
 				/* if(document.getElementById("trRemove" + $("#prodCode").val()) === null){ */
-					$("#purProTable")
-					.append(
-							'<tbody><tr id="trRemove'+$("#prodCode").val()+'"><td>'
-									+ i
-									+ '</td><td>'
-									+ $("#prCode").val()
-									+ '</td><td>'
-									+ $("#prDesc").val()
-									+ '</td><td>'
-									+ $("#qty").val()
-									+ '</td><td>'
-									+ $("#uom").val()
-									+ '</td><td>'
-									+ $("#work").val()
-									+ '</td><td>'
-									+ '<a href="#" onclick="removeProduct('
-									+ $("#prodCode").val()
-									+ ');"><img src="img/cross.png" height="16px" width="16px"></a>'
-									+ '</td></tr></tbody>');
+				$("#purProTable")
+						.append(
+								'<tbody><tr id="trRemove'
+										+ $("#prodCode").val()
+										+ '"><td>'
+										+ i
+										+ '</td><td>'
+										+ $("#prCode").val()
+										+ '</td><td>'
+										+ $("#prDesc").val()
+										+ '</td><td>'
+										+ $("#qty").val()
+										+ '</td><td>'
+										+ $("#uom").val()
+										+ '</td><td>'
+										+ $("#work").val()
+										+ '</td><td>'
+										+ '<a href="#" onclick="removeProduct('
+										+ $("#prodCode").val()
+										+ ');"><img src="img/cross.png" height="16px" width="16px"></a>'
+										+ '</td></tr></tbody>');
 				/* }else{
 					$("#trRemove" + $("#prodCode").val()+" :nth-child(4)").html(Number($("#qty").val())+Number($("#trRemove" + $("#prodCode").val()+" :nth-child(4)").html()));
 					$("#trRemove" + $("#prodCode").val()+" :nth-child(6)").html($("#work").val());
 				} */
-				
+
 				i++;
 				$("#totProd").val(Number($("#totProd").val()) + Number(1));
 				$("#totQty").val(
 						Number($("#totQty").val()) + Number($("#qty").val()));
-				
+
 				/* if(document.getElementById("trRemoveH" + $("#prodCode").val()) === null){ */
-					$("#hiddenTable")
-					.append(
-							'<tbody><tr id="trRemoveH'+$("#prodCode").val()+'">'
-									+ '<td><input type="text" name="pProdDetIdH" value=\''
-									+ $("#prodCode").val()
-									+ '\'></td>'
-									+ '<td><input type="text" name="qtyH" value=\''
-									+ $("#qty").val()
-									+ '\'></td>'
-									+ '<td><input type="text" name="workH" value=\''
-									+ $("#work").val() + '\'></td>'
-									+ '</tr></tbody>');
+				$("#hiddenTable")
+						.append(
+								'<tbody><tr id="trRemoveH'
+										+ $("#prodCode").val()
+										+ '">'
+										+ '<td><input type="text" name="pProdDetIdH" value=\''
+										+ $("#prodCode").val()
+										+ '\'></td>'
+										+ '<td><input type="text" name="qtyH" value=\''
+										+ $("#qty").val()
+										+ '\'></td>'
+										+ '<td><input type="text" name="workH" value=\''
+										+ $("#work").val() + '\'></td>'
+										+ '</tr></tbody>');
 				/* }else{
 					$("#trRemoveH" + $("#prodCode").val()+" :nth-child(2)").html('<input type="text" name="qtyH" value=\''
 							+ Number($("#trRemove" + $("#prodCode").val()+" :nth-child(4)").html())
@@ -639,7 +691,6 @@
 							+ $("#work").val() + '\'>');
 				} */
 
-				
 				ind++;
 				$("#prodDesc").val("");
 				$("#qty").val("");
