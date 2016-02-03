@@ -25,6 +25,7 @@ import com.kaanish.model.Country;
 import com.kaanish.model.Department;
 import com.kaanish.model.ProductDetail;
 import com.kaanish.model.ProductImage;
+import com.kaanish.model.ProductsForDesignCostSheet;
 import com.kaanish.model.Purchase_Product_Details;
 import com.kaanish.model.QtyUnit;
 import com.kaanish.model.QtyUnitConversionPK;
@@ -62,7 +63,8 @@ import com.kaanish.util.DepartmentCotractor;
 		"/addJsonState", "/addJsonCountry", "/productSumaryJson",
 		"/getVendorsByNameAndType", "/getVendorsByVendorTypeVendorAndName",
 		"/getVendorsByVendorTypePurchaseAgentAndName", "/getCustomerByName",
-		"/getCriticalStock", "/getSampleDesignCostSheetByDesignNumber" })
+		"/getCriticalStock", "/getSampleDesignCostSheetByDesignNumber",
+		"/getProductDetailsByDesignNumberAndQuantity", "/getPurchaseProductDetailsByProductCode"})
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -284,6 +286,37 @@ public class JsonServlet extends HttpServlet {
 								req.getParameter("code"),
 								DateConverter.getDate(req.getParameter("date"))));
 				break;
+			case "getPurchaseProductDetailsByProductCode":
+				pw = resp.getWriter();
+				pw.print(ejb
+						.getPurchaseProductDetailsByProductCode(
+								req.getParameter("code"),
+								DateConverter.getDate(req.getParameter("date"))));
+				break;
+
+			case "getProductDetailsByDesignNumberAndQuantity":
+				
+				JsonGeneratorFactory factory3=Json.createGeneratorFactory(null);
+				JsonGenerator generator3=factory3.createGenerator(resp.getOutputStream());
+				generator3.writeStartArray();
+				for(ProductsForDesignCostSheet pdcs:ejb.getSampleDesignCostSheetById(Integer.parseInt(req.getParameter("did"))).getProductsForDesignCostSheets()){
+					generator3.writeStartObject()
+					.write("ProductCode",pdcs.getProductDetail().getCode())
+					.write("ProductId",pdcs.getProductDetail().getId())
+					.write("ProductDesc",pdcs.getProductDetail().getDescription())
+					.write("ProductUOMid",pdcs.getProductDetail().getQtyUnit().getId())
+					.write("ProductUOMName",pdcs.getProductDetail().getQtyUnit().getName())
+					.write("ProductRemainingQty",pdcs.getProductDetail().isRaw()?pdcs.getProductDetail().getRawMaterialsStock().getRemainingQty():pdcs.getProductDetail().getReadyGoodsStock().getRemainingQty())
+					.write("ProductQtyForSample",pdcs.getQty())
+					.write("ProductRateForSample",pdcs.getRate())
+					.write("ProductAmountForSample",pdcs.getAmmount())
+					.writeEnd();
+				}
+				generator3.writeEnd().close();
+				break;
+				
+				
+
 			case "getProductByDescription":
 				pw = resp.getWriter();
 				pw.print(ejb.getProductDetailByCode(req
@@ -997,6 +1030,7 @@ public class JsonServlet extends HttpServlet {
 								.getParameter("dNo"))) {
 					generatorD.writeStartObject().write("dId", sdcs.getId())
 							.write("dNumber", sdcs.getDesignNumber())
+							.write("dDEsc", sdcs.getDesignDescription())
 							.writeEnd();
 				}
 				generatorD.writeEnd().close();
