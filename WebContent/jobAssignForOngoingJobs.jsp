@@ -26,6 +26,15 @@
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
 <!-- Responsive -->
 <style>
+.se-pre-con {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background: url(images/loader/spinner.gif) center no-repeat #fff;
+}
 .font {
 	color: #777777;
 	float: left;
@@ -79,6 +88,7 @@
 </script>
 </head>
 <body>
+<div class="se-pre-con"></div>
 	<c:if test="${sessionScope['user']==null}">
 		<c:redirect url="index.jsp" />
 	</c:if>
@@ -173,15 +183,15 @@
 											</div>
 
 											<div class="form-group">
-
-												<label for="" class="font">Design No. :</label> <input
-													type="text" class="form-control" name=""
-													required="required" id="">
+												<label for="" class="font">Design No. :</label>
+												<input type="text" class="form-control" name="designNo" value="" id="designNo">
+											</div>
+											<div class="form-group">
+												<label for="" class="font">Plan No. :</label>
+												 <input	type="text" class="form-control" value="" name="planNo" id="planNo">
 											</div>
 
-											<!-- <br> <input type="button" class="btn green pull-right"
-												data-toggle="modal" data-target="#addProduct"
-												value="Add Product" style="width: 100%"> -->
+											
 										</div>
 										<div class='toast' style='display: none'>
 											<h3 id="msg">${requestScope['msg']}</h3>
@@ -264,6 +274,14 @@
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 	<script src="js/numericInput.min.js"></script>
 	<script>
+	window.addEventListener("beforeunload", function (e) {
+		
+	    var confirmationMessage = 'It looks like you have been editing something. '
+	                            + 'If you leave before saving, your changes will be lost.';
+
+	   (e || window.event).returnValue = JSON.stringify(e||window.event); //Gecko + IE
+	   return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+	});
 		function submitForm() {
 			if ($("#jName").val() == 0) {
 				alert("please select jobber name");
@@ -373,6 +391,12 @@
 			});
 
 		});
+	</script>
+	<script type="text/javascript">
+	$(window).load(function() {
+		// Animate loader off screen
+		$(".se-pre-con").fadeOut("slow");;
+	});
 	</script>
 </body>
 

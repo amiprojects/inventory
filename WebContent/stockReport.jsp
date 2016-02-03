@@ -144,7 +144,7 @@ td {
 
 											<br>
 											<br>
-											<table class="table table-bordered" id="example"
+											<table class="table table-bordered" id="table1"
 												cellspacing="0" width="100%">
 												<thead>
 													<tr>
@@ -233,7 +233,7 @@ td {
 										<div id="pStock" class="tab-pane fade">
 											<br>
 											<br>
-											<table class="table table-bordered" id="e1" cellspacing="0"
+											<table class="table table-bordered" id="table2" cellspacing="0"
 												width="100%">
 
 												<thead>
@@ -246,9 +246,7 @@ td {
 														<th>WSP</th>
 														<th>MRP</th>
 													</tr>
-
 												</thead>
-
 												<tbody>
 												
 												<c:set var="count" value="${1}" />
@@ -323,15 +321,18 @@ td {
 
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 	<script>
+
 		$(document).ready(function() {
-			$('#example').DataTable({
+			
+			$('#table2').DataTable({
 				"scrollY" : 200,
 				"scrollX" : true
 			});
-			$('#e1').DataTable({
+			$('#table1').DataTable({
 				"scrollY" : 200,
 				"scrollX" : true
 			});
+			
 		});
 	</script>
 
