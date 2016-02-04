@@ -3030,10 +3030,7 @@ public class Ejb {
 	}
 
 	/******** alertNotificationforQuantity *******************/
-	// own object can
-	// move in
-	// freedom with
-	// in own class
+	
 	public void alertNotificationQty() {
 		LocalDateTime localDateTime = LocalDateTime.now();
 
@@ -3051,4 +3048,6 @@ public class Ejb {
 		}
 
 	}
+	
+	
 }

@@ -22,7 +22,7 @@
 <link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href=style.css>
+<!-- <link rel="stylesheet" href=style.css> -->
 <link rel="stylesheet" href="css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="css/fixedHeader.dataTables.min.css">
 
@@ -70,7 +70,7 @@ td {
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
 
 
-
+<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#reports").attr("id", "activeSubMenu");
@@ -105,6 +105,8 @@ td {
 
 
 
+
+
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
@@ -131,7 +133,8 @@ td {
 									<ul class="nav nav-tabs">
 										<li class="active"><a data-toggle="tab" href="#dayBook">DayBook</a></li>
 										<li><a data-toggle="tab" href="#profitLoss">Profit-Loss</a></li>
-									 	<li><a data-toggle="tab" href="#ledgerAcount">Ledger Account</a></li> 
+										<li><a data-toggle="tab" href="#ledgerAcount">Ledger
+												Account</a></li>
 
 									</ul>
 									<div class="tab-content">
@@ -140,26 +143,35 @@ td {
 
 
 										<div id="dayBook" class="tab-pane fade active in">
-											<table>
-											<thead>
-											
-											
-											</thead>
-											
+										<br><br>
+											<table id="example" class="table table-bordered"  cellspacing="0" width="100%">
+												<thead>
+													<tr>
+														<th>Date</th>
+														<th>Description</th>
+														<th>Type</th>
+														<th>Voucher No</th>
+														<th>Debit Amount</th>
+														<th>Credit Amount</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td></td>
+														<td></td>
+														<td></td>
+														<td></td>
+														<td></td>
+														<td></td>
+													</tr>
+												</tbody>
 											</table>
-											
-											
-										</div>
-										
-										<div id="profitLoss" class="tab-pane fade">
-											
 
 										</div>
-										
-										<div id="ledgerAcount" class="tab-pane fade">
-											
 
-										</div>
+										<div id="profitLoss" class="tab-pane fade"></div>
+
+										<div id="ledgerAcount" class="tab-pane fade"></div>
 									</div>
 								</div>
 							</div>
@@ -184,7 +196,35 @@ td {
 	<script src="js/dataTables.fixedHeader.min.js"></script>
 
 	<script src="js/jquery-ui/jquery-ui.js"></script>
-	
+
+	<script type="text/javascript" src="js/modernizr.js"></script>
+	<script type="text/javascript" src="js/script.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+	<script type="text/javascript" src="js/enscroll.js"></script>
+	<script type="text/javascript" src="js/grid-filter.js"></script>
+	<script src="js/jquery.dataTables.min.js"></script>
+	<script src="js/dataTables.fixedHeader.min.js"></script>
+
+	<script src="js/jquery-ui/jquery-ui.js"></script>
+	<script>
+		$(document).ready(function() {
+			$('#example').DataTable({
+				"scrollY" : 200,
+				"scrollX" : true
+			});
+			$('#e2').DataTable({
+				"scrollY" : 200,
+				"scrollX" : true
+			});
+
+			$('#e3').DataTable({
+				"scrollY" : 200,
+				"scrollX" : true
+			});
+		});
+	</script>
+
+
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
