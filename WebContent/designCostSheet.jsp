@@ -221,15 +221,15 @@
 												onkeyup="surchargeF();" autocomplete="off"></td>
 									</tr>
 									<tr>
-									<td>Profit <select name="profitType" id="profitType" onchange="profitTypeF();">
+									<td><!-- Profit  --><select style="display: none;" name="profitType" id="profitType" onchange="profitTypeF();">
 												<option value="profitPer">%</option>
 												<option value="profitFlat">Flat</option>
-												</select> :</td>
-									<td><input type="number" name="profitVal" value="0.00" id="profitVal"
+												</select> <!-- : --></td>
+									<td><input type="hidden" name="profitVal" value="0.00" id="profitVal"
 												onkeyup="profitValF();" autocomplete="off"></td></tr>
 									<tr>
-									<td>Profit Value :</td>
-									<td><input type="number" name="totProfit" value="0.00" id="totProfit"
+									<td><!-- Profit Value : --></td>
+									<td><input type="hidden" name="totProfit" value="0.00" id="totProfit"
 												readonly="readonly" autocomplete="off"></td></tr>
 									<tr>
 									<td>GrandTotal :</td>
