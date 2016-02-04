@@ -785,7 +785,23 @@
 				$("#purchaseDetails").modal("hide");
 				
 				//error
-				/* $('#productNjobsDiv').append('<table><tr><td>' + " 1" + '</td></tr><tr><td>' + "2" + '</td></tr></table>'); */
+				$('#productNjobsDiv').append('<table class="table table-striped table-bordered"><thead style="background-color: #F0F0F0;"><tr><th style="text-align: right;">'
+				+ "Product code :" 
+				+ '</th><td>'
+				+ $("#prod" + $("#pIdModal").val() + " :nth-child(2)").html() +
+				'</td><th style="text-align: right;">'
+				+ "Description :" 
+				+ '</th><td>'
+				+ $("#prod" + $("#pIdModal").val() + " :nth-child(3)").html() +
+				'</td><th style="text-align: right;">'
+				+ "Qty :" 
+				+ '</th><td>'
+				+ $("#prod" + $("#pIdModal").val() + " :nth-child(4)").html() +
+				'</td><th style="text-align: right;">'
+				+ "Rate :" 
+				+ '</th><td>'
+				+ $("#prod" + $("#pIdModal").val() + " :nth-child(5)").html() +
+				'</td></tr></thead></table>');
 			}
 		}
 		function prodDetOkF(){
