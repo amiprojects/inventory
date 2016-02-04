@@ -117,8 +117,8 @@
 							</div>
 
 							<!-- <div class="widget-area"> -->
-			
-			
+
+
 							<div class="col-md-12">
 								<form role="form" class="sec" method="post" id="jobForm"
 									action="jobAssignment">
@@ -204,26 +204,47 @@
 												data-toggle="modal" data-target="#addProduct"
 												value="Add Product" style="width: 100%" onclick="manage();">
 										</div> -->
-									<h3>List of material use</h3>
+									<!-- <h3>List of material use</h3>
 									<table id="products" class="table table-striped table-bordered">
 										<thead style="background-color: #F0F0F0;">
 											<tr>
 												<th>#</th>
 												<th>Product code</th>
-												<th>Product Description</th>
+												<th>Description</th>
 												<th>Quantity</th>
-												<th>UOM</th>
 												<th>rate</th>
-												<th>Amount</th>
-												<th>Remove</th>
 											</tr>
 										</thead>
-									</table>
-									<!-- <a href="#" onclick="addProduct();"><img src="img/add.png"
-										height="20px" style="float: right;"></a> -->
+									</table>									
 									<h3>List of jobs</h3>
 									<table id="jobs" class="table table-striped table-bordered">
 										<thead style="background-color: #F0F0F0;">
+											<tr>
+												<th>#</th>
+												<th>Job Name</th>
+												<th>Product Code</th>
+												<th>Qty</th>
+												<th>UOM</th>
+												<th>Rate</th>
+												<th>Amount</th>
+												<th>Estimated Submission Date</th>
+												<th>Remove</th>
+											</tr>
+										</thead>
+									</table> -->
+									<div id="productNjobsDiv"></div>
+									<table id="productNjobsTable" class="table table-striped table-bordered">
+										<thead style="background-color: #F0F0F0;">
+											<tr>
+												<th style="text-align: right;">Product code :</th>
+												<td>code</td>
+												<th style="text-align: right;">Description :</th>
+												<td colspan="2">code</td>
+												<th style="text-align: right;">Quantity :</th>
+												<td>code</td>
+												<th style="text-align: right;">Rate :</th>
+												<td>code</td>
+											</tr>
 											<tr>
 												<th>#</th>
 												<th>Job Name</th>
@@ -315,13 +336,12 @@
 		</div>
 	</div>
 
-	<div id="purchaseDetails" class="modal fade" role="dialog"
+	<div id="productDetails" class="modal fade" role="dialog"
 		style="top: 25px;" data-backdrop="static" data-keyboard="false">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						onclick="closeModal();">&times;</button>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">Product Details For the Design Number</h4>
 				</div>
 				<div class="modal-body">
@@ -347,8 +367,8 @@
 								<th>Product Description</th>
 								<th>UOM</th>
 								<th>Quantity</th>
-	<th>rate</th>
-	<th>Amount</th>
+								<th>rate</th>
+								<th>Amount</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -361,31 +381,64 @@
 					</table>
 				</div>
 				<div class="modal-footer">
-					<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+					<button type="button" class="btn btn-default" onclick="prodDetOkF();">Ok</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="purchaseDetails" class="modal fade" role="dialog"
+		style="top: 25px;" data-backdrop="static" data-keyboard="false">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+					<h4 class="modal-title">Purchase Details</h4>
+				</div>
+				<div class="modal-body">
+					<table id="stream_table" width="100%">
+						<thead>
+							<tr>
+								<th>Product Code:</th>
+								<td colspan="2"><input type="text" readonly="readonly"
+									id="pCodeModal" class="form-control"></td>
+							</tr>
+							<tr>
+								<th>Description :</th>
+								<td colspan="2"><input type="text" readonly="readonly"
+									id="pDescModal" class="form-control"></td>
+							</tr>
+							<tr>
+								<th>UOM :</th>
+								<td colspan="2"><input type="text" readonly="readonly"
+									id="pUOMModal" class="form-control"><input type="hidden" id="pIdModal"></td>
+							</tr>
+						</thead>
+					</table>
+					<table id="purchaseDetailsTable" class="table">
+						<thead>
+							<tr>
+								<th>Purchase Date</th>
+								<th>Cost/Unit</th>
+								<th>Remaining Qty.</th>								
+								<th>Qty Selected</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" onclick="purDetOkF();">Ok</button>
 				</div>
 			</div>
 
 		</div>
-		
-		
 	</div>
-	<div id="myModal" class="modal fade" role="dialog" style="top: 25px;" data-backdrop="static" data-keyboard="false">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">Modal Header</h4>
-			</div>
-			<div class="modal-body">
-				<h1 id="purchaseDet"></h1>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			</div>
-		</div>
-
-	</div>
-</div>
 
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
@@ -554,69 +607,194 @@
 		function qtyFC() {
 			if ($("#qty").val() != "") {
 				if ($("#qty").val() > 0) {
-					$("#purchaseDetails").modal("show");
+					$("#productDetails").modal("show");
 
-					$.ajax({
-						type : "post",
-						url : "getProductDetailsByDesignNumberAndQuantity",
-						dataType : "json",
-						data : {
-							did : $("#dId").val()
-						},
-						success : function(data2) {
-							$("#ProductDetailsTable tbody").empty();
-						
-							$.each(data2, function(index, item2) {
-
-								if(item2.ProductRemainingQty>=(Number($("#qty").val())*item2.ProductQtyForSample)){
-									$("#ProductDetailsTable").append(
-											"<tbody onclick='selectProduct(\""+item2.ProductCode+"\");'>" + "<tr>" + "<td>" + Number(1+index)
-													+ "</td>" + "<td>" + item2.ProductCode
-													+ "</td>" + "<td>"
-													+ item2.ProductDesc + "</td>"
-													+ "<td>" + item2.ProductUOMName
-													+ "</td>"
-													+ "<td>" + item2.ProductQtyForSample*$("#qty").val()
-													+ "</td>"
-													+ "<td>" + item2.ProductRateForSample*$("#qty").val()
-													+ "</td>"
-													+ "<td>" + (item2.ProductQtyForSample*$("#qty").val())*(item2.ProductRateForSample*$("#qty").val())
-													+ "</td>"
-													+ "</tr>"
-													+ "</tbody>");
-								}else{
-									alert("unsufficient product "+item2.ProductDesc);
+					$
+							.ajax({
+								type : "post",
+								url : "getProductDetailsByDesignNumberAndQuantity",
+								dataType : "json",
+								data : {
+									did : $("#dId").val()
+								},
+								success : function(data2) {
 									$("#ProductDetailsTable tbody").empty();
-									$("#purchaseDetails").modal("hide");
-									return false;
-								}
-								
 
+									$
+											.each(
+													data2,
+													function(index, item2) {
+														if (item2.ProductRemainingQty >= (Number($(
+																"#qty").val()) * item2.ProductQtyForSample)) {
+															$(
+																	
+																	"#ProductDetailsTable")
+																	.append(
+																			"<tbody id='prod"+item2.ProductId+"' onclick='selectProduct(\""
+																					+ item2.ProductCode
+																					+ "\",\""+ item2.ProductDesc +"\",\""+ item2.ProductUOMName +"\",\""+ item2.ProductId +"\");'>"
+																					+ "<tr>"
+																					+ "<td>"
+																					+ Number(1 + index)
+																					+ "</td>"
+																					+ "<td>"
+																					+ item2.ProductCode
+																					+ "</td>"
+																					+ "<td>"
+																					+ item2.ProductDesc
+																					+ "</td>"
+																					+ "<td>"
+																					+ item2.ProductUOMName
+																					+ "</td>"
+																					+ "<td>"
+																					+ item2.ProductQtyForSample
+																							* $(
+																									"#qty")
+																									.val()
+																					+ "</td>"
+																					+ "<td>"
+																					+ item2.ProductRateForSample
+																							* $(
+																									"#qty")
+																									.val()
+																					+ "</td>"
+																					+ "<td>"
+																					+ (item2.ProductQtyForSample * $(
+																							"#qty")
+																							.val())
+																					* (item2.ProductRateForSample * $(
+																							"#qty")
+																							.val())
+																					+ "</td>"
+																					+ "</tr>"
+																					+ "</tbody>");
+														} else {
+															alert("unsufficient product "
+																	+ item2.ProductDesc);
+															$(
+																	"#ProductDetailsTable tbody")
+																	.empty();
+															$(
+																	"#productDetails")
+																	.modal(
+																			"hide");
+															return false;
+														}
+
+													});
+								}
 							});
-						}
-					});
 				} else {
 					alert("Please enter valid quantity...");
 				}
 			}
 		}
-		function selectProduct(code){
-			$("#myModal").modal("show");
+		function selectProduct(code, desc, uom, id) {
+			$("#purchaseDetails").modal("show");
+			$("#pCodeModal").val(code);
+			$("#pDescModal").val(desc);
+			$("#pUOMModal").val(uom);
+			$("#pIdModal").val(id);
 			$.ajax({
-				url:'getPurchaseProductDetailsByProductCode',
-				type:'post',
-				dataType:"json",
-				data:{
-					code:code,
-					date:$("#datepicker").val()
-					},
-				success:function(data){
-					$.map(data,function(item){
-						$("#purchaseDet").html($("#purchaseDet").html()+item.purchaseDate+'\n');
-					});
+				url : 'getPurchaseProductDetailsByProductCode',
+				type : 'post',
+				dataType : "json",
+				data : {
+					code : code,
+					date : $("#datepicker").val()
+				},
+				success : function(data) {
+					/* $.map(data, function(item) {
+						$("#purchaseDet").html(
+								$("#purchaseDet").html() + item.purchaseDate
+										+ '\n');
+						
+						
+					}); */
+					$(
+					"#purchaseDetailsTable tbody").empty();
+					$.map(data, function(item2) {
+						if (item2.purchaseDate != 'Initial Inventory') {
+										$("#purchaseDetailsTable").append(
+														"<tbody id='viewAttr"+item2.id+"' title='"+item2.attrName1+" : "+item2.attrValue1+" , "+item2.attrName2+" : "+item2.attrValue2+" , "+item2.attrName3+" : "+item2.attrValue3+" , "+item2.attrName4+" : "+item2.attrValue4+" , "+item2.attrName5+" : "+item2.attrValue5+" , "+item2.attrName6+" : "+item2.attrValue6+"'>"
+																+ "<tr>"
+																+ "<td>"
+																+ formatDate(item2.purchaseDate)
+																+ "</td>"
+																+ "<td>"
+																+ item2.cost
+																+ "</td>"
+																+ "<td>"
+																+ item2.remaining_quantity
+																+ "</td>"
+																+ "<td>"
+																+ '<input type="text" class="form-control qtySelected" onkeyup="selectedQtyF('+item2.id+','+$("#pIdModal").val()+')">'
+																+ "</td>"
+																+ "</tr>"
+																+ "</tbody>");
+						}else{
+							$("#purchaseDetailsTable").append(
+									"<tbody id='viewAttr"+item2.id+"' title='"+item2.attrName1+" : "+item2.attrValue1+" , "+item2.attrName2+" : "+item2.attrValue2+" , "+item2.attrName3+" : "+item2.attrValue3+" , "+item2.attrName4+" : "+item2.attrValue4+" , "+item2.attrName5+" : "+item2.attrValue5+" , "+item2.attrName6+" : "+item2.attrValue6+"'>"
+											+ "<tr>"
+											+ "<td>"
+											+ item2.purchaseDate
+											+ "</td>"
+											+ "<td>"
+											+ item2.cost
+											+ "</td>"
+											+ "<td>"
+											+ item2.remaining_quantity
+											+ "</td>"
+											+ "<td>"
+											+ '<input type="text" class="form-control qtySelected" onkeyup="selectedQtyF('+item2.id+','+$("#pIdModal").val()+')">'
+											+ "</td>"
+											+ "</tr>"
+											+ "</tbody>");
+						}
+									
+								$(
+										"#viewAttr"
+												+ item2.id)
+										.tooltip(
+												{
+													track : true
+												});
+
+							});
 				}
 			});
+		}
+		
+		function selectedQtyF(id, prodId){			
+			//alert($("#prod" + prodId + " :nth-child(5)").html());
+			if(Number($("#viewAttr" + id + " :nth-child(3)").html()) < Number($("#viewAttr" + id + " :nth-child(4) input[type=text]").val())){
+				alert("You can not select more than remaining qty!");
+				$("#viewAttr" + id + " :nth-child(4) input[type=text]").val("");
 			}
+		}
+		function purDetOkF(){
+			var sum = 0;						
+				$(".qtySelected").each(function() {
+					if (!isNaN(this.value) && this.value.length != 0) {	
+						sum += parseFloat(this.value);
+					}
+				});					
+			if(Number(sum)!=Number($("#prod" + $("#pIdModal").val() + " :nth-child(5)").html())){
+				alert("Selected Qty can not be more than or less than Required Qty! Total required qty is : "+ $("#prod" + $("#pIdModal").val() + " :nth-child(5)").html()+". PLease select valid qty...");
+			}else{				
+				$("#purchaseDetails").modal("hide");
+				
+				//error
+				/* $('#productNjobsDiv').append('<table><tr><td>' + " 1" + '</td></tr><tr><td>' + "2" + '</td></tr></table>'); */
+			}
+		}
+		function prodDetOkF(){
+			alert("///");
+		}
+		function formatDate(d) {
+			var dateparts = d.split(" ");
+			return dateparts[2] + "-" + dateparts[1] + "-" + dateparts[5];
+		}
 	</script>
 </body>
 

@@ -1578,7 +1578,7 @@ public class Ejb {
 
 		TypedQuery<Purchase_Product_Details> q = em
 				.createQuery(
-						"select c from Purchase_Product_Details c where c.companyInfo.id=:cId AND UPPER(c.productDetail.code)=:cd and c.remaining_quantity>0 and c.purchase_Entry.purchase_date<:date ORDER BY c.id ASC",
+						"select c from Purchase_Product_Details c where c.companyInfo.id=:cId AND UPPER(c.productDetail.code)=:cd and c.remaining_quantity>0 and c.purchase_Entry.purchase_date<=:date ORDER BY c.id ASC",
 						Purchase_Product_Details.class);
 		q.setParameter("cd", code.toUpperCase());
 		q.setParameter("date", date);
