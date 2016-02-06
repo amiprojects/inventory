@@ -331,8 +331,7 @@ td {
 			$('#table1').DataTable({
 				"scrollY" : 200,
 				"scrollX" : true
-			});
-			
+			});			
 		});
 	</script>
 
