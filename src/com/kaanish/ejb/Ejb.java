@@ -1185,6 +1185,21 @@ public class Ejb {
 		q.setParameter("nm", "%" + name.toUpperCase() + "%");
 		return q.getResultList();
 	}
+	public List<Vendor> getAllAgenttypeAgent() {
+		TypedQuery<Vendor> q = em
+				.createQuery(
+						"select c from Vendor c where c.vendorType.type='Sales Agent' OR c.vendorType.type='Purchase Agent'",Vendor.class);
+		
+		return q.getResultList();
+	}
+	public List<Vendor> getAllVendtypeVen() {
+		TypedQuery<Vendor> q = em
+				.createQuery(
+						"select c from Vendor c where c.vendorType.type='Vendor'",
+						Vendor.class);
+		
+		return q.getResultList();
+	}
 
 	public List<Vendor> getVendorsWithVendorTypeJobberByProductID(String jobber) {
 		TypedQuery<Vendor> q = em.createQuery(
@@ -1546,7 +1561,7 @@ public class Ejb {
 
 		TypedQuery<Purchase_Product_Details> q = em
 				.createQuery(
-						"select c from Purchase_Product_Details c where c.companyInfo.id=:cId AND UPPER(c.productDetail.code)=:cd and c.remaining_quantity>0 and c.productDetail.isSaleble=:salable and c.purchase_Entry.purchase_date<:date ORDER BY c.id ASC",
+						"select c from Purchase_Product_Details c where c.companyInfo.id=:cId AND UPPER(c.productDetail.code)=:cd and c.remaining_quantity>0 and c.productDetail.isSaleble=:salable and c.purchase_Entry.purchase_date<=:date ORDER BY c.id ASC",
 						Purchase_Product_Details.class);
 		q.setParameter("salable", true);
 		q.setParameter("cd", code.toUpperCase());
@@ -3049,5 +3064,25 @@ public class Ejb {
 
 	}
 	
-	
+	public List<Purchase_Entry> getPurchaseEntryByDateForReport(Date pDate) {
+			
+		TypedQuery<Purchase_Entry> q = em
+				.createQuery(
+						"select c from Purchase_Entry c WHERE c.purchase_date = :pDate",
+						Purchase_Entry.class);
+		q.setParameter("pDate", pDate);
+		System.out.println(q.getResultList().size());
+		
+		return q.getResultList();
+	}
+	public List<SalesEntry> getSalesEntryByDateForReport(Date sDate) {
+		
+		TypedQuery<SalesEntry> q = em
+				.createQuery(
+						"select c from SalesEntry c WHERE c.sales_date = :sDate",
+						SalesEntry.class);
+		q.setParameter("sDate", sDate);
+		
+		return q.getResultList();
+	}
 }

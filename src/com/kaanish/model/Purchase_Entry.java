@@ -29,7 +29,7 @@ public class Purchase_Entry implements Serializable {
 	private String challanNumber;
 	private int challanSuffix;
 	private String vendor_bill_no;
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date purchase_date;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date entry_date;

@@ -144,7 +144,7 @@ td {
 
 											<br>
 											<br>
-											<table class="table table-bordered" id="table1"
+											<table class="table table-bordered display" id=""
 												cellspacing="0" width="100%">
 												<thead>
 													<tr>
@@ -233,7 +233,7 @@ td {
 										<div id="pStock" class="tab-pane fade">
 											<br>
 											<br>
-											<table class="table table-bordered" id="table2" cellspacing="0"
+											<table class="table table-bordered display" id="" cellspacing="0"
 												width="100%">
 
 												<thead>
@@ -322,16 +322,21 @@ td {
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 	<script>
 
-		$(document).ready(function() {
-			
-			$('#table2').DataTable({
+		$(document).ready(function() {			
+			/* $('#table2').DataTable({
 				"scrollY" : 200,
 				"scrollX" : true
 			});
 			$('#table1').DataTable({
 				"scrollY" : 200,
 				"scrollX" : true
-			});			
+			});		 */	
+			$('table.display').DataTable({
+				 fixedHeader: {
+			            header: true,
+			            footer: true
+			        }
+			});
 		});
 	</script>
 

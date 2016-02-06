@@ -43,7 +43,7 @@
 </style>
 <style>
 div.dataTables_wrapper {
-	width: 80%;
+	width: 100%;
 	margin: 0 auto;
 }
 
@@ -64,6 +64,22 @@ td {
 	width: 16.66% !important;
 	text-align: center !important;
 }
+
+tfoot {
+	width: 100% !important;
+}
+margin-bottom
+
+
+:
+
+ 
+
+3
+em
+
+
+;
 </style>
 
 </head>
@@ -120,14 +136,11 @@ td {
 
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
-								<h3 style="margin-top: 11px;">Stock Report</h3>
+								<h3 style="margin-top: 11px;">Finalcial Report</h3>
 							</div>
 
 							<div class="widget-area">
 								<div class="col-md-12">
-
-
-
 
 
 									<ul class="nav nav-tabs">
@@ -139,63 +152,224 @@ td {
 									</ul>
 									<div class="tab-content">
 
-										<!-- .......................................**********************General****************************************************...................................... -->
+										<!-- .......................................**********************DayBook****************************************************......... -->
 
 
 										<div id="dayBook" class="tab-pane fade active in">
-										<br><br>
-											<table id="example" class="table table-bordered"  cellspacing="0" width="100%">
-												<thead>
-													<tr>
-														<th>Date</th>
-														<th>Description</th>
-														<th>Type</th>
-														<th>Voucher No</th>
-														<th>Debit Amount</th>
-														<th>Credit Amount</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td></td>
-													</tr>
-												</tbody>
-											</table>
+											<br> <br>
+											<div>
+												<form action="dayBookreport">
+													<label>Choose your date:</label>&nbsp;<input type="text"
+														readonly="readonly" name="dayBookDate" id="datepicker">
+													<input type="submit" value="search">
+												</form>
+											</div>
+											<br> <br>
+											<div>
+												<table id="" class="table table-bordered display"
+													cellspacing="0" width="100%">
+													<thead>
+														<tr>
+															<th>Date</th>
+															<th>Description</th>
+															<th>Type</th>
+															<th>Voucher No</th>
+															<th>Debit Amount</th>
+															<th>Credit Amount</th>
+														</tr>
+													</thead>
 
+													<tbody>
+														<c:forEach items="${requestScope['salesEty']}" var="sRepo">
+															<tr>
+																<td><fmt:formatDate value="${sRepo.sales_date}"
+																		pattern="dd-MM-yyyy" /></td>
+																<td>${sRepo.customer.name}&nbsp;<br> <br>&nbsp;${sRepo.paymentDetails.get(0).paymentType.type}
+																</td>
+																<td>Sales Payment</td>
+																<td>${sRepo.challanNumber}</td>
+																<td>${sRepo.totalCost}<br> <br>&nbsp;
+																</td>
+																<td>&nbsp;&nbsp;<br>${sRepo.totalCost}</td>
+															</tr>
+														</c:forEach>
+
+														<c:forEach items="${requestScope['purchaseEty']}"
+															var="pRepo">
+															<tr>
+																<td><fmt:formatDate value="${pRepo.purchase_date}"
+																		pattern="dd-MM-yyyy" /></td>
+																<td>${pRepo.vendor.name}&nbsp;<br> <br>&nbsp;${pRepo.paymentDetails.get(0).paymentType.type}
+																</td>
+																<td>Purchase Payment</td>
+																<td>${pRepo.challanNumber}</td>
+																<td>&nbsp;<br> <br>${pRepo.totalCost}</td>
+																<td>${pRepo.totalCost}<br> <br>&nbsp;
+																</td>
+															</tr>
+														</c:forEach>
+
+													</tbody>
+
+												</table>
+											</div>
 										</div>
-
+										<!-- .......................................**********************profitLoss****************************************************......... -->
 										<div id="profitLoss" class="tab-pane fade"></div>
 
-										<div id="ledgerAcount" class="tab-pane fade"></div>
+
+										<!-- .......................................**********************ledgerAcount****************************************************......... -->
+										<div id="ledgerAcount" class="tab-pane fade">
+
+
+											<div class="col-md-12">
+												<div class="col-md-4">
+													<h4>Select your Ledger Type:</h4>
+												</div>
+												<div class="col-md-4" style="margin-left: -60px;">
+													<h4>
+														<select class="form-control" onchange="ledger()"
+															id="ledSel">
+															<option value="0">select ledger type</option>
+															<option value="vendorLed">Vendor</option>
+															<option value="AgentLed">Agent</option>
+															<option value="CustomerLed">Customer</option>
+														</select>
+													</h4>
+												</div>
+
+											</div>
+
+
+											<div class="col-md-12" id="cus">
+												<!-- <div class="col-md-4">
+													<h4>Enter your Customer Name:</h4>
+
+
+												</div>
+												<div class="col-md-4" style="margin-left: -60px;">
+													<input class="form-control" type="text">
+												</div>
+												<br> <br>-->
+												<br> <br> 
+												<div>
+													<table id="" class="table table-bordered display"
+														cellspacing="0" width="100%">
+														<thead>
+															<tr>
+																<th>#</th>
+																<th>Name</th>
+																<th>Phone Number</th>
+																<th>Address</th>
+																<th>Details/view</th>
+																
+															</tr>
+														</thead>
+
+														<tbody>
+															<c:set var="c" value="1" />
+												<c:forEach items="${sessionScope['ejb'].getAllCustomerEntry()}"
+													var="ccustomer">
+													<tr>
+														<td>${c}</td>
+																<td>${ccustomer.name}</td>
+																<td>${ccustomer.mobile}</td>
+																<td>${ccustomer.address}</td>
+																<td><a href="ccustomerRaz.jsp?id=${ccustomer.id}"><img
+																alt="click to view" src="images/eye.png" height="20"></a></td>
+
+															</tr>
+															<c:set var="c" value="${c+1}" />
+												</c:forEach>
+
+														</tbody>
+													</table>
+												</div>
+											</div>
+											<div class="col-md-12" id="vend">
+												<table id="" class="table table-bordered display"
+														cellspacing="0" width="100%">
+														<thead>
+															<tr>
+																<th>#</th>
+																<th>Name</th>
+																<th>Phone Number</th>
+																<th>Address</th>
+																<th>Details/view</th>
+																
+															</tr>
+														</thead>
+
+														<tbody>
+															<c:set var="c" value="1" />
+												<c:forEach items="${sessionScope['ejb'].getAllVendtypeVen()}"
+													var="vvendor">
+													<tr>
+														<td>${c}</td>
+																<td>${vvendor.name}</td>
+																<td>${vvendor.ph1}</td>
+																<td>${vvendor.address}</td>
+																<td><a href="vendorRaz.jsp?id=${vvendor.id}"><img
+																alt="click to view" src="images/eye.png" height="20"></a></td>
+
+															</tr>
+															<c:set var="c" value="${c+1}" />
+												</c:forEach>
+
+														</tbody>
+													</table>
+											</div>
+											<div class="col-md-12" id="agen">
+												
+												
+												<br> <br><br> <br><div>
+												<table id="" class="table table-bordered display"
+														cellspacing="0" width="100%">
+														<thead>
+															<tr>
+																<th>#</th>
+																<th>Name</th>
+																<th>Phone Number</th>
+																<th>Address</th>
+																<th>Details/view</th>
+																
+															</tr>
+														</thead>
+
+														<tbody>
+															<c:set var="c" value="1" />
+												<c:forEach items="${sessionScope['ejb'].getAllAgenttypeAgent()}"
+													var="endor">
+													<tr>
+														<td>${c}</td>
+																<td>${endor.name}</td>
+																<td>${endor.ph1}</td>
+																<td>${endor.address}</td>
+																<td><a href="endorRaz.jsp?id=${endor.id}"><img
+																alt="click to view" src="images/eye.png" height="20"></a></td>
+
+															</tr>
+															<c:set var="c" value="${c+1}" />
+												</c:forEach>
+
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
+					<!-- Content Sec -->
 				</div>
+				<!-- Page Container -->
 			</div>
-			<!-- Content Sec -->
+			<!-- main -->
 		</div>
-		<!-- Page Container -->
 	</div>
-	<!-- main -->
 	<!-- Script -->
-	<script type="text/javascript" src="js/modernizr.js"></script>
-	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
-	<script type="text/javascript" src="js/script.js"></script>
-	<script type="text/javascript" src="js/bootstrap.js"></script>
-	<script type="text/javascript" src="js/enscroll.js"></script>
-	<script type="text/javascript" src="js/grid-filter.js"></script>
-	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-	<script src="js/jquery.dataTables.min.js"></script>
-	<script src="js/dataTables.fixedHeader.min.js"></script>
-
-	<script src="js/jquery-ui/jquery-ui.js"></script>
 
 	<script type="text/javascript" src="js/modernizr.js"></script>
 	<script type="text/javascript" src="js/script.js"></script>
@@ -208,22 +382,143 @@ td {
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 	<script>
 		$(document).ready(function() {
-			$('#example').DataTable({
-				"scrollY" : 200,
-				"scrollX" : true
-			});
-			$('#e2').DataTable({
-				"scrollY" : 200,
-				"scrollX" : true
-			});
-
-			$('#e3').DataTable({
-				"scrollY" : 200,
-				"scrollX" : true
+			var table = $('table.display').DataTable({
+				fixedHeader : {
+					header : true,
+					footer : true
+				}
 			});
 		});
 	</script>
 
+	<script type="text/javascript">
+		$(function() {
+			$("#datepicker").datepicker({
+				dateFormat : "dd-mm-yy",
+				maxDate : 0,
+			});
+		});
+	</script>
+	<script>
+		$(document).ready(function() {
+			$("#cus").hide();
+			$("#vend").hide();
+			$("#agen").hide();
+			/* $("#agenTable").hide();
+			$("#venTable").hide();
+			$("#custTable").hide(); */
+		});
+		function ledger() {
+			if ($("#ledSel").val() == "vendorLed") {
+				$("#cus").hide();
+				$("#vend").show();
+				$("#agen").hide();
+				/* $("#agenTable").hide();
+				$("#venTable").show();
+				$("#custTable").hide(); */
+			} else if ($("#ledSel").val() == "AgentLed") {
+				$("#cus").hide();
+				$("#vend").hide();
+				$("#agen").show();
+				/* $("#agenTable").show();
+				$("#venTable").hide();
+				$("#custTable").hide(); */
+			} else if ($("#ledSel").val() == "CustomerLed") {
+				$("#cus").show();
+				$("#vend").hide();
+				$("#agen").hide();
+				/* $("#agenTable").hide();
+				$("#venTable").hide();
+				$("#custTable").show(); */
+			} else {
+				$("#cus").hide();
+				$("#vend").hide();
+				$("#agen").hide();
+				/* $("#agenTable").hide();
+				$("#venTable").hide();
+				$("#custTable").hide(); */
+			}
+
+		}
+	</script>
+	<script>
+	
+	$(function() {
+		$("#vendorName").autocomplete({
+			source : function(req, resp) {
+				$.ajax({
+					type : "post",
+					url : "getVendorsByVendorTypeVendorAndName",
+					data : {
+						name : req.term
+					},
+					dataType : "json",
+					success : function(data) {
+						resp($.map(data, function(item) {
+							return ({
+								value : item.name,
+								id : item.id
+							});
+						}));
+					},
+
+					error : function(a, b, c) {
+						alert(a + b + c);
+					}
+
+				});
+			},
+			
+			select : function(event, ui) {
+				if (ui.item == null) {
+					$(this).val("");
+					$("#vendorName").val("");
+				} else {
+					$("#vendorName").val(ui.item.name);
+				}
+
+			}
+		});
+	});
+	
+	$(function() {
+		$("#agentName").autocomplete({
+			source : function(req, resp) {
+				$.ajax({
+					type : "post",
+					url : "getVendorsByVendorTypeVendorAndName",
+					data : {
+						name : req.term
+					},
+					dataType : "json",
+					success : function(data) {
+						resp($.map(data, function(item) {
+							return ({
+								value : item.name,
+								id : item.id
+							});
+						}));
+					},
+
+					error : function(a, b, c) {
+						alert(a + b + c);
+					}
+
+				});
+			},
+		
+			select : function(event, ui) {
+				if (ui.item == null) {
+					$(this).val("");
+					$("#agentName").val("");
+				} else {
+					$("#agentName").val(ui.item.name);
+				}
+
+			}
+		});
+	});
+	</script>
 
 </body>
 
