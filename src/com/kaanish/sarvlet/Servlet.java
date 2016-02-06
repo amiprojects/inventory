@@ -96,7 +96,7 @@ import com.kaanish.util.DateConverter;
 		"/purchaseReportByDate", "/purchaseReportByAgentName",
 		"/purchaseProductView", "/purchaseReportView", "/salesProductView",
 		"/salesReportView", "/salesReportByCustomerName",
-		"/salesReportByAgentName","/dayBookreport" })
+		"/salesReportByAgentName","/dayBookreport","/jobAssignmentForParticularDesignNumber" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -3051,6 +3051,10 @@ public class Servlet extends HttpServlet {
 				ejb.updateSampleDesignCostSheet(sampleDesignCostSheet);
 
 				msg = "your request hasbeen successfully processed";
+				break;
+				
+			case "jobAssignmentForParticularDesignNumber":
+				page="jobAssignForParticularDesignNumber.jsp";
 				break;
 				
 			case "dayBookreport":
