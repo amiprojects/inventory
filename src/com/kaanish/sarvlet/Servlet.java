@@ -3055,6 +3055,7 @@ public class Servlet extends HttpServlet {
 				
 			case "jobAssignmentForParticularDesignNumber":
 				page="jobAssignForParticularDesignNumber.jsp";
+				msg="Job Assigned Successfully";
 				break;
 				
 			case "dayBookreport":

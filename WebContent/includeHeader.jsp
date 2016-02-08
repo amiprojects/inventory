@@ -110,7 +110,7 @@
 
 	</div>
 </header>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 function criticalStockService(){
 	setTimeout(getCritcalStock(), 30000);
 }
@@ -140,5 +140,5 @@ function getCritcalStock(){
 $(document).ready(function(){
 	getCritcalStock();
 });
-</script>
+</script> -->
 <!-- Header -->
