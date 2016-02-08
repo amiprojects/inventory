@@ -40,6 +40,13 @@
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 <script src="js/jquery-ui/jquery-ui.js"></script>
 <script>
+function showDatePicker() {
+	$(".estSubmDate").datepicker({
+		dateFormat : "dd-mm-yy",
+		minDate : 0
+	});
+}
+
 	$(function() {
 		var d = new Date();
 		var m = d.getMonth();
@@ -61,12 +68,7 @@
 			minDate : 0
 		});
 	});
-	function showDatePicker() {
-		$(".estSubmDate").datepicker({
-			dateFormat : "dd-mm-yy",
-			minDate : 0
-		});
-	}
+
 </script>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -205,7 +207,7 @@
 									
 									<div id="productNjobsDiv"></div>
 									<div id="productNpurchasesDiv"></div>
-									<div id="productNpurchasesDiv" style="display: none;"></div>
+									<!-- <div id="productNpurchasesDiv" style="display: none;"></div> -->
 									
 									<table id="productNjobsTable" class="table table-striped table-bordered">
 										<thead style="background-color: #F0F0F0;">
@@ -421,6 +423,10 @@
 				alert("please select Assigning date");
 			} else if ($("#datepicker1").val() == "") {
 				alert("please select Estimated submission date");
+			} else if ($("#dNo").val() == "") {
+				alert("please enter design no.");
+			} else if ($("#qty").val() == "") {
+				alert("please enter Qty");
 			} else {
 				$("#jobAssignmentForParticularDesignNumber").submit();
 			}
@@ -694,7 +700,8 @@
 																+ item2.remaining_quantity
 																+ "</td>"
 																+ "<td>"
-																+ '<input type="text" class="form-control qtySelected" onkeyup="selectedQtyF('+item2.id+','+$("#pIdModal").val()+')">'
+																+ '<input type="text" class="form-control qtySelected" onkeyup="selectedQtyF('+item2.id+','+$("#pIdModal").val()+')" id="qtySelected'+item2.id+'">'+
+																'<input type="hidden" class="form-control" value="'+item2.id+'" id="purProDetId'+item2.id+'">'
 																+ "</td>"
 																+ "</tr>"
 																+ "</tbody>");
@@ -712,19 +719,12 @@
 											+ item2.remaining_quantity
 											+ "</td>"
 											+ "<td>"
-											+ '<input type="text" class="form-control qtySelected" onkeyup="selectedQtyF('+item2.id+','+$("#pIdModal").val()+')">'
+											+ '<input type="text" class="form-control qtySelected" onkeyup="selectedQtyF('+item2.id+','+$("#pIdModal").val()+')" id="qtySelected'+item2.id+'">'+
+											'<input type="hidden" class="form-control" value="'+item2.id+'" id="purProDetId'+item2.id+'">'
 											+ "</td>"
 											+ "</tr>"
 											+ "</tbody>");
 						}
-									
-								$(
-										"#viewAttr"
-												+ item2.id)
-										.tooltip(
-												{
-													track : true
-												});
 
 							});
 				}
@@ -747,14 +747,13 @@
 					if (!isNaN(this.value) && this.value.length != 0) {	
 						sum += parseFloat(this.value);
 					}
-				});					
+				});	
 			if(Number(sum)!=Number($("#prod" + $("#pIdModal").val() + " :nth-child(5)").html())){
-				alert("Selected Qty can not be more than or less than Required Qty! Total required qty is : "+ $("#prod" + $("#pIdModal").val() + " :nth-child(5)").html()+". PLease select valid qty...");
+				alert("Selected Qty can not be more than or less than Required Qty! Total required qty is : "+ $("#prod" + $("#pIdModal").val() + " :nth-child(5)").html()+". You selected : "+ sum+". PLease select valid qty...");
 			}else{				
 				$("#purchaseDetails").modal("hide");				
-				$("#productNjobsTable").hide();
-				
-				//error										
+				$("#productNjobsTable").hide();				
+													
 				$('#productNjobsDiv').append('<table id="pDetTable'+$("#pForSampleIdModal").val()+'" class="table table-striped table-bordered"><thead style="background-color: #F0F0F0;"><tr><th style="text-align: right;">'
 				+ "Product code:" 
 				+ '</th><td>'
@@ -833,14 +832,62 @@
 																		+ "<input onclick='showDatePicker();' type='text' class='form-control estSubmDate'>"
 																		+ "</td>"
 																		+ "<td>"
-																		+ "<input type='checkbox'>"
+																		+ "<input type='checkbox' name='selectedJobs' value='"+item2.JobId+"'>"
 																		+ "</td>"
 																		+ "</tr>"
 																		+ "</tbody>");										
 
 										});
 					}
-				});				 
+				});
+				 
+				 
+				//error	
+				 $('#productNpurchasesDiv').append('<table id="productDetTable'+$("#pIdModal").val()+'" class="table table-striped table-bordered"><thead style="background-color: #F0F0F0;"><tr><th style="text-align: right;">'
+							+ "Product code:" 
+							+ '</th><td>'
+							+ "<input type='text' class='form-control' readonly='readonly' name='productCode' value='"+$("#prod" + $("#pIdModal").val() + " :nth-child(2)").html()+"'>" +
+							'</td><th style="text-align: right;">'
+							+ "Product Id:" 
+							+ '</th><td>'
+							+ "<input type='text' class='form-control' readonly='readonly' name='productId' value='"+ $("#pIdModal").val()+ "'>" +
+							'</td><th style="text-align: right;">'
+							+ "Qty:" 
+							+ '</th><td>'
+							+ "<input type='text' class='form-control' readonly='readonly' value='"+$("#prod" + $("#pIdModal").val() + " :nth-child(5)").html()+"'>" +
+							'</td></tr><tr><th>'
+							+ "Purchase Product Detail Id" 
+							+ '</th><th>'
+							+ "Qty Selected" +
+							'</th></tr></thead></table>');
+				
+				 $.ajax({
+						url : 'getPurchaseProductDetailsByProductCode',
+						type : 'post',
+						dataType : "json",
+						data : {
+							code : $("#pCodeModal").val(),
+							date : $("#datepicker").val()
+						},
+						success : function(data) {
+							$.map(data, function(item2) {
+								if (!isNaN($("#qtySelected"+item2.id).val()) && $("#qtySelected"+item2.id).val().length != 0) {
+												$("#productDetTable"+$("#pIdModal").val()).append(
+																"<tbody id='purchaseDetail"+item2.id+"'>"
+																		+ "<tr>"
+																		+ "<td>"
+																		+ '<input type="text" class="form-control" name="purProDetId'+$("#pIdModal").val()+'" value="'+$("#purProDetId"+item2.id).val()+'">'
+																		+ "</td>"
+																		+ "<td>"
+																		+ '<input type="text" class="form-control" name="qtySelected'+$("#pIdModal").val()+'" value="'+$("#qtySelected"+item2.id).val()+'">'																		
+																		+ "</td>"
+																		+ "</tr>"
+																		+ "</tbody>");
+								}
+
+									});
+						}
+					});
 			}
 		}
 		function prodDetOkF(){

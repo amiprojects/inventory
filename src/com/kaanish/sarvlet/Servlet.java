@@ -28,6 +28,7 @@ import com.kaanish.model.Department;
 import com.kaanish.model.DesignImage;
 import com.kaanish.model.JobAssignmentDetails;
 import com.kaanish.model.JobAssignmentProducts;
+import com.kaanish.model.JobPlan;
 import com.kaanish.model.JobRecievedDetails;
 import com.kaanish.model.JobStock;
 import com.kaanish.model.JobTypes;
@@ -96,7 +97,8 @@ import com.kaanish.util.DateConverter;
 		"/purchaseReportByDate", "/purchaseReportByAgentName",
 		"/purchaseProductView", "/purchaseReportView", "/salesProductView",
 		"/salesReportView", "/salesReportByCustomerName",
-		"/salesReportByAgentName","/dayBookreport","/jobAssignmentForParticularDesignNumber" })
+		"/salesReportByAgentName", "/dayBookreport",
+		"/jobAssignmentForParticularDesignNumber" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -152,6 +154,7 @@ public class Servlet extends HttpServlet {
 	private JobsForDesignCostSheet jobsForDesignCostSheet;
 	private ProductsForDesignCostSheet productsForDesignCostSheet;
 	private DesignImage designImage;
+	private JobPlan jobPlan;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -1919,75 +1922,71 @@ public class Servlet extends HttpServlet {
 
 			case "jobAssignment":
 				page = "jobAssign.jsp";
-				/*jobAssignmentDetails = new JobAssignmentDetails();
-				dt = new Date();
-				companyInfo = ejb.getUserById(
-						(String) httpSession.getAttribute("user"))
-						.getCompanyInfo();
-				jobAssignmentDetails.setAssignDate(DateConverter.getDate(req
-						.getParameter("assignedDate")));
-				jobAssignmentDetails.setEstimatedCompletionDate(DateConverter
-						.getDate(req.getParameter("estSubmissionDate")));
-				jobAssignmentDetails.setChallanNumber(req
-						.getParameter("jobChallanNo"));
-				jobAssignmentDetails.setChallan_no(Integer.parseInt(req
-						.getParameter("challanNo")));
-				jobAssignmentDetails.setChallanSuffix(Integer.parseInt(req
-						.getParameter("challanSuffix")));
-				jobAssignmentDetails.setEntryDate(dt);
-				jobAssignmentDetails.setVendor(ejb.getVendorById(Integer
-						.parseInt(req.getParameter("jName"))));
-				jobAssignmentDetails.setCompanyInfo(companyInfo);
-
-				ejb.setJobAssignment(jobAssignmentDetails);
-
-				String pProdDetIdH[] = req.getParameterValues("pProdDetIdH");
-				String qtyH[] = req.getParameterValues("qtyH");
-				String workH[] = req.getParameterValues("workH");
-
-				for (int l = 0; l < pProdDetIdH.length; l++) {
-					jobAssignmentProducts = new JobAssignmentProducts();
-
-					jobAssignmentProducts.setPurchase_Product_Details(ejb
-							.getPurchaseProductDetailsById(Integer
-									.parseInt(pProdDetIdH[l])));
-					jobAssignmentProducts.setQty(Integer.parseInt(qtyH[l]));
-					jobAssignmentProducts.setRemaninQty(Integer
-							.parseInt(qtyH[l]));
-					jobAssignmentProducts.setWorkDescription(workH[l]);
-					jobAssignmentProducts
-							.setJobAssignmentDetails(jobAssignmentDetails);
-					ejb.setJobAssignmentProducts(jobAssignmentProducts);
-
-					jobStock = new JobStock();
-					jobStock.setJobAssignmentProducts(jobAssignmentProducts);
-					jobStock.setGivenQty(Integer.parseInt(qtyH[l]));
-					jobStock.setRemainingQty(Integer.parseInt(qtyH[l]));
-
-					ejb.setJobStock(jobStock);
-
-					purchaseProductDetails = ejb
-							.getPurchaseProductDetailsById(Integer
-									.parseInt(pProdDetIdH[l]));
-					purchaseProductDetails
-							.setRemaining_quantity(purchaseProductDetails
-									.getRemaining_quantity()
-									- Integer.parseInt(qtyH[l]));
-					ejb.updatePurchaseProductDetails(purchaseProductDetails);
-
-					rawMaterialsStock = ejb
-							.getRawMeterialStoctByProductAndCompanyId(
-									purchaseProductDetails.getProductDetail()
-											.getId(), companyInfo.getId());
-					rawMaterialsStock.setRemainingQty(rawMaterialsStock
-							.getRemainingQty() - Integer.parseInt(qtyH[l]));
-					ejb.updateRawMaterialStockDetail(rawMaterialsStock);
-
-					rawMaterialsStock = null;
-					jobStock = null;
-					jobAssignmentProducts = null;
-					purchaseProductDetails = null;
-				}*/
+				/*
+				 * jobAssignmentDetails = new JobAssignmentDetails(); dt = new
+				 * Date(); companyInfo = ejb.getUserById( (String)
+				 * httpSession.getAttribute("user")) .getCompanyInfo();
+				 * jobAssignmentDetails.setAssignDate(DateConverter.getDate(req
+				 * .getParameter("assignedDate")));
+				 * jobAssignmentDetails.setEstimatedCompletionDate(DateConverter
+				 * .getDate(req.getParameter("estSubmissionDate")));
+				 * jobAssignmentDetails.setChallanNumber(req
+				 * .getParameter("jobChallanNo"));
+				 * jobAssignmentDetails.setChallan_no(Integer.parseInt(req
+				 * .getParameter("challanNo")));
+				 * jobAssignmentDetails.setChallanSuffix(Integer.parseInt(req
+				 * .getParameter("challanSuffix")));
+				 * jobAssignmentDetails.setEntryDate(dt);
+				 * jobAssignmentDetails.setVendor(ejb.getVendorById(Integer
+				 * .parseInt(req.getParameter("jName"))));
+				 * jobAssignmentDetails.setCompanyInfo(companyInfo);
+				 * 
+				 * ejb.setJobAssignment(jobAssignmentDetails);
+				 * 
+				 * String pProdDetIdH[] = req.getParameterValues("pProdDetIdH");
+				 * String qtyH[] = req.getParameterValues("qtyH"); String
+				 * workH[] = req.getParameterValues("workH");
+				 * 
+				 * for (int l = 0; l < pProdDetIdH.length; l++) {
+				 * jobAssignmentProducts = new JobAssignmentProducts();
+				 * 
+				 * jobAssignmentProducts.setPurchase_Product_Details(ejb
+				 * .getPurchaseProductDetailsById(Integer
+				 * .parseInt(pProdDetIdH[l])));
+				 * jobAssignmentProducts.setQty(Integer.parseInt(qtyH[l]));
+				 * jobAssignmentProducts.setRemaninQty(Integer
+				 * .parseInt(qtyH[l]));
+				 * jobAssignmentProducts.setWorkDescription(workH[l]);
+				 * jobAssignmentProducts
+				 * .setJobAssignmentDetails(jobAssignmentDetails);
+				 * ejb.setJobAssignmentProducts(jobAssignmentProducts);
+				 * 
+				 * jobStock = new JobStock();
+				 * jobStock.setJobAssignmentProducts(jobAssignmentProducts);
+				 * jobStock.setGivenQty(Integer.parseInt(qtyH[l]));
+				 * jobStock.setRemainingQty(Integer.parseInt(qtyH[l]));
+				 * 
+				 * ejb.setJobStock(jobStock);
+				 * 
+				 * purchaseProductDetails = ejb
+				 * .getPurchaseProductDetailsById(Integer
+				 * .parseInt(pProdDetIdH[l])); purchaseProductDetails
+				 * .setRemaining_quantity(purchaseProductDetails
+				 * .getRemaining_quantity() - Integer.parseInt(qtyH[l]));
+				 * ejb.updatePurchaseProductDetails(purchaseProductDetails);
+				 * 
+				 * rawMaterialsStock = ejb
+				 * .getRawMeterialStoctByProductAndCompanyId(
+				 * purchaseProductDetails.getProductDetail() .getId(),
+				 * companyInfo.getId());
+				 * rawMaterialsStock.setRemainingQty(rawMaterialsStock
+				 * .getRemainingQty() - Integer.parseInt(qtyH[l]));
+				 * ejb.updateRawMaterialStockDetail(rawMaterialsStock);
+				 * 
+				 * rawMaterialsStock = null; jobStock = null;
+				 * jobAssignmentProducts = null; purchaseProductDetails = null;
+				 * }
+				 */
 
 				msg = "Job assigned succesfully.";
 				break;
@@ -2974,7 +2973,7 @@ public class Servlet extends HttpServlet {
 				String[] productid = req.getParameterValues("productId");
 				// changing
 				String[] proqty = req.getParameterValues("proQty");
-				//String[] proqty = req.getParameterValues("qty");
+				// String[] proqty = req.getParameterValues("qty");
 				// changing
 				String[] prorate = req.getParameterValues("rate");
 				String[] proamount = req.getParameterValues("amount");
@@ -3052,17 +3051,38 @@ public class Servlet extends HttpServlet {
 
 				msg = "your request hasbeen successfully processed";
 				break;
-				
+
 			case "jobAssignmentForParticularDesignNumber":
-				page="jobAssignForParticularDesignNumber.jsp";
-				msg="Job Assigned Successfully";
-				break;
+				page = "jobAssignForParticularDesignNumber.jsp";				
 				
+				jobPlan = new JobPlan();
+				jobPlan.setPlanDate(DateConverter.getDate(req
+						.getParameter("assignedDate")));
+				jobPlan.setQty(Integer.parseInt(req.getParameter("qty")));
+				jobPlan.setEstimatedCost(Float.parseFloat(req
+						.getParameter("qty"))
+						* ejb.getSampleDesignCostSheetById(
+								Integer.parseInt(req.getParameter("dId")))
+								.getGrandTotal());
+				jobPlan.setTotalJobExpanse(0);
+				jobPlan.setComplete(false);
+				
+				float totalProductCost=0;
+				jobPlan.setTotalProductCost(totalProductCost);
+				jobPlan.setTotalExpanse(0+totalProductCost);				
+
+				msg = "Job Assigned Successfully";
+				break;
+
 			case "dayBookreport":
 				page = "finalcialReport.jsp";
 
-				List<Purchase_Entry> purchaseEty = ejb.getPurchaseEntryByDateForReport(DateConverter.getDate(req.getParameter("dayBookDate")));
-				List<SalesEntry> salesEty = ejb.getSalesEntryByDateForReport(DateConverter.getDate(req.getParameter("dayBookDate")));		
+				List<Purchase_Entry> purchaseEty = ejb
+						.getPurchaseEntryByDateForReport(DateConverter
+								.getDate(req.getParameter("dayBookDate")));
+				List<SalesEntry> salesEty = ejb
+						.getSalesEntryByDateForReport(DateConverter.getDate(req
+								.getParameter("dayBookDate")));
 				req.setAttribute("purchaseEty", purchaseEty);
 				req.setAttribute("salesEty", salesEty);
 
