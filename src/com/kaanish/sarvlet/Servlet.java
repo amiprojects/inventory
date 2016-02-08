@@ -1919,7 +1919,7 @@ public class Servlet extends HttpServlet {
 
 			case "jobAssignment":
 				page = "jobAssign.jsp";
-				jobAssignmentDetails = new JobAssignmentDetails();
+				/*jobAssignmentDetails = new JobAssignmentDetails();
 				dt = new Date();
 				companyInfo = ejb.getUserById(
 						(String) httpSession.getAttribute("user"))
@@ -1987,7 +1987,7 @@ public class Servlet extends HttpServlet {
 					jobStock = null;
 					jobAssignmentProducts = null;
 					purchaseProductDetails = null;
-				}
+				}*/
 
 				msg = "Job assigned succesfully.";
 				break;

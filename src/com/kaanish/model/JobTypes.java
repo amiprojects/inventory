@@ -26,8 +26,8 @@ public class JobTypes implements Serializable {
 	@OneToMany(mappedBy = "jobTypes")
 	private List<JobsForDesignCostSheet> jobsForDesignCostSheets;
 	
-	@ManyToMany@JoinTable(joinColumns={@JoinColumn(name="jobAssignProductId")}, inverseJoinColumns={@JoinColumn(name="jobtypeId")})
-	private List<JobAssignmentProducts> jobAssignmentProducts;
+	@ManyToMany@JoinTable(name="jobAssignJob_JobType",joinColumns={@JoinColumn(name="jobAssignmentJobId")},inverseJoinColumns={@JoinColumn(name="jobTypeId")})
+	private List<JobAssignmentJobDetails> jobAssignmentJobDetails;
 
 	public int getId() {
 		return id;
@@ -59,14 +59,6 @@ public class JobTypes implements Serializable {
 
 	public void setJobsForDesignCostSheets(List<JobsForDesignCostSheet> jobsForDesignCostSheets) {
 		this.jobsForDesignCostSheets = jobsForDesignCostSheets;
-	}
-
-	public List<JobAssignmentProducts> getJobAssignmentProducts() {
-		return jobAssignmentProducts;
-	}
-
-	public void setJobAssignmentProducts(List<JobAssignmentProducts> jobAssignmentProducts) {
-		this.jobAssignmentProducts = jobAssignmentProducts;
 	}
 
 }
