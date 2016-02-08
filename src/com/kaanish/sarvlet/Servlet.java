@@ -96,7 +96,7 @@ import com.kaanish.util.DateConverter;
 		"/purchaseReportByDate", "/purchaseReportByAgentName",
 		"/purchaseProductView", "/purchaseReportView", "/salesProductView",
 		"/salesReportView", "/salesReportByCustomerName",
-		"/salesReportByAgentName" })
+		"/salesReportByAgentName","/dayBookreport","/jobAssignmentForParticularDesignNumber" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -2944,6 +2944,18 @@ public class Servlet extends HttpServlet {
 				sampleDesignCostSheet.setVendor(ejb.getVendorById(Integer
 						.parseInt(req.getParameter("designerId"))));
 
+				// ///adding
+				sampleDesignCostSheet.setGrandTotal(Float.parseFloat(req
+						.getParameter("grandtot")));
+				sampleDesignCostSheet.setProfit(Float.parseFloat(req
+						.getParameter("totProfit")));
+				if (req.getParameter("profitType").equals("profitFlat")) {
+					sampleDesignCostSheet.setFlatProfit(true);
+				} else {
+					sampleDesignCostSheet.setFlatProfit(false);
+				}
+				// ///adding
+
 				ejb.setSampleDesignCostSheet(sampleDesignCostSheet);
 
 				String[] designImageContent = req
@@ -2960,7 +2972,10 @@ public class Servlet extends HttpServlet {
 				float prototal = 0.0F;
 
 				String[] productid = req.getParameterValues("productId");
-				String[] proqty = req.getParameterValues("qty");
+				// changing
+				String[] proqty = req.getParameterValues("proQty");
+				//String[] proqty = req.getParameterValues("qty");
+				// changing
 				String[] prorate = req.getParameterValues("rate");
 				String[] proamount = req.getParameterValues("amount");
 				String[] proqtyUnitId = req.getParameterValues("qtyUnitId");
@@ -3030,12 +3045,26 @@ public class Servlet extends HttpServlet {
 
 				sampleDesignCostSheet.setTotalJobcost(jobtotal);
 				sampleDesignCostSheet.setTotalProductcost(prototal);
-				sampleDesignCostSheet.setGrandTotal(jobtotal + prototal
-						+ sampleDesignCostSheet.getSurcharge());
+				// sampleDesignCostSheet.setGrandTotal(jobtotal + prototal
+				// + sampleDesignCostSheet.getSurcharge());
 
 				ejb.updateSampleDesignCostSheet(sampleDesignCostSheet);
 
 				msg = "your request hasbeen successfully processed";
+				break;
+				
+			case "jobAssignmentForParticularDesignNumber":
+				page="jobAssignForParticularDesignNumber.jsp";
+				break;
+				
+			case "dayBookreport":
+				page = "finalcialReport.jsp";
+
+				List<Purchase_Entry> purchaseEty = ejb.getPurchaseEntryByDateForReport(DateConverter.getDate(req.getParameter("dayBookDate")));
+				List<SalesEntry> salesEty = ejb.getSalesEntryByDateForReport(DateConverter.getDate(req.getParameter("dayBookDate")));		
+				req.setAttribute("purchaseEty", purchaseEty);
+				req.setAttribute("salesEty", salesEty);
+
 				break;
 
 			default:

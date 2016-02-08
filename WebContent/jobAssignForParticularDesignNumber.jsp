@@ -61,6 +61,12 @@
 			minDate : 0
 		});
 	});
+	$(function() {
+		$(".estSubmDate").datepicker({
+			dateFormat : "dd-mm-yy",
+			minDate : 0
+		});
+	});
 </script>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -117,10 +123,10 @@
 							</div>
 
 							<!-- <div class="widget-area"> -->
-			
-			
+
+
 							<div class="col-md-12">
-								<form role="form" class="sec" method="post" id="jobForm"
+								<form role="form" class="sec" method="post" id="jobAssignmentForParticularDesignNumber"
 									action="jobAssignment">
 									<div class="widget-area">
 										<div class="col-md-6">
@@ -179,14 +185,16 @@
 
 												<label for="" class="font">Design No. :</label> <input
 													type="text" class="form-control" name="dNo"
-													required="required" id="dNo">
+													required="required" id="dNo"><input type="hidden"
+													id="dId" name="dId">
 											</div>
 
 											<div class="form-group">
 
-												<label for="" class="font">Qty :</label> <input type="text"
-													class="form-control" name="qty" required="required"
-													id="qty">
+												<label for="" class="font">Qty :</label> <input
+													type="number" class="form-control" name="qty"
+													required="required" id="qty" onkeyup="qtyF();"
+													onchange="qtyFC();">
 											</div>
 
 											<!-- <br> <input type="button" class="btn green pull-right"
@@ -196,42 +204,31 @@
 										<div class='toast' style='display: none'>
 											<h3 id="msg">${requestScope['msg']}</h3>
 										</div>
-									</div>
-									<!-- <div class="widget-area">
-											<input type="button" class="btn green pull-right"
-												data-toggle="modal" data-target="#addProduct"
-												value="Add Product" style="width: 100%" onclick="manage();">
-										</div> -->
-									<h3>List of material use</h3>
-									<table id="products" class="table table-striped table-bordered">
+									</div>									
+									
+									<div id="productNjobsDiv"></div>
+									<table id="productNjobsTable" class="table table-striped table-bordered">
 										<thead style="background-color: #F0F0F0;">
 											<tr>
-												<th>#</th>
-												<th>Product code</th>
-												<th>Product Description</th>
-												<th>Quantity</th>
-												<th>UOM</th>
-												<th>rate</th>
-												<th>Amount</th>
-												<th>Remove</th>
+												<th style="text-align: right;">Product code :</th>
+												<td>---</td>
+												<th style="text-align: right;">Description :</th>
+												<td colspan="2">---</td>
+												<th style="text-align: right;">Quantity :</th>
+												<td>code</td>
+												<th style="text-align: right;">Rate :</th>
+												<td>---</td>
 											</tr>
-										</thead>
-									</table>
-									<!-- <a href="#" onclick="addProduct();"><img src="img/add.png"
-										height="20px" style="float: right;"></a> -->
-									<h3>List of jobs</h3>
-									<table id="jobs" class="table table-striped table-bordered">
-										<thead style="background-color: #F0F0F0;">
 											<tr>
 												<th>#</th>
-												<th>Job Name</th>
-												<th>Product Code</th>
+												<th>Job</th>
+												<th>Job</th>											
+												<th>Sample Rate</th>
+												<th>Present Rate</th>
 												<th>Qty</th>
 												<th>UOM</th>
-												<th>Rate</th>
 												<th>Amount</th>
 												<th>Estimated Submission Date</th>
-												<th>Remove</th>
 											</tr>
 										</thead>
 									</table>
@@ -312,6 +309,111 @@
 
 		</div>
 	</div>
+
+	<div id="productDetails" class="modal fade" role="dialog"
+		style="top: 25px;" data-backdrop="static" data-keyboard="false">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Product Details For the Design Number</h4>
+				</div>
+				<div class="modal-body">
+					<table id="stream_table" width="100%">
+						<thead>
+							<tr>
+								<th>Design No:</th>
+								<td colspan="2"><input type="text" readonly="readonly"
+									id="dNoModal" class="form-control"></td>
+							</tr>
+							<tr>
+								<th>Description :</th>
+								<td colspan="2"><input type="text" readonly="readonly"
+									id="dDescModal" class="form-control"></td>
+							</tr>
+						</thead>
+					</table>
+					<table id="ProductDetailsTable" class="table">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Product code</th>
+								<th>Product Description</th>
+								<th>UOM</th>
+								<th>Quantity</th>
+								<th>rate</th>
+								<th>Amount</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" onclick="prodDetOkF();">Ok</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="purchaseDetails" class="modal fade" role="dialog"
+		style="top: 25px;" data-backdrop="static" data-keyboard="false">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+					<h4 class="modal-title">Purchase Details</h4>
+				</div>
+				<div class="modal-body">
+					<table id="stream_table" width="100%">
+						<thead>
+							<tr>
+								<th>Product Code:</th>
+								<td colspan="2"><input type="text" readonly="readonly"
+									id="pCodeModal" class="form-control"></td>
+							</tr>
+							<tr>
+								<th>Description :</th>
+								<td colspan="2"><input type="text" readonly="readonly"
+									id="pDescModal" class="form-control"></td>
+							</tr>
+							<tr>
+								<th>UOM :</th>
+								<td colspan="2"><input type="text" readonly="readonly"
+									id="pUOMModal" class="form-control"><input type="hidden" id="pIdModal"><input type="hidden" id="pForSampleIdModal"></td>
+							</tr>
+						</thead>
+					</table>
+					<table id="purchaseDetailsTable" class="table">
+						<thead>
+							<tr>
+								<th>Purchase Date</th>
+								<th>Cost/Unit</th>
+								<th>Remaining Qty.</th>								
+								<th>Qty Selected</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" onclick="purDetOkF();">Ok</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
 	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
@@ -331,7 +433,7 @@
 			} else if ($("#datepicker1").val() == "") {
 				alert("please select Estimated submission date");
 			} else {
-				$("#jobForm").submit();
+				$("#jobAssignmentForParticularDesignNumber").submit();
 			}
 		}
 
@@ -435,7 +537,8 @@
 							resp($.map(data, function(item) {
 								return ({
 									value : item.dNumber,
-									id : item.dId
+									id : item.dId,
+									dDEsc : item.dDEsc
 								});
 							}));
 						}
@@ -445,10 +548,311 @@
 				change : function(event, ui) {
 					if (ui.item == null) {
 						$(this).val("");
+						$("#dId").val("");
+						$("#dDescModal").val("");
+						$("#dNoModal").val("");
+					} else {
+						$("#dId").val(ui.item.id);
+						$("#dDescModal").val(ui.item.dDEsc);
+						$("#dNoModal").val($(this).val());
+					}
+				},
+				select : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#dId").val("");
+						$("#dDescModal").val("");
+						$("#dNoModal").val("");
+					} else {
+						$("#dId").val(ui.item.id);
+						$("#dDescModal").val(ui.item.dDEsc);
+						$("#dNoModal").val($(this).val());
 					}
 				}
 			});
 		});
+
+		function qtyF() {
+			if ($("#dNo").val() == "") {
+				alert("PLease enter design no. first...");
+				$("#qty").val("");
+			}
+		}
+		function qtyFC() {
+			if ($("#qty").val() != "") {
+				if ($("#qty").val() > 0) {
+					$("#productDetails").modal("show");
+
+					$
+							.ajax({
+								type : "post",
+								url : "getProductDetailsByDesignNumberAndQuantity",
+								dataType : "json",
+								data : {
+									did : $("#dId").val()
+								},
+								success : function(data2) {
+									$("#ProductDetailsTable tbody").empty();
+
+									$
+											.each(
+													data2,
+													function(index, item2) {
+														if (item2.ProductRemainingQty >= (Number($(
+																"#qty").val()) * item2.ProductQtyForSample)) {
+															$(
+																	
+																	"#ProductDetailsTable")
+																	.append(
+																			"<tbody id='prod"+item2.ProductId+"' onclick='selectProduct(\""
+																					+ item2.ProductCode
+																					+ "\",\""+ item2.ProductDesc +"\",\""+ item2.ProductUOMName +"\",\""+ item2.ProductForSampleId +"\",\""+ item2.ProductId +"\");'>"
+																					+ "<tr>"
+																					+ "<td>"
+																					+ Number(1 + index)
+																					+ "</td>"
+																					+ "<td>"
+																					+ item2.ProductCode
+																					+ "</td>"
+																					+ "<td>"
+																					+ item2.ProductDesc
+																					+ "</td>"
+																					+ "<td>"
+																					+ item2.ProductUOMName
+																					+ "</td>"
+																					+ "<td>"
+																					+ item2.ProductQtyForSample
+																							* $(
+																									"#qty")
+																									.val()
+																					+ "</td>"
+																					+ "<td>"
+																					+ item2.ProductRateForSample
+																							* $(
+																									"#qty")
+																									.val()
+																					+ "</td>"
+																					+ "<td>"
+																					+ (item2.ProductQtyForSample * $(
+																							"#qty")
+																							.val())
+																					* (item2.ProductRateForSample * $(
+																							"#qty")
+																							.val())
+																					+ "</td>"
+																					+ "</tr>"
+																					+ "</tbody>");
+														} else {
+															alert("unsufficient product "
+																	+ item2.ProductDesc);
+															$(
+																	"#ProductDetailsTable tbody")
+																	.empty();
+															$(
+																	"#productDetails")
+																	.modal(
+																			"hide");
+															return false;
+														}
+
+													});
+								}
+							});
+				} else {
+					alert("Please enter valid quantity...");
+				}
+			}
+		}
+		function selectProduct(code, desc, uom, ProductForSampleId, id) {
+			$("#purchaseDetails").modal("show");
+			$("#pCodeModal").val(code);
+			$("#pDescModal").val(desc);
+			$("#pUOMModal").val(uom);
+			$("#pIdModal").val(id);
+			$("#pForSampleIdModal").val(ProductForSampleId);
+			$.ajax({
+				url : 'getPurchaseProductDetailsByProductCode',
+				type : 'post',
+				dataType : "json",
+				data : {
+					code : code,
+					date : $("#datepicker").val()
+				},
+				success : function(data) {
+					/* $.map(data, function(item) {
+						$("#purchaseDet").html(
+								$("#purchaseDet").html() + item.purchaseDate
+										+ '\n');
+						
+						
+					}); */
+					$(
+					"#purchaseDetailsTable tbody").empty();
+					$.map(data, function(item2) {
+						if (item2.purchaseDate != 'Initial Inventory') {
+										$("#purchaseDetailsTable").append(
+														"<tbody id='viewAttr"+item2.id+"' title='"+item2.attrName1+" : "+item2.attrValue1+" , "+item2.attrName2+" : "+item2.attrValue2+" , "+item2.attrName3+" : "+item2.attrValue3+" , "+item2.attrName4+" : "+item2.attrValue4+" , "+item2.attrName5+" : "+item2.attrValue5+" , "+item2.attrName6+" : "+item2.attrValue6+"'>"
+																+ "<tr>"
+																+ "<td>"
+																+ formatDate(item2.purchaseDate)
+																+ "</td>"
+																+ "<td>"
+																+ item2.cost
+																+ "</td>"
+																+ "<td>"
+																+ item2.remaining_quantity
+																+ "</td>"
+																+ "<td>"
+																+ '<input type="text" class="form-control qtySelected" onkeyup="selectedQtyF('+item2.id+','+$("#pIdModal").val()+')">'
+																+ "</td>"
+																+ "</tr>"
+																+ "</tbody>");
+						}else{
+							$("#purchaseDetailsTable").append(
+									"<tbody id='viewAttr"+item2.id+"' title='"+item2.attrName1+" : "+item2.attrValue1+" , "+item2.attrName2+" : "+item2.attrValue2+" , "+item2.attrName3+" : "+item2.attrValue3+" , "+item2.attrName4+" : "+item2.attrValue4+" , "+item2.attrName5+" : "+item2.attrValue5+" , "+item2.attrName6+" : "+item2.attrValue6+"'>"
+											+ "<tr>"
+											+ "<td>"
+											+ item2.purchaseDate
+											+ "</td>"
+											+ "<td>"
+											+ item2.cost
+											+ "</td>"
+											+ "<td>"
+											+ item2.remaining_quantity
+											+ "</td>"
+											+ "<td>"
+											+ '<input type="text" class="form-control qtySelected" onkeyup="selectedQtyF('+item2.id+','+$("#pIdModal").val()+')">'
+											+ "</td>"
+											+ "</tr>"
+											+ "</tbody>");
+						}
+									
+								$(
+										"#viewAttr"
+												+ item2.id)
+										.tooltip(
+												{
+													track : true
+												});
+
+							});
+				}
+			});
+		}
+		
+		function selectedQtyF(id, prodId){			
+			//alert($("#prod" + prodId + " :nth-child(5)").html());
+			if(Number($("#viewAttr" + id + " :nth-child(3)").html()) < Number($("#viewAttr" + id + " :nth-child(4) input[type=text]").val())){
+				alert("You can not select more than remaining qty!");
+				$("#viewAttr" + id + " :nth-child(4) input[type=text]").val("");
+			}
+		}
+		function purDetOkF(){
+			var sum = 0;						
+				$(".qtySelected").each(function() {
+					if (!isNaN(this.value) && this.value.length != 0) {	
+						sum += parseFloat(this.value);
+					}
+				});					
+			if(Number(sum)!=Number($("#prod" + $("#pIdModal").val() + " :nth-child(5)").html())){
+				alert("Selected Qty can not be more than or less than Required Qty! Total required qty is : "+ $("#prod" + $("#pIdModal").val() + " :nth-child(5)").html()+". PLease select valid qty...");
+			}else{				
+				$("#purchaseDetails").modal("hide");				
+				$("#productNjobsTable").hide();
+				
+				//error										
+				$('#productNjobsDiv').append('<table id="pDetTable'+$("#pForSampleIdModal").val()+'" class="table table-striped table-bordered"><thead style="background-color: #F0F0F0;"><tr><th style="text-align: right;">'
+				+ "Product code :" 
+				+ '</th><td>'
+				+ $("#prod" + $("#pIdModal").val() + " :nth-child(2)").html() +
+				'</td><th style="text-align: right;">'
+				+ "Description :" 
+				+ '</th><td>'
+				+ $("#prod" + $("#pIdModal").val() + " :nth-child(3)").html() +
+				'</td><th style="text-align: right;">'
+				+ "Qty :" 
+				+ '</th><td>'
+				+ $("#prod" + $("#pIdModal").val() + " :nth-child(5)").html() +
+				'</td><th style="text-align: right;">'
+				+ "Rate :" 
+				+ '</th><td>'
+				+ $("#prod" + $("#pIdModal").val() + " :nth-child(6)").html() +
+				'</td></tr><tr><th>'
+				+ "#" 
+				+ '</th><th>'
+				+ "Job" 
+				+ '</th><th>'
+				+ "Sample Rate" +
+				'</th><th>'
+				+ "Present Rate" 
+				+ '</th><th>'
+				+ "Qty" +
+				'</th><th>'
+				+ "UOM" 
+				+ '</th><th>'
+				+ "Amount" +
+				'</th><th>'
+				+ "Est. Submission Date" +
+				'</th></tr></thead></table>');
+				
+				 $
+				.ajax({
+					type : "post",
+					url : "getJobsForDesignCostSheetByProductSForSampleId",
+					dataType : "json",
+					data : {
+						pid : $("#pForSampleIdModal").val()
+					},
+					success : function(data2) {
+						$
+								.each(
+										data2,
+										function(index, item2) {											
+												$(
+														
+														"#pDetTable"+$("#pForSampleIdModal").val())
+														.append(
+																"<tbody id='pDetTable"+item2.JobId+"'>"
+																		+ "<tr>"
+																		+ "<td>"
+																		+ Number(1 + index)
+																		+ "</td>"
+																		+ "<td>"
+																		+ item2.JobName
+																		+ "</td>"
+																		+ "<td>"
+																		+ item2.JobRateOfSample
+																		+ "</td>"
+																		+ "<td>"
+																		+ "<input type='text' class='form-control' value='"+item2.JobRateOfSample+"'>"
+																		+ "</td>"
+																		+ "<td>"
+																		+ "<input type='text' class='form-control' value='"+item2.JobQtyOfSample+"'>"
+																		+ "</td>"
+																		+ "<td>"
+																		+ item2.JobUOMOfSample
+																		+ "</td>"
+																		+ "<td>"
+																		+ "<input type='text' readonly='readonly' class='form-control' value='"+item2.JobAmountOfSample+"'>"
+																		+ "</td>"
+																		+ "<td>"
+																		+ "<input type='text' class='form-control estSubmDate'>"
+																		+ "</td>"
+																		+ "</tr>"
+																		+ "</tbody>");										
+
+										});
+					}
+				});
+			}
+		}
+		function prodDetOkF(){
+			alert("///");
+		}
+		function formatDate(d) {
+			var dateparts = d.split(" ");
+			return dateparts[2] + "-" + dateparts[1] + "-" + dateparts[5];
+		}
 	</script>
 </body>
 

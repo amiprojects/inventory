@@ -27,7 +27,7 @@ public class SalesEntry implements Serializable {
 	private int challanNo;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date entry_Date;
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date sales_date;
 	private float surcharge;
 	private float transportcCharge;

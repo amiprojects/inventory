@@ -1,6 +1,7 @@
 package com.kaanish.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Cacheable;
@@ -12,11 +13,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Cacheable(false)
 public class JobAssignmentProducts implements Serializable {
-
+	// job plan product stock wise
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
@@ -26,6 +29,9 @@ public class JobAssignmentProducts implements Serializable {
 	private float estimatedCost;
 	@Column(length = 800)
 	private String workDescription;
+	private float totalJobCost;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date estimatedCompletionDate;
 
 	@OneToMany(mappedBy = "jobAssignmentProducts")
 	private List<JobRecievedDetails> jobRecievedDetails;
@@ -49,6 +55,7 @@ public class JobAssignmentProducts implements Serializable {
 	@OneToMany(mappedBy="assignmentProducts")
 	private List<JobAssignmentJobDetails> jobAssignmentJobDetails;
 	
+
 
 	public int getId() {
 		return id;
@@ -86,7 +93,8 @@ public class JobAssignmentProducts implements Serializable {
 		return jobAssignmentDetails;
 	}
 
-	public void setJobAssignmentDetails(JobAssignmentDetails jobAssignmentDetails) {
+	public void setJobAssignmentDetails(
+			JobAssignmentDetails jobAssignmentDetails) {
 		this.jobAssignmentDetails = jobAssignmentDetails;
 	}
 
@@ -102,7 +110,8 @@ public class JobAssignmentProducts implements Serializable {
 		return jobRecievedDetails;
 	}
 
-	public void setJobRecievedDetails(List<JobRecievedDetails> jobRecievedDetails) {
+	public void setJobRecievedDetails(
+			List<JobRecievedDetails> jobRecievedDetails) {
 		this.jobRecievedDetails = jobRecievedDetails;
 	}
 
@@ -136,6 +145,23 @@ public class JobAssignmentProducts implements Serializable {
 
 	public void setJobAssignmentJobDetails(List<JobAssignmentJobDetails> jobAssignmentJobDetails) {
 		this.jobAssignmentJobDetails = jobAssignmentJobDetails;
+	}
+
+
+	public Date getEstimatedCompletionDate() {
+		return estimatedCompletionDate;
+	}
+
+	public void setEstimatedCompletionDate(Date estimatedCompletionDate) {
+		this.estimatedCompletionDate = estimatedCompletionDate;
+	}
+
+	public float getTotalJobCost() {
+		return totalJobCost;
+	}
+
+	public void setTotalJobCost(float totalJobCost) {
+		this.totalJobCost = totalJobCost;
 	}
 
 }
