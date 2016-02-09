@@ -7,9 +7,6 @@ import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -26,7 +23,7 @@ public class JobTypes implements Serializable {
 	@OneToMany(mappedBy = "jobTypes")
 	private List<JobsForDesignCostSheet> jobsForDesignCostSheets;
 	
-	@ManyToMany@JoinTable(name="jobAssignJob_JobType",joinColumns={@JoinColumn(name="jobAssignmentJobId")},inverseJoinColumns={@JoinColumn(name="jobTypeId")})
+	@OneToMany(mappedBy="jobType")
 	private List<JobAssignmentJobDetails> jobAssignmentJobDetails;
 
 	public int getId() {
@@ -53,12 +50,22 @@ public class JobTypes implements Serializable {
 		this.jobDescription = jobDescription;
 	}
 
+
 	public List<JobsForDesignCostSheet> getJobsForDesignCostSheets() {
 		return jobsForDesignCostSheets;
 	}
 
-	public void setJobsForDesignCostSheets(List<JobsForDesignCostSheet> jobsForDesignCostSheets) {
+	public void setJobsForDesignCostSheets(
+			List<JobsForDesignCostSheet> jobsForDesignCostSheets) {
 		this.jobsForDesignCostSheets = jobsForDesignCostSheets;
+	}
+
+	public List<JobAssignmentJobDetails> getJobAssignmentJobDetails() {
+		return jobAssignmentJobDetails;
+	}
+
+	public void setJobAssignmentJobDetails(List<JobAssignmentJobDetails> jobAssignmentJobDetails) {
+		this.jobAssignmentJobDetails = jobAssignmentJobDetails;
 	}
 
 }

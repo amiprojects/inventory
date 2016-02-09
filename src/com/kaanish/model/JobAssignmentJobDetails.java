@@ -2,14 +2,12 @@ package com.kaanish.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -41,8 +39,8 @@ public class JobAssignmentJobDetails implements Serializable {
 	@JoinColumn(name = "jobAssignProductId")
 	private JobAssignmentProducts assignmentProducts;
 
-	@ManyToMany(mappedBy = "jobAssignmentJobDetails")
-	private List<JobTypes> jobTypes;
+	@ManyToOne@JoinColumn(name="jobtypeId")
+	private JobTypes jobType;
 
 	public int getId() {
 		return id;
@@ -100,13 +98,6 @@ public class JobAssignmentJobDetails implements Serializable {
 		this.assignmentProducts = assignmentProducts;
 	}
 
-	public List<JobTypes> getJobTypes() {
-		return jobTypes;
-	}
-
-	public void setJobTypes(List<JobTypes> jobTypes) {
-		this.jobTypes = jobTypes;
-	}
 
 	public Date getEstimatedCompletionDate() {
 		return estimatedCompletionDate;
@@ -114,6 +105,14 @@ public class JobAssignmentJobDetails implements Serializable {
 
 	public void setEstimatedCompletionDate(Date estimatedCompletionDate) {
 		this.estimatedCompletionDate = estimatedCompletionDate;
+	}
+
+	public JobTypes getJobType() {
+		return jobType;
+	}
+
+	public void setJobType(JobTypes jobType) {
+		this.jobType = jobType;
 	}
 
 }

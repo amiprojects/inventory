@@ -832,7 +832,7 @@ function showDatePicker() {
 																		+ "<input onclick='showDatePicker();' type='text' name='estSubmDate"+$("#pForSampleIdModal").val()+"' class='form-control estSubmDate'>"
 																		+ "</td>"
 																		+ "<td>"
-																		+ "<input type='checkbox' name='selectedJobs' value='"+item2.JobId+"'>"
+																		+ "<input type='checkbox' name='selectedJobs"+$("#pForSampleIdModal").val()+"' value='"+item2.JobId+"'>"
 																		+ "</td>"
 																		+ "</tr>"
 																		+ "</tbody>");										

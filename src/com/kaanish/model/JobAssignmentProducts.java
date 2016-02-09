@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -52,7 +53,7 @@ public class JobAssignmentProducts implements Serializable {
 	@JoinColumn(name = "jobPlanProStockId")
 	private JobPlanProductStock jobPlanProductStock;
 	
-	@OneToMany(mappedBy="assignmentProducts")
+	@OneToMany(mappedBy="assignmentProducts",cascade=CascadeType.ALL)
 	private List<JobAssignmentJobDetails> jobAssignmentJobDetails;
 	
 

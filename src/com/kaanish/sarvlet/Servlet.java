@@ -2529,37 +2529,37 @@ public class Servlet extends HttpServlet {
 						jobPlanProductStock.setTotalJobCost(0);
 						jobPlanProductStock.setUndergoingProcess(false);
 						jobPlanProductStock.setComplete(false);
-						jobPlanProductStock.setQty(Integer.parseInt(qtySelected[l]));
-						jobPlanProductStock.setRemainingQty(Integer.parseInt(qtySelected[l]));
+						jobPlanProductStock.setQty(Integer.parseInt(qtySelected[l1]));
+						jobPlanProductStock.setRemainingQty(Integer.parseInt(qtySelected[l1]));
 						ejb.setJobPlanProductStock(jobPlanProductStock);
 
 						purchaseProductDetails.setRemaining_quantity(
-								purchaseProductDetails.getRemaining_quantity() - Integer.parseInt(qtySelected[l]));
+								purchaseProductDetails.getRemaining_quantity() - Integer.parseInt(qtySelected[l1]));
 						ejb.updatePurchaseProductDetails(purchaseProductDetails);
 
 						if (purchaseProductDetails.getProductDetail().isRaw()) {
 							rawMaterialsStock = ejb
 									.getRawMeterialStoctByProductId(purchaseProductDetails.getProductDetail().getId());
 							rawMaterialsStock.setRemainingQty(
-									rawMaterialsStock.getRemainingQty() - Integer.parseInt(qtySelected[l]));
+									rawMaterialsStock.getRemainingQty() - Integer.parseInt(qtySelected[l1]));
 							ejb.updateRawMaterialStockDetail(rawMaterialsStock);
 						} else {
 							readyGoodsStock = ejb
 									.getReadyGoodsStoctByProductId(purchaseProductDetails.getProductDetail().getId());
 							readyGoodsStock.setRemainingQty(
-									readyGoodsStock.getRemainingQty() - Integer.parseInt(qtySelected[l]));
+									readyGoodsStock.getRemainingQty() - Integer.parseInt(qtySelected[l1]));
 							ejb.updateReadyGoodsStockDetail(readyGoodsStock);
 						}
 
 						jobAssignmentProducts = new JobAssignmentProducts();
-						jobAssignmentProducts.setQty(Integer.parseInt(qtySelected[l]));
-						jobAssignmentProducts.setRemaninQty(Integer.parseInt(qtySelected[l]));
+						jobAssignmentProducts.setQty(Integer.parseInt(qtySelected[l1]));
+						jobAssignmentProducts.setRemaninQty(Integer.parseInt(qtySelected[l1]));
 						jobAssignmentProducts.setJobAssignmentDetails(jobAssignmentDetails);
 						jobAssignmentProducts.setJobPlanProductStock(jobPlanProductStock);
 						ejb.setJobAssignmentProducts(jobAssignmentProducts);
 
 						totalProductCost = totalProductCost
-								+ purchaseProductDetails.getCost() * Integer.parseInt(qtySelected[l]);
+								+ purchaseProductDetails.getCost() * Integer.parseInt(qtySelected[l1]);
 					}
 
 					String[] jobid = req.getParameterValues("jobId" + productForSampleId[l]);
