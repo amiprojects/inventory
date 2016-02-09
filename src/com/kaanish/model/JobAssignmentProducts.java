@@ -26,19 +26,19 @@ public class JobAssignmentProducts implements Serializable {
 	private int id;
 	private int qty;
 	private int remaninQty;
-	private float estimatedCost;
+	private float estimatedCost;//old concept
 	@Column(length = 800)
-	private String workDescription;
+	private String workDescription;//old concept
 	private float totalJobCost;
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date estimatedCompletionDate;
+	private Date estimatedCompletionDate;//old concept
 
 	@OneToMany(mappedBy = "jobAssignmentProducts")
 	private List<JobRecievedDetails> jobRecievedDetails;
 
 	@ManyToOne
 	@JoinColumn(name = "designerID")
-	private Vendor vendor;
+	private Vendor vendor;//old concept
 
 	@ManyToOne
 	@JoinColumn(name = "jobAsignmentDetailsId")
@@ -46,7 +46,7 @@ public class JobAssignmentProducts implements Serializable {
 
 	@OneToOne
 	@JoinColumn(name = "jobStockId")
-	private JobStock jobStock;
+	private JobStock jobStock;//old concept
 
 	@ManyToOne
 	@JoinColumn(name = "jobPlanProStockId")

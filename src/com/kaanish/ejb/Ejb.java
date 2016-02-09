@@ -26,6 +26,7 @@ import com.kaanish.model.CustomerEntry;
 import com.kaanish.model.Department;
 import com.kaanish.model.DesignImage;
 import com.kaanish.model.JobAssignmentDetails;
+import com.kaanish.model.JobAssignmentJobDetails;
 import com.kaanish.model.JobAssignmentProducts;
 import com.kaanish.model.JobClass;
 import com.kaanish.model.JobPlan;
@@ -1281,6 +1282,15 @@ public class Ejb {
 		lst.clear();
 		lst.addAll(hash);
 		return lst;
+	}
+	
+	/***************** for Job Assignment Job ***********************/
+	public void setJobAssignmentJobDetails(JobAssignmentJobDetails jobAssignmentJobDetails) {
+		em.persist(jobAssignmentJobDetails);
+	}
+
+	public void updateJobAssignmentJobDetails(JobAssignmentJobDetails jobAssignmentJobDetails) {
+		em.merge(jobAssignmentJobDetails);
 	}
 
 	/***************** for Job Assignment Products ***********************/

@@ -811,25 +811,25 @@ function showDatePicker() {
 																		+ Number(1 + index)
 																		+ "</td>"
 																		+ "<td>"
-																		+ item2.JobName
+																		+ item2.JobName+"<input type='text' name='jobId"+$("#pForSampleIdModal").val()+"' value='"+item2.JobId+"'>"
 																		+ "</td>"
 																		+ "<td>"
 																		+ item2.JobRateOfSample
 																		+ "</td>"
 																		+ "<td>"
-																		+ "<input type='text' class='form-control' id='jobPresentRate"+item2.JobId+"' onkeyup='presentRateKU("+item2.JobId+");' value='"+item2.JobRateOfSample+"'>"
+																		+ "<input type='text' class='form-control' name='jobPresentRate"+$("#pForSampleIdModal").val()+"' id='jobPresentRate"+item2.JobId+"' onkeyup='presentRateKU("+item2.JobId+");' value='"+item2.JobRateOfSample+"'>"
 																		+ "</td>"
 																		+ "<td>"
-																		+ "<input type='text' class='form-control' id='jobQty"+item2.JobId+"' onkeyup='qtyKU("+item2.JobId+");' value='"+item2.JobQtyOfSample+"'>"
+																		+ "<input type='text' class='form-control' name='jobQty"+$("#pForSampleIdModal").val()+"' id='jobQty"+item2.JobId+"' onkeyup='qtyKU("+item2.JobId+");' value='"+item2.JobQtyOfSample+"'>"
 																		+ "</td>"
 																		+ "<td>"
 																		+ item2.JobUOMOfSample
 																		+ "</td>"
 																		+ "<td>"
-																		+ "<input type='text' readonly='readonly' class='form-control' id='jobAmount"+item2.JobId+"' value='"+item2.JobAmountOfSample+"'>"
+																		+ "<input type='text' readonly='readonly' name='jobAmount"+$("#pForSampleIdModal").val()+"' class='form-control' id='jobAmount"+item2.JobId+"' value='"+item2.JobAmountOfSample+"'>"
 																		+ "</td>"
 																		+ "<td>"
-																		+ "<input onclick='showDatePicker();' type='text' class='form-control estSubmDate'>"
+																		+ "<input onclick='showDatePicker();' type='text' name='estSubmDate"+$("#pForSampleIdModal").val()+"' class='form-control estSubmDate'>"
 																		+ "</td>"
 																		+ "<td>"
 																		+ "<input type='checkbox' name='selectedJobs' value='"+item2.JobId+"'>"
@@ -852,9 +852,9 @@ function showDatePicker() {
 							+ '</th><td>'
 							+ "<input type='text' class='form-control' readonly='readonly' name='productId' value='"+ $("#pIdModal").val()+ "'>" +
 							'</td><th style="text-align: right;">'
-							+ "Qty:" 
+							+ "Product For sample id:" 
 							+ '</th><td>'
-							+ "<input type='text' class='form-control' readonly='readonly' value='"+$("#prod" + $("#pIdModal").val() + " :nth-child(5)").html()+"'>" +
+							+ "<input type='text' class='form-control' readonly='readonly' name='productForSampleId' value='"+$("#pForSampleIdModal").val()+"'>" +
 							'</td></tr><tr><th>'
 							+ "Purchase Product Detail Id" 
 							+ '</th><th>'
@@ -876,10 +876,10 @@ function showDatePicker() {
 																"<tbody id='purchaseDetail"+item2.id+"'>"
 																		+ "<tr>"
 																		+ "<td>"
-																		+ '<input type="text" class="form-control" name="purProDetId'+$("#pIdModal").val()+'" value="'+$("#purProDetId"+item2.id).val()+'">'
+																		+ '<input type="text" class="form-control" name="purProDetId'+$("#pForSampleIdModal").val()+'" value="'+$("#purProDetId"+item2.id).val()+'">'
 																		+ "</td>"
 																		+ "<td>"
-																		+ '<input type="text" class="form-control" name="qtySelected'+$("#pIdModal").val()+'" value="'+$("#qtySelected"+item2.id).val()+'">'																		
+																		+ '<input type="text" class="form-control" name="qtySelected'+$("#pForSampleIdModal").val()+'" value="'+$("#qtySelected"+item2.id).val()+'">'																		
 																		+ "</td>"
 																		+ "</tr>"
 																		+ "</tbody>");
@@ -919,8 +919,8 @@ function showDatePicker() {
 					}
 				}
 			});
-			$("#dNo").prop("disabled", true);
-			 $("#qty").prop("disabled", true);
+			$("#dNo").prop("readonly", "readonly");
+			 $("#qty").prop("readonly", "readonly");
 		}
 		function formatDate(d) {
 			var dateparts = d.split(" ");

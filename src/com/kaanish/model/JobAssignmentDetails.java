@@ -30,7 +30,7 @@ public class JobAssignmentDetails implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date assignDate;
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date estimatedCompletionDate;
+	private Date estimatedCompletionDate;//old concept
 	private float surcharge;
 	private float grandTotal;
 	private float profit;
@@ -38,7 +38,7 @@ public class JobAssignmentDetails implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "companyInfoId")
-	private CompanyInfo companyInfo;
+	private CompanyInfo companyInfo;//old concept
 
 	@ManyToOne
 	@JoinColumn(name = "jobberId")
