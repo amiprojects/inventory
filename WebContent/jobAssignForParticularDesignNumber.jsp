@@ -206,8 +206,8 @@ function showDatePicker() {
 									</div>									
 									
 									<div id="productNjobsDiv"></div>
-									<div id="productNpurchasesDiv"></div>
-									<!-- <div id="productNpurchasesDiv" style="display: none;"></div> -->
+									<!-- <div id="productNpurchasesDiv"></div> -->
+									<div id="productNpurchasesDiv" style="display: none;"></div>
 									
 									<table id="productNjobsTable" class="table table-striped table-bordered">
 										<thead style="background-color: #F0F0F0;">
@@ -423,7 +423,7 @@ function showDatePicker() {
 					</table>
 				</div>
 				<div class="modal-footer">
-				<input type="text" id="totalAmount" name="totalAmount">
+				<input type="hidden" id="totalAmount" name="totalAmount">
 					<button type="button" class="btn btn-default" onclick="purDetOkF();">Ok</button>
 				</div>
 			</div>
@@ -727,8 +727,8 @@ function showDatePicker() {
 																+ "</td>"
 																+ "<td>"
 																+ '<input type="text" class="form-control qtySelected" onkeyup="selectedQtyF('+item2.id+','+$("#pIdModal").val()+')" id="qtySelected'+item2.id+'">'+
-																'<input type="text" class="form-control" value="'+item2.id+'" id="purProDetId'+item2.id+'">'+
-																'<input type="text" class="form-control purProDetTotAmount" id="purProDetTotAmount'+item2.id+'">'
+																'<input type="hidden" class="form-control" value="'+item2.id+'" id="purProDetId'+item2.id+'">'+
+																'<input type="hidden" class="form-control purProDetTotAmount" id="purProDetTotAmount'+item2.id+'">'
 																+ "</td>"
 																+ "</tr>"
 																+ "</tbody>");
@@ -747,8 +747,8 @@ function showDatePicker() {
 											+ "</td>"
 											+ "<td>"
 											+ '<input type="text" class="form-control qtySelected" onkeyup="selectedQtyF('+item2.id+','+$("#pIdModal").val()+')" id="qtySelected'+item2.id+'">'+
-											'<input type="text" class="form-control" value="'+item2.id+'" id="purProDetId'+item2.id+'">'+
-											'<input type="text" class="form-control purProDetTotAmount" id="purProDetTotAmount'+item2.id+'">'
+											'<input type="hidden" class="form-control" value="'+item2.id+'" id="purProDetId'+item2.id+'">'+
+											'<input type="hidden" class="form-control purProDetTotAmount" id="purProDetTotAmount'+item2.id+'">'
 											+ "</td>"
 											+ "</tr>"
 											+ "</tbody>");
@@ -857,7 +857,7 @@ function showDatePicker() {
 																		+ Number(1 + index)
 																		+ "</td>"
 																		+ "<td>"
-																		+ item2.JobName+"<input type='text' name='jobId"+$("#pForSampleIdModal").val()+"' value='"+item2.JobId+"'>"
+																		+ item2.JobName+"<input type='hidden' name='jobId"+$("#pForSampleIdModal").val()+"' value='"+item2.JobId+"'>"
 																		+ "</td>"
 																		+ "<td>"
 																		+ item2.JobRateOfSample
