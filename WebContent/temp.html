@@ -1,45 +1,18 @@
-jobAssignmentDetails = new JobAssignmentDetails(); dt = new Date();
-jobAssignmentDetails.setAssignDate(DateConverter.getDate(req.getParameter("assignedDate")));
-jobAssignmentDetails.setChallanNumber(req.getParameter("jobChallanNo"));
-jobAssignmentDetails.setChallan_no(Integer.parseInt(req.getParameter("challanNo")));
-jobAssignmentDetails.setChallanSuffix(Integer.parseInt(req.getParameter("challanSuffix")));
-jobAssignmentDetails.setEntryDate(dt);
-jobAssignmentDetails.setVendor(ejb.getVendorById(Integer.parseInt(req.getParameter("jName"))));
-ejb.setJobAssignment(jobAssignmentDetails);
+totalAmount
+purProDetTotAmount
+qtySelected
 
 
-
-jobAssignmentProducts = new JobAssignmentProducts();
-						jobAssignmentProducts.setQty(Integer.parseInt(qtySelected[l]));
-						jobAssignmentProducts.setRemaninQty(Integer.parseInt(qtySelected[l]));
-						jobAssignmentProducts.setJobAssignmentDetails(jobAssignmentDetails);
-						jobAssignmentProducts.setJobPlanProductStock(jobPlanProductStock);
-						ejb.setJobAssignmentProducts(jobAssignmentProducts);
-						
-						
-						
-
-String[] prodId = req.getParameterValues("productId");
-float totalJobCost = 0;
-String[] jobid = req.getParameterValues("jobId" + productForSampleId[l]);
-					String[] jobqty = req.getParameterValues("jobQty" + productForSampleId[l]);
-					String[] jobrate = req.getParameterValues("jobPresentRate" + productForSampleId[l]);
-					String[] jobamount = req.getParameterValues("jobAmount" + productForSampleId[l]);
-					String[] estSubmDate = req.getParameterValues("estSubmDate" + productForSampleId[l]);
-
-					for (int lc1 = 0; lc1 < jobid.length; lc1++) {
-						jobAssignmentJobDetails = new JobAssignmentJobDetails();
-						jobAssignmentJobDetails.setQty(Integer.parseInt(jobqty[lc1]));
-						jobAssignmentJobDetails.setRate(Float.parseFloat(jobrate[lc1]));
-						jobAssignmentJobDetails.setAmmount(Float.parseFloat(jobamount[lc1]));
-						jobAssignmentJobDetails.setEstimatedCompletionDate(DateConverter.getDate(estSubmDate[lc1]));
-						jobAssignmentJobDetails
-								.setQtyUnit(ejb.getProductDetailById(Integer.parseInt(prodId[l])).getQtyUnit());
-						jobAssignmentJobDetails.setJobAssignmentDetails(jobAssignmentDetails);
-						//jobAssignmentJobDetails.setAssignmentProducts(jobAssignmentProducts);
-						ejb.setJobAssignmentJobDetails(jobAssignmentJobDetails);
-
-						totalJobCost = totalJobCost + Float.parseFloat(jobamount[lc1]);
-					}
-					jobAssignmentProducts.setTotalJobCost(totalJobCost);
-					ejb.updateJobAssignmentProductDetails(jobAssignmentProducts);
+$("#gt").val(
+						Number($("#gt").val()) + $("#totalAmount").val());
+				var sum = 0;
+				$(".eachtotalvalue").each(function() {
+					sum += parseFloat(this.value);
+				});
+				$("#gtot").val(
+						Number($("#gt").val()) + Number(sum.toFixed(2))
+								+ Number($("#surcharge").val()));
+				profitValF();
+				$("#grandtot").val(
+						Number($("#gtot").val())
+								+ Number($("#totProfit").val()));

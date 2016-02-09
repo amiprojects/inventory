@@ -2738,6 +2738,14 @@ public class Ejb {
 	public JobPlanProductStock getJobPlanProductStockById(int id) {
 		return em.find(JobPlanProductStock.class, id);
 	}
+	
+	public JobPlanProductStock getJobPlanProductStockByPurchaseProductDetailsIdAndJobPlanId(int ppdId, int jpId){
+		TypedQuery<JobPlanProductStock> q = em.createQuery("select c from JobPlanProductStock c where c.jobPlan.id=:jpId AND c.purchase_Product_Details.id=:ppdId",
+				JobPlanProductStock.class);
+		q.setParameter("jpId", jpId);
+		q.setParameter("ppdId", ppdId);
+		return q.getResultList().get(0);
+	}
 
 	public List<JobPlanProductStock> getAllJobPlanProductStock() {
 		TypedQuery<JobPlanProductStock> q = em.createQuery("select c from JobPlanProductStock c",
