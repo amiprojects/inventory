@@ -374,7 +374,7 @@
 			$("#cancelOrNot").modal("show");
 		}
 		$("#yesC").click(function() {
-			window.location = 'jobAssign.jsp';
+			window.location = 'jobAssignForOngoingJobs.jsp';
 		});
 		$("#noC").click(function() {
 			$("#cancelOrNot").modal("hide");
