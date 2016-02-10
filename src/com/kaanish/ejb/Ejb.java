@@ -2482,7 +2482,7 @@ public class Ejb {
 	 * Search Job Assignment Details by ChallanID
 	 ****************/
 
-	public JobAssignmentDetails getJobAssignmentDetailsbyChallanNumber(String challanNumber) {
+	/*public JobAssignmentDetails getJobAssignmentDetailsbyChallanNumber(String challanNumber) {
 		TypedQuery<JobAssignmentDetails> q = em.createQuery(
 				"select c from JobAssignmentDetails c where c.challanNumber=:challanNumber",
 				JobAssignmentDetails.class);
@@ -2492,6 +2492,14 @@ public class Ejb {
 		} else {
 			return null;
 		}
+	}*/
+	
+	public List<JobAssignmentDetails> getJobAssignmentDetailsbyChallanNumber(String challanNumber) {
+		TypedQuery<JobAssignmentDetails> q = em.createQuery(
+				"select c from JobAssignmentDetails c where UPPER(c.challanNumber)=:challanNumber ORDER BY c.id DESC",
+				JobAssignmentDetails.class);
+		q.setParameter("challanNumber", challanNumber);
+			return q.getResultList();
 	}
 
 	public JobAssignmentDetails getJobAssignmentDetailsbyChallanNumberAndCompany(String challanNumber) {

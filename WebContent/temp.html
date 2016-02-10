@@ -1,2 +1,36 @@
-class='form-control estSubmDate'
-class='form-control estSubmDate totdate'
+case "purchaseSearchByPurchaseChallanNo":
+				page = "purchasingPurchaseSearch.jsp";
+
+				/*
+				 * List<Purchase_Entry> purEntryList1 = ejb
+				 * .getPurchaseEntryByChallanNo(req
+				 * .getParameter("purChallanNo"));
+				 */
+
+				List<Purchase_Entry> purEntryList1 = ejb.getPurchaseEntryByChallanNo(
+						req.getParameter("companyInitial") + "/" + req.getParameter("fynYear") + "/"
+								+ req.getParameter("month") + "/" + req.getParameter("billType") + "/"
+								+ req.getParameter("autoNum") + "/" + req.getParameter("suffix"));
+
+				req.setAttribute("purEntryList", purEntryList1);
+
+				if (purEntryList1.size() > 0) {
+					msg = "Your search for Purchase challan number : " + req.getParameter("companyInitial") + "/"
+							+ req.getParameter("fynYear") + "/" + req.getParameter("month") + "/"
+							+ req.getParameter("billType") + "/" + req.getParameter("autoNum") + "/"
+							+ req.getParameter("suffix");
+				} else {
+					msg = "No result found for Purchase challan number : " + req.getParameter("companyInitial") + "/"
+							+ req.getParameter("fynYear") + "/" + req.getParameter("month") + "/"
+							+ req.getParameter("billType") + "/" + req.getParameter("autoNum") + "/"
+							+ req.getParameter("suffix");
+				}
+
+				/*
+				 * if (purEntryList1.size() > 0) { msg =
+				 * "Your search for Purchase challan number : " +
+				 * req.getParameter("purChallanNo").toUpperCase(); } else { msg
+				 * = "No result found for Purchase challan number : " +
+				 * req.getParameter("purChallanNo").toUpperCase(); }
+				 */
+				break;
