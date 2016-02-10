@@ -156,9 +156,9 @@ function showDatePicker() {
 												<c:set var="fy"
 													value="${sessionScope['ejb'].getCurrentFinancialYear()}" />
 												<c:set var="cno"
-													value="${sessionScope['ejb'].getLastJobChallanNumber()+1}" />
+													value="${sessionScope['ejb'].getLastJobChallanNumberByCompany()+1}" />
 												<c:set var="csuf"
-													value="${sessionScope['ejb'].getLastJobChallanSuffix()+1}" />
+													value="${sessionScope['ejb'].getLastJobChallanSuffixByCompany()+1}" />
 												<c:set var="suf" value="JOB" />
 												<c:set var="bs"
 													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompany(suf)}" />
@@ -806,8 +806,8 @@ function showDatePicker() {
 				+ "Product code:" 
 				+ '</th><td>'
 				+ "<input type='text' class='form-control' readonly='readonly' value='"+$("#prod" + $("#pIdModal").val() + " :nth-child(2)").html()+"'>" +
-				"<input type='text' class='form-control' readonly='readonly' id='productForSampleId"+$("#pForSampleIdModal").val()+"' value='"+$("#pForSampleIdModal").val()+"'>"+
-				"<input type='text' class='form-control' readonly='readonly' id='productId"+$("#pForSampleIdModal").val()+"' value='"+ $("#pIdModal").val()+ "'>" +
+				"<input type='text' class='form-control' readonly='readonly' name='productForSampleId1' id='productForSampleId"+$("#pForSampleIdModal").val()+"' value='"+$("#pForSampleIdModal").val()+"'>"+
+				"<input type='text' class='form-control' readonly='readonly' name='productId1' id='productId"+$("#pForSampleIdModal").val()+"' value='"+ $("#pIdModal").val()+ "'>" +
 				'</td><th style="text-align: right;">'
 				+ "Description:" 
 				+ '</th><td>'
@@ -815,11 +815,11 @@ function showDatePicker() {
 				'</td><th style="text-align: right;">'
 				+ "Qty:" 
 				+ '</th><td>'
-				+ "<input type='text' id='qtyOfSampleProduct"+$("#pForSampleIdModal").val()+"' class='form-control' readonly='readonly' value='"+$("#prod" + $("#pIdModal").val() + " :nth-child(5)").html()+"'>" +
+				+ "<input type='text' name='qtyOfSampleProduct' id='qtyOfSampleProduct"+$("#pForSampleIdModal").val()+"' class='form-control' readonly='readonly' value='"+$("#prod" + $("#pIdModal").val() + " :nth-child(5)").html()+"'>" +
 				'</td><th style="text-align: right;">'
 				+ "Total Amount:" 
 				+ '</th><td>'
-				+ "<input type='text' class='form-control' id='productEachTotal"+$("#pForSampleIdModal").val()+"' readonly='readonly' value='"+$("#totalAmount").val()+"'>" +
+				+ "<input type='text' class='form-control productEachTotal' id='productEachTotal"+$("#pForSampleIdModal").val()+"' readonly='readonly' value='"+$("#totalAmount").val()+"'>" +
 				'</td></tr><tr><th>'
 				+ "#" 
 				+ '</th><th>'
@@ -861,28 +861,28 @@ function showDatePicker() {
 																		+ Number(1 + index)
 																		+ "</td>"
 																		+ "<td>"
-																		+ item2.JobName+"<input type='hidden' id='jobId"+item2.JobId+"' value='"+item2.JobId+"'>"
+																		+ item2.JobName+"<input type='hidden' id='jobId"+item2.JobId+"' name='jobId"+$("#pForSampleIdModal").val()+"' value='"+item2.JobId+"'>"
 																		+ "</td>"
 																		+ "<td>"
 																		+ item2.JobRateOfSample
 																		+ "</td>"
 																		+ "<td>"
-																		+ "<input type='text' class='form-control' id='jobPresentRate"+item2.JobId+"' onkeyup='presentRateKU("+item2.JobId+");' value='"+item2.JobRateOfSample+"'>"
+																		+ "<input type='text' class='form-control' id='jobPresentRate"+item2.JobId+"' name='jobPresentRate"+$("#pForSampleIdModal").val()+"' id='jobPresentRate"+item2.JobId+"' onkeyup='presentRateKU("+item2.JobId+");' value='"+item2.JobRateOfSample+"'>"
 																		+ "</td>"
 																		+ "<td>"
-																		+ "<input type='text' class='form-control' id='jobQty"+item2.JobId+"' onkeyup='qtyKU("+item2.JobId+");' value='"+item2.JobQtyOfSample+"'>"
+																		+ "<input type='text' class='form-control' id='jobQty"+item2.JobId+"' name='jobQty"+$("#pForSampleIdModal").val()+"' id='jobQty"+item2.JobId+"' onkeyup='qtyKU("+item2.JobId+");' value='"+item2.JobQtyOfSample+"'>"
 																		+ "</td>"
 																		+ "<td>"
 																		+ item2.JobUOMOfSample
 																		+ "</td>"
 																		+ "<td>"
-																		+ "<input type='text' readonly='readonly' id='jobAmount"+item2.JobId+"' class='form-control' value='"+item2.JobAmountOfSample+"'>"
+																		+ "<input type='text' readonly='readonly' id='jobAmount"+item2.JobId+"' name='jobAmount"+$("#pForSampleIdModal").val()+"' class='form-control eachtotalvalue' id='jobAmount"+item2.JobId+"' value='"+item2.JobAmountOfSample+"'>"
 																		+ "</td>"
 																		+ "<td>"
-																		+ "<input onclick='showDatePicker();' type='text' id='estSubmDate"+item2.JobId+"' class='form-control estSubmDate'>"
+																		+ "<input onclick='showDatePicker();' type='text' id='estSubmDate"+item2.JobId+"' name='estSubmDate"+$("#pForSampleIdModal").val()+"' class='form-control estSubmDate'>"
 																		+ "</td>"
 																		+ "<td>"
-																		+ "<input type='checkbox' onclick='isSelectedF("+$("#pForSampleIdModal").val()+","+item2.JobId+");' name='selectedJobs"+item2.JobId+"' class='isSelected"+$("#pForSampleIdModal").val()+"' id='isSelected"+item2.JobId+"' value='"+item2.JobId+"'>"
+																		+ "<input type='checkbox' checked='checked' onclick='isSelectedF("+$("#pForSampleIdModal").val()+","+item2.JobId+");' name='selectedJobs"+item2.JobId+"' class='isSelected"+$("#pForSampleIdModal").val()+"' id='isSelected"+item2.JobId+"' value='"+item2.JobId+"'>"
 																		+ "</td>"
 																		+ "</tr>"
 																		+ "</tbody>");										
@@ -1105,7 +1105,7 @@ function showDatePicker() {
 		        }
 		    });
 		    if (i == 0) {
-		       // alert("Please select atleast one users");
+		        alert("Please select atleast one users");
 		        
 		        $("#productForSampleId"+psId).removeAttr("name");
 		        $("#productId"+psId).removeAttr("name");
@@ -1113,18 +1113,18 @@ function showDatePicker() {
 		        
 		        $("#productEachTotal"+psId).attr("class", "form-control");
 		    } else {
-		    	//alert("Atleast one is selected");
+		    	alert("Atleast one is selected");
 		    	
 		    	$("#productForSampleId"+psId).attr("name", "productForSampleId1");
 		        $("#productId"+psId).attr("name", "productId1");
-		        $("#qtyOfSampleProduct"+psId).attr("name", "qtyOfSampleProduct");
+		        $("#qtyOfSampleProduct"+psId).attr("name", "productForSampleId1");
 		        
 		        $("#productEachTotal"+psId).attr("class", "form-control productEachTotal");
 		    }
 		    
 		    
 		    if ($('#isSelected'+jobId).is(":checked")) {
-		    	//alert("checked"+jobId);
+		    	alert("checked"+jobId);
 		    	
 		    	$("#jobId"+jobId).attr("name", "jobId"+psId);
 		    	$("#jobPresentRate"+jobId).attr("name", "jobPresentRate"+psId);
@@ -1134,7 +1134,7 @@ function showDatePicker() {
 		    	
 		    	$("#jobAmount"+jobId).attr("class", "form-control eachtotalvalue");
 		    }else{
-		    	//alert("not checked"+jobId);
+		    	alert("not checked"+jobId);
 		    	
 		    	$("#jobId"+jobId).removeAttr("name");
 		    	$("#jobPresentRate"+jobId).removeAttr("name");

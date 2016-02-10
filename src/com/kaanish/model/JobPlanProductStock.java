@@ -22,7 +22,6 @@ public class JobPlanProductStock implements Serializable {
 	private int qty;
 	private int remainingQty;//same as qty
 	private int jobCycle;//0
-	private float totalJobCost;//0
 	private boolean isUndergoingProcess;//false
 	private boolean isComplete;//false
 	private int jobAssignQty;//new
@@ -70,14 +69,6 @@ public class JobPlanProductStock implements Serializable {
 
 	public void setJobCycle(int jobCycle) {
 		this.jobCycle = jobCycle;
-	}
-
-	public float getTotalJobCost() {
-		return totalJobCost;
-	}
-
-	public void setTotalJobCost(float totalJobCost) {
-		this.totalJobCost = totalJobCost;
 	}
 
 	public boolean isUndergoingProcess() {
