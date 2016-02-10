@@ -1121,6 +1121,7 @@ function showDatePicker() {
 		        $("#productForSampleId"+psId).removeAttr("name");
 		        $("#productId"+psId).removeAttr("name");
 		        $("#qtyOfSampleProduct"+psId).removeAttr("name");
+		        $("#productEachTotal"+psId).removeAttr("name");
 		        
 		        $("#productEachTotal"+psId).attr("class", "form-control");
 		    } else {
@@ -1129,6 +1130,7 @@ function showDatePicker() {
 		    	$("#productForSampleId"+psId).attr("name", "productForSampleId1");
 		        $("#productId"+psId).attr("name", "productId1");
 		        $("#qtyOfSampleProduct"+psId).attr("name", "qtyOfSampleProduct");
+		        $("#productEachTotal"+psId).attr("name", "productEachTotal");
 		        
 		        $("#productEachTotal"+psId).attr("class", "form-control productEachTotal");
 		    }

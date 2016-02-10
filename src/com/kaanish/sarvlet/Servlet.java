@@ -2584,6 +2584,7 @@ public class Servlet extends HttpServlet {
 					String[] productForSampleId1 = req.getParameterValues("productForSampleId1");
 					String[] prodId = req.getParameterValues("productId1");
 					String[] qtyOfSampleProduct=req.getParameterValues("qtyOfSampleProduct");
+					String[] productEachTotal=req.getParameterValues("productEachTotal");
 					float totalJobExpanse=0;
 					
 					for (int l1 = 0; l1 < productForSampleId1.length; l1++) {
@@ -2593,6 +2594,7 @@ public class Servlet extends HttpServlet {
 					//jobAssignmentProducts.setJobPlanProductStock(jobPlanProductStock);
 					jobAssignmentProducts.setQty(Integer.parseInt(qtyOfSampleProduct[l1]));
 					jobAssignmentProducts.setRemaninQty(Integer.parseInt(qtyOfSampleProduct[l1]));
+					jobAssignmentProducts.setEstimatedCost(Float.parseFloat(productEachTotal[l1]));
 					ejb.setJobAssignmentProducts(jobAssignmentProducts);
 					
 					String[] purProDetId1 = req.getParameterValues("purProDetId" + productForSampleId1[l1]);
