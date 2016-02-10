@@ -2501,7 +2501,7 @@ public class Servlet extends HttpServlet {
 			case "jobAssignmentForParticularDesignNumber":
 				page = "jobAssignForParticularDesignNumber.jsp";
 				sampleDesignCostSheet = ejb.getSampleDesignCostSheetById(Integer.parseInt(req.getParameter("dId")));
-
+				
 				jobPlan = new JobPlan();
 				jobPlan.setPlanDate(DateConverter.getDate(req.getParameter("assignedDate")));
 				jobPlan.setQty(Integer.parseInt(req.getParameter("qty")));
