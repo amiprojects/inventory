@@ -2579,6 +2579,7 @@ public class Servlet extends HttpServlet {
 					} else {
 						jobAssignmentDetails.setFlatProfit(false);
 					}
+					jobAssignmentDetails.setJobPlan(jobPlan);
 					ejb.setJobAssignment(jobAssignmentDetails);					
 					
 					String[] productForSampleId1 = req.getParameterValues("productForSampleId1");

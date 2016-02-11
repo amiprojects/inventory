@@ -39,6 +39,9 @@ public class JobPlan implements Serializable {
 
 	@OneToMany(mappedBy = "jobPlan",cascade=CascadeType.ALL)
 	private List<JobPlanProductStock> jobPlanProductStocks;
+	
+	@OneToMany(mappedBy = "jobPlan",cascade=CascadeType.ALL)
+	private List<JobAssignmentDetails> jobAssignmentDetails;
 
 	public int getId() {
 		return id;
@@ -126,6 +129,14 @@ public class JobPlan implements Serializable {
 
 	public void setQty(int qty) {
 		this.qty = qty;
+	}
+
+	public List<JobAssignmentDetails> getJobAssignmentDetails() {
+		return jobAssignmentDetails;
+	}
+
+	public void setJobAssignmentDetails(List<JobAssignmentDetails> jobAssignmentDetails) {
+		this.jobAssignmentDetails = jobAssignmentDetails;
 	}
 
 }

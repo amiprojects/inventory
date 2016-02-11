@@ -17,6 +17,15 @@
 <link rel="stylesheet" href="bootstrapcdn.css">
 <script src="maxcdn.bootstrapcdn.js"></script>
 
+
+
+<link rel="stylesheet" href="css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="css/fixedHeader.dataTables.min.css">
+<link rel="stylesheet" href="css/buttons.dataTables.min.css">
+<link rel="stylesheet" href="css/dataTables.searchHighlight.css" />
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+
+
 <style>
 .font {
 	color: #777777;
@@ -112,11 +121,10 @@
 									<h3>Stock</h3>
 
 									<br>
-									<div
-										style="overflow-y: scroll; overflow-x: hidden; height: 470px">
+									
 
-										<table id="stream_table"
-											class="table table-striped table-bordered">
+										<table id="example" cellspacing="0" width="100%"
+											class="display">
 											<thead>
 												<tr>
 													<th>#</th>
@@ -126,9 +134,7 @@
 													<th>Quantity</th>
 													<th>WSP</th>
 													<th>MRP</th>
-
-
-													<th></th>
+													<th>view</th>
 
 												</tr>
 											</thead>
@@ -141,7 +147,7 @@
 													<c:if
 														test="${amiProStock1.purchase_Product_Details.size()>0}">
 														<c:set var="qty"
-															value="${amiProStock1.isSaleble()?sessionScope['ejb'].getReadyGoodsStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty:sessionScope['ejb'].getRawMaterialStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty}" />
+															value="${!amiProStock1.isRaw()?sessionScope['ejb'].getReadyGoodsStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty:sessionScope['ejb'].getRawMaterialStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty}" />
 														<c:choose>
 															<c:when test="${qty==0}">
 																<tr>
@@ -158,8 +164,10 @@
 																			action="stockDetailShow" method="post"
 																			id="StockDetails${amiProStock1.id}">
 																			<a href="#"
-																				onclick="showDetails('${amiProStock1.id}');"><input type="hidden" value="${amiProStock1.id}"name="proId">
-																				<img alt="" src="images/eye.png" height="25px"></a>
+																				onclick="showDetails('${amiProStock1.id}');"><input
+																				type="hidden" value="${amiProStock1.id}"
+																				name="proId"> <img alt=""
+																				src="images/eye.png" height="25px"></a>
 																		</form></td>
 																</tr>
 															</c:when>
@@ -192,7 +200,7 @@
 											</tbody>
 
 										</table>
-									</div>
+									
 
 								</div>
 							</div>
@@ -214,6 +222,22 @@
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="js/enscroll.js"></script>
 	<script type="text/javascript" src="js/grid-filter.js"></script>
+	
+	<script src="js/jquery.dataTables.min.js"></script>
+	<script src="js/dataTables.fixedHeader.min.js"></script>
+	<script src="js/buttons.flash.min.js"></script>
+	<script src="js/buttons.html5.min.js"></script>
+	<script src="js/buttons.print.min.js"></script>
+	<script src="js/dataTables.buttons.min.js"></script>
+	<script src="js/jszip.min.js"></script>
+	<script src="js/vfs_fonts.js"></script>
+	<script src="js/pdfmake.min.js"></script>
+	<script src="js/pdfmake.min.js"></script>
+	<script src="js/dataTables.searchHighlight.min.js"></script>
+	<script src="js/pdfmake.min.js"></script>
+	<script src="js/jquery.highlight.js"></script>
+	
+	
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#stock").attr("id", "activeSubMenu");
@@ -230,6 +254,27 @@
 			window.location = 'productDisplay.jsp';
 		}
 	</script>
+	
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var table = $('#example').DataTable({
+
+				"scrollY" : 200,
+				"scrollX" : true,
+				dom : 'Bfrtip',
+				buttons : [ 'copy', 'excel', 'print' ]
+			});
+
+			table.on('draw', function() {
+				var body = $(table.table().body());
+
+				body.unhighlight();
+				body.highlight(table.search());
+			});
+		});
+	</script>
+
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->

@@ -2747,6 +2747,14 @@ public class Ejb {
 		TypedQuery<JobPlan> q = em.createQuery("select c from JobPlan c", JobPlan.class);
 		return q.getResultList();
 	}
+	
+	public List<JobPlan> getAllJobPlanByDesignNumber(String dn) {		
+		TypedQuery<JobPlan> q = em.createQuery(
+				"select c from JobPlan c where UPPER(c.designCostSheet.designNumber) like :dn",
+				JobPlan.class);
+		q.setParameter("dn", dn.toUpperCase() + "%");
+		return q.getResultList();		
+	}
 
 	/***************************
 	 * for JobPlanProductStockProductStock

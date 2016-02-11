@@ -23,6 +23,7 @@ import com.kaanish.model.City;
 import com.kaanish.model.CompanyInfo;
 import com.kaanish.model.Country;
 import com.kaanish.model.Department;
+import com.kaanish.model.JobPlan;
 import com.kaanish.model.JobsForDesignCostSheet;
 import com.kaanish.model.ProductDetail;
 import com.kaanish.model.ProductImage;
@@ -67,7 +68,10 @@ import com.kaanish.util.DepartmentCotractor;
 		"/getCriticalStock", "/getSampleDesignCostSheetByDesignNumber",
 		"/getProductDetailsByDesignNumberAndQuantity",
 		"/getPurchaseProductDetailsByProductCode",
-		"/getJobsForDesignCostSheetByProductSForSampleId","/getProductImagejson", "/getPlannedSampleDesignCostSheetByDesignNumber" })
+		"/getJobsForDesignCostSheetByProductSForSampleId",
+		"/getProductImagejson",
+		"/getPlannedSampleDesignCostSheetByDesignNumber",
+		"/getAllJobPlanByDesignNumber" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -346,12 +350,15 @@ public class JsonServlet extends HttpServlet {
 						.getProductsForDesignCostSheetById(
 								Integer.parseInt(req.getParameter("pid")))
 						.getJobsForDesignCostSheets()) {
-					generator4.writeStartObject().write("JobId", jdcs.getId())
-					.write("JobName", jdcs.getJobTypes().getJobName())
-					.write("JobRateOfSample", jdcs.getRate())
-					.write("JobQtyOfSample", jdcs.getQty())
-					.write("JobUOMOfSample", jdcs.getQtyUnit().getName())
-					.write("JobAmountOfSample", jdcs.getAmmount())
+					generator4
+							.writeStartObject()
+							.write("JobId", jdcs.getId())
+							.write("JobName", jdcs.getJobTypes().getJobName())
+							.write("JobRateOfSample", jdcs.getRate())
+							.write("JobQtyOfSample", jdcs.getQty())
+							.write("JobUOMOfSample",
+									jdcs.getQtyUnit().getName())
+							.write("JobAmountOfSample", jdcs.getAmmount())
 							.writeEnd();
 					;
 				}
@@ -542,7 +549,7 @@ public class JsonServlet extends HttpServlet {
 					ejb.setVendor(vendor);
 					ejb.setAccountDetails(accountDetails);
 
-							gen2.writeStartObject()
+					gen2.writeStartObject()
 							.write("result", "vendor added successfully")
 							.write("vid", vendor.getId())
 							.write("vname", vendor.getName())
@@ -1077,6 +1084,25 @@ public class JsonServlet extends HttpServlet {
 				generatorD.writeEnd().close();
 				break;
 				
+			case "getAllJobPlanByDesignNumber":
+				JsonGeneratorFactory factoryJP = Json
+						.createGeneratorFactory(null);
+				JsonGenerator generatorJP = factoryJP.createGenerator(resp
+						.getOutputStream());
+				generatorJP.writeStartArray();
+
+				for (JobPlan jp : ejb
+						.getAllJobPlanByDesignNumber(req
+								.getParameter("dNo"))) {
+					generatorJP.writeStartObject().write("jpId", jp.getId())
+					//.write("jpDesc", jp.getDescription())
+					.write("jpDate", jp.getPlanDate().toString())
+					.write("jpQty", jp.getQty())
+							.writeEnd();
+				}
+				generatorJP.writeEnd().close();
+				break;
+
 			case "getPlannedSampleDesignCostSheetByDesignNumber":
 				JsonGeneratorFactory factoryDP = Json
 						.createGeneratorFactory(null);
@@ -1093,19 +1119,23 @@ public class JsonServlet extends HttpServlet {
 							.writeEnd();
 				}
 				generatorDP.writeEnd().close();
-				break;
+				break;			
 
 			case "getProductImagejson":
-				JsonGeneratorFactory factoryI = Json.createGeneratorFactory(null);
-				JsonGenerator generatorI = factoryI.createGenerator(resp.getOutputStream());
+				JsonGeneratorFactory factoryI = Json
+						.createGeneratorFactory(null);
+				JsonGenerator generatorI = factoryI.createGenerator(resp
+						.getOutputStream());
 				generatorI.writeStartArray();
 				for (ProductImage pmg : ejb
-						.getAllProductImageByProductId(Integer.parseInt(req.getParameter("productCode")))) {
-					generatorI.writeStartObject().write("pImid", pmg.getImageAsString()).writeEnd();
+						.getAllProductImageByProductId(Integer.parseInt(req
+								.getParameter("productCode")))) {
+					generatorI.writeStartObject()
+							.write("pImid", pmg.getImageAsString()).writeEnd();
 				}
 				generatorI.writeEnd().close();
 				break;
-				
+
 			default:
 				break;
 			}
