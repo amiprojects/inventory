@@ -24,6 +24,10 @@ public class SerialNumber implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "purchaseProductDetailsId")
 	private Purchase_Product_Details purchase_Product_Details;
+	
+	@ManyToOne
+	@JoinColumn(name = "purchaseOrderProductdetailsId")
+	private PurchaseOrderProductdetails purchaseOrderProductdetails;
 
 	public int getId() {
 		return id;
@@ -63,6 +67,14 @@ public class SerialNumber implements Serializable {
 
 	public void setLotNo(String lotNo) {
 		this.lotNo = lotNo;
+	}
+
+	public PurchaseOrderProductdetails getPurchaseOrderProductdetails() {
+		return purchaseOrderProductdetails;
+	}
+
+	public void setPurchaseOrderProductdetails(PurchaseOrderProductdetails purchaseOrderProductdetails) {
+		this.purchaseOrderProductdetails = purchaseOrderProductdetails;
 	}
 
 }

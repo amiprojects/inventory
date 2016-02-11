@@ -22,7 +22,7 @@
 <link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
 <!-- Bootstrap -->
 
-<!-- <link rel="stylesheet" href=style.css> -->
+
 <link rel="stylesheet" href="css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="css/fixedHeader.dataTables.min.css">
 <link rel="stylesheet" href="css/buttons.dataTables.min.css">

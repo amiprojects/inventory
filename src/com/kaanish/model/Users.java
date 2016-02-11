@@ -46,6 +46,9 @@ public class Users implements Serializable {
 	private List<Purchase_Entry> purchase_Entries;
 	
 	@OneToMany(mappedBy = "users")
+	private List<PurchaseOrderEntry> purchaseOrderEntry;
+	
+	@OneToMany(mappedBy = "users")
 	private List<VoucherDetails> voucherDetails;
 	
 	@OneToMany(mappedBy = "users")
@@ -166,4 +169,21 @@ public class Users implements Serializable {
 	public void setSalesReturn(List<SalesReturn> salesReturn) {
 		SalesReturn = salesReturn;
 	}
+
+	public List<NotificationView> getNotificationView() {
+		return notificationView;
+	}
+
+	public void setNotificationView(List<NotificationView> notificationView) {
+		this.notificationView = notificationView;
+	}
+
+	public List<PurchaseOrderEntry> getPurchaseOrderEntry() {
+		return purchaseOrderEntry;
+	}
+
+	public void setPurchaseOrderEntry(List<PurchaseOrderEntry> purchaseOrderEntry) {
+		this.purchaseOrderEntry = purchaseOrderEntry;
+	}
+	
 }

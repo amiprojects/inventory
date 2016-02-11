@@ -42,6 +42,10 @@ public class VoucherDetails implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "purchase_EntryId")
 	private Purchase_Entry purchase_Entry;
+	
+	@OneToOne
+	@JoinColumn(name = "purchaseOrderEntryId")
+	private PurchaseOrderEntry purchaseOrderEntry;
 
 	@OneToOne
 	@JoinColumn(name = "purchaseReturnId")
@@ -149,6 +153,14 @@ public class VoucherDetails implements Serializable {
 
 	public void setTotalCreditNote(float totalCreditNote) {
 		this.totalCreditNote = totalCreditNote;
+	}
+
+	public PurchaseOrderEntry getPurchaseOrderEntry() {
+		return purchaseOrderEntry;
+	}
+
+	public void setPurchaseOrderEntry(PurchaseOrderEntry purchaseOrderEntry) {
+		this.purchaseOrderEntry = purchaseOrderEntry;
 	}
 
 }
