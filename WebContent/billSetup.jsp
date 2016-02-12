@@ -186,6 +186,62 @@
 								</div>
 								<div class="widget-area">
 									<div>
+										<h1>Purchase Order Invoice Setup</h1>
+									</div>
+									<div class="col-md-3">
+										<label>Purchase Order Invoice Sample:</label>
+									</div>
+									<br>
+									<div class="col-md-8">
+										<label style="font-size: 30px;" style="text-align:center;">KK&nbsp;/&nbsp;PURO&nbsp;/&nbsp;15-16&nbsp;/&nbsp;12&nbsp;/&nbsp;0091&nbsp;/&nbsp;001</label><br>
+										<img src="img/th.jpg" height="33px" width="33px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<img src="img/th_1.jpg" height="33px" width="33px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<img src="img/th_1.jpg" height="33px" width="33px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<img src="img/th.jpg" height="33px" width="33px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<img src="img/th.jpg" height="33px" width="33px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<img src="img/th.jpg" height="33px" width="33px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<h5 style="text-align: left;">Company
+											Name&nbsp;&nbsp;/&nbsp;&nbsp;Invoice
+											Type&nbsp;&nbsp;/&nbsp;&nbsp;Year&nbsp;&nbsp;/&nbsp;&nbsp;Month&nbsp;&nbsp;/&nbsp;&nbsp;Auto
+											Number&nbsp;&nbsp;/&nbsp;&nbsp;Suffix</h5>
+									</div>
+									<c:set
+										value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompanyId('PURO', compInfo.id)}"
+										var="pur" />
+									<div class="col-md-9">
+										<label>Present Setup:</label> <br>
+										<form action="addBillSetup" method="post"
+											id="addpurchaseorderinvoice">
+											<input type="text"  style="width: 50px"
+												name="comname" id=pormname readonly="readonly"
+												value="${pur.companyInitial}"></input> <input type="text"
+												name="type" id="ptype" readonly="readonly" value="PURO"
+												style="width: 50px"></input> <input type="text"
+												readonly="readonly" name="year" id="pyear"
+												style="width: 50px" value="15-16"></input> <input
+												type="text" readonly="readonly" name="month" id="pmonth"
+												style="width: 50px" value="12"></input> <input type="text"
+												readonly="readonly" name="autonum" id="pautonum"
+												style="width: 50px" value="0091"></input> <input type="text"
+												name="suffix" id="posuffix" style="width: 50px"
+												readonly="readonly" value="${pur.sufix}"></input>
+											<div id="purOrdrInvImgEdit" style="display: block;">
+												<a href="#" onclick="editPurchaseOrderInvoce()"> <img
+													src="img/edit.png" height="29px" width="29px"></a>
+											</div>
+											<div style="display: none;" id="purOrImgAdd">
+												<a href="#" onclick="addPurchaseOrderInvoice();"> <img
+													src="img/add.png" height="29px" width="29px"></a>
+											</div>
+										</form>
+									</div>
+									<br> <br> <br>
+								</div>
+								
+								
+								
+								<div class="widget-area">
+									<div>
 										<h1>Sales Invoice Setup</h1>
 									</div>
 									<div class="col-md-3">
@@ -446,7 +502,9 @@
 		function addRoadChallan() {
 			$("#addroadchallan").submit();
 		}
-
+		function addPurchaseOrderInvoice() {
+			$("#addpurchaseorderinvoice").submit();
+		}
 		$(document).ready(function() {
 			$("#setup").attr("id", "activeSubMenu");
 			$("#sSetupBill").attr("style", "color: #6a94ff;");
@@ -496,6 +554,13 @@
 			$('#rcomname').attr("readonly", false);
 			$('#rsuffix').attr("readonly", false);
 		}
+		
+		function editPurchaseOrderInvoce() {
+			$("#purOrdrInvImgEdit").attr("style", "display: none;");
+			$("#purOrImgAdd").attr("style", "display: block;");
+			$('#pormname').attr("readonly", false);
+			$('#posuffix').attr("readonly", false);
+					}
 	</script>
 	<script>
 		$(function() {

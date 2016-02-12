@@ -45,6 +45,8 @@ import com.kaanish.model.PaymentType;
 import com.kaanish.model.ProductDetail;
 import com.kaanish.model.ProductImage;
 import com.kaanish.model.ProductsForDesignCostSheet;
+import com.kaanish.model.PurchaseOrderEntry;
+import com.kaanish.model.PurchaseOrderProductdetails;
 import com.kaanish.model.PurchaseReturn;
 import com.kaanish.model.PurchaseReturnProductDetails;
 import com.kaanish.model.Purchase_Entry;
@@ -903,6 +905,19 @@ public class Ejb {
 
 	}
 
+	public int getLastPurchaseOrderChallanNumberByCompany(int cId) {
+		TypedQuery<PurchaseOrderEntry> q = em.createQuery(
+				"select c from PurchaseOrderEntry c WHERE c.companyInfo.id=:cId ORDER BY c.id DESC", PurchaseOrderEntry.class);
+		q.setParameter("cId", cId);
+		if (q.getResultList().size() > 0) {
+			return q.getResultList().get(0).getChallan_no();
+		} else {
+			return 0;
+		}
+
+	}
+
+	
 	public int getLastPurchaseChallanSuffix() {
 		TypedQuery<Purchase_Entry> q = em.createQuery("select c from Purchase_Entry c ORDER BY c.id DESC",
 				Purchase_Entry.class);
@@ -949,6 +964,34 @@ public class Ejb {
 			}
 		}
 	}
+	
+	public int getLastPurchaseOrderChallanSuffixByCompany(int cId) {
+	TypedQuery<PurchaseOrderEntry> q = em.createQuery(
+			"select c from PurchaseOrderEntry c WHERE c.companyInfo.id=:cId ORDER BY c.id DESC", PurchaseOrderEntry.class);
+	q.setParameter("cId", cId);
+	if (q.getResultList().size() > 0) {
+		int s = q.getResultList().get(0).getChallanSuffix();
+		if (getLastBillSetupBySufixAndCompanyId("PURO", cId).equals(null)) {
+			return s;
+		} else {
+			if (Integer.parseInt(getLastBillSetupBySufixAndCompanyId("PURO", cId).getSufix()) < s) {
+				return s;
+			} else {
+				return Integer.parseInt((getLastBillSetupBySufixAndCompanyId("PURO", cId).getSufix()));
+			}
+		}
+	} else {
+		if (getLastBillSetupBySufixAndCompanyId("PURO", cId).equals(null)) {
+			return 0;
+		} else {
+			return Integer.parseInt(getLastBillSetupBySufixAndCompanyId("PURO", cId).getSufix());
+		}
+	}
+}
+
+
+
+ 
 
 	public List<Purchase_Entry> getAllPurchaseEntry() {
 		TypedQuery<Purchase_Entry> q = em.createQuery("select c from Purchase_Entry c", Purchase_Entry.class);
@@ -2516,9 +2559,7 @@ public class Ejb {
 		}
 	}
 
-	/*****************************
-	 * Search Sasles for return by ChallanID
-	 ****************/
+	/*****************************Search Sasles for return by ChallanID***************/
 
 	public SalesEntry getSalestDetailsbyChallanNumber(String challanNumber) {
 		TypedQuery<SalesEntry> q = em.createQuery("select c from SalesEntry c where c.challanNumber=:challanNumber",
@@ -2539,9 +2580,7 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	/*****************************
-	 * Sasles return
-	 ********************************************************/
+	/*****************************Sasles return********************************************/
 
 	public void setSalesReturn(SalesReturn salesReturn) {
 		em.persist(salesReturn);
@@ -2577,7 +2616,7 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	/**************** VoucherAssign ******************************************************************/
+	/****************VoucherAssign ******************************************************************/
 	public void setVoucherAssign(VoucherAssign voucherAssign) {
 		em.persist(voucherAssign);
 	}
@@ -2608,7 +2647,7 @@ public class Ejb {
 		return q.getResultList().get(0);
 	}
 
-	/*************************** for jobtypes ******************************/
+	/***************************for job_types ******************************/
 	public void setJobTypes(JobTypes jobTypes) {
 		em.persist(jobTypes);
 	}
@@ -2626,9 +2665,7 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	/***************************
-	 * for SampleDesignCostSheet
-	 *********************/
+	/***************************for SampleDesignCostSheet*********************/
 
 	public void setSampleDesignCostSheet(SampleDesignCostSheet sample) {
 		em.persist(sample);
@@ -2669,9 +2706,7 @@ public class Ejb {
 		return lst;
 	}
 
-	/***************************
-	 * for ProductsForDesignCostSheet
-	 *********************/
+	/**************************for ProductsForDesignCostSheet********************/
 
 	public void setProductsForDesignCostSheet(ProductsForDesignCostSheet sample) {
 		em.persist(sample);
@@ -2746,6 +2781,14 @@ public class Ejb {
 	public List<JobPlan> getAllJobPlan() {
 		TypedQuery<JobPlan> q = em.createQuery("select c from JobPlan c", JobPlan.class);
 		return q.getResultList();
+	}
+	
+	public List<JobPlan> getAllJobPlanByDesignNumber(String dn) {		
+		TypedQuery<JobPlan> q = em.createQuery(
+				"select c from JobPlan c where UPPER(c.designCostSheet.designNumber) like :dn",
+				JobPlan.class);
+		q.setParameter("dn", dn.toUpperCase() + "%");
+		return q.getResultList();		
 	}
 
 	/***************************
@@ -2890,6 +2933,54 @@ public List<SalesProductDetails> getAllSalesProductDetails(){
 	TypedQuery<SalesProductDetails> q=em.createQuery("select c from SalesProductDetails c",SalesProductDetails.class);
 	return q.getResultList();
 }
-/**************************************************************************************************/
-	
+
+/**************** PurchaseOrder *****************/
+
+public void setPurchaseOrderEntry(PurchaseOrderEntry purchaseOrderEntry) {
+	em.persist(purchaseOrderEntry);
+}
+
+public PurchaseOrderEntry getPurchaseOrderEntryById(int id) {
+	return em.find(PurchaseOrderEntry.class, id);
+}
+
+public void deletePurchaseOrderEntryById(int id) {
+	em.remove(getPurchaseOrderEntryById(id));
+}
+
+public void updatePurchaseOrderEntry(PurchaseOrderEntry purchaseOrderEntry) {
+	em.merge(purchaseOrderEntry);
+}
+
+public List<PurchaseOrderEntry> getAllPurchaseOrderEntry() {
+	TypedQuery<PurchaseOrderEntry> q = em.createQuery("select c from PurchaseOrderEntry c", PurchaseOrderEntry.class);
+	return q.getResultList();
+}
+
+/****************PurchaseOrderProductdetails*****************/
+
+
+public void setPurchaseOrderProductdetails(PurchaseOrderProductdetails purchaseOrderProductdetails) {
+	em.persist(purchaseOrderProductdetails);
+}
+
+public PurchaseOrderProductdetails getPurchaseOrderProductdetailsById(int id) {
+	return em.find(PurchaseOrderProductdetails.class, id);
+}
+
+public void deletePurchaseOrderProductdetailsById(int id) {
+	em.remove(getPurchaseOrderProductdetailsById(id));
+}
+
+public void updatePurchaseOrderEntry(PurchaseOrderProductdetails purchaseOrderProductdetails) {
+	em.merge(purchaseOrderProductdetails);
+}
+
+public List<PurchaseOrderProductdetails> getAllPurchaseOrderProductdetails() {
+	TypedQuery<PurchaseOrderProductdetails> q = em.createQuery("select c from PurchaseOrderProductdetails c", PurchaseOrderProductdetails.class);
+	return q.getResultList();
+}
+
+
+
 }

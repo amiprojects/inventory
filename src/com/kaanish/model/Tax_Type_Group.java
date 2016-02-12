@@ -32,6 +32,9 @@ public class Tax_Type_Group implements Serializable {
 	private List<AccountDetails> accountDetails;
 	@OneToMany(mappedBy = "tax_Type_Group")
 	private List<SalesEntry> salesEntry;
+	
+	@OneToMany(mappedBy = "tax_Type_Group")
+	private List<PurchaseOrderEntry> purchaseOrderEntry;
 
 	@OneToMany(mappedBy = "tax_Type_Group")
 	private List<Purchase_Entry> purchase_Entries;
@@ -104,6 +107,22 @@ public class Tax_Type_Group implements Serializable {
 
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
+	}
+
+	public List<SalesEntry> getSalesEntry() {
+		return salesEntry;
+	}
+
+	public void setSalesEntry(List<SalesEntry> salesEntry) {
+		this.salesEntry = salesEntry;
+	}
+
+	public List<PurchaseOrderEntry> getPurchaseOrderEntry() {
+		return purchaseOrderEntry;
+	}
+
+	public void setPurchaseOrderEntry(List<PurchaseOrderEntry> purchaseOrderEntry) {
+		this.purchaseOrderEntry = purchaseOrderEntry;
 	}
 
 }

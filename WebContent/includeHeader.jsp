@@ -1,16 +1,15 @@
 <header class="header" id="header">
 	<div class="logo">
-		<!--  <a href="dashboard.html" title=""><img src="images/logo2.png"
-			alt="" /></a> 
-		<a title="" class="toggle-menu"><i class="fa fa-bars"></i></a> -->
-		<h4>Kaanish Kouture</h4>
+		<!-- <a href="dashboard.html" title=""><img src="images/logo2.png"
+			alt="" /></a>  -->
+		<a title="" class="toggle-menu"><i class="fa fa-bars"></i></a>
 	</div>
 	<div class="custom-dropdowns">
 		<div class="message-list dropdown">
 			<a title=""><span class="blue">0</span><i
 				class="fa fa-envelope-o"></i></a>
 			<div class="message drop-list">
-				<span >You have 4 New Messages</span>
+				<span>You have 4 New Messages</span>
 				<ul>
 					<li><a href="#" title=""><span><img
 								src="images/resource/sender1.jpg" alt="" /></span><i>${sessionScope['user']}</i>Hi!
@@ -38,7 +37,8 @@
 		</div>
 		<!-- Message List -->
 		<div class="notification-list dropdown">
-			<a title=""><span class="green" id="notification">0</span><i class="fa fa-bell-o"></i></a>
+			<a title=""><span class="green" id="notification">0</span><i
+				class="fa fa-bell-o"></i></a>
 			<div class="notification drop-list">
 				<span id="notificationStatement">You have 3 New Notifications</span>
 				<ul id="notificationDetails">

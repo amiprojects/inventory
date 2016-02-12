@@ -15,7 +15,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 @Entity
 @Cacheable(false)
@@ -56,6 +55,10 @@ public class Vendor implements Serializable {
 
 	@OneToMany(mappedBy = "vendor")
 	private List<Purchase_Entry> purchaseEntry;
+	
+	
+	@OneToMany(mappedBy = "vendor")
+	private List<PurchaseOrderEntry> purchaseOrderEntry;
 
 	@OneToMany(mappedBy = "vendor")
 	private List<SalesEntry> salesEntry;
@@ -311,6 +314,14 @@ public class Vendor implements Serializable {
 
 	public void setVoucherAssign(VoucherAssign voucherAssign) {
 		this.voucherAssign = voucherAssign;
+	}
+
+	public List<PurchaseOrderEntry> getPurchaseOrderEntry() {
+		return purchaseOrderEntry;
+	}
+
+	public void setPurchaseOrderEntry(List<PurchaseOrderEntry> purchaseOrderEntry) {
+		this.purchaseOrderEntry = purchaseOrderEntry;
 	}
 
 }

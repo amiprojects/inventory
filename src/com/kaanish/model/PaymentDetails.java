@@ -35,6 +35,10 @@ public class PaymentDetails implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "purchaseEntryId")
 	private Purchase_Entry purchase_Entry;
+	
+	@ManyToOne
+	@JoinColumn(name = "purchaseOrderEntryId")
+	private PurchaseOrderEntry purchaseOrderEntry;
 
 	@ManyToOne
 	@JoinColumn(name = "salesEntryId")
@@ -138,6 +142,14 @@ public class PaymentDetails implements Serializable {
 
 	public void setPurchaseReturn(PurchaseReturn purchaseReturn) {
 		this.purchaseReturn = purchaseReturn;
+	}
+
+	public PurchaseOrderEntry getPurchaseOrderEntry() {
+		return purchaseOrderEntry;
+	}
+
+	public void setPurchaseOrderEntry(PurchaseOrderEntry purchaseOrderEntry) {
+		this.purchaseOrderEntry = purchaseOrderEntry;
 	}
 
 }
