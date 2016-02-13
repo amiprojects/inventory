@@ -47,6 +47,9 @@ public class CompanyInfo implements Serializable {
 
 	@OneToMany(mappedBy = "companyInfo")
 	private List<Purchase_Product_Details> purchase_Product_Details;
+	
+	@OneToMany(mappedBy = "companyInfo")
+	private List<PurchaseOrderProductdetails> purchaseOrderProductdetails;
 
 	@OneToMany(mappedBy = "companyInfo")
 	private List<Users> users;
@@ -314,6 +317,14 @@ public class CompanyInfo implements Serializable {
 
 	public void setPurchaseOrderEntry(List<PurchaseOrderEntry> purchaseOrderEntry) {
 		this.purchaseOrderEntry = purchaseOrderEntry;
+	}
+
+	public List<PurchaseOrderProductdetails> getPurchaseOrderProductdetails() {
+		return purchaseOrderProductdetails;
+	}
+
+	public void setPurchaseOrderProductdetails(List<PurchaseOrderProductdetails> purchaseOrderProductdetails) {
+		this.purchaseOrderProductdetails = purchaseOrderProductdetails;
 	}
 
 }

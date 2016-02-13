@@ -41,6 +41,8 @@ import com.kaanish.model.PaymentDetails;
 import com.kaanish.model.ProductDetail;
 import com.kaanish.model.ProductImage;
 import com.kaanish.model.ProductsForDesignCostSheet;
+import com.kaanish.model.PurchaseOrderEntry;
+import com.kaanish.model.PurchaseOrderProductdetails;
 import com.kaanish.model.PurchaseReturn;
 import com.kaanish.model.PurchaseReturnProductDetails;
 import com.kaanish.model.Purchase_Entry;
@@ -101,7 +103,7 @@ import com.kaanish.util.DateConverter;
 		"/purchaseProductView", "/purchaseReportView", "/salesProductView",
 		"/salesReportView", "/salesReportByCustomerName",
 		"/salesReportByAgentName", "/dayBookreport",
-		"/jobAssignmentForParticularDesignNumber" })
+		"/jobAssignmentForParticularDesignNumber","/purchaseOrderEntry","/purchaseSearchForPORecieve","/purchaseOrderReceive" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -161,6 +163,8 @@ public class Servlet extends HttpServlet {
 	private JobPlanProductStock jobPlanProductStock;
 	private JobAssignmentJobDetails jobAssignmentJobDetails;
 	private JobAsignmentProductsFromStock jobAsignmentProductsFromStock;
+	private PurchaseOrderEntry purchaseOrderEntry;
+	private PurchaseOrderProductdetails purchaseOrderProductdetails;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -1152,6 +1156,36 @@ public class Servlet extends HttpServlet {
 				}
 				break;
 
+				
+				
+			case "purchaseSearchForPORecieve":
+				page = "purchasingPurchaseOrderRecive.jsp";
+
+				
+				List<PurchaseOrderEntry> purOListR = ejb.getPurchaseOrderByChallanNo(
+						req.getParameter("companyInitial") + "/" + req.getParameter("fynYear") + "/"
+								+ req.getParameter("month") + "/" + req.getParameter("billType") + "/"
+								+ req.getParameter("autoNum") + "/" + req.getParameter("suffix"));
+
+				if (purOListR.size() > 0) 
+				{
+					req.setAttribute("pId", purOListR.get(0).getId());
+
+					msg = "Your search for Purchase order challan number : " + req.getParameter("companyInitial") + "/"
+							+ req.getParameter("fynYear") + "/" + req.getParameter("month") + "/"
+							+ req.getParameter("billType") + "/" + req.getParameter("autoNum") + "/"
+							+ req.getParameter("suffix");
+				} 
+				else 
+				{
+					msg = "No result found for Purchase challan number : " + req.getParameter("companyInitial") + "/"
+							+ req.getParameter("fynYear") + "/" + req.getParameter("month") + "/"
+							+ req.getParameter("billType") + "/" + req.getParameter("autoNum") + "/"
+							+ req.getParameter("suffix");
+				}
+				break;
+
+				
 			case "purchaseReturn":
 				page = "purchaseReturn.jsp";
 
@@ -2670,7 +2704,180 @@ public class Servlet extends HttpServlet {
 				req.setAttribute("salesReturn", salesReturn);
 
 				break;
+				
+			case "purchaseOrderEntry":
+				page="purchasingPurchaseOrderGive.jsp";
 
+				
+				companyInfo = ejb.getUserById((String) httpSession.getAttribute("user")).getCompanyInfo();
+				purchaseOrderEntry= new PurchaseOrderEntry();
+				paymentDetails = new PaymentDetails();
+
+				List<PurchaseOrderEntry> purOdEty = ejb.getAllPurchaseOrderEntry();
+				int fm1 = 0;
+				for (PurchaseOrderEntry pe : purOdEty) {
+					if (pe.getVendor_bill_no().equals(req.getParameter("vendorBillNo"))) {
+						fm1 = 1;
+						break;
+					}
+				}
+				if (fm1 == 0) {
+					purchaseOrderEntry.setVendor_bill_no(req.getParameter("vendorBillNo").toUpperCase());
+
+					dt = new Date();
+					purchaseOrderEntry.setChallan_no(Integer.parseInt(req.getParameter("challanNo")));
+					purchaseOrderEntry.setChallanSuffix(Integer.parseInt(req.getParameter("challanSuffix")));
+					purchaseOrderEntry.setChallanNumber(req.getParameter("challanNumber"));
+
+					purchaseOrderEntry.setPurchaseOrderDate(DateConverter.getDate(req.getParameter("purchaseDate")));
+					purchaseOrderEntry.setVendor(ejb.getVendorById(Integer.parseInt(req.getParameter("vId"))));
+					purchaseOrderEntry.setUsers(ejb.getUserById(httpSession.getAttribute("user").toString()));
+					purchaseOrderEntry.setEntry_date(dt);
+
+					purchaseOrderEntry.setSur_charge(Float.parseFloat(req.getParameter("surcharge")));
+					purchaseOrderEntry.setTransport_cost(Float.parseFloat(req.getParameter("transportCost")));
+					purchaseOrderEntry.setTotalCost(Float.parseFloat(req.getParameter("spAmount")));
+					purchaseOrderEntry.setTax_Type_Group(
+							ejb.getTax_Type_GroupById(Integer.parseInt(req.getParameter("taxGroup"))));
+					purchaseOrderEntry.setSubTotal(Float.parseFloat(req.getParameter("subTotal")));
+					purchaseOrderEntry.setTaxAmount(Float.parseFloat(req.getParameter("taxAmount")));
+					
+					purchaseOrderEntry.setCompanyInfo(
+							ejb.getUserById((String) httpSession.getAttribute("user")).getCompanyInfo());
+					purchaseOrderEntry.setRoundOf(Float.parseFloat(req.getParameter("roundvalue")));
+					if (req.getParameter("isAgent").equals("yes")) {
+						purchaseOrderEntry.setAgentId(Integer.parseInt(req.getParameter("agentName")));
+					}
+					ejb.setPurchaseOrderEntry(purchaseOrderEntry);
+
+					if (ejb.getVoucherAssignByVendorId(Integer.parseInt(req.getParameter("vId"))).size() == 0) {
+						voucherAssign = new VoucherAssign();
+						vendor = ejb.getVendorById(Integer.parseInt(req.getParameter("vId")));
+						voucherAssign.setVendor(vendor);
+						voucherAssign.setVoucherDetailsNumber(vendor.getPh1());
+						ejb.setVoucherAssign(voucherAssign);
+					} else {
+						voucherAssign = ejb.getVoucherAssignByVendorId(Integer.parseInt(req.getParameter("vId")))
+								.get(0);
+					}
+
+					if (!req.getParameter("pstatus").equals("Full Paid")) {
+						voucherDetails = new VoucherDetails();
+						voucherDetails.setVoucherAssign(voucherAssign);
+						voucherDetails.setCredit(true);
+						voucherDetails.setValue(Float.parseFloat(req.getParameter("spDueAmount")));
+						voucherDetails.setTotalCreditNote(Float.parseFloat(req.getParameter("finalDC")));
+						if (ejb.getVoucherDetailsByVendorId(Integer.parseInt(req.getParameter("vId"))).size() == 0) {
+							voucherDetails.setTotalCreditNote(Float.parseFloat(req.getParameter("spDueAmount")));
+						} else {
+							float totalCreditNote = ejb
+									.getVoucherDetailsByVendorId(Integer.parseInt(req.getParameter("vId")))
+									.get(ejb.getVoucherDetailsByVendorId(Integer.parseInt(req.getParameter("vId")))
+											.size() - 1)
+									.getTotalCreditNote();
+							voucherDetails.setTotalCreditNote(
+									Float.parseFloat(req.getParameter("spDueAmount")) + totalCreditNote);
+						}
+						voucherDetails.setVoucherDate(DateConverter.getDate(req.getParameter("payDate")));
+						voucherDetails.setUsers(ejb.getUserById((String) httpSession.getAttribute("user")));
+						voucherDetails.setPurchaseOrderEntry(purchaseOrderEntry);
+						ejb.setVoucherDetails(voucherDetails);
+					}
+
+					paymentDetails.setPaymentDate(DateConverter.getDate(req.getParameter("payDate")));
+					paymentDetails.setTotalAmount(Float.parseFloat(req.getParameter("spAmount")));
+					paymentDetails.setPaidAmount(Float.parseFloat(req.getParameter("spPaymentAmount")));
+					paymentDetails.setDescription(req.getParameter("desc"));
+					paymentDetails.setPurchaseOrderEntry(purchaseOrderEntry);
+					paymentDetails.setPaymentType(ejb.getPaymentTypeByType(req.getParameter("pType")));
+					paymentDetails.setPaymentStatus(ejb.getPaymentStatusByStatus(req.getParameter("pstatus")));
+					ejb.setPaymentDetails(paymentDetails);
+
+					String attr1a[] = req.getParameterValues("attr1H");
+					String attr2a[] = req.getParameterValues("attr2H");
+					String attr3a[] = req.getParameterValues("attr3H");
+					String attr4a[] = req.getParameterValues("attr4H");
+					String attr5a[] = req.getParameterValues("attr5H");
+					String attr6a[] = req.getParameterValues("attr6H");
+
+					String mrpa[] = req.getParameterValues("mrpH");
+					String wspa[] = req.getParameterValues("wspH");
+
+					String qtya[] = req.getParameterValues("qtyH");
+					String costa[] = req.getParameterValues("rateH");
+					String productIda[] = req.getParameterValues("pCodeIdH");
+					String lota[] = req.getParameterValues("lotH");
+
+					for (int l = 0; l < qtya.length; l++) {
+						purchaseOrderProductdetails = new PurchaseOrderProductdetails();
+
+						purchaseOrderProductdetails.setAttrValue1(attr1a[l]);
+						purchaseOrderProductdetails.setAttrValue2(attr2a[l]);
+						purchaseOrderProductdetails.setAttrValue3(attr3a[l]);
+						purchaseOrderProductdetails.setAttrValue4(attr4a[l]);
+						purchaseOrderProductdetails.setAttrValue5(attr5a[l]);
+						purchaseOrderProductdetails.setAttrValue6(attr6a[l]);
+						purchaseOrderProductdetails
+								.setProductDetail(ejb.getProductDetailsById(Integer.parseInt(productIda[l])));
+						if (req.getParameter("isSalable").equals("yes")) {
+							purchaseOrderProductdetails.setMrp(Float.parseFloat(mrpa[l]));
+							purchaseOrderProductdetails.setWsp(Float.parseFloat(wspa[l]));
+						}
+
+						purchaseOrderProductdetails.setQuantity(Integer.parseInt(qtya[l]));
+
+						purchaseOrderProductdetails.setRemaining_quantity(Integer.parseInt(qtya[l]));
+						purchaseOrderProductdetails.setCost(Float.parseFloat(costa[l]));
+						purchaseOrderProductdetails.setPurchaseOrderEntry(purchaseOrderEntry);
+						purchaseOrderProductdetails.setLotNumber(lota[l]);
+						purchaseOrderProductdetails.setCompanyInfo(companyInfo);
+						ejb.setPurchaseOrderProductdetails(purchaseOrderProductdetails);
+						
+						/*if (purchaseProductDetails.getProductDetail().isRaw()) {
+							rawMaterialsStock = ejb.getRawMeterialStoctByProductAndCompanyId(
+									purchaseProductDetails.getProductDetail().getId(), companyInfo.getId());
+							rawMaterialsStock
+									.setProductDetail(ejb.getProductDetailsById(Integer.parseInt(productId[l])));
+							rawMaterialsStock
+									.setRemainingQty(rawMaterialsStock.getRemainingQty() + Integer.parseInt(qty[l]));
+							ejb.updateRawMaterialStockDetail(rawMaterialsStock);
+							rawMaterialsStock = null;
+						} else {
+							readyGoodsStock = ejb.getReadyGoodStoctByProductAndCompanyId(
+									purchaseProductDetails.getProductDetail().getId(), companyInfo.getId());
+							readyGoodsStock.setProductDetail(ejb.getProductDetailsById(Integer.parseInt(productId[l])));
+							readyGoodsStock
+									.setRemainingQty(readyGoodsStock.getRemainingQty() + Integer.parseInt(qty[l]));
+							ejb.updateReadyGoodsStockDetail(readyGoodsStock);
+							readyGoodsStock = null;
+						}*/
+						purchaseOrderProductdetails = null;
+					}
+					
+						req.setAttribute("print", 0);
+
+
+					req.setAttribute("purDetIdforPC", purchaseOrderEntry.getId());
+					purchaseOrderEntry = null;
+					msg = "Purchase order was successfull.";
+				} else {
+					msg = "Duplicate Vendor Bill no. not allowed.";
+				}
+				
+				
+				
+				
+				break;
+				
+				
+			case "purchaseOrderReceive":
+				page="purchasingPurchaseOrderGive.jsp";
+				
+				
+				
+				
+				
+				break;
 			default:
 				break;
 			}

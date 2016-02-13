@@ -980,17 +980,7 @@ public class JsonServlet extends HttpServlet {
 					productDetail.setActive(true);
 					ejb.setProductDetail(productDetail);
 
-					/*
-					 * if (Boolean.parseBoolean(req.getParameter("isSalebi"))) {
-					 * readyGoodsStock = new ReadyGoodsStock();
-					 * readyGoodsStock.setProductDetail(productDetail);
-					 * readyGoodsStock.setRemainingQty(0);
-					 * ejb.setReadyGoodsStockDetail(readyGoodsStock); } else {
-					 * rawMaterialsStock = new RawMaterialsStock();
-					 * rawMaterialsStock.setProductDetail(productDetail);
-					 * rawMaterialsStock.setRemainingQty(0);
-					 * ejb.setRawMaterialsStocktDetail(rawMaterialsStock); }
-					 */
+					
 					if (Boolean.parseBoolean(req.getParameter("isRaw"))) {
 
 						rawMaterialsStock.setProductDetail(productDetail);
