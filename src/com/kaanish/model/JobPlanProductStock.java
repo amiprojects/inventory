@@ -35,6 +35,9 @@ public class JobPlanProductStock implements Serializable {
 	/*@OneToMany(mappedBy = "jobPlanProductStock")
 	private List<JobAssignmentProducts> jobAssignmentProducts;*/
 	
+	@OneToMany(mappedBy = "jobPlanProductStock")
+	private List<JobAsignmentProductsFromStock> jobAsignmentProductsFromStock;
+	
 	@ManyToOne
 	@JoinColumn(name = "jobAssignmentProductsId")
 	private JobAssignmentProducts jobAssignmentProducts;

@@ -71,7 +71,7 @@ import com.kaanish.util.DepartmentCotractor;
 		"/getJobsForDesignCostSheetByProductSForSampleId",
 		"/getProductImagejson",
 		"/getPlannedSampleDesignCostSheetByDesignNumber",
-		"/getAllJobPlanByDesignNumber" })
+		"/getAllJobPlanByDesignNumber", "/getProductAndDesignDetailsAndJobPlanByJobPlanId", "/getJobsForDesignCostSheetByPlanId" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -340,6 +340,51 @@ public class JsonServlet extends HttpServlet {
 				generator3.writeEnd().close();
 				break;
 
+			case "getProductAndDesignDetailsAndJobPlanByJobPlanId":
+				JsonGeneratorFactory factoryM = Json
+						.createGeneratorFactory(null);
+				JsonGenerator generatorM = factoryM.createGenerator(resp
+						.getOutputStream());
+				generatorM.writeStartArray();
+				for (ProductsForDesignCostSheet pdcs : ejb
+						.getJobPlanById(
+								Integer.parseInt(req.getParameter("pId")))
+						.getDesignCostSheet().getProductsForDesignCostSheets()) {
+					generatorM
+							.writeStartObject()
+							.write("ProductCode",
+									pdcs.getProductDetail().getCode())
+							.write("ProductId", pdcs.getProductDetail().getId())
+							.write("ProductDesc",
+									pdcs.getProductDetail().getDescription())
+							.write("ProductUOMid",
+									pdcs.getProductDetail().getQtyUnit()
+											.getId())
+							.write("ProductUOMName",
+									pdcs.getProductDetail().getQtyUnit()
+											.getName())
+							.write("ProductRemainingQty",
+									pdcs.getProductDetail().isRaw() ? pdcs
+											.getProductDetail()
+											.getRawMaterialsStock()
+											.getRemainingQty() : pdcs
+											.getProductDetail()
+											.getReadyGoodsStock()
+											.getRemainingQty())
+							.write("ProductTotalAmount",
+									ejb.getJobAssignmentProductDetailsByproductAndJobPlanId(
+											pdcs.getProductDetail().getId(),
+											Integer.parseInt(req
+													.getParameter("pId"))).getEstimatedCost())
+							.write("ProductQtyForSample", pdcs.getQty())
+							.write("ProductRateForSample", pdcs.getRate())
+							.write("ProductAmountForSample", pdcs.getAmmount())
+							.write("ProductForSampleId", pdcs.getId())
+							.writeEnd();
+				}
+				generatorM.writeEnd().close();
+				break;
+
 			case "getJobsForDesignCostSheetByProductSForSampleId":
 				JsonGeneratorFactory factory4 = Json
 						.createGeneratorFactory(null);
@@ -363,6 +408,31 @@ public class JsonServlet extends HttpServlet {
 					;
 				}
 				generator4.writeEnd().close();
+				break;
+				
+			case "getJobsForDesignCostSheetByPlanId":
+				JsonGeneratorFactory factoryJ = Json
+						.createGeneratorFactory(null);
+				JsonGenerator generatorJ = factoryJ.createGenerator(resp
+						.getOutputStream());
+				generatorJ.writeStartArray();
+				for (JobsForDesignCostSheet jdcs : ejb
+						.getProductsForDesignCostSheetById(
+								Integer.parseInt(req.getParameter("pid")))
+						.getJobsForDesignCostSheets()) {
+					generatorJ
+							.writeStartObject()
+							.write("JobId", jdcs.getId())
+							.write("JobName", jdcs.getJobTypes().getJobName())
+							.write("JobRateOfSample", jdcs.getRate())
+							.write("JobQtyOfSample", jdcs.getQty())
+							.write("JobUOMOfSample",
+									jdcs.getQtyUnit().getName())
+							.write("JobAmountOfSample", jdcs.getAmmount())
+							.writeEnd();
+					;
+				}
+				generatorJ.writeEnd().close();
 				break;
 
 			case "getProductByDescription":
@@ -1083,7 +1153,7 @@ public class JsonServlet extends HttpServlet {
 				}
 				generatorD.writeEnd().close();
 				break;
-				
+
 			case "getAllJobPlanByDesignNumber":
 				JsonGeneratorFactory factoryJP = Json
 						.createGeneratorFactory(null);
@@ -1091,14 +1161,12 @@ public class JsonServlet extends HttpServlet {
 						.getOutputStream());
 				generatorJP.writeStartArray();
 
-				for (JobPlan jp : ejb
-						.getAllJobPlanByDesignNumber(req
-								.getParameter("dNo"))) {
+				for (JobPlan jp : ejb.getAllJobPlanByDesignNumber(req
+						.getParameter("dNo"))) {
 					generatorJP.writeStartObject().write("jpId", jp.getId())
-					//.write("jpDesc", jp.getDescription())
-					.write("jpDate", jp.getPlanDate().toString())
-					.write("jpQty", jp.getQty())
-							.writeEnd();
+							// .write("jpDesc", jp.getDescription())
+							.write("jpDate", jp.getPlanDate().toString())
+							.write("jpQty", jp.getQty()).writeEnd();
 				}
 				generatorJP.writeEnd().close();
 				break;
@@ -1119,7 +1187,7 @@ public class JsonServlet extends HttpServlet {
 							.writeEnd();
 				}
 				generatorDP.writeEnd().close();
-				break;			
+				break;
 
 			case "getProductImagejson":
 				JsonGeneratorFactory factoryI = Json

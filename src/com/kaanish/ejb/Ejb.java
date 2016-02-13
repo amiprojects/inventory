@@ -25,6 +25,7 @@ import com.kaanish.model.Country;
 import com.kaanish.model.CustomerEntry;
 import com.kaanish.model.Department;
 import com.kaanish.model.DesignImage;
+import com.kaanish.model.JobAsignmentProductsFromStock;
 import com.kaanish.model.JobAssignmentDetails;
 import com.kaanish.model.JobAssignmentJobDetails;
 import com.kaanish.model.JobAssignmentProducts;
@@ -1346,12 +1347,13 @@ public class Ejb {
 
 	}
 
-	public List<JobAssignmentProducts> getJobAssignmentProductDetailsByproductId(int id) {
-		TypedQuery<JobAssignmentProducts> q = em.createQuery(
-				"select c from JobAssignmentProducts c where c.purchase_Product_Details.productDetail.id=:id",
-				JobAssignmentProducts.class);
+	public JobAssignmentProducts getJobAssignmentProductDetailsByproductAndJobPlanId(int id, int jpId) {
+		TypedQuery<JobAsignmentProductsFromStock> q = em.createQuery(
+				"select c from JobAsignmentProductsFromStock c where c.jobPlanProductStock.purchase_Product_Details.productDetail.id=:id and c.jobPlan.id=:jpId",
+				JobAsignmentProductsFromStock.class);
 		q.setParameter("id", id);
-		return q.getResultList();
+		q.setParameter("jpId", jpId);
+		return q.getResultList().get(0).getJobAssignmentProducts();
 	}
 
 	public List<JobAssignmentProducts> getJobAssignmentProductDetailsByproductIdAndCompany(int id) {
@@ -1373,6 +1375,16 @@ public class Ejb {
 		TypedQuery<JobAssignmentProducts> q = em.createQuery("select c from JobAssignmentProducts c ",
 				JobAssignmentProducts.class);
 		return q.getResultList();
+	}
+	
+	
+	/**************************************************/	
+	public void setJobAsignmentProductsFromStock(JobAsignmentProductsFromStock jobAsignmentProductsFromStock) {
+		em.persist(jobAsignmentProductsFromStock);
+	}
+
+	public void updateJobAsignmentProductsFromStock(JobAsignmentProductsFromStock jobAsignmentProductsFromStock) {
+		em.merge(jobAsignmentProductsFromStock);
 	}
 
 	/***************** for Job AStock ***********************/
