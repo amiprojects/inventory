@@ -2486,7 +2486,7 @@ public class Servlet extends HttpServlet {
 
 					productsForDesignCostSheet
 							.setProductDetail(ejb.getProductDetailById(Integer.parseInt(productid[lc])));
-					productsForDesignCostSheet.setQty(Integer.parseInt(proqty[lc]));
+					productsForDesignCostSheet.setQty(Float.parseFloat(proqty[lc]));
 					productsForDesignCostSheet.setRate(Float.parseFloat(prorate[lc]));
 					productsForDesignCostSheet.setAmmount(Float.parseFloat(proamount[lc]));
 					productsForDesignCostSheet.setQtyUnit(ejb.getQtyUnitById(Integer.parseInt(proqtyUnitId[lc])));
@@ -2505,7 +2505,7 @@ public class Servlet extends HttpServlet {
 						jobsForDesignCostSheet = new JobsForDesignCostSheet();
 
 						jobsForDesignCostSheet.setJobTypes(ejb.getJobTypeById(Integer.parseInt(jobid[lc1])));
-						jobsForDesignCostSheet.setQty(Integer.parseInt(jobqty[lc1]));
+						jobsForDesignCostSheet.setQty(Float.parseFloat(jobqty[lc1]));
 						jobsForDesignCostSheet.setRate(Float.parseFloat(jobrate[lc1]));
 						jobsForDesignCostSheet.setAmmount(Float.parseFloat(jobamount[lc1]));
 						jobsForDesignCostSheet.setQtyUnit(ejb.getQtyUnitById(Integer.parseInt(proqtyUnitId[lc])));

@@ -465,13 +465,13 @@
 															+ $("#proCode")
 																	.val()
 															+ '</td>'
-															+ '<td><input type="number" id="rate1'
+															+ '<td><input type="number" step="0.01" id="rate1'
 															+ $(this).val()
 															+ $("#proId").val()
 															+ '" onchange="calAnount(\''
 															+ $(this).val()
 															+ $("#proId").val()
-															+ '\');" value="0" name="jobqty"></td>'
+															+ '\');" value="0.0" name="jobqty"></td>'
 															+ '<td>'
 															+ $("#proUOM")
 																	.val()
