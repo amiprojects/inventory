@@ -427,7 +427,7 @@
 											</div>
 										</div>
 									</div> -->
-									<div style="width: 40%; float: left;">
+									<div style="width: 40%; float: right;">
 										<table id="stream_table"
 											class="table table-striped table-bordered">
 											<thead>
@@ -3136,7 +3136,7 @@
 
 			$("#quantity").numericInput({
 
-				allowFloat : false, // Accpets positive numbers (floating point)
+				allowFloat : true, // Accpets positive numbers (floating point)
 
 				allowNegative : false,
 			// Accpets positive or negative integer
@@ -3853,9 +3853,9 @@
 				$("#attr6").prop("readonly", true);
 			}
 
-			/* AVIKaJAX */
+			/* KaJAX */
 			
-			alert("lolt");
+			//alert("lolt");
 			var img = "";
 			$
 					.ajax({
@@ -4333,7 +4333,7 @@
 
 			$("#qty").numericInput({
 
-				allowFloat : false, // Accpets positive numbers (floating point)
+				allowFloat : true, // Accpets positive numbers (floating point)
 
 				allowNegative : false,
 			// Accpets positive or negative integer

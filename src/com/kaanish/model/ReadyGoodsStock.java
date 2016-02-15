@@ -19,7 +19,7 @@ public class ReadyGoodsStock implements Serializable {
 	@Id
 	@GeneratedValue
 	private int id;
-	private int remainingQty;
+	private float remainingQty;
 	
 	@ManyToOne
 	@JoinColumn(name = "companyInfoId")
@@ -37,11 +37,11 @@ public class ReadyGoodsStock implements Serializable {
 		this.id = id;
 	}
 
-	public int getRemainingQty() {
+	public float getRemainingQty() {
 		return remainingQty;
 	}
 
-	public void setRemainingQty(int remainingQty) {
+	public void setRemainingQty(float remainingQty) {
 		this.remainingQty = remainingQty;
 	}
 

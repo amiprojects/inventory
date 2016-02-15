@@ -26,7 +26,7 @@ public class JobPlan implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date planDate;
 	private String description;
-	private int qty;
+	private float qty;
 	private float estimatedCost;//sample cost * qty
 	private float totalJobExpanse;//0
 	private float totalProductCost;//purchaseproddet->prodqty*amount
@@ -129,13 +129,7 @@ public class JobPlan implements Serializable {
 		this.jobPlanProductStocks = jobPlanProductStocks;
 	}
 
-	public int getQty() {
-		return qty;
-	}
-
-	public void setQty(int qty) {
-		this.qty = qty;
-	}
+	
 
 	public List<JobAssignmentDetails> getJobAssignmentDetails() {
 		return jobAssignmentDetails;
@@ -160,6 +154,14 @@ public class JobPlan implements Serializable {
 
 	public void setJobAssignmentProducts(List<JobAssignmentProducts> jobAssignmentProducts) {
 		this.jobAssignmentProducts = jobAssignmentProducts;
+	}
+
+	public float getQty() {
+		return qty;
+	}
+
+	public void setQty(float qty) {
+		this.qty = qty;
 	}
 
 }

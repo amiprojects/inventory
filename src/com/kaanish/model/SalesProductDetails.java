@@ -21,9 +21,9 @@ public class SalesProductDetails implements Serializable {
 	@GeneratedValue
 
 	private int id;
-	private int quantity;
+	private float quantity;
 	private float salesPrice;	
-	private int salesReQty;
+	private float salesReQty;
 
 	@ManyToOne
 	@JoinColumn(name = "salesEntryId")
@@ -45,19 +45,19 @@ public class SalesProductDetails implements Serializable {
 		this.id = id;
 	}
 
-	public int getQuantity() {
+	public float getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(float quantity) {
 		this.quantity = quantity;
 	}
 
-	public int getSalesReQty() {
+	public float getSalesReQty() {
 		return salesReQty;
 	}
 
-	public void setSalesReQty(int salesReQty) {
+	public void setSalesReQty(float salesReQty) {
 		this.salesReQty = salesReQty;
 	}
 

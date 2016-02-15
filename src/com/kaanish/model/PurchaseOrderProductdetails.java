@@ -22,9 +22,9 @@ public class PurchaseOrderProductdetails implements Serializable {
 	private int id;
 
 	private float cost;
-	private int remaining_quantity;
-	private int quantity;
-	private int totalReturningQty;
+	private float remaining_quantity;
+	private float quantity;
+	private float totalReturningQty;
 	private float mrp;
 	private float wsp;
 	private String attrValue1;
@@ -70,27 +70,27 @@ public class PurchaseOrderProductdetails implements Serializable {
 		this.cost = cost;
 	}
 
-	public int getRemaining_quantity() {
+	public float getRemaining_quantity() {
 		return remaining_quantity;
 	}
 
-	public void setRemaining_quantity(int remaining_quantity) {
+	public void setRemaining_quantity(float remaining_quantity) {
 		this.remaining_quantity = remaining_quantity;
 	}
 
-	public int getQuantity() {
+	public float getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(float quantity) {
 		this.quantity = quantity;
 	}
 
-	public int getTotalReturningQty() {
+	public float getTotalReturningQty() {
 		return totalReturningQty;
 	}
 
-	public void setTotalReturningQty(int totalReturningQty) {
+	public void setTotalReturningQty(float totalReturningQty) {
 		this.totalReturningQty = totalReturningQty;
 	}
 

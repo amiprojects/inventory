@@ -1021,7 +1021,7 @@ public class JsonServlet extends HttpServlet {
 								.getParameter("mrp1")));
 						purchaseProductDetails.setWsp(Float.parseFloat(req
 								.getParameter("wsp1")));
-						purchaseProductDetails.setQuantity(Integer.parseInt(req
+						purchaseProductDetails.setQuantity(Float.parseFloat(req
 								.getParameter("qty1")));
 						purchaseProductDetails.setCost(Float.parseFloat(req
 								.getParameter("ucost")));
@@ -1037,8 +1037,7 @@ public class JsonServlet extends HttpServlet {
 								.getParameter("att5"));
 						purchaseProductDetails.setAttrValue6(req
 								.getParameter("att6"));
-						purchaseProductDetails.setRemaining_quantity(Integer
-								.parseInt(req.getParameter("qty1")));
+						purchaseProductDetails.setRemaining_quantity(Float.parseFloat(req.getParameter("qty1")));
 						purchaseProductDetails.setInitialInventory(true);
 						purchaseProductDetails.setProductDetail(productDetail);
 						purchaseProductDetails.setLotNumber(req
@@ -1063,7 +1062,7 @@ public class JsonServlet extends HttpServlet {
 							rawMaterialsStock
 									.setRemainingQty(rawMaterialsStock
 											.getRemainingQty()
-											+ Integer.parseInt(req
+											+ Float.parseFloat(req
 													.getParameter("qty1")));
 							ejb.updateRawMaterialStockDetail(rawMaterialsStock);
 						} else {
@@ -1074,7 +1073,7 @@ public class JsonServlet extends HttpServlet {
 							readyGoodsStock
 									.setRemainingQty(readyGoodsStock
 											.getRemainingQty()
-											+ Integer.parseInt(req
+											+ Float.parseFloat(req
 													.getParameter("qty1")));
 							ejb.updateReadyGoodsStockDetail(readyGoodsStock);
 						}

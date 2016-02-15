@@ -19,12 +19,12 @@ public class JobPlanProductStock implements Serializable {
 	@Id
 	@GeneratedValue
 	private int id;
-	private int qty;
-	private int remainingQty;//same as qty
+	private float qty;
+	private float remainingQty;//same as qty
 	private int jobCycle;//0
 	private boolean isUndergoingProcess;//false
 	private boolean isComplete;//false
-	private int jobAssignQty;//new
+	private float jobAssignQty;//new
 
 	@ManyToOne
 	@JoinColumn(name = "planId")
@@ -50,21 +50,7 @@ public class JobPlanProductStock implements Serializable {
 		this.id = id;
 	}
 
-	public int getQty() {
-		return qty;
-	}
-
-	public void setQty(int qty) {
-		this.qty = qty;
-	}
-
-	public int getRemainingQty() {
-		return remainingQty;
-	}
-
-	public void setRemainingQty(int remainingQty) {
-		this.remainingQty = remainingQty;
-	}
+	
 
 	public int getJobCycle() {
 		return jobCycle;
@@ -106,12 +92,23 @@ public class JobPlanProductStock implements Serializable {
 		this.jobAssignmentProducts = jobAssignmentProducts;
 	}
 
-	public int getJobAssignQty() {
+	
+
+	public float getJobAssignQty() {
 		return jobAssignQty;
 	}
 
-	public void setJobAssignQty(int jobAssignQty) {
+	public void setJobAssignQty(float jobAssignQty) {
 		this.jobAssignQty = jobAssignQty;
+	}
+
+	public List<JobAsignmentProductsFromStock> getJobAsignmentProductsFromStock() {
+		return jobAsignmentProductsFromStock;
+	}
+
+	public void setJobAsignmentProductsFromStock(
+			List<JobAsignmentProductsFromStock> jobAsignmentProductsFromStock) {
+		this.jobAsignmentProductsFromStock = jobAsignmentProductsFromStock;
 	}
 
 	public Purchase_Product_Details getPurchase_Product_Details() {
@@ -120,6 +117,22 @@ public class JobPlanProductStock implements Serializable {
 
 	public void setPurchase_Product_Details(Purchase_Product_Details purchase_Product_Details) {
 		this.purchase_Product_Details = purchase_Product_Details;
+	}
+
+	public float getQty() {
+		return qty;
+	}
+
+	public void setQty(float qty) {
+		this.qty = qty;
+	}
+
+	public float getRemainingQty() {
+		return remainingQty;
+	}
+
+	public void setRemainingQty(float remainingQty) {
+		this.remainingQty = remainingQty;
 	}
 
 	/*public List<JobAssignmentProducts> getJobAssignmentProducts() {

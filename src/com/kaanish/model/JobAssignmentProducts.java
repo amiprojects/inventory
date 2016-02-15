@@ -25,8 +25,8 @@ public class JobAssignmentProducts implements Serializable {
 	@Id
 	@GeneratedValue
 	private int id;
-	private int qty;
-	private int remaninQty;
+	private float qty;
+	private float remaninQty;
 	private float estimatedCost;//total amount of product
 	@Column(length = 800)
 	private String workDescription;//old concept
@@ -75,22 +75,7 @@ public class JobAssignmentProducts implements Serializable {
 		this.id = id;
 	}
 
-	public int getQty() {
-		return qty;
-	}
-
-	public void setQty(int qty) {
-		this.qty = qty;
-	}
-
-	public int getRemaninQty() {
-		return remaninQty;
-	}
-
-	public void setRemaninQty(int remaninQty) {
-		this.remaninQty = remaninQty;
-	}
-
+	
 	public float getEstimatedCost() {
 		return estimatedCost;
 	}
@@ -197,6 +182,22 @@ public class JobAssignmentProducts implements Serializable {
 
 	public void setJobPlan(JobPlan jobPlan) {
 		this.jobPlan = jobPlan;
+	}
+
+	public float getQty() {
+		return qty;
+	}
+
+	public void setQty(float qty) {
+		this.qty = qty;
+	}
+
+	public float getRemaninQty() {
+		return remaninQty;
+	}
+
+	public void setRemaninQty(float remaninQty) {
+		this.remaninQty = remaninQty;
 	}
 
 }

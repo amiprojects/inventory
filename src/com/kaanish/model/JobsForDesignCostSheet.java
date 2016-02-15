@@ -17,7 +17,7 @@ public class JobsForDesignCostSheet implements Serializable {
 	@GeneratedValue
 	private int id;
 	
-	private int qty;
+	private float qty;
 	private float rate;
 	private float ammount;
 	
@@ -42,10 +42,11 @@ public class JobsForDesignCostSheet implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getQty() {
+	
+	public float getQty() {
 		return qty;
 	}
-	public void setQty(int qty) {
+	public void setQty(float qty) {
 		this.qty = qty;
 	}
 	public float getRate() {

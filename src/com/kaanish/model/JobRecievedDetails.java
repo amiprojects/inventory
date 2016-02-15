@@ -19,7 +19,7 @@ public class JobRecievedDetails implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id@GeneratedValue
 	private int id;
-	private int qtyRecieved;
+	private float qtyRecieved;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date recievingDate;
 	private boolean isComplete;
@@ -36,11 +36,11 @@ public class JobRecievedDetails implements Serializable {
 		this.id = id;
 	}
 
-	public int getQtyRecieved() {
+	public float getQtyRecieved() {
 		return qtyRecieved;
 	}
 
-	public void setQtyRecieved(int qtyRecieved) {
+	public void setQtyRecieved(float qtyRecieved) {
 		this.qtyRecieved = qtyRecieved;
 	}
 

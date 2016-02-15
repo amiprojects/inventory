@@ -431,10 +431,14 @@
 												</td>
 												<td>${purchaseProducts.productDetail.description}</td>
 												<td>${purchaseProducts.quantity}</td>
-												<td id="qty${purchaseProducts.id}">${purchaseProducts.quantity-purchaseProducts.totalReturningQty}</td>
+												<td id="qty${purchaseProducts.id}">
+												<fmt:formatNumber type="number" maxFractionDigits="2" value="${purchaseProducts.quantity-purchaseProducts.totalReturningQty}" />
+												</td>
 												<td>${purchaseProducts.productDetail.qtyUnit.name}</td>
 												<td id="cost${purchaseProducts.id}">${purchaseProducts.cost}</td>
-												<td>${purchaseProducts.quantity*purchaseProducts.cost}</td>
+												<td>
+												<fmt:formatNumber type="number" maxFractionDigits="2" value="${purchaseProducts.quantity*purchaseProducts.cost}" />
+												</td>
 												<td><input type="text" class="form-control rQty"
 													id="rQty${purchaseProducts.id}" name="rQty"
 													onkeyup="changeNcheck('${purchaseProducts.id}');" value="0"
@@ -930,8 +934,8 @@
 		function changeNcheck(id) {
 			if (Number($("#rQty" + id).val()) <= Number($("#qty" + id).html())) {
 				$("#rAmount" + id).val(
-						Number($("#rQty" + id).val())
-								* Number($("#cost" + id).html()));
+						(Number($("#rQty" + id).val())
+								* Number($("#cost" + id).html())).toFixed(2));
 				var sum = 0;
 				$(".rAmount").each(function() {
 					if (!isNaN(this.value) && this.value.length != 0) {

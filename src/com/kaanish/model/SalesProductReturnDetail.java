@@ -18,7 +18,7 @@ public class SalesProductReturnDetail implements Serializable {
 	@Id
 	@GeneratedValue
 	private int id;
-	private int qtyReturn;
+	private float qtyReturn;
 	private String fault;
 
 	@ManyToOne
@@ -37,7 +37,7 @@ public class SalesProductReturnDetail implements Serializable {
 		this.id = id;
 	}
 
-	public int getQtyReturn() {
+	public float getQtyReturn() {
 		return qtyReturn;
 	}
 

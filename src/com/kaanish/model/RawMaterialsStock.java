@@ -17,7 +17,7 @@ public class RawMaterialsStock implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id@GeneratedValue
 	private int id;
-	private int remainingQty;
+	private float remainingQty;
 	
 	@ManyToOne
 	@JoinColumn(name = "companyInfoId")
@@ -32,10 +32,10 @@ public class RawMaterialsStock implements Serializable{
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getRemainingQty() {
+	public float getRemainingQty() {
 		return remainingQty;
 	}
-	public void setRemainingQty(int remainingQty) {
+	public void setRemainingQty(float remainingQty) {
 		this.remainingQty = remainingQty;
 	}
 	public ProductDetail getProductDetail() {

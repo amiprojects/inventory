@@ -17,7 +17,7 @@ public class JobAsignmentProductsFromStock implements Serializable {
 	@Id
 	@GeneratedValue
 	private int id;
-	private int qty;
+	private float qty;
 
 	@ManyToOne
 	@JoinColumn(name = "jobAsignmentDetailsId")
@@ -43,11 +43,13 @@ public class JobAsignmentProductsFromStock implements Serializable {
 		this.id = id;
 	}
 
-	public int getQty() {
+	
+
+	public float getQty() {
 		return qty;
 	}
 
-	public void setQty(int qty) {
+	public void setQty(float qty) {
 		this.qty = qty;
 	}
 

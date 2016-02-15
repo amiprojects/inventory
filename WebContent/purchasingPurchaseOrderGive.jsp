@@ -3128,7 +3128,7 @@
 
 			$("#quantity").numericInput({
 
-				allowFloat : false, // Accpets positive numbers (floating point)
+				allowFloat : true, // Accpets positive numbers (floating point)
 
 				allowNegative : false,
 			// Accpets positive or negative integer

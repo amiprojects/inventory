@@ -360,7 +360,7 @@ public class Servlet extends HttpServlet {
 
 						purchaseProductDetails.setMrp(Float.parseFloat(req.getParameter("mrp1")));
 						purchaseProductDetails.setWsp(Float.parseFloat(req.getParameter("wsp1")));
-						purchaseProductDetails.setQuantity(Integer.parseInt(req.getParameter("qty1")));
+						purchaseProductDetails.setQuantity(Float.parseFloat(req.getParameter("qty1")));
 						purchaseProductDetails.setCost(Float.parseFloat(req.getParameter("ucost")));
 						purchaseProductDetails.setAttrValue1(req.getParameter("att1"));
 						purchaseProductDetails.setAttrValue2(req.getParameter("att2"));
@@ -368,7 +368,7 @@ public class Servlet extends HttpServlet {
 						purchaseProductDetails.setAttrValue4(req.getParameter("att4"));
 						purchaseProductDetails.setAttrValue5(req.getParameter("att5"));
 						purchaseProductDetails.setAttrValue6(req.getParameter("att6"));
-						purchaseProductDetails.setRemaining_quantity(Integer.parseInt(req.getParameter("qty1")));
+						purchaseProductDetails.setRemaining_quantity(Float.parseFloat(req.getParameter("qty1")));
 						purchaseProductDetails.setInitialInventory(true);
 						purchaseProductDetails.setProductDetail(productDetail);
 						purchaseProductDetails.setLotNumber(req.getParameter("lotnumberS"));
@@ -400,13 +400,13 @@ public class Servlet extends HttpServlet {
 							rawMaterialsStock = ejb.getRawMeterialStoctByProductAndCompanyId(productDetail.getId(),
 									companyInfo.getId());
 							rawMaterialsStock.setRemainingQty(
-									rawMaterialsStock.getRemainingQty() + Integer.parseInt(req.getParameter("qty1")));
+									rawMaterialsStock.getRemainingQty() + Float.parseFloat(req.getParameter("qty1")));
 							ejb.updateRawMaterialStockDetail(rawMaterialsStock);
 						} else {
 							readyGoodsStock = ejb.getReadyGoodStoctByProductAndCompanyId(productDetail.getId(),
 									companyInfo.getId());
 							readyGoodsStock.setRemainingQty(
-									readyGoodsStock.getRemainingQty() + Integer.parseInt(req.getParameter("qty1")));
+									readyGoodsStock.getRemainingQty() + Float.parseFloat(req.getParameter("qty1")));
 							ejb.updateReadyGoodsStockDetail(readyGoodsStock);
 						}
 
@@ -1053,9 +1053,9 @@ public class Servlet extends HttpServlet {
 							purchaseProductDetails.setWsp(Float.parseFloat(wsp[l]));
 						}
 
-						purchaseProductDetails.setQuantity(Integer.parseInt(qty[l]));
+						purchaseProductDetails.setQuantity(Float.parseFloat(qty[l]));
 
-						purchaseProductDetails.setRemaining_quantity(Integer.parseInt(qty[l]));
+						purchaseProductDetails.setRemaining_quantity(Float.parseFloat(qty[l]));
 						purchaseProductDetails.setCost(Float.parseFloat(cost[l]));
 						purchaseProductDetails.setPurchase_Entry(purchaseEntry);
 						purchaseProductDetails.setLotNumber(lot[l]);
@@ -1103,7 +1103,7 @@ public class Servlet extends HttpServlet {
 							rawMaterialsStock
 									.setProductDetail(ejb.getProductDetailsById(Integer.parseInt(productId[l])));
 							rawMaterialsStock
-									.setRemainingQty(rawMaterialsStock.getRemainingQty() + Integer.parseInt(qty[l]));
+									.setRemainingQty(rawMaterialsStock.getRemainingQty() + Float.parseFloat(qty[l]));
 							ejb.updateRawMaterialStockDetail(rawMaterialsStock);
 							rawMaterialsStock = null;
 						} else {
@@ -1111,7 +1111,7 @@ public class Servlet extends HttpServlet {
 									purchaseProductDetails.getProductDetail().getId(), companyInfo.getId());
 							readyGoodsStock.setProductDetail(ejb.getProductDetailsById(Integer.parseInt(productId[l])));
 							readyGoodsStock
-									.setRemainingQty(readyGoodsStock.getRemainingQty() + Integer.parseInt(qty[l]));
+									.setRemainingQty(readyGoodsStock.getRemainingQty() + Float.parseFloat(qty[l]));
 							ejb.updateReadyGoodsStockDetail(readyGoodsStock);
 							readyGoodsStock = null;
 						}
@@ -1237,15 +1237,15 @@ public class Servlet extends HttpServlet {
 							purchaseProductDetails = ejb
 									.getPurchaseProductDetailsById(Integer.parseInt(purProductDetailsID[l]));
 							purchaseProductDetails.setTotalReturningQty(
-									purchaseProductDetails.getTotalReturningQty() + Integer.parseInt(rQty[l]));
+									purchaseProductDetails.getTotalReturningQty() + Float.parseFloat(rQty[l]));
 							purchaseProductDetails.setRemaining_quantity(
-									purchaseProductDetails.getRemaining_quantity() - Integer.parseInt(rQty[l]));
+									purchaseProductDetails.getRemaining_quantity() - Float.parseFloat(rQty[l]));
 							purchaseProductDetails.setPurchaseReturn(purchaseReturn);
 							ejb.updatePurchaseProductDetails(purchaseProductDetails);
 
 							purchaseReturnProductDetails = new PurchaseReturnProductDetails();
 							purchaseReturnProductDetails.setFault(db[l]);
-							purchaseReturnProductDetails.setQtyReturn(Integer.parseInt(rQty[l]));
+							purchaseReturnProductDetails.setQtyReturn(Float.parseFloat(rQty[l]));
 							purchaseReturnProductDetails.setPurchaseProductDetails(purchaseProductDetails);
 							purchaseReturnProductDetails.setPurchaseReturn(purchaseReturn);
 							ejb.setPurchaseProdReturnDetails(purchaseReturnProductDetails);
@@ -1254,14 +1254,14 @@ public class Servlet extends HttpServlet {
 								rawMaterialsStock = ejb.getRawMeterialStoctByProductAndCompanyId(
 										purchaseProductDetails.getProductDetail().getId(), companyInfo.getId());
 								rawMaterialsStock.setRemainingQty(
-										rawMaterialsStock.getRemainingQty() - Integer.parseInt(rQty[l]));
+										rawMaterialsStock.getRemainingQty() - Float.parseFloat(rQty[l]));
 								ejb.updateRawMaterialStockDetail(rawMaterialsStock);
 								rawMaterialsStock = null;
 							} else {
 								readyGoodsStock = ejb.getReadyGoodStoctByProductAndCompanyId(
 										purchaseProductDetails.getProductDetail().getId(), companyInfo.getId());
 								readyGoodsStock
-										.setRemainingQty(readyGoodsStock.getRemainingQty() - Integer.parseInt(rQty[l]));
+										.setRemainingQty(readyGoodsStock.getRemainingQty() - Float.parseFloat(rQty[l]));
 								ejb.updateReadyGoodsStockDetail(readyGoodsStock);
 								readyGoodsStock = null;
 							}
@@ -1384,7 +1384,7 @@ public class Servlet extends HttpServlet {
 
 					salesProductDetails.setSalesPrice(Float.parseFloat(mrpQty[l]));
 
-					salesProductDetails.setQuantity(Integer.parseInt(qtyvalue[l]));
+					salesProductDetails.setQuantity(Float.parseFloat(qtyvalue[l]));
 
 					salesProductDetails.setPurchase_Product_Details(
 							ejb.getPurchaseProductDetailsById(Integer.parseInt(purchaseProductDetId[l])));
@@ -1404,7 +1404,7 @@ public class Servlet extends HttpServlet {
 								purchaseProductDetails.getProductDetail().getId(), companyInfo.getId());
 
 						rawMaterialsStock
-								.setRemainingQty(rawMaterialsStock.getRemainingQty() - Integer.parseInt(qtyvalue[l]));
+								.setRemainingQty(rawMaterialsStock.getRemainingQty() - Float.parseFloat(qtyvalue[l]));
 
 						ejb.updateRawMaterialStockDetail(rawMaterialsStock);
 					} else {
@@ -1412,7 +1412,7 @@ public class Servlet extends HttpServlet {
 								purchaseProductDetails.getProductDetail().getId(), companyInfo.getId());
 
 						readyGoodsStock
-								.setRemainingQty(readyGoodsStock.getRemainingQty() - Integer.parseInt(qtyvalue[l]));
+								.setRemainingQty(readyGoodsStock.getRemainingQty() - Float.parseFloat(qtyvalue[l]));
 
 						ejb.updateReadyGoodsStockDetail(readyGoodsStock);
 					}
@@ -1661,22 +1661,22 @@ public class Servlet extends HttpServlet {
 
 					// jobAssignmentProducts.setPurchase_Product_Details(
 					// ejb.getPurchaseProductDetailsById(Integer.parseInt(pProdDetIdH[l])));
-					jobAssignmentProducts.setQty(Integer.parseInt(qtyH[l]));
-					jobAssignmentProducts.setRemaninQty(Integer.parseInt(qtyH[l]));
+					jobAssignmentProducts.setQty(Float.parseFloat(qtyH[l]));
+					jobAssignmentProducts.setRemaninQty(Float.parseFloat(qtyH[l]));
 					jobAssignmentProducts.setWorkDescription(workH[l]);
 					jobAssignmentProducts.setJobAssignmentDetails(jobAssignmentDetails);
 					ejb.setJobAssignmentProducts(jobAssignmentProducts);
 
 					jobStock = new JobStock();
 					jobStock.setJobAssignmentProducts(jobAssignmentProducts);
-					jobStock.setGivenQty(Integer.parseInt(qtyH[l]));
-					jobStock.setRemainingQty(Integer.parseInt(qtyH[l]));
+					jobStock.setGivenQty(Float.parseFloat(qtyH[l]));
+					jobStock.setRemainingQty(Float.parseFloat(qtyH[l]));
 
 					ejb.setJobStock(jobStock);
 
 					purchaseProductDetails = ejb.getPurchaseProductDetailsById(Integer.parseInt(pProdDetIdH[l]));
 					purchaseProductDetails.setRemaining_quantity(
-							purchaseProductDetails.getRemaining_quantity() - Integer.parseInt(qtyH[l]));
+							purchaseProductDetails.getRemaining_quantity() - Float.parseFloat(qtyH[l]));
 					ejb.updatePurchaseProductDetails(purchaseProductDetails);
 
 					rawMaterialsStock = ejb.getRawMeterialStoctByProductAndCompanyId(
@@ -2347,7 +2347,7 @@ public class Servlet extends HttpServlet {
 
 							purchaseProductDetails = salesProductDetails.getPurchase_Product_Details();
 							purchaseProductDetails.setRemaining_quantity(
-									purchaseProductDetails.getRemaining_quantity() + Integer.parseInt(qty4[l]));
+									purchaseProductDetails.getRemaining_quantity() + Float.parseFloat(qty4[l]));
 							ejb.updatePurchaseProductDetails(purchaseProductDetails);
 
 							/*
@@ -2368,7 +2368,7 @@ public class Servlet extends HttpServlet {
 										purchaseProductDetails.getProductDetail().getId(), companyInfo.getId());
 
 								rawMaterialsStock.setRemainingQty(
-										rawMaterialsStock.getRemainingQty() + Integer.parseInt(qty4[l]));
+										rawMaterialsStock.getRemainingQty() + Float.parseFloat(qty4[l]));
 
 								ejb.updateRawMaterialStockDetail(rawMaterialsStock);
 							} else {
@@ -2376,7 +2376,7 @@ public class Servlet extends HttpServlet {
 										purchaseProductDetails.getProductDetail().getId(), companyInfo.getId());
 
 								readyGoodsStock
-										.setRemainingQty(readyGoodsStock.getRemainingQty() + Integer.parseInt(qty4[l]));
+										.setRemainingQty(readyGoodsStock.getRemainingQty() + Float.parseFloat(qty4[l]));
 
 								ejb.updateReadyGoodsStockDetail(readyGoodsStock);
 							}
@@ -2540,9 +2540,9 @@ public class Servlet extends HttpServlet {
 				
 				jobPlan = new JobPlan();
 				jobPlan.setPlanDate(DateConverter.getDate(req.getParameter("assignedDate")));
-				jobPlan.setQty(Integer.parseInt(req.getParameter("qty")));
+				jobPlan.setQty(Float.parseFloat(req.getParameter("qty")));
 				jobPlan.setEstimatedCost(
-						Integer.parseInt(req.getParameter("qty")) * sampleDesignCostSheet.getGrandTotal());
+						Float.parseFloat(req.getParameter("qty")) * sampleDesignCostSheet.getGrandTotal());
 				jobPlan.setTotalJobExpanse(0);
 				jobPlan.setComplete(false);
 				jobPlan.setDesignCostSheet(sampleDesignCostSheet);
@@ -2563,30 +2563,30 @@ public class Servlet extends HttpServlet {
 						jobPlanProductStock.setJobCycle(0);
 						jobPlanProductStock.setUndergoingProcess(false);
 						jobPlanProductStock.setComplete(false);
-						jobPlanProductStock.setQty(Integer.parseInt(qtySelected[l1]));						
-						jobPlanProductStock.setRemainingQty(Integer.parseInt(qtySelected[l1]));
+						jobPlanProductStock.setQty(Float.parseFloat(qtySelected[l1]));						
+						jobPlanProductStock.setRemainingQty(Float.parseFloat(qtySelected[l1]));
 						ejb.setJobPlanProductStock(jobPlanProductStock);
 
 						purchaseProductDetails.setRemaining_quantity(
-								purchaseProductDetails.getRemaining_quantity() - Integer.parseInt(qtySelected[l1]));
+								purchaseProductDetails.getRemaining_quantity() - Float.parseFloat(qtySelected[l1]));
 						ejb.updatePurchaseProductDetails(purchaseProductDetails);
 
 						if (purchaseProductDetails.getProductDetail().isRaw()) {
 							rawMaterialsStock = ejb
 									.getRawMeterialStoctByProductId(purchaseProductDetails.getProductDetail().getId());
 							rawMaterialsStock.setRemainingQty(
-									rawMaterialsStock.getRemainingQty() - Integer.parseInt(qtySelected[l1]));
+									rawMaterialsStock.getRemainingQty() - Float.parseFloat(qtySelected[l1]));
 							ejb.updateRawMaterialStockDetail(rawMaterialsStock);
 						} else {
 							readyGoodsStock = ejb
 									.getReadyGoodsStoctByProductId(purchaseProductDetails.getProductDetail().getId());
 							readyGoodsStock.setRemainingQty(
-									readyGoodsStock.getRemainingQty() - Integer.parseInt(qtySelected[l1]));
+									readyGoodsStock.getRemainingQty() - Float.parseFloat(qtySelected[l1]));
 							ejb.updateReadyGoodsStockDetail(readyGoodsStock);
 						}			
 						
 						totalProductCost = totalProductCost
-								+ purchaseProductDetails.getCost() * Integer.parseInt(qtySelected[l1]);
+								+ purchaseProductDetails.getCost() * Float.parseFloat(qtySelected[l1]);
 					}
 				}
 					
@@ -2629,8 +2629,8 @@ public class Servlet extends HttpServlet {
 					jobAssignmentProducts = new JobAssignmentProducts();					
 					jobAssignmentProducts.setJobAssignmentDetails(jobAssignmentDetails);
 					//jobAssignmentProducts.setJobPlanProductStock(jobPlanProductStock);
-					jobAssignmentProducts.setQty(Integer.parseInt(qtyOfSampleProduct[l1]));
-					jobAssignmentProducts.setRemaninQty(Integer.parseInt(qtyOfSampleProduct[l1]));
+					jobAssignmentProducts.setQty(Float.parseFloat(qtyOfSampleProduct[l1]));
+					jobAssignmentProducts.setRemaninQty(Float.parseFloat(qtyOfSampleProduct[l1]));
 					jobAssignmentProducts.setEstimatedCost(Float.parseFloat(productEachTotal[l1]));
 					jobAssignmentProducts.setJobPlan(jobPlan);
 					ejb.setJobAssignmentProducts(jobAssignmentProducts);
@@ -2639,14 +2639,14 @@ public class Servlet extends HttpServlet {
 					String[] qtySelected1 = req.getParameterValues("qtySelected" + productForSampleId1[l1]);
 					for (int l2 = 0; l2 < purProDetId1.length; l2++) {
 						jobPlanProductStock = ejb.getJobPlanProductStockByPurchaseProductDetailsIdAndJobPlanId(Integer.parseInt(purProDetId1[l2]),jobPlan.getId());
-						jobPlanProductStock.setJobAssignQty(Integer.parseInt(qtySelected1[l2]));
-						jobPlanProductStock.setRemainingQty(jobPlanProductStock.getRemainingQty()-Integer.parseInt(qtySelected1[l2]));
+						jobPlanProductStock.setJobAssignQty(Float.parseFloat(qtySelected1[l2]));
+						jobPlanProductStock.setRemainingQty(jobPlanProductStock.getRemainingQty()-Float.parseFloat(qtySelected1[l2]));
 						jobPlanProductStock.setUndergoingProcess(true);
 						jobPlanProductStock.setJobAssignmentProducts(jobAssignmentProducts);
 						ejb.updateJobPlanProductStock(jobPlanProductStock);
 						
 						jobAsignmentProductsFromStock=new JobAsignmentProductsFromStock();
-						jobAsignmentProductsFromStock.setQty(Integer.parseInt(qtySelected1[l2]));
+						jobAsignmentProductsFromStock.setQty(Float.parseFloat(qtySelected1[l2]));
 						jobAsignmentProductsFromStock.setJobAssignmentDetails(jobAssignmentDetails);
 						jobAsignmentProductsFromStock.setJobPlanProductStock(jobPlanProductStock);
 						jobAsignmentProductsFromStock.setJobAssignmentProducts(jobAssignmentProducts);
@@ -2665,7 +2665,7 @@ public class Servlet extends HttpServlet {
 
 					for (int lc1 = 0; lc1 < jobid.length; lc1++) {
 						jobAssignmentJobDetails = new JobAssignmentJobDetails();
-						jobAssignmentJobDetails.setQty(Integer.parseInt(jobqty[lc1]));
+						jobAssignmentJobDetails.setQty(Float.parseFloat(jobqty[lc1]));
 						jobAssignmentJobDetails.setRate(Float.parseFloat(jobrate[lc1]));
 						jobAssignmentJobDetails.setAmmount(Float.parseFloat(jobamount[lc1]));
 						jobAssignmentJobDetails.setEstimatedCompletionDate(DateConverter.getDate(estSubmDate[lc1]));
@@ -2806,7 +2806,7 @@ public class Servlet extends HttpServlet {
 					String qtya[] = req.getParameterValues("qtyH");
 					String costa[] = req.getParameterValues("rateH");
 					String productIda[] = req.getParameterValues("pCodeIdH");
-					String lota[] = req.getParameterValues("lotH");
+					/*String lota[] = req.getParameterValues("lotH");*/
 
 					for (int l = 0; l < qtya.length; l++) {
 						purchaseOrderProductdetails = new PurchaseOrderProductdetails();
@@ -2824,7 +2824,7 @@ public class Servlet extends HttpServlet {
 							purchaseOrderProductdetails.setWsp(Float.parseFloat(wspa[l]));
 						}
 
-						purchaseOrderProductdetails.setQuantity(Integer.parseInt(qtya[l]));
+						purchaseOrderProductdetails.setQuantity(Float.parseFloat(qtya[l]));
 
 						purchaseOrderProductdetails.setRemaining_quantity(Integer.parseInt(qtya[l]));
 						purchaseOrderProductdetails.setCost(Float.parseFloat(costa[l]));
@@ -3005,12 +3005,12 @@ public class Servlet extends HttpServlet {
 									purchaseProductDetails.getProductDetail().getId(), companyInfo.getId());
 							readyGoodsStock.setProductDetail(ejb.getProductDetailsById(Integer.parseInt(productIdaa[l])));
 							readyGoodsStock
-									.setRemainingQty(readyGoodsStock.getRemainingQty() + Integer.parseInt(qty[l]));
+									.setRemainingQty(readyGoodsStock.getRemainingQty() + Float.parseFloat(qty[l]));
 							ejb.updateReadyGoodsStockDetail(readyGoodsStock);
 							readyGoodsStock = null;
 						}
 						purchaseOrderProductdetails= new PurchaseOrderProductdetails();
-						purchaseOrderProductdetails.setRemaining_quantity(purchaseOrderProductdetails.getRemaining_quantity()-Integer.parseInt(qty[l]));
+						purchaseOrderProductdetails.setRemaining_quantity(purchaseOrderProductdetails.getRemaining_quantity()- Float.parseFloat(qty[l]));
 						purchaseEntry.setPurchaseOrderEntry(purchaseOrderEntry);
 						purchaseProductDetails = null;
 					}
