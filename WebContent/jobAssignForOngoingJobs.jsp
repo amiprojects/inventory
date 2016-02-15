@@ -524,11 +524,15 @@ function showDatePicker() {
 						$("#dDescModal").val("");
 						$("#dNoModal").val("");
 						$("#planNo").val("");
+						$("#productNjobsDiv table").empty();
+						$("#productNjobsTable").show();
 					} else {
 						$("#dId").val(ui.item.id);
 						$("#dDescModal").val(ui.item.dDEsc);
 						$("#dNoModal").val($(this).val());
 						$("#planNo").val("");
+						$("#productNjobsDiv table").empty();
+						$("#productNjobsTable").show();
 					}					
 				},
 				select : function(event, ui) {
@@ -538,12 +542,15 @@ function showDatePicker() {
 						$("#dDescModal").val("");
 						$("#dNoModal").val("");
 						$("#planNo").val("");
+						$("#productNjobsDiv table").empty();
+						$("#productNjobsTable").show();
 					} else {
 						$("#dId").val(ui.item.id);
 						$("#dDescModal").val(ui.item.dDEsc);
 						$("#dNoModal").val($(this).val());
 						$("#planNo").val("");
-						
+						$("#productNjobsDiv table").empty();
+						$("#productNjobsTable").show();
 						$
 						.ajax({
 							type : "post",
@@ -554,13 +561,11 @@ function showDatePicker() {
 							},
 							success : function(data2) {
 								$("#jobPlansTable tbody").empty();
-
+								if(data2.length>0){
 								$
 										.each(
 												data2,
 												function(index, item2) {
-													//alert(data2.length);
-													if(data2.length>0){
 														$(
 																
 																"#jobPlansTable")
@@ -588,14 +593,14 @@ function showDatePicker() {
 																				+ "</td>"
 																				+ "</tr>"
 																				+ "</tbody>");
-													}else{
-														alert("There is no plans for this design number.")
-													}
-
 												});
+								$("#jobPlans").modal("show");
+								}else{
+									alert("There is no plans for this design number.");	
+									$("#dNo").val("");
+								}
 							}
-						});
-						$("#jobPlans").modal("show");
+						});						
 					}					
 				}
 			});
@@ -801,7 +806,7 @@ function showDatePicker() {
 				success : function(data2) {
 					//$("#ProductDetailsTable tbody").empty();
 					$("#productNjobsDiv table").empty();
-
+					
 					$
 							.each(
 									data2,
