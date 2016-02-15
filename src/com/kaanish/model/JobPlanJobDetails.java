@@ -16,7 +16,7 @@ public class JobPlanJobDetails implements Serializable {
 	@Id
 	@GeneratedValue
 	private int id;
-	
+	private boolean isComplete;
 	private float qty;
 	
 	@ManyToOne@JoinColumn(name="jobType")
@@ -51,5 +51,11 @@ public class JobPlanJobDetails implements Serializable {
 	}
 	public void setJobPlanProductStock(JobPlanProductStock jobPlanProductStock) {
 		this.jobPlanProductStock = jobPlanProductStock;
+	}
+	public boolean isComplete() {
+		return isComplete;
+	}
+	public void setComplete(boolean isComplete) {
+		this.isComplete = isComplete;
 	}
 }
