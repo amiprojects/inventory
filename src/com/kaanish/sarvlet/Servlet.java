@@ -2674,6 +2674,7 @@ public class Servlet extends HttpServlet {
 						jobAssignmentJobDetails.setJobType(ejb.getJobTypeById(Integer.parseInt(jobid[lc1])));
 						jobAssignmentJobDetails.setJobAssignmentDetails(jobAssignmentDetails);
 						jobAssignmentJobDetails.setAssignmentProducts(jobAssignmentProducts);
+						jobAssignmentJobDetails.setComplete(false);
 						ejb.setJobAssignmentJobDetails(jobAssignmentJobDetails);
 
 						totalJobCost = totalJobCost + Float.parseFloat(jobamount[lc1]);

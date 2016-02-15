@@ -24,6 +24,8 @@ public class JobAssignmentJobDetails implements Serializable {
 	private float qty;
 	private float rate;
 	private float ammount;
+	//adding
+	private boolean isComplete;//
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date estimatedCompletionDate;
 
@@ -113,6 +115,14 @@ public class JobAssignmentJobDetails implements Serializable {
 
 	public void setJobType(JobTypes jobType) {
 		this.jobType = jobType;
+	}
+
+	public boolean isComplete() {
+		return isComplete;
+	}
+
+	public void setComplete(boolean isComplete) {
+		this.isComplete = isComplete;
 	}
 
 }
