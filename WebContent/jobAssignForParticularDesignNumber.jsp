@@ -408,7 +408,6 @@ function showDatePicker() {
 						<thead>
 							<tr>
 								<th>Purchase Date</th>
-								<th>Lot no.</th>
 								<th>Cost/Unit</th>
 								<th>Remaining Qty.</th>								
 								<th>Qty Selected</th>
@@ -732,9 +731,6 @@ function showDatePicker() {
 																+ formatDate(item2.purchaseDate)
 																+ "</td>"
 																+ "<td>"
-																+ item2.lotNumber
-																+ "</td>"
-																+ "<td>"
 																+ item2.cost
 																+ "</td>"
 																+ "<td>"
@@ -753,9 +749,6 @@ function showDatePicker() {
 											+ "<tr>"
 											+ "<td>"
 											+ item2.purchaseDate
-											+ "</td>"
-											+ "<td>"
-											+ item2.lotNumber
 											+ "</td>"
 											+ "<td>"
 											+ item2.cost
