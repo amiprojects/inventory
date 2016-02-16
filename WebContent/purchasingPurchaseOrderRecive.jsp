@@ -435,8 +435,8 @@ em
 	<td style="display:none;"><input type="hidden" name="attr1H" value="${purchaseProducts.attrValue1}" id="a1${purchaseProducts.id}"></td>
 	<td style="display:none;"><input type="hidden" name="attr1H" value="${purchaseProducts.attrValue1}" id="a1${purchaseProducts.id}"></td>
 	<td style="display:none;"><input type="hidden" name="attr2H" value="${purchaseProducts.attrValue2}" id="a2${purchaseProducts.id}"></td>
-													<td style="display:none;"><input type="hidden" name="attr3H" value="${purchaseProducts.attrValue3}" id="a3${purchaseProducts.id}"></td>
-													<td style="display:none;"><input type="hidden" name="attr4H" value="${purchaseProducts.attrValue4}" id="a4${purchaseProducts.id}"></td>
+	<td style="display:none;"><input type="hidden" name="attr3H" value="${purchaseProducts.attrValue3}" id="a3${purchaseProducts.id}"></td>
+	<td style="display:none;"><input type="hidden" name="attr4H" value="${purchaseProducts.attrValue4}" id="a4${purchaseProducts.id}"></td>
 													<td style="display:none;"><input type="hidden" name="attr5H" value="${purchaseProducts.attrValue5}" id="a5${purchaseProducts.id}"></td>
 													<td style="display:none;"><input type="hidden" name="attr6H" value="${purchaseProducts.attrValue6}" id="a6${purchaseProducts.id}"></td>
 													<td style="display:none;"><input type="hidden" name="mrpH" value="${purchaseProducts.mrp}" id="mr7p${purchaseProducts.id}"></td>
