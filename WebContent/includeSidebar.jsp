@@ -52,10 +52,10 @@
 							title="">Search Purchase Entry</a></li>
 						<li><a id="sPurchReturn" href="purchaseReturn.jsp" title="">Purchase
 								Return</a></li>
-					 <li><a id="sPurchPOgive" href="purchasingPurchaseOrderGive.jsp" title="">Purchase
+					 <!-- <li><a id="sPurchPOgive" href="purchasingPurchaseOrderGive.jsp" title="">Purchase
 								Order</a></li>
-					 <li><a id="sPurchPOtake" href="purchasingPurchaseOrderRecive.jsp" title="">Purchase
-								Order Receive</a></li> 
+						<li><a id="sPurchPOtake" href="purchasingPurchaseOrderRecive.jsp" title="">Purchase
+								Order Receive</a></li>  -->
 					</ul>
 				</div>
 			</div>
