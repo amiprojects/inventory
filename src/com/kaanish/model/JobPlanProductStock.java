@@ -30,10 +30,6 @@ public class JobPlanProductStock implements Serializable {
 	@JoinColumn(name = "planId")
 	private JobPlan jobPlan;
 	
-	
-	@OneToMany(mappedBy = "jobPlanProductStock")
-	private List<JobPlanJobDetails> jobPlanJobDetails;
-	
 	@ManyToOne
 	@JoinColumn(name = "purchaseProductId")
 	private Purchase_Product_Details purchase_Product_Details;
@@ -138,14 +134,6 @@ public class JobPlanProductStock implements Serializable {
 
 	public void setRemainingQty(float remainingQty) {
 		this.remainingQty = remainingQty;
-	}
-
-	public List<JobPlanJobDetails> getJobPlanJobDetails() {
-		return jobPlanJobDetails;
-	}
-
-	public void setJobPlanJobDetails(List<JobPlanJobDetails> jobPlanJobDetails) {
-		this.jobPlanJobDetails = jobPlanJobDetails;
 	}
 
 	/*public List<JobAssignmentProducts> getJobAssignmentProducts() {

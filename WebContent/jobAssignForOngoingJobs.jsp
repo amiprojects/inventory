@@ -852,13 +852,17 @@ function showDatePicker() {
 										'</th></tr></thead></table>');
 										
 										var ProductForSampleId= item2.ProductForSampleId;
+										var planId=pId;
+										var prodId=item2.ProductId;
 										$
 										.ajax({
 											type : "post",
 											url : "getJobsForDesignCostSheetByPlanId",
 											dataType : "json",
 											data : {
-												pid : ProductForSampleId
+												pid : ProductForSampleId,
+												planId : planId,
+												prodId : prodId
 											},
 											success : function(data2) {
 												$

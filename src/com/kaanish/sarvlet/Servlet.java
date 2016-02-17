@@ -2645,6 +2645,9 @@ public class Servlet extends HttpServlet {
 						jobPlanProductStock.setJobAssignmentProducts(jobAssignmentProducts);
 						ejb.updateJobPlanProductStock(jobPlanProductStock);
 						
+						String[] jobid = req.getParameterValues("jobId" + productForSampleId1[l1]);
+						String[] jobqty = req.getParameterValues("jobQty" + productForSampleId1[l1]);
+						
 						jobAsignmentProductsFromStock=new JobAsignmentProductsFromStock();
 						jobAsignmentProductsFromStock.setQty(Float.parseFloat(qtySelected1[l2]));
 						jobAsignmentProductsFromStock.setJobAssignmentDetails(jobAssignmentDetails);
