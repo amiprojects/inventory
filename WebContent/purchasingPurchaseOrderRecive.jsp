@@ -67,21 +67,9 @@ tfoot {
 	width: 100% !important;
 }
 margin-bottom
-
-
-
-
 :
-
-
-
-
 3
 em
-
-
-
-
 ;
 </style>
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
@@ -437,13 +425,13 @@ em
 	<td style="display:none;"><input type="hidden" name="attr2H" value="${purchaseProducts.attrValue2}" id="a2${purchaseProducts.id}"></td>
 	<td style="display:none;"><input type="hidden" name="attr3H" value="${purchaseProducts.attrValue3}" id="a3${purchaseProducts.id}"></td>
 	<td style="display:none;"><input type="hidden" name="attr4H" value="${purchaseProducts.attrValue4}" id="a4${purchaseProducts.id}"></td>
-													<td style="display:none;"><input type="hidden" name="attr5H" value="${purchaseProducts.attrValue5}" id="a5${purchaseProducts.id}"></td>
-													<td style="display:none;"><input type="hidden" name="attr6H" value="${purchaseProducts.attrValue6}" id="a6${purchaseProducts.id}"></td>
-													<td style="display:none;"><input type="hidden" name="mrpH" value="${purchaseProducts.mrp}" id="mr7p${purchaseProducts.id}"></td>
-													<td style="display:none;"><input type="hidden" name="wspH" value="${purchaseProducts.wsp}" id="ws7p${purchaseProducts.id}"></td>
-													<td style="display:none;"><input type="hidden" name="rateH" value="${purchaseProducts.cost}" id="ra7t${purchaseProducts.id}"></td>
-												<td>${purchaseProducts.productDetail.description}</td>
-												<td>${purchaseProducts.quantity}</td>
+	<td style="display:none;"><input type="hidden" name="attr5H" value="${purchaseProducts.attrValue5}" id="a5${purchaseProducts.id}"></td>
+	<td style="display:none;"><input type="hidden" name="attr6H" value="${purchaseProducts.attrValue6}" id="a6${purchaseProducts.id}"></td>
+	<td style="display:none;"><input type="hidden" name="mrpH" value="${purchaseProducts.mrp}" id="mr7p${purchaseProducts.id}"></td>
+	<td style="display:none;"><input type="hidden" name="wspH" value="${purchaseProducts.wsp}" id="ws7p${purchaseProducts.id}"></td>
+	<td style="display:none;"><input type="hidden" name="rateH" value="${purchaseProducts.cost}" id="ra7t${purchaseProducts.id}"></td>
+	<td>${purchaseProducts.productDetail.description}</td>
+	<td>${purchaseProducts.quantity}</td>
 												<td id="qty${purchaseProducts.id}">${purchaseProducts.quantity-purchaseProducts.totalReturningQty}</td>
 												<td>${purchaseProducts.productDetail.qtyUnit.name}</td>
 												<td id="cost${purchaseProducts.id}">${purchaseProducts.cost}</td>

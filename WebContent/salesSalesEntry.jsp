@@ -1127,10 +1127,17 @@
 					<h4 class="modal-title">Purchase Details</h4>
 				</div>
 				<div class="modal-body">
+				
+				<div class="col-md-5">Product Image:</div>
+								<div class="col-md-7" id="imgaeDIV">
+									<img  id="productImage" height="60" width="50" style="" alt="">
+								</div>
 					<table id="stream_table" width="100%">
 						<thead>
 							<tr>
 								<th>Designer Number:</th>
+								
+							
 								<td colspan="2"><input type="text" readonly="readonly"
 									id="pCodeModal" class="form-control"></td>
 							</tr>
@@ -2163,7 +2170,8 @@
 													codeParts : req.term
 												},
 												dataType : "json",
-												success : function(data) {
+												success : function(data) {				
+
 													resp($
 															.map(
 																	data,
@@ -2172,7 +2180,8 @@
 																		return ({
 																			value : item.code,
 																			id : item.id,
-																			description : item.description
+																			description : item.description,
+																			image : item.aimage
 																		});
 																	}));
 												},
@@ -2196,12 +2205,14 @@
 								select : function(event, ui) {
 									if (ui.item != null) {
 										$("#pCodeId").val(ui.item.id);
-										//getProductDetailsByProductCode(ui.item.id);
+										//getProductDetailsByProductCode(ui.item.id) ;
 										$("#purchaseDetails").modal("show");
 										$("#pCodeModal").val(ui.item.value);
+										$("#productImage").attr('src',
+												'data:image/jpeg;base64,' + ui.item.image);
 										$("#pDescModal").val(
 												ui.item.description);
-
+										
 										$
 												.ajax({
 													type : "post",

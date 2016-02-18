@@ -42,6 +42,7 @@ public class Purchase_Entry implements Serializable {
 	private int agentId;
 	private boolean isFlatDiscount;
 	private float discountValue;
+	private boolean isCommisionTotal;
 //	private float dueAmount;
 
 	@OneToMany(mappedBy = "purchase_Entry")
@@ -297,6 +298,14 @@ public class Purchase_Entry implements Serializable {
 
 	public void setPurchaseOrderEntry(PurchaseOrderEntry purchaseOrderEntry) {
 		this.purchaseOrderEntry = purchaseOrderEntry;
+	}
+
+	public boolean isCommisionTotal() {
+		return isCommisionTotal;
+	}
+
+	public void setCommisionTotal(boolean isCommisionTotal) {
+		this.isCommisionTotal = isCommisionTotal;
 	}
 
 	

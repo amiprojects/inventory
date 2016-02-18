@@ -35,6 +35,10 @@ public class Purchase_Product_Details implements Serializable {
 	private String attrValue6;
 	private String lotNumber;
 	private boolean initialInventory;
+	private float agentCommisionValue;
+	private boolean isFlat;
+	
+	
 	@Transient
 	private int numberForBarcodePrint;
 
@@ -312,6 +316,22 @@ public class Purchase_Product_Details implements Serializable {
 
 	public void setPurchaseOrderProductdetails(List<PurchaseOrderProductdetails> purchaseOrderProductdetails) {
 		this.purchaseOrderProductdetails = purchaseOrderProductdetails;
+	}
+
+	public float getAgentCommisionValue() {
+		return agentCommisionValue;
+	}
+
+	public void setAgentCommisionValue(float agentCommisionValue) {
+		this.agentCommisionValue = agentCommisionValue;
+	}
+
+	public boolean isFlat() {
+		return isFlat;
+	}
+
+	public void setFlat(boolean isFlat) {
+		this.isFlat = isFlat;
 	}
 
 }
