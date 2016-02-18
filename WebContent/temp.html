@@ -1,6 +1,19 @@
-for (JobAssignmentProducts jap : ejb
+case "getOngoingJobAssignmentsByPlanId":
+				JsonGeneratorFactory factoryJA = Json
+						.createGeneratorFactory(null);
+				JsonGenerator generatorJA = factoryJA.createGenerator(resp
+						.getOutputStream());
+				generatorJA.writeStartArray();
+				for (JobAssignmentProducts jap : ejb
 						.getOngoingJobAssignmentsByPlanId(
-								Integer.parseInt(req.getParameter("pid"))).getJobAssignmentProducts())
+								Integer.parseInt(req.getParameter("pid"))).getJobAssignmentProducts()) {
+					generatorJA
+							.writeStartObject()
+							.write("japId", jap.getId())
+							.writeEnd();
+				}
+				generatorJA.writeEnd().close();
+				break;
 
 
 case "getProductAndDesignDetailsAndJobPlanByJobPlanId":
