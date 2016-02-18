@@ -63,9 +63,6 @@ public class JobAssignmentProducts implements Serializable {
 	@OneToMany(mappedBy="jobAssignmentProducts",cascade=CascadeType.ALL)
 	private List<JobPlanProductStock> jobPlanProductStock;
 	
-	@OneToMany(mappedBy="jobAssignmentProducts",cascade=CascadeType.ALL)
-	private List<JobAsignmentProductsFromStock> jobAsignmentProductsFromStock;
-	
 	@OneToMany(mappedBy="assignmentProducts",cascade=CascadeType.ALL)
 	private List<JobAssignmentJobDetails> jobAssignmentJobDetails;
 	
@@ -169,15 +166,6 @@ public class JobAssignmentProducts implements Serializable {
 
 	public void setJobPlanProductStock(List<JobPlanProductStock> jobPlanProductStock) {
 		this.jobPlanProductStock = jobPlanProductStock;
-	}
-
-	public List<JobAsignmentProductsFromStock> getJobAsignmentProductsFromStock() {
-		return jobAsignmentProductsFromStock;
-	}
-
-	public void setJobAsignmentProductsFromStock(
-			List<JobAsignmentProductsFromStock> jobAsignmentProductsFromStock) {
-		this.jobAsignmentProductsFromStock = jobAsignmentProductsFromStock;
 	}
 
 	public JobPlan getJobPlan() {

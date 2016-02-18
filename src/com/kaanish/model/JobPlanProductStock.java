@@ -24,7 +24,6 @@ public class JobPlanProductStock implements Serializable {
 	private int jobCycle;//0
 	private boolean isUndergoingProcess;//false
 	private boolean isComplete;//false
-	private float jobAssignQty;//new
 
 	@ManyToOne
 	@JoinColumn(name = "planId")
@@ -35,9 +34,6 @@ public class JobPlanProductStock implements Serializable {
 	private Purchase_Product_Details purchase_Product_Details;
 	/*@OneToMany(mappedBy = "jobPlanProductStock")
 	private List<JobAssignmentProducts> jobAssignmentProducts;*/
-	
-	@OneToMany(mappedBy = "jobPlanProductStock")
-	private List<JobAsignmentProductsFromStock> jobAsignmentProductsFromStock;
 	
 	@ManyToOne
 	@JoinColumn(name = "jobAssignmentProductsId")
@@ -95,25 +91,6 @@ public class JobPlanProductStock implements Serializable {
 
 	public void setJobAssignmentProducts(JobAssignmentProducts jobAssignmentProducts) {
 		this.jobAssignmentProducts = jobAssignmentProducts;
-	}
-
-	
-
-	public float getJobAssignQty() {
-		return jobAssignQty;
-	}
-
-	public void setJobAssignQty(float jobAssignQty) {
-		this.jobAssignQty = jobAssignQty;
-	}
-
-	public List<JobAsignmentProductsFromStock> getJobAsignmentProductsFromStock() {
-		return jobAsignmentProductsFromStock;
-	}
-
-	public void setJobAsignmentProductsFromStock(
-			List<JobAsignmentProductsFromStock> jobAsignmentProductsFromStock) {
-		this.jobAsignmentProductsFromStock = jobAsignmentProductsFromStock;
 	}
 
 	public Purchase_Product_Details getPurchase_Product_Details() {
