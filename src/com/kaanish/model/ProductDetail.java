@@ -190,7 +190,7 @@ public class ProductDetail implements Serializable {
 				+ category.getSubDepartment().getName()
 				+ "\",\"categoryId\":\"" + category.getId()
 				+ "\",\"Department\":\""
-				+ category.getSubDepartment().getDepartment().getName() + "\"}";
+				+ category.getSubDepartment().getDepartment().getName() + "\"," + "\"aimage\":\"" + productImages.get(0).getImageAsString() + "\"}";
 	}
 
 	public List<ProductImage> getProductImages() {

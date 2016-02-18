@@ -9,17 +9,17 @@ public class GetMacId {
 	
 	public static String getMacId(){
 		InetAddress ip;
-		String macid="";
+		String macid=new String();
 		try {
 				
 			ip = InetAddress.getLocalHost();
-			//System.out.println("Current IP address : " + ip.getHostAddress());
+			System.out.println("Current IP address : " + ip.getHostAddress());
 			
 			NetworkInterface network = NetworkInterface.getByInetAddress(ip);
 				
 			byte[] mac = network.getHardwareAddress();
 				
-			System.out.print("Current MAC address : ");
+			
 				
 			StringBuilder sb = new StringBuilder();
 			for (int i = 0; i < mac.length; i++) {
@@ -38,6 +38,7 @@ public class GetMacId {
 			e.printStackTrace();
 				
 		}
+		//System.out.print("Current MAC address : "+macid);
 		return macid;
 		
 	}

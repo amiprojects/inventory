@@ -2,6 +2,7 @@ package com.kaanish.sarvlet;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,7 +32,7 @@ import com.kaanish.model.Users;
 import com.kaanish.model.VendorType;
 import com.kaanish.util.GetMacId;
 
-@WebServlet({ "/login" })
+@WebServlet({ "/login", "/test" })
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	@EJB
@@ -351,7 +352,7 @@ public class LoginServlet extends HttpServlet {
 			bill_setup.setCompanyInfo(companyInfoKainat);
 			ejb.setBillSetup(bill_setup);
 			bill_setup = null;
-			
+
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("PURO");
 			bill_setup.setCompanyInitial("KK");
@@ -367,7 +368,7 @@ public class LoginServlet extends HttpServlet {
 			bill_setup.setCompanyInfo(companyInfoKainat);
 			ejb.setBillSetup(bill_setup);
 			bill_setup = null;
-			
+
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("INV");
 			bill_setup.setCompanyInitial("KK");
@@ -435,10 +436,8 @@ public class LoginServlet extends HttpServlet {
 		if (ejb.getAllStoct().size() < 1) {
 			LocalDateTime afterThreeMonths = currentDateTime.plusMonths(3);
 			stoct = new Stoct();
-			stoct.setStartDate(Date.from(currentDateTime.toInstant(ZoneOffset
-					.ofHoursMinutes(5, 30))));
-			stoct.setEndDate(Date.from(afterThreeMonths.toInstant(ZoneOffset
-					.ofHoursMinutes(5, 30))));
+			stoct.setStartDate(Date.from(currentDateTime.toInstant(ZoneOffset.ofHoursMinutes(5, 30))));
+			stoct.setEndDate(Date.from(afterThreeMonths.toInstant(ZoneOffset.ofHoursMinutes(5, 30))));
 			stoct.setStockNumber(GetMacId.getMacId());
 			ejb.setStoct(stoct);
 		}
@@ -455,74 +454,62 @@ public class LoginServlet extends HttpServlet {
 		}
 		if (ejb.getAllSecurityQuestions().size() < 10) {
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb
-					.getSecurityQueGroupByGroupName("First"));
+			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("First"));
 			securityQuestions.setQuestion("What is the place you borned?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb
-					.getSecurityQueGroupByGroupName("First"));
+			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("First"));
 			securityQuestions.setQuestion("What is your first friend's name?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb
-					.getSecurityQueGroupByGroupName("First"));
+			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("First"));
 			securityQuestions.setQuestion("What is your first teacher's name?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb
-					.getSecurityQueGroupByGroupName("First"));
-			securityQuestions
-					.setQuestion("What is the name of your first school?");
+			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("First"));
+			securityQuestions.setQuestion("What is the name of your first school?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb
-					.getSecurityQueGroupByGroupName("First"));
+			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("First"));
 			securityQuestions.setQuestion("What is your pet's name?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb
-					.getSecurityQueGroupByGroupName("Favourite"));
+			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("Favourite"));
 			securityQuestions.setQuestion("What is your favourite food?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb
-					.getSecurityQueGroupByGroupName("Favourite"));
+			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("Favourite"));
 			securityQuestions.setQuestion("What is your favourite movie?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb
-					.getSecurityQueGroupByGroupName("Favourite"));
+			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("Favourite"));
 			securityQuestions.setQuestion("Who is your favourite person?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb
-					.getSecurityQueGroupByGroupName("Favourite"));
+			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("Favourite"));
 			securityQuestions.setQuestion("Who is your favourite player?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb
-					.getSecurityQueGroupByGroupName("Favourite"));
-			securityQuestions
-					.setQuestion("Who is your favourite Actor/Actress?");
+			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("Favourite"));
+			securityQuestions.setQuestion("Who is your favourite Actor/Actress?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 		}
@@ -530,8 +517,7 @@ public class LoginServlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		date = new Date();
 		url = req.getRequestURL().toString();
@@ -552,6 +538,7 @@ public class LoginServlet extends HttpServlet {
 					jobClass = new JobClass();
 					jobClass.setJobTitle(user);
 					jobClass.setAssignDate(date);
+					jobClass.setMacId(GetMacId.getMacId());
 					ejb.setJobClass(jobClass);
 
 					httpSession.setAttribute("user", user);
@@ -581,6 +568,7 @@ public class LoginServlet extends HttpServlet {
 						jobClass = new JobClass();
 						jobClass.setJobTitle(user);
 						jobClass.setAssignDate(date);
+						jobClass.setMacId(GetMacId.getMacId());
 						ejb.setJobClass(jobClass);
 
 						httpSession.setAttribute("user", user);
@@ -588,24 +576,24 @@ public class LoginServlet extends HttpServlet {
 						httpSession.setAttribute("port", port);
 						page = "dashboard.jsp";
 
-						/*
-						 * LocalDateTime afterThreeMonths = LocalDateTime
-						 * .ofInstant(ejb.getAllStoct().get(0)
-						 * .getEndDate().toInstant(), ZoneId.systemDefault());
-						 * LocalDateTime before21Days = afterThreeMonths
-						 * .minusDays(21); if (date.after(Date.from(before21Days
-						 * .toInstant(ZoneOffset.ofHoursMinutes(5, 30))))) { msg
-						 * = "Validity will be ended on " +
-						 * ejb.getAllStoct().get(0).getEndDate() +
-						 * ". Please contact to your vendor..."; } else {
-						 */
-						msg = "Login Successful.";
-						/* } */
+						LocalDateTime afterThreeMonths = LocalDateTime
+								.ofInstant(ejb.getAllStoct().get(0).getEndDate().toInstant(), ZoneId.systemDefault());
+						LocalDateTime before21Days = afterThreeMonths.minusDays(21);
+						if (date.after(Date.from(before21Days.toInstant(ZoneOffset.ofHoursMinutes(5, 30))))) {
+							msg = "Validity will be ended on " + ejb.getAllStoct().get(0).getEndDate()
+									+ ". Please contact to your vendor...";
+						} else {
+
+							msg = "Login Successful.";
+						}
 
 					} else {
 						msg = "Invalid username/Password.";
 						httpSession.removeAttribute("user");
 					}
+					break;
+				case "test":
+					resp.getWriter().println(GetMacId.getMacId());
 					break;
 
 				default:
@@ -626,8 +614,7 @@ public class LoginServlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doGet(req, resp);
 	}
 }

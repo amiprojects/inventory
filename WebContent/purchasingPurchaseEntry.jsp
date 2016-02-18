@@ -200,7 +200,7 @@
 			$("#finalDC").val(
 					Math.round((Number($("#spDueAmount").val()) + Number($(
 							"#totalCredit").val())) * 100) / 100);
-		}
+		}  
 	}
 	function pTypeFunc() {
 		$("#description").show();
@@ -335,6 +335,14 @@
 															<option value="${agents.id}">${agents.name}</option>
 														</c:forEach>
 													</select>
+													
+													<div>
+														
+														<!-- <input type="radio" name="agntMoney" id="perProduct"
+														value="perPro">Commission Per product<br>
+														
+														<input type="radio"	name="agntMoney" id="totProduct" value="totPro">Commission on grand total
+ -->												</div>
 												</div>
 												<div class="col-md-1">
 
@@ -344,6 +352,7 @@
 														width="30px" alt="" src="img/add.png">
 													</a>
 												</div>
+												
 											</div>
 										</div>
 										<div class="col-md-6">
@@ -1482,6 +1491,12 @@
 									<input type="text" class="form-control" name="pDesc" id="pDesc"
 										readonly="readonly">
 								</div>
+								<div class="col-md-5">Product Image:</div>
+								<div class="col-md-7" id="imgaeDIV">
+									<img width="100" id="productImage" height="60" width="50" style="" alt="">
+								</div>
+								<br>
+								<br>
 							</div>
 						</div>
 						<div class="widget-area" style="width: 50%; height: 275px;">
@@ -3354,6 +3369,8 @@
 					success : function(data) {
 						$("#dept").val(data.Department);
 						$("#pCode").val(data.code);
+						$("#productImage").attr('src',
+								'data:image/jpeg;base64,' + data.aimage);
 						if (data.isSaleble == 'true') {
 							$("#wsp").attr("readonly", false);
 							$("#mrp").attr("readonly", false);
@@ -3854,7 +3871,7 @@
 			}
 
 			/* KaJAX */
-			
+
 			//alert("lolt");
 			var img = "";
 			$
@@ -3870,7 +3887,7 @@
 									.map(
 											data1,
 											function(item) {
-											alert(item.image+"1233");
+												alert(item.image + "1233");
 												img = img
 														+ '<img width="100" height="100" style="" alt="" src="data:image/jpeg;base64,'+item.image+'">';
 											});
