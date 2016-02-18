@@ -1,56 +1,50 @@
-if (item2.ProductRemainingQty >= (Number($(
-												"#qty").val()) * item2.ProductQtyForSample)) {
-											$(
-													
-													"#ProductDetailsTable")
-													.append(
-															"<tbody id='prod"+item2.ProductId+"' onclick='selectProduct(\""
-																	+ item2.ProductCode
-																	+ "\",\""+ item2.ProductDesc +"\",\""+ item2.ProductUOMName +"\",\""+ item2.ProductForSampleId +"\",\""+ item2.ProductId +"\");'>"
-																	+ "<tr>"
-																	+ "<td>"
-																	+ Number(1 + index)
-																	+ "</td>"
-																	+ "<td>"
-																	+ item2.ProductCode
-																	+ "</td>"
-																	+ "<td>"
-																	+ item2.ProductDesc
-																	+ "</td>"
-																	+ "<td>"
-																	+ item2.ProductUOMName
-																	+ "</td>"
-																	+ "<td>"
-																	+ item2.ProductQtyForSample
-																			* $(
-																					"#qty")
-																					.val()
-																	+ "</td>"
-																	+ "<td>"
-																	+ item2.ProductRateForSample
-																			* $(
-																					"#qty")
-																					.val()
-																	+ "</td>"
-																	+ "<td>"
-																	+ (item2.ProductQtyForSample * $(
-																			"#qty")
-																			.val())
-																	* (item2.ProductRateForSample * $(
-																			"#qty")
-																			.val())
-																	+ "</td>"
-																	+ "</tr>"
-																	+ "</tbody>");
-										} else {
-											alert("unsufficient product "
-													+ item2.ProductDesc);
-											$(
-													"#ProductDetailsTable tbody")
-													.empty();
-											$(
-													"#productDetails")
-													.modal(
-															"hide");
-											return false;
-										}
+for (JobAssignmentProducts jap : ejb
+						.getOngoingJobAssignmentsByPlanId(
+								Integer.parseInt(req.getParameter("pid"))).getJobAssignmentProducts())
+
+
+case "getProductAndDesignDetailsAndJobPlanByJobPlanId":
+				JsonGeneratorFactory factoryM = Json
+						.createGeneratorFactory(null);
+				JsonGenerator generatorM = factoryM.createGenerator(resp
+						.getOutputStream());
+				generatorM.writeStartArray();
+				for (ProductsForDesignCostSheet pdcs : ejb
+						.getJobPlanById(
+								Integer.parseInt(req.getParameter("pId")))
+						.getDesignCostSheet().getProductsForDesignCostSheets()) {
+					generatorM
+							.writeStartObject()
+							.write("ProductCode",
+									pdcs.getProductDetail().getCode())
+							.write("ProductId", pdcs.getProductDetail().getId())
+							.write("ProductDesc",
+									pdcs.getProductDetail().getDescription())
+							.write("ProductUOMid",
+									pdcs.getProductDetail().getQtyUnit()
+											.getId())
+							.write("ProductUOMName",
+									pdcs.getProductDetail().getQtyUnit()
+											.getName())
+							.write("ProductRemainingQty",
+									pdcs.getProductDetail().isRaw() ? pdcs
+											.getProductDetail()
+											.getRawMaterialsStock()
+											.getRemainingQty() : pdcs
+											.getProductDetail()
+											.getReadyGoodsStock()
+											.getRemainingQty())
+							.write("ProductTotalAmount",
+									ejb.getJobAssignmentProductDetailsByproductAndJobPlanId(
+											pdcs.getProductDetail().getId(),
+											Integer.parseInt(req
+													.getParameter("pId")))
+											.getEstimatedCost())
+							.write("ProductQtyForSample", pdcs.getQty())
+							.write("ProductRateForSample", pdcs.getRate())
+							.write("ProductAmountForSample", pdcs.getAmmount())
+							.write("ProductForSampleId", pdcs.getId())
+							.writeEnd();
+				}
+				generatorM.writeEnd().close();
+				break;

@@ -46,6 +46,10 @@ public class JobAssignmentProducts implements Serializable {
 	private JobAssignmentDetails jobAssignmentDetails;
 	
 	@ManyToOne
+	@JoinColumn(name = "ProductsForDesignCostSheetId")
+	private ProductsForDesignCostSheet productsForDesignCostSheet;
+	
+	@ManyToOne
 	@JoinColumn(name = "jobPlanId")
 	private JobPlan jobPlan;
 
@@ -198,6 +202,14 @@ public class JobAssignmentProducts implements Serializable {
 
 	public void setRemaninQty(float remaninQty) {
 		this.remaninQty = remaninQty;
+	}
+
+	public ProductsForDesignCostSheet getProductsForDesignCostSheet() {
+		return productsForDesignCostSheet;
+	}
+
+	public void setProductsForDesignCostSheet(ProductsForDesignCostSheet productsForDesignCostSheet) {
+		this.productsForDesignCostSheet = productsForDesignCostSheet;
 	}
 
 }

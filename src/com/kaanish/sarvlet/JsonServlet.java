@@ -23,6 +23,8 @@ import com.kaanish.model.City;
 import com.kaanish.model.CompanyInfo;
 import com.kaanish.model.Country;
 import com.kaanish.model.Department;
+import com.kaanish.model.JobAssignmentDetails;
+import com.kaanish.model.JobAssignmentProducts;
 import com.kaanish.model.JobPlan;
 import com.kaanish.model.JobsForDesignCostSheet;
 import com.kaanish.model.ProductDetail;
@@ -71,7 +73,9 @@ import com.kaanish.util.DepartmentCotractor;
 		"/getJobsForDesignCostSheetByProductSForSampleId",
 		"/getProductImagejson",
 		"/getPlannedSampleDesignCostSheetByDesignNumber",
-		"/getAllJobPlanByDesignNumber", "/getProductAndDesignDetailsAndJobPlanByJobPlanId", "/getJobsForDesignCostSheetByPlanId" })
+		"/getAllOngoingJobPlanByDesignNumber",
+		"/getProductAndDesignDetailsAndJobPlanByJobPlanId",
+		"/getJobsForDesignCostSheetByPlanId", "/getOngoingJobAssignmentsByPlanId" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -375,7 +379,8 @@ public class JsonServlet extends HttpServlet {
 									ejb.getJobAssignmentProductDetailsByproductAndJobPlanId(
 											pdcs.getProductDetail().getId(),
 											Integer.parseInt(req
-													.getParameter("pId"))).getEstimatedCost())
+													.getParameter("pId")))
+											.getEstimatedCost())
 							.write("ProductQtyForSample", pdcs.getQty())
 							.write("ProductRateForSample", pdcs.getRate())
 							.write("ProductAmountForSample", pdcs.getAmmount())
@@ -405,11 +410,10 @@ public class JsonServlet extends HttpServlet {
 									jdcs.getQtyUnit().getName())
 							.write("JobAmountOfSample", jdcs.getAmmount())
 							.writeEnd();
-					;
 				}
 				generator4.writeEnd().close();
 				break;
-				
+
 			case "getJobsForDesignCostSheetByPlanId":
 				JsonGeneratorFactory factoryJ = Json
 						.createGeneratorFactory(null);
@@ -430,9 +434,25 @@ public class JsonServlet extends HttpServlet {
 									jdcs.getQtyUnit().getName())
 							.write("JobAmountOfSample", jdcs.getAmmount())
 							.writeEnd();
-					;
 				}
 				generatorJ.writeEnd().close();
+				break;
+
+			case "getOngoingJobAssignmentsByPlanId":
+				JsonGeneratorFactory factoryJA = Json
+						.createGeneratorFactory(null);
+				JsonGenerator generatorJA = factoryJA.createGenerator(resp
+						.getOutputStream());
+				generatorJA.writeStartArray();
+				for (JobAssignmentProducts jap : ejb
+						.getOngoingJobAssignmentsByPlanId(
+								Integer.parseInt(req.getParameter("pid"))).getJobAssignmentProducts()) {
+					generatorJA
+							.writeStartObject()
+							.write("japId", jap.getId())
+							.writeEnd();
+				}
+				generatorJA.writeEnd().close();
 				break;
 
 			case "getProductByDescription":
@@ -980,7 +1000,6 @@ public class JsonServlet extends HttpServlet {
 					productDetail.setActive(true);
 					ejb.setProductDetail(productDetail);
 
-					
 					if (Boolean.parseBoolean(req.getParameter("isRaw"))) {
 
 						rawMaterialsStock.setProductDetail(productDetail);
@@ -1037,7 +1056,8 @@ public class JsonServlet extends HttpServlet {
 								.getParameter("att5"));
 						purchaseProductDetails.setAttrValue6(req
 								.getParameter("att6"));
-						purchaseProductDetails.setRemaining_quantity(Float.parseFloat(req.getParameter("qty1")));
+						purchaseProductDetails.setRemaining_quantity(Float
+								.parseFloat(req.getParameter("qty1")));
 						purchaseProductDetails.setInitialInventory(true);
 						purchaseProductDetails.setProductDetail(productDetail);
 						purchaseProductDetails.setLotNumber(req
@@ -1143,14 +1163,14 @@ public class JsonServlet extends HttpServlet {
 				generatorD.writeEnd().close();
 				break;
 
-			case "getAllJobPlanByDesignNumber":
+			case "getAllOngoingJobPlanByDesignNumber":
 				JsonGeneratorFactory factoryJP = Json
 						.createGeneratorFactory(null);
 				JsonGenerator generatorJP = factoryJP.createGenerator(resp
 						.getOutputStream());
 				generatorJP.writeStartArray();
 
-				for (JobPlan jp : ejb.getAllJobPlanByDesignNumber(req
+				for (JobPlan jp : ejb.getAllOngoingJobPlanByDesignNumber(req
 						.getParameter("dNo"))) {
 					generatorJP.writeStartObject().write("jpId", jp.getId())
 							// .write("jpDesc", jp.getDescription())

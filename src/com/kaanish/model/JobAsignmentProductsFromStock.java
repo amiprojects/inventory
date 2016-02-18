@@ -34,6 +34,10 @@ public class JobAsignmentProductsFromStock implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "jobAssignmentProductsId")
 	private JobAssignmentProducts jobAssignmentProducts;
+	
+	@ManyToOne
+	@JoinColumn(name = "ProductsForDesignCostSheetId")
+	private ProductsForDesignCostSheet productsForDesignCostSheet;
 
 	public int getId() {
 		return id;
@@ -84,5 +88,13 @@ public class JobAsignmentProductsFromStock implements Serializable {
 
 	public void setJobPlan(JobPlan jobPlan) {
 		this.jobPlan = jobPlan;
+	}
+
+	public ProductsForDesignCostSheet getProductsForDesignCostSheet() {
+		return productsForDesignCostSheet;
+	}
+
+	public void setProductsForDesignCostSheet(ProductsForDesignCostSheet productsForDesignCostSheet) {
+		this.productsForDesignCostSheet = productsForDesignCostSheet;
 	}
 }

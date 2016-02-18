@@ -108,7 +108,8 @@ public class Ejb {
 
 	/****************** for security *********************/
 	public List<JobClass> getAllJobClasses() {
-		TypedQuery<JobClass> q = em.createQuery("select c from JobClass c", JobClass.class);
+		TypedQuery<JobClass> q = em.createQuery("select c from JobClass c",
+				JobClass.class);
 		return q.getResultList();
 	}
 
@@ -117,7 +118,9 @@ public class Ejb {
 	}
 
 	public List<JobClass> getLastJobClass() {
-		TypedQuery<JobClass> q = em.createQuery("select c from JobClass c order by c.assignDate DESC", JobClass.class);
+		TypedQuery<JobClass> q = em.createQuery(
+				"select c from JobClass c order by c.assignDate DESC",
+				JobClass.class);
 
 		return q.getResultList();
 	}
@@ -127,16 +130,18 @@ public class Ejb {
 	}
 
 	public List<Stoct> getAllStoct() {
-		TypedQuery<Stoct> q = em.createQuery("select c from Stoct c ORDER BY c.id DESC", Stoct.class);
+		TypedQuery<Stoct> q = em.createQuery(
+				"select c from Stoct c ORDER BY c.id DESC", Stoct.class);
 		return q.getResultList();
 	}
 
 	public boolean is21Days() {
 		Date date = new Date();
-		LocalDateTime afterThreeMonths = LocalDateTime.ofInstant(getAllStoct().get(0).getEndDate().toInstant(),
-				ZoneId.systemDefault());
+		LocalDateTime afterThreeMonths = LocalDateTime.ofInstant(getAllStoct()
+				.get(0).getEndDate().toInstant(), ZoneId.systemDefault());
 		LocalDateTime before21Days = afterThreeMonths.minusDays(21);
-		if (date.after(Date.from(before21Days.toInstant(ZoneOffset.ofHoursMinutes(5, 30))))) {
+		if (date.after(Date.from(before21Days.toInstant(ZoneOffset
+				.ofHoursMinutes(5, 30))))) {
 			return true;
 		} else {
 			return false;
@@ -158,13 +163,15 @@ public class Ejb {
 	}
 
 	public List<SecurityQuestionGroup> getAllSecurityQuestionGroups() {
-		TypedQuery<SecurityQuestionGroup> q = em.createQuery("select c from SecurityQuestionGroup c",
+		TypedQuery<SecurityQuestionGroup> q = em.createQuery(
+				"select c from SecurityQuestionGroup c",
 				SecurityQuestionGroup.class);
 		return q.getResultList();
 	}
 
 	public SecurityQuestionGroup getSecurityQueGroupByGroupName(String name) {
-		TypedQuery<SecurityQuestionGroup> q = em.createQuery("select c from SecurityQuestionGroup c where c.name=:name",
+		TypedQuery<SecurityQuestionGroup> q = em.createQuery(
+				"select c from SecurityQuestionGroup c where c.name=:name",
 				SecurityQuestionGroup.class);
 		q.setParameter("name", name);
 		return q.getResultList().get(0);
@@ -188,13 +195,16 @@ public class Ejb {
 	}
 
 	public List<SequrityQuestions> getAllSecurityQuestions() {
-		TypedQuery<SequrityQuestions> q = em.createQuery("select c from SequrityQuestions c", SequrityQuestions.class);
+		TypedQuery<SequrityQuestions> q = em.createQuery(
+				"select c from SequrityQuestions c", SequrityQuestions.class);
 		return q.getResultList();
 	}
 
 	public List<SequrityQuestions> getSecurityQuestionsByGroup(String name) {
-		TypedQuery<SequrityQuestions> q = em.createQuery(
-				"select c from SequrityQuestions c where c.securityQuestionGroup.name=:name", SequrityQuestions.class);
+		TypedQuery<SequrityQuestions> q = em
+				.createQuery(
+						"select c from SequrityQuestions c where c.securityQuestionGroup.name=:name",
+						SequrityQuestions.class);
 		q.setParameter("name", name);
 		return q.getResultList();
 	}
@@ -213,12 +223,14 @@ public class Ejb {
 	}
 
 	public List<SecurityAnswers> getAllSecurityAnswers() {
-		TypedQuery<SecurityAnswers> q = em.createQuery("select c from SecurityAnswers c", SecurityAnswers.class);
+		TypedQuery<SecurityAnswers> q = em.createQuery(
+				"select c from SecurityAnswers c", SecurityAnswers.class);
 		return q.getResultList();
 	}
 
 	public List<SecurityAnswers> getAllSecurityAnswerByUserId(String usrId) {
-		TypedQuery<SecurityAnswers> q = em.createQuery("select c from SecurityAnswers c where c.users.userId=:usrId",
+		TypedQuery<SecurityAnswers> q = em.createQuery(
+				"select c from SecurityAnswers c where c.users.userId=:usrId",
 				SecurityAnswers.class);
 		q.setParameter("usrId", usrId);
 		return q.getResultList();
@@ -234,7 +246,8 @@ public class Ejb {
 	}
 
 	public List<Users> getAllUsers() {
-		TypedQuery<Users> q = em.createQuery("select c from Users c", Users.class);
+		TypedQuery<Users> q = em.createQuery("select c from Users c",
+				Users.class);
 		return q.getResultList();
 	}
 
@@ -260,12 +273,14 @@ public class Ejb {
 	}
 
 	public List<UserGroup> getAllUserGroup() {
-		TypedQuery<UserGroup> q = em.createQuery("select c from UserGroup c", UserGroup.class);
+		TypedQuery<UserGroup> q = em.createQuery("select c from UserGroup c",
+				UserGroup.class);
 		return q.getResultList();
 	}
 
 	public List<UserGroup> getAllUserGroupByCompany(int cId) {
-		TypedQuery<UserGroup> q = em.createQuery("select c from UserGroup c WHERE c.companyInfo.id=:cId",
+		TypedQuery<UserGroup> q = em.createQuery(
+				"select c from UserGroup c WHERE c.companyInfo.id=:cId",
 				UserGroup.class);
 		q.setParameter("cId", cId);
 		return q.getResultList();
@@ -289,7 +304,8 @@ public class Ejb {
 	}
 
 	public List<PageList> getAllPageList() {
-		TypedQuery<PageList> q = em.createQuery("select c from PageList c", PageList.class);
+		TypedQuery<PageList> q = em.createQuery("select c from PageList c",
+				PageList.class);
 		return q.getResultList();
 	}
 
@@ -333,7 +349,8 @@ public class Ejb {
 	}
 
 	public List<Module> getAllModule() {
-		TypedQuery<Module> q = em.createQuery("select c from Module c", Module.class);
+		TypedQuery<Module> q = em.createQuery("select c from Module c",
+				Module.class);
 		return q.getResultList();
 	}
 
@@ -348,18 +365,22 @@ public class Ejb {
 
 	public List<QtyUnitType> getAllQtyUnitTypes() {
 
-		TypedQuery<QtyUnitType> q = em.createQuery("select c from QtyUnitType c", QtyUnitType.class);
+		TypedQuery<QtyUnitType> q = em.createQuery(
+				"select c from QtyUnitType c", QtyUnitType.class);
 		return q.getResultList();
 	}
 
 	public List<QtyUnit> getUOMByUOMTypeId(int id) {
-		TypedQuery<QtyUnit> q = em.createQuery("select c from QtyUnit c where c.QtyUnit.id=:Id", QtyUnit.class);
+		TypedQuery<QtyUnit> q = em
+				.createQuery("select c from QtyUnit c where c.QtyUnit.id=:Id",
+						QtyUnit.class);
 		q.setParameter("Id", id);
 		return q.getResultList();
 	}
 
 	public List<QtyUnit> getAllUOM() {
-		TypedQuery<QtyUnit> q = em.createQuery("select c from QtyUnit c", QtyUnit.class);
+		TypedQuery<QtyUnit> q = em.createQuery("select c from QtyUnit c",
+				QtyUnit.class);
 		return q.getResultList();
 	}
 
@@ -369,7 +390,8 @@ public class Ejb {
 	}
 
 	public PaymentStatus getPaymentStatusByStatus(String status) {
-		TypedQuery<PaymentStatus> q = em.createQuery("select c from PaymentStatus c Where c.status=:status",
+		TypedQuery<PaymentStatus> q = em.createQuery(
+				"select c from PaymentStatus c Where c.status=:status",
 				PaymentStatus.class);
 		q.setParameter("status", status);
 		if (q.getResultList().size() > 0) {
@@ -380,7 +402,8 @@ public class Ejb {
 	}
 
 	public List<PaymentStatus> getAllPaymentStatus() {
-		TypedQuery<PaymentStatus> q = em.createQuery("select c from PaymentStatus c", PaymentStatus.class);
+		TypedQuery<PaymentStatus> q = em.createQuery(
+				"select c from PaymentStatus c", PaymentStatus.class);
 		return q.getResultList();
 	}
 
@@ -390,7 +413,9 @@ public class Ejb {
 	}
 
 	public PaymentType getPaymentTypeByType(String type) {
-		TypedQuery<PaymentType> q = em.createQuery("select c from PaymentType c Where c.type=:type", PaymentType.class);
+		TypedQuery<PaymentType> q = em.createQuery(
+				"select c from PaymentType c Where c.type=:type",
+				PaymentType.class);
 		q.setParameter("type", type);
 		if (q.getResultList().size() > 0) {
 			return q.getResultList().get(0);
@@ -400,7 +425,8 @@ public class Ejb {
 	}
 
 	public List<PaymentType> getAllPaymentType() {
-		TypedQuery<PaymentType> q = em.createQuery("select c from PaymentType c", PaymentType.class);
+		TypedQuery<PaymentType> q = em.createQuery(
+				"select c from PaymentType c", PaymentType.class);
 		return q.getResultList();
 	}
 
@@ -414,7 +440,8 @@ public class Ejb {
 	}
 
 	public List<PaymentDetails> getAllPaymentDetails() {
-		TypedQuery<PaymentDetails> q = em.createQuery("select c from PaymentDetails c", PaymentDetails.class);
+		TypedQuery<PaymentDetails> q = em.createQuery(
+				"select c from PaymentDetails c", PaymentDetails.class);
 
 		return q.getResultList();
 	}
@@ -429,7 +456,8 @@ public class Ejb {
 	}
 
 	public List<QtyUnit> getAllQtyUnit() {
-		TypedQuery<QtyUnit> q = em.createQuery("select c from QtyUnit c", QtyUnit.class);
+		TypedQuery<QtyUnit> q = em.createQuery("select c from QtyUnit c",
+				QtyUnit.class);
 		return q.getResultList();
 	}
 
@@ -438,7 +466,9 @@ public class Ejb {
 	}
 
 	public List<QtyUnit> getAllQtyUnitByType(int id) {
-		TypedQuery<QtyUnit> q = em.createQuery("select c from QtyUnit c where c.qtyUnitType.id=:id", QtyUnit.class);
+		TypedQuery<QtyUnit> q = em.createQuery(
+				"select c from QtyUnit c where c.qtyUnitType.id=:id",
+				QtyUnit.class);
 		q.setParameter("id", id);
 		return q.getResultList();
 	}
@@ -448,9 +478,10 @@ public class Ejb {
 	 ************************************************/
 
 	public List<QtyUnit> getAllQtyUnitByNameOrAbv(String name) {
-		TypedQuery<QtyUnit> q = em.createQuery(
-				"select c from QtyUnit c where UPPER(c.name) like :nm OR UPPER(c.abbreviation) like :av",
-				QtyUnit.class);
+		TypedQuery<QtyUnit> q = em
+				.createQuery(
+						"select c from QtyUnit c where UPPER(c.name) like :nm OR UPPER(c.abbreviation) like :av",
+						QtyUnit.class);
 		q.setParameter("nm", name.toUpperCase() + "%");
 		q.setParameter("av", name.toUpperCase() + "%");
 		return q.getResultList();
@@ -461,7 +492,8 @@ public class Ejb {
 	 ********************************************/
 
 	public List<ProductDetail> getAllProductByProductCode(String code) {
-		TypedQuery<ProductDetail> q = em.createQuery("select c from ProductDetail c where UPPER(c.code) like :nm ",
+		TypedQuery<ProductDetail> q = em.createQuery(
+				"select c from ProductDetail c where UPPER(c.code) like :nm ",
 				ProductDetail.class);
 		q.setParameter("nm", code.toUpperCase() + "%");
 
@@ -473,7 +505,8 @@ public class Ejb {
 	 ********************************************/
 
 	public ProductDetail getProductByProductCode(String code) {
-		TypedQuery<ProductDetail> q = em.createQuery("select c from ProductDetail c where UPPER(c.code) = :nm ",
+		TypedQuery<ProductDetail> q = em.createQuery(
+				"select c from ProductDetail c where UPPER(c.code) = :nm ",
 				ProductDetail.class);
 		q.setParameter("nm", code.toUpperCase());
 
@@ -490,8 +523,10 @@ public class Ejb {
 	 ************************************/
 
 	public List<ProductDetail> getAllProductByCategory(String cat) {
-		TypedQuery<ProductDetail> q = em.createQuery(
-				"select c from ProductDetail c where UPPER(c.category.name) like :nm ", ProductDetail.class);
+		TypedQuery<ProductDetail> q = em
+				.createQuery(
+						"select c from ProductDetail c where UPPER(c.category.name) like :nm ",
+						ProductDetail.class);
 		q.setParameter("nm", cat.toUpperCase() + "%");
 
 		return q.getResultList();
@@ -503,7 +538,9 @@ public class Ejb {
 
 	public List<ProductDetail> getAllProductByProductDescription(String des) {
 		TypedQuery<ProductDetail> q = em
-				.createQuery("select c from ProductDetail c where UPPER(c.description) like :nm ", ProductDetail.class);
+				.createQuery(
+						"select c from ProductDetail c where UPPER(c.description) like :nm ",
+						ProductDetail.class);
 		q.setParameter("nm", des.toUpperCase() + "%");
 
 		return q.getResultList();
@@ -514,13 +551,16 @@ public class Ejb {
 	public List<QtyUnit> getAllOthersQtyUnitForConversion(int id) {
 		QtyUnit qu = new QtyUnit();
 		qu = this.getQtyUnitById(id);
-		TypedQuery<QtyUnit> q = em.createQuery("select c from QtyUnit c where c.qtyUnitType.id=:id AND c.id<>:oid",
-				QtyUnit.class);
+		TypedQuery<QtyUnit> q = em
+				.createQuery(
+						"select c from QtyUnit c where c.qtyUnitType.id=:id AND c.id<>:oid",
+						QtyUnit.class);
 		q.setParameter("id", qu.getQtyUnitType().getId());
 		q.setParameter("oid", id);
 
-		TypedQuery<QtyUnitConversion> q1 = em
-				.createQuery("select s from QtyUnitConversion s where s.qtyUnitId1.id=:id1", QtyUnitConversion.class);
+		TypedQuery<QtyUnitConversion> q1 = em.createQuery(
+				"select s from QtyUnitConversion s where s.qtyUnitId1.id=:id1",
+				QtyUnitConversion.class);
 		q1.setParameter("id1", id);
 
 		List<QtyUnit> lst1 = new ArrayList<>();
@@ -551,25 +591,29 @@ public class Ejb {
 	}
 
 	public List<QtyUnitConversion> getAllQtyUnitConversionByQtyUnitId(int id) {
-		TypedQuery<QtyUnitConversion> q = em.createQuery("select c from QtyUnitConversion c where c.qtyUnitId1.id=:id",
+		TypedQuery<QtyUnitConversion> q = em.createQuery(
+				"select c from QtyUnitConversion c where c.qtyUnitId1.id=:id",
 				QtyUnitConversion.class);
 		q.setParameter("id", id);
 		return q.getResultList();
 	}
 
-	public QtyUnitConversion getQtyUnitConversionById(QtyUnitConversionPK qtyUnitConversionPK) {
+	public QtyUnitConversion getQtyUnitConversionById(
+			QtyUnitConversionPK qtyUnitConversionPK) {
 
 		return em.find(QtyUnitConversion.class, qtyUnitConversionPK);
 	}
 
 	public List<QtyUnitConversionPK> getAllQtyUnitConversionPK() {
-		TypedQuery<QtyUnitConversionPK> q = em.createQuery("select c from QtyUnitConversionPK c",
+		TypedQuery<QtyUnitConversionPK> q = em.createQuery(
+				"select c from QtyUnitConversionPK c",
 				QtyUnitConversionPK.class);
 		return q.getResultList();
 	}
 
 	public List<QtyUnitConversion> getAllQtyUnitConversion() {
-		TypedQuery<QtyUnitConversion> q = em.createQuery("select c from QtyUnitConversion c", QtyUnitConversion.class);
+		TypedQuery<QtyUnitConversion> q = em.createQuery(
+				"select c from QtyUnitConversion c", QtyUnitConversion.class);
 		return q.getResultList();
 	}
 
@@ -581,8 +625,10 @@ public class Ejb {
 	/*************************** for login purpose *****************/
 	public boolean getCheckLogin(String usr, String pwd) {
 
-		TypedQuery<Users> q = em.createQuery("select c from Users c where (c.userId=:user AND c.password=:pwd)",
-				Users.class);
+		TypedQuery<Users> q = em
+				.createQuery(
+						"select c from Users c where (c.userId=:user AND c.password=:pwd)",
+						Users.class);
 		q.setParameter("user", usr);
 		q.setParameter("pwd", pwd);
 		return q.getResultList().size() > 0;
@@ -590,8 +636,10 @@ public class Ejb {
 
 	public boolean getCheckPassword(String pwd) {
 		String usr;
-		TypedQuery<Users> q = em.createQuery("select c from Users c where (c.userId=:user AND c.password=:pwd)",
-				Users.class);
+		TypedQuery<Users> q = em
+				.createQuery(
+						"select c from Users c where (c.userId=:user AND c.password=:pwd)",
+						Users.class);
 		usr = httpSession.getAttribute("user").toString();
 		q.setParameter("user", usr);
 		q.setParameter("pwd", pwd);
@@ -613,7 +661,8 @@ public class Ejb {
 	}
 
 	public List<Tax> getAllActiveTax() {
-		TypedQuery<Tax> q = em.createQuery("select c from Tax c where c.isActive=true", Tax.class);
+		TypedQuery<Tax> q = em.createQuery(
+				"select c from Tax c where c.isActive=true", Tax.class);
 		return q.getResultList();
 	}
 
@@ -632,7 +681,8 @@ public class Ejb {
 	}
 
 	public List<Tax_Type_Group> getAllTax_Type_Groups() {
-		TypedQuery<Tax_Type_Group> q = em.createQuery("select s from Tax_Type_Group s", Tax_Type_Group.class);
+		TypedQuery<Tax_Type_Group> q = em.createQuery(
+				"select s from Tax_Type_Group s", Tax_Type_Group.class);
 		return q.getResultList();
 	}
 
@@ -678,50 +728,59 @@ public class Ejb {
 	}
 
 	public List<Vendor> getAllVendors() {
-		TypedQuery<Vendor> q = em.createQuery("select c from Vendor c", Vendor.class);
+		TypedQuery<Vendor> q = em.createQuery("select c from Vendor c",
+				Vendor.class);
 		return q.getResultList();
 	}
 
 	public List<Vendor> getAllVendorsByAssendingMaxPurchase(String type) {
 		List<Vendor> vendors = new ArrayList<Vendor>();
-		TypedQuery<Vendor> q = em.createQuery("select c from Vendor c where UPPER(c.vendorType.type)=:type",
+		TypedQuery<Vendor> q = em.createQuery(
+				"select c from Vendor c where UPPER(c.vendorType.type)=:type",
 				Vendor.class);
 		q.setParameter("type", type.toUpperCase());
 
 		vendors = q.getResultList();
-		vendors.sort((Vendor v2, Vendor v1) -> Float.compare(v1.getTotPurchase(), v2.getTotPurchase()));
+		vendors.sort((Vendor v2, Vendor v1) -> Float.compare(
+				v1.getTotPurchase(), v2.getTotPurchase()));
 		return vendors;
 	}
 
 	public List<Vendor> getAllAgentsByAssendingMaxSale() {
 		List<Vendor> vendors = new ArrayList<Vendor>();
-		TypedQuery<Vendor> q = em.createQuery("select c from Vendor c where c.vendorType.type='Sales Agent'",
+		TypedQuery<Vendor> q = em.createQuery(
+				"select c from Vendor c where c.vendorType.type='Sales Agent'",
 				Vendor.class);
 
 		vendors = q.getResultList();
-		vendors.sort((Vendor v2, Vendor v1) -> Float.compare(v1.getTotSale(), v2.getTotSale()));
+		vendors.sort((Vendor v2, Vendor v1) -> Float.compare(v1.getTotSale(),
+				v2.getTotSale()));
 		return vendors;
 	}
 
 	public List<Vendor> getVendorsByVendorTypeIdByName(int id, String nm) {
-		TypedQuery<Vendor> q = em.createQuery(
-				"select c from Vendor c where c.vendorType.id=:Id AND UPPER(c.name) LIKE :name ORDER BY c.id ASC",
-				Vendor.class);
+		TypedQuery<Vendor> q = em
+				.createQuery(
+						"select c from Vendor c where c.vendorType.id=:Id AND UPPER(c.name) LIKE :name ORDER BY c.id ASC",
+						Vendor.class);
 		q.setParameter("Id", id);
 		q.setParameter("name", "%" + nm.toUpperCase() + "%");
 		return q.getResultList();
 	}
 
 	public List<Vendor> getVendorsByVendorTypeId(int id) {
-		TypedQuery<Vendor> q = em.createQuery("select c from Vendor c where c.vendorType.id=:Id", Vendor.class);
+		TypedQuery<Vendor> q = em.createQuery(
+				"select c from Vendor c where c.vendorType.id=:Id",
+				Vendor.class);
 		q.setParameter("Id", id);
 		return q.getResultList();
 	}
 
 	public List<Vendor> getVendorByTypeAndName(String type, String name) {
-		TypedQuery<Vendor> q = em.createQuery(
-				"select c from Vendor c where UPPER(c.name) like :name and UPPER(c.vendorType.type)=:type",
-				Vendor.class);
+		TypedQuery<Vendor> q = em
+				.createQuery(
+						"select c from Vendor c where UPPER(c.name) like :name and UPPER(c.vendorType.type)=:type",
+						Vendor.class);
 		q.setParameter("name", "%" + name.toUpperCase() + "%");
 		q.setParameter("type", type.toUpperCase());
 		return q.getResultList();
@@ -745,7 +804,8 @@ public class Ejb {
 	}
 
 	public List<VendorType> getAllVendorType() {
-		TypedQuery<VendorType> q = em.createQuery("select c from VendorType c", VendorType.class);
+		TypedQuery<VendorType> q = em.createQuery("select c from VendorType c",
+				VendorType.class);
 		return q.getResultList();
 	}
 
@@ -755,13 +815,16 @@ public class Ejb {
 	}
 
 	public List<AccountDetails> getAllAccountDetails() {
-		TypedQuery<AccountDetails> q = em.createQuery("select c from AccountDetails c", AccountDetails.class);
+		TypedQuery<AccountDetails> q = em.createQuery(
+				"select c from AccountDetails c", AccountDetails.class);
 		return q.getResultList();
 	}
 
 	public AccountDetails getAccountDetailsByVendorId(int id) {
-		TypedQuery<AccountDetails> q = em.createQuery(
-				"select c from AccountDetails c WHERE c.vendor.id=:id ORDER BY c.id DESC", AccountDetails.class);
+		TypedQuery<AccountDetails> q = em
+				.createQuery(
+						"select c from AccountDetails c WHERE c.vendor.id=:id ORDER BY c.id DESC",
+						AccountDetails.class);
 		q.setParameter("id", id);
 		if (q.getResultList().size() > 0) {
 			return q.getResultList().get(0);
@@ -784,19 +847,23 @@ public class Ejb {
 		return em.find(Purchase_Entry.class, id);
 	}
 
-	public List<Purchase_Entry> getPurchaseEntryByDate(Date startDate, Date endDate) {
-		TypedQuery<Purchase_Entry> q = em.createQuery(
-				"select c from Purchase_Entry c WHERE c.purchase_date BETWEEN :startDate AND :endDate ORDER BY c.id DESC",
-				Purchase_Entry.class);
+	public List<Purchase_Entry> getPurchaseEntryByDate(Date startDate,
+			Date endDate) {
+		TypedQuery<Purchase_Entry> q = em
+				.createQuery(
+						"select c from Purchase_Entry c WHERE c.purchase_date BETWEEN :startDate AND :endDate ORDER BY c.id DESC",
+						Purchase_Entry.class);
 		q.setParameter("startDate", startDate);
 		q.setParameter("endDate", endDate);
 		return q.getResultList();
 	}
 
-	public List<Purchase_Entry> getPurchaseEntryByDateAndCompany(Date startDate, Date endDate, int cId) {
-		TypedQuery<Purchase_Entry> q = em.createQuery(
-				"select c from Purchase_Entry c WHERE c.companyInfo.id=:cId AND c.purchase_date BETWEEN :startDate AND :endDate ORDER BY c.id DESC",
-				Purchase_Entry.class);
+	public List<Purchase_Entry> getPurchaseEntryByDateAndCompany(
+			Date startDate, Date endDate, int cId) {
+		TypedQuery<Purchase_Entry> q = em
+				.createQuery(
+						"select c from Purchase_Entry c WHERE c.companyInfo.id=:cId AND c.purchase_date BETWEEN :startDate AND :endDate ORDER BY c.id DESC",
+						Purchase_Entry.class);
 		q.setParameter("startDate", startDate);
 		q.setParameter("endDate", endDate);
 		q.setParameter("cId", cId);
@@ -804,65 +871,77 @@ public class Ejb {
 	}
 
 	public List<Purchase_Entry> getPurchaseEntryByChallanNo(String chNo) {
-		TypedQuery<Purchase_Entry> q = em.createQuery(
-				"select c from Purchase_Entry c where UPPER(c.challanNumber)=:chNo ORDER BY c.id DESC",
-				Purchase_Entry.class);
-		q.setParameter("chNo", chNo.toUpperCase());
-		return q.getResultList();
-	}
-	
-	public List<PurchaseOrderEntry> getPurchaseOrderByChallanNo(String chNo) {
-		TypedQuery<PurchaseOrderEntry> q = em.createQuery(
-				"select c from PurchaseOrderEntry c where UPPER(c.challanNumber)=:chNo ORDER BY c.id DESC",
-				PurchaseOrderEntry.class);
+		TypedQuery<Purchase_Entry> q = em
+				.createQuery(
+						"select c from Purchase_Entry c where UPPER(c.challanNumber)=:chNo ORDER BY c.id DESC",
+						Purchase_Entry.class);
 		q.setParameter("chNo", chNo.toUpperCase());
 		return q.getResultList();
 	}
 
+	public List<PurchaseOrderEntry> getPurchaseOrderByChallanNo(String chNo) {
+		TypedQuery<PurchaseOrderEntry> q = em
+				.createQuery(
+						"select c from PurchaseOrderEntry c where UPPER(c.challanNumber)=:chNo ORDER BY c.id DESC",
+						PurchaseOrderEntry.class);
+		q.setParameter("chNo", chNo.toUpperCase());
+		return q.getResultList();
+	}
 
 	public List<Purchase_Entry> getPurchaseEntryByVendorName(String name) {
-		TypedQuery<Purchase_Entry> q = em.createQuery(
-				"select c from Purchase_Entry c where c.vendor.vendorType.type='Vendor' and UPPER(c.vendor.name)=:name ORDER BY c.id DESC",
-				Purchase_Entry.class);
+		TypedQuery<Purchase_Entry> q = em
+				.createQuery(
+						"select c from Purchase_Entry c where c.vendor.vendorType.type='Vendor' and UPPER(c.vendor.name)=:name ORDER BY c.id DESC",
+						Purchase_Entry.class);
 		q.setParameter("name", name.toUpperCase());
 		return q.getResultList();
 	}
 
-	public List<Purchase_Entry> getPurchaseEntryByVendorNameAndCompany(String name) {
-		cId = getUserById((String) httpSession.getAttribute("user")).getCompanyInfo().getId();
-		TypedQuery<Purchase_Entry> q = em.createQuery(
-				"select c from Purchase_Entry c where c.companyInfo.id=:cId AND c.vendor.vendorType.type='Vendor' and UPPER(c.vendor.name)=:name ORDER BY c.id DESC",
-				Purchase_Entry.class);
+	public List<Purchase_Entry> getPurchaseEntryByVendorNameAndCompany(
+			String name) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<Purchase_Entry> q = em
+				.createQuery(
+						"select c from Purchase_Entry c where c.companyInfo.id=:cId AND c.vendor.vendorType.type='Vendor' and UPPER(c.vendor.name)=:name ORDER BY c.id DESC",
+						Purchase_Entry.class);
 		q.setParameter("name", name.toUpperCase());
 		q.setParameter("cId", cId);
 		return q.getResultList();
 	}
 
 	public List<Purchase_Entry> getPurchaseEntryByAgentName(String name) {
-		TypedQuery<Purchase_Entry> q = em.createQuery(
-				"select c from Purchase_Entry c where c.vendor.vendorType.type='Purchase Agent' and UPPER(c.vendor.name)=:name ORDER BY c.id DESC",
-				Purchase_Entry.class);
+		TypedQuery<Purchase_Entry> q = em
+				.createQuery(
+						"select c from Purchase_Entry c where c.vendor.vendorType.type='Purchase Agent' and UPPER(c.vendor.name)=:name ORDER BY c.id DESC",
+						Purchase_Entry.class);
 		q.setParameter("name", name.toUpperCase());
 		return q.getResultList();
 	}
 
-	public List<Purchase_Entry> getPurchaseEntryByAgentNameAndCompany(String name) {
-		cId = getUserById((String) httpSession.getAttribute("user")).getCompanyInfo().getId();
-		TypedQuery<Purchase_Entry> q = em.createQuery(
-				"select c from Purchase_Entry c where c.companyInfo.id=:cId AND c.vendor.vendorType.type='Purchase Agent' and UPPER(c.vendor.name)=:name ORDER BY c.id DESC",
-				Purchase_Entry.class);
+	public List<Purchase_Entry> getPurchaseEntryByAgentNameAndCompany(
+			String name) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<Purchase_Entry> q = em
+				.createQuery(
+						"select c from Purchase_Entry c where c.companyInfo.id=:cId AND c.vendor.vendorType.type='Purchase Agent' and UPPER(c.vendor.name)=:name ORDER BY c.id DESC",
+						Purchase_Entry.class);
 		q.setParameter("name", name.toUpperCase());
 		q.setParameter("cId", cId);
 		return q.getResultList();
 	}
 
-	public List<Purchase_Entry> getPurchaseEntryByProductCodeAndCompany(String name) {
-		cId = getUserById((String) httpSession.getAttribute("user")).getCompanyInfo().getId();
+	public List<Purchase_Entry> getPurchaseEntryByProductCodeAndCompany(
+			String name) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
 		List<Purchase_Entry> lst = new ArrayList<Purchase_Entry>();
 		Set<Purchase_Entry> hs = new HashSet<>();
-		TypedQuery<Purchase_Product_Details> q = em.createQuery(
-				"select c from Purchase_Product_Details c where c.purchase_Entry.companyInfo.id=:cId AND UPPER(c.productDetail.code)=:name and c.purchase_Entry!=null ORDER BY c.id DESC",
-				Purchase_Product_Details.class);
+		TypedQuery<Purchase_Product_Details> q = em
+				.createQuery(
+						"select c from Purchase_Product_Details c where c.purchase_Entry.companyInfo.id=:cId AND UPPER(c.productDetail.code)=:name and c.purchase_Entry!=null ORDER BY c.id DESC",
+						Purchase_Product_Details.class);
 		q.setParameter("name", name.toUpperCase());
 		q.setParameter("cId", cId);
 
@@ -878,9 +957,10 @@ public class Ejb {
 	public List<Purchase_Entry> getPurchaseEntryByProductCode(String name) {
 		List<Purchase_Entry> lst = new ArrayList<Purchase_Entry>();
 		Set<Purchase_Entry> hs = new HashSet<>();
-		TypedQuery<Purchase_Product_Details> q = em.createQuery(
-				"select c from Purchase_Product_Details c where UPPER(c.productDetail.code)=:name and c.purchase_Entry!=null ORDER BY c.id DESC",
-				Purchase_Product_Details.class);
+		TypedQuery<Purchase_Product_Details> q = em
+				.createQuery(
+						"select c from Purchase_Product_Details c where UPPER(c.productDetail.code)=:name and c.purchase_Entry!=null ORDER BY c.id DESC",
+						Purchase_Product_Details.class);
 		q.setParameter("name", name.toUpperCase());
 
 		for (Purchase_Product_Details p : q.getResultList()) {
@@ -893,7 +973,8 @@ public class Ejb {
 	}
 
 	public int getLastPurchaseChallanNumber() {
-		TypedQuery<Purchase_Entry> q = em.createQuery("select c from Purchase_Entry c ORDER BY c.id DESC",
+		TypedQuery<Purchase_Entry> q = em.createQuery(
+				"select c from Purchase_Entry c ORDER BY c.id DESC",
 				Purchase_Entry.class);
 		if (q.getResultList().size() > 0) {
 			return q.getResultList().get(0).getChallan_no();
@@ -904,8 +985,10 @@ public class Ejb {
 	}
 
 	public int getLastPurchaseChallanNumberByCompany(int cId) {
-		TypedQuery<Purchase_Entry> q = em.createQuery(
-				"select c from Purchase_Entry c WHERE c.companyInfo.id=:cId ORDER BY c.id DESC", Purchase_Entry.class);
+		TypedQuery<Purchase_Entry> q = em
+				.createQuery(
+						"select c from Purchase_Entry c WHERE c.companyInfo.id=:cId ORDER BY c.id DESC",
+						Purchase_Entry.class);
 		q.setParameter("cId", cId);
 		if (q.getResultList().size() > 0) {
 			return q.getResultList().get(0).getChallan_no();
@@ -916,8 +999,10 @@ public class Ejb {
 	}
 
 	public int getLastPurchaseOrderChallanNumberByCompany(int cId) {
-		TypedQuery<PurchaseOrderEntry> q = em.createQuery(
-				"select c from PurchaseOrderEntry c WHERE c.companyInfo.id=:cId ORDER BY c.id DESC", PurchaseOrderEntry.class);
+		TypedQuery<PurchaseOrderEntry> q = em
+				.createQuery(
+						"select c from PurchaseOrderEntry c WHERE c.companyInfo.id=:cId ORDER BY c.id DESC",
+						PurchaseOrderEntry.class);
 		q.setParameter("cId", cId);
 		if (q.getResultList().size() > 0) {
 			return q.getResultList().get(0).getChallan_no();
@@ -927,9 +1012,9 @@ public class Ejb {
 
 	}
 
-	
 	public int getLastPurchaseChallanSuffix() {
-		TypedQuery<Purchase_Entry> q = em.createQuery("select c from Purchase_Entry c ORDER BY c.id DESC",
+		TypedQuery<Purchase_Entry> q = em.createQuery(
+				"select c from Purchase_Entry c ORDER BY c.id DESC",
 				Purchase_Entry.class);
 		if (q.getResultList().size() > 0) {
 			int s = q.getResultList().get(0).getChallanSuffix();
@@ -939,78 +1024,91 @@ public class Ejb {
 				if (Integer.parseInt(getLastBillSetupBySufix("PUR").getSufix()) < s) {
 					return s;
 				} else {
-					return Integer.parseInt(getLastBillSetupBySufix("PUR").getSufix());
+					return Integer.parseInt(getLastBillSetupBySufix("PUR")
+							.getSufix());
 				}
 			}
 		} else {
 			if (getLastBillSetupBySufix("PUR").equals(null)) {
 				return 0;
 			} else {
-				return Integer.parseInt(getLastBillSetupBySufix("PUR").getSufix());
+				return Integer.parseInt(getLastBillSetupBySufix("PUR")
+						.getSufix());
 			}
 		}
 	}
 
 	public int getLastPurchaseChallanSuffixByCompany(int cId) {
-		TypedQuery<Purchase_Entry> q = em.createQuery(
-				"select c from Purchase_Entry c WHERE c.companyInfo.id=:cId ORDER BY c.id DESC", Purchase_Entry.class);
+		TypedQuery<Purchase_Entry> q = em
+				.createQuery(
+						"select c from Purchase_Entry c WHERE c.companyInfo.id=:cId ORDER BY c.id DESC",
+						Purchase_Entry.class);
 		q.setParameter("cId", cId);
 		if (q.getResultList().size() > 0) {
 			int s = q.getResultList().get(0).getChallanSuffix();
 			if (getLastBillSetupBySufixAndCompanyId("PUR", cId).equals(null)) {
 				return s;
 			} else {
-				if (Integer.parseInt(getLastBillSetupBySufixAndCompanyId("PUR", cId).getSufix()) < s) {
+				if (Integer.parseInt(getLastBillSetupBySufixAndCompanyId("PUR",
+						cId).getSufix()) < s) {
 					return s;
 				} else {
-					return Integer.parseInt((getLastBillSetupBySufixAndCompanyId("PUR", cId).getSufix()));
+					return Integer
+							.parseInt((getLastBillSetupBySufixAndCompanyId(
+									"PUR", cId).getSufix()));
 				}
 			}
 		} else {
 			if (getLastBillSetupBySufixAndCompanyId("PUR", cId).equals(null)) {
 				return 0;
 			} else {
-				return Integer.parseInt(getLastBillSetupBySufixAndCompanyId("PUR", cId).getSufix());
+				return Integer.parseInt(getLastBillSetupBySufixAndCompanyId(
+						"PUR", cId).getSufix());
 			}
 		}
 	}
-	
+
 	public int getLastPurchaseOrderChallanSuffixByCompany(int cId) {
-	TypedQuery<PurchaseOrderEntry> q = em.createQuery(
-			"select c from PurchaseOrderEntry c WHERE c.companyInfo.id=:cId ORDER BY c.id DESC", PurchaseOrderEntry.class);
-	q.setParameter("cId", cId);
-	if (q.getResultList().size() > 0) {
-		int s = q.getResultList().get(0).getChallanSuffix();
-		if (getLastBillSetupBySufixAndCompanyId("PURO", cId).equals(null)) {
-			return s;
-		} else {
-			if (Integer.parseInt(getLastBillSetupBySufixAndCompanyId("PURO", cId).getSufix()) < s) {
+		TypedQuery<PurchaseOrderEntry> q = em
+				.createQuery(
+						"select c from PurchaseOrderEntry c WHERE c.companyInfo.id=:cId ORDER BY c.id DESC",
+						PurchaseOrderEntry.class);
+		q.setParameter("cId", cId);
+		if (q.getResultList().size() > 0) {
+			int s = q.getResultList().get(0).getChallanSuffix();
+			if (getLastBillSetupBySufixAndCompanyId("PURO", cId).equals(null)) {
 				return s;
 			} else {
-				return Integer.parseInt((getLastBillSetupBySufixAndCompanyId("PURO", cId).getSufix()));
+				if (Integer.parseInt(getLastBillSetupBySufixAndCompanyId(
+						"PURO", cId).getSufix()) < s) {
+					return s;
+				} else {
+					return Integer
+							.parseInt((getLastBillSetupBySufixAndCompanyId(
+									"PURO", cId).getSufix()));
+				}
+			}
+		} else {
+			if (getLastBillSetupBySufixAndCompanyId("PURO", cId).equals(null)) {
+				return 0;
+			} else {
+				return Integer.parseInt(getLastBillSetupBySufixAndCompanyId(
+						"PURO", cId).getSufix());
 			}
 		}
-	} else {
-		if (getLastBillSetupBySufixAndCompanyId("PURO", cId).equals(null)) {
-			return 0;
-		} else {
-			return Integer.parseInt(getLastBillSetupBySufixAndCompanyId("PURO", cId).getSufix());
-		}
 	}
-}
-
-
-
- 
 
 	public List<Purchase_Entry> getAllPurchaseEntry() {
-		TypedQuery<Purchase_Entry> q = em.createQuery("select c from Purchase_Entry c", Purchase_Entry.class);
+		TypedQuery<Purchase_Entry> q = em.createQuery(
+				"select c from Purchase_Entry c", Purchase_Entry.class);
 		return q.getResultList();
 	}
 
 	public List<Purchase_Entry> getAllPurchaseEntryByCompany() {
-		cId = getUserById((String) httpSession.getAttribute("user")).getCompanyInfo().getId();
-		TypedQuery<Purchase_Entry> q = em.createQuery("select c from Purchase_Entry c where c.companyInfo.id=:cId",
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<Purchase_Entry> q = em.createQuery(
+				"select c from Purchase_Entry c where c.companyInfo.id=:cId",
 				Purchase_Entry.class);
 		q.setParameter("cId", cId);
 		return q.getResultList();
@@ -1033,8 +1131,7 @@ public class Ejb {
 		lst.addAll(hash);
 		return lst;
 	}
-	
-	
+
 	public List<String> getAllFinancialForPurchaseOrder() {
 		List<String> lst = new ArrayList<String>();
 		HashSet<String> hash = new HashSet<String>();
@@ -1046,43 +1143,67 @@ public class Ejb {
 		lst.addAll(hash);
 		return lst;
 	}
-	
-	public List<Purchase_Entry> getAllPurchaseEntryByVendorIdTypeVendor(int id){
-		TypedQuery<Purchase_Entry> q = em.createQuery("select c from Purchase_Entry c Where c.vendor.vendorType.type='Vendor' and c.vendor.id = :id",Purchase_Entry.class);
+
+	public List<Purchase_Entry> getAllPurchaseEntryByVendorIdTypeVendor(int id) {
+		TypedQuery<Purchase_Entry> q = em
+				.createQuery(
+						"select c from Purchase_Entry c Where c.vendor.vendorType.type='Vendor' and c.vendor.id = :id",
+						Purchase_Entry.class);
 		q.setParameter("id", id);
 		return q.getResultList();
-		
+
 	}
 
-	public List<PurchaseReturn> getAllPurchaseReturnByVendorIdTypeVendor(int id){
-		TypedQuery<PurchaseReturn> q = em.createQuery("select c from PurchaseReturn c Where c.purchaseEntry.vendor.vendorType.type='Vendor' and c.purchaseEntry.vendor.id = :id",PurchaseReturn.class);
+	public List<PurchaseReturn> getAllPurchaseReturnByVendorIdTypeVendor(int id) {
+		TypedQuery<PurchaseReturn> q = em
+				.createQuery(
+						"select c from PurchaseReturn c Where c.purchaseEntry.vendor.vendorType.type='Vendor' and c.purchaseEntry.vendor.id = :id",
+						PurchaseReturn.class);
 		q.setParameter("id", id);
 		return q.getResultList();
-		
+
 	}
-	public List<Purchase_Entry> getAllPurchaseEntryByVendorIdTypePurchaseAgent(int id){
-		TypedQuery<Purchase_Entry> q = em.createQuery("select c from Purchase_Entry c Where c.vendor.vendorType.type='Purchase Agent' and c.vendor.id = :id",Purchase_Entry.class);
+
+	public List<Purchase_Entry> getAllPurchaseEntryByVendorIdTypePurchaseAgent(
+			int id) {
+		TypedQuery<Purchase_Entry> q = em
+				.createQuery(
+						"select c from Purchase_Entry c Where c.vendor.vendorType.type='Purchase Agent' and c.vendor.id = :id",
+						Purchase_Entry.class);
 		q.setParameter("id", id);
 		return q.getResultList();
-		
+
 	}
-	public List<PurchaseReturn> getAllPurchaseReturnByVendorIdTypePurchaseAgent(int id){
-		TypedQuery<PurchaseReturn> q = em.createQuery("select c from PurchaseReturn c Where c.purchaseEntry.vendor.vendorType.type='Purchase Agent' and c.purchaseEntry.vendor.id = :id",PurchaseReturn.class);
+
+	public List<PurchaseReturn> getAllPurchaseReturnByVendorIdTypePurchaseAgent(
+			int id) {
+		TypedQuery<PurchaseReturn> q = em
+				.createQuery(
+						"select c from PurchaseReturn c Where c.purchaseEntry.vendor.vendorType.type='Purchase Agent' and c.purchaseEntry.vendor.id = :id",
+						PurchaseReturn.class);
 		q.setParameter("id", id);
 		return q.getResultList();
-		
+
 	}
-	public List<SalesEntry> getAllSalesEntryByVendorIdTypeSalesAgent(int id){
-		TypedQuery<SalesEntry> q = em.createQuery("select c from SalesEntry c Where c.vendor.vendorType.type='Sales Agent' and c.vendor.id = :id",SalesEntry.class);
+
+	public List<SalesEntry> getAllSalesEntryByVendorIdTypeSalesAgent(int id) {
+		TypedQuery<SalesEntry> q = em
+				.createQuery(
+						"select c from SalesEntry c Where c.vendor.vendorType.type='Sales Agent' and c.vendor.id = :id",
+						SalesEntry.class);
 		q.setParameter("id", id);
 		return q.getResultList();
-		
+
 	}
-	public List<SalesReturn> getAllSalesReturnByVendorIdTypeSalesAgent(int id){
-		TypedQuery<SalesReturn> q = em.createQuery("select c from SalesReturn c Where c.salesEntry.vendor.vendorType.type='Sales Agent' and c.salesEntry.vendor.id = :id",SalesReturn.class);
+
+	public List<SalesReturn> getAllSalesReturnByVendorIdTypeSalesAgent(int id) {
+		TypedQuery<SalesReturn> q = em
+				.createQuery(
+						"select c from SalesReturn c Where c.salesEntry.vendor.vendorType.type='Sales Agent' and c.salesEntry.vendor.id = :id",
+						SalesReturn.class);
 		q.setParameter("id", id);
 		return q.getResultList();
-		
+
 	}
 
 	/***************** for Purchase Return ***********************/
@@ -1095,8 +1216,10 @@ public class Ejb {
 	}
 
 	public int getLastPurchaseReturnChallanNumberByCompany(int cId) {
-		TypedQuery<PurchaseReturn> q = em.createQuery(
-				"select c from PurchaseReturn c WHERE c.companyInfo.id=:cId ORDER BY c.id DESC", PurchaseReturn.class);
+		TypedQuery<PurchaseReturn> q = em
+				.createQuery(
+						"select c from PurchaseReturn c WHERE c.companyInfo.id=:cId ORDER BY c.id DESC",
+						PurchaseReturn.class);
 		q.setParameter("cId", cId);
 		if (q.getResultList().size() > 0) {
 			return q.getResultList().get(0).getChallanNo();
@@ -1107,30 +1230,35 @@ public class Ejb {
 	}
 
 	public int getLastPurchaseReturnChallanSuffix() {
-		TypedQuery<PurchaseReturn> q = em.createQuery("select c from PurchaseReturn c ORDER BY c.id DESC",
+		TypedQuery<PurchaseReturn> q = em.createQuery(
+				"select c from PurchaseReturn c ORDER BY c.id DESC",
 				PurchaseReturn.class);
 		if (q.getResultList().size() > 0) {
 			int s = q.getResultList().get(0).getChallanSuffix();
 			if (getLastBillSetupBySufix("RPUR").equals(null)) {
 				return s;
 			} else {
-				if (Integer.parseInt(getLastBillSetupBySufix("RPUR").getSufix()) < s) {
+				if (Integer
+						.parseInt(getLastBillSetupBySufix("RPUR").getSufix()) < s) {
 					return s;
 				} else {
-					return Integer.parseInt(getLastBillSetupBySufix("RPUR").getSufix());
+					return Integer.parseInt(getLastBillSetupBySufix("RPUR")
+							.getSufix());
 				}
 			}
 		} else {
 			if (getLastBillSetupBySufix("RPUR").equals(null)) {
 				return 0;
 			} else {
-				return Integer.parseInt(getLastBillSetupBySufix("RPUR").getSufix());
+				return Integer.parseInt(getLastBillSetupBySufix("RPUR")
+						.getSufix());
 			}
 		}
 	}
 
-	/*****************for Purchase Product Return Details***********************/
-	public void setPurchaseProdReturnDetails(PurchaseReturnProductDetails purchaseReturnProductDetails) {
+	/***************** for Purchase Product Return Details ***********************/
+	public void setPurchaseProdReturnDetails(
+			PurchaseReturnProductDetails purchaseReturnProductDetails) {
 		em.persist(purchaseReturnProductDetails);
 	}
 
@@ -1143,49 +1271,68 @@ public class Ejb {
 		return em.find(JobAssignmentDetails.class, id);
 	}
 
+	public JobAssignmentDetails getOngoingJobAssignmentsByPlanId(int pid) {
+		TypedQuery<JobAssignmentDetails> q = em
+				.createQuery(
+						"select c from JobAssignmentDetails c where c.jobPlan.id=:pid ORDER BY c.id DESC",
+						JobAssignmentDetails.class);
+		q.setParameter("pid", pid);
+		return q.getResultList().get(0);
+	}
+
 	public List<Vendor> getVendorsByVendorTypeJobber(String jobber) {
-		TypedQuery<Vendor> q = em.createQuery("select c from Vendor c where c.vendorType.type=:jobber", Vendor.class);
+		TypedQuery<Vendor> q = em.createQuery(
+				"select c from Vendor c where c.vendorType.type=:jobber",
+				Vendor.class);
 		q.setParameter("jobber", jobber);
 		return q.getResultList();
 	}
 
 	public List<Vendor> getVendorsByVendorTypeJobberAndName(String name) {
-		TypedQuery<Vendor> q = em.createQuery(
-				"select c from Vendor c where c.vendorType.type='Jobber' and UPPER(c.name) like :nm", Vendor.class);
+		TypedQuery<Vendor> q = em
+				.createQuery(
+						"select c from Vendor c where c.vendorType.type='Jobber' and UPPER(c.name) like :nm",
+						Vendor.class);
 		q.setParameter("nm", "%" + name.toUpperCase() + "%");
 		return q.getResultList();
 	}
 
 	public List<Vendor> getVendorsByVendorTypeVendorAndName(String name) {
-		TypedQuery<Vendor> q = em.createQuery(
-				"select c from Vendor c where c.vendorType.type='Vendor' and UPPER(c.name) like :nm", Vendor.class);
+		TypedQuery<Vendor> q = em
+				.createQuery(
+						"select c from Vendor c where c.vendorType.type='Vendor' and UPPER(c.name) like :nm",
+						Vendor.class);
 		q.setParameter("nm", "%" + name.toUpperCase() + "%");
 		return q.getResultList();
 	}
 
 	public List<Vendor> getVendorsByVendorTypePurchaseAgentAndName(String name) {
-		TypedQuery<Vendor> q = em.createQuery(
-				"select c from Vendor c where c.vendorType.type='Purchase Agent' and UPPER(c.name) like :nm",
-				Vendor.class);
+		TypedQuery<Vendor> q = em
+				.createQuery(
+						"select c from Vendor c where c.vendorType.type='Purchase Agent' and UPPER(c.name) like :nm",
+						Vendor.class);
 		q.setParameter("nm", "%" + name.toUpperCase() + "%");
 		return q.getResultList();
 	}
 
 	public List<Vendor> getVendorsByVendorTypeSalesAgentAndName(String name) {
-		TypedQuery<Vendor> q = em.createQuery(
-				"select c from Vendor c where c.vendorType.type='Sales Agent' and UPPER(c.name) like :nm",
-				Vendor.class);
+		TypedQuery<Vendor> q = em
+				.createQuery(
+						"select c from Vendor c where c.vendorType.type='Sales Agent' and UPPER(c.name) like :nm",
+						Vendor.class);
 		q.setParameter("nm", "%" + name.toUpperCase() + "%");
 		return q.getResultList();
 	}
 
 	public List<Vendor> getAllAgenttypePurchaseAgent() {
-		TypedQuery<Vendor> q = em.createQuery(
-				"select c from Vendor c where c.vendorType.type='Purchase Agent'",
-				Vendor.class);
+		TypedQuery<Vendor> q = em
+				.createQuery(
+						"select c from Vendor c where c.vendorType.type='Purchase Agent'",
+						Vendor.class);
 
 		return q.getResultList();
 	}
+
 	public List<Vendor> getAllAgenttypeSalesAgent() {
 		TypedQuery<Vendor> q = em.createQuery(
 				"select c from Vendor c where c.vendorType.type='Sales Agent'",
@@ -1195,19 +1342,24 @@ public class Ejb {
 	}
 
 	public List<Vendor> getAllVendtypeVen() {
-		TypedQuery<Vendor> q = em.createQuery("select c from Vendor c where c.vendorType.type='Vendor'", Vendor.class);
+		TypedQuery<Vendor> q = em.createQuery(
+				"select c from Vendor c where c.vendorType.type='Vendor'",
+				Vendor.class);
 
 		return q.getResultList();
 	}
 
 	public List<Vendor> getVendorsWithVendorTypeJobberByProductID(String jobber) {
-		TypedQuery<Vendor> q = em.createQuery("select c from Vendor c where c.vendorType.type=:jobber", Vendor.class);
+		TypedQuery<Vendor> q = em.createQuery(
+				"select c from Vendor c where c.vendorType.type=:jobber",
+				Vendor.class);
 		q.setParameter("jobber", jobber);
 		return q.getResultList();
 	}
 
 	public int getLastJobChallanNumber() {
-		TypedQuery<JobAssignmentDetails> q = em.createQuery("select c from JobAssignmentDetails c ORDER BY c.id DESC",
+		TypedQuery<JobAssignmentDetails> q = em.createQuery(
+				"select c from JobAssignmentDetails c ORDER BY c.id DESC",
 				JobAssignmentDetails.class);
 		if (q.getResultList().size() > 0) {
 			return q.getResultList().get(0).getChallan_no();
@@ -1217,10 +1369,12 @@ public class Ejb {
 	}
 
 	public int getLastJobChallanNumberByCompany() {
-		cId = getUserById((String) httpSession.getAttribute("user")).getCompanyInfo().getId();
-		TypedQuery<JobAssignmentDetails> q = em.createQuery(
-				"select c from JobAssignmentDetails c where c.companyInfo.id=:cId ORDER BY c.id DESC",
-				JobAssignmentDetails.class);
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<JobAssignmentDetails> q = em
+				.createQuery(
+						"select c from JobAssignmentDetails c where c.companyInfo.id=:cId ORDER BY c.id DESC",
+						JobAssignmentDetails.class);
 		q.setParameter("cId", cId);
 		if (q.getResultList().size() > 0) {
 			return q.getResultList().get(0).getChallan_no();
@@ -1230,7 +1384,8 @@ public class Ejb {
 	}
 
 	public int getLastJobChallanSuffix() {
-		TypedQuery<JobAssignmentDetails> q = em.createQuery("select c from JobAssignmentDetails c ORDER BY c.id DESC",
+		TypedQuery<JobAssignmentDetails> q = em.createQuery(
+				"select c from JobAssignmentDetails c ORDER BY c.id DESC",
 				JobAssignmentDetails.class);
 		if (q.getResultList().size() > 0) {
 			int s = q.getResultList().get(0).getChallanSuffix();
@@ -1240,49 +1395,60 @@ public class Ejb {
 				if (Integer.parseInt(getLastBillSetupBySufix("JOB").getSufix()) < s) {
 					return s;
 				} else {
-					return Integer.parseInt(getLastBillSetupBySufix("JOB").getSufix());
+					return Integer.parseInt(getLastBillSetupBySufix("JOB")
+							.getSufix());
 				}
 			}
 		} else {
 			if (getLastBillSetupBySufix("JOB").equals(null)) {
 				return 0;
 			} else {
-				return Integer.parseInt(getLastBillSetupBySufix("JOB").getSufix());
+				return Integer.parseInt(getLastBillSetupBySufix("JOB")
+						.getSufix());
 			}
 		}
 	}
 
 	public int getLastJobChallanSuffixByCompany() {
-		cId = getUserById((String) httpSession.getAttribute("user")).getCompanyInfo().getId();
-		TypedQuery<JobAssignmentDetails> q = em.createQuery(
-				"select c from JobAssignmentDetails c where c.companyInfo.id=:cId ORDER BY c.id DESC",
-				JobAssignmentDetails.class);
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<JobAssignmentDetails> q = em
+				.createQuery(
+						"select c from JobAssignmentDetails c where c.companyInfo.id=:cId ORDER BY c.id DESC",
+						JobAssignmentDetails.class);
 		q.setParameter("cId", cId);
 		if (q.getResultList().size() > 0) {
 			int s = q.getResultList().get(0).getChallanSuffix();
 			if (getLastBillSetupBySufixAndCompany("JOB").equals(null)) {
 				return s;
 			} else {
-				if (Integer.parseInt(getLastBillSetupBySufixAndCompany("JOB").getSufix()) < s) {
+				if (Integer.parseInt(getLastBillSetupBySufixAndCompany("JOB")
+						.getSufix()) < s) {
 					return s;
 				} else {
-					return Integer.parseInt(getLastBillSetupBySufixAndCompany("JOB").getSufix());
+					return Integer.parseInt(getLastBillSetupBySufixAndCompany(
+							"JOB").getSufix());
 				}
 			}
 		} else {
 			if (getLastBillSetupBySufixAndCompany("JOB").equals(null)) {
 				return 0;
 			} else {
-				return Integer.parseInt(getLastBillSetupBySufixAndCompany("JOB").getSufix());
+				return Integer
+						.parseInt(getLastBillSetupBySufixAndCompany("JOB")
+								.getSufix());
 			}
 		}
 	}
 
-	public List<JobAssignmentDetails> getJobAssignmentByDate(Date startDate, Date endDate) {
-		cId = getUserById((String) httpSession.getAttribute("user")).getCompanyInfo().getId();
-		TypedQuery<JobAssignmentDetails> q = em.createQuery(
-				"select c from JobAssignmentDetails c WHERE c.companyInfo.id=:cId AND c.assignDate BETWEEN :startDate AND :endDate",
-				JobAssignmentDetails.class);
+	public List<JobAssignmentDetails> getJobAssignmentByDate(Date startDate,
+			Date endDate) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<JobAssignmentDetails> q = em
+				.createQuery(
+						"select c from JobAssignmentDetails c WHERE c.companyInfo.id=:cId AND c.assignDate BETWEEN :startDate AND :endDate",
+						JobAssignmentDetails.class);
 		q.setParameter("startDate", startDate);
 		q.setParameter("endDate", endDate);
 		q.setParameter("cId", cId);
@@ -1290,30 +1456,35 @@ public class Ejb {
 	}
 
 	public List<JobAssignmentDetails> getJobAssignByChallanNo(String chNo) {
-		TypedQuery<JobAssignmentDetails> q = em.createQuery(
-				"select c from JobAssignmentDetails c where UPPER(c.challanNumber)=:chNo ORDER BY c.id DESC",
-				JobAssignmentDetails.class);
+		TypedQuery<JobAssignmentDetails> q = em
+				.createQuery(
+						"select c from JobAssignmentDetails c where UPPER(c.challanNumber)=:chNo ORDER BY c.id DESC",
+						JobAssignmentDetails.class);
 		q.setParameter("chNo", chNo.toUpperCase());
 		return q.getResultList();
 	}
 
 	public List<JobAssignmentDetails> getJobAssignByJobberName(String name) {
-		cId = getUserById((String) httpSession.getAttribute("user")).getCompanyInfo().getId();
-		TypedQuery<JobAssignmentDetails> q = em.createQuery(
-				"select c from JobAssignmentDetails c where c.companyInfo.id=:cId AND c.vendor.vendorType.type='Jobber' and UPPER(c.vendor.name)=:name ORDER BY c.id DESC",
-				JobAssignmentDetails.class);
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<JobAssignmentDetails> q = em
+				.createQuery(
+						"select c from JobAssignmentDetails c where c.companyInfo.id=:cId AND c.vendor.vendorType.type='Jobber' and UPPER(c.vendor.name)=:name ORDER BY c.id DESC",
+						JobAssignmentDetails.class);
 		q.setParameter("name", name.toUpperCase());
 		q.setParameter("cId", cId);
 		return q.getResultList();
 	}
 
 	public List<JobAssignmentDetails> getJobAssignByProductCode(String name) {
-		cId = getUserById((String) httpSession.getAttribute("user")).getCompanyInfo().getId();
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
 		List<JobAssignmentDetails> lst = new ArrayList<JobAssignmentDetails>();
 		Set<JobAssignmentDetails> hs = new HashSet<>();
-		TypedQuery<JobAssignmentProducts> q = em.createQuery(
-				"select c from JobAssignmentProducts c where c.jobAssignmentDetails.companyInfo.id=:cId AND UPPER(c.purchase_Product_Details.productDetail.code)=:name ORDER BY c.id DESC",
-				JobAssignmentProducts.class);
+		TypedQuery<JobAssignmentProducts> q = em
+				.createQuery(
+						"select c from JobAssignmentProducts c where c.jobAssignmentDetails.companyInfo.id=:cId AND UPPER(c.purchase_Product_Details.productDetail.code)=:name ORDER BY c.id DESC",
+						JobAssignmentProducts.class);
 		q.setParameter("name", name.toUpperCase());
 		q.setParameter("cId", cId);
 		for (JobAssignmentProducts p : q.getResultList()) {
@@ -1326,15 +1497,19 @@ public class Ejb {
 	}
 
 	public List<JobAssignmentDetails> getAllJobassignmentDetails() {
-		TypedQuery<JobAssignmentDetails> q = em.createQuery("select c from JobAssignmentDetails c",
+		TypedQuery<JobAssignmentDetails> q = em.createQuery(
+				"select c from JobAssignmentDetails c",
 				JobAssignmentDetails.class);
 		return q.getResultList();
 	}
 
 	public List<JobAssignmentDetails> getAllJobassignmentDetailsByCompany() {
-		cId = getUserById((String) httpSession.getAttribute("user")).getCompanyInfo().getId();
-		TypedQuery<JobAssignmentDetails> q = em.createQuery(
-				"select c from JobAssignmentDetails c WHERE c.companyInfo.id=:cId", JobAssignmentDetails.class);
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<JobAssignmentDetails> q = em
+				.createQuery(
+						"select c from JobAssignmentDetails c WHERE c.companyInfo.id=:cId",
+						JobAssignmentDetails.class);
 		q.setParameter("cId", cId);
 		return q.getResultList();
 	}
@@ -1350,40 +1525,49 @@ public class Ejb {
 		lst.addAll(hash);
 		return lst;
 	}
-	
+
 	/***************** for Job Assignment Job ***********************/
-	public void setJobAssignmentJobDetails(JobAssignmentJobDetails jobAssignmentJobDetails) {
+	public void setJobAssignmentJobDetails(
+			JobAssignmentJobDetails jobAssignmentJobDetails) {
 		em.persist(jobAssignmentJobDetails);
 	}
 
-	public void updateJobAssignmentJobDetails(JobAssignmentJobDetails jobAssignmentJobDetails) {
+	public void updateJobAssignmentJobDetails(
+			JobAssignmentJobDetails jobAssignmentJobDetails) {
 		em.merge(jobAssignmentJobDetails);
 	}
 
 	/***************** for Job Assignment Products ***********************/
-	public void setJobAssignmentProducts(JobAssignmentProducts jobAssignmentProducts) {
+	public void setJobAssignmentProducts(
+			JobAssignmentProducts jobAssignmentProducts) {
 		em.persist(jobAssignmentProducts);
 	}
 
-	public void updateJobAssignmentProductDetails(JobAssignmentProducts jobAssignmentProducts) {
+	public void updateJobAssignmentProductDetails(
+			JobAssignmentProducts jobAssignmentProducts) {
 		em.merge(jobAssignmentProducts);
 
 	}
 
-	public JobAssignmentProducts getJobAssignmentProductDetailsByproductAndJobPlanId(int id, int jpId) {
-		TypedQuery<JobAsignmentProductsFromStock> q = em.createQuery(
-				"select c from JobAsignmentProductsFromStock c where c.jobPlanProductStock.purchase_Product_Details.productDetail.id=:id and c.jobPlan.id=:jpId",
-				JobAsignmentProductsFromStock.class);
+	public JobAssignmentProducts getJobAssignmentProductDetailsByproductAndJobPlanId(
+			int id, int jpId) {
+		TypedQuery<JobAsignmentProductsFromStock> q = em
+				.createQuery(
+						"select c from JobAsignmentProductsFromStock c where c.jobPlanProductStock.purchase_Product_Details.productDetail.id=:id and c.jobPlan.id=:jpId",
+						JobAsignmentProductsFromStock.class);
 		q.setParameter("id", id);
 		q.setParameter("jpId", jpId);
 		return q.getResultList().get(0).getJobAssignmentProducts();
 	}
 
-	public List<JobAssignmentProducts> getJobAssignmentProductDetailsByproductIdAndCompany(int id) {
-		cId = getUserById((String) httpSession.getAttribute("user")).getCompanyInfo().getId();
-		TypedQuery<JobAssignmentProducts> q = em.createQuery(
-				"select c from JobAssignmentProducts c where c.jobAssignmentDetails.companyInfo.id=:cId AND c.purchase_Product_Details.productDetail.id=:id",
-				JobAssignmentProducts.class);
+	public List<JobAssignmentProducts> getJobAssignmentProductDetailsByproductIdAndCompany(
+			int id) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<JobAssignmentProducts> q = em
+				.createQuery(
+						"select c from JobAssignmentProducts c where c.jobAssignmentDetails.companyInfo.id=:cId AND c.purchase_Product_Details.productDetail.id=:id",
+						JobAssignmentProducts.class);
 		q.setParameter("id", id);
 		q.setParameter("cId", cId);
 		return q.getResultList();
@@ -1395,18 +1579,20 @@ public class Ejb {
 	}
 
 	public List<JobAssignmentProducts> getAllJobAssignmentProductDetails() {
-		TypedQuery<JobAssignmentProducts> q = em.createQuery("select c from JobAssignmentProducts c ",
+		TypedQuery<JobAssignmentProducts> q = em.createQuery(
+				"select c from JobAssignmentProducts c ",
 				JobAssignmentProducts.class);
 		return q.getResultList();
 	}
-	
-	
-	/**************************************************/	
-	public void setJobAsignmentProductsFromStock(JobAsignmentProductsFromStock jobAsignmentProductsFromStock) {
+
+	/**************************************************/
+	public void setJobAsignmentProductsFromStock(
+			JobAsignmentProductsFromStock jobAsignmentProductsFromStock) {
 		em.persist(jobAsignmentProductsFromStock);
 	}
 
-	public void updateJobAsignmentProductsFromStock(JobAsignmentProductsFromStock jobAsignmentProductsFromStock) {
+	public void updateJobAsignmentProductsFromStock(
+			JobAsignmentProductsFromStock jobAsignmentProductsFromStock) {
 		em.merge(jobAsignmentProductsFromStock);
 	}
 
@@ -1416,18 +1602,21 @@ public class Ejb {
 	}
 
 	public List<JobStock> getAllJobStock() {
-		TypedQuery<JobStock> q = em.createQuery("select c from JobStock c", JobStock.class);
+		TypedQuery<JobStock> q = em.createQuery("select c from JobStock c",
+				JobStock.class);
 		return q.getResultList();
 	}
 
 	/***************** for purchase product details ***********************/
 
-	public void setPurchaseProductDetails(Purchase_Product_Details purchaseProductDetails) {
+	public void setPurchaseProductDetails(
+			Purchase_Product_Details purchaseProductDetails) {
 		em.persist(purchaseProductDetails);
 	}
 
 	public List<Purchase_Product_Details> getAllPurchase_Product_Details() {
-		TypedQuery<Purchase_Product_Details> q = em.createQuery("select c from Purchase_Product_Details c",
+		TypedQuery<Purchase_Product_Details> q = em.createQuery(
+				"select c from Purchase_Product_Details c",
 				Purchase_Product_Details.class);
 		return q.getResultList();
 	}
@@ -1436,18 +1625,21 @@ public class Ejb {
 		return em.find(ProductDetail.class, id);
 	}
 
-	public List<Purchase_Product_Details> getPurchase_Product_DetailsByProId(int id) {
+	public List<Purchase_Product_Details> getPurchase_Product_DetailsByProId(
+			int id) {
 		List<Purchase_Product_Details> lst = new ArrayList<>();
-		TypedQuery<Purchase_Product_Details> q = em.createQuery(
-				"select s from Purchase_Product_Details s where s.productDetail.id=:Id and s.initialInventory=:initialInventory",
-				Purchase_Product_Details.class);
+		TypedQuery<Purchase_Product_Details> q = em
+				.createQuery(
+						"select s from Purchase_Product_Details s where s.productDetail.id=:Id and s.initialInventory=:initialInventory",
+						Purchase_Product_Details.class);
 		q.setParameter("Id", id);
 		q.setParameter("initialInventory", true);
 		lst = q.getResultList();
 
-		TypedQuery<Purchase_Product_Details> q1 = em.createQuery(
-				"select s from Purchase_Product_Details s where s.productDetail.id=:Id and s.initialInventory=:initialInventory ORDER BY s.purchase_Entry.purchase_date DESC",
-				Purchase_Product_Details.class);
+		TypedQuery<Purchase_Product_Details> q1 = em
+				.createQuery(
+						"select s from Purchase_Product_Details s where s.productDetail.id=:Id and s.initialInventory=:initialInventory ORDER BY s.purchase_Entry.purchase_date DESC",
+						Purchase_Product_Details.class);
 		q1.setParameter("Id", id);
 		q1.setParameter("initialInventory", false);
 		lst.addAll(q1.getResultList());
@@ -1455,20 +1647,24 @@ public class Ejb {
 		return lst;
 	}
 
-	public List<Purchase_Product_Details> getPurchase_Product_DetailsByProductIdAndCompany(int id) {
-		cId = getUserById((String) httpSession.getAttribute("user")).getCompanyInfo().getId();
+	public List<Purchase_Product_Details> getPurchase_Product_DetailsByProductIdAndCompany(
+			int id) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
 		List<Purchase_Product_Details> lst = new ArrayList<>();
-		TypedQuery<Purchase_Product_Details> q = em.createQuery(
-				"select s from Purchase_Product_Details s where s.companyInfo.id=:cId AND s.productDetail.id=:Id and s.initialInventory=:initialInventory",
-				Purchase_Product_Details.class);
+		TypedQuery<Purchase_Product_Details> q = em
+				.createQuery(
+						"select s from Purchase_Product_Details s where s.companyInfo.id=:cId AND s.productDetail.id=:Id and s.initialInventory=:initialInventory",
+						Purchase_Product_Details.class);
 		q.setParameter("Id", id);
 		q.setParameter("initialInventory", true);
 		q.setParameter("cId", cId);
 		lst = q.getResultList();
 
-		TypedQuery<Purchase_Product_Details> q1 = em.createQuery(
-				"select s from Purchase_Product_Details s where s.companyInfo.id=:cId AND s.productDetail.id=:Id and s.initialInventory=:initialInventory ORDER BY s.purchase_Entry.purchase_date DESC",
-				Purchase_Product_Details.class);
+		TypedQuery<Purchase_Product_Details> q1 = em
+				.createQuery(
+						"select s from Purchase_Product_Details s where s.companyInfo.id=:cId AND s.productDetail.id=:Id and s.initialInventory=:initialInventory ORDER BY s.purchase_Entry.purchase_date DESC",
+						Purchase_Product_Details.class);
 		q1.setParameter("Id", id);
 		q1.setParameter("initialInventory", false);
 		q1.setParameter("cId", cId);
@@ -1477,56 +1673,67 @@ public class Ejb {
 		return lst;
 	}
 
-	public List<Purchase_Product_Details> getInitialPurchase_Product_DetailsByProductIdAndCompany(int id) {
-		cId = getUserById((String) httpSession.getAttribute("user")).getCompanyInfo().getId();
-		TypedQuery<Purchase_Product_Details> q = em.createQuery(
-				"select s from Purchase_Product_Details s where s.companyInfo.id=:cId AND s.productDetail.id=:Id and s.initialInventory=:initialInventory",
-				Purchase_Product_Details.class);
+	public List<Purchase_Product_Details> getInitialPurchase_Product_DetailsByProductIdAndCompany(
+			int id) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<Purchase_Product_Details> q = em
+				.createQuery(
+						"select s from Purchase_Product_Details s where s.companyInfo.id=:cId AND s.productDetail.id=:Id and s.initialInventory=:initialInventory",
+						Purchase_Product_Details.class);
 		q.setParameter("Id", id);
 		q.setParameter("initialInventory", true);
 		q.setParameter("cId", cId);
 		return q.getResultList();
 	}
 
-	public List<Purchase_Product_Details> getPurchase_Product_DetailsByPurchaseEntryId(int id) throws Throwable {
+	public List<Purchase_Product_Details> getPurchase_Product_DetailsByPurchaseEntryId(
+			int id) throws Throwable {
 		finalize();
-		TypedQuery<Purchase_Product_Details> q = em.createQuery(
-				"select s from Purchase_Product_Details s where s.purchase_Entry.id=:Id",
-				Purchase_Product_Details.class);
+		TypedQuery<Purchase_Product_Details> q = em
+				.createQuery(
+						"select s from Purchase_Product_Details s where s.purchase_Entry.id=:Id",
+						Purchase_Product_Details.class);
 		q.setParameter("Id", id);
 		return q.getResultList();
 	}
 
-	public void updatePurchaseProductDetails(Purchase_Product_Details purchase_Product_Details) {
+	public void updatePurchaseProductDetails(
+			Purchase_Product_Details purchase_Product_Details) {
 		em.merge(purchase_Product_Details);
 	}
 
 	public List<Purchase_Product_Details> getPurchaseProductDetailsByQty() {
-		TypedQuery<Purchase_Product_Details> q = em.createQuery(
-				"select c from Purchase_Product_Details c where c.remaining_quantity>0 and c.productDetail.isRaw=:raw ORDER BY c.id ASC",
-				Purchase_Product_Details.class);
+		TypedQuery<Purchase_Product_Details> q = em
+				.createQuery(
+						"select c from Purchase_Product_Details c where c.remaining_quantity>0 and c.productDetail.isRaw=:raw ORDER BY c.id ASC",
+						Purchase_Product_Details.class);
 		q.setParameter("raw", true);
 		return q.getResultList();
 	}
 
 	public List<Purchase_Product_Details> getPurchaseProductDetailsByQtyAndCompany() {
-		cId = getUserById((String) httpSession.getAttribute("user")).getCompanyInfo().getId();
-		TypedQuery<Purchase_Product_Details> q = em.createQuery(
-				"select c from Purchase_Product_Details c where c.companyInfo.id=:cId AND c.remaining_quantity>0 and c.productDetail.isRaw=:raw ORDER BY c.id ASC",
-				Purchase_Product_Details.class);
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<Purchase_Product_Details> q = em
+				.createQuery(
+						"select c from Purchase_Product_Details c where c.companyInfo.id=:cId AND c.remaining_quantity>0 and c.productDetail.isRaw=:raw ORDER BY c.id ASC",
+						Purchase_Product_Details.class);
 		q.setParameter("raw", true);
 		q.setParameter("cId", cId);
 		return q.getResultList();
 	}
 
-	public List<Purchase_Product_Details> getSaleblePurchaseProductDetailsByProductCodeAndQuantity(String code,
-			Date date) {
-		cId = getUserById((String) httpSession.getAttribute("user")).getCompanyInfo().getId();
+	public List<Purchase_Product_Details> getSaleblePurchaseProductDetailsByProductCodeAndQuantity(
+			String code, Date date) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
 		List<Purchase_Product_Details> lst = new ArrayList<Purchase_Product_Details>();
 
-		TypedQuery<Purchase_Product_Details> q = em.createQuery(
-				"select c from Purchase_Product_Details c where c.companyInfo.id=:cId AND UPPER(c.productDetail.code)=:cd and c.remaining_quantity>0 and c.productDetail.isSaleble=:salable and c.purchase_Entry.purchase_date<=:date ORDER BY c.id ASC",
-				Purchase_Product_Details.class);
+		TypedQuery<Purchase_Product_Details> q = em
+				.createQuery(
+						"select c from Purchase_Product_Details c where c.companyInfo.id=:cId AND UPPER(c.productDetail.code)=:cd and c.remaining_quantity>0 and c.productDetail.isSaleble=:salable and c.purchase_Entry.purchase_date<=:date ORDER BY c.id ASC",
+						Purchase_Product_Details.class);
 		q.setParameter("salable", true);
 		q.setParameter("cd", code.toUpperCase());
 		q.setParameter("date", date);
@@ -1534,9 +1741,10 @@ public class Ejb {
 
 		lst = q.getResultList();
 
-		TypedQuery<Purchase_Product_Details> q1 = em.createQuery(
-				"select c from Purchase_Product_Details c where c.companyInfo.id=:cId AND UPPER(c.productDetail.code)=:cd and c.remaining_quantity>0 and c.productDetail.isSaleble=:salable and c.initialInventory=true ORDER BY c.id ASC",
-				Purchase_Product_Details.class);
+		TypedQuery<Purchase_Product_Details> q1 = em
+				.createQuery(
+						"select c from Purchase_Product_Details c where c.companyInfo.id=:cId AND UPPER(c.productDetail.code)=:cd and c.remaining_quantity>0 and c.productDetail.isSaleble=:salable and c.initialInventory=true ORDER BY c.id ASC",
+						Purchase_Product_Details.class);
 		q1.setParameter("salable", true);
 		q1.setParameter("cd", code.toUpperCase());
 		q1.setParameter("cId", cId);
@@ -1548,22 +1756,26 @@ public class Ejb {
 		return lst;
 	}
 
-	public List<Purchase_Product_Details> getPurchaseProductDetailsByProductCode(String code, Date date) {
-		cId = getUserById((String) httpSession.getAttribute("user")).getCompanyInfo().getId();
+	public List<Purchase_Product_Details> getPurchaseProductDetailsByProductCode(
+			String code, Date date) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
 		List<Purchase_Product_Details> lst = new ArrayList<Purchase_Product_Details>();
 
-		TypedQuery<Purchase_Product_Details> q = em.createQuery(
-				"select c from Purchase_Product_Details c where c.companyInfo.id=:cId AND UPPER(c.productDetail.code)=:cd and c.remaining_quantity>0 and c.purchase_Entry.purchase_date<=:date ORDER BY c.id ASC",
-				Purchase_Product_Details.class);
+		TypedQuery<Purchase_Product_Details> q = em
+				.createQuery(
+						"select c from Purchase_Product_Details c where c.companyInfo.id=:cId AND UPPER(c.productDetail.code)=:cd and c.remaining_quantity>0 and c.purchase_Entry.purchase_date<=:date ORDER BY c.id ASC",
+						Purchase_Product_Details.class);
 		q.setParameter("cd", code.toUpperCase());
 		q.setParameter("date", date);
 		q.setParameter("cId", cId);
 
 		lst = q.getResultList();
 
-		TypedQuery<Purchase_Product_Details> q1 = em.createQuery(
-				"select c from Purchase_Product_Details c where c.companyInfo.id=:cId AND UPPER(c.productDetail.code)=:cd and c.remaining_quantity>0 and c.initialInventory=true ORDER BY c.id ASC",
-				Purchase_Product_Details.class);
+		TypedQuery<Purchase_Product_Details> q1 = em
+				.createQuery(
+						"select c from Purchase_Product_Details c where c.companyInfo.id=:cId AND UPPER(c.productDetail.code)=:cd and c.remaining_quantity>0 and c.initialInventory=true ORDER BY c.id ASC",
+						Purchase_Product_Details.class);
 		q1.setParameter("cd", code.toUpperCase());
 		q1.setParameter("cId", cId);
 
@@ -1574,10 +1786,12 @@ public class Ejb {
 		return lst;
 	}
 
-	public List<ProductDetail> getProductDetailsByDesignNumberAndQuantity(int dId, int qty) {
+	public List<ProductDetail> getProductDetailsByDesignNumberAndQuantity(
+			int dId, int qty) {
 		SampleDesignCostSheet sdcs = getSampleDesignCostSheetById(dId);
 		List<ProductDetail> pdArr = new ArrayList<>();
-		for (ProductsForDesignCostSheet pd : sdcs.getProductsForDesignCostSheets()) {
+		for (ProductsForDesignCostSheet pd : sdcs
+				.getProductsForDesignCostSheets()) {
 			pdArr.add(pd.getProductDetail());
 		}
 
@@ -1585,9 +1799,10 @@ public class Ejb {
 	}
 
 	public List<Purchase_Product_Details> getReadyPurchaseProductDetailsByQty() {
-		TypedQuery<Purchase_Product_Details> q = em.createQuery(
-				"select c from Purchase_Product_Details c where c.remaining_quantity>0 and c.productDetail.isSaleble=:salable ORDER BY c.id ASC",
-				Purchase_Product_Details.class);
+		TypedQuery<Purchase_Product_Details> q = em
+				.createQuery(
+						"select c from Purchase_Product_Details c where c.remaining_quantity>0 and c.productDetail.isSaleble=:salable ORDER BY c.id ASC",
+						Purchase_Product_Details.class);
 		q.setParameter("salable", true);
 		return q.getResultList();
 	}
@@ -1596,20 +1811,23 @@ public class Ejb {
 		return em.find(Purchase_Product_Details.class, id);
 	}
 
-	public Purchase_Product_Details getPurchaseProductDetailsByIdForSale(int id, String date) {
+	public Purchase_Product_Details getPurchaseProductDetailsByIdForSale(
+			int id, String date) {
 
-		TypedQuery<Purchase_Product_Details> q = em.createQuery(
-				"select c from Purchase_Product_Details c where c.id=:id and c.remaining_quantity>0 and c.productDetail.isSaleble=true and c.purchase_Entry.purchase_date<:date",
-				Purchase_Product_Details.class);
+		TypedQuery<Purchase_Product_Details> q = em
+				.createQuery(
+						"select c from Purchase_Product_Details c where c.id=:id and c.remaining_quantity>0 and c.productDetail.isSaleble=true and c.purchase_Entry.purchase_date<:date",
+						Purchase_Product_Details.class);
 		q.setParameter("id", id);
 		q.setParameter("date", DateConverter.getDate(date));
 
 		if (q.getResultList().size() > 0) {
 			return q.getResultList().get(0);
 		} else {
-			TypedQuery<Purchase_Product_Details> q1 = em.createQuery(
-					"select c from Purchase_Product_Details c where c.id=:id and c.remaining_quantity>0 and c.productDetail.isSaleble=true and c.initialInventory=true",
-					Purchase_Product_Details.class);
+			TypedQuery<Purchase_Product_Details> q1 = em
+					.createQuery(
+							"select c from Purchase_Product_Details c where c.id=:id and c.remaining_quantity>0 and c.productDetail.isSaleble=true and c.initialInventory=true",
+							Purchase_Product_Details.class);
 			q1.setParameter("id", id);
 			if (q1.getResultList().size() > 0) {
 				return q1.getResultList().get(0);
@@ -1620,11 +1838,14 @@ public class Ejb {
 
 	}
 
-	public List<Purchase_Product_Details> getPurchaseProductDetailsByProductIdAndCompany(int pId) {
-		cId = getUserById((String) httpSession.getAttribute("user")).getCompanyInfo().getId();
-		TypedQuery<Purchase_Product_Details> q = em.createQuery(
-				"select c from Purchase_Product_Details c where c.companyInfo.id=:cId AND c.productDetail.id=:pId",
-				Purchase_Product_Details.class);
+	public List<Purchase_Product_Details> getPurchaseProductDetailsByProductIdAndCompany(
+			int pId) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<Purchase_Product_Details> q = em
+				.createQuery(
+						"select c from Purchase_Product_Details c where c.companyInfo.id=:cId AND c.productDetail.id=:pId",
+						Purchase_Product_Details.class);
 		q.setParameter("cId", cId);
 		q.setParameter("pId", pId);
 		return q.getResultList();
@@ -1636,8 +1857,8 @@ public class Ejb {
 	}
 
 	public List<JobRecievedDetails> getAllJobRecievedDetails() {
-		TypedQuery<JobRecievedDetails> q = em.createQuery("select c from JobRecievedDetails c",
-				JobRecievedDetails.class);
+		TypedQuery<JobRecievedDetails> q = em.createQuery(
+				"select c from JobRecievedDetails c", JobRecievedDetails.class);
 		return q.getResultList();
 	}
 
@@ -1664,13 +1885,16 @@ public class Ejb {
 	}
 
 	public List<City> getCityByName(String name) {
-		TypedQuery<City> q = em.createQuery("select c from City c where UPPER(c.cityName) like :nm", City.class);
+		TypedQuery<City> q = em.createQuery(
+				"select c from City c where UPPER(c.cityName) like :nm",
+				City.class);
 		q.setParameter("nm", "%" + name.toUpperCase() + "%");
 		return q.getResultList();
 	}
 
 	public List<City> getCityByState(int id) {
-		TypedQuery<City> q = em.createQuery("select c from City c where c.state.id = :id", City.class);
+		TypedQuery<City> q = em.createQuery(
+				"select c from City c where c.state.id = :id", City.class);
 		q.setParameter("id", id);
 		return q.getResultList();
 	}
@@ -1693,14 +1917,17 @@ public class Ejb {
 	}
 
 	public List<State> getAllState() {
-		TypedQuery<State> q = em.createQuery("select c from State c", State.class);
+		TypedQuery<State> q = em.createQuery("select c from State c",
+				State.class);
 		return q.getResultList();
 	}
 
 	public List<State> getStateByName(String name, int countryId) {
 
-		TypedQuery<State> q = em.createQuery(
-				"select c from State c where c.country.id=:cid AND UPPER(c.stateName) like :nm", State.class);
+		TypedQuery<State> q = em
+				.createQuery(
+						"select c from State c where c.country.id=:cid AND UPPER(c.stateName) like :nm",
+						State.class);
 		q.setParameter("nm", "%" + name.toUpperCase() + "%");
 		q.setParameter("cid", countryId);
 		return q.getResultList();
@@ -1709,8 +1936,10 @@ public class Ejb {
 
 	public List<City> getCityByNameAjax(String name, int Stateid) {
 
-		TypedQuery<City> q = em.createQuery("select c from City c where c.state.id=:cid AND UPPER(c.cityName) like :nm",
-				City.class);
+		TypedQuery<City> q = em
+				.createQuery(
+						"select c from City c where c.state.id=:cid AND UPPER(c.cityName) like :nm",
+						City.class);
 		q.setParameter("nm", "%" + name.toUpperCase() + "%");
 		q.setParameter("cid", Stateid);
 		return q.getResultList();
@@ -1718,13 +1947,15 @@ public class Ejb {
 	}
 
 	public List<State> getAllStatesByCountryId(int id) {
-		TypedQuery<State> q = em.createQuery("select c from State c where c.country.id=:Id", State.class);
+		TypedQuery<State> q = em.createQuery(
+				"select c from State c where c.country.id=:Id", State.class);
 		q.setParameter("Id", id);
 		return q.getResultList();
 	}
 
 	public List<State> getStateByCityName(String nm) {
-		TypedQuery<State> q = em.createQuery("select c from State c", State.class);
+		TypedQuery<State> q = em.createQuery("select c from State c",
+				State.class);
 		List<State> stList = new ArrayList<>();
 		for (State s : q.getResultList()) {
 			for (City c : s.getCities()) {
@@ -1754,12 +1985,14 @@ public class Ejb {
 	}
 
 	public List<Country> getAllCountry() {
-		TypedQuery<Country> q = em.createQuery("select c from Country c", Country.class);
+		TypedQuery<Country> q = em.createQuery("select c from Country c",
+				Country.class);
 		return q.getResultList();
 	}
 
 	public List<Country> getCountryByName(String name) {
-		TypedQuery<Country> q = em.createQuery("select c from Country c where UPPER(c.countryName) like :nm",
+		TypedQuery<Country> q = em.createQuery(
+				"select c from Country c where UPPER(c.countryName) like :nm",
 				Country.class);
 		q.setParameter("nm", "%" + name.toUpperCase() + "%");
 		return q.getResultList();
@@ -1783,12 +2016,14 @@ public class Ejb {
 	}
 
 	public List<Department> getAllDepartments() {
-		TypedQuery<Department> q = em.createQuery("select s from Department s", Department.class);
+		TypedQuery<Department> q = em.createQuery("select s from Department s",
+				Department.class);
 		return q.getResultList();
 	}
 
 	public List<Department> getAllDepartmentsByName(String name) {
-		TypedQuery<Department> q = em.createQuery("select s from Department s where UPPER(s.name) LIKE :name",
+		TypedQuery<Department> q = em.createQuery(
+				"select s from Department s where UPPER(s.name) LIKE :name",
 				Department.class);
 		q.setParameter("name", "%" + name.toUpperCase() + "%");
 		return q.getResultList();
@@ -1812,19 +2047,22 @@ public class Ejb {
 	}
 
 	public List<SubDepartment> getAllSubDepartments() {
-		TypedQuery<SubDepartment> q = em.createQuery("select s from SubDepartment s", SubDepartment.class);
+		TypedQuery<SubDepartment> q = em.createQuery(
+				"select s from SubDepartment s", SubDepartment.class);
 		return q.getResultList();
 	}
 
 	public List<SubDepartment> getAllSubDepartmentsByDepartmentId(int id) {
-		TypedQuery<SubDepartment> q = em.createQuery("select s from SubDepartment s where s.department.id=:Id",
+		TypedQuery<SubDepartment> q = em.createQuery(
+				"select s from SubDepartment s where s.department.id=:Id",
 				SubDepartment.class);
 		q.setParameter("Id", id);
 		return q.getResultList();
 	}
 
 	public List<SubDepartment> getAllSubDepartmentsByName(String name) {
-		TypedQuery<SubDepartment> q = em.createQuery("select s from SubDepartment s where UPPER(s.name) LIKE :name",
+		TypedQuery<SubDepartment> q = em.createQuery(
+				"select s from SubDepartment s where UPPER(s.name) LIKE :name",
 				SubDepartment.class);
 		q.setParameter("name", "%" + name.toUpperCase() + "%");
 		return q.getResultList();
@@ -1848,12 +2086,14 @@ public class Ejb {
 	}
 
 	public List<Category> getAllCategory() {
-		TypedQuery<Category> q = em.createQuery("select s from Category s", Category.class);
+		TypedQuery<Category> q = em.createQuery("select s from Category s",
+				Category.class);
 		return q.getResultList();
 	}
 
 	public List<Category> getAllCategoryBySubDepartmentId(int id) {
-		TypedQuery<Category> q = em.createQuery("select s from Category s where s.subDepartment.id=:Id",
+		TypedQuery<Category> q = em.createQuery(
+				"select s from Category s where s.subDepartment.id=:Id",
 				Category.class);
 		q.setParameter("Id", id);
 		return q.getResultList();
@@ -1877,12 +2117,14 @@ public class Ejb {
 	}
 
 	public List<ProductDetail> getAllProductDetail() {
-		TypedQuery<ProductDetail> q = em.createQuery("select c from ProductDetail c", ProductDetail.class);
+		TypedQuery<ProductDetail> q = em.createQuery(
+				"select c from ProductDetail c", ProductDetail.class);
 		return q.getResultList();
 	}
 
 	public List<ProductDetail> getAllProductDetailByAssendingProduct() {
-		TypedQuery<ProductDetail> q = em.createQuery("select c from ProductDetail c ORDER BY c.code ASC",
+		TypedQuery<ProductDetail> q = em.createQuery(
+				"select c from ProductDetail c ORDER BY c.code ASC",
 				ProductDetail.class);
 		return q.getResultList();
 	}
@@ -1894,7 +2136,8 @@ public class Ejb {
 		List<ProductDetail> listpro = new ArrayList<ProductDetail>();
 		HashSet<ProductDetail> hash = new HashSet<ProductDetail>();
 		for (ProductDetail pd : getAllProductDetail()) {
-			for (Purchase_Product_Details ppd : pd.getPurchase_Product_Details()) {
+			for (Purchase_Product_Details ppd : pd
+					.getPurchase_Product_Details()) {
 				if (ppd.getCompanyInfo().equals(usr.getCompanyInfo())) {
 					listpro.add(ppd.getProductDetail());
 				}
@@ -1907,38 +2150,45 @@ public class Ejb {
 	}
 
 	public List<ProductDetail> getAllActiveProductDetail() {
-		TypedQuery<ProductDetail> q = em.createQuery("select c from ProductDetail c where c.isActive=true",
+		TypedQuery<ProductDetail> q = em.createQuery(
+				"select c from ProductDetail c where c.isActive=true",
 				ProductDetail.class);
 		return q.getResultList();
 	}
 
 	public List<ProductDetail> getAllProductDetailByCategoryId(int id) {
-		TypedQuery<ProductDetail> q = em.createQuery("select s from ProductDetail s where s.category.id=:Id",
+		TypedQuery<ProductDetail> q = em.createQuery(
+				"select s from ProductDetail s where s.category.id=:Id",
 				ProductDetail.class);
 		q.setParameter("Id", id);
 		return q.getResultList();
 	}
 
 	public List<ProductDetail> getProductDetailByCode(String name) {
-		TypedQuery<ProductDetail> q = em.createQuery("select c from ProductDetail c where UPPER(c.code) like :nm",
+		TypedQuery<ProductDetail> q = em.createQuery(
+				"select c from ProductDetail c where UPPER(c.code) like :nm",
 				ProductDetail.class);
 		q.setParameter("nm", "%" + name.toUpperCase() + "%");
 		return q.getResultList();
 	}
 
-	public List<ProductDetail> getSalebleProductsByQtyAndCodeAndCompany(String nm) {
-		cId = getUserById((String) httpSession.getAttribute("user")).getCompanyInfo().getId();
+	public List<ProductDetail> getSalebleProductsByQtyAndCodeAndCompany(
+			String nm) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
 		List<ProductDetail> lst = new ArrayList<ProductDetail>();
-		TypedQuery<ProductDetail> query = em.createQuery(
-				"select c from ProductDetail c where c.readyGoodsStock.companyInfo.id=:cId AND c.isSaleble=:sal AND c.readyGoodsStock.remainingQty>0 AND UPPER(c.code) like :codeName",
-				ProductDetail.class);
+		TypedQuery<ProductDetail> query = em
+				.createQuery(
+						"select c from ProductDetail c where c.readyGoodsStock.companyInfo.id=:cId AND c.isSaleble=:sal AND c.readyGoodsStock.remainingQty>0 AND UPPER(c.code) like :codeName",
+						ProductDetail.class);
 		query.setParameter("codeName", "%" + nm.toUpperCase() + "%");
 		query.setParameter("sal", true);
 		query.setParameter("cId", cId);
 		lst = query.getResultList();
-		TypedQuery<ProductDetail> q = em.createQuery(
-				"select c from ProductDetail c where c.rawMaterialsStock.companyInfo.id=:cId AND c.isSaleble=:sal AND c.rawMaterialsStock.remainingQty>0 AND UPPER(c.code) like :codeName",
-				ProductDetail.class);
+		TypedQuery<ProductDetail> q = em
+				.createQuery(
+						"select c from ProductDetail c where c.rawMaterialsStock.companyInfo.id=:cId AND c.isSaleble=:sal AND c.rawMaterialsStock.remainingQty>0 AND UPPER(c.code) like :codeName",
+						ProductDetail.class);
 		q.setParameter("sal", true);
 		q.setParameter("cId", cId);
 		q.setParameter("codeName", "%" + nm.toUpperCase() + "%");
@@ -1948,7 +2198,9 @@ public class Ejb {
 
 	public List<ProductDetail> getProductDetailBydescription(String name) {
 		TypedQuery<ProductDetail> q = em
-				.createQuery("select c from ProductDetail c where UPPER(c.description) like :nm", ProductDetail.class);
+				.createQuery(
+						"select c from ProductDetail c where UPPER(c.description) like :nm",
+						ProductDetail.class);
 		q.setParameter("nm", "%" + name.toUpperCase() + "%");
 		return q.getResultList();
 	}
@@ -1967,14 +2219,16 @@ public class Ejb {
 	}
 
 	public List<ProductImage> getAllProductImageByProductId(int id) {
-		TypedQuery<ProductImage> q = em.createQuery("select s from ProductImage s where s.productDetail.id=:id",
+		TypedQuery<ProductImage> q = em.createQuery(
+				"select s from ProductImage s where s.productDetail.id=:id",
 				ProductImage.class);
 		q.setParameter("id", id);
 		return q.getResultList();
 	}
 
 	public List<ProductImage> getAllProductImage() {
-		TypedQuery<ProductImage> q = em.createQuery("select c from ProductImage c", ProductImage.class);
+		TypedQuery<ProductImage> q = em.createQuery(
+				"select c from ProductImage c", ProductImage.class);
 		return q.getResultList();
 	}
 
@@ -1984,9 +2238,10 @@ public class Ejb {
 	}
 
 	public List<SerialNumber> getSerialNumberByPurchaseEntryId(int id) {
-		TypedQuery<SerialNumber> q = em.createQuery(
-				"select c from SerialNumber c where c.purchase_Product_Details.purchase_Entry.id=:id",
-				SerialNumber.class);
+		TypedQuery<SerialNumber> q = em
+				.createQuery(
+						"select c from SerialNumber c where c.purchase_Product_Details.purchase_Entry.id=:id",
+						SerialNumber.class);
 		q.setParameter("id", id);
 		return q.getResultList();
 	}
@@ -1998,13 +2253,16 @@ public class Ejb {
 	}
 
 	public List<Bill_setup> getAllBillSetup() {
-		TypedQuery<Bill_setup> q = em.createQuery("select c from Bill_setup c", Bill_setup.class);
+		TypedQuery<Bill_setup> q = em.createQuery("select c from Bill_setup c",
+				Bill_setup.class);
 		return q.getResultList();
 	}
 
 	public Bill_setup getLastBillSetupBySufix(String billType) {
 		TypedQuery<Bill_setup> q = em
-				.createQuery("select s from Bill_setup s where s.billType=:btype order by s.id DESC", Bill_setup.class);
+				.createQuery(
+						"select s from Bill_setup s where s.billType=:btype order by s.id DESC",
+						Bill_setup.class);
 		q.setParameter("btype", billType);
 		if (q.getResultList().size() > 0) {
 			return q.getResultList().get(0);
@@ -2013,10 +2271,12 @@ public class Ejb {
 		}
 	}
 
-	public Bill_setup getLastBillSetupBySufixAndCompanyId(String billType, int cId) {
-		TypedQuery<Bill_setup> q = em.createQuery(
-				"select s from Bill_setup s where s.billType=:btype AND s.companyInfo.id=:cId order by s.id DESC",
-				Bill_setup.class);
+	public Bill_setup getLastBillSetupBySufixAndCompanyId(String billType,
+			int cId) {
+		TypedQuery<Bill_setup> q = em
+				.createQuery(
+						"select s from Bill_setup s where s.billType=:btype AND s.companyInfo.id=:cId order by s.id DESC",
+						Bill_setup.class);
 		q.setParameter("btype", billType);
 		q.setParameter("cId", cId);
 		if (q.getResultList().size() > 0) {
@@ -2027,10 +2287,12 @@ public class Ejb {
 	}
 
 	public Bill_setup getLastBillSetupBySufixAndCompany(String billType) {
-		cId = getUserById((String) httpSession.getAttribute("user")).getCompanyInfo().getId();
-		TypedQuery<Bill_setup> q = em.createQuery(
-				"select s from Bill_setup s where s.billType=:btype AND s.companyInfo.id=:cId order by s.id DESC",
-				Bill_setup.class);
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<Bill_setup> q = em
+				.createQuery(
+						"select s from Bill_setup s where s.billType=:btype AND s.companyInfo.id=:cId order by s.id DESC",
+						Bill_setup.class);
 		q.setParameter("btype", billType);
 		q.setParameter("cId", cId);
 		if (q.getResultList().size() > 0) {
@@ -2052,17 +2314,21 @@ public class Ejb {
 	}
 
 	public boolean isCompanyInfoExist() {
-		TypedQuery<CompanyInfo> q = em.createQuery("Select c from CompanyInfo c", CompanyInfo.class);
+		TypedQuery<CompanyInfo> q = em.createQuery(
+				"Select c from CompanyInfo c", CompanyInfo.class);
 		return q.getResultList().size() > 0;
 	}
 
 	public List<CompanyInfo> getAllCompanyInfo() {
-		TypedQuery<CompanyInfo> q = em.createQuery("select c from CompanyInfo c", CompanyInfo.class);
+		TypedQuery<CompanyInfo> q = em.createQuery(
+				"select c from CompanyInfo c", CompanyInfo.class);
 		return q.getResultList();
 	}
 
 	public CompanyInfo getCompanyInfo() {
-		TypedQuery<CompanyInfo> q = em.createQuery("Select c from CompanyInfo c order by c.id DESC", CompanyInfo.class);
+		TypedQuery<CompanyInfo> q = em.createQuery(
+				"Select c from CompanyInfo c order by c.id DESC",
+				CompanyInfo.class);
 		if (q.getResultList().size() > 0) {
 			return q.getResultList().get(0);
 		} else {
@@ -2087,16 +2353,21 @@ public class Ejb {
 
 	public RawMaterialsStock getRawMaterialStocktDetailByProductId(int id) {
 		TypedQuery<RawMaterialsStock> q = em
-				.createQuery("select c from RawMaterialsStock c where c.productDetail.id=:ID", RawMaterialsStock.class);
+				.createQuery(
+						"select c from RawMaterialsStock c where c.productDetail.id=:ID",
+						RawMaterialsStock.class);
 		q.setParameter("ID", id);
 		return q.getResultList().size() > 0 ? q.getResultList().get(0) : null;
 	}
 
-	public RawMaterialsStock getRawMaterialStocktDetailByProductIdAndCompany(int id) {
-		cId = getUserById((String) httpSession.getAttribute("user")).getCompanyInfo().getId();
-		TypedQuery<RawMaterialsStock> q = em.createQuery(
-				"select c from RawMaterialsStock c where c.companyInfo.id=:cId AND c.productDetail.id=:ID",
-				RawMaterialsStock.class);
+	public RawMaterialsStock getRawMaterialStocktDetailByProductIdAndCompany(
+			int id) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<RawMaterialsStock> q = em
+				.createQuery(
+						"select c from RawMaterialsStock c where c.companyInfo.id=:cId AND c.productDetail.id=:ID",
+						RawMaterialsStock.class);
 		q.setParameter("ID", id);
 		q.setParameter("cId", cId);
 		return q.getResultList().size() > 0 ? q.getResultList().get(0) : null;
@@ -2111,21 +2382,26 @@ public class Ejb {
 	}
 
 	public List<RawMaterialsStock> getAllRawMaterialStockDetail() {
-		TypedQuery<RawMaterialsStock> q = em.createQuery("select c from RawMaterialsStock c", RawMaterialsStock.class);
+		TypedQuery<RawMaterialsStock> q = em.createQuery(
+				"select c from RawMaterialsStock c", RawMaterialsStock.class);
 		return q.getResultList();
 	}
 
 	public RawMaterialsStock getRawMeterialStoctByProductId(int id) {
 		TypedQuery<RawMaterialsStock> q = em
-				.createQuery("select s from RawMaterialsStock s where s.productDetail.id=:id", RawMaterialsStock.class);
+				.createQuery(
+						"select s from RawMaterialsStock s where s.productDetail.id=:id",
+						RawMaterialsStock.class);
 		q.setParameter("id", id);
 		return q.getResultList().get(0);
 	}
 
-	public RawMaterialsStock getRawMeterialStoctByProductAndCompanyId(int pId, int cId) {
-		TypedQuery<RawMaterialsStock> q = em.createQuery(
-				"select s from RawMaterialsStock s where s.productDetail.id=:pId AND s.companyInfo.id=:cId",
-				RawMaterialsStock.class);
+	public RawMaterialsStock getRawMeterialStoctByProductAndCompanyId(int pId,
+			int cId) {
+		TypedQuery<RawMaterialsStock> q = em
+				.createQuery(
+						"select s from RawMaterialsStock s where s.productDetail.id=:pId AND s.companyInfo.id=:cId",
+						RawMaterialsStock.class);
 		q.setParameter("pId", pId);
 		q.setParameter("cId", cId);
 		return q.getResultList().get(0);
@@ -2146,17 +2422,20 @@ public class Ejb {
 	}
 
 	public ReadyGoodsStock getReadyGoodsStocktDetailByProductId(int id) {
-		TypedQuery<ReadyGoodsStock> q = em.createQuery("select c from ReadyGoodsStock c where c.productDetail.id=:ID",
+		TypedQuery<ReadyGoodsStock> q = em.createQuery(
+				"select c from ReadyGoodsStock c where c.productDetail.id=:ID",
 				ReadyGoodsStock.class);
 		q.setParameter("ID", id);
 		return q.getResultList().size() > 0 ? q.getResultList().get(0) : null;
 	}
 
 	public ReadyGoodsStock getReadyGoodsStocktDetailByProductIdAndCompany(int id) {
-		cId = getUserById((String) httpSession.getAttribute("user")).getCompanyInfo().getId();
-		TypedQuery<ReadyGoodsStock> q = em.createQuery(
-				"select c from ReadyGoodsStock c where c.companyInfo.id=:cId AND c.productDetail.id=:ID",
-				ReadyGoodsStock.class);
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<ReadyGoodsStock> q = em
+				.createQuery(
+						"select c from ReadyGoodsStock c where c.companyInfo.id=:cId AND c.productDetail.id=:ID",
+						ReadyGoodsStock.class);
 		q.setParameter("ID", id);
 		q.setParameter("cId", cId);
 		return q.getResultList().size() > 0 ? q.getResultList().get(0) : null;
@@ -2167,21 +2446,25 @@ public class Ejb {
 	}
 
 	public List<ReadyGoodsStock> getAllRawMaterialsStockDetail() {
-		TypedQuery<ReadyGoodsStock> q = em.createQuery("select c from ReadyGoodsStock c", ReadyGoodsStock.class);
+		TypedQuery<ReadyGoodsStock> q = em.createQuery(
+				"select c from ReadyGoodsStock c", ReadyGoodsStock.class);
 		return q.getResultList();
 	}
 
 	public ReadyGoodsStock getReadyGoodsStoctByProductId(int id) {
-		TypedQuery<ReadyGoodsStock> q = em.createQuery("select s from ReadyGoodsStock s where s.productDetail.id=:id",
+		TypedQuery<ReadyGoodsStock> q = em.createQuery(
+				"select s from ReadyGoodsStock s where s.productDetail.id=:id",
 				ReadyGoodsStock.class);
 		q.setParameter("id", id);
 		return q.getResultList().get(0);
 	}
 
-	public ReadyGoodsStock getReadyGoodStoctByProductAndCompanyId(int pId, int cId) {
-		TypedQuery<ReadyGoodsStock> q = em.createQuery(
-				"select s from ReadyGoodsStock s where s.productDetail.id=:pId AND s.companyInfo.id=:cId",
-				ReadyGoodsStock.class);
+	public ReadyGoodsStock getReadyGoodStoctByProductAndCompanyId(int pId,
+			int cId) {
+		TypedQuery<ReadyGoodsStock> q = em
+				.createQuery(
+						"select s from ReadyGoodsStock s where s.productDetail.id=:pId AND s.companyInfo.id=:cId",
+						ReadyGoodsStock.class);
 		q.setParameter("pId", pId);
 		q.setParameter("cId", cId);
 		return q.getResultList().get(0);
@@ -2204,12 +2487,11 @@ public class Ejb {
 	public void updateSalesEntry(SalesEntry salesEntry) {
 		em.merge(salesEntry);
 	}
-	
-	
-	
-	
+
 	public int getLastSalesReturnChallanNumber() {
-		TypedQuery<SalesReturn> q = em.createQuery("select c from SalesReturn c ORDER BY c.id DESC", SalesReturn.class);
+		TypedQuery<SalesReturn> q = em.createQuery(
+				"select c from SalesReturn c ORDER BY c.id DESC",
+				SalesReturn.class);
 		if (q.getResultList().size() > 0) {
 			return q.getResultList().get(0).getChallanNo();
 		} else {
@@ -2219,30 +2501,37 @@ public class Ejb {
 	}
 
 	public int getLastSalesRChallanSuffix() {
-		TypedQuery<SalesReturn> q = em.createQuery("select c from SalesReturn c ORDER BY c.id DESC", SalesReturn.class);
+		TypedQuery<SalesReturn> q = em.createQuery(
+				"select c from SalesReturn c ORDER BY c.id DESC",
+				SalesReturn.class);
 
 		if (q.getResultList().size() > 0) {
 			int s = q.getResultList().get(0).getChallanSuffix();
 			if (getLastBillSetupBySufix("SRINV").equals(null)) {
 				return s;
 			} else {
-				if (Integer.parseInt(getLastBillSetupBySufix("SRINV").getSufix()) < s) {
+				if (Integer.parseInt(getLastBillSetupBySufix("SRINV")
+						.getSufix()) < s) {
 					return s;
 				} else {
-					return Integer.parseInt(getLastBillSetupBySufix("SRINV").getSufix());
+					return Integer.parseInt(getLastBillSetupBySufix("SRINV")
+							.getSufix());
 				}
 			}
 		} else {
 			if (getLastBillSetupBySufix("SRINV").equals(null)) {
 				return 0;
 			} else {
-				return Integer.parseInt(getLastBillSetupBySufix("SRINV").getSufix());
+				return Integer.parseInt(getLastBillSetupBySufix("SRINV")
+						.getSufix());
 			}
 		}
 	}
 
 	public int getLastSalesChallanNumber() {
-		TypedQuery<SalesEntry> q = em.createQuery("select c from SalesEntry c ORDER BY c.id DESC", SalesEntry.class);
+		TypedQuery<SalesEntry> q = em.createQuery(
+				"select c from SalesEntry c ORDER BY c.id DESC",
+				SalesEntry.class);
 		if (q.getResultList().size() > 0) {
 			return q.getResultList().get(0).getChallanNo();
 		} else {
@@ -2251,9 +2540,12 @@ public class Ejb {
 	}
 
 	public int getLastSalesChallanNumberByCompany() {
-		cId = getUserById((String) httpSession.getAttribute("user")).getCompanyInfo().getId();
-		TypedQuery<SalesEntry> q = em.createQuery(
-				"select c from SalesEntry c where c.companyInfo.id=:cId ORDER BY c.id DESC", SalesEntry.class);
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<SalesEntry> q = em
+				.createQuery(
+						"select c from SalesEntry c where c.companyInfo.id=:cId ORDER BY c.id DESC",
+						SalesEntry.class);
 		q.setParameter("cId", cId);
 		if (q.getResultList().size() > 0) {
 			return q.getResultList().get(0).getChallanNo();
@@ -2263,7 +2555,9 @@ public class Ejb {
 	}
 
 	public int getLastSalesChallanSuffix() {
-		TypedQuery<SalesEntry> q = em.createQuery("select c from SalesEntry c ORDER BY c.id DESC", SalesEntry.class);
+		TypedQuery<SalesEntry> q = em.createQuery(
+				"select c from SalesEntry c ORDER BY c.id DESC",
+				SalesEntry.class);
 
 		if (q.getResultList().size() > 0) {
 			int s = q.getResultList().get(0).getChallanSuffix();
@@ -2273,22 +2567,27 @@ public class Ejb {
 				if (Integer.parseInt(getLastBillSetupBySufix("INV").getSufix()) < s) {
 					return s;
 				} else {
-					return Integer.parseInt(getLastBillSetupBySufix("INV").getSufix());
+					return Integer.parseInt(getLastBillSetupBySufix("INV")
+							.getSufix());
 				}
 			}
 		} else {
 			if (getLastBillSetupBySufix("INV").equals(null)) {
 				return 0;
 			} else {
-				return Integer.parseInt(getLastBillSetupBySufix("INV").getSufix());
+				return Integer.parseInt(getLastBillSetupBySufix("INV")
+						.getSufix());
 			}
 		}
 	}
 
 	public int getLastSalesChallanSuffixByCompany() {
-		cId = getUserById((String) httpSession.getAttribute("user")).getCompanyInfo().getId();
-		TypedQuery<SalesEntry> q = em.createQuery(
-				"select c from SalesEntry c where c.companyInfo.id=:cId ORDER BY c.id DESC", SalesEntry.class);
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<SalesEntry> q = em
+				.createQuery(
+						"select c from SalesEntry c where c.companyInfo.id=:cId ORDER BY c.id DESC",
+						SalesEntry.class);
 		q.setParameter("cId", cId);
 
 		if (q.getResultList().size() > 0) {
@@ -2296,80 +2595,108 @@ public class Ejb {
 			if (getLastBillSetupBySufixAndCompanyId("INV", cId).equals(null)) {
 				return s;
 			} else {
-				if (Integer.parseInt(getLastBillSetupBySufixAndCompanyId("INV", cId).getSufix()) < s) {
+				if (Integer.parseInt(getLastBillSetupBySufixAndCompanyId("INV",
+						cId).getSufix()) < s) {
 					return s;
 				} else {
-					return Integer.parseInt(getLastBillSetupBySufixAndCompanyId("INV", cId).getSufix());
+					return Integer
+							.parseInt(getLastBillSetupBySufixAndCompanyId(
+									"INV", cId).getSufix());
 				}
 			}
 		} else {
 			if (getLastBillSetupBySufixAndCompanyId("INV", cId).equals(null)) {
 				return 0;
 			} else {
-				return Integer.parseInt(getLastBillSetupBySufixAndCompanyId("INV", cId).getSufix());
+				return Integer.parseInt(getLastBillSetupBySufixAndCompanyId(
+						"INV", cId).getSufix());
 			}
 		}
 	}
 
 	public List<SalesEntry> getSalesEntryByDate(Date startDate, Date endDate) {
-		cId = getUserById((String) httpSession.getAttribute("user")).getCompanyInfo().getId();
-		TypedQuery<SalesEntry> q = em.createQuery(
-				"select c from SalesEntry c WHERE c.companyInfo.id=:cId AND c.sales_date BETWEEN :startDate AND :endDate",
-				SalesEntry.class);
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<SalesEntry> q = em
+				.createQuery(
+						"select c from SalesEntry c WHERE c.companyInfo.id=:cId AND c.sales_date BETWEEN :startDate AND :endDate",
+						SalesEntry.class);
 		q.setParameter("startDate", startDate);
 		q.setParameter("endDate", endDate);
 		q.setParameter("cId", cId);
 		return q.getResultList();
 	}
 
-	public List<Purchase_Product_Details> getAgeingPurProductDetailsBet45and90daysbyproId(int id) {
+	public List<Purchase_Product_Details> getAgeingPurProductDetailsBet45and90daysbyproId(
+			int id) {
 		LocalDateTime dateTime = LocalDateTime.now();
-		TypedQuery<Purchase_Product_Details> q = em.createQuery(
-				"select c from Purchase_Product_Details c where c.productDetail.id=:id and c.remaining_quantity>0 and c.purchase_Entry.purchase_date<:date1 and c.purchase_Entry.purchase_date>:date2 ",
-				Purchase_Product_Details.class);
-		q.setParameter("date1", Date.from(dateTime.minusDays(45).toInstant(ZoneOffset.ofHoursMinutes(5, 30))));
-		q.setParameter("date2", Date.from(dateTime.minusDays(90).toInstant(ZoneOffset.ofHoursMinutes(5, 30))));
+		TypedQuery<Purchase_Product_Details> q = em
+				.createQuery(
+						"select c from Purchase_Product_Details c where c.productDetail.id=:id and c.remaining_quantity>0 and c.purchase_Entry.purchase_date<:date1 and c.purchase_Entry.purchase_date>:date2 ",
+						Purchase_Product_Details.class);
+		q.setParameter(
+				"date1",
+				Date.from(dateTime.minusDays(45).toInstant(
+						ZoneOffset.ofHoursMinutes(5, 30))));
+		q.setParameter(
+				"date2",
+				Date.from(dateTime.minusDays(90).toInstant(
+						ZoneOffset.ofHoursMinutes(5, 30))));
 		q.setParameter("id", id);
 		return q.getResultList();
 	}
 
-	public List<Purchase_Product_Details> getAgeingPurProductDetailsLes45daysbyproId(int id) {
+	public List<Purchase_Product_Details> getAgeingPurProductDetailsLes45daysbyproId(
+			int id) {
 		LocalDateTime dateTime = LocalDateTime.now();
-		TypedQuery<Purchase_Product_Details> q = em.createQuery(
-				"select c from Purchase_Product_Details c where c.productDetail.id=:id and c.remaining_quantity>0 and c.purchase_Entry.purchase_date>:date1 ",
-				Purchase_Product_Details.class);
-		q.setParameter("date1", Date.from(dateTime.minusDays(45).toInstant(ZoneOffset.ofHoursMinutes(5, 30))));
+		TypedQuery<Purchase_Product_Details> q = em
+				.createQuery(
+						"select c from Purchase_Product_Details c where c.productDetail.id=:id and c.remaining_quantity>0 and c.purchase_Entry.purchase_date>:date1 ",
+						Purchase_Product_Details.class);
+		q.setParameter(
+				"date1",
+				Date.from(dateTime.minusDays(45).toInstant(
+						ZoneOffset.ofHoursMinutes(5, 30))));
 		q.setParameter("id", id);
 		return q.getResultList();
 	}
 
-	public List<Purchase_Product_Details> getAgeingPurProductDetailsGre90daysbyproId(int id) {
+	public List<Purchase_Product_Details> getAgeingPurProductDetailsGre90daysbyproId(
+			int id) {
 		LocalDateTime dateTime = LocalDateTime.now();
-		TypedQuery<Purchase_Product_Details> q = em.createQuery(
-				"select c from Purchase_Product_Details c where c.productDetail.id=:id and c.remaining_quantity>0 and c.purchase_Entry.purchase_date<:date2 ",
-				Purchase_Product_Details.class);
-		q.setParameter("date2", Date.from(dateTime.minusDays(90).toInstant(ZoneOffset.ofHoursMinutes(5, 30))));
+		TypedQuery<Purchase_Product_Details> q = em
+				.createQuery(
+						"select c from Purchase_Product_Details c where c.productDetail.id=:id and c.remaining_quantity>0 and c.purchase_Entry.purchase_date<:date2 ",
+						Purchase_Product_Details.class);
+		q.setParameter(
+				"date2",
+				Date.from(dateTime.minusDays(90).toInstant(
+						ZoneOffset.ofHoursMinutes(5, 30))));
 		q.setParameter("id", id);
 		return q.getResultList();
 	}
 
 	public List<VoucherDetails> getLastVoucherDetailsbyCustomerId(int id) {
-		TypedQuery<VoucherDetails> q = em.createQuery(
+		TypedQuery<VoucherDetails> q = em
+				.createQuery(
 
-				"select s from VoucherDetails s where s.voucherAssign.customerEntry.id=:Id ORDER BY s.id ASC",
-				VoucherDetails.class);
+						"select s from VoucherDetails s where s.voucherAssign.customerEntry.id=:Id ORDER BY s.id ASC",
+						VoucherDetails.class);
 		q.setParameter("Id", id);
 		return q.getResultList();
 	}
 
 	public List<SalesEntry> getAllSalesEntries() {
-		TypedQuery<SalesEntry> q = em.createQuery("select c from SalesEntry c", SalesEntry.class);
+		TypedQuery<SalesEntry> q = em.createQuery("select c from SalesEntry c",
+				SalesEntry.class);
 		return q.getResultList();
 	}
 
 	public List<SalesEntry> getAllSalesEntriesByCompany() {
-		cId = getUserById((String) httpSession.getAttribute("user")).getCompanyInfo().getId();
-		TypedQuery<SalesEntry> q = em.createQuery("select c from SalesEntry c WHERE c.companyInfo.id=:cId",
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<SalesEntry> q = em.createQuery(
+				"select c from SalesEntry c WHERE c.companyInfo.id=:cId",
 				SalesEntry.class);
 		q.setParameter("cId", cId);
 		return q.getResultList();
@@ -2388,39 +2715,47 @@ public class Ejb {
 	}
 
 	public List<SalesEntry> getSalesEntryByChallanNo(String chNo) {
-		TypedQuery<SalesEntry> q = em.createQuery(
-				"select c from SalesEntry c where UPPER(c.challanNumber)=:chNo ORDER BY c.id DESC", SalesEntry.class);
+		TypedQuery<SalesEntry> q = em
+				.createQuery(
+						"select c from SalesEntry c where UPPER(c.challanNumber)=:chNo ORDER BY c.id DESC",
+						SalesEntry.class);
 		q.setParameter("chNo", chNo.toUpperCase());
 		return q.getResultList();
 	}
 
 	public List<SalesEntry> getSalesEntryByAgentName(String name) {
-		cId = getUserById((String) httpSession.getAttribute("user")).getCompanyInfo().getId();
-		TypedQuery<SalesEntry> q = em.createQuery(
-				"select c from SalesEntry c where c.companyInfo.id=:cId AND UPPER(c.vendor.name)=:name",
-				SalesEntry.class);
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<SalesEntry> q = em
+				.createQuery(
+						"select c from SalesEntry c where c.companyInfo.id=:cId AND UPPER(c.vendor.name)=:name",
+						SalesEntry.class);
 		q.setParameter("name", name.toUpperCase());
 		q.setParameter("cId", cId);
 		return q.getResultList();
 	}
 
 	public List<SalesEntry> getSalesEntryByCustomerName(String name) {
-		cId = getUserById((String) httpSession.getAttribute("user")).getCompanyInfo().getId();
-		TypedQuery<SalesEntry> q = em.createQuery(
-				"select c from SalesEntry c where c.companyInfo.id=:cId AND UPPER(c.customer.name)=:name",
-				SalesEntry.class);
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<SalesEntry> q = em
+				.createQuery(
+						"select c from SalesEntry c where c.companyInfo.id=:cId AND UPPER(c.customer.name)=:name",
+						SalesEntry.class);
 		q.setParameter("name", name.toUpperCase());
 		q.setParameter("cId", cId);
 		return q.getResultList();
 	}
 
 	public List<SalesEntry> getSalesEntriesByProductCode(String code) {
-		cId = getUserById((String) httpSession.getAttribute("user")).getCompanyInfo().getId();
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
 		List<SalesEntry> lst = new ArrayList<SalesEntry>();
 		HashSet<SalesEntry> hs = new HashSet<SalesEntry>();
-		TypedQuery<SalesProductDetails> q = em.createQuery(
-				"select c from SalesProductDetails c where c.salesEntry.companyInfo.id=:cId AND UPPER(c.purchase_Product_Details.productDetail.code)=:code ORDER BY c.id DESC",
-				SalesProductDetails.class);
+		TypedQuery<SalesProductDetails> q = em
+				.createQuery(
+						"select c from SalesProductDetails c where c.salesEntry.companyInfo.id=:cId AND UPPER(c.purchase_Product_Details.productDetail.code)=:code ORDER BY c.id DESC",
+						SalesProductDetails.class);
 
 		q.setParameter("code", code.toUpperCase());
 		q.setParameter("cId", cId);
@@ -2447,23 +2782,28 @@ public class Ejb {
 		em.remove(getSalesProductDetailsById(id));
 	}
 
-	public void updateSalesProductDetails(SalesProductDetails salesProductDetails) {
+	public void updateSalesProductDetails(
+			SalesProductDetails salesProductDetails) {
 		em.merge(salesProductDetails);
 	}
 
 	public List<SalesProductDetails> getSales_Product_DetailsByProId(int id) {
-		TypedQuery<SalesProductDetails> q = em.createQuery(
-				"select s from SalesProductDetails s where s.purchase_Product_Details.productDetail.id=:Id ORDER BY s.salesEntry.sales_date DESC ",
-				SalesProductDetails.class);
+		TypedQuery<SalesProductDetails> q = em
+				.createQuery(
+						"select s from SalesProductDetails s where s.purchase_Product_Details.productDetail.id=:Id ORDER BY s.salesEntry.sales_date DESC ",
+						SalesProductDetails.class);
 		q.setParameter("Id", id);
 		return q.getResultList();
 	}
 
-	public List<SalesProductDetails> getSales_Product_DetailsByProductIdAndCompany(int id) {
-		cId = getUserById((String) httpSession.getAttribute("user")).getCompanyInfo().getId();
-		TypedQuery<SalesProductDetails> q = em.createQuery(
-				"select s from SalesProductDetails s where s.salesEntry.companyInfo.id=:cId AND s.purchase_Product_Details.productDetail.id=:Id ORDER BY s.salesEntry.sales_date DESC ",
-				SalesProductDetails.class);
+	public List<SalesProductDetails> getSales_Product_DetailsByProductIdAndCompany(
+			int id) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<SalesProductDetails> q = em
+				.createQuery(
+						"select s from SalesProductDetails s where s.salesEntry.companyInfo.id=:cId AND s.purchase_Product_Details.productDetail.id=:Id ORDER BY s.salesEntry.sales_date DESC ",
+						SalesProductDetails.class);
 		q.setParameter("Id", id);
 		q.setParameter("cId", cId);
 		return q.getResultList();
@@ -2488,41 +2828,50 @@ public class Ejb {
 	}
 
 	public List<CustomerEntry> getAllCustomerEntry() {
-		TypedQuery<CustomerEntry> q = em.createQuery("select c from CustomerEntry c", CustomerEntry.class);
+		TypedQuery<CustomerEntry> q = em.createQuery(
+				"select c from CustomerEntry c", CustomerEntry.class);
 		return q.getResultList();
 	}
 
 	public List<SalesEntry> getAllSalesEntrybyCustomerID(int id) {
-		TypedQuery<SalesEntry> q = em.createQuery("select c from SalesEntry c where c.customer.id=:id",
+		TypedQuery<SalesEntry> q = em.createQuery(
+				"select c from SalesEntry c where c.customer.id=:id",
 				SalesEntry.class);
 		q.setParameter("id", id);
 		return q.getResultList();
 	}
-	public List<SalesReturn> getAllSalesReEntrybyCustomerID(int id){
-		TypedQuery<SalesReturn> q = em.createQuery("select c from SalesReturn c where c.salesEntry.customer.id=:id",
-				SalesReturn.class);
+
+	public List<SalesReturn> getAllSalesReEntrybyCustomerID(int id) {
+		TypedQuery<SalesReturn> q = em
+				.createQuery(
+						"select c from SalesReturn c where c.salesEntry.customer.id=:id",
+						SalesReturn.class);
 		q.setParameter("id", id);
 		return q.getResultList();
 	}
 
 	public List<CustomerEntry> getAllCustomerEntryByAssendingMaxSale() {
 		List<CustomerEntry> cList = new ArrayList<CustomerEntry>();
-		TypedQuery<CustomerEntry> q = em.createQuery("select c from CustomerEntry c", CustomerEntry.class);
+		TypedQuery<CustomerEntry> q = em.createQuery(
+				"select c from CustomerEntry c", CustomerEntry.class);
 
 		cList = q.getResultList();
-		cList.sort((CustomerEntry v2, CustomerEntry v1) -> Float.compare(v1.getTotSale(), v2.getTotSale()));
+		cList.sort((CustomerEntry v2, CustomerEntry v1) -> Float.compare(
+				v1.getTotSale(), v2.getTotSale()));
 		return cList;
 	}
 
 	public List<CustomerEntry> getCustomerByPh(String ph) {
-		TypedQuery<CustomerEntry> q = em.createQuery("select c from CustomerEntry c where c.mobile like :ph",
+		TypedQuery<CustomerEntry> q = em.createQuery(
+				"select c from CustomerEntry c where c.mobile like :ph",
 				CustomerEntry.class);
 		q.setParameter("ph", "%" + ph + "%");
 		return q.getResultList();
 	}
 
 	public List<CustomerEntry> getCustomerByName(String name) {
-		TypedQuery<CustomerEntry> q = em.createQuery("select c from CustomerEntry c where UPPER(c.name) like :name",
+		TypedQuery<CustomerEntry> q = em.createQuery(
+				"select c from CustomerEntry c where UPPER(c.name) like :name",
 				CustomerEntry.class);
 		q.setParameter("name", "%" + name.toUpperCase() + "%");
 		return q.getResultList();
@@ -2532,19 +2881,22 @@ public class Ejb {
 	 * stock search by product code
 	 ****************/
 
-	public List<ProductDetail> getProductDetailsByCodeDescriptionCategory(String code, String description,
-			String name) {
-		cId = getUserById((String) httpSession.getAttribute("user")).getCompanyInfo().getId();
-		TypedQuery<ProductDetail> q = em.createQuery(
-				"select c from ProductDetail c where c.code=:code OR c.description=:description OR c.category.name=:name ",
-				ProductDetail.class);
+	public List<ProductDetail> getProductDetailsByCodeDescriptionCategory(
+			String code, String description, String name) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<ProductDetail> q = em
+				.createQuery(
+						"select c from ProductDetail c where c.code=:code OR c.description=:description OR c.category.name=:name ",
+						ProductDetail.class);
 		q.setParameter("code", code);
 		q.setParameter("description", description);
 		q.setParameter("name", name);
 		List<ProductDetail> listpro = new ArrayList<ProductDetail>();
 		HashSet<ProductDetail> hash = new HashSet<ProductDetail>();
 		for (ProductDetail pd : q.getResultList()) {
-			for (Purchase_Product_Details ppd : pd.getPurchase_Product_Details()) {
+			for (Purchase_Product_Details ppd : pd
+					.getPurchase_Product_Details()) {
 				if (ppd.getCompanyInfo().getId() == cId) {
 					listpro.add(ppd.getProductDetail());
 				}
@@ -2560,31 +2912,33 @@ public class Ejb {
 	 * Search Job Assignment Details by ChallanID
 	 ****************/
 
-	/*public JobAssignmentDetails getJobAssignmentDetailsbyChallanNumber(String challanNumber) {
-		TypedQuery<JobAssignmentDetails> q = em.createQuery(
-				"select c from JobAssignmentDetails c where c.challanNumber=:challanNumber",
-				JobAssignmentDetails.class);
+	/*
+	 * public JobAssignmentDetails getJobAssignmentDetailsbyChallanNumber(String
+	 * challanNumber) { TypedQuery<JobAssignmentDetails> q = em.createQuery(
+	 * "select c from JobAssignmentDetails c where c.challanNumber=:challanNumber"
+	 * , JobAssignmentDetails.class); q.setParameter("challanNumber",
+	 * challanNumber); if (q.getResultList().size() > 0) { return
+	 * q.getResultList().get(0); } else { return null; } }
+	 */
+
+	public List<JobAssignmentDetails> getJobAssignmentDetailsbyChallanNumber(
+			String challanNumber) {
+		TypedQuery<JobAssignmentDetails> q = em
+				.createQuery(
+						"select c from JobAssignmentDetails c where UPPER(c.challanNumber)=:challanNumber ORDER BY c.id DESC",
+						JobAssignmentDetails.class);
 		q.setParameter("challanNumber", challanNumber);
-		if (q.getResultList().size() > 0) {
-			return q.getResultList().get(0);
-		} else {
-			return null;
-		}
-	}*/
-	
-	public List<JobAssignmentDetails> getJobAssignmentDetailsbyChallanNumber(String challanNumber) {
-		TypedQuery<JobAssignmentDetails> q = em.createQuery(
-				"select c from JobAssignmentDetails c where UPPER(c.challanNumber)=:challanNumber ORDER BY c.id DESC",
-				JobAssignmentDetails.class);
-		q.setParameter("challanNumber", challanNumber);
-			return q.getResultList();
+		return q.getResultList();
 	}
 
-	public JobAssignmentDetails getJobAssignmentDetailsbyChallanNumberAndCompany(String challanNumber) {
-		cId = getUserById((String) httpSession.getAttribute("user")).getCompanyInfo().getId();
-		TypedQuery<JobAssignmentDetails> q = em.createQuery(
-				"select c from JobAssignmentDetails c where c.companyInfo.id=:cId AND c.challanNumber=:challanNumber",
-				JobAssignmentDetails.class);
+	public JobAssignmentDetails getJobAssignmentDetailsbyChallanNumberAndCompany(
+			String challanNumber) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<JobAssignmentDetails> q = em
+				.createQuery(
+						"select c from JobAssignmentDetails c where c.companyInfo.id=:cId AND c.challanNumber=:challanNumber",
+						JobAssignmentDetails.class);
 		q.setParameter("challanNumber", challanNumber);
 		q.setParameter("cId", cId);
 		if (q.getResultList().size() > 0) {
@@ -2594,11 +2948,13 @@ public class Ejb {
 		}
 	}
 
-	/*****************************Search Sasles for return by ChallanID***************/
+	/***************************** Search Sasles for return by ChallanID ***************/
 
 	public SalesEntry getSalestDetailsbyChallanNumber(String challanNumber) {
-		TypedQuery<SalesEntry> q = em.createQuery("select c from SalesEntry c where c.challanNumber=:challanNumber",
-				SalesEntry.class);
+		TypedQuery<SalesEntry> q = em
+				.createQuery(
+						"select c from SalesEntry c where c.challanNumber=:challanNumber",
+						SalesEntry.class);
 		q.setParameter("challanNumber", challanNumber);
 		if (q.getResultList().size() > 0) {
 			return q.getResultList().get(0);
@@ -2609,13 +2965,15 @@ public class Ejb {
 	}
 
 	public List<SalesEntry> getSalesEntryDByChallanNo(String chNo) {
-		TypedQuery<SalesEntry> q = em.createQuery(
-				"select c from SalesEntry c where UPPER(c.challanNumber)=:chNo ORDER BY c.id DESC", SalesEntry.class);
+		TypedQuery<SalesEntry> q = em
+				.createQuery(
+						"select c from SalesEntry c where UPPER(c.challanNumber)=:chNo ORDER BY c.id DESC",
+						SalesEntry.class);
 		q.setParameter("chNo", chNo.toUpperCase());
 		return q.getResultList();
 	}
 
-	/*****************************Sasles return********************************************/
+	/***************************** Sasles return ********************************************/
 
 	public void setSalesReturn(SalesReturn salesReturn) {
 		em.persist(salesReturn);
@@ -2627,7 +2985,8 @@ public class Ejb {
 
 	/*********************************************************** SalesProductReturnDetails ***********************/
 
-	public void setSalesProductReturnDetails(SalesProductReturnDetail salesProductReturnDetail) {
+	public void setSalesProductReturnDetails(
+			SalesProductReturnDetail salesProductReturnDetail) {
 		em.persist(salesProductReturnDetail);
 	}
 
@@ -2645,13 +3004,15 @@ public class Ejb {
 	}
 
 	public List<VoucherDetails> getVoucherDetailsByVendorId(int id) {
-		TypedQuery<VoucherDetails> q = em.createQuery(
-				"select c from VoucherDetails c where c.voucherAssign.vendor.id=:id", VoucherDetails.class);
+		TypedQuery<VoucherDetails> q = em
+				.createQuery(
+						"select c from VoucherDetails c where c.voucherAssign.vendor.id=:id",
+						VoucherDetails.class);
 		q.setParameter("id", id);
 		return q.getResultList();
 	}
 
-	/****************VoucherAssign ******************************************************************/
+	/**************** VoucherAssign ******************************************************************/
 	public void setVoucherAssign(VoucherAssign voucherAssign) {
 		em.persist(voucherAssign);
 	}
@@ -2665,7 +3026,8 @@ public class Ejb {
 	}
 
 	public List<VoucherAssign> getVoucherAssignByVendorId(int id) {
-		TypedQuery<VoucherAssign> q = em.createQuery("select c from VoucherAssign c where c.vendor.id=:id",
+		TypedQuery<VoucherAssign> q = em.createQuery(
+				"select c from VoucherAssign c where c.vendor.id=:id",
 				VoucherAssign.class);
 		q.setParameter("id", id);
 		/*
@@ -2676,13 +3038,14 @@ public class Ejb {
 	}
 
 	public VoucherAssign getVoucherAssignByCustomerId(int id) {
-		TypedQuery<VoucherAssign> q = em.createQuery("select c from VoucherAssign c where c.customerEntry.id=:id",
+		TypedQuery<VoucherAssign> q = em.createQuery(
+				"select c from VoucherAssign c where c.customerEntry.id=:id",
 				VoucherAssign.class);
 		q.setParameter("id", id);
 		return q.getResultList().get(0);
 	}
 
-	/***************************for job_types ******************************/
+	/*************************** for job_types ******************************/
 	public void setJobTypes(JobTypes jobTypes) {
 		em.persist(jobTypes);
 	}
@@ -2696,11 +3059,12 @@ public class Ejb {
 	}
 
 	public List<JobTypes> getAllJobTypes() {
-		TypedQuery<JobTypes> q = em.createQuery("select c from JobTypes c", JobTypes.class);
+		TypedQuery<JobTypes> q = em.createQuery("select c from JobTypes c",
+				JobTypes.class);
 		return q.getResultList();
 	}
 
-	/***************************for SampleDesignCostSheet*********************/
+	/*************************** for SampleDesignCostSheet *********************/
 
 	public void setSampleDesignCostSheet(SampleDesignCostSheet sample) {
 		em.persist(sample);
@@ -2715,39 +3079,45 @@ public class Ejb {
 	}
 
 	public List<SampleDesignCostSheet> getAllSampleDesignCostSheet() {
-		TypedQuery<SampleDesignCostSheet> q = em.createQuery("select c from SampleDesignCostSheet c",
+		TypedQuery<SampleDesignCostSheet> q = em.createQuery(
+				"select c from SampleDesignCostSheet c",
 				SampleDesignCostSheet.class);
 		return q.getResultList();
 	}
 
-	public List<SampleDesignCostSheet> getSampleDesignCostSheetByDesignNumber(String dn) {
-		TypedQuery<SampleDesignCostSheet> q = em.createQuery(
-				"select c from SampleDesignCostSheet c where UPPER(c.designNumber) like :dn",
-				SampleDesignCostSheet.class);
+	public List<SampleDesignCostSheet> getSampleDesignCostSheetByDesignNumber(
+			String dn) {
+		TypedQuery<SampleDesignCostSheet> q = em
+				.createQuery(
+						"select c from SampleDesignCostSheet c where UPPER(c.designNumber) like :dn",
+						SampleDesignCostSheet.class);
 		q.setParameter("dn", dn.toUpperCase() + "%");
 		return q.getResultList();
 	}
-	
-	public List<SampleDesignCostSheet> getPlannedSampleDesignCostSheetByDesignNumber(String dn) {		
-		TypedQuery<JobPlan> q = em.createQuery(
-				"select c from JobPlan c where UPPER(c.designCostSheet.designNumber) like :dn",
-				JobPlan.class);
+
+	public List<SampleDesignCostSheet> getPlannedSampleDesignCostSheetByDesignNumber(
+			String dn) {
+		TypedQuery<JobPlan> q = em
+				.createQuery(
+						"select c from JobPlan c where UPPER(c.designCostSheet.designNumber) like :dn",
+						JobPlan.class);
 		q.setParameter("dn", dn.toUpperCase() + "%");
-		
-		List<SampleDesignCostSheet> lst=new ArrayList<>();
-		for(JobPlan jp: q.getResultList()){
+
+		List<SampleDesignCostSheet> lst = new ArrayList<>();
+		for (JobPlan jp : q.getResultList()) {
 			lst.add(jp.getDesignCostSheet());
 		}
 		return lst;
 	}
 
-	/**************************for ProductsForDesignCostSheet********************/
+	/************************** for ProductsForDesignCostSheet ********************/
 
 	public void setProductsForDesignCostSheet(ProductsForDesignCostSheet sample) {
 		em.persist(sample);
 	}
 
-	public void updateProductsForDesignCostSheet(ProductsForDesignCostSheet sample) {
+	public void updateProductsForDesignCostSheet(
+			ProductsForDesignCostSheet sample) {
 		em.merge(sample);
 	}
 
@@ -2756,7 +3126,8 @@ public class Ejb {
 	}
 
 	public List<ProductsForDesignCostSheet> getAllProductsForDesignCostSheet() {
-		TypedQuery<ProductsForDesignCostSheet> q = em.createQuery("select c from ProductsForDesignCostSheet c",
+		TypedQuery<ProductsForDesignCostSheet> q = em.createQuery(
+				"select c from ProductsForDesignCostSheet c",
 				ProductsForDesignCostSheet.class);
 		return q.getResultList();
 	}
@@ -2777,7 +3148,8 @@ public class Ejb {
 	}
 
 	public List<JobsForDesignCostSheet> getAllJobsForDesignCostSheet() {
-		TypedQuery<JobsForDesignCostSheet> q = em.createQuery("select c from JobsForDesignCostSheet c",
+		TypedQuery<JobsForDesignCostSheet> q = em.createQuery(
+				"select c from JobsForDesignCostSheet c",
 				JobsForDesignCostSheet.class);
 		return q.getResultList();
 	}
@@ -2796,7 +3168,8 @@ public class Ejb {
 	}
 
 	public List<DesignImage> getAllDesignImage() {
-		TypedQuery<DesignImage> q = em.createQuery("select c from DesignImage c", DesignImage.class);
+		TypedQuery<DesignImage> q = em.createQuery(
+				"select c from DesignImage c", DesignImage.class);
 		return q.getResultList();
 	}
 
@@ -2814,16 +3187,18 @@ public class Ejb {
 	}
 
 	public List<JobPlan> getAllJobPlan() {
-		TypedQuery<JobPlan> q = em.createQuery("select c from JobPlan c", JobPlan.class);
+		TypedQuery<JobPlan> q = em.createQuery("select c from JobPlan c",
+				JobPlan.class);
 		return q.getResultList();
 	}
-	
-	public List<JobPlan> getAllJobPlanByDesignNumber(String dn) {		
-		TypedQuery<JobPlan> q = em.createQuery(
-				"select c from JobPlan c where UPPER(c.designCostSheet.designNumber) like :dn",
-				JobPlan.class);
+
+	public List<JobPlan> getAllOngoingJobPlanByDesignNumber(String dn) {
+		TypedQuery<JobPlan> q = em
+				.createQuery(
+						"select c from JobPlan c where UPPER(c.designCostSheet.designNumber) like :dn and c.isComplete=false",
+						JobPlan.class);
 		q.setParameter("dn", dn.toUpperCase() + "%");
-		return q.getResultList();		
+		return q.getResultList();
 	}
 
 	/***************************
@@ -2840,17 +3215,21 @@ public class Ejb {
 	public JobPlanProductStock getJobPlanProductStockById(int id) {
 		return em.find(JobPlanProductStock.class, id);
 	}
-	
-	public JobPlanProductStock getJobPlanProductStockByPurchaseProductDetailsIdAndJobPlanId(int ppdId, int jpId){
-		TypedQuery<JobPlanProductStock> q = em.createQuery("select c from JobPlanProductStock c where c.jobPlan.id=:jpId AND c.purchase_Product_Details.id=:ppdId",
-				JobPlanProductStock.class);
+
+	public JobPlanProductStock getJobPlanProductStockByPurchaseProductDetailsIdAndJobPlanId(
+			int ppdId, int jpId) {
+		TypedQuery<JobPlanProductStock> q = em
+				.createQuery(
+						"select c from JobPlanProductStock c where c.jobPlan.id=:jpId AND c.purchase_Product_Details.id=:ppdId",
+						JobPlanProductStock.class);
 		q.setParameter("jpId", jpId);
 		q.setParameter("ppdId", ppdId);
 		return q.getResultList().get(0);
 	}
 
 	public List<JobPlanProductStock> getAllJobPlanProductStock() {
-		TypedQuery<JobPlanProductStock> q = em.createQuery("select c from JobPlanProductStock c",
+		TypedQuery<JobPlanProductStock> q = em.createQuery(
+				"select c from JobPlanProductStock c",
 				JobPlanProductStock.class);
 		return q.getResultList();
 	}
@@ -2862,7 +3241,8 @@ public class Ejb {
 	}
 
 	public List<NotificationDetails> getAllNotificationDetails() {
-		TypedQuery<NotificationDetails> q = em.createQuery("select c from NotificationDetails  c",
+		TypedQuery<NotificationDetails> q = em.createQuery(
+				"select c from NotificationDetails  c",
 				NotificationDetails.class);
 		return q.getResultList();
 	}
@@ -2878,7 +3258,8 @@ public class Ejb {
 	}
 
 	public List<NotificationView> getAllNotificationView() {
-		TypedQuery<NotificationView> q = em.createQuery("select c from NotificationView  c", NotificationView.class);
+		TypedQuery<NotificationView> q = em.createQuery(
+				"select c from NotificationView  c", NotificationView.class);
 		return q.getResultList();
 	}
 
@@ -2894,8 +3275,9 @@ public class Ejb {
 		for (ProductDetail pd : getAllProductDetail()) {
 			if (pd.getReadyGoodsStock().getRemainingQty() < 10) {
 				for (NotificationDetails notDet : pd.getNotificationDetails()) {
-					if (notDet.getNotifiDate()
-							.after(Date.from(localDateTime.minusDays(7).toInstant(ZoneOffset.ofHoursMinutes(5, 30))))) {
+					if (notDet.getNotifiDate().after(
+							Date.from(localDateTime.minusDays(7).toInstant(
+									ZoneOffset.ofHoursMinutes(5, 30))))) {
 
 					}
 
@@ -2907,8 +3289,10 @@ public class Ejb {
 
 	public List<Purchase_Entry> getPurchaseEntryByDateForReport(Date pDate) {
 
-		TypedQuery<Purchase_Entry> q = em.createQuery("select c from Purchase_Entry c WHERE c.purchase_date = :pDate",
-				Purchase_Entry.class);
+		TypedQuery<Purchase_Entry> q = em
+				.createQuery(
+						"select c from Purchase_Entry c WHERE c.purchase_date = :pDate",
+						Purchase_Entry.class);
 		q.setParameter("pDate", pDate);
 		System.out.println(q.getResultList().size());
 
@@ -2917,7 +3301,8 @@ public class Ejb {
 
 	public List<PurchaseReturn> getPurchaseReturnByDateForReport(Date pDate) {
 
-		TypedQuery<PurchaseReturn> q = em.createQuery("select c from PurchaseReturn c WHERE c.returnDate = :pDate",
+		TypedQuery<PurchaseReturn> q = em.createQuery(
+				"select c from PurchaseReturn c WHERE c.returnDate = :pDate",
 				PurchaseReturn.class);
 		q.setParameter("pDate", pDate);
 		System.out.println(q.getResultList().size());
@@ -2925,97 +3310,103 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	
 	public List<SalesEntry> getSalesEntryByDateForReport(Date sDate) {
 
-		TypedQuery<SalesEntry> q = em.createQuery("select c from SalesEntry c WHERE c.sales_date = :sDate",
+		TypedQuery<SalesEntry> q = em.createQuery(
+				"select c from SalesEntry c WHERE c.sales_date = :sDate",
 				SalesEntry.class);
 		q.setParameter("sDate", sDate);
 
 		return q.getResultList();
 	}
-	
+
 	public List<SalesReturn> getSalesReturnByDateForReport(Date sDate) {
 
-		TypedQuery<SalesReturn> q = em.createQuery("select c from SalesReturn c WHERE c.returnDate = :sDate",
+		TypedQuery<SalesReturn> q = em.createQuery(
+				"select c from SalesReturn c WHERE c.returnDate = :sDate",
 				SalesReturn.class);
 		q.setParameter("sDate", sDate);
 
 		return q.getResultList();
 	}
-	
-	/******report for profit loss*************************************************/
-	
-	public List<SalesEntry> getAllSalesEntry(){
-		TypedQuery<SalesEntry> q=em.createQuery("select c from SalesEntry c",SalesEntry.class);
+
+	/****** report for profit loss *************************************************/
+
+	public List<SalesEntry> getAllSalesEntry() {
+		TypedQuery<SalesEntry> q = em.createQuery("select c from SalesEntry c",
+				SalesEntry.class);
 		return q.getResultList();
-		
+
 	}
 
-	
-	public List<PurchaseReturn> getAllPurchaseReturn(){
-		TypedQuery<PurchaseReturn> q=em.createQuery("select c from PurchaseReturn c",PurchaseReturn.class);
+	public List<PurchaseReturn> getAllPurchaseReturn() {
+		TypedQuery<PurchaseReturn> q = em.createQuery(
+				"select c from PurchaseReturn c", PurchaseReturn.class);
 		return q.getResultList();
 	}
-	
-public List<SalesReturn> getAllSalesReturn(){
-	TypedQuery<SalesReturn> q=em.createQuery("select c from SalesReturn c",SalesReturn.class);
-	return q.getResultList();
+
+	public List<SalesReturn> getAllSalesReturn() {
+		TypedQuery<SalesReturn> q = em.createQuery(
+				"select c from SalesReturn c", SalesReturn.class);
+		return q.getResultList();
 	}
 
+	public List<SalesProductDetails> getAllSalesProductDetails() {
+		TypedQuery<SalesProductDetails> q = em.createQuery(
+				"select c from SalesProductDetails c",
+				SalesProductDetails.class);
+		return q.getResultList();
+	}
 
-public List<SalesProductDetails> getAllSalesProductDetails(){
-	TypedQuery<SalesProductDetails> q=em.createQuery("select c from SalesProductDetails c",SalesProductDetails.class);
-	return q.getResultList();
-}
+	/**************** PurchaseOrder *****************/
 
-/**************** PurchaseOrder *****************/
+	public void setPurchaseOrderEntry(PurchaseOrderEntry purchaseOrderEntry) {
+		em.persist(purchaseOrderEntry);
+	}
 
-public void setPurchaseOrderEntry(PurchaseOrderEntry purchaseOrderEntry) {
-	em.persist(purchaseOrderEntry);
-}
+	public PurchaseOrderEntry getPurchaseOrderEntryById(int id) {
+		return em.find(PurchaseOrderEntry.class, id);
+	}
 
-public PurchaseOrderEntry getPurchaseOrderEntryById(int id) {
-	return em.find(PurchaseOrderEntry.class, id);
-}
+	public void deletePurchaseOrderEntryById(int id) {
+		em.remove(getPurchaseOrderEntryById(id));
+	}
 
-public void deletePurchaseOrderEntryById(int id) {
-	em.remove(getPurchaseOrderEntryById(id));
-}
+	public void updatePurchaseOrderEntry(PurchaseOrderEntry purchaseOrderEntry) {
+		em.merge(purchaseOrderEntry);
+	}
 
-public void updatePurchaseOrderEntry(PurchaseOrderEntry purchaseOrderEntry) {
-	em.merge(purchaseOrderEntry);
-}
+	public List<PurchaseOrderEntry> getAllPurchaseOrderEntry() {
+		TypedQuery<PurchaseOrderEntry> q = em.createQuery(
+				"select c from PurchaseOrderEntry c", PurchaseOrderEntry.class);
+		return q.getResultList();
+	}
 
-public List<PurchaseOrderEntry> getAllPurchaseOrderEntry() {
-	TypedQuery<PurchaseOrderEntry> q = em.createQuery("select c from PurchaseOrderEntry c", PurchaseOrderEntry.class);
-	return q.getResultList();
-}
+	/**************** PurchaseOrderProductdetails *****************/
 
-/****************PurchaseOrderProductdetails*****************/
+	public void setPurchaseOrderProductdetails(
+			PurchaseOrderProductdetails purchaseOrderProductdetails) {
+		em.persist(purchaseOrderProductdetails);
+	}
 
+	public PurchaseOrderProductdetails getPurchaseOrderProductdetailsById(int id) {
+		return em.find(PurchaseOrderProductdetails.class, id);
+	}
 
-public void setPurchaseOrderProductdetails(PurchaseOrderProductdetails purchaseOrderProductdetails) {
-	em.persist(purchaseOrderProductdetails);
-}
+	public void deletePurchaseOrderProductdetailsById(int id) {
+		em.remove(getPurchaseOrderProductdetailsById(id));
+	}
 
-public PurchaseOrderProductdetails getPurchaseOrderProductdetailsById(int id) {
-	return em.find(PurchaseOrderProductdetails.class, id);
-}
+	public void updatePurchaseOrderEntry(
+			PurchaseOrderProductdetails purchaseOrderProductdetails) {
+		em.merge(purchaseOrderProductdetails);
+	}
 
-public void deletePurchaseOrderProductdetailsById(int id) {
-	em.remove(getPurchaseOrderProductdetailsById(id));
-}
-
-public void updatePurchaseOrderEntry(PurchaseOrderProductdetails purchaseOrderProductdetails) {
-	em.merge(purchaseOrderProductdetails);
-}
-
-public List<PurchaseOrderProductdetails> getAllPurchaseOrderProductdetails() {
-	TypedQuery<PurchaseOrderProductdetails> q = em.createQuery("select c from PurchaseOrderProductdetails c", PurchaseOrderProductdetails.class);
-	return q.getResultList();
-}
-
-
+	public List<PurchaseOrderProductdetails> getAllPurchaseOrderProductdetails() {
+		TypedQuery<PurchaseOrderProductdetails> q = em.createQuery(
+				"select c from PurchaseOrderProductdetails c",
+				PurchaseOrderProductdetails.class);
+		return q.getResultList();
+	}
 
 }

@@ -36,6 +36,9 @@ public class JobPlan implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "costSheetId")
 	private SampleDesignCostSheet designCostSheet;
+	
+	@OneToMany(mappedBy = "jobPlan",cascade=CascadeType.ALL)
+	private List<JobAssignmentJobDetails> jobAssignmentJobDetails;
 
 	@OneToMany(mappedBy = "jobPlan",cascade=CascadeType.ALL)
 	private List<JobPlanProductStock> jobPlanProductStocks;
@@ -162,6 +165,14 @@ public class JobPlan implements Serializable {
 
 	public void setQty(float qty) {
 		this.qty = qty;
+	}
+
+	public List<JobAssignmentJobDetails> getJobAssignmentJobDetails() {
+		return jobAssignmentJobDetails;
+	}
+
+	public void setJobAssignmentJobDetails(List<JobAssignmentJobDetails> jobAssignmentJobDetails) {
+		this.jobAssignmentJobDetails = jobAssignmentJobDetails;
 	}
 
 }

@@ -35,7 +35,18 @@ public class ProductsForDesignCostSheet implements Serializable {
 	
 	@OneToMany(mappedBy="productsForDesignCostSheet")
 	private List<JobsForDesignCostSheet> jobsForDesignCostSheets;
-
+	
+	@OneToMany(mappedBy="productsForDesignCostSheet")
+	private List<JobAssignmentProducts> jobAssignmentProducts;
+	
+	@OneToMany(mappedBy="productsForDesignCostSheet")
+	private List<JobPlanProductStock> jobPlanProductStock;
+	
+	@OneToMany(mappedBy="productsForDesignCostSheet")
+	private List<JobAsignmentProductsFromStock> jobAsignmentProductsFromStock;
+	
+	@OneToMany(mappedBy="productsForDesignCostSheet")
+	private List<JobAssignmentJobDetails> jobAssignmentJobDetails;
 
 	public int getId() {
 		return id;
@@ -99,6 +110,39 @@ public class ProductsForDesignCostSheet implements Serializable {
 
 	public void setJobsForDesignCostSheets(List<JobsForDesignCostSheet> jobsForDesignCostSheets) {
 		this.jobsForDesignCostSheets = jobsForDesignCostSheets;
+	}
+
+	public List<JobAssignmentProducts> getJobAssignmentProducts() {
+		return jobAssignmentProducts;
+	}
+
+	public void setJobAssignmentProducts(List<JobAssignmentProducts> jobAssignmentProducts) {
+		this.jobAssignmentProducts = jobAssignmentProducts;
+	}
+
+	public List<JobPlanProductStock> getJobPlanProductStock() {
+		return jobPlanProductStock;
+	}
+
+	public void setJobPlanProductStock(List<JobPlanProductStock> jobPlanProductStock) {
+		this.jobPlanProductStock = jobPlanProductStock;
+	}
+
+	public List<JobAsignmentProductsFromStock> getJobAsignmentProductsFromStock() {
+		return jobAsignmentProductsFromStock;
+	}
+
+	public void setJobAsignmentProductsFromStock(
+			List<JobAsignmentProductsFromStock> jobAsignmentProductsFromStock) {
+		this.jobAsignmentProductsFromStock = jobAsignmentProductsFromStock;
+	}
+
+	public List<JobAssignmentJobDetails> getJobAssignmentJobDetails() {
+		return jobAssignmentJobDetails;
+	}
+
+	public void setJobAssignmentJobDetails(List<JobAssignmentJobDetails> jobAssignmentJobDetails) {
+		this.jobAssignmentJobDetails = jobAssignmentJobDetails;
 	}
 
 }

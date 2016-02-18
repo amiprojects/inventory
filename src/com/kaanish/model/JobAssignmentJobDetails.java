@@ -28,6 +28,10 @@ public class JobAssignmentJobDetails implements Serializable {
 	private boolean isComplete;//
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date estimatedCompletionDate;
+	
+	@ManyToOne
+	@JoinColumn(name = "jobPlanId")
+	private JobPlan jobPlan;
 
 	@ManyToOne
 	@JoinColumn(name = "UOMid")
@@ -43,6 +47,10 @@ public class JobAssignmentJobDetails implements Serializable {
 
 	@ManyToOne@JoinColumn(name="jobtypeId")
 	private JobTypes jobType;
+	
+	@ManyToOne
+	@JoinColumn(name = "ProductsForDesignCostSheetId")
+	private ProductsForDesignCostSheet productsForDesignCostSheet;
 
 	public int getId() {
 		return id;
@@ -123,6 +131,22 @@ public class JobAssignmentJobDetails implements Serializable {
 
 	public void setComplete(boolean isComplete) {
 		this.isComplete = isComplete;
+	}
+
+	public JobPlan getJobPlan() {
+		return jobPlan;
+	}
+
+	public void setJobPlan(JobPlan jobPlan) {
+		this.jobPlan = jobPlan;
+	}
+
+	public ProductsForDesignCostSheet getProductsForDesignCostSheet() {
+		return productsForDesignCostSheet;
+	}
+
+	public void setProductsForDesignCostSheet(ProductsForDesignCostSheet productsForDesignCostSheet) {
+		this.productsForDesignCostSheet = productsForDesignCostSheet;
 	}
 
 }
