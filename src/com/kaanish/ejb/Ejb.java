@@ -101,6 +101,15 @@ public class Ejb {
 			return dt.getYear() + "-" + (dt.getYear() + 1);
 		}
 	}
+	public String getFinancialYearByData(String dat) {
+		Date date=DateConverter.getDate(dat);
+		LocalDateTime dt = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+		if (dt.getMonthValue() < 4) {
+			return (dt.getYear() - 1) + "-" + dt.getYear();
+		} else {
+			return dt.getYear() + "-" + (dt.getYear() + 1);
+		}
+	}
 
 	public String getNumberToWords(int number) {
 		return DigitToWords.convertNumberToWords(number);

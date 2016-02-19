@@ -336,25 +336,22 @@
 														</c:forEach>
 													</select>
 													
-													<div>
+												<div id="agentCommi">
 														
-														<!-- <input type="radio" name="agntMoney" id="perProduct"
-														value="perPro">Commission Per product<br>
+						<input type="radio" name="agntMoney"  value="perPro">Commission Per product<br>
 														
-														<input type="radio"	name="agntMoney" id="totProduct" value="totPro">Commission on grand total
- -->												</div>
+														<input type="radio"	name="agntMoney"  value="totPro">Commission on grand total
+ 													</div> 
 												</div>
 												<div class="col-md-1">
-
 													<b class="font">&nbsp;&nbsp; </b> <a
 														onclick="addAgentDetails()" title="Add New Agent."> <img
 														style="margin-top: 4px; cursor: pointer" height="30px"
 														width="30px" alt="" src="img/add.png">
 													</a>
 												</div>
-												
-											</div>
 										</div>
+									</div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label for="" class="font">Vendor Bill no :</label> <input
@@ -381,7 +378,7 @@
 													value="${sessionScope['ejb'].getCurrentDateTime()}"
 													pattern="MM" var="yr" />
 												<input readonly="readonly" type="text" placeholder=""
-													name="challanNumber" class="form-control"
+													name="challanNumber" class="form-control" id="chaId"
 													value="${bs.companyInitial}/${fy}/${yr}/${bs.billType}/${lastChNo}/${lastSuf}">
 												<input type="hidden" name="challanNo" value="${lastChNo}"
 													id="challanNo"> <input type="hidden"
@@ -389,7 +386,7 @@
 											</div>
 											<div class="form-group">
 												<label for="" class="font">Purchase Date :</label> <input
-													type="text" id="datepicker" class="form-control"
+													type="text" id="datepicker" class="form-control" onchange="financialyr()"
 													name="purchaseDate" required="required" readonly="readonly">
 											</div>
 											<div class="form-group" id="aDetailDiv">
@@ -434,8 +431,8 @@
 												</div>
 
 											</div>
-										</div>
-									</div> -->
+										</div>-->
+									</div> 
 									<div style="width: 40%; float: right;">
 										<table id="stream_table"
 											class="table table-striped table-bordered">
@@ -447,6 +444,19 @@
 														name="subTotal"></td>
 												</tr>
 											</thead>
+											<tbody id="agentCommonTotal">
+												<tr>
+												<td colspan="2">Agent Commission &nbsp; <select name="comType" id="comType" onchange="comType();">
+
+														<option value="disFlat">Flat</option>
+														<option value="disPer">%</option>
+
+												</select>
+												</td>
+												<td><input type="number" class="form-control" name="disValue" id="discount" placeholder="" onkeyup="discountF();" autocomplete="off"></td>
+											</tr>
+											</tbody>
+											
 											<tbody>
 												<tr>
 													<td><select class="form-control" id="taxGroup"
@@ -496,14 +506,16 @@
 														id="roundvalue" name="roundvalue" value="0"></td>
 												</tr>
 											</tbody>
-											<thead>
+											<tbody>
 												<tr>
 													<td colspan="2">Grand Total :</td>
 													<td><input type="text" class="form-control" id="gt"
 														placeholder="0" readonly="readonly"></td>
 												</tr>
-											</thead>
+											</tbody>
+											
 										</table>
+										
 										<div class="widget-area" style="display: none;">
 											<!-- <div class="widget-area" style="overflow-x: scroll;"> -->
 											<table id="hiddenTable"
@@ -715,7 +727,7 @@
 			</div>
 		</div>
 		<!-- Content Sec -->
-	</div>
+	
 
 
 
@@ -2658,6 +2670,15 @@
 	<script type="text/javascript" src="js/enscroll.js"></script>
 	<script type="text/javascript" src="js/grid-filter.js"></script>
 	<script src="js/numericInput.min.js"></script>
+	
+	<script>
+	function financialyr(){
+		var str=$("#chaId").val();
+		challanParts=str.split("/");
+		alert($('#datepicker').val());
+
+	}
+	</script>
 	<script type="text/javascript">
 		function addDesineNo() {
 
@@ -3873,7 +3894,7 @@
 			/* KaJAX */
 
 			//alert("lolt");
-			var img = "";
+		/* 	var img = "";
 			$
 					.ajax({
 						type : "get",
@@ -3893,7 +3914,7 @@
 											});
 							$("#peoImg").html(img);
 						}
-					});
+					}); */
 
 		}
 		function closeProduct() {
@@ -3933,6 +3954,7 @@
 		function getVendorNameByType() {
 			$("#vName").val("");
 			$("#vDetail").val("");
+			var valCom = $('[name="pstatus"]').val();
 			$("#idvendorType").val($("#vendorType").val());
 			if ($("#vendorType").val() == 0) {
 				$("#agent").prop("disabled", "disabled");
@@ -3942,6 +3964,11 @@
 				$("#aDetailDiv").hide();
 				$("#agentName").val(0);
 				$("#agentDet").val("");
+			}
+			if (valCom == 'Purchase Agent')
+			{
+				
+				("#description").show();
 			}
 
 			$.ajax({
@@ -5321,13 +5348,25 @@
 
 		}
 	</script>
-	<script>
-		function addTaxNo() {
-
+	
+	
+	<!-- <script>
+	$("input:radio[name=agntMoney]").click(function() {
+		var value = $(this).val();
+		//alert(value);
+		if (value == "perPro") {
+			$("#mrpWSP").html("MRP/Qty");
+			$("#wspORmrp").val('mrpVal');
+		} else {
+			$("#mrpWSP").html("WSP/Qty");
+			$("#wspORmrp").val('wspVal');
 		}
-	</script>
+	});
+</script> -->
+	
+	
 </body>
-<!-- `lastr er number change koro barite -->
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
+
 </html>

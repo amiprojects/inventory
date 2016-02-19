@@ -171,7 +171,7 @@ public class Servlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		/*
-		 * if(httpSession.getAttribute("user").equals("")){ System.exit(0); }
+		 * if(httpSession.getAttribute("user").equals("")){ System.exit(0); }..ekuniiii
 		 */
 
 		url = req.getRequestURL().toString();

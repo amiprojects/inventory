@@ -23,7 +23,6 @@ import com.kaanish.model.City;
 import com.kaanish.model.CompanyInfo;
 import com.kaanish.model.Country;
 import com.kaanish.model.Department;
-import com.kaanish.model.JobAssignmentDetails;
 import com.kaanish.model.JobAssignmentProducts;
 import com.kaanish.model.JobPlan;
 import com.kaanish.model.JobsForDesignCostSheet;
@@ -75,7 +74,7 @@ import com.kaanish.util.DepartmentCotractor;
 		"/getPlannedSampleDesignCostSheetByDesignNumber",
 		"/getAllOngoingJobPlanByDesignNumber",
 		"/getProductAndDesignDetailsAndJobPlanByJobPlanId",
-		"/getJobsForDesignCostSheetByPlanId", "/getOngoingJobAssignmentsByPlanId" })
+		"/getJobsForDesignCostSheetByPlanId", "/getOngoingJobAssignmentsByPlanId", "/getJonsonDateFinancial" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -1198,7 +1197,7 @@ public class JsonServlet extends HttpServlet {
 				generatorDP.writeEnd().close();
 				break;
 
-			case "getProductImagejson":
+			/*case "getProductImagejson":
 				JsonGeneratorFactory factoryI = Json
 						.createGeneratorFactory(null);
 				JsonGenerator generatorI = factoryI.createGenerator(resp
@@ -1211,7 +1210,7 @@ public class JsonServlet extends HttpServlet {
 							.write("pImid", pmg.getImageAsString()).writeEnd();
 				}
 				generatorI.writeEnd().close();
-				break;
+				break;*/
 
 			default:
 				break;
