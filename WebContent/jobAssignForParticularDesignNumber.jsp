@@ -207,6 +207,8 @@ function showDatePicker() {
 									</div>									
 									
 									<div id="productNjobsDiv"></div>
+									<div id="productNjobsDivH"></div>
+									<!-- <div id="productNjobsDivH" style="display: none;"></div> -->
 									<!-- <div id="productNpurchasesDiv"></div> -->
 									<div id="productNpurchasesDiv" style="display: none;"></div>
 									
@@ -879,13 +881,13 @@ function showDatePicker() {
 																		+ "<input type='text' class='form-control' id='jobPresentRate"+item2.JobId+"' onkeyup='presentRateKU("+item2.JobId+");' value='"+item2.JobRateOfSample+"'>"
 																		+ "</td>"
 																		+ "<td>"
-																		+ "<input type='text' class='form-control' id='jobQty"+item2.JobId+"' onkeyup='qtyKU("+item2.JobId+");' value='"+item2.JobQtyOfSample+"'>"
+																		+ "<input type='text' class='form-control' id='jobQty"+item2.JobId+"' onkeyup='qtyKU("+item2.JobId+");' value='"+item2.JobQtyOfSample*$("#qty").val()+"'>"
 																		+ "</td>"
 																		+ "<td>"
 																		+ item2.JobUOMOfSample
 																		+ "</td>"
 																		+ "<td>"
-																		+ "<input type='text' readonly='readonly' id='jobAmount"+item2.JobId+"' class='form-control' value='"+item2.JobAmountOfSample+"'>"
+																		+ "<input type='text' readonly='readonly' id='jobAmount"+item2.JobId+"' class='form-control' value='"+item2.JobAmountOfSample*$("#qty").val()+"'>"
 																		+ "</td>"
 																		+ "<td>"
 																		+ "<input onclick='showDatePicker();' type='text' id='estSubmDate"+item2.JobId+"' class='form-control estSubmDate'>"
@@ -899,6 +901,93 @@ function showDatePicker() {
 										});
 					}
 				});
+				 
+				 
+				 $('#productNjobsDivH').append('<table id="pDetTableH'+$("#pForSampleIdModal").val()+'" class="table table-striped table-bordered"><thead style="background-color: #F0F0F0;"><tr><th style="text-align: right;">'
+							+ "Product code:" 
+							+ '</th><td>'
+							+ "<input type='text' class='form-control' readonly='readonly' value='"+$("#prod" + $("#pIdModal").val() + " :nth-child(2)").html()+"'>" +
+							"<input type='text' class='form-control' readonly='readonly' name='productForSampleIdH' id='productForSampleIdH"+$("#pForSampleIdModal").val()+"' value='"+$("#pForSampleIdModal").val()+"'>"+
+							"<input type='text' class='form-control' readonly='readonly' name='productIdH' id='productIdH"+$("#pForSampleIdModal").val()+"' value='"+ $("#pIdModal").val()+ "'>" +
+							'</td><th style="text-align: right;">'
+							+ "Description:" 
+							+ '</th><td>'
+							+ "<input type='text' class='form-control' readonly='readonly' value='"+$("#prod" + $("#pIdModal").val() + " :nth-child(3)").html()+"'>" +
+							'</td><th style="text-align: right;">'
+							+ "Qty:" 
+							+ '</th><td>'
+							+ "<input type='text' name='qtyOfSampleProductH' id='qtyOfSampleProductH"+$("#pForSampleIdModal").val()+"' class='form-control' readonly='readonly' value='"+$("#prod" + $("#pIdModal").val() + " :nth-child(5)").html()+"'>" +
+							'</td><th style="text-align: right;">'
+							+ "Total Amount:" 
+							+ '</th><td>'
+							+ "<input type='text' class='form-control' name='productEachTotalH' id='productEachTotalH"+$("#pForSampleIdModal").val()+"' readonly='readonly' value='"+$("#totalAmount").val()+"'>" +
+							'</td></tr><tr><th>'
+							+ "#" 
+							+ '</th><th>'
+							+ "Job" 
+							+ '</th><th>'
+							+ "Sample Rate" +
+							'</th><th>'
+							+ "Present Rate" 
+							+ '</th><th>'
+							+ "Qty" +
+							'</th><th>'
+							+ "UOM" 
+							+ '</th><th>'
+							+ "Amount" +
+							'</th><th>'
+							+ "Est. Submission Date" +
+							'</th></tr></thead></table>');
+							
+							 $
+							.ajax({
+								type : "post",
+								url : "getJobsForDesignCostSheetByProductSForSampleId",
+								dataType : "json",
+								data : {
+									pid : $("#pForSampleIdModal").val()
+								},
+								success : function(data2) {
+									$
+											.each(
+													data2,
+													function(index, item2) {											
+															$(
+																	
+																	"#pDetTableH"+$("#pForSampleIdModal").val())
+																	.append(
+																			"<tbody id='pDetTableH"+item2.JobId+"'>"
+																					+ "<tr>"
+																					+ "<td>"
+																					+ Number(1 + index)
+																					+ "</td>"
+																					+ "<td>"
+																					+ item2.JobName+"<input type='hidden' name='jobIdH' id='jobIdH"+item2.JobId+"' value='"+item2.JobId+"'>"
+																					+ "</td>"
+																					+ "<td>"
+																					+ item2.JobRateOfSample
+																					+ "</td>"
+																					+ "<td>"
+																					+ "<input type='text' class='form-control' name='jobPresentRateH' id='jobPresentRateH"+item2.JobId+"' onkeyup='presentRateKU("+item2.JobId+");' value='"+item2.JobRateOfSample+"'>"
+																					+ "</td>"
+																					+ "<td>"
+																					+ "<input type='text' class='form-control' name='jobQtyH' id='jobQtyH"+item2.JobId+"' onkeyup='qtyKU("+item2.JobId+");' value='"+item2.JobQtyOfSample*$("#qty").val()+"'>"
+																					+ "</td>"
+																					+ "<td>"
+																					+ item2.JobUOMOfSample
+																					+ "</td>"
+																					+ "<td>"
+																					+ "<input type='text' readonly='readonly' name='jobAmountH' id='jobAmountH"+item2.JobId+"' class='form-control' value='"+item2.JobAmountOfSample*$("#qty").val()+"'>"
+																					+ "</td>"
+																					+ "<td>"
+																					+ "<input onclick='showDatePicker();' type='text' name='estSubmDateH' id='estSubmDateH"+item2.JobId+"' class='form-control'>"
+																					+ "</td>"																					
+																					+ "</tr>"
+																					+ "</tbody>");										
+
+													});
+								}
+							});
 				 
 				 
 				 $('#productNpurchasesDiv').append('<table id="productDetTable'+$("#pIdModal").val()+'" class="table table-striped table-bordered"><thead style="background-color: #F0F0F0;"><tr><th style="text-align: right;">'

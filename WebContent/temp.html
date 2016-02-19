@@ -1,63 +1,71 @@
-case "getOngoingJobAssignmentsByPlanId":
-				JsonGeneratorFactory factoryJA = Json
-						.createGeneratorFactory(null);
-				JsonGenerator generatorJA = factoryJA.createGenerator(resp
-						.getOutputStream());
-				generatorJA.writeStartArray();
-				for (JobAssignmentProducts jap : ejb
-						.getOngoingJobAssignmentsByPlanId(
-								Integer.parseInt(req.getParameter("pid"))).getJobAssignmentProducts()) {
-					generatorJA
-							.writeStartObject()
-							.write("japId", jap.getId())
-							.writeEnd();
-				}
-				generatorJA.writeEnd().close();
-				break;
-
-
-case "getProductAndDesignDetailsAndJobPlanByJobPlanId":
-				JsonGeneratorFactory factoryM = Json
-						.createGeneratorFactory(null);
-				JsonGenerator generatorM = factoryM.createGenerator(resp
-						.getOutputStream());
-				generatorM.writeStartArray();
-				for (ProductsForDesignCostSheet pdcs : ejb
-						.getJobPlanById(
-								Integer.parseInt(req.getParameter("pId")))
-						.getDesignCostSheet().getProductsForDesignCostSheets()) {
-					generatorM
-							.writeStartObject()
-							.write("ProductCode",
-									pdcs.getProductDetail().getCode())
-							.write("ProductId", pdcs.getProductDetail().getId())
-							.write("ProductDesc",
-									pdcs.getProductDetail().getDescription())
-							.write("ProductUOMid",
-									pdcs.getProductDetail().getQtyUnit()
-											.getId())
-							.write("ProductUOMName",
-									pdcs.getProductDetail().getQtyUnit()
-											.getName())
-							.write("ProductRemainingQty",
-									pdcs.getProductDetail().isRaw() ? pdcs
-											.getProductDetail()
-											.getRawMaterialsStock()
-											.getRemainingQty() : pdcs
-											.getProductDetail()
-											.getReadyGoodsStock()
-											.getRemainingQty())
-							.write("ProductTotalAmount",
-									ejb.getJobAssignmentProductDetailsByproductAndJobPlanId(
-											pdcs.getProductDetail().getId(),
-											Integer.parseInt(req
-													.getParameter("pId")))
-											.getEstimatedCost())
-							.write("ProductQtyForSample", pdcs.getQty())
-							.write("ProductRateForSample", pdcs.getRate())
-							.write("ProductAmountForSample", pdcs.getAmmount())
-							.write("ProductForSampleId", pdcs.getId())
-							.writeEnd();
-				}
-				generatorM.writeEnd().close();
-				break;
+			
+			var i = 0;
+		    $(".isSelected" + psId).each(function () {
+		        if ($(this).is(':checked')) {
+		            i = 1;
+		        }
+		    });
+		    if (i == 0) {
+		       // alert("Please select atleast one users");
+		        
+		        $("#productForSampleId"+psId).removeAttr("name");
+		        $("#productId"+psId).removeAttr("name");
+		        $("#qtyOfSampleProduct"+psId).removeAttr("name");
+		        $("#productEachTotal"+psId).removeAttr("name");
+		        
+		        $("#productEachTotal"+psId).attr("class", "form-control");
+		    } else {
+		    	//alert("Atleast one is selected");
+		    	
+		    	$("#productForSampleId"+psId).attr("name", "productForSampleId1");
+		        $("#productId"+psId).attr("name", "productId1");
+		        $("#qtyOfSampleProduct"+psId).attr("name", "qtyOfSampleProduct");
+		        $("#productEachTotal"+psId).attr("name", "productEachTotal");
+		        
+		        $("#productEachTotal"+psId).attr("class", "form-control productEachTotal");
+		    }
+		    
+		    
+		    if ($('#isSelected'+jobId).is(":checked")) {
+		    	//alert("checked"+jobId);
+		    	
+		    	$("#jobId"+jobId).attr("name", "jobId"+psId);
+		    	$("#jobPresentRate"+jobId).attr("name", "jobPresentRate"+psId);
+		    	$("#jobQty"+jobId).attr("name", "jobQty"+psId);
+		    	$("#jobAmount"+jobId).attr("name", "jobAmount"+psId);
+		    	$("#estSubmDate"+jobId).attr("name", "estSubmDate"+psId);
+		    	
+		    	$("#estSubmDate"+jobId).attr("class", "form-control estSubmDate totdate");
+		    	$("#jobAmount"+jobId).attr("class", "form-control eachtotalvalue");
+		    }else{
+		    	//alert("not checked"+jobId);
+		    	
+		    	$("#jobId"+jobId).removeAttr("name");
+		    	$("#jobPresentRate"+jobId).removeAttr("name");
+		    	$("#jobQty"+jobId).removeAttr("name");
+		    	$("#jobAmount"+jobId).removeAttr("name");
+		    	$("#estSubmDate"+jobId).removeAttr("name");
+		    	
+		    	$("#estSubmDate"+jobId).attr("class", "form-control estSubmDate");
+		    	$("#jobAmount"+jobId).attr("class", "form-control");
+		    }
+		    
+		  //error
+			var sm = 0;
+			$(".productEachTotal").each(function() {
+				sm += parseFloat(this.value);
+			});
+			$("#gt").val(Number(sm.toFixed(2)));
+			
+			var sum = 0;
+			$(".eachtotalvalue").each(function() {
+				sum += parseFloat(this.value);
+			});
+			$("#gtot").val(
+					Number($("#gt").val()) + Number(sum.toFixed(2))
+							+ Number($("#surcharge").val()));
+			profitValF();
+			$("#grandtot").val(
+					Number($("#gtot").val())
+							+ Number($("#totProfit").val()));
+		}

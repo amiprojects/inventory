@@ -30,6 +30,10 @@ public class JobAssignmentJobDetails implements Serializable {
 	private Date estimatedCompletionDate;
 	
 	@ManyToOne
+	@JoinColumn(name = "JobPlanJobStockId")
+	private JobPlanJobStock jobPlanJobStock;
+	
+	@ManyToOne
 	@JoinColumn(name = "jobPlanId")
 	private JobPlan jobPlan;
 

@@ -3872,7 +3872,7 @@
 
 			/* KaJAX */
 
-			//alert("lolt");
+			/* //alert("lolt");
 			var img = "";
 			$
 					.ajax({
@@ -3893,7 +3893,7 @@
 											});
 							$("#peoImg").html(img);
 						}
-					});
+					}); */
 
 		}
 		function closeProduct() {

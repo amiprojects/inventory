@@ -43,9 +43,6 @@ public class ProductsForDesignCostSheet implements Serializable {
 	private List<JobPlanProductStock> jobPlanProductStock;
 	
 	@OneToMany(mappedBy="productsForDesignCostSheet")
-	private List<JobAsignmentProductsFromStock> jobAsignmentProductsFromStock;
-	
-	@OneToMany(mappedBy="productsForDesignCostSheet")
 	private List<JobAssignmentJobDetails> jobAssignmentJobDetails;
 
 	public int getId() {
@@ -126,15 +123,6 @@ public class ProductsForDesignCostSheet implements Serializable {
 
 	public void setJobPlanProductStock(List<JobPlanProductStock> jobPlanProductStock) {
 		this.jobPlanProductStock = jobPlanProductStock;
-	}
-
-	public List<JobAsignmentProductsFromStock> getJobAsignmentProductsFromStock() {
-		return jobAsignmentProductsFromStock;
-	}
-
-	public void setJobAsignmentProductsFromStock(
-			List<JobAsignmentProductsFromStock> jobAsignmentProductsFromStock) {
-		this.jobAsignmentProductsFromStock = jobAsignmentProductsFromStock;
 	}
 
 	public List<JobAssignmentJobDetails> getJobAssignmentJobDetails() {
