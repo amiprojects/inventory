@@ -30,7 +30,9 @@ import com.kaanish.model.JobAssignmentDetails;
 import com.kaanish.model.JobAssignmentJobDetails;
 import com.kaanish.model.JobAssignmentProducts;
 import com.kaanish.model.JobPlan;
+import com.kaanish.model.JobPlanJobStock;
 import com.kaanish.model.JobPlanProductStock;
+import com.kaanish.model.JobPlanProducts;
 import com.kaanish.model.JobRecievedDetails;
 import com.kaanish.model.JobStock;
 import com.kaanish.model.JobTypes;
@@ -152,6 +154,8 @@ public class Servlet extends HttpServlet {
 	private JobAssignmentJobDetails jobAssignmentJobDetails;
 	private PurchaseOrderEntry purchaseOrderEntry;
 	private PurchaseOrderProductdetails purchaseOrderProductdetails;
+	private JobPlanProducts jobPlanProducts;
+	private JobPlanJobStock jobPlanJobStock;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -2531,14 +2535,27 @@ public class Servlet extends HttpServlet {
 				String[] productForSampleId = req.getParameterValues("productForSampleId");
 				float totalProductCost = 0;
 				for (int l = 0; l < productForSampleId.length; l++) {
+					jobPlanProducts = new JobPlanProducts();
+					jobPlanProducts.setJobPlan(jobPlan);
+					jobPlanProducts.setProductsForDesignCostSheet(
+							ejb.getProductsForDesignCostSheetById(Integer.parseInt(productForSampleId[l])));
+					jobPlanProducts.setJobCycle(0);
+					jobPlanProducts.setUndergoingProcess(false);
+					jobPlanProducts.setComplete(false);
+					ejb.setJobPlanProducts(jobPlanProducts);
+
 					String[] purProDetId = req.getParameterValues("purProDetId" + productForSampleId[l]);
 					String[] qtySelected = req.getParameterValues("qtySelected" + productForSampleId[l]);
+					float planProductQty = 0;
+					float planProductRemQty = 0;
+					float planProductTotalCost = 0;
 
 					for (int l1 = 0; l1 < purProDetId.length; l1++) {
 						purchaseProductDetails = ejb.getPurchaseProductDetailsById(Integer.parseInt(purProDetId[l1]));
 
 						jobPlanProductStock = new JobPlanProductStock();
 						jobPlanProductStock.setJobPlan(jobPlan);
+						jobPlanProductStock.setJobPlanProducts(jobPlanProducts);
 						jobPlanProductStock.setProductsForDesignCostSheet(
 								ejb.getProductsForDesignCostSheetById(Integer.parseInt(productForSampleId[l])));
 						jobPlanProductStock.setPurchase_Product_Details(purchaseProductDetails);
@@ -2569,7 +2586,16 @@ public class Servlet extends HttpServlet {
 
 						totalProductCost = totalProductCost
 								+ purchaseProductDetails.getCost() * Float.parseFloat(qtySelected[l1]);
+
+						planProductQty = planProductQty + Float.parseFloat(qtySelected[l1]);
+						planProductRemQty = planProductRemQty + Float.parseFloat(qtySelected[l1]);
+						planProductTotalCost = planProductTotalCost
+								+ purchaseProductDetails.getCost() * Float.parseFloat(qtySelected[l1]);
 					}
+					jobPlanProducts.setQty(planProductQty);
+					jobPlanProducts.setRemainingQty(planProductRemQty);
+					jobPlanProducts.setTotalProductCost(planProductTotalCost);
+					ejb.updateJobPlanProducts(jobPlanProducts);
 				}
 
 				jobPlan.setTotalProductCost(totalProductCost);
@@ -2605,6 +2631,12 @@ public class Servlet extends HttpServlet {
 				float totalJobExpanse = 0;
 
 				for (int l1 = 0; l1 < productForSampleId1.length; l1++) {
+					jobPlanProducts = ejb.getJobPlanProductByPlanIdAndSampleProductId(jobPlan.getId(),
+							Integer.parseInt(productForSampleId1[l1]));
+					jobPlanProducts
+							.setRemainingQty(0);
+					jobPlanProducts.setUndergoingProcess(true);
+					ejb.updateJobPlanProducts(jobPlanProducts);
 
 					jobAssignmentProducts = new JobAssignmentProducts();
 					jobAssignmentProducts.setJobAssignmentDetails(jobAssignmentDetails);
@@ -2613,6 +2645,7 @@ public class Servlet extends HttpServlet {
 					jobAssignmentProducts.setRemaninQty(Float.parseFloat(qtyOfSampleProduct[l1]));
 					jobAssignmentProducts.setEstimatedCost(Float.parseFloat(productEachTotal[l1]));
 					jobAssignmentProducts.setJobPlan(jobPlan);
+					jobAssignmentProducts.setJobPlanProducts(jobPlanProducts);
 					jobAssignmentProducts.setProductsForDesignCostSheet(
 							ejb.getProductsForDesignCostSheetById(Integer.parseInt(productForSampleId1[l1])));
 					ejb.setJobAssignmentProducts(jobAssignmentProducts);
@@ -2697,6 +2730,12 @@ public class Servlet extends HttpServlet {
 				float totalJobExpanse1 = 0;
 
 				for (int l1 = 0; l1 < productForSampleId2.length; l1++) {
+					jobPlanProducts = ejb.getJobPlanProductByPlanIdAndSampleProductId(jobPlan.getId(),
+							Integer.parseInt(productForSampleId2[l1]));
+					jobPlanProducts
+							.setRemainingQty(0);
+					jobPlanProducts.setUndergoingProcess(true);
+					ejb.updateJobPlanProducts(jobPlanProducts);					
 
 					jobAssignmentProducts = new JobAssignmentProducts();
 					jobAssignmentProducts.setJobAssignmentDetails(jobAssignmentDetails);
@@ -2705,6 +2744,7 @@ public class Servlet extends HttpServlet {
 					jobAssignmentProducts.setRemaninQty(Float.parseFloat(qtyOfSampleProduct2[l1]));
 					jobAssignmentProducts.setEstimatedCost(Float.parseFloat(productEachTotal2[l1]));
 					jobAssignmentProducts.setJobPlan(jobPlan);
+					jobAssignmentProducts.setJobPlanProducts(jobPlanProducts);
 					jobAssignmentProducts.setProductsForDesignCostSheet(
 							ejb.getProductsForDesignCostSheetById(Integer.parseInt(productForSampleId2[l1])));
 					ejb.setJobAssignmentProducts(jobAssignmentProducts);

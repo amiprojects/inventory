@@ -817,7 +817,7 @@ function showDatePicker() {
 									+ '</th><td>'
 									+ "<input type='text' class='form-control' readonly='readonly' value='"+item2.ProductCode+"'>" +
 									"<input type='hidden' class='form-control' readonly='readonly' id='productForSampleId"+item2.ProductForSampleId+"' value='"+item2.ProductForSampleId+"'>"+
-									"<input type='text' class='form-control' readonly='readonly' id='productId"+item2.ProductForSampleId+"' value='"+ item2.ProductId+ "'>" +
+									"<input type='hidden' class='form-control' readonly='readonly' id='productId"+item2.ProductForSampleId+"' value='"+ item2.ProductId+ "'>" +
 									'</td><th style="text-align: right;">'
 									+ "Description:" 
 									+ '</th><td>'
@@ -918,7 +918,7 @@ function showDatePicker() {
 								+ '</th><td>'
 								+ "<input type='text' class='form-control' readonly='readonly' value='"+item2.ProductCode+"'>" +
 								"<input type='hidden' class='form-control' readonly='readonly' id='productForSampleId"+item2.ProductForSampleId+"' value='"+item2.ProductForSampleId+"'>"+
-								"<input type='text' class='form-control' readonly='readonly' id='productId"+item2.ProductForSampleId+"' value='"+ item2.ProductId+ "'>" +
+								"<input type='hidden' class='form-control' readonly='readonly' id='productId"+item2.ProductForSampleId+"' value='"+ item2.ProductId+ "'>" +
 								'</td><th style="text-align: right;">'
 								+ "Description:" 
 								+ '</th><td>'

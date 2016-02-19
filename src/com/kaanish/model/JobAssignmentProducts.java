@@ -52,6 +52,10 @@ public class JobAssignmentProducts implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "jobPlanId")
 	private JobPlan jobPlan;
+	
+	@ManyToOne
+	@JoinColumn(name = "jobPlanProductsId")
+	private JobPlanProducts jobPlanProducts;
 
 	@OneToOne
 	@JoinColumn(name = "jobStockId")
@@ -198,6 +202,14 @@ public class JobAssignmentProducts implements Serializable {
 
 	public void setProductsForDesignCostSheet(ProductsForDesignCostSheet productsForDesignCostSheet) {
 		this.productsForDesignCostSheet = productsForDesignCostSheet;
+	}
+
+	public JobPlanProducts getJobPlanProducts() {
+		return jobPlanProducts;
+	}
+
+	public void setJobPlanProducts(JobPlanProducts jobPlanProducts) {
+		this.jobPlanProducts = jobPlanProducts;
 	}
 
 }

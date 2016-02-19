@@ -30,7 +30,9 @@ import com.kaanish.model.JobAssignmentJobDetails;
 import com.kaanish.model.JobAssignmentProducts;
 import com.kaanish.model.JobClass;
 import com.kaanish.model.JobPlan;
+import com.kaanish.model.JobPlanJobStock;
 import com.kaanish.model.JobPlanProductStock;
+import com.kaanish.model.JobPlanProducts;
 import com.kaanish.model.JobRecievedDetails;
 import com.kaanish.model.JobStock;
 import com.kaanish.model.JobTypes;
@@ -1411,7 +1413,7 @@ public class Ejb {
 		}
 		return tot;
 	}
-	
+
 	public List<JobPlanProductStock> getJobPlanProductStockBySampleProductIdAndPlanId(int spId, int jpId) {
 		TypedQuery<JobPlanProductStock> q = em.createQuery(
 				"select c from JobPlanProductStock c where c.productsForDesignCostSheet.id=:spId and c.jobPlan.id=:jpId",
@@ -2858,6 +2860,37 @@ public class Ejb {
 				JobPlan.class);
 		q.setParameter("dn", dn.toUpperCase() + "%");
 		return q.getResultList();
+	}
+
+	/***************************
+	 * for JobPlanProductS
+	 *********************/
+	public void setJobPlanProducts(JobPlanProducts sample) {
+		em.persist(sample);
+	}
+
+	public void updateJobPlanProducts(JobPlanProducts sample) {
+		em.merge(sample);
+	}
+
+	public JobPlanProducts getJobPlanProductByPlanIdAndSampleProductId(int jpId, int sId) {
+		TypedQuery<JobPlanProducts> q = em.createQuery(
+				"select c from JobPlanProducts c where c.jobPlan.id=:jpId AND c.productsForDesignCostSheet.id=:sId",
+				JobPlanProducts.class);
+		q.setParameter("jpId", jpId);
+		q.setParameter("sId", sId);
+		return q.getResultList().get(0);
+	}
+	
+	/***************************
+	 * for JobPlanJobStock
+	 *********************/
+	public void setJobPlanJobStock(JobPlanJobStock sample) {
+		em.persist(sample);
+	}
+
+	public void updateJobPlanJobStock(JobPlanJobStock sample) {
+		em.merge(sample);
 	}
 
 	/***************************
