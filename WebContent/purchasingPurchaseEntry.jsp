@@ -336,13 +336,13 @@
 														</c:forEach>
 													</select>
 													
-													<!-- <div id="agentCommi">
+													<div>
 														
-														<input type="radio" name="agntMoney" id="perProduct"
+														<!-- <input type="radio" name="agntMoney" id="perProduct"
 														value="perPro">Commission Per product<br>
 														
 														<input type="radio"	name="agntMoney" id="totProduct" value="totPro">Commission on grand total
- 													</div> -->
+ -->												</div>
 												</div>
 												<div class="col-md-1">
 
@@ -434,8 +434,8 @@
 												</div>
 
 											</div>
-										</div>-->
-									</div> 
+										</div>
+									</div> -->
 									<div style="width: 40%; float: right;">
 										<table id="stream_table"
 											class="table table-striped table-bordered">
@@ -447,24 +447,6 @@
 														name="subTotal"></td>
 												</tr>
 											</thead>
-											<tbody id="agentCommonTotal">
-												<tr>
-												<td colspan="2">Agent Commission &nbsp; <select name="comType" id="comType" onchange="comType();">
-
-														<option value="disFlat">Flat</option>
-														<option value="disPer">%</option>
-
-												</select>
-												</td>
-												<td><input type="number" class="form-control" name="disValue" id="discount" placeholder="" onkeyup="discountF();" autocomplete="off"></td>
-											</tr>
-											</tbody>
-											
-										
-									
-										
-											
-											</body>
 											<tbody>
 												<tr>
 													<td><select class="form-control" id="taxGroup"
@@ -3951,7 +3933,6 @@
 		function getVendorNameByType() {
 			$("#vName").val("");
 			$("#vDetail").val("");
-			var valCom = $('[name="pstatus"]').val();
 			$("#idvendorType").val($("#vendorType").val());
 			if ($("#vendorType").val() == 0) {
 				$("#agent").prop("disabled", "disabled");
@@ -3961,11 +3942,6 @@
 				$("#aDetailDiv").hide();
 				$("#agentName").val(0);
 				$("#agentDet").val("");
-			}
-			if (valCom == 'Purchase Agent')
-			{
-				
-				("#description").show();
 			}
 
 			$.ajax({
@@ -5345,10 +5321,12 @@
 
 		}
 	</script>
-	
-	
+	<script>
+		function addTaxNo() {
+
+		}
+	</script>
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
-
 </html>
