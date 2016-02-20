@@ -61,9 +61,8 @@
 			var n = d.getFullYear() - 1;
 		}
 		$("#datepicker").datepicker({
-			dateFormat : "dd-mm-yy",
-			minDate : new Date(n, 3, 1),
-			maxDate : 0
+			dateFormat : "dd-mm-yy"
+			
 		});
 		$("#datepicker").datepicker('setDate', new Date());
 	});
@@ -381,7 +380,7 @@
 													value="${sessionScope['ejb'].getCurrentDateTime()}"
 													pattern="MM" var="yr" />
 												<input readonly="readonly" type="text" placeholder=""
-													name="challanNumber" class="form-control"
+													name="challanNumber" class="form-control" id="chaId"
 													value="${bs.companyInitial}/${fy}/${yr}/${bs.billType}/${lastChNo}/${lastSuf}">
 												<input type="hidden" name="challanNo" value="${lastChNo}"
 													id="challanNo"> <input type="hidden"
@@ -389,7 +388,7 @@
 											</div>
 											<div class="form-group">
 												<label for="" class="font">Purchase Date :</label> <input
-													type="text" id="datepicker" class="form-control"
+													type="text" id="datepicker" class="form-control" onchange="financialyr()"
 													name="purchaseDate" required="required" readonly="readonly">
 											</div>
 											<div class="form-group" id="aDetailDiv">
@@ -5325,6 +5324,22 @@
 		function addTaxNo() {
 
 		}
+	</script>
+	
+	<script>
+	function financialyr(){
+		//alert('hello');
+		var str=$("#chaId").val();
+		challanParts=str.split("/");
+		$.ajax({
+			url:"getJonsonDateFinancial",
+			dataType:"json",
+			data:{date:$('#datepicker').val()},
+			success:function(data){
+				$("#chaId").val(challanParts[0]+'/'+data.finantialYear+'/'+challanParts[2]+'/'+challanParts[3]+'/'+challanParts[4]+'/'+Number(Number(data.lastChallanNo)+Number(1)));
+			}
+		});
+	}
 	</script>
 </body>
 <!-- `lastr er number change koro barite -->

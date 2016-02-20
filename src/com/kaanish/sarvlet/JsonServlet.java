@@ -106,12 +106,21 @@ public class JsonServlet extends HttpServlet {
 					gen.writeStartObject().write("response", "already exist").writeEnd().close();
 				}
 				break;
+				
+				
+			case "getJonsonDateFinancial":				
+				JsonGeneratorFactory factoryf = Json.createGeneratorFactory(null);
+				JsonGenerator genf = factoryf.createGenerator(resp.getOutputStream());			
+				genf.writeStartObject()
+				.write("finantialYear",ejb.getFinancialYearByDate(req.getParameter("date")))
+				.write("lastChallanNo", ejb.getLastPurchaseChallanNumberByFinantialYr(ejb.getFinancialYearByDate(req.getParameter("date"))))
+				.writeEnd().close();
+				break;
 
 			case "getUOMtype":
 				pw = resp.getWriter();
 				pw.print(ejb.getAllQtyUnitTypes());
 				break;
-
 			case "getAllDepartments":
 				pw = resp.getWriter();
 				name = req.getParameter("name");

@@ -102,7 +102,7 @@ public class Ejb {
 			return dt.getYear() + "-" + (dt.getYear() + 1);
 		}
 	}
-	public String getFinancialYearByData(String dat) {
+	public String getFinancialYearByDate(String dat) {
 		Date date=DateConverter.getDate(dat);
 		LocalDateTime dt = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
 		if (dt.getMonthValue() < 4) {
@@ -916,6 +916,19 @@ public class Ejb {
 		TypedQuery<Purchase_Entry> q = em.createQuery(
 				"select c from Purchase_Entry c WHERE c.companyInfo.id=:cId ORDER BY c.id DESC", Purchase_Entry.class);
 		q.setParameter("cId", cId);
+		if (q.getResultList().size() > 0) {
+			return q.getResultList().get(0).getChallan_no();
+		} else {
+			return 0;
+		}
+
+	}
+	
+	
+	public int getLastPurchaseChallanNumberByFinantialYr(String fyear) {		
+		TypedQuery<Purchase_Entry> q = em.createQuery(
+				"select c from Purchase_Entry c where c.challanNumber like :chNo order by c.id DESC ", Purchase_Entry.class);
+		q.setParameter("chNo", "%"+fyear+"%");
 		if (q.getResultList().size() > 0) {
 			return q.getResultList().get(0).getChallan_no();
 		} else {
