@@ -141,8 +141,8 @@
 							title="">Country/State/City</a></li>
 						<li><a id="sSetupBill" href="billSetup.jsp" title="">Bill
 								Setup</a></li>
-						<!-- <li><a id="jobSetup" href="jobSetup.jsp" title="">Job
-								Setup</a></li> -->
+						<li><a id="jobSetup" href="jobSetup.jsp" title="">Job
+								Setup</a></li>
 					</ul>
 				</div>
 			</div>

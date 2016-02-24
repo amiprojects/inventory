@@ -20,6 +20,7 @@ public class JobPlanJobStock implements Serializable {
 	private int id;	
 	private float qty;
 	private float remQty;
+	private boolean isComplete;
 	
 	@ManyToOne@JoinColumn(name="JobPlanProductsId")
 	private JobPlanProducts jobPlanProducts;
@@ -66,5 +67,11 @@ public class JobPlanJobStock implements Serializable {
 	}
 	public void setJobAssignmentJobDetails(List<JobAssignmentJobDetails> jobAssignmentJobDetails) {
 		this.jobAssignmentJobDetails = jobAssignmentJobDetails;
+	}
+	public boolean isComplete() {
+		return isComplete;
+	}
+	public void setComplete(boolean isComplete) {
+		this.isComplete = isComplete;
 	}
 }

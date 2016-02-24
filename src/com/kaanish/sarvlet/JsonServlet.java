@@ -62,7 +62,7 @@ import com.kaanish.util.DepartmentCotractor;
 		"/getPurchaseProductDetailsByProductCode", "/getJobsForDesignCostSheetByProductSForSampleId",
 		"/getProductImagejson", "/getPlannedSampleDesignCostSheetByDesignNumber", "/getAllOngoingJobPlanByDesignNumber",
 		"/getProductAndDesignDetailsAndJobPlanByJobPlanId", "/getJobsForDesignCostSheetByPlanId",
-		"/getOngoingJobAssignmentsByPlanId", "/getJonsonDateFinancial"  })
+		"/getOngoingJobAssignmentsByPlanId", "/getJonsonDateFinancial" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -106,15 +106,14 @@ public class JsonServlet extends HttpServlet {
 					gen.writeStartObject().write("response", "already exist").writeEnd().close();
 				}
 				break;
-				
-				
-			case "getJonsonDateFinancial":				
+
+			case "getJonsonDateFinancial":
 				JsonGeneratorFactory factoryf = Json.createGeneratorFactory(null);
-				JsonGenerator genf = factoryf.createGenerator(resp.getOutputStream());			
-				genf.writeStartObject()
-				.write("finantialYear",ejb.getFinancialYearByDate(req.getParameter("date")))
-				.write("lastChallanNo", ejb.getLastPurchaseChallanNumberByFinantialYr(ejb.getFinancialYearByDate(req.getParameter("date"))))
-				.writeEnd().close();
+				JsonGenerator genf = factoryf.createGenerator(resp.getOutputStream());
+				genf.writeStartObject().write("finantialYear", ejb.getFinancialYearByDate(req.getParameter("date")))
+						.write("lastChallanNo", ejb.getLastPurchaseChallanNumberByFinantialYr(
+								ejb.getFinancialYearByDate(req.getParameter("date"))))
+						.writeEnd().close();
 				break;
 
 			case "getUOMtype":
@@ -317,6 +316,12 @@ public class JsonServlet extends HttpServlet {
 												Integer.parseInt(req.getParameter("pId"))).getId())
 								.write("japYesOrNo", "yes")
 
+								.write("IsComplete",
+										ejb.getJobAssignmentProductDetailsByproductAndJobPlanId(
+												pdcs.getProductDetail().getId(),
+												Integer.parseInt(req.getParameter("pId"))).getJobPlanProducts()
+										.isComplete())
+
 								.write("ProductQtyForSample", pdcs.getQty())
 								.write("ProductRateForSample", pdcs.getRate())
 								.write("ProductAmountForSample", pdcs.getAmmount())
@@ -338,7 +343,6 @@ public class JsonServlet extends HttpServlet {
 								.write("ProductTotalAmount",
 										ejb.getTotalProductCostInJobPlanProductStockBySampleProductIdAndPlanId(
 												pdcs.getId(), Integer.parseInt(req.getParameter("pId"))))
-
 								.write("japYesOrNo", "no")
 
 								.write("ProductQtyForSample", pdcs.getQty())
@@ -348,6 +352,121 @@ public class JsonServlet extends HttpServlet {
 					}
 				}
 				generatorM.writeEnd().close();
+				break;
+
+			case "getJobsForDesignCostSheetByPlanId":
+				JsonGeneratorFactory factoryJ = Json.createGeneratorFactory(null);
+				JsonGenerator generatorJ = factoryJ.createGenerator(resp.getOutputStream());
+				generatorJ.writeStartArray();
+				for (JobsForDesignCostSheet jdcs : ejb
+						.getProductsForDesignCostSheetById(Integer.parseInt(req.getParameter("pid")))
+						.getJobsForDesignCostSheets()) {
+					if (!req.getParameter("japId").equals("0")) {
+						if (ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
+								Integer.parseInt(req.getParameter("japId")), jdcs.getId()) != null) {
+							if (ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
+									Integer.parseInt(req.getParameter("japId")), jdcs.getId()).getJobPlanJobStock()
+									.isComplete()) {
+								generatorJ.writeStartObject().write("JobId", jdcs.getId())
+										.write("JobName", jdcs.getJobTypes().getJobName())
+										.write("JobRateOfSample", jdcs.getRate()).write("JobQtyOfSample", jdcs.getQty())
+										.write("JobUOMOfSample", jdcs.getQtyUnit().getName())
+										.write("JobAmountOfSample", jdcs.getAmmount()).write("Status", "Completed")
+										
+										
+										.write("RemQty", "NA")
+										.write("PresentRate", ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
+												Integer.parseInt(req.getParameter("japId")), jdcs.getId())
+										.getRate())
+										.write("AssignQty", "NA")
+										.write("Amount", "NA")
+										.write("EstSubDate", "NA")
+										.writeEnd();
+							} else {
+								if (ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
+										Integer.parseInt(req.getParameter("japId")), jdcs.getId()).getRemQty() > 0) {
+									generatorJ.writeStartObject().write("JobId", jdcs.getId())
+											.write("JobName", jdcs.getJobTypes().getJobName())
+											.write("JobRateOfSample", jdcs.getRate())
+											.write("JobQtyOfSample", jdcs.getQty())
+											.write("JobUOMOfSample",
+													jdcs.getQtyUnit().getName())
+											.write("JobAmountOfSample",
+													jdcs.getAmmount())
+											.write("Status", "Assigned")
+											
+											
+											.write("RemQty", ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
+													Integer.parseInt(req.getParameter("japId")), jdcs.getId())
+											.getJobPlanJobStock().getRemQty())
+											.write("PresentRate", ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
+													Integer.parseInt(req.getParameter("japId")), jdcs.getId())
+											.getRate())
+											.write("AssignQty", ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
+													Integer.parseInt(req.getParameter("japId")), jdcs.getId())
+											.getQty())
+											.write("Amount", ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
+													Integer.parseInt(req.getParameter("japId")), jdcs.getId())
+											.getAmmount())
+											.write("EstSubDate",
+													ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
+															Integer.parseInt(req.getParameter("japId")), jdcs.getId())
+													.getEstimatedCompletionDate().toString())
+											.writeEnd();
+								} else {
+									generatorJ.writeStartObject().write("JobId", jdcs.getId())
+											.write("JobName", jdcs.getJobTypes().getJobName())
+											.write("JobRateOfSample", jdcs.getRate())
+											.write("JobQtyOfSample", jdcs.getQty())
+											.write("JobUOMOfSample", jdcs.getQtyUnit().getName())
+											.write("JobAmountOfSample", jdcs.getAmmount())
+											.write("Status", "Not Completed")
+											
+											
+											.write("RemQty", ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
+													Integer.parseInt(req.getParameter("japId")), jdcs.getId())
+											.getJobPlanJobStock().getRemQty())
+											.write("PresentRate", ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
+													Integer.parseInt(req.getParameter("japId")), jdcs.getId())
+											.getRate())
+											.write("AssignQty", "NA")
+											.write("Amount", "NA")
+											.write("EstSubDate", "NA")
+											.writeEnd();
+								}
+							}
+						} else {
+							generatorJ.writeStartObject().write("JobId", jdcs.getId())
+									.write("JobName", jdcs.getJobTypes().getJobName())
+									.write("JobRateOfSample", jdcs.getRate()).write("JobQtyOfSample", jdcs.getQty())
+									.write("JobUOMOfSample", jdcs.getQtyUnit().getName())
+									.write("JobAmountOfSample", jdcs.getAmmount()).write("Status", "Not Assigned")
+									
+									
+									.write("RemQty", jdcs.getQty())
+									.write("PresentRate", "NA")
+									.write("AssignQty", "NA")
+									.write("Amount", "NA")
+									.write("EstSubDate", "NA")
+									.writeEnd();
+						}
+					} else {
+						generatorJ.writeStartObject().write("JobId", jdcs.getId())
+								.write("JobName", jdcs.getJobTypes().getJobName())
+								.write("JobRateOfSample", jdcs.getRate()).write("JobQtyOfSample", jdcs.getQty())
+								.write("JobUOMOfSample", jdcs.getQtyUnit().getName())
+								.write("JobAmountOfSample", jdcs.getAmmount()).write("Status", "Not Assigned")
+								
+								
+								.write("RemQty", jdcs.getQty())
+								.write("PresentRate", "NA")
+								.write("AssignQty", "NA")
+								.write("Amount", "NA")
+								.write("EstSubDate", "NA")
+								.writeEnd();
+					}
+				}
+				generatorJ.writeEnd().close();
 				break;
 
 			case "getJobsForDesignCostSheetByProductSForSampleId":
@@ -363,21 +482,6 @@ public class JsonServlet extends HttpServlet {
 							.write("JobAmountOfSample", jdcs.getAmmount()).writeEnd();
 				}
 				generator4.writeEnd().close();
-				break;
-
-			case "getJobsForDesignCostSheetByPlanId":
-				JsonGeneratorFactory factoryJ = Json.createGeneratorFactory(null);
-				JsonGenerator generatorJ = factoryJ.createGenerator(resp.getOutputStream());
-				generatorJ.writeStartArray();
-				for (JobsForDesignCostSheet jdcs : ejb
-						.getProductsForDesignCostSheetById(Integer.parseInt(req.getParameter("pid")))
-						.getJobsForDesignCostSheets()) {
-					generatorJ.writeStartObject().write("JobId", jdcs.getId())
-							.write("JobName", jdcs.getJobTypes().getJobName()).write("JobRateOfSample", jdcs.getRate())
-							.write("JobQtyOfSample", jdcs.getQty()).write("JobUOMOfSample", jdcs.getQtyUnit().getName())
-							.write("JobAmountOfSample", jdcs.getAmmount()).writeEnd();
-				}
-				generatorJ.writeEnd().close();
 				break;
 
 			case "getOngoingJobAssignmentsByPlanId":
@@ -954,21 +1058,19 @@ public class JsonServlet extends HttpServlet {
 				generatorDP.writeEnd().close();
 				break;
 
-			/*case "getProductImagejson":
-				JsonGeneratorFactory factoryI = Json
-						.createGeneratorFactory(null);
-				JsonGenerator generatorI = factoryI.createGenerator(resp
-						.getOutputStream());
-			case "getProductImagejson":
-				JsonGeneratorFactory factoryI = Json.createGeneratorFactory(null);
-				JsonGenerator generatorI = factoryI.createGenerator(resp.getOutputStream());
-				generatorI.writeStartArray();
-				for (ProductImage pmg : ejb
-						.getAllProductImageByProductId(Integer.parseInt(req.getParameter("productCode")))) {
-					generatorI.writeStartObject().write("pImid", pmg.getImageAsString()).writeEnd();
-				}
-				generatorI.writeEnd().close();
-				break;*/
+			/*
+			 * case "getProductImagejson": JsonGeneratorFactory factoryI = Json
+			 * .createGeneratorFactory(null); JsonGenerator generatorI =
+			 * factoryI.createGenerator(resp .getOutputStream()); case
+			 * "getProductImagejson": JsonGeneratorFactory factoryI =
+			 * Json.createGeneratorFactory(null); JsonGenerator generatorI =
+			 * factoryI.createGenerator(resp.getOutputStream());
+			 * generatorI.writeStartArray(); for (ProductImage pmg : ejb
+			 * .getAllProductImageByProductId(Integer.parseInt(req.getParameter(
+			 * "productCode")))) { generatorI.writeStartObject().write("pImid",
+			 * pmg.getImageAsString()).writeEnd(); }
+			 * generatorI.writeEnd().close(); break;
+			 */
 
 			default:
 				break;

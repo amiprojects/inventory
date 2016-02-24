@@ -1,71 +1,19 @@
-			
-			var i = 0;
-		    $(".isSelected" + psId).each(function () {
-		        if ($(this).is(':checked')) {
-		            i = 1;
-		        }
-		    });
-		    if (i == 0) {
-		       // alert("Please select atleast one users");
-		        
-		        $("#productForSampleId"+psId).removeAttr("name");
-		        $("#productId"+psId).removeAttr("name");
-		        $("#qtyOfSampleProduct"+psId).removeAttr("name");
-		        $("#productEachTotal"+psId).removeAttr("name");
-		        
-		        $("#productEachTotal"+psId).attr("class", "form-control");
-		    } else {
-		    	//alert("Atleast one is selected");
-		    	
-		    	$("#productForSampleId"+psId).attr("name", "productForSampleId1");
-		        $("#productId"+psId).attr("name", "productId1");
-		        $("#qtyOfSampleProduct"+psId).attr("name", "qtyOfSampleProduct");
-		        $("#productEachTotal"+psId).attr("name", "productEachTotal");
-		        
-		        $("#productEachTotal"+psId).attr("class", "form-control productEachTotal");
-		    }
-		    
-		    
-		    if ($('#isSelected'+jobId).is(":checked")) {
-		    	//alert("checked"+jobId);
-		    	
-		    	$("#jobId"+jobId).attr("name", "jobId"+psId);
-		    	$("#jobPresentRate"+jobId).attr("name", "jobPresentRate"+psId);
-		    	$("#jobQty"+jobId).attr("name", "jobQty"+psId);
-		    	$("#jobAmount"+jobId).attr("name", "jobAmount"+psId);
-		    	$("#estSubmDate"+jobId).attr("name", "estSubmDate"+psId);
-		    	
-		    	$("#estSubmDate"+jobId).attr("class", "form-control estSubmDate totdate");
-		    	$("#jobAmount"+jobId).attr("class", "form-control eachtotalvalue");
-		    }else{
-		    	//alert("not checked"+jobId);
-		    	
-		    	$("#jobId"+jobId).removeAttr("name");
-		    	$("#jobPresentRate"+jobId).removeAttr("name");
-		    	$("#jobQty"+jobId).removeAttr("name");
-		    	$("#jobAmount"+jobId).removeAttr("name");
-		    	$("#estSubmDate"+jobId).removeAttr("name");
-		    	
-		    	$("#estSubmDate"+jobId).attr("class", "form-control estSubmDate");
-		    	$("#jobAmount"+jobId).attr("class", "form-control");
-		    }
-		    
-		  //error
-			var sm = 0;
-			$(".productEachTotal").each(function() {
-				sm += parseFloat(this.value);
-			});
-			$("#gt").val(Number(sm.toFixed(2)));
-			
-			var sum = 0;
-			$(".eachtotalvalue").each(function() {
-				sum += parseFloat(this.value);
-			});
-			$("#gtot").val(
-					Number($("#gt").val()) + Number(sum.toFixed(2))
-							+ Number($("#surcharge").val()));
-			profitValF();
-			$("#grandtot").val(
-					Number($("#gtot").val())
-							+ Number($("#totProfit").val()));
-		}
+ colspan="2"
+ 
+ 
++ '</th><th>'
+				+ "Sample Qty" +
+				'</th><th>'
+				+ "Assign Qty" +
+				'</th><th>'
+				+ "UOM" 
+				+ '</th><th>'
+				+ "Sample Amount" +
+				'</th><th>'
+
+
+function qtyKU(jobId){			
+			if($("#jobQty"+jobId).val()>$("#jobRemQty"+jobId).val()){
+				alert("Assigning qty can not be more than Remaining qty!");
+				$("#jobQty"+jobId).val()
+			}else{

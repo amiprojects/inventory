@@ -210,8 +210,6 @@ function showDatePicker() {
 									</div>									
 									
 									<div id="productNjobsDiv"></div>
-									<!-- <div id="productNpurchasesDiv"></div> -->
-									<div id="productNpurchasesDiv" style="display: none;"></div>
 									
 									<table id="productNjobsTable" class="table table-striped table-bordered">
 										<thead style="background-color: #F0F0F0;">
@@ -627,6 +625,10 @@ function showDatePicker() {
 							+ Number($("#totProfit").val()));
 		}
 		function qtyKU(jobId){
+			if($("#jobQty"+jobId).val()>$("#jobRemQty"+jobId).val()){
+				alert("Assigning qty can not be more than Remaining qty!");
+				$("#jobQty"+jobId).val("");
+			}else{
 			$("#jobAmount"+jobId).val($("#jobPresentRate"+jobId).val()*$("#jobQty"+jobId).val());
 			
 			//error
@@ -641,6 +643,7 @@ function showDatePicker() {
 			$("#grandtot").val(
 					Number($("#gtot").val())
 							+ Number($("#totProfit").val()));
+			}
 		}
 		function profitTypeF(){
 			//error
@@ -792,9 +795,9 @@ function showDatePicker() {
 		}
 		function selectPlan(pId, pQty){
 			$("#planNo").val(pId);
-			alert("plan "+ pId +" selected");
-			
-			
+			alert("plan "+ pId +" selected");			
+			$("#jobPlans").modal("hide");
+			$( ".estSubmDate" ).trigger( "click" );
 			$
 			.ajax({
 				type : "post",
@@ -804,6 +807,7 @@ function showDatePicker() {
 					pId : pId
 				},
 				success : function(data2) {
+					$( ".estSubmDate" ).trigger( "click" );
 					$("#productNjobsDiv table").empty();
 					$("#dNo").attr("readonly","readonly");
 					$
@@ -811,8 +815,13 @@ function showDatePicker() {
 							data2,
 							function(index, item2) {
 								$("#productNjobsTable").hide();	
-								if(item2.japYesOrNo=="yes"){									
-									$('#productNjobsDiv').append('<table id="pDetTable'+item2.ProductForSampleId+'" class="table table-striped table-bordered"><thead style="background-color: #F0F0F0;"><tr><th style="text-align: right;">'
+								if(item2.japYesOrNo=="yes"){
+									if(item2.japRemQty>0 && item2.IsComplete==false){
+										var Assigned="Assigned";
+									}else if(item2.IsComplete==true){
+										var Assigned="Completed";
+									}
+									$('#productNjobsDiv').append('<table id="pDetTable'+item2.ProductForSampleId+'" class="table table-striped table-bordered"><thead style="background-color: #F0F0F0;"><tr><th style="text-align: right;" colspan="2">'
 									+ "Product code:" 
 									+ '</th><td>'
 									+ "<input type='text' class='form-control' readonly='readonly' value='"+item2.ProductCode+"'>" +
@@ -820,7 +829,7 @@ function showDatePicker() {
 									"<input type='hidden' class='form-control' readonly='readonly' id='productId"+item2.ProductForSampleId+"' value='"+ item2.ProductId+ "'>" +
 									'</td><th style="text-align: right;">'
 									+ "Description:" 
-									+ '</th><td>'
+									+ '</th><td colspan="2">'
 									+ "<input type='text' class='form-control' readonly='readonly' value='"+item2.ProductDesc+"'>" +
 									'</td><th style="text-align: right;">'
 									+ "Qty:" 
@@ -833,7 +842,7 @@ function showDatePicker() {
 									'</td><th style="text-align: right;">'
 									+ "Status:" 
 									+ '</th><td>'
-									+ "Assigned" +
+									+ Assigned +
 									'</td></tr><tr><th>'
 									+ "#" 
 									+ '</th><th>'
@@ -843,10 +852,14 @@ function showDatePicker() {
 									'</th><th>'
 									+ "Present Rate" 
 									+ '</th><th>'
-									+ "Qty" +
+									+ "Sample Qty" +
+									'</th><th>'
+									+ "Assign Qty" +
 									'</th><th>'
 									+ "UOM" 
 									+ '</th><th>'
+									+ "Sample Amount" +
+									'</th><th>'
 									+ "Amount" +
 									'</th><th colspan="2">'
 									+ "Est. Submission Date" +
@@ -857,6 +870,7 @@ function showDatePicker() {
 									var ProductForSampleId= item2.ProductForSampleId;
 									var planId=pId;
 									var prodId=item2.ProductId;
+									var japId = item2.japId;
 									$
 									.ajax({
 										type : "post",
@@ -865,13 +879,19 @@ function showDatePicker() {
 										data : {
 											pid : ProductForSampleId,
 											planId : planId,
-											prodId : prodId
+											prodId : prodId,
+											japId : japId
 										},
 										success : function(data2) {
 											$
 													.each(
 															data2,
-															function(index, item2) {											
+															function(index, item2) {
+																if(item2.EstSubDate!="NA"){
+																	var EstSubDate = formatDate(item2.EstSubDate);
+																}else{
+																	var EstSubDate = item2.EstSubDate;
+																}
 																	$(
 																			
 																			"#pDetTable"+ProductForSampleId)
@@ -888,22 +908,28 @@ function showDatePicker() {
 																							+ item2.JobRateOfSample
 																							+ "</td>"
 																							+ "<td>"
-																							+ "<input type='text' readonly='readonly' class='form-control' id='jobPresentRate"+item2.JobId+"' onkeyup='presentRateKU("+item2.JobId+");' value='"+item2.JobRateOfSample+"'>"
+																							+ "<input type='text' readonly='readonly' class='form-control' id='jobPresentRate"+item2.JobId+"' onkeyup='presentRateKU("+item2.JobId+");' value='"+item2.PresentRate+"'>"
 																							+ "</td>"
 																							+ "<td>"
-																							+ "<input type='text' readonly='readonly' class='form-control' id='jobQty"+item2.JobId+"' onkeyup='qtyKU("+item2.JobId+");' value='"+item2.JobQtyOfSample+"'>"
+																							+ item2.JobQtyOfSample*pQty
+																							+ "</td>"
+																							+ "<td>"
+																							+ "<input type='text' readonly='readonly' class='form-control' id='jobQty"+item2.JobId+"' onkeyup='qtyKU("+item2.JobId+");' value='"+item2.AssignQty+"'>"
 																							+ "</td>"
 																							+ "<td>"
 																							+ item2.JobUOMOfSample
 																							+ "</td>"
 																							+ "<td>"
-																							+ "<input type='text' readonly='readonly' id='jobAmount"+item2.JobId+"' class='form-control' value='"+item2.JobAmountOfSample+"'>"
-																							+ "</td>"
-																							+ "<td colspan='2'>"
-																							+ "<input type='text' readonly='readonly' id='estSubmDate"+item2.JobId+"' class='form-control'>"
+																							+ item2.JobAmountOfSample*pQty
 																							+ "</td>"
 																							+ "<td>"
-																							+ "status"
+																							+ "<input type='text' readonly='readonly' id='jobAmount"+item2.JobId+"' class='form-control' value='"+item2.Amount+"'>"
+																							+ "</td>"
+																							+ "<td colspan='2'>"
+																							+ "<input type='text' readonly='readonly' id='estSubmDate"+item2.JobId+"' value='"+EstSubDate+"' class='form-control'>"
+																							+ "</td>"
+																							+ "<td>"
+																							+ item2.Status
 																							+ "</td>"																							
 																							+ "</tr>"
 																							+ "</tbody>");										
@@ -912,8 +938,15 @@ function showDatePicker() {
 										}
 									});
 									
-								}else{								
-								$('#productNjobsDiv').append('<table id="pDetTable'+item2.ProductForSampleId+'" class="table table-striped table-bordered"><thead style="background-color: #F0F0F0;"><tr><th style="text-align: right;">'
+								}else if(item2.japYesOrNo=="no" || (item2.japYesOrNo=="yes" && item2.japRemQty==0)){
+								if(item2.japYesOrNo=="no"){
+									var Assigned="Not Assigned";
+									var japId = 0;
+								}else if(item2.japYesOrNo=="yes" && item2.japRemQty==0){
+									var Assigned="Not completed";
+									var japId = item2.japId;
+								}
+								$('#productNjobsDiv').append('<table id="pDetTable'+item2.ProductForSampleId+'" class="table table-striped table-bordered"><thead style="background-color: #F0F0F0;"><tr><th style="text-align: right;" colspan="2">'
 								+ "Product code:" 
 								+ '</th><td>'
 								+ "<input type='text' class='form-control' readonly='readonly' value='"+item2.ProductCode+"'>" +
@@ -921,7 +954,7 @@ function showDatePicker() {
 								"<input type='hidden' class='form-control' readonly='readonly' id='productId"+item2.ProductForSampleId+"' value='"+ item2.ProductId+ "'>" +
 								'</td><th style="text-align: right;">'
 								+ "Description:" 
-								+ '</th><td>'
+								+ '</th><td colspan="2">'
 								+ "<input type='text' class='form-control' readonly='readonly' value='"+item2.ProductDesc+"'>" +
 								'</td><th style="text-align: right;">'
 								+ "Qty:" 
@@ -934,7 +967,7 @@ function showDatePicker() {
 								'</td><th style="text-align: right;">'
 								+ "Status:" 
 								+ '</th><td>'
-								+ "Not Assigned" +
+								+ Assigned +
 								'</td></tr><tr><th>'
 								+ "#" 
 								+ '</th><th>'
@@ -944,17 +977,21 @@ function showDatePicker() {
 								'</th><th>'
 								+ "Present Rate" 
 								+ '</th><th>'
-								+ "Qty" +
+								+ "Sample Qty" +
+								'</th><th>'
+								+ "Remaining Qty" +
+								'</th><th>'
+								+ "Assign Qty" +
 								'</th><th>'
 								+ "UOM" 
 								+ '</th><th>'
+								+ "Sample Amount" +
+								'</th><th>'
 								+ "Amount" +
 								'</th><th>'
 								+ "Est. Submission Date" +
 								'</th><th>'
 								+ "Status" +
-								'</th><th>'
-								+ "Select" +
 								'</th></tr></thead></table>');
 								
 								var ProductForSampleId= item2.ProductForSampleId;
@@ -968,13 +1005,14 @@ function showDatePicker() {
 									data : {
 										pid : ProductForSampleId,
 										planId : planId,
-										prodId : prodId
+										prodId : prodId,
+										japId : japId
 									},
 									success : function(data2) {
 										$
 												.each(
 														data2,
-														function(index, item2) {											
+														function(index, item2) {
 																$(
 																		
 																		"#pDetTable"+ProductForSampleId)
@@ -994,19 +1032,28 @@ function showDatePicker() {
 																						+ "<input type='text' class='form-control' id='jobPresentRate"+item2.JobId+"' onkeyup='presentRateKU("+item2.JobId+");' value='"+item2.JobRateOfSample+"'>"
 																						+ "</td>"
 																						+ "<td>"
-																						+ "<input type='text' class='form-control' id='jobQty"+item2.JobId+"' onkeyup='qtyKU("+item2.JobId+");' value='"+item2.JobQtyOfSample+"'>"
+																						+ item2.JobQtyOfSample*pQty
+																						+ "</td>"
+																						+ "<td>"
+																						+ "<input type='text' class='form-control' id='jobRemQty"+item2.JobId+"' readonly='readonly' value='"+item2.RemQty*pQty+"'>"
+																						+ "</td>"
+																						+ "<td>"
+																						+ "<input type='text' class='form-control' id='jobQty"+item2.JobId+"' onkeyup='qtyKU("+item2.JobId+");' value='"+item2.JobQtyOfSample*pQty+"'>"
 																						+ "</td>"
 																						+ "<td>"
 																						+ item2.JobUOMOfSample
 																						+ "</td>"
 																						+ "<td>"
-																						+ "<input type='text' readonly='readonly' id='jobAmount"+item2.JobId+"' class='form-control' value='"+item2.JobAmountOfSample+"'>"
+																						+ item2.JobAmountOfSample*pQty
+																						+ "</td>"
+																						+ "<td>"
+																						+ "<input type='text' readonly='readonly' id='jobAmount"+item2.JobId+"' class='form-control' value='"+item2.JobAmountOfSample*pQty+"'>"
 																						+ "</td>"
 																						+ "<td>"
 																						+ "<input onclick='showDatePicker();' type='text' id='estSubmDate"+item2.JobId+"' class='form-control estSubmDate'>"
 																						+ "</td>"
 																						+ "<td>"
-																						+ "status"
+																						+ item2.Status
 																						+ "</td>"
 																						+ "<td>"
 																						+ "<input type='checkbox' onclick='isSelectedF("+ProductForSampleId+","+item2.JobId+");' name='selectedJobs"+item2.JobId+"' class='isSelected"+ProductForSampleId+"' id='isSelected"+item2.JobId+"' value='"+item2.JobId+"'>"
@@ -1020,7 +1067,8 @@ function showDatePicker() {
 								}
 							});
 				}
-			});			
+			});	
+			$( ".estSubmDate" ).trigger( "click" );
 		}
 	</script>
 </body>
