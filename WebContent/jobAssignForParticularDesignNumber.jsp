@@ -187,7 +187,6 @@ function showDatePicker() {
 													type="text" class="form-control" name="dNo"
 													required="required" id="dNo" autocomplete="off">
 													<input type="hidden" id="dId" name="dId">
-													<input type="hidden" id="dNoCheck" name="dNoCheck">
 											</div>
 
 											<div class="form-group">
@@ -1283,38 +1282,6 @@ function showDatePicker() {
 							+ Number($("#totProfit").val()));
 		}
 	</script>
-	
-	<!-- <script type="text/javascript">
-		function dNoKeyUp() {
-			$("#dNoCheck").val("");
-			$.ajax({
-				url : "getPlannedSampleDesignCostSheetByDesignNumber",
-				dataType : "json",
-				data : {
-					dNo : $("#dNo").val()
-				},
-				success : function(data) {
-					$.map(data, function(item){
-					if (item.dNumber != "") {
-						$("#dNoCheck").val(item.dNumber);
-					}else{
-						$("#dNoCheck").val("");
-					}
-					});
-				}
-
-			});
-
-		}
-
-		function dNoChange() {
-			if ($("#dNoCheck").val() != "") {
-				alert("This Design Number already assigned.");
-				$("#dNoCheck").val("");
-				$("#dNo").val("");
-			}
-		}
-	</script> -->
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
