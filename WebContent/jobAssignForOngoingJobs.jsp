@@ -381,7 +381,30 @@ function showDatePicker() {
 
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 	<script src="js/numericInput.min.js"></script>
-	<script>
+	<script>		
+		function getDetailsByJobberName(id1) {
+			if (id1 != 0) {
+				$.ajax({
+					url : 'getJobberDetailsByName',
+					type : 'post',
+					dataType : "json",
+					data : {
+						id : id1
+					},
+					success : function(data) {
+						$("#jDetail").val(
+								"Address :\n\t" + data.address + "\nPh1 : "
+										+ data.ph1 + "\nPh2 : " + data.ph2);
+					},
+					error : function(a, b, c) {
+						alert(b + ": " + c);
+					}
+				});
+			} else {
+				alert("please select one jobber name");
+				$("#jDetail").val("");
+			}
+		}
 		function submitForm() {
 			var sum = 0;						
 			$(".totdate").each(function() {
@@ -404,30 +427,6 @@ function showDatePicker() {
 				alert("please select est. submission date");
 			} else {
 				$("#jobAssignmentForOngoingJob").submit();
-			}
-		}
-
-		function getDetailsByJobberName(id1) {
-			if (id1 != 0) {
-				$.ajax({
-					url : 'getJobberDetailsByName',
-					type : 'post',
-					dataType : "json",
-					data : {
-						id : id1
-					},
-					success : function(data) {
-						$("#jDetail").val(
-								"Address :\n\t" + data.address + "\nPh1 : "
-										+ data.ph1 + "\nPh2 : " + data.ph2);
-					},
-					error : function(a, b, c) {
-						alert(b + ": " + c);
-					}
-				});
-			} else {
-				alert("please select one jobber name");
-				$("#jDetail").val("");
 			}
 		}
 		function emptyForm() {

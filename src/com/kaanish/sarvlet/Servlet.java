@@ -2733,7 +2733,6 @@ public class Servlet extends HttpServlet {
 				jobAssignmentDetails.setChallanSuffix(Integer.parseInt(req.getParameter("challanSuffix")));
 				jobAssignmentDetails.setEntryDate(dt);
 				jobAssignmentDetails.setVendor(ejb.getVendorById(Integer.parseInt(req.getParameter("jName"))));
-
 				jobAssignmentDetails.setSurcharge(Float.parseFloat(req.getParameter("surcharge")));
 				jobAssignmentDetails.setGrandTotal(Float.parseFloat(req.getParameter("grandtot")));
 				jobAssignmentDetails.setProfit(Float.parseFloat(req.getParameter("totProfit")));
