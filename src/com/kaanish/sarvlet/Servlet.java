@@ -2793,23 +2793,7 @@ public class Servlet extends HttpServlet {
 						jobPlanJobStock.setRemQty(jobPlanJobStock.getRemQty() - Float.parseFloat(jobqty[lc1]));
 						ejb.updateJobPlanJobStock(jobPlanJobStock);
 
-						jobAssignmentJobDetails = new JobAssignmentJobDetails();
-						jobAssignmentJobDetails.setQty(Float.parseFloat(jobqty[lc1]));
-						jobAssignmentJobDetails.setRemQty(Float.parseFloat(jobqty[lc1]));
-						jobAssignmentJobDetails.setRate(Float.parseFloat(jobrate[lc1]));
-						jobAssignmentJobDetails.setAmmount(Float.parseFloat(jobamount[lc1]));
-						jobAssignmentJobDetails.setEstimatedCompletionDate(DateConverter.getDate(estSubmDate[lc1]));
-						jobAssignmentJobDetails
-								.setQtyUnit(ejb.getProductDetailById(Integer.parseInt(prodId2[l1])).getQtyUnit());
-						jobAssignmentJobDetails.setJobType(
-								ejb.getJobsForDesignCostSheetById(Integer.parseInt(jobid[lc1])).getJobTypes());
-						jobAssignmentJobDetails.setJobAssignmentDetails(jobAssignmentDetails);
-						jobAssignmentJobDetails.setAssignmentProducts(jobAssignmentProducts);
-						jobAssignmentJobDetails.setJobPlan(jobPlan);
-						jobAssignmentJobDetails.setJobPlanJobStock(jobPlanJobStock);
-						jobAssignmentJobDetails.setProductsForDesignCostSheet(
-								ejb.getProductsForDesignCostSheetById(Integer.parseInt(productForSampleId2[l1])));
-						ejb.setJobAssignmentJobDetails(jobAssignmentJobDetails);
+						
 
 						totalJobCost = totalJobCost + Float.parseFloat(jobamount[lc1]);
 					}
