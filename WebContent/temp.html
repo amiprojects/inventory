@@ -1,19 +1,4 @@
- colspan="2"
- 
- 
-+ '</th><th>'
-				+ "Sample Qty" +
-				'</th><th>'
-				+ "Assign Qty" +
-				'</th><th>'
-				+ "UOM" 
-				+ '</th><th>'
-				+ "Sample Amount" +
-				'</th><th>'
+<td width="10%" style="text-align: center; padding: 2px"><span
+	id="remainQtyRe${jobPro.id}">${jobPro.remaninQty}</span></td>
 
-
-function qtyKU(jobId){			
-			if($("#jobQty"+jobId).val()>$("#jobRemQty"+jobId).val()){
-				alert("Assigning qty can not be more than Remaining qty!");
-				$("#jobQty"+jobId).val()
-			}else{
+<th width="10%" style="text-align: center">Remaining Quantity</th>
