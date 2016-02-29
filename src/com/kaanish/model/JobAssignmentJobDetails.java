@@ -22,10 +22,9 @@ public class JobAssignmentJobDetails implements Serializable {
 	private int id;
 
 	private float qty;
+	private float remQty;
 	private float rate;
 	private float ammount;
-	//adding
-	private boolean isComplete;//
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date estimatedCompletionDate;
 	
@@ -129,14 +128,6 @@ public class JobAssignmentJobDetails implements Serializable {
 		this.jobType = jobType;
 	}
 
-	public boolean isComplete() {
-		return isComplete;
-	}
-
-	public void setComplete(boolean isComplete) {
-		this.isComplete = isComplete;
-	}
-
 	public JobPlan getJobPlan() {
 		return jobPlan;
 	}
@@ -151,6 +142,22 @@ public class JobAssignmentJobDetails implements Serializable {
 
 	public void setProductsForDesignCostSheet(ProductsForDesignCostSheet productsForDesignCostSheet) {
 		this.productsForDesignCostSheet = productsForDesignCostSheet;
+	}
+
+	public JobPlanJobStock getJobPlanJobStock() {
+		return jobPlanJobStock;
+	}
+
+	public void setJobPlanJobStock(JobPlanJobStock jobPlanJobStock) {
+		this.jobPlanJobStock = jobPlanJobStock;
+	}
+
+	public float getRemQty() {
+		return remQty;
+	}
+
+	public void setRemQty(float remQty) {
+		this.remQty = remQty;
 	}
 
 }

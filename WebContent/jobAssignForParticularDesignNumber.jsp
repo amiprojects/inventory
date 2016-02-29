@@ -187,7 +187,6 @@ function showDatePicker() {
 													type="text" class="form-control" name="dNo"
 													required="required" id="dNo" autocomplete="off">
 													<input type="hidden" id="dId" name="dId">
-													<input type="hidden" id="dNoCheck" name="dNoCheck">
 											</div>
 
 											<div class="form-group">
@@ -207,8 +206,8 @@ function showDatePicker() {
 									</div>									
 									
 									<div id="productNjobsDiv"></div>
-									<div id="productNjobsDivH"></div>
-									<!-- <div id="productNjobsDivH" style="display: none;"></div> -->
+									<!-- <div id="productNjobsDivH"></div> -->
+									<div id="productNjobsDivH" style="display: none;"></div>
 									<!-- <div id="productNpurchasesDiv"></div> -->
 									<div id="productNpurchasesDiv" style="display: none;"></div>
 									
@@ -813,7 +812,7 @@ function showDatePicker() {
 				$("#purchaseDetails").modal("hide");				
 				$("#productNjobsTable").hide();											
 													
-				$('#productNjobsDiv').append('<table id="pDetTable'+$("#pForSampleIdModal").val()+'" class="table table-striped table-bordered"><thead style="background-color: #F0F0F0;"><tr><th style="text-align: right;">'
+				$('#productNjobsDiv').append('<table id="pDetTable'+$("#pForSampleIdModal").val()+'" class="table table-striped table-bordered"><thead style="background-color: #F0F0F0;"><tr><th style="text-align: right;" colspan="2">'
 				+ "Product code:" 
 				+ '</th><td>'
 				+ "<input type='text' class='form-control' readonly='readonly' value='"+$("#prod" + $("#pIdModal").val() + " :nth-child(2)").html()+"'>" +
@@ -821,7 +820,7 @@ function showDatePicker() {
 				"<input type='hidden' class='form-control' readonly='readonly' id='productId"+$("#pForSampleIdModal").val()+"' value='"+ $("#pIdModal").val()+ "'>" +
 				'</td><th style="text-align: right;">'
 				+ "Description:" 
-				+ '</th><td>'
+				+ '</th><td colspan="2">'
 				+ "<input type='text' class='form-control' readonly='readonly' value='"+$("#prod" + $("#pIdModal").val() + " :nth-child(3)").html()+"'>" +
 				'</td><th style="text-align: right;">'
 				+ "Qty:" 
@@ -840,10 +839,14 @@ function showDatePicker() {
 				'</th><th>'
 				+ "Present Rate" 
 				+ '</th><th>'
-				+ "Qty" +
+				+ "Sample Qty" +
+				'</th><th>'
+				+ "Assign Qty" +
 				'</th><th>'
 				+ "UOM" 
 				+ '</th><th>'
+				+ "Sample Amount" +
+				'</th><th>'
 				+ "Amount" +
 				'</th><th>'
 				+ "Est. Submission Date" +
@@ -881,10 +884,16 @@ function showDatePicker() {
 																		+ "<input type='text' class='form-control' id='jobPresentRate"+item2.JobId+"' onkeyup='presentRateKU("+item2.JobId+");' value='"+item2.JobRateOfSample+"'>"
 																		+ "</td>"
 																		+ "<td>"
+																		+ "<input type='text' class='form-control' id='jobSampleQty"+item2.JobId+"' readonly='readonly' value='"+item2.JobQtyOfSample*$("#qty").val()+"'>"
+																		+ "</td>"
+																		+ "<td>"
 																		+ "<input type='text' class='form-control' id='jobQty"+item2.JobId+"' onkeyup='qtyKU("+item2.JobId+");' value='"+item2.JobQtyOfSample*$("#qty").val()+"'>"
 																		+ "</td>"
 																		+ "<td>"
 																		+ item2.JobUOMOfSample
+																		+ "</td>"
+																		+ "<td>"
+																		+ item2.JobAmountOfSample*$("#qty").val()
 																		+ "</td>"
 																		+ "<td>"
 																		+ "<input type='text' readonly='readonly' id='jobAmount"+item2.JobId+"' class='form-control' value='"+item2.JobAmountOfSample*$("#qty").val()+"'>"
@@ -962,7 +971,7 @@ function showDatePicker() {
 																					+ Number(1 + index)
 																					+ "</td>"
 																					+ "<td>"
-																					+ item2.JobName+"<input type='hidden' name='jobIdH' id='jobIdH"+item2.JobId+"' value='"+item2.JobId+"'>"
+																					+ item2.JobName+"<input type='hidden' name='jobIdH"+$("#pForSampleIdModal").val()+"' id='jobIdH"+item2.JobId+"' value='"+item2.JobId+"'>"
 																					+ "</td>"
 																					+ "<td>"
 																					+ item2.JobRateOfSample
@@ -971,7 +980,7 @@ function showDatePicker() {
 																					+ "<input type='text' class='form-control' name='jobPresentRateH' id='jobPresentRateH"+item2.JobId+"' onkeyup='presentRateKU("+item2.JobId+");' value='"+item2.JobRateOfSample+"'>"
 																					+ "</td>"
 																					+ "<td>"
-																					+ "<input type='text' class='form-control' name='jobQtyH' id='jobQtyH"+item2.JobId+"' onkeyup='qtyKU("+item2.JobId+");' value='"+item2.JobQtyOfSample*$("#qty").val()+"'>"
+																					+ "<input type='text' class='form-control' name='jobQtyH"+$("#pForSampleIdModal").val()+"' id='jobQtyH"+item2.JobId+"' onkeyup='qtyKU("+item2.JobId+");' value='"+item2.JobQtyOfSample*$("#qty").val()+"'>"
 																					+ "</td>"
 																					+ "<td>"
 																					+ item2.JobUOMOfSample
@@ -1113,7 +1122,11 @@ function showDatePicker() {
 					Number($("#gtot").val())
 							+ Number($("#totProfit").val()));
 		}
-		function qtyKU(jobId){
+		function qtyKU(jobId){			
+			if($("#jobQty"+jobId).val()>$("#jobSampleQty"+jobId).val()){
+				alert("Assigning qty can not be more than sample qty!");
+				$("#jobQty"+jobId).val("");
+			}else{			
 			$("#jobAmount"+jobId).val($("#jobPresentRate"+jobId).val()*$("#jobQty"+jobId).val());
 			
 			//error
@@ -1128,6 +1141,7 @@ function showDatePicker() {
 			$("#grandtot").val(
 					Number($("#gtot").val())
 							+ Number($("#totProfit").val()));
+			}
 		}
 		function profitTypeF(){
 			//error
@@ -1268,38 +1282,6 @@ function showDatePicker() {
 							+ Number($("#totProfit").val()));
 		}
 	</script>
-	
-	<!-- <script type="text/javascript">
-		function dNoKeyUp() {
-			$("#dNoCheck").val("");
-			$.ajax({
-				url : "getPlannedSampleDesignCostSheetByDesignNumber",
-				dataType : "json",
-				data : {
-					dNo : $("#dNo").val()
-				},
-				success : function(data) {
-					$.map(data, function(item){
-					if (item.dNumber != "") {
-						$("#dNoCheck").val(item.dNumber);
-					}else{
-						$("#dNoCheck").val("");
-					}
-					});
-				}
-
-			});
-
-		}
-
-		function dNoChange() {
-			if ($("#dNoCheck").val() != "") {
-				alert("This Design Number already assigned.");
-				$("#dNoCheck").val("");
-				$("#dNo").val("");
-			}
-		}
-	</script> -->
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->

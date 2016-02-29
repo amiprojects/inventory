@@ -102,8 +102,9 @@ public class Ejb {
 			return dt.getYear() + "-" + (dt.getYear() + 1);
 		}
 	}
+
 	public String getFinancialYearByDate(String dat) {
-		Date date=DateConverter.getDate(dat);
+		Date date = DateConverter.getDate(dat);
 		LocalDateTime dt = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
 		if (dt.getMonthValue() < 4) {
 			return (dt.getYear() - 1) + "-" + dt.getYear();
@@ -923,12 +924,12 @@ public class Ejb {
 		}
 
 	}
-	
-	
-	public int getLastPurchaseChallanNumberByFinantialYr(String fyear) {		
+
+	public int getLastPurchaseChallanNumberByFinantialYr(String fyear) {
 		TypedQuery<Purchase_Entry> q = em.createQuery(
-				"select c from Purchase_Entry c where c.challanNumber like :chNo order by c.id DESC ", Purchase_Entry.class);
-		q.setParameter("chNo", "%"+fyear+"%");
+				"select c from Purchase_Entry c where c.challanNumber like :chNo order by c.id DESC ",
+				Purchase_Entry.class);
+		q.setParameter("chNo", "%" + fyear + "%");
 		if (q.getResultList().size() > 0) {
 			return q.getResultList().get(0).getChallan_no();
 		} else {
@@ -1420,6 +1421,16 @@ public class Ejb {
 		q.setParameter("id", id);
 		q.setParameter("jpId", jpId);
 		return q.getResultList().get(0).getJobAssignmentProducts();
+	}
+
+	public JobAssignmentJobDetails getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
+			int japId, int jsId) {
+		TypedQuery<JobAssignmentJobDetails> q = em.createQuery(
+				"select c from JobAssignmentJobDetails c where c.assignmentProducts.id=:japId and c.jobPlanJobStock.jobsForDesignCostSheet.id=:jsId",
+				JobAssignmentJobDetails.class);
+		q.setParameter("japId", japId);
+		q.setParameter("jsId", jsId);
+		return q.getResultList().get(0);
 	}
 
 	public float getTotalProductCostInJobPlanProductStockBySampleProductIdAndPlanId(int spId, int jpId) {
@@ -2901,7 +2912,7 @@ public class Ejb {
 		q.setParameter("sId", sId);
 		return q.getResultList().get(0);
 	}
-	
+
 	/***************************
 	 * for JobPlanJobStock
 	 *********************/
@@ -2911,6 +2922,15 @@ public class Ejb {
 
 	public void updateJobPlanJobStock(JobPlanJobStock sample) {
 		em.merge(sample);
+	}
+
+	public JobPlanJobStock getJobPlanJobStockByJobPlanProductIdAndJobForSampleId(int jppId, int jsId) {
+		TypedQuery<JobPlanJobStock> q = em.createQuery(
+				"select c from JobPlanJobStock c where c.jobPlanProducts.id=:jppId AND c.jobsForDesignCostSheet.id=:jsId",
+				JobPlanJobStock.class);
+		q.setParameter("jppId", jppId);
+		q.setParameter("jsId", jsId);
+		return q.getResultList().get(0);
 	}
 
 	/***************************
