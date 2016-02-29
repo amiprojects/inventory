@@ -1079,7 +1079,12 @@ em
 	</script>
 	<script type="text/javascript">
 	function paymentDate() {
-		$("#savePurchase").modal("show");	
+		$("#savePurchase").modal("show");
+		$("#datepicker2").datepicker({
+			dateFormat : "dd-mm-yy",
+			minDate : new Date(n, m, dt),
+			maxDate : 0
+		});
 	}</script>
 	<script>
 	$("input:radio[name=bar]").click(function() {
@@ -1092,6 +1097,13 @@ em
 		}
 	});
 	
+	</script>
+	<script>
+	
+
+	$(function() {
+	
+	});
 	</script>
 	
 </body>

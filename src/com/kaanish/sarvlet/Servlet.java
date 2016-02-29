@@ -3025,29 +3025,25 @@ public class Servlet extends HttpServlet {
 				purchaseEntry.setUsers(ejb.getUserById(httpSession.getAttribute("user").toString()));
 				purchaseEntry.setEntry_date(dt);
 
-				/*
-				 * purchaseEntry.setSur_charge(Float.parseFloat(req.
-				 * getParameter( "surcharge")));
-				 */
+				purchaseEntry.setSur_charge(Float.parseFloat(req.getParameter("surcharge")));
+
 				purchaseEntry.setTransport_cost(Float.parseFloat(req.getParameter("transportCost")));
 				purchaseEntry.setTotalCost(Float.parseFloat(req.getParameter("spAmount")));
-				/*
-				 * purchaseEntry.setTax_Type_Group(
-				 * ejb.getTax_Type_GroupById(Integer
-				 * .parseInt(req.getParameter("taxGroup"))));
-				 */
+
+				purchaseEntry
+						.setTax_Type_Group(ejb.getTax_Type_GroupById(Integer.parseInt(req.getParameter("taxGroup"))));
+
 				purchaseEntry.setSubTotal(Float.parseFloat(req.getParameter("subTotalname")));
 				purchaseEntry.setTaxAmount(Float.parseFloat(req.getParameter("taxAmount")));
 
 				purchaseEntry
 						.setCompanyInfo(ejb.getUserById((String) httpSession.getAttribute("user")).getCompanyInfo());
 				purchaseEntry.setRoundOf(Float.parseFloat(req.getParameter("roundvalue")));
-				/*
-				 * if (req.getParameter("agentyes").equals("yes")) {
-				 * purchaseEntry
-				 * .setAgentId(Integer.parseInt(req.getParameter("agentName")));
-				 * }
-				 */
+
+				if (req.getParameter("agentyes").equals("yes")) {
+					purchaseEntry.setAgentId(Integer.parseInt(req.getParameter("agentName")));
+				}
+
 				ejb.setPurchaseEntry(purchaseEntry);
 
 				if (ejb.getVoucherAssignByVendorId(Integer.parseInt(req.getParameter("vId"))).size() == 0) {
