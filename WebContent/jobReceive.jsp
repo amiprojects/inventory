@@ -177,40 +177,47 @@
 													<td><p style="font-size: 18px; color: black;">
 															Jobber Details:</p> <br>
 														<p style="font-size: 17px; color: black;">
-															Email: <b>${jjjjj.vendor.email}</b>
+															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: <b>${jjjjj.vendor.email}</b>
 														</p> <br>
 														<p style="font-size: 17px; color: black;">
-															Address:<b>${jjjjj.vendor.address}</b>
+															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Address:<b>${jjjjj.vendor.address}</b>
 														</p>
 												</tr>
 											</table>
 
 										</div>
 
-
 										<div class="col-md-6">
 
 											<table>
 												<tr>
 													<td><p style="font-size: 18px; color: black;">Job
-															Challan ID:</td>
-													<td>&nbsp;</td>
-													<td><p style="font-size: 17px; color: black;">
-															<b>${jjjjj.challanNumber}</b>
-														</p></td>
+															Challan ID: &nbsp;</td>
+													<td><input type="text" value="${jjjjj.challanNumber}"
+														class="form-control" readonly="readonly"></td>
 
 												</tr>
 												<tr>
-													<td>&nbsp;</td>
+													<td><p style="font-size: 18px; color: black;">
+															Assigned Date: &nbsp;</p></td>
+													<td><input type="text" id="assgnDate"
+														value="<fmt:formatDate value="${jjjjj.assignDate}"
+																	pattern="dd-MM-yyyy" />"
+														class="form-control" disabled="disabled"></td>
+
+												</tr>
+												<tr>
+													<td><p style="font-size: 18px; color: black;">Job
+															Receive Challan No: &nbsp;</td>
+													<td><input type="text" value="" class="form-control"
+														readonly="readonly"></td>
+
 												</tr>
 												<tr>
 													<td><p style="font-size: 18px; color: black;">
-															Assigned Date:</p></td>
-													<td>&nbsp;</td>
-													<td><p style="font-size: 17px; color: black;">
-															<b><fmt:formatDate value="${jjjjj.assignDate}"
-																	pattern="dd-MM-yyyy" /></b>
-														</p></td>
+															Receiving Date: &nbsp;</p></td>
+													<td><input type="text" value="" class="form-control"
+														id="datepicker" readonly="readonly"></td>
 
 												</tr>
 											</table>
@@ -367,17 +374,24 @@
 			$('#msg').html("Wrong challan number...");
 		}
 	}); */
-
 	$(function() {
-		$("#datepicker").datepicker({
+		$("#assgnDate").datepicker({
 			dateFormat : "dd-mm-yy"
 		});
+		$("#assgnDate").datepicker('setDate', new Date());
 	});
 
 	$(function() {
-		$("#datepicker1").datepicker({
-			dateFormat : "dd-mm-yy"
+		var d = $("#assgnDate").datepicker('getDate');
+		var n = d.getFullYear();
+		var m = d.getMonth();
+		var dt = d.getDate();
+		$("#datepicker").datepicker({
+			dateFormat : "dd-mm-yy",
+			minDate : new Date(n, m, dt),
+			maxDate : 0
 		});
+		$("#datepicker").datepicker('setDate', new Date());
 	});
 
 	function jRec() {
