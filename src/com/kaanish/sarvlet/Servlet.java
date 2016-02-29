@@ -3023,7 +3023,7 @@ public class Servlet extends HttpServlet {
 				purchaseEntry.setTotalCost(Float.parseFloat(req.getParameter("spAmount")));
 
 				purchaseEntry
-						.setTax_Type_Group(ejb.getTax_Type_GroupById(Integer.parseInt(req.getParameter("taxGroup"))));
+						.setTax_Type_Group(ejb.getTax_Type_GroupById(Integer.parseInt(req.getParameter("taxGroupID"))));
 
 				purchaseEntry.setSubTotal(Float.parseFloat(req.getParameter("subTotalname")));
 				purchaseEntry.setTaxAmount(Float.parseFloat(req.getParameter("taxAmount")));
@@ -3060,10 +3060,8 @@ public class Servlet extends HttpServlet {
 						float totalCreditNote = ejb
 								.getVoucherDetailsByVendorId(Integer.parseInt(req.getParameter("vId")))
 								.get(ejb.getVoucherDetailsByVendorId(Integer.parseInt(req.getParameter("vId"))).size()
-										- 1)
-								.getTotalCreditNote();
-						voucherDetails.setTotalCreditNote(
-								Float.parseFloat(req.getParameter("spDueAmount")) + totalCreditNote);
+										- 1).getTotalCreditNote();
+						voucherDetails.setTotalCreditNote(Float.parseFloat(req.getParameter("spDueAmount")) + totalCreditNote);
 					}
 					voucherDetails.setVoucherDate(DateConverter.getDate(req.getParameter("payDate")));
 					voucherDetails.setUsers(ejb.getUserById((String) httpSession.getAttribute("user")));
