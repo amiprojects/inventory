@@ -2582,9 +2582,7 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	/******************************
-	 * stock search by product code
-	 ****************/
+	/******************************stock search by product code***************/
 
 	public List<ProductDetail> getProductDetailsByCodeDescriptionCategory(String code, String description,
 			String name) {

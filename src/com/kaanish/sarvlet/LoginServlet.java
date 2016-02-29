@@ -307,8 +307,8 @@ public class LoginServlet extends HttpServlet {
 			ejb.setUser(usersKaanish);
 
 			usersKainat = new Users();
-			usersKainat.setUserId("adminKfdgdfainat");
-			usersKainat.setPassword("admdfgdsfgin");
+			usersKainat.setUserId("adminKainat");
+			usersKainat.setPassword("addfdmin");
 			usersKainat.setName("Kainat Admin");
 			usersKainat.setPh("0");
 			usersKainat.setCompanyInfo(companyInfoKainat);

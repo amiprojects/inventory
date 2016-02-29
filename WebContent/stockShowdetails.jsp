@@ -107,8 +107,8 @@
 	<c:set var="salesPro"
 		value="${sessionScope['ejb'].getSales_Product_DetailsByProductIdAndCompany(requestScope['proid1'])}" />
 
-	<c:set var="jobProList"
-		value="${sessionScope['ejb'].getJobAssignmentProductDetailsByproductIdAndCompany(requestScope['proid1'])}" />
+	<%-- <c:set var="jobProList"
+		value="${sessionScope['ejb'].getJobAssignmentProductDetailsByproductIdAndCompany(requestScope['proid1'])}" /> --%>
 
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
@@ -143,8 +143,8 @@
 												Inventory</a></li>
 										<li><a data-toggle="tab" href="#Sales">Sales
 												Inventory</a></li>
-										<li><a data-toggle="tab" href="#jobber">Jobber
-												Inventory</a></li>
+										<!-- <li><a data-toggle="tab" href="#jobber">Jobber
+												Inventory</a></li> -->
 
 
 										<li><a data-toggle="tab" href="#DSP">Detailed Present
@@ -270,9 +270,9 @@
 														<c:set var="sProduct"
 															value="${sessionScope['ejb'].getSales_Product_DetailsByProductIdAndCompany(requestScope['proid1'])}" />
 
-														<c:set var="jpL"
+														<%-- <c:set var="jpL"
 															value="${sessionScope['ejb'].getJobAssignmentProductDetailsByproductIdAndCompany(requestScope['proid1'])}" />
-
+ --%>
 
 
 														<c:set value="${0}" var="total" />
@@ -300,11 +300,11 @@
 
 													</tr>
 
-													<c:forEach items="${jpL}" var="jppL">
+													<%-- <c:forEach items="${jpL}" var="jppL">
 														<c:set var="total" value="${total+jppL.remaninQty}" />
-													</c:forEach>
+													</c:forEach> --%>
 													<tr>
-														<td><b>In Jobwork:</b>&nbsp;&nbsp;${total}</td>
+														<%-- <td><b>In Jobwork:</b>&nbsp;&nbsp;${total}</td> --%>
 
 														<c:forEach items="${sProduct}" var="sP">
 															<c:set var="sTotal" value="${sTotal+sP.quantity}" />
@@ -318,9 +318,9 @@
 
 											<hr width="100%">
 											<table>
-												<tr>
+												<%-- <tr>
 													<td><b>To receive from jobber:&nbsp;&nbsp;</b>${total}</td>
-												</tr>
+												</tr> --%>
 												<tr>
 													<td></td>
 												</tr>
@@ -576,7 +576,7 @@
 										</div>
 										<!-- **********************************************************************************jobber*****************************************************************************-->
 
-										<div id="jobber" class="tab-pane fade">
+										<%-- <div id="jobber" class="tab-pane fade">
 											<div class="widget-area">
 
 
@@ -671,7 +671,7 @@
 											</div>
 											<br>
 
-										</div>
+										</div> --%>
 
 
 										<!-- .......................................**********************DSP****************************************************...................................... -->

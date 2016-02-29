@@ -174,7 +174,7 @@ td {
 														items="${sessionScope['ejb'].getAllProductDetailByCompany()}"
 														var="amiProStock1">
 														<c:set var="qty"
-															value="${amiProStock1.isSaleble()?sessionScope['ejb'].getReadyGoodsStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty:sessionScope['ejb'].getRawMaterialStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty}" />
+															value="${!amiProStock1.isRaw()?sessionScope['ejb'].getReadyGoodsStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty:sessionScope['ejb'].getRawMaterialStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty}" />
 														<tr>
 															<td>${amiProStock1.code}</td>
 
@@ -182,7 +182,6 @@ td {
 																value="${amiProStock1.purchase_Product_Details.size()}" />
 
 															<td>${purSize>0?amiProStock1.purchase_Product_Details.get(purSize-1).wsp:'nill'}</td>
-
 															<td>${purSize>0?amiProStock1.purchase_Product_Details.get(purSize-1).mrp:'nill'}</td>
 															<td>${qty}</td>
 															<c:set value="${0}" var="remainqt" />
@@ -252,48 +251,30 @@ td {
 												<c:set var="count" value="${1}" />
 
 												<c:forEach
-													items="${sessionScope['ejb'].getAllProductDetailByCompany()}"
-													var="amiPro">
+														items="${sessionScope['ejb'].getAllProductDetailByCompany()}"
+														var="amiProStock1">
 													<c:if
-														test="${amiPro.purchase_Product_Details.size()>0}">
+														test="${amiProStock1.purchase_Product_Details.size()>0}">
 														<c:set var="qty"
-															value="${!amiPro.isRaw()?sessionScope['ejb'].getReadyGoodsStocktDetailByProductIdAndCompany(amiPro.id).remainingQty:sessionScope['ejb'].getRawMaterialStocktDetailByProductIdAndCompany(amiPro.id).remainingQty}" />
-														<c:choose>
-															<c:when test="${qty==0}">
-																<tr>
-																	<td style="color: red;">${count}</td>
-																	<td style="color: red;">${amiPro.code}</td>
-																	<td style="color: red;">${amiPro.description}</td>
-																	<td style="color: red;">${amiPro.qtyUnit.name}</td>
-																	<td style="color: red;">${qty}</td>
-																	<c:set var="purSizeq"
-																		value="${amiPro.purchase_Product_Details.size()}" />
-																	<td style="color: red;">${purSizeq>0?amiProStock1.purchase_Product_Details.get(purSizeq-1).wsp:'nill'}</td>
-																	<td style="color: red;">${purSizeq>0?amiProStock1.purchase_Product_Details.get(purSizeq-1).mrp:'nill'}</td>
-																	
-																</tr>
-															</c:when>
-															<c:otherwise>
+															value="${!amiProStock1.isRaw()?sessionScope['ejb'].getReadyGoodsStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty:sessionScope['ejb'].getRawMaterialStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty}" />
+														
 																<tr>
 																	<td>${count}</td>
-																	<td>${amiPro.code}</td>
-																	<td>${amiPro.description}</td>
-																	<td>${amiPro.qtyUnit.name}</td>
+																	<td>${amiProStock1.code}</td>
+																	<td>${amiProStock1.description}</td>
+																	<td>${amiProStock1.qtyUnit.name}</td>
 																	<td>${qty}</td>
-																	<c:set var="purSize"
-																		value="${amiPro.purchase_Product_Details.size()}" />
-																	<td>${purSizeq>0?amiProStock1.purchase_Product_Details.get(purSize-1).wsp:'nill'}</td>
-																	<td>${purSizeq>0?amiProStock1.purchase_Product_Details.get(purSize-1).mrp:'nill'}</td>
+																	<c:set var="purSizeq"
+																		value="${amiProStock1.purchase_Product_Details.size()}" />
+																	<td>${purSizeq>0?amiProStock1.purchase_Product_Details.get(purSizeq-1).wsp:'nill'}</td>
+																	<td>${purSizeq>0?amiProStock1.purchase_Product_Details.get(purSizeq-1).mrp:'nill'}</td>
 																	
 																</tr>
-
-															</c:otherwise>
-														</c:choose>
+															
+																
 														<c:set var="count" value="${count+1}" />
 													</c:if>
 												</c:forEach>
-												
-												
 												</tbody>
 											</table>
 
