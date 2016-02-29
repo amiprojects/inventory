@@ -1699,14 +1699,6 @@ public class Servlet extends HttpServlet {
 							+ req.getParameter("suffix");
 				}
 
-				/*
-				 * jobAssignmentDetails = ejb
-				 * .getJobAssignmentDetailsbyChallanNumberAndCompany(req
-				 * .getParameter("jChallan"));
-				 * 
-				 * req.setAttribute("amj", jobAssignmentDetails); msg = "";
-				 */
-
 				break;
 
 			case "jobAssignSearchByDate":

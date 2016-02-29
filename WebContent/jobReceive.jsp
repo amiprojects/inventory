@@ -155,150 +155,160 @@
 								</div>
 								<br> <br> <br> <br>
 								<%-- <c:if test="${requestScope['amj']!=null}"> --%>
-									<div class="col-md-12" style="width: 100%;" id="jrecive">
-										<div>
-											<div class="col-md-6">
+								<div class="col-md-12" style="width: 100%;" id="jrecive">
+									<div>
+										<div class="col-md-6">
 
-												<table>
-													<tr>
-														<c:set value="${requestScope['amj']}" var="jjjjj" />
-														<td><p style="font-size: 18px; color: black;">
-																Jobber Name:</p></td>
+											<table>
+												<tr>
+													<c:set value="${requestScope['amj']}" var="jjjjj" />
+													<td><p style="font-size: 18px; color: black;">
+															Jobber Name:</p></td>
 
-														<td><p style="font-size: 17px; color: black;">
-																<b>${jjjjj.vendor.name}</b>
-															</p></td>
+													<td><p style="font-size: 17px; color: black;">
+															<b>${jjjjj.vendor.name}</b>
+														</p></td>
 
-													</tr>
-													<tr>
-														<td>&nbsp;</td>
-													</tr>
-													<tr>
-														<td><p style="font-size: 18px; color: black;">
-																Jobber Details:</p> <br>
-															<p style="font-size: 17px; color: black;">
-																Email: <b>${jjjjj.vendor.email}</b>
-															</p> <br>
-															<p style="font-size: 17px; color: black;">
-																Address:<b>${jjjjj.vendor.address}</b>
-															</p>
-													</tr>
-												</table>
+												</tr>
+												<tr>
+													<td>&nbsp;</td>
+												</tr>
+												<tr>
+													<td><p style="font-size: 18px; color: black;">
+															Jobber Details:</p> <br>
+														<p style="font-size: 17px; color: black;">
+															Email: <b>${jjjjj.vendor.email}</b>
+														</p> <br>
+														<p style="font-size: 17px; color: black;">
+															Address:<b>${jjjjj.vendor.address}</b>
+														</p>
+												</tr>
+											</table>
 
-											</div>
-
-
-											<div class="col-md-6">
-
-												<table>
-													<tr>
-														<td><p style="font-size: 18px; color: black;">
-																Job Challan ID:</td>
-														<td>&nbsp;</td>
-														<td><p style="font-size: 17px; color: black;">
-																<b>${jjjjj.challanNumber}</b>
-															</p></td>
-
-													</tr>
-													<tr>
-														<td>&nbsp;</td>
-													</tr>
-													<tr>
-														<td><p style="font-size: 18px; color: black;">
-																Assigned Date:</p></td>
-														<td>&nbsp;</td>
-														<td><p style="font-size: 17px; color: black;">
-																<b><fmt:formatDate value="${jjjjj.assignDate}"
-																		pattern="dd-MM-yyyy" /></b>
-															</p></td>
-
-													</tr>
-												</table>
-
-											</div>
 										</div>
-										<div class="col-md-12">&nbsp;</div>
-
-										<div class="col-md-12">
 
 
-											<hr width="100%">
-											<br> <br>
-											<form action="jobRecieve" method="post">
-												<input type="hidden" value="${requestScope['amj'].id}"
-													name="jobAssignID">
-												<table cellspacing="0" cellpadding="0" border="0"
-													width="975">
-													<tr>
-														<td>
-															<table cellspacing="0" cellpadding="1" border="1"
-																width="900">
-																<tr style="color: black; background-color: #f4f4f0">
-																	<th style="text-align: center" width="5%">#</th>
+										<div class="col-md-6">
 
-																	<th width="15%" style="text-align: center">Product Code</th>
-																	<th width="15%" style="text-align: center">Product
-																		Description</th>
-																	<th width="10%" style="text-align: center">Quantity</th>
-																	<th width="10%" style="text-align: center">UOM</th>
-																	<th width="15%" style="text-align: center">Work</th>
-																	<th width="10%" style="text-align: center">Remaining
-																		Quantity</th>
-																	<th width="20%" style="text-align: center">Quantity
-																		Receive</th>
-																</tr>
-															</table>
-														</td>
-													</tr>
-													<tr>
-														<td>
-															<div style="width: 960px; height: 360px; overflow: auto;">
-																<table cellspacing="0" cellpadding="1" border="1"
-																	width="900">
+											<table>
+												<tr>
+													<td><p style="font-size: 18px; color: black;">Job
+															Challan ID:</td>
+													<td>&nbsp;</td>
+													<td><p style="font-size: 17px; color: black;">
+															<b>${jjjjj.challanNumber}</b>
+														</p></td>
 
-																	<c:set var="count" value="${1}" />
+												</tr>
+												<tr>
+													<td>&nbsp;</td>
+												</tr>
+												<tr>
+													<td><p style="font-size: 18px; color: black;">
+															Assigned Date:</p></td>
+													<td>&nbsp;</td>
+													<td><p style="font-size: 17px; color: black;">
+															<b><fmt:formatDate value="${jjjjj.assignDate}"
+																	pattern="dd-MM-yyyy" /></b>
+														</p></td>
 
-																	<c:forEach items="${jjjjj.jobAssignmentProducts}"
-																		var="jobPro">
-																		<tr>
+												</tr>
+											</table>
 
-
-																			<td style="text-align: center" width="5%">${count}</td>
-
-																			<td width="15%" style="text-align: center">${jobPro.jobPlanProductStock.get(0).purchase_Product_Details.productDetail.code}</td>
-																			<td width="15%" style="text-align: center">${jobPro.jobPlanProductStock.get(0).purchase_Product_Details.productDetail.description}</td>
-																			<td width="10%" style="text-align: center"><span
-																				id="qtty${jobPro.id}">${jobPro.qty}</span></td>
-																			<td width="10%" style="text-align: center">${jobPro.jobPlanProductStock.get(0).purchase_Product_Details.productDetail.qtyUnit.name}</td>
-																			<td width="15%" style="text-align: center">${jobPro.workDescription}</td>
-																			<td width="10%"
-																				style="text-align: center; padding: 2px"><span
-																				id="remainQtyRe${jobPro.id}">${jobPro.remaninQty}</span></td>
-
-																			<td width="20%"
-																				style="text-align: center; padding: 4px"><input
-																				type="number" class="form-control" value="0"
-																				name="qtyRe${jobPro.id}" id="qtyRe${jobPro.id}"
-																				onkeyup="qtySubtraction('${jobPro.id}');"
-																				onchange="return0('${jobPro.id}');"></td>
-
-																		</tr>
-																	</c:forEach>
-																	<c:set var="count" value="${count+1}" />
-																</table>
-
-															</div>
-														</td>
-													</tr>
-												</table>
-												<input type="hidden" name="remaining_qty" id="remaining_qty"
-													required> <input type="hidden" name="receive_qty"
-													id="remaining_qty" required> <input
-													class="btn green pull-right" type="submit"
-													style="float: right" value="Save">
-											</form>
 										</div>
 									</div>
+									<div class="col-md-12">&nbsp;</div>
+
+									<div class="col-md-12">
+
+
+										<hr width="100%">
+										<br> <br>
+										<form action="jobRecieve" method="post">
+											<input type="hidden" value="${requestScope['amj'].id}"
+												name="jobAssignID">
+											<table cellspacing="0" cellpadding="0" border="0" width="975">
+												<tr>
+													<td>
+														<table cellspacing="0" cellpadding="1" border="1"
+															width="900">
+															<tr style="color: black; background-color: #f4f4f0">
+																<th style="text-align: center" width="5%">#</th>
+
+																<th width="10%" style="text-align: center">Product
+																	Code</th>
+																<th width="10%" style="text-align: center">Product
+																	Description</th>
+																<th width="5%" style="text-align: center">Qty</th>
+																<th width="10%" style="text-align: center">Remaining
+																	Qty</th>
+																<th width="10%" style="text-align: center">UOM</th>
+																<th width="10%" style="text-align: center">Job</th>
+																<th width="10%" style="text-align: center">Job Qty</th>
+																<th width="10%" style="text-align: center">Qty
+																	Received</th>
+																<th width="20%" style="text-align: center">Reoson,
+																	If not receiving all products</th>
+															</tr>
+														</table>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<div style="width: 960px; height: 360px; overflow: auto;">
+															<table cellspacing="0" cellpadding="1" border="1"
+																width="900">
+
+																<c:set var="count" value="${1}" />
+
+																<c:forEach items="${jjjjj.jobAssignmentProducts}"
+																	var="jobPro">
+																	<tr>
+																		<td style="text-align: center" width="5%">${count}</td>
+
+																		<td width="10%" style="text-align: center">${jobPro.jobPlanProductStock.get(0).purchase_Product_Details.productDetail.code}</td>
+																		<td width="10%" style="text-align: center">${jobPro.jobPlanProductStock.get(0).purchase_Product_Details.productDetail.description}</td>
+																		<td width="5%" style="text-align: center"><span
+																			id="qtty${jobPro.id}">${jobPro.qty}</span></td>
+																		<td width="10%"
+																			style="text-align: center; padding: 2px"><span
+																			id="remainQtyRe${jobPro.id}">${jobPro.remaninQty}</span></td>
+																		<td width="10%" style="text-align: center">${jobPro.jobPlanProductStock.get(0).purchase_Product_Details.productDetail.qtyUnit.name}</td>
+																		<td width="10%" style="text-align: center"><c:forEach
+																				items="${jobPro.jobAssignmentJobDetails}"
+																				var="jobProjob">
+																				${jobProjob.jobType.jobName}<hr>
+																			</c:forEach></td>
+																		<td width="10%" style="text-align: center"><c:forEach
+																				items="${jobPro.jobAssignmentJobDetails}"
+																				var="jobProjob">
+																				${jobProjob.qty}<hr>
+																			</c:forEach></td>
+																		<td width="10%"
+																			style="text-align: center; padding: 4px"><input
+																			type="text" class="form-control" value="0"
+																			name="qtyRe${jobPro.id}" id="qtyRe${jobPro.id}"
+																			onkeyup="qtySubtraction('${jobPro.id}');"
+																			onchange="return0('${jobPro.id}');"></td>
+																		<td width="20%" style="text-align: center"><input
+																			type="text" class="form-control"></td>
+																	</tr>
+																</c:forEach>
+																<c:set var="count" value="${count+1}" />
+															</table>
+
+														</div>
+													</td>
+												</tr>
+											</table>
+											<input type="hidden" name="remaining_qty" id="remaining_qty"
+												required> <input type="hidden" name="receive_qty"
+												id="remaining_qty" required> <input
+												class="btn green pull-right" type="submit"
+												style="float: right" value="Save">
+										</form>
+									</div>
+								</div>
 								<%-- </c:if> --%>
 							</div>
 
@@ -319,12 +329,23 @@
 <script type="text/javascript" src="js/enscroll.js"></script>
 <script type="text/javascript" src="js/grid-filter.js"></script>
 <script src="js/jquery-ui/jquery-ui.js"></script>
+<script src="js/numericInput.min.js"></script>
 <script type="text/javascript">
 	function qtySubtraction(g) {
 
 		if (Number($("#qtyRe" + g).val()) > Number($("#remainQtyRe" + g).html())) {
 			$("#qtyRe" + g).val("0");
+			alert("Receiving qty can not be more than remaining qty.");
 		}
+
+		$("#qtyRe" + g).numericInput({
+
+			allowFloat : true, // Accpets positive numbers (floating point)
+
+			allowNegative : false,
+		// Accpets positive or negative integer
+
+		});
 	}
 	function return0(g) {
 		if ($("#qtyRe" + g).val() == "") {

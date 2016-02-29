@@ -814,7 +814,7 @@ function showDatePicker() {
 							data2,
 							function(index, item2) {
 								$("#productNjobsTable").hide();	
-								if(item2.japYesOrNo=="yes"){
+								if((item2.japYesOrNo=="yes" && item2.IsComplete==true) || (item2.japYesOrNo=="yes" && item2.japRemQty>0 && item2.IsComplete==false)){
 									if(item2.japRemQty>0 && item2.IsComplete==false){
 										var Assigned="Assigned";
 									}else if(item2.IsComplete==true){
