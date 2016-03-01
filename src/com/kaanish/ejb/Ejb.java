@@ -3510,7 +3510,7 @@ public class Ejb {
 		em.remove(getPurchaseOrderProductdetailsById(id));
 	}
 
-	public void updatePurchaseOrderEntry(
+	public void updatePurchaseOrderProductdetails(
 			PurchaseOrderProductdetails purchaseOrderProductdetails) {
 		em.merge(purchaseOrderProductdetails);
 	}

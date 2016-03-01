@@ -47,7 +47,7 @@ public class PurchaseOrderEntry implements Serializable {
 	@OneToMany(mappedBy = "purchaseOrderEntry")
 	private List<NotificationDetails> notificationDetails;
 	
-	@OneToMany(mappedBy = "purchaseOrderEntry", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "purchaseOrderEntry", cascade = CascadeType.PERSIST)
 	private List<PurchaseOrderProductdetails> purchaseOrderProductdetails;
 	
 	@ManyToOne
