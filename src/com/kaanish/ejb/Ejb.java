@@ -33,6 +33,7 @@ import com.kaanish.model.JobPlan;
 import com.kaanish.model.JobPlanJobStock;
 import com.kaanish.model.JobPlanProductStock;
 import com.kaanish.model.JobPlanProducts;
+import com.kaanish.model.JobRecieveProductsDetails;
 import com.kaanish.model.JobRecievedDetails;
 import com.kaanish.model.JobStock;
 import com.kaanish.model.JobTypes;
@@ -1559,6 +1560,10 @@ public class Ejb {
 			JobAssignmentJobDetails jobAssignmentJobDetails) {
 		em.persist(jobAssignmentJobDetails);
 	}
+	
+	public JobAssignmentJobDetails getJobAssignmentJobDetailsById(int id) {
+		return em.find(JobAssignmentJobDetails.class, id);
+	}
 
 	public void updateJobAssignmentJobDetails(
 			JobAssignmentJobDetails jobAssignmentJobDetails) {
@@ -1575,6 +1580,16 @@ public class Ejb {
 			JobAssignmentProducts jobAssignmentProducts) {
 		em.merge(jobAssignmentProducts);
 
+	}
+
+	public JobAssignmentProducts getJobAssignmentProductsByJobPlanProductId(
+			int id) {
+		TypedQuery<JobAssignmentProducts> q = em
+				.createQuery(
+						"select c from JobAssignmentProducts c where c.jobPlanProducts.id=:id",
+						JobAssignmentProducts.class);
+		q.setParameter("id", id);
+		return q.getResultList().get(0);
 	}
 
 	public JobAssignmentProducts getJobAssignmentProductDetailsByproductAndJobPlanId(
@@ -1920,6 +1935,57 @@ public class Ejb {
 	public List<JobRecievedDetails> getAllJobRecievedDetails() {
 		TypedQuery<JobRecievedDetails> q = em.createQuery(
 				"select c from JobRecievedDetails c", JobRecievedDetails.class);
+		return q.getResultList();
+	}
+
+	public int getLastJobReChallanNumber() {
+		TypedQuery<JobRecievedDetails> q = em.createQuery(
+				"select c from JobRecievedDetails c ORDER BY c.id DESC",
+				JobRecievedDetails.class);
+		if (q.getResultList().size() > 0) {
+			return q.getResultList().get(0).getChallanNo();
+		} else {
+			return 0;
+		}
+	}
+
+	public int getLastJobReChallanSuffix() {
+		TypedQuery<JobRecievedDetails> q = em.createQuery(
+				"select c from JobRecievedDetails c ORDER BY c.id DESC",
+				JobRecievedDetails.class);
+		if (q.getResultList().size() > 0) {
+			int s = q.getResultList().get(0).getChallanSuffix();
+			if (getLastBillSetupBySufix("JOBR").equals(null)) {
+				return s;
+			} else {
+				if (Integer
+						.parseInt(getLastBillSetupBySufix("JOBR").getSufix()) < s) {
+					return s;
+				} else {
+					return Integer.parseInt(getLastBillSetupBySufix("JOBR")
+							.getSufix());
+				}
+			}
+		} else {
+			if (getLastBillSetupBySufix("JOBR").equals(null)) {
+				return 0;
+			} else {
+				return Integer.parseInt(getLastBillSetupBySufix("JOBR")
+						.getSufix());
+			}
+		}
+	}
+
+	/********************* for job Receive Product Details *********************/
+	public void setJobRecieveProductsDetails(
+			JobRecieveProductsDetails jobRecieveProductsDetails) {
+		em.persist(jobRecieveProductsDetails);
+	}
+
+	public List<JobRecieveProductsDetails> getAllJobRecieveProductsDetails() {
+		TypedQuery<JobRecieveProductsDetails> q = em.createQuery(
+				"select c from JobRecieveProductsDetails c",
+				JobRecieveProductsDetails.class);
 		return q.getResultList();
 	}
 
@@ -3279,6 +3345,10 @@ public class Ejb {
 		em.merge(sample);
 	}
 
+	public JobPlanProducts getJobPlanProductsById(int id) {
+		return em.find(JobPlanProducts.class, id);
+	}
+
 	public JobPlanProducts getJobPlanProductByPlanIdAndSampleProductId(
 			int jpId, int sId) {
 		TypedQuery<JobPlanProducts> q = em
@@ -3306,6 +3376,17 @@ public class Ejb {
 		TypedQuery<JobPlanJobStock> q = em
 				.createQuery(
 						"select c from JobPlanJobStock c where c.jobPlanProducts.id=:jppId AND c.jobsForDesignCostSheet.id=:jsId",
+						JobPlanJobStock.class);
+		q.setParameter("jppId", jppId);
+		q.setParameter("jsId", jsId);
+		return q.getResultList().get(0);
+	}
+	
+	public JobPlanJobStock getJobPlanJobStockByJobPlanProductIdAndJobAssignmentJobDetailsId(
+			int jppId, int jsId) {
+		TypedQuery<JobPlanJobStock> q = em
+				.createQuery(
+						"select c from JobPlanJobStock c where c.jobPlanProducts.id=:jppId AND c.jobAssignmentJobDetails.id=:jsId",
 						JobPlanJobStock.class);
 		q.setParameter("jppId", jppId);
 		q.setParameter("jsId", jsId);

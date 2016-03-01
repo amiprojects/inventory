@@ -19,25 +19,28 @@ public class JobPlanProducts implements Serializable {
 	@GeneratedValue
 	private int id;
 	private float qty;
-	private float remainingQty;//same as qty
+	private float remainingQty;// same as qty
 	private float totalProductCost;
-	private int jobCycle;//0
-	private boolean isUndergoingProcess;//false
-	private boolean isComplete;//false
-	
+	private int jobCycle;// 0
+	private boolean isUndergoingProcess;// false
+	private boolean isComplete;// false
+
 	@OneToMany(mappedBy = "jobPlanProducts")
 	private List<JobPlanJobStock> JobPlanJobStock;
+
+	@OneToMany(mappedBy = "jobPlanProducts")
+	private List<JobRecieveProductsDetails> jobRecieveProductsDetails;
 
 	@ManyToOne
 	@JoinColumn(name = "planId")
 	private JobPlan jobPlan;
-	
+
 	@OneToMany(mappedBy = "jobPlanProducts")
 	private List<JobPlanProductStock> jobPlanProductStock;
-	
+
 	@OneToMany(mappedBy = "jobPlanProducts")
 	private List<JobAssignmentProducts> jobAssignmentProducts;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "ProductsForDesignCostSheetId")
 	private ProductsForDesignCostSheet productsForDesignCostSheet;
@@ -48,7 +51,7 @@ public class JobPlanProducts implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
-	}	
+	}
 
 	public int getJobCycle() {
 		return jobCycle;
@@ -81,7 +84,7 @@ public class JobPlanProducts implements Serializable {
 	public void setJobPlan(JobPlan jobPlan) {
 		this.jobPlan = jobPlan;
 	}
-	
+
 	public float getQty() {
 		return qty;
 	}
@@ -102,7 +105,8 @@ public class JobPlanProducts implements Serializable {
 		return productsForDesignCostSheet;
 	}
 
-	public void setProductsForDesignCostSheet(ProductsForDesignCostSheet productsForDesignCostSheet) {
+	public void setProductsForDesignCostSheet(
+			ProductsForDesignCostSheet productsForDesignCostSheet) {
 		this.productsForDesignCostSheet = productsForDesignCostSheet;
 	}
 
@@ -110,7 +114,8 @@ public class JobPlanProducts implements Serializable {
 		return jobAssignmentProducts;
 	}
 
-	public void setJobAssignmentProducts(List<JobAssignmentProducts> jobAssignmentProducts) {
+	public void setJobAssignmentProducts(
+			List<JobAssignmentProducts> jobAssignmentProducts) {
 		this.jobAssignmentProducts = jobAssignmentProducts;
 	}
 
@@ -118,7 +123,8 @@ public class JobPlanProducts implements Serializable {
 		return jobPlanProductStock;
 	}
 
-	public void setJobPlanProductStock(List<JobPlanProductStock> jobPlanProductStock) {
+	public void setJobPlanProductStock(
+			List<JobPlanProductStock> jobPlanProductStock) {
 		this.jobPlanProductStock = jobPlanProductStock;
 	}
 
@@ -128,6 +134,15 @@ public class JobPlanProducts implements Serializable {
 
 	public void setTotalProductCost(float totalProductCost) {
 		this.totalProductCost = totalProductCost;
+	}
+
+	public List<JobRecieveProductsDetails> getJobRecieveProductsDetails() {
+		return jobRecieveProductsDetails;
+	}
+
+	public void setJobRecieveProductsDetails(
+			List<JobRecieveProductsDetails> jobRecieveProductsDetails) {
+		this.jobRecieveProductsDetails = jobRecieveProductsDetails;
 	}
 
 }
