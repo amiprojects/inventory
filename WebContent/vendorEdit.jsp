@@ -306,7 +306,7 @@ $(document).ready(function(){
 
 
 
-							<div class="widget-area" style="width: 72%">
+							<div class="widget-area">
 								<div class="col-md-12">
 									<%-- <p>${requestScope['msg']}</p> --%>
 									<form role="form" class="sec" action="updateVendor"
@@ -332,8 +332,7 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" name="bankName"
-															id="bankname" required="required"
-															value="${account.bankName}">
+															id="bankname" value="${account.bankName}">
 													</div>
 													<br>
 													<div class="col-md-3">
@@ -341,8 +340,7 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" name="bankAccNo"
-															id="acno" required="required"
-															value="${account.bankAccountNumber}">
+															id="acno" value="${account.bankAccountNumber}">
 													</div>
 													<br>
 													<div class="col-md-3">
@@ -350,7 +348,7 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" name="bankBranch"
-															id="branch" required="required" value="${account.branch}">
+															id="branch" value="${account.branch}">
 													</div>
 													<br>
 													<div class="col-md-3">
@@ -358,9 +356,9 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" id="bankcity"
-															required="required" value="${account.city.cityName}">
-														<input type="hidden" value="${account.city.id}"
-															name="bankCity" id="bankCityId">
+															value="${account.city.cityName}"> <input
+															type="hidden" value="${account.city.id}" name="bankCity"
+															id="bankCityId">
 													</div>
 													<br>
 													<div class="col-md-3">
@@ -368,8 +366,7 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" name="bankIFSC"
-															id="ifsc" required="required"
-															value="${account.bankIFSCnumber}">
+															id="ifsc" value="${account.bankIFSCnumber}">
 													</div>
 													<br>
 													<div class="col-md-3">
@@ -377,8 +374,7 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" name="bankMICR"
-															id="micrno" required="required"
-															value="${account.bankMICRnumber}">
+															id="micrno" value="${account.bankMICRnumber}">
 													</div>
 													<br>
 													<div class="col-md-3">
@@ -386,8 +382,7 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" name="bankRTGS"
-															id="rtgscd" required="required"
-															value="${account.bankRTGCnumber}">
+															id="rtgscd" value="${account.bankRTGCnumber}">
 													</div>
 													<br>
 													<div class="col-md-3">
@@ -395,7 +390,7 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control"
-															name="bankCheckLebel" id="label" required="required">
+															name="bankCheckLebel" id="label">
 													</div>
 												</div>
 												<br>
@@ -415,7 +410,7 @@ $(document).ready(function(){
 														</div>
 														<div class="col-md-7">
 															<input type="text" class="form-control"
-																name="vendorVATno" id="vatno" required="required"
+																name="vendorVATno" id="vatno"
 																value="${account.vatNumber}">
 														</div>
 													</div>
@@ -428,9 +423,8 @@ $(document).ready(function(){
 															<fmt:formatDate value="${account.vatRegistrationDate}"
 																var="vatregdate" pattern="dd-MM-yyyy" />
 															<input type="text" class="form-control"
-																name="vendorVATregDate" required="required"
-																id="datepicker" readonly="readonly"
-																value="${vatregdate}">
+																name="vendorVATregDate" id="datepicker"
+																readonly="readonly" value="${vatregdate}">
 														</div>
 													</div>
 
@@ -440,7 +434,7 @@ $(document).ready(function(){
 														</div>
 														<div class="col-md-7">
 															<input type="text" class="form-control"
-																name="vendorCSTno" id="cstno" required="required"
+																name="vendorCSTno" id="cstno"
 																value="${account.cstNumber}">
 														</div>
 													</div>
@@ -453,9 +447,8 @@ $(document).ready(function(){
 															<fmt:formatDate value="${account.cstRegistrationDate}"
 																var="cstregdate" pattern="dd-MM-yyyy" />
 															<input type="text" class="form-control"
-																name="vendorCSTregDate" required="required"
-																id="datepicker1" readonly="readonly"
-																value="${cstregdate}">
+																name="vendorCSTregDate" id="datepicker1"
+																readonly="readonly" value="${cstregdate}">
 														</div>
 													</div>
 
@@ -465,8 +458,7 @@ $(document).ready(function(){
 														</div>
 														<div class="col-md-7">
 															<input type="text" class="form-control"
-																name="vendorPANno" id="pan" required="required"
-																value="${account.panNumber}">
+																name="vendorPANno" id="pan" value="${account.panNumber}">
 														</div>
 													</div>
 
@@ -477,7 +469,6 @@ $(document).ready(function(){
 														<div class="col-md-7">
 															<input type="text" class="form-control"
 																name="vendorExciseRegNo" id="exciseno"
-																required="required"
 																value="${account.exciseRegistrationNumber}">
 														</div>
 													</div>
@@ -490,9 +481,8 @@ $(document).ready(function(){
 															<fmt:formatDate value="${account.exciseRegistrationDate}"
 																var="exciseregdate" pattern="dd-MM-yyyy" />
 															<input type="text" class="form-control"
-																name="vendorExciseRegDate" required="required"
-																id="datepicker2" readonly="readonly"
-																value="${exciseregdate}">
+																name="vendorExciseRegDate" id="datepicker2"
+																readonly="readonly" value="${exciseregdate}">
 														</div>
 													</div>
 
@@ -503,7 +493,6 @@ $(document).ready(function(){
 														<div class="col-md-7">
 															<input type="text" class="form-control"
 																name="vendorServiceTaxRegNo" id="servtaxno"
-																required="required"
 																value="${account.serviceTaxRegistrationNumber}">
 														</div>
 													</div>
@@ -517,9 +506,8 @@ $(document).ready(function(){
 																value="${account.serviceTaxRegistrationDate}"
 																var="serviceregdate" pattern="dd-MM-yyyy" />
 															<input type="text" class="form-control"
-																name="vendorServiceTaxRegDate" required="required"
-																id="datepicker3" readonly="readonly"
-																value="${serviceregdate}">
+																name="vendorServiceTaxRegDate" id="datepicker3"
+																readonly="readonly" value="${serviceregdate}">
 														</div>
 													</div>
 													<div class="row">
@@ -555,7 +543,7 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" name="vendorName"
-															id="name" required="required" value="${vendor.name}">
+															id="name" value="${vendor.name}">
 													</div>
 													<br>
 													<div class="col-md-3">
@@ -564,7 +552,7 @@ $(document).ready(function(){
 													<div class="col-md-9">
 														<input type="text" class="form-control"
 															name="vendorCompanyName" id="compname"
-															required="required" value="${vendor.companyName}">
+															value="${vendor.companyName}">
 													</div>
 
 													<div class="col-md-3">
@@ -572,7 +560,7 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" name="vendorPh1"
-															id="phn1" required="required" value="${vendor.ph1}">
+															id="phn1" value="${vendor.ph1}">
 													</div>
 
 													<div class="col-md-3">
@@ -580,7 +568,7 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" name="vendorPh2"
-															id="phn2" required="required" value="${vendor.ph2}">
+															id="phn2" value="${vendor.ph2}">
 													</div>
 
 													<div class="col-md-3">
@@ -588,7 +576,7 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" name="vendorMail"
-															id="email" required="required" value="${vendor.email}">
+															id="email" value="${vendor.email}">
 													</div>
 
 													<div class="col-md-3">
@@ -596,8 +584,7 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" name="vendorAlias"
-															id="alias" required="required"
-															value="${vendor.aliseName}">
+															id="alias" value="${vendor.aliseName}">
 													</div>
 
 													<div class="col-md-3">
@@ -631,12 +618,12 @@ $(document).ready(function(){
 														</ul>
 													</div>
 													<textarea rows="" cols="" class="form-control"
-														name="vendorAddress" id="addr" required="required">${vendor.address}</textarea>
+														name="vendorAddress" id="addr">${vendor.address}</textarea>
 													<div class="row">
 														<div class="col-md-3">City :</div>
 														<div class="col-md-9">
 															<input type="text" class="form-control cityAuto"
-																id="vendorcity" name="vendorCity" required="required"
+																id="vendorcity" name="vendorCity"
 																value="${vendor.city.cityName}"> <input
 																type="hidden" name="vendorCityId"
 																value="${account.city.id}" id="vendorCityId">
@@ -646,7 +633,7 @@ $(document).ready(function(){
 														<div class="col-md-3">Pin code :</div>
 														<div class="col-md-9">
 															<input type="text" class="form-control" name="vendorPin"
-																id="pin" required="required" value="${vendor.pinCode}">
+																id="pin" value="${vendor.pinCode}">
 														</div>
 													</div>
 												</div>

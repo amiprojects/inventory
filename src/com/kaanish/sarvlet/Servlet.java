@@ -967,17 +967,17 @@ public class Servlet extends HttpServlet {
 					vendor.setLastModifiedDate(dt);
 					vendor.setAddress(req.getParameter("vendorAddress"));
 					vendor.setAliseName(req.getParameter("vendorAlias"));
-					vendor.setCity(ejb.getCityById(Integer.parseInt(req
-							.getParameter("vendorCityId"))));
+					if (!req.getParameter("vendorCityId").equals("")) {
+						vendor.setCity(ejb.getCityById(Integer.parseInt(req.getParameter("vendorCityId"))));
+					}
 					vendor.setCompanyName(req.getParameter("vendorCompanyName"));
 					vendor.setEmail(req.getParameter("vendorMail"));
 					vendor.setPh1(req.getParameter("vendorPh1"));
 					vendor.setPh2(req.getParameter("vendorPh2"));
 					vendor.setPinCode(req.getParameter("vendorPin"));
-					vendor.setVendorType(ejb.getVendorTypeById(Integer
-							.parseInt(req.getParameter("vendorType"))));
-					vendor.setUsers(ejb.getUserById((String) httpSession
-							.getAttribute("user")));
+					
+					vendor.setVendorType(ejb.getVendorTypeById(Integer.parseInt(req.getParameter("vendorType"))));
+					vendor.setUsers(ejb.getUserById((String) httpSession.getAttribute("user")));
 
 					accountDetails.setBankAccountNumber(req
 							.getParameter("bankAccNo"));

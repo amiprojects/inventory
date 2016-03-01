@@ -18,6 +18,14 @@
 <link rel="stylesheet" href="css/toast.css" type="text/css" />
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 
+
+<script src="js/jquery.dataTables.min.js"></script>
+	<script src="js/dataTables.fixedHeader.min.js"></script>
+	
+	<script src="js/dataTables.searchHighlight.min.js"></script>
+
+	<script src="js/jquery.highlight.js"></script>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		if ($('#msg').html() != "") {
@@ -73,12 +81,21 @@
 </style>
 <!-- Script -->
 
+
+
 <script type="text/javascript" src="js/modernizr.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script type="text/javascript" src="js/enscroll.js"></script>
 <script type="text/javascript" src="js/grid-filter.js"></script>
 <script src="js/jquery-ui/jquery-ui.js"></script>
+
+
+<link rel="stylesheet" href="css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="css/fixedHeader.dataTables.min.css">
+<link rel="stylesheet" href="css/buttons.dataTables.min.css">
+<link rel="stylesheet" href="css/dataTables.searchHighlight.css" />
+<link rel="stylesheet" href="css/style.css" type="text/css" />
 
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
 <!-- Styles -->
@@ -337,7 +354,7 @@ $(document).ready(function(){
 
 								</div>
 
-								<div class="widget-area" style="width: 28%;">
+								<div class="widget-area" style="width:32% " >
 
 									<!-- <div class="form-group">
 											<form action="goSearchVendor" method="post">
@@ -355,14 +372,15 @@ $(document).ready(function(){
 
 
 									<br> <br>
-									<div style="overflow: scroll; height: 500px ">
-										<table class="table">
+									
+										<table id="example" cellspacing="0" width="100%"
+											class="display">
 											<thead>
 												<tr>
 													<th>#</th>
 													<th>Name</th>
 													<th>Phone Number</th>
-													<th></th>
+													<th>View</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -380,9 +398,9 @@ $(document).ready(function(){
 												</c:forEach>
 											</tbody>
 										</table>
-									</div>
+									
 								</div>
-								<div class="widget-area" style="width: 72%">
+								<div class="widget-area" style="width:68%">
 
 									<form role="form" class="sec" action="addVendor" method="post">
 										<ul class="nav nav-tabs">
@@ -612,7 +630,7 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" name="vendorName"
-															id="name" required="required" value="${vendor.name}">
+															id="name"  required="required" value="${vendor.name}">
 													</div>
 													<br>
 													<div class="col-md-3">
@@ -629,7 +647,7 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" name="vendorPh1"
-															id="phn1" required="required" value="${vendor.ph1}">
+															id="phn1" required="required"   value="${vendor.ph1}">
 													</div>
 
 													<div class="col-md-3">
@@ -637,7 +655,7 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" name="vendorPh2"
-															id="phn2" required="required" value="${vendor.ph2}">
+															id="phn2" value="${vendor.ph2}">
 													</div>
 
 													<div class="col-md-3">
@@ -645,7 +663,7 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" name="vendorMail"
-															id="email" required="required" value="${vendor.email}">
+															id="email"  value="${vendor.email}">
 													</div>
 
 													<div class="col-md-3">
@@ -653,7 +671,7 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" name="vendorAlias"
-															id="alias" required="required"
+															id="alias" 
 															value="${vendor.aliseName}">
 													</div>
 
@@ -687,7 +705,7 @@ $(document).ready(function(){
 														</ul>
 													</div>
 													<textarea rows="" cols="" class="form-control"
-														name="vendorAddress" id="addr" required="required"
+														name="vendorAddress" id="addr"  
 														value="${vendor.address}"></textarea>
 													<div class="row">
 														<div class="col-md-3">
@@ -695,7 +713,7 @@ $(document).ready(function(){
 														</div>
 														<div class="col-md-9">
 															<input type="text" class="form-control cityAuto"
-																name="vendorCity" required="required" id="vendorCity"
+																name="vendorCity"   id="vendorCity"
 																value="${vendor.city}" autocomplete="off"> <input type="hidden"
 																name="vendorCityId" id="vendorCityId">
 														</div>
@@ -706,7 +724,7 @@ $(document).ready(function(){
 														</div>
 														<div class="col-md-9">
 															<input type="text" class="form-control" name="vendorPin"
-																id="pin" required="required" value="${vendor.pinCode}">
+																id="pin"   value="${vendor.pinCode}">
 														</div>
 													</div>
 												</div>
@@ -805,6 +823,27 @@ $(document).ready(function(){
 		</div>
 		<!-- Page Container -->
 	</div>
+	
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var table = $('#example').DataTable({
+
+				"scrollY" : 250,
+				"scrollX" : true,
+				"bLengthChange": false,
+			});
+
+			table.on('draw', function() {
+				var body = $(table.table().body());
+
+				body.unhighlight();
+				body.highlight(table.search());
+			});
+		});
+	</script>
+	
+	
 	<!-- main -->
 </body>
 
