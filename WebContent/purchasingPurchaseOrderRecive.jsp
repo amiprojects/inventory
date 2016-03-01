@@ -267,6 +267,7 @@ em
 
 											</div>
 											<div class="col-md-12">
+											<input type="hidden" name="ageIDD" value="${purchaseSearchView.agentId}">
 												<c:choose>
 													<c:when test="${purchaseSearchView.agentId==0}">
 														<input type="checkbox" id="agent" name="agent"
@@ -517,9 +518,12 @@ em
 												<td>${purchaseSearchView.tax_Type_Group.name}</td>
 												<td>%</td>
 												<td><input type="text" class="form-control"
-													readonly="readonly"
+													readonly="readonly" name="taxGroupName"
 													value="${purchaseSearchView.tax_Type_Group.getTotalTaxValue()}"
-													id="taxTot"></td>
+													id="taxTot">
+													<input type="hidden" name="taxGroupID" value="${purchaseSearchView.tax_Type_Group.id}">
+													</td>
+													
 											</tr>
 										</tbody>
 										<tbody>
@@ -541,7 +545,7 @@ em
 										<tbody>
 											<tr>
 												<td colspan="2">Surcharge :</td>
-												<td><input type="text" class="form-control"
+												<td><input type="number" class="form-control"
 													id="surcharge" name="surcharge"></td>
 													
 											</tr>
@@ -916,7 +920,7 @@ em
 								+ Number($("#transportCost").val()) + Number($(
 								"#surcharge").val())) * 100) / 100); */
 				$("#totalvalue").val(
-						Math.round((Number($("#subTotal").val()) + Number($(
+						Math.round((Number($("#subTotal").val())+Number($("#surcharge").val()) + Number($(
 								"#taxAmount").val())) * 100) / 100);
 				var tot = $("#totalvalue").val();
 				var round = Math.round(tot);
@@ -1079,7 +1083,12 @@ em
 	</script>
 	<script type="text/javascript">
 	function paymentDate() {
-		$("#savePurchase").modal("show");	
+		$("#savePurchase").modal("show");
+		$("#datepicker2").datepicker({
+			dateFormat : "dd-mm-yy",
+			minDate : new Date(n, m, dt),
+			maxDate : 0
+		});
 	}</script>
 	<script>
 	$("input:radio[name=bar]").click(function() {
@@ -1092,6 +1101,12 @@ em
 		}
 	});
 	
+	</script>
+	<script>
+		$(function() {
+	
+			
+		});
 	</script>
 	
 </body>

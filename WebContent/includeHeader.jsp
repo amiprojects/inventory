@@ -141,5 +141,5 @@ function getCritcalStock(){
 $(document).ready(function(){
 	//getCritcalStock();
 });
-</script> -->
+</script>-->
 <!-- Header -->
