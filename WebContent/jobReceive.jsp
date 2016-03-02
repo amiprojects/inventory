@@ -155,7 +155,7 @@
 								</div>
 								<br> <br> <br> <br>
 								<%-- <c:if test="${requestScope['amj']!=null}"> --%>
-								<form action="jobRecieve" method="post">
+								<form action="jobRecieve" method="post" id="jobRcvForm">
 									<div class="col-md-12" style="width: 100%;" id="jrecive">
 										<div>
 											<div class="col-md-6">
@@ -276,7 +276,10 @@
 																<th width="10%" style="text-align: center">Job</th>
 																<th width="10%" style="text-align: center">Assigned
 																	Job Qty</th>
-																<th width="15%" style="text-align: center">Qty Done</th>
+																<th width="15%" style="text-align: center">Job Qty
+																	Done</th>
+																<th width="10%" style="text-align: center">Select
+																	Product</th>
 																<!-- <th width="20%" style="text-align: center">Reoson,
 																	If not receiving all products</th> -->
 															</tr>
@@ -295,9 +298,9 @@
 																	var="jobPro">
 																	<tr>
 																		<td style="text-align: center" width="5%">${count}<input
-																			type="hidden" name="jobPlanProductsId"
+																			type="hidden" id="jobPlanProductsId${jobPro.id}"
 																			value="${jobPro.jobPlanProducts.id}"><input
-																			type="hidden" name="jobAssgnProductsId"
+																			type="hidden" id="jobAssgnProductsId${jobPro.id}"
 																			value="${jobPro.id}"></td>
 
 																		<td width="10%" style="text-align: center">${jobPro.jobPlanProductStock.get(0).purchase_Product_Details.productDetail.code}</td>
@@ -322,13 +325,30 @@
 																			style="text-align: center; padding: 4px"><c:forEach
 																				items="${jobPro.jobAssignmentJobDetails}"
 																				var="jobProjob">
-																				<input type="text" class="form-control" value="0"
-																					name="qtyRe${jobPro.id}" id="qtyRe${jobProjob.id}"
+																				<input type="text" class="form-control"
+																					value="${jobProjob.qty}" name="qtyRe${jobPro.id}"
+																					id="qtyRe${jobProjob.id}"
 																					onkeyup="qtySubtraction('${jobProjob.id}');"
 																					onchange="return0('${jobProjob.id}');">
-																				<input type="hidden" name="jobAssgnJobId${jobPro.id}">
+																				<input type="hidden"
+																					name="jobAssgnJobId${jobPro.id}"
+																					value="${jobProjob.id}">
 																				<hr>
 																			</c:forEach></td>
+
+																		<td width="10%" style="text-align: center"><c:if
+																				test="${jobPro.remaninQty>0}">
+																				<input type="checkbox" class="isSelected"
+																					id="isSelected${jobPro.id}"
+																					name="isSelected${jobPro.id}"
+																					onclick="isSelectedF(${jobPro.id});">
+																			</c:if> <c:if test="${jobPro.remaninQty==0}">
+																				<input type="checkbox" class="isSelected"
+																					disabled="disabled" id="isSelected${jobPro.id}"
+																					name="isSelected${jobPro.id}"
+																					onclick="isSelectedF(${jobPro.id});">
+																			</c:if></td>
+
 																		<!-- <td width="20%" style="text-align: center"><input
 																			type="text" class="form-control" name="reoson"></td> -->
 																	</tr>
@@ -340,11 +360,62 @@
 													</td>
 												</tr>
 											</table>
+											<%-- <hr>
+											<table class="table table-striped table-bordered">
+												<thead>
+													<tr>
+														<th>#</th>
+														<th>Received Date</th>
+														<th>Received challan no.</th>
+														<th>Product Code</th>
+														<th>Product Description</th>
+														<th>Product Qty</th>
+														<th>UOM</th>
+													</tr>
+												</thead>
+
+												<c:set var="j" value="${1}"></c:set>
+												<c:forEach var="jobReceive"
+													items="${jjjjj.jobRecievedDetails}">
+
+													<tbody>
+														<tr>
+															<td>${j}</td>
+															<td><fmt:formatDate
+																	value="${jobReceive.recievingDate}" pattern="dd-MM-yy" />
+															</td>
+															<td>${jobReceive.challanNumber}</td>
+															<td><c:forEach var="jobReceivedProd"
+																	items="${jobReceive.jobRecieveProductsDetails}">														
+													${jobReceivedProd.jobPlanProducts.productsForDesignCostSheet.productDetail.code}
+														<hr>
+																</c:forEach></td>
+															<td><c:forEach var="jobReceivedProd"
+																	items="${jobReceive.jobRecieveProductsDetails}">														
+													${jobReceivedProd.jobPlanProducts.productsForDesignCostSheet.productDetail.description}
+														<hr>
+																</c:forEach></td>
+															<td><c:forEach var="jobReceivedProd"
+																	items="${jobReceive.jobRecieveProductsDetails}">														
+													${jobReceivedProd.qtyReturn}
+														<hr>
+																</c:forEach></td>
+															<td><c:forEach var="purchaseReturnProd"
+																	items="${purchaseReturn.purchaseReturnProductDetails}">
+																	<c:if test="${purchaseReturnProd.qtyReturn!=0}">
+													${purchaseReturnProd.fault}
+														<hr>
+																</c:forEach></td>
+														</tr>
+													</tbody>
+													<c:set var="j" value="${j+1}" />
+												</c:forEach>
+											</table> --%>
 											<input type="hidden" name="remaining_qty" id="remaining_qty"
 												required> <input type="hidden" name="receive_qty"
 												id="remaining_qty" required> <input
-												class="btn green pull-right" type="submit"
-												style="float: right" value="Save">
+												class="btn green pull-right" type="button"
+												style="float: right" value="Save" onclick="saveF()">
 
 										</div>
 									</div>
@@ -440,6 +511,30 @@
 					vars[key] = value;
 				});
 		return vars;
+	}
+
+	function isSelectedF(japId) {
+		if ($('#isSelected'+japId).is(":checked")) {
+			$("#jobAssgnProductsId"+japId).attr("name", "jobAssgnProductsId");
+			$("#jobPlanProductsId"+japId).attr("name", "jobPlanProductsId");
+		}else{
+			$("#jobAssgnProductsId"+japId).removeAttr("name");
+			$("#jobPlanProductsId"+japId).removeAttr("name");
+		}
+	}
+	
+	function saveF(){
+		var i = 0;
+	    $(".isSelected").each(function () {
+	        if ($(this).is(':checked')) {
+	            i = 1;
+	        }
+	    });
+	    if (i == 0) {
+	    	alert("No product found to receive...");
+	    }else{
+	    	$("#jobRcvForm").submit();
+	    }
 	}
 </script>
 

@@ -3381,17 +3381,6 @@ public class Ejb {
 		q.setParameter("jsId", jsId);
 		return q.getResultList().get(0);
 	}
-	
-	public JobPlanJobStock getJobPlanJobStockByJobPlanProductIdAndJobAssignmentJobDetailsId(
-			int jppId, int jsId) {
-		TypedQuery<JobPlanJobStock> q = em
-				.createQuery(
-						"select c from JobPlanJobStock c where c.jobPlanProducts.id=:jppId AND c.jobAssignmentJobDetails.id=:jsId",
-						JobPlanJobStock.class);
-		q.setParameter("jppId", jppId);
-		q.setParameter("jsId", jsId);
-		return q.getResultList().get(0);
-	}
 
 	/***************************
 	 * for JobPlanProductStockProductStock

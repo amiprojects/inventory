@@ -625,60 +625,60 @@ $(document).ready(function(){
 											<div id="detail" class="tab-pane fade active in">
 												<div class="widget-area">
 
-													<div class="col-md-3">
+													<div class="col-md-4">
 														<b>Name:</b>
 													</div>
-													<div class="col-md-9">
+													<div class="col-md-8">
 														<input type="text" class="form-control" name="vendorName"
 															id="name"  required="required" value="${vendor.name}">
 													</div>
 													<br>
-													<div class="col-md-3">
+													<div class="col-md-4">
 														<b>Company Name:</b>
 													</div>
-													<div class="col-md-9">
+													<div class="col-md-8">
 														<input type="text" class="form-control"
 															name="vendorCompanyName" id="compname"
 															value="${vendor.companyName}">
 													</div>
-
-													<div class="col-md-3">
+													<div class="col-md-12"></div>
+													<div class="col-md-4">
 														<b>Ph No1:</b>
 													</div>
-													<div class="col-md-9">
+													<div class="col-md-8">
 														<input type="text" class="form-control" name="vendorPh1"
 															id="phn1" required="required"   value="${vendor.ph1}">
 													</div>
 
-													<div class="col-md-3">
+													<div class="col-md-4">
 														<b>Ph No2:</b>
 													</div>
-													<div class="col-md-9">
+													<div class="col-md-8">
 														<input type="text" class="form-control" name="vendorPh2"
 															id="phn2" value="${vendor.ph2}">
 													</div>
 
-													<div class="col-md-3">
+													<div class="col-md-4">
 														<b>Email :</b>
 													</div>
-													<div class="col-md-9">
+													<div class="col-md-8">
 														<input type="text" class="form-control" name="vendorMail"
 															id="email"  value="${vendor.email}">
 													</div>
 
-													<div class="col-md-3">
+													<div class="col-md-4">
 														<b>Alias name :</b>
 													</div>
-													<div class="col-md-9">
+													<div class="col-md-8">
 														<input type="text" class="form-control" name="vendorAlias"
 															id="alias" 
 															value="${vendor.aliseName}">
 													</div>
 
-													<div class="col-md-3">
+													<div class="col-md-4">
 														<b>Vendor type :</b>
 													</div>
-													<div class="col-md-9">
+													<div class="col-md-8">
 														<select class="form-control" name="vendorType" id="type"
 															value="${vendor.vendorType}">
 															<c:forEach

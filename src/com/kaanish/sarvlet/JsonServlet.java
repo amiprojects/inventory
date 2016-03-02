@@ -384,7 +384,9 @@ public class JsonServlet extends HttpServlet {
 										.writeEnd();
 							} else {
 								if (ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
-										Integer.parseInt(req.getParameter("japId")), jdcs.getId()).getRemQty() > 0) {
+										Integer.parseInt(req.getParameter("japId")), jdcs.getId()).getRemQty() > 0 && ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
+												Integer.parseInt(req.getParameter("japId")), jdcs.getId()).getRemQty() == ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
+														Integer.parseInt(req.getParameter("japId")), jdcs.getId()).getQty()) {
 									generatorJ.writeStartObject().write("JobId", jdcs.getId())
 											.write("JobName", jdcs.getJobTypes().getJobName())
 											.write("JobRateOfSample", jdcs.getRate())
@@ -413,7 +415,14 @@ public class JsonServlet extends HttpServlet {
 															Integer.parseInt(req.getParameter("japId")), jdcs.getId())
 													.getEstimatedCompletionDate().toString())
 											.writeEnd();
-								} else {
+								} 
+//								else if (ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
+//										Integer.parseInt(req.getParameter("japId")), jdcs.getId()).getRemQty() > 0 && ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
+//												Integer.parseInt(req.getParameter("japId")), jdcs.getId()).getRemQty() != ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
+//														Integer.parseInt(req.getParameter("japId")), jdcs.getId()).getQty()) {
+//									
+//								}
+								else {
 									generatorJ.writeStartObject().write("JobId", jdcs.getId())
 											.write("JobName", jdcs.getJobTypes().getJobName())
 											.write("JobRateOfSample", jdcs.getRate())
