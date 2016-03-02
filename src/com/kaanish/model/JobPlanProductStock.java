@@ -18,10 +18,10 @@ public class JobPlanProductStock implements Serializable {
 	@GeneratedValue
 	private int id;
 	private float qty;
-	private float remainingQty;//same as qty
-	private int jobCycle;//0
-	private boolean isUndergoingProcess;//false
-	private boolean isComplete;//false
+	//private float remainingQty;//same as qty
+	//private int jobCycle;//0
+	//private boolean isUndergoingProcess;//false
+	//private boolean isComplete;//false
 
 	@ManyToOne
 	@JoinColumn(name = "planId")
@@ -34,9 +34,9 @@ public class JobPlanProductStock implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "purchaseProductId")
 	private Purchase_Product_Details purchase_Product_Details;
-	/*@OneToMany(mappedBy = "jobPlanProductStock")
-	private List<JobAssignmentProducts> jobAssignmentProducts;*/
 	
+	/*@OneToMany(mappedBy = "jobPlanProductStock")
+	private List<JobAssignmentProducts> jobAssignmentProducts;*/	
 	@ManyToOne
 	@JoinColumn(name = "jobAssignmentProductsId")
 	private JobAssignmentProducts jobAssignmentProducts;
@@ -55,29 +55,29 @@ public class JobPlanProductStock implements Serializable {
 
 	
 
-	public int getJobCycle() {
-		return jobCycle;
-	}
+//	public int getJobCycle() {
+//		return jobCycle;
+//	}
+//
+//	public void setJobCycle(int jobCycle) {
+//		this.jobCycle = jobCycle;
+//	}
+//
+//	public boolean isUndergoingProcess() {
+//		return isUndergoingProcess;
+//	}
+//
+//	public void setUndergoingProcess(boolean isUndergoingProcess) {
+//		this.isUndergoingProcess = isUndergoingProcess;
+//	}
 
-	public void setJobCycle(int jobCycle) {
-		this.jobCycle = jobCycle;
-	}
-
-	public boolean isUndergoingProcess() {
-		return isUndergoingProcess;
-	}
-
-	public void setUndergoingProcess(boolean isUndergoingProcess) {
-		this.isUndergoingProcess = isUndergoingProcess;
-	}
-
-	public boolean isComplete() {
-		return isComplete;
-	}
-
-	public void setComplete(boolean isComplete) {
-		this.isComplete = isComplete;
-	}
+	// public boolean isComplete() {
+	// return isComplete;
+	// }
+	//
+	// public void setComplete(boolean isComplete) {
+	// this.isComplete = isComplete;
+	// }
 
 	public JobPlan getJobPlan() {
 		return jobPlan;
@@ -111,13 +111,13 @@ public class JobPlanProductStock implements Serializable {
 		this.qty = qty;
 	}
 
-	public float getRemainingQty() {
-		return remainingQty;
-	}
-
-	public void setRemainingQty(float remainingQty) {
-		this.remainingQty = remainingQty;
-	}
+//	public float getRemainingQty() {
+//		return remainingQty;
+//	}
+//
+//	public void setRemainingQty(float remainingQty) {
+//		this.remainingQty = remainingQty;
+//	}
 
 	public ProductsForDesignCostSheet getProductsForDesignCostSheet() {
 		return productsForDesignCostSheet;

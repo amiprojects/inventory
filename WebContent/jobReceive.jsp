@@ -155,78 +155,108 @@
 								</div>
 								<br> <br> <br> <br>
 								<%-- <c:if test="${requestScope['amj']!=null}"> --%>
-								<div class="col-md-12" style="width: 100%;" id="jrecive">
-									<div>
-										<div class="col-md-6">
+								<form action="jobRecieve" method="post" id="jobRcvForm">
+									<div class="col-md-12" style="width: 100%;" id="jrecive">
+										<div>
+											<div class="col-md-6">
 
-											<table>
-												<tr>
-													<c:set value="${requestScope['amj']}" var="jjjjj" />
-													<td><p style="font-size: 18px; color: black;">
-															Jobber Name:</p></td>
+												<table>
+													<tr>
+														<c:set value="${requestScope['amj']}" var="jjjjj" />
+														<td><p style="font-size: 18px; color: black;">
+																Jobber Name:</p></td>
 
-													<td><p style="font-size: 17px; color: black;">
-															<b>${jjjjj.vendor.name}</b>
-														</p></td>
+														<td><p style="font-size: 17px; color: black;">
+																<b>${jjjjj.vendor.name}</b>
+															</p></td>
 
-												</tr>
-												<tr>
-													<td>&nbsp;</td>
-												</tr>
-												<tr>
-													<td><p style="font-size: 18px; color: black;">
-															Jobber Details:</p> <br>
-														<p style="font-size: 17px; color: black;">
-															Email: <b>${jjjjj.vendor.email}</b>
-														</p> <br>
-														<p style="font-size: 17px; color: black;">
-															Address:<b>${jjjjj.vendor.address}</b>
-														</p>
-												</tr>
-											</table>
+													</tr>
+													<tr>
+														<td>&nbsp;</td>
+													</tr>
+													<tr>
+														<td><p style="font-size: 18px; color: black;">
+																Jobber Details:</p> <br>
+															<p style="font-size: 17px; color: black;">
+																&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: <b>${jjjjj.vendor.email}</b>
+															</p> <br>
+															<p style="font-size: 17px; color: black;">
+																&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Address:<b>${jjjjj.vendor.address}</b>
+															</p>
+													</tr>
+												</table>
 
+											</div>
+
+											<div class="col-md-6">
+
+												<table>
+													<tr>
+														<td><p style="font-size: 18px; color: black;">Job
+																Challan ID: &nbsp;</td>
+														<td width="242px"><input type="text"
+															value="${jjjjj.challanNumber}" class="form-control"
+															readonly="readonly" name="jobChallanNo"></td>
+
+													</tr>
+													<tr>
+														<td><p style="font-size: 18px; color: black;">
+																Assigned Date: &nbsp;</p></td>
+														<td><c:if test="${requestScope['amj']!=null}">
+																<input type="text" id="assgnDate"
+																	value="<fmt:formatDate value="${jjjjj.assignDate}"
+																	pattern="dd-MM-yyyy" />"
+																	class="form-control" disabled="disabled">
+															</c:if> <c:if test="${requestScope['amj']==null}">
+																<input type="text" id="assgnDate" value="00-00-0000"
+																	class="form-control" disabled="disabled">
+															</c:if></td>
+
+													</tr>
+													<tr>
+														<td><p style="font-size: 18px; color: black;">Job
+																Rcv Challan No: &nbsp;</td>
+														<td><c:set var="fy"
+																value="${sessionScope['ejb'].getCurrentFinancialYear()}" />
+															<c:set var="cno"
+																value="${sessionScope['ejb'].getLastJobReChallanNumber()+1}" />
+															<c:set var="csuf"
+																value="${sessionScope['ejb'].getLastJobReChallanSuffix()+1}" />
+															<c:set var="suf" value="JOBR" /> <c:set var="bs"
+																value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompany(suf)}" />
+															<fmt:formatNumber value="${cno}" var="lastChNo"
+																minIntegerDigits="4" groupingUsed="false" /> <fmt:formatNumber
+																value="${csuf}" var="lastSuf" minIntegerDigits="3"
+																groupingUsed="false" /> <fmt:formatDate
+																value="${sessionScope['ejb'].getCurrentDateTime()}"
+																pattern="MM" var="yr" /> <input readonly="readonly"
+															type="text" placeholder="" name="jobReChallanNo"
+															id="jobChallanNo" class="form-control"
+															value="${bs.companyInitial}/${fy}/${yr}/${bs.billType}/${lastChNo}/${lastSuf}">
+															<input type="hidden" name="challanNo" value="${lastChNo}"
+															id="challanNo"> <input type="hidden"
+															name="challanSuffix" value="${lastSuf}"></td>
+
+													</tr>
+													<tr>
+														<td><p style="font-size: 18px; color: black;">
+																Receiving Date: &nbsp;</p></td>
+														<td><input type="text" value="" class="form-control"
+															id="datepicker" readonly="readonly" name="rcvDate"></td>
+
+													</tr>
+												</table>
+
+											</div>
 										</div>
+										<div class="col-md-12">&nbsp;</div>
+
+										<div class="col-md-12">
 
 
-										<div class="col-md-6">
-
-											<table>
-												<tr>
-													<td><p style="font-size: 18px; color: black;">Job
-															Challan ID:</td>
-													<td>&nbsp;</td>
-													<td><p style="font-size: 17px; color: black;">
-															<b>${jjjjj.challanNumber}</b>
-														</p></td>
-
-												</tr>
-												<tr>
-													<td>&nbsp;</td>
-												</tr>
-												<tr>
-													<td><p style="font-size: 18px; color: black;">
-															Assigned Date:</p></td>
-													<td>&nbsp;</td>
-													<td><p style="font-size: 17px; color: black;">
-															<b><fmt:formatDate value="${jjjjj.assignDate}"
-																	pattern="dd-MM-yyyy" /></b>
-														</p></td>
-
-												</tr>
-											</table>
-
-										</div>
-									</div>
-									<div class="col-md-12">&nbsp;</div>
-
-									<div class="col-md-12">
-
-
-										<hr width="100%">
-										<br> <br>
-										<form action="jobRecieve" method="post">
-											<input type="hidden" value="${requestScope['amj'].id}"
-												name="jobAssignID">
+											<hr width="100%">
+											<br> <br> <input type="hidden"
+												value="${requestScope['amj'].id}" name="jobAssignID">
 											<table cellspacing="0" cellpadding="0" border="0" width="975">
 												<tr>
 													<td>
@@ -237,18 +267,21 @@
 
 																<th width="10%" style="text-align: center">Product
 																	Code</th>
-																<th width="10%" style="text-align: center">Product
+																<th width="15%" style="text-align: center">Product
 																	Description</th>
 																<th width="5%" style="text-align: center">Qty</th>
 																<th width="10%" style="text-align: center">Remaining
 																	Qty</th>
 																<th width="10%" style="text-align: center">UOM</th>
 																<th width="10%" style="text-align: center">Job</th>
-																<th width="10%" style="text-align: center">Job Qty</th>
-																<th width="10%" style="text-align: center">Qty
-																	Received</th>
-																<th width="20%" style="text-align: center">Reoson,
-																	If not receiving all products</th>
+																<th width="10%" style="text-align: center">Assigned
+																	Job Qty</th>
+																<th width="15%" style="text-align: center">Job Qty
+																	Done</th>
+																<th width="10%" style="text-align: center">Select
+																	Product</th>
+																<!-- <th width="20%" style="text-align: center">Reoson,
+																	If not receiving all products</th> -->
 															</tr>
 														</table>
 													</td>
@@ -264,15 +297,18 @@
 																<c:forEach items="${jjjjj.jobAssignmentProducts}"
 																	var="jobPro">
 																	<tr>
-																		<td style="text-align: center" width="5%">${count}</td>
+																		<td style="text-align: center" width="5%">${count}<input
+																			type="hidden" id="jobPlanProductsId${jobPro.id}"
+																			value="${jobPro.jobPlanProducts.id}"><input
+																			type="hidden" id="jobAssgnProductsId${jobPro.id}"
+																			value="${jobPro.id}"></td>
 
 																		<td width="10%" style="text-align: center">${jobPro.jobPlanProductStock.get(0).purchase_Product_Details.productDetail.code}</td>
-																		<td width="10%" style="text-align: center">${jobPro.jobPlanProductStock.get(0).purchase_Product_Details.productDetail.description}</td>
+																		<td width="15%" style="text-align: center">${jobPro.jobPlanProductStock.get(0).purchase_Product_Details.productDetail.description}</td>
 																		<td width="5%" style="text-align: center"><span
 																			id="qtty${jobPro.id}">${jobPro.qty}</span></td>
 																		<td width="10%"
-																			style="text-align: center; padding: 2px"><span
-																			id="remainQtyRe${jobPro.id}">${jobPro.remaninQty}</span></td>
+																			style="text-align: center; padding: 2px">${jobPro.remaninQty}</td>
 																		<td width="10%" style="text-align: center">${jobPro.jobPlanProductStock.get(0).purchase_Product_Details.productDetail.qtyUnit.name}</td>
 																		<td width="10%" style="text-align: center"><c:forEach
 																				items="${jobPro.jobAssignmentJobDetails}"
@@ -282,33 +318,108 @@
 																		<td width="10%" style="text-align: center"><c:forEach
 																				items="${jobPro.jobAssignmentJobDetails}"
 																				var="jobProjob">
-																				${jobProjob.qty}<hr>
+																				<span id="remainQtyRe${jobProjob.id}">${jobProjob.qty}</span>
+																				<hr>
 																			</c:forEach></td>
-																		<td width="10%"
-																			style="text-align: center; padding: 4px"><input
-																			type="text" class="form-control" value="0"
-																			name="qtyRe${jobPro.id}" id="qtyRe${jobPro.id}"
-																			onkeyup="qtySubtraction('${jobPro.id}');"
-																			onchange="return0('${jobPro.id}');"></td>
-																		<td width="20%" style="text-align: center"><input
-																			type="text" class="form-control"></td>
+																		<td width="15%"
+																			style="text-align: center; padding: 4px"><c:forEach
+																				items="${jobPro.jobAssignmentJobDetails}"
+																				var="jobProjob">
+																				<input type="text" class="form-control"
+																					value="${jobProjob.qty}" name="qtyRe${jobPro.id}"
+																					id="qtyRe${jobProjob.id}"
+																					onkeyup="qtySubtraction('${jobProjob.id}');"
+																					onchange="return0('${jobProjob.id}');">
+																				<input type="hidden"
+																					name="jobAssgnJobId${jobPro.id}"
+																					value="${jobProjob.id}">
+																				<hr>
+																			</c:forEach></td>
+
+																		<td width="10%" style="text-align: center"><c:if
+																				test="${jobPro.remaninQty>0}">
+																				<input type="checkbox" class="isSelected"
+																					id="isSelected${jobPro.id}"
+																					name="isSelected${jobPro.id}"
+																					onclick="isSelectedF(${jobPro.id});">
+																			</c:if> <c:if test="${jobPro.remaninQty==0}">
+																				<input type="checkbox" class="isSelected"
+																					disabled="disabled" id="isSelected${jobPro.id}"
+																					name="isSelected${jobPro.id}"
+																					onclick="isSelectedF(${jobPro.id});">
+																			</c:if></td>
+
+																		<!-- <td width="20%" style="text-align: center"><input
+																			type="text" class="form-control" name="reoson"></td> -->
 																	</tr>
+																	<c:set var="count" value="${count+1}" />
 																</c:forEach>
-																<c:set var="count" value="${count+1}" />
 															</table>
 
 														</div>
 													</td>
 												</tr>
 											</table>
+											<%-- <hr>
+											<table class="table table-striped table-bordered">
+												<thead>
+													<tr>
+														<th>#</th>
+														<th>Received Date</th>
+														<th>Received challan no.</th>
+														<th>Product Code</th>
+														<th>Product Description</th>
+														<th>Product Qty</th>
+														<th>UOM</th>
+													</tr>
+												</thead>
+
+												<c:set var="j" value="${1}"></c:set>
+												<c:forEach var="jobReceive"
+													items="${jjjjj.jobRecievedDetails}">
+
+													<tbody>
+														<tr>
+															<td>${j}</td>
+															<td><fmt:formatDate
+																	value="${jobReceive.recievingDate}" pattern="dd-MM-yy" />
+															</td>
+															<td>${jobReceive.challanNumber}</td>
+															<td><c:forEach var="jobReceivedProd"
+																	items="${jobReceive.jobRecieveProductsDetails}">														
+													${jobReceivedProd.jobPlanProducts.productsForDesignCostSheet.productDetail.code}
+														<hr>
+																</c:forEach></td>
+															<td><c:forEach var="jobReceivedProd"
+																	items="${jobReceive.jobRecieveProductsDetails}">														
+													${jobReceivedProd.jobPlanProducts.productsForDesignCostSheet.productDetail.description}
+														<hr>
+																</c:forEach></td>
+															<td><c:forEach var="jobReceivedProd"
+																	items="${jobReceive.jobRecieveProductsDetails}">														
+													${jobReceivedProd.qtyReturn}
+														<hr>
+																</c:forEach></td>
+															<td><c:forEach var="purchaseReturnProd"
+																	items="${purchaseReturn.purchaseReturnProductDetails}">
+																	<c:if test="${purchaseReturnProd.qtyReturn!=0}">
+													${purchaseReturnProd.fault}
+														<hr>
+																</c:forEach></td>
+														</tr>
+													</tbody>
+													<c:set var="j" value="${j+1}" />
+												</c:forEach>
+											</table> --%>
 											<input type="hidden" name="remaining_qty" id="remaining_qty"
 												required> <input type="hidden" name="receive_qty"
 												id="remaining_qty" required> <input
-												class="btn green pull-right" type="submit"
-												style="float: right" value="Save">
-										</form>
+												class="btn green pull-right" type="button"
+												style="float: right" value="Save" onclick="saveF()">
+
+										</div>
 									</div>
-								</div>
+								</form>
 								<%-- </c:if> --%>
 							</div>
 
@@ -335,7 +446,7 @@
 
 		if (Number($("#qtyRe" + g).val()) > Number($("#remainQtyRe" + g).html())) {
 			$("#qtyRe" + g).val("0");
-			alert("Receiving qty can not be more than remaining qty.");
+			alert("Receiving qty can not be more than Assigning qty.");
 		}
 
 		$("#qtyRe" + g).numericInput({
@@ -367,17 +478,24 @@
 			$('#msg').html("Wrong challan number...");
 		}
 	}); */
-
 	$(function() {
-		$("#datepicker").datepicker({
+		$("#assgnDate").datepicker({
 			dateFormat : "dd-mm-yy"
 		});
+		//$("#assgnDate").datepicker('setDate', new Date());
 	});
 
 	$(function() {
-		$("#datepicker1").datepicker({
-			dateFormat : "dd-mm-yy"
+		var d = $("#assgnDate").datepicker('getDate');
+		var n = d.getFullYear();
+		var m = d.getMonth();
+		var dt = d.getDate();
+		$("#datepicker").datepicker({
+			dateFormat : "dd-mm-yy",
+			minDate : new Date(n, m, dt),
+			maxDate : 0
 		});
+		$("#datepicker").datepicker('setDate', new Date());
 	});
 
 	function jRec() {
@@ -393,6 +511,30 @@
 					vars[key] = value;
 				});
 		return vars;
+	}
+
+	function isSelectedF(japId) {
+		if ($('#isSelected'+japId).is(":checked")) {
+			$("#jobAssgnProductsId"+japId).attr("name", "jobAssgnProductsId");
+			$("#jobPlanProductsId"+japId).attr("name", "jobPlanProductsId");
+		}else{
+			$("#jobAssgnProductsId"+japId).removeAttr("name");
+			$("#jobPlanProductsId"+japId).removeAttr("name");
+		}
+	}
+	
+	function saveF(){
+		var i = 0;
+	    $(".isSelected").each(function () {
+	        if ($(this).is(':checked')) {
+	            i = 1;
+	        }
+	    });
+	    if (i == 0) {
+	    	alert("No product found to receive...");
+	    }else{
+	    	$("#jobRcvForm").submit();
+	    }
 	}
 </script>
 

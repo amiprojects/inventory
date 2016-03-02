@@ -626,7 +626,7 @@ function showDatePicker() {
 		function qtyKU(jobId){
 			if($("#jobQty"+jobId).val()>$("#jobRemQty"+jobId).val()){
 				alert("Assigning qty can not be more than Remaining qty!");
-				$("#jobQty"+jobId).val("");
+				$("#jobQty"+jobId).val("0");
 			}else{
 			$("#jobAmount"+jobId).val($("#jobPresentRate"+jobId).val()*$("#jobQty"+jobId).val());
 			
@@ -1034,10 +1034,10 @@ function showDatePicker() {
 																						+ item2.JobQtyOfSample*pQty
 																						+ "</td>"
 																						+ "<td>"
-																						+ "<input type='text' class='form-control' id='jobRemQty"+item2.JobId+"' readonly='readonly' value='"+item2.RemQty*pQty+"'>"
+																						+ "<input type='text' class='form-control' id='jobRemQty"+item2.JobId+"' readonly='readonly' value='"+item2.RemQty+"'>"
 																						+ "</td>"
 																						+ "<td>"
-																						+ "<input type='text' class='form-control' id='jobQty"+item2.JobId+"' onkeyup='qtyKU("+item2.JobId+");' value='"+item2.JobQtyOfSample*pQty+"'>"
+																						+ "<input type='text' class='form-control' id='jobQty"+item2.JobId+"' onkeyup='qtyKU("+item2.JobId+");' value='"+item2.RemQty+"'>"
 																						+ "</td>"
 																						+ "<td>"
 																						+ item2.JobUOMOfSample

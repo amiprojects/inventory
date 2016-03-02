@@ -30,19 +30,22 @@ public class JobAssignmentDetails implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date assignDate;
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date estimatedCompletionDate;//old concept
+	private Date estimatedCompletionDate;// old concept
 	private float surcharge;
 	private float grandTotal;
 	private float profit;
 	private boolean isFlatProfit;
 
+	@OneToMany(mappedBy = "jobAssignmentDetails")
+	private List<JobRecievedDetails> jobRecievedDetails;
+
 	@ManyToOne
 	@JoinColumn(name = "JobPlanId")
 	private JobPlan jobPlan;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "companyInfoId")
-	private CompanyInfo companyInfo;//old concept
+	private CompanyInfo companyInfo;// old concept
 
 	@ManyToOne
 	@JoinColumn(name = "jobberId")
@@ -90,7 +93,8 @@ public class JobAssignmentDetails implements Serializable {
 		return jobAssignmentProducts;
 	}
 
-	public void setJobAssignmentProducts(List<JobAssignmentProducts> jobAssignmentProducts) {
+	public void setJobAssignmentProducts(
+			List<JobAssignmentProducts> jobAssignmentProducts) {
 		this.jobAssignmentProducts = jobAssignmentProducts;
 	}
 
@@ -138,7 +142,8 @@ public class JobAssignmentDetails implements Serializable {
 		return jobAssignmentJobDetails;
 	}
 
-	public void setJobAssignmentJobDetails(List<JobAssignmentJobDetails> jobAssignmentJobDetails) {
+	public void setJobAssignmentJobDetails(
+			List<JobAssignmentJobDetails> jobAssignmentJobDetails) {
 		this.jobAssignmentJobDetails = jobAssignmentJobDetails;
 	}
 
@@ -180,6 +185,14 @@ public class JobAssignmentDetails implements Serializable {
 
 	public void setJobPlan(JobPlan jobPlan) {
 		this.jobPlan = jobPlan;
+	}
+
+	public List<JobRecievedDetails> getJobRecievedDetails() {
+		return jobRecievedDetails;
+	}
+
+	public void setJobRecievedDetails(List<JobRecievedDetails> jobRecievedDetails) {
+		this.jobRecievedDetails = jobRecievedDetails;
 	}
 
 }
