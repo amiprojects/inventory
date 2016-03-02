@@ -272,6 +272,7 @@ em
 									</div>
 									<form role="form" class="sec" action="purchaseOrderReceive"
 										method="post">
+										<input type="hidden" name=purOrId value="${purchaseSearchView.id}" >
 										<div class="col-md-6">
 											<div class="col-md-12">
 												&nbsp; &nbsp; &nbsp; <b class="font">Vendor Type :</b> <input
@@ -510,7 +511,7 @@ em
 												id="ra7t${purchaseProducts.id}"></td>
 											<td>${purchaseProducts.productDetail.description}</td>
 											<td>${purchaseProducts.quantity}</td>
-											<td id="qty${purchaseProducts.id}">${purchaseProducts.quantity-purchaseProducts.totalReturningQty}</td>
+											<td id="qty${purchaseProducts.id}">${purchaseProducts.remaining_quantity}</td>
 											<td>${purchaseProducts.productDetail.qtyUnit.name}</td>
 											<td id="cost${purchaseProducts.id}">${purchaseProducts.cost}</td>
 											<td>${purchaseProducts.quantity*purchaseProducts.cost}</td>
@@ -548,6 +549,58 @@ em
 									<c:set var="j" value="${1}"></c:set>
 									<c:forEach var="purchaseReturn"
 										items="${purchaseSearchView.purchaseReturn}">
+
+										<tbody>
+											<tr>
+												<td>${j}</td>
+												<td><fmt:formatDate
+														value="${purchaseReturn.returnDate}" pattern="dd-MM-yy" />
+												</td>
+												<td>${purchaseReturn.challanNumber}</td>
+												<td><c:forEach var="purchaseReturnProd"
+														items="${purchaseReturn.purchaseReturnProductDetails}">														
+													${purchaseReturnProd.purchaseProductDetails.productDetail.code}
+														<hr>
+													</c:forEach></td>
+												<td><c:forEach var="purchaseReturnProd"
+														items="${purchaseReturn.purchaseReturnProductDetails}">														
+													${purchaseReturnProd.purchaseProductDetails.productDetail.description}
+														<hr>
+													</c:forEach></td>
+												<td><c:forEach var="purchaseReturnProd"
+														items="${purchaseReturn.purchaseReturnProductDetails}">														
+													${purchaseReturnProd.qtyReturn}
+														<hr>
+													</c:forEach></td>
+												<td><c:forEach var="purchaseReturnProd"
+														items="${purchaseReturn.purchaseReturnProductDetails}">
+														<c:if test="${purchaseReturnProd.qtyReturn!=0}">
+													${purchaseReturnProd.fault}
+														<hr>
+													</c:forEach></td>
+											</tr>
+										</tbody>
+										<c:set var="j" value="${j+1}" />
+									</c:forEach>
+								</table> --%>
+								
+								<%-- <table class="table table-striped table-bordered">
+
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Receive Date</th>
+											<th>Purchase Order challan no.</th>
+											<th>Product Code</th>
+											<th>Product Description</th>
+											<th>Receving Quantity</th>
+											
+										</tr>
+									</thead>
+
+									<c:set var="j" value="${1}"></c:set>
+									<c:forEach var="pur_order_purEntid"
+										items="${}">
 
 										<tbody>
 											<tr>

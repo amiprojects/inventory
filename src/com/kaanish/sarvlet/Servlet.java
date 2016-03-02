@@ -844,9 +844,7 @@ public class Servlet extends HttpServlet {
 				int counter2 = 0;
 				for (Vendor ven : vend) {
 
-					if (ven.getEmail().equals(req.getParameter("vendorMail"))
-
-							|| ven.getPh1().equals(req.getParameter("vendorPh1"))) {
+					if (ven.getPh1().equals(req.getParameter("vendorPh1"))) {
 
 						counter2 = 1;
 						break;
@@ -859,17 +857,48 @@ public class Servlet extends HttpServlet {
 
 					vendor.setName(req.getParameter("vendorName").toUpperCase());
 					vendor.setLastModifiedDate(dt);
-					vendor.setAddress(req.getParameter("vendorAddress"));
+					if (!req.getParameter("vendorAddress").equals("")) {
+						vendor.setAddress(req.getParameter("vendorAddress"));
+					} else {
+						vendor.setAddress(req.getParameter(""));
+					}
 					vendor.setAliseName(req.getParameter("vendorAlias"));
 					if (!req.getParameter("vendorCityId").equals("")) {
 						vendor.setCity(ejb.getCityById(Integer.parseInt(req.getParameter("vendorCityId"))));
+					} else {
+						vendor.setCity(ejb.getCityById(0));
 					}
-					vendor.setCompanyName(req.getParameter("vendorCompanyName"));
-					vendor.setEmail(req.getParameter("vendorMail"));
-					vendor.setPh1(req.getParameter("vendorPh1"));
-					vendor.setPh2(req.getParameter("vendorPh2"));
-					vendor.setPinCode(req.getParameter("vendorPin"));
+					if (!req.getParameter("vendorCompanyName").equals("")) {
+						vendor.setCompanyName(req.getParameter("vendorCompanyName"));
+					} else {
+						vendor.setCompanyName(req.getParameter(""));
+					}
+					if (!req.getParameter("vendorMail").equals("")) {
+						vendor.setEmail(req.getParameter("vendorMail"));
+					}
+					else{
+						vendor.setEmail(req.getParameter(""));
+					}
 					
+					
+					vendor.setPh1(req.getParameter("vendorPh1"));
+					
+					
+					if(!req.getParameter("vendorPh2").equals(""))
+					{
+						vendor.setPh2(req.getParameter("vendorPh2"));
+					}
+					else
+					{
+					vendor.setPh2(req.getParameter(""));
+					}
+					if(!req.getParameter("vendorPin").equals(""))
+					{
+					vendor.setPinCode(req.getParameter("vendorPin"));
+					}
+					else{
+						vendor.setPinCode(req.getParameter(""));
+					}
 					vendor.setVendorType(ejb.getVendorTypeById(Integer.parseInt(req.getParameter("vendorType"))));
 					vendor.setUsers(ejb.getUserById((String) httpSession.getAttribute("user")));
 
@@ -2712,6 +2741,8 @@ public class Servlet extends HttpServlet {
 				jobPlan.setTotalJobExpanse(totalJobExpanse);
 				jobPlan.setTotalExpanse(jobPlan.getTotalExpanse() + totalJobExpanse);
 				ejb.updateJobPlan(jobPlan);
+				req.setAttribute("jobasfoPaDeN", jobAssignmentDetails.getId());
+				
 
 				msg = "Job Assigned Successfully";
 				break;
@@ -2987,16 +3018,16 @@ public class Servlet extends HttpServlet {
 						 */
 						purchaseOrderProductdetails = null;
 					}
-
+					
 					req.setAttribute("print", 0);
-
+					
 					req.setAttribute("purDetIdforPC", purchaseOrderEntry.getId());
 					purchaseOrderEntry = null;
 					msg = "Purchase order was successfull.";
 				} else {
 					msg = "Duplicate Vendor Bill no. not allowed.";
 				}
-
+				
 				break;
 
 			case "purchaseOrderReceive":
@@ -3014,7 +3045,7 @@ public class Servlet extends HttpServlet {
 				purchaseEntry.setChallan_no(Integer.parseInt(req.getParameter("challanNo")));
 				purchaseEntry.setChallanSuffix(Integer.parseInt(req.getParameter("challanSuffix")));
 				purchaseEntry.setChallanNumber(req.getParameter("challanNumber"));
-
+				// purchaseEntry.setPurchaseOrderEntry(purchaseOrderEntry);
 				purchaseEntry.setPurchase_date(dt);
 				purchaseEntry.setVendor(ejb.getVendorById(Integer.parseInt(req.getParameter("vId"))));
 				purchaseEntry.setUsers(ejb.getUserById(httpSession.getAttribute("user").toString()));
@@ -3039,7 +3070,7 @@ public class Servlet extends HttpServlet {
 				if (req.getParameter("agentyes").equals("yes")) {
 					purchaseEntry.setAgentId(Integer.parseInt(req.getParameter("agentName")));
 				}
-
+				purchaseEntry.setPurchaseOrderEntry(purchaseOrderEntry);
 				ejb.setPurchaseEntry(purchaseEntry);
 
 				if (ejb.getVoucherAssignByVendorId(Integer.parseInt(req.getParameter("vId"))).size() == 0) {
@@ -3124,9 +3155,10 @@ public class Servlet extends HttpServlet {
 					purchaseProductDetails.setCompanyInfo(companyInfo);
 					ejb.setPurchaseProductDetails(purchaseProductDetails);
 
-					System.out.println("plzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz" + isRawable[l]);
+					// System.out.println("plzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+					// + isRawable[l]);
 					if (isRawable[l].equals("yesRaw")) {
-						
+
 						System.out.println("plzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz" + productIdaa[l]);
 						rawMaterialsStock = ejb.getRawMeterialStoctByProductId(Integer.parseInt(productIdaa[l]));
 						rawMaterialsStock.setProductDetail(ejb.getProductDetailsById(Integer.parseInt(productIdaa[l])));
@@ -3135,29 +3167,35 @@ public class Servlet extends HttpServlet {
 						ejb.updateRawMaterialStockDetail(rawMaterialsStock);
 						rawMaterialsStock = null;
 					} else {
-						
-						System.out.println("plzzzzzzzzzzzzzzzzzzzzddddddzzzzzzzzzzzzzzzzzzzzzzz" + productIdaa[l]);
+
+						// System.out.println("plzzzzzzzzzzzzzzzzzzzzddddddzzzzzzzzzzzzzzzzzzzzzzz"
+						// + productIdaa[l]);
 						readyGoodsStock = ejb.getReadyGoodsStoctByProductId(Integer.parseInt(productIdaa[l]));
 						readyGoodsStock.setProductDetail(ejb.getProductDetailsById(Integer.parseInt(productIdaa[l])));
 						readyGoodsStock.setRemainingQty(readyGoodsStock.getRemainingQty() + Float.parseFloat(qty[l]));
 						ejb.updateReadyGoodsStockDetail(readyGoodsStock);
 						readyGoodsStock = null;
 					}
-					
-					
-					purchaseOrderProductdetails.setRemaining_quantity(
-							purchaseOrderProductdetails.getRemaining_quantity() - Float.parseFloat(qty[l]));
-					
-					
-					float g=purchaseOrderProductdetails.getRemaining_quantity() - Float.parseFloat(qty[l]);
-					System.out.println("restProduct"+".............."+g);
-					System.out.println("restProduct"+".............."+Float.parseFloat(qty[l]));
-					
-					
+
+					/*
+					 * purchaseOrderProductdetails.setRemaining_quantity( 
+					 * purchaseOrderProductdetails.getRemaining_quantity() -
+					 * Float.parseFloat(qty[l]));
+					 */
+
+					purchaseOrderProductdetails = ejb.getPurchaseOrderProductdetailsByPurchaseOrderIdandProdctId(
+							Integer.parseInt(req.getParameter("purOrId")), Integer.parseInt(productIdaa[l]));
+					float g = purchaseOrderProductdetails.getRemaining_quantity() - Float.parseFloat(qty[l]);
+					System.out.println("restProduct in purchaseOrderProductdetails" + ".............." + g);
+					System.out.println("restProduct in ourchase receive" + ".............." + Float.parseFloat(qty[l]));
+					System.out.println("Hello" + purchaseOrderProductdetails.getRemaining_quantity());
+					purchaseOrderProductdetails.setRemaining_quantity(g);
+					System.out.println("object print" + purchaseOrderProductdetails);
+
 					ejb.updatePurchaseOrderProductdetails(purchaseOrderProductdetails);
-					
-					purchaseEntry.setPurchaseOrderEntry(purchaseOrderEntry);
+
 					purchaseProductDetails = null;
+
 				}
 				if (req.getParameter("isBarPrint").equals("yes")) {
 					req.setAttribute("print", 1);
@@ -3167,6 +3205,7 @@ public class Servlet extends HttpServlet {
 				}
 
 				req.setAttribute("purDetIdforPC", purchaseEntry.getId());
+				
 				purchaseEntry = null;
 				msg = "Purchase Order Receive was successfull.";
 

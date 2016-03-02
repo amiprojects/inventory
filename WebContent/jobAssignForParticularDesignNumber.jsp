@@ -108,6 +108,21 @@ function showDatePicker() {
 			</script>
 		</c:if>
 	</c:if>
+	
+	
+	<c:if test="${requestScope['jobasfoPaDeN']!=null}">
+		<script type="text/javascript">
+			var myWindow = window
+					.open(
+							"jobChallan1ForPrint.jsp?id=${requestScope['jobasfoPaDeN']}&print=${requestScope['print']}",
+							'name', 'width=600,height=400');
+			
+			myWindow.print();
+			
+		</script>
+		
+	</c:if>
+	
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
