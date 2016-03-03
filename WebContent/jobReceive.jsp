@@ -327,11 +327,21 @@
 																			style="text-align: center; padding: 4px"><c:forEach
 																				items="${jobPro.jobAssignmentJobDetails}"
 																				var="jobProjob">
-																				<input type="text" class="form-control"
-																					value="${jobProjob.qty}" name="qtyRe${jobPro.id}"
-																					id="qtyRe${jobProjob.id}"
-																					onkeyup="qtySubtraction('${jobProjob.id}');"
-																					onchange="return0('${jobProjob.id}');">
+																				<c:if test="${jobPro.remaninQty>0}">
+																					<input type="text" class="form-control"
+																						value="${jobProjob.qty}" name="qtyRe${jobPro.id}"
+																						id="qtyRe${jobProjob.id}"
+																						onkeyup="qtySubtraction('${jobProjob.id}');"
+																						onchange="return0('${jobProjob.id}');">
+																				</c:if>
+																				<c:if test="${jobPro.remaninQty==0}">
+																					<input type="text" class="form-control"
+																						readonly="readonly"
+																						value="${jobProjob.qty-jobProjob.remQty}"
+																						name="qtyRe${jobPro.id}" id="qtyRe${jobProjob.id}"
+																						onkeyup="qtySubtraction('${jobProjob.id}');"
+																						onchange="return0('${jobProjob.id}');">
+																				</c:if>
 																				<input type="hidden"
 																					name="jobAssgnJobId${jobPro.id}"
 																					value="${jobProjob.id}">
