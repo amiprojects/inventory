@@ -62,7 +62,7 @@
 		}
 		$("#datepicker").datepicker({
 			dateFormat : "dd-mm-yy"
-			
+
 		});
 		$("#datepicker").datepicker('setDate', new Date());
 	});
@@ -199,7 +199,7 @@
 			$("#finalDC").val(
 					Math.round((Number($("#spDueAmount").val()) + Number($(
 							"#totalCredit").val())) * 100) / 100);
-		}  
+		}
 	}
 	function pTypeFunc() {
 		$("#description").show();
@@ -334,14 +334,15 @@
 															<option value="${agents.id}">${agents.name}</option>
 														</c:forEach>
 													</select>
-													
+
 													<div>
-														
+
 														<!-- <input type="radio" name="agntMoney" id="perProduct"
 														value="perPro">Commission Per product<br>
 														
 														<input type="radio"	name="agntMoney" id="totProduct" value="totPro">Commission on grand total
- -->												</div>
+ -->
+													</div>
 												</div>
 												<div class="col-md-1">
 
@@ -351,7 +352,7 @@
 														width="30px" alt="" src="img/add.png">
 													</a>
 												</div>
-												
+
 											</div>
 										</div>
 										<div class="col-md-6">
@@ -388,8 +389,9 @@
 											</div>
 											<div class="form-group">
 												<label for="" class="font">Purchase Date :</label> <input
-													type="text" id="datepicker" class="form-control" onchange="financialyr()"
-													name="purchaseDate" required="required" readonly="readonly">
+													type="text" id="datepicker" class="form-control"
+													onchange="financialyr()" name="purchaseDate"
+													required="required" readonly="readonly">
 											</div>
 											<div class="form-group" id="aDetailDiv">
 												<label for="" class="font">Agent Details:</label>
@@ -968,7 +970,7 @@
 									</div>
 
 									<div class="col-md-3">
-										<b>Ph No2:(optional)</b>
+										<b>Ph No2:</b>
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorPh2"
@@ -1045,9 +1047,9 @@
 										</div>
 										<div class="col-md-8">
 											<input type="text" class="form-control cityAuto"
-												name="vendorCity" required="required" id="vendorCity"
-												autocomplete="off"> <input type="hidden"
-												name="vendorCityId" id="vendorCityId" autocomplete="off">
+												name="vendorCity" id="vendorCity" autocomplete="off">
+											<input type="hidden" name="vendorCityId" id="vendorCityId"
+												autocomplete="off">
 										</div>
 										<div class="col-md-1">
 											<a onclick="addCitySC()" title="Add New City"> <img
@@ -1064,7 +1066,7 @@
 										</div>
 										<div class="col-md-9">
 											<input type="text" class="form-control" name="vendorPin"
-												id="idvendorPin" required="required">
+												id="idvendorPin">
 										</div>
 									</div>
 								</div>
@@ -1317,11 +1319,11 @@
 								<div class="widget-area">
 
 									<div class="col-md-3">
-										<b>Name:</b>
+										<b>Name:*</b>
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorName2"
-											id="idName2" required="required">
+											id="idName2">
 									</div>
 									<br>
 									<div class="col-md-3">
@@ -1333,19 +1335,19 @@
 									</div>
 
 									<div class="col-md-3">
-										<b>Ph No1:</b>
+										<b>Ph No1:*</b>
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorPh12"
-											id="iphone2" required="required">
+											id="iphone2">
 									</div>
 
 									<div class="col-md-3">
-										<b>Ph No2:(optional)</b>
+										<b>Ph No2:</b>
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorPh22"
-											id="idvendorPh22" required="required">
+											id="idvendorPh22">
 									</div>
 
 									<div class="col-md-3">
@@ -1353,8 +1355,7 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorMail2"
-											style="text-transform: none;" id="idvendorMail2"
-											required="required">
+											style="text-transform: none;" id="idvendorMail2">
 									</div>
 
 									<div class="col-md-3">
@@ -1362,7 +1363,7 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorAlias2"
-											id="idvendorAlias2" required="required">
+											id="idvendorAlias2">
 									</div>
 
 									<div class="col-md-3">
@@ -1401,7 +1402,7 @@
 										</div>
 										<div class="col-md-9">
 											<textarea rows="" cols="" class="form-control"
-												name="vendorAddress2" id="idAdd2" required="required"></textarea>
+												name="vendorAddress2" id="idAdd2"></textarea>
 											<div class="row"></div>
 										</div>
 										<div class="col-md-3">
@@ -1409,8 +1410,8 @@
 										</div>
 										<div class="col-md-9">
 											<input type="text" class="form-control cityAuto"
-												name="vendorCity2" required="required" id="vendorCity2">
-											<input type="hidden" name="vendorCityId2" id="vendorCityId2">
+												name="vendorCity2" id="vendorCity2"> <input
+												type="hidden" name="vendorCityId2" id="vendorCityId2">
 										</div>
 									</div>
 									<div class="row">
@@ -1419,7 +1420,7 @@
 										</div>
 										<div class="col-md-9">
 											<input type="text" class="form-control" name="vendorPin2"
-												id="idvendorPin2" required="required">
+												id="idvendorPin2">
 										</div>
 									</div>
 								</div>
@@ -1492,10 +1493,10 @@
 								</div>
 								<div class="col-md-5">Product Image:</div>
 								<div class="col-md-7" id="imgaeDIV">
-									<img width="100" id="productImage" height="60" width="50" style="" alt="">
+									<img width="100" id="productImage" height="60" width="50"
+										style="" alt="">
 								</div>
-								<br>
-								<br>
+								<br> <br>
 							</div>
 						</div>
 						<div class="widget-area" style="width: 50%; height: 275px;">
@@ -4649,23 +4650,12 @@
 
 			if ($("#idName").val() == 0) {
 				alert("please select  name");
-			} else if ($("#idvendorCompanyName").val() == "") {
-				alert("please select Company Name");
 			} else if ($("#iphone").val() == "") {
 				alert("please select Ph No1");
-			} else if ($("#idvendorMail").val() == "") {
-				alert("please select email");
-			} else if ($("#idvendorAlias").val() == "") {
-				alert("please select Alias name");
-			} else if ($("#cityname").val() == "") {
+			}else if ($("#vendorCityId").val() == "") {
 				alert("please select cityname");
-			} else if ($("#idAdd").val() == "") {
-				alert("please select Adress");
-			} else if ($("#vendorCity").val() == "") {
-				alert("please select vendor city");
-			} else if ($("#idvendorPin").val() == "") {
-				alert("please select pin code");
-			} else {
+			}
+			else {
 
 				var dataa1 = {
 					vendorName : $("#idName").val(),
@@ -4733,24 +4723,10 @@
 		function submitform2() {
 			if ($("#idName2").val() == 0) {
 				alert("please select  name");
-			} else if ($("#idvendorCompanyName2").val() == "") {
-				alert("please select Company Name");
 			} else if ($("#iphone2").val() == "") {
 				alert("please select Ph No1");
-			} else if ($("#idvendorMail2").val() == "") {
-				alert("please select email");
-			} else if ($("#idvendorAlias2").val() == "") {
-				alert("please select Alias name");
 			} else if ($("#cityname2").val() == "") {
 				alert("please select cityname");
-			} else if ($("#idAdd2").val() == "") {
-				alert("please select Adress");
-			} else if ($("#vendorCity2").val() == "") {
-				alert("please select vendor city");
-			} else if ($("#idvendorPin2").val() == "") {
-				alert("please select pin code");
-			} else if ($("#service2").val() == "") {
-				alert("please select Service Tax");
 			} else {
 				var dataa2 = {
 					vendorName2 : $("#idName2").val(),
@@ -5325,21 +5301,35 @@
 
 		}
 	</script>
-	
+
 	<script>
-	function financialyr(){
-		//alert('hello');
-		var str=$("#chaId").val();
-		challanParts=str.split("/");
-		$.ajax({
-			url:"getJonsonDateFinancial",
-			dataType:"json",
-			data:{date:$('#datepicker').val()},
-			success:function(data){
-				$("#chaId").val(challanParts[0]+'/'+data.finantialYear+'/'+challanParts[2]+'/'+challanParts[3]+'/'+challanParts[4]+'/'+Number(Number(data.lastChallanNo)+Number(1)));
-			}
-		});
-	}
+		function financialyr() {
+			//alert('hello');
+			var str = $("#chaId").val();
+			challanParts = str.split("/");
+			$.ajax({
+				url : "getJonsonDateFinancial",
+				dataType : "json",
+				data : {
+					date : $('#datepicker').val()
+				},
+				success : function(data) {
+					$("#chaId").val(
+							challanParts[0]
+									+ '/'
+									+ data.finantialYear
+									+ '/'
+									+ challanParts[2]
+									+ '/'
+									+ challanParts[3]
+									+ '/'
+									+ challanParts[4]
+									+ '/'
+									+ Number(Number(data.lastChallanNo)
+											+ Number(1)));
+				}
+			});
+		}
 	</script>
 </body>
 <!-- `lastr er number change koro barite -->

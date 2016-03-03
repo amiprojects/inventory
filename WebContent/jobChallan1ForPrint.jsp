@@ -122,6 +122,8 @@ myWindow.print();
  <c:set value="${sessionScope['ejb'].getJobAssignmentDetailsByID(param.id)}"   
 		var="jobAssi"/> 
 		
+		
+		
 	<page id="print1" size="A4">
 	<h3 align="center"> Challan</h3>
 	<table class="tg"
@@ -182,22 +184,24 @@ myWindow.print();
 		</tr>
 		<tr>
 			<td class="tg-031e" colspan="7">
-				<c:forEach items="" var="">
+				<c:forEach items="${jobAssi.jobAssignmentProducts}" var="outerTable">
+				
 				<table class="tg"
 					style="height: auto; width: 750px; border-color: white; margin-left: -6px; margin-right: -4px; margin-top: -11px;">
 					
 					
 					<tr>
 						<th>Product Code</th>
-						<th></th>
+										
+						<th>${outerTable.jobPlanProducts.productsForDesignCostSheet.productDetail.code}</th>
 						<th>Description</th>
-						<th></th>
+						<th>${outerTable.jobPlanProducts.productsForDesignCostSheet.productDetail.description}</th>
 						<th>Quantity</th>
-						<th></th>
+						<th>${outerTable.qty}</th>
 					</tr>
 					
 					
-					<c:forEach items="${jobAssi.purchase_Product_Details}" var="ppdet">
+					<%-- <c:forEach items="${jobAssi.purchase_Product_Details}" var="ppdet">
 						<tr>
 							
 							<td>${ppdet.productDetail.description}</td>
@@ -210,9 +214,10 @@ myWindow.print();
 						</tr>
 						<c:set value="${sl+1}" var="sl" />
 					</c:forEach>
+					 --%>
 					
 				</table>
-				</c:forEach>
+								</c:forEach>
 			</td>
 		</tr>
 		<tr style="height: 75px">

@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 
 import com.kaanish.ejb.Ejb;
 import com.kaanish.model.Bill_setup;
+import com.kaanish.model.City;
 import com.kaanish.model.CompanyInfo;
 import com.kaanish.model.JobClass;
 import com.kaanish.model.Module;
@@ -60,6 +61,7 @@ public class LoginServlet extends HttpServlet {
 	private Bill_setup bill_setup;
 	private SecurityQuestionGroup securityQuestionGroup;
 	private SequrityQuestions securityQuestions;
+	private City city;
 
 	@Override
 	public void init() throws ServletException {
@@ -316,6 +318,12 @@ public class LoginServlet extends HttpServlet {
 			usersKainat.setCompanyInfo(companyInfoKainat);
 			ejb.setUser(usersKainat);
 		}
+		
+		/*if(ejb.getAllCity().size()<1){
+			city = new City();
+			city.setId(0);
+			city.setCityName("null");
+		}*/
 		if (ejb.getAllBillSetup().size() < 16) {
 			/*
 			 * companyInfoKaanish = ejb.getUserById("adminKaanish")
