@@ -1560,7 +1560,7 @@ public class Ejb {
 			JobAssignmentJobDetails jobAssignmentJobDetails) {
 		em.persist(jobAssignmentJobDetails);
 	}
-	
+
 	public JobAssignmentJobDetails getJobAssignmentJobDetailsById(int id) {
 		return em.find(JobAssignmentJobDetails.class, id);
 	}
@@ -1582,13 +1582,14 @@ public class Ejb {
 
 	}
 
-	public JobAssignmentProducts getJobAssignmentProductsByJobPlanProductId(
-			int id) {
+	public JobAssignmentProducts getJobAssignmentProductsByJobPlanProductIdAndJobAssignmentId(
+			int id, int jaId) {
 		TypedQuery<JobAssignmentProducts> q = em
 				.createQuery(
-						"select c from JobAssignmentProducts c where c.jobPlanProducts.id=:id",
+						"select c from JobAssignmentProducts c where c.jobPlanProducts.id=:id AND c.jobAssignmentDetails.id=:jaId",
 						JobAssignmentProducts.class);
 		q.setParameter("id", id);
+		q.setParameter("jaId", jaId);
 		return q.getResultList().get(0);
 	}
 

@@ -3531,29 +3531,35 @@ public class Servlet extends HttpServlet {
 						.getParameterValues("jobPlanProductsId");
 				String jobAssgnProductsId[] = req
 						.getParameterValues("jobAssgnProductsId");
-				// String qtyRe[] = req.getParameterValues("qtyRe");
+				String prodQtyRe[] = req.getParameterValues("prodQtyRe");
 				// String reoson[] = req.getParameterValues("reoson");
 
 				for (int l = 0; l < jobPlanProductsId.length; l++) {
-					// if(!qtyRe[l].equals("0")){
-					// jobRecieveProductsDetails = new
-					// JobRecieveProductsDetails();
-					// jobRecieveProductsDetails.setQtyReturn(Float.parseFloat(qtyRe[l]));
+					jobRecieveProductsDetails = new JobRecieveProductsDetails();
+					jobRecieveProductsDetails.setQtyReturn(Float
+							.parseFloat(prodQtyRe[l]));
 					// jobRecieveProductsDetails.setReason(reoson[l]);
-					// jobRecieveProductsDetails.setJobRecievedDetails(jobRecievedDetails);
-					// jobRecieveProductsDetails.setJobPlanProducts(ejb.getJobPlanProductsById(Integer.parseInt(jobPlanProductsId[l])));
-					// ejb.setJobRecieveProductsDetails(jobRecieveProductsDetails);
+					jobRecieveProductsDetails
+							.setJobRecievedDetails(jobRecievedDetails);
+					jobRecieveProductsDetails.setJobPlanProducts(ejb
+							.getJobPlanProductsById(Integer
+									.parseInt(jobPlanProductsId[l])));
+					ejb.setJobRecieveProductsDetails(jobRecieveProductsDetails);
 
 					jobPlanProducts = ejb.getJobPlanProductsById(Integer
 							.parseInt(jobPlanProductsId[l]));
 					jobPlanProducts.setUndergoingProcess(false);
-					jobPlanProducts.setRemainingQty(jobPlanProducts.getQty());
+					jobPlanProducts
+							.setRemainingQty(jobPlanProducts.getRemainingQty()
+									+ Float.parseFloat(prodQtyRe[l]));
 					ejb.updateJobPlanProducts(jobPlanProducts);
 
 					jobAssignmentProducts = ejb
-							.getJobAssignmentProductsByJobPlanProductId(Integer
-									.parseInt(jobPlanProductsId[l]));
-					jobAssignmentProducts.setRemaninQty(0);
+							.getJobAssignmentProductsByJobPlanProductIdAndJobAssignmentId(
+									Integer.parseInt(jobPlanProductsId[l]),
+									jobAssignmentDetails.getId());
+					jobAssignmentProducts.setRemaninQty(jobAssignmentProducts
+							.getRemaninQty() - Float.parseFloat(prodQtyRe[l]));
 					ejb.updateJobAssignmentProductDetails(jobAssignmentProducts);
 
 					String[] jobAssgnJobId = req
@@ -3585,7 +3591,6 @@ public class Servlet extends HttpServlet {
 						}
 					}
 
-					// }
 				}
 
 				// Avik

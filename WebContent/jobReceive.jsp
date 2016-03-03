@@ -308,7 +308,9 @@
 																		<td width="5%" style="text-align: center"><span
 																			id="qtty${jobPro.id}">${jobPro.qty}</span></td>
 																		<td width="10%"
-																			style="text-align: center; padding: 2px">${jobPro.remaninQty}</td>
+																			style="text-align: center; padding: 2px">${jobPro.remaninQty}<input
+																			type="hidden" id="prodQtyRe${jobPro.id}"
+																			value="${jobPro.remaninQty}"></td>
 																		<td width="10%" style="text-align: center">${jobPro.jobPlanProductStock.get(0).purchase_Product_Details.productDetail.qtyUnit.name}</td>
 																		<td width="10%" style="text-align: center"><c:forEach
 																				items="${jobPro.jobAssignmentJobDetails}"
@@ -360,7 +362,7 @@
 													</td>
 												</tr>
 											</table>
-											<%-- <hr>
+											<hr>
 											<table class="table table-striped table-bordered">
 												<thead>
 													<tr>
@@ -400,17 +402,16 @@
 													${jobReceivedProd.qtyReturn}
 														<hr>
 																</c:forEach></td>
-															<td><c:forEach var="purchaseReturnProd"
-																	items="${purchaseReturn.purchaseReturnProductDetails}">
-																	<c:if test="${purchaseReturnProd.qtyReturn!=0}">
-													${purchaseReturnProd.fault}
+															<td><c:forEach var="jobReceivedProd"
+																	items="${jobReceive.jobRecieveProductsDetails}">																	
+													${jobReceivedProd.jobPlanProducts.productsForDesignCostSheet.productDetail.qtyUnit.name}
 														<hr>
 																</c:forEach></td>
 														</tr>
 													</tbody>
 													<c:set var="j" value="${j+1}" />
 												</c:forEach>
-											</table> --%>
+											</table>
 											<input type="hidden" name="remaining_qty" id="remaining_qty"
 												required> <input type="hidden" name="receive_qty"
 												id="remaining_qty" required> <input
@@ -517,9 +518,11 @@
 		if ($('#isSelected'+japId).is(":checked")) {
 			$("#jobAssgnProductsId"+japId).attr("name", "jobAssgnProductsId");
 			$("#jobPlanProductsId"+japId).attr("name", "jobPlanProductsId");
+			$("#prodQtyRe"+japId).attr("name", "prodQtyRe");
 		}else{
 			$("#jobAssgnProductsId"+japId).removeAttr("name");
 			$("#jobPlanProductsId"+japId).removeAttr("name");
+			$("#prodQtyRe"+japId).removeAttr("prodQtyRe");
 		}
 	}
 	
