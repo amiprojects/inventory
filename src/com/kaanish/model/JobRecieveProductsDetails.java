@@ -1,6 +1,7 @@
 package com.kaanish.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Entity;
@@ -8,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 @Cacheable(false)
@@ -21,6 +23,8 @@ public class JobRecieveProductsDetails implements Serializable {
 	private float qtyReturn;
 	private String reason;
 	
+	@OneToMany(mappedBy = "jobRecieveProductsDetails")
+	private List<JobReceiveJobDetails> JobReceiveJobDetails;
 	
 	@ManyToOne
 	@JoinColumn(name = "jobRecievedDetailsId")
@@ -78,6 +82,16 @@ public class JobRecieveProductsDetails implements Serializable {
 
 	public void setJobPlanProducts(JobPlanProducts jobPlanProducts) {
 		this.jobPlanProducts = jobPlanProducts;
+	}
+
+
+	public List<JobReceiveJobDetails> getJobReceiveJobDetails() {
+		return JobReceiveJobDetails;
+	}
+
+
+	public void setJobReceiveJobDetails(List<JobReceiveJobDetails> jobReceiveJobDetails) {
+		JobReceiveJobDetails = jobReceiveJobDetails;
 	}
 
 }

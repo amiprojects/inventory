@@ -33,6 +33,7 @@ import com.kaanish.model.JobPlan;
 import com.kaanish.model.JobPlanJobStock;
 import com.kaanish.model.JobPlanProductStock;
 import com.kaanish.model.JobPlanProducts;
+import com.kaanish.model.JobReceiveJobDetails;
 import com.kaanish.model.JobRecieveProductsDetails;
 import com.kaanish.model.JobRecievedDetails;
 import com.kaanish.model.JobStock;
@@ -1400,7 +1401,7 @@ public class Ejb {
 	public void setJobAssignmentJobDetails(JobAssignmentJobDetails jobAssignmentJobDetails) {
 		em.persist(jobAssignmentJobDetails);
 	}
-	
+
 	public JobAssignmentJobDetails getJobAssignmentJobDetailsById(int id) {
 		return em.find(JobAssignmentJobDetails.class, id);
 	}
@@ -1419,13 +1420,14 @@ public class Ejb {
 
 	}
 
-	public JobAssignmentProducts getJobAssignmentProductsByJobPlanProductId(
-			int id) {
+	public JobAssignmentProducts getJobAssignmentProductsByJobPlanProductIdAndJobAssignmentId(
+			int id, int jaId) {
 		TypedQuery<JobAssignmentProducts> q = em
 				.createQuery(
-						"select c from JobAssignmentProducts c where c.jobPlanProducts.id=:id",
+						"select c from JobAssignmentProducts c where c.jobPlanProducts.id=:id AND c.jobAssignmentDetails.id=:jaId",
 						JobAssignmentProducts.class);
 		q.setParameter("id", id);
+		q.setParameter("jaId", jaId);
 		return q.getResultList().get(0);
 	}
 
@@ -1775,6 +1777,32 @@ public class Ejb {
 		TypedQuery<JobRecieveProductsDetails> q = em.createQuery(
 				"select c from JobRecieveProductsDetails c",
 				JobRecieveProductsDetails.class);
+		return q.getResultList();
+	}
+
+	/******************** for Job Receive Job Details *******************************/
+	public void setJobReceiveJobDetails(
+			JobReceiveJobDetails jobReceiveJobDetails) {
+		em.persist(jobReceiveJobDetails);
+	}
+
+	public JobReceiveJobDetails getJobReceiveJobDetailsById(int id) {
+		return em.find(JobReceiveJobDetails.class, id);
+	}
+
+	public void deleteJobReceiveJobDetailsById(int id) {
+		em.remove(getJobReceiveJobDetailsById(id));
+	}
+
+	public void updateJobReceiveJobDetails(
+			JobReceiveJobDetails jobReceiveJobDetails) {
+		em.merge(jobReceiveJobDetails);
+	}
+
+	public List<JobReceiveJobDetails> getAllJobReceiveJobDetails() {
+		TypedQuery<JobReceiveJobDetails> q = em.createQuery(
+				"select c from JobReceiveJobDetails c",
+				JobReceiveJobDetails.class);
 		return q.getResultList();
 	}
 

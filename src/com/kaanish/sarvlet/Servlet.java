@@ -33,6 +33,7 @@ import com.kaanish.model.JobPlan;
 import com.kaanish.model.JobPlanJobStock;
 import com.kaanish.model.JobPlanProductStock;
 import com.kaanish.model.JobPlanProducts;
+import com.kaanish.model.JobReceiveJobDetails;
 import com.kaanish.model.JobRecieveProductsDetails;
 import com.kaanish.model.JobRecievedDetails;
 import com.kaanish.model.JobStock;
@@ -171,6 +172,7 @@ public class Servlet extends HttpServlet {
 	private JobPlanProducts jobPlanProducts;
 	private JobPlanJobStock jobPlanJobStock;
 	private JobRecieveProductsDetails jobRecieveProductsDetails;
+	private JobReceiveJobDetails jobReceiveJobDetails;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -3565,29 +3567,40 @@ public class Servlet extends HttpServlet {
 						.getParameterValues("jobPlanProductsId");
 				String jobAssgnProductsId[] = req
 						.getParameterValues("jobAssgnProductsId");
-				// String qtyRe[] = req.getParameterValues("qtyRe");
+				String prodQtyRe[] = req.getParameterValues("prodQtyRe");
 				// String reoson[] = req.getParameterValues("reoson");
 
 				for (int l = 0; l < jobPlanProductsId.length; l++) {
-					// if(!qtyRe[l].equals("0")){
-					// jobRecieveProductsDetails = new
-					// JobRecieveProductsDetails();
-					// jobRecieveProductsDetails.setQtyReturn(Float.parseFloat(qtyRe[l]));
+					jobRecieveProductsDetails = new JobRecieveProductsDetails();
+					jobRecieveProductsDetails.setQtyReturn(Float
+							.parseFloat(prodQtyRe[l]));
 					// jobRecieveProductsDetails.setReason(reoson[l]);
-					// jobRecieveProductsDetails.setJobRecievedDetails(jobRecievedDetails);
-					// jobRecieveProductsDetails.setJobPlanProducts(ejb.getJobPlanProductsById(Integer.parseInt(jobPlanProductsId[l])));
-					// ejb.setJobRecieveProductsDetails(jobRecieveProductsDetails);
+					jobRecieveProductsDetails
+							.setJobRecievedDetails(jobRecievedDetails);
+					jobRecieveProductsDetails.setJobPlanProducts(ejb
+							.getJobPlanProductsById(Integer
+									.parseInt(jobPlanProductsId[l])));
+					ejb.setJobRecieveProductsDetails(jobRecieveProductsDetails);
 
 					jobPlanProducts = ejb.getJobPlanProductsById(Integer
 							.parseInt(jobPlanProductsId[l]));
-					jobPlanProducts.setUndergoingProcess(false);
-					jobPlanProducts.setRemainingQty(jobPlanProducts.getQty());
+					jobPlanProducts
+							.setRemainingQty(jobPlanProducts.getRemainingQty()
+									+ Float.parseFloat(prodQtyRe[l]));
+					if (jobPlanProducts.getQty() == jobPlanProducts
+							.getRemainingQty()) {
+						jobPlanProducts.setUndergoingProcess(false);
+					}
+					jobPlanProducts
+							.setJobCycle(jobPlanProducts.getJobCycle() + 1);
 					ejb.updateJobPlanProducts(jobPlanProducts);
 
 					jobAssignmentProducts = ejb
-							.getJobAssignmentProductsByJobPlanProductId(Integer
-									.parseInt(jobPlanProductsId[l]));
-					jobAssignmentProducts.setRemaninQty(0);
+							.getJobAssignmentProductsByJobPlanProductIdAndJobAssignmentId(
+									Integer.parseInt(jobPlanProductsId[l]),
+									jobAssignmentDetails.getId());
+					jobAssignmentProducts.setRemaninQty(jobAssignmentProducts
+							.getRemaninQty() - Float.parseFloat(prodQtyRe[l]));
 					ejb.updateJobAssignmentProductDetails(jobAssignmentProducts);
 
 					String[] jobAssgnJobId = req
@@ -3616,10 +3629,18 @@ public class Servlet extends HttpServlet {
 											.getRemQty()
 											- Float.parseFloat(qtyRe[lc1]));
 							ejb.updateJobAssignmentJobDetails(jobAssignmentJobDetails);
+
+							jobReceiveJobDetails = new JobReceiveJobDetails();
+							jobReceiveJobDetails
+									.setJobPlanJobStock(jobPlanJobStock);
+							jobReceiveJobDetails
+									.setJobRecieveProductsDetails(jobRecieveProductsDetails);
+							jobReceiveJobDetails.setQtyDone(Float
+									.parseFloat(qtyRe[lc1]));
+							ejb.setJobReceiveJobDetails(jobReceiveJobDetails);
 						}
 					}
 
-					// }
 				}
 
 				// Avik
