@@ -402,7 +402,7 @@ $(document).ready(function(){
 								</div>
 								<div class="widget-area" style="width:68%">
 
-									<form role="form" class="sec" action="addVendor" method="post">
+									<form role="form" class="sec" action="addVendor" method="post" id="addVendorid">
 										<ul class="nav nav-tabs">
 											<li class="active" id="detl"><a data-toggle="tab"
 												href="#detail">Details</a></li>
@@ -416,8 +416,7 @@ $(document).ready(function(){
 										<div class="tab-content">
 											<div id="bankAccount" class="tab-pane fade">
 												<div class="widget-area">
-													<h5 align="center">(* All the below fields are
-														optional)</h5>
+													<h5 align="center"></h5>
 													<br>
 													<div class="col-md-3">
 														<b>Bank Name:</b>
@@ -491,7 +490,7 @@ $(document).ready(function(){
 													<!-- <input
 														class="btn green pull-left" type="button" value="Next"
 														onclick="partButtonNext();"> -->
-													<button class="btn green pull-right" type="submit">Finish</button>
+													<button class="btn green pull-right" onclick="subVenform()" type="button">Finish</button>
 												</div>
 												<!-- <div class="col-md-12">
 													<input type="button" value="Next"
@@ -501,8 +500,7 @@ $(document).ready(function(){
 											<div id="vendorAccount" class="tab-pane fade">
 												<div class="widget-area">
 													<div class="row">
-														<h5 align="center">(* All the below fields are
-															optional)</h5>
+														<h5 align="center"></h5>
 														<br>
 														<div class="col-md-5">
 															<b>VAT no:</b>
@@ -626,7 +624,7 @@ $(document).ready(function(){
 												<div class="widget-area">
 
 													<div class="col-md-4">
-														<b>Name:</b>
+														<b>Name:*</b>
 													</div>
 													<div class="col-md-8">
 														<input type="text" class="form-control" name="vendorName"
@@ -643,7 +641,7 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-12"></div>
 													<div class="col-md-4">
-														<b>Ph No1:</b>
+														<b>Ph No1:</b>*
 													</div>
 													<div class="col-md-8">
 														<input type="text" class="form-control" name="vendorPh1"
@@ -709,7 +707,7 @@ $(document).ready(function(){
 														value="${vendor.address}"></textarea>
 													<div class="row">
 														<div class="col-md-3">
-															<b>City :</b>
+															<b>City:</b>*
 														</div>
 														<div class="col-md-9">
 															<input type="text" class="form-control cityAuto"
@@ -842,7 +840,26 @@ $(document).ready(function(){
 			});
 		});
 	</script>
+	<script>
 	
+	function subVenform(){
+		
+		if($("#name").val()==""){
+			alert("Enter the Name");
+		}
+		else if($("#phn1").val()==""){
+			alert("Enter the phone number1");
+		}
+		else if($("#vendorCity").val()==""){
+			alert("please Select City");
+		}
+		else{
+			$("#addVendorid").submit();
+			
+			}
+	}
+	
+	</script>
 	
 	<!-- main -->
 </body>

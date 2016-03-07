@@ -952,13 +952,8 @@ public class Servlet extends HttpServlet {
 				int counter2 = 0;
 				for (Vendor ven : vend) {
 
-/*<<<<<<< HEAD*/
-					if (ven.getPh1().equals(req.getParameter("vendorPh1"))) {
-/*=======
-					if (ven.getEmail().equals(req.getParameter("vendorMail"))
 
-					|| ven.getPh1().equals(req.getParameter("vendorPh1"))) {
->>>>>>> refs/remotes/origin/master*/
+					if (ven.getPh1().equals(req.getParameter("vendorPh1"))) {
 
 						counter2 = 1;
 						break;
@@ -974,30 +969,24 @@ public class Servlet extends HttpServlet {
 					if (!req.getParameter("vendorAddress").equals("")) {
 						vendor.setAddress(req.getParameter("vendorAddress"));
 					} else {
-						vendor.setAddress(req.getParameter(""));
+						vendor.setAddress(req.getParameter("null"));
 					}
 					vendor.setAliseName(req.getParameter("vendorAlias"));
-					if (!req.getParameter("vendorCityId").equals("")) {
-/*<<<<<<< HEAD*/
-						vendor.setCity(ejb.getCityById(Integer.parseInt(req.getParameter("vendorCityId"))));
-					} else {
-						vendor.setCity(ejb.getCityById(0));
-/*=======
-						vendor.setCity(ejb.getCityById(Integer.parseInt(req
-								.getParameter("vendorCityId"))));
->>>>>>> refs/remotes/origin/master*/
-					}
-//<<<<<<< HEAD
-					if (!req.getParameter("vendorCompanyName").equals("")) {
+					
+				
+					vendor.setCity(ejb.getCityById(Integer.parseInt(req.getParameter("vendorCityId"))));
+					
+				
+						if (!req.getParameter("vendorCompanyName").equals("")) {
 						vendor.setCompanyName(req.getParameter("vendorCompanyName"));
 					} else {
-						vendor.setCompanyName(req.getParameter(""));
+						vendor.setCompanyName(req.getParameter("null"));
 					}
 					if (!req.getParameter("vendorMail").equals("")) {
 						vendor.setEmail(req.getParameter("vendorMail"));
 					}
 					else{
-						vendor.setEmail(req.getParameter(""));
+						vendor.setEmail(req.getParameter("null"));
 					}
 					
 					
@@ -1010,24 +999,17 @@ public class Servlet extends HttpServlet {
 					}
 					else
 					{
-					vendor.setPh2(req.getParameter(""));
+					vendor.setPh2(req.getParameter("null"));
 					}
 					if(!req.getParameter("vendorPin").equals(""))
 					{
 					vendor.setPinCode(req.getParameter("vendorPin"));
 					}
 					else{
-						vendor.setPinCode(req.getParameter(""));
+						vendor.setPinCode(req.getParameter("null"));
 					}
 					vendor.setVendorType(ejb.getVendorTypeById(Integer.parseInt(req.getParameter("vendorType"))));
 					vendor.setUsers(ejb.getUserById((String) httpSession.getAttribute("user")));
-//=======
-//					vendor.setCompanyName(req.getParameter("vendorCompanyName"));
-//					vendor.setEmail(req.getParameter("vendorMail"));
-//					vendor.setPh1(req.getParameter("vendorPh1"));
-//					vendor.setPh2(req.getParameter("vendorPh2"));
-//					vendor.setPinCode(req.getParameter("vendorPin"));
-//>>>>>>> refs/remotes/origin/master
 
 					vendor.setVendorType(ejb.getVendorTypeById(Integer
 							.parseInt(req.getParameter("vendorType"))));
