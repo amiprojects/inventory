@@ -165,3 +165,48 @@ $("input:radio[name=bar]").click(function() {
 		
 var count = $('#purProTable tbody').length;
 		alert(count);
+		
+		
+		
+
+/*Only number*/
+ $(".numberOnly").keydown(function(event) {
+            if ( event.keyCode == 190 || event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 || event.keyCode == 13 || (event.keyCode == 65 && event.ctrlKey === true) || (event.keyCode >= 35 && event.keyCode <= 39)) {
+
+        if(event.keyCode == 190){
+				if($(this).val().indexOf('.')!=-1){
+                  event.preventDefault();
+                }
+
+            }
+        return;
+    }
+    else {
+
+        if (event.shiftKey || (event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105 )) {
+
+            event.preventDefault();
+            }
+    }
+});
+
+
+//////////////////////
+<script src="js/numericInput.min.js"></script>
+
+<script>
+		$(function() {
+
+			$("#quantity").numericInput({
+
+				allowFloat : true, // Accpets positive numbers (floating point)
+
+				allowNegative : false,
+			// Accpets positive or negative integer
+
+			});
+
+		});
+	</script>
+
+

@@ -125,8 +125,9 @@
 											<div class="col-md-12">
 												<b class="font">Design No.</b> <input type="text"
 													class="form-control" id="designNo" name="designNo"
-													autocomplete="off" onkeyup="dNoKeyUp();" onchange="dNoChange();">
-													<input type="hidden" id="dNoCheck" name="dNoCheck">
+													autocomplete="off" onkeyup="dNoKeyUp();"
+													onchange="dNoChange();"> <input type="hidden"
+													id="dNoCheck" name="dNoCheck">
 											</div>
 											<div class="col-md-12">
 												<b class="font">Designer Name :</b> <input type="text"
@@ -214,30 +215,40 @@
 
 									<br>
 									<div class="col-md-12">
-									<table style="float: right;">
-									<tr>
-									<td>Surcharge :</td>
-									<td><input type="number" name="surcharge" value="0.00" id="surcharge"
-												onkeyup="surchargeF();" autocomplete="off"></td>
-									</tr>
-									<tr>
-									<td><!-- Profit  --><select style="display: none;" name="profitType" id="profitType" onchange="profitTypeF();">
-												<option value="profitPer">%</option>
-												<option value="profitFlat">Flat</option>
-												</select> <!-- : --></td>
-									<td><input type="hidden" name="profitVal" value="0.00" id="profitVal"
-												onkeyup="profitValF();" autocomplete="off"></td></tr>
-									<tr>
-									<td><!-- Profit Value : --></td>
-									<td><input type="hidden" name="totProfit" value="0.00" id="totProfit"
-												readonly="readonly" autocomplete="off"></td></tr>
-									<tr>
-									<td>GrandTotal :</td>
-									<td><input type="number" name="grandtot" value="0.00" readonly="readonly"
-												id="grandtot"><input type="hidden" name="gtot" value="0.00" readonly="readonly"
-												id="gtot"><input type="hidden" name="gt"
-												value="0.00" readonly="readonly" id="gt"></td></tr>
-									</table>
+										<table style="float: right;">
+											<tr>
+												<td>Surcharge :</td>
+												<td><input type="number" name="surcharge" value="0.00"
+													id="surcharge" onkeyup="surchargeF();" autocomplete="off"></td>
+											</tr>
+											<tr>
+												<td>
+													<!-- Profit  -->
+													<select style="display: none;" name="profitType"
+													id="profitType" onchange="profitTypeF();">
+														<option value="profitPer">%</option>
+														<option value="profitFlat">Flat</option>
+												</select> <!-- : -->
+												</td>
+												<td><input type="hidden" name="profitVal" value="0.00"
+													id="profitVal" onkeyup="profitValF();" autocomplete="off"></td>
+											</tr>
+											<tr>
+												<td>
+													<!-- Profit Value : -->
+												</td>
+												<td><input type="hidden" name="totProfit" value="0.00"
+													id="totProfit" readonly="readonly" autocomplete="off"></td>
+											</tr>
+											<tr>
+												<td>GrandTotal :</td>
+												<td><input type="number" name="grandtot" value="0.00"
+													readonly="readonly" id="grandtot"><input
+													type="hidden" name="gtot" value="0.00" readonly="readonly"
+													id="gtot"><input type="hidden" name="gt"
+													value="0.00" readonly="readonly" id="gt"></td>
+											</tr>
+										</table>
 										<!-- <div class="form-group" style="float: right;">
 											<label for="surcharge" class="font">Surcharge :</label> <input
 												type="number" name="surcharge" value="0.00" id="surcharge"
@@ -363,6 +374,20 @@
 <script src="js/jquery-ui/jquery-ui.js"></script>
 <script src="js/numericInput.min.js"></script>
 <script>
+	$(function() {
+
+		$(".numFloat").numericInput({
+
+			allowFloat : true, // Accpets positive numbers (floating point)
+
+			allowNegative : false,
+		// Accpets positive or negative integer
+
+		});
+
+	});
+</script>
+<script>
 	/******************for products*************/
 	function addProduct() {
 		$("#addProduct").modal("show");
@@ -465,18 +490,18 @@
 															+ $("#proCode")
 																	.val()
 															+ '</td>'
-															+ '<td><input type="number" step="0.01" id="rate1'
+															+ '<td><input type="text" class="numFloat" id="rate1'
 															+ $(this).val()
 															+ $("#proId").val()
 															+ '" onchange="calAnount(\''
 															+ $(this).val()
 															+ $("#proId").val()
-															+ '\');" value="0.0" name="jobqty"></td>'
+															+ '\');" value="0" name="jobqty"></td>'
 															+ '<td>'
 															+ $("#proUOM")
 																	.val()
 															+ '</td>'
-															+ '<td><input type="number" id="qtu1'
+															+ '<td><input type="text" class="numFloat" id="qtu1'
 															+ $(this).val()
 															+ $("#proId").val()
 															+ '" onchange="calAnount(\''
@@ -555,7 +580,7 @@
 														+ '<td>'
 														+ $("#proCode").val()
 														+ '</td>'
-														+ '<td><input type="number" id="rate1'
+														+ '<td><input type="text" class="numFloat" id="rate1'
 														+ $(this).val()
 														+ $("#proId").val()
 														+ '" onchange="calAnount(\''
@@ -567,7 +592,7 @@
 														+ '<td>'
 														+ $("#proUOM").val()
 														+ '</td>'
-														+ '<td><input type="number" id="qtu1'
+														+ '<td><input type="text" class="numFloat" id="qtu1'
 														+ $(this).val()
 														+ $("#proId").val()
 														+ '" onchange="calAnount(\''
@@ -606,8 +631,7 @@
 						+ Number($("#surcharge").val()));
 		profitValF();
 		$("#grandtot").val(
-				Number($("#gtot").val())
-						+ Number($("#totProfit").val()));
+				Number($("#gtot").val()) + Number($("#totProfit").val()));
 
 		$("#proCode").val("");
 		$("#proId").val("");
@@ -634,8 +658,7 @@
 						+ Number($("#surcharge").val()));
 		profitValF();
 		$("#grandtot").val(
-				Number($("#gtot").val())
-						+ Number($("#totProfit").val()));
+				Number($("#gtot").val()) + Number($("#totProfit").val()));
 	}
 
 	function removeProductRow(id) {
@@ -655,8 +678,7 @@
 						+ Number($("#surcharge").val()));
 		profitValF();
 		$("#grandtot").val(
-				Number($("#gtot").val())
-						+ Number($("#totProfit").val()));
+				Number($("#gtot").val()) + Number($("#totProfit").val()));
 	}
 
 	function removeJobRow(id) {
@@ -672,8 +694,7 @@
 						+ Number($("#surcharge").val()));
 		profitValF();
 		$("#grandtot").val(
-				Number($("#gtot").val())
-						+ Number($("#totProfit").val()));
+				Number($("#gtot").val()) + Number($("#totProfit").val()));
 	}
 
 	function surchargeF() {
@@ -687,8 +708,7 @@
 						+ Number($("#surcharge").val()));
 		profitValF();
 		$("#grandtot").val(
-				Number($("#gtot").val())
-						+ Number($("#totProfit").val()));
+				Number($("#gtot").val()) + Number($("#totProfit").val()));
 	}
 
 	/****************for Designer*****************/
@@ -752,29 +772,27 @@
 			reader.readAsDataURL(input.files[0]);
 		}
 	}
-	function profitTypeF(){
+	function profitTypeF() {
 		//error
-	$("#profitVal").val("0.00");
-	$("#totProfit").val("0.00");
-	var sum = 0;
-	$(".eachtotalvalue").each(function() {
-		sum += parseFloat(this.value);
-	});
-	$("#gtot").val(
-			Number($("#gt").val()) + Number(sum.toFixed(2))
-					+ Number($("#surcharge").val()));
-	$("#grandtot").val(
-			Number($("#gtot").val())
-					+ Number($("#totProfit").val()));
+		$("#profitVal").val("0.00");
+		$("#totProfit").val("0.00");
+		var sum = 0;
+		$(".eachtotalvalue").each(function() {
+			sum += parseFloat(this.value);
+		});
+		$("#gtot").val(
+				Number($("#gt").val()) + Number(sum.toFixed(2))
+						+ Number($("#surcharge").val()));
+		$("#grandtot").val(
+				Number($("#gtot").val()) + Number($("#totProfit").val()));
 	}
-	function profitValF(){
+	function profitValF() {
 		//error
 		if ($("#profitType").val() == 'profitPer') {
 			$("#totProfit")
 					.val(
 							Math
-									.round((Number($("#gtot")
-											.val())
+									.round((Number($("#gtot").val())
 											* Number($("#profitVal").val()) / 100) * 100) / 100);
 			var sum = 0;
 			$(".eachtotalvalue").each(function() {
@@ -784,57 +802,53 @@
 					Number($("#gt").val()) + Number(sum.toFixed(2))
 							+ Number($("#surcharge").val()));
 			$("#grandtot").val(
-					Number($("#gtot").val())
-							+ Number($("#totProfit").val()));
-		} else {			
-				$("#totProfit")
-						.val(
-								Math
-										.round(Number($("#profitVal").val()) * 100) / 100);
-				var sum = 0;
-				$(".eachtotalvalue").each(function() {
-					sum += parseFloat(this.value);
-				});
-				$("#gtot").val(
-						Number($("#gt").val()) + Number(sum.toFixed(2))
-								+ Number($("#surcharge").val()));
-				$("#grandtot").val(
-						Number($("#gtot").val())
-								+ Number($("#totProfit").val()));
+					Number($("#gtot").val()) + Number($("#totProfit").val()));
+		} else {
+			$("#totProfit").val(
+					Math.round(Number($("#profitVal").val()) * 100) / 100);
+			var sum = 0;
+			$(".eachtotalvalue").each(function() {
+				sum += parseFloat(this.value);
+			});
+			$("#gtot").val(
+					Number($("#gt").val()) + Number(sum.toFixed(2))
+							+ Number($("#surcharge").val()));
+			$("#grandtot").val(
+					Number($("#gtot").val()) + Number($("#totProfit").val()));
 
 		}
 	}
 </script>
 
 <script type="text/javascript">
-		function dNoKeyUp() {
-			$("#dNoCheck").val("");
-			$.ajax({
-				url : "getSampleDesignCostSheetByDesignNumber",
-				dataType : "json",
-				data : {
-					dNo : $("#designNo").val()
-				},
-				success : function(data) {
-					$.map(data, function(item){
+	function dNoKeyUp() {
+		$("#dNoCheck").val("");
+		$.ajax({
+			url : "getSampleDesignCostSheetByDesignNumber",
+			dataType : "json",
+			data : {
+				dNo : $("#designNo").val()
+			},
+			success : function(data) {
+				$.map(data, function(item) {
 					if (item.dNumber != "") {
 						$("#dNoCheck").val(item.dNumber);
-					}else{
+					} else {
 						$("#dNoCheck").val("");
 					}
-					});
-				}
-
-			});
-
-		}
-
-		function dNoChange() {
-			if ($("#dNoCheck").val() != "") {
-				alert("Duplicate Design Number");
-				$("#dNoCheck").val("");
-				$("#designNo").val("");
+				});
 			}
+
+		});
+
+	}
+
+	function dNoChange() {
+		if ($("#dNoCheck").val() != "") {
+			alert("Duplicate Design Number");
+			$("#dNoCheck").val("");
+			$("#designNo").val("");
 		}
-	</script>
+	}
+</script>
 </html>
