@@ -210,3 +210,18 @@ var count = $('#purProTable tbody').length;
 	</script>
 
 
+//block special character
+<head id="Head1" runat="server">
+    <title></title>
+    <script type="text/javascript">
+        function blockSpecialChar(e) {
+            var k = e.keyCode;
+            return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k==32  || (k >= 48 && k <= 57));
+        }
+    </script>
+</head>
+<body>
+    <form id="frm" runat="server">
+      <input type="text" name="name"  onkeypress="return blockSpecialChar(event)"/>
+    </form>
+</body>

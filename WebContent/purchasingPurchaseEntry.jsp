@@ -1965,7 +1965,7 @@
 											<label for="exampleInputEmail1">Product Code:</label> <input
 												type="text" name="productCode2" id="productCodeAMI"
 												onkeyup="codeKeyUp();" onchange="codeChange();"
-												class="form-control"><input type="hidden"
+												class="form-control" onkeypress="return blockSpecialChar(event)"><input type="hidden"
 												id="pcodeCheck">
 										</div>
 									</div>
@@ -2662,9 +2662,43 @@
 		function addDesineNo() {
 
 			$("#addDesineN").modal('show');
-
+			
+			//adding
+			$("#step1").show();
+			$("#step2").hide();
+			$("#step3").hide();
+			$("#step4").hide();
+			$("#step5").hide();
+			$("#step6").hide();
+			$("#step7").hide();
+			
+			prevF();
+			prevF();
+			prevF();
+			prevF();
+			prevF();
+			prevF();
+			prevF();
+			prevF();
+			
+			$("#menu1")
+						.attr(
+								"style",
+								"color: red; font-weight: bolder; background-color: #A3DEDE; box-shadow: 1px 1px 1px 1px #507B8A");
+			$("#menu2").attr("style", "");
+			$("#menu3").attr("style", "");
+			$("#menu4").attr("style", "");
+			$("#menu5").attr("style", "");
+			$("#menu6").attr("style", "");
+			$("#menu7").attr("style", "");
 		}
 	</script>
+	<script type="text/javascript">
+        function blockSpecialChar(e) {
+            var k = e.keyCode;
+            return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || (k >= 48 && k <= 57));
+        }
+    </script>
 	<script type="text/javascript">
 		function readURL(input) {
 			if (input.files && input.files[0]) {

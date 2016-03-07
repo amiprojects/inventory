@@ -125,18 +125,18 @@
 												<tr>
 													<td>Name :</td>
 													<td><input type="text" name="custName" id="custName"
-														style="align: center;"></input></td>
+														style="align: center; text-transform: uppercase;"></input></td>
 												</tr>
 
 												<tr>
 													<td>Address :</td>
 													<td><input type="text" name="addr" id="addr"
-														style="length: 40px;" style="align:center;"></input></td>
+														style="length: 40px;" style="align:center; text-transform:uppercase;"></input></td>
 												</tr>
 												<tr>
 													<td>City :</td>
 													<td><input type="text" name="city" id="city"
-														style="length: 40px;" autocomplete="off"></input></td>
+														style="length: 40px; text-transform: uppercase;" autocomplete="off"></input></td>
 													<td><a onclick="addCitySC()" title="Add New City">
 															<img height="20px" width="20px" alt="" src="img/add.png">
 													</a></td>
@@ -153,13 +153,13 @@
 												<tr>
 													<td>Vat No./CST No. :</td>
 													<td><input type="text" name="vatcst" id="vatcst"
-														style="length: 40px;"></input></td>
+														style="length: 40px; text-transform: uppercase;"></input></td>
 												</tr>
 												<tr>
 													<td><input type="checkbox" onclick="isAgentF();"
 														id="agent" name="agent">&nbsp; Via Agent :</td>
 													<td><input type="text" name="agentName" id="agentName"
-														style="length: 30px;" readonly="readonly"><input
+														style="length: 30px; text-transform: uppercase;" readonly="readonly"><input
 														type="hidden" name="aId" id="aId"><input
 														type="hidden" name="isExistingCust" id="isExistingCust"><input
 														type="hidden" name="existingCustId" value=""
@@ -238,7 +238,7 @@
 
 								</div>
 								<div class="widget-area">
-									<b>Quantity :</b> <input type="number" name="qty" id="qty"
+									<b>Quantity :</b> <input type="text" name="qty" id="qty"
 										style="width: 70px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									<b>Product :</b><input type="text" id="pCode" name="pCode"
 										onkeyup="pcodeF();" autocomplete="off"><input
@@ -329,7 +329,7 @@
 
 												</select>
 												</td>
-												<td><input type="number" class="form-control"
+												<td><input type="text" value="0" class="form-control"
 													name="disValue" id="discount" placeholder=""
 													onkeyup="discountF();" autocomplete="off"></td>
 											</tr>
@@ -338,7 +338,7 @@
 										<tbody>
 											<tr>
 												<td colspan="2" id="disc">Discount Value:</td>
-												<td><input type="number" class="form-control"
+												<td><input type="text" class="form-control"
 													readonly="readonly" id="discountValue" name="discountValue"
 													value="0"></td>
 											</tr>
@@ -371,7 +371,7 @@
 										<tbody>
 											<tr>
 												<td colspan="2" id="trans">Transport charge :</td>
-												<td><input type="number" class="form-control" value="0"
+												<td><input type="text" class="form-control" value="0"
 													id="transcharge" name="transcharge"
 													onkeyup="transchargeF();" autocomplete="off"></td>
 											</tr>
@@ -380,7 +380,7 @@
 										<tbody>
 											<tr>
 												<td colspan="2" id="sur">Surcharge :</td>
-												<td><input type="number" class="form-control" value="0"
+												<td><input type="text" class="form-control" value="0"
 													id="surcharge" name="surcharge" onkeyup="surchargeF();"
 													autocomplete="off"></td>
 											</tr>
@@ -1614,6 +1614,62 @@
 	<script type="text/javascript" src="js/grid-filter.js"></script>
 
 	<script src="js/jquery-ui/jquery-ui.js"></script>
+	
+	<script src="js/numericInput.min.js"></script>
+
+<script>
+		$(function() {
+
+			$("#discount").numericInput({
+
+				allowFloat : true, // Accpets positive numbers (floating point)
+
+				allowNegative : false,
+			// Accpets positive or negative integer
+
+			});
+
+		});
+		
+		$(function() {
+
+			$("#qty").numericInput({
+
+				allowFloat : true, // Accpets positive numbers (floating point)
+
+				allowNegative : false,
+			// Accpets positive or negative integer
+
+			});
+
+		});
+		
+		$(function() {
+
+			$("#transcharge").numericInput({
+
+				allowFloat : true, // Accpets positive numbers (floating point)
+
+				allowNegative : false,
+			// Accpets positive or negative integer
+
+			});
+
+		});
+		
+		$(function() {
+
+			$("#surcharge").numericInput({
+
+				allowFloat : true, // Accpets positive numbers (floating point)
+
+				allowNegative : false,
+			// Accpets positive or negative integer
+
+			});
+
+		});
+	</script>
 
 	<script>
 		$("input:radio[name=saleAt]").click(function() {
@@ -2780,20 +2836,7 @@
 			});
 		});
 	</script>
-	<script src="js/numericInput.min.js"></script>
-	<script>
-		$(function() {
-
-			$("#qty").numericInput({
-
-				allowFloat : true, // Accpets positive numbers (floating point)
-
-				allowNegative : false,
-			// Accpets positive or negative integer
-
-			});
-
-		});
+	<script>	
 
 		function addAgentDetails() {
 

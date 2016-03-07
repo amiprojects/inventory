@@ -603,7 +603,7 @@
 											<label for="exampleInputEmail1">Product Code:</label> <input
 												type="text" name="productCode2" id="productCode" 
 												onkeyup="codeKeyUp();" onchange="codeChange();"
-												class="form-control">
+												class="form-control" onkeypress="return blockSpecialChar(event)">
 										</div>
 									</div>
 									<div class="col-md-6">
@@ -2222,6 +2222,13 @@
 
 		}
 	</script>
+	
+	<script type="text/javascript">
+        function blockSpecialChar(e) {
+            var k = e.keyCode;
+            return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8  || (k >= 48 && k <= 57));
+        }
+    </script>
 
 </body>
 

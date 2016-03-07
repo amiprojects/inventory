@@ -2123,7 +2123,7 @@ public class Servlet extends HttpServlet {
 			case "jobAssignSearchByDate":
 				page = "jobAssignSearch.jsp";
 				List<JobAssignmentDetails> jobAssignList = ejb
-						.getJobAssignmentByDate(DateConverter.getDate(req
+						.getJobAsignmentByDate(DateConverter.getDate(req
 								.getParameter("fDate")), DateConverter
 								.getDate(req.getParameter("lDate")));
 				req.setAttribute("jobAssignList", jobAssignList);
@@ -2190,7 +2190,7 @@ public class Servlet extends HttpServlet {
 			case "jobSearchByJobberName":
 				page = "jobAssignSearchByJobber.jsp";
 				List<JobAssignmentDetails> jobAssignList2 = ejb
-						.getJobAssignByJobberName(req
+						.getJobAssignByJoberName(req
 								.getParameter("jobberName"));
 				req.setAttribute("jobAssignList", jobAssignList2);
 				if (jobAssignList2.size() > 0) {
@@ -2205,7 +2205,7 @@ public class Servlet extends HttpServlet {
 			case "jobSearchByProductCode":
 				page = "jobAssignSearch.jsp";
 				List<JobAssignmentDetails> jobAssignList3 = ejb
-						.getJobAssignByProductCode(req.getParameter("prodCode"));
+						.getJobAssignByProdCode(req.getParameter("prodCode"));
 				req.setAttribute("jobAssignList", jobAssignList3);
 				if (jobAssignList3.size() > 0) {
 					msg = "Your search for Product code : "
@@ -2219,7 +2219,7 @@ public class Servlet extends HttpServlet {
 			case "jobSearchAll":
 				page = "jobAssignSearch.jsp";
 				List<JobAssignmentDetails> jobAssignListA = ejb
-						.getAllJobassignmentDetailsByCompany();
+						.getAllJobassignmentDetails();
 				req.setAttribute("jobAssignList", jobAssignListA);
 				if (jobAssignListA.size() > 0) {
 					msg = "All Job Assign List";
