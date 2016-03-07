@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%-- <jsp:include page="include.jsp" /> --%>
+<jsp:include page="include.jsp" />
 
 <aside class="sidebar" style="height: 100%; overflow-y: scroll;">
 	<div class="menu-sec">
@@ -53,10 +53,10 @@
 							title="">Search Purchase Entry</a></li>
 						<li><a id="sPurchReturn" href="purchaseReturn.jsp" title="">Purchase
 								Return</a></li>
-					<li><a id="sPurchPOgive" href="purchasingPurchaseOrderGive.jsp" title="">Purchase
+					<!-- <li><a id="sPurchPOgive" href="purchasingPurchaseOrderGive.jsp" title="">Purchase
 								Order</a></li>
 						<li><a id="sPurchPOtake" href="purchasingPurchaseOrderRecive.jsp" title="">Purchase
-								Order Receive</a></li>
+								Order Receive</a></li> -->
 					</ul>
 				</div>
 			</div>
@@ -75,7 +75,7 @@
 						<li><a id="sSalesSearch" href="salesSearch.jsp" title="">Sales
 								Search</a></li>
 
-						<!-- 	 <li><a id="sSalesDiscount" href="salesDiscount.jsp" title="">Discount</a></li> -->
+					<!--  <li><a id="sSalesDiscount" href="salesDiscount.jsp" title="">Discount</a></li> -->
 
 					</ul>
 				</div>
@@ -106,7 +106,7 @@
 			</div>
 
 
-			<div class="single-menu">
+			<!-- <div class="single-menu">
 
 
 				<h2 id="jobs">
@@ -116,14 +116,14 @@
 					<ul>
 						<li><a id="jAssign" href="jobAssign.jsp" title="">Job
 								Assignment</a></li>
-						<!-- <li><a id="jSearch" href="jobAssignSearch.jsp" title="">Job
-								Assignment Search</a></li> -->
+						<li><a id="jSearch" href="jobAssignSearch.jsp" title="">Job
+								Assignment Search</a></li>
 						<li><a id="jR" href="jobReceive.jsp" title="">Job Receive</a></li>
 						<li><a id="designCostSheet" href="designCostSheet.jsp"
 							title="">Sample Job CostSheet</a></li>
 					</ul>
 				</div>
-			</div>
+			</div> -->
 			<div class="single-menu">
 				<h2 id="setup">
 					<a title=""><span>Setup Module</span></a>
@@ -145,8 +145,8 @@
 						<li><a id="sSetupBill" href="billSetup.jsp" title="">Bill
 								Setup</a></li>
 
-						<li><a id="jobSetup" href="jobSetup.jsp" title="">Job
-								Setup</a></li>
+						<!-- <li><a id="jobSetup" href="jobSetup.jsp" title="">Job
+								Setup</a></li> -->
 
 					</ul>
 				</div>

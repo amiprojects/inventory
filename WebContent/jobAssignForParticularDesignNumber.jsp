@@ -110,7 +110,7 @@ function showDatePicker() {
 	</c:if>
 	
 	
-	<c:if test="${requestScope['jobasfoPaDeN']!=null}">
+	<%-- <c:if test="${requestScope['jobasfoPaDeN']!=null}">
 		<script type="text/javascript">
 			var myWindow = window
 					.open(
@@ -121,7 +121,7 @@ function showDatePicker() {
 			
 		</script>
 		
-	</c:if>
+	</c:if> --%>
 	
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>

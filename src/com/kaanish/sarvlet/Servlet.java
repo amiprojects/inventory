@@ -3385,8 +3385,9 @@ public class Servlet extends HttpServlet {
 				jobPlan.setTotalExpanse(jobPlan.getTotalExpanse()
 						+ totalJobExpanse);
 				ejb.updateJobPlan(jobPlan);
-				req.setAttribute("jobasfoPaDeN", jobAssignmentDetails.getId());
 				
+				//req.setAttribute("jobasfoPaDeN", jobAssignmentDetails.getId());
+				//Barcode  request send
 
 				msg = "Job Assigned Successfully";
 				break;

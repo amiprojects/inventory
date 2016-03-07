@@ -118,7 +118,7 @@
 
 
 
-								<div class="col-md-4"><a href="jobAssign.jsp">
+								<!-- <div class="col-md-4"><a href="jobAssign.jsp">
 
 										<div class="stats-counter">
 											<img alt="sales Entry" src="images/jobs.PNG"
@@ -127,7 +127,7 @@
 											<h4 style="color: red">Job Assignment</h4>
 										</div></a>
 
-									</div>
+									</div> -->
 
 
 									
