@@ -600,7 +600,7 @@
 								<form action="#" method="get">
 									<div class="col-md-6">
 										<div>
-											<label for="exampleInputEmail1">Product Code:</label> <input
+											<label for="exampleInputEmail1">Product Code:<font color="red" size="4">*</font></label> <input
 												type="text" name="productCode2" id="productCode" 
 												onkeyup="codeKeyUp();" onchange="codeChange();"
 												class="form-control" onkeypress="return blockSpecialChar(event)">
@@ -608,7 +608,7 @@
 									</div>
 									<div class="col-md-6">
 										<div>
-											<label for="exampleInputPassword1">Description:</label> <input
+											<label for="exampleInputPassword1">Description:<font color="red" size="4">*</font></label> <input
 												type="text" name="description" id="description"
 												class="form-control"><br>
 										</div>
@@ -617,14 +617,14 @@
 
 									<div class="col-md-6">
 										<label for="exampleInputEmail1">Designer's Design
-											number:</label> <input type="text" name="universalProductCode"
+											number:<font color="red" size="4">*</font></label> <input type="text" name="universalProductCode"
 											id="universalProductCode"  placeholder=""
 											class="form-control"><br>
 									</div>
 									<div class="col-md-5">
 										<div>
 											<label for="exampleInputPassword1">Unit Of
-												Measurement:</label> <select required name="uom" id="uomO"
+												Measurement:<font color="red" size="4">*</font></label> <select required name="uom" id="uomO"
 												onchange="uomFunction()" class="form-control"
 												style="width: 205px; height: 34px">
 												<option value="0">select an UOM</option>
@@ -649,7 +649,7 @@
 						<div id="bD"
 							style="position: absolute; top: 225px; right: 2px; width: 560px; height: 180px; font-family: arial;">
 
-							<h3>Products:</h3>
+							<h3>Products:<font color="red" size="4">*</font></h3>
 
 							<p style="font-size: 20px; margin-right: 342px;">
 								<input type="radio" name="isReady" id="raw" onclick=""
@@ -788,27 +788,27 @@
 
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="" class="font">Per Unit Cost:</label> <input
+										<label for="" class="font">Per Unit Cost:<font color="red" size="4">*</font></label> <input
 											name="unitCost" type="text" placeholder="" id="ucO"
 											onchange="rateF()" class="form-control">
 
 									</div>
 									<div class="form-group">
-										<label for="" class="font">Wholesale Price :</label> <input
+										<label for="" class="font">Wholesale Price :<font color="red" size="4">*</font></label> <input
 											type="text" name="wsp" onchange="wspF()" placeholder=""
 											id="wspO" class="form-control">
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="" class="font">Quantity:</label> <input
+										<label for="" class="font">Quantity:<font color="red" size="4">*</font></label> <input
 											name="quantity" type="text" pattern="\d*" id="quantity"
 											onkeyup="setLimit()" class="form-control">
 									</div>
 
 
 									<div class="form-group">
-										<label for="" class="font">Maximum Retail Price :</label> <input
+										<label for="" class="font">Maximum Retail Price :<font color="red" size="4">*</font></label> <input
 											type="text" name="mrp" placeholder="" id="mrpO"
 											onchange="mrpF()" class="form-control">
 									</div>
@@ -867,7 +867,7 @@
 							<div class="col-md-6">
 								<div class="widget-area" align="left">
 									<h2 class="widget-title">
-										<strong>Tree</strong> List &nbsp; &nbsp;
+										<strong>Tree</strong> List <font color="red" size="4">*</font>&nbsp; &nbsp;
 									<!--  <a onclick="addCat()"
 											title="Add New Category"> <img style="margin-top: 4px;"
 											height="30px" width="30px" alt="" src="img/add.png">
@@ -936,7 +936,7 @@
 							<div id="trackkDiv">
 								<div class="col-md-6">
 
-									<label for="exampleInputEmail1">Lot Number:</label> <input
+									<label for="exampleInputEmail1">Lot Number:<font color="red" size="4">*</font></label> <input
 										id="lotnO" type="text" name="lotNumber" required
 										class="form-control"><br>
 
@@ -1314,14 +1314,14 @@
 
 						</div>
 						<div class="row">
-							<div class="col-md-3">Abbreviation :</div>
+							<div class="col-md-3">Abbreviation :<font color="red" size="4">*</font></div>
 							<div class="col-md-9">
 								<input type="text" required name="abbreviationuom"
 									id="abbreviationuom" class="form-control">
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-md-3">Name UOM :</div>
+							<div class="col-md-3">Name UOM :<font color="red" size="4">*</font></div>
 							<div class="col-md-9">
 								<input type="text" id="nameuom" required name="nameuom"
 									class="form-control">
@@ -1477,12 +1477,12 @@
 		}
 	</script>
 
-	<script>
+	<!-- <script>
 		$(document).ready(function() {
 			$('#tree').abixTreeList();
 		});
-	</script>
-	<script type="text/javascript" src="js/abixTreeList.min.js"></script>
+	</script> -->
+	<!-- <script type="text/javascript" src="js/abixTreeList.min.js"></script> -->
 	<script type="text/javascript">
 		function setLimit() {
 			$("#limit").val($("#quantity").val());
@@ -1521,7 +1521,7 @@
 				success : function(data) {
 
 					if ((data.attrNmae1) != 'null') {
-						$("#sa1").html(data.attrNmae1);
+						$("#sa1").html(data.attrNmae1+":<font color='red' size='4'>*</font>");
 						$("#summaryA1").html(data.attrNmae1);
 						$("#a10").prop("disabled", false);
 					} else {
@@ -1530,7 +1530,7 @@
 						$("#a10").prop("disabled", true);
 					}
 					if ((data.attrNmae2) != 'null') {
-						$("#sa2").html(data.attrNmae2);
+						$("#sa2").html(data.attrNmae2+":<font color='red' size='4'>*</font>");
 						$("#summaryA2").html(data.attrNmae2);
 						$("#a20").prop("disabled", false);
 					} else {
@@ -1539,7 +1539,7 @@
 						$("#a20").prop("disabled", true);
 					}
 					if ((data.attrNmae3) != 'null') {
-						$("#sa3").html(data.attrNmae3);
+						$("#sa3").html(data.attrNmae3+":<font color='red' size='4'>*</font>");
 						$("#summaryA3").html(data.attrNmae3);
 						$("#a30").prop("disabled", false);
 					} else {
@@ -1548,7 +1548,7 @@
 						$("#a30").prop("disabled", true);
 					}
 					if ((data.attrNmae4) != 'null') {
-						$("#sa4").html(data.attrNmae4);
+						$("#sa4").html(data.attrNmae4+":<font color='red' size='4'>*</font>");
 						$("#summaryA4").html(data.attrNmae4);
 						$("#a40").prop("disabled", false);
 					} else {
@@ -1557,7 +1557,7 @@
 						$("#a40").prop("disabled", true);
 					}
 					if ((data.attrNmae5) != 'null') {
-						$("#sa5").html(data.attrNmae5);
+						$("#sa5").html(data.attrNmae5+":<font color='red' size='4'>*</font>");
 						$("#summaryA5").html(data.attrNmae5);
 						$("#a50").prop("disabled", false);
 					} else {
@@ -1567,7 +1567,7 @@
 					}
 					if ((data.attrNmae6) != 'null') {
 						$("#sa6").html(data.attrNmae6);
-						$("#summaryA6").html(data.attrNmae6);
+						$("#summaryA6").html(data.attrNmae6+":<font color='red' size='4'>*</font>");
 						$("#a60").prop("disabled", false);
 					} else {
 						$("#sa6").html("Attribute6:");
@@ -1884,7 +1884,12 @@
 
 	<script type="text/javascript">
 		function submitform1() {
-
+			if ($("#abbreviationuom").val() == "") {
+				alert("please enter UOM Abbreviation.");
+			}else if($("#nameuom").val() == ""){
+				alert("please enter UOM name.");
+			}
+			else {
 			var dataa2 = {
 				descriptionuom : $("#descriptionuom").val(),
 				nameuom : $("#nameuom").val(),
@@ -1926,6 +1931,7 @@
 						}
 
 					});
+		}
 		}
 	</script>
 

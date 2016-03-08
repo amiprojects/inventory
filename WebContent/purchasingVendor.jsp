@@ -152,10 +152,17 @@ $(document).ready(function(){
 	}
 
 	function detailButtonNext() {
-		$("#detl").removeAttr("class");
-		$("#detail").attr("class", "tab-pane fade");
-		$("#addr").attr("class", "active");
-		$("#address").attr("class", "tab-pane fade active in");
+		if($("#name").val()==""){
+			alert("Enter the Name");
+		}
+		else if($("#phn1").val()==""){
+			alert("Enter the phone number1");
+		} else{
+			$("#detl").removeAttr("class");
+			$("#detail").attr("class", "tab-pane fade");
+			$("#addr").attr("class", "active");
+			$("#address").attr("class", "tab-pane fade active in");			
+		}		
 	}
 
 	function addressButtonPrev() {
@@ -166,10 +173,15 @@ $(document).ready(function(){
 	}
 
 	function addressButtonNext() {
-		$("#addr").removeAttr("class");
-		$("#address").attr("class", "tab-pane fade");
-		$("#vAcc").attr("class", "active");
-		$("#vendorAccount").attr("class", "tab-pane fade active in");
+		if($("#vendorCity").val()==""){
+			alert("please Select City");
+		}
+		else{
+			$("#addr").removeAttr("class");
+			$("#address").attr("class", "tab-pane fade");
+			$("#vAcc").attr("class", "active");
+			$("#vendorAccount").attr("class", "tab-pane fade active in");			
+		}			
 	}
 
 	$(function() {
@@ -624,7 +636,7 @@ $(document).ready(function(){
 												<div class="widget-area">
 
 													<div class="col-md-4">
-														<b>Name:*</b>
+														<b>Name:<font color="red" size="4">*</font></b>
 													</div>
 													<div class="col-md-8">
 														<input type="text" class="form-control" name="vendorName"
@@ -641,7 +653,7 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-12"></div>
 													<div class="col-md-4">
-														<b>Ph No1:</b>*
+														<b>Ph No1:<font color="red" size="4">*</font></b>
 													</div>
 													<div class="col-md-8">
 														<input type="text" class="form-control" name="vendorPh1"
@@ -697,17 +709,27 @@ $(document).ready(function(){
 											</div>
 											<div id="address" class="tab-pane fade ">
 												<div class="widget-area">
-													<div class="breadcrumbs">
+													<%-- <div class="breadcrumbs">
 														<ul>
 															<li><a title="" class="font"><h6>Address</h6></a></li>
 														</ul>
 													</div>
 													<textarea rows="" cols="" class="form-control"
 														name="vendorAddress" id="addr"  
+														value="${vendor.address}"></textarea> --%>
+														<div class="row">
+														<div class="col-md-3">
+															<b>Address :</b>
+														</div>
+														<div class="col-md-9">
+															<textarea rows="" cols="" class="form-control"
+														name="vendorAddress" id="addr"  
 														value="${vendor.address}"></textarea>
+														</div>
+													</div>
 													<div class="row">
 														<div class="col-md-3">
-															<b>City:</b>*
+															<b>City:<font color="red" size="4">*</font></b>
 														</div>
 														<div class="col-md-9">
 															<input type="text" class="form-control cityAuto"

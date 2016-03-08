@@ -78,28 +78,43 @@
 
 							<div class="widget-area"
 								style="height: 500px; overflow: auto; width: 60%; float: left;">
-								<form action="createUserGroup" method="post">
-									<div class="col-md-8">
-										<input type="text" name="userGroupName" class="form-control">
+								<form action="createUserGroup" method="post"
+									id="createUserGroupId">
+									<div class="col-md-9">
+										<div class="col-md-1"
+											style="margin-right: 0px; padding-right: 0px;">
+											<font color='red' size='4'><b>*</b></font>
+										</div>
+										<div class="col-md-11"
+											style="margin-left: 0px; padding-left: 0px;">
+											<input type="text" placeholder="Enter user group name:"
+												name="userGroupName" id="userGroupName" class="form-control">
+										</div>
 									</div>
-									<div class="col-md-4">
-										<input type="submit" value="Create Group"
-											class="btn green pull-right">
+									<div class="col-md-3">
+										<input type="button" value="Create Group"
+											class="btn green pull-right" onclick="userGroupSubmit();">
 									</div>
+									<br>
+									<br>
 									<p>
-										<a href="#" id="tree-expand-all">Expand all</a> | <a href="#"
-											id="tree-collapse-all">Collapse all</a>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="red" size="4">*</font><!-- <a href="#"
+											id="tree-expand-all">Expand all</a> | <a href="#"
+											id="tree-collapse-all">Collapse all</a> -->
+											<b>Select Pages:</b>
 									</p>
 									<ul id="tree">
 										<c:forEach items="${sessionScope['ejb'].getAllModule()}"
 											var="module">
-											<li><input type="checkbox" value="">${module.name}
+											<li>
+												<!-- <input type="checkbox" value=""> -->${module.name}
 												<ul>
 													<c:forEach items="${module.pageLists}" var="page">
 														<li><input name="pageId" type="checkbox"
-															value="${page.id}">${page.name}</li>
+															class="isSelected" value="${page.id}">${page.name}</li>
 													</c:forEach>
-												</ul></li>
+												</ul>
+											</li>
 										</c:forEach>
 									</ul>
 								</form>
@@ -112,7 +127,8 @@
 								style="height: 500px; overflow: auto; width: 40%; float: left;">
 								<h2>User Group</h2>
 								<ul>
-									<c:forEach items="${sessionScope['ejb'].getAllUserGroupByCompany(compInfo.id)}"
+									<c:forEach
+										items="${sessionScope['ejb'].getAllUserGroupByCompany(compInfo.id)}"
 										var="ug">
 										<li><a href="#" onclick="viewUser('${ug.id}');">${ug.groupName}</a></li>
 
@@ -122,7 +138,7 @@
 												<div class="modal-content">
 													<div class="modal-header">
 														<button type="button" class="close" data-dismiss="modal">&times;</button>
-														<h4 class="modal-title">Modal Header</h4>
+														<h4 class="modal-title">Update User Group</h4>
 													</div>
 													<div class="modal-body">
 														<form action="updateUserGroup" method="post">
@@ -198,10 +214,25 @@
 		$(document).ready(function() {
 			$("#setup").attr("id", "activeSubMenu");
 			$("#sSetupUgroup").attr("style", "color: #6a94ff;");
-			$('#tree').abixTreeList();
+			//$('#tree').abixTreeList();
 		});
 		function viewUser(id) {
 			$("#userGroup" + id).modal();
+		}
+		function userGroupSubmit(){
+			var i = 0;
+		    $(".isSelected").each(function () {
+		        if ($(this).is(':checked')) {
+		            i = 1;
+		        }
+		    });
+			if($("#userGroupName").val()==""){
+				alert("Enter user group name...");
+			}else if(i == 0){
+				alert("Select pages to give access...");
+			}else{
+				$("#createUserGroupId").submit();
+			}
 		}
 	</script>
 </body>

@@ -86,6 +86,8 @@
 								$("#perentOfSubDept").html(
 										'Perent Department: ' + ui.item.pname);
 								$("#attr1").prop("disabled", false);
+								
+								$("#attr1Star").html("Attribute 1:<font color='red' size='4'>*</font>");
 								/* $("#attr2").prop("disabled", false);
 								$("#attr3").prop("disabled", false);
 								$("#attr4").prop("disabled", false);
@@ -99,6 +101,8 @@
 								$("#attr4").prop("disabled", true);
 								$("#attr5").prop("disabled", true);
 								$("#attr6").prop("disabled", true);
+								
+								$("#attr1Star").html("Attribute 1:");
 							}
 						}
 					},
@@ -270,18 +274,18 @@
 														<li>Add Department</li>
 													</ul>
 												</div>
-												<span>Department name: </span> <input type="text" id="dName"
+												<span>Department name:<font color="red" size="4">*</font> </span> <input type="text" id="dName"
 													class="form-control"> <span>Parent</span>&nbsp; <input
 													type="radio" name="parent" value="y">&nbsp;Y &nbsp;<input
 													type="radio" name="parent" value="n" checked="checked">&nbsp;N
-												<br> <span>Parent name: </span><span
+												<br> <span id="parentNameStar">Parent name: </span><span
 													id="perentOfSubDept"></span> <input type="text"
 													class="form-control" id="prnt" disabled="disabled"><br>
 												<input type="button" value="submit" onclick="addBtn()"
 													class="btn green pull-right">
 											</div>
 											<div class="widget-area" style="width: 40%">
-												<label for="" class="font">Attribute 1:</label><input
+												<label for="" class="font"><span id="attr1Star">Attribute 1:</span></label><input
 													type="text" class="form-control" placeholder=""
 													disabled="disabled" id="attr1" onchange="attr1F();"><label
 													for="" class="font">Attribute 2:</label><input type="text"
@@ -389,8 +393,12 @@
 			//alert(value);
 			if (value == "y") {
 				$("#prnt").prop("disabled", false);
+				
+				$("#parentNameStar").html("Parent name:<font color='red' size='4'>*</font>");
 			} else {
 				$("#prnt").prop("disabled", true);
+				
+				$("#parentNameStar").html("Parent name:");
 			}
 		});
 
@@ -411,26 +419,26 @@
 		}
 		function attr1F() {
 			$("#attr2").prop("disabled", false);
-			$("#attr1").prop("disabled", true);
+			//$("#attr1").prop("disabled", true);
 		}
 		function attr2F() {
 			$("#attr3").prop("disabled", false);
-			$("#attr2").prop("disabled", true);
+			//$("#attr2").prop("disabled", true);
 		}
 		function attr3F() {
 			$("#attr4").prop("disabled", false);
-			$("#attr3").prop("disabled", true);
+			//$("#attr3").prop("disabled", true);
 		}
 		function attr4F() {
 			$("#attr5").prop("disabled", false);
-			$("#attr4").prop("disabled", true);
+			//$("#attr4").prop("disabled", true);
 		}
 		function attr5F() {
 			$("#attr6").prop("disabled", false);
-			$("#attr5").prop("disabled", true);
+			//$("#attr5").prop("disabled", true);
 		}
 		function attr6F() {
-			$("#attr6").prop("disabled", true);
+			//$("#attr6").prop("disabled", true);
 		}
 	</script>
 

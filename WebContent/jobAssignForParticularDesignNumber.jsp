@@ -149,7 +149,7 @@ function showDatePicker() {
 										<div class="col-md-6">
 											<div class="col-md-12"></div>
 											<div class="col-md-12">
-												<b class="font">Jobber Name :</b> <input type="text"
+												<b class="font">Jobber Name :<font color="red" size="4">*</font></b> <input type="text"
 													class="form-control" id="jId" name="jId"
 													onchange="emptyForm();" autocomplete="off"> <input
 													type="hidden" id="jName" name="jName">
@@ -192,20 +192,20 @@ function showDatePicker() {
 													name="challanSuffix" value="${lastSuf}">
 											</div>
 											<div class="form-group">
-												<label for="" class="font">Asigned Date :</label> <input
+												<label for="" class="font">Asigned Date :<font color="red" size="4">*</font></label> <input
 													type="text" class="form-control" name="assignedDate"
 													required="required" id="datepicker" readonly="readonly">
 											</div>
 
 											<div class="form-group">
-												<label for="" class="font">Design No. :</label> <input
+												<label for="" class="font">Design No. :<font color="red" size="4">*</font></label> <input
 													type="text" class="form-control" name="dNo"
 													required="required" id="dNo" autocomplete="off">
 													<input type="hidden" id="dId" name="dId">
 											</div>
 
 											<div class="form-group">
-												<label for="" class="font">Qty :</label> <input
+												<label for="" class="font">Qty :<font color="red" size="4">*</font></label> <input
 													type="number" class="form-control" name="qty"
 													required="required" id="qty" onkeyup="qtyF();"
 													onchange="qtyFC();">

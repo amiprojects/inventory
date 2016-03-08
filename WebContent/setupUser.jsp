@@ -92,29 +92,29 @@
 							<div class="widget-area" style="width: 100%">
 								<div class="col-md-12">
 									<div class="widget-area"
-										style="height: 500px; overflow: auto; width: 55%; float: left;">
+										style="height: 500px; overflow: auto; width: 70%; float: left;">
 										<form action="createNewUser" method="post" id="createUser">
 											<div class="col-md-4">
-												<span>User Id</span>
+												<span>User Id:<font color="red" size="4">*</font></span>
 											</div>
 											<div class="col-md-8">
 												<input name="userId" type="text" class="form-control">
 											</div>
 
 											<div class="col-md-4">
-												<span>Name</span>
+												<span>Name:<font color="red" size="4">*</font></span>
 											</div>
 											<div class="col-md-8">
 												<input name="name" type="text" class="form-control">
 											</div>
 											<div class="col-md-4">
-												<span>Password</span>
+												<span>Password:<font color="red" size="4">*</font></span>
 											</div>
 											<div class="col-md-8">
 												<input name="pass" type="password" class="form-control">
 											</div>
 											<div class="col-md-4">
-												<span>Confirm Password</span>
+												<span>Confirm Password:<font color="red" size="4">*</font></span>
 											</div>
 											<div class="col-md-8">
 												<input name="conPass" type="password" class="form-control">
@@ -122,13 +122,16 @@
 
 											<div class="col-md-12"></div>
 											<div class="col-md-4">
-												<span>mobile</span>
+												<span>Mobile:<font color="red" size="4">*</font></span>
 											</div>
 											<div class="col-md-8">
 												<input name="mobile" type="text" maxlength="10"
 													class="form-control">
 											</div>
-											<div class="col-md-12">
+											<div class="col-md-4">
+												<span>User Group:<font color="red" size="4">*</font></span>
+											</div>
+											<div class="col-md-8">
 												<select class="form-control" name="ugid">
 													<option value="0">Select a user group</option>
 													<c:forEach
@@ -138,11 +141,12 @@
 													</c:forEach>
 												</select>
 											</div>
-
-											<div class="col-md-12">
+											<div class="col-md-4">
+												<span>Security Que1:<font color="red" size="4">*</font></span>
+											</div>
+											<div class="col-md-8">
 												<select class="form-control" name="sqId1">
-													<option value="0">Select any Security Question
-														from group1</option>
+													<option value="0">Select Security Que from group1</option>
 													<c:forEach
 														items="${sessionScope['ejb'].getSecurityQuestionsByGroup('First')}"
 														var="sq1">
@@ -151,16 +155,18 @@
 												</select>
 											</div>
 											<div class="col-md-4">
-												<span>Answer:</span>
+												<span>Answer:<font color="red" size="4">*</font></span>
 											</div>
 											<div class="col-md-8">
-												<input name="ans1" type="text" class="form-control">
+												<input name="ans1" id="ans1" type="text"
+													class="form-control">
 											</div>
-
-											<div class="col-md-12">
+											<div class="col-md-4">
+												<span>Security Que2:<font color="red" size="4">*</font></span>
+											</div>
+											<div class="col-md-8">
 												<select class="form-control" name="sqId2">
-													<option value="0">Select any Security Question
-														from group2</option>
+													<option value="0">Select Security Que from group2</option>
 													<c:forEach
 														items="${sessionScope['ejb'].getSecurityQuestionsByGroup('Favourite')}"
 														var="sq2">
@@ -169,10 +175,11 @@
 												</select>
 											</div>
 											<div class="col-md-4">
-												<span>Answer:</span>
+												<span>Answer:<font color="red" size="4">*</font></span>
 											</div>
 											<div class="col-md-8">
-												<input name="ans2" type="text" class="form-control">
+												<input name="ans2" id="ans2" type="text"
+													class="form-control">
 											</div>
 
 											<div class="col-md-12">
@@ -187,7 +194,7 @@
 										</div>
 									</div>
 									<div class="widget-area"
-										style="height: 500px; overflow: auto; width: 45%; float: left;">
+										style="height: 500px; overflow: auto; width: 30%; float: left;">
 										<ul>
 											<c:forEach items="${sessionScope['ejb'].getAllUsers()}"
 												var="user">
@@ -203,7 +210,7 @@
 																<div class="modal-header">
 																	<button type="button" class="close"
 																		data-dismiss="modal">&times;</button>
-																	<h4 class="modal-title">Modal Header</h4>
+																	<h4 class="modal-title">Update User</h4>
 																</div>
 																<div class="modal-body">
 																	<form action="updateUser" method="post">
@@ -278,20 +285,24 @@
 			var conPass = $('[name="conPass"]').val();
 			var mobile = $('[name="mobile"]').val();
 			var ugid = $('[name="ugid"]').val();
+			var sqId1 = $('[name="sqId1"]').val();
+			var sqId2 = $('[name="sqId2"]').val();
 
-			if (ugid != 0) {
-				if (pass == conPass) {
-					if (uid != "" && name != "" && mobile != "") {
-						$("#createUser").submit();
-					} else {
-						alert("you can not left any field blank.");
-					}
+			/* if (ugid != 0) { */
+			if (pass == conPass) {
+				if (uid != "" && name != "" && mobile != "" && ugid != 0
+						&& sqId1 != 0 && sqId2 != 0 && $("#ans1").val() != ""
+						&& $("#ans2").val() != "") {
+					$("#createUser").submit();
 				} else {
-					alert('password does not match with confirm password');
+					alert("please select all field and do not left any field blank.");
 				}
 			} else {
-				alert('please select a user group');
+				alert('password mismatch!');
 			}
+			/* } else {
+				alert('please select a user group');
+			} */
 		}
 		function userEdit(id) {
 			$("#edit" + id).modal('show');

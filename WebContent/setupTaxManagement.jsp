@@ -95,16 +95,18 @@
 											<form action="addTax" method="post">
 												<div class="col-md-12">
 													<div class="form-group">
-														<label for="" class="font">Tax Name :</label> <input
-															type="text" placeholder="Enter tax name" id=""
-															name="name" class="form-control" required>
+														<label for="" class="font">Tax Name :<font
+															color="red" size="4">*</font></label> <input type="text"
+															placeholder="Enter tax name" id="" name="name"
+															class="form-control" required>
 													</div>
 												</div>
 												<div class="col-md-11">
 													<div class="form-group">
-														<label for="" class="font">Value :</label> <input
-															step="0.01" type="number" placeholder="" id=""
-															name="value" class="form-control" required>
+														<label for="" class="font">Value :<font
+															color="red" size="4">*</font></label> <input step="0.01"
+															type="number" placeholder="" id="" name="value"
+															class="form-control" required>
 													</div>
 												</div>
 												<div class="col-md-1" style="top: 28px; float: left;">
@@ -266,7 +268,7 @@
 										</div>
 										<div id="newTaxGroup" class="modal fade" role="dialog"
 											style="top: 25px;">
-											<form action="addTaxGroup" method="post">
+											<form action="addTaxGroup" method="post" id="taxGroupSubId">
 												<div class="modal-dialog modal-lg">
 													<div class="modal-content">
 														<div class="modal-header">
@@ -280,16 +282,18 @@
 																	<c:forEach
 																		items="${sessionScope['ejb'].getAllActiveTax()}"
 																		var="tax">
-																		<input type="checkbox" value="${tax.id}" name="tax">${tax.name} (${tax.value})&nbsp;													
+																		<input type="checkbox" class="isSelected"
+																			value="${tax.id}" name="tax">${tax.name} (${tax.value})&nbsp;													
 																	<br>
 																	</c:forEach>
 																</div>
 																<div class="col-md-8">
-																	<label for="" class="font">Tax Group Name :</label> <input
-																		type="text" placeholder="Enter tax group name" id=""
+																	<label for="" class="font">Tax Group Name :<font
+																		color="red" size="4">*</font></label> <input type="text"
+																		placeholder="Enter tax group name" id="tgName"
 																		name="name" class="form-control"> <input
-																		class="btn green pull-right" type="submit"
-																		value="Create">
+																		class="btn green pull-right" type="button"
+																		value="Create" onclick="taxGroupSubmit();">
 																</div>
 															</div>
 														</div>
@@ -386,6 +390,22 @@
 				$('#activeRadioG').prop("checked", "checked");
 			} else {
 				$('#inactiveRadioG').prop("checked", "checked");
+			}
+		}
+
+		function taxGroupSubmit() {
+			var i = 0;
+			$(".isSelected").each(function() {
+				if ($(this).is(':checked')) {
+					i = 1;
+				}
+			});
+			if (i == 0) {
+				alert("Please select tax...");
+			} else if ($("#tgName").val() == "") {
+				alert("Please enter tax group name...");
+			} else {
+				$("#taxGroupSubId").submit();
 			}
 		}
 	</script>

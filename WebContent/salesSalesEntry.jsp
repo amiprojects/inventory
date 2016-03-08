@@ -123,18 +123,18 @@
 											</div>
 											<table cellspacing="2">
 												<tr>
-													<td>Name :</td>
+													<td>Name :<font color="red" size="4">*</font></td>
 													<td><input type="text" name="custName" id="custName"
 														style="align: center; text-transform: uppercase;"></input></td>
 												</tr>
 
 												<tr>
-													<td>Address :</td>
+													<td>Address :<font color="red" size="4">*</font></td>
 													<td><input type="text" name="addr" id="addr"
 														style="length: 40px;" style="align:center; text-transform:uppercase;"></input></td>
 												</tr>
 												<tr>
-													<td>City :</td>
+													<td>City :<font color="red" size="4">*</font></td>
 													<td><input type="text" name="city" id="city"
 														style="length: 40px; text-transform: uppercase;" autocomplete="off"></input></td>
 													<td><a onclick="addCitySC()" title="Add New City">
@@ -143,7 +143,7 @@
 												</tr>
 
 												<tr>
-													<td>Phone No. :</td>
+													<td>Phone No. :<font color="red" size="4">*</font></td>
 													<td><input type="number" name="phone" id="phone"
 														style="length: 40px;" autocomplete="off"></input></td>
 
@@ -157,7 +157,7 @@
 												</tr>
 												<tr>
 													<td><input type="checkbox" onclick="isAgentF();"
-														id="agent" name="agent">&nbsp; Via Agent :</td>
+														id="agent" name="agent">&nbsp;<span id="aNameStar">Via Agent :</span></td>
 													<td><input type="text" name="agentName" id="agentName"
 														style="length: 30px; text-transform: uppercase;" readonly="readonly"><input
 														type="hidden" name="aId" id="aId"><input
@@ -238,9 +238,9 @@
 
 								</div>
 								<div class="widget-area">
-									<b>Quantity :</b> <input type="text" name="qty" id="qty"
+									<b>Quantity :<font color="red" size="4">*</font></b> <input type="text" name="qty" id="qty"
 										style="width: 70px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									<b>Product :</b><input type="text" id="pCode" name="pCode"
+									<b>Product :<font color="red" size="4">*</font></b><input type="text" id="pCode" name="pCode"
 										onkeyup="pcodeF();" autocomplete="off"><input
 										type="hidden" id="pCodeId" name="pCodeId">
 									<%-- <select name="prodCode" id="prodCode"
@@ -994,7 +994,7 @@
 								<div class="widget-area">
 
 									<div class="col-md-3">
-										<b>Name:</b>
+										<b>Name:<font color="red" size="4">*</font></b>
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorName2"
@@ -1010,7 +1010,7 @@
 									</div>
 
 									<div class="col-md-3">
-										<b>Ph No1:</b>
+										<b>Ph No1:<font color="red" size="4">*</font></b>
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorPh12"
@@ -1082,7 +1082,7 @@
 											<div class="row"></div>
 										</div>
 										<div class="col-md-3">
-											<b>City :</b>
+											<b>City :<font color="red" size="4">*</font></b>
 										</div>
 										<div class="col-md-9">
 											<input type="text" class="form-control cityAuto"
@@ -1204,361 +1204,8 @@
 			</div>
 
 		</div>
-	</div>
+	</div>	
 	
-	
-	<div id="addA" class="modal fade" role="dialog" style="top: 25px;">
-
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<center>
-						<h3 class="modal-title">Vendor/Agent</h3>
-					</center>
-				</div>
-				<div class="modal-body">
-					<form role="form" class="sec" action="addAgen" id="addAgena"
-						method="post">
-						<ul class="nav nav-tabs">
-							<li class="active" id="detl2"><a data-toggle="tab"
-								href="#detail2">Details</a></li>
-							<li id="addr2"><a data-toggle="tab" href="#address2">Address</a></li>
-							<li id="vAcc2"><a data-toggle="tab" href="#vendorAccount2">Vendor
-									Account Info</a></li>
-							<li id="bAcc2"><a data-toggle="tab" href="#bankAccount2">Bank
-									Account info</a></li>
-							<!-- <li id="prts"><a data-toggle="tab" href="#part">Parts</a></li> -->
-						</ul>
-						<div class="tab-content">
-							<div id="bankAccount2" class="tab-pane fade">
-								<div class="widget-area">
-									<h5 align="center">(All the below fields are optional)</h5>
-									<br>
-									<div class="col-md-3">
-										<b>Bank Name:</b>
-									</div>
-									<div class="col-md-9">
-										<input type="text" class="form-control" name="bankName2"
-											id="idbankName2">
-									</div>
-									<br>
-									<div class="col-md-3">
-										<b>A/C no:</b>
-									</div>
-									<div class="col-md-9">
-										<input type="text" class="form-control" name="bankAccNo2"
-											id="acno2">
-									</div>
-									<br>
-									<div class="col-md-3">
-										<b>Branch:</b>
-									</div>
-									<div class="col-md-9">
-										<input type="text" class="form-control" name="bankBranch2"
-											id="idbankBranch2">
-									</div>
-									<br>
-									<div class="col-md-3">
-										<b>City:</b>
-									</div>
-									<div class="col-md-9">
-										<input type="text" class="form-control" id="bankCity6"
-											autocomplete="off"> <input type="hidden" value=""
-											name="bankCity6" id="bankCityId26">
-									</div>
-									<br>
-									<div class="col-md-3">
-										<b>IFSC no:</b>
-									</div>
-									<div class="col-md-9">
-										<input type="text" class="form-control" name="bankIFSC2"
-											id="idbankIFSC2">
-									</div>
-									<br>
-									<div class="col-md-3">
-										<b>MICR no:</b>
-									</div>
-									<div class="col-md-9">
-										<input type="text" class="form-control" name="bankMICR2"
-											id="idbankMICR2">
-									</div>
-									<br>
-									<div class="col-md-3">
-										<b>RTGS code:</b>
-									</div>
-									<div class="col-md-9">
-										<input type="text" class="form-control" name="bankRTGS2"
-											id="idbankRTGS2">
-									</div>
-									<br>
-									<div class="col-md-3">
-										<b>Check lebel:</b>
-									</div>
-									<div class="col-md-9">
-										<input type="text" class="form-control" name="bankCheckLebel2"
-											id="idbankCheckLebel2">
-									</div>
-								</div>
-								<br>
-								<div class="col-md-12">
-									<input class="btn green pull-left" type="button"
-										value="Previous" onclick="bankButtonPrev2();"> <input
-										class="btn green pull-right" type="button" value="Finish"
-										onclick="submitform2();">
-								</div>
-
-							</div>
-							<div id="vendorAccount2" class="tab-pane fade">
-								<div class="widget-area">
-									<div class="row">
-										<h5 align="center">(All the below fields are optional)</h5>
-										<br>
-										<div class="col-md-5">
-											<b>VAT no:</b>
-										</div>
-										<div class="col-md-7">
-											<input type="text" class="form-control" name="vendorVATno2"
-												id="idvendorVATno2">
-										</div>
-									</div>
-
-									<div class="row">
-										<div class="col-md-5">
-											<b>VAT registration date:</b>
-										</div>
-										<div class="col-md-7">
-											<input type="text" class="form-control"
-												name="vendorVATregDate2" id="datepickerA2"
-												readonly="readonly">
-										</div>
-									</div>
-
-									<div class="row">
-										<div class="col-md-5">
-											<b>CST no:</b>
-										</div>
-										<div class="col-md-7">
-											<input type="text" class="form-control" name="vendorCSTno2"
-												id="idvendorCSTno2">
-										</div>
-									</div>
-
-									<div class="row">
-										<div class="col-md-5">
-											<b>CST registration date:</b>
-										</div>
-										<div class="col-md-7">
-											<input type="text" class="form-control"
-												name="vendorCSTregDate2" id="datepickerB2"
-												readonly="readonly">
-										</div>
-									</div>
-
-									<div class="row">
-										<div class="col-md-5">
-
-											<b>PAN no:</b>
-										</div>
-										<div class="col-md-7">
-											<input type="text" class="form-control" name="vendorPANno2"
-												id="idvendorPANno2">
-										</div>
-									</div>
-
-									<div class="row">
-										<div class="col-md-5">
-											<b>Excise registration no:</b>
-										</div>
-										<div class="col-md-7">
-											<input type="text" class="form-control"
-												name="vendorExciseRegNo2" id="idvendorExciseRegNo2">
-										</div>
-									</div>
-
-									<div class="row">
-										<div class="col-md-5">
-											<b>Excise registration date:</b>
-										</div>
-										<div class="col-md-7">
-											<input type="text" class="form-control"
-												name="vendorExciseRegDate2" id="datepickerC2"
-												readonly="readonly">
-										</div>
-									</div>
-
-									<div class="row">
-										<div class="col-md-5">
-											<b>Service tax registration no:</b>
-										</div>
-										<div class="col-md-7">
-											<input type="text" class="form-control"
-												name="vendorServiceTaxRegNo2" id="idvendorServiceTaxRegNo2">
-										</div>
-									</div>
-
-									<div class="row">
-										<div class="col-md-5">
-											<b>Service tax registration date:</b>
-										</div>
-										<div class="col-md-7">
-											<input type="text" class="form-control"
-												name="vendorServiceTaxRegDate2" id="datepickerD2"
-												readonly="readonly">
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-5">
-											<b>Tax group id:</b>
-										</div>
-										<div class="col-md-7">
-											<select class="form-control" name="taxTypeGroupId2"
-												id="taxgroup2">
-												<option value="0">select a tax group</option>
-												<c:forEach
-													items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
-													var="taxTypeGroup">
-													<option value="${taxTypeGroup.id}">${taxTypeGroup.name}</option>
-												</c:forEach>
-											</select>
-										</div>
-									</div>
-								</div>
-								<br>
-								<div class="col-md-12">
-									<input type="button" value="Next" class="btn green pull-right"
-										onclick="vendorButtonNext2();"> <input type="button"
-										value="Previous" class="btn green pull-left"
-										onclick="vendorButtonPrev2();">
-								</div>
-							</div>
-
-							<div id="detail2" class="tab-pane fade active in">
-								<div class="widget-area">
-
-									<div class="col-md-3">
-										<b>Name:</b>
-									</div>
-									<div class="col-md-9">
-										<input type="text" class="form-control" name="vendorName2"
-											id="idName2" required="required">
-									</div>
-									<br>
-									<div class="col-md-3">
-										<b>Company Name:</b>
-									</div>
-									<div class="col-md-9">
-										<input type="text" class="form-control"
-											name="vendorCompanyName2" id="idvendorCompanyName2">
-									</div>
-
-									<div class="col-md-3">
-										<b>Ph No1:</b>
-									</div>
-									<div class="col-md-9">
-										<input type="text" class="form-control" name="vendorPh12"
-											id="iphone2" required="required">
-									</div>
-
-									<div class="col-md-3">
-										<b>Ph No2:(optional)</b>
-									</div>
-									<div class="col-md-9">
-										<input type="text" class="form-control" name="vendorPh22"
-											id="idvendorPh22" required="required">
-									</div>
-
-									<div class="col-md-3">
-										<b>Email :</b>
-									</div>
-									<div class="col-md-9">
-										<input type="text" class="form-control" name="vendorMail2"
-											style="text-transform: none;" id="idvendorMail2"
-											required="required">
-									</div>
-
-									<div class="col-md-3">
-										<b>Alias name :</b>
-									</div>
-									<div class="col-md-9">
-										<input type="text" class="form-control" name="vendorAlias2"
-											id="idvendorAlias2" required="required">
-									</div>
-
-									<div class="col-md-3">
-										<b>Vendor type :</b>
-									</div>
-									<div class="col-md-9">
-
-										<select class="form-control" name="vendorType2"
-											disabled="disabled" id="idvendorType2">
-											<c:forEach items="${sessionScope['ejb'].getAllVendorType()}"
-												var="vType">
-
-												<c:choose>
-													<c:when test="${vType.type.equals('Purchase Agent')}">
-														<option value="${vType.id}" selected="selected">${vType.type}</option>
-
-													</c:when>
-												</c:choose>
-
-											</c:forEach>
-										</select>
-									</div>
-								</div>
-								<br>
-								<div class="col-md-12">
-
-									<input class="btn green pull-right" type="button" value="Next"
-										onclick="detailButtonNext2();">
-								</div>
-							</div>
-							<div id="address2" class="tab-pane fade ">
-								<div class="widget-area">
-									<div class="row">
-										<div class="col-md-3">
-											<b>Adress :</b>
-										</div>
-										<div class="col-md-9">
-											<textarea rows="" cols="" class="form-control"
-												name="vendorAddress2" id="idAdd2" required="required"></textarea>
-											<div class="row"></div>
-										</div>
-										<div class="col-md-3">
-											<b>City :</b>
-										</div>
-										<div class="col-md-9">
-											<input type="text" class="form-control cityAuto"
-												name="vendorCity2" required="required" id="vendorCity2">
-											<input type="hidden" name="vendorCityId2" id="vendorCityId2">
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-3">
-											<b>Pin code :</b>
-										</div>
-										<div class="col-md-9">
-											<input type="text" class="form-control" name="vendorPin2"
-												id="idvendorPin2" required="required">
-										</div>
-									</div>
-								</div>
-								<br>
-								<div class="col-md-12">
-									<input class="btn green pull-left" type="button"
-										value="Previous" onclick="addressButtonPrev2();"> <input
-										class="btn green pull-right" type="button" value="Next"
-										onclick="addressButtonNext2();">
-								</div>
-							</div>
-
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer"></div>
-			</div>
-		</div>
-	</div>
 	<script>
 		$(function() {
 			var d = new Date();
@@ -2449,11 +2096,15 @@
 			if ($('#agent').is(":checked")) {
 				$("#isAgent").val('yes');
 				$("#agentName").prop("readonly", false);
+				
+				$("#aNameStar").html("Via Agent :<font color='red' size='4'>*</font>");
 			} else {
 				$("#isAgent").val('no');
 				$("#agentName").prop("readonly", true);
 				$("#aDetailsDiv").hide();
 				$("#agentName").val("");
+				
+				$("#aNameStar").html("Via Agent :");
 			}
 		}
 		$(function() {
@@ -2847,24 +2498,24 @@
 		function submitform2() {
 			if ($("#idName2").val() == 0) {
 				alert("please select  name");
-			} else if ($("#idvendorCompanyName2").val() == "") {
-				alert("please select Company Name");
+			/* } else if ($("#idvendorCompanyName2").val() == "") {
+				alert("please select Company Name"); */
 			} else if ($("#iphone2").val() == "") {
 				alert("please select Ph No1");
-			} else if ($("#idvendorMail2").val() == "") {
+			/* } else if ($("#idvendorMail2").val() == "") {
 				alert("please select email");
 			} else if ($("#idvendorAlias2").val() == "") {
 				alert("please select Alias name");
 			} else if ($("#cityname2").val() == "") {
 				alert("please select cityname");
 			} else if ($("#idAdd2").val() == "") {
-				alert("please select Adress");
+				alert("please select Adress"); */
 			} else if ($("#vendorCity2").val() == "") {
 				alert("please select vendor city");
-			} else if ($("#idvendorPin2").val() == "") {
+			/* } else if ($("#idvendorPin2").val() == "") {
 				alert("please select pin code");
 			} else if ($("#service2").val() == "") {
-				alert("please select Service Tax");
+				alert("please select Service Tax"); */
 			} else {
 				var dataa2 = {
 					vendorName2 : $("#idName2").val(),
@@ -2957,10 +2608,16 @@
 		}
 
 		function detailButtonNext2() {
+			if ($("#idName2").val() == 0) {
+				alert("please select  name");			
+			} else if ($("#iphone2").val() == "") {
+				alert("please select Ph No1");			
+			} else {
 			$("#detl2").removeAttr("class");
 			$("#detail2").attr("class", "tab-pane fade");
 			$("#addr2").attr("class", "active");
 			$("#address2").attr("class", "tab-pane fade active in");
+			}
 		}
 
 		function addressButtonPrev2() {
@@ -2971,10 +2628,14 @@
 		}
 
 		function addressButtonNext2() {
+			if ($("#vendorCity2").val() == "") {
+				alert("please select vendor city");			
+			} else {
 			$("#addr2").removeAttr("class");
 			$("#address2").attr("class", "tab-pane fade");
 			$("#vAcc2").attr("class", "active");
 			$("#vendorAccount2").attr("class", "tab-pane fade active in");
+			}
 		}
 
 		$(function() {

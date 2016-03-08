@@ -95,8 +95,8 @@
 										</thead>
 									</table>
 									<div
-										style="height: 250px; overflow-y: scroll; overflow-x: hidden; width: 253px;">
-										<table class="table">
+										style="height: 250px; overflow-y: scroll; overflow-x: scroll;">
+										<table class="table" >
 											<tbody>
 												<c:set var="count" value="${1}" />
 												<c:forEach
@@ -129,7 +129,7 @@
 																		<div class="col-md-12">
 																			<input type="hidden" value="${unit.id}"
 																				name="firstUnit"> Select Target UOM for this
-																			conversion: <select id="contype${unit.id}"
+																			conversion:<font color="red" size="4">*</font> <select id="contype${unit.id}"
 																				onchange="selectUnit()" name="selectedUnit">
 																				<option value="0">Select Unit</option>
 																				<c:forEach
@@ -141,7 +141,7 @@
 																		</div>
 																		<br> <br> <br>
 																		<div class="col-md-12">Defining the relationship
-																			between units:</div>
+																			between units:<font color="red" size="4">*</font></div>
 																		<br>
 																		<div class="col-md-12">
 																			<input type="radio" name="name1" value="1"
@@ -158,7 +158,7 @@
 																		</div>
 																		<br> <br> <br>
 																		<div class="col-md-12">Defining ratio between
-																			the units:</div>
+																			the units:<font color="red" size="4">*</font></div>
 																		<br>
 																		<div class="col-md-12">Fill in the blank with
 																			correct number</div>
@@ -332,14 +332,14 @@
 							</div> -->
 						</div>
 						<div class="row">
-							<div class="col-md-3">Abbreviation :</div>
+							<div class="col-md-3">Abbreviation :<font color="red" size="4">*</font></div>
 							<div class="col-md-9">
 								<input type="text" required name="abbreviation"
 									class="form-control">
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-md-3">Name UOM :</div>
+							<div class="col-md-3">Name UOM :<font color="red" size="4">*</font></div>
 							<div class="col-md-9">
 								<input type="text" required name="name" class="form-control">
 							</div>

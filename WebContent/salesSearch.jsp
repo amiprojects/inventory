@@ -76,27 +76,27 @@
 										</div>
 									</form>
 									<form role="form" class="sec" action="salesSearchByDate"
-										method="post">
+										method="post" id="salesSearchByDateId">
 										<div class="row">
 											<div class="col-md-5">
 												<div class="form-group">
 													<label for="">Search between two dates : (Start
-														Date)</label> <input type="text" placeholder="Enter First Date"
+														Date)<font color="red" size="4">*</font></label> <input type="text" placeholder="Enter First Date"
 														id="datepicker" class="form-control" name="fDate"
-														id="fDate" autocomplete="off" onchange="dateSet();">
+														 autocomplete="off" onchange="dateSet();">
 												</div>
 											</div>
 											<div class="col-md-5">
 												<div class="form-group">
-													<label for="">(End Date)</label> <input type="text"
+													<label for="">(End Date)<font color="red" size="4">*</font></label> <input type="text"
 														placeholder="Enter last date" id="datepicker1"
-														class="form-control" name="lDate" id="lDate"
+														class="form-control" name="lDate"
 														autocomplete="off" onchange="checkDate();">
 												</div>
 											</div>
 											<div class="col-md-2">
 												<button class="btn green pull-left"
-													style="margin-top: 25px;" type="submit">Search</button>
+													style="margin-top: 25px;" type="button" onclick="salesSearchByDateSubmit();">Search</button>
 											</div>
 										</div>
 									</form>
@@ -452,6 +452,14 @@
 				}
 			});
 		});
+		
+		function salesSearchByDateSubmit() {
+			if ($("#datepicker").val() == "" || $("#datepicker1").val() == "") {
+				alert("Please enter start date and end date");
+			} else {
+				$("#salesSearchByDateId").submit();
+			}
+		}
 	</script>
 </body>
 

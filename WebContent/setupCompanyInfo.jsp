@@ -100,107 +100,111 @@
 
 													<div id="step-1">
 
+														<div class="col-md-12">
 
-
-														<div class="col-md-6">
-															<div>
-																<label for="exampleInputEmail1">Company Name:</label> <input
-																	type="text" name="name" id="compname"
-																	placeholder="Enter Company Name" class="form-control"
-																	readonly="readonly" value="${compInfo.compname}"><br>
-															</div>
-														</div>
-
-														<div class="col-md-6">
-															<div>
-																<label for="exampleInputPassword1">Company
-																	Email:</label> <input type="text" name="email" id="email"
-																	onchange="check();" placeholder="Enter Company Email"
-																	class="form-control" readonly="readonly"
-																	value="${compInfo.email}"><br>
+															<div class="col-md-6">
+																<div>
+																	<label for="">Company Name:<font color="red"
+																		size="4">*</font></label> <input type="text" name="name"
+																		id="compname" placeholder="Enter Company Name"
+																		class="form-control" readonly="readonly"
+																		value="${compInfo.compname}"><br>
+																</div>
 															</div>
 
-														</div>
+															<div class="col-md-6">
+																<div>
+																	<label for="">Company Email:<font color="white"
+																		size="4">*</font></label> <input type="text" name="email"
+																		id="email" onchange="check();"
+																		placeholder="Enter Company Email" class="form-control"
+																		readonly="readonly" value="${compInfo.email}"><br>
+																</div>
 
-
-														<div class="col-md-6">
-															<div>
-																<label for="exampleInputEmail1">Company Mobile
-																	No:</label> <input type='text' name="mono" id="mobile"
-																	maxlength="10" minlength="10"
-																	onChange="this.value = minmax(this.value, 999999999, 9999999999)"
-																	placeholder="Eg. 9xxxxxxxxx" class="form-control"
-																	readonly="readonly" value="${compInfo.mobile}"><br>
-															</div>
-														</div>
-
-
-
-														<div class="col-md-6">
-															<div>
-																<label for="exampleInputPassword1"> Country:</label> <input
-																	id="country1" readonly="readonly" type="text"
-																	value="${compInfo.country1}"
-																	placeholder="choose Country name" name="country1"
-																	class="form-control"> <br>
-															</div>
-														</div>
-
-
-
-														<div class="col-md-6">
-															<div>
-																<label for="exampleInputPassword1">Company Phone
-																	No:</label> <input type='number' name="phno" id="phone"
-																	placeholder="Enter Phone Number" class="form-control"
-																	readonly="readonly" value="${compInfo.phone}"><br>
 															</div>
 
 														</div>
-														<br>
-														<div class="col-md-6">
-															<div>
-																<label for="exampleInputPassword1"> State:</label> <input
-																	id="state" readonly="readonly"
-																	value="${compInfo.state}" name="state"
-																	class="form-control" placeholder="choose state name"
-																	type="text"><br>
+														<div class="col-md-12">
+															<div class="col-md-6">
+																<div>
+																	<label for="">Company Mobile No:</label> <input
+																		type='text' name="mono" id="mobile" maxlength="10"
+																		minlength="10"
+																		onChange="this.value = minmax(this.value, 999999999, 9999999999)"
+																		placeholder="Eg. 9xxxxxxxxx" class="form-control"
+																		readonly="readonly" value="${compInfo.mobile}"><br>
+																</div>
 															</div>
-														</div>
-														<br> <br>
-
-														<div class="col-md-6">
-															<div>
-																<label for="exampleInputPassword1">Company
-																	Address:</label><br>
-																<textarea name="adress" id="addr" rows="5" cols="55"
-																	disabled="disabled">${compInfo.addr}</textarea>
-																<br>
-															</div>
-														</div>
-														<br>
-														<div class="col-md-6">
-															<div>
-																<label for="exampleInputPassword1"> City:</label> <input
-																	placeholder="choose city name" id="city"
-																	readonly="readonly" value="${compInfo.city}"
-																	class="form-control" name="city" type="text"><br>
-
-															</div>
-														</div>
 
 
-														<div>
-															<label for="exampleInputPassword1"> Upload logo:</label>
-															<div>
-																<img id="image" alt=""
-																	src="data:image/jpeg;base64,${compInfo.getImageAsString()}"
-																	style="width: 100px; height: 50px;">
+
+															<div class="col-md-6">
+																<div>
+																	<label for=""> Country:</label> <input id="country1"
+																		readonly="readonly" type="text"
+																		value="${compInfo.country1}"
+																		placeholder="choose Country name" name="country1"
+																		class="form-control"> <br>
+																</div>
+															</div>
+
+														</div>
+														<div class="col-md-12">
+
+															<div class="col-md-6">
+																<div>
+																	<label for="">Company Phone No:</label> <input
+																		type='number' name="phno" id="phone"
+																		placeholder="Enter Phone Number" class="form-control"
+																		readonly="readonly" value="${compInfo.phone}"><br>
+																</div>
+
+															</div>
+															<div class="col-md-6">
+																<div>
+																	<label for=""> State:</label> <input id="state"
+																		readonly="readonly" value="${compInfo.state}"
+																		name="state" class="form-control"
+																		placeholder="choose state name" type="text"><br>
+																</div>
 															</div>
 														</div>
-														<div id="companyLogo">
-															<input type="file" name="proImg" size="60" id="image"
-																onchange="readURL(this);" value="${compInfo.image}">
+														<div class="col-md-12">
+
+															<div class="col-md-6">
+																<div>
+																	<label for="">Company Address:</label><br>
+																	<textarea name="adress" id="addr" rows="5" cols="55"
+																		disabled="disabled">${compInfo.addr}</textarea>
+																	<br>
+																</div>
+															</div>
+
+															<div class="col-md-6">
+																<div>
+																	<label for=""> City:</label> <input
+																		placeholder="choose city name" id="city"
+																		readonly="readonly" value="${compInfo.city}"
+																		class="form-control" name="city" type="text"><br>
+
+																</div>
+															</div>
+														</div>
+														<div class="col-md-12">
+															<div class="col-md-12">
+																<div>
+																	<label for=""> Logo:</label>
+																	<div>
+																		<img id="image" alt=""
+																			src="data:image/jpeg;base64,${compInfo.getImageAsString()}"
+																			style="width: 100px; height: 50px;">
+																	</div>
+																</div>
+																<div id="companyLogo">
+																	<input type="file" name="proImg" size="60" id="image"
+																		onchange="readURL(this);" value="${compInfo.image}">
+																</div>
+															</div>
 														</div>
 													</div>
 
@@ -412,34 +416,34 @@
 		function submitCompmanyDetails() {
 
 			if ($("#compname").val() == 0) {
-				alert("please select Company name");
-			} else if ($("#mobile").val() == "") {
-				alert("please select Mobile Number");
-			} else if ($("#addr").val() == "") {
-				alert("please select Address");
-			} else if ($("#email").val() == "") {
-				alert("please select email");
-			} else if ($("#phone").val() == "") {
-				alert("please select Phone");
-			} else if ($("#cityname").val() == "") {
-				alert("please select cityname");
-			} else if ($("#vat").val() == "") {
-				alert("please select VAT");
-			} else if ($("#cst").val() == "") {
-				alert("please select CST");
-			} else if ($("#tin").val() == "") {
-				alert("please select TIN");
-			} else if ($("#service").val() == "") {
-				alert("please select Service Tax");
-			} else if ($("#vatdate").val() == "") {
-				alert("please select VAT resistration Date");
-			} else if ($("#cstdate").val() == "") {
-				alert("please select CST resistration Date");
-			} else if ($("#tinDate").val() == "") {
-				alert("please select TIN resistration Date");
-			} else if ($("#servicedate").val() == "") {
-				alert("please select Service resistration Date");
-			}
+				alert("please enter Company name");
+			} /* else if ($("#mobile").val() == "") {
+						alert("please select Mobile Number");
+					} else if ($("#addr").val() == "") {
+						alert("please select Address");
+					} else if ($("#email").val() == "") {
+						alert("please select email");
+					} else if ($("#phone").val() == "") {
+						alert("please select Phone");
+					} else if ($("#cityname").val() == "") {
+						alert("please select cityname");
+					} else if ($("#vat").val() == "") {
+						alert("please select VAT");
+					} else if ($("#cst").val() == "") {
+						alert("please select CST");
+					} else if ($("#tin").val() == "") {
+						alert("please select TIN");
+					} else if ($("#service").val() == "") {
+						alert("please select Service Tax");
+					} else if ($("#vatdate").val() == "") {
+						alert("please select VAT resistration Date");
+					} else if ($("#cstdate").val() == "") {
+						alert("please select CST resistration Date");
+					} else if ($("#tinDate").val() == "") {
+						alert("please select TIN resistration Date");
+					} else if ($("#servicedate").val() == "") {
+						alert("please select Service resistration Date");
+					} */
 
 			else {
 				$("#companydetails").submit();
@@ -483,10 +487,14 @@
 			$("#comp").attr("class", "tab-pane fade active in");
 		}
 		function detailButtonNext() {
-			$("#info1").removeAttr("class");
-			$("#comp").attr("class", "tab-pane fade");
-			$("#info2").attr("class", "active");
-			$("#tax").attr("class", "tab-pane fade active in");
+			if ($("#compname").val() == 0) {
+				alert("please enter Company name");
+			} else {
+				$("#info1").removeAttr("class");
+				$("#comp").attr("class", "tab-pane fade");
+				$("#info2").attr("class", "active");
+				$("#tax").attr("class", "tab-pane fade active in");
+			}
 		}
 	</script>
 	<script type="text/javascript">

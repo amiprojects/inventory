@@ -79,29 +79,30 @@
 									</div>
 								</form>
 								<form role="form" class="sec" action="purchaseSearchByDate"
-									method="post">
+									method="post" id="purchaseSearchByDateId">
 									<div class="row">
 										<div class="col-md-5">
 											<div class="form-group">
 												<label for="" style="float: left;">Search between
-													two dates : (Start Date)</label> <input type="text"
-													placeholder="Enter First Date" id="datepicker"
-													class="form-control" name="fDate" id="fDate"
+													two dates : (Start Date)<font color="red" size="4">*</font>
+												</label> <input type="text" placeholder="Enter First Date"
+													id="datepicker" class="form-control" name="fDate" value=""
 													autocomplete="off" onchange="dateSet();">
 											</div>
 										</div>
 
 										<div class="col-md-5">
 											<div class="form-group">
-												<label for="" style="float: left;">(End Date)</label> <input
-													type="text" placeholder="Enter last date" id="datepicker1"
-													class="form-control" name="lDate" id="lDate"
+												<label for="" style="float: left;">(End Date)<font
+													color="red" size="4">*</font></label> <input type="text"
+													placeholder="Enter last date" id="datepicker1"
+													class="form-control" name="lDate" value=""
 													autocomplete="off" onchange="checkDate();">
 											</div>
 										</div>
 										<div class="col-md-2">
 											<button class="btn green pull-left" style="margin-top: 25px;"
-												type="submit">Search</button>
+												type="button" onclick="purchaseSearchByDateSubmit();">Search</button>
 										</div>
 									</div>
 								</form>
@@ -471,6 +472,14 @@
 				}
 			});
 		});
+
+		function purchaseSearchByDateSubmit() {
+			if ($("#datepicker").val() == "" || $("#datepicker1").val() == "") {
+				alert("Please enter start date and end date");
+			} else {
+				$("#purchaseSearchByDateId").submit();
+			}
+		}
 	</script>
 </body>
 
