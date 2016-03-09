@@ -253,7 +253,7 @@
 	</c:if>
 
 	<c:set var="compInfo"
-		value="${sessionScope['ejb'].getUserById(sessionScope['user']).getCompanyInfo()}" />
+		value="${sessionScope[ 'ejb'].getUserById(sessionScope['user']).getCompanyInfo()}" />
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
@@ -268,7 +268,6 @@
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
 								<h3 style="margin-top: 11px;">Purchase Entry</h3>
-
 							</div>
 
 							<div class="col-md-12">
@@ -3764,7 +3763,7 @@
 			$("#gt").val(Math.round((round) * 100) / 100);
 
 		}
-		var i = 1;
+		var k = 1;
 		function anotherShow() {
 			if ($("#productCode").val() == 0) {
 				alert("please select Product Code:");
@@ -3796,7 +3795,7 @@
 				$("#purProTable")
 						.append(
 								'<tbody><tr class="trRemove" id="trRemove'+ind+'"><td>'
-										+ i
+										+ k
 										+ '</td><td>'
 										+ $("#pCode").val()
 										+ '</td><td>'
@@ -3835,7 +3834,7 @@
 				$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
 				$("#gt").val(Math.round((round) * 100) / 100);
 
-				i++;
+				k++;
 
 				$("#hiddenTable")
 						.append(

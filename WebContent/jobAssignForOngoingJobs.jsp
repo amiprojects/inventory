@@ -133,13 +133,13 @@ function showDatePicker() {
 										<div class="col-md-6">
 											<div class="col-md-12"></div>
 											<div class="col-md-12">
-												<b class="font">Jobber Name :</b> <input type="text"
+												<b class="font">Jobber Name :<font color="red" size="4">*</font></b> <input type="text"
 													class="form-control" id="jId" name="jId"
 													onchange="emptyForm();" autocomplete="off"> <input
 													type="hidden" id="jName" name="jName">
 											</div>
 											<div class="col-md-12">
-												&nbsp; &nbsp; &nbsp; <b class="font">Jobber Details :</b>
+												&nbsp; &nbsp; &nbsp; <b class="font">Jobber Details :<font color="red" size="4">*</font></b>
 												<textarea rows="5" cols="" id="jDetail" class="form-control"
 													readonly="readonly"></textarea>
 											</div>
@@ -174,13 +174,13 @@ function showDatePicker() {
 													name="challanSuffix" value="${lastSuf}">
 											</div>
 											<div class="form-group">
-												<label for="" class="font">Asigned Date :</label> <input
+												<label for="" class="font">Asigned Date :<font color="red" size="4">*</font></label> <input
 													type="text" class="form-control" name="assignedDate"
 													required="required" id="datepicker" readonly="readonly">
 											</div>
 
 											<div class="form-group">
-												<label for="" class="font">Design No. :</label> <input
+												<label for="" class="font">Design No. :<font color="red" size="4">*</font></label> <input
 													type="text" class="form-control" name="dNo"
 													required="required" id="dNo" autocomplete="off">
 													<input type="hidden" id="dId" name="dId">
@@ -349,7 +349,7 @@ function showDatePicker() {
 						<thead>
 							<tr>
 								<th>#</th>
-								<th>Plan No.</th>
+								<th>Plan No.<font color="red" size="4">*</font></th>
 								<!-- <th>PLan Description</th> -->
 								<th>Plan Date</th>
 								<th>Qty</th>
@@ -974,13 +974,13 @@ function showDatePicker() {
 								+ '</th><th>'
 								+ "Sample Rate" +
 								'</th><th>'
-								+ "Present Rate" 
+								+ "Present Rate<font color='red' size='4'>*</font>" 
 								+ '</th><th>'
 								+ "Sample Qty" +
 								'</th><th>'
 								+ "Remaining Qty" +
 								'</th><th>'
-								+ "Assign Qty" +
+								+ "Assign Qty<font color='red' size='4'>*</font>" +
 								'</th><th>'
 								+ "UOM" 
 								+ '</th><th>'
@@ -988,7 +988,7 @@ function showDatePicker() {
 								'</th><th>'
 								+ "Amount" +
 								'</th><th>'
-								+ "Est. Submission Date" +
+								+ "Est. Submission Date<font color='red' size='4'>*</font>" +
 								'</th><th>'
 								+ "Status" +
 								'</th></tr></thead></table>');

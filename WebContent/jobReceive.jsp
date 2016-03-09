@@ -240,7 +240,7 @@
 													</tr>
 													<tr>
 														<td><p style="font-size: 18px; color: black;">
-																Receiving Date: &nbsp;</p></td>
+																Receiving Date:<font color="red" size="4">*</font> &nbsp;</p></td>
 														<td><input type="text" value="" class="form-control"
 															id="datepicker" readonly="readonly" name="rcvDate"></td>
 
@@ -277,9 +277,9 @@
 																<th width="10%" style="text-align: center">Assigned
 																	Job Qty</th>
 																<th width="15%" style="text-align: center">Job Qty
-																	Done</th>
+																	Done<font color="red" size="4">*</font></th>
 																<th width="10%" style="text-align: center">Select
-																	Product</th>
+																	Product<font color="red" size="4">*</font></th>
 																<!-- <th width="20%" style="text-align: center">Reoson,
 																	If not receiving all products</th> -->
 															</tr>
