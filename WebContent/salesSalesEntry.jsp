@@ -131,12 +131,13 @@
 												<tr>
 													<td>Address :<font color="red" size="4">*</font></td>
 													<td><input type="text" name="addr" id="addr"
-														style="length: 40px;" style="align:center; text-transform:uppercase;"></input></td>
+														style="align: center; length: 40px; text-transform: uppercase;"></input></td>
 												</tr>
 												<tr>
 													<td>City :<font color="red" size="4">*</font></td>
 													<td><input type="text" name="city" id="city"
-														style="length: 40px; text-transform: uppercase;" autocomplete="off"></input></td>
+														style="length: 40px; text-transform: uppercase;"
+														autocomplete="off"></input></td>
 													<td><a onclick="addCitySC()" title="Add New City">
 															<img height="20px" width="20px" alt="" src="img/add.png">
 													</a></td>
@@ -157,11 +158,13 @@
 												</tr>
 												<tr>
 													<td><input type="checkbox" onclick="isAgentF();"
-														id="agent" name="agent">&nbsp;<span id="aNameStar">Via Agent :</span></td>
+														id="agent" name="agent">&nbsp;<span id="aNameStar">Via
+															Agent :</span></td>
 													<td><input type="text" name="agentName" id="agentName"
-														style="length: 30px; text-transform: uppercase;" readonly="readonly"><input
-														type="hidden" name="aId" id="aId"><input
-														type="hidden" name="isExistingCust" id="isExistingCust"><input
+														style="length: 30px; text-transform: uppercase;"
+														readonly="readonly"><input type="hidden"
+														name="aId" id="aId"><input type="hidden"
+														name="isExistingCust" id="isExistingCust"><input
 														type="hidden" name="existingCustId" value=""
 														id="existingCustId"></td>
 													<td><a onclick="addAgentDetails()"
@@ -238,11 +241,12 @@
 
 								</div>
 								<div class="widget-area">
-									<b>Quantity :<font color="red" size="4">*</font></b> <input type="text" name="qty" id="qty"
-										style="width: 70px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									<b>Product :<font color="red" size="4">*</font></b><input type="text" id="pCode" name="pCode"
-										onkeyup="pcodeF();" autocomplete="off"><input
-										type="hidden" id="pCodeId" name="pCodeId">
+									<b>Quantity :<font color="red" size="4">*</font></b> <input
+										type="text" name="qty" id="qty" style="width: 70px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<b>Product :<font color="red" size="4">*</font></b><input
+										type="text" id="pCode" name="pCode" onkeyup="pcodeF();"
+										autocomplete="off"><input type="hidden" id="pCodeId"
+										name="pCodeId">
 									<%-- <select name="prodCode" id="prodCode"
 										onchange="getProdDetByPurchaseProdDetId();"
 										required="required">
@@ -1127,17 +1131,17 @@
 					<h4 class="modal-title">Purchase Details</h4>
 				</div>
 				<div class="modal-body">
-				
-				<div class="col-md-5">Product Image:</div>
-								<div class="col-md-7" id="imgaeDIV">
-									<img  id="productImage" height="60" width="50" style="" alt="">
-								</div>
+
+					<div class="col-md-5">Product Image:</div>
+					<div class="col-md-7" id="imgaeDIV">
+						<img id="productImage" height="60" width="50" style="" alt="">
+					</div>
 					<table id="stream_table" width="100%">
 						<thead>
 							<tr>
 								<th>Designer Number:</th>
-								
-							
+
+
 								<td colspan="2"><input type="text" readonly="readonly"
 									id="pCodeModal" class="form-control"></td>
 							</tr>
@@ -1204,8 +1208,8 @@
 			</div>
 
 		</div>
-	</div>	
-	
+	</div>
+
 	<script>
 		$(function() {
 			var d = new Date();
@@ -1261,10 +1265,10 @@
 	<script type="text/javascript" src="js/grid-filter.js"></script>
 
 	<script src="js/jquery-ui/jquery-ui.js"></script>
-	
+
 	<script src="js/numericInput.min.js"></script>
 
-<script>
+	<script>
 		$(function() {
 
 			$("#discount").numericInput({
@@ -1277,7 +1281,7 @@
 			});
 
 		});
-		
+
 		$(function() {
 
 			$("#qty").numericInput({
@@ -1290,7 +1294,7 @@
 			});
 
 		});
-		
+
 		$(function() {
 
 			$("#transcharge").numericInput({
@@ -1303,7 +1307,7 @@
 			});
 
 		});
-		
+
 		$(function() {
 
 			$("#surcharge").numericInput({
@@ -1873,7 +1877,7 @@
 													codeParts : req.term
 												},
 												dataType : "json",
-												success : function(data) {				
+												success : function(data) {
 
 													resp($
 															.map(
@@ -1911,11 +1915,13 @@
 										//getProductDetailsByProductCode(ui.item.id) ;
 										$("#purchaseDetails").modal("show");
 										$("#pCodeModal").val(ui.item.value);
-										$("#productImage").attr('src',
-												'data:image/jpeg;base64,' + ui.item.image);
+										$("#productImage").attr(
+												'src',
+												'data:image/jpeg;base64,'
+														+ ui.item.image);
 										$("#pDescModal").val(
 												ui.item.description);
-										
+
 										$
 												.ajax({
 													type : "post",
@@ -2096,14 +2102,15 @@
 			if ($('#agent').is(":checked")) {
 				$("#isAgent").val('yes');
 				$("#agentName").prop("readonly", false);
-				
-				$("#aNameStar").html("Via Agent :<font color='red' size='4'>*</font>");
+
+				$("#aNameStar").html(
+						"Via Agent :<font color='red' size='4'>*</font>");
 			} else {
 				$("#isAgent").val('no');
 				$("#agentName").prop("readonly", true);
 				$("#aDetailsDiv").hide();
 				$("#agentName").val("");
-				
+
 				$("#aNameStar").html("Via Agent :");
 			}
 		}
@@ -2487,8 +2494,7 @@
 			});
 		});
 	</script>
-	<script>	
-
+	<script>
 		function addAgentDetails() {
 
 			$("#addA").modal("show");
@@ -2498,24 +2504,24 @@
 		function submitform2() {
 			if ($("#idName2").val() == 0) {
 				alert("please select  name");
-			/* } else if ($("#idvendorCompanyName2").val() == "") {
-				alert("please select Company Name"); */
+				/* } else if ($("#idvendorCompanyName2").val() == "") {
+					alert("please select Company Name"); */
 			} else if ($("#iphone2").val() == "") {
 				alert("please select Ph No1");
-			/* } else if ($("#idvendorMail2").val() == "") {
-				alert("please select email");
-			} else if ($("#idvendorAlias2").val() == "") {
-				alert("please select Alias name");
-			} else if ($("#cityname2").val() == "") {
-				alert("please select cityname");
-			} else if ($("#idAdd2").val() == "") {
-				alert("please select Adress"); */
+				/* } else if ($("#idvendorMail2").val() == "") {
+					alert("please select email");
+				} else if ($("#idvendorAlias2").val() == "") {
+					alert("please select Alias name");
+				} else if ($("#cityname2").val() == "") {
+					alert("please select cityname");
+				} else if ($("#idAdd2").val() == "") {
+					alert("please select Adress"); */
 			} else if ($("#vendorCity2").val() == "") {
 				alert("please select vendor city");
-			/* } else if ($("#idvendorPin2").val() == "") {
-				alert("please select pin code");
-			} else if ($("#service2").val() == "") {
-				alert("please select Service Tax"); */
+				/* } else if ($("#idvendorPin2").val() == "") {
+					alert("please select pin code");
+				} else if ($("#service2").val() == "") {
+					alert("please select Service Tax"); */
 			} else {
 				var dataa2 = {
 					vendorName2 : $("#idName2").val(),
@@ -2609,14 +2615,14 @@
 
 		function detailButtonNext2() {
 			if ($("#idName2").val() == 0) {
-				alert("please select  name");			
+				alert("please select  name");
 			} else if ($("#iphone2").val() == "") {
-				alert("please select Ph No1");			
+				alert("please select Ph No1");
 			} else {
-			$("#detl2").removeAttr("class");
-			$("#detail2").attr("class", "tab-pane fade");
-			$("#addr2").attr("class", "active");
-			$("#address2").attr("class", "tab-pane fade active in");
+				$("#detl2").removeAttr("class");
+				$("#detail2").attr("class", "tab-pane fade");
+				$("#addr2").attr("class", "active");
+				$("#address2").attr("class", "tab-pane fade active in");
 			}
 		}
 
@@ -2629,12 +2635,12 @@
 
 		function addressButtonNext2() {
 			if ($("#vendorCity2").val() == "") {
-				alert("please select vendor city");			
+				alert("please select vendor city");
 			} else {
-			$("#addr2").removeAttr("class");
-			$("#address2").attr("class", "tab-pane fade");
-			$("#vAcc2").attr("class", "active");
-			$("#vendorAccount2").attr("class", "tab-pane fade active in");
+				$("#addr2").removeAttr("class");
+				$("#address2").attr("class", "tab-pane fade");
+				$("#vAcc2").attr("class", "active");
+				$("#vendorAccount2").attr("class", "tab-pane fade active in");
 			}
 		}
 
