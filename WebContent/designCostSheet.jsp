@@ -163,8 +163,6 @@
 														readonly="readonly">
 												</div>
 											</div>
-
-
 											<div class="form-group"
 												style="width: 50%; height: 100px; margin-top: 27px;">
 												<img id="image" alt="" src="">
@@ -172,9 +170,10 @@
 
 											<br>
 											<div class="form-group">
-												<input type="file" onchange="readURL(this);"
-													name="productImage"> <input type="hidden"
-													name="proImage1" id="proImage1" value="">
+												<label for="" class="font">Sample Design Image :</label><input
+													type="file" onchange="readURL(this);" name="productImage">
+												<input type="hidden" name="proImage1" id="proImage1"
+													value="">
 											</div>
 										</div>
 										<div class='toast' style='display: none'>
