@@ -310,9 +310,7 @@ public class LoginServlet extends HttpServlet {
 
 			usersKainat = new Users();
 			usersKainat.setUserId("adminKainat");
-
 			usersKainat.setPassword("admin");
-
 			usersKainat.setName("Kainat Admin");
 			usersKainat.setPh("0");
 			usersKainat.setCompanyInfo(companyInfoKainat);
