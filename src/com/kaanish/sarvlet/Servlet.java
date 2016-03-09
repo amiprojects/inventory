@@ -1090,14 +1090,20 @@ public class Servlet extends HttpServlet {
 
 				List<Purchase_Entry> purEntry = ejb.getAllPurchaseEntry();
 				int fm = 0;
+				int chP = 0;
 				for (Purchase_Entry pe : purEntry) {
 					if (pe.getVendor_bill_no().equals(
 							req.getParameter("vendorBillNo"))) {
 						fm = 1;
 						break;
 					}
+					if (pe.getChallanNumber().equals(
+							req.getParameter("challanNumber"))) {
+						chP = 1;
+						break;
+					}
 				}
-				if (fm == 0) {
+				if (fm == 0 && chP == 0) {
 					purchaseEntry.setVendor_bill_no(req.getParameter(
 							"vendorBillNo").toUpperCase());
 
@@ -1238,7 +1244,9 @@ public class Servlet extends HttpServlet {
 						purchaseProductDetails.setProductDetail(ejb
 								.getProductDetailsById(Integer
 										.parseInt(productId[l])));
-						if (req.getParameter("isSalable").equals("yes")) {
+						// if (req.getParameter("isSalable").equals("yes")) {
+						if (purchaseProductDetails.getProductDetail()
+								.isSaleble()) {
 							purchaseProductDetails.setMrp(Float
 									.parseFloat(mrp[l]));
 							purchaseProductDetails.setWsp(Float
@@ -1334,7 +1342,7 @@ public class Servlet extends HttpServlet {
 					purchaseEntry = null;
 					msg = "Purchase entry was successfull.";
 				} else {
-					msg = "Duplicate Vendor Bill no. not allowed.";
+					msg = "Duplicate Entry! Not allowed!";
 				}
 
 				break;
@@ -1549,196 +1557,214 @@ public class Servlet extends HttpServlet {
 						(String) httpSession.getAttribute("user"))
 						.getCompanyInfo();
 
-				if (req.getParameter("isExistingCust").equals("0")) {
-					customerEntry = new CustomerEntry();
-					customerEntry.setName(req.getParameter("custName"));
-					customerEntry.setAddress(req.getParameter("addr"));
-					customerEntry.setCity(req.getParameter("city"));
-					customerEntry.setMobile(req.getParameter("phone"));
-					customerEntry.setVat_cst_no(req.getParameter("vatcst"));
-					ejb.setCustomerEntry(customerEntry);
-
-					voucherAssign = new VoucherAssign();
-					voucherAssign.setCustomerEntry(customerEntry);
-					voucherAssign.setVoucherDetailsNumber(customerEntry
-							.getMobile());
-					ejb.setVoucherAssign(voucherAssign);
-
-				} else {
-					voucherAssign = ejb.getVoucherAssignByCustomerId(Integer
-							.parseInt(req.getParameter("existingCustId")));
-				}
-
-				salesEntry = new SalesEntry();
-				dt = new Date();
-				salesEntry.setChallanNumber(req.getParameter("challanNumber"));
-				salesEntry.setChallanNo(Integer.parseInt(req
-						.getParameter("challanNo")));
-				salesEntry.setChallanSuffix(Integer.parseInt(req
-						.getParameter("challanSuffix")));
-				salesEntry.setEntry_Date(dt);
-				salesEntry.setSales_date(DateConverter.getDate(req
-						.getParameter("salesDate")));
-				salesEntry.setTax_Type_Group(ejb.getTax_Type_GroupById(Integer
-						.parseInt(req.getParameter("taxGroup"))));
-				salesEntry.setSubTotal(Float.parseFloat(req
-						.getParameter("subtotalvalue")));
-				salesEntry.setTaxAmount(Float.parseFloat(req
-						.getParameter("taxAmount")));
-				salesEntry.setTransportcCharge(Float.parseFloat(req
-						.getParameter("transcharge")));
-				salesEntry.setSurcharge(Float.parseFloat(req
-						.getParameter("surcharge")));
-				salesEntry.setRoundOf(Float.parseFloat(req
-						.getParameter("roundvalue")));
-				salesEntry.setTotalCost(Float.parseFloat(req
-						.getParameter("grandtotal")));
-				salesEntry.setCompanyInfo(companyInfo);
-
-				if (!req.getParameter("aId").equals("")) {
-					salesEntry.setVendor(ejb.getVendorById(Integer.parseInt(req
-							.getParameter("aId"))));
-				}
-
-				if (req.getParameter("wspORmrp").equals("mrpVal")) {
-					salesEntry.setMRP(true);
-				} else {
-					salesEntry.setMRP(false);
-				}
-				if (req.getParameter("disType").equals("disFlat")) {
-					salesEntry.setFlatDiscount(true);
-				} else {
-					salesEntry.setFlatDiscount(false);
-				}
-
-				if (req.getParameter("isExistingCust").equals("0")) {
-					salesEntry.setCustomer(customerEntry);
-				} else {
-					salesEntry.setCustomer(ejb.getCustomerEntryById(Integer
-							.parseInt(req.getParameter("existingCustId"))));
-				}
-
-				salesEntry.setDiscountValue(Float.parseFloat(req
-						.getParameter("disValue")));
-
-				ejb.setSalesEntry(salesEntry);
-				if (!req.getParameter("pstatus").equals("Full Paid")) {
-					voucherDetails = new VoucherDetails();
-					voucherDetails.setSalesEntry(salesEntry);
-					voucherDetails.setCredit(false);
-					voucherDetails.setValue(Float.parseFloat(req
-							.getParameter("spDueAmount")));
-					voucherDetails.setVoucherDate(DateConverter.getDate(req
-							.getParameter("payDate")));
-					voucherDetails.setUsers(ejb.getUserById(httpSession
-							.getAttribute("user").toString()));
-
-					if (!req.getParameter("existingCustId").equals("")) {
-						List<VoucherDetails> vDetails = ejb
-								.getLastVoucherDetailsbyCustomerId(Integer.parseInt(req
-										.getParameter("existingCustId")));
-						voucherDetails
-								.setTotalDebitNote(vDetails.size() > 0 ? vDetails
-										.get(vDetails.size() - 1)
-										.getTotalDebitNote()
-										+ Float.parseFloat(req
-												.getParameter("spDueAmount"))
-										: 0 + Float.parseFloat(req
-												.getParameter("spDueAmount")));
+				List<SalesEntry> sEntry = ejb.getAllSalesEntries();
+				int chS = 0;
+				for (SalesEntry se : sEntry) {
+					if (se.getChallanNumber().equals(
+							req.getParameter("challanNumber"))) {
+						chS = 1;
+						break;
 					}
-
-					else {
-						voucherDetails.setTotalDebitNote(Float.parseFloat(req
-								.getParameter("spDueAmount")));
-					}
-
-					voucherDetails.setVoucherAssign(voucherAssign);
-					ejb.setVoucherDetails(voucherDetails);
 				}
+				if (chS == 0) {
+					if (req.getParameter("isExistingCust").equals("0")) {
+						customerEntry = new CustomerEntry();
+						customerEntry.setName(req.getParameter("custName").toUpperCase());
+						customerEntry.setAddress(req.getParameter("addr").toUpperCase());
+						customerEntry.setCity(req.getParameter("city").toUpperCase());
+						customerEntry.setMobile(req.getParameter("phone"));
+						customerEntry.setVat_cst_no(req.getParameter("vatcst").toUpperCase());
+						ejb.setCustomerEntry(customerEntry);
 
-				paymentDetails = new PaymentDetails();
-				paymentDetails.setPaymentDate(DateConverter.getDate(req
-						.getParameter("payDate")));
-				paymentDetails.setTotalAmount(Float.parseFloat(req
-						.getParameter("spAmount")));
-				paymentDetails.setPaidAmount(Float.parseFloat(req
-						.getParameter("spPaymentAmount")));
-				paymentDetails.setDescription(req.getParameter("desc"));
-				paymentDetails.setSalesEntry(salesEntry);
-				paymentDetails.setPaymentType(ejb.getPaymentTypeByType(req
-						.getParameter("pType")));
-				paymentDetails.setPaymentStatus(ejb
-						.getPaymentStatusByStatus(req.getParameter("pstatus")));
-				ejb.setPaymentDetails(paymentDetails);
+						voucherAssign = new VoucherAssign();
+						voucherAssign.setCustomerEntry(customerEntry);
+						voucherAssign.setVoucherDetailsNumber(customerEntry
+								.getMobile());
+						ejb.setVoucherAssign(voucherAssign);
 
-				String productId[] = req.getParameterValues("productId");
-				String qtyvalue[] = req.getParameterValues("qtyvalue");
-				String mrpQty[] = req.getParameterValues("mrpQty");
-				String purchaseProductDetId[] = req
-						.getParameterValues("purchaseProductDetId");
-
-				for (int l = 0; l < productId.length; l++) {
-					salesProductDetails = new SalesProductDetails();
-
-					salesProductDetails.setSalesEntry(salesEntry);
-
-					salesProductDetails.setSalesPrice(Float
-							.parseFloat(mrpQty[l]));
-
-					salesProductDetails.setQuantity(Float
-							.parseFloat(qtyvalue[l]));
-
-					salesProductDetails.setPurchase_Product_Details(ejb
-							.getPurchaseProductDetailsById(Integer
-									.parseInt(purchaseProductDetId[l])));
-
-					ejb.setSalesProductDetails(salesProductDetails);
-
-					purchaseProductDetails = ejb
-							.getPurchaseProductDetailsById(Integer
-									.parseInt(purchaseProductDetId[l]));
-
-					purchaseProductDetails
-							.setRemaining_quantity(purchaseProductDetails
-									.getRemaining_quantity()
-									- Integer.parseInt(qtyvalue[l]));
-
-					ejb.updatePurchaseProductDetails(purchaseProductDetails);
-
-					if (purchaseProductDetails.getProductDetail().isRaw()) {
-						rawMaterialsStock = ejb
-								.getRawMeterialStoctByProductAndCompanyId(
-										purchaseProductDetails
-												.getProductDetail().getId(),
-										companyInfo.getId());
-
-						rawMaterialsStock.setRemainingQty(rawMaterialsStock
-								.getRemainingQty()
-								- Float.parseFloat(qtyvalue[l]));
-
-						ejb.updateRawMaterialStockDetail(rawMaterialsStock);
 					} else {
-						readyGoodsStock = ejb
-								.getReadyGoodStoctByProductAndCompanyId(
-										purchaseProductDetails
-												.getProductDetail().getId(),
-										companyInfo.getId());
-
-						readyGoodsStock.setRemainingQty(readyGoodsStock
-								.getRemainingQty()
-								- Float.parseFloat(qtyvalue[l]));
-
-						ejb.updateReadyGoodsStockDetail(readyGoodsStock);
+						voucherAssign = ejb
+								.getVoucherAssignByCustomerId(Integer.parseInt(req
+										.getParameter("existingCustId")));
 					}
 
-					readyGoodsStock = null;
-					purchaseProductDetails = null;
-					salesProductDetails = null;
-				}
+					salesEntry = new SalesEntry();
+					dt = new Date();
+					salesEntry.setChallanNumber(req
+							.getParameter("challanNumber"));
+					salesEntry.setChallanNo(Integer.parseInt(req
+							.getParameter("challanNo")));
+					salesEntry.setChallanSuffix(Integer.parseInt(req
+							.getParameter("challanSuffix")));
+					salesEntry.setEntry_Date(dt);
+					salesEntry.setSales_date(DateConverter.getDate(req
+							.getParameter("salesDate")));
+					salesEntry.setTax_Type_Group(ejb
+							.getTax_Type_GroupById(Integer.parseInt(req
+									.getParameter("taxGroup"))));
+					salesEntry.setSubTotal(Float.parseFloat(req
+							.getParameter("subtotalvalue")));
+					salesEntry.setTaxAmount(Float.parseFloat(req
+							.getParameter("taxAmount")));
+					salesEntry.setTransportcCharge(Float.parseFloat(req
+							.getParameter("transcharge")));
+					salesEntry.setSurcharge(Float.parseFloat(req
+							.getParameter("surcharge")));
+					salesEntry.setRoundOf(Float.parseFloat(req
+							.getParameter("roundvalue")));
+					salesEntry.setTotalCost(Float.parseFloat(req
+							.getParameter("grandtotal")));
+					salesEntry.setCompanyInfo(companyInfo);
 
-				req.setAttribute("purDetIdforPC", salesEntry.getId());
-				salesEntry = null;
-				msg = "Sales entry is successfull...";
+					if (!req.getParameter("aId").equals("")) {
+						salesEntry.setVendor(ejb.getVendorById(Integer
+								.parseInt(req.getParameter("aId"))));
+					}
+
+					if (req.getParameter("wspORmrp").equals("mrpVal")) {
+						salesEntry.setMRP(true);
+					} else {
+						salesEntry.setMRP(false);
+					}
+					if (req.getParameter("disType").equals("disFlat")) {
+						salesEntry.setFlatDiscount(true);
+					} else {
+						salesEntry.setFlatDiscount(false);
+					}
+
+					if (req.getParameter("isExistingCust").equals("0")) {
+						salesEntry.setCustomer(customerEntry);
+					} else {
+						salesEntry.setCustomer(ejb.getCustomerEntryById(Integer
+								.parseInt(req.getParameter("existingCustId"))));
+					}
+
+					salesEntry.setDiscountValue(Float.parseFloat(req
+							.getParameter("disValue")));
+
+					ejb.setSalesEntry(salesEntry);
+					if (!req.getParameter("pstatus").equals("Full Paid")) {
+						voucherDetails = new VoucherDetails();
+						voucherDetails.setSalesEntry(salesEntry);
+						voucherDetails.setCredit(false);
+						voucherDetails.setValue(Float.parseFloat(req
+								.getParameter("spDueAmount")));
+						voucherDetails.setVoucherDate(DateConverter.getDate(req
+								.getParameter("payDate")));
+						voucherDetails.setUsers(ejb.getUserById(httpSession
+								.getAttribute("user").toString()));
+
+						if (!req.getParameter("existingCustId").equals("")) {
+							List<VoucherDetails> vDetails = ejb
+									.getLastVoucherDetailsbyCustomerId(Integer.parseInt(req
+											.getParameter("existingCustId")));
+							voucherDetails
+									.setTotalDebitNote(vDetails.size() > 0 ? vDetails
+											.get(vDetails.size() - 1)
+											.getTotalDebitNote()
+											+ Float.parseFloat(req
+													.getParameter("spDueAmount"))
+											: 0 + Float.parseFloat(req
+													.getParameter("spDueAmount")));
+						}
+
+						else {
+							voucherDetails
+									.setTotalDebitNote(Float.parseFloat(req
+											.getParameter("spDueAmount")));
+						}
+
+						voucherDetails.setVoucherAssign(voucherAssign);
+						ejb.setVoucherDetails(voucherDetails);
+					}
+
+					paymentDetails = new PaymentDetails();
+					paymentDetails.setPaymentDate(DateConverter.getDate(req
+							.getParameter("payDate")));
+					paymentDetails.setTotalAmount(Float.parseFloat(req
+							.getParameter("spAmount")));
+					paymentDetails.setPaidAmount(Float.parseFloat(req
+							.getParameter("spPaymentAmount")));
+					paymentDetails.setDescription(req.getParameter("desc"));
+					paymentDetails.setSalesEntry(salesEntry);
+					paymentDetails.setPaymentType(ejb.getPaymentTypeByType(req
+							.getParameter("pType")));
+					paymentDetails.setPaymentStatus(ejb
+							.getPaymentStatusByStatus(req
+									.getParameter("pstatus")));
+					ejb.setPaymentDetails(paymentDetails);
+
+					String productId[] = req.getParameterValues("productId");
+					String qtyvalue[] = req.getParameterValues("qtyvalue");
+					String mrpQty[] = req.getParameterValues("mrpQty");
+					String purchaseProductDetId[] = req
+							.getParameterValues("purchaseProductDetId");
+
+					for (int l = 0; l < productId.length; l++) {
+						salesProductDetails = new SalesProductDetails();
+
+						salesProductDetails.setSalesEntry(salesEntry);
+
+						salesProductDetails.setSalesPrice(Float
+								.parseFloat(mrpQty[l]));
+
+						salesProductDetails.setQuantity(Float
+								.parseFloat(qtyvalue[l]));
+
+						salesProductDetails.setPurchase_Product_Details(ejb
+								.getPurchaseProductDetailsById(Integer
+										.parseInt(purchaseProductDetId[l])));
+
+						ejb.setSalesProductDetails(salesProductDetails);
+
+						purchaseProductDetails = ejb
+								.getPurchaseProductDetailsById(Integer
+										.parseInt(purchaseProductDetId[l]));
+
+						purchaseProductDetails
+								.setRemaining_quantity(purchaseProductDetails
+										.getRemaining_quantity()
+										- Integer.parseInt(qtyvalue[l]));
+
+						ejb.updatePurchaseProductDetails(purchaseProductDetails);
+
+						if (purchaseProductDetails.getProductDetail().isRaw()) {
+							rawMaterialsStock = ejb
+									.getRawMeterialStoctByProductAndCompanyId(
+											purchaseProductDetails
+													.getProductDetail().getId(),
+											companyInfo.getId());
+
+							rawMaterialsStock.setRemainingQty(rawMaterialsStock
+									.getRemainingQty()
+									- Float.parseFloat(qtyvalue[l]));
+
+							ejb.updateRawMaterialStockDetail(rawMaterialsStock);
+						} else {
+							readyGoodsStock = ejb
+									.getReadyGoodStoctByProductAndCompanyId(
+											purchaseProductDetails
+													.getProductDetail().getId(),
+											companyInfo.getId());
+
+							readyGoodsStock.setRemainingQty(readyGoodsStock
+									.getRemainingQty()
+									- Float.parseFloat(qtyvalue[l]));
+
+							ejb.updateReadyGoodsStockDetail(readyGoodsStock);
+						}
+
+						readyGoodsStock = null;
+						purchaseProductDetails = null;
+						salesProductDetails = null;
+					}
+
+					req.setAttribute("purDetIdforPC", salesEntry.getId());
+					salesEntry = null;
+					msg = "Sales entry is successfull...";
+				} else {
+					msg = "Duplicate entry! Not allowed!";
+				}
 				break;
 
 			case "purchaseSearchByDate":

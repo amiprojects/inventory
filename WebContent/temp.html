@@ -2,6 +2,19 @@
 <font color="red" size="4">*</font>
 
 
-jobForm
-designCostSheetSubmit()
-
+List<Purchase_Entry> purEntry = ejb.getAllPurchaseEntry();
+int fm = 0;
+int chP = 0;
+for (Purchase_Entry pe : purEntry) {
+	if (pe.getVendor_bill_no().equals(
+		req.getParameter("vendorBillNo"))) {
+		fm = 1;
+		break;
+	}
+	if (pe.getChallanNumber().equals(
+		req.getParameter("challanNumber"))) {
+		chP = 1;
+		break;
+		}
+	}
+if (fm == 0 && chP == 0) {
