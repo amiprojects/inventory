@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -23,6 +24,7 @@ public class SampleDesignCostSheet implements Serializable {
 	private int id;
 	private String designNumber;
 	private String designDetails;
+	@Column(length = 800)
 	private String designDescription;
 	private int qty;
 	private float totalProductcost;

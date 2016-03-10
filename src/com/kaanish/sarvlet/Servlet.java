@@ -3058,9 +3058,9 @@ public class Servlet extends HttpServlet {
 					sampleDesignCostSheet = new SampleDesignCostSheet();
 
 					sampleDesignCostSheet.setDesignDescription(req
-							.getParameter("designDescription"));
+							.getParameter("designDescription").toUpperCase());
 					sampleDesignCostSheet.setDesignNumber(req
-							.getParameter("designNo"));
+							.getParameter("designNo").toUpperCase());
 					sampleDesignCostSheet.setQty(Integer.parseInt(req
 							.getParameter("qty")));
 					sampleDesignCostSheet.setSurcharge(Float.parseFloat(req

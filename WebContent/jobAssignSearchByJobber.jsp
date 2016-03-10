@@ -322,7 +322,7 @@
 										<thead>
 											<tr>
 												<th width="100%"
-													style="text-align: center; font-size: 20px;">Completed
+													style="text-align: center; font-size: 20px;">Received
 													jobs</th>
 											</tr>
 										</thead>

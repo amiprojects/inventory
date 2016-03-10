@@ -261,7 +261,7 @@
 															<c:set value="${totREMqty+proDetl.remaninQty}"
 																var="totREMqty" />
 															<c:if test="${totREMqty==0}">
-																<c:set value="Completed" var="Status" />
+																<c:set value="Received" var="Status" />
 															</c:if>
 															<c:if test="${totREMqty>0}">
 																<c:set value="Processing" var="Status" />
@@ -388,7 +388,7 @@
 				}
 			});
 		});
-		
+
 		$(function() {
 			$("#jobberName").autocomplete({
 				source : function(req, resp) {
