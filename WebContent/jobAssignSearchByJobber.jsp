@@ -94,7 +94,8 @@
 												<div class="form-group">
 													<label for="">(End Date)</label> <input type="text"
 														placeholder="Enter last date" id="datepicker1"
-														class="form-control" name="lDate" id="lDate" autocomplete="off">
+														class="form-control" name="lDate" id="lDate"
+														autocomplete="off">
 												</div>
 											</div>
 											<div class="col-md-2">
@@ -168,9 +169,9 @@
 										<div class="row">
 											<div class="col-md-10">
 												<div class="form-group">
-													<label for="" style="float: left;">Designer Number :</label> <input
-														type="" placeholder="Enter Designer Number" id="prodCode"
-														name="prodCode" class="form-control">
+													<label for="" style="float: left;">Designer Number
+														:</label> <input type="" placeholder="Enter Designer Number"
+														id="prodCode" name="prodCode" class="form-control">
 												</div>
 											</div>
 											<div class="col-md-2">
@@ -212,7 +213,7 @@
 												<th width="5%">#</th>
 												<th width="20%">Job Assigned No.</th>
 												<th width="15%">Assigned Date</th>
-												<th width="20%">Est. Submission Date</th>
+												<th width="20%">Jobber Name</th>
 												<th width="15%">Number of Items</th>
 												<th width="15%">Quantity</th>
 											</tr>
@@ -227,9 +228,7 @@
 													<td width="20%">${jobAssignByDate.challanNumber}</td>
 													<td width="15%"><fmt:formatDate
 															value="${jobAssignByDate.assignDate}" pattern="dd-MM-yy" /></td>
-													<td width="20%"><fmt:formatDate
-															value="${jobAssignByDate.estimatedCompletionDate}"
-															pattern="dd-MM-yy" /></td>
+													<td width="20%">${jobAssignByDate.vendor.name}</td>
 													<td width="15%">${jobAssignByDate.jobAssignmentProducts.size()}</td>
 													<c:set value="${0}" var="totqty" />
 													<c:forEach items="${jobAssignByDate.jobAssignmentProducts}"
@@ -267,7 +266,7 @@
 												<th width="4%">#</th>
 												<th width="17%">Job Assigned No.</th>
 												<th width="14%">Assigned Date</th>
-												<th width="18%">Est. Submission Date</th>
+												<th width="18%">Jobber Name</th>
 												<th width="12%">No. of Items</th>
 												<th width="10%">Quantity</th>
 												<th width="15%">Remaining Qty</th>
@@ -289,9 +288,7 @@
 															<td width="14%"><fmt:formatDate
 																	value="${jobAssignByDate.assignDate}"
 																	pattern="dd-MM-yy" /></td>
-															<td width="18%"><fmt:formatDate
-																	value="${jobAssignByDate.estimatedCompletionDate}"
-																	pattern="dd-MM-yy" /></td>
+															<td width="18%">${jobAssignByDate.vendor.name}</td>
 															<td width="12%">${jobAssignByDate.jobAssignmentProducts.size()}</td>
 															<c:set value="${0}" var="totqty" />
 															<c:forEach
@@ -334,7 +331,7 @@
 												<th width="5%">#</th>
 												<th width="20%">Job Assigned No.</th>
 												<th width="15%">Assigned Date</th>
-												<th width="20%">Est. Submission Date</th>
+												<th width="20%">Jobber Name</th>
 												<th width="15%">Number of Items</th>
 												<th width="15%">Quantity</th>
 											</tr>
@@ -355,9 +352,7 @@
 															<td width="15%"><fmt:formatDate
 																	value="${jobAssignByDate.assignDate}"
 																	pattern="dd-MM-yy" /></td>
-															<td width="20%"><fmt:formatDate
-																	value="${jobAssignByDate.estimatedCompletionDate}"
-																	pattern="dd-MM-yy" /></td>
+															<td width="20%">${jobAssignByDate.vendor.name}</td>
 															<td width="15%">${jobAssignByDate.jobAssignmentProducts.size()}</td>
 															<c:set value="${0}" var="totqty" />
 															<c:forEach
@@ -429,6 +424,96 @@
 			//alert(id);
 			$("#JobDetails" + id).submit();
 		}
+
+		$(function() {
+			$("#prodCode").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getProductbyProductCode",
+						data : {
+							code : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.code,
+									id : item.id
+								});
+							}));
+						},
+
+						error : function(a, b, c) {
+							alert(a + b + c);
+						}
+
+					});
+				},
+				/* change : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#prodCode").val("");						
+					} else {
+						$("#prodCode").val(ui.item.code);
+					}
+				}, */
+				select : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#prodCode").val("");
+					} else {
+						$("#prodCode").val(ui.item.code);
+					}
+
+				}
+			});
+		});
+
+		$(function() {
+			$("#jobberName").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getVendorsByVendorTypeJobberAndName",
+						data : {
+							name : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.name,
+									id : item.id
+								});
+							}));
+						},
+
+						error : function(a, b, c) {
+							alert(a + b + c);
+						}
+
+					});
+				},
+				/* change : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#jobberName").val("");
+					} else {
+						$("#jobberName").val(ui.item.name);
+					}
+				}, */
+				select : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#jobberName").val("");
+					} else {
+						$("#jobberName").val(ui.item.name);
+					}
+
+				}
+			});
+		});
 	</script>
 </body>
 

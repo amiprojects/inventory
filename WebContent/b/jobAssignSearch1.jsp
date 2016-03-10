@@ -90,24 +90,22 @@
 											<div class="col-md-5">
 												<div class="form-group">
 													<label for="">Search between two dates : (Start
-														Date)<font color="red" size="4">*</font>
-													</label> <input type="text" placeholder="Enter First Date"
+														Date)<font color="red" size="4">*</font></label> <input type="text" placeholder="Enter First Date"
 														id="datepicker" class="form-control" name="fDate"
-														autocomplete="off" onchange="dateSet();">
+														 autocomplete="off" onchange="dateSet();">
 												</div>
 											</div>
 											<div class="col-md-5">
 												<div class="form-group">
-													<label for="">(End Date)<font color="red" size="4">*</font></label>
-													<input type="text" placeholder="Enter last date"
-														id="datepicker1" onchange="checkDate();"
-														class="form-control" name="lDate" autocomplete="off">
+													<label for="">(End Date)<font color="red" size="4">*</font></label> <input type="text"
+														placeholder="Enter last date" id="datepicker1"
+														onchange="checkDate();" class="form-control" name="lDate"
+														 autocomplete="off">
 												</div>
 											</div>
 											<div class="col-md-2">
 												<button class="btn green pull-left"
-													style="margin-top: 25px;" type="button"
-													onclick="jobSearchByDateSubmit();">Search</button>
+													style="margin-top: 25px;"type="button" onclick="jobSearchByDateSubmit();">Search</button>
 											</div>
 										</div>
 									</form>
@@ -194,8 +192,7 @@
 												<div class="form-group">
 													<label for="" style="float: left;">Designer Number
 														:</label> <input type="" placeholder="Enter Designer Number"
-														id="prodCode" name="prodCode" class="form-control"
-														autocomplete="off">
+														id="prodCode" name="prodCode" class="form-control" autocomplete="off">
 												</div>
 											</div>
 											<div class="col-md-2">
@@ -254,19 +251,7 @@
 														<c:set value="${totqty+proDet.qty}" var="totqty" />
 													</c:forEach>
 													<td width="10%">${totqty}</td>
-													<td width="10%"><c:set value="${0}" var="totREMqty" />
-														<c:forEach
-															items="${jobAssignByDate.jobAssignmentProducts}"
-															var="proDetl">
-															<c:set value="${totREMqty+proDetl.remaninQty}"
-																var="totREMqty" />
-															<c:if test="${totREMqty==0}">
-																<c:set value="Completed" var="Status" />
-															</c:if>
-															<c:if test="${totREMqty>0}">
-																<c:set value="Processing" var="Status" />
-															</c:if>
-														</c:forEach>${Status}</td>
+													<td width="10%">Status</td>
 													<td width="10%">
 														<form action="goJobDetailShow" method="post"
 															id="JobDetails${jobAssignByDate.id}">
@@ -343,7 +328,7 @@
 			//alert(id);
 			$("#JobDetails" + id).submit();
 		}
-
+		
 		$(function() {
 			$("#prodCode").autocomplete({
 				source : function(req, resp) {
@@ -380,7 +365,7 @@
 				select : function(event, ui) {
 					if (ui.item == null) {
 						$(this).val("");
-						$("#prodCode").val("");
+						$("#prodCode").val("");						
 					} else {
 						$("#prodCode").val(ui.item.code);
 					}
@@ -389,51 +374,6 @@
 			});
 		});
 		
-		$(function() {
-			$("#jobberName").autocomplete({
-				source : function(req, resp) {
-					$.ajax({
-						type : "post",
-						url : "getVendorsByVendorTypeJobberAndName",
-						data : {
-							name : req.term
-						},
-						dataType : "json",
-						success : function(data) {
-							resp($.map(data, function(item) {
-								return ({
-									value : item.name,
-									id : item.id
-								});
-							}));
-						},
-
-						error : function(a, b, c) {
-							alert(a + b + c);
-						}
-
-					});
-				},
-				/* change : function(event, ui) {
-					if (ui.item == null) {
-						$(this).val("");
-						$("#jobberName").val("");
-					} else {
-						$("#jobberName").val(ui.item.name);
-					}
-				}, */
-				select : function(event, ui) {
-					if (ui.item == null) {
-						$(this).val("");
-						$("#jobberName").val("");
-					} else {
-						$("#jobberName").val(ui.item.name);
-					}
-
-				}
-			});
-		});
-
 		function jobSearchByDateSubmit() {
 			if ($("#datepicker").val() == "" || $("#datepicker1").val() == "") {
 				alert("Please enter start date and end date");

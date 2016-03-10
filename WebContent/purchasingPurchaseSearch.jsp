@@ -433,7 +433,7 @@
 				source : function(req, resp) {
 					$.ajax({
 						type : "post",
-						url : "getVendorsByVendorTypeVendorAndName",
+						url : "getVendorsByVendorTypePurchaseAgentAndName",
 						data : {
 							name : req.term
 						},
