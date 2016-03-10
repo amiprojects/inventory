@@ -119,7 +119,7 @@
 							<div class="col-md-12">
 								<form role="form" class="sec" method="post" id="jobForm"
 									action="sampleJobCost">
-									<div class="widget-area">
+									<div class="widget-area" style="margin-bottom: 20px;">
 										<div class="col-md-6">
 											<div class="col-md-12"></div>
 											<div class="col-md-12">
@@ -163,24 +163,37 @@
 														readonly="readonly">
 												</div>
 											</div>
+											<br>
+											<!-- <div class="form-group">
+												<label for="" class="font">Sample
+													Design Image :</label><input type="file"
+													onchange="readURL(this);" name="productImage"> <input
+													type="hidden" name="proImage1" id="proImage1" value="">
+											</div>
+
 											<div class="form-group"
 												style="width: 50%; height: 100px; margin-top: 27px;">
 												<img id="image" alt="" src="">
-											</div>
-
-											<br>
-											<div class="form-group">
-												<label for="" class="font">Sample Design Image :</label><input
-													type="file" onchange="readURL(this);" name="productImage">
-												<input type="hidden" name="proImage1" id="proImage1"
-													value="">
+											</div> -->
+											<div class="col-md-12">
+												<div class="form-group">
+													<label> Sample Design Image :</label>
+													<div>
+														<img id="image" alt="" style="width: 100px; height: 50px;">
+													</div>
+													<input type="file" onchange="readURL(this);"
+														name="productImage"> <input type="hidden"
+														name="proImage1" id="proImage1" value="">
+												</div>
 											</div>
 										</div>
 										<div class='toast' style='display: none'>
 											<h3 id="msg">${requestScope['msg']}</h3>
 										</div>
 									</div>
-									<h3>List of material use</h3>
+									<br> <br> <br>
+									<h3 style="margin-top: 10px; padding-top: 10px;">List of
+										material use</h3>
 									<table id="products" class="table table-striped table-bordered">
 										<thead style="background-color: #F0F0F0;">
 											<tr>
@@ -322,7 +335,7 @@
 										<td><label for="proQty" class="font">Product Qty
 												:<font color="red" size="4">*</font>
 										</label></td>
-										<td><input type="number" id="proQty"></td>
+										<td><input type="text" class="numChk" id="proQty"></td>
 									</tr>
 									<tr>
 										<td><label for="proUOM" class="font">UOM :</label></td>
@@ -333,7 +346,7 @@
 									<tr>
 										<td><label for="rate" class="font">Product Rate :<font
 												color="red" size="4">*</font></label></td>
-										<td><input type="number" id="rate"></td>
+										<td><input type="text" id="rate" class="numChk"></td>
 									</tr>
 									<tr>
 										<td><label for="rate" class="font">Select Job :<font
@@ -381,7 +394,7 @@
 <script>
 	$(function() {
 
-		$(".numFloat").numericInput({
+		$(".numChk").numericInput({
 
 			allowFloat : true, // Accpets positive numbers (floating point)
 
@@ -514,7 +527,7 @@
 																+ $("#proCode")
 																		.val()
 																+ '</td>'
-																+ '<td><input type="text" class="numFloat" id="rate1'
+																+ '<td><input type="text" class="numChk" id="rate1'
 																+ $(this).val()
 																+ $("#proId")
 																		.val()
@@ -527,7 +540,7 @@
 																+ $("#proUOM")
 																		.val()
 																+ '</td>'
-																+ '<td><input type="text" class="numFloat" id="qtu1'
+																+ '<td><input type="text" class="numChk" id="qtu1'
 																+ $(this).val()
 																+ $("#proId")
 																		.val()
@@ -605,7 +618,9 @@
 
 									$("#jobs")
 											.append(
-													'<tbody id="jobRow'
+													'<tbody class="proTable'
+															+ $("#proId").val()
+															+ '" id="jobRow'
 															+ $(this).val()
 															+ $("#proId").val()
 															+ '"><tr>'
@@ -626,7 +641,7 @@
 															+ $("#proCode")
 																	.val()
 															+ '</td>'
-															+ '<td><input type="text" class="numFloat" id="rate1'
+															+ '<td><input type="text" class="numChk" id="rate1'
 															+ $(this).val()
 															+ $("#proId").val()
 															+ '" onchange="calAnount(\''
@@ -639,7 +654,7 @@
 															+ $("#proUOM")
 																	.val()
 															+ '</td>'
-															+ '<td><input type="text" class="numFloat" id="qtu1'
+															+ '<td><input type="text" class="numChk" id="qtu1'
 															+ $(this).val()
 															+ $("#proId").val()
 															+ '" onchange="calAnount(\''
@@ -681,6 +696,7 @@
 			$("#grandtot").val(
 					Number($("#gtot").val()) + Number($("#totProfit").val()));
 
+			//error
 			$("#proCode").val("");
 			$("#proId").val("");
 			$("#proDesc").val("");
@@ -688,12 +704,29 @@
 			$("#UOMid").val("");
 			$("#proQty").val("");
 			$("#rate").val("");
-			$("#productForJob").val("0");
+			$(".isSelected").removeProp("checked");
 		}
 
 	}
 
 	function calAnount(a) {
+		$("#rate1" + a).numericInput({
+
+			allowFloat : true, // Accpets positive numbers (floating point)
+
+			allowNegative : false,
+		// Accpets positive or negative integer
+
+		});
+		$("#qtu1" + a).numericInput({
+
+			allowFloat : true, // Accpets positive numbers (floating point)
+
+			allowNegative : false,
+		// Accpets positive or negative integer
+
+		});
+
 		$("#amount" + a).val(
 				Number($("#qtu1" + a).val()) * Number($("#rate1" + a).val()));
 
@@ -714,6 +747,7 @@
 		//error
 		n1 = $("#proTable" + id + " td:nth-child(7)").html();
 		$("#proTable" + id).remove();
+		$(".proTable" + id).remove();
 
 		$("#gt").val(
 				Math.round((Number($("#gt").val()) - Number(n1)) * 100) / 100);
