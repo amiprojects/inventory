@@ -111,22 +111,6 @@
 											</div>
 										</div>
 									</form>
-									<!-- <form role="form" class="sec" action="jobSearchByJobChallanNo"
-										method="post">
-										<div class="row">
-											<div class="col-md-10">
-												<div class="form-group">
-													<label for="" style="float: left;">Job challan no.
-														:</label> <input type="" placeholder="Enter Job challan Number"
-														id="jobChallanNo" name="jobChallanNo" class="form-control">
-												</div>
-											</div>
-											<div class="col-md-2">
-												<button class="btn green pull-left"
-													style="margin-top: 25px;" type="submit">Search</button>
-											</div>
-										</div>
-									</form> -->
 									<form role="form" class="sec" action="jobSearchByJobChallanNo"
 										method="post">
 										<div class="row">
@@ -192,10 +176,9 @@
 										<div class="row">
 											<div class="col-md-10">
 												<div class="form-group">
-													<label for="" style="float: left;">Designer Number
-														:</label> <input type="" placeholder="Enter Designer Number"
-														id="prodCode" name="prodCode" class="form-control"
-														autocomplete="off">
+													<label for="" style="float: left;">Product Code :</label> <input
+														type="" placeholder="Enter Product Code" id="prodCode"
+														name="prodCode" class="form-control" autocomplete="off">
 												</div>
 											</div>
 											<div class="col-md-2">
@@ -212,6 +195,23 @@
 													<label for="" style="float: left;">Jobber Name :</label> <input
 														type="" placeholder="Enter Jober Name" id="jobberName"
 														name="jobberName" class="form-control">
+												</div>
+											</div>
+											<div class="col-md-2">
+												<button class="btn green pull-left"
+													style="margin-top: 25px;" type="submit">Search</button>
+											</div>
+
+										</div>
+									</form>
+									<form role="form" class="sec" action="jobSearchByPlanNo"
+										method="post">
+										<div class="row">
+											<div class="col-md-10">
+												<div class="form-group">
+													<label for="" style="float: left;">Plan Number :</label> <input
+														type="" placeholder="Enter Plan Number" id="planNo"
+														name="planNo" class="form-control">
 												</div>
 											</div>
 											<div class="col-md-2">
@@ -441,6 +441,58 @@
 				$("#jobSearchByDateId").submit();
 			}
 		}
+	</script>
+	<script src="js/numericInput.min.js"></script>
+	<script>
+		$(function() {
+
+			$("#planNo").numericInput({
+
+				allowFloat : false, // Accpets positive numbers (floating point)
+
+				allowNegative : false,
+			// Accpets positive or negative integer
+
+			});
+
+		});
+
+		$(function() {
+			$("#planNo").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getPlanNumbersById",
+						data : {
+							id : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.id,
+									id : item.id
+								});
+							}));
+						},
+
+						error : function(a, b, c) {
+							alert(a + b + c);
+						}
+
+					});
+				},
+				select : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#planNo").val("");
+					} else {
+						$("#planNo").val(ui.item.id);
+					}
+
+				}
+			});
+		});
 	</script>
 </body>
 

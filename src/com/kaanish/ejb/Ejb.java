@@ -1535,6 +1535,14 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<JobAssignmentDetails> getJobAssignByPlanNumber(int id) {
+		TypedQuery<JobAssignmentDetails> q = em.createQuery(
+				"select c from JobAssignmentDetails c where c.jobPlan.id=:id",
+				JobAssignmentDetails.class);
+		q.setParameter("id", id);
+		return q.getResultList();
+	}
+
 	public List<JobAssignmentDetails> getJobAssignByProductCode(String name) {
 		cId = getUserById((String) httpSession.getAttribute("user"))
 				.getCompanyInfo().getId();
@@ -3391,7 +3399,7 @@ public class Ejb {
 				"select c from DesignImage c", DesignImage.class);
 		return q.getResultList();
 	}
-	
+
 	public List<DesignImage> getAllDesignImageBySampleJobId(int id) {
 		TypedQuery<DesignImage> q = em.createQuery(
 				"select s from DesignImage s where s.designCostSheet.id=:id",

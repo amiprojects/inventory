@@ -73,7 +73,7 @@ function showDatePicker() {
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#jobs").attr("id", "activeSubMenu");
-		$("#jAssign").attr("style", "color: #6a94ff;");
+		$("#jobPlan").attr("style", "color: #6a94ff;");
 	});
 </script>
 <link rel="stylesheet" href="css/toast.css" type="text/css" />
@@ -352,7 +352,7 @@ function showDatePicker() {
 								<th>Plan No.<font color="red" size="4">*</font></th>
 								<!-- <th>PLan Description</th> -->
 								<th>Plan Date</th>
-								<th>Design Qty</th>
+								<th>Qty</th>
 							</tr>
 						</thead>
 						<tbody>

@@ -110,7 +110,7 @@ import com.kaanish.util.DateConverter;
 		"/purchaseSearchForPORecieve", "/purchaseOrderReceive",
 		"/jobAssignmentForOngoingJobs", "/sampleJobSearchAll",
 		"/sampleJobSearchByDesignNo", "/sampleJobSearchByDesignerName",
-		"/sampleJobCostSheetView" })
+		"/sampleJobCostSheetView", "/jobSearchByPlanNo" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -2242,6 +2242,21 @@ public class Servlet extends HttpServlet {
 				} else {
 					msg = "No result found for jobber name : "
 							+ req.getParameter("jobberName").toUpperCase();
+				}
+				break;
+
+			case "jobSearchByPlanNo":
+				page = "jobAssignSearch.jsp";
+				List<JobAssignmentDetails> jobAssignListP = ejb
+						.getJobAssignByPlanNumber(Integer.parseInt(req
+								.getParameter("planNo")));
+				req.setAttribute("jobAssignList", jobAssignListP);
+				if (jobAssignListP.size() > 0) {
+					msg = "Your search for Plan Number : "
+							+ req.getParameter("planNo").toUpperCase();
+				} else {
+					msg = "No result found for Plan Number : "
+							+ req.getParameter("planNo").toUpperCase();
 				}
 				break;
 
