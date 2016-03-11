@@ -108,7 +108,7 @@ import com.kaanish.util.DateConverter;
 		"/salesReportByAgentName", "/dayBookreport",
 		"/jobAssignmentForParticularDesignNumber", "/purchaseOrderEntry",
 		"/purchaseSearchForPORecieve", "/purchaseOrderReceive",
-		"/jobAssignmentForOngoingJobs" })
+		"/jobAssignmentForOngoingJobs","/purchaseEdit" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -1973,6 +1973,15 @@ public class Servlet extends HttpServlet {
 
 			case "purchaseView":
 				page = "purchaseView.jsp";
+
+				req.setAttribute("pId", req.getParameter("pId"));
+
+				msg = "";
+
+				break;
+				
+			case "purchaseEdit":
+				page = "purchaseEdit.jsp";
 
 				req.setAttribute("pId", req.getParameter("pId"));
 
@@ -4061,9 +4070,7 @@ public class Servlet extends HttpServlet {
 					// System.out.println("plzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
 					// + isRawable[l]);
 					if (isRawable[l].equals("yesRaw")) {
-						System.out
-								.println("plzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
-										+ productIdaa[l]);
+						
 						rawMaterialsStock = ejb
 								.getRawMeterialStoctByProductId(Integer
 										.parseInt(productIdaa[l]));
@@ -4076,8 +4083,7 @@ public class Servlet extends HttpServlet {
 						rawMaterialsStock = null;
 					} else {
 
-						// System.out.println("plzzzzzzzzzzzzzzzzzzzzddddddzzzzzzzzzzzzzzzzzzzzzzz"
-						// + productIdaa[l]);
+						
 						readyGoodsStock = ejb
 								.getReadyGoodsStoctByProductId(Integer
 										.parseInt(productIdaa[l]));

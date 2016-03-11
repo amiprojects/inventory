@@ -26,9 +26,11 @@ import com.kaanish.model.Department;
 import com.kaanish.model.JobAssignmentProducts;
 import com.kaanish.model.JobPlan;
 import com.kaanish.model.JobsForDesignCostSheet;
+import com.kaanish.model.PaymentDetails;
 import com.kaanish.model.ProductDetail;
 import com.kaanish.model.ProductImage;
 import com.kaanish.model.ProductsForDesignCostSheet;
+import com.kaanish.model.Purchase_Entry;
 import com.kaanish.model.Purchase_Product_Details;
 import com.kaanish.model.QtyUnit;
 import com.kaanish.model.QtyUnitConversionPK;
@@ -40,6 +42,7 @@ import com.kaanish.model.SerialNumber;
 import com.kaanish.model.State;
 import com.kaanish.model.SubDepartment;
 import com.kaanish.model.Vendor;
+import com.kaanish.model.VoucherDetails;
 import com.kaanish.util.Base64;
 import com.kaanish.util.DateConverter;
 import com.kaanish.util.DepartmentCotractor;
@@ -62,7 +65,8 @@ import com.kaanish.util.DepartmentCotractor;
 		"/getPurchaseProductDetailsByProductCode", "/getJobsForDesignCostSheetByProductSForSampleId",
 		"/getProductImagejson", "/getPlannedSampleDesignCostSheetByDesignNumber", "/getAllOngoingJobPlanByDesignNumber",
 		"/getProductAndDesignDetailsAndJobPlanByJobPlanId", "/getJobsForDesignCostSheetByPlanId",
-		"/getOngoingJobAssignmentsByPlanId", "/getJonsonDateFinancial" })
+		"/getOngoingJobAssignmentsByPlanId", "/getJonsonDateFinancial", "/updatePurchaseEntry",
+		"/updatePurchaseproduct"})
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -73,10 +77,11 @@ public class JsonServlet extends HttpServlet {
 	private String name;
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, NullPointerException {
 		String url = req.getRequestURL().toString();
 		url = url.substring(url.lastIndexOf('/') + 1);
 		resp.setContentType("application/json");
+		HttpSession httpSession = req.getSession();
 
 		try {
 			switch (url) {
@@ -372,56 +377,67 @@ public class JsonServlet extends HttpServlet {
 										.write("JobRateOfSample", jdcs.getRate()).write("JobQtyOfSample", jdcs.getQty())
 										.write("JobUOMOfSample", jdcs.getQtyUnit().getName())
 										.write("JobAmountOfSample", jdcs.getAmmount()).write("Status", "Completed")
-										
-										
+
 										.write("RemQty", "NA")
-										.write("PresentRate", ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
-												Integer.parseInt(req.getParameter("japId")), jdcs.getId())
-										.getRate())
-										.write("AssignQty", "NA")
-										.write("Amount", "NA")
-										.write("EstSubDate", "NA")
+										.write("PresentRate",
+												ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
+														Integer.parseInt(req.getParameter("japId")), jdcs.getId())
+												.getRate())
+										.write("AssignQty", "NA").write("Amount", "NA").write("EstSubDate", "NA")
 										.writeEnd();
 							} else {
 								if (ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
-										Integer.parseInt(req.getParameter("japId")), jdcs.getId()).getRemQty() > 0 && ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
-												Integer.parseInt(req.getParameter("japId")), jdcs.getId()).getRemQty() == ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
-														Integer.parseInt(req.getParameter("japId")), jdcs.getId()).getQty()) {
+										Integer.parseInt(req.getParameter("japId")), jdcs.getId())
+										.getRemQty() > 0 && ejb
+												.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
+														Integer.parseInt(req.getParameter("japId")), jdcs.getId())
+												.getRemQty() == ejb
+														.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
+																Integer.parseInt(req.getParameter("japId")),
+																jdcs.getId())
+														.getQty()) {
 									generatorJ.writeStartObject().write("JobId", jdcs.getId())
 											.write("JobName", jdcs.getJobTypes().getJobName())
 											.write("JobRateOfSample", jdcs.getRate())
 											.write("JobQtyOfSample", jdcs.getQty())
-											.write("JobUOMOfSample",
-													jdcs.getQtyUnit().getName())
-											.write("JobAmountOfSample",
-													jdcs.getAmmount())
-											.write("Status", "Assigned")
-											
-											
-											.write("RemQty", ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
-													Integer.parseInt(req.getParameter("japId")), jdcs.getId())
-											.getJobPlanJobStock().getRemQty())
-											.write("PresentRate", ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
-													Integer.parseInt(req.getParameter("japId")), jdcs.getId())
-											.getRate())
-											.write("AssignQty", ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
-													Integer.parseInt(req.getParameter("japId")), jdcs.getId())
-											.getQty())
-											.write("Amount", ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
-													Integer.parseInt(req.getParameter("japId")), jdcs.getId())
-											.getAmmount())
+											.write("JobUOMOfSample", jdcs.getQtyUnit().getName())
+											.write("JobAmountOfSample", jdcs.getAmmount()).write("Status", "Assigned")
+
+											.write("RemQty",
+													ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
+															Integer.parseInt(req.getParameter("japId")), jdcs.getId())
+													.getJobPlanJobStock().getRemQty())
+											.write("PresentRate",
+													ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
+															Integer.parseInt(req.getParameter("japId")),
+															jdcs.getId()).getRate())
+											.write("AssignQty",
+													ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
+															Integer.parseInt(req.getParameter("japId")), jdcs.getId())
+													.getQty())
+											.write("Amount",
+													ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
+															Integer.parseInt(req.getParameter("japId")), jdcs
+																	.getId())
+															.getAmmount())
 											.write("EstSubDate",
 													ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
 															Integer.parseInt(req.getParameter("japId")), jdcs.getId())
 													.getEstimatedCompletionDate().toString())
 											.writeEnd();
-								} 
-//								else if (ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
-//										Integer.parseInt(req.getParameter("japId")), jdcs.getId()).getRemQty() > 0 && ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
-//												Integer.parseInt(req.getParameter("japId")), jdcs.getId()).getRemQty() != ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
-//														Integer.parseInt(req.getParameter("japId")), jdcs.getId()).getQty()) {
-//									
-//								}
+								}
+								// else if
+								// (ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
+								// Integer.parseInt(req.getParameter("japId")),
+								// jdcs.getId()).getRemQty() > 0 &&
+								// ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
+								// Integer.parseInt(req.getParameter("japId")),
+								// jdcs.getId()).getRemQty() !=
+								// ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
+								// Integer.parseInt(req.getParameter("japId")),
+								// jdcs.getId()).getQty()) {
+								//
+								// }
 								else {
 									generatorJ.writeStartObject().write("JobId", jdcs.getId())
 											.write("JobName", jdcs.getJobTypes().getJobName())
@@ -430,17 +446,16 @@ public class JsonServlet extends HttpServlet {
 											.write("JobUOMOfSample", jdcs.getQtyUnit().getName())
 											.write("JobAmountOfSample", jdcs.getAmmount())
 											.write("Status", "Not Completed")
-											
-											
-											.write("RemQty", ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
-													Integer.parseInt(req.getParameter("japId")), jdcs.getId())
-											.getJobPlanJobStock().getRemQty())
-											.write("PresentRate", ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
-													Integer.parseInt(req.getParameter("japId")), jdcs.getId())
-											.getRate())
-											.write("AssignQty", "NA")
-											.write("Amount", "NA")
-											.write("EstSubDate", "NA")
+
+											.write("RemQty",
+													ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
+															Integer.parseInt(req.getParameter("japId")), jdcs.getId())
+													.getJobPlanJobStock().getRemQty())
+											.write("PresentRate",
+													ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
+															Integer.parseInt(req.getParameter("japId")), jdcs.getId())
+													.getRate())
+											.write("AssignQty", "NA").write("Amount", "NA").write("EstSubDate", "NA")
 											.writeEnd();
 								}
 							}
@@ -450,14 +465,9 @@ public class JsonServlet extends HttpServlet {
 									.write("JobRateOfSample", jdcs.getRate()).write("JobQtyOfSample", jdcs.getQty())
 									.write("JobUOMOfSample", jdcs.getQtyUnit().getName())
 									.write("JobAmountOfSample", jdcs.getAmmount()).write("Status", "Not Assigned")
-									
-									
-									.write("RemQty", jdcs.getQty())
-									.write("PresentRate", "NA")
-									.write("AssignQty", "NA")
-									.write("Amount", "NA")
-									.write("EstSubDate", "NA")
-									.writeEnd();
+
+									.write("RemQty", jdcs.getQty()).write("PresentRate", "NA").write("AssignQty", "NA")
+									.write("Amount", "NA").write("EstSubDate", "NA").writeEnd();
 						}
 					} else {
 						generatorJ.writeStartObject().write("JobId", jdcs.getId())
@@ -465,14 +475,9 @@ public class JsonServlet extends HttpServlet {
 								.write("JobRateOfSample", jdcs.getRate()).write("JobQtyOfSample", jdcs.getQty())
 								.write("JobUOMOfSample", jdcs.getQtyUnit().getName())
 								.write("JobAmountOfSample", jdcs.getAmmount()).write("Status", "Not Assigned")
-								
-								
-								.write("RemQty", jdcs.getQty())
-								.write("PresentRate", "NA")
-								.write("AssignQty", "NA")
-								.write("Amount", "NA")
-								.write("EstSubDate", "NA")
-								.writeEnd();
+
+								.write("RemQty", jdcs.getQty()).write("PresentRate", "NA").write("AssignQty", "NA")
+								.write("Amount", "NA").write("EstSubDate", "NA").writeEnd();
 					}
 				}
 				generatorJ.writeEnd().close();
@@ -570,7 +575,6 @@ public class JsonServlet extends HttpServlet {
 				resp.setContentType("application/json");
 				JsonGeneratorFactory jsg = Json.createGeneratorFactory(null);
 				JsonGenerator gen2 = jsg.createGenerator(resp.getOutputStream());
-				HttpSession httpSession = req.getSession();
 
 				Vendor vendor = new Vendor();
 
@@ -579,7 +583,7 @@ public class JsonServlet extends HttpServlet {
 				int counter2 = 0;
 				for (Vendor ven : vend) {
 
-					if ( ven.getPh1().equals(req.getParameter("vendorPh1"))) {
+					if (ven.getPh1().equals(req.getParameter("vendorPh1"))) {
 
 						counter2 = 1;
 						break;
@@ -593,52 +597,42 @@ public class JsonServlet extends HttpServlet {
 
 					vendor.setName(req.getParameter("vendorName").toUpperCase());
 					vendor.setLastModifiedDate(dt);
-					
+
 					if (!req.getParameter("vendorAddress").equals("")) {
-					vendor.setAddress(req.getParameter("vendorAddress"));
-					}
-					else{
+						vendor.setAddress(req.getParameter("vendorAddress"));
+					} else {
 						vendor.setAddress("NA");
 					}
-					if(!req.getParameter("vendorAlias").equals(""))
-					{
-					vendor.setAliseName(req.getParameter("vendorAlias"));
-					}
-					else
-					{
+					if (!req.getParameter("vendorAlias").equals("")) {
+						vendor.setAliseName(req.getParameter("vendorAlias"));
+					} else {
 						vendor.setAliseName("NA");
 					}
-					
-				vendor.setCity(ejb.getCityById(Integer.parseInt(req.getParameter("vendorCityId"))));
-					
-					
-					if(!req.getParameter("vendorCompanyName").equals(""))
-					{
-					vendor.setCompanyName(req.getParameter("vendorCompanyName"));
-					}
-					else{
+
+					vendor.setCity(ejb.getCityById(Integer.parseInt(req.getParameter("vendorCityId"))));
+
+					if (!req.getParameter("vendorCompanyName").equals("")) {
+						vendor.setCompanyName(req.getParameter("vendorCompanyName"));
+					} else {
 						vendor.setCompanyName("NA");
 					}
-					if(!req.getParameter("vendorMail").equals("")){
+					if (!req.getParameter("vendorMail").equals("")) {
 						vendor.setEmail(req.getParameter("vendorMail"));
-					}else{
+					} else {
 						vendor.setEmail("NA");
 					}
-					
+
 					vendor.setPh1(req.getParameter("vendorPh1"));
-					
-					if(!req.getParameter("vendorPh2").equals("")){
-					
+
+					if (!req.getParameter("vendorPh2").equals("")) {
+
 						vendor.setPh2(req.getParameter("vendorPh2"));
-					}
-					else{
+					} else {
 						vendor.setPh2("NA");
 					}
-					if(!req.getParameter("vendorPin").equals(""))
-					{
-					vendor.setPinCode(req.getParameter("vendorPin"));
-					}
-					else{
+					if (!req.getParameter("vendorPin").equals("")) {
+						vendor.setPinCode(req.getParameter("vendorPin"));
+					} else {
 						vendor.setPinCode("NA");
 					}
 					vendor.setVendorType(ejb.getVendorTypeById(Integer.parseInt(req.getParameter("vendorType"))));
@@ -726,48 +720,40 @@ public class JsonServlet extends HttpServlet {
 
 					vendor2.setName(req.getParameter("vendorName2").toUpperCase());
 					vendor2.setLastModifiedDate(dt2);
-					if(!req.getParameter("vendorAddress2").equals("")){
-						
-					vendor2.setAddress(req.getParameter("vendorAddress2"));
-					}
-					else{
+					if (!req.getParameter("vendorAddress2").equals("")) {
+
+						vendor2.setAddress(req.getParameter("vendorAddress2"));
+					} else {
 						vendor2.setAddress("NA");
 					}
-					if(!req.getParameter("vendorAlias2").equals("")){
+					if (!req.getParameter("vendorAlias2").equals("")) {
 						vendor2.setAliseName(req.getParameter("vendorAlias2"));
-					}
-					else{
+					} else {
 						vendor2.setAliseName("NA");
 					}
-				
-						vendor2.setCity(ejb.getCityById(Integer.parseInt(req.getParameter("vendorCityId2"))));
-				
-					
-					if(!req.getParameter("vendorCompanyName2").equals("")){
+
+					vendor2.setCity(ejb.getCityById(Integer.parseInt(req.getParameter("vendorCityId2"))));
+
+					if (!req.getParameter("vendorCompanyName2").equals("")) {
 						vendor2.setCompanyName(req.getParameter("vendorCompanyName2"));
-					}
-					else{
+					} else {
 						vendor2.setCompanyName("NA");
 					}
-					if(!req.getParameter("vendorMail2").equals("")){
+					if (!req.getParameter("vendorMail2").equals("")) {
 						vendor2.setEmail(req.getParameter("vendorMail2"));
-					}
-					else{
+					} else {
 						vendor2.setEmail("NA");
 					}
 					vendor2.setPh1(req.getParameter("vendorPh12"));
-					
-					if(!req.getParameter("vendorPh22").equals("")){
+
+					if (!req.getParameter("vendorPh22").equals("")) {
 						vendor2.setPh2(req.getParameter("vendorPh22"));
-					}
-					else{
+					} else {
 						vendor2.setPh2("NA");
 					}
-					if(!req.getParameter("vendorPin2").equals(""))
-					{
-					vendor2.setPinCode(req.getParameter("vendorPin2"));
-					}
-					else{
+					if (!req.getParameter("vendorPin2").equals("")) {
+						vendor2.setPinCode(req.getParameter("vendorPin2"));
+					} else {
 						vendor2.setPinCode("NA");
 					}
 					vendor2.setVendorType(ejb.getVendorTypeById(Integer.parseInt(req.getParameter("vendorType2"))));
@@ -1137,6 +1123,95 @@ public class JsonServlet extends HttpServlet {
 							.write("dDEsc", sdcs.getDesignDescription()).writeEnd();
 				}
 				generatorDP.writeEnd().close();
+				break;
+
+			case "updatePurchaseEntry":
+				JsonGeneratorFactory factory2 = Json.createGeneratorFactory(null);
+				JsonGenerator generator2 = factory2.createGenerator(resp.getOutputStream());
+				try {
+					Purchase_Entry purchase_Entry = ejb.getPurchaseEntryById(Integer.parseInt(req.getParameter("id")));
+					float oldGT = purchase_Entry.getTotalCost();
+
+					purchase_Entry.setSur_charge(Float.parseFloat(req.getParameter("surCharge")));
+					purchase_Entry.setTransport_cost(Float.parseFloat(req.getParameter("trCharge")));
+					purchase_Entry.setRoundOf(Float.parseFloat(req.getParameter("roundvalue")));
+					purchase_Entry.setTotalCost(Float.parseFloat(req.getParameter("gt")));
+					purchase_Entry.setSubTotal(Float.parseFloat(req.getParameter("st")));
+
+					ejb.updatePurchaseEntry(purchase_Entry);
+
+					VoucherDetails vd = new VoucherDetails();
+					vd.setCredit(true);
+					vd.setUsers(ejb.getUserById((String) httpSession.getAttribute("user")));
+					vd.setVoucherAssign(purchase_Entry.getVendor().getVoucherAssign());
+					vd.setPurchase_Entry(purchase_Entry);
+					vd.setValue(Float.parseFloat(req.getParameter("gt")) - oldGT);
+					vd.setVoucherDate(new Date());
+
+					if (!(purchase_Entry.getVendor().getVoucherAssign().getVoucherDetails().size() > 0)) {
+						vd.setTotalCreditNote(Float.parseFloat(req.getParameter("gt")));
+					} else {
+						float totalCreditNote = ejb.getVoucherDetailsByVendorId(purchase_Entry.getVendor().getId()).get(
+								ejb.getVoucherDetailsByVendorId(purchase_Entry.getVendor().getId()).size() - 1)
+								.getTotalCreditNote();
+						vd.setTotalCreditNote(vd.getValue() + totalCreditNote);
+					}
+
+					ejb.setVoucherDetails(vd);
+					
+					PaymentDetails paymentDetails=new PaymentDetails();
+					
+					paymentDetails.setPaymentDate(new Date());
+					paymentDetails.setTotalAmount(Float.parseFloat(req.getParameter("gt")) - oldGT);
+					paymentDetails.setPaidAmount(Float.parseFloat(req.getParameter("gt")) - oldGT);
+					
+					paymentDetails.setPurchase_Entry(purchase_Entry);
+					
+					paymentDetails.setPaymentStatus(ejb
+							.getPaymentStatusByStatus("Not Paid"));
+					ejb.setPaymentDetails(paymentDetails);
+
+					generator2.writeStartObject().write("error", false).writeEnd().close();
+
+				} catch (Exception e) {
+					generator2.writeStartObject().write("error", true).writeEnd().close();
+					System.out.println(e.getMessage());
+					e.printStackTrace();
+				}
+				break;
+
+			case "updatePurchaseproduct":
+				JsonGeneratorFactory factory5 = Json.createGeneratorFactory(null);
+				JsonGenerator generator5 = factory5.createGenerator(resp.getOutputStream());
+				try {
+					
+					Purchase_Product_Details ppd=ejb.getPurchaseProductDetailsById(Integer.parseInt(req.getParameter("id")));
+					float sellqty=ppd.getQuantity()-ppd.getRemaining_quantity();
+					
+					
+					if(ppd.getProductDetail().isRaw()){
+						RawMaterialsStock rms=ppd.getProductDetail().getRawMaterialsStock();						
+						rms.setRemainingQty((rms.getRemainingQty()-ppd.getQuantity())+Float.parseFloat(req.getParameter("qty")));
+						ejb.updateRawMaterialStockDetail(rms);
+					}else{
+						ReadyGoodsStock rgs=ppd.getProductDetail().getReadyGoodsStock();
+						rgs.setRemainingQty((rgs.getRemainingQty()-ppd.getQuantity())+Float.parseFloat(req.getParameter("qty")));
+						ejb.updateReadyGoodsStockDetail(rgs);
+					}
+					
+					
+					ppd.setQuantity(Float.parseFloat(req.getParameter("qty")));
+					ppd.setRemaining_quantity(Float.parseFloat(req.getParameter("qty"))-sellqty);
+					ppd.setCost(Float.parseFloat(req.getParameter("cost")));					
+					ejb.updatePurchaseProductDetails(ppd);
+					
+					generator5.writeStartObject().write("error", false).write("msg", "purchase product details updated successfully").writeEnd().close();
+
+				} catch (Exception e) {
+					generator5.writeStartObject().write("error", true).write("msg", e.getMessage()).writeEnd().close();
+					e.printStackTrace();
+				}
+
 				break;
 
 			/*

@@ -860,6 +860,10 @@ public class Ejb {
 	public Purchase_Entry getPurchaseEntryById(int id) {
 		return em.find(Purchase_Entry.class, id);
 	}
+	
+	public void updatePurchaseEntry(Purchase_Entry purchaseEntry) {
+		em.merge(purchaseEntry);
+	}
 
 	public List<Purchase_Entry> getPurchaseEntryByDate(Date startDate,
 			Date endDate) {
