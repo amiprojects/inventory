@@ -426,7 +426,7 @@ function showDatePicker() {
 								<th>Purchase Date</th>
 								<th>Cost/Unit</th>
 								<th>Remaining Qty.</th>								
-								<th>Qty Selected</th>
+								<th>Qty Selected<font color="red" size="4">*</font></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -688,6 +688,9 @@ function showDatePicker() {
 																							"#qty")
 																							.val())
 																					+ "</td>"
+																					+ "<td>"
+																					+ "<font color='red' size='4'>*</font>"
+																					+ "</td>"
 																					+ "</tr>"
 																					+ "</tbody>");
 														} else {
@@ -852,11 +855,11 @@ function showDatePicker() {
 				+ '</th><th>'
 				+ "Sample Rate" +
 				'</th><th>'
-				+ "Present Rate" 
+				+ "Present Rate<font color='red' size='4'>*</font>" 
 				+ '</th><th>'
 				+ "Sample Qty" +
 				'</th><th>'
-				+ "Assign Qty" +
+				+ "Assign Qty<font color='red' size='4'>*</font>" +
 				'</th><th>'
 				+ "UOM" 
 				+ '</th><th>'
@@ -864,7 +867,7 @@ function showDatePicker() {
 				'</th><th>'
 				+ "Amount" +
 				'</th><th>'
-				+ "Est. Submission Date" +
+				+ "Est. Submission Date<font color='red' size='4'>*</font>" +
 				'</th></tr></thead></table>');
 				
 				 $
@@ -1140,7 +1143,7 @@ function showDatePicker() {
 		function qtyKU(jobId){			
 			if($("#jobQty"+jobId).val()>$("#jobSampleQty"+jobId).val()){
 				alert("Assigning qty can not be more than sample qty!");
-				$("#jobQty"+jobId).val("");
+				$("#jobQty"+jobId).val($("#jobSampleQty"+jobId).val());
 			}else{			
 			$("#jobAmount"+jobId).val($("#jobPresentRate"+jobId).val()*$("#jobQty"+jobId).val());
 			

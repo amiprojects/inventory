@@ -10,13 +10,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
+import com.kaanish.util.Base64;
+
 @Entity
 @Cacheable(false)
 public class DesignImage implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id@GeneratedValue
+	@Id
+	@GeneratedValue
 	private int id;
 	@Lob
 	private byte[] image;
@@ -47,6 +50,21 @@ public class DesignImage implements Serializable {
 
 	public void setDesignCostSheet(SampleDesignCostSheet designCostSheet) {
 		this.designCostSheet = designCostSheet;
+	}
+
+	public String getImageAsString() {
+		if (image.equals(null)) {
+			return "";
+		} else {
+			return Base64.encodeBytes(image);
+		}
+	}
+
+	@Override
+	public String toString() {
+		return "{\"id\":\"" + id + "\", " + "\"designCostSheetId\":\""
+				+ getDesignCostSheet().getId() + "\", " + "\"image\":\""
+				+ getImageAsString() + "\"}";
 	}
 
 }

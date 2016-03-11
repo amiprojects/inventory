@@ -156,7 +156,7 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#purch").attr("id", "activeSubMenu");
-			$("#sPurchSearch").attr("style", "color: #6a94ff;");
+			$("#sPurchEntry").attr("style", "color: #6a94ff;");
 		});
 	</script>
 </body>

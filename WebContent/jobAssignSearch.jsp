@@ -85,46 +85,32 @@
 										</div>
 									</form>
 									<form role="form" class="sec" action="jobAssignSearchByDate"
-										method="post">
+										method="post" id="jobSearchByDateId">
 										<div class="row">
 											<div class="col-md-5">
 												<div class="form-group">
 													<label for="">Search between two dates : (Start
-														Date)</label> <input type="text" placeholder="Enter First Date"
+														Date)<font color="red" size="4">*</font>
+													</label> <input type="text" placeholder="Enter First Date"
 														id="datepicker" class="form-control" name="fDate"
-														id="fDate" autocomplete="off" onchange="dateSet();">
+														autocomplete="off" onchange="dateSet();">
 												</div>
 											</div>
 											<div class="col-md-5">
 												<div class="form-group">
-													<label for="">(End Date)</label> <input type="text"
-														placeholder="Enter last date" id="datepicker1"
-														onchange="checkDate();" class="form-control" name="lDate"
-														id="lDate" autocomplete="off">
+													<label for="">(End Date)<font color="red" size="4">*</font></label>
+													<input type="text" placeholder="Enter last date"
+														id="datepicker1" onchange="checkDate();"
+														class="form-control" name="lDate" autocomplete="off">
 												</div>
 											</div>
 											<div class="col-md-2">
 												<button class="btn green pull-left"
-													style="margin-top: 25px;" type="submit">Search</button>
+													style="margin-top: 25px;" type="button"
+													onclick="jobSearchByDateSubmit();">Search</button>
 											</div>
 										</div>
 									</form>
-									<!-- <form role="form" class="sec" action="jobSearchByJobChallanNo"
-										method="post">
-										<div class="row">
-											<div class="col-md-10">
-												<div class="form-group">
-													<label for="" style="float: left;">Job challan no.
-														:</label> <input type="" placeholder="Enter Job challan Number"
-														id="jobChallanNo" name="jobChallanNo" class="form-control">
-												</div>
-											</div>
-											<div class="col-md-2">
-												<button class="btn green pull-left"
-													style="margin-top: 25px;" type="submit">Search</button>
-											</div>
-										</div>
-									</form> -->
 									<form role="form" class="sec" action="jobSearchByJobChallanNo"
 										method="post">
 										<div class="row">
@@ -190,9 +176,9 @@
 										<div class="row">
 											<div class="col-md-10">
 												<div class="form-group">
-													<label for="" style="float: left;">Designer Number
-														:</label> <input type="" placeholder="Enter Designer Number"
-														id="prodCode" name="prodCode" class="form-control" autocomplete="off">
+													<label for="" style="float: left;">Product Code :</label> <input
+														type="" placeholder="Enter Product Code" id="prodCode"
+														name="prodCode" class="form-control" autocomplete="off">
 												</div>
 											</div>
 											<div class="col-md-2">
@@ -218,6 +204,23 @@
 
 										</div>
 									</form>
+									<form role="form" class="sec" action="jobSearchByPlanNo"
+										method="post">
+										<div class="row">
+											<div class="col-md-10">
+												<div class="form-group">
+													<label for="" style="float: left;">Plan Number :</label> <input
+														type="" placeholder="Enter Plan Number" id="planNo"
+														name="planNo" class="form-control">
+												</div>
+											</div>
+											<div class="col-md-2">
+												<button class="btn green pull-left"
+													style="margin-top: 25px;" type="submit">Search</button>
+											</div>
+
+										</div>
+									</form>
 									<br>
 									<h3 align="center" style="color: #6a94ff;">${requestScope['msg']}</h3>
 									<br>
@@ -227,9 +230,10 @@
 												<th width="5%">#</th>
 												<th width="20%">Job Assigned No.</th>
 												<th width="15%">Assigned Date</th>
-												<th width="20%">Est. Submission Date</th>
+												<th width="15%">Jobber Name</th>
 												<th width="15%">Number of Items</th>
-												<th width="15%">Quantity</th>
+												<th width="10%">Quantity</th>
+												<th width="10%">Status</th>
 											</tr>
 										</thead>
 										<tbody style="height: 300px;">
@@ -242,16 +246,27 @@
 													<td width="20%">${jobAssignByDate.challanNumber}</td>
 													<td width="15%"><fmt:formatDate
 															value="${jobAssignByDate.assignDate}" pattern="dd-MM-yy" /></td>
-													<td width="20%"><fmt:formatDate
-															value="${jobAssignByDate.estimatedCompletionDate}"
-															pattern="dd-MM-yy" /></td>
+													<td width="15%">${jobAssignByDate.vendor.name}</td>
 													<td width="15%">${jobAssignByDate.jobAssignmentProducts.size()}</td>
 													<c:set value="${0}" var="totqty" />
 													<c:forEach items="${jobAssignByDate.jobAssignmentProducts}"
 														var="proDet">
 														<c:set value="${totqty+proDet.qty}" var="totqty" />
 													</c:forEach>
-													<td width="15%">${totqty}</td>
+													<td width="10%">${totqty}</td>
+													<td width="10%"><c:set value="${0}" var="totREMqty" />
+														<c:forEach
+															items="${jobAssignByDate.jobAssignmentProducts}"
+															var="proDetl">
+															<c:set value="${totREMqty+proDetl.remaninQty}"
+																var="totREMqty" />
+															<c:if test="${totREMqty==0}">
+																<c:set value="Received" var="Status" />
+															</c:if>
+															<c:if test="${totREMqty>0}">
+																<c:set value="Processing" var="Status" />
+															</c:if>
+														</c:forEach>${Status}</td>
 													<td width="10%">
 														<form action="goJobDetailShow" method="post"
 															id="JobDetails${jobAssignByDate.id}">
@@ -328,7 +343,7 @@
 			//alert(id);
 			$("#JobDetails" + id).submit();
 		}
-		
+
 		$(function() {
 			$("#prodCode").autocomplete({
 				source : function(req, resp) {
@@ -365,9 +380,114 @@
 				select : function(event, ui) {
 					if (ui.item == null) {
 						$(this).val("");
-						$("#prodCode").val("");						
+						$("#prodCode").val("");
 					} else {
 						$("#prodCode").val(ui.item.code);
+					}
+
+				}
+			});
+		});
+
+		$(function() {
+			$("#jobberName").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getVendorsByVendorTypeJobberAndName",
+						data : {
+							name : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.name,
+									id : item.id
+								});
+							}));
+						},
+
+						error : function(a, b, c) {
+							alert(a + b + c);
+						}
+
+					});
+				},
+				/* change : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#jobberName").val("");
+					} else {
+						$("#jobberName").val(ui.item.name);
+					}
+				}, */
+				select : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#jobberName").val("");
+					} else {
+						$("#jobberName").val(ui.item.name);
+					}
+
+				}
+			});
+		});
+
+		function jobSearchByDateSubmit() {
+			if ($("#datepicker").val() == "" || $("#datepicker1").val() == "") {
+				alert("Please enter start date and end date");
+			} else {
+				$("#jobSearchByDateId").submit();
+			}
+		}
+	</script>
+	<script src="js/numericInput.min.js"></script>
+	<script>
+		$(function() {
+
+			$("#planNo").numericInput({
+
+				allowFloat : false, // Accpets positive numbers (floating point)
+
+				allowNegative : false,
+			// Accpets positive or negative integer
+
+			});
+
+		});
+
+		$(function() {
+			$("#planNo").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getPlanNumbersById",
+						data : {
+							id : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.id,
+									id : item.id
+								});
+							}));
+						},
+
+						error : function(a, b, c) {
+							alert(a + b + c);
+						}
+
+					});
+				},
+				select : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#planNo").val("");
+					} else {
+						$("#planNo").val(ui.item.id);
 					}
 
 				}

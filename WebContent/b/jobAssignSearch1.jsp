@@ -72,30 +72,51 @@
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
 								<h3 style="margin-top: 11px;">Job Assign Search</h3>
-
-
 							</div>
 							<div class="col-md-12">
 								<div class="widget-area">
-									<form role="form" class="sec" action="jobAssignSearchByDate"
+									<form role="form" class="sec" action="jobSearchAll"
 										method="post">
-
+										<div class="row">
+											<div class="col-md-12">
+												<button class="btn green pull-right" type="submit"
+													style="margin-right: 63px;">Show All</button>
+											</div>
+										</div>
+									</form>
+									<form role="form" class="sec" action="jobAssignSearchByDate"
+										method="post" id="jobSearchByDateId">
 										<div class="row">
 											<div class="col-md-5">
 												<div class="form-group">
 													<label for="">Search between two dates : (Start
-														Date)</label> <input type="text" placeholder="Enter First Date"
+														Date)<font color="red" size="4">*</font></label> <input type="text" placeholder="Enter First Date"
 														id="datepicker" class="form-control" name="fDate"
-														id="fDate" autocomplete="off">
+														 autocomplete="off" onchange="dateSet();">
 												</div>
 											</div>
-
 											<div class="col-md-5">
 												<div class="form-group">
-													<label for="">(End Date)</label> <input type="text"
+													<label for="">(End Date)<font color="red" size="4">*</font></label> <input type="text"
 														placeholder="Enter last date" id="datepicker1"
-														class="form-control" name="lDate" id="lDate"
-														autocomplete="off">
+														onchange="checkDate();" class="form-control" name="lDate"
+														 autocomplete="off">
+												</div>
+											</div>
+											<div class="col-md-2">
+												<button class="btn green pull-left"
+													style="margin-top: 25px;"type="button" onclick="jobSearchByDateSubmit();">Search</button>
+											</div>
+										</div>
+									</form>
+									<!-- <form role="form" class="sec" action="jobSearchByJobChallanNo"
+										method="post">
+										<div class="row">
+											<div class="col-md-10">
+												<div class="form-group">
+													<label for="" style="float: left;">Job challan no.
+														:</label> <input type="" placeholder="Enter Job challan Number"
+														id="jobChallanNo" name="jobChallanNo" class="form-control">
 												</div>
 											</div>
 											<div class="col-md-2">
@@ -103,7 +124,7 @@
 													style="margin-top: 25px;" type="submit">Search</button>
 											</div>
 										</div>
-									</form>
+									</form> -->
 									<form role="form" class="sec" action="jobSearchByJobChallanNo"
 										method="post">
 										<div class="row">
@@ -171,7 +192,7 @@
 												<div class="form-group">
 													<label for="" style="float: left;">Designer Number
 														:</label> <input type="" placeholder="Enter Designer Number"
-														id="prodCode" name="prodCode" class="form-control">
+														id="prodCode" name="prodCode" class="form-control" autocomplete="off">
 												</div>
 											</div>
 											<div class="col-md-2">
@@ -201,21 +222,15 @@
 									<h3 align="center" style="color: #6a94ff;">${requestScope['msg']}</h3>
 									<br>
 									<table class="table table-fixedheader">
-										<thead></thead>
-										<thead>
-											<tr>
-												<th width="100%"
-													style="text-align: center; font-size: 20px;">All jobs</th>
-											</tr>
-										</thead>
 										<thead>
 											<tr>
 												<th width="5%">#</th>
 												<th width="20%">Job Assigned No.</th>
 												<th width="15%">Assigned Date</th>
-												<th width="20%">Jobber Name</th>
+												<th width="15%">Jobber Name</th>
 												<th width="15%">Number of Items</th>
-												<th width="15%">Quantity</th>
+												<th width="10%">Quantity</th>
+												<th width="10%">Status</th>
 											</tr>
 										</thead>
 										<tbody style="height: 300px;">
@@ -228,14 +243,15 @@
 													<td width="20%">${jobAssignByDate.challanNumber}</td>
 													<td width="15%"><fmt:formatDate
 															value="${jobAssignByDate.assignDate}" pattern="dd-MM-yy" /></td>
-													<td width="20%">${jobAssignByDate.vendor.name}</td>
+													<td width="15%">${jobAssignByDate.vendor.name}</td>
 													<td width="15%">${jobAssignByDate.jobAssignmentProducts.size()}</td>
 													<c:set value="${0}" var="totqty" />
 													<c:forEach items="${jobAssignByDate.jobAssignmentProducts}"
 														var="proDet">
 														<c:set value="${totqty+proDet.qty}" var="totqty" />
 													</c:forEach>
-													<td width="15%">${totqty}</td>
+													<td width="10%">${totqty}</td>
+													<td width="10%">Status</td>
 													<td width="10%">
 														<form action="goJobDetailShow" method="post"
 															id="JobDetails${jobAssignByDate.id}">
@@ -248,134 +264,6 @@
 													</td>
 												</tr>
 												<c:set var="count" value="${count+1}" />
-											</c:forEach>
-										</tbody>
-									</table>
-									<br>
-									<table class="table table-fixedheader">
-										<thead></thead>
-										<thead>
-											<tr>
-												<th width="100%"
-													style="text-align: center; font-size: 20px;">Processing
-													jobs</th>
-											</tr>
-										</thead>
-										<thead>
-											<tr>
-												<th width="4%">#</th>
-												<th width="17%">Job Assigned No.</th>
-												<th width="14%">Assigned Date</th>
-												<th width="18%">Jobber Name</th>
-												<th width="12%">No. of Items</th>
-												<th width="10%">Quantity</th>
-												<th width="15%">Remaining Qty</th>
-											</tr>
-										</thead>
-										<tbody style="height: 300px;">
-											<c:set var="count" value="${1}" />
-											<c:forEach items="${requestScope['jobAssignList']}"
-												var="jobAssignByDate">
-												<c:set value="${0}" var="totREMqty" />
-												<c:forEach items="${jobAssignByDate.jobAssignmentProducts}"
-													var="proDetl">
-													<c:set value="${totREMqty+proDetl.remaninQty}"
-														var="totREMqty" />
-													<c:if test="${totREMqty>0}">
-														<tr>
-															<td width="4%">${count}</td>
-															<td width="17%">${jobAssignByDate.challanNumber}</td>
-															<td width="14%"><fmt:formatDate
-																	value="${jobAssignByDate.assignDate}"
-																	pattern="dd-MM-yy" /></td>
-															<td width="18%">${jobAssignByDate.vendor.name}</td>
-															<td width="12%">${jobAssignByDate.jobAssignmentProducts.size()}</td>
-															<c:set value="${0}" var="totqty" />
-															<c:forEach
-																items="${jobAssignByDate.jobAssignmentProducts}"
-																var="proDet">
-																<c:set value="${totqty+proDet.qty}" var="totqty" />
-															</c:forEach>
-															<td width="10%">${totqty}</td>
-															<td width="15%">${totREMqty}</td>
-															<td width="10%">
-																<form action="goJobDetailShow" method="post"
-																	id="JobDetails${jobAssignByDate.id}">
-
-																	<a href="#"
-																		onclick="jobShowDetails('${jobAssignByDate.id}');"><input
-																		type="hidden" value="${jobAssignByDate.id}"
-																		name="joId"><img alt="" src="images/eye.png"
-																		height="25px"></a>
-																</form>
-															</td>
-														</tr>
-														<c:set var="count" value="${count+1}" />
-													</c:if>
-												</c:forEach>
-											</c:forEach>
-										</tbody>
-									</table>
-									<br>
-									<table class="table table-fixedheader">
-										<thead></thead>
-										<thead>
-											<tr>
-												<th width="100%"
-													style="text-align: center; font-size: 20px;">Received
-													jobs</th>
-											</tr>
-										</thead>
-										<thead>
-											<tr>
-												<th width="5%">#</th>
-												<th width="20%">Job Assigned No.</th>
-												<th width="15%">Assigned Date</th>
-												<th width="20%">Jobber Name</th>
-												<th width="15%">Number of Items</th>
-												<th width="15%">Quantity</th>
-											</tr>
-										</thead>
-										<tbody style="height: 300px;">
-											<c:set var="count" value="${1}" />
-											<c:forEach items="${requestScope['jobAssignList']}"
-												var="jobAssignByDate">
-												<c:set value="${0}" var="totREMqty" />
-												<c:forEach items="${jobAssignByDate.jobAssignmentProducts}"
-													var="proDetl">
-													<c:set value="${totREMqty+proDetl.remaninQty}"
-														var="totREMqty" />
-													<c:if test="${totREMqty==0}">
-														<tr>
-															<td width="5%">${count}</td>
-															<td width="20%">${jobAssignByDate.challanNumber}</td>
-															<td width="15%"><fmt:formatDate
-																	value="${jobAssignByDate.assignDate}"
-																	pattern="dd-MM-yy" /></td>
-															<td width="20%">${jobAssignByDate.vendor.name}</td>
-															<td width="15%">${jobAssignByDate.jobAssignmentProducts.size()}</td>
-															<c:set value="${0}" var="totqty" />
-															<c:forEach
-																items="${jobAssignByDate.jobAssignmentProducts}"
-																var="proDet">
-																<c:set value="${totqty+proDet.qty}" var="totqty" />
-															</c:forEach>
-															<td width="15%">${totqty}</td>
-															<td width="10%">
-																<form action="goJobDetailShow" method="post"
-																	id="JobDetails${jobAssignByDate.id}">
-
-																	<a href="#"
-																		onclick="jobShowDetails('${jobAssignByDate.id}');"><input
-																		type="hidden" value="${jobAssignByDate.id}"
-																		name="joId"><img alt="" src="images/eye.png"
-																		height="25px"></a>
-																</form>
-															</td>
-														</tr>
-														<c:set var="count" value="${count+1}" />
-													</c:if>
-												</c:forEach>
 											</c:forEach>
 										</tbody>
 									</table>
@@ -418,13 +306,29 @@
 				dateFormat : "dd-mm-yy"
 			});
 		});
+		function dateSet() {
+			var dt = $("#datepicker").datepicker('getDate');
+			var dt1 = $("#datepicker1").datepicker('getDate');
+			if ($("#datepicker1").val() != "" && dt >= dt1) {
+				alert("Start date must be before than end date...");
+				$("#datepicker").val("");
+			}
+		}
+		function checkDate() {
+			var d = $("#datepicker").datepicker('getDate');
+			var d1 = $("#datepicker1").datepicker('getDate');
+			if ($("#datepicker").val() != "" && d >= d1) {
+				alert("End date must be later than start date...");
+				$("#datepicker1").val("");
+			}
+		}
 	</script>
 	<script type="text/javascript">
 		function jobShowDetails(id) {
 			//alert(id);
 			$("#JobDetails" + id).submit();
 		}
-
+		
 		$(function() {
 			$("#prodCode").autocomplete({
 				source : function(req, resp) {
@@ -461,7 +365,7 @@
 				select : function(event, ui) {
 					if (ui.item == null) {
 						$(this).val("");
-						$("#prodCode").val("");
+						$("#prodCode").val("");						
 					} else {
 						$("#prodCode").val(ui.item.code);
 					}
@@ -469,51 +373,14 @@
 				}
 			});
 		});
-
-		$(function() {
-			$("#jobberName").autocomplete({
-				source : function(req, resp) {
-					$.ajax({
-						type : "post",
-						url : "getVendorsByVendorTypeJobberAndName",
-						data : {
-							name : req.term
-						},
-						dataType : "json",
-						success : function(data) {
-							resp($.map(data, function(item) {
-								return ({
-									value : item.name,
-									id : item.id
-								});
-							}));
-						},
-
-						error : function(a, b, c) {
-							alert(a + b + c);
-						}
-
-					});
-				},
-				/* change : function(event, ui) {
-					if (ui.item == null) {
-						$(this).val("");
-						$("#jobberName").val("");
-					} else {
-						$("#jobberName").val(ui.item.name);
-					}
-				}, */
-				select : function(event, ui) {
-					if (ui.item == null) {
-						$(this).val("");
-						$("#jobberName").val("");
-					} else {
-						$("#jobberName").val(ui.item.name);
-					}
-
-				}
-			});
-		});
+		
+		function jobSearchByDateSubmit() {
+			if ($("#datepicker").val() == "" || $("#datepicker1").val() == "") {
+				alert("Please enter start date and end date");
+			} else {
+				$("#jobSearchByDateId").submit();
+			}
+		}
 	</script>
 </body>
 

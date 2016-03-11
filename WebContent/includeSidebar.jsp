@@ -53,7 +53,7 @@
 							title="">Search Purchase Entry</a></li>
 						<li><a id="sPurchReturn" href="purchaseReturn.jsp" title="">Purchase
 								Return</a></li>
-					<!-- <li><a id="sPurchPOgive" href="purchasingPurchaseOrderGive.jsp" title="">Purchase
+						<!-- <li><a id="sPurchPOgive" href="purchasingPurchaseOrderGive.jsp" title="">Purchase
 								Order</a></li>
 						<li><a id="sPurchPOtake" href="purchasingPurchaseOrderRecive.jsp" title="">Purchase
 								Order Receive</a></li> -->
@@ -75,7 +75,7 @@
 						<li><a id="sSalesSearch" href="salesSearch.jsp" title="">Sales
 								Search</a></li>
 
-					<!--  <li><a id="sSalesDiscount" href="salesDiscount.jsp" title="">Discount</a></li> -->
+						<!--  <li><a id="sSalesDiscount" href="salesDiscount.jsp" title="">Discount</a></li> -->
 
 					</ul>
 				</div>
@@ -87,7 +87,7 @@
 				</h2>
 				<div class="sub-menu">
 					<ul>
-						<li><a id="vVendor" href="purchasingVendor.jsp" title="">Vendor/Agent/Jobber</a></li>
+						<li><a id="vVendor" href="purchasingVendor.jsp" title="">Vendor/Agent/Jobber/Designer</a></li>
 					</ul>
 				</div>
 			</div>
@@ -107,8 +107,6 @@
 
 
 			<div class="single-menu">
-
-
 				<h2 id="jobs">
 					<a title=""><span>Jobs Module</span></a>
 				</h2>
@@ -119,8 +117,13 @@
 						<li><a id="jSearch" href="jobAssignSearch.jsp" title="">Job
 								Assignment Search</a></li>
 						<li><a id="jR" href="jobReceive.jsp" title="">Job Receive</a></li>
-						<li><a id="designCostSheet" href="designCostSheet.jsp"
+						<li><a id="designCostSheet" href="jobDesignCostSheet.jsp"
 							title="">Sample Job CostSheet</a></li>
+						<li><a id="designCostSheetSearch"
+							href="jobDesignCostSheetSearch.jsp" title="">SampleJobCostSheet
+								Search</a></li>
+						<!-- <li><a id="jobPlan" href="jobPlanSearch.jsp" title="">Job
+								Plan Search</a></li> -->
 					</ul>
 				</div>
 			</div>

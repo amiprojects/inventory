@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -28,6 +29,7 @@ public class Vendor implements Serializable {
 	private String companyName;
 	private String ph1;
 	private String ph2;
+	@Column(length = 800)
 	private String address;
 	private String pinCode;
 	private String email;

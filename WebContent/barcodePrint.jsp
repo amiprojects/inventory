@@ -39,12 +39,13 @@ page[size="A4"] {
 <c:set value="${param.ip}" var="ip"/>
 </c:otherwise>
 </c:choose>
+<c:set value="${sessionScope['ejb'].getCompanyInfo()}"
+		var="companyInfo" />
 <c:set value="${sessionScope['ejb'].getPurchaseEntryById(param.id)}" var="purentry"/>
 	<c:forEach items="${purentry.purchase_Product_Details}" var="purProDet">
 	<c:forEach begin="1" end="${purProDet.quantity}">	
 			<page size="A4">			
-				<center style="padding-top: 12px;"><span style="font-weight: bold; font-size: 9px">Kaanish
-					Kouture</span><br> <span style="font-size: 9px">Pcode:${purProDet.productDetail.code}</span><br>
+				<center style="padding-top: 12px;"><span style="font-weight: bold; font-size: 9px">${companyInfo.compname}</span><br> <span style="font-size: 9px">Pcode:${purProDet.productDetail.code}</span><br>
 				<span style="font-size: 9px">MRP:${purProDet.mrp}</span><br> <img
 					src="http://${ip}:${param.port}/barbecue/BarcodeServlet?data=${purProDet.id}/${purProDet.lotNumber}/${purProDet.productDetail.code}&drawText=true&width=2&height=30"
 					width="110" /><br>

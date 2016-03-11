@@ -65,8 +65,8 @@ import com.kaanish.util.DepartmentCotractor;
 		"/getPurchaseProductDetailsByProductCode", "/getJobsForDesignCostSheetByProductSForSampleId",
 		"/getProductImagejson", "/getPlannedSampleDesignCostSheetByDesignNumber", "/getAllOngoingJobPlanByDesignNumber",
 		"/getProductAndDesignDetailsAndJobPlanByJobPlanId", "/getJobsForDesignCostSheetByPlanId",
-		"/getOngoingJobAssignmentsByPlanId", "/getJonsonDateFinancial", "/updatePurchaseEntry",
-		"/updatePurchaseproduct"})
+		"/getOngoingJobAssignmentsByPlanId", "/getJonsonDateFinancial", "/getVendorsByVendorTypeDesignerAndName",
+		"/getDesignImageBySampleJobId", "/getPlanNumbersById", "/updatePurchaseEntry", "/updatePurchaseproduct" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -77,7 +77,7 @@ public class JsonServlet extends HttpServlet {
 	private String name;
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, NullPointerException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String url = req.getRequestURL().toString();
 		url = url.substring(url.lastIndexOf('/') + 1);
 		resp.setContentType("application/json");
@@ -165,17 +165,22 @@ public class JsonServlet extends HttpServlet {
 				resp.getWriter().print(ejb.getVendorTypeById(Integer.parseInt(req.getParameter("id"))));
 				break;
 
+			case "getPlanNumbersById":
+				resp.getWriter().print(ejb.getJobPlanById(Integer.parseInt(req.getParameter("id"))));
+				break;
+
 			case "getVendorsByVendorTypeJobberAndName":
 				resp.getWriter().print(ejb.getVendorsByVendorTypeJobberAndName(req.getParameter("name")));
+				break;
+			case "getVendorsByVendorTypeDesignerAndName":
+				resp.getWriter().print(ejb.getVendorsByVendorTypeDesignerAndName(req.getParameter("name")));
 				break;
 			case "getVendorsByVendorTypeVendorAndName":
 				resp.getWriter().print(ejb.getVendorsByVendorTypeVendorAndName(req.getParameter("name")));
 				break;
-
 			case "getVendorsByVendorTypePurchaseAgentAndName":
 				resp.getWriter().print(ejb.getVendorsByVendorTypePurchaseAgentAndName(req.getParameter("name")));
 				break;
-
 			case "getVendorsByVendorTypeSalesAgentAndName":
 				resp.getWriter().print(ejb.getVendorsByVendorTypeSalesAgentAndName(req.getParameter("name")));
 				break;
@@ -542,6 +547,9 @@ public class JsonServlet extends HttpServlet {
 			case "getProductImageByProductid":
 				resp.getWriter().print(ejb.getAllProductImageByProductId(Integer.parseInt(req.getParameter("id"))));
 				break;
+			case "getDesignImageBySampleJobId":
+				resp.getWriter().print(ejb.getAllDesignImageBySampleJobId(Integer.parseInt(req.getParameter("id"))));
+				break;
 			case "getStateByCityName":
 				resp.getWriter().print(ejb.getStateByCityName(req.getParameter("nm")));
 				break;
@@ -575,6 +583,7 @@ public class JsonServlet extends HttpServlet {
 				resp.setContentType("application/json");
 				JsonGeneratorFactory jsg = Json.createGeneratorFactory(null);
 				JsonGenerator gen2 = jsg.createGenerator(resp.getOutputStream());
+				httpSession = req.getSession();
 
 				Vendor vendor = new Vendor();
 
@@ -608,7 +617,6 @@ public class JsonServlet extends HttpServlet {
 					} else {
 						vendor.setAliseName("NA");
 					}
-
 					vendor.setCity(ejb.getCityById(Integer.parseInt(req.getParameter("vendorCityId"))));
 
 					if (!req.getParameter("vendorCompanyName").equals("")) {
@@ -731,7 +739,6 @@ public class JsonServlet extends HttpServlet {
 					} else {
 						vendor2.setAliseName("NA");
 					}
-
 					vendor2.setCity(ejb.getCityById(Integer.parseInt(req.getParameter("vendorCityId2"))));
 
 					if (!req.getParameter("vendorCompanyName2").equals("")) {
@@ -1151,24 +1158,23 @@ public class JsonServlet extends HttpServlet {
 					if (!(purchase_Entry.getVendor().getVoucherAssign().getVoucherDetails().size() > 0)) {
 						vd.setTotalCreditNote(Float.parseFloat(req.getParameter("gt")));
 					} else {
-						float totalCreditNote = ejb.getVoucherDetailsByVendorId(purchase_Entry.getVendor().getId()).get(
-								ejb.getVoucherDetailsByVendorId(purchase_Entry.getVendor().getId()).size() - 1)
+						float totalCreditNote = ejb.getVoucherDetailsByVendorId(purchase_Entry.getVendor().getId())
+								.get(ejb.getVoucherDetailsByVendorId(purchase_Entry.getVendor().getId()).size() - 1)
 								.getTotalCreditNote();
 						vd.setTotalCreditNote(vd.getValue() + totalCreditNote);
 					}
 
 					ejb.setVoucherDetails(vd);
-					
-					PaymentDetails paymentDetails=new PaymentDetails();
-					
+
+					PaymentDetails paymentDetails = new PaymentDetails();
+
 					paymentDetails.setPaymentDate(new Date());
 					paymentDetails.setTotalAmount(Float.parseFloat(req.getParameter("gt")) - oldGT);
 					paymentDetails.setPaidAmount(Float.parseFloat(req.getParameter("gt")) - oldGT);
-					
+
 					paymentDetails.setPurchase_Entry(purchase_Entry);
-					
-					paymentDetails.setPaymentStatus(ejb
-							.getPaymentStatusByStatus("Not Paid"));
+
+					paymentDetails.setPaymentStatus(ejb.getPaymentStatusByStatus("Not Paid"));
 					ejb.setPaymentDetails(paymentDetails);
 
 					generator2.writeStartObject().write("error", false).writeEnd().close();
@@ -1184,28 +1190,30 @@ public class JsonServlet extends HttpServlet {
 				JsonGeneratorFactory factory5 = Json.createGeneratorFactory(null);
 				JsonGenerator generator5 = factory5.createGenerator(resp.getOutputStream());
 				try {
-					
-					Purchase_Product_Details ppd=ejb.getPurchaseProductDetailsById(Integer.parseInt(req.getParameter("id")));
-					float sellqty=ppd.getQuantity()-ppd.getRemaining_quantity();
-					
-					
-					if(ppd.getProductDetail().isRaw()){
-						RawMaterialsStock rms=ppd.getProductDetail().getRawMaterialsStock();						
-						rms.setRemainingQty((rms.getRemainingQty()-ppd.getQuantity())+Float.parseFloat(req.getParameter("qty")));
+
+					Purchase_Product_Details ppd = ejb
+							.getPurchaseProductDetailsById(Integer.parseInt(req.getParameter("id")));
+					float sellqty = ppd.getQuantity() - ppd.getRemaining_quantity();
+
+					if (ppd.getProductDetail().isRaw()) {
+						RawMaterialsStock rms = ppd.getProductDetail().getRawMaterialsStock();
+						rms.setRemainingQty((rms.getRemainingQty() - ppd.getQuantity())
+								+ Float.parseFloat(req.getParameter("qty")));
 						ejb.updateRawMaterialStockDetail(rms);
-					}else{
-						ReadyGoodsStock rgs=ppd.getProductDetail().getReadyGoodsStock();
-						rgs.setRemainingQty((rgs.getRemainingQty()-ppd.getQuantity())+Float.parseFloat(req.getParameter("qty")));
+					} else {
+						ReadyGoodsStock rgs = ppd.getProductDetail().getReadyGoodsStock();
+						rgs.setRemainingQty((rgs.getRemainingQty() - ppd.getQuantity())
+								+ Float.parseFloat(req.getParameter("qty")));
 						ejb.updateReadyGoodsStockDetail(rgs);
 					}
-					
-					
+
 					ppd.setQuantity(Float.parseFloat(req.getParameter("qty")));
-					ppd.setRemaining_quantity(Float.parseFloat(req.getParameter("qty"))-sellqty);
-					ppd.setCost(Float.parseFloat(req.getParameter("cost")));					
+					ppd.setRemaining_quantity(Float.parseFloat(req.getParameter("qty")) - sellqty);
+					ppd.setCost(Float.parseFloat(req.getParameter("cost")));
 					ejb.updatePurchaseProductDetails(ppd);
-					
-					generator5.writeStartObject().write("error", false).write("msg", "purchase product details updated successfully").writeEnd().close();
+
+					generator5.writeStartObject().write("error", false)
+							.write("msg", "purchase product details updated successfully").writeEnd().close();
 
 				} catch (Exception e) {
 					generator5.writeStartObject().write("error", true).write("msg", e.getMessage()).writeEnd().close();
