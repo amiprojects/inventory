@@ -223,7 +223,7 @@
 								<table class="table table-fixedheader">
 									<thead>
 										<tr>
-											<th width="5%">#</th>
+											<th width="2%">#</th>
 											<th width="19%">Purchase challan no.</th>
 											<th width="12%">Vendor Name</th>
 											<th width="11%">Agent Name</th>
@@ -231,6 +231,8 @@
 											<th width="13%">Purchase Date</th>
 											<th width="12%">Total Amount</th>
 											<th width="8%">Barcode</th>
+											<th width="4%"></th>
+											<th width="4%"></th>
 										</tr>
 									</thead>
 									<tbody style="height: 300px;">
@@ -238,7 +240,7 @@
 										<c:forEach items="${requestScope['purEntryList']}"
 											var="pEntryByD">
 											<tr>
-												<td width="5%">${count}</td>
+												<td width="2%">${count}</td>
 												<td width="19%">${pEntryByD.challanNumber}</td>
 												<c:if test="${pEntryByD.vendor.vendorType.type=='Vendor'}">
 													<td width="12%">${pEntryByD.vendor.name}</td>
@@ -266,12 +268,18 @@
 													onclick="window.open('purchaseBarcodePrint.jsp?id=${pEntryByD.id}','mywindow','width=1100,height=500')">
 														<img alt="click to view" src="Capture.PNG" height="20">
 												</a></td>
-												<td width="5%">
+												<td width="4%">
 													<form action="purchaseView" method="post"
 														id="pView${pEntryByD.id}">
 														<a href="#" onclick="purchaseViewF('${pEntryByD.id}');"><input
 															type="hidden" value="${pEntryByD.id}" name="pId"><img
 															alt="" src="images/eye.png" height="25px"></a>
+													</form>
+												</td>
+												<td width="4%">
+													<form action="purchaseEdit" method="post">
+														<input type="hidden" value="${pEntryByD.id}" name="pId">
+															<input type="image" src="img/edit.png">
 													</form>
 												</td>
 											</tr>

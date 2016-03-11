@@ -143,6 +143,11 @@ public class Purchase_Entry implements Serializable {
 		return sur_charge;
 	}
 
+	/**
+	 * it takes float type surcharge
+	 * @param sur_charge
+	 */
+	
 	public void setSur_charge(float sur_charge) {
 		this.sur_charge = sur_charge;
 	}

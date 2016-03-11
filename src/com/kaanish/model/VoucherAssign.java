@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -22,7 +23,7 @@ public class VoucherAssign implements Serializable {
 	private int id;
 	private String voucherDetailsNumber;
 
-	@OneToMany(mappedBy = "voucherAssign")
+	@OneToMany(mappedBy = "voucherAssign",cascade=CascadeType.ALL)
 	private List<VoucherDetails> voucherDetails;
 
 	@OneToOne
