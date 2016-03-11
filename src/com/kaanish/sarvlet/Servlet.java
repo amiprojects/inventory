@@ -108,7 +108,9 @@ import com.kaanish.util.DateConverter;
 		"/salesReportByAgentName", "/dayBookreport",
 		"/jobAssignmentForParticularDesignNumber", "/purchaseOrderEntry",
 		"/purchaseSearchForPORecieve", "/purchaseOrderReceive",
-		"/jobAssignmentForOngoingJobs" })
+		"/jobAssignmentForOngoingJobs", "/sampleJobSearchAll",
+		"/sampleJobSearchByDesignNo", "/sampleJobSearchByDesignerName",
+		"/sampleJobCostSheetView" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -522,80 +524,6 @@ public class Servlet extends HttpServlet {
 				msg = "Vendor type updated successfully.";
 				break;
 
-			case "updateVendor":
-				page = "purchasingVendor.jsp";
-				vendor = ejb.getVendorById(Integer.parseInt(req
-						.getParameter("vendoeId")));// vendorid
-
-				vendor.setName(req.getParameter("vendorName"));
-				vendor.setCompanyName(req.getParameter("vendorCompanyName"));
-				vendor.setPh1(req.getParameter("vendorPh1"));
-				vendor.setPh2(req.getParameter("vendorPh2"));
-				vendor.setEmail(req.getParameter("vendorMail"));
-				vendor.setAliseName(req.getParameter("vendorAlias"));
-				vendor.setAddress(req.getParameter("vendorAddress"));
-				vendor.setPinCode(req.getParameter("vendorPin"));
-				vendor.setVendorType(ejb.getVendorTypeById(Integer.parseInt(req
-						.getParameter("vendorType"))));
-				if (!req.getParameter("vendorCityId").equals("")) {
-					vendor.setCity(ejb.getCityById(Integer.parseInt(req
-							.getParameter("vendorCityId"))));
-				}
-
-				accountDetails = ejb.getAccountDetailsByVendorId(Integer
-						.parseInt(req.getParameter("vendoeId")));// vender
-																	// id
-
-				accountDetails.setVatNumber(req.getParameter("vendorVATno"));
-
-				if (!req.getParameter("vendorVATregDate").equals("")) {
-					accountDetails.setCstRegistrationDate(DateConverter
-							.getDate(req.getParameter("vendorVATregDate")));
-				}
-
-				accountDetails.setCstNumber(req.getParameter("vendorCSTno"));
-				if (!req.getParameter("vendorCSTregDate").equals("")) {
-					accountDetails.setCstRegistrationDate(DateConverter
-							.getDate(req.getParameter("vendorCSTregDate")));
-				}
-
-				accountDetails.setPanNumber(req.getParameter("vendorPANno"));
-				accountDetails.setExciseRegistrationNumber(req
-						.getParameter("vendorExciseRegNo"));
-
-				if (!req.getParameter("vendorExciseRegDate").equals("")) {
-					accountDetails.setCstRegistrationDate(DateConverter
-							.getDate(req.getParameter("vendorExciseRegDate")));
-				}
-
-				accountDetails.setServiceTaxRegistrationNumber(req
-						.getParameter("vendorServiceTaxRegNo"));
-
-				if (!req.getParameter("vendorServiceTaxRegDate").equals("")) {
-					accountDetails.setCstRegistrationDate(DateConverter
-							.getDate(req
-									.getParameter("vendorServiceTaxRegDate")));
-				}
-
-				accountDetails.setBankName(req.getParameter("bankName"));
-				accountDetails.setBankAccountNumber(req
-						.getParameter("bankAccNo"));
-				accountDetails.setBranch(req.getParameter("bankBranch"));
-				if (!req.getParameter("bankCity").equals("")) {
-					accountDetails.setCity(ejb.getCityById(Integer.parseInt(req
-							.getParameter("bankCity"))));
-				}
-
-				accountDetails.setBankIFSCnumber(req.getParameter("bankIFSC"));
-
-				accountDetails.setBankMICRnumber(req.getParameter("bankMICR"));
-
-				accountDetails.setBankRTGCnumber(req.getParameter("bankRTGS"));
-				ejb.updateVendor(vendor);
-				ejb.updateAccountDetails(accountDetails);
-				msg = "Vendor details updated successfully.";
-				break;
-
 			case "editproductSummary":
 				page = "MaterialPartDetailsGenerals.jsp";
 				productDetail = new ProductDetail();
@@ -970,8 +898,11 @@ public class Servlet extends HttpServlet {
 					} else {
 						vendor.setAddress("NA");
 					}
-					vendor.setAliseName(req.getParameter("vendorAlias"));
-
+					if (!req.getParameter("vendorAlias").equals("")) {
+						vendor.setAliseName(req.getParameter("vendorAlias"));
+					} else {
+						vendor.setAddress("NA");
+					}
 					vendor.setCity(ejb.getCityById(Integer.parseInt(req
 							.getParameter("vendorCityId"))));
 
@@ -999,11 +930,6 @@ public class Servlet extends HttpServlet {
 					} else {
 						vendor.setPinCode("NA");
 					}
-					vendor.setVendorType(ejb.getVendorTypeById(Integer
-							.parseInt(req.getParameter("vendorType"))));
-					vendor.setUsers(ejb.getUserById((String) httpSession
-							.getAttribute("user")));
-
 					vendor.setVendorType(ejb.getVendorTypeById(Integer
 							.parseInt(req.getParameter("vendorType"))));
 					vendor.setUsers(ejb.getUserById((String) httpSession
@@ -1072,12 +998,91 @@ public class Servlet extends HttpServlet {
 					ejb.setVendor(vendor);
 					ejb.setAccountDetails(accountDetails);
 
-					msg = "vendor added successfully;";
+					msg = "Added successfully;";
 
 				} else {
 					msg = "Duplicate vendor Entry";
 				}
 
+				break;
+
+			case "updateVendor":
+				page = "purchasingVendor.jsp";
+				vendor = ejb.getVendorById(Integer.parseInt(req
+						.getParameter("vendoeId")));// vendorid
+
+				vendor.setName(req.getParameter("vendorName"));
+				vendor.setCompanyName(req.getParameter("vendorCompanyName"));
+				vendor.setPh1(req.getParameter("vendorPh1"));
+				vendor.setPh2(req.getParameter("vendorPh2"));
+				vendor.setEmail(req.getParameter("vendorMail"));
+				vendor.setAliseName(req.getParameter("vendorAlias"));
+				vendor.setAddress(req.getParameter("vendorAddress"));
+				vendor.setPinCode(req.getParameter("vendorPin"));
+				vendor.setVendorType(ejb.getVendorTypeById(Integer.parseInt(req
+						.getParameter("vendorType"))));
+				if (!req.getParameter("vendorCityId").equals("")) {
+					vendor.setCity(ejb.getCityById(Integer.parseInt(req
+							.getParameter("vendorCityId"))));
+				}
+
+				accountDetails = ejb.getAccountDetailsByVendorId(Integer
+						.parseInt(req.getParameter("vendoeId")));// vender
+																	// id
+
+				accountDetails.setVatNumber(req.getParameter("vendorVATno"));
+
+				if (!req.getParameter("vendorVATregDate").equals("")) {
+					accountDetails.setCstRegistrationDate(DateConverter
+							.getDate(req.getParameter("vendorVATregDate")));
+				}
+
+				accountDetails.setCstNumber(req.getParameter("vendorCSTno"));
+				if (!req.getParameter("vendorCSTregDate").equals("")) {
+					accountDetails.setCstRegistrationDate(DateConverter
+							.getDate(req.getParameter("vendorCSTregDate")));
+				}
+
+				accountDetails.setPanNumber(req.getParameter("vendorPANno"));
+				accountDetails.setExciseRegistrationNumber(req
+						.getParameter("vendorExciseRegNo"));
+
+				if (!req.getParameter("vendorExciseRegDate").equals("")) {
+					accountDetails.setCstRegistrationDate(DateConverter
+							.getDate(req.getParameter("vendorExciseRegDate")));
+				}
+
+				accountDetails.setServiceTaxRegistrationNumber(req
+						.getParameter("vendorServiceTaxRegNo"));
+
+				if (!req.getParameter("vendorServiceTaxRegDate").equals("")) {
+					accountDetails.setCstRegistrationDate(DateConverter
+							.getDate(req
+									.getParameter("vendorServiceTaxRegDate")));
+				}
+
+				accountDetails.setBankName(req.getParameter("bankName"));
+				accountDetails.setBankAccountNumber(req
+						.getParameter("bankAccNo"));
+				accountDetails.setBranch(req.getParameter("bankBranch"));
+				if (!req.getParameter("bankCity").equals("")) {
+					accountDetails.setCity(ejb.getCityById(Integer.parseInt(req
+							.getParameter("bankCity"))));
+				}
+				if (!req.getParameter("taxTypeGroupId").equals("0")) {
+					accountDetails.setTax_Type_Group(ejb
+							.getTax_Type_GroupById(Integer.parseInt(req
+									.getParameter("taxTypeGroupId"))));
+				}
+
+				accountDetails.setBankIFSCnumber(req.getParameter("bankIFSC"));
+
+				accountDetails.setBankMICRnumber(req.getParameter("bankMICR"));
+
+				accountDetails.setBankRTGCnumber(req.getParameter("bankRTGS"));
+				ejb.updateVendor(vendor);
+				ejb.updateAccountDetails(accountDetails);
+				msg = "Updated successfully.";
 				break;
 
 			case "purchaseEntry":
@@ -2266,6 +2271,61 @@ public class Servlet extends HttpServlet {
 				}
 				break;
 
+			case "sampleJobSearchAll":
+				page = "jobDesignCostSheetSearch.jsp";
+				List<SampleDesignCostSheet> sampleDesignCostSheetListA = ejb
+						.getAllSampleDesignCostSheet();
+				req.setAttribute("sampleDesignCostSheetList",
+						sampleDesignCostSheetListA);
+				if (sampleDesignCostSheetListA.size() > 0) {
+					msg = "All Sample Job Cost Sheet List";
+				} else {
+					msg = "No result found...";
+				}
+				break;
+
+			case "sampleJobSearchByDesignNo":
+				page = "jobDesignCostSheetSearch.jsp";
+				List<SampleDesignCostSheet> sampleDesignCostSheetListD = ejb
+						.getSampleDesignCostSheetByDesignNumber(req
+								.getParameter("designNo"));
+				req.setAttribute("sampleDesignCostSheetList",
+						sampleDesignCostSheetListD);
+				if (sampleDesignCostSheetListD.size() > 0) {
+					msg = "Your search for Design no. : "
+							+ req.getParameter("designNo").toUpperCase();
+				} else {
+					msg = "No result found for Design no. : "
+							+ req.getParameter("designNo").toUpperCase();
+				}
+				break;
+
+			case "sampleJobSearchByDesignerName":
+				page = "jobDesignCostSheetSearch.jsp";
+				List<SampleDesignCostSheet> sampleDesignCostSheetListDR = ejb
+						.getSampleDesignCostSheetByDesignerName(req
+								.getParameter("designerName"));
+				req.setAttribute("sampleDesignCostSheetList",
+						sampleDesignCostSheetListDR);
+				if (sampleDesignCostSheetListDR.size() > 0) {
+					msg = "Your search for Designer name : "
+							+ req.getParameter("designerName").toUpperCase();
+				} else {
+					msg = "No result found for Designer name : "
+							+ req.getParameter("designerName").toUpperCase();
+				}
+				break;
+
+			case "sampleJobCostSheetView":
+				page = "jobDesignCostSheetSearchView.jsp";
+
+				req.setAttribute("sampleDesignCostSheetId",
+						req.getParameter("sampleDesignCostSheetId"));
+
+				msg = "";
+
+				break;
+
 			case "salesSearchByDate":
 				page = "salesSearch.jsp";
 
@@ -3042,7 +3102,7 @@ public class Servlet extends HttpServlet {
 				break;
 
 			case "sampleJobCost":
-				page = "designCostSheet.jsp";
+				page = "jobDesignCostSheet.jsp";
 
 				List<SampleDesignCostSheet> sampleDesignCostSheetLst = ejb
 						.getAllSampleDesignCostSheet();
@@ -3059,8 +3119,8 @@ public class Servlet extends HttpServlet {
 
 					sampleDesignCostSheet.setDesignDescription(req
 							.getParameter("designDescription").toUpperCase());
-					sampleDesignCostSheet.setDesignNumber(req
-							.getParameter("designNo").toUpperCase());
+					sampleDesignCostSheet.setDesignNumber(req.getParameter(
+							"designNo").toUpperCase());
 					sampleDesignCostSheet.setQty(Integer.parseInt(req
 							.getParameter("qty")));
 					sampleDesignCostSheet.setSurcharge(Float.parseFloat(req

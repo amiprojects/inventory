@@ -516,12 +516,28 @@ $(document).ready(function(){
 														</div>
 														<div class="col-md-7">
 															<select class="form-control" name="taxTypeGroupId"
-																id="taxgroup" value="${account.tax_Type_Group}">
-																<c:forEach
-																	items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
-																	var="taxTypeGroup">
-																	<option value="${taxTypeGroup.id}">${taxTypeGroup.name}</option>
-																</c:forEach>
+																id="taxgroup">
+																<c:if test="${account.tax_Type_Group!=null}">
+																	<option selected="selected"
+																		value="${account.tax_Type_Group.id}">${account.tax_Type_Group.name}</option>
+																	<c:forEach
+																		items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
+																		var="taxTypeGroup">
+																		<c:if
+																			test="${taxTypeGroup.id!=account.tax_Type_Group.id}">
+																			<option value="${taxTypeGroup.id}">${taxTypeGroup.name}</option>
+																		</c:if>
+																	</c:forEach>
+																</c:if>
+																<c:if test="${account.tax_Type_Group==null}">
+																	<option selected="selected" value="0">Select A
+																		Tax Group</option>
+																	<c:forEach
+																		items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
+																		var="taxTypeGroup">
+																		<option value="${taxTypeGroup.id}">${taxTypeGroup.name}</option>
+																	</c:forEach>
+																</c:if>
 															</select>
 														</div>
 													</div>

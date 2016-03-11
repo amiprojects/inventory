@@ -87,7 +87,7 @@
 				</h2>
 				<div class="sub-menu">
 					<ul>
-						<li><a id="vVendor" href="purchasingVendor.jsp" title="">Vendor/Agent/Jobber</a></li>
+						<li><a id="vVendor" href="purchasingVendor.jsp" title="">Vendor/Agent/Jobber/Designer</a></li>
 					</ul>
 				</div>
 			</div>

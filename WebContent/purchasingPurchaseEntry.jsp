@@ -2169,19 +2169,19 @@
 						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial;">
 
 						<div class="masonary-grids">
-							<div class="col-md-6">
+							<div class="col-md-12">
 								<div class="widget-area" align="left">
 									<h2 class="widget-title">
-										<strong>Tree</strong> List <font color="red" size="4">*</font>&nbsp; &nbsp;
+										<strong>Choose Category</strong> From Department <font color="red" size="4">*</font>&nbsp; &nbsp;
 										<!--  <a onclick="addCat()"
 											title="Add New Category"> <img style="margin-top: 4px;"
 											height="30px" width="30px" alt="" src="img/add.png">
 										</a> -->
 									</h2>
-									<p>
+									<!-- <p>
 										<a href="#" id="tree-expand-all">Expand all</a> | <a href="#"
 											id="tree-collapse-all">Collapse all</a>
-									</p>
+									</p> -->
 
 									<div class="tree-list"
 										style="overflow-y: scroll; overflow-y: scroll; height: 300px">
@@ -2202,12 +2202,31 @@
 																		items="${sessionScope['ejb'].getAllCategoryBySubDepartmentId(subDept.id)}">
 																		<li><input type="radio" name="same"
 																			onclick="catProblem('${cat.id}')" value="${cat.id}">
-																			${cat.name}
-																			<ul>
+																			${cat.name} <%-- <ul>
 																				<c:forEach var="pro"
 																					items="${sessionScope['ejb'].getAllProductDetailByCategoryId(cat.id)}">
 																					<li>${pro.description}</li>
 																				</c:forEach>
+																			</ul> --%>
+																			<ul>
+																				<c:if test="${cat.attrNmae1!=null}">
+																					<li>${cat.attrNmae1}</li>
+																				</c:if>
+																				<c:if test="${cat.attrNmae2!=null}">
+																					<li>${cat.attrNmae2}</li>
+																				</c:if>
+																				<c:if test="${cat.attrNmae3!=null}">
+																					<li>${cat.attrNmae3}</li>
+																				</c:if>
+																				<c:if test="${cat.attrNmae4!=null}">
+																					<li>${cat.attrNmae4}</li>
+																				</c:if>
+																				<c:if test="${cat.attrNmae5!=null}">
+																					<li>${cat.attrNmae5}</li>
+																				</c:if>
+																				<c:if test="${cat.attrNmae6!=null}">
+																					<li>${cat.attrNmae6}</li>
+																				</c:if>
 																			</ul></li>
 																	</c:forEach>
 																</ul>

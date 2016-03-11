@@ -181,7 +181,6 @@
 										</thead>
 										<c:set var="total" value="${total+jppL.remaninQty}" />
 										<tbody>
-
 											<c:set var="count" value="${1}" />
 											<c:forEach var="jobp"
 												items="${jobAssi.jobAssignmentProducts}">

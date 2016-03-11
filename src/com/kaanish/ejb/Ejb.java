@@ -1327,6 +1327,15 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<Vendor> getVendorsByVendorTypeDesignerAndName(String name) {
+		TypedQuery<Vendor> q = em
+				.createQuery(
+						"select c from Vendor c where c.vendorType.type='Designer' and UPPER(c.name) like :nm",
+						Vendor.class);
+		q.setParameter("nm", "%" + name.toUpperCase() + "%");
+		return q.getResultList();
+	}
+
 	public List<Vendor> getVendorsByVendorTypeVendorAndName(String name) {
 		TypedQuery<Vendor> q = em
 				.createQuery(
@@ -3293,6 +3302,16 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<SampleDesignCostSheet> getSampleDesignCostSheetByDesignerName(
+			String name) {
+		TypedQuery<SampleDesignCostSheet> q = em
+				.createQuery(
+						"select c from SampleDesignCostSheet c where c.vendor.vendorType.type='Designer' and UPPER(c.vendor.name)=:name ORDER BY c.id DESC",
+						SampleDesignCostSheet.class);
+		q.setParameter("name", name.toUpperCase());
+		return q.getResultList();
+	}
+
 	public List<SampleDesignCostSheet> getPlannedSampleDesignCostSheetByDesignNumber(
 			String dn) {
 		TypedQuery<JobPlan> q = em
@@ -3370,6 +3389,14 @@ public class Ejb {
 	public List<DesignImage> getAllDesignImage() {
 		TypedQuery<DesignImage> q = em.createQuery(
 				"select c from DesignImage c", DesignImage.class);
+		return q.getResultList();
+	}
+	
+	public List<DesignImage> getAllDesignImageBySampleJobId(int id) {
+		TypedQuery<DesignImage> q = em.createQuery(
+				"select s from DesignImage s where s.designCostSheet.id=:id",
+				DesignImage.class);
+		q.setParameter("id", id);
 		return q.getResultList();
 	}
 

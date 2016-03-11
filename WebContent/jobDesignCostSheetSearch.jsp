@@ -68,14 +68,13 @@
 				<div class="container">
 					<div class="row">
 						<div class="masonary-grids">
-
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
 								<h3 style="margin-top: 11px;">Sample Job Cost Sheet Search</h3>
 							</div>
 							<div class="col-md-12">
 								<div class="widget-area">
-									<form role="form" class="sec" action="jobSearchAll"
+									<form role="form" class="sec" action="sampleJobSearchAll"
 										method="post">
 										<div class="row">
 											<div class="col-md-12">
@@ -84,14 +83,14 @@
 											</div>
 										</div>
 									</form>
-									<form role="form" class="sec" action="jobSearchByProductCode"
-										method="post">
+									<form role="form" class="sec"
+										action="sampleJobSearchByDesignNo" method="post">
 										<div class="row">
 											<div class="col-md-10">
 												<div class="form-group">
 													<label for="" style="float: left;">Design No. :</label> <input
-														type="" placeholder="Enter Design No." id="prodCode"
-														name="prodCode" class="form-control" autocomplete="off">
+														type="" placeholder="Enter Design No." id="designNo"
+														name="designNo" class="form-control" autocomplete="off">
 												</div>
 											</div>
 											<div class="col-md-2">
@@ -100,14 +99,14 @@
 											</div>
 										</div>
 									</form>
-									<form role="form" class="sec" action="jobSearchByJobberName"
-										method="post">
+									<form role="form" class="sec"
+										action="sampleJobSearchByDesignerName" method="post">
 										<div class="row">
 											<div class="col-md-10">
 												<div class="form-group">
 													<label for="" style="float: left;">Designer Name :</label>
 													<input type="" placeholder="Enter Designer Name"
-														id="jobberName" name="jobberName" class="form-control">
+														id="designerName" name="designerName" class="form-control">
 												</div>
 											</div>
 											<div class="col-md-2">
@@ -124,53 +123,30 @@
 										<thead>
 											<tr>
 												<th width="5%">#</th>
-												<th width="20%">Job Assigned No.</th>
-												<th width="15%">Assigned Date</th>
-												<th width="15%">Jobber Name</th>
-												<th width="15%">Number of Items</th>
-												<th width="10%">Quantity</th>
-												<th width="10%">Status</th>
+												<th width="20%">Design No.</th>
+												<th width="35%">Design Description</th>
+												<th width="30%">Designer Name</th>
 											</tr>
 										</thead>
 										<tbody style="height: 300px;">
 											<c:set var="count" value="${1}" />
-											<c:forEach items="${requestScope['jobAssignList']}"
-												var="jobAssignByDate">
+											<c:forEach
+												items="${requestScope['sampleDesignCostSheetList']}"
+												var="sampleDesignCostSheet">
 
 												<tr>
 													<td width="5%">${count}</td>
-													<td width="20%">${jobAssignByDate.challanNumber}</td>
-													<td width="15%"><fmt:formatDate
-															value="${jobAssignByDate.assignDate}" pattern="dd-MM-yy" /></td>
-													<td width="15%">${jobAssignByDate.vendor.name}</td>
-													<td width="15%">${jobAssignByDate.jobAssignmentProducts.size()}</td>
-													<c:set value="${0}" var="totqty" />
-													<c:forEach items="${jobAssignByDate.jobAssignmentProducts}"
-														var="proDet">
-														<c:set value="${totqty+proDet.qty}" var="totqty" />
-													</c:forEach>
-													<td width="10%">${totqty}</td>
-													<td width="10%"><c:set value="${0}" var="totREMqty" />
-														<c:forEach
-															items="${jobAssignByDate.jobAssignmentProducts}"
-															var="proDetl">
-															<c:set value="${totREMqty+proDetl.remaninQty}"
-																var="totREMqty" />
-															<c:if test="${totREMqty==0}">
-																<c:set value="Received" var="Status" />
-															</c:if>
-															<c:if test="${totREMqty>0}">
-																<c:set value="Processing" var="Status" />
-															</c:if>
-														</c:forEach>${Status}</td>
+													<td width="20%">${sampleDesignCostSheet.designNumber.toUpperCase()}</td>
+													<td width="35%">${sampleDesignCostSheet.designDescription.toUpperCase()}</td>
+													<td width="30%">${sampleDesignCostSheet.vendor.name}</td>
 													<td width="10%">
-														<form action="goJobDetailShow" method="post"
-															id="JobDetails${jobAssignByDate.id}">
-
+														<form action="sampleJobCostSheetView" method="post"
+															id="JobDetails${sampleDesignCostSheet.id}">
 															<a href="#"
-																onclick="jobShowDetails('${jobAssignByDate.id}');"><input
-																type="hidden" value="${jobAssignByDate.id}" name="joId"><img
-																alt="" src="images/eye.png" height="25px"></a>
+																onclick="jobShowDetails('${sampleDesignCostSheet.id}');"><input
+																type="hidden" value="${sampleDesignCostSheet.id}"
+																name="sampleDesignCostSheetId"><img alt=""
+																src="images/eye.png" height="25px"></a>
 														</form>
 													</td>
 												</tr>
@@ -241,56 +217,43 @@
 		}
 
 		$(function() {
-			$("#prodCode").autocomplete({
+			$("#designNo").autocomplete({
 				source : function(req, resp) {
 					$.ajax({
 						type : "post",
-						url : "getProductbyProductCode",
+						url : "getSampleDesignCostSheetByDesignNumber",
 						data : {
-							code : req.term
+							dNo : req.term
 						},
 						dataType : "json",
 						success : function(data) {
 							resp($.map(data, function(item) {
 								return ({
-									value : item.code,
-									id : item.id
+									value : item.dNumber.toUpperCase(),
+									id : item.dId
 								});
 							}));
-						},
-
-						error : function(a, b, c) {
-							alert(a + b + c);
 						}
 
 					});
 				},
-				/* change : function(event, ui) {
-					if (ui.item == null) {
-						$(this).val("");
-						$("#prodCode").val("");						
-					} else {
-						$("#prodCode").val(ui.item.code);
-					}
-				}, */
 				select : function(event, ui) {
 					if (ui.item == null) {
 						$(this).val("");
-						$("#prodCode").val("");
+						$("#designNo").val("");
 					} else {
-						$("#prodCode").val(ui.item.code);
+						$("#designNo").val($(this).val());
 					}
-
 				}
 			});
 		});
 
 		$(function() {
-			$("#jobberName").autocomplete({
+			$("#designerName").autocomplete({
 				source : function(req, resp) {
 					$.ajax({
 						type : "post",
-						url : "getVendorsByVendorTypeJobberAndName",
+						url : "getVendorsByVendorTypeDesignerAndName",
 						data : {
 							name : req.term
 						},
