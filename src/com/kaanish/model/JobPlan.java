@@ -27,26 +27,26 @@ public class JobPlan implements Serializable {
 	private Date planDate;
 	private String description;
 	private float qty;
-	private float estimatedCost;//sample cost * qty
-	private float totalJobExpanse;//0
-	private float totalProductCost;//purchaseproddet->prodqty*amount
+	private float estimatedCost;// sample cost * qty
+	private float totalJobExpanse;// 0
+	private float totalProductCost;// purchaseproddet->prodqty*amount
 	private float totalExpanse;
-	private boolean isComplete;//false
+	private boolean isComplete;// false
 
 	@ManyToOne
 	@JoinColumn(name = "costSheetId")
 	private SampleDesignCostSheet designCostSheet;
-	
-	@OneToMany(mappedBy = "jobPlan",cascade=CascadeType.ALL)
+
+	@OneToMany(mappedBy = "jobPlan", cascade = CascadeType.ALL)
 	private List<JobAssignmentJobDetails> jobAssignmentJobDetails;
 
-	@OneToMany(mappedBy = "jobPlan",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "jobPlan", cascade = CascadeType.ALL)
 	private List<JobPlanProductStock> jobPlanProductStocks;
-	
-	@OneToMany(mappedBy = "jobPlan",cascade=CascadeType.ALL)
+
+	@OneToMany(mappedBy = "jobPlan", cascade = CascadeType.ALL)
 	private List<JobAssignmentProducts> jobAssignmentProducts;
-	
-	@OneToMany(mappedBy = "jobPlan",cascade=CascadeType.ALL)
+
+	@OneToMany(mappedBy = "jobPlan", cascade = CascadeType.ALL)
 	private List<JobAssignmentDetails> jobAssignmentDetails;
 
 	public int getId() {
@@ -125,25 +125,26 @@ public class JobPlan implements Serializable {
 		return jobPlanProductStocks;
 	}
 
-	public void setJobPlanProductStocks(List<JobPlanProductStock> jobPlanProductStocks) {
+	public void setJobPlanProductStocks(
+			List<JobPlanProductStock> jobPlanProductStocks) {
 		this.jobPlanProductStocks = jobPlanProductStocks;
 	}
-
-	
 
 	public List<JobAssignmentDetails> getJobAssignmentDetails() {
 		return jobAssignmentDetails;
 	}
 
-	public void setJobAssignmentDetails(List<JobAssignmentDetails> jobAssignmentDetails) {
+	public void setJobAssignmentDetails(
+			List<JobAssignmentDetails> jobAssignmentDetails) {
 		this.jobAssignmentDetails = jobAssignmentDetails;
 	}
-	
+
 	public List<JobAssignmentProducts> getJobAssignmentProducts() {
 		return jobAssignmentProducts;
 	}
 
-	public void setJobAssignmentProducts(List<JobAssignmentProducts> jobAssignmentProducts) {
+	public void setJobAssignmentProducts(
+			List<JobAssignmentProducts> jobAssignmentProducts) {
 		this.jobAssignmentProducts = jobAssignmentProducts;
 	}
 
@@ -159,8 +160,14 @@ public class JobPlan implements Serializable {
 		return jobAssignmentJobDetails;
 	}
 
-	public void setJobAssignmentJobDetails(List<JobAssignmentJobDetails> jobAssignmentJobDetails) {
+	public void setJobAssignmentJobDetails(
+			List<JobAssignmentJobDetails> jobAssignmentJobDetails) {
 		this.jobAssignmentJobDetails = jobAssignmentJobDetails;
+	}
+
+	@Override
+	public String toString() {
+		return "{\"id\":\"" + id + "\"}";
 	}
 
 }

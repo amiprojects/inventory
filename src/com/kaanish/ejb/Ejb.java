@@ -3427,12 +3427,12 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	public List<JobPlan> getAllOngoingJobPlanByDesignNumber(String dn) {
+	public List<JobPlan> getAllOngoingJobPlanByDesignNumber(int dn) {
 		TypedQuery<JobPlan> q = em
 				.createQuery(
-						"select c from JobPlan c where UPPER(c.designCostSheet.designNumber) like :dn and c.isComplete=false",
+						"select c from JobPlan c where c.designCostSheet.id =:dn and c.isComplete=false",
 						JobPlan.class);
-		q.setParameter("dn", dn.toUpperCase() + "%");
+		q.setParameter("dn", dn);
 		return q.getResultList();
 	}
 

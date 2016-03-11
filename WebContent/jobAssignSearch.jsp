@@ -457,7 +457,7 @@
 
 		});
 
-		$(function() {
+		/* $(function() {
 			$("#planNo").autocomplete({
 				source : function(req, resp) {
 					$.ajax({
@@ -492,7 +492,7 @@
 
 				}
 			});
-		});
+		}); */
 	</script>
 </body>
 

@@ -1505,8 +1505,9 @@ public class JsonServlet extends HttpServlet {
 						.getOutputStream());
 				generatorJP.writeStartArray();
 
-				for (JobPlan jp : ejb.getAllOngoingJobPlanByDesignNumber(req
-						.getParameter("dNo"))) {
+				for (JobPlan jp : ejb
+						.getAllOngoingJobPlanByDesignNumber(Integer
+								.parseInt(req.getParameter("dId")))) {
 					generatorJP.writeStartObject().write("jpId", jp.getId())
 							// .write("jpDesc", jp.getDescription())
 							.write("jpDate", jp.getPlanDate().toString())

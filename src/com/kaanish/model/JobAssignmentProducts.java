@@ -20,7 +20,6 @@ import javax.persistence.TemporalType;
 @Entity
 @Cacheable(false)
 public class JobAssignmentProducts implements Serializable {
-	// job plan product stock wise
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
@@ -61,9 +60,6 @@ public class JobAssignmentProducts implements Serializable {
 	@JoinColumn(name = "jobStockId")
 	private JobStock jobStock;//old concept
 
-	/*@ManyToOne
-	@JoinColumn(name = "jobPlanProStockId")
-	private JobPlanProductStock jobPlanProductStock;*/
 	@OneToMany(mappedBy="jobAssignmentProducts",cascade=CascadeType.ALL)
 	private List<JobPlanProductStock> jobPlanProductStock;
 	
@@ -130,14 +126,6 @@ public class JobAssignmentProducts implements Serializable {
 	public void setWorkDescription(String workDescription) {
 		this.workDescription = workDescription;
 	}
-
-	/*public JobPlanProductStock getJobPlanProductStock() {
-		return jobPlanProductStock;
-	}
-
-	public void setJobPlanProductStock(JobPlanProductStock jobPlanProductStock) {
-		this.jobPlanProductStock = jobPlanProductStock;
-	}*/
 
 	public List<JobAssignmentJobDetails> getJobAssignmentJobDetails() {
 		return jobAssignmentJobDetails;
