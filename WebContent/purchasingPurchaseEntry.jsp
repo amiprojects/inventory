@@ -276,8 +276,9 @@
 									<div class="widget-area">
 										<div class="col-md-6">
 											<div class="col-md-12">
-												&nbsp; &nbsp; &nbsp; <b class="font">Vendor Type :<font color="red" size="4">*</font></b> <select
-													class="form-control" name="vendorType" id="vendorType"
+												&nbsp; &nbsp; &nbsp; <b class="font">Vendor Type :<font
+													color="red" size="4">*</font></b> <select class="form-control"
+													name="vendorType" id="vendorType"
 													onchange="getVendorNameByType();" required="required">
 													<option value="0">Select Vendor Type</option>
 													<c:forEach
@@ -293,8 +294,9 @@
 												</select>
 											</div>
 											<div class="col-md-11">
-												&nbsp; &nbsp; &nbsp; <b class="font">Vendor Name :<font color="red" size="4">*</font></b> <input
-													type="text" class="form-control" id="vName" name="vName"
+												&nbsp; &nbsp; &nbsp; <b class="font">Vendor Name :<font
+													color="red" size="4">*</font></b> <input type="text"
+													class="form-control" id="vName" name="vName"
 													required="required" onchange="emptyVender();"
 													autocomplete="off"><input type="hidden" id="vId"
 													name="vId">
@@ -320,7 +322,8 @@
 											</div>
 											<div class="col-md-12" id="aNameDiv">
 												<div class="col-md-11">
-													<label for="" class="font">Agent Name:<font color="red" size="4">*</font></label>
+													<label for="" class="font">Agent Name:<font
+														color="red" size="4">*</font></label>
 													<!-- <input
 															type="text" class="form-control" name="agentName"
 															id="agentName"> -->
@@ -356,10 +359,10 @@
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
-												<label for="" class="font">Vendor Bill no :<font color="red" size="4">*</font></label> <input
-													type="text" placeholder="" id="vendorBillNo"
-													class="form-control" name="vendorBillNo"
-													required="required">
+												<label for="" class="font">Vendor Bill no :<font
+													color="red" size="4">*</font></label> <input type="text"
+													placeholder="" id="vendorBillNo" class="form-control"
+													name="vendorBillNo" required="required">
 											</div>
 											<div class="form-group">
 												<label for="" class="font">Purchase challan no. :</label>
@@ -387,8 +390,9 @@
 													name="challanSuffix" value="${lastSuf}">
 											</div>
 											<div class="form-group">
-												<label for="" class="font">Purchase Date :<font color="red" size="4">*</font></label> <input
-													type="text" id="datepicker" class="form-control"
+												<label for="" class="font">Purchase Date :<font
+													color="red" size="4">*</font></label> <input type="text"
+													id="datepicker" class="form-control"
 													onchange="financialyr()" name="purchaseDate"
 													required="required" readonly="readonly">
 											</div>
@@ -562,7 +566,9 @@
 																	</div>
 																	<br> <br> <br>
 																	<div class="row">
-																		<div class="col-md-5">Payment status :<font color="red" size="4">*</font></div>
+																		<div class="col-md-5">
+																			Payment status :<font color="red" size="4">*</font>
+																		</div>
 																		<div class="col-md-7">
 																			<div class="sec">
 
@@ -587,7 +593,9 @@
 																		<br> <br> <br>
 																		<div class="row">
 																			<div class="sec" id="pTypeDiv">
-																				<div class="col-md-5">Payment type :<font color="red" size="4">*</font></div>
+																				<div class="col-md-5">
+																					Payment type :<font color="red" size="4">*</font>
+																				</div>
 																				<div class="col-md-7">
 																					<select class="form-control" id="pType"
 																						name="pType" onchange="pTypeFunc()">
@@ -619,7 +627,9 @@
 																				</div>
 																			</div>
 																			<div id="pPayAmount">
-																				<div class="col-md-5">Payment Amount :<font color="red" size="4">*</font></div>
+																				<div class="col-md-5">
+																					Payment Amount :<font color="red" size="4">*</font>
+																				</div>
 																				<div class="col-md-7">
 																					<input type="text" class="form-control" value="0"
 																						id="spPaymentAmount" name="spPaymentAmount"
@@ -1472,7 +1482,9 @@
 								<div class="col-md-12">
 									<br>
 								</div>
-								<div class="col-md-5">Product Code:<font color="red" size="4">*</font></div>
+								<div class="col-md-5">
+									Product Code:<font color="red" size="4">*</font>
+								</div>
 								<div class="col-md-6">
 									<input type="text" id="pCode" name="pCode" class="form-control"
 										onchange="emptyForm();" autocomplete="off"><input
@@ -1508,42 +1520,42 @@
 							<br> <br>
 							<div class="row">
 								<div class="col-md-2">
-									<span id="attr1Name">Attribute1:</span>
+									<span id="attr1Name">Attribute1:</span><span id="starNcolon1"></span>
 								</div>
 								<div class="col-md-10">
 									<input type="text" class="form-control" name="attr1" id="attr1"
 										readonly="readonly">
 								</div>
 								<div class="col-md-2">
-									<span id="attr2Name">Attribute2:</span>
+									<span id="attr2Name">Attribute2:</span><span id="starNcolon2"></span>
 								</div>
 								<div class="col-md-10">
 									<input type="text" class="form-control" name="attr2" id="attr2"
 										readonly="readonly">
 								</div>
 								<div class="col-md-2">
-									<span id="attr3Name">Attribute3:</span>
+									<span id="attr3Name">Attribute3:</span><span id="starNcolon3"></span>
 								</div>
 								<div class="col-md-10">
 									<input type="text" class="form-control" name="attr3" id="attr3"
 										readonly="readonly">
 								</div>
 								<div class="col-md-2">
-									<span id="attr4Name">Attribute4:</span>
+									<span id="attr4Name">Attribute4:</span><span id="starNcolon4"></span>
 								</div>
 								<div class="col-md-10">
 									<input type="text" class="form-control" name="attr4" id="attr4"
 										readonly="readonly">
 								</div>
 								<div class="col-md-2">
-									<span id="attr5Name">Attribute5:</span>
+									<span id="attr5Name">Attribute5:</span><span id="starNcolon5"></span>
 								</div>
 								<div class="col-md-10">
 									<input type="text" class="form-control" name="attr5" id="attr5"
 										readonly="readonly">
 								</div>
 								<div class="col-md-2">
-									<span id="attr6Name">Attribute6:</span>
+									<span id="attr6Name">Attribute6:</span><span id="starNcolon6"></span>
 								</div>
 								<div class="col-md-10">
 									<input type="text" class="form-control" name="attr6" id="attr6"
@@ -1553,7 +1565,9 @@
 						</div>
 						<div class="widget-area" style="width: 50%;">
 							<div class="row">
-								<div class="col-md-3">Quantity:<font color="red" size="4">*</font></div>
+								<div class="col-md-3">
+									Quantity:<font color="red" size="4">*</font>
+								</div>
 								<div class="col-md-9">
 									<input type="number" class="form-control" name="qty" id="qty">
 								</div>
@@ -1562,7 +1576,9 @@
 									<input type="text" class="form-control" id="uom" name="uom"
 										readonly="readonly">
 								</div>
-								<div class="col-md-3">Rate:<font color="red" size="4">*</font></div>
+								<div class="col-md-3">
+									Rate:<font color="red" size="4">*</font>
+								</div>
 								<div class="col-md-9">
 									<input type="number" class="form-control" name="rate" id="rate"
 										required="required" onchange="rateF();">
@@ -1577,12 +1593,16 @@
 									<!-- Is salable -->
 
 								</div>
-								<div class="col-md-2"><span id="wspStar">WSP:</span></div>
+								<div class="col-md-2">
+									<span id="wspStar">WSP:</span>
+								</div>
 								<div class="col-md-10">
 									<input type="number" class="form-control" id="wsp"
 										readonly="readonly" name="wsp" onchange="wspF();">
 								</div>
-								<div class="col-md-2"><span id="mrpStar">MRP:</span></div>
+								<div class="col-md-2">
+									<span id="mrpStar">MRP:</span>
+								</div>
 								<div class="col-md-10">
 									<input type="number" class="form-control" id="mrp"
 										readonly="readonly" name="mrp" onchange="mrpF();">
@@ -1961,31 +1981,35 @@
 								<form action="#" method="get">
 									<div class="col-md-6">
 										<div>
-											<label for="exampleInputEmail1">Product Code:<font color="red" size="4">*</font></label> <input
-												type="text" name="productCode2" id="productCodeAMI"
+											<label for="exampleInputEmail1">Product Code:<font
+												color="red" size="4">*</font></label> <input type="text"
+												name="productCode2" id="productCodeAMI"
 												onkeyup="codeKeyUp();" onchange="codeChange();"
-												class="form-control" onkeypress="return blockSpecialChar(event)"><input type="hidden"
-												id="pcodeCheck">
+												class="form-control"
+												onkeypress="return blockSpecialChar(event)"><input
+												type="hidden" id="pcodeCheck">
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div>
-											<label for="exampleInputPassword1">Description:<font color="red" size="4">*</font></label> <input
-												type="text" name="description" id="descriptionAMI"
-												class="form-control"><br>
+											<label for="exampleInputPassword1">Description:<font
+												color="red" size="4">*</font></label> <input type="text"
+												name="description" id="descriptionAMI" class="form-control"><br>
 										</div>
 
 									</div>
 
 									<div class="col-md-6">
 										<label for="exampleInputEmail1">Designer's Design
-											number:<font color="red" size="4">*</font></label> <input type="text" name="universalProductCode"
+											number:<font color="red" size="4">*</font>
+										</label> <input type="text" name="universalProductCode"
 											id="universalProductCode" placeholder="" class="form-control"><br>
 									</div>
 									<div class="col-md-5">
 										<div>
 											<label for="exampleInputPassword1">Unit Of
-												Measurement:<font color="red" size="4">*</font></label> <select required name="uom" id="uomO"
+												Measurement:<font color="red" size="4">*</font>
+											</label> <select required name="uom" id="uomO"
 												onchange="uomFunction()" class="form-control"
 												style="width: 205px; height: 34px">
 												<option value="0">select an UOM</option>
@@ -2010,7 +2034,9 @@
 						<div id="bD"
 							style="position: absolute; top: 225px; right: 2px; width: 560px; height: 180px; font-family: arial;">
 
-							<h3>Products:<font color="red" size="4">*</font></h3>
+							<h3>
+								Products:<font color="red" size="4">*</font>
+							</h3>
 
 							<p style="font-size: 20px; margin-right: 342px;">
 								<input type="radio" name="isReady" id="raw" onclick=""
@@ -2093,29 +2119,32 @@
 
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="" class="font">Per Unit Cost:<font color="red" size="4">*</font></label> <input
-											name="unitCost" type="text" placeholder="" id="ucO"
-											onchange="rateF2()" class="form-control">
+										<label for="" class="font">Per Unit Cost:<font
+											color="red" size="4">*</font></label> <input name="unitCost"
+											type="text" placeholder="" id="ucO" onchange="rateF2()"
+											class="form-control">
 
 									</div>
 									<div class="form-group">
-										<label for="" class="font">Wholesale Price :<font color="red" size="4">*</font></label> <input
-											type="text" name="wsp" onchange="wspF2()" placeholder=""
-											id="wspO" class="form-control">
+										<label for="" class="font">Wholesale Price :<font
+											color="red" size="4">*</font></label> <input type="text" name="wsp"
+											onchange="wspF2()" placeholder="" id="wspO"
+											class="form-control">
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="" class="font">Quantity:<font color="red" size="4">*</font></label> <input
-											name="quantity" type="text" id="quantity"
-											onkeyup="setLimit()" class="form-control">
+										<label for="" class="font">Quantity:<font color="red"
+											size="4">*</font></label> <input name="quantity" type="text"
+											id="quantity" onkeyup="setLimit()" class="form-control">
 									</div>
 
 
 									<div class="form-group">
-										<label for="" class="font">Maximum Retail Price :<font color="red" size="4">*</font></label> <input
-											type="text" name="mrp" placeholder="" id="mrpO"
-											onchange="mrpF2()" class="form-control">
+										<label for="" class="font">Maximum Retail Price :<font
+											color="red" size="4">*</font></label> <input type="text" name="mrp"
+											placeholder="" id="mrpO" onchange="mrpF2()"
+											class="form-control">
 									</div>
 
 								</div>
@@ -2172,7 +2201,8 @@
 							<div class="col-md-12">
 								<div class="widget-area" align="left">
 									<h2 class="widget-title">
-										<strong>Choose Category</strong> From Department <font color="red" size="4">*</font>&nbsp; &nbsp;
+										<strong>Choose Category</strong> From Department <font
+											color="red" size="4">*</font>&nbsp; &nbsp;
 										<!--  <a onclick="addCat()"
 											title="Add New Category"> <img style="margin-top: 4px;"
 											height="30px" width="30px" alt="" src="img/add.png">
@@ -2260,9 +2290,9 @@
 							<div id="trackkDiv">
 								<div class="col-md-6">
 
-									<label for="exampleInputEmail1">Lot Number:<font color="red" size="4">*</font></label> <input
-										id="lotnO" type="text" name="lotNumber" required
-										class="form-control"><br>
+									<label for="exampleInputEmail1">Lot Number:<font
+										color="red" size="4">*</font></label> <input id="lotnO" type="text"
+										name="lotNumber" required class="form-control"><br>
 
 								</div>
 							</div>
@@ -2287,34 +2317,40 @@
 
 								<div class="col-md-6">
 									<div class="form-group">
-										<span id="sa1" style="font-size: 17px">Attribute 1</span> <input
+										<span id="sa1" style="font-size: 17px">Attribute 1</span><span
+											id="starNcolonsa1" style="font-size: 17px"></span> <input
 											name="a1" type="text" disabled="disabled" id="a10"
 											class="form-control">
 									</div>
 									<div class="form-group">
-										<span id="sa2" style="font-size: 17px">Attribute 2</span> <input
+										<span id="sa2" style="font-size: 17px">Attribute 2</span><span
+											id="starNcolonsa2" style="font-size: 17px"></span> <input
 											name="a2" type="text" disabled="disabled" id="a20"
 											class="form-control">
 									</div>
 									<div class="form-group">
-										<span id="sa3" style="font-size: 17px">Attribute 3</span> <input
+										<span id="sa3" style="font-size: 17px">Attribute 3</span><span
+											id="starNcolonsa3" style="font-size: 17px"></span> <input
 											name="a3" type="text" id="a30" disabled="disabled"
 											class="form-control">
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
-										<span id="sa4" style="font-size: 17px">Attribute 4</span> <input
+										<span id="sa4" style="font-size: 17px">Attribute 4</span><span
+											id="starNcolonsa4" style="font-size: 17px"></span> <input
 											name="a4" type="text" disabled="disabled" id="a40"
 											class="form-control">
 									</div>
 									<div class="form-group">
-										<span id="sa5" style="font-size: 17px">Attribute 5</span> <input
+										<span id="sa5" style="font-size: 17px">Attribute 5</span><span
+											id="starNcolonsa5" style="font-size: 17px"></span> <input
 											name="a5" type="text" disabled="disabled" id="a50"
 											class="form-control">
 									</div>
 									<div class="form-group">
-										<span id="sa6" style="font-size: 17px">Attribute 6</span> <input
+										<span id="sa6" style="font-size: 17px">Attribute 6</span><span
+											id="starNcolonsa6" style="font-size: 17px"></span> <input
 											name="a6" type="text" disabled="disabled" id="a60"
 											class="form-control">
 									</div>
@@ -2635,14 +2671,18 @@
 
 						</div>
 						<div class="row">
-							<div class="col-md-3">Abbreviation :<font color="red" size="4">*</font></div>
+							<div class="col-md-3">
+								Abbreviation :<font color="red" size="4">*</font>
+							</div>
 							<div class="col-md-9">
 								<input type="text" required name="abbreviationuom"
 									id="abbreviationuom" class="form-control">
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-md-3">Name UOM :<font color="red" size="4">*</font></div>
+							<div class="col-md-3">
+								Name UOM :<font color="red" size="4">*</font>
+							</div>
 							<div class="col-md-9">
 								<input type="text" id="nameuom" required name="nameuom"
 									class="form-control">
@@ -2680,7 +2720,7 @@
 		function addDesineNo() {
 
 			$("#addDesineN").modal('show');
-			
+
 			//adding
 			$("#step1").show();
 			$("#step2").hide();
@@ -2689,7 +2729,7 @@
 			$("#step5").hide();
 			$("#step6").hide();
 			$("#step7").hide();
-			
+
 			prevF();
 			prevF();
 			prevF();
@@ -2698,11 +2738,11 @@
 			prevF();
 			prevF();
 			prevF();
-			
+
 			$("#menu1")
-						.attr(
-								"style",
-								"color: red; font-weight: bolder; background-color: #A3DEDE; box-shadow: 1px 1px 1px 1px #507B8A");
+					.attr(
+							"style",
+							"color: red; font-weight: bolder; background-color: #A3DEDE; box-shadow: 1px 1px 1px 1px #507B8A");
 			$("#menu2").attr("style", "");
 			$("#menu3").attr("style", "");
 			$("#menu4").attr("style", "");
@@ -2712,11 +2752,11 @@
 		}
 	</script>
 	<script type="text/javascript">
-        function blockSpecialChar(e) {
-            var k = e.keyCode;
-            return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || (k >= 48 && k <= 57));
-        }
-    </script>
+		function blockSpecialChar(e) {
+			var k = e.keyCode;
+			return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || (k >= 48 && k <= 57));
+		}
+	</script>
 	<script type="text/javascript">
 		function readURL(input) {
 			if (input.files && input.files[0]) {
@@ -2764,55 +2804,59 @@
 
 	<script type="text/javascript">
 		function submitform11() {
-			
+
 			if ($("#abbreviationuom").val() == "") {
 				alert("please enter UOM Abbreviation.");
-			}else if($("#nameuom").val() == ""){
+			} else if ($("#nameuom").val() == "") {
 				alert("please enter UOM name.");
-			}
-			else {
+			} else {
 
-			var dataa2 = {
-				descriptionuom : $("#descriptionuom").val(),
-				nameuom : $("#nameuom").val(),
-				abbreviationuom : $("#abbreviationuom").val(),
-				qtyUnitTypeIduom : $("#qtyUnitTypeIduom").val()
+				var dataa2 = {
+					descriptionuom : $("#descriptionuom").val(),
+					nameuom : $("#nameuom").val(),
+					abbreviationuom : $("#abbreviationuom").val(),
+					qtyUnitTypeIduom : $("#qtyUnitTypeIduom").val()
 
-			};
-			$
-					.ajax({
-						url : "addUOMjson",
-						dataType : "json",
-						data : dataa2,
-						type : "post",
-						success : function(data2) {
-							alert(data2.result);
-							$("#addUoM").modal('hide');
-						},
-						complete : function() {
-							$
-									.ajax({
-										url : "getuomByType",
-										data : {
-											id : $("#qtyUnitTypeIduom").val()
-										},
-										dataType : "json",
-										success : function(data) {
-											$("#uomO").empty();
-											$("#uomO")
-													.append(
-															'<option value="0">select an UOM</option>');
-											$.map(data, function(item) {
-												$("#uomO").append(
-														'<option value="'+item.id+'">'
-																+ item.name
-																+ '</option>');
-											});
-										}
-									});
-						}
+				};
+				$
+						.ajax({
+							url : "addUOMjson",
+							dataType : "json",
+							data : dataa2,
+							type : "post",
+							success : function(data2) {
+								alert(data2.result);
+								$("#addUoM").modal('hide');
+							},
+							complete : function() {
+								$
+										.ajax({
+											url : "getuomByType",
+											data : {
+												id : $("#qtyUnitTypeIduom")
+														.val()
+											},
+											dataType : "json",
+											success : function(data) {
+												$("#uomO").empty();
+												$("#uomO")
+														.append(
+																'<option value="0">select an UOM</option>');
+												$
+														.map(
+																data,
+																function(item) {
+																	$("#uomO")
+																			.append(
+																					'<option value="'+item.id+'">'
+																							+ item.name
+																							+ '</option>');
+																});
+											}
+										});
+							}
 
-					});
+						});
 			}
 		}
 	</script>
@@ -3084,74 +3128,94 @@
 	<script>
 		function catProblem(a) {
 			$("#catagoryId").val(a);
-			$.ajax({
-				url : 'getCategoryById',
-				type : 'post',
-				dataType : "json",
-				data : {
-					id : a
-				},
-				success : function(data) {
+			$
+					.ajax({
+						url : 'getCategoryById',
+						type : 'post',
+						dataType : "json",
+						data : {
+							id : a
+						},
+						success : function(data) {
 
-					if ((data.attrNmae1) != 'null') {
-						$("#sa1").html(data.attrNmae1+":<font color='red' size='4'>*</font>");
-						$("#summaryA1").html(data.attrNmae1);
-						$("#a10").prop("disabled", false);
-					} else {
-						$("#sa1").html("Attribute1:");
-						$("#summaryA1").html("Attribute1:");
-						$("#a10").prop("disabled", true);
-					}
-					if ((data.attrNmae2) != 'null') {
-						$("#sa2").html(data.attrNmae2+":<font color='red' size='4'>*</font>");
-						$("#summaryA2").html(data.attrNmae2);
-						$("#a20").prop("disabled", false);
-					} else {
-						$("#sa2").html("Attribute2:");
-						$("#summaryA2").html("Attribute2:");
-						$("#a20").prop("disabled", true);
-					}
-					if ((data.attrNmae3) != 'null') {
-						$("#sa3").html(data.attrNmae3+":<font color='red' size='4'>*</font>");
-						$("#summaryA3").html(data.attrNmae3);
-						$("#a30").prop("disabled", false);
-					} else {
-						$("#sa3").html("Attribute3:");
-						$("#summaryA3").html("Attribute3:");
-						$("#a30").prop("disabled", true);
-					}
-					if ((data.attrNmae4) != 'null') {
-						$("#sa4").html(data.attrNmae4+":<font color='red' size='4'>*</font>");
-						$("#summaryA4").html(data.attrNmae4);
-						$("#a40").prop("disabled", false);
-					} else {
-						$("#sa4").html("Attribute4:");
-						$("#summaryA4").html("Attribute4:");
-						$("#a40").prop("disabled", true);
-					}
-					if ((data.attrNmae5) != 'null') {
-						$("#sa5").html(data.attrNmae5+":<font color='red' size='4'>*</font>");
-						$("#summaryA5").html(data.attrNmae5);
-						$("#a50").prop("disabled", false);
-					} else {
-						$("#sa5").html("Attribute5:");
-						$("#summaryA5").html("Attribute5:");
-						$("#a50").prop("disabled", true);
-					}
-					if ((data.attrNmae6) != 'null') {
-						$("#sa6").html(data.attrNmae6+":<font color='red' size='4'>*</font>");
-						$("#summaryA6").html(data.attrNmae6);
-						$("#a60").prop("disabled", false);
-					} else {
-						$("#sa6").html("Attribute6:");
-						$("#summaryA6").html("Attribute6:");
-						$("#a60").prop("disabled", true);
-					}
-				},
-				error : function(a, b, c) {
-					alert(b + ": " + c);
-				}
-			});
+							if ((data.attrNmae1) != 'null') {
+								$("#sa1").html(data.attrNmae1);
+								$("#starNcolonsa1").html(
+										":<font color='red' size='4'>*</font>");
+								$("#summaryA1").html(data.attrNmae1);
+								$("#a10").prop("disabled", false);
+							} else {
+								$("#sa1").html("Attribute1:");
+								$("#starNcolonsa1").html("");
+								$("#summaryA1").html("Attribute1:");
+								$("#a10").prop("disabled", true);
+							}
+							if ((data.attrNmae2) != 'null') {
+								$("#sa2").html(data.attrNmae2);
+								$("#starNcolonsa2").html(
+										":<font color='red' size='4'>*</font>");
+								$("#summaryA2").html(data.attrNmae2);
+								$("#a20").prop("disabled", false);
+							} else {
+								$("#sa2").html("Attribute2:");
+								$("#starNcolonsa2").html("");
+								$("#summaryA2").html("Attribute2:");
+								$("#a20").prop("disabled", true);
+							}
+							if ((data.attrNmae3) != 'null') {
+								$("#sa3").html(data.attrNmae3);
+								$("#starNcolonsa3").html(
+										":<font color='red' size='4'>*</font>");
+								$("#summaryA3").html(data.attrNmae3);
+								$("#a30").prop("disabled", false);
+							} else {
+								$("#sa3").html("Attribute3:");
+								$("#starNcolonsa3").html("");
+								$("#summaryA3").html("Attribute3:");
+								$("#a30").prop("disabled", true);
+							}
+							if ((data.attrNmae4) != 'null') {
+								$("#sa4").html(data.attrNmae4);
+								$("#starNcolonsa4").html(
+										":<font color='red' size='4'>*</font>");
+								$("#summaryA4").html(data.attrNmae4);
+								$("#a40").prop("disabled", false);
+							} else {
+								$("#sa4").html("Attribute4:");
+								$("#starNcolonsa4").html("");
+								$("#summaryA4").html("Attribute4:");
+								$("#a40").prop("disabled", true);
+							}
+							if ((data.attrNmae5) != 'null') {
+								$("#sa5").html(data.attrNmae5);
+								$("#starNcolonsa5").html(
+										":<font color='red' size='4'>*</font>");
+								$("#summaryA5").html(data.attrNmae5);
+								$("#a50").prop("disabled", false);
+							} else {
+								$("#sa5").html("Attribute5:");
+								$("#starNcolonsa5").html("");
+								$("#summaryA5").html("Attribute5:");
+								$("#a50").prop("disabled", true);
+							}
+							if ((data.attrNmae6) != 'null') {
+								$("#sa6")
+										.html(
+												data.attrNmae6
+														+ ":<font color='red' size='4'>*</font>");
+								$("#summaryA6").html(data.attrNmae6);
+								$("#a60").prop("disabled", false);
+							} else {
+								$("#sa6").html("Attribute6:");
+								$("#starNcolonsa6").html("");
+								$("#summaryA6").html("Attribute6:");
+								$("#a60").prop("disabled", true);
+							}
+						},
+						error : function(a, b, c) {
+							alert(b + ": " + c);
+						}
+					});
 		}
 	</script>
 
@@ -3436,15 +3500,17 @@
 							$("#mrp").attr("readonly", false);
 							$("#isSalable").val('yes');
 							$('#sale').prop("checked", "checked");
-							
-							$("#wspStar").html("WSP:<font color='red' size='4'>*</font>");
-							$("#mrpStar").html("MRP:<font color='red' size='4'>*</font>");
+
+							$("#wspStar").html(
+									"WSP:<font color='red' size='4'>*</font>");
+							$("#mrpStar").html(
+									"MRP:<font color='red' size='4'>*</font>");
 						} else {
 							$("#wsp").attr("readonly", true);
 							$("#mrp").attr("readonly", true);
 							$("#isSalable").val('no');
 							$('#sale').removeProp("checked");
-							
+
 							$("#wspStar").html("WSP:");
 							$("#mrpStar").html("MRP:");
 						}
@@ -3453,45 +3519,63 @@
 						$("#pDesc").val(data.description);
 						$("#uom").val(data.qtyUnit);
 						if ((data.attrNmae1) != 'null') {
-							$("#attr1Name").html(data.attrNmae1 + ":<font color='red' size='4'>*</font>");
+							$("#attr1Name").html(data.attrNmae1);
+							$("#starNcolon1").html(
+									":<font color='red' size='4'>*</font>");
 							$("#attr1").prop("readonly", false);
 						} else {
 							$("#attr1Name").html("Attribute1:");
+							$("#starNcolon1").html("");
 							$("#attr1").prop("readonly", true);
 						}
 						if ((data.attrNmae2) != 'null') {
-							$("#attr2Name").html(data.attrNmae2 + ":<font color='red' size='4'>*</font>");
+							$("#attr2Name").html(data.attrNmae2);
+							$("#starNcolon2").html(
+									":<font color='red' size='4'>*</font>");
 							$("#attr2").prop("readonly", false);
 						} else {
 							$("#attr2Name").html("Attribute2:");
+							$("#starNcolon2").html("");
 							$("#attr2").prop("readonly", true);
 						}
 						if ((data.attrNmae3) != 'null') {
-							$("#attr3Name").html(data.attrNmae3 + ":<font color='red' size='4'>*</font>");
+							$("#attr3Name").html(data.attrNmae3);
+							$("#starNcolon3").html(
+									":<font color='red' size='4'>*</font>");
 							$("#attr3").prop("readonly", false);
 						} else {
 							$("#attr3Name").html("Attribute3:");
+							$("#starNcolon3").html("");
 							$("#attr3").prop("readonly", true);
 						}
 						if ((data.attrNmae4) != 'null') {
-							$("#attr4Name").html(data.attrNmae4 + ":<font color='red' size='4'>*</font>");
+							$("#attr4Name").html(data.attrNmae4);
+							$("#starNcolon4").html(
+									":<font color='red' size='4'>*</font>");
 							$("#attr4").prop("readonly", false);
 						} else {
 							$("#attr4Name").html("Attribute4:");
+							$("#starNcolon4").html("");
 							$("#attr4").prop("readonly", true);
 						}
 						if ((data.attrNmae5) != 'null') {
-							$("#attr5Name").html(data.attrNmae5 + ":<font color='red' size='4'>*</font>");
+							$("#attr5Name").html(data.attrNmae5);
+							$("#starNcolon5").html(
+									":<font color='red' size='4'>*</font>");
 							$("#attr5").prop("readonly", false);
 						} else {
 							$("#attr5Name").html("Attribute5:");
+							$("#starNcolon5").html("");
 							$("#attr5").prop("readonly", true);
 						}
 						if ((data.attrNmae6) != 'null') {
-							$("#attr6Name").html(data.attrNmae6 + ":<font color='red' size='4'>*</font>");
+							$("#attr6Name").html(data.attrNmae6);
+							$("#starNcolon6").html(
+									":<font color='red' size='4'>*</font>");
 							$("#attr6").prop("readonly", false);
 						} else {
 							$("#attr6Name").html("Attribute6:");
+							$("#starNcolon6").html("");
 							$("#attr6").prop("readonly", true);
 						}
 					},
@@ -4490,11 +4574,11 @@
 				alert("please select  name");
 			} else if ($("#iphone").val() == "") {
 				alert("please select Ph No1");
-			}else {
-			$("#detl").removeAttr("class");
-			$("#detail").attr("class", "tab-pane fade");
-			$("#addr").attr("class", "active");
-			$("#address").attr("class", "tab-pane fade active in");
+			} else {
+				$("#detl").removeAttr("class");
+				$("#detail").attr("class", "tab-pane fade");
+				$("#addr").attr("class", "active");
+				$("#address").attr("class", "tab-pane fade active in");
 			}
 		}
 
@@ -4508,12 +4592,11 @@
 		function addressButtonNext() {
 			if ($("#vendorCityId").val() == "") {
 				alert("please select cityname");
-			}
-			else {
-			$("#addr").removeAttr("class");
-			$("#address").attr("class", "tab-pane fade");
-			$("#vAcc").attr("class", "active");
-			$("#vendorAccount").attr("class", "tab-pane fade active in");
+			} else {
+				$("#addr").removeAttr("class");
+				$("#address").attr("class", "tab-pane fade");
+				$("#vAcc").attr("class", "active");
+				$("#vendorAccount").attr("class", "tab-pane fade active in");
 			}
 		}
 	</script>
@@ -4729,10 +4812,9 @@
 				alert("please select  name");
 			} else if ($("#iphone").val() == "") {
 				alert("please select Ph No1");
-			}else if ($("#vendorCityId").val() == "") {
+			} else if ($("#vendorCityId").val() == "") {
 				alert("please select cityname");
-			}
-			else {
+			} else {
 
 				var dataa1 = {
 					vendorName : $("#idName").val(),
