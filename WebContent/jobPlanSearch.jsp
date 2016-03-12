@@ -561,7 +561,7 @@
 			//$("#dNo").attr("readonly","readonly");
 		}
 		function selectPlan(pId, pQty) {
-			$("#planNo").val(pId);
+			$("#planNo").val(pId);			
 			$("#planNoMsg").html("Yor search for plan number : " + pId);
 			alert("plan " + pId + " selected");
 			$("#jobPlans").modal("hide");
@@ -772,11 +772,11 @@
 																			+ '</th><th>'
 																			+ "Sample Rate"
 																			+ '</th><th>'
-																			+ "Present Rate<font color='red' size='4'>*</font>"
+																			+ "Present Rate"
 																			+ '</th><th>'
 																			+ "Sample Qty"
 																			+ '</th><th>'
-																			+ "Assign Qty<font color='red' size='4'>*</font>"
+																			+ "Assign Qty"
 																			+ '</th><th>'
 																			+ "UOM"
 																			+ '</th><th>'
@@ -784,7 +784,7 @@
 																			+ '</th><th>'
 																			+ "Amount"
 																			+ '</th><th>'
-																			+ "Est. Submission Date<font color='red' size='4'>*</font>"
+																			+ "Est. Submission Date"
 																			+ '</th><th>'
 																			+ "Status"
 																			+ '</th></tr></thead></table>');
