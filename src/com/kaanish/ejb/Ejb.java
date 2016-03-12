@@ -3439,6 +3439,15 @@ public class Ejb {
 		q.setParameter("dn", dn);
 		return q.getResultList();
 	}
+	
+	public List<JobPlan> getAllJobPlanByDesignNumber(int dn) {
+		TypedQuery<JobPlan> q = em
+				.createQuery(
+						"select c from JobPlan c where c.designCostSheet.id =:dn",
+						JobPlan.class);
+		q.setParameter("dn", dn);
+		return q.getResultList();
+	}
 
 	/***************************
 	 * for JobPlanProductS

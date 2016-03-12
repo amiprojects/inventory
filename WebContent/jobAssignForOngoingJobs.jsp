@@ -251,9 +251,9 @@
 												</tr>
 												<tr>
 													<td>
-														<!-- Profit  -->
-														<select style="display: none;" name="profitType"
-														id="profitType" onchange="profitTypeF();">
+														<!-- Profit  --> <select style="display: none;"
+														name="profitType" id="profitType"
+														onchange="profitTypeF();">
 															<option value="profitPer">%</option>
 															<option value="profitFlat">Flat</option>
 													</select> <!-- : -->
@@ -663,7 +663,7 @@
 		function qtyKU(jobId) {
 			if ($("#jobQty" + jobId).val() > $("#jobRemQty" + jobId).val()) {
 				alert("Assigning qty can not be more than Remaining qty!");
-				$("#jobQty" + jobId).val("0");
+				$("#jobQty" + jobId).val($("#jobRemQty" + jobId).val());
 			} else {
 				$("#jobAmount" + jobId).val(
 						$("#jobPresentRate" + jobId).val()
@@ -1020,7 +1020,7 @@
 																			+ "<input type='hidden' class='form-control' readonly='readonly' id='productId"+item2.ProductForSampleId+"' value='"+ item2.ProductId+ "'>"
 																			+ '</td><th style="text-align: right;">'
 																			+ "Description:"
-																			+ '</th><td colspan="2">'
+																			+ '</th><td>'
 																			+ "<input type='text' class='form-control' readonly='readonly' value='"+item2.ProductDesc+"'>"
 																			+ '</td><th style="text-align: right;">'
 																			+ "Qty:"
@@ -1044,8 +1044,6 @@
 																			+ "Present Rate<font color='red' size='4'>*</font>"
 																			+ '</th><th>'
 																			+ "Sample Qty"
-																			+ '</th><th>'
-																			+ "Remaining Qty"
 																			+ '</th><th>'
 																			+ "Assign Qty<font color='red' size='4'>*</font>"
 																			+ '</th><th>'
@@ -1109,11 +1107,8 @@
 																												+ "'>"
 																												+ "</td>"
 																												+ "<td>"
-																												+ item2.JobQtyOfSample
-																														* pQty
-																												+ "</td>"
-																												+ "<td>"
-																												+ "<input type='text' class='form-control' id='jobRemQty"+item2.JobId+"' readonly='readonly' value='"+item2.RemQty+"'>"
+																												+ "<input type='text' class='form-control' id='jobRemQty"+item2.JobId+"' readonly='readonly' value='"+item2.JobQtyOfSample
+																														* pQty+"'>"
 																												+ "</td>"
 																												+ "<td>"
 																												+ "<input type='text' class='form-control' id='jobQty"
@@ -1121,7 +1116,8 @@
 																												+ "' onkeyup='qtyKU("
 																												+ item2.JobId
 																												+ ");' value='"
-																												+ item2.RemQty
+																												+ item2.JobQtyOfSample
+																														* pQty
 																												+ "'>"
 																												+ "</td>"
 																												+ "<td>"

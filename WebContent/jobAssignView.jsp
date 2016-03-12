@@ -125,7 +125,7 @@
 										<div class="col-md-12">
 
 											&nbsp; &nbsp; &nbsp; <b class="font">Jobber Details :</b>
-											<textarea rows="5" cols="" id="" class="form-control"
+											<textarea rows="9" cols="" id="" class="form-control"
 												readonly="readonly">
 													Address: ${jobAssi.vendor.address}
 													Phone Number:${jobAssi.vendor.ph1}
@@ -138,23 +138,24 @@
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
+											<label for="" class="font">Design No. :</label> <input
+												readonly="readonly" type="text"
+												value="${jobAssi.jobPlan.designCostSheet.designNumber}"
+												name="" id="" class="form-control">
+										</div>
+										<div class="form-group">
 											<label for="" class="font">Job Plan No. :</label> <input
 												readonly="readonly" type="text"
 												value="${jobAssi.jobPlan.id}" name="" id=""
 												class="form-control">
-
-
 										</div>
 										<div class="form-group">
 											<label for="" class="font">Job Challan no :</label> <input
 												readonly="readonly" type="text"
 												value="${jobAssi.challanNumber}" name="" id=""
 												class="form-control">
-
-
 										</div>
 										<div class="form-group">
-
 											<label for="" class="font">Asigned Date :</label> <input
 												readonly="readonly" type="text" placeholder=""
 												value=<fmt:formatDate
