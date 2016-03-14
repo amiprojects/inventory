@@ -413,6 +413,10 @@ public class JsonServlet extends HttpServlet {
 												.getReadyGoodsStock()
 												.getRemainingQty())
 
+								.write("DesignNo",
+										pdcs.getSampleDesignCostSheet()
+												.getDesignNumber())
+
 								.write("JobAssignmentId",
 										ejb.getJobAssignmentProductDetailsByproductAndJobPlanId(
 												pdcs.getProductDetail().getId(),
@@ -478,6 +482,10 @@ public class JsonServlet extends HttpServlet {
 												.getProductDetail()
 												.getReadyGoodsStock()
 												.getRemainingQty())
+
+								.write("DesignNo",
+										pdcs.getSampleDesignCostSheet()
+												.getDesignNumber())
 
 								.write("JobAssignmentId",
 										ejb.getOngoingJobAssignmentsByPlanId(
@@ -1542,9 +1550,12 @@ public class JsonServlet extends HttpServlet {
 						.getOutputStream());
 				generatorJP2.writeStartArray();
 				for (JobPlan jp : ejb.getAllJobPlan()) {
-					generatorJP2.writeStartObject().write("jpId", jp.getId())
+					generatorJP2
+							.writeStartObject()
+							.write("jpId", jp.getId())
 							// .write("jpDesc", jp.getDescription())
-							.write("dNo", jp.getDesignCostSheet().getDesignNumber())
+							.write("dNo",
+									jp.getDesignCostSheet().getDesignNumber())
 							.write("jpDate", jp.getPlanDate().toString())
 							.write("jpQty", jp.getQty()).writeEnd();
 				}

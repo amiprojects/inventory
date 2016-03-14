@@ -237,9 +237,9 @@
 			</div>
 		</div>
 	</div>
-	
-	<div id="jobPlansAll" class="modal fade" role="dialog" style="top: 25px;"
-		data-backdrop="static" data-keyboard="false">
+
+	<div id="jobPlansAll" class="modal fade" role="dialog"
+		style="top: 25px;" data-backdrop="static" data-keyboard="false">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -473,83 +473,6 @@
 			}
 		}
 
-		function isSelectedF(psId, jobId) {
-			var i = 0;
-			$(".isSelected" + psId).each(function() {
-				if ($(this).is(':checked')) {
-					i = 1;
-				}
-			});
-			if (i == 0) {
-				// alert("Please select atleast one users");
-
-				$("#productForSampleId" + psId).removeAttr("name");
-				$("#productId" + psId).removeAttr("name");
-				$("#qtyOfSampleProduct" + psId).removeAttr("name");
-				$("#productEachTotal" + psId).removeAttr("name");
-
-				$("#productEachTotal" + psId).attr("class", "form-control");
-			} else {
-				//alert("Atleast one is selected");
-
-				$("#productForSampleId" + psId).attr("name",
-						"productForSampleId1");
-				$("#productId" + psId).attr("name", "productId1");
-				$("#qtyOfSampleProduct" + psId).attr("name",
-						"qtyOfSampleProduct");
-				$("#productEachTotal" + psId).attr("name", "productEachTotal");
-
-				$("#productEachTotal" + psId).attr("class",
-						"form-control productEachTotal");
-			}
-
-			if ($('#isSelected' + jobId).is(":checked")) {
-				//alert("checked"+jobId);
-
-				$("#jobId" + jobId).attr("name", "jobId" + psId);
-				$("#jobPresentRate" + jobId).attr("name",
-						"jobPresentRate" + psId);
-				$("#jobQty" + jobId).attr("name", "jobQty" + psId);
-				$("#jobAmount" + jobId).attr("name", "jobAmount" + psId);
-				$("#estSubmDate" + jobId).attr("name", "estSubmDate" + psId);
-
-				$("#estSubmDate" + jobId).attr("class",
-						"form-control estSubmDate totdate");
-				$("#jobAmount" + jobId).attr("class",
-						"form-control eachtotalvalue");
-			} else {
-				//alert("not checked"+jobId);
-
-				$("#jobId" + jobId).removeAttr("name");
-				$("#jobPresentRate" + jobId).removeAttr("name");
-				$("#jobQty" + jobId).removeAttr("name");
-				$("#jobAmount" + jobId).removeAttr("name");
-				$("#estSubmDate" + jobId).removeAttr("name");
-
-				$("#estSubmDate" + jobId).attr("class",
-						"form-control estSubmDate");
-				$("#jobAmount" + jobId).attr("class", "form-control");
-			}
-
-			//error
-			var sm = 0;
-			$(".productEachTotal").each(function() {
-				sm += parseFloat(this.value);
-			});
-			$("#gt").val(Number(sm.toFixed(2)));
-
-			var sum = 0;
-			$(".eachtotalvalue").each(function() {
-				sum += parseFloat(this.value);
-			});
-			$("#gtot").val(
-					Number($("#gt").val()) + Number(sum.toFixed(2))
-							+ Number($("#surcharge").val()));
-			profitValF();
-			$("#grandtot").val(
-					Number($("#gtot").val()) + Number($("#totProfit").val()));
-		}
-
 		function JobPlanOkF() {
 			if ($("#planNo").val() != "") {
 				$("#jobPlans").modal("hide");
@@ -561,7 +484,7 @@
 			//$("#dNo").attr("readonly","readonly");
 		}
 		function selectPlan(pId, pQty) {
-			$("#planNo").val(pId);			
+			$("#planNo").val(pId);
 			$("#planNoMsg").html("Yor search for plan number : " + pId);
 			alert("plan " + pId + " selected");
 			$("#jobPlans").modal("hide");
@@ -583,6 +506,8 @@
 									.each(
 											data2,
 											function(index, item2) {
+												$("#dNo").val(item2.DesignNo);
+
 												$("#productNjobsTable").hide();
 												if ((item2.japYesOrNo == "yes" && item2.IsComplete == true)
 														|| (item2.japYesOrNo == "yes"
@@ -829,7 +754,7 @@
 																												+ item2.JobRateOfSample
 																												+ "</td>"
 																												+ "<td>"
-																												+ "<input type='text' class='form-control' id='jobPresentRate"
+																												+ "<input type='text' readonly='readonly' class='form-control' id='jobPresentRate"
 																												+ item2.JobId
 																												+ "' onkeyup='presentRateKU("
 																												+ item2.JobId
@@ -842,13 +767,13 @@
 																														* pQty+"'>"
 																												+ "</td>"
 																												+ "<td>"
-																												+ "<input type='text' class='form-control' id='jobQty"
+																												+ "<input type='text' class='form-control' readonly='readonly' id='jobQty"
 																												+ item2.JobId
 																												+ "' onkeyup='qtyKU("
 																												+ item2.JobId
 																												+ ");' value='"
 																												+ item2.JobQtyOfSample
-																														* pQty
+																												* pQty
 																												+ "'>"
 																												+ "</td>"
 																												+ "<td>"
@@ -856,7 +781,7 @@
 																												+ "</td>"
 																												+ "<td>"
 																												+ item2.JobAmountOfSample
-																														* pQty
+																												* pQty
 																												+ "</td>"
 																												+ "<td>"
 																												+ "<input type='text' readonly='readonly' id='jobAmount"+item2.JobId+"' class='form-control' value='"+item2.JobAmountOfSample*pQty+"'>"
@@ -868,21 +793,6 @@
 																												+ "</td>"
 																												+ "<td>"
 																												+ item2.Status
-																												+ "</td>"
-																												+ "<td>"
-																												+ "<input type='checkbox' onclick='isSelectedF("
-																												+ ProductForSampleId
-																												+ ","
-																												+ item2.JobId
-																												+ ");' name='selectedJobs"
-																												+ item2.JobId
-																												+ "' class='isSelected"
-																												+ ProductForSampleId
-																												+ "' id='isSelected"
-																												+ item2.JobId
-																												+ "' value='"
-																												+ item2.JobId
-																												+ "'>"
 																												+ "</td>"
 																												+ "</tr>"
 																												+ "</tbody>");

@@ -65,12 +65,17 @@ page[size="A4"] {
 		<c:forEach begin="1" end="${purProDet.numberForBarcodePrint}">
 			<page size="A4">
 			<center style="padding-top: 12px;">
-				<span style="font-weight: bold; font-size: 9px">${companyInfo.compname}</span><br> <span style="font-size: 9px">Pcode:${purProDet.productDetail.code}</span><br>
-				<span style="font-size: 9px">MRP:${purProDet.mrp}</span><br> <img
-					src="http://${ip}:${sessionScope['port']}/barbecue/BarcodeServlet?data=${purProDet.id}/${purProDet.lotNumber}/${purProDet.productDetail.code}&drawText=true&width=2&height=30"
+				<span style="font-weight: bold; font-size: 9px">${companyInfo.compname}</span><br>
+				<%-- <span style="font-size: 9px">Pcode:${purProDet.productDetail.code}</span><br>
+				<span style="font-size: 9px">Design No. :
+					${purProDet.productDetail.universalCode}</span><br> --%>
+				<span style="font-size: 9px">${purProDet.productDetail.universalCode}</span>&nbsp;&nbsp;&nbsp;<span
+					style="font-size: 9px">${sessionScope['ejb'].getMRPlh(purProDet.mrp)}</span><br>
+				<img
+					src="http://${ip}:${sessionScope['port']}/barbecue/BarcodeServlet?data=${purProDet.id}/${purProDet.lotNumber}/${purProDet.productDetail.code}&drawText=true&width=2&height=35"
 					width="110" /><br>
 				<center>
-					<span style="font-size: 5px">${purProDet.id}/${purProDet.lotNumber}/${purProDet.productDetail.code}</span>
+					<span style="font-size: 8px">${purProDet.id}/${purProDet.lotNumber}/${purProDet.productDetail.code}</span>
 				</center>
 			</center>
 			<br>
