@@ -292,7 +292,7 @@ public class LoginServlet extends HttpServlet {
 
 		if (!ejb.isCompanyInfoExist()) {
 			companyInfoKaanish = new CompanyInfo();
-			companyInfoKaanish.setCompname("Kaanish Kouture");
+			companyInfoKaanish.setCompname("KK");
 			ejb.setCompanyInfo(companyInfoKaanish);
 
 			companyInfoKainat = new CompanyInfo();
@@ -302,15 +302,15 @@ public class LoginServlet extends HttpServlet {
 		if (ejb.getAllUsers().size() < 2) {
 			usersKaanish = new Users();
 			usersKaanish.setUserId("adminKaanish");
-			usersKaanish.setPassword("admin");
-			usersKaanish.setName("Kaanish Admin");
+			usersKaanish.setPassword("productionKaanish");
+			usersKaanish.setName("Production Admin");
 			usersKaanish.setPh("0");
 			usersKaanish.setCompanyInfo(companyInfoKaanish);
 			ejb.setUser(usersKaanish);
 
 			usersKainat = new Users();
-			usersKainat.setUserId("adminKainat");
-			usersKainat.setPassword("admin");
+			usersKainat.setUserId("admierwtertrnKainat");
+			usersKainat.setPassword("admertewrtwertin");
 			usersKainat.setName("Kainat Admin");
 			usersKainat.setPh("0");
 			usersKainat.setCompanyInfo(companyInfoKainat);
