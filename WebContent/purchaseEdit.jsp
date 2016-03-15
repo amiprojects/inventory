@@ -197,7 +197,7 @@
 									</div>
 								</div>
 
-								<table id="" class="table table-striped table-bordered">
+								<table id="purPro" class="table table-striped table-bordered">
 									<thead style="background-color: #F0F0F0;">
 										<tr>
 											<th>#</th>
@@ -210,9 +210,12 @@
 										</tr>
 									</thead>
 									<c:set var="i" value="${1}"></c:set>
-									<c:forEach var="purchaseProducts"
-										items="${purchaseSearchView.purchase_Product_Details}">
-										<tbody>
+
+									<tbody>
+
+										<c:forEach var="purchaseProducts"
+											items="${purchaseSearchView.purchase_Product_Details}">
+
 											<tr id="proRow${purchaseProducts.id}">
 												<td>${i}</td>
 												<td>${purchaseProducts.productDetail.code}</td>
@@ -220,19 +223,29 @@
 												<td><input type="text"
 													value="${purchaseProducts.quantity}"
 													style="background-color: gray;" readonly="readonly"
-													name="pproqty" onchange="update(this,${purchaseProducts.id});"
+													name="pproqty"
+													onchange="update(this,${purchaseProducts.id});"
 													ondblclick="enable(this);"></td>
 												<td>${purchaseProducts.productDetail.qtyUnit.name}</td>
 												<td><input type="text" value="${purchaseProducts.cost}"
 													style="background-color: gray;" readonly="readonly"
-													name="pprocost" onchange="update(this,${purchaseProducts.id});"
+													name="pprocost"
+													onchange="update(this,${purchaseProducts.id});"
 													ondblclick="enable(this);"></td>
 												<td class="proTotCost">${purchaseProducts.quantity*purchaseProducts.cost}</td>
 											</tr>
-										</tbody>
-										<c:set var="i" value="${i+1}" />
-									</c:forEach>
+
+											<c:set var="i" value="${i+1}" />
+										</c:forEach>
+
+									</tbody>
 								</table>
+
+								<div class="col-md-12">
+									<input type="button" class="form-control btn-success"
+										data-toggle="modal" data-target="#addProduct"
+										value="Add Product" value="Add">
+								</div>
 
 
 								<div style="width: 40%; float: right;">
@@ -324,6 +337,237 @@
 			</div>
 		</div>
 		<!-- Content Sec -->
+	</div>
+
+
+	<!-- for adding new product -->
+
+	<div id="addProduct" class="modal fade" role="dialog"
+		style="top: -70px; overflow-y: hidden; overflow-x: hidden;">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="row">
+						<div class="widget-area" style="width: 50%; height: 275px;">
+							<div class="breadcrumbs">
+								<ul>
+									<li><a title="" style="font-size: 20px;"><strong>Group</strong></a></li>
+								</ul>
+							</div>
+							<br> <br>
+							<div class="row">
+								<div class="col-md-5">Department:</div>
+								<div class="col-md-7">
+									<input type="text" class="form-control" readonly="readonly"
+										id="dept" name="dept">
+								</div>
+								<div class="col-md-5">Sub-Department:</div>
+								<div class="col-md-7">
+									<input type="text" class="form-control" readonly="readonly"
+										id="subDept" name="subDept">
+								</div>
+								<div class="col-md-5">Category:</div>
+								<div class="col-md-7">
+									<input type="text" class="form-control" readonly="readonly"
+										id="cat" name="cat">
+								</div>
+								<div class="col-md-12">
+									<br>
+								</div>
+								<div class="col-md-5">
+									Product Code:<font color="red" size="4">*</font>
+								</div>
+								<div class="col-md-6">
+									<input type="text" id="pCode" name="pCode" class="form-control"
+										onchange="emptyForm();" autocomplete="off"><input
+										type="hidden" id="productCode" name="productCode">
+
+								</div>
+								<!-- <div class="col-md-1">
+									<a onclick="addDesineNo()" title="Add New Product"> <img
+										style="margin-top: 4px; cursor: pointer; margin-left: -23px;"
+										height="27px" width="27px" alt="" src="img/add.png">
+									</a>
+								</div> -->
+								<div class="col-md-5">Product Descripsion:</div>
+								<div class="col-md-7">
+									<input type="text" class="form-control" name="pDesc" id="pDesc"
+										readonly="readonly">
+								</div>
+								<div class="col-md-5">Product Image:</div>
+								<div class="col-md-7" id="imgaeDIV">
+									<img width="100" id="productImage" height="60" width="50"
+										style="" alt="">
+								</div>
+								<br> <br>
+							</div>
+						</div>
+						<div class="widget-area" style="width: 50%; height: 275px;">
+							<div class="breadcrumbs">
+								<ul>
+									<li><a title="" style="font-size: 20px;"><strong>Attributes</strong>
+									</a></li>
+								</ul>
+							</div>
+							<br> <br>
+							<div class="row">
+								<div class="col-md-2">
+									<span id="attr1Name">Attribute1:</span>
+								</div>
+								<div class="col-md-10">
+									<input type="text" class="form-control" name="attr1" id="attr1"
+										readonly="readonly">
+								</div>
+								<div class="col-md-2">
+									<span id="attr2Name">Attribute2:</span>
+								</div>
+								<div class="col-md-10">
+									<input type="text" class="form-control" name="attr2" id="attr2"
+										readonly="readonly">
+								</div>
+								<div class="col-md-2">
+									<span id="attr3Name">Attribute3:</span>
+								</div>
+								<div class="col-md-10">
+									<input type="text" class="form-control" name="attr3" id="attr3"
+										readonly="readonly">
+								</div>
+								<div class="col-md-2">
+									<span id="attr4Name">Attribute4:</span>
+								</div>
+								<div class="col-md-10">
+									<input type="text" class="form-control" name="attr4" id="attr4"
+										readonly="readonly">
+								</div>
+								<div class="col-md-2">
+									<span id="attr5Name">Attribute5:</span>
+								</div>
+								<div class="col-md-10">
+									<input type="text" class="form-control" name="attr5" id="attr5"
+										readonly="readonly">
+								</div>
+								<div class="col-md-2">
+									<span id="attr6Name">Attribute6:</span>
+								</div>
+								<div class="col-md-10">
+									<input type="text" class="form-control" name="attr6" id="attr6"
+										readonly="readonly">
+								</div>
+							</div>
+						</div>
+						<div class="widget-area" style="width: 50%;">
+							<div class="row">
+								<div class="col-md-3">
+									Quantity:<font color="red" size="4">*</font>
+								</div>
+								<div class="col-md-9">
+									<input type="number" class="form-control" name="qty" id="qty">
+								</div>
+								<div class="col-md-3">UOM:</div>
+								<div class="col-md-9">
+									<input type="text" class="form-control" id="uom" name="uom"
+										readonly="readonly">
+								</div>
+								<div class="col-md-3">
+									Rate:<font color="red" size="4">*</font>
+								</div>
+								<div class="col-md-9">
+									<input type="number" class="form-control" name="rate" id="rate"
+										required="required" onchange="rateF();">
+								</div>
+							</div>
+						</div>
+						<div class="widget-area" style="width: 50%;">
+							<div class="row">
+								<div class="row">
+									&nbsp; &nbsp; &nbsp; &nbsp; <input type="checkbox" id="sale"
+										onclick="salable();" style="display: none;"> &nbsp;
+									<!-- Is salable -->
+
+								</div>
+								<div class="col-md-2">
+									<input type="hidden" name="isSalable" id="isSalable">
+									<span id="wspStar">WSP:</span>
+								</div>
+								<div class="col-md-10">
+									<input type="number" class="form-control" id="wsp"
+										readonly="readonly" name="wsp" onchange="wspF();">
+								</div>
+								<div class="col-md-2">
+									<span id="mrpStar">MRP:</span>
+								</div>
+								<div class="col-md-10">
+									<input type="number" class="form-control" id="mrp"
+										readonly="readonly" name="mrp" onchange="mrpF();">
+								</div>
+							</div>
+						</div>
+						<div class="widget-area" style="width: 100%; top: 0px;">
+							
+
+							<div class="row">
+								<div class="col-md-2">
+									<b>Lot No. :<font color="red" size="4">*</font></b>
+								</div>
+								<div class="col-md-10">
+									<input type="text" class="form-control" id="lotText"
+										name="lotText">
+								</div>
+							</div>
+							
+							<br>
+							<div class="row">								
+
+								<div style="float: right; right: 25px;">
+									<input type="button" class="btn green pull-left" width=""
+										value="Add Product" data-toggle="modal"
+										onclick="anotherShow();"> <input type="button"
+										class="btn btn-default" data-dismiss="modal" value="Close"
+										id="close" onclick="closeProduct()">
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- end of adding product dialog -->
+	
+	<!-- add button clicked div -->
+	
+	<div id="another" class="modal fade" role="dialog" style="top: -25px;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<!-- <div class="modal-header">
+					<button type="button" class="close" onclick="close1();">&times;</button>
+					<h4 class="modal-title">Modal Header</h4>
+				</div> -->
+				<div class="modal-body">
+					<div class="row">
+						<div class="widget-area">
+							<div class="row">
+								<span>Product added successfully...</span> <span>Do you
+									want to add another product?</span>
+							</div>
+							<br>
+							<div class="row">
+								<button type="button" class="btn btn-success medium" id="yesP">Yes</button>
+								<button type="button" class="btn btn-danger medium" id="noP">No</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<!-- <button type="button" class="btn btn-default" id="close1"
+						onclick="close1();">Close</button> -->
+				</div>
+			</div>
+
+		</div>
 	</div>
 
 	<!-- Script -->
@@ -466,6 +710,554 @@
 
 		});
 	}
+	
+	
+	
+	/**********for adding new product**********/
+	$("#close").click(function() {
+			$("#addProduct").modal("hide");
+			$("#header").show();
+		});
+		/* $("#close1").click(function() {
+			$("#another").modal("hide");
+		}); */
+		function close1() {
+			$("#another").modal("hide");
+		}
+		function manage() {
+			$("#header").hide();
+		}
+		$("#yesP").click(function() {
+			$("#another").modal("hide");
+		});
+		$("#noP").click(function() {
+			$("#another").modal("hide");
+			$("#addProduct").modal("hide");
+			$("#header").show();
+		});
+		ind = 0;
+	
+	
+	
+	
+	
+	function emptyForm() {
+			if ($("#pCode").val() == "") {
+				getProductDetailsByProductCode(0);
+			}
+		}
+		$(function() {
+			$("#pCode").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getProductbyProductCode",
+						data : {
+							code : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.code,
+									id : item.id
+								});
+							}));
+						},
+
+						error : function(a, b, c) {
+							alert(a + b + c);
+						}
+
+					});
+				},
+				change : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#productCode").val("");
+						getProductDetailsByProductCode(0);
+					} else {
+						$("#productCode").val(ui.item.id);
+						getProductDetailsByProductCode(ui.item.id);
+					}
+				},
+				select : function(event, ui) {
+					if (ui.item != null) {
+						$("#productCode").val(ui.item.id);
+						getProductDetailsByProductCode(ui.item.id);
+					} else {
+						$(this).val("");
+						$("#productCode").val("");
+						getProductDetailsByProductCode(0);
+					}
+
+				}
+			});
+		});
+		
+		
+		
+		
+		$(document).ready(function() {
+			$("#isSalable").val('no');
+			$("#isBarPrint").val('no');
+			$("#isSerial").val('no');
+			$("#isLot").val('yes');
+			$("#isAgent").val('no');
+			$("#aNameDiv").hide();
+			$("#aDetailDiv").hide();
+		});
+		$(function() {
+			$("#datepicker").datepicker();
+		});
+		function getProductDetailsByProductCode(id1) {
+			if (id1 != 0) {
+				$.ajax({
+					url : 'getProductDetailById',
+					type : 'post',
+					dataType : "json",
+					data : {
+						id : id1
+					},
+					success : function(data) {
+						$("#dept").val(data.Department);
+						$("#pCode").val(data.code);
+						$("#productImage").attr('src',
+								'data:image/jpeg;base64,' + data.aimage);
+						if (data.isSaleble == 'true') {
+							$("#wsp").attr("readonly", false);
+							$("#mrp").attr("readonly", false);
+							$("#isSalable").val('yes');
+							$('#sale').prop("checked", "checked");
+							
+							$("#wspStar").html("WSP:<font color='red' size='4'>*</font>");
+							$("#mrpStar").html("MRP:<font color='red' size='4'>*</font>");
+						} else {
+							$("#wsp").attr("readonly", true);
+							$("#mrp").attr("readonly", true);
+							$("#isSalable").val('no');
+							$('#sale').removeProp("checked");
+							
+							$("#wspStar").html("WSP:");
+							$("#mrpStar").html("MRP:");
+						}
+						$("#subDept").val(data.subDepartment);
+						$("#cat").val(data.category);
+						$("#pDesc").val(data.description);
+						$("#uom").val(data.qtyUnit);
+						if ((data.attrNmae1) != 'null') {
+							$("#attr1Name").html(data.attrNmae1 + ":<font color='red' size='4'>*</font>");
+							$("#attr1").prop("readonly", false);
+						} else {
+							$("#attr1Name").html("Attribute1:");
+							$("#attr1").prop("readonly", true);
+						}
+						if ((data.attrNmae2) != 'null') {
+							$("#attr2Name").html(data.attrNmae2 + ":<font color='red' size='4'>*</font>");
+							$("#attr2").prop("readonly", false);
+						} else {
+							$("#attr2Name").html("Attribute2:");
+							$("#attr2").prop("readonly", true);
+						}
+						if ((data.attrNmae3) != 'null') {
+							$("#attr3Name").html(data.attrNmae3 + ":<font color='red' size='4'>*</font>");
+							$("#attr3").prop("readonly", false);
+						} else {
+							$("#attr3Name").html("Attribute3:");
+							$("#attr3").prop("readonly", true);
+						}
+						if ((data.attrNmae4) != 'null') {
+							$("#attr4Name").html(data.attrNmae4 + ":<font color='red' size='4'>*</font>");
+							$("#attr4").prop("readonly", false);
+						} else {
+							$("#attr4Name").html("Attribute4:");
+							$("#attr4").prop("readonly", true);
+						}
+						if ((data.attrNmae5) != 'null') {
+							$("#attr5Name").html(data.attrNmae5 + ":<font color='red' size='4'>*</font>");
+							$("#attr5").prop("readonly", false);
+						} else {
+							$("#attr5Name").html("Attribute5:");
+							$("#attr5").prop("readonly", true);
+						}
+						if ((data.attrNmae6) != 'null') {
+							$("#attr6Name").html(data.attrNmae6 + ":<font color='red' size='4'>*</font>");
+							$("#attr6").prop("readonly", false);
+						} else {
+							$("#attr6Name").html("Attribute6:");
+							$("#attr6").prop("readonly", true);
+						}
+					},
+					error : function(a, b, c) {
+						alert(b + ": " + c);
+						$("#wsp").val("");
+						$("#mrp").val("");
+						$("#subDept").val("");
+						$("#dept").val("");
+						$("#cat").val("");
+						$("#pDesc").val("");
+						$("#uom").val("");
+						$("#pCode").val("");
+						$("#attr1Name").html("Attribute1:");
+						$("#attr2Name").html("Attribute2:");
+						$("#attr3Name").html("Attribute3:");
+						$("#attr4Name").html("Attribute4:");
+						$("#attr5Name").html("Attribute5:");
+						$("#attr6Name").html("Attribute6:");
+						$("#attr1").prop("readonly", true);
+						$("#attr2").prop("readonly", true);
+						$("#attr3").prop("readonly", true);
+						$("#attr4").prop("readonly", true);
+						$("#attr5").prop("readonly", true);
+						$("#attr6").prop("readonly", true);
+						$("#wsp").prop("readonly", true);
+						$("#mrp").prop("readonly", true);
+						$("#productCode").val(0);
+					}
+				});
+				$("#wsp").val("");
+				$("#mrp").val("");
+				$("#rate").val("");
+				$("#attr1").val("");
+				$("#attr2").val("");
+				$("#attr3").val("");
+				$("#attr4").val("");
+				$("#attr5").val("");
+				$("#attr6").val("");
+				$("#lotText").val("");
+			} else {
+				alert("please select one Product Code:");
+				$("#wsp").val("");
+				$("#mrp").val("");
+				$("#rate").val("");
+				$("#attr1").val("");
+				$("#attr2").val("");
+				$("#attr3").val("");
+				$("#attr4").val("");
+				$("#attr5").val("");
+				$("#attr6").val("");
+				$("#lotText").val("");
+				$("#subDept").val("");
+				$("#dept").val("");
+				$("#cat").val("");
+				$("#pDesc").val("");
+				$("#uom").val("");
+				$("#pCode").val("");
+				$("#attr1Name").html("Attribute1:");
+				$("#attr2Name").html("Attribute2:");
+				$("#attr3Name").html("Attribute3:");
+				$("#attr4Name").html("Attribute4:");
+				$("#attr5Name").html("Attribute5:");
+				$("#attr6Name").html("Attribute6:");
+				$("#attr1").prop("readonly", true);
+				$("#attr2").prop("readonly", true);
+				$("#attr3").prop("readonly", true);
+				$("#attr4").prop("readonly", true);
+				$("#attr5").prop("readonly", true);
+				$("#attr6").prop("readonly", true);
+				$("#wsp").prop("readonly", true);
+				$("#mrp").prop("readonly", true);
+			}
+			
+		}
+		
+		function rateF() {
+			if ($("#isSalable").val() == 'yes') {
+				if ($("#wsp").val() != ""
+						&& Number($("#rate").val()) > Number($("#wsp").val())) {
+					alert("Rate should be less than or equals to WSP.");
+					$("#rate").val("");
+				} else if ($("#mrp").val() != ""
+						&& Number($("#rate").val()) > Number($("#mrp").val())) {
+					alert("Rate should be less than or equals to MRP.");
+					$("#rate").val("");
+				}
+			}
+		}
+
+		function wspF() {
+			if ($("#isSalable").val() == 'yes') {
+				if ($("#rate").val() == "") {
+					alert("Please insert Rate first...");
+					$("#wsp").val("");
+				} else if (Number($("#rate").val()) > Number($("#wsp").val())) {
+					alert("WSP should be greater than or equals to Rate.");
+					$("#wsp").val("");
+				} else if ($("#mrp").val() != ""
+						&& Number($("#wsp").val()) > Number($("#mrp").val())) {
+					alert("WSP should be less than or equals to MRP.");
+					$("#wsp").val("");
+				}
+			}
+		}
+
+		function mrpF() {
+			if ($("#isSalable").val() == 'yes') {
+				if ($("#rate").val() == "") {
+					alert("Please insert Rate first...");
+					$("#mrp").val("");
+				} else if ($("#wsp").val() == "") {
+					alert("Please insert WSP first...");
+					$("#mrp").val("");
+				} else if (Number($("#rate").val()) > Number($("#mrp").val())) {
+					alert("MRP should be greater than or equals to Rate.");
+					$("#mrp").val("");
+				} else if (Number($("#wsp").val()) > Number($("#mrp").val())) {
+					alert("MRP should be greater than or equals to WSP.");
+					$("#mrp").val("");
+				}
+			}
+		}
+		
+		
+		var k = Number("${i}");
+		function anotherShow() {
+			
+			
+			if ($("#productCode").val() == 0) {
+				alert("please select Product Code:");
+			} else if ($("#qty").val() == "") {
+				alert("please insert quantity");
+			} else if ($("#rate").val() == "") {
+				alert("please insert Rate");
+			} else if ($("#lotText").val() == "") {
+				alert("please insert Lot no.");
+			} else if ($("#isSalable").val() == 'yes' && $("#wsp").val() == "") {
+				alert("please insert WSP");
+			} else if ($("#isSalable").val() == 'yes' && $("#mrp").val() == "") {
+				alert("please insert MRP");
+			} else if (!$('#attr1').attr("readonly") && $("#attr1").val() == "") {
+				alert("Please insert " + $("#attr1Name").html() + " value");
+			} else if (!$('#attr2').attr("readonly") && $("#attr2").val() == "") {
+				alert("Please insert " + $("#attr2Name").html() + " value");
+			} else if (!$('#attr3').attr("readonly") && $("#attr3").val() == "") {
+				alert("Please insert " + $("#attr3Name").html() + " value");
+			} else if (!$('#attr4').attr("readonly") && $("#attr4").val() == "") {
+				alert("Please insert " + $("#attr4Name").html() + " value");
+			} else if (!$('#attr5').attr("readonly") && $("#attr5").val() == "") {
+				alert("Please insert " + $("#attr5Name").html() + " value");
+			} else if (!$('#attr6').attr("readonly") && $("#attr6").val() == "") {
+				alert("Please insert " + $("#attr6Name").html() + " value");
+			} else {
+				$.ajax({
+					url:"setPurchaseProduct",
+					dataType:"json",
+					data:{
+						id:$("#peId").val(),
+						attr1:$("#attr1").val(),
+						attr2:$("#attr2").val(),
+						attr3:$("#attr3").val(),
+						attr4:$("#attr4").val(),
+						attr5:$("#attr5").val(),
+						attr6:$("#attr6").val(),
+						
+						proCode:$("#pCode").val(),
+						mrp:$("#mrp").val(),
+						rate:$("#rate").val(),
+						wsp:$("#wsp").val(),
+						qty:$("#qty").val(),
+						lot:$("#lotText").val()
+						
+					},
+					success:function(data){
+						
+						if(data.error){
+							sweetAlert('Oops...', data.msg, 'error');
+						}else{
+							displayProductIntable(data.ppid);
+						}
+					},error:function(a,b,c){
+						alert(JSON.stringify(a));
+					}
+				});
+				
+				
+				
+				
+			}
+		}
+		
+		function closeProduct() {
+			$("#dept").val("");
+			$("#subDept").val("");
+			$("#cat").val("");
+			$("#pCode").val("");
+			$("#pDesc").val("");
+			$("#attr1").val("");
+			$("#attr2").val("");
+			$("#attr3").val("");
+			$("#attr4").val("");
+			$("#attr5").val("");
+			$("#attr6").val("");
+			$("#qty").val("");
+			$("#uom").val("");
+			$("#rate").val("");
+			$("#wsp").val("");
+			$("#mrp").val("");
+			$("#lotText").val("");
+			$("#serialText").val("");
+			$("#productCode").val("0");
+			$("#attr1Name").html("Attribute1:");
+			$("#attr2Name").html("Attribute2:");
+			$("#attr3Name").html("Attribute3:");
+			$("#attr4Name").html("Attribute4:");
+			$("#attr5Name").html("Attribute5:");
+			$("#attr6Name").html("Attribute6:");
+			$("#attr1").prop("readonly", true);
+			$("#attr2").prop("readonly", true);
+			$("#attr3").prop("readonly", true);
+			$("#attr4").prop("readonly", true);
+			$("#attr5").prop("readonly", true);
+			$("#attr6").prop("readonly", true);
+		}
+		
+/*************remove product**********/	
+function removeProduct(a) {
+
+	n1 = $("#trRemove" + a + " :nth-child(7)").html();
+	n2 = $("#subTotal").val();
+	$("#subTotal").val(
+			Math.round((Number(n2) - Number(n1)) * 100) / 100);
+
+	/* var sum = 0;
+	$(".trRemove:nth-child(7)").each(function() {
+		sum += parseFloat(this.value);
+	});
+	$("#subTotal").val(sum.toFixed(2)); */
+
+	$("#trRemove" + a).remove();
+	
+	
+	$("#totalvalue").val(
+			Math.round((Number($("#subTotal").val())
+					+ Number($("#taxAmount").val())
+					+ Number($("#transportCost").val()) + Number($(
+					"#surcharge").val())) * 100) / 100);
+	var tot = $("#totalvalue").val();
+	var round = Math.round(tot);
+	$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
+	$("#gt").val(Math.round((round) * 100) / 100);
+}
+
+function displayProductIntable(ppid){
+	
+	
+	$("#purPro tbody")
+			.append(
+					'<tr class="trRemove" id="trRemove'+ind+'"><td>'
+							+ k
+							+ '</td><td>'
+							+ $("#pCode").val()
+							+ '</td><td>'
+							+ $("#pDesc").val()
+							+ '</td><td>'
+							+'<input type="text" value="'+ $("#qty").val()+'" style="background-color: gray;" readonly="readonly"	name="pproqty"	onchange="update(this,\''+ppid+'\');"	ondblclick="enable(this);">'
+							+ '</td><td>'
+							+ $("#uom").val()
+							+ '</td><td>'
+							+'<input type="text" value="'+ $("#rate").val()+'" style="background-color: gray;" readonly="readonly" name="pprocost"	onchange="update(this,\''+ppid+'\'});"	ondblclick="enable(this);">'
+							+ '</td><td>'
+							+ Number($("#qty").val())
+							* Number($("#rate").val())
+							+ '</td>'/* <td>
+							+ '<a href="#" onclick="removeProduct('
+							+ ind
+							+ ');"><img src="img/cross.png" height="16px" width="16px"></a>'
+							+ '</td> */+'</tr>');
+	$("#subTotal").val(
+			Math.round(Number($("#subTotal").val()) + Number($(
+					"#qty").val())
+					* Number($("#rate").val())));
+	$("#taxAmount")
+			.val(
+					Math
+							.round((Number($("#subTotal").val())
+									* Number($("#taxTot").val()) / Number(100)) * 100) / 100);
+
+	$("#totalvalue").val(
+			Math.round((Number($("#subTotal").val())
+					+ Number($("#taxAmount").val())
+					+ Number($("#transportCost").val()) + Number($(
+					"#surcharge").val())) * 100) / 100);
+	var tot = $("#totalvalue").val();
+	var round = Math.round(tot);
+	$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
+	$("#gt").val(Math.round((round) * 100) / 100);
+
+	k++;
+
+	
+	ind++;
+
+	$("#dept").val("");
+	$("#subDept").val("");
+	$("#cat").val("");
+	$("#pCode").val("");
+	$("#pDesc").val("");
+	$("#attr1").val("");
+	$("#attr2").val("");
+	$("#attr3").val("");
+	$("#attr4").val("");
+	$("#attr5").val("");
+	$("#attr6").val("");
+	$("#qty").val("");
+	$("#uom").val("");
+	$("#rate").val("");
+	$("#wsp").val("");
+	$("#mrp").val("");
+	$("#lotText").val("");
+	$("#serialText").val("");
+	$("#productCode").val("0");
+	$("#attr1Name").html("Attribute1:");
+	$("#attr2Name").html("Attribute2:");
+	$("#attr3Name").html("Attribute3:");
+	$("#attr4Name").html("Attribute4:");
+	$("#attr5Name").html("Attribute5:");
+	$("#attr6Name").html("Attribute6:");
+	$("#attr1").prop("readonly", true);
+	$("#attr2").prop("readonly", true);
+	$("#attr3").prop("readonly", true);
+	$("#attr4").prop("readonly", true);
+	$("#attr5").prop("readonly", true);
+	$("#attr6").prop("readonly", true);
+	
+	
+	
+
+	var st = $("#subTotal").val();
+	st = st.replace(",", "");
+	var scharge = $("#surcharge").val();
+	var tcharge = $("#transportCost").val();
+	var tot = Number(st) + Number(scharge) + Number(tcharge);
+	var gt = Math.round(tot, 0);
+	var roundvalue = gt - tot;
+	roundvalue = roundvalue.toFixed(2);
+	$("#roundvalue").val(roundvalue);
+	$("#gt").val(Number(gt));
+
+	$.ajax({
+		url : "updatePurchaseEntry",
+		dataType : "json",
+		data : {
+			id : $("#peId").val(),
+			surCharge : scharge,
+			trCharge : tcharge,
+			gt:gt,
+			roundvalue:roundvalue,
+			st:st
+		},
+		success : function(data) {
+			if (data.error) {					
+				sweetAlert('Oops...', data.msg, 'error');
+			} else {
+				swal('Update', 'Data successfully saved!', 'success');
+				$("#another").modal("show");
+			}
+		}
+
+	});
+	
+}
 </script>
 
 </html>
