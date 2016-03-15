@@ -2547,14 +2547,18 @@ public class Ejb {
 	}
 
 	public CompanyInfo getCompanyInfo() {
-		TypedQuery<CompanyInfo> q = em.createQuery(
-				"Select c from CompanyInfo c order by c.id DESC",
-				CompanyInfo.class);
-		if (q.getResultList().size() > 0) {
-			return q.getResultList().get(0);
-		} else {
-			return null;
-		}
+		// TypedQuery<CompanyInfo> q = em.createQuery(
+		// "Select c from CompanyInfo c order by c.id DESC",
+		// CompanyInfo.class);
+		// if (q.getResultList().size() > 0) {
+		// return q.getResultList().get(0);
+		// } else {
+		// return null;
+		// }
+
+		CompanyInfo compInfo = getUserById(
+				(String) httpSession.getAttribute("user")).getCompanyInfo();
+		return compInfo;
 
 	}
 
@@ -2916,9 +2920,10 @@ public class Ejb {
 	public List<SalesEntry> getAllSalesEntriesByCompany() {
 		cId = getUserById((String) httpSession.getAttribute("user"))
 				.getCompanyInfo().getId();
-		TypedQuery<SalesEntry> q = em.createQuery(
-				"select c from SalesEntry c WHERE c.companyInfo.id=:cId order by c.id desc",
-				SalesEntry.class);
+		TypedQuery<SalesEntry> q = em
+				.createQuery(
+						"select c from SalesEntry c WHERE c.companyInfo.id=:cId order by c.id desc",
+						SalesEntry.class);
 		q.setParameter("cId", cId);
 		return q.getResultList();
 	}
