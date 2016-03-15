@@ -4046,6 +4046,7 @@
 					}); */
 
 		}
+		
 		function closeProduct() {
 			$("#dept").val("");
 			$("#subDept").val("");
