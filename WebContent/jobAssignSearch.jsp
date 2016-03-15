@@ -205,18 +205,20 @@
 										</div>
 									</form>
 									<form role="form" class="sec" action="jobSearchByPlanNo"
-										method="post">
+										method="post" id="jobSearchByPlanNoId">
 										<div class="row">
 											<div class="col-md-10">
 												<div class="form-group">
-													<label for="" style="float: left;">Plan Number :</label> <input
-														type="" placeholder="Enter Plan Number" id="planNo"
-														name="planNo" class="form-control">
+													<label for="" style="float: left;">Plan Number :<font
+														color="red" size="4">*</font></label> <input type=""
+														placeholder="Enter Plan Number" id="planNo" name="planNo"
+														class="form-control">
 												</div>
 											</div>
 											<div class="col-md-2">
 												<button class="btn green pull-left"
-													style="margin-top: 25px;" type="submit">Search</button>
+													style="margin-top: 25px;" type="button"
+													onclick="planNoF();">Search</button>
 											</div>
 
 										</div>
@@ -493,6 +495,14 @@
 				}
 			});
 		}); */
+
+		function planNoF() {
+			if ($("#planNo").val() == "") {
+				alert("Please enter plan number")
+			} else {
+				$("#jobSearchByPlanNoId").submit();
+			}
+		}
 	</script>
 </body>
 

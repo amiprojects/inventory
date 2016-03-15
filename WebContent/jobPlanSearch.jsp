@@ -668,7 +668,7 @@
 													}
 													$('#productNjobsDiv')
 															.append(
-																	'<table id="pDetTable'+item2.ProductForSampleId+'" class="table table-striped table-bordered"><thead style="background-color: #F0F0F0;"><tr><th style="text-align: right;" colspan="2">'
+																	'<table id="pDetTable'+item2.ProductForSampleId+'" class="table table-striped table-bordered"><thead style="background-color: #F0F0F0;"><tr><th style="text-align: right;">'
 																			+ "Product code:"
 																			+ '</th><td>'
 																			+ "<input type='text' class='form-control' readonly='readonly' value='"+item2.ProductCode+"'>"
@@ -694,23 +694,15 @@
 																			+ "#"
 																			+ '</th><th>'
 																			+ "Job"
-																			+ '</th><th>'
+																			+ '</th><th colspan="2">'
 																			+ "Sample Rate"
-																			+ '</th><th>'
-																			+ "Present Rate"
 																			+ '</th><th>'
 																			+ "Sample Qty"
 																			+ '</th><th>'
-																			+ "Assign Qty"
-																			+ '</th><th>'
 																			+ "UOM"
-																			+ '</th><th>'
+																			+ '</th><th colspan="2">'
 																			+ "Sample Amount"
-																			+ '</th><th>'
-																			+ "Amount"
-																			+ '</th><th>'
-																			+ "Est. Submission Date"
-																			+ '</th><th>'
+																			+ '</th><th colspan="2">'
 																			+ "Status"
 																			+ '</th></tr></thead></table>');
 
@@ -750,48 +742,21 @@
 																												+ item2.JobName
 																												+ "<input type='hidden' id='jobId"+item2.JobId+"' value='"+item2.JobId+"'>"
 																												+ "</td>"
-																												+ "<td>"
+																												+ "<td colspan='2'>"
 																												+ item2.JobRateOfSample
-																												+ "</td>"
-																												+ "<td>"
-																												+ "<input type='text' readonly='readonly' class='form-control' id='jobPresentRate"
-																												+ item2.JobId
-																												+ "' onkeyup='presentRateKU("
-																												+ item2.JobId
-																												+ ");' value='"
-																												+ item2.JobRateOfSample
-																												+ "'>"
 																												+ "</td>"
 																												+ "<td>"
 																												+ "<input type='text' class='form-control' id='jobRemQty"+item2.JobId+"' readonly='readonly' value='"+item2.JobQtyOfSample
 																														* pQty+"'>"
 																												+ "</td>"
 																												+ "<td>"
-																												+ "<input type='text' class='form-control' readonly='readonly' id='jobQty"
-																												+ item2.JobId
-																												+ "' onkeyup='qtyKU("
-																												+ item2.JobId
-																												+ ");' value='"
-																												+ item2.JobQtyOfSample
-																												* pQty
-																												+ "'>"
-																												+ "</td>"
-																												+ "<td>"
 																												+ item2.JobUOMOfSample
 																												+ "</td>"
-																												+ "<td>"
+																												+ "<td colspan='2'>"
 																												+ item2.JobAmountOfSample
-																												* pQty
+																														* pQty
 																												+ "</td>"
-																												+ "<td>"
-																												+ "<input type='text' readonly='readonly' id='jobAmount"+item2.JobId+"' class='form-control' value='"+item2.JobAmountOfSample*pQty+"'>"
-																												+ "</td>"
-																												+ "<td>"
-																												+ "<input onclick='showDatePicker();' type='text' id='estSubmDate"
-																												+ item2.JobId
-																												+ "' class='form-control estSubmDate'>"
-																												+ "</td>"
-																												+ "<td>"
+																												+ "<td colspan='2'>"
 																												+ item2.Status
 																												+ "</td>"
 																												+ "</tr>"

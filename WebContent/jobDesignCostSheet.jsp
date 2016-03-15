@@ -126,8 +126,9 @@
 												<b class="font">Design No.<font color="red" size="4">*</font></b>
 												<input type="text" class="form-control" id="designNo"
 													name="designNo" autocomplete="off" onkeyup="dNoKeyUp();"
-													onchange="dNoChange();"> <input type="hidden"
-													id="dNoCheck" name="dNoCheck">
+													onchange="dNoChange();"
+													onkeypress="return blockSpecialChar(event)"> <input
+													type="hidden" id="dNoCheck" name="dNoCheck">
 											</div>
 											<div class="col-md-12">
 												<b class="font">Designer Name :<font color="red"
@@ -152,7 +153,8 @@
 													</label>
 
 													<textarea class="form-control" rows="" cols=""
-														name="designDescription" id="designDescription"></textarea>
+														name="designDescription" id="designDescription"
+														onkeypress="return blockSpecialCharWS(event)"></textarea>
 
 												</div>
 											</div>
@@ -392,20 +394,6 @@
 <script src="js/jquery-ui/jquery-ui.js"></script>
 <script src="js/numericInput.min.js"></script>
 <script>
-	$(function() {
-
-		$(".numChk").numericInput({
-
-			allowFloat : true, // Accpets positive numbers (floating point)
-
-			allowNegative : false,
-		// Accpets positive or negative integer
-
-		});
-
-	});
-</script>
-<script>
 	/******************for products*************/
 	function addProduct() {
 		$("#addProduct").modal("show");
@@ -535,7 +523,7 @@
 																+ $(this).val()
 																+ $("#proId")
 																		.val()
-																+ '\');" value="0" name="jobqty"></td>'
+																+ '\');" value="0" name="jobqty" onkeypress="return blockSpecialChar(event)"></td>'
 																+ '<td>'
 																+ $("#proUOM")
 																		.val()
@@ -548,7 +536,7 @@
 																+ $(this).val()
 																+ $("#proId")
 																		.val()
-																+ '\');" value="0" name="jobRate"></td>'
+																+ '\');" value="0" name="jobRate" onkeypress="return blockSpecialChar(event)"></td>'
 																+ '<td><input type="text" name="totalAmount" value="0" readonly="readonly" id="amount'
 																+ $(this).val()
 																+ $("#proId")
@@ -947,5 +935,37 @@
 			$("#jobForm").submit();
 		}
 	}
+</script>
+<script type="text/javascript">
+	function blockSpecialChar(e) {
+		var k = e.keyCode;
+		return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || (k >= 48 && k <= 57));
+	}
+	function blockSpecialCharWS(e) {
+		var k = e.keyCode;
+		return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 32 || (k >= 48 && k <= 57));
+	}
+	$(function() {
+		$("#surcharge").numericInput({
+
+			allowFloat : true, // Accpets positive numbers (floating point)
+
+			allowNegative : false,
+		// Accpets positive or negative integer
+
+		});
+	});
+	$(function() {
+
+		$(".numChk").numericInput({
+
+			allowFloat : true, // Accpets positive numbers (floating point)
+
+			allowNegative : false,
+		// Accpets positive or negative integer
+
+		});
+
+	});
 </script>
 </html>

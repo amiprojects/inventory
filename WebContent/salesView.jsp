@@ -243,13 +243,17 @@
 												<c:choose>
 													<c:when test="${salesSearchView.isMRP()==true}">
 														<td>${salesProducts.purchase_Product_Details.mrp}</td>
-														<td>${salesProducts.quantity*salesProducts.purchase_Product_Details.mrp}</td>
+														<td><fmt:formatNumber var="amount"
+																value="${salesProducts.quantity*salesProducts.purchase_Product_Details.mrp}"
+																maxFractionDigits="2" /> ${amount}</td>
 														<%-- <c:set var="subTotal"
 															value="${subTotal+salesProducts.quantity*salesProducts.purchase_Product_Details.mrp}"></c:set> --%>
 													</c:when>
 													<c:otherwise>
 														<td>${salesProducts.purchase_Product_Details.wsp}</td>
-														<td>${salesProducts.quantity*salesProducts.purchase_Product_Details.wsp}</td>
+														<td><fmt:formatNumber var="amount"
+																value="${salesProducts.quantity*salesProducts.purchase_Product_Details.wsp}"
+																maxFractionDigits="2" /> ${amount}</td>
 														<%-- <c:set var="subTotal"
 															value="${subTotal+salesProducts.quantity*salesProducts.purchase_Product_Details.wsp}"></c:set> --%>
 													</c:otherwise>
@@ -267,7 +271,7 @@
 										<tr>
 											<th>#</th>
 											<th>Return Date</th>
-											<th>Purchase Return challan no.</th>
+											<th>Sales Return challan no.</th>
 											<th>Product Code</th>
 											<th>Product Description</th>
 											<th>Returning Qty</th>
@@ -284,7 +288,8 @@
 												<td>${j}</td>
 												<td><fmt:formatDate value="${salesReturn.returnDate}"
 														pattern="dd-MM-yy" /></td>
-												<td>${salesReturn.challanNumber}</td>
+												<td><a href="#"
+													onclick="viewInvoiceS(${salesReturn.id});"><b>${salesReturn.challanNumber}</b></a></td>
 												<td><c:forEach var="salesReturnProd"
 														items="${salesReturn.salesProductReturnDetail}">
 														
@@ -448,6 +453,14 @@
 	<script type="text/javascript" src="js/enscroll.js"></script>
 	<script type="text/javascript" src="js/grid-filter.js"></script>
 	<script src="js/jquery-ui/jquery-ui.js"></script>
+	<script type="text/javascript">
+	function viewInvoiceS(id){		
+		window
+		.open(
+				"salesReturnInvoiceForPrint.jsp?id="+id,
+				'name', 'width=900,height=700');
+	}
+	</script>
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->

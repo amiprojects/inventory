@@ -964,7 +964,7 @@ public class Ejb {
 		Set<Purchase_Entry> hs = new HashSet<>();
 		TypedQuery<Purchase_Product_Details> q = em
 				.createQuery(
-						"select c from Purchase_Product_Details c where c.purchase_Entry.companyInfo.id=:cId AND UPPER(c.productDetail.code)=:name and c.purchase_Entry!=null ORDER BY c.id DESC",
+						"select c from Purchase_Product_Details c where c.purchase_Entry.companyInfo.id=:cId AND UPPER(c.productDetail.code)=:name and c.purchase_Entry!=null ORDER BY c.purchase_Entry.id DESC",
 						Purchase_Product_Details.class);
 		q.setParameter("name", name.toUpperCase());
 		q.setParameter("cId", cId);
@@ -1547,9 +1547,10 @@ public class Ejb {
 	}
 
 	public List<JobAssignmentDetails> getJobAssignByPlanNumber(int id) {
-		TypedQuery<JobAssignmentDetails> q = em.createQuery(
-				"select c from JobAssignmentDetails c where c.jobPlan.id=:id",
-				JobAssignmentDetails.class);
+		TypedQuery<JobAssignmentDetails> q = em
+				.createQuery(
+						"select c from JobAssignmentDetails c where c.jobPlan.id=:id order by c.id desc",
+						JobAssignmentDetails.class);
 		q.setParameter("id", id);
 		return q.getResultList();
 	}
@@ -1561,7 +1562,7 @@ public class Ejb {
 		Set<JobAssignmentDetails> hs = new HashSet<>();
 		TypedQuery<JobAssignmentProducts> q = em
 				.createQuery(
-						"select c from JobAssignmentProducts c where c.jobAssignmentDetails.companyInfo.id=:cId AND UPPER(c.purchase_Product_Details.productDetail.code)=:name ORDER BY c.id DESC",
+						"select c from JobAssignmentProducts c where c.jobAssignmentDetails.companyInfo.id=:cId AND UPPER(c.purchase_Product_Details.productDetail.code)=:name ORDER BY c.jobAssignmentDetails.id DESC",
 						JobAssignmentProducts.class);
 		q.setParameter("name", name.toUpperCase());
 		q.setParameter("cId", cId);
@@ -1579,7 +1580,7 @@ public class Ejb {
 		Set<JobAssignmentDetails> hs = new HashSet<>();
 		TypedQuery<JobAssignmentProducts> q = em
 				.createQuery(
-						"select c from JobAssignmentProducts c where UPPER(c.productsForDesignCostSheet.productDetail.code)=:name ORDER BY c.id DESC",
+						"select c from JobAssignmentProducts c where UPPER(c.productsForDesignCostSheet.productDetail.code)=:name ORDER BY c.jobAssignmentDetails.id DESC",
 						JobAssignmentProducts.class);
 		q.setParameter("name", name.toUpperCase());
 		for (JobAssignmentProducts p : q.getResultList()) {
@@ -1593,7 +1594,7 @@ public class Ejb {
 
 	public List<JobAssignmentDetails> getAllJobassignmentDetails() {
 		TypedQuery<JobAssignmentDetails> q = em.createQuery(
-				"select c from JobAssignmentDetails c",
+				"select c from JobAssignmentDetails c order by c.id desc",
 				JobAssignmentDetails.class);
 		return q.getResultList();
 	}
@@ -2839,7 +2840,7 @@ public class Ejb {
 				.getCompanyInfo().getId();
 		TypedQuery<SalesEntry> q = em
 				.createQuery(
-						"select c from SalesEntry c WHERE c.companyInfo.id=:cId AND c.sales_date BETWEEN :startDate AND :endDate",
+						"select c from SalesEntry c WHERE c.companyInfo.id=:cId AND c.sales_date BETWEEN :startDate AND :endDate order by c.id desc",
 						SalesEntry.class);
 		q.setParameter("startDate", startDate);
 		q.setParameter("endDate", endDate);
@@ -2916,7 +2917,7 @@ public class Ejb {
 		cId = getUserById((String) httpSession.getAttribute("user"))
 				.getCompanyInfo().getId();
 		TypedQuery<SalesEntry> q = em.createQuery(
-				"select c from SalesEntry c WHERE c.companyInfo.id=:cId",
+				"select c from SalesEntry c WHERE c.companyInfo.id=:cId order by c.id desc",
 				SalesEntry.class);
 		q.setParameter("cId", cId);
 		return q.getResultList();
@@ -2948,7 +2949,7 @@ public class Ejb {
 				.getCompanyInfo().getId();
 		TypedQuery<SalesEntry> q = em
 				.createQuery(
-						"select c from SalesEntry c where c.companyInfo.id=:cId AND UPPER(c.vendor.name)=:name",
+						"select c from SalesEntry c where c.companyInfo.id=:cId AND UPPER(c.vendor.name)=:name order by c.id desc",
 						SalesEntry.class);
 		q.setParameter("name", name.toUpperCase());
 		q.setParameter("cId", cId);
@@ -2960,7 +2961,7 @@ public class Ejb {
 				.getCompanyInfo().getId();
 		TypedQuery<SalesEntry> q = em
 				.createQuery(
-						"select c from SalesEntry c where c.companyInfo.id=:cId AND UPPER(c.customer.name)=:name",
+						"select c from SalesEntry c where c.companyInfo.id=:cId AND UPPER(c.customer.name)=:name order by c.id desc",
 						SalesEntry.class);
 		q.setParameter("name", name.toUpperCase());
 		q.setParameter("cId", cId);
@@ -2974,7 +2975,7 @@ public class Ejb {
 		HashSet<SalesEntry> hs = new HashSet<SalesEntry>();
 		TypedQuery<SalesProductDetails> q = em
 				.createQuery(
-						"select c from SalesProductDetails c where c.salesEntry.companyInfo.id=:cId AND UPPER(c.purchase_Product_Details.productDetail.code)=:code ORDER BY c.id DESC",
+						"select c from SalesProductDetails c where c.salesEntry.companyInfo.id=:cId AND UPPER(c.purchase_Product_Details.productDetail.code)=:code ORDER BY c.salesEntry.id DESC",
 						SalesProductDetails.class);
 
 		q.setParameter("code", code.toUpperCase());
@@ -3306,7 +3307,7 @@ public class Ejb {
 
 	public List<SampleDesignCostSheet> getAllSampleDesignCostSheet() {
 		TypedQuery<SampleDesignCostSheet> q = em.createQuery(
-				"select c from SampleDesignCostSheet c",
+				"select c from SampleDesignCostSheet c order by c.id desc",
 				SampleDesignCostSheet.class);
 		return q.getResultList();
 	}
@@ -3315,7 +3316,7 @@ public class Ejb {
 			String dn) {
 		TypedQuery<SampleDesignCostSheet> q = em
 				.createQuery(
-						"select c from SampleDesignCostSheet c where UPPER(c.designNumber) like :dn",
+						"select c from SampleDesignCostSheet c where UPPER(c.designNumber) like :dn order by c.id desc",
 						SampleDesignCostSheet.class);
 		q.setParameter("dn", dn.toUpperCase() + "%");
 		return q.getResultList();

@@ -169,9 +169,9 @@
 										<div class="row">
 											<div class="col-md-10">
 												<div class="form-group">
-													<label for="" style="float: left;">Designer Number
-														:</label> <input type="" placeholder="Enter Designer Number"
-														id="prodCode" name="prodCode" class="form-control">
+													<label for="" style="float: left;">Product Code :</label> <input
+														type="" placeholder="Enter Product Cose" id="prodCode"
+														name="prodCode" class="form-control">
 												</div>
 											</div>
 											<div class="col-md-2">
@@ -193,6 +193,25 @@
 											<div class="col-md-2">
 												<button class="btn green pull-left"
 													style="margin-top: 25px;" type="submit">Search</button>
+											</div>
+
+										</div>
+									</form>
+									<form role="form" class="sec" action="jobSearchByPlanNo"
+										method="post" id="jobSearchByPlanNoId">
+										<div class="row">
+											<div class="col-md-10">
+												<div class="form-group">
+													<label for="" style="float: left;">Plan Number :<font
+														color="red" size="4">*</font></label> <input type=""
+														placeholder="Enter Plan Number" id="planNo" name="planNo"
+														class="form-control">
+												</div>
+											</div>
+											<div class="col-md-2">
+												<button class="btn green pull-left"
+													style="margin-top: 25px;" type="button"
+													onclick="planNoF();">Search</button>
 											</div>
 
 										</div>
@@ -281,38 +300,37 @@
 													var="proDetl">
 													<c:set value="${totREMqty+proDetl.remaninQty}"
 														var="totREMqty" />
-													<c:if test="${totREMqty>0}">
-														<tr>
-															<td width="4%">${count}</td>
-															<td width="17%">${jobAssignByDate.challanNumber}</td>
-															<td width="14%"><fmt:formatDate
-																	value="${jobAssignByDate.assignDate}"
-																	pattern="dd-MM-yy" /></td>
-															<td width="18%">${jobAssignByDate.vendor.name}</td>
-															<td width="12%">${jobAssignByDate.jobAssignmentProducts.size()}</td>
-															<c:set value="${0}" var="totqty" />
-															<c:forEach
-																items="${jobAssignByDate.jobAssignmentProducts}"
-																var="proDet">
-																<c:set value="${totqty+proDet.qty}" var="totqty" />
-															</c:forEach>
-															<td width="10%">${totqty}</td>
-															<td width="15%">${totREMqty}</td>
-															<td width="10%">
-																<form action="goJobDetailShow" method="post"
-																	id="JobDetails${jobAssignByDate.id}">
-
-																	<a href="#"
-																		onclick="jobShowDetails('${jobAssignByDate.id}');"><input
-																		type="hidden" value="${jobAssignByDate.id}"
-																		name="joId"><img alt="" src="images/eye.png"
-																		height="25px"></a>
-																</form>
-															</td>
-														</tr>
-														<c:set var="count" value="${count+1}" />
-													</c:if>
 												</c:forEach>
+												<c:if test="${totREMqty>0}">
+													<tr>
+														<td width="4%">${count}</td>
+														<td width="17%">${jobAssignByDate.challanNumber}</td>
+														<td width="14%"><fmt:formatDate
+																value="${jobAssignByDate.assignDate}" pattern="dd-MM-yy" /></td>
+														<td width="18%">${jobAssignByDate.vendor.name}</td>
+														<td width="12%">${jobAssignByDate.jobAssignmentProducts.size()}</td>
+														<c:set value="${0}" var="totqty" />
+														<c:forEach
+															items="${jobAssignByDate.jobAssignmentProducts}"
+															var="proDet">
+															<c:set value="${totqty+proDet.qty}" var="totqty" />
+														</c:forEach>
+														<td width="10%">${totqty}</td>
+														<td width="15%">${totREMqty}</td>
+														<td width="10%">
+															<form action="goJobDetailShow" method="post"
+																id="JobDetails${jobAssignByDate.id}">
+
+																<a href="#"
+																	onclick="jobShowDetails('${jobAssignByDate.id}');"><input
+																	type="hidden" value="${jobAssignByDate.id}" name="joId"><img
+																	alt="" src="images/eye.png" height="25px"></a>
+															</form>
+														</td>
+													</tr>
+													<c:set var="count" value="${count+1}" />
+												</c:if>
+
 											</c:forEach>
 										</tbody>
 									</table>
@@ -345,37 +363,36 @@
 													var="proDetl">
 													<c:set value="${totREMqty+proDetl.remaninQty}"
 														var="totREMqty" />
-													<c:if test="${totREMqty==0}">
-														<tr>
-															<td width="5%">${count}</td>
-															<td width="20%">${jobAssignByDate.challanNumber}</td>
-															<td width="15%"><fmt:formatDate
-																	value="${jobAssignByDate.assignDate}"
-																	pattern="dd-MM-yy" /></td>
-															<td width="20%">${jobAssignByDate.vendor.name}</td>
-															<td width="15%">${jobAssignByDate.jobAssignmentProducts.size()}</td>
-															<c:set value="${0}" var="totqty" />
-															<c:forEach
-																items="${jobAssignByDate.jobAssignmentProducts}"
-																var="proDet">
-																<c:set value="${totqty+proDet.qty}" var="totqty" />
-															</c:forEach>
-															<td width="15%">${totqty}</td>
-															<td width="10%">
-																<form action="goJobDetailShow" method="post"
-																	id="JobDetails${jobAssignByDate.id}">
-
-																	<a href="#"
-																		onclick="jobShowDetails('${jobAssignByDate.id}');"><input
-																		type="hidden" value="${jobAssignByDate.id}"
-																		name="joId"><img alt="" src="images/eye.png"
-																		height="25px"></a>
-																</form>
-															</td>
-														</tr>
-														<c:set var="count" value="${count+1}" />
-													</c:if>
 												</c:forEach>
+												<c:if test="${totREMqty==0}">
+													<tr>
+														<td width="5%">${count}</td>
+														<td width="20%">${jobAssignByDate.challanNumber}</td>
+														<td width="15%"><fmt:formatDate
+																value="${jobAssignByDate.assignDate}" pattern="dd-MM-yy" /></td>
+														<td width="20%">${jobAssignByDate.vendor.name}</td>
+														<td width="15%">${jobAssignByDate.jobAssignmentProducts.size()}</td>
+														<c:set value="${0}" var="totqty" />
+														<c:forEach
+															items="${jobAssignByDate.jobAssignmentProducts}"
+															var="proDet">
+															<c:set value="${totqty+proDet.qty}" var="totqty" />
+														</c:forEach>
+														<td width="15%">${totqty}</td>
+														<td width="10%">
+															<form action="goJobDetailShow" method="post"
+																id="JobDetails${jobAssignByDate.id}">
+
+																<a href="#"
+																	onclick="jobShowDetails('${jobAssignByDate.id}');"><input
+																	type="hidden" value="${jobAssignByDate.id}" name="joId"><img
+																	alt="" src="images/eye.png" height="25px"></a>
+															</form>
+														</td>
+													</tr>
+													<c:set var="count" value="${count+1}" />
+												</c:if>
+
 											</c:forEach>
 										</tbody>
 									</table>
@@ -513,6 +530,29 @@
 
 				}
 			});
+		});
+
+		function planNoF() {
+			if ($("#planNo").val() == "") {
+				alert("Please enter plan number")
+			} else {
+				$("#jobSearchByPlanNoId").submit();
+			}
+		}
+	</script>
+	<script src="js/numericInput.min.js"></script>
+	<script>
+		$(function() {
+
+			$("#planNo").numericInput({
+
+				allowFloat : false, // Accpets positive numbers (floating point)
+
+				allowNegative : false,
+			// Accpets positive or negative integer
+
+			});
+
 		});
 	</script>
 </body>

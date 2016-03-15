@@ -243,13 +243,17 @@
 												<c:choose>
 													<c:when test="${salesSearchView.isMRP()==true}">
 														<td>${salesProducts.purchase_Product_Details.mrp}</td>
-														<td>${salesProducts.quantity*salesProducts.purchase_Product_Details.mrp}</td>
+														<td><fmt:formatNumber var="amount"
+																value="${salesProducts.quantity*salesProducts.purchase_Product_Details.mrp}"
+																maxFractionDigits="2" /> ${amount}</td>
 														<%-- <c:set var="subTotal"
 															value="${subTotal+salesProducts.quantity*salesProducts.purchase_Product_Details.mrp}"></c:set> --%>
 													</c:when>
 													<c:otherwise>
 														<td>${salesProducts.purchase_Product_Details.wsp}</td>
-														<td>${salesProducts.quantity*salesProducts.purchase_Product_Details.wsp}</td>
+														<td><fmt:formatNumber var="amount"
+																value="${salesProducts.quantity*salesProducts.purchase_Product_Details.wsp}"
+																maxFractionDigits="2" /> ${amount}</td>
 														<%-- <c:set var="subTotal"
 															value="${subTotal+salesProducts.quantity*salesProducts.purchase_Product_Details.wsp}"></c:set> --%>
 													</c:otherwise>
@@ -267,7 +271,7 @@
 										<tr>
 											<th>#</th>
 											<th>Return Date</th>
-											<th>Purchase Return challan no.</th>
+											<th>Sales Return challan no.</th>
 											<th>Product Code</th>
 											<th>Product Description</th>
 											<th>Returning Qty</th>

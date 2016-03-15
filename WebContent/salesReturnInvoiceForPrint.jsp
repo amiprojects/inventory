@@ -174,7 +174,9 @@ page[size="A4"] {
 							<c:set value="${tqty+ppdet.qtyReturn}" var="tqty" />
 							<td>${ppdet.salesProductDetails.getSalesPrice()}</td>
 							<td>${ppdet.salesProductDetails.purchase_Product_Details.productDetail.qtyUnit.name}</td>
-							<td>${ppdet.salesProductDetails.getSalesPrice()*ppdet.qtyReturn}</td>
+							<td><fmt:formatNumber var="amount"
+									value="${ppdet.salesProductDetails.getSalesPrice()*ppdet.qtyReturn}"
+									maxFractionDigits="2" /> ${amount}</td>
 							<c:set
 								value="${gtot+ppdet.salesProductDetails.getSalesPrice()*ppdet.qtyReturn}"
 								var="gtot" />

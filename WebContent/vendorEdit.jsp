@@ -26,6 +26,7 @@
 		}
 
 		$("#type").val($("#oldVendortypeID").val());
+		$("#subVdet").hide();
 	});
 
 	function fillFields() {
@@ -57,6 +58,10 @@
 		$("#micrno").val();
 		$("#rtgscd").val();
 		$("#label").val();
+	}
+
+	function editVendor() {
+		$("#subVdet").show();
 	}
 </script>
 
@@ -622,8 +627,10 @@ $(document).ready(function(){
 												<div class="col-md-12">
 													<!-- <input class="btn green pull-left" type="button"
 														value="Previous" onclick="detailButtonPrev();"> -->
-													<input class="btn green pull-right" type="button"
-														value="Next" onclick="detailButtonNext();">
+													<input class="btn green pull-left" type="button"
+														value="Edit" onclick="editVendor();"> <input
+														class="btn green pull-right" type="button" value="Next"
+														onclick="detailButtonNext();">
 												</div>
 											</div>
 											<div id="address" class="tab-pane fade ">
@@ -734,9 +741,11 @@ $(document).ready(function(){
 												<br>
 											</div> -->
 										</div>
-										<input type="button" class="btn green pull-left" type="submit"
-											style="width: 100px; margin-top: 27px;" value="Submit"
-											onclick="submitVendorDetails();">
+										<div id="subVdet">
+											<input type="button" class="btn green pull-left"
+												type="submit" style="width: 100px; margin-top: 27px;"
+												value="Submit" onclick="submitVendorDetails();">
+										</div>
 									</form>
 									<div class='toast' style='display: none'>
 										<h3 id="msg">${requestScope['msg']}</h3>

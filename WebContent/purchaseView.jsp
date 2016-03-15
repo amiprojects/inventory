@@ -198,7 +198,7 @@
 									<thead style="background-color: #F0F0F0;">
 										<tr>
 											<th>#</th>
-											<th>Designer Number:</th>
+											<th>Product Code:</th>
 											<th>Product Description</th>
 											<th>Qty</th>
 											<th>UOM</th>
@@ -248,7 +248,7 @@
 												<td><fmt:formatDate
 														value="${purchaseReturn.returnDate}" pattern="dd-MM-yy" />
 												</td>
-												<td>${purchaseReturn.challanNumber}</td>
+												<td><a href="#" onclick="viewInvoice(${purchaseReturn.id});"><b>${purchaseReturn.challanNumber}</b></a></td>
 												<td><c:forEach var="purchaseReturnProd"
 														items="${purchaseReturn.purchaseReturnProductDetails}">														
 													${purchaseReturnProd.purchaseProductDetails.productDetail.code}
@@ -411,6 +411,16 @@
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="js/enscroll.js"></script>
 	<script type="text/javascript" src="js/grid-filter.js"></script>
+
+	<script type="text/javascript">
+	function viewInvoice(id){
+		window
+		.open(
+				"purchaseReturnChallanForPrint.jsp?id="+id,
+				'name', 'width=900,height=700');
+		
+	}
+	</script>
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->

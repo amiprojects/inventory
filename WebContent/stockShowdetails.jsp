@@ -282,7 +282,6 @@
 														<c:forEach items="${prolst}" var="pro">
 															<c:choose>
 																<c:when test="${pro.isInitialInventory()}">
-
 																	<c:set value="${pro.quantity}" var="initialQty" />
 																</c:when>
 
@@ -295,7 +294,13 @@
 														<td><b>Total Purchased:</b> &nbsp;&nbsp;${purQtyt}</td>
 
 
-														<td><b>Initial Inventory:</b> ${initialQty}</td>
+														<td><b>Initial Inventory:</b> ${initialQty} <c:if
+																test="${initialQty!=0}">
+																<a href="#"
+																	onclick="window.open('initialBarcodePrint.jsp?id=${requestScope['proid1']}','mywindow','width=1100,height=500')">
+																	<img alt="click to view" src="Capture.PNG" height="20">
+																</a>
+															</c:if></td>
 
 
 													</tr>
@@ -536,7 +541,10 @@
 																<!-- Cost -->
 
 
-																<td><b>${sPro.salesPrice*sPro.quantity}</b></td>
+																<td><b> <fmt:formatNumber var="amount"
+																			value="${sPro.salesPrice*sPro.quantity}"
+																			maxFractionDigits="2" /> ${amount}
+																</b></td>
 																<!-- Amount -->
 
 

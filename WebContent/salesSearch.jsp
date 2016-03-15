@@ -81,22 +81,24 @@
 											<div class="col-md-5">
 												<div class="form-group">
 													<label for="">Search between two dates : (Start
-														Date)<font color="red" size="4">*</font></label> <input type="text" placeholder="Enter First Date"
+														Date)<font color="red" size="4">*</font>
+													</label> <input type="text" placeholder="Enter First Date"
 														id="datepicker" class="form-control" name="fDate"
-														 autocomplete="off" onchange="dateSet();">
+														autocomplete="off" onchange="dateSet();">
 												</div>
 											</div>
 											<div class="col-md-5">
 												<div class="form-group">
-													<label for="">(End Date)<font color="red" size="4">*</font></label> <input type="text"
-														placeholder="Enter last date" id="datepicker1"
-														class="form-control" name="lDate"
+													<label for="">(End Date)<font color="red" size="4">*</font></label>
+													<input type="text" placeholder="Enter last date"
+														id="datepicker1" class="form-control" name="lDate"
 														autocomplete="off" onchange="checkDate();">
 												</div>
 											</div>
 											<div class="col-md-2">
 												<button class="btn green pull-left"
-													style="margin-top: 25px;" type="button" onclick="salesSearchByDateSubmit();">Search</button>
+													style="margin-top: 25px;" type="button"
+													onclick="salesSearchByDateSubmit();">Search</button>
 											</div>
 										</div>
 									</form>
@@ -232,7 +234,8 @@
 											<tbody>
 												<tr>
 													<td>${count}</td>
-													<td>${sEntryByD.challanNumber}</td>
+													<td><a href="#"
+														onclick="viewInvoiceS(${sEntryByD.id});"><b>${sEntryByD.challanNumber}</b></a></td>
 													<td>${sEntryByD.customer.name}</td>
 													<c:choose>
 														<c:when test="${sEntryByD.vendor==null}">
@@ -459,6 +462,13 @@
 			} else {
 				$("#salesSearchByDateId").submit();
 			}
+		}
+		function viewInvoiceS(id){
+			
+			window
+			.open(
+					"stockSaCha.jsp?id="+id,
+					'name', 'width=900,height=700');
 		}
 	</script>
 </body>

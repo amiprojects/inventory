@@ -207,7 +207,10 @@ myWindow.print();
 							<c:set value="${tqty+ppdet.quantity}" var="tqty" />
 							<td>${ppdet.cost}</td>
 							<td>${ppdet.productDetail.qtyUnit.name}</td>
-							<td>${ppdet.cost*ppdet.quantity}</td>
+							<td>
+							<fmt:formatNumber var="amount"
+									value="${ppdet.cost*ppdet.quantity}" maxFractionDigits="2" />
+								${amount}</td>
 							<c:set value="${gtot+ppdet.cost*ppdet.quantity}" var="gtot" />
 						</tr>
 						<c:set value="${sl+1}" var="sl" />

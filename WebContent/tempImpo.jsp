@@ -196,7 +196,6 @@ var count = $('#purProTable tbody').length;
 
 <script>
 		$(function() {
-
 			$("#quantity").numericInput({
 
 				allowFloat : true, // Accpets positive numbers (floating point)
@@ -205,7 +204,6 @@ var count = $('#purProTable tbody').length;
 			// Accpets positive or negative integer
 
 			});
-
 		});
 	</script>
 

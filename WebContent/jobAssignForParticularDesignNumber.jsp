@@ -795,7 +795,7 @@ function showDatePicker() {
 		function selectedQtyF(id, prodId){			
 			//alert($("#prod" + prodId + " :nth-child(5)").html());
 			if(Number($("#viewAttr" + id + " :nth-child(3)").html()) < Number($("#viewAttr" + id + " :nth-child(4) input[type=text]").val())){
-				alert("You can not select more than remaining qty!");
+				alert("You can not select more than remaining quantity!");
 				$("#qtySelected" + id).val("");
 				$("#purProDetTotAmount"+id).val("");
 				$("#purProDetTotAmount"+id).val(Number($("#viewAttr" + id + " :nth-child(2)").html())*Number($("#qtySelected" + id ).val()));
@@ -825,7 +825,7 @@ function showDatePicker() {
 					}
 				});	
 			if(Number(sum)!=Number($("#prod" + $("#pIdModal").val() + " :nth-child(5)").html())){
-				alert("Selected Qty can not be more than or less than Required Qty! Total required qty is : "+ $("#prod" + $("#pIdModal").val() + " :nth-child(5)").html()+". You selected : "+ sum+". PLease select valid qty...");
+				alert("Selected Quantity can not be more than or less than Required Quantity! Total required qty is : "+ $("#prod" + $("#pIdModal").val() + " :nth-child(5)").html()+". You selected : "+ sum+". PLease select valid quantity...");
 			}else{				
 				$("#purchaseDetails").modal("hide");				
 				$("#productNjobsTable").hide();											

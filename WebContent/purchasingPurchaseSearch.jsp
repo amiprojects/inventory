@@ -231,8 +231,8 @@
 											<th width="13%">Purchase Date</th>
 											<th width="12%">Total Amount</th>
 											<th width="8%">Barcode</th>
-											<th width="4%"></th>
-											<th width="4%"></th>
+											<!-- <th width="4%"></th>
+											<th width="4%"></th> -->
 										</tr>
 									</thead>
 									<tbody style="height: 300px;">
@@ -241,7 +241,9 @@
 											var="pEntryByD">
 											<tr>
 												<td width="2%">${count}</td>
-												<td width="19%">${pEntryByD.challanNumber}</td>
+												<td width="19%"><a href="#"
+													onclick="viewInvoice(${pEntryByD.id});"><b>${pEntryByD.challanNumber}</b></a>
+												</td>
 												<c:if test="${pEntryByD.vendor.vendorType.type=='Vendor'}">
 													<td width="12%">${pEntryByD.vendor.name}</td>
 												</c:if>
@@ -279,7 +281,7 @@
 												<td width="4%">
 													<form action="purchaseEdit" method="post">
 														<input type="hidden" value="${pEntryByD.id}" name="pId">
-															<input type="image" src="img/edit.png">
+														<input type="image" src="img/edit.png">
 													</form>
 												</td>
 											</tr>
@@ -487,6 +489,14 @@
 			} else {
 				$("#purchaseSearchByDateId").submit();
 			}
+		}
+		
+		function viewInvoice(id){
+			window
+			.open(
+					"stockPurCha.jsp?id="+id,
+					'name', 'width=900,height=700');
+			
 		}
 	</script>
 </body>
