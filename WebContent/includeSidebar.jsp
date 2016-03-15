@@ -122,8 +122,8 @@
 						<li><a id="designCostSheetSearch"
 							href="jobDesignCostSheetSearch.jsp" title="">SampleJobCostSheet
 								Search</a></li>
-						<!-- <li><a id="jobPlan" href="jobPlanSearch.jsp" title="">Job
-								Plan Search</a></li> -->
+						<li><a id="jobPlan" href="jobPlanSearch.jsp" title="">Job
+								Plan Search</a></li>
 					</ul>
 				</div>
 			</div>

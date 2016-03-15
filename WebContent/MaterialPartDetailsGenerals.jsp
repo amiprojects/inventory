@@ -875,8 +875,8 @@
 							<div class="col-md-12">
 								<div class="widget-area" align="left">
 									<h2 class="widget-title">
-										<strong>Choose Category</strong> From Department <font color="red" size="4">*</font>&nbsp;
-										&nbsp;
+										<strong>Choose Category</strong> From Department <font
+											color="red" size="4">*</font>&nbsp; &nbsp;
 										<!--  <a onclick="addCat()"
 											title="Add New Category"> <img style="margin-top: 4px;"
 											height="30px" width="30px" alt="" src="img/add.png">
@@ -991,34 +991,40 @@
 
 								<div class="col-md-6">
 									<div class="form-group">
-										<span id="sa1" style="font-size: 17px">Attribute 1</span> <input
+										<span id="sa1" style="font-size: 17px">Attribute 1</span><span
+											id="starNcolonsa1" style="font-size: 17px"></span><input
 											name="a1" type="text" disabled="disabled" id="a10"
 											class="form-control">
 									</div>
 									<div class="form-group">
-										<span id="sa2" style="font-size: 17px">Attribute 2</span> <input
+										<span id="sa2" style="font-size: 17px">Attribute 2</span><span
+											id="starNcolonsa2" style="font-size: 17px"></span> <input
 											name="a2" type="text" disabled="disabled" id="a20"
 											class="form-control">
 									</div>
 									<div class="form-group">
-										<span id="sa3" style="font-size: 17px">Attribute 3</span> <input
+										<span id="sa3" style="font-size: 17px">Attribute 3</span><span
+											id="starNcolonsa3" style="font-size: 17px"></span> <input
 											name="a3" type="text" id="a30" disabled="disabled"
 											class="form-control">
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
-										<span id="sa4" style="font-size: 17px">Attribute 4</span> <input
+										<span id="sa4" style="font-size: 17px">Attribute 4</span><span
+											id="starNcolonsa4" style="font-size: 17px"></span> <input
 											name="a4" type="text" disabled="disabled" id="a40"
 											class="form-control">
 									</div>
 									<div class="form-group">
-										<span id="sa5" style="font-size: 17px">Attribute 5</span> <input
+										<span id="sa5" style="font-size: 17px">Attribute 5</span><span
+											id="starNcolonsa5" style="font-size: 17px"></span> <input
 											name="a5" type="text" disabled="disabled" id="a50"
 											class="form-control">
 									</div>
 									<div class="form-group">
-										<span id="sa6" style="font-size: 17px">Attribute 6</span> <input
+										<span id="sa6" style="font-size: 17px">Attribute 6</span><span
+											id="starNcolonsa6" style="font-size: 17px"></span> <input
 											name="a6" type="text" disabled="disabled" id="a60"
 											class="form-control">
 									</div>
@@ -1543,93 +1549,92 @@
 	<script>
 		function catProblem(a) {
 			$("#catagoryId").val(a);
-			$
-					.ajax({
-						url : 'getCategoryById',
-						type : 'post',
-						dataType : "json",
-						data : {
-							id : a
-						},
-						success : function(data) {
+			$.ajax({
+				url : 'getCategoryById',
+				type : 'post',
+				dataType : "json",
+				data : {
+					id : a
+				},
+				success : function(data) {
 
-							if ((data.attrNmae1) != 'null') {
-								$("#sa1")
-										.html(
-												data.attrNmae1
-														+ ":<font color='red' size='4'>*</font>");
-								$("#summaryA1").html(data.attrNmae1);
-								$("#a10").prop("disabled", false);
-							} else {
-								$("#sa1").html("Attribute1:");
-								$("#summaryA1").html("Attribute1:");
-								$("#a10").prop("disabled", true);
-							}
-							if ((data.attrNmae2) != 'null') {
-								$("#sa2")
-										.html(
-												data.attrNmae2
-														+ ":<font color='red' size='4'>*</font>");
-								$("#summaryA2").html(data.attrNmae2);
-								$("#a20").prop("disabled", false);
-							} else {
-								$("#sa2").html("Attribute2:");
-								$("#summaryA2").html("Attribute2:");
-								$("#a20").prop("disabled", true);
-							}
-							if ((data.attrNmae3) != 'null') {
-								$("#sa3")
-										.html(
-												data.attrNmae3
-														+ ":<font color='red' size='4'>*</font>");
-								$("#summaryA3").html(data.attrNmae3);
-								$("#a30").prop("disabled", false);
-							} else {
-								$("#sa3").html("Attribute3:");
-								$("#summaryA3").html("Attribute3:");
-								$("#a30").prop("disabled", true);
-							}
-							if ((data.attrNmae4) != 'null') {
-								$("#sa4")
-										.html(
-												data.attrNmae4
-														+ ":<font color='red' size='4'>*</font>");
-								$("#summaryA4").html(data.attrNmae4);
-								$("#a40").prop("disabled", false);
-							} else {
-								$("#sa4").html("Attribute4:");
-								$("#summaryA4").html("Attribute4:");
-								$("#a40").prop("disabled", true);
-							}
-							if ((data.attrNmae5) != 'null') {
-								$("#sa5")
-										.html(
-												data.attrNmae5
-														+ ":<font color='red' size='4'>*</font>");
-								$("#summaryA5").html(data.attrNmae5);
-								$("#a50").prop("disabled", false);
-							} else {
-								$("#sa5").html("Attribute5:");
-								$("#summaryA5").html("Attribute5:");
-								$("#a50").prop("disabled", true);
-							}
-							if ((data.attrNmae6) != 'null') {
-								$("#sa6").html(data.attrNmae6);
-								$("#summaryA6")
-										.html(
-												data.attrNmae6
-														+ ":<font color='red' size='4'>*</font>");
-								$("#a60").prop("disabled", false);
-							} else {
-								$("#sa6").html("Attribute6:");
-								$("#summaryA6").html("Attribute6:");
-								$("#a60").prop("disabled", true);
-							}
-						},
-						error : function(a, b, c) {
-							alert(b + ": " + c);
-						}
-					});
+					if ((data.attrNmae1) != 'null') {
+						$("#sa1").html(data.attrNmae1);
+						$("#starNcolonsa1").html(
+								":<font color='red' size='4'>*</font>");
+						$("#summaryA1").html(data.attrNmae1);
+						$("#a10").prop("disabled", false);
+					} else {
+						$("#sa1").html("Attribute1:");
+						$("#starNcolonsa1").html("");
+						$("#summaryA1").html("Attribute1:");
+						$("#a10").prop("disabled", true);
+					}
+					if ((data.attrNmae2) != 'null') {
+						$("#sa2").html(data.attrNmae2);
+						$("#starNcolonsa2").html(
+								":<font color='red' size='4'>*</font>");
+						$("#summaryA2").html(data.attrNmae2);
+						$("#a20").prop("disabled", false);
+					} else {
+						$("#sa2").html("Attribute2:");
+						$("#starNcolonsa2").html("");
+						$("#summaryA2").html("Attribute2:");
+						$("#a20").prop("disabled", true);
+					}
+					if ((data.attrNmae3) != 'null') {
+						$("#sa3").html(data.attrNmae3);
+						$("#starNcolonsa3").html(
+								":<font color='red' size='4'>*</font>");
+						$("#summaryA3").html(data.attrNmae3);
+						$("#a30").prop("disabled", false);
+					} else {
+						$("#sa3").html("Attribute3:");
+						$("#starNcolonsa3").html("");
+						$("#summaryA3").html("Attribute3:");
+						$("#a30").prop("disabled", true);
+					}
+					if ((data.attrNmae4) != 'null') {
+						$("#sa4").html(data.attrNmae4);
+						$("#starNcolonsa4").html(
+								":<font color='red' size='4'>*</font>");
+						$("#summaryA4").html(data.attrNmae4);
+						$("#a40").prop("disabled", false);
+					} else {
+						$("#sa4").html("Attribute4:");
+						$("#starNcolonsa4").html("");
+						$("#summaryA4").html("Attribute4:");
+						$("#a40").prop("disabled", true);
+					}
+					if ((data.attrNmae5) != 'null') {
+						$("#sa5").html(data.attrNmae5);
+						$("#starNcolonsa5").html(
+								":<font color='red' size='4'>*</font>");
+						$("#summaryA5").html(data.attrNmae5);
+						$("#a50").prop("disabled", false);
+					} else {
+						$("#sa5").html("Attribute5:");
+						$("#starNcolonsa5").html("");
+						$("#summaryA5").html("Attribute5:");
+						$("#a50").prop("disabled", true);
+					}
+					if ((data.attrNmae6) != 'null') {
+						$("#sa6").html(data.attrNmae6);
+						$("#summaryA6").html(data.attrNmae6);
+						$("#starNcolonsa6").html(
+								":<font color='red' size='4'>*</font>");
+						$("#a60").prop("disabled", false);
+					} else {
+						$("#sa6").html("Attribute6:");
+						$("#starNcolonsa2").html("");
+						$("#summaryA6").html("Attribute6:");
+						$("#a60").prop("disabled", true);
+					}
+				},
+				error : function(a, b, c) {
+					alert(b + ": " + c);
+				}
+			});
 		}
 	</script>
 

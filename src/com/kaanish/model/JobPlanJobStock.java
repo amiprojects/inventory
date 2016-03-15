@@ -20,7 +20,7 @@ public class JobPlanJobStock implements Serializable {
 	@GeneratedValue
 	private int id;
 	private float qty;
-	private float remQty;
+	//private float remQty;
 	private boolean isComplete;
 
 	@OneToMany(mappedBy = "jobPlanJobStock")
@@ -70,13 +70,13 @@ public class JobPlanJobStock implements Serializable {
 		this.jobPlanProducts = jobPlanProducts;
 	}
 
-	public float getRemQty() {
-		return remQty;
-	}
-
-	public void setRemQty(float remQty) {
-		this.remQty = remQty;
-	}
+//	public float getRemQty() {
+//		return remQty;
+//	}
+//
+//	public void setRemQty(float remQty) {
+//		this.remQty = remQty;
+//	}
 
 	public List<JobAssignmentJobDetails> getJobAssignmentJobDetails() {
 		return jobAssignmentJobDetails;

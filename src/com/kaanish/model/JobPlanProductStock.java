@@ -35,8 +35,6 @@ public class JobPlanProductStock implements Serializable {
 	@JoinColumn(name = "purchaseProductId")
 	private Purchase_Product_Details purchase_Product_Details;
 	
-	/*@OneToMany(mappedBy = "jobPlanProductStock")
-	private List<JobAssignmentProducts> jobAssignmentProducts;*/	
 	@ManyToOne
 	@JoinColumn(name = "jobAssignmentProductsId")
 	private JobAssignmentProducts jobAssignmentProducts;
@@ -134,13 +132,5 @@ public class JobPlanProductStock implements Serializable {
 	public void setJobPlanProducts(JobPlanProducts jobPlanProducts) {
 		this.jobPlanProducts = jobPlanProducts;
 	}
-
-	/*public List<JobAssignmentProducts> getJobAssignmentProducts() {
-		return jobAssignmentProducts;
-	}
-
-	public void setJobAssignmentProducts(List<JobAssignmentProducts> jobAssignmentProducts) {
-		this.jobAssignmentProducts = jobAssignmentProducts;
-	}*/
 
 }

@@ -2687,7 +2687,7 @@ public class Servlet extends HttpServlet {
 						for (int l1 = 0; l1 < jobForSampleIdH.length; l1++) {
 							jobPlanJobStock = new JobPlanJobStock();
 							jobPlanJobStock.setQty(Float.parseFloat(jobQtyH[l1]));
-							jobPlanJobStock.setRemQty(Float.parseFloat(jobQtyH[l1]));
+							//jobPlanJobStock.setRemQty(Float.parseFloat(jobQtyH[l1]));
 							jobPlanJobStock.setComplete(false);
 							jobPlanJobStock.setJobPlanProducts(jobPlanProducts);
 							jobPlanJobStock.setJobsForDesignCostSheet(
@@ -2825,8 +2825,8 @@ public class Servlet extends HttpServlet {
 						for (int lc1 = 0; lc1 < jobid.length; lc1++) {
 							jobPlanJobStock = ejb.getJobPlanJobStockByJobPlanProductIdAndJobForSampleId(
 									jobPlanProducts.getId(), Integer.parseInt(jobForSampleIdH[lc1]));
-							jobPlanJobStock.setRemQty(jobPlanJobStock.getRemQty() - Float.parseFloat(jobqty[lc1]));
-							ejb.updateJobPlanJobStock(jobPlanJobStock);
+//							jobPlanJobStock.setRemQty(jobPlanJobStock.getRemQty() - Float.parseFloat(jobqty[lc1]));
+//							ejb.updateJobPlanJobStock(jobPlanJobStock);
 
 							jobAssignmentJobDetails = new JobAssignmentJobDetails();
 							jobAssignmentJobDetails.setQty(Float.parseFloat(jobqty[lc1]));
@@ -2943,8 +2943,8 @@ public class Servlet extends HttpServlet {
 						for (int lc1 = 0; lc1 < jobid.length; lc1++) {
 							jobPlanJobStock = ejb.getJobPlanJobStockByJobPlanProductIdAndJobForSampleId(
 									jobPlanProducts.getId(), Integer.parseInt(jobid[lc1]));
-							jobPlanJobStock.setRemQty(jobPlanJobStock.getRemQty() - Float.parseFloat(jobqty[lc1]));
-							ejb.updateJobPlanJobStock(jobPlanJobStock);
+//							jobPlanJobStock.setRemQty(jobPlanJobStock.getRemQty() - Float.parseFloat(jobqty[lc1]));
+//							ejb.updateJobPlanJobStock(jobPlanJobStock);
 
 							jobAssignmentJobDetails = new JobAssignmentJobDetails();
 							jobAssignmentJobDetails.setQty(Float.parseFloat(jobqty[lc1]));
@@ -3042,8 +3042,9 @@ public class Servlet extends HttpServlet {
 										.getJobAssignmentJobDetailsById(Integer.parseInt(jobAssgnJobId[lc1]));
 
 								jobPlanJobStock = jobAssignmentJobDetails.getJobPlanJobStock();
-								jobPlanJobStock.setRemQty(jobPlanJobStock.getRemQty() + Float.parseFloat(qtyRe[lc1]));
-								ejb.updateJobPlanJobStock(jobPlanJobStock);
+								// jobPlanJobStock.setRemQty(jobPlanJobStock.getRemQty()
+								// + Float.parseFloat(qtyRe[lc1]));
+								// ejb.updateJobPlanJobStock(jobPlanJobStock);
 
 								jobAssignmentJobDetails = ejb
 										.getJobAssignmentJobDetailsById(Integer.parseInt(jobAssgnJobId[lc1]));

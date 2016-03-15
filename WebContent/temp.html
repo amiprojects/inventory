@@ -1,17 +1,4 @@
-":<font color='red' size='4'>*</font>"
-<font color="red" size="4">*</font>
+<span id="starNcolon1"></span>
 
-
-List<Purchase_Entry> purEntry = ejb.getAllPurchaseEntry();
-int chP = 0;
-for (Purchase_Entry pe : purEntry) {
-	if (pe.getChallanNumber().equals(
-		req.getParameter("challanNumber"))) {
-		chP = 1;
-		break;
-		}
-	}
-if (chP == 0) {
-} else {
-	msg = "Duplicate Entry! Not Allowed!";
-}
+$("#starNcolon1").html(":<font color='red' size='4'>*</font>");
+$("#starNcolon1").html("");

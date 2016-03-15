@@ -83,6 +83,7 @@ import com.kaanish.model.VoucherAssign;
 import com.kaanish.model.VoucherDetails;
 import com.kaanish.util.DateConverter;
 import com.kaanish.util.DigitToWords;
+import com.kaanish.util.MRPtoLAXMIHOUSE;
 
 @Stateless
 public class Ejb {
@@ -91,6 +92,11 @@ public class Ejb {
 	@Inject
 	private HttpSession httpSession;
 	private int cId;
+	private MRPtoLAXMIHOUSE mrpTOlh;;
+
+	public String getMRPlh(float mrp) {
+		return mrpTOlh.getLaxmiHouse(mrp);
+	}
 
 	public Date getCurrentDateTime() {
 		return new Date();
@@ -860,7 +866,7 @@ public class Ejb {
 	public Purchase_Entry getPurchaseEntryById(int id) {
 		return em.find(Purchase_Entry.class, id);
 	}
-	
+
 	public void updatePurchaseEntry(Purchase_Entry purchaseEntry) {
 		em.merge(purchaseEntry);
 	}
@@ -1139,9 +1145,10 @@ public class Ejb {
 	public List<Purchase_Entry> getAllPurchaseEntryByCompany() {
 		cId = getUserById((String) httpSession.getAttribute("user"))
 				.getCompanyInfo().getId();
-		TypedQuery<Purchase_Entry> q = em.createQuery(
-				"select c from Purchase_Entry c where c.companyInfo.id=:cId",
-				Purchase_Entry.class);
+		TypedQuery<Purchase_Entry> q = em
+				.createQuery(
+						"select c from Purchase_Entry c where c.companyInfo.id=:cId ORDER BY c.id DESC",
+						Purchase_Entry.class);
 		q.setParameter("cId", cId);
 		return q.getResultList();
 	}
@@ -3431,12 +3438,20 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	public List<JobPlan> getAllOngoingJobPlanByDesignNumber(String dn) {
+	public List<JobPlan> getAllOngoingJobPlanByDesignNumber(int dn) {
 		TypedQuery<JobPlan> q = em
 				.createQuery(
-						"select c from JobPlan c where UPPER(c.designCostSheet.designNumber) like :dn and c.isComplete=false",
+						"select c from JobPlan c where c.designCostSheet.id =:dn and c.isComplete=false",
 						JobPlan.class);
-		q.setParameter("dn", dn.toUpperCase() + "%");
+		q.setParameter("dn", dn);
+		return q.getResultList();
+	}
+
+	public List<JobPlan> getAllJobPlanByDesignNumber(int dn) {
+		TypedQuery<JobPlan> q = em.createQuery(
+				"select c from JobPlan c where c.designCostSheet.id =:dn",
+				JobPlan.class);
+		q.setParameter("dn", dn);
 		return q.getResultList();
 	}
 

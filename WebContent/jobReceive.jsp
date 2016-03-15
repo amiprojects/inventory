@@ -240,7 +240,9 @@
 													</tr>
 													<tr>
 														<td><p style="font-size: 18px; color: black;">
-																Receiving Date:<font color="red" size="4">*</font> &nbsp;</p></td>
+																Receiving Date:<font color="red" size="4">*</font>
+																&nbsp;
+															</p></td>
 														<td><input type="text" value="" class="form-control"
 															id="datepicker" readonly="readonly" name="rcvDate"></td>
 
@@ -277,9 +279,11 @@
 																<th width="10%" style="text-align: center">Assigned
 																	Job Qty</th>
 																<th width="15%" style="text-align: center">Job Qty
-																	Done<font color="red" size="4">*</font></th>
+																	Done<font color="red" size="4">*</font>
+																</th>
 																<th width="10%" style="text-align: center">Select
-																	Product<font color="red" size="4">*</font></th>
+																	Product<font color="red" size="4">*</font>
+																</th>
 																<!-- <th width="20%" style="text-align: center">Reoson,
 																	If not receiving all products</th> -->
 															</tr>
@@ -303,15 +307,15 @@
 																			type="hidden" id="jobAssgnProductsId${jobPro.id}"
 																			value="${jobPro.id}"></td>
 
-																		<td width="10%" style="text-align: center">${jobPro.jobPlanProductStock.get(0).purchase_Product_Details.productDetail.code}</td>
-																		<td width="15%" style="text-align: center">${jobPro.jobPlanProductStock.get(0).purchase_Product_Details.productDetail.description}</td>
+																		<td width="10%" style="text-align: center">${jobPro.jobPlanProducts.jobPlanProductStock.get(0).purchase_Product_Details.productDetail.code}</td>
+																		<td width="15%" style="text-align: center">${jobPro.jobPlanProducts.jobPlanProductStock.get(0).purchase_Product_Details.productDetail.description}</td>
 																		<td width="5%" style="text-align: center"><span
 																			id="qtty${jobPro.id}">${jobPro.qty}</span></td>
 																		<td width="10%"
 																			style="text-align: center; padding: 2px">${jobPro.remaninQty}<input
 																			type="hidden" id="prodQtyRe${jobPro.id}"
 																			value="${jobPro.remaninQty}"></td>
-																		<td width="10%" style="text-align: center">${jobPro.jobPlanProductStock.get(0).purchase_Product_Details.productDetail.qtyUnit.name}</td>
+																		<td width="10%" style="text-align: center">${jobPro.jobPlanProducts.jobPlanProductStock.get(0).purchase_Product_Details.productDetail.qtyUnit.name}</td>
 																		<td width="10%" style="text-align: center"><c:forEach
 																				items="${jobPro.jobAssignmentJobDetails}"
 																				var="jobProjob">
