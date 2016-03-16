@@ -448,7 +448,7 @@
 																				<div class="col-md-5">Payment type :</div>
 																				<div class="col-md-7">
 																					<select class="form-control" id="pstatus"
-																						name="pstatus" onchange="pStatusDiv()">
+																						name="pType" onchange="pTypeFunc()">
 																						<option value="-" selected="selected">---</option>
 																						<c:forEach items="${sessionScope['ejb'].getAllPaymentType()}"
 																							var="payType">

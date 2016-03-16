@@ -164,6 +164,15 @@
 			</script>
 		</c:if>
 	</c:if>
+	<c:if test="${requestScope['purRetIdforPC']!=null}">
+		<script type="text/javascript">
+			var myWindow = window
+					.open(
+							"purchaseReturnChallanForPrint.jsp?id=${requestScope['purRetIdforPC']}",
+							'name', 'width=600,height=400');
+			myWindow.print();
+		</script>
+	</c:if>
 	<c:set var="compInfo"
 		value="${sessionScope['ejb'].getUserById(sessionScope['user']).getCompanyInfo()}" />
 	<c:set var="purchaseSearchView"
@@ -535,7 +544,7 @@
 													readonly="readonly" value="0" id="taxAmount"></td>
 											</tr>
 										</tbody>
-										<tbody>
+										<%-- <tbody>
 											<tr>
 												<td colspan="2">Transport charge :</td>
 												<td><input type="text" class="form-control"
@@ -552,7 +561,7 @@
 													value="${purchaseSearchView.sur_charge}"
 													readonly="readonly"></td>
 											</tr>
-										</tbody>
+										</tbody> --%>
 										<tbody>
 											<tr>
 												<td colspan="2" id="round">Round Of :</td>

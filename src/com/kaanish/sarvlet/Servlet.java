@@ -87,7 +87,9 @@ import com.kaanish.util.DateConverter;
 		"/salesReturnServlet", "/purchaseSearchAll", "/salesSearchAll",
 		"/jobSearchAll", "/forgotPassUserCheck", "/forgotPassVarify",
 		"/resetPass", "/purchaseSearchForReturn", "/purchaseReturn",
-		"/setJobTypes", "/updateJob" })
+		"/setJobTypes", "/updateJob", "/allPurchaseReport",
+		"/purchaseReportByProductCode", "/purchaseReportByVendorName",
+		"/purchaseReportByDate", "/purchaseReportByAgentName" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -1659,6 +1661,28 @@ public class Servlet extends HttpServlet {
 				}
 				break;
 
+			case "purchaseReportByDate":
+				page = "reportPurchaseReport.jsp";
+				List<Purchase_Entry> purEntryListRp = ejb
+						.getPurchaseEntryByDateAndCompany(
+								DateConverter
+										.getDate(req.getParameter("fDate")),
+								DateConverter.getDate(req.getParameter("lDate")),
+								ejb.getUserById(
+										(String) httpSession
+												.getAttribute("user"))
+										.getCompanyInfo().getId());
+				req.setAttribute("purEntryList", purEntryListRp);
+				if (purEntryListRp.size() > 0) {
+					msg = "Your search for dated " + req.getParameter("fDate")
+							+ " to " + req.getParameter("lDate");
+				} else {
+					msg = "No result found for dated "
+							+ req.getParameter("fDate") + " to "
+							+ req.getParameter("lDate") + "...";
+				}
+				break;
+
 			case "purchaseSearchByPurchaseChallanNo":
 				page = "purchasingPurchaseSearch.jsp";
 
@@ -1727,6 +1751,22 @@ public class Servlet extends HttpServlet {
 				}
 				break;
 
+			case "purchaseReportByVendorName":
+				page = "reportPurchaseReport.jsp";
+				List<Purchase_Entry> purEntryList2R = ejb
+						.getPurchaseEntryByVendorNameAndCompany(req
+								.getParameter("vendorName"));
+				req.setAttribute("purEntryList", purEntryList2R);
+				if (purEntryList2R.size() > 0) {
+					msg = "Your search for Vendor name : "
+							+ req.getParameter("vendorName").toUpperCase();
+				} else {
+					msg = "No result found for Vendor name : "
+							+ req.getParameter("vendorName").toUpperCase()
+							+ "...";
+				}
+				break;
+
 			case "purchaseSearchByAgentName":
 				page = "purchasingPurchaseSearch.jsp";
 				List<Purchase_Entry> purEntryList3 = ejb
@@ -1734,6 +1774,21 @@ public class Servlet extends HttpServlet {
 								.getParameter("agentName"));
 				req.setAttribute("purEntryList", purEntryList3);
 				if (purEntryList3.size() > 0) {
+					msg = "Your search for Agent name : "
+							+ req.getParameter("agentName").toUpperCase();
+				} else {
+					msg = "No result found for Agent name : "
+							+ req.getParameter("agentName").toUpperCase()
+							+ "...";
+				}
+				break;
+			case "purchaseReportByAgentName":
+				page = "reportPurchaseReport.jsp";
+				List<Purchase_Entry> purEntryList3R = ejb
+						.getPurchaseEntryByAgentNameAndCompany(req
+								.getParameter("agentName"));
+				req.setAttribute("purEntryList", purEntryList3R);
+				if (purEntryList3R.size() > 0) {
 					msg = "Your search for Agent name : "
 							+ req.getParameter("agentName").toUpperCase();
 				} else {
@@ -1759,6 +1814,22 @@ public class Servlet extends HttpServlet {
 				}
 				break;
 
+			case "purchaseReportByProductCode":
+				page = "reportPurchaseReport.jsp";
+				List<Purchase_Entry> purEntryList4R = ejb
+						.getPurchaseEntryByProductCodeAndCompany(req
+								.getParameter("prodCode"));
+				req.setAttribute("purEntryList", purEntryList4R);
+				if (purEntryList4R.size() > 0) {
+					msg = "Your search for Product code : "
+							+ req.getParameter("prodCode").toUpperCase();
+				} else {
+					msg = "No result found for product code : "
+							+ req.getParameter("prodCode").toUpperCase()
+							+ "...";
+				}
+				break;
+
 			case "purchaseSearchAll":
 				page = "purchasingPurchaseSearch.jsp";
 				List<Purchase_Entry> purEntryListA = ejb
@@ -1769,6 +1840,18 @@ public class Servlet extends HttpServlet {
 				} else {
 					msg = "No result found...";
 				}
+				break;
+
+			case "allPurchaseReport":
+				page = "reportPurchaseReport.jsp";
+				List<Purchase_Entry> purEntryListAR = ejb
+						.getAllPurchaseEntryByCompany();
+				req.setAttribute("purEntryList", purEntryListAR);
+				msg="";
+				/*
+				 * if (purEntryListAR.size() > 0) { msg = "All Purchase List"; }
+				 * else { msg = "No result found..."; }
+				 */
 				break;
 
 			case "purchaseBarCode":

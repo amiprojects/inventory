@@ -88,46 +88,52 @@
 							<div class="row">
 								<div class="masonary-grids">
 
-									<div class="col-md-4"><a href="purchasingPurchaseEntry.jsp">
-										<div class="stats-counter">
-											<img alt="purchase Entry" src="images/"
-												style="height: 179px; width: 330px;"> <i
-												class="fa fa-user red"></i>
-											<h4 style="color: red">Purchase Report</h4>
-										</div></a>
+									<div class="col-md-4">
+										<a href="reportPurchaseReport.jsp">
+											<div class="stats-counter">
+												<img alt="Purchase Report" src="images/"
+													style="height: 179px; width: 330px;"> <i
+													class="fa fa-user red"></i>
+												<h4 style="color: red">Purchase Report</h4>
+											</div>
+										</a>
 
 									</div>
 
-									
 
 
-									<div class="col-md-4"><a href="salesSalesEntry.jsp">
-										<div class="stats-counter">
-											<img alt="sales Entry" src="images/"
-												style="height: 179px; width: 330px;"> <i
-												class="fa fa-user red"></i>
-											<h4 style="color: red">Sales Report</h4>
-										</div></a>
+
+									<div class="col-md-4">
+										<a href="#">
+											<div class="stats-counter">
+												<img alt="Sales Report" src="images/"
+													style="height: 179px; width: 330px;"> <i
+													class="fa fa-user red"></i>
+												<h4 style="color: red">Sales Report</h4>
+											</div>
+										</a>
 
 									</div>
-									
-
- 									<div class="col-md-4"></div>
 
 
+									<div class="col-md-4"></div>
 
-									<div class="col-md-4"><a href="stockReport.jsp">
-										<div class="stats-counter">
-											<img alt="sales Entry" src="images/stockReport.JPG"
-												style="height: 179px; width: 330px;"> <i
-												class="fa fa-user red"></i>
-											<h4 style="color: red">Stock Report</h4>
-										</div></a>
+
+
+									<div class="col-md-4">
+										<a href="stockReport.jsp">
+											<div class="stats-counter">
+												<img alt="sales Entry" src="images/stockReport.JPG"
+													style="height: 179px; width: 330px;"> <i
+													class="fa fa-user red"></i>
+												<h4 style="color: red">Stock Report</h4>
+											</div>
+										</a>
 									</div>
 
-									
 
-												<div class="col-md-4"></div>
+
+									<div class="col-md-4"></div>
 
 
 								</div>
@@ -143,7 +149,7 @@
 		<!-- Content Sec -->
 	</div>
 	<!-- Page Container -->
-	
+
 	<!-- main -->
 
 	<!-- Script -->
@@ -156,15 +162,15 @@
 
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 
-	
+
 	<script type="text/javascript">
-	$(document).ready(function() {
-		$("#reports").attr("id", "activeSubMenu");
-		$("#report").attr("style", "color: #6a94ff;");
-	});
-	$(function() {
-		$("#datepicker").datepicker();
-	});
+		$(document).ready(function() {
+			$("#reports").attr("id", "activeSubMenu");
+			$("#report").attr("style", "color: #6a94ff;");
+		});
+		$(function() {
+			$("#datepicker").datepicker();
+		});
 	</script>
 	<script type="text/javascript">
 		function random_num(field, interval, range) {
@@ -204,7 +210,6 @@
 			document.getElementById('reportrange').innerHTML = x1;
 			tt = display_c();
 		}
-		
 	</script>
 </body>
 

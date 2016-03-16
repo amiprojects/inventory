@@ -62,7 +62,7 @@
 
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
-								<h3 style="margin-top: 11px;">Sales Search</h3>
+								<h3 style="margin-top: 11px;">Sales Report</h3>
 							</div>
 							<div class="widget-area">
 								<div class="col-md-12">

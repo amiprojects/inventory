@@ -73,8 +73,8 @@
 									method="post">
 									<div class="row">
 										<div class="col-md-12">
-											<button class="btn green pull-right" type="submit" style="margin-right: 63px;">Show
-												All</button>
+											<button class="btn green pull-right" type="submit"
+												style="margin-right: 63px;">Show All</button>
 										</div>
 									</div>
 								</form>
@@ -170,9 +170,9 @@
 									<div class="row">
 										<div class="col-md-10">
 											<div class="form-group">
-												<label for="" style="float: left;">Designer Number:</label>
-												<input type="" placeholder="Enter Designer Number"
-													id="prodCode" name="prodCode" class="form-control">
+												<label for="" style="float: left;">Product Code:</label> <input
+													type="" placeholder="Enter Designer Number" id="prodCode"
+													name="prodCode" class="form-control">
 											</div>
 										</div>
 										<div class="col-md-2">
