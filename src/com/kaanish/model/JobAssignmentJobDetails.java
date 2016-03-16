@@ -22,7 +22,7 @@ public class JobAssignmentJobDetails implements Serializable {
 	private int id;
 
 	private float qty;
-	private float remQty;
+	//private float remQty;
 	private float rate;
 	private float ammount;
 	@Temporal(TemporalType.TIMESTAMP)
@@ -152,12 +152,12 @@ public class JobAssignmentJobDetails implements Serializable {
 		this.jobPlanJobStock = jobPlanJobStock;
 	}
 
-	public float getRemQty() {
-		return remQty;
-	}
-
-	public void setRemQty(float remQty) {
-		this.remQty = remQty;
-	}
+	// public float getRemQty() {
+	// return remQty;
+	// }
+	//
+	// public void setRemQty(float remQty) {
+	// this.remQty = remQty;
+	// }
 
 }

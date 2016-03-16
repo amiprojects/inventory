@@ -1649,6 +1649,10 @@ public class Ejb {
 
 	}
 
+	public JobAssignmentProducts getJobAssignmentProductById(int id) {
+		return em.find(JobAssignmentProducts.class, id);
+	}
+
 	public JobAssignmentProducts getJobAssignmentProductsByJobPlanProductIdAndJobAssignmentId(
 			int id, int jaId) {
 		TypedQuery<JobAssignmentProducts> q = em
@@ -1676,6 +1680,21 @@ public class Ejb {
 		TypedQuery<JobAssignmentJobDetails> q = em
 				.createQuery(
 						"select c from JobAssignmentJobDetails c where c.assignmentProducts.id=:japId and c.jobPlanJobStock.jobsForDesignCostSheet.id=:jsId",
+						JobAssignmentJobDetails.class);
+		q.setParameter("japId", japId);
+		q.setParameter("jsId", jsId);
+		if (q.getResultList().size() > 0) {
+			return q.getResultList().get(0);
+		} else {
+			return null;
+		}
+	}
+
+	public JobAssignmentJobDetails getJobAssignmentJobDetailsByPlanIdAndJobsForDesignCostSheetId(
+			int japId, int jsId) {
+		TypedQuery<JobAssignmentJobDetails> q = em
+				.createQuery(
+						"select c from JobAssignmentJobDetails c where c.jobPlan.id=:japId and c.jobPlanJobStock.jobsForDesignCostSheet.id=:jsId order by c.id desc",
 						JobAssignmentJobDetails.class);
 		q.setParameter("japId", japId);
 		q.setParameter("jsId", jsId);

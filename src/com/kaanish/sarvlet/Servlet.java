@@ -3552,8 +3552,8 @@ public class Servlet extends HttpServlet {
 							jobAssignmentJobDetails = new JobAssignmentJobDetails();
 							jobAssignmentJobDetails.setQty(Float
 									.parseFloat(jobqty[lc1]));
-							jobAssignmentJobDetails.setRemQty(Float
-									.parseFloat(jobqty[lc1]));
+							// jobAssignmentJobDetails.setRemQty(Float
+							// .parseFloat(jobqty[lc1]));
 							jobAssignmentJobDetails.setRate(Float
 									.parseFloat(jobrate[lc1]));
 							jobAssignmentJobDetails.setAmmount(Float
@@ -3724,8 +3724,8 @@ public class Servlet extends HttpServlet {
 							jobAssignmentJobDetails = new JobAssignmentJobDetails();
 							jobAssignmentJobDetails.setQty(Float
 									.parseFloat(jobqty[lc1]));
-							jobAssignmentJobDetails.setRemQty(Float
-									.parseFloat(jobqty[lc1]));
+							// jobAssignmentJobDetails.setRemQty(Float
+							// .parseFloat(jobqty[lc1]));
 							jobAssignmentJobDetails.setRate(Float
 									.parseFloat(jobrate[lc1]));
 							jobAssignmentJobDetails.setAmmount(Float
@@ -3866,11 +3866,11 @@ public class Servlet extends HttpServlet {
 								jobAssignmentJobDetails = ejb
 										.getJobAssignmentJobDetailsById(Integer
 												.parseInt(jobAssgnJobId[lc1]));
-								jobAssignmentJobDetails
-										.setRemQty(jobAssignmentJobDetails
-												.getRemQty()
-												- Float.parseFloat(qtyRe[lc1]));
-								ejb.updateJobAssignmentJobDetails(jobAssignmentJobDetails);
+								// jobAssignmentJobDetails
+								// .setRemQty(jobAssignmentJobDetails
+								// .getRemQty()
+								// - Float.parseFloat(qtyRe[lc1]));
+								// ejb.updateJobAssignmentJobDetails(jobAssignmentJobDetails);
 
 								jobReceiveJobDetails = new JobReceiveJobDetails();
 								jobReceiveJobDetails

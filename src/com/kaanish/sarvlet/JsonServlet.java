@@ -556,18 +556,30 @@ public class JsonServlet extends HttpServlet {
 										.write("Amount", "NA")
 										.write("EstSubDate", "NA").writeEnd();
 							} else {
-								if (ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
+
+								// if
+								// (ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
+								// Integer.parseInt(req
+								// .getParameter("japId")),
+								// jdcs.getId()).getRemQty() > 0
+								// &&
+								// ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
+								// Integer.parseInt(req
+								// .getParameter("japId")),
+								// jdcs.getId()).getRemQty() == ejb
+								// .getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
+								// Integer.parseInt(req
+								// .getParameter("japId")),
+								// jdcs.getId()).getQty()) {
+
+								if (ejb.getJobAssignmentProductById(
 										Integer.parseInt(req
-												.getParameter("japId")),
-										jdcs.getId()).getRemQty() > 0
+												.getParameter("japId")))
+										.getRemaninQty() > 0
 										&& ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
 												Integer.parseInt(req
 														.getParameter("japId")),
-												jdcs.getId()).getRemQty() == ejb
-												.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
-														Integer.parseInt(req
-																.getParameter("japId")),
-														jdcs.getId()).getQty()) {
+												jdcs.getId()) != null) {
 									generatorJ
 											.writeStartObject()
 											.write("JobId", jdcs.getId())
@@ -584,13 +596,6 @@ public class JsonServlet extends HttpServlet {
 													jdcs.getAmmount())
 											.write("Status", "Assigned")
 
-											// .write("RemQty",
-											// ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
-											// Integer.parseInt(req
-											// .getParameter("japId")),
-											// jdcs.getId())
-											// .getJobPlanJobStock()
-											// .getRemQty())
 											.write("PresentRate",
 													ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
 															Integer.parseInt(req
@@ -617,20 +622,7 @@ public class JsonServlet extends HttpServlet {
 															.getEstimatedCompletionDate()
 															.toString())
 											.writeEnd();
-								}
-								// else if
-								// (ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
-								// Integer.parseInt(req.getParameter("japId")),
-								// jdcs.getId()).getRemQty() > 0 &&
-								// ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
-								// Integer.parseInt(req.getParameter("japId")),
-								// jdcs.getId()).getRemQty() !=
-								// ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
-								// Integer.parseInt(req.getParameter("japId")),
-								// jdcs.getId()).getQty()) {
-								//
-								// }
-								else {
+								} else {
 									generatorJ
 											.writeStartObject()
 											.write("JobId", jdcs.getId())
@@ -647,13 +639,6 @@ public class JsonServlet extends HttpServlet {
 													jdcs.getAmmount())
 											.write("Status", "Not Completed")
 
-											// .write("RemQty",
-											// ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
-											// Integer.parseInt(req
-											// .getParameter("japId")),
-											// jdcs.getId())
-											// .getJobPlanJobStock()
-											// .getRemQty())
 											.write("PresentRate",
 													ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
 															Integer.parseInt(req
@@ -667,24 +652,52 @@ public class JsonServlet extends HttpServlet {
 								}
 							}
 						} else {
-							generatorJ
-									.writeStartObject()
-									.write("JobId", jdcs.getId())
-									.write("JobName",
-											jdcs.getJobTypes().getJobName())
-									.write("JobRateOfSample", jdcs.getRate())
-									.write("JobQtyOfSample", jdcs.getQty())
-									.write("JobUOMOfSample",
-											jdcs.getQtyUnit().getName())
-									.write("JobAmountOfSample",
-											jdcs.getAmmount())
-									.write("Status", "Not Assigned")
+							if (ejb.getJobAssignmentJobDetailsByPlanIdAndJobsForDesignCostSheetId(
+									Integer.parseInt(req.getParameter("planId")),
+									jdcs.getId()) != null) {
+								generatorJ
+										.writeStartObject()
+										.write("JobId", jdcs.getId())
+										.write("JobName",
+												jdcs.getJobTypes().getJobName())
+										.write("JobRateOfSample",
+												jdcs.getRate())
+										.write("JobQtyOfSample", jdcs.getQty())
+										.write("JobUOMOfSample",
+												jdcs.getQtyUnit().getName())
+										.write("JobAmountOfSample",
+												jdcs.getAmmount())
+										.write("Status", "Not Completed")
 
-									.write("RemQty", jdcs.getQty())
-									.write("PresentRate", "NA")
-									.write("AssignQty", "NA")
-									.write("Amount", "NA")
-									.write("EstSubDate", "NA").writeEnd();
+										.write("PresentRate",
+												ejb.getJobAssignmentJobDetailsByPlanIdAndJobsForDesignCostSheetId(
+														Integer.parseInt(req
+																.getParameter("planId")),
+														jdcs.getId()).getRate())
+										.write("AssignQty", "NA")
+										.write("Amount", "NA")
+										.write("EstSubDate", "NA").writeEnd();
+							} else {
+								generatorJ
+										.writeStartObject()
+										.write("JobId", jdcs.getId())
+										.write("JobName",
+												jdcs.getJobTypes().getJobName())
+										.write("JobRateOfSample",
+												jdcs.getRate())
+										.write("JobQtyOfSample", jdcs.getQty())
+										.write("JobUOMOfSample",
+												jdcs.getQtyUnit().getName())
+										.write("JobAmountOfSample",
+												jdcs.getAmmount())
+										.write("Status", "Not Assigned")
+
+										.write("RemQty", jdcs.getQty())
+										.write("PresentRate", "NA")
+										.write("AssignQty", "NA")
+										.write("Amount", "NA")
+										.write("EstSubDate", "NA").writeEnd();
+							}
 						}
 					} else {
 						generatorJ

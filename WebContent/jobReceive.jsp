@@ -176,12 +176,13 @@
 													</tr>
 													<tr>
 														<td><p style="font-size: 18px; color: black;">
-																Jobber Details:</p> <br>
-															<p style="font-size: 17px; color: black;">
-																&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: <b>${jjjjj.vendor.email}</b>
+																<u>Jobber Details:</u>
 															</p> <br>
 															<p style="font-size: 17px; color: black;">
-																&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Address:<b>${jjjjj.vendor.address}</b>
+																Email: <b>${jjjjj.vendor.email}</b>
+															</p> <br>
+															<p style="font-size: 17px; color: black;">
+																Address:<b>${jjjjj.vendor.address}</b>
 															</p>
 													</tr>
 												</table>
@@ -276,10 +277,10 @@
 																	Qty</th>
 																<th width="10%" style="text-align: center">UOM</th>
 																<th width="10%" style="text-align: center">Job</th>
-																<th width="10%" style="text-align: center">Assigned
+																<th width="10%" style="text-align: center">Total
 																	Job Qty</th>
-																<th width="15%" style="text-align: center">Job Qty
-																	Done<font color="red" size="4">*</font>
+																<th width="15%" style="text-align: center">Receiving
+																	Product Qty<font color="red" size="4">*</font>
 																</th>
 																<th width="10%" style="text-align: center">Select
 																	Product<font color="red" size="4">*</font>
@@ -312,9 +313,8 @@
 																		<td width="5%" style="text-align: center"><span
 																			id="qtty${jobPro.id}">${jobPro.qty}</span></td>
 																		<td width="10%"
-																			style="text-align: center; padding: 2px">${jobPro.remaninQty}<input
-																			type="hidden" id="prodQtyRe${jobPro.id}"
-																			value="${jobPro.remaninQty}"></td>
+																			style="text-align: center; padding: 2px"><span
+																			id="prodRemQty${jobPro.id}">${jobPro.remaninQty}</span></td>
 																		<td width="10%" style="text-align: center">${jobPro.jobPlanProducts.jobPlanProductStock.get(0).purchase_Product_Details.productDetail.qtyUnit.name}</td>
 																		<td width="10%" style="text-align: center"><c:forEach
 																				items="${jobPro.jobAssignmentJobDetails}"
@@ -332,16 +332,16 @@
 																				items="${jobPro.jobAssignmentJobDetails}"
 																				var="jobProjob">
 																				<c:if test="${jobPro.remaninQty>0}">
-																					<input type="text" class="form-control"
+																					<input type="hidden" class="form-control"
 																						value="${jobProjob.qty}" name="qtyRe${jobPro.id}"
 																						id="qtyRe${jobProjob.id}"
 																						onkeyup="qtySubtraction('${jobProjob.id}');"
 																						onchange="return0('${jobProjob.id}');">
 																				</c:if>
 																				<c:if test="${jobPro.remaninQty==0}">
-																					<input type="text" class="form-control"
+																					<input type="hidden" class="form-control"
 																						readonly="readonly"
-																						value="${jobProjob.qty-jobProjob.remQty}"
+																						value="${jobProjob.qty-jobProjob.qty}"
 																						name="qtyRe${jobPro.id}" id="qtyRe${jobProjob.id}"
 																						onkeyup="qtySubtraction('${jobProjob.id}');"
 																						onchange="return0('${jobProjob.id}');">
@@ -349,8 +349,17 @@
 																				<input type="hidden"
 																					name="jobAssgnJobId${jobPro.id}"
 																					value="${jobProjob.id}">
-																				<hr>
-																			</c:forEach></td>
+																				<!-- <hr> -->
+																			</c:forEach> <c:if test="${jobPro.remaninQty>0}">
+																				<input type="text" class="form-control"
+																					id="prodQtyRe${jobPro.id}"
+																					value="${jobPro.remaninQty}"
+																					onkeyup="qtySubtractionProd('${jobPro.id}');">
+																			</c:if> <c:if test="${jobPro.remaninQty==0}">
+																				<input type="text" readonly="readonly"
+																					class="form-control" id="prodQtyRe${jobPro.id}"
+																					value="${jobPro.remaninQty}">
+																			</c:if></td>
 
 																		<td width="10%" style="text-align: center"><c:if
 																				test="${jobPro.remaninQty>0}">
@@ -465,6 +474,22 @@
 		}
 
 		$("#qtyRe" + g).numericInput({
+
+			allowFloat : true, // Accpets positive numbers (floating point)
+
+			allowNegative : false,
+		// Accpets positive or negative integer
+
+		});
+	}
+	function qtySubtractionProd(g) {
+
+		if (Number($("#prodQtyRe" + g).val()) > Number($("#prodRemQty" + g).html())) {
+			$("#prodQtyRe" + g).val($("#prodRemQty" + g).html());
+			alert("Receiving qty can not be more than Remaining qty.");
+		}
+
+		$("#prodQtyRe" + g).numericInput({
 
 			allowFloat : true, // Accpets positive numbers (floating point)
 

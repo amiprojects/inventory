@@ -1,6 +1,33 @@
-<form action="jobReceiveFromSearch" method="post"
-	id="jobReceiveFromSearch${jobAssignByDate.id}">
-	<a href="#" onclick="jobReceiveFromSearchF('${jobAssignByDate.id}');"><input
-		type="hidden" value="${jobAssignByDate.challanNumber}"
-		name="joChallan">Receive</a>
-</form>
+function qtySubtraction(g) {
+
+		if (Number($("#qtyRe" + g).val()) > Number($("#remainQtyRe" + g).html())) {
+			$("#qtyRe" + g).val("0");
+			alert("Receiving qty can not be more than Assigning qty.");
+		}
+
+		$("#qtyRe" + g).numericInput({
+
+			allowFloat : true, // Accpets positive numbers (floating point)
+
+			allowNegative : false,
+		// Accpets positive or negative integer
+
+		});
+	}
+	
+function qtySubtractionProd(g) {
+
+		if (Number($("#prodQtyRe" + g).val()) > Number($("#prodRemQty" + g).html())) {
+			$("#qtyRe" + g).val($("#prodRemQty" + g).html());
+			alert("Receiving qty can not be more than Remaining qty.");
+		}
+
+		$("#prodQtyRe" + g).numericInput({
+
+			allowFloat : true, // Accpets positive numbers (floating point)
+
+			allowNegative : false,
+		// Accpets positive or negative integer
+
+		});
+	}
