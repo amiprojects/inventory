@@ -158,10 +158,8 @@
 																			action="stockDetailShow" method="post"
 																			id="StockDetails${amiProStock1.id}">
 																			<a href="#"
-																				onclick="showDetails('${amiProStock1.id}');"><input
-																				type="hidden" value="${amiProStock1.id}"
-																				name="proId"><img alt=""
-																				src="images/eye.png" height="25px"></a>
+																				onclick="showDetails('${amiProStock1.id}');"><input type="hidden" value="${amiProStock1.id}"name="proId">
+																				<img alt="" src="images/eye.png" height="25px"></a>
 																		</form></td>
 																</tr>
 															</c:when>
