@@ -520,8 +520,8 @@
 													}
 													$('#productNjobsDiv')
 															.append(
-																	'<table id="pDetTable'+item2.ProductForSampleId+'" class="table table-striped table-bordered"><thead style="background-color: #F0F0F0;"><tr><th style="text-align: right;" colspan="2">'
-																			+ "Product code:"
+																	'<table id="pDetTable'+item2.ProductForSampleId+'" class="table table-striped table-bordered"><thead style="background-color: #F0F0F0;"><tr><th style="text-align: right;">'
+																			+ "Pcode:"
 																			+ '</th><td>'
 																			+ "<input type='text' class='form-control' readonly='readonly' value='"+item2.ProductCode+"'>"
 																			+ "<input type='hidden' class='form-control' readonly='readonly' id='productForSampleId"+item2.ProductForSampleId+"' value='"+item2.ProductForSampleId+"'>"
@@ -551,15 +551,13 @@
 																			+ '</th><th>'
 																			+ "Present Rate"
 																			+ '</th><th>'
-																			+ "Sample Qty"
+																			+ "Qty per sample"
 																			+ '</th><th>'
-																			+ "Assign Qty"
+																			+ "Total Qty"
 																			+ '</th><th>'
 																			+ "UOM"
 																			+ '</th><th>'
-																			+ "Sample Amount"
-																			+ '</th><th>'
-																			+ "Amount"
+																			+ "Total Amount"
 																			+ '</th><th colspan="2">'
 																			+ "Est. Submission Date"
 																			+ '</th><th>'
@@ -622,7 +620,6 @@
 																												+ "</td>"
 																												+ "<td>"
 																												+ item2.JobQtyOfSample
-																														* pQty
 																												+ "</td>"
 																												+ "<td>"
 																												+ "<input type='text' readonly='readonly' class='form-control' id='jobQty"
@@ -635,10 +632,6 @@
 																												+ "</td>"
 																												+ "<td>"
 																												+ item2.JobUOMOfSample
-																												+ "</td>"
-																												+ "<td>"
-																												+ item2.JobAmountOfSample
-																												* pQty
 																												+ "</td>"
 																												+ "<td>"
 																												+ "<input type='text' readonly='readonly' id='jobAmount"+item2.JobId+"' class='form-control' value='"+item2.Amount+"'>"
@@ -669,7 +662,7 @@
 													$('#productNjobsDiv')
 															.append(
 																	'<table id="pDetTable'+item2.ProductForSampleId+'" class="table table-striped table-bordered"><thead style="background-color: #F0F0F0;"><tr><th style="text-align: right;">'
-																			+ "Product code:"
+																			+ "Pcode:"
 																			+ '</th><td>'
 																			+ "<input type='text' class='form-control' readonly='readonly' value='"+item2.ProductCode+"'>"
 																			+ "<input type='hidden' class='form-control' readonly='readonly' id='productForSampleId"+item2.ProductForSampleId+"' value='"+item2.ProductForSampleId+"'>"
@@ -692,16 +685,16 @@
 																			+ Assigned
 																			+ '</td></tr><tr><th>'
 																			+ "#"
-																			+ '</th><th>'
+																			+ '</th><th colspan="2">'
 																			+ "Job"
 																			+ '</th><th colspan="2">'
 																			+ "Sample Rate"
 																			+ '</th><th>'
-																			+ "Sample Qty"
+																			+ "Qty per sample"
+																			+ '</th><th>'
+																			+ "Total Qty"
 																			+ '</th><th>'
 																			+ "UOM"
-																			+ '</th><th colspan="2">'
-																			+ "Sample Amount"
 																			+ '</th><th colspan="2">'
 																			+ "Status"
 																			+ '</th></tr></thead></table>');
@@ -738,7 +731,7 @@
 																												+ "<td>"
 																												+ Number(1 + index)
 																												+ "</td>"
-																												+ "<td>"
+																												+ "<td colspan='2'>"
 																												+ item2.JobName
 																												+ "<input type='hidden' id='jobId"+item2.JobId+"' value='"+item2.JobId+"'>"
 																												+ "</td>"
@@ -747,14 +740,14 @@
 																												+ "</td>"
 																												+ "<td>"
 																												+ "<input type='text' class='form-control' id='jobRemQty"+item2.JobId+"' readonly='readonly' value='"+item2.JobQtyOfSample
+																														+"'>"
+																												+ "</td>"
+																												+ "<td>"
+																												+ "<input type='text' class='form-control' id='jobRemQty"+item2.JobId+"' readonly='readonly' value='"+item2.JobQtyOfSample
 																														* pQty+"'>"
 																												+ "</td>"
 																												+ "<td>"
 																												+ item2.JobUOMOfSample
-																												+ "</td>"
-																												+ "<td colspan='2'>"
-																												+ item2.JobAmountOfSample
-																														* pQty
 																												+ "</td>"
 																												+ "<td colspan='2'>"
 																												+ item2.Status

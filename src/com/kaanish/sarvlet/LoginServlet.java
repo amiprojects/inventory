@@ -292,36 +292,55 @@ public class LoginServlet extends HttpServlet {
 
 		if (!ejb.isCompanyInfoExist()) {
 			companyInfoKaanish = new CompanyInfo();
-			companyInfoKaanish.setCompname("KK");
+			companyInfoKaanish.setCompname("Kaanish Kouture");
 			ejb.setCompanyInfo(companyInfoKaanish);
+
+			// companyInfoKaanish = new CompanyInfo();
+			// companyInfoKaanish.setCompname("KK");
+			// ejb.setCompanyInfo(companyInfoKaanish);
 
 			companyInfoKainat = new CompanyInfo();
 			companyInfoKainat.setCompname("Kainat Kreation");
 			ejb.setCompanyInfo(companyInfoKainat);
 		}
 		if (ejb.getAllUsers().size() < 2) {
-			usersKaanish = new Users();
-			usersKaanish.setUserId("adminKaanish");
-			usersKaanish.setPassword("productionKaanish");
-			usersKaanish.setName("Production Admin");
-			usersKaanish.setPh("0");
-			usersKaanish.setCompanyInfo(companyInfoKaanish);
-			ejb.setUser(usersKaanish);
+			// usersKaanish = new Users();
+			// usersKaanish.setUserId("adminKaanish");
+			// usersKaanish.setPassword("admin");
+			// usersKaanish.setName("Production Admin");
+			// usersKaanish.setPh("0");
+			// usersKaanish.setCompanyInfo(companyInfoKaanish);
+			// ejb.setUser(usersKaanish);
+			//
+			// usersKaanish = new Users();
+			// usersKaanish.setUserId("adminKaanish");
+			// usersKaanish.setPassword("productionKaanish");
+			// usersKaanish.setName("Production Admin");
+			// usersKaanish.setPh("0");
+			// usersKaanish.setCompanyInfo(companyInfoKaanish);
+			// ejb.setUser(usersKaanish);
 
 			usersKainat = new Users();
-			usersKainat.setUserId("admierwtertrnKainat");
-			usersKainat.setPassword("admertewrtwertin");
+			usersKainat.setUserId("adminKainat");
+			usersKainat.setPassword("admin");
 			usersKainat.setName("Kainat Admin");
 			usersKainat.setPh("0");
 			usersKainat.setCompanyInfo(companyInfoKainat);
 			ejb.setUser(usersKainat);
+			
+			usersKaanish = new Users();
+			usersKaanish.setUserId("adminaaaaaaaaKaanish");
+			usersKaanish.setPassword("adminaaaaaaaa");
+			usersKaanish.setName("Production Admin");
+			usersKaanish.setPh("0");
+			usersKaanish.setCompanyInfo(companyInfoKaanish);
+			ejb.setUser(usersKaanish);
 		}
-		
-		/*if(ejb.getAllCity().size()<1){
-			city = new City();
-			city.setId(0);
-			city.setCityName("null");
-		}*/
+
+		/*
+		 * if(ejb.getAllCity().size()<1){ city = new City(); city.setId(0);
+		 * city.setCityName("null"); }
+		 */
 		if (ejb.getAllBillSetup().size() < 16) {
 			/*
 			 * companyInfoKaanish = ejb.getUserById("adminKaanish")

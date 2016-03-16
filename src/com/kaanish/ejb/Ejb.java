@@ -3327,6 +3327,16 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<SampleDesignCostSheet> getSampleDesignCostSheetByDesignNumberForDuplicateCheck(
+			String dn) {
+		TypedQuery<SampleDesignCostSheet> q = em
+				.createQuery(
+						"select c from SampleDesignCostSheet c where UPPER(c.designNumber) =:dn order by c.id desc",
+						SampleDesignCostSheet.class);
+		q.setParameter("dn", dn.toUpperCase());
+		return q.getResultList();
+	}
+
 	public List<SampleDesignCostSheet> getSampleDesignCostSheetByDesignerName(
 			String name) {
 		TypedQuery<SampleDesignCostSheet> q = em

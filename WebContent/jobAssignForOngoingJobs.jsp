@@ -246,7 +246,7 @@
 											<table style="float: right;">
 												<tr>
 													<td>Surcharge :</td>
-													<td><input type="number" name="surcharge" value="0.00"
+													<td><input type="text" name="surcharge" value="0.00"
 														id="surcharge" onkeyup="surchargeF();" autocomplete="off"></td>
 												</tr>
 												<tr>
@@ -278,20 +278,22 @@
 												</tr>
 											</table>
 										</div>
-										<div class="col-md-3">
-											<!-- <span><b>Estimated Submission Date: </b></span> -->
-										</div>
-										<div class="col-md-7">
-											<!-- <input type="text" class="form-control"
+										<div class="col-md-12" style="margin-top: 10px;">
+											<div class="col-md-3">
+												<!-- <span><b>Estimated Submission Date: </b></span> -->
+											</div>
+											<div class="col-md-7">
+												<!-- <input type="text" class="form-control"
 												name="estSubmissionDate" required="required"
 												id="datepicker1" readonly="readonly"> -->
-										</div>
-										<div class="col-md-2">
-											<input type="button" onclick="cancelF();"
-												class="btn btn-danger small" value="Cancel"
-												data-toggle="modal"><input type="button"
-												class="btn green pull-right" value="Save"
-												onclick="submitForm();">
+											</div>
+											<div class="col-md-2">
+												<input type="button" onclick="cancelF();"
+													class="btn btn-danger small" value="Cancel"
+													data-toggle="modal"><input type="button"
+													class="btn green pull-right" value="Save"
+													onclick="submitForm();">
+											</div>
 										</div>
 									</div>
 								</form>
@@ -397,7 +399,6 @@
 	<script type="text/javascript" src="js/grid-filter.js"></script>
 
 	<script src="js/jquery-ui/jquery-ui.js"></script>
-	<script src="js/numericInput.min.js"></script>
 	<script>
 		function getDetailsByJobberName(id1) {
 			if (id1 != 0) {
@@ -865,14 +866,14 @@
 													$('#productNjobsDiv')
 															.append(
 																	'<table id="pDetTable'+item2.ProductForSampleId+'" class="table table-striped table-bordered"><thead style="background-color: #F0F0F0;"><tr><th style="text-align: right;" colspan="2">'
-																			+ "Product code:"
+																			+ "Pcode:"
 																			+ '</th><td>'
 																			+ "<input type='text' class='form-control' readonly='readonly' value='"+item2.ProductCode+"'>"
 																			+ "<input type='hidden' class='form-control' readonly='readonly' id='productForSampleId"+item2.ProductForSampleId+"' value='"+item2.ProductForSampleId+"'>"
 																			+ "<input type='hidden' class='form-control' readonly='readonly' id='productId"+item2.ProductForSampleId+"' value='"+ item2.ProductId+ "'>"
 																			+ '</td><th style="text-align: right;">'
 																			+ "Description:"
-																			+ '</th><td colspan="2">'
+																			+ '</th><td>'
 																			+ "<input type='text' class='form-control' readonly='readonly' value='"+item2.ProductDesc+"'>"
 																			+ '</td><th style="text-align: right;">'
 																			+ "Qty:"
@@ -895,15 +896,13 @@
 																			+ '</th><th>'
 																			+ "Present Rate"
 																			+ '</th><th>'
-																			+ "Sample Qty"
+																			+ "Qty per sample"
 																			+ '</th><th>'
-																			+ "Assign Qty"
+																			+ "Total Qty"
 																			+ '</th><th>'
 																			+ "UOM"
 																			+ '</th><th>'
-																			+ "Sample Amount"
-																			+ '</th><th>'
-																			+ "Amount"
+																			+ "Total Amount"
 																			+ '</th><th colspan="2">'
 																			+ "Est. Submission Date"
 																			+ '</th><th>'
@@ -966,7 +965,6 @@
 																												+ "</td>"
 																												+ "<td>"
 																												+ item2.JobQtyOfSample
-																														* pQty
 																												+ "</td>"
 																												+ "<td>"
 																												+ "<input type='text' readonly='readonly' class='form-control' id='jobQty"
@@ -979,10 +977,6 @@
 																												+ "</td>"
 																												+ "<td>"
 																												+ item2.JobUOMOfSample
-																												+ "</td>"
-																												+ "<td>"
-																												+ item2.JobAmountOfSample
-																												* pQty
 																												+ "</td>"
 																												+ "<td>"
 																												+ "<input type='text' readonly='readonly' id='jobAmount"+item2.JobId+"' class='form-control' value='"+item2.Amount+"'>"
@@ -1013,7 +1007,7 @@
 													$('#productNjobsDiv')
 															.append(
 																	'<table id="pDetTable'+item2.ProductForSampleId+'" class="table table-striped table-bordered"><thead style="background-color: #F0F0F0;"><tr><th style="text-align: right;" colspan="2">'
-																			+ "Product code:"
+																			+ "Pcode:"
 																			+ '</th><td>'
 																			+ "<input type='text' class='form-control' readonly='readonly' value='"+item2.ProductCode+"'>"
 																			+ "<input type='hidden' class='form-control' readonly='readonly' id='productForSampleId"+item2.ProductForSampleId+"' value='"+item2.ProductForSampleId+"'>"
@@ -1043,16 +1037,14 @@
 																			+ '</th><th>'
 																			+ "Present Rate<font color='red' size='4'>*</font>"
 																			+ '</th><th>'
-																			+ "Sample Qty"
+																			+ "Qty per sample"
 																			+ '</th><th>'
-																			+ "Assign Qty<font color='red' size='4'>*</font>"
+																			+ "Total Qty"
 																			+ '</th><th>'
 																			+ "UOM"
 																			+ '</th><th>'
-																			+ "Sample Amount"
-																			+ '</th><th>'
-																			+ "Amount"
-																			+ '</th><th>'
+																			+ "Total Amount"
+																			+ '</th><th colspan="2">'
 																			+ "Est. Submission Date<font color='red' size='4'>*</font>"
 																			+ '</th><th>'
 																			+ "Status"
@@ -1108,29 +1100,25 @@
 																												+ "</td>"
 																												+ "<td>"
 																												+ "<input type='text' class='form-control' id='jobRemQty"+item2.JobId+"' readonly='readonly' value='"+item2.JobQtyOfSample
-																														* pQty+"'>"
+																														+"'>"
 																												+ "</td>"
 																												+ "<td>"
-																												+ "<input type='text' class='form-control' id='jobQty"
+																												+ "<input type='text' readonly='readonly' class='form-control' id='jobQty"
 																												+ item2.JobId
 																												+ "' onkeyup='qtyKU("
 																												+ item2.JobId
 																												+ ");' value='"
 																												+ item2.JobQtyOfSample
-																														* pQty
+																												* pQty
 																												+ "'>"
 																												+ "</td>"
 																												+ "<td>"
 																												+ item2.JobUOMOfSample
 																												+ "</td>"
 																												+ "<td>"
-																												+ item2.JobAmountOfSample
-																														* pQty
-																												+ "</td>"
-																												+ "<td>"
 																												+ "<input type='text' readonly='readonly' id='jobAmount"+item2.JobId+"' class='form-control' value='"+item2.JobAmountOfSample*pQty+"'>"
 																												+ "</td>"
-																												+ "<td>"
+																												+ "<td colspan='2'>"
 																												+ "<input onclick='showDatePicker();' type='text' id='estSubmDate"
 																												+ item2.JobId
 																												+ "' class='form-control estSubmDate'>"
@@ -1165,6 +1153,19 @@
 					});
 			$(".estSubmDate").trigger("click");
 		}
+	</script>
+	<script src="js/numericInput.min.js"></script>
+	<script>
+		$(function() {
+			$("#surcharge").numericInput({
+
+				allowFloat : true, // Accpets positive numbers (floating point)
+
+				allowNegative : false,
+			// Accpets positive or negative integer
+
+			});
+		});
 	</script>
 </body>
 

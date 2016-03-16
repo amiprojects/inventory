@@ -89,8 +89,9 @@
 									<form action="setJobTypes" method="post">
 										<div class="col-md-12">
 											<div class="form-group">
-												<label for="" class="font">Jab Name :<font color="red" size="4">*</font></label> <input
-													type="text" placeholder="Enter job name" id="" name="name"
+												<label for="" class="font">Jab Name :<font
+													color="red" size="4">*</font></label> <input type="text"
+													placeholder="Enter job name" id="" name="name"
 													class="form-control" required>
 											</div>
 										</div>
@@ -134,14 +135,17 @@
 																<h4 class="modal-title">Edit Job Types</h4>
 															</div>
 															<div class="modal-body">
-																<form action="updateJob" method="post">
+																<form action="updateJob" method="post"
+																	id="updateJobId${jobtype.id}">
 																	<input type="hidden" value="${jobtype.id}" name="id">
 																	<div class="col-md-12">
 																		<div class="form-group">
-																			<label for="name" class="font">Jab Name :</label> <input
+																			<label for="name" class="font">Job Name :</label> <input
 																				type="text" placeholder="Enter job name" id=""
 																				name="name" value="${jobtype.jobName}"
-																				class="form-control" required>
+																				class="form-control" required> <input
+																				type="hidden" id="jobUsedSize${jobtype.id}"
+																				value="${jobtype.jobsForDesignCostSheets.size()}">
 																		</div>
 																	</div>
 																	<div class="col-md-12">
@@ -151,14 +155,12 @@
 																		</div>
 																	</div>
 																	<div class="col-md-12">
-																		<input class="btn green pull-left" type="submit"
-																			value="Update">
+																		<input class="btn green pull-left" type="button"
+																			value="Update" onclick="cancelF('${jobtype.id}');">
 																	</div>
 																</form>
 															</div>
-															<div class="modal-footer">
-																
-															</div>
+															<div class="modal-footer"></div>
 														</div>
 
 													</div>
@@ -180,6 +182,37 @@
 	</div>
 	<!-- main -->
 
+	<div id="cancelOrNot" class="modal fade" role="dialog"
+		style="top: 25px;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<!-- <h4 class="modal-title">Modal Header</h4> -->
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="widget-area">
+							<div class="row">
+								<span>This job is used in somewhere. On update, the job
+									name will be changed everywhere it is being used. Do you want
+									to update?</span>
+							</div>
+							<br>
+							<div class="row">
+								<button type="button" class="btn btn-success medium" id="yesC">Yes</button>
+								<button type="button" class="btn btn-danger medium" id="noC">No</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
 	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
@@ -197,8 +230,21 @@
 		function editJobTypes(id) {
 			$("#jobEdit" + id).modal('show');
 		}
-	</script>
 
+		function cancelF(id) {
+			if ($("#jobUsedSize" + id).val() > 0) {
+				$("#cancelOrNot").modal("show");
+			} else {
+				$("#updateJobId" + id).submit();
+			}
+			$("#yesC").click(function() {
+				$("#updateJobId" + id).submit();
+			});
+			$("#noC").click(function() {
+				$("#cancelOrNot").modal("hide");
+			});
+		}
+	</script>
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->

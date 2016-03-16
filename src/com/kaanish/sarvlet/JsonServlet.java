@@ -82,7 +82,9 @@ import com.kaanish.util.DepartmentCotractor;
 		"/getVendorsByVendorTypeDesignerAndName",
 		"/getDesignImageBySampleJobId", "/getPlanNumbersById",
 		"/updatePurchaseEntry", "/updatePurchaseproduct",
-		"/getAllJobPlanByDesignNumber", "/getAllJobPlans","/setPurchaseProduct" })
+		"/getAllJobPlanByDesignNumber", "/getAllJobPlans",
+		"/setPurchaseProduct",
+		"/getSampleDesignCostSheetByDesignNumberForDuplicateCheck" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -93,7 +95,6 @@ public class JsonServlet extends HttpServlet {
 	private String name;
 	private Purchase_Product_Details purchase_Product_Details;
 	private Purchase_Entry purchase_Entry;
-	
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -1513,6 +1514,24 @@ public class JsonServlet extends HttpServlet {
 				generatorD.writeEnd().close();
 				break;
 
+			case "getSampleDesignCostSheetByDesignNumberForDuplicateCheck":
+				JsonGeneratorFactory factoryDC = Json
+						.createGeneratorFactory(null);
+				JsonGenerator generatorDC = factoryDC.createGenerator(resp
+						.getOutputStream());
+				generatorDC.writeStartArray();
+
+				for (SampleDesignCostSheet sdcs : ejb
+						.getSampleDesignCostSheetByDesignNumberForDuplicateCheck(req
+								.getParameter("dNo"))) {
+					generatorDC.writeStartObject().write("dId", sdcs.getId())
+							.write("dNumber", sdcs.getDesignNumber())
+							.write("dDEsc", sdcs.getDesignDescription())
+							.writeEnd();
+				}
+				generatorDC.writeEnd().close();
+				break;
+
 			case "getAllOngoingJobPlanByDesignNumber":
 				JsonGeneratorFactory factoryJP = Json
 						.createGeneratorFactory(null);
@@ -1708,67 +1727,99 @@ public class JsonServlet extends HttpServlet {
 				}
 
 				break;
-				
+
 			case "setPurchaseProduct":
-				JsonGeneratorFactory factory6=Json.createGeneratorFactory(null);
-				JsonGenerator generator6=factory6.createGenerator(resp.getOutputStream());
+				JsonGeneratorFactory factory6 = Json
+						.createGeneratorFactory(null);
+				JsonGenerator generator6 = factory6.createGenerator(resp
+						.getOutputStream());
 				companyInfo = new CompanyInfo();
 
-				companyInfo = ejb.getUserById((String) httpSession.getAttribute("user")).getCompanyInfo();
+				companyInfo = ejb.getUserById(
+						(String) httpSession.getAttribute("user"))
+						.getCompanyInfo();
 				try {
 					purchaseProductDetails = new Purchase_Product_Details();
-					purchase_Entry=ejb.getPurchaseEntryById(Integer.parseInt(req.getParameter("id")));		
+					purchase_Entry = ejb.getPurchaseEntryById(Integer
+							.parseInt(req.getParameter("id")));
 
-					purchaseProductDetails.setAttrValue1(req.getParameter("attr1"));
-					purchaseProductDetails.setAttrValue2(req.getParameter("attr2"));
-					purchaseProductDetails.setAttrValue3(req.getParameter("attr3"));
-					purchaseProductDetails.setAttrValue4(req.getParameter("attr4"));
-					purchaseProductDetails.setAttrValue5(req.getParameter("attr5"));
-					purchaseProductDetails.setAttrValue6(req.getParameter("attr6"));
-					purchaseProductDetails.setProductDetail(ejb.getProductByProductCode(req.getParameter("proCode")));
-					
-					
+					purchaseProductDetails.setAttrValue1(req
+							.getParameter("attr1"));
+					purchaseProductDetails.setAttrValue2(req
+							.getParameter("attr2"));
+					purchaseProductDetails.setAttrValue3(req
+							.getParameter("attr3"));
+					purchaseProductDetails.setAttrValue4(req
+							.getParameter("attr4"));
+					purchaseProductDetails.setAttrValue5(req
+							.getParameter("attr5"));
+					purchaseProductDetails.setAttrValue6(req
+							.getParameter("attr6"));
+					purchaseProductDetails.setProductDetail(ejb
+							.getProductByProductCode(req
+									.getParameter("proCode")));
+
 					if (purchaseProductDetails.getProductDetail().isSaleble()) {
-						purchaseProductDetails.setMrp(Float.parseFloat(req.getParameter("mrp")));
-						purchaseProductDetails.setWsp(Float.parseFloat(req.getParameter("wsp")));
+						purchaseProductDetails.setMrp(Float.parseFloat(req
+								.getParameter("mrp")));
+						purchaseProductDetails.setWsp(Float.parseFloat(req
+								.getParameter("wsp")));
 					}
 
-					purchaseProductDetails.setQuantity(Float.parseFloat(req.getParameter("qty")));
+					purchaseProductDetails.setQuantity(Float.parseFloat(req
+							.getParameter("qty")));
 
-					purchaseProductDetails.setRemaining_quantity(Float.parseFloat(req.getParameter("qty")));
-					purchaseProductDetails.setCost(Float.parseFloat(req.getParameter("rate")));
+					purchaseProductDetails.setRemaining_quantity(Float
+							.parseFloat(req.getParameter("qty")));
+					purchaseProductDetails.setCost(Float.parseFloat(req
+							.getParameter("rate")));
 					purchaseProductDetails.setPurchase_Entry(purchase_Entry);
-					purchaseProductDetails.setLotNumber(req.getParameter("lot"));
+					purchaseProductDetails
+							.setLotNumber(req.getParameter("lot"));
 					purchaseProductDetails.setCompanyInfo(companyInfo);
 					ejb.setPurchaseProductDetails(purchaseProductDetails);
-					
+
 					if (purchaseProductDetails.getProductDetail().isRaw()) {
-						rawMaterialsStock = ejb.getRawMeterialStoctByProductAndCompanyId(
-								purchaseProductDetails.getProductDetail().getId(), companyInfo.getId());
-						rawMaterialsStock
-								.setProductDetail(ejb.getProductByProductCode(req.getParameter("proCode")));
-						rawMaterialsStock
-								.setRemainingQty(rawMaterialsStock.getRemainingQty() + Float.parseFloat(req.getParameter("qty")));
+						rawMaterialsStock = ejb
+								.getRawMeterialStoctByProductAndCompanyId(
+										purchaseProductDetails
+												.getProductDetail().getId(),
+										companyInfo.getId());
+						rawMaterialsStock.setProductDetail(ejb
+								.getProductByProductCode(req
+										.getParameter("proCode")));
+						rawMaterialsStock.setRemainingQty(rawMaterialsStock
+								.getRemainingQty()
+								+ Float.parseFloat(req.getParameter("qty")));
 						ejb.updateRawMaterialStockDetail(rawMaterialsStock);
 						rawMaterialsStock = null;
 					} else {
-						readyGoodsStock = ejb.getReadyGoodStoctByProductAndCompanyId(
-								purchaseProductDetails.getProductDetail().getId(), companyInfo.getId());
-						readyGoodsStock.setProductDetail(ejb.getProductByProductCode(req.getParameter("proCode")));
-						readyGoodsStock
-								.setRemainingQty(readyGoodsStock.getRemainingQty() + Float.parseFloat(req.getParameter("qty")));
+						readyGoodsStock = ejb
+								.getReadyGoodStoctByProductAndCompanyId(
+										purchaseProductDetails
+												.getProductDetail().getId(),
+										companyInfo.getId());
+						readyGoodsStock.setProductDetail(ejb
+								.getProductByProductCode(req
+										.getParameter("proCode")));
+						readyGoodsStock.setRemainingQty(readyGoodsStock
+								.getRemainingQty()
+								+ Float.parseFloat(req.getParameter("qty")));
 						ejb.updateReadyGoodsStockDetail(readyGoodsStock);
 						readyGoodsStock = null;
 					}
-					
-					
-					generator6.writeStartObject().write("error", false).write("msg", "Data updated suucessfully").write("ppid",purchaseProductDetails.getId()).writeEnd().close();
-					
+
+					generator6.writeStartObject().write("error", false)
+							.write("msg", "Data updated suucessfully")
+							.write("ppid", purchaseProductDetails.getId())
+							.writeEnd().close();
+
 				} catch (Exception e) {
-					generator6.writeStartObject().write("error", true).write("msg", e.getMessage()).writeEnd().close();
+					generator6.writeStartObject().write("error", true)
+							.write("msg", e.getMessage()).writeEnd().close();
 					e.printStackTrace();
 				}
-				
+
 				break;
 
 			default:

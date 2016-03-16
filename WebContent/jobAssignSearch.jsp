@@ -233,7 +233,7 @@
 												<th width="20%">Job Assigned No.</th>
 												<th width="15%">Assigned Date</th>
 												<th width="15%">Jobber Name</th>
-												<th width="15%">Number of Items</th>
+												<th width="12%">No. of Items</th>
 												<th width="10%">Quantity</th>
 												<th width="10%">Status</th>
 											</tr>
@@ -249,7 +249,7 @@
 													<td width="15%"><fmt:formatDate
 															value="${jobAssignByDate.assignDate}" pattern="dd-MM-yy" /></td>
 													<td width="15%">${jobAssignByDate.vendor.name}</td>
-													<td width="15%">${jobAssignByDate.jobAssignmentProducts.size()}</td>
+													<td width="12%">${jobAssignByDate.jobAssignmentProducts.size()}</td>
 													<c:set value="${0}" var="totqty" />
 													<c:forEach items="${jobAssignByDate.jobAssignmentProducts}"
 														var="proDet">
@@ -269,10 +269,17 @@
 																<c:set value="Processing" var="Status" />
 															</c:if>
 														</c:forEach>${Status}</td>
-													<td width="10%">
+													<td width="8%"><form action="jobReceiveFromSearch" method="post"
+															id="jobReceiveFromSearch${jobAssignByDate.id}">
+															<a href="#"
+																onclick="jobReceiveFromSearchF('${jobAssignByDate.id}');"><input
+																type="hidden" value="${jobAssignByDate.challanNumber}"
+																name="joChallan"> <span style="color: #6a94ff;"><u>
+																		Receive</u></span></a>
+														</form></td>
+													<td width="5%">
 														<form action="goJobDetailShow" method="post"
 															id="JobDetails${jobAssignByDate.id}">
-
 															<a href="#"
 																onclick="jobShowDetails('${jobAssignByDate.id}');"><input
 																type="hidden" value="${jobAssignByDate.id}" name="joId"><img
@@ -344,6 +351,10 @@
 		function jobShowDetails(id) {
 			//alert(id);
 			$("#JobDetails" + id).submit();
+		}
+		function jobReceiveFromSearchF(id) {
+			//alert(id);
+			$("#jobReceiveFromSearch" + id).submit();
 		}
 
 		$(function() {

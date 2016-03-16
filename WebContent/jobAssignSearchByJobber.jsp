@@ -285,7 +285,7 @@
 												<th width="4%">#</th>
 												<th width="17%">Job Assigned No.</th>
 												<th width="14%">Assigned Date</th>
-												<th width="18%">Jobber Name</th>
+												<th width="15%">Jobber Name</th>
 												<th width="12%">No. of Items</th>
 												<th width="10%">Quantity</th>
 												<th width="15%">Remaining Qty</th>
@@ -307,7 +307,7 @@
 														<td width="17%">${jobAssignByDate.challanNumber}</td>
 														<td width="14%"><fmt:formatDate
 																value="${jobAssignByDate.assignDate}" pattern="dd-MM-yy" /></td>
-														<td width="18%">${jobAssignByDate.vendor.name}</td>
+														<td width="15%">${jobAssignByDate.vendor.name}</td>
 														<td width="12%">${jobAssignByDate.jobAssignmentProducts.size()}</td>
 														<c:set value="${0}" var="totqty" />
 														<c:forEach
@@ -317,7 +317,16 @@
 														</c:forEach>
 														<td width="10%">${totqty}</td>
 														<td width="15%">${totREMqty}</td>
-														<td width="10%">
+														<td width="8%"><form action="jobReceiveFromSearch"
+																method="post"
+																id="jobReceiveFromSearch${jobAssignByDate.id}">
+																<a href="#"
+																	onclick="jobReceiveFromSearchF('${jobAssignByDate.id}');"><input
+																	type="hidden" value="${jobAssignByDate.challanNumber}"
+																	name="joChallan"> <span style="color: #6a94ff;"><u>
+																			Receive</u></span></a>
+															</form></td>
+														<td width="5%">
 															<form action="goJobDetailShow" method="post"
 																id="JobDetails${jobAssignByDate.id}">
 
@@ -554,6 +563,10 @@
 			});
 
 		});
+		function jobReceiveFromSearchF(id) {
+			//alert(id);
+			$("#jobReceiveFromSearch" + id).submit();
+		}
 	</script>
 </body>
 

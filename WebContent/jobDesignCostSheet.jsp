@@ -233,7 +233,7 @@
 										<table style="float: right;">
 											<tr>
 												<td>Surcharge :</td>
-												<td><input type="number" name="surcharge" value="0.00"
+												<td><input type="text" name="surcharge" value="0.00"
 													id="surcharge" onkeyup="surchargeF();" autocomplete="off"></td>
 											</tr>
 											<tr>
@@ -282,7 +282,7 @@
 												value="0.00" readonly="readonly" id="gt">
 										</div> -->
 									</div>
-									<div class="col-md-12">
+									<div class="col-md-12" style="margin-top: 10px;">
 										<div class="form-group">
 											<input type="button" value="Submit"
 												onclick="designCostSheetSubmit();"
@@ -895,7 +895,7 @@
 	function dNoKeyUp() {
 		$("#dNoCheck").val("");
 		$.ajax({
-			url : "getSampleDesignCostSheetByDesignNumber",
+			url : "getSampleDesignCostSheetByDesignNumberForDuplicateCheck",
 			dataType : "json",
 			data : {
 				dNo : $("#designNo").val()
