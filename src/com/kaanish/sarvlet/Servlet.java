@@ -3762,7 +3762,8 @@ public class Servlet extends HttpServlet {
 
 						totalJobExpanse1 = totalJobExpanse1 + totalJobCost;
 					}
-					jobPlan.setTotalJobExpanse(totalJobExpanse1);
+					jobPlan.setTotalJobExpanse(totalJobExpanse1
+							+ jobPlan.getTotalJobExpanse());
 					jobPlan.setTotalExpanse(jobPlan.getTotalExpanse()
 							+ totalJobExpanse1);
 					ejb.updateJobPlan(jobPlan);
@@ -3918,6 +3919,12 @@ public class Servlet extends HttpServlet {
 				List<SalesEntry> salesEty = ejb
 						.getSalesEntryByDateForReport(DateConverter.getDate(req
 								.getParameter("dayBookDate")));
+				List<PurchaseReturn> purchaseReturn = ejb
+						.getPurchaseReturnByDateForReport(DateConverter
+								.getDate(req.getParameter("dayBookDate")));
+				List<SalesReturn> salesReturn = ejb
+						.getSalesReturnByDateForReport(DateConverter
+								.getDate(req.getParameter("dayBookDate")));
 				req.setAttribute("purchaseEty", purchaseEty);
 				req.setAttribute("salesEty", salesEty);
 				req.setAttribute("purchaseReturn", purchaseReturn);

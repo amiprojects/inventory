@@ -167,7 +167,10 @@ public class JobPlan implements Serializable {
 
 	@Override
 	public String toString() {
-		return "{\"id\":\"" + id + "\"}";
+		return "{\"id\":\"" + id + "\", " + "\"totalProductCost\":\""
+				+ totalProductCost + "\", " + "\"totalJobExpanse\":\""
+				+ totalJobExpanse + "\", " + "\"totalExpanse\":\""
+				+ totalExpanse + "\"}";
 	}
 
 }

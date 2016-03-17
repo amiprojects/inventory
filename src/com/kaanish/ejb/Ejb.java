@@ -3631,19 +3631,15 @@ public class Ejb {
 						"select c from Purchase_Entry c WHERE c.purchase_date = :pDate",
 						Purchase_Entry.class);
 		q.setParameter("pDate", pDate);
-		System.out.println(q.getResultList().size());
-
 		return q.getResultList();
 	}
 
 	public List<PurchaseReturn> getPurchaseReturnByDateForReport(Date pDate) {
-
 		TypedQuery<PurchaseReturn> q = em.createQuery(
 				"select c from PurchaseReturn c WHERE c.returnDate = :pDate",
 				PurchaseReturn.class);
 		q.setParameter("pDate", pDate);
 		System.out.println(q.getResultList().size());
-
 		return q.getResultList();
 	}
 

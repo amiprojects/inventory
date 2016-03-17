@@ -29,7 +29,7 @@ public class JobAssignmentDetails implements Serializable {
 	private Date entryDate;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date assignDate;
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date estimatedCompletionDate;// old concept
 	private float surcharge;
 	private float grandTotal;

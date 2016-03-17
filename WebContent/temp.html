@@ -1,33 +1,15 @@
-function qtySubtraction(g) {
+transportCost
+surcharge
 
-		if (Number($("#qtyRe" + g).val()) > Number($("#remainQtyRe" + g).html())) {
-			$("#qtyRe" + g).val("0");
-			alert("Receiving qty can not be more than Assigning qty.");
+$("#transportCost").val(
+					Number($("#transportCost").val()).toFixed(2));
+			$("#surcharge").val(
+					Number($("#surcharge").val()).toFixed(2));
+					
+function qtyDecimalFixFunc() {
+			if ($("#qty").val() != "") {
+				$("#qty").val(Number($("#qty").val()).toFixed(2));
+			}else{
+				$("#qty").val("");
+			}
 		}
-
-		$("#qtyRe" + g).numericInput({
-
-			allowFloat : true, // Accpets positive numbers (floating point)
-
-			allowNegative : false,
-		// Accpets positive or negative integer
-
-		});
-	}
-	
-function qtySubtractionProd(g) {
-
-		if (Number($("#prodQtyRe" + g).val()) > Number($("#prodRemQty" + g).html())) {
-			$("#qtyRe" + g).val($("#prodRemQty" + g).html());
-			alert("Receiving qty can not be more than Remaining qty.");
-		}
-
-		$("#prodQtyRe" + g).numericInput({
-
-			allowFloat : true, // Accpets positive numbers (floating point)
-
-			allowNegative : false,
-		// Accpets positive or negative integer
-
-		});
-	}

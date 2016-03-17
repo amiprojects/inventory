@@ -97,8 +97,11 @@
 															var="proedPurDet"
 															items="${prod.purchase_Product_Details}">
 															<c:if test="${proedPurDet.purchase_Entry!=null}">
-																<c:set var="totPurQty"
-																	value="${totPurQty+proedPurDet.quantity-proedPurDet.totalReturningQty}"></c:set>
+																<%-- <c:set var="totPurQty"
+																	value="${totPurQty+proedPurDet.quantity-proedPurDet.totalReturningQty}"></c:set> --%>
+																<fmt:formatNumber var="totPurQty"
+																	value="${totPurQty+proedPurDet.quantity-proedPurDet.totalReturningQty}"
+																	maxFractionDigits="2" />
 															</c:if>
 														</c:forEach> ${totPurQty}</td>
 													<td>${prod.qtyUnit.name}</td>
@@ -142,7 +145,9 @@
 														<td>${vendor.companyName}</td>
 														<td>${vendor.ph1}</td>
 														<td>${vendor.ph2}</td>
-														<td>${vendor.getTotPurchase()}</td>
+														<td><fmt:formatNumber var="totPurSub"
+																value="${vendor.getTotPurchase()}" maxFractionDigits="2" />
+															${totPurSub}</td>
 														<td>
 															<form action="purchaseReportByVendorName" method="post"
 																id="pView${vendor.id}">
@@ -183,7 +188,9 @@
 														<td>${vendor.companyName}</td>
 														<td>${vendor.ph1}</td>
 														<td>${vendor.ph2}</td>
-														<td>${vendor.getTotPurchase()}</td>
+														<td><fmt:formatNumber var="totPurSubA"
+																value="${vendor.getTotPurchase()}" maxFractionDigits="2" />
+															${totPurSubA}</td>
 														<td>
 															<form action="purchaseReportByAgentName" method="post"
 																id="pView${vendor.id}">

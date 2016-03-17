@@ -74,13 +74,79 @@ margin-bottom
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 :
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 
 3
 em
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -203,8 +269,13 @@ em
 																</td>
 																<td>Sales Payment</td>
 																<td>${sRepo.challanNumber}</td>
-																<td>${sRepo.totalCost}<br> <br>0
-																<td>0<br> <br>${sRepo.totalCost}</td>
+																<td><fmt:formatNumber var="totalCost"
+																		value="${sRepo.totalCost}" maxFractionDigits="2" />
+																	${totalCost}<br> <br>0
+																<td>0<br> <br> <fmt:formatNumber
+																		var="totalCost" value="${sRepo.totalCost}"
+																		maxFractionDigits="2" /> ${totalCost}
+																</td>
 															</tr>
 															<c:set var="total1" value="${total1 + sRepo.totalCost}" />
 															<c:set var="total2" value="${total2 + sRepo.totalCost}" />
@@ -219,9 +290,13 @@ em
 																</td>
 																<td>Purchase Payment</td>
 																<td>${pRepo.challanNumber}</td>
-																<td>0<br> <br>${pRepo.totalCost}</td>
-																<td>${pRepo.totalCost}<br> <br>0
+																<td>0<br> <br> <fmt:formatNumber
+																		var="totalCost" value="${pRepo.totalCost}"
+																		maxFractionDigits="2" /> ${totalCost}
 																</td>
+																<td><fmt:formatNumber var="totalCost"
+																		value="${pRepo.totalCost}" maxFractionDigits="2" />
+																	${totalCost}<br> <br>0</td>
 															</tr>
 
 															<c:set var="total3" value="${total3 + pRepo.totalCost}" />
@@ -238,26 +313,36 @@ em
 																</td>
 																<td>Sales Return Payment</td>
 																<td>${srRepo.challanNumber}</td>
-																<td>0<br> <br>${srRepo.totalReCost}</td>
-																<td>${srRepo.totalReCost}<br> <br>0
+																<td>0<br> <br> <fmt:formatNumber
+																		var="totalCost" value="${srRepo.totalReCost}"
+																		maxFractionDigits="2" /> ${totalCost}
 																</td>
+																<td><fmt:formatNumber var="totalCost"
+																		value="${srRepo.totalReCost}" maxFractionDigits="2" />
+																	${totalCost}<br> <br>0</td>
 															</tr>
-															<c:set var="total5" value="${total5 + pRepo.totalCost}" />
-															<c:set var="total6" value="${total6 + pRepo.totalCost}" />
+															<c:set var="total5"
+																value="${total5 + srRepo.totalReCost}" />
+															<c:set var="total6"
+																value="${total6 + srRepo.totalReCost}" />
 														</c:forEach>
 														<c:forEach items="${requestScope['purchaseReturn']}"
 															var="prRepo">
 															<tr>
-																<td><fmt:formatDate value="${prRepo.sales_date}"
+																<td><fmt:formatDate value="${prRepo.returnDate}"
 																		pattern="dd-MM-yyyy" /></td>
 																<td>${prRepo.purchaseEntry.vendor.name}&nbsp;<br>
 																	<br>&nbsp;${prRepo.paymentDetails.get(0).paymentType.type}
 																</td>
 																<td>Purchase Return Payment</td>
 																<td>${prRepo.challanNumber}</td>
-																<td>${prRepo.totalReCost}<br> <br>0;
+																<td><fmt:formatNumber var="totalCost"
+																		value="${prRepo.totalReCost}" maxFractionDigits="2" />
+																	${totalCost}<br> <br>0;</td>
+																<td>0<br> <br> <fmt:formatNumber
+																		var="totalCost" value="${prRepo.totalReCost}"
+																		maxFractionDigits="2" /> ${totalCost}
 																</td>
-																<td>0<br> <br>${prRepo.totalReCost}</td>
 															</tr>
 															<c:set var="total7"
 																value="${total7 + prRepo.totalReCost}" />
@@ -270,8 +355,14 @@ em
 
 
 															<th colspan="4"><h4>Total:</h4></th>
-															<th><h4>${total3+total1+total5+total7}</h4></th>
-															<th><h4>${total2+total4+total6+total8}</h4></th>
+															<th><h4>
+																	<fmt:formatNumber var="totalDebit"
+																		value="${total3+total1+total5+total7}"
+																		maxFractionDigits="2" />${totalDebit}</h4></th>
+															<th><h4>
+																	<fmt:formatNumber var="totalCredit"
+																		value="${total2+total4+total6+total8}"
+																		maxFractionDigits="2" />${totalCredit}</h4></th>
 
 														</tr>
 													</tfoot>
@@ -342,7 +433,7 @@ em
 													</tr>
 
 													<tr>
-														<td><h2 style="color: red;">Sales</h2></td>
+														<td><h2 style="color: #6a94ff;">Sales</h2></td>
 														<td>Quantity<br> <br>${spd-spd1}</td>
 
 														<td>${totalSE-srta}<br> <br>&#8721; of
@@ -387,7 +478,7 @@ em
 											</div>
 
 											<!-- total expance........................... -->
-												<div class="col-md-6">
+											<div class="col-md-6">
 												<h4 align="center">Total Expense</h4>
 												<table class="table table-striped table-bordered">
 													<c:set value="${0}" var="totalPE" />
@@ -447,11 +538,11 @@ em
 													</tr>
 
 													<tr>
-														<td><h2 style="color: red;">Purchase</h2></td>
+														<td><h2 style="color: #6a94ff;">Purchase</h2></td>
 														<td>Quantity<br> <br>${ppd-ppd1}</td>
 
-														<td>${totalPE-prta}<br> <br>&#8721; of
-															Sub total
+														<td>${totalPE-prta}<br> <br>&#8721; of Sub
+															total
 														</td>
 													</tr>
 
@@ -489,7 +580,7 @@ em
 
 												</table>
 											</div>
-											
+
 											<div class="col-md-12">
 												<br>
 
@@ -503,12 +594,12 @@ em
 														<td><h4 align="center">Total Expanse</h4></td>
 													</tr>
 													<tr>
-													
+
 														<td><fmt:formatNumber type="number"
 																maxFractionDigits="2"
 																value="${totalSE-srta-totalSE3-totalSE2-totalSE1-totalPE+prta-totalPE3-totalPE2-totalPE1}" /></td>
 														<td>&nbsp;</td>
-														
+
 														<td><fmt:formatNumber type="number"
 																maxFractionDigits="2"
 																value="${totalSE-srta-totalSE3-totalSE2-totalSE1}" /></td>

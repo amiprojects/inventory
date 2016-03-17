@@ -169,20 +169,25 @@
 										<thead style="background-color: #F0F0F0;">
 											<tr>
 												<th>#</th>
-												<th>Designer Number</th>
+												<th>Product code</th>
 												<th>Product Description</th>
 												<th>Quantity</th>
 												<th>Remaining Quantity</th>
 												<th>UOM</th>
+												<th>Total Product Amount</th>
 												<th>Job</th>
-												<th>Assigned Job Qty</th>
-												<th>Job qty done</th>
+												<th>Total Job Qty</th>
+												<th>Job Rate</th>
+												<th>Job Amount</th>
+												<!-- <th>Job qty done</th> -->
 												<th>Status</th>
 											</tr>
 										</thead>
 										<c:set var="total" value="${total+jppL.remaninQty}" />
 										<tbody>
 											<c:set var="count" value="${1}" />
+											<c:set var="totProCost" value="${0}" />
+											<c:set var="totJobCost" value="${0}" />
 											<c:forEach var="jobp"
 												items="${jobAssi.jobAssignmentProducts}">
 												<tr>
@@ -192,6 +197,7 @@
 													<td>${jobp.qty}</td>
 													<td>${jobp.remaninQty}</td>
 													<td>${jobp.productsForDesignCostSheet.productDetail.qtyUnit.name}</td>
+													<td>${jobp.jobPlanProducts.totalProductCost}</td>
 													<td><c:forEach items="${jobp.jobAssignmentJobDetails}"
 															var="jobProjob">
 																				${jobProjob.jobType.jobName}<hr>
@@ -203,9 +209,17 @@
 														</c:forEach></td>
 													<td><c:forEach items="${jobp.jobAssignmentJobDetails}"
 															var="jobProjob">
+																				${jobProjob.rate}<hr>
+														</c:forEach></td>
+													<td><c:forEach items="${jobp.jobAssignmentJobDetails}"
+															var="jobProjob">
+																				${jobProjob.ammount}<hr>
+														</c:forEach></td>
+													<%-- <td><c:forEach items="${jobp.jobAssignmentJobDetails}"
+															var="jobProjob">
 															${jobProjob.qty-jobProjob.remQty}
 															<hr>
-														</c:forEach></td>
+														</c:forEach></td> --%>
 													<c:choose>
 														<c:when test="${jobp.remaninQty==0}">
 															<td><b>Received</b></td>
@@ -217,6 +231,10 @@
 													<c:set var="count" value="${count+1}" />
 													<c:set var="total" value="${total+jobp.qty}" />
 													<c:set var="totalt" value="${totalt+jobp.remaninQty}" />
+													<c:set var="totProCost"
+														value="${totProCost+jobp.jobPlanProducts.totalProductCost}" />
+													<c:set var="totJobCost"
+														value="${totJobCost+jobp.totalJobCost}" />
 												</tr>
 											</c:forEach>
 
@@ -224,10 +242,14 @@
 											<tr>
 												<td colspan="2">Total No. Of Items:</td>
 												<td><h4>${count-1}</h4></td>
-												<td colspan="2">Total Quantity:</td>
-												<td colspan="2"><h4>${total}</h4></td>
-												<td colspan="2">Total Remaining:</td>
+												<td>Total Quantity:</td>
+												<td><h4>${total}</h4></td>
+												<td>Total Remaining:</td>
 												<td><h4>${totalt}</h4></td>
+												<td colspan="2">Total Product Cost:</td>
+												<td><h4>${totProCost}</h4></td>
+												<td>Total Job Cost:</td>
+												<td><h4>${totJobCost}</h4></td>
 											</tr>
 										</tbody>
 									</table>
@@ -299,6 +321,45 @@
 									</table>
 
 								</div>
+							</div>
+							<br>
+							<div class="col-md-12" style="margin-top: 10px;">
+								<table style="float: right;">
+									<tr>
+										<td>Surcharge :</td>
+										<td><input type="number" name="surcharge"
+											value="${jobAssi.surcharge}" id="surcharge"
+											onkeyup="surchargeF();" autocomplete="off"
+											readonly="readonly"></td>
+									</tr>
+									<tr>
+										<td>
+											<!-- Profit  --> <select style="display: none;"
+											name="profitType" id="profitType" onchange="profitTypeF();">
+												<option value="profitPer">%</option>
+												<option value="profitFlat">Flat</option>
+										</select> <!-- : -->
+										</td>
+										<td><input type="hidden" name="profitVal" value="0.00"
+											id="profitVal" onkeyup="profitValF();" autocomplete="off"></td>
+									</tr>
+									<tr>
+										<td>
+											<!-- Profit Value : -->
+										</td>
+										<td><input type="hidden" name="totProfit" value="0.00"
+											id="totProfit" readonly="readonly" autocomplete="off"></td>
+									</tr>
+									<tr>
+										<td>GrandTotal :</td>
+										<td><input type="number" name="grandtot"
+											value="${jobAssi.grandTotal}" readonly="readonly"
+											id="grandtot"><input type="hidden" name="gtot"
+											value="0.00" readonly="readonly" id="gtot"><input
+											type="hidden" name="gt" value="0.00" readonly="readonly"
+											id="gt"></td>
+									</tr>
+								</table>
 							</div>
 						</div>
 					</div>

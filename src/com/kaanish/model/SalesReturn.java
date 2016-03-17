@@ -25,7 +25,7 @@ public class SalesReturn implements Serializable {
 	@GeneratedValue
 	private int id;
 	
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date returnDate;
 	
 	

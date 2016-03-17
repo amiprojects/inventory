@@ -123,11 +123,6 @@ td {
 
 							<div class="widget-area">
 								<div class="col-md-12">
-
-
-
-
-
 									<ul class="nav nav-tabs">
 										<li class="active"><a data-toggle="tab" href="#aStock">Ageing
 												Stock</a></li>
@@ -142,8 +137,7 @@ td {
 
 										<div id="aStock" class="tab-pane fade active in">
 
-											<br>
-											<br>
+											<br> <br>
 											<table class="table table-bordered display" id=""
 												cellspacing="0" width="100%">
 												<thead>
@@ -173,25 +167,34 @@ td {
 													<c:forEach
 														items="${sessionScope['ejb'].getAllProductDetailByCompany()}"
 														var="amiProStock1">
-														<c:set var="qty"
-															value="${!amiProStock1.isRaw()?sessionScope['ejb'].getReadyGoodsStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty:sessionScope['ejb'].getRawMaterialStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty}" />
+														<%-- <c:set var="qty"
+															value="${!amiProStock1.isRaw()?sessionScope['ejb'].getReadyGoodsStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty:sessionScope['ejb'].getRawMaterialStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty}" /> --%>
+														<fmt:formatNumber var="qty"
+															value="${!amiProStock1.isRaw()?sessionScope['ejb'].getReadyGoodsStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty:sessionScope['ejb'].getRawMaterialStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty}"
+															maxFractionDigits="2" />
 														<tr>
 															<td>${amiProStock1.code}</td>
 
 															<c:set var="purSize"
 																value="${amiProStock1.purchase_Product_Details.size()}" />
 
-															<td>${purSize>0?amiProStock1.purchase_Product_Details.get(purSize-1).wsp:'nill'}</td>
-															<td>${purSize>0?amiProStock1.purchase_Product_Details.get(purSize-1).mrp:'nill'}</td>
+															<td><fmt:formatNumber var="wsp"
+																	value="${purSize>0?amiProStock1.purchase_Product_Details.get(purSize-1).wsp:'nill'}"
+																	maxFractionDigits="2" /> ${wsp}</td>
+															<td><fmt:formatNumber var="mrp"
+																	value="${purSize>0?amiProStock1.purchase_Product_Details.get(purSize-1).mrp:'nill'}"
+																	maxFractionDigits="2" /> ${mrp}</td>
 															<td>${qty}</td>
 															<c:set value="${0}" var="remainqt" />
 
 															<c:forEach
 																items="${sessionScope['ejb'].getAgeingPurProductDetailsLes45daysbyproId(amiProStock1.id)}"
 																var="rem">
-																<c:set var="remainqt"
-																	value="${remainqt+rem.remaining_quantity}" />
-
+																<%-- <c:set var="remainqt"
+																	value="${remainqt+rem.remaining_quantity}" /> --%>
+																<fmt:formatNumber var="remainqt"
+																	value="${remainqt+rem.remaining_quantity}"
+																	maxFractionDigits="2" />
 															</c:forEach>
 															<td>${remainqt}</td>
 															<c:set value="${0}" var="remainqtt" />
@@ -199,10 +202,11 @@ td {
 															<c:forEach
 																items="${sessionScope['ejb'].getAgeingPurProductDetailsBet45and90daysbyproId(amiProStock1.id)}"
 																var="rem1">
-
-																<c:set var="remainqtt"
-																	value="${remainqtt+rem1.remaining_quantity}" />
-
+																<%-- <c:set var="remainqtt"
+																	value="${remainqtt+rem1.remaining_quantity}" /> --%>
+																<fmt:formatNumber var="remainqtt"
+																	value="${remainqtt+rem1.remaining_quantity}"
+																	maxFractionDigits="2" />
 															</c:forEach>
 															<td>${remainqtt}</td>
 															<c:set value="${0}" var="remainqttt" />
@@ -210,10 +214,11 @@ td {
 															<c:forEach
 																items="${sessionScope['ejb'].getAgeingPurProductDetailsGre90daysbyproId(amiProStock1.id)}"
 																var="rem2">
-
-																<c:set var="remainqttt"
-																	value="${remainqttt+rem2.remaining_quantity}" />
-
+																<%-- <c:set var="remainqttt"
+																	value="${remainqttt+rem2.remaining_quantity}" /> --%>
+																<fmt:formatNumber var="remainqttt"
+																	value="${remainqttt+rem2.remaining_quantity}"
+																	maxFractionDigits="2" />
 															</c:forEach>
 															<td>${remainqttt}</td>
 
@@ -221,24 +226,17 @@ td {
 														</tr>
 													</c:forEach>
 												</tbody>
-
 											</table>
-
-
-
-
 										</div>
-										
 										<div id="pStock" class="tab-pane fade">
-											<br>
-											<br>
-											<table class="table table-bordered display" id="" cellspacing="0"
-												width="100%">
+											<br> <br>
+											<table class="table table-bordered display" id=""
+												cellspacing="0" width="100%">
 
 												<thead>
 													<tr>
-													<th>#</th>
-														<th>Designer Number:</th>
+														<th>#</th>
+														<th>Product code:</th>
 														<th>Product Description:</th>
 														<th>UOM</th>
 														<th>Quantity</th>
@@ -247,34 +245,35 @@ td {
 													</tr>
 												</thead>
 												<tbody>
-												
-												<c:set var="count" value="${1}" />
-
-												<c:forEach
+													<c:set var="count" value="${1}" />
+													<c:forEach
 														items="${sessionScope['ejb'].getAllProductDetailByCompany()}"
 														var="amiProStock1">
-													<c:if
-														test="${amiProStock1.purchase_Product_Details.size()>0}">
-														<c:set var="qty"
-															value="${!amiProStock1.isRaw()?sessionScope['ejb'].getReadyGoodsStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty:sessionScope['ejb'].getRawMaterialStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty}" />
-														
-																<tr>
-																	<td>${count}</td>
-																	<td>${amiProStock1.code}</td>
-																	<td>${amiProStock1.description}</td>
-																	<td>${amiProStock1.qtyUnit.name}</td>
-																	<td>${qty}</td>
-																	<c:set var="purSizeq"
-																		value="${amiProStock1.purchase_Product_Details.size()}" />
-																	<td>${purSizeq>0?amiProStock1.purchase_Product_Details.get(purSizeq-1).wsp:'nill'}</td>
-																	<td>${purSizeq>0?amiProStock1.purchase_Product_Details.get(purSizeq-1).mrp:'nill'}</td>
-																	
-																</tr>
-															
-																
-														<c:set var="count" value="${count+1}" />
-													</c:if>
-												</c:forEach>
+														<c:if
+															test="${amiProStock1.purchase_Product_Details.size()>0}">
+															<%-- <c:set var="qty"
+																value="${!amiProStock1.isRaw()?sessionScope['ejb'].getReadyGoodsStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty:sessionScope['ejb'].getRawMaterialStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty}" /> --%>
+															<fmt:formatNumber var="qty"
+																value="${!amiProStock1.isRaw()?sessionScope['ejb'].getReadyGoodsStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty:sessionScope['ejb'].getRawMaterialStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty}"
+																maxFractionDigits="2" />
+															<tr>
+																<td>${count}</td>
+																<td>${amiProStock1.code}</td>
+																<td>${amiProStock1.description}</td>
+																<td>${amiProStock1.qtyUnit.name}</td>
+																<td>${qty}</td>
+																<c:set var="purSizeq"
+																	value="${amiProStock1.purchase_Product_Details.size()}" />
+																<td><fmt:formatNumber var="wsp"
+																		value="${purSizeq>0?amiProStock1.purchase_Product_Details.get(purSizeq-1).wsp:'nill'}"
+																		maxFractionDigits="2" /> ${wsp}</td>
+																<td><fmt:formatNumber var="mrp"
+																		value="${purSizeq>0?amiProStock1.purchase_Product_Details.get(purSizeq-1).mrp:'nill'}"
+																		maxFractionDigits="2" /> ${mrp}</td>
+															</tr>
+															<c:set var="count" value="${count+1}" />
+														</c:if>
+													</c:forEach>
 												</tbody>
 											</table>
 
@@ -302,8 +301,7 @@ td {
 
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 	<script>
-
-		$(document).ready(function() {			
+		$(document).ready(function() {
 			/* $('#table2').DataTable({
 				"scrollY" : 200,
 				"scrollX" : true
@@ -311,12 +309,12 @@ td {
 			$('#table1').DataTable({
 				"scrollY" : 200,
 				"scrollX" : true
-			});		 */	
+			});		 */
 			$('table.display').DataTable({
-				 fixedHeader: {
-			            header: true,
-			            footer: true
-			        }
+				fixedHeader : {
+					header : true,
+					footer : true
+				}
 			});
 		});
 	</script>

@@ -87,65 +87,102 @@
 
 
 							<div class="col-md-12">
-								<div class="widget-area" style="margin-bottom: 20px;">
-									<div class="col-md-8">
-										<div class="form-group">
-											<label for="" class="font">Design No. :</label> <input
-												type="text" class="form-control" name="dNo"
-												required="required" id="dNo" autocomplete="off"> <input
-												type="hidden" id="dId" name="dId"> <input
-												type="hidden" id="dNoCheck" name="dNoCheck">
+								<form action="jobSearchByPlanNo" method="post"
+									id="jobSearchByPlanNoId">
+									<div class="widget-area" style="margin-bottom: 20px;">
+										<div class="col-md-8">
+											<div class="form-group">
+												<label for="" class="font">Design No. :</label> <input
+													type="text" class="form-control" name="dNo"
+													required="required" id="dNo" autocomplete="off"> <input
+													type="hidden" id="dId" name="dId"> <input
+													type="hidden" id="dNoCheck" name="dNoCheck">
+											</div>
+											<div class="form-group">
+												<!-- <label for="" class="font">Plan No. :</label> -->
+												<input readonly="readonly" type="hidden"
+													class="form-control" value="" name="planNo" id="planNo">
+											</div>
 										</div>
-										<div class="form-group">
-											<!-- <label for="" class="font">Plan No. :</label> -->
-											<input readonly="readonly" type="hidden" class="form-control"
-												value="" name="planNo" id="planNo">
-										</div>
-									</div>
-									<div class="col-md-4">
-										<!-- <button class="btn green pull-left"
+										<div class="col-md-4">
+											<!-- <button class="btn green pull-left"
 											style="margin-top: 22px; margin-right: 20px;" type="button"
 											onclick="plansByDnoF();">Go</button> -->
-										<button class="btn pull-left"
-											style="margin-top: 22px; margin-right: 20px;" type="button"
-											onclick="cancelF();">Reset</button>
-										<button class="btn green pull-left" style="margin-top: 22px;"
-											type="button" onclick="allJobPlanF();" id="allJobBtn">All
-											Plans</button>
+											<button class="btn pull-left"
+												style="margin-top: 22px; margin-right: 20px;" type="button"
+												onclick="cancelF();">Reset</button>
+											<button class="btn green pull-left" style="margin-top: 22px;"
+												type="button" onclick="allJobPlanF();" id="allJobBtn">All
+												Plans</button>
 
+										</div>
 									</div>
-								</div>
-								<h3 align="center" style="color: #6a94ff;">
-									<span id="planNoMsg"></span>
-								</h3>
-								<div id="productNjobsDiv"></div>
+									<h3 align="center" style="color: #6a94ff;">
+										<span id="planNoMsg"></span>
+									</h3>
+									<br>
+									<table class="table table-striped table-bordered">
+										<thead>
+											<tr>
+												<th colspan="6"><h3>Expanse Details</h3></th>
+											</tr>
+										</thead>
+										<thead>
+											<tr>
+												<th>Total Product Cost :</th>
+												<td><span id="totProCost"></span></td>
+												<th>Total Job expanse till now :</th>
+												<td><span id="totJobExpanse"></span></td>
+												<th>Total Expanse till now :</th>
+												<td><span id="totExpanse"></span></td>
+											</tr>
+										</thead>
+									</table>
+									<div class="col-md-12">
+										<div class="col-md-6">
+											<h3 align="left">Current Status</h3>
+										</div>
+										<div class="col-md-6" align="right">
+											<!-- <button class="btn pull-right" type="button"
+											onclick="cancelF();">
+											<h5>All job assignments of this plan</h5>
+										</button> -->
 
-								<table id="productNjobsTable"
-									class="table table-striped table-bordered">
-									<thead style="background-color: #F0F0F0;">
-										<tr>
-											<th style="text-align: right;">Product code :</th>
-											<td>---</td>
-											<th style="text-align: right;">Description :</th>
-											<td>---</td>
-											<th style="text-align: right;">Quantity :</th>
-											<td>code</td>
-											<th style="text-align: right;">Total Amount :</th>
-											<td>---</td>
-										</tr>
-										<tr>
-											<th>#</th>
-											<th>Job</th>
-											<th>Sample Rate</th>
-											<th>Present Rate</th>
-											<th>Qty</th>
-											<th>UOM</th>
-											<th>Amount</th>
-											<th>Estimated Submission Date</th>
-										</tr>
-									</thead>
-								</table>
-								<br>
+
+											<a href="#" target="_blank" onclick="jobSearchByPlanNoF();"><input
+												type="hidden" value="" name="planIdForAssign"
+												id="planIdForAssign"><u><h3>All job
+														assignments of this plan</h3></u></a>
+										</div>
+									</div>
+									<div id="productNjobsDiv"></div>
+									<table id="productNjobsTable"
+										class="table table-striped table-bordered">
+										<thead style="background-color: #F0F0F0;">
+											<tr>
+												<th style="text-align: right;">Product code :</th>
+												<td>---</td>
+												<th style="text-align: right;">Description :</th>
+												<td>---</td>
+												<th style="text-align: right;">Quantity :</th>
+												<td>code</td>
+												<th style="text-align: right;">Total Amount :</th>
+												<td>---</td>
+											</tr>
+											<tr>
+												<th>#</th>
+												<th>Job</th>
+												<th>Sample Rate</th>
+												<th>Present Rate</th>
+												<th>Qty</th>
+												<th>UOM</th>
+												<th>Amount</th>
+												<th>Estimated Submission Date</th>
+											</tr>
+										</thead>
+									</table>
+									<br>
+								</form>
 							</div>
 							<!-- </div> -->
 						</div>
@@ -485,11 +522,27 @@
 		}
 		function selectPlan(pId, pQty) {
 			$("#planNo").val(pId);
-			$("#planNoMsg").html("Yor search for plan number : " + pId);
+			$("#planNoMsg").html("Your search for plan number : " + pId);
 			alert("plan " + pId + " selected");
 			$("#jobPlans").modal("hide");
 			$("#jobPlansAll").modal("hide");
 			$(".estSubmDate").trigger("click");
+
+			$.ajax({
+				type : "post",
+				url : "getPlanNumbersById",
+				dataType : "json",
+				data : {
+					id : pId
+				},
+				success : function(data) {
+					//alert(data.id);
+					$("#totProCost").html(data.totalProductCost);
+					$("#totJobExpanse").html(data.totalJobExpanse);
+					$("#totExpanse").html(data.totalExpanse);
+				}
+			});
+
 			$
 					.ajax({
 						type : "post",
@@ -801,6 +854,14 @@
 					}
 				}
 			});
+		}
+
+		function jobSearchByPlanNoF() {
+			if ($("#planNo").val() != "") {
+				$("#jobSearchByPlanNoId").submit();
+			} else {
+				alert("Please select a plan first");
+			}
 		}
 	</script>
 </body>

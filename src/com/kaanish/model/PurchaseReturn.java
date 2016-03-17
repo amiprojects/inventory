@@ -24,7 +24,7 @@ public class PurchaseReturn implements Serializable {
 	@Id
 	@GeneratedValue
 	private int id;
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date returnDate;
 
 	private float totalReCost;

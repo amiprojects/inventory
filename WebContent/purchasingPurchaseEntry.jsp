@@ -201,6 +201,11 @@
 							"#totalCredit").val())) * 100) / 100);
 		}
 	}
+	function spPaymentAmountDecimalFixF() {
+		$("#spPaymentAmount").val(
+				Number($("#spPaymentAmount").val()).toFixed(2));
+		spPaymentAmountFunc();
+	}
 	function pTypeFunc() {
 		$("#description").show();
 		var val = $('[name="pType"]').val();
@@ -362,7 +367,8 @@
 												<label for="" class="font">Vendor Bill no :<font
 													color="red" size="4">*</font></label> <input type="text"
 													placeholder="" id="vendorBillNo" class="form-control"
-													name="vendorBillNo" required="required">
+													name="vendorBillNo" required="required"
+													onkeypress="return blockSpecialChar(event)">
 											</div>
 											<div class="form-group">
 												<label for="" class="font">Purchase challan no. :</label>
@@ -480,7 +486,7 @@
 													<td colspan="2">Transport charge :</td>
 													<td><input type="text" class="form-control"
 														name="transportCost" id="transportCost" onkeyup="gtot();"
-														value="0" autocomplete="off"></td>
+														value="0" autocomplete="off" onchange="decimalFixF();"></td>
 												</tr>
 											</tbody>
 											<tbody>
@@ -488,7 +494,7 @@
 													<td colspan="2">Surcharge :</td>
 													<td><input type="text" class="form-control"
 														id="surcharge" name="surcharge" onkeyup="gtot();"
-														value="0" autocomplete="off"></td>
+														value="0" autocomplete="off" onchange="decimalFixF();"></td>
 												</tr>
 											</tbody>
 											<tbody>
@@ -634,7 +640,8 @@
 																					<input type="text" class="form-control" value="0"
 																						id="spPaymentAmount" name="spPaymentAmount"
 																						onkeyup="spPaymentAmountFunc();"
-																						autocomplete="off">
+																						autocomplete="off"
+																						onchange="spPaymentAmountDecimalFixF();">
 																				</div>
 																			</div>
 																			<div id="pDueAmount">
@@ -1569,7 +1576,8 @@
 									Quantity:<font color="red" size="4">*</font>
 								</div>
 								<div class="col-md-9">
-									<input type="number" class="form-control" name="qty" id="qty">
+									<input type="text" class="form-control" name="qty" id="qty"
+										onchange="qtyDecimalFixFunc();">
 								</div>
 								<div class="col-md-3">UOM:</div>
 								<div class="col-md-9">
@@ -1580,7 +1588,7 @@
 									Rate:<font color="red" size="4">*</font>
 								</div>
 								<div class="col-md-9">
-									<input type="number" class="form-control" name="rate" id="rate"
+									<input type="text" class="form-control" name="rate" id="rate"
 										required="required" onchange="rateF();">
 								</div>
 							</div>
@@ -1597,14 +1605,14 @@
 									<span id="wspStar">WSP:</span>
 								</div>
 								<div class="col-md-10">
-									<input type="number" class="form-control" id="wsp"
+									<input type="text" class="form-control" id="wsp"
 										readonly="readonly" name="wsp" onchange="wspF();">
 								</div>
 								<div class="col-md-2">
 									<span id="mrpStar">MRP:</span>
 								</div>
 								<div class="col-md-10">
-									<input type="number" class="form-control" id="mrp"
+									<input type="text" class="form-control" id="mrp"
 										readonly="readonly" name="mrp" onchange="mrpF();">
 								</div>
 							</div>
@@ -1622,7 +1630,7 @@
 								</div>
 								<div class="col-md-10">
 									<input type="text" class="form-control" id="lotText"
-										name="lotText">
+										name="lotText" onkeypress="return blockSpecialChar(event)">
 								</div>
 							</div>
 							<!-- <br>
@@ -3283,6 +3291,10 @@
 			});
 
 		});
+		function blockSpecialChar(e) {
+			var k = e.keyCode;
+			return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || (k >= 48 && k <= 57));
+		}
 	</script>
 
 	<script>
@@ -3711,6 +3723,11 @@
 		}
 
 		function rateF() {
+			if ($("#rate").val() != "") {
+				$("#rate").val(Number($("#rate").val()).toFixed(2));
+			} else {
+				$("#rate").val("");
+			}
 			if ($("#isSalable").val() == 'yes') {
 				if ($("#wsp").val() != ""
 						&& Number($("#rate").val()) > Number($("#wsp").val())) {
@@ -3725,6 +3742,11 @@
 		}
 
 		function wspF() {
+			if ($("#wsp").val() != "") {
+				$("#wsp").val(Number($("#wsp").val()).toFixed(2));
+			} else {
+				$("#wsp").val("");
+			}
 			if ($("#isSalable").val() == 'yes') {
 				if ($("#rate").val() == "") {
 					alert("Please insert Rate first...");
@@ -3741,6 +3763,11 @@
 		}
 
 		function mrpF() {
+			if ($("#mrp").val() != "") {
+				$("#mrp").val(Number($("#mrp").val()).toFixed(2));
+			} else {
+				$("#mrp").val("");
+			}
 			if ($("#isSalable").val() == 'yes') {
 				if ($("#rate").val() == "") {
 					alert("Please insert Rate first...");
@@ -3904,14 +3931,17 @@
 										+ '</td><td>'
 										+ $("#pDesc").val()
 										+ '</td><td>'
-										+ $("#qty").val()
+										+ Number($("#qty").val()).toFixed(2)
 										+ '</td><td>'
 										+ $("#uom").val()
 										+ '</td><td>'
-										+ $("#rate").val()
+										+ Number($("#rate").val()).toFixed(2)
 										+ '</td><td>'
-										+ Number($("#qty").val())
-										* Number($("#rate").val())
+										+ Number(
+												Number($("#qty").val())
+														* Number($("#rate")
+																.val()))
+												.toFixed(2)
 										+ '</td><td>'
 										+ '<a href="#" onclick="removeProduct('
 										+ ind
@@ -3964,13 +3994,13 @@
 										+ $("#attr6").val()
 										+ '\'></td>'
 										+ '<td><input type="text" name="qtyH" value=\''
-										+ $("#qty").val()
+										+ Number($("#qty").val()).toFixed(2)
 										+ '\'></td>'
 										+ '<td><input type="text" name="uomH" value=\''
 										+ $("#uom").val()
 										+ '\'></td>'
 										+ '<td><input type="text" name="rateH" value=\''
-										+ $("#rate").val()
+										+ Number($("#rate").val()).toFixed(2)
 										+ '\'></td>'
 										+ '<td><input type="text" name="wspH" value=\''
 										+ $("#wsp").val()
@@ -4046,7 +4076,7 @@
 					}); */
 
 		}
-		
+
 		function closeProduct() {
 			$("#dept").val("");
 			$("#subDept").val("");
@@ -4417,6 +4447,20 @@
 				$("#gt").val(Math.round((round) * 100) / 100);
 			}
 		}
+		function decimalFixF() {
+			$("#transportCost").val(
+					Number($("#transportCost").val()).toFixed(2));
+			$("#surcharge").val(Number($("#surcharge").val()).toFixed(2));
+			gtot();
+		}
+		function qtyDecimalFixFunc() {
+			if ($("#qty").val() != "") {
+				$("#qty").val(Number($("#qty").val()).toFixed(2));
+			} else {
+				$("#qty").val("");
+			}
+		}
+
 		function submit() {
 			document.getElementById("purchaseForm").submit();
 		}

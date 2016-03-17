@@ -25,7 +25,7 @@ public class JobAssignmentJobDetails implements Serializable {
 	//private float remQty;
 	private float rate;
 	private float ammount;
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date estimatedCompletionDate;
 	
 	@ManyToOne
