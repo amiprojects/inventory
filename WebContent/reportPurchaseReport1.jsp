@@ -153,7 +153,6 @@
 											<button class="btn green pull-left" style="margin-top: 25px;"
 												type="submit">Search</button>
 										</div>
-
 									</div>
 								</form>
 								<br>

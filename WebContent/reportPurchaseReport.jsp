@@ -87,7 +87,7 @@
 										<tbody style="height: 300px;">
 											<c:set var="count" value="${1}" />
 											<c:forEach
-												items="${sessionScope['ejb'].getAllProductDetailByCompany()}"
+												items="${sessionScope['ejb'].getAllProductDetail()}"
 												var="prod">
 												<tr>
 													<td>${count}</td>
@@ -117,8 +117,82 @@
 										</tbody>
 									</table>
 								</div>
-								<div id="byVendor" class="tab-pane fade ">Vendor</div>
-								<div id="byAgent" class="tab-pane fade ">Agent</div>
+								<div id="byVendor" class="tab-pane fade ">
+									<table class="table">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>Vendor Name</th>
+												<th>Company Name</th>
+												<th>Phone1</th>
+												<th>Phone2</th>
+											</tr>
+										</thead>
+										<tbody style="height: 300px;">
+											<c:set var="count" value="${1}" />
+											<c:forEach items="${sessionScope['ejb'].getAllVendors()}"
+												var="vendor">
+												<c:if test="${vendor.vendorType.type=='Vendor'}">
+													<tr>
+														<td>${count}</td>
+														<td>${vendor.name}</td>
+														<td>${vendor.companyName}</td>
+														<td>${vendor.ph1}</td>
+														<td>${vendor.ph2}</td>
+														<td>
+															<form action="purchaseReportByVendorName" method="post"
+																id="pView${vendor.id}">
+																<a href="#" onclick="purchaseViewF('${vendor.id}');"><input
+																	type="hidden" value="${vendor.id}" name="pId"><input
+																	type="hidden" value="${vendor.name}" name="vendorName"><img
+																	alt="" src="images/eye.png" height="25px"></a>
+															</form>
+														</td>
+													</tr>
+												</c:if>
+												<c:set var="count" value="${count+1}" />
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
+								<div id="byAgent" class="tab-pane fade ">
+									<table class="table">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>Agent Name</th>
+												<th>Company Name</th>
+												<th>Phone1</th>
+												<th>Phone2</th>
+											</tr>
+										</thead>
+										<tbody style="height: 300px;">
+											<c:set var="count" value="${1}" />
+											<c:forEach items="${sessionScope['ejb'].getAllVendors()}"
+												var="vendor">
+												<c:if test="${vendor.vendorType.type=='Purchase Agent'}">
+													<tr>
+														<td>${count}</td>
+														<td>${vendor.name}</td>
+														<td>${vendor.companyName}</td>
+														<td>${vendor.ph1}</td>
+														<td>${vendor.ph2}</td>
+														<td>
+															<form action="purchaseReportByAgentName" method="post"
+																id="pView${vendor.id}">
+																<a href="#" onclick="purchaseViewF('${vendor.id}');"><input
+																	type="hidden" value="${vendor.id}" name="pId"><input
+																	type="hidden" value="${vendor.name}" name="agentName"><img
+																	alt="" src="images/eye.png" height="25px"></a>
+															</form>
+														</td>
+													</tr>
+												</c:if>
+												<c:set var="count" value="${count+1}" />
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
 							</div>
 						</div>
 					</div>

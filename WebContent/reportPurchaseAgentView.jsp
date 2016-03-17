@@ -65,42 +65,36 @@
 
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
-								<h3 style="margin-top: 11px;">Purchase Report By Product</h3>
+								<h3 style="margin-top: 11px;">Purchase Report By Agent</h3>
 							</div>
 
 							<div class="widget-area">
-								<c:set var="prod"
-									value="${sessionScope['ejb'].getProductDetailById(requestScope['pId'])}" />
+								<c:set var="vendor"
+									value="${sessionScope['ejb'].getVendorById(requestScope['pId'])}" />
 								<table id="stream_table"
 									class="table table-striped table-bordered" style="width: 30%;">
 									<thead>
 										<tr>
-											<th style="text-align: right;">Product Code :</th>
-											<td>${prod.code}</td>
+											<th style="text-align: right;">Vendor Name :</th>
+											<td>${vendor.name}</td>
 										</tr>
 									</thead>
 									<thead>
 										<tr>
-											<th style="text-align: right;">Product Description :</th>
-											<td>${prod.description}</td>
+											<th style="text-align: right;">Company Name :</th>
+											<td>${vendor.companyName}</td>
 										</tr>
 									</thead>
 									<thead>
 										<tr>
-											<th style="text-align: right;">UOM :</th>
-											<td>${prod.qtyUnit.name}</td>
+											<th style="text-align: right;">Phone1 :</th>
+											<td>${vendor.ph1}</td>
 										</tr>
 									</thead>
 									<thead>
 										<tr>
-											<th style="text-align: right;">Total Qty (Purchased) :</th>
-											<td><c:set var="totPurQty" value="${0}"></c:set> <c:forEach
-													var="proedPurDet" items="${prod.purchase_Product_Details}">
-													<c:if test="${proedPurDet.purchase_Entry!=null}">
-														<c:set var="totPurQty"
-															value="${totPurQty+proedPurDet.quantity-proedPurDet.totalReturningQty}"></c:set>
-													</c:if>
-												</c:forEach> ${totPurQty}</td>
+											<th style="text-align: right;">Phone2 :</th>
+											<td>${vendor.ph2}</td>
 										</tr>
 									</thead>
 								</table>
@@ -120,19 +114,20 @@
 											<th>Agent Name</th>
 											<th>Purchase challan no.</th>
 											<th>Vendor Bill no.</th>
-											<th>Qty</th>
+											<!-- <th>Qty</th> -->
 											<th>Sub Total</th>
 											<th>Tax Amount</th>
-											<!-- <th>Transport Cost</th>
+											<th>Transport Cost</th>
 											<th>Surcharge</th>
 											<th>RoundOf</th>
-											<th>Grand Total</th> -->
+											<th>Grand Total</th>
 											<th></th>
 										</tr>
 									</thead>
 									<tbody style="height: 300px;">
 										<c:set var="count" value="${1}" />
-										<c:forEach items="${requestScope['purEntryList']}"
+										<c:forEach
+											items="${requestScope['purEntryList']}"
 											var="pEntryByD">
 											<tr>
 												<td>${count}</td>
@@ -158,31 +153,13 @@
 												</c:choose>
 												<td>${pEntryByD.challanNumber}</td>
 												<td>${pEntryByD.vendor_bill_no}</td>
-												<td><c:set var="totPurQty" value="${0}"></c:set> <c:forEach
-														var="proedPurDet"
-														items="${pEntryByD.purchase_Product_Details}">
-														<c:if
-															test="${proedPurDet.productDetail.id==requestScope['pId']}">
-															<c:set var="totPurQty"
-																value="${totPurQty+proedPurDet.quantity-proedPurDet.totalReturningQty}"></c:set>
-														</c:if>
-													</c:forEach> ${totPurQty}</td>
-												<td><c:set var="subot" value="${0}"></c:set> <c:forEach
-														var="proedPurDet"
-														items="${pEntryByD.purchase_Product_Details}">
-														<c:if
-															test="${proedPurDet.productDetail.id==requestScope['pId']}">
-															<c:set var="subot"
-																value="${subot+(proedPurDet.quantity-proedPurDet.totalReturningQty)*proedPurDet.cost}"></c:set>
-														</c:if>
-													</c:forEach> ${subot}</td>
-												<td><fmt:formatNumber var="taxAmount"
-														value="${subot*pEntryByD.tax_Type_Group.getTotalTaxValue()/100}"
-														maxFractionDigits="2" />${taxAmount}</td>
-												<%-- <td>${pEntryByD.transport_cost}</td>
+												<!-- <td>Qty</td> -->
+												<td>${pEntryByD.subTotal}</td>
+												<td>${pEntryByD.taxAmount}</td>
+												<td>${pEntryByD.transport_cost}</td>
 												<td>${pEntryByD.sur_charge}</td>
 												<td>${pEntryByD.roundOf}</td>
-												<td>${pEntryByD.totalCost}</td> --%>
+												<td>${pEntryByD.totalCost}</td>
 												<td><form action="purchaseReportView" method="post"
 														id="pView${pEntryByD.id}">
 														<a href="#" onclick="purchaseViewF('${pEntryByD.id}');"><input
