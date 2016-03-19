@@ -11,6 +11,7 @@ import javax.json.Json;
 import javax.json.stream.JsonGenerator;
 import javax.json.stream.JsonGeneratorFactory;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -51,7 +52,7 @@ import com.kaanish.util.DepartmentCotractor;
 		"/getSalesAgentDetailsById", "/getPurchaseProductDetailsByIdForSale", "/getCustomerByPh", "/checkPcode",
 		"/addVendorbyjson", "/addAgen", "/getVendorByType", "/addUOMjson", "/getuomByType", "/getDeptjson",
 		"/getSubByDepjson", "/getCatBySubjson", "/addJsonCity", "/addJsonState", "/addJsonCountry",
-		"/productSumaryJson", "/getVendorsByNameAndType" })
+		"/productSumaryJson", "/getVendorsByNameAndType","/getCriticalStock" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -735,6 +736,23 @@ public class JsonServlet extends HttpServlet {
 			case "getVendorsByNameAndType":
 				resp.getWriter().print(ejb.getVendorByTypeAndName(req.getParameter("type"), req.getParameter("name")));
 				break;
+				
+			case "getCriticalStock":
+				JsonGeneratorFactory factory1=Json.createGeneratorFactory(null);
+				JsonGenerator generator=factory1.createGenerator(resp.getOutputStream());
+				generator.writeStartArray();
+				
+				for(ProductDetail pd:ejb.getAllProductDetail()){
+					if(pd.getReadyGoodsStock().getRemainingQty()<10){
+						generator.writeStartObject().write("productId",pd.getId())
+						.write("productCode",pd.getCode())
+						.write("productDescription",pd.getDescription())						
+						.writeEnd();						
+					}
+				}
+				generator.writeEnd().close();
+				break;
+				
 			default:
 				break;
 			}

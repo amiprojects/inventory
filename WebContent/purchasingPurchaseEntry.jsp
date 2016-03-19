@@ -4740,7 +4740,6 @@
 							data : dataa2,
 							type : "post",
 							success : function(data2) {
-
 								agentId = data2.vendorid;
 								alert(data2.result);
 								$("#addA").modal('hide');
@@ -4756,7 +4755,7 @@
 											success : function(data) {
 
 												$("#agentName").empty();
-												$("#agentName")
+									 	$("#agentName")
 														.append(
 																'<option value="0">Select Agent name</option>');
 												$
@@ -4769,12 +4768,12 @@
 																					'<option value="'+item.id+'">'
 																							+ item.name
 																							+ '</option>');
-																});
+																}); 
 											},
-											complete : function() {
+										/* 	complete : function() {
 												$("#agentName").val(agentId);
 
-											}///show for current update
+											}///show for current update */
 
 										});
 							}

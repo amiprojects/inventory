@@ -6,10 +6,10 @@
 	</div>
 	<div class="custom-dropdowns">
 		<div class="message-list dropdown">
-			<a title=""><span class="blue">4</span><i
+			<a title=""><span class="blue">0</span><i
 				class="fa fa-envelope-o"></i></a>
 			<div class="message drop-list">
-				<span>You have 4 New Messages</span>
+				<span >You have 4 New Messages</span>
 				<ul>
 					<li><a href="#" title=""><span><img
 								src="images/resource/sender1.jpg" alt="" /></span><i>${sessionScope['user']}</i>Hi!
@@ -37,11 +37,11 @@
 		</div>
 		<!-- Message List -->
 		<div class="notification-list dropdown">
-			<a title=""><span class="green">3</span><i class="fa fa-bell-o"></i></a>
+			<a title=""><span class="green" id="notification">0</span><i class="fa fa-bell-o"></i></a>
 			<div class="notification drop-list">
-				<span>You have 3 New Notifications</span>
-				<ul>
-					<li><a href="#" title=""><span><i
+				<span id="notificationStatement">You have 3 New Notifications</span>
+				<ul id="notificationDetails">
+					<!-- <li><a href="#" title=""><span><i
 								class="fa fa-bug red"></i></span>Server 3 is Over Loader Please
 							Check...
 							<h6>2 min ago..</h6></a></li>
@@ -52,7 +52,7 @@
 							<p class="status red">Urgent</p></a></li>
 					<li><a href="#" title=""><span><i
 								class="fa fa-bullhorn green"></i></span>Envato Has change the policies
-							<h6>7 min ago..</h6></a></li>
+							<h6>7 min ago..</h6></a></li> -->
 				</ul>
 				<a href="#" title="">See All Notifications</a>
 			</div>
@@ -110,4 +110,35 @@
 
 	</div>
 </header>
+<script type="text/javascript">
+function criticalStockService(){
+	setTimeout(getCritcalStock(), 30000);
+}
+var l=0;
+function getCritcalStock(){
+	$.ajax({
+		url : "getCriticalStock",
+		dataType : "json",		
+		success : function(data) {
+			if (data.length>l) {				
+				$("#notification").html(data.length);
+				$("#notificationStatement").html('you have '+data.length+' notification ');
+				$("#notificationDetails").empty();
+				$.map(data,function(item){
+					$("#notificationDetails").append('<li><a href="#" title=""><span>'+
+							'<i class="fa fa-bug red"></i></span><h6>Yor product '+item.productCode+": "+item.productDescription+' is in critical condition</h6></a></li>');	
+				});
+				l=data.length;
+			}
+		},
+		complete:function(){
+			criticalStockService();
+		}
+	});	
+	
+}
+$(document).ready(function(){
+	getCritcalStock();
+});
+</script>
 <!-- Header -->

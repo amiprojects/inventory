@@ -33,6 +33,8 @@ import com.kaanish.model.JobStock;
 import com.kaanish.model.JobTypes;
 import com.kaanish.model.JobsForDesignCostSheet;
 import com.kaanish.model.Module;
+import com.kaanish.model.NotificationDetails;
+import com.kaanish.model.NotificationView;
 import com.kaanish.model.PageList;
 import com.kaanish.model.PaymentDetails;
 import com.kaanish.model.PaymentStatus;
@@ -2093,31 +2095,37 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	public List<Purchase_Product_Details> getAgeingPurProductDetailsBet45and90daysbyproId(int id){
-		LocalDateTime dateTime =LocalDateTime.now();
-		TypedQuery<Purchase_Product_Details> q = em.createQuery("select c from Purchase_Product_Details c where c.productDetail.id=:id and c.remaining_quantity>0 and c.purchase_Entry.purchase_date<:date1 and c.purchase_Entry.purchase_date>:date2 ",Purchase_Product_Details.class);
+	public List<Purchase_Product_Details> getAgeingPurProductDetailsBet45and90daysbyproId(int id) {
+		LocalDateTime dateTime = LocalDateTime.now();
+		TypedQuery<Purchase_Product_Details> q = em.createQuery(
+				"select c from Purchase_Product_Details c where c.productDetail.id=:id and c.remaining_quantity>0 and c.purchase_Entry.purchase_date<:date1 and c.purchase_Entry.purchase_date>:date2 ",
+				Purchase_Product_Details.class);
 		q.setParameter("date1", Date.from(dateTime.minusDays(45).toInstant(ZoneOffset.ofHoursMinutes(5, 30))));
 		q.setParameter("date2", Date.from(dateTime.minusDays(90).toInstant(ZoneOffset.ofHoursMinutes(5, 30))));
 		q.setParameter("id", id);
 		return q.getResultList();
 	}
 
-	public List<Purchase_Product_Details> getAgeingPurProductDetailsLes45daysbyproId(int id){
-		LocalDateTime dateTime =LocalDateTime.now();
-		TypedQuery<Purchase_Product_Details> q = em.createQuery("select c from Purchase_Product_Details c where c.productDetail.id=:id and c.remaining_quantity>0 and c.purchase_Entry.purchase_date>:date1 ",Purchase_Product_Details.class);
+	public List<Purchase_Product_Details> getAgeingPurProductDetailsLes45daysbyproId(int id) {
+		LocalDateTime dateTime = LocalDateTime.now();
+		TypedQuery<Purchase_Product_Details> q = em.createQuery(
+				"select c from Purchase_Product_Details c where c.productDetail.id=:id and c.remaining_quantity>0 and c.purchase_Entry.purchase_date>:date1 ",
+				Purchase_Product_Details.class);
 		q.setParameter("date1", Date.from(dateTime.minusDays(45).toInstant(ZoneOffset.ofHoursMinutes(5, 30))));
 		q.setParameter("id", id);
 		return q.getResultList();
 	}
-	
-	public List<Purchase_Product_Details> getAgeingPurProductDetailsGre90daysbyproId(int id){
-		LocalDateTime dateTime =LocalDateTime.now();
-		TypedQuery<Purchase_Product_Details> q = em.createQuery("select c from Purchase_Product_Details c where c.productDetail.id=:id and c.remaining_quantity>0 and c.purchase_Entry.purchase_date<:date2 ",Purchase_Product_Details.class);
+
+	public List<Purchase_Product_Details> getAgeingPurProductDetailsGre90daysbyproId(int id) {
+		LocalDateTime dateTime = LocalDateTime.now();
+		TypedQuery<Purchase_Product_Details> q = em.createQuery(
+				"select c from Purchase_Product_Details c where c.productDetail.id=:id and c.remaining_quantity>0 and c.purchase_Entry.purchase_date<:date2 ",
+				Purchase_Product_Details.class);
 		q.setParameter("date2", Date.from(dateTime.minusDays(90).toInstant(ZoneOffset.ofHoursMinutes(5, 30))));
 		q.setParameter("id", id);
 		return q.getResultList();
 	}
-	
+
 	public List<VoucherDetails> getLastVoucherDetailsbyCustomerId(int id) {
 		TypedQuery<VoucherDetails> q = em.createQuery(
 
@@ -2431,61 +2439,137 @@ public class Ejb {
 		TypedQuery<JobTypes> q = em.createQuery("select c from JobTypes c", JobTypes.class);
 		return q.getResultList();
 	}
-	
-	/*************************** for SampleDesignCostSheet *********************/
-	public void setSampleDesignCostSheet(SampleDesignCostSheet sample){
+
+	/***************************
+	 * for SampleDesignCostSheet
+	 *********************/
+	public void setSampleDesignCostSheet(SampleDesignCostSheet sample) {
 		em.persist(sample);
 	}
-	public void updateSampleDesignCostSheet(SampleDesignCostSheet sample){
+
+	public void updateSampleDesignCostSheet(SampleDesignCostSheet sample) {
 		em.merge(sample);
 	}
-	public SampleDesignCostSheet getSampleDesignCostSheetById(int id){
+
+	public SampleDesignCostSheet getSampleDesignCostSheetById(int id) {
 		return em.find(SampleDesignCostSheet.class, id);
 	}
-	public List<SampleDesignCostSheet> getAllSampleDesignCostSheet(){
-		TypedQuery<SampleDesignCostSheet> q=em.createQuery("select c from SampleDesignCostSheet c", SampleDesignCostSheet.class);
+
+	public List<SampleDesignCostSheet> getAllSampleDesignCostSheet() {
+		TypedQuery<SampleDesignCostSheet> q = em.createQuery("select c from SampleDesignCostSheet c",
+				SampleDesignCostSheet.class);
 		return q.getResultList();
 	}
-	/*************************** for ProductsForDesignCostSheet *********************/
-	public void setProductsForDesignCostSheet(ProductsForDesignCostSheet sample){
+
+	/***************************
+	 * for ProductsForDesignCostSheet
+	 *********************/
+	public void setProductsForDesignCostSheet(ProductsForDesignCostSheet sample) {
 		em.persist(sample);
 	}
-	public void updateProductsForDesignCostSheet(ProductsForDesignCostSheet sample){
+
+	public void updateProductsForDesignCostSheet(ProductsForDesignCostSheet sample) {
 		em.merge(sample);
 	}
-	public ProductsForDesignCostSheet getProductsForDesignCostSheetById(int id){
+
+	public ProductsForDesignCostSheet getProductsForDesignCostSheetById(int id) {
 		return em.find(ProductsForDesignCostSheet.class, id);
 	}
-	public List<ProductsForDesignCostSheet> getAllProductsForDesignCostSheet(){
-		TypedQuery<ProductsForDesignCostSheet> q=em.createQuery("select c from ProductsForDesignCostSheet c", ProductsForDesignCostSheet.class);
+
+	public List<ProductsForDesignCostSheet> getAllProductsForDesignCostSheet() {
+		TypedQuery<ProductsForDesignCostSheet> q = em.createQuery("select c from ProductsForDesignCostSheet c",
+				ProductsForDesignCostSheet.class);
 		return q.getResultList();
 	}
-	/*************************** for JobsForDesignCostSheet *********************/
-	public void setJobsForDesignCostSheet(JobsForDesignCostSheet sample){
+
+	/***************************
+	 * for JobsForDesignCostSheet
+	 *********************/
+	public void setJobsForDesignCostSheet(JobsForDesignCostSheet sample) {
 		em.persist(sample);
 	}
-	public void updateJobsForDesignCostSheet(JobsForDesignCostSheet sample){
+
+	public void updateJobsForDesignCostSheet(JobsForDesignCostSheet sample) {
 		em.merge(sample);
 	}
-	public JobsForDesignCostSheet getJobsForDesignCostSheetById(int id){
+
+	public JobsForDesignCostSheet getJobsForDesignCostSheetById(int id) {
 		return em.find(JobsForDesignCostSheet.class, id);
 	}
-	public List<JobsForDesignCostSheet> getAllJobsForDesignCostSheet(){
-		TypedQuery<JobsForDesignCostSheet> q=em.createQuery("select c from JobsForDesignCostSheet c", JobsForDesignCostSheet.class);
+
+	public List<JobsForDesignCostSheet> getAllJobsForDesignCostSheet() {
+		TypedQuery<JobsForDesignCostSheet> q = em.createQuery("select c from JobsForDesignCostSheet c",
+				JobsForDesignCostSheet.class);
 		return q.getResultList();
 	}
+
 	/*************************** for DesignImage *********************/
-	public void setDesignImage(DesignImage sample){
+	public void setDesignImage(DesignImage sample) {
 		em.persist(sample);
 	}
-	public void updateDesignImage(DesignImage sample){
+
+	public void updateDesignImage(DesignImage sample) {
 		em.merge(sample);
 	}
-	public DesignImage getDesignImageById(int id){
+
+	public DesignImage getDesignImageById(int id) {
 		return em.find(DesignImage.class, id);
 	}
-	public List<DesignImage> getAllDesignImage(){
-		TypedQuery<DesignImage> q=em.createQuery("select c from DesignImage c", DesignImage.class);
+
+	public List<DesignImage> getAllDesignImage() {
+		TypedQuery<DesignImage> q = em.createQuery("select c from DesignImage c", DesignImage.class);
 		return q.getResultList();
+	}
+
+	/************************** NotificationView ****************************/
+
+	public void setNotificationDetails(NotificationDetails notificationDetails) {
+		em.persist(notificationDetails);
+	}
+
+	public List<NotificationDetails> getAllNotificationDetails() {
+		TypedQuery<NotificationDetails> q = em.createQuery("select c from NotificationDetails  c",
+				NotificationDetails.class);
+		return q.getResultList();
+	}
+
+	public NotificationDetails getNotificationDetailsById(int id) {
+		return em.find(NotificationDetails.class, id);
+	}
+
+	/************************** NotificationView ****************************/
+
+	public void setNotificationView(NotificationView notificationView) {
+		em.persist(notificationView);
+	}
+
+	public List<NotificationView> getAllNotificationView() {
+		TypedQuery<NotificationView> q = em.createQuery("select c from NotificationView  c", NotificationView.class);
+		return q.getResultList();
+	}
+
+	public NotificationView getNotificationViewById(int id) {
+		return em.find(NotificationView.class, id);
+	}
+
+	/******** alertNotificationforQuantity *******************/// own object can
+																// move in
+																// freedom with
+																// in own class
+	public void alertNotificationQty() {
+		LocalDateTime localDateTime = LocalDateTime.now();
+
+		for (ProductDetail pd : getAllProductDetail()) {
+			if (pd.getReadyGoodsStock().getRemainingQty() < 10) {
+				for (NotificationDetails notDet : pd.getNotificationDetails()) {
+					if (notDet.getNotifiDate().after(
+							Date.from(localDateTime.minusDays(7).toInstant(ZoneOffset.ofHoursMinutes(5, 30))))) {
+						
+					}
+
+					}
+			}
+		}
+
 	}
 }

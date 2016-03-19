@@ -58,6 +58,7 @@
 			</script>
 		</c:if>
 	</c:if>
+
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
@@ -143,8 +144,6 @@
 							</div>
 						</div>
 					</div>
-
-
 				</div>
 			</div>
 		</div>
@@ -220,6 +219,7 @@
 
 		});
 	</script>
+
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
