@@ -299,15 +299,15 @@ public class LoginServlet extends HttpServlet {
 		if (ejb.getAllUsers().size() < 2) {
 			usersKaanish = new Users();
 			usersKaanish.setUserId("adminKaanish");
-			usersKaanish.setPassword("admin");
+			usersKaanish.setPassword("adminProduction");
 			usersKaanish.setName("Kaanish Admin");
 			usersKaanish.setPh("0");
 			usersKaanish.setCompanyInfo(companyInfoKaanish);
 			ejb.setUser(usersKaanish);
 
 			usersKainat = new Users();
-			usersKainat.setUserId("AmiKainat");
-			usersKainat.setPassword("AmiKainat");
+			usersKainat.setUserId("holho");
+			usersKainat.setPassword("holo");
 			usersKainat.setName("Kainat Admin");
 			usersKainat.setPh("0");
 			usersKainat.setCompanyInfo(companyInfoKainat);

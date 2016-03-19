@@ -152,7 +152,7 @@
 	function submitSumary() {
 
 		if ($("#productCode").val() == 0) {
-			alert("please select Designer Number");
+			alert("please select Product Code");
 		} else if ($("#description").val() == "") {
 			alert("please select Description");
 		} else if ($("#universalProductCode").val() == "") {
@@ -265,7 +265,7 @@
 									<!-- .........*****************************............ PRODUCT SEARCH PANAEL............***************************************-->
 									<div class="form-group">
 										<form action="goProView" method="post">
-											<label for="" class="">Designer Number: </label> <input
+											<label for="" class="">Product Code: </label> <input
 												type="text" id="prodcode" name="pCodeSearch"
 												class="form-control"> <label class="">Description: </label> <input type="text" id="prodesc"
 												name="pDesSearch" class="form-control"> <label
@@ -283,7 +283,7 @@
 
 										<tr>
 											<th align="center">#</th>
-											<th align="center">Designer Number</th>
+											<th align="center">Product Code</th>
 											<th align="left">Description</th>
 											<th align="right">Category</th>
 											<th align="right">view</th>
@@ -346,7 +346,7 @@
 										<div id="general" class="tab-pane fade active in">
 											<div class="row">
 												<div class="col-md-3">
-													<label>Designer Number:</label>
+													<label>Product Code:</label>
 												</div>
 												<div class="col-md-5">
 													<input id="pp1" type="text" readonly="readonly"
@@ -602,7 +602,7 @@
 								<form action="#" method="get">
 									<div class="col-md-6">
 										<div>
-											<label for="exampleInputEmail1">Designer Number:</label> <input
+											<label for="exampleInputEmail1">Product Code:</label> <input
 												type="text" name="productCode2" id="productCode" required
 												onkeyup="codeKeyUp();" onchange="codeChange();"
 												class="form-control">
@@ -1021,7 +1021,7 @@
 									</h4>
 									<table>
 										<tr>
-											<td>Designer Number:</td>
+											<td>Product Code:</td>
 											<td><input id="pcodedisp" name="productCode" type="text"
 												class="form-control " readonly></td>
 										</tr>
@@ -1470,7 +1470,7 @@
 
 		function codeChange() {
 			if ($("#pcodeCheck").val() != "") {
-				alert("this designer number already exist.");
+				alert("this Product Code already exist.");
 				$("#pcodeCheck").val("");
 				$("#productCode").val("");
 			}
