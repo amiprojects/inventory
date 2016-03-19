@@ -87,7 +87,7 @@
 										<tbody style="height: 300px;">
 											<c:set var="count" value="${1}" />
 											<c:forEach
-												items="${sessionScope['ejb'].getAllProductDetail()}"
+												items="${sessionScope['ejb'].getAllProductDetailByAssendingProduct()}"
 												var="prod">
 												<tr>
 													<td>${count}</td>
@@ -126,11 +126,14 @@
 												<th>Company Name</th>
 												<th>Phone1</th>
 												<th>Phone2</th>
+												<th>Sub Total</th>
 											</tr>
 										</thead>
 										<tbody style="height: 300px;">
 											<c:set var="count" value="${1}" />
-											<c:forEach items="${sessionScope['ejb'].getAllVendors()}"
+
+											<c:forEach
+												items="${sessionScope['ejb'].getAllVendorsByAssendingMaxPurchase('Vendor')}"
 												var="vendor">
 												<c:if test="${vendor.vendorType.type=='Vendor'}">
 													<tr>
@@ -139,6 +142,7 @@
 														<td>${vendor.companyName}</td>
 														<td>${vendor.ph1}</td>
 														<td>${vendor.ph2}</td>
+														<td>${vendor.getTotPurchase()}</td>
 														<td>
 															<form action="purchaseReportByVendorName" method="post"
 																id="pView${vendor.id}">
@@ -164,11 +168,13 @@
 												<th>Company Name</th>
 												<th>Phone1</th>
 												<th>Phone2</th>
+												<th>Sub Total</th>
 											</tr>
 										</thead>
 										<tbody style="height: 300px;">
 											<c:set var="count" value="${1}" />
-											<c:forEach items="${sessionScope['ejb'].getAllVendors()}"
+											<c:forEach
+												items="${sessionScope['ejb'].getAllVendorsByAssendingMaxPurchase('Purchase Agent')}"
 												var="vendor">
 												<c:if test="${vendor.vendorType.type=='Purchase Agent'}">
 													<tr>
@@ -177,6 +183,7 @@
 														<td>${vendor.companyName}</td>
 														<td>${vendor.ph1}</td>
 														<td>${vendor.ph2}</td>
+														<td>${vendor.getTotPurchase()}</td>
 														<td>
 															<form action="purchaseReportByAgentName" method="post"
 																id="pView${vendor.id}">

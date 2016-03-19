@@ -676,6 +676,27 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<Vendor> getAllVendorsByAssendingMaxPurchase(String type) {
+		List<Vendor> vendors = new ArrayList<Vendor>();
+		TypedQuery<Vendor> q = em.createQuery("select c from Vendor c where UPPER(c.vendorType.type)=:type",
+				Vendor.class);
+		q.setParameter("type", type.toUpperCase());
+
+		vendors = q.getResultList();
+		vendors.sort((Vendor v2, Vendor v1) -> Float.compare(v1.getTotPurchase(), v2.getTotPurchase()));
+		return vendors;
+	}
+
+	public List<Vendor> getAllAgentsByAssendingMaxSale() {
+		List<Vendor> vendors = new ArrayList<Vendor>();
+		TypedQuery<Vendor> q = em.createQuery("select c from Vendor c where c.vendorType.type='Sales Agent'",
+				Vendor.class);
+
+		vendors = q.getResultList();
+		vendors.sort((Vendor v2, Vendor v1) -> Float.compare(v1.getTotSale(), v2.getTotSale()));
+		return vendors;
+	}
+
 	public List<Vendor> getVendorsByVendorTypeIdByName(int id, String nm) {
 		TypedQuery<Vendor> q = em.createQuery(
 				"select c from Vendor c where c.vendorType.id=:Id AND UPPER(c.name) LIKE :name ORDER BY c.id ASC",
@@ -1026,6 +1047,21 @@ public class Ejb {
 	public List<Vendor> getVendorsByVendorTypeJobberAndName(String name) {
 		TypedQuery<Vendor> q = em.createQuery(
 				"select c from Vendor c where c.vendorType.type='Jobber' and UPPER(c.name) like :nm", Vendor.class);
+		q.setParameter("nm", "%" + name.toUpperCase() + "%");
+		return q.getResultList();
+	}
+
+	public List<Vendor> getVendorsByVendorTypeVendorAndName(String name) {
+		TypedQuery<Vendor> q = em.createQuery(
+				"select c from Vendor c where c.vendorType.type='Vendor' and UPPER(c.name) like :nm", Vendor.class);
+		q.setParameter("nm", "%" + name.toUpperCase() + "%");
+		return q.getResultList();
+	}
+
+	public List<Vendor> getVendorsByVendorTypePurchaseAgentAndName(String name) {
+		TypedQuery<Vendor> q = em.createQuery(
+				"select c from Vendor c where c.vendorType.type='Purchase Agent' and UPPER(c.name) like :nm",
+				Vendor.class);
 		q.setParameter("nm", "%" + name.toUpperCase() + "%");
 		return q.getResultList();
 	}
@@ -1663,6 +1699,12 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<ProductDetail> getAllProductDetailByAssendingProduct() {
+		TypedQuery<ProductDetail> q = em.createQuery("select c from ProductDetail c ORDER BY c.code ASC",
+				ProductDetail.class);
+		return q.getResultList();
+	}
+
 	public List<ProductDetail> getAllProductDetailByCompany() {
 		Users usr = getUserById((String) httpSession.getAttribute("user"));
 		// TypedQuery<ProductDetail> q =
@@ -2265,10 +2307,26 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<CustomerEntry> getAllCustomerEntryByAssendingMaxSale() {
+		List<CustomerEntry> cList = new ArrayList<CustomerEntry>();
+		TypedQuery<CustomerEntry> q = em.createQuery("select c from CustomerEntry c", CustomerEntry.class);
+
+		cList = q.getResultList();
+		cList.sort((CustomerEntry v2, CustomerEntry v1) -> Float.compare(v1.getTotSale(), v2.getTotSale()));
+		return cList;
+	}
+
 	public List<CustomerEntry> getCustomerByPh(String ph) {
 		TypedQuery<CustomerEntry> q = em.createQuery("select c from CustomerEntry c where c.mobile like :ph",
 				CustomerEntry.class);
 		q.setParameter("ph", "%" + ph + "%");
+		return q.getResultList();
+	}
+
+	public List<CustomerEntry> getCustomerByName(String name) {
+		TypedQuery<CustomerEntry> q = em.createQuery("select c from CustomerEntry c where UPPER(c.name) like :name",
+				CustomerEntry.class);
+		q.setParameter("name", "%" + name.toUpperCase() + "%");
 		return q.getResultList();
 	}
 
@@ -2443,6 +2501,7 @@ public class Ejb {
 	/***************************
 	 * for SampleDesignCostSheet
 	 *********************/
+
 	public void setSampleDesignCostSheet(SampleDesignCostSheet sample) {
 		em.persist(sample);
 	}
@@ -2464,6 +2523,7 @@ public class Ejb {
 	/***************************
 	 * for ProductsForDesignCostSheet
 	 *********************/
+
 	public void setProductsForDesignCostSheet(ProductsForDesignCostSheet sample) {
 		em.persist(sample);
 	}
@@ -2562,12 +2622,12 @@ public class Ejb {
 		for (ProductDetail pd : getAllProductDetail()) {
 			if (pd.getReadyGoodsStock().getRemainingQty() < 10) {
 				for (NotificationDetails notDet : pd.getNotificationDetails()) {
-					if (notDet.getNotifiDate().after(
-							Date.from(localDateTime.minusDays(7).toInstant(ZoneOffset.ofHoursMinutes(5, 30))))) {
-						
-					}
+					if (notDet.getNotifiDate()
+							.after(Date.from(localDateTime.minusDays(7).toInstant(ZoneOffset.ofHoursMinutes(5, 30))))) {
 
 					}
+
+				}
 			}
 		}
 

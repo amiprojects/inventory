@@ -97,6 +97,12 @@
 											<td>${vendor.ph2}</td>
 										</tr>
 									</thead>
+									<thead>
+										<tr>
+											<th style="text-align: right;">Sub Total :</th>
+											<td>${vendor.getTotPurchase()}</td>
+										</tr>
+									</thead>
 								</table>
 
 								<br>
@@ -126,8 +132,7 @@
 									</thead>
 									<tbody style="height: 300px;">
 										<c:set var="count" value="${1}" />
-										<c:forEach
-											items="${requestScope['purEntryList']}"
+										<c:forEach items="${requestScope['purEntryList']}"
 											var="pEntryByD">
 											<tr>
 												<td>${count}</td>

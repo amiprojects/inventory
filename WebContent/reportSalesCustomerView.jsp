@@ -93,8 +93,8 @@
 									</thead>
 									<thead>
 										<tr>
-											<th style="text-align: right;">Address :</th>
-											<td>${vendor.address}</td>
+											<th style="text-align: right;">Sub Total :</th>
+											<td>${vendor.getTotSale()}</td>
 										</tr>
 									</thead>
 								</table>
@@ -148,8 +148,7 @@
 														value="${pEntryByD.isFlatDiscount()?pEntryByD.discountValue:pEntryByD.subTotal*pEntryByD.discountValue/100}" />
 													${disVal}</td>
 												<td><fmt:formatNumber var="taxAmount"
-														value="${pEntryByD.taxAmount}"
-														maxFractionDigits="2" />${taxAmount}</td>
+														value="${pEntryByD.taxAmount}" maxFractionDigits="2" />${taxAmount}</td>
 												<td>${pEntryByD.transportcCharge}</td>
 												<td>${pEntryByD.surcharge}</td>
 												<td>${pEntryByD.roundOf}</td>

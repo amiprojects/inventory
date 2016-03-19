@@ -87,14 +87,14 @@
 									</thead>
 									<thead>
 										<tr>
-											<th style="text-align: right;">Phone1 :</th>
+											<th style="text-align: right;">Phone :</th>
 											<td>${vendor.ph1}</td>
 										</tr>
 									</thead>
 									<thead>
 										<tr>
-											<th style="text-align: right;">Phone2 :</th>
-											<td>${vendor.ph2}</td>
+											<th style="text-align: right;">Sub Total :</th>
+											<td>${vendor.getTotSale()}</td>
 										</tr>
 									</thead>
 								</table>
