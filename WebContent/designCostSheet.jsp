@@ -376,23 +376,25 @@
 			$("#proTable"+$("#proId").val()+" td:nth-child(7)").html(Number($("#proTable"+$("#proId").val()+" td:nth-child(6)").html())+Number($("#proQty").val()) * Number($("#rate").val()));
 			
 			$('[name="jobName"]:checked').each(function() {
+				if($(document).find("#jobRow"+$(this).val()+$("#proId").val()).length==0){
 				
-				 $("#jobs").append(
-							'<tbody id="jobRow'+$(this).val()+$("#proId").val()+'"><tr>'
-							+ '<td>#<input type="hidden" value="'+$("#proId").val()+'" name="proId"><input type="hidden" value="'+$(this).val()+'" name="jobId"></td>'
-							+ '<td>'+$("#jobName"+$(this).val()).html()+'</td>'
-									+ '<td>'+$("#proCode").val() + '</td>'
-									+ '<td><input type="number" id="rate1'+$(this).val()+$("#proId").val()+'" onchange="calAnount(\''+$(this).val()+$("#proId").val()+'\');" value="0" name="jobqty"></td>'
-									+ '<td>'+$("#proUOM").val()+'</td>'
-									+ '<td><input type="number" id="qtu1'+$(this).val()+$("#proId").val()+'" onchange="calAnount(\''+$(this).val()+$("#proId").val()+'\');" value="0" name="jobRate"></td>'
-									+ '<td><input type="text" name="totalAmount" readonly="readonly" id="amount'+$(this).val()+$("#proId").val()+'"></td>'
-									+ '<td><a href="#" onclick="removeJobRow(\''+$(this).val()+$("#proId").val()+'\');">remove</a></td>'
-									+ '</tr>'
-									+ '</tbody>');
-					$("#jobQty").val("0");
-					$("#jobrate").val("0");
-					$("#jobName").val("0");
-					$("#jobUOM").val("0");
+					 $("#jobs").append(
+								'<tbody id="jobRow'+$(this).val()+$("#proId").val()+'"><tr>'
+								+ '<td>#<input type="hidden" value="'+$("#proId").val()+'" name="proId"><input type="hidden" value="'+$(this).val()+'" name="jobId"></td>'
+								+ '<td>'+$("#jobName"+$(this).val()).html()+'</td>'
+										+ '<td>'+$("#proCode").val() + '</td>'
+										+ '<td><input type="number" id="rate1'+$(this).val()+$("#proId").val()+'" onchange="calAnount(\''+$(this).val()+$("#proId").val()+'\');" value="0" name="jobqty"></td>'
+										+ '<td>'+$("#proUOM").val()+'</td>'
+										+ '<td><input type="number" id="qtu1'+$(this).val()+$("#proId").val()+'" onchange="calAnount(\''+$(this).val()+$("#proId").val()+'\');" value="0" name="jobRate"></td>'
+										+ '<td><input type="text" name="totalAmount" value="0" readonly="readonly" id="amount'+$(this).val()+$("#proId").val()+'"></td>'
+										+ '<td><a href="#" onclick="removeJobRow(\''+$(this).val()+$("#proId").val()+'\');">remove</a></td>'
+										+ '</tr>'
+										+ '</tbody>');
+						$("#jobQty").val("0");
+						$("#jobrate").val("0");
+						$("#jobName").val("0");
+						$("#jobUOM").val("0");
+				}
 		        });
 			
 		}else{
@@ -410,13 +412,13 @@
 				
 				 $("#jobs").append(
 							'<tbody id="jobRow'+$(this).val()+$("#proId").val()+'"><tr>'
-							+ '<td>#<input type="hidden" value="'+$("#proId").val()+'" name="proId"><input type="hidden" value="'+$(this).val()+'" name="jobId"></td>'
+							+ '<td>#<input type="hidden" value="'+$(this).val()+'" name="jobId'+$("#proId").val()+'"></td>'
 							+ '<td>'+$("#jobName"+$(this).val()).html()+'</td>'
 									+ '<td>'+$("#proCode").val() + '</td>'
-									+ '<td><input type="number" id="rate1'+$(this).val()+$("#proId").val()+'" onchange="calAnount(\''+$(this).val()+$("#proId").val()+'\');" value="0" name="jobqty"></td>'
+									+ '<td><input type="number" id="rate1'+$(this).val()+$("#proId").val()+'" onchange="calAnount(\''+$(this).val()+$("#proId").val()+'\');" value="0" name="jobqty'+$("#proId").val()+'"></td>'
 									+ '<td>'+$("#proUOM").val()+'</td>'
-									+ '<td><input type="number" id="qtu1'+$(this).val()+$("#proId").val()+'" onchange="calAnount(\''+$(this).val()+$("#proId").val()+'\');" value="0" name="jobRate"></td>'
-									+ '<td><input type="text" name="totalAmount" readonly="readonly" id="amount'+$(this).val()+$("#proId").val()+'"></td>'
+									+ '<td><input type="number" id="qtu1'+$(this).val()+$("#proId").val()+'" onchange="calAnount(\''+$(this).val()+$("#proId").val()+'\');" value="0" name="jobRate'+$("#proId").val()+'"></td>'
+									+ '<td><input type="text" value="0" name="totalAmount'+$("#proId").val()+'" readonly="readonly" id="amount'+$(this).val()+$("#proId").val()+'"></td>'
 									+ '<td><a href="#" onclick="removeJobRow(\''+$(this).val()+$("#proId").val()+'\');">remove</a></td>'
 									+ '</tr>'
 									+ '</tbody>');

@@ -201,7 +201,7 @@
 												<div class="form-group">
 													<label for="" style="float: left;">Product code :</label> <input
 														type="" placeholder="Enter Product code" id="prodCode"
-														name="prodCode" class="form-control">
+														name="prodCode" class="form-control" autocomplete="off">
 												</div>
 											</div>
 											<div class="col-md-2">
@@ -317,6 +317,51 @@
 				$("#datepicker1").val("");
 			}
 		}
+		
+		$(function() {
+			$("#prodCode").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getProductbyProductCode",
+						data : {
+							code : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.code,
+									id : item.id
+								});
+							}));
+						},
+
+						error : function(a, b, c) {
+							alert(a + b + c);
+						}
+
+					});
+				},
+				/* change : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#prodCode").val("");						
+					} else {
+						$("#prodCode").val(ui.item.code);
+					}
+				}, */
+				select : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#prodCode").val("");						
+					} else {
+						$("#prodCode").val(ui.item.code);
+					}
+
+				}
+			});
+		});
 	</script>
 </body>
 

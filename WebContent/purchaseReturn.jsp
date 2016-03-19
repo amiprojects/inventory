@@ -435,7 +435,7 @@
 												<td>${purchaseProducts.productDetail.qtyUnit.name}</td>
 												<td id="cost${purchaseProducts.id}">${purchaseProducts.cost}</td>
 												<td>${purchaseProducts.quantity*purchaseProducts.cost}</td>
-												<td><input type="text" class="form-control"
+												<td><input type="text" class="form-control rQty"
 													id="rQty${purchaseProducts.id}" name="rQty"
 													onkeyup="changeNcheck('${purchaseProducts.id}');" value="0"
 													autocomplete="off"></td>
@@ -467,8 +467,7 @@
 									<c:set var="j" value="${1}"></c:set>
 									<c:forEach var="purchaseReturn"
 										items="${purchaseSearchView.purchaseReturn}">
-										<%-- <c:if
-											test="${purchaseReturn.purchaseReturnProductDetails.qtyReturn!=0}"></c:if> --%>
+
 										<tbody>
 											<tr>
 												<td>${j}</td>
@@ -477,44 +476,30 @@
 												</td>
 												<td>${purchaseReturn.challanNumber}</td>
 												<td><c:forEach var="purchaseReturnProd"
-														items="${purchaseReturn.purchaseReturnProductDetails}">
-														<%-- <c:if test="${purchaseReturnProd.qtyReturn!=0}"> --%>
+														items="${purchaseReturn.purchaseReturnProductDetails}">														
 													${purchaseReturnProd.purchaseProductDetails.productDetail.code}
 														<hr>
-														<%-- </c:if> --%>
-													</c:forEach> <%-- ${purchaseReturn.purchaseEntry.purchase_Product_Details.get(0).productDetail.code} --%>
-												</td>
+													</c:forEach></td>
 												<td><c:forEach var="purchaseReturnProd"
-														items="${purchaseReturn.purchaseReturnProductDetails}">
-														<%-- <c:if test="${purchaseReturnProd.qtyReturn!=0}"> --%>
+														items="${purchaseReturn.purchaseReturnProductDetails}">														
 													${purchaseReturnProd.purchaseProductDetails.productDetail.description}
 														<hr>
-														<%-- </c:if> --%>
 													</c:forEach></td>
-												<%-- <td>
-													${purchaseReturn.purchaseEntry.purchase_Product_Details.get(0).productDetail.description}
-												</td> --%>
 												<td><c:forEach var="purchaseReturnProd"
-														items="${purchaseReturn.purchaseReturnProductDetails}">
-														<%-- <c:if test="${purchaseReturnProd.qtyReturn!=0}"> --%>
+														items="${purchaseReturn.purchaseReturnProductDetails}">														
 													${purchaseReturnProd.qtyReturn}
 														<hr>
-														<%-- </c:if> --%>
-													</c:forEach> <%-- ${purchaseReturn.purchaseEntry.purchase_Product_Details.get(0).productDetail.code} --%>
-												</td>
+													</c:forEach></td>
 												<td><c:forEach var="purchaseReturnProd"
 														items="${purchaseReturn.purchaseReturnProductDetails}">
 														<%-- <c:if test="${purchaseReturnProd.qtyReturn!=0}"> --%>
 													${purchaseReturnProd.fault}
 														<hr>
-														<%-- </c:if> --%>
-													</c:forEach> <%-- ${purchaseReturn.purchaseEntry.purchase_Product_Details.get(0).productDetail.code} --%>
-												</td>
+													</c:forEach></td>
 											</tr>
 										</tbody>
 										<c:set var="j" value="${j+1}" />
 									</c:forEach>
-
 								</table>
 
 								<div style="width: 40%; float: right;">
@@ -1007,7 +992,15 @@
 		function paymentDate() {
 			$("#AMi2").hide();
 			var count = $('#productList tbody').length;
-			if (count < 1) {
+
+			var chk = 0;
+			$(".rQty").each(function() {
+				if (this.value != 0 && this.value != "") {
+					chk = chk + 1;
+				}
+			});
+
+			if (count < 1 || chk < 1) {
 				alert("No product found to return.");
 			} else {
 				var d = $("#datepicker1").datepicker('getDate');

@@ -222,19 +222,21 @@ page[size="A4"] {
 			<tr>
 				<td colspan="6" align="left">Return Details :</td>
 			</tr>
+			<tr>
+				<th>#</th>
+				<th>Return Date</th>
+				<th>Purchase Return challan no.</th>
+				<th>Product Code</th>
+				<th>Product Description</th>
+				<th>Returning Qty</th>
+			</tr>
 			<c:set value="${1}" var="slno" />
 			<c:forEach items="${purEntry.purchaseReturn}" var="pret">
 				<tr>
-					<th>#</th>
-					<th>Return Date</th>
-					<th>Purchase Return challan no.</th>
-					<th>Product Code</th>
-					<th>Product Description</th>
-					<th>Returning Qty</th>
-				</tr>
-				<tr>
 					<td>${slno}</td>
-					<td>${pret.returnDate}</td>
+					<td><fmt:formatDate value="${pret.returnDate}"
+							pattern="dd-MM-yy" /> <%-- ${pret.returnDate} --%></td>
+
 					<td>${pret.challanNumber}</td>
 					<td><c:forEach var="purchaseReturnProd"
 							items="${pret.purchaseReturnProductDetails}">

@@ -399,7 +399,7 @@
 															<td>${srr.quantity*srr.purchase_Product_Details.cost}
 															</td>
 															<td style="padding: 4px"><input id="rQtySa${srr.id}"
-																value="0" type="text" class="form-control"
+																value="0" type="text" class="form-control rQty"
 																style="width: 120px" name="rQtySa"
 																onchange="qtySubtraction('${srr.id}')"></td>
 
@@ -559,7 +559,7 @@
 															readonly="readonly" value="0" id="taxAmount2"></td>
 													</tr>
 												</tbody>
-												<tbody>
+												<%-- <tbody>
 													<tr>
 														<td colspan="2" id="trans">Transport charge :</td>
 														<td><input type="text" class="form-control"
@@ -567,7 +567,7 @@
 															id="transcharge" name="transcharge"></td>
 
 													</tr>
-												</tbody>
+												</tbody> --%>
 
 
 												<tbody>
@@ -917,9 +917,17 @@
 
 	<script type="text/javascript">
 		function paymentDate() {
+			var count = $('#example tbody').length;
 
-			if ($("#rQtySa307").val() == 0) {
-				alert("please enter returning quantity");
+			var chk = 0;
+			$(".rQty").each(function() {
+				if (this.value != 0 && this.value != "") {
+					chk = chk + 1;
+				}
+			});
+
+			if (count < 1 || chk < 1) {
+				alert("No product found to return.");
 			} else if ($("#drabackIid").val() == "") {
 				alert("please enter the draw back");
 			} else {

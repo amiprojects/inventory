@@ -201,8 +201,8 @@
 											<th>Designer Number:</th>
 											<th>Product Description</th>
 											<th>Qty</th>
-											<th>UOM</th>											
-											<th>Rate</th>											
+											<th>UOM</th>
+											<th>Rate</th>
 											<th>Amount</th>
 										</tr>
 									</thead>
@@ -216,13 +216,66 @@
 												<td>${purchaseProducts.productDetail.description}</td>
 												<td>${purchaseProducts.quantity}</td>
 												<td>${purchaseProducts.productDetail.qtyUnit.name}</td>
-												<td>${purchaseProducts.cost}</td>												
+												<td>${purchaseProducts.cost}</td>
 												<td>${purchaseProducts.quantity*purchaseProducts.cost}</td>
 											</tr>
 										</tbody>
 										<c:set var="i" value="${i+1}" />
 									</c:forEach>
 								</table>
+
+								<table class="table table-striped table-bordered">
+
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Return Date</th>
+											<th>Purchase Return challan no.</th>
+											<th>Product Code</th>
+											<th>Product Description</th>
+											<th>Returning Qty</th>
+											<th>Drawback</th>
+										</tr>
+									</thead>
+
+									<c:set var="j" value="${1}"></c:set>
+									<c:forEach var="purchaseReturn"
+										items="${purchaseSearchView.purchaseReturn}">
+
+										<tbody>
+											<tr>
+												<td>${j}</td>
+												<td><fmt:formatDate
+														value="${purchaseReturn.returnDate}" pattern="dd-MM-yy" />
+												</td>
+												<td>${purchaseReturn.challanNumber}</td>
+												<td><c:forEach var="purchaseReturnProd"
+														items="${purchaseReturn.purchaseReturnProductDetails}">														
+													${purchaseReturnProd.purchaseProductDetails.productDetail.code}
+														<hr>
+													</c:forEach></td>
+												<td><c:forEach var="purchaseReturnProd"
+														items="${purchaseReturn.purchaseReturnProductDetails}">														
+													${purchaseReturnProd.purchaseProductDetails.productDetail.description}
+														<hr>
+													</c:forEach></td>
+												<td><c:forEach var="purchaseReturnProd"
+														items="${purchaseReturn.purchaseReturnProductDetails}">														
+													${purchaseReturnProd.qtyReturn}
+														<hr>
+													</c:forEach></td>
+												<td><c:forEach var="purchaseReturnProd"
+														items="${purchaseReturn.purchaseReturnProductDetails}">
+														<%-- <c:if test="${purchaseReturnProd.qtyReturn!=0}"> --%>
+													${purchaseReturnProd.fault}
+														<hr>
+													</c:forEach></td>
+											</tr>
+										</tbody>
+										<c:set var="j" value="${j+1}" />
+									</c:forEach>
+								</table>
+
 								<div style="width: 40%; float: right;">
 									<table id="stream_table"
 										class="table table-striped table-bordered">
