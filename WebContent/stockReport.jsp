@@ -22,7 +22,7 @@
 <link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href=style.css>
+<!-- <link rel="stylesheet" href=style.css> -->
 <link rel="stylesheet" href="css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="css/fixedHeader.dataTables.min.css">
 
@@ -70,7 +70,7 @@ td {
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
 
 
-
+<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#reports").attr("id", "activeSubMenu");
@@ -238,17 +238,13 @@ td {
 
 												<thead>
 													<tr>
-													<tr>
-														<th>#</th>
+													<th>#</th>
 														<th>Designer Number:</th>
 														<th>Product Description:</th>
 														<th>UOM</th>
 														<th>Quantity</th>
 														<th>WSP</th>
 														<th>MRP</th>
-
-
-
 													</tr>
 
 												</thead>
@@ -318,12 +314,10 @@ td {
 	<!-- main -->
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
-	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 	<script type="text/javascript" src="js/script.js"></script>
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="js/enscroll.js"></script>
 	<script type="text/javascript" src="js/grid-filter.js"></script>
-	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 	<script src="js/jquery.dataTables.min.js"></script>
 	<script src="js/dataTables.fixedHeader.min.js"></script>
 
@@ -334,82 +328,12 @@ td {
 				"scrollY" : 200,
 				"scrollX" : true
 			});
-		});
-
-		$(document).ready(function() {
-
-			$.extend(true, $.fn.dataTable.defaults, {
-
-			//fixedHeader: true
-
-			});
-
-			var table = $('#example').DataTable({
-
-				fixedHeader : true
-
-			});
-
-			$('#example input').on('click', function(e) {
-				e.stopPropagation();
-			});
-		});
-	</script>
-	<script>
-		$(document).ready(function() {
-			$('#e2').DataTable({
-				"scrollY" : 200,
-				"scrollX" : true
-			});
-		});
-
-		$(document).ready(function() {
-
-			$.extend(true, $.fn.dataTable.defaults, {
-
-			//fixedHeader: true
-
-			});
-
-			var table = $('#e2').DataTable({
-
-				fixedHeader : true
-
-			});
-
-			$('#e2 input').on('click', function(e) {
-				e.stopPropagation();
-			});
-		});
-	</script>
-	<script>
-		$(document).ready(function() {
 			$('#e1').DataTable({
 				"scrollY" : 200,
 				"scrollX" : true
 			});
 		});
-
-		$(document).ready(function() {
-
-			$.extend(true, $.fn.dataTable.defaults, {
-
-			//fixedHeader: true
-
-			});
-
-			var table = $('#e1').DataTable({
-
-				fixedHeader : true
-
-			});
-
-			$('#e1 input').on('click', function(e) {
-				e.stopPropagation();
-			});
-		});
 	</script>
-</body>
 
-<!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
+</body>
 </html>
