@@ -134,7 +134,16 @@
 
 									<div class="col-md-4"></div>
 
-
+									<div class="col-md-4">
+										<a href="finalcialReport.jsp">
+											<div class="stats-counter">
+												<img alt="sales Entry" src="img/financialImage.JPG"
+													style="height: 179px; width: 330px;"> <i
+													class="fa fa-user red"></i>
+												<h4 style="color: red">Stock Report</h4>
+											</div>
+										</a>
+									</div>
 								</div>
 								<!-- END -->
 							</div>

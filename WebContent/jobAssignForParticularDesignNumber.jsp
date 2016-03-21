@@ -117,6 +117,8 @@
 							</div>
 
 							<!-- <div class="widget-area"> -->
+			
+			
 							<div class="col-md-12">
 								<form role="form" class="sec" method="post" id="jobForm"
 									action="jobAssignment">
