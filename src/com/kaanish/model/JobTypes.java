@@ -7,6 +7,9 @@ import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -22,6 +25,9 @@ public class JobTypes implements Serializable {
 
 	@OneToMany(mappedBy = "jobTypes")
 	private List<JobsForDesignCostSheet> jobsForDesignCostSheets;
+	
+	@ManyToMany@JoinTable(joinColumns={@JoinColumn(name="jobAssignProductId")}, inverseJoinColumns={@JoinColumn(name="jobtypeId")})
+	private List<JobAssignmentProducts> jobAssignmentProducts;
 
 	public int getId() {
 		return id;
@@ -53,6 +59,14 @@ public class JobTypes implements Serializable {
 
 	public void setJobsForDesignCostSheets(List<JobsForDesignCostSheet> jobsForDesignCostSheets) {
 		this.jobsForDesignCostSheets = jobsForDesignCostSheets;
+	}
+
+	public List<JobAssignmentProducts> getJobAssignmentProducts() {
+		return jobAssignmentProducts;
+	}
+
+	public void setJobAssignmentProducts(List<JobAssignmentProducts> jobAssignmentProducts) {
+		this.jobAssignmentProducts = jobAssignmentProducts;
 	}
 
 }

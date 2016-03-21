@@ -4,11 +4,13 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -49,6 +51,9 @@ public class JobAssignmentProducts implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "jobPlanProStockId")
 	private JobPlanProductStock jobPlanProductStock;
+	
+	@ManyToMany(mappedBy="jobAssignmentProducts",cascade=CascadeType.ALL)
+	private List<JobTypes> jobTypes;
 
 	public int getId() {
 		return id;
@@ -136,5 +141,13 @@ public class JobAssignmentProducts implements Serializable {
 
 	public void setJobPlanProductStock(JobPlanProductStock jobPlanProductStock) {
 		this.jobPlanProductStock = jobPlanProductStock;
+	}
+
+	public List<JobTypes> getJobTypes() {
+		return jobTypes;
+	}
+
+	public void setJobTypes(List<JobTypes> jobTypes) {
+		this.jobTypes = jobTypes;
 	}
 }
