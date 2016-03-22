@@ -341,10 +341,9 @@
 					<span>Quantity :</span> <input type="text" id="qty" name="qty"
 						class="form-control" onkeyup="checkQty();" required><input
 						type="hidden" id="remQty" name="remQty"><input
-						type="hidden" id="uom" name="uom"> <span>Describe
-						Work :</span>
-					<textarea rows="5" cols="" id="work" name="work"
-						class="form-control" required style="text-transform: none;"></textarea>
+						type="hidden" id="uom" name="uom"> <span>Select Jobs:</span>
+					 <textarea rows="5" cols="" id="work" name="work"
+						class="form-control" required style="text-transform: none;"></textarea> 
 				</div>
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" value="Add"
