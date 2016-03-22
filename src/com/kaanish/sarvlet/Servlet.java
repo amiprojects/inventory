@@ -3190,7 +3190,6 @@ public class Servlet extends HttpServlet {
 					}
 				}
 				if (flag == 0) {
-
 					itemsForDesignCostSheet.setName(req.getParameter("name").toUpperCase());
 					ejb.updateItemsForDesignCostSheet(itemsForDesignCostSheet);
 					msg = "Updated successfully";

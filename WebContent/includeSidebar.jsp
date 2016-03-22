@@ -150,8 +150,8 @@
 
 						<li><a id="jobSetup" href="jobSetup.jsp" title="">Job
 								Setup</a></li>
-						<li><a id="itemSetup" href="setupItem.jsp" title="">Item
-								Setup</a></li>
+						<!-- <li><a id="itemSetup" href="setupItem.jsp" title="">Item
+								Setup</a></li> -->
 
 					</ul>
 				</div>
