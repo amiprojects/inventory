@@ -40,6 +40,7 @@ import com.kaanish.model.JobStock;
 import com.kaanish.model.JobTypes;
 import com.kaanish.model.JobsForDesignCostSheet;
 import com.kaanish.model.Module;
+import com.kaanish.model.ItemsForDesignCostSheet;
 import com.kaanish.model.NotificationDetails;
 import com.kaanish.model.NotificationView;
 import com.kaanish.model.PageList;
@@ -167,6 +168,28 @@ public class Ejb {
 			return false;
 		}
 
+	}
+
+	/***************** for ItemsForDesignCostSheet **********************/
+	public void setItemsForDesignCostSheet(
+			ItemsForDesignCostSheet itemsForDesignCostSheet) {
+		em.persist(itemsForDesignCostSheet);
+	}
+	
+	public ItemsForDesignCostSheet getItemsForDesignCostSheetById(int id) {
+		return em.find(ItemsForDesignCostSheet.class, id);
+	}
+
+	public void updateItemsForDesignCostSheet(
+			ItemsForDesignCostSheet itemsForDesignCostSheet) {
+		em.merge(itemsForDesignCostSheet);
+	}
+
+	public List<ItemsForDesignCostSheet> getAllItemsForDesignCostSheet() {
+		TypedQuery<ItemsForDesignCostSheet> q = em.createQuery(
+				"select c from ItemsForDesignCostSheet c",
+				ItemsForDesignCostSheet.class);
+		return q.getResultList();
 	}
 
 	/***************** for Security Questions group **********************/

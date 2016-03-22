@@ -1371,15 +1371,14 @@ public class JsonServlet extends HttpServlet {
 						rawMaterialsStock.setCompanyInfo(ejb
 								.getAllCompanyInfo().get(0));
 						ejb.setRawMaterialsStocktDetail(rawMaterialsStock);
-
 						rawMaterialsStock = null;
 
-						rawMaterialsStock = new RawMaterialsStock();
-						rawMaterialsStock.setProductDetail(productDetail);
-						rawMaterialsStock.setRemainingQty(0);
-						rawMaterialsStock.setCompanyInfo(ejb
-								.getAllCompanyInfo().get(1));
-						ejb.setRawMaterialsStocktDetail(rawMaterialsStock);
+						// rawMaterialsStock = new RawMaterialsStock();
+						// rawMaterialsStock.setProductDetail(productDetail);
+						// rawMaterialsStock.setRemainingQty(0);
+						// rawMaterialsStock.setCompanyInfo(ejb
+						// .getAllCompanyInfo().get(1));
+						// ejb.setRawMaterialsStocktDetail(rawMaterialsStock);
 					} else {
 
 						readyGoodsStock.setProductDetail(productDetail);
@@ -1390,12 +1389,12 @@ public class JsonServlet extends HttpServlet {
 
 						readyGoodsStock = null;
 
-						readyGoodsStock = new ReadyGoodsStock();
-						readyGoodsStock.setProductDetail(productDetail);
-						readyGoodsStock.setRemainingQty(0);
-						readyGoodsStock.setCompanyInfo(ejb.getAllCompanyInfo()
-								.get(1));
-						ejb.setReadyGoodsStockDetail(readyGoodsStock);
+						// readyGoodsStock = new ReadyGoodsStock();
+						// readyGoodsStock.setProductDetail(productDetail);
+						// readyGoodsStock.setRemainingQty(0);
+						// readyGoodsStock.setCompanyInfo(ejb.getAllCompanyInfo()
+						// .get(1));
+						// ejb.setReadyGoodsStockDetail(readyGoodsStock);
 					}
 
 					if (req.getParameter("addini").equals("add")) {

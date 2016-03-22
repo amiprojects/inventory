@@ -40,7 +40,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("#jobSetup").attr("style", "color: #6a94ff;");
+		$("#itemSetup").attr("style", "color: #6a94ff;");
 		$("#setup").attr("id", "activeSubMenu");
 		if ($('#msg').html() != "") {
 			$('.toast').fadeIn(400).delay(3000).fadeOut(400);
@@ -81,26 +81,19 @@
 						<div class="masonary-grids">
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
-								<h3 style="margin-top: 11px;">Job Setup Management</h3>
+								<h3 style="margin-top: 11px;">Item Setup</h3>
 							</div>
 							<div class="widget-area">
 								<div class="widget-area"
 									style="height: 380px; overflow: auto; width: 50%;">
-									<form action="setJobTypes" method="post">
+									<form action="setItems" method="post">
 										<div class="col-md-12">
 											<div class="form-group">
-												<label for="" class="font">Jab Name :<font
+												<label for="" class="font">Item Name :<font
 													color="red" size="4">*</font></label> <input type="text"
-													placeholder="Enter job name" id=""
+													placeholder="Enter item name" id=""
 													onkeypress="return blockSpecialChar(event)" name="name"
 													class="form-control" required>
-											</div>
-										</div>
-										<div class="col-md-11">
-											<div class="form-group">
-												<label for="" class="font">Job Description :</label>
-												<textarea rows="" cols="" name="jobDesc"
-													onkeypress="return blockSpecialChar(event)"></textarea>
 											</div>
 										</div>
 										<div class="col-md-12">
@@ -112,18 +105,15 @@
 									<table class="table">
 										<thead>
 											<tr>
-												<th width="30%">Job name</th>
-												<th width="35%">Job Description</th>
-												<th width="20%">Edit/Delete</th>
-												<th></th>
+												<th>Item name</th>
+												<th>Edit/Delete</th>
 											</tr>
 										</thead>
 										<tbody>
-											<c:forEach items="${sessionScope['ejb'].getAllJobTypes()}"
+											<c:forEach items="${sessionScope['ejb'].getAllItemsForDesignCostSheet()}"
 												var="jobtype">
 												<tr>
-													<td>${jobtype.jobName}</td>
-													<td>${jobtype.jobDescription}</td>
+													<td>${jobtype.name}</td>
 													<td><a href="#"
 														onclick="editJobTypes('${jobtype.id}')"><img alt=""
 															src="img/edit.png"></a></td>
@@ -134,29 +124,22 @@
 														<div class="modal-content">
 															<div class="modal-header">
 																<button type="button" class="close" data-dismiss="modal">&times;</button>
-																<h4 class="modal-title">Edit Job Types</h4>
+																<h4 class="modal-title">Edit Item</h4>
 															</div>
 															<div class="modal-body">
-																<form action="updateJob" method="post"
+																<form action="updateItems" method="post"
 																	id="updateJobId${jobtype.id}">
 																	<input type="hidden" value="${jobtype.id}" name="id">
 																	<div class="col-md-12">
 																		<div class="form-group">
-																			<label for="name" class="font">Job Name :</label> <input
+																			<label for="name" class="font">Item Name :</label> <input
 																				type="text" placeholder="Enter job name" id=""
 																				name="name"
 																				onkeypress="return blockSpecialChar(event)"
-																				value="${jobtype.jobName}" class="form-control"
+																				value="${jobtype.name}" class="form-control"
 																				required> <input type="hidden"
 																				id="jobUsedSize${jobtype.id}"
-																				value="${jobtype.jobsForDesignCostSheets.size()}">
-																		</div>
-																	</div>
-																	<div class="col-md-12">
-																		<div class="form-group">
-																			<label for="" class="font">Job Description :</label>
-																			<textarea rows="" cols="" name="jobDesc"
-																				onkeypress="return blockSpecialChar(event)">${jobtype.jobDescription}</textarea>
+																				value="${jobtype.sampleId}">
 																		</div>
 																	</div>
 																	<div class="col-md-12">
@@ -199,7 +182,7 @@
 					<div class="row">
 						<div class="widget-area">
 							<div class="row">
-								<span>This job is used in somewhere. On update, the job
+								<span>This item is used in somewhere. On update, the item
 									name will be changed everywhere it is being used. Do you want
 									to update?</span>
 							</div>
@@ -227,11 +210,7 @@
 	<script type="text/javascript" src="js/grid-filter.js"></script>
 
 	<script src="js/jquery-ui/jquery-ui.js"></script>
-	<script src="js/tinymce.min.js"></script>
 	<script>
-		tinymce.init({
-			selector : 'textarea'
-		});
 		function editJobTypes(id) {
 			$("#jobEdit" + id).modal('show');
 		}

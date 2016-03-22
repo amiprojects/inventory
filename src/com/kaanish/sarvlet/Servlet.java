@@ -39,6 +39,7 @@ import com.kaanish.model.JobRecievedDetails;
 import com.kaanish.model.JobStock;
 import com.kaanish.model.JobTypes;
 import com.kaanish.model.JobsForDesignCostSheet;
+import com.kaanish.model.ItemsForDesignCostSheet;
 import com.kaanish.model.PageList;
 import com.kaanish.model.PaymentDetails;
 import com.kaanish.model.ProductDetail;
@@ -111,7 +112,7 @@ import com.kaanish.util.DateConverter;
 		"/jobAssignmentForOngoingJobs", "/sampleJobSearchAll",
 		"/sampleJobSearchByDesignNo", "/sampleJobSearchByDesignerName",
 		"/sampleJobCostSheetView", "/jobSearchByPlanNo", "/purchaseEdit",
-		"/jobReceiveFromSearch" })
+		"/jobReceiveFromSearch", "/setItems", "/updateItems" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -176,6 +177,7 @@ public class Servlet extends HttpServlet {
 	private JobPlanJobStock jobPlanJobStock;
 	private JobRecieveProductsDetails jobRecieveProductsDetails;
 	private JobReceiveJobDetails jobReceiveJobDetails;
+	private ItemsForDesignCostSheet itemsForDesignCostSheet;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -374,7 +376,6 @@ public class Servlet extends HttpServlet {
 						// readyGoodsStock.setCompanyInfo(ejb.getAllCompanyInfo().get(0));
 						readyGoodsStock.setCompanyInfo(companyInfo);
 						ejb.setReadyGoodsStockDetail(readyGoodsStock);
-
 						readyGoodsStock = null;
 
 						// readyGoodsStock = new ReadyGoodsStock();
@@ -3125,6 +3126,7 @@ public class Servlet extends HttpServlet {
 				}
 
 				break;
+
 			case "updateJob":
 				page = "jobSetup.jsp";
 				jobTypes = ejb.getJobTypeById(Integer.parseInt(req
@@ -3148,6 +3150,52 @@ public class Servlet extends HttpServlet {
 					msg = "Job Type updated successfully.";
 				} else {
 					msg = "You can not update duplicate job name.";
+				}
+				break;
+
+			case "setItems":
+				page = "setupItem.jsp";
+				flag = 0;
+				for (ItemsForDesignCostSheet jt : ejb
+						.getAllItemsForDesignCostSheet()) {
+					if (jt.getName().equalsIgnoreCase(req.getParameter("name"))) {
+						flag = 1;
+						break;
+					}
+				}
+				if (flag == 0) {
+					itemsForDesignCostSheet = new ItemsForDesignCostSheet();
+					itemsForDesignCostSheet.setName(req.getParameter("name")
+							.toUpperCase());
+					ejb.setItemsForDesignCostSheet(itemsForDesignCostSheet);
+					msg = "Added successfully";
+				} else {
+					msg = "You can not Add duplicate name";
+				}
+				break;
+
+			case "updateItems":
+				page = "setupItem.jsp";
+				itemsForDesignCostSheet = ejb
+						.getItemsForDesignCostSheetById(Integer.parseInt(req
+								.getParameter("id")));
+				flag = 0;
+				for (ItemsForDesignCostSheet jt : ejb
+						.getAllItemsForDesignCostSheet()) {
+					if (jt.getName().equalsIgnoreCase(req.getParameter("name"))
+							&& !itemsForDesignCostSheet.getName()
+									.equalsIgnoreCase(req.getParameter("name"))) {
+						flag = 1;
+						break;
+					}
+				}
+				if (flag == 0) {
+
+					itemsForDesignCostSheet.setName(req.getParameter("name").toUpperCase());
+					ejb.updateItemsForDesignCostSheet(itemsForDesignCostSheet);
+					msg = "Updated successfully";
+				} else {
+					msg = "You can not update duplicate item name.";
 				}
 				break;
 
@@ -3214,6 +3262,7 @@ public class Servlet extends HttpServlet {
 					String[] prorate = req.getParameterValues("rate");
 					String[] proamount = req.getParameterValues("amount");
 					String[] proqtyUnitId = req.getParameterValues("qtyUnitId");
+					String productIdList = "";
 
 					for (int lc = 0; lc < productid.length; lc++) {
 						productsForDesignCostSheet = new ProductsForDesignCostSheet();
@@ -3279,7 +3328,23 @@ public class Servlet extends HttpServlet {
 									+ Float.parseFloat(jobamount[lc1]);
 						}
 						productsForDesignCostSheet = null;
+
+						productIdList += productid[lc] + " ";
 					}
+					// itemsForDesignCostSheet = new ItemsForDesignCostSheet();
+					// itemsForDesignCostSheet.setProductIdList(productIdList);
+					// itemsForDesignCostSheet.setSampleId(sampleDesignCostSheet
+					// .getId());
+					// ejb.setItemsForDesignCostSheet(itemsForDesignCostSheet);
+					//
+					// String string =
+					// itemsForDesignCostSheet.getProductIdList();
+					// String[] parts = string.split(" ");
+					// for (String str : parts) {
+					// System.out.println(ejb.getProductDetailById(
+					// Integer.parseInt(str)).getDescription()
+					// + "," + str);
+					// }
 
 					sampleDesignCostSheet.setTotalJobcost(jobtotal);
 					sampleDesignCostSheet.setTotalProductcost(prototal);

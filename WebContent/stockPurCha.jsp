@@ -100,7 +100,7 @@ page[size="A4"] {
 
 	<c:set value="${purEntry.purchase_Product_Details.size()}"
 		var="proLength" />
-	<c:set value="${Math.ceil(proLength/8)}" var="qPage" />
+	<c:set value="${Math.ceil(proLength/6)}" var="qPage" />
 
 	<c:set value="${1}" var="sl" />
 	<c:forEach var="i" begin="1" end="${qPage}">
@@ -183,11 +183,13 @@ page[size="A4"] {
 						</tr>
 						<c:set value="${0}" var="tqty" />
 						<c:set value="${0}" var="gtot" />
-						<c:forEach begin="${(i-1)*8}" end="${i*8-1}"
+						<c:forEach begin="${(i-1)*6}" end="${i*6-1}"
 							items="${purEntry.purchase_Product_Details}" var="ppdet">
 							<tr>
 								<td>${sl}</td>
-								<td>${ppdet.productDetail.description}</td>
+								<td><b>${ppdet.productDetail.description}</b><br>Barcode
+									: ${ppdet.id}/${ppdet.lotNumber}/${ppdet.productDetail.code}<br>Design
+									No : ${ppdet.productDetail.universalCode}</td>
 								<td><fmt:formatNumber var="qty" value="${ppdet.quantity}"
 										maxFractionDigits="3" />${qty}</td>
 								<c:set value="${tqty+ppdet.quantity}" var="tqty" />
