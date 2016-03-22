@@ -361,15 +361,11 @@
 														<th>Remaining Quantity</th>
 														<th><c:choose>
 																<c:when test="${salre.MRP}">
-
 																	<b> MRP</b>
-
 																</c:when>
-
 																<c:otherwise>
 																	<b>WSP</b>
 																</c:otherwise>
-
 															</c:choose>/Qty</th>
 														<th>Total Price</th>
 														<th>Quantity Return</th>
@@ -394,10 +390,22 @@
 															<td>${srr.purchase_Product_Details.productDetail.description}</td>
 															<td id="qtty${srr.id}">${srr.quantity}</td>
 															<td id="qtttyR${srr.id}">${srr.quantity-srr.salesReQty}</td>
-															<td id="qttyC${srr.id}">
-																${srr.purchase_Product_Details.cost}</td>
-															<td>${srr.quantity*srr.purchase_Product_Details.cost}
-															</td>
+															<td id="qttyC${srr.id}"><c:choose>
+																	<c:when test="${salre.MRP}">
+																		${srr.purchase_Product_Details.mrp}
+																	</c:when>
+																	<c:otherwise>
+																		${srr.purchase_Product_Details.wsp}
+																	</c:otherwise>
+																</c:choose></td>
+															<td><c:choose>
+																	<c:when test="${salre.MRP}">																		
+																			${srr.quantity*srr.purchase_Product_Details.mrp}
+																	</c:when>
+																	<c:otherwise>
+																		${srr.quantity*srr.purchase_Product_Details.wsp}
+																	</c:otherwise>
+																</c:choose></td>
 															<td style="padding: 4px"><input id="rQtySa${srr.id}"
 																value="0" type="text" class="form-control rQty"
 																style="width: 120px" name="rQtySa"

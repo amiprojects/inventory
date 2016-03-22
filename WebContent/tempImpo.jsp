@@ -1,4 +1,43 @@
- class="tab-pane fade active in"
+<script>
+	$(document).ready(function() {
+		$("#taxVal").change(function() {
+			$("#taxVal").val(Number($("#taxVal").val()).toFixed(2));
+		});
+	});
+</script>
+------
+<fmt:formatNumber var="a" value="${val}" maxFractionDigits="2" />
+${a} ////////////////////////////
+<script src="js/numericInput.min.js"></script>
+<script>
+	$(function() {
+		$("#quantity").numericInput({
+			allowFloat : true, // Accpets positive numbers (floating point)
+			allowNegative : false, // Accpets positive or negative integer
+		});
+	});
+</script>
+//block special character
+<script type="text/javascript">
+	function blockSpecialChar(e) {
+		var k = e.keyCode;
+		return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 32 || (k >= 48 && k <= 57));
+	}
+	function blockSpecialCharNspace(e) {
+		var k = e.keyCode;
+		return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || (k >= 48 && k <= 57));
+	}
+	function blockOtherThanEmail(e) {
+		var k = e.keyCode;
+		return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 64 || k == 46 || (k >= 48 && k <= 57));
+	}
+</script>
+
+<input type="text" name="name"
+	 onkeypress="return blockSpecialChar(event)"
+	 onkeypress="return blockOtherThanEmail(event)" onkeypress="return blockSpecialCharNspace(event)" />
+/////////////////////////////////////////// class="tab-pane fade active
+in"
 <link rel="stylesheet" href="bootstrapcdn.css">
 <script src="maxcdn.bootstrapcdn.js"></script>
 
@@ -45,10 +84,7 @@ includeSidebar.html //tabs
 
 	</div>
 </div>
-$("#id").modal("show");
-
-
-//for toast
+$("#id").modal("show"); //for toast
 <link rel="stylesheet" href="css/toast.css" type="text/css" />
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 <script type="text/javascript">
@@ -74,152 +110,66 @@ $("#id").modal("show");
 
 // http://localhost:8088/kaanish_kouture/getProductDetailById?id=1
 
-//Math.round((num) * 100) / 100
+//Math.round((num) * 100) / 100 //autocomplete $(function() {
+$("#bankCity").autocomplete({ source : function(req, resp) { $.ajax({
+type : "post", url : "getCityByName", data : { name : req.term },
+dataType : "json", success : function(data) { resp($.map(data,
+function(item) { return ({ value : item.cityName, id : item.id }); }));
+} }); }, change : function(event, ui) { if (ui.item == null) {
+$(this).val(""); $("#bankCityId").val(""); } else {
+$("#bankCityId").val(ui.item.id); } }, select : function(event, ui) {
+$("#bankCityId").val(ui.item.id); } }); });
 
-//autocomplete
-$(function() {
-		$("#bankCity").autocomplete({
-			source : function(req, resp) {
-				$.ajax({
-					type : "post",
-					url : "getCityByName",
-					data : {
-						name : req.term
-					},
-					dataType : "json",
-					success : function(data) {
-						resp($.map(data, function(item) {
-							return ({
-								value : item.cityName,
-								id : item.id
-							});
-						}));
-					}
-
-				});
-			},
-			change : function(event, ui) {
-				if (ui.item == null) {
-					$(this).val("");
-					$("#bankCityId").val("");
-				} else {
-					$("#bankCityId").val(ui.item.id);
-				}
-			},
-			select : function(event, ui) {
-				$("#bankCityId").val(ui.item.id);
-			}
-		});
-	});
-	
 <c:choose>
-		<c:when test="${pCode.initialInventory.equals(false)}">
-												<fmt:formatDate
-													value="${pCode.purchase_Entry.purchase_date}"
-													pattern="dd-MM-yy" />
-											</c:when>
-											<c:otherwise>Intial inventory</c:otherwise>
-										</c:choose>
-										
+	<c:when test="${pCode.initialInventory.equals(false)}">
+		<fmt:formatDate value="${pCode.purchase_Entry.purchase_date}"
+			pattern="dd-MM-yy" />
+	</c:when>
+	<c:otherwise>Intial inventory</c:otherwise>
+</c:choose>
+
 <c:if test="${pEntryByD.vendor.vendorType.type=='Vendor'}">
-														<td>${pEntryByD.vendor.name}</td>
-													</c:if>
-													
-//<fmt:formatNumber var="" value="" maxFractionDigits="2" />
-//<fmt:formatDate value="" pattern="dd-MM-yy" />
+	<td>${pEntryByD.vendor.name}</td>
+</c:if>
+
+//
+<fmt:formatNumber var="" value="" maxFractionDigits="2" />
+//
+<fmt:formatDate value="" pattern="dd-MM-yy" />
 
 //scroll table
 <link rel="stylesheet" href="css/scrollTable.css" type="text/css" />
 <table class="table table-fixedheader">
-									<thead>
-										<tr>
-											<th width="50%">#</th>
-											<th width="50%">Purchase challan no.</th>											
-										</tr>
-									</thead>
-									<tbody style="height: 300px;">									
-											<tr>
-												<td width="50%"></td>
-												<td width="50%"></td>									
-											</tr>
-									</tbody>
-								</table>
-								
-//if (!isNaN(this.value) && this.value.length != 0) {
-var sum = 0;
-				$(".rQtyAm").each(function() {
-					sum += parseFloat(this.value);
-				});
-				$("#subtotalvalue").val(sum.toFixed(2));
-				
+	<thead>
+		<tr>
+			<th width="50%">#</th>
+			<th width="50%">Purchase challan no.</th>
+		</tr>
+	</thead>
+	<tbody style="height: 300px;">
+		<tr>
+			<td width="50%"></td>
+			<td width="50%"></td>
+		</tr>
+	</tbody>
+</table>
 
-$("input:radio[name=bar]").click(function() {
-			var value = $(this).val();
-			//alert(value);
-			if (value == "yesBar") {
-				$("#isBarPrint").val('yes');
-			} else {
-				$("#isBarPrint").val('no');
-			}
-		});
-		
-var count = $('#purProTable tbody').length;
-		alert(count);
-		
-		
-		
-
-/*Only number*/
- $(".numberOnly").keydown(function(event) {
-            if ( event.keyCode == 190 || event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 || event.keyCode == 13 || (event.keyCode == 65 && event.ctrlKey === true) || (event.keyCode >= 35 && event.keyCode <= 39)) {
-
-        if(event.keyCode == 190){
-				if($(this).val().indexOf('.')!=-1){
-                  event.preventDefault();
-                }
-
-            }
-        return;
-    }
-    else {
-
-        if (event.shiftKey || (event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105 )) {
-
-            event.preventDefault();
-            }
-    }
-});
+//if (!isNaN(this.value) && this.value.length != 0) { var sum = 0;
+$(".rQtyAm").each(function() { sum += parseFloat(this.value); });
+$("#subtotalvalue").val(sum.toFixed(2));
 
 
-//////////////////////
-<script src="js/numericInput.min.js"></script>
-
-<script>
-		$(function() {
-			$("#quantity").numericInput({
-
-				allowFloat : true, // Accpets positive numbers (floating point)
-
-				allowNegative : false,
-			// Accpets positive or negative integer
-
-			});
-		});
-	</script>
+$("input:radio[name=bar]").click(function() { var value = $(this).val();
+//alert(value); if (value == "yesBar") { $("#isBarPrint").val('yes'); }
+else { $("#isBarPrint").val('no'); } }); var count = $('#purProTable
+tbody').length; alert(count); /*Only number*/
+$(".numberOnly").keydown(function(event) { if ( event.keyCode == 190 ||
+event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 ||
+event.keyCode == 27 || event.keyCode == 13 || (event.keyCode == 65 &&
+event.ctrlKey === true) || (event.keyCode >= 35 && event.keyCode <= 39))
+{ if(event.keyCode == 190){ if($(this).val().indexOf('.')!=-1){
+event.preventDefault(); } } return; } else { if (event.shiftKey ||
+(event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 ||
+event.keyCode > 105 )) { event.preventDefault(); } } });
 
 
-//block special character
-<head id="Head1" runat="server">
-    <title></title>
-    <script type="text/javascript">
-        function blockSpecialChar(e) {
-            var k = e.keyCode;
-            return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k==32  || (k >= 48 && k <= 57));
-        }
-    </script>
-</head>
-<body>
-    <form id="frm" runat="server">
-      <input type="text" name="name"  onkeypress="return blockSpecialChar(event)"/>
-    </form>
-</body>

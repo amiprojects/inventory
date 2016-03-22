@@ -98,14 +98,15 @@
 														<label for="" class="font">Tax Name :<font
 															color="red" size="4">*</font></label> <input type="text"
 															placeholder="Enter tax name" id="" name="name"
+															onkeypress="return blockSpecialChar(event)"
 															class="form-control" required>
 													</div>
 												</div>
 												<div class="col-md-11">
 													<div class="form-group">
 														<label for="" class="font">Value :<font
-															color="red" size="4">*</font></label> <input step="0.01"
-															type="number" placeholder="" id="" name="value"
+															color="red" size="4">*</font></label> <input type="text"
+															placeholder="" id="taxVal" name="value"
 															class="form-control" required>
 													</div>
 												</div>
@@ -228,26 +229,6 @@
 																	<form action="editTaxGroup" method="post">
 																		<div class="modal-body">
 																			<input type="hidden" value="${taxGroup.id}" name="id">
-																			<%-- <input type="text" value="${taxGroup.name}"
-																				name="name">
-																			<c:forEach
-																				items="${sessionScope['ejb'].getAllTaxByTaxTypeGroupId(taxGroup.id)}"
-																				var="tax">
-
-																				<c:choose>
-																					<c:when test="${tax.isAvailable()}">
-																						<input checked="checked" type="checkbox"
-																							value="${tax.id}" name="tax">
-																						<span>${tax.name}</span>
-																					</c:when>
-																					<c:otherwise>
-																						<input type="checkbox" value="${tax.id}"
-																							name="tax">
-																						<span>${tax.name}</span>
-																					</c:otherwise>
-																				</c:choose>
-																			</c:forEach>
-																			<input type="submit" value="update"> --%>
 																			<input type="radio" name="isActiveG" value="true"
 																				id="activeRadioG">Active&nbsp; &nbsp;<input
 																				type="radio" name="isActiveG" value="false"
@@ -291,7 +272,9 @@
 																	<label for="" class="font">Tax Group Name :<font
 																		color="red" size="4">*</font></label> <input type="text"
 																		placeholder="Enter tax group name" id="tgName"
-																		name="name" class="form-control"> <input
+																		name="name"
+																		onkeypress="return blockSpecialChar(event)"
+																		class="form-control"> <input
 																		class="btn green pull-right" type="button"
 																		value="Create" onclick="taxGroupSubmit();">
 																</div>
@@ -331,13 +314,8 @@
 				</div>
 				<div class="modal-body">
 					<form role="form" class="sec" action="editTax">
-						<input type="hidden" name="id" value="" id="id1">
-						<!-- <span>Tax
-							name : </span> <input type="text" class="form-control" name="name"
-							value="" id="name1"> <span>Tax Value : </span> <input
-							type="text" class="form-control" name="value" value=""
-							id="value1"> -->
-						<input type="radio" name="isActive" value="true" id="activeRadio">Active&nbsp;
+						<input type="hidden" name="id" value="" id="id1"> <input
+							type="radio" name="isActive" value="true" id="activeRadio">Active&nbsp;
 						&nbsp;<input type="radio" name="isActive" value="false"
 							id="inactiveRadio">Inactive
 						<div style="float: right;">
@@ -408,6 +386,28 @@
 				$("#taxGroupSubId").submit();
 			}
 		}
+	</script>
+	<script>
+		$(document).ready(function() {
+			$("#taxVal").change(function() {
+				$("#taxVal").val(Number($("#taxVal").val()).toFixed(2));
+			});
+		});
+	</script>
+	<script src="js/numericInput.min.js"></script>
+	<script type="text/javascript">
+		function blockSpecialChar(e) {
+			var k = e.keyCode;
+			return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8
+					|| k == 32 || (k >= 48 && k <= 57));
+		}
+		
+		$(function() {
+			$("#taxVal").numericInput({
+				allowFloat : true, // Accpets positive numbers (floating point)
+				allowNegative : false, // Accpets positive or negative integer
+			});
+		});
 	</script>
 </body>
 

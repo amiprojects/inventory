@@ -217,7 +217,9 @@
 												<td>${purchaseProducts.quantity}</td>
 												<td>${purchaseProducts.productDetail.qtyUnit.name}</td>
 												<td>${purchaseProducts.cost}</td>
-												<td>${purchaseProducts.quantity*purchaseProducts.cost}</td>
+												<td><fmt:formatNumber var="amount"
+														value="${purchaseProducts.quantity*purchaseProducts.cost}"
+														maxFractionDigits="2" />${amount}</td>
 											</tr>
 										</tbody>
 										<c:set var="i" value="${i+1}" />
@@ -248,7 +250,8 @@
 												<td><fmt:formatDate
 														value="${purchaseReturn.returnDate}" pattern="dd-MM-yy" />
 												</td>
-												<td><a href="#" onclick="viewInvoice(${purchaseReturn.id});"><b>${purchaseReturn.challanNumber}</b></a></td>
+												<td><a href="#"
+													onclick="viewInvoice(${purchaseReturn.id});"><b>${purchaseReturn.challanNumber}</b></a></td>
 												<td><c:forEach var="purchaseReturnProd"
 														items="${purchaseReturn.purchaseReturnProductDetails}">														
 													${purchaseReturnProd.purchaseProductDetails.productDetail.code}

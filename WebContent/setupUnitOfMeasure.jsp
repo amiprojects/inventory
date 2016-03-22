@@ -51,7 +51,7 @@
 			</script>
 		</c:if>
 	</c:if>
-	
+
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
@@ -96,7 +96,7 @@
 									</table>
 									<div
 										style="height: 250px; overflow-y: scroll; overflow-x: scroll;">
-										<table class="table" >
+										<table class="table">
 											<tbody>
 												<c:set var="count" value="${1}" />
 												<c:forEach
@@ -129,8 +129,9 @@
 																		<div class="col-md-12">
 																			<input type="hidden" value="${unit.id}"
 																				name="firstUnit"> Select Target UOM for this
-																			conversion:<font color="red" size="4">*</font> <select id="contype${unit.id}"
-																				onchange="selectUnit()" name="selectedUnit">
+																			conversion:<font color="red" size="4">*</font> <select
+																				id="contype${unit.id}" onchange="selectUnit()"
+																				name="selectedUnit">
 																				<option value="0">Select Unit</option>
 																				<c:forEach
 																					items="${sessionScope['ejb'].getAllOthersQtyUnitForConversion(unit.id)}"
@@ -140,8 +141,10 @@
 																			</select>
 																		</div>
 																		<br> <br> <br>
-																		<div class="col-md-12">Defining the relationship
-																			between units:<font color="red" size="4">*</font></div>
+																		<div class="col-md-12">
+																			Defining the relationship between units:<font
+																				color="red" size="4">*</font>
+																		</div>
 																		<br>
 																		<div class="col-md-12">
 																			<input type="radio" name="name1" value="1"
@@ -157,8 +160,10 @@
 
 																		</div>
 																		<br> <br> <br>
-																		<div class="col-md-12">Defining ratio between
-																			the units:<font color="red" size="4">*</font></div>
+																		<div class="col-md-12">
+																			Defining ratio between the units:<font color="red"
+																				size="4">*</font>
+																		</div>
 																		<br>
 																		<div class="col-md-12">Fill in the blank with
 																			correct number</div>
@@ -332,22 +337,30 @@
 							</div> -->
 						</div>
 						<div class="row">
-							<div class="col-md-3">Abbreviation :<font color="red" size="4">*</font></div>
+							<div class="col-md-3">
+								Abbreviation :<font color="red" size="4">*</font>
+							</div>
 							<div class="col-md-9">
 								<input type="text" required name="abbreviation"
+									onkeypress="return blockSpecialChar(event)"
 									class="form-control">
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-md-3">Name UOM :<font color="red" size="4">*</font></div>
+							<div class="col-md-3">
+								Name UOM :<font color="red" size="4">*</font>
+							</div>
 							<div class="col-md-9">
-								<input type="text" required name="name" class="form-control">
+								<input type="text" required name="name"
+									onkeypress="return blockSpecialChar(event)"
+									class="form-control">
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-3">UOM Description :</div>
 							<div class="col-md-9">
 								<textarea rows="" cols="" name="description"
+									onkeypress="return blockSpecialChar(event)"
 									class="form-control"></textarea>
 							</div>
 						</div>
@@ -648,6 +661,13 @@
 					});
 				}
 			});
+		}
+	</script>
+	<script type="text/javascript">
+		function blockSpecialChar(e) {
+			var k = e.keyCode;
+			return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8
+					|| k == 32 || (k >= 48 && k <= 57));
 		}
 	</script>
 	<div class='toast' style='display: none'>

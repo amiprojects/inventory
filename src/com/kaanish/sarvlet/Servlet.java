@@ -1758,7 +1758,7 @@ public class Servlet extends HttpServlet {
 						purchaseProductDetails
 								.setRemaining_quantity(purchaseProductDetails
 										.getRemaining_quantity()
-										- Integer.parseInt(qtyvalue[l]));
+										- Float.parseFloat(qtyvalue[l]));
 
 						ejb.updatePurchaseProductDetails(purchaseProductDetails);
 

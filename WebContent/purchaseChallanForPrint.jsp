@@ -216,8 +216,9 @@ myWindow.print();
 								<td><b>${ppdet.productDetail.description}</b><br>Barcode
 									: ${ppdet.id}/${ppdet.lotNumber}/${ppdet.productDetail.code}<br>Design
 									No : ${ppdet.productDetail.universalCode}</td>
-								<td>${ppdet.quantity}</td>
-								<c:set value="${tqty+ppdet.quantity}" var="tqty" />
+								<td><fmt:formatNumber var="qty" value="${ppdet.quantity}"
+										maxFractionDigits="3" />${qty}</td>
+								<c:set value="${tqty+qty}" var="tqty" />
 								<td>${ppdet.cost}</td>
 								<td>${ppdet.productDetail.qtyUnit.name}</td>
 								<td><fmt:formatNumber var="amount"
@@ -255,9 +256,11 @@ myWindow.print();
 							</c:if>
 							<tr>
 								<td colspan="2" align="right">Total Quantity :</td>
-								<td>${tqty}</td>
+								<td><fmt:formatNumber var="totalQ" value="${tqty}"
+										maxFractionDigits="3" />${totalQ}</td>
 								<td colspan="2" align="right">Grand Total :</td>
-								<td>${purEntry.totalCost}<%-- ${gtot} --%>
+								<td><fmt:formatNumber var="grandT"
+										value="${purEntry.totalCost}" maxFractionDigits="2" />${grandT}
 								</td>
 							</tr>
 						</c:if>

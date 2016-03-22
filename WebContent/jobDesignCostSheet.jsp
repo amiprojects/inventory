@@ -572,8 +572,11 @@
 										+ '"><input type="hidden" name="rate" value="'
 										+ $("#rate").val()
 										+ '"><input type="hidden" name="amount" value="'
-										+ Number($("#proQty").val())
-												* Number($("#rate").val())
+										+ Number(
+												Number($("#proQty").val())
+														* Number($("#rate")
+																.val()))
+												.toFixed(2)
 										+ '"><input type="hidden" name="qtyUnitId" value="'
 										+ $("#UOMid").val()
 										+ '">'
@@ -592,8 +595,11 @@
 										+ $("#rate").val()
 										+ '</td>'
 										+ '<td>'
-										+ Number($("#proQty").val())
-										* Number($("#rate").val())
+										+ Number(
+												Number($("#proQty").val())
+														* Number($("#rate")
+																.val()))
+												.toFixed(2)
 										+ '</td>'
 										+ '<td><a href="#" onclick="removeProductRow(\''
 										+ $("#proId").val()
@@ -681,8 +687,12 @@
 					Number($("#gt").val()) + Number(sum.toFixed(2))
 							+ Number($("#surcharge").val()));
 			profitValF();
-			$("#grandtot").val(
-					Number($("#gtot").val()) + Number($("#totProfit").val()));
+			$("#grandtot")
+					.val(
+							Number(
+									Number($("#gtot").val())
+											+ Number($("#totProfit").val()))
+									.toFixed(2));
 
 			//error
 			$("#proCode").val("");
@@ -714,9 +724,11 @@
 		// Accpets positive or negative integer
 
 		});
-
+		$("#qtu1" + a).val(Number($("#qtu1" + a).val()).toFixed(2));
 		$("#amount" + a).val(
-				Number($("#qtu1" + a).val()) * Number($("#rate1" + a).val()));
+				Number(
+						Number($("#qtu1" + a).val())
+								* Number($("#rate1" + a).val())).toFixed(2));
 
 		//error
 		var sum = 0;
@@ -727,8 +739,12 @@
 				Number($("#gt").val()) + Number(sum.toFixed(2))
 						+ Number($("#surcharge").val()));
 		profitValF();
-		$("#grandtot").val(
-				Number($("#gtot").val()) + Number($("#totProfit").val()));
+		$("#grandtot")
+				.val(
+						Number(
+								Number($("#gtot").val())
+										+ Number($("#totProfit").val()))
+								.toFixed(2));
 	}
 
 	function removeProductRow(id) {
@@ -748,8 +764,12 @@
 				Number($("#gt").val()) + Number(sum.toFixed(2))
 						+ Number($("#surcharge").val()));
 		profitValF();
-		$("#grandtot").val(
-				Number($("#gtot").val()) + Number($("#totProfit").val()));
+		$("#grandtot")
+				.val(
+						Number(
+								Number($("#gtot").val())
+										+ Number($("#totProfit").val()))
+								.toFixed(2));
 	}
 
 	function removeJobRow(id) {
@@ -764,8 +784,12 @@
 				Number($("#gt").val()) + Number(sum.toFixed(2))
 						+ Number($("#surcharge").val()));
 		profitValF();
-		$("#grandtot").val(
-				Number($("#gtot").val()) + Number($("#totProfit").val()));
+		$("#grandtot")
+				.val(
+						Number(
+								Number($("#gtot").val())
+										+ Number($("#totProfit").val()))
+								.toFixed(2));
 	}
 
 	function surchargeF() {
@@ -778,8 +802,12 @@
 				Number($("#gt").val()) + Number(sum.toFixed(2))
 						+ Number($("#surcharge").val()));
 		profitValF();
-		$("#grandtot").val(
-				Number($("#gtot").val()) + Number($("#totProfit").val()));
+		$("#grandtot")
+				.val(
+						Number(
+								Number($("#gtot").val())
+										+ Number($("#totProfit").val()))
+								.toFixed(2));
 	}
 
 	/****************for Designer*****************/
@@ -854,8 +882,12 @@
 		$("#gtot").val(
 				Number($("#gt").val()) + Number(sum.toFixed(2))
 						+ Number($("#surcharge").val()));
-		$("#grandtot").val(
-				Number($("#gtot").val()) + Number($("#totProfit").val()));
+		$("#grandtot")
+				.val(
+						Number(
+								Number($("#gtot").val())
+										+ Number($("#totProfit").val()))
+								.toFixed(2));
 	}
 	function profitValF() {
 		//error
@@ -872,8 +904,12 @@
 			$("#gtot").val(
 					Number($("#gt").val()) + Number(sum.toFixed(2))
 							+ Number($("#surcharge").val()));
-			$("#grandtot").val(
-					Number($("#gtot").val()) + Number($("#totProfit").val()));
+			$("#grandtot")
+					.val(
+							Number(
+									Number($("#gtot").val())
+											+ Number($("#totProfit").val()))
+									.toFixed(2));
 		} else {
 			$("#totProfit").val(
 					Math.round(Number($("#profitVal").val()) * 100) / 100);
@@ -884,8 +920,12 @@
 			$("#gtot").val(
 					Number($("#gt").val()) + Number(sum.toFixed(2))
 							+ Number($("#surcharge").val()));
-			$("#grandtot").val(
-					Number($("#gtot").val()) + Number($("#totProfit").val()));
+			$("#grandtot")
+					.val(
+							Number(
+									Number($("#gtot").val())
+											+ Number($("#totProfit").val()))
+									.toFixed(2));
 
 		}
 	}
@@ -966,6 +1006,16 @@
 
 		});
 
+	});
+</script>
+<script>
+	$(document).ready(function() {
+		$("#rate").change(function() {
+			$("#rate").val(Number($("#rate").val()).toFixed(2));
+		});
+		$("#surcharge").change(function() {
+			$("#surcharge").val(Number($("#surcharge").val()).toFixed(2));
+		});
 	});
 </script>
 </html>

@@ -254,7 +254,8 @@
 														var="proDet">
 														<c:set value="${totqty+proDet.qty}" var="totqty" />
 													</c:forEach>
-													<td width="15%">${totqty}</td>
+													<td width="15%"><fmt:formatNumber var="totalQ"
+															value="${totqty}" maxFractionDigits="3" />${totalQ}</td>
 													<td width="10%">
 														<form action="goJobDetailShow" method="post"
 															id="JobDetails${jobAssignByDate.id}">
@@ -315,8 +316,10 @@
 															var="proDet">
 															<c:set value="${totqty+proDet.qty}" var="totqty" />
 														</c:forEach>
-														<td width="10%">${totqty}</td>
-														<td width="15%">${totREMqty}</td>
+														<td width="10%"><fmt:formatNumber var="totalQ"
+																value="${totqty}" maxFractionDigits="3" />${totalQ}</td>
+														<td width="15%"><fmt:formatNumber var="totalRQ"
+																value="${totREMqty}" maxFractionDigits="3" />${totalRQ}</td>
 														<td width="8%"><form action="jobReceiveFromSearch"
 																method="post"
 																id="jobReceiveFromSearch${jobAssignByDate.id}">
@@ -387,7 +390,8 @@
 															var="proDet">
 															<c:set value="${totqty+proDet.qty}" var="totqty" />
 														</c:forEach>
-														<td width="15%">${totqty}</td>
+														<td width="15%"><fmt:formatNumber var="totalQ"
+																value="${totqty}" maxFractionDigits="3" />${totalQ}</td>
 														<td width="10%">
 															<form action="goJobDetailShow" method="post"
 																id="JobDetails${jobAssignByDate.id}">

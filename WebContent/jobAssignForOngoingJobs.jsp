@@ -644,10 +644,16 @@
 			var dateparts = d.split(" ");
 			return dateparts[2] + "-" + dateparts[1] + "-" + dateparts[5];
 		}
+		function presentRateOC(jobId) {
+			$("#jobPresentRate" + jobId).val(
+					Number($("#jobPresentRate" + jobId).val()).toFixed(2));
+			presentRateKU(jobId);
+		}
 		function presentRateKU(jobId) {
 			$("#jobAmount" + jobId).val(
-					$("#jobPresentRate" + jobId).val()
-							* $("#jobQty" + jobId).val());
+					Number(
+							$("#jobPresentRate" + jobId).val()
+									* $("#jobQty" + jobId).val()).toFixed(2));
 
 			//error
 			var sum = 0;
@@ -658,8 +664,12 @@
 					Number($("#gt").val()) + Number(sum.toFixed(2))
 							+ Number($("#surcharge").val()));
 			profitValF();
-			$("#grandtot").val(
-					Number($("#gtot").val()) + Number($("#totProfit").val()));
+			$("#grandtot")
+					.val(
+							Number(
+									Number($("#gtot").val())
+											+ Number($("#totProfit").val()))
+									.toFixed(2));
 		}
 		function qtyKU(jobId) {
 			if ($("#jobQty" + jobId).val() > $("#jobRemQty" + jobId).val()) {
@@ -680,8 +690,10 @@
 								+ Number($("#surcharge").val()));
 				profitValF();
 				$("#grandtot").val(
-						Number($("#gtot").val())
-								+ Number($("#totProfit").val()));
+						Number(
+								Number($("#gtot").val())
+										+ Number($("#totProfit").val()))
+								.toFixed(2));
 			}
 		}
 		function profitTypeF() {
@@ -695,8 +707,12 @@
 			$("#gtot").val(
 					Number($("#gt").val()) + Number(sum.toFixed(2))
 							+ Number($("#surcharge").val()));
-			$("#grandtot").val(
-					Number($("#gtot").val()) + Number($("#totProfit").val()));
+			$("#grandtot")
+					.val(
+							Number(
+									Number($("#gtot").val())
+											+ Number($("#totProfit").val()))
+									.toFixed(2));
 		}
 		function profitValF() {
 			//error
@@ -714,8 +730,10 @@
 						Number($("#gt").val()) + Number(sum.toFixed(2))
 								+ Number($("#surcharge").val()));
 				$("#grandtot").val(
-						Number($("#gtot").val())
-								+ Number($("#totProfit").val()));
+						Number(
+								Number($("#gtot").val())
+										+ Number($("#totProfit").val()))
+								.toFixed(2));
 			} else {
 				$("#totProfit").val(
 						Math.round(Number($("#profitVal").val()) * 100) / 100);
@@ -727,8 +745,10 @@
 						Number($("#gt").val()) + Number(sum.toFixed(2))
 								+ Number($("#surcharge").val()));
 				$("#grandtot").val(
-						Number($("#gtot").val())
-								+ Number($("#totProfit").val()));
+						Number(
+								Number($("#gtot").val())
+										+ Number($("#totProfit").val()))
+								.toFixed(2));
 
 			}
 		}
@@ -742,8 +762,12 @@
 					Number($("#gt").val()) + Number(sum.toFixed(2))
 							+ Number($("#surcharge").val()));
 			profitValF();
-			$("#grandtot").val(
-					Number($("#gtot").val()) + Number($("#totProfit").val()));
+			$("#grandtot")
+					.val(
+							Number(
+									Number($("#gtot").val())
+											+ Number($("#totProfit").val()))
+									.toFixed(2));
 		}
 
 		function isSelectedF(psId, jobId) {
@@ -819,8 +843,12 @@
 					Number($("#gt").val()) + Number(sum.toFixed(2))
 							+ Number($("#surcharge").val()));
 			profitValF();
-			$("#grandtot").val(
-					Number($("#gtot").val()) + Number($("#totProfit").val()));
+			$("#grandtot")
+					.val(
+							Number(
+									Number($("#gtot").val())
+											+ Number($("#totProfit").val()))
+									.toFixed(2));
 		}
 
 		function JobPlanOkF() {
@@ -878,11 +906,26 @@
 																			+ '</td><th style="text-align: right;">'
 																			+ "Qty:"
 																			+ '</th><td>'
-																			+ "<input type='text' id='qtyOfSampleProduct"+item2.ProductForSampleId+"' class='form-control' readonly='readonly' value='"+item2.ProductQtyForSample*pQty+"'>"
+																			+ "<input type='text' id='qtyOfSampleProduct"
+																			+ item2.ProductForSampleId
+																			+ "' class='form-control' readonly='readonly' value='"
+																			+ Number(
+																					item2.ProductQtyForSample
+																							* pQty)
+																					.toFixed(
+																							3)
+																			+ "'>"
 																			+ '</td><th style="text-align: right;">'
 																			+ "Total Amount:"
 																			+ '</th><td>'
-																			+ "<input type='text' class='form-control' id='productEachTotal"+item2.ProductForSampleId+"' readonly='readonly' value='"+item2.ProductTotalAmount+"'>"
+																			+ "<input type='text' class='form-control' id='productEachTotal"
+																			+ item2.ProductForSampleId
+																			+ "' readonly='readonly' value='"
+																			+ Number(
+																					item2.ProductTotalAmount)
+																					.toFixed(
+																							2)
+																			+ "'>"
 																			+ '</td><th style="text-align: right;">'
 																			+ "Status:"
 																			+ '</th><td>'
@@ -953,18 +996,23 @@
 																												+ "</td>"
 																												+ "<td>"
 																												+ item2.JobRateOfSample
+																														.toFixed(2)
 																												+ "</td>"
 																												+ "<td>"
 																												+ "<input type='text' readonly='readonly' class='form-control' id='jobPresentRate"
 																												+ item2.JobId
 																												+ "' onkeyup='presentRateKU("
 																												+ item2.JobId
+																												+ ");' onchange='presentRateOC("
+																												+ item2.JobId
 																												+ ");' value='"
 																												+ item2.PresentRate
+																														.toFixed(2)
 																												+ "'>"
 																												+ "</td>"
 																												+ "<td>"
 																												+ item2.JobQtyOfSample
+																														.toFixed(3)
 																												+ "</td>"
 																												+ "<td>"
 																												+ "<input type='text' readonly='readonly' class='form-control' id='jobQty"
@@ -973,13 +1021,19 @@
 																												+ item2.JobId
 																												+ ");' value='"
 																												+ item2.AssignQty
+																														.toFixed(3)
 																												+ "'>"
 																												+ "</td>"
 																												+ "<td>"
 																												+ item2.JobUOMOfSample
 																												+ "</td>"
 																												+ "<td>"
-																												+ "<input type='text' readonly='readonly' id='jobAmount"+item2.JobId+"' class='form-control' value='"+item2.Amount+"'>"
+																												+ "<input type='text' readonly='readonly' id='jobAmount"
+																												+ item2.JobId
+																												+ "' class='form-control' value='"
+																												+ item2.Amount
+																														.toFixed(2)
+																												+ "'>"
 																												+ "</td>"
 																												+ "<td colspan='2'>"
 																												+ "<input type='text' readonly='readonly' id='estSubmDate"+item2.JobId+"' value='"+EstSubDate+"' class='form-control'>"
@@ -1019,11 +1073,26 @@
 																			+ '</td><th style="text-align: right;">'
 																			+ "Qty:"
 																			+ '</th><td>'
-																			+ "<input type='text' id='qtyOfSampleProduct"+item2.ProductForSampleId+"' class='form-control' readonly='readonly' value='"+item2.ProductQtyForSample*pQty+"'>"
+																			+ "<input type='text' id='qtyOfSampleProduct"
+																			+ item2.ProductForSampleId
+																			+ "' class='form-control' readonly='readonly' value='"
+																			+ Number(
+																					item2.ProductQtyForSample
+																							* pQty)
+																					.toFixed(
+																							3)
+																			+ "'>"
 																			+ '</td><th style="text-align: right;">'
 																			+ "Total Amount:"
 																			+ '</th><td>'
-																			+ "<input type='text' class='form-control' id='productEachTotal"+item2.ProductForSampleId+"' readonly='readonly' value='"+item2.ProductTotalAmount+"'>"
+																			+ "<input type='text' class='form-control' id='productEachTotal"
+																			+ item2.ProductForSampleId
+																			+ "' readonly='readonly' value='"
+																			+ Number(
+																					item2.ProductTotalAmount)
+																					.toFixed(
+																							2)
+																			+ "'>"
 																			+ '</td><th style="text-align: right;">'
 																			+ "Status:"
 																			+ '</th><td>'
@@ -1088,19 +1157,27 @@
 																												+ "</td>"
 																												+ "<td>"
 																												+ item2.JobRateOfSample
+																														.toFixed(2)
 																												+ "</td>"
 																												+ "<td>"
 																												+ "<input type='text' class='form-control' id='jobPresentRate"
 																												+ item2.JobId
 																												+ "' onkeyup='presentRateKU("
 																												+ item2.JobId
+																												+ ");' onchange='presentRateOC("
+																												+ item2.JobId
 																												+ ");' value='"
 																												+ item2.JobRateOfSample
+																														.toFixed(2)
 																												+ "'>"
 																												+ "</td>"
 																												+ "<td>"
-																												+ "<input type='text' class='form-control' id='jobRemQty"+item2.JobId+"' readonly='readonly' value='"+item2.JobQtyOfSample
-																														+"'>"
+																												+ "<input type='text' class='form-control' id='jobRemQty"
+																												+ item2.JobId
+																												+ "' readonly='readonly' value='"
+																												+ item2.JobQtyOfSample
+																														.toFixed(3)
+																												+ "'>"
 																												+ "</td>"
 																												+ "<td>"
 																												+ "<input type='text' readonly='readonly' class='form-control' id='jobQty"
@@ -1108,15 +1185,26 @@
 																												+ "' onkeyup='qtyKU("
 																												+ item2.JobId
 																												+ ");' value='"
-																												+ item2.JobQtyOfSample
-																												* pQty
+																												+ Number(
+																														item2.JobQtyOfSample
+																																* pQty)
+																														.toFixed(
+																																3)
 																												+ "'>"
 																												+ "</td>"
 																												+ "<td>"
 																												+ item2.JobUOMOfSample
 																												+ "</td>"
 																												+ "<td>"
-																												+ "<input type='text' readonly='readonly' id='jobAmount"+item2.JobId+"' class='form-control' value='"+item2.JobAmountOfSample*pQty+"'>"
+																												+ "<input type='text' readonly='readonly' id='jobAmount"
+																												+ item2.JobId
+																												+ "' class='form-control' value='"
+																												+ Number(
+																														item2.JobAmountOfSample
+																																* pQty)
+																														.toFixed(
+																																2)
+																												+ "'>"
 																												+ "</td>"
 																												+ "<td colspan='2'>"
 																												+ "<input onclick='showDatePicker();' type='text' id='estSubmDate"
@@ -1164,6 +1252,14 @@
 				allowNegative : false,
 			// Accpets positive or negative integer
 
+			});
+		});
+	</script>
+	<script>
+		$(document).ready(function() {
+			$("#surcharge").change(function() {
+				$("#surcharge").val(Number($("#surcharge").val()).toFixed(2));
+				surchargeF();
 			});
 		});
 	</script>

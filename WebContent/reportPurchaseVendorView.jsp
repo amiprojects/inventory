@@ -100,7 +100,9 @@
 									<thead>
 										<tr>
 											<th style="text-align: right;">Sub Total :</th>
-											<td>${vendor.getTotPurchase()}</td>
+											<td><fmt:formatNumber var="totPurSubA"
+													value="${vendor.getTotPurchase()}" maxFractionDigits="2" />
+												${totPurSubA}</td>
 										</tr>
 									</thead>
 								</table>
@@ -132,8 +134,7 @@
 									</thead>
 									<tbody style="height: 300px;">
 										<c:set var="count" value="${1}" />
-										<c:forEach
-											items="${requestScope['purEntryList']}"
+										<c:forEach items="${requestScope['purEntryList']}"
 											var="pEntryByD">
 											<tr>
 												<td>${count}</td>

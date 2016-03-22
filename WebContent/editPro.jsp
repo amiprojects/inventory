@@ -99,13 +99,17 @@
 											<div class="form-group">
 												<label for="exampleInputEmail1">Description:</label> <input
 													type="text" name="description123"
+													onkeypress="return blockSpecialChar(event)"
 													value="${editpro.description}" class="form-control"><br>
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
-												<label for="exampleInputEmail1">Designer's Design number: </label> <input type="text" value="${editpro.universalCode}"
-													name="upc123" class="form-control"><br>
+												<label for="exampleInputEmail1">Designer's Design
+													number: </label> <input type="text"
+													value="${editpro.universalCode}" name="upc123"
+													onkeypress="return blockSpecialChar(event)"
+													class="form-control"><br>
 											</div>
 
 											<div class="form-group">
@@ -168,7 +172,13 @@
 			$("#sProduct").attr("style", "color: #6a94ff;");
 		});
 	</script>
-
+	<script type="text/javascript">
+		function blockSpecialChar(e) {
+			var k = e.keyCode;
+			return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8
+					|| k == 32 || (k >= 48 && k <= 57));
+		}
+	</script>
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->

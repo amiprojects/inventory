@@ -91,14 +91,16 @@
 											<div class="form-group">
 												<label for="" class="font">Jab Name :<font
 													color="red" size="4">*</font></label> <input type="text"
-													placeholder="Enter job name" id="" name="name"
+													placeholder="Enter job name" id=""
+													onkeypress="return blockSpecialChar(event)" name="name"
 													class="form-control" required>
 											</div>
 										</div>
 										<div class="col-md-11">
 											<div class="form-group">
 												<label for="" class="font">Job Description :</label>
-												<textarea rows="" cols="" name="jobDesc"></textarea>
+												<textarea rows="" cols="" name="jobDesc"
+													onkeypress="return blockSpecialChar(event)"></textarea>
 											</div>
 										</div>
 										<div class="col-md-12">
@@ -142,16 +144,19 @@
 																		<div class="form-group">
 																			<label for="name" class="font">Job Name :</label> <input
 																				type="text" placeholder="Enter job name" id=""
-																				name="name" value="${jobtype.jobName}"
-																				class="form-control" required> <input
-																				type="hidden" id="jobUsedSize${jobtype.id}"
+																				name="name"
+																				onkeypress="return blockSpecialChar(event)"
+																				value="${jobtype.jobName}" class="form-control"
+																				required> <input type="hidden"
+																				id="jobUsedSize${jobtype.id}"
 																				value="${jobtype.jobsForDesignCostSheets.size()}">
 																		</div>
 																	</div>
 																	<div class="col-md-12">
 																		<div class="form-group">
 																			<label for="" class="font">Job Description :</label>
-																			<textarea rows="" cols="" name="jobDesc">${jobtype.jobDescription}</textarea>
+																			<textarea rows="" cols="" name="jobDesc"
+																				onkeypress="return blockSpecialChar(event)">${jobtype.jobDescription}</textarea>
 																		</div>
 																	</div>
 																	<div class="col-md-12">
@@ -243,6 +248,13 @@
 			$("#noC").click(function() {
 				$("#cancelOrNot").modal("hide");
 			});
+		}
+	</script>
+	<script type="text/javascript">
+		function blockSpecialChar(e) {
+			var k = e.keyCode;
+			return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8
+					|| k == 32 || (k >= 48 && k <= 57));
 		}
 	</script>
 </body>

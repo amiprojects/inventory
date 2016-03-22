@@ -801,7 +801,7 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="bankName2"
-											id="idbankName2">
+											id="idbankName2" onkeypress="return blockSpecialChar(event)">
 									</div>
 									<br>
 									<div class="col-md-3">
@@ -809,7 +809,7 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="bankAccNo2"
-											id="acno2">
+											id="acno2" onkeypress="return blockSpecialChar(event)">
 									</div>
 									<br>
 									<div class="col-md-3">
@@ -817,7 +817,8 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="bankBranch2"
-											id="idbankBranch2">
+											id="idbankBranch2"
+											onkeypress="return blockSpecialChar(event)">
 									</div>
 									<br>
 									<div class="col-md-3">
@@ -834,7 +835,7 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="bankIFSC2"
-											id="idbankIFSC2">
+											id="idbankIFSC2" onkeypress="return blockSpecialChar(event)">
 									</div>
 									<br>
 									<div class="col-md-3">
@@ -842,7 +843,7 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="bankMICR2"
-											id="idbankMICR2">
+											id="idbankMICR2" onkeypress="return blockSpecialChar(event)">
 									</div>
 									<br>
 									<div class="col-md-3">
@@ -850,7 +851,7 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="bankRTGS2"
-											id="idbankRTGS2">
+											id="idbankRTGS2" onkeypress="return blockSpecialChar(event)">
 									</div>
 									<br>
 									<div class="col-md-3">
@@ -858,7 +859,8 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="bankCheckLebel2"
-											id="idbankCheckLebel2">
+											id="idbankCheckLebel2"
+											onkeypress="return blockSpecialChar(event)">
 									</div>
 								</div>
 								<br>
@@ -880,7 +882,8 @@
 										</div>
 										<div class="col-md-7">
 											<input type="text" class="form-control" name="vendorVATno2"
-												id="idvendorVATno2">
+												id="idvendorVATno2"
+												onkeypress="return blockSpecialChar(event)">
 										</div>
 									</div>
 
@@ -901,7 +904,8 @@
 										</div>
 										<div class="col-md-7">
 											<input type="text" class="form-control" name="vendorCSTno2"
-												id="idvendorCSTno2">
+												id="idvendorCSTno2"
+												onkeypress="return blockSpecialChar(event)">
 										</div>
 									</div>
 
@@ -923,7 +927,8 @@
 										</div>
 										<div class="col-md-7">
 											<input type="text" class="form-control" name="vendorPANno2"
-												id="idvendorPANno2">
+												id="idvendorPANno2"
+												onkeypress="return blockSpecialChar(event)">
 										</div>
 									</div>
 
@@ -933,7 +938,8 @@
 										</div>
 										<div class="col-md-7">
 											<input type="text" class="form-control"
-												name="vendorExciseRegNo2" id="idvendorExciseRegNo2">
+												name="vendorExciseRegNo2" id="idvendorExciseRegNo2"
+												onkeypress="return blockSpecialChar(event)">
 										</div>
 									</div>
 
@@ -954,7 +960,8 @@
 										</div>
 										<div class="col-md-7">
 											<input type="text" class="form-control"
-												name="vendorServiceTaxRegNo2" id="idvendorServiceTaxRegNo2">
+												name="vendorServiceTaxRegNo2" id="idvendorServiceTaxRegNo2"
+												onkeypress="return blockSpecialChar(event)">
 										</div>
 									</div>
 
@@ -1002,7 +1009,8 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorName2"
-											id="idName2" required="required">
+											id="idName2" required="required"
+											onkeypress="return blockSpecialChar(event)">
 									</div>
 									<br>
 									<div class="col-md-3">
@@ -1010,7 +1018,8 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control"
-											name="vendorCompanyName2" id="idvendorCompanyName2">
+											name="vendorCompanyName2" id="idvendorCompanyName2"
+											onkeypress="return blockSpecialChar(event)">
 									</div>
 
 									<div class="col-md-3">
@@ -1035,6 +1044,7 @@
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorMail2"
 											style="text-transform: none;" id="idvendorMail2"
+											onkeypress="return blockOtherThanEmail(event)"
 											required="required">
 									</div>
 
@@ -1043,7 +1053,8 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorAlias2"
-											id="idvendorAlias2" required="required">
+											id="idvendorAlias2" required="required"
+											onkeypress="return blockSpecialChar(event)">
 									</div>
 
 									<div class="col-md-3">
@@ -1082,7 +1093,8 @@
 										</div>
 										<div class="col-md-9">
 											<textarea rows="" cols="" class="form-control"
-												name="vendorAddress2" id="idAdd2" required="required"></textarea>
+												name="vendorAddress2" id="idAdd2" required="required"
+												onkeypress="return blockSpecialChar(event)"></textarea>
 											<div class="row"></div>
 										</div>
 										<div class="col-md-3">
@@ -1320,6 +1332,52 @@
 			});
 
 		});
+		$(function() {
+
+			$("#spPaymentAmount").numericInput({
+
+				allowFloat : true, // Accpets positive numbers (floating point)
+
+				allowNegative : false,
+			// Accpets positive or negative integer
+
+			});
+
+		});
+	</script>
+	<script>
+		$(document).ready(
+				function() {
+					$("#spPaymentAmount").change(
+							function() {
+								$("#spPaymentAmount").val(
+										Number($("#spPaymentAmount").val())
+												.toFixed(2));
+								spPaymentAmountFunc();
+							});
+					$("#surcharge").change(
+							function() {
+								$("#surcharge").val(
+										Number($("#surcharge").val())
+												.toFixed(2));
+								surchargeF();
+							});
+					$("#transcharge").change(
+							function() {
+								$("#transcharge").val(
+										Number($("#transcharge").val())
+												.toFixed(2));
+								transchargeF();
+							});
+					$("#discount").change(
+							function() {
+								$("#discount")
+										.val(
+												Number($("#discount").val())
+														.toFixed(2));
+								discountF();
+							});
+				});
 	</script>
 
 	<script>
@@ -1517,9 +1575,11 @@
 																	.val()
 															+ '\'></td>'
 															+ '<td><input readonly="readonly" type="text" class="eachtotalvalue" name="eachtotalvalue" value=\''
-															+ $(
-																	"#eachtotalvalue")
-																	.val()
+															+ Number(
+																	$(
+																			"#eachtotalvalue")
+																			.val())
+																	.toFixed(2)
 															+ '\'></td>'
 															+ '<td>'
 															+ '<a href="#" onclick="removeProduct('
@@ -1547,12 +1607,16 @@
 											+ '\'>');
 									$(
 											"#trRemove" + $("#salesbarH").val()
-													+ " :nth-child(6)").html(
-											'<input readonly="readonly" type="text" name="eachtotalvalue" value=\''
-													+ Number($(
-															"#eachtotalvalue")
-															.val()
-															* Q) + '\'>');
+													+ " :nth-child(6)")
+											.html(
+													'<input readonly="readonly" type="text" name="eachtotalvalue" value=\''
+															+ Number(
+																	$(
+																			"#eachtotalvalue")
+																			.val()
+																			* Q)
+																	.toFixed(2)
+															+ '\'>');
 								}
 							}
 
@@ -2364,9 +2428,12 @@
 																		.val()
 																+ '\'></td>'
 																+ '<td><input readonly="readonly" type="text" class="eachtotalvalue" name="eachtotalvalue" value=\''
-																+ $(
-																		"#eachtotalvalue")
-																		.val()
+																+ Number(
+																		$(
+																				"#eachtotalvalue")
+																				.val())
+																		.toFixed(
+																				2)
 																+ '\'></td>'
 																+ '<td>'
 																+ '<a href="#" onclick="removeProduct('
@@ -2402,10 +2469,13 @@
 														+ " :nth-child(6)")
 												.html(
 														'<input readonly="readonly" type="text" name="eachtotalvalue" value=\''
-																+ Number($(
-																		"#eachtotalvalue")
-																		.val()
-																		* Q)
+																+ Number(
+																		$(
+																				"#eachtotalvalue")
+																				.val()
+																				* Q)
+																		.toFixed(
+																				2)
 																+ '\'>');
 									}
 									$("#pCode").val("");
@@ -3070,6 +3140,37 @@
 				}
 			});
 
+		}
+	</script>
+
+	<script src="js/numericInput.min.js"></script>
+	<script>
+		$(function() {
+			$("#iphone2").numericInput({
+				allowFloat : false, // Accpets positive numbers (floating point)
+				allowNegative : false, // Accpets positive or negative integer
+			});
+			$("#idvendorPh22").numericInput({
+				allowFloat : false, // Accpets positive numbers (floating point)
+				allowNegative : false, // Accpets positive or negative integer
+			});
+			$("#idvendorPin2").numericInput({
+				allowFloat : false, // Accpets positive numbers (floating point)
+				allowNegative : false, // Accpets positive or negative integer
+			});
+		});
+	</script>
+
+	<script type="text/javascript">
+		function blockSpecialChar(e) {
+			var k = e.keyCode;
+			return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8
+					|| k == 32 || (k >= 48 && k <= 57));
+		}
+		function blockOtherThanEmail(e) {
+			var k = e.keyCode;
+			return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8
+					|| k == 64 || k == 46 || (k >= 48 && k <= 57));
 		}
 	</script>
 </body>

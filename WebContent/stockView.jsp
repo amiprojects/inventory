@@ -95,7 +95,7 @@
 									<br> <br>
 									<div class="form-group">
 										<form action="goStockView" method="post">
-											<label for="" class="">Designer Number: </label> <input
+											<label for="" class="">Product code: </label> <input
 												type="text" id="prodcode" name="pCodeSearch"
 												class="form-control"> <label class="">Product
 												Description: </label> <input type="text" id="prodesc"
@@ -128,7 +128,7 @@
 											<thead>
 												<tr>
 													<th>#</th>
-													<th>Designer Number:</th>
+													<th>Product code:</th>
 													<th>Product Description:</th>
 													<th>UOM</th>
 													<th>Quantity</th>

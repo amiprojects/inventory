@@ -132,7 +132,7 @@
 									<c:set
 										value="${sessionScope['ejb'].getProductDetailById(requestScope['proid1'])}"
 										var="p" />
-									<h4 align="center">Designer Number:&nbsp;${p.code}</h4>
+									<h4 align="center">Product code:&nbsp;${p.code}</h4>
 
 									<br> <br>
 
@@ -176,7 +176,7 @@
 												value="${sessionScope['ejb'].getReadyGoodsStocktDetailByProductIdAndCompany(p.id).remainingQty}" />
 											<br> <br>
 											<div style="width: 50%; float: left;">
-												<b>Designer Number:</b>&nbsp;&nbsp;${p.code} <br> <br>
+												<b>Product code:</b>&nbsp;&nbsp;${p.code} <br> <br>
 												<b>Product Description:</b>&nbsp;${p.description}<br> <br>
 												<b>UOM:</b>&nbsp;&nbsp;&nbsp;&nbsp;${p.qtyUnit.name}<br>
 												<br> <b>Latest Cost Price:</b>
@@ -690,7 +690,7 @@
 												<table class="table table-striped table-bordered">
 
 													<tr>
-														<td><b>Designer Number:</b></td>
+														<td><b>Product code:</b></td>
 
 
 														<td><b>Product Description</b></td>

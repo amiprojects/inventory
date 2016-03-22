@@ -88,20 +88,23 @@
 										<div class="col-md-11"
 											style="margin-left: 0px; padding-left: 0px;">
 											<input type="text" placeholder="Enter user group name:"
-												name="userGroupName" id="userGroupName" class="form-control">
+												name="userGroupName"
+												onkeypress="return blockSpecialChar(event)"
+												id="userGroupName" class="form-control">
 										</div>
 									</div>
 									<div class="col-md-3">
 										<input type="button" value="Create Group"
 											class="btn green pull-right" onclick="userGroupSubmit();">
 									</div>
-									<br>
-									<br>
+									<br> <br>
 									<p>
-										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="red" size="4">*</font><!-- <a href="#"
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font
+											color="red" size="4">*</font>
+										<!-- <a href="#"
 											id="tree-expand-all">Expand all</a> | <a href="#"
 											id="tree-collapse-all">Collapse all</a> -->
-											<b>Select Pages:</b>
+										<b>Select Pages:</b>
 									</p>
 									<ul id="tree">
 										<c:forEach items="${sessionScope['ejb'].getAllModule()}"
@@ -145,6 +148,7 @@
 															<div class="col-md-8">
 																<input type="hidden" name="usrGpId" value="${ug.id}">
 																<input type="text" name="userGroupName"
+																	onkeypress="return blockSpecialChar(event)"
 																	class="form-control" value="${ug.groupName}">
 															</div>
 															<div class="col-md-4">
@@ -219,20 +223,27 @@
 		function viewUser(id) {
 			$("#userGroup" + id).modal();
 		}
-		function userGroupSubmit(){
+		function userGroupSubmit() {
 			var i = 0;
-		    $(".isSelected").each(function () {
-		        if ($(this).is(':checked')) {
-		            i = 1;
-		        }
-		    });
-			if($("#userGroupName").val()==""){
+			$(".isSelected").each(function() {
+				if ($(this).is(':checked')) {
+					i = 1;
+				}
+			});
+			if ($("#userGroupName").val() == "") {
 				alert("Enter user group name...");
-			}else if(i == 0){
+			} else if (i == 0) {
 				alert("Select pages to give access...");
-			}else{
+			} else {
 				$("#createUserGroupId").submit();
 			}
+		}
+	</script>
+	<script type="text/javascript">
+		function blockSpecialChar(e) {
+			var k = e.keyCode;
+			return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8
+					|| k == 32 || (k >= 48 && k <= 57));
 		}
 	</script>
 </body>

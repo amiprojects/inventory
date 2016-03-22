@@ -1,1 +1,25 @@
-qTable
+<font color="red" size="4">*</font>
+
+function detailButtonNext() {
+			if ($("#idName").val() == 0) {
+				alert("please enter  name");
+			} else if ($("#iphone").val() == "") {
+				alert("please enter Ph No1");
+			} else {
+				$("#detl").removeAttr("class");
+				$("#detail").attr("class", "tab-pane fade");
+				$("#addr").attr("class", "active");
+				$("#address").attr("class", "tab-pane fade active in");
+			}
+		}
+		
+function addressButtonNext() {
+			if ($("#vendorCityId").val() == "") {
+				alert("please select cityname");
+			} else {
+				$("#addr").removeAttr("class");
+				$("#address").attr("class", "tab-pane fade");
+				$("#vAcc").attr("class", "active");
+				$("#vendorAccount").attr("class", "tab-pane fade active in");
+			}
+		}

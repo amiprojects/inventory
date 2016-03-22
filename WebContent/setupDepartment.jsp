@@ -46,101 +46,106 @@
 <script src="js/jquery-ui/jquery-ui.js"></script>
 <script type="text/javascript">
 	$(function() {
-		$("#prnt").autocomplete(
-				{
-					source : function(req, resp) {
-						$.ajax({
-							url : "getAllDepartments",
-							dataType : "json",
-							data : {
-								name : req.term
-							},
-							success : function(data) {
-								resp($.map(data, function(item) {
-									return {
-										value : item.name,
-										id : item.id,
-										status : item.status,
-										pname : item.pName
+		$("#prnt")
+				.autocomplete(
+						{
+							source : function(req, resp) {
+								$.ajax({
+									url : "getAllDepartments",
+									dataType : "json",
+									data : {
+										name : req.term
+									},
+									success : function(data) {
+										resp($.map(data, function(item) {
+											return {
+												value : item.name,
+												id : item.id,
+												status : item.status,
+												pname : item.pName
+											}
+										}));
 									}
-								}));
+								});
+							},
+							change : function(event, ui) {
+								if (ui.item == null) {
+									$(this).val("");
+									$("#id").val("");
+									$('#status').val("");
+									$("#perentOfSubDept").html("");
+									$("#attr1").prop("disabled", true);
+									$("#attr2").prop("disabled", true);
+									$("#attr3").prop("disabled", true);
+									$("#attr4").prop("disabled", true);
+									$("#attr5").prop("disabled", true);
+									$("#attr6").prop("disabled", true);
+								} else {
+									$("#id").val(ui.item.id);
+									$('#status').val(ui.item.status);
+									if (ui.item.status == "2") {
+										$("#perentOfSubDept").html(
+												'Perent Department: '
+														+ ui.item.pname);
+										$("#attr1").prop("disabled", false);
+
+										$("#attr1Star")
+												.html(
+														"Attribute 1:<font color='red' size='4'>*</font>");
+										/* $("#attr2").prop("disabled", false);
+										$("#attr3").prop("disabled", false);
+										$("#attr4").prop("disabled", false);
+										$("#attr5").prop("disabled", false);
+										$("#attr6").prop("disabled", false); */
+									} else {
+										$("#perentOfSubDept").html("");
+										$("#attr1").prop("disabled", true);
+										$("#attr2").prop("disabled", true);
+										$("#attr3").prop("disabled", true);
+										$("#attr4").prop("disabled", true);
+										$("#attr5").prop("disabled", true);
+										$("#attr6").prop("disabled", true);
+
+										$("#attr1Star").html("Attribute 1:");
+									}
+								}
+							},
+							select : function(event, ui) {
+								if (ui.item == null) {
+									$(this).val("");
+									$("#id").val("");
+									$('#status').val("");
+									$("#attr1").prop("disabled", true);
+									$("#attr2").prop("disabled", true);
+									$("#attr3").prop("disabled", true);
+									$("#attr4").prop("disabled", true);
+									$("#attr5").prop("disabled", true);
+									$("#attr6").prop("disabled", true);
+								} else {
+									$("#id").val(ui.item.id);
+									$('#status').val(ui.item.status);
+									if (ui.item.status == "2") {
+										$("#perentOfSubDept").html(
+												'Perent Department: '
+														+ ui.item.pname);
+										$("#attr1").prop("disabled", false);
+										/* $("#attr2").prop("disabled", false);
+										$("#attr3").prop("disabled", false);
+										$("#attr4").prop("disabled", false);
+										$("#attr5").prop("disabled", false);
+										$("#attr6").prop("disabled", false); */
+									} else {
+										$("#perentOfSubDept").html("");
+										$("#attr1").prop("disabled", true);
+										$("#attr2").prop("disabled", true);
+										$("#attr3").prop("disabled", true);
+										$("#attr4").prop("disabled", true);
+										$("#attr5").prop("disabled", true);
+										$("#attr6").prop("disabled", true);
+									}
+								}
 							}
 						});
-					},
-					change : function(event, ui) {
-						if (ui.item == null) {
-							$(this).val("");
-							$("#id").val("");
-							$('#status').val("");
-							$("#perentOfSubDept").html("");
-							$("#attr1").prop("disabled", true);
-							$("#attr2").prop("disabled", true);
-							$("#attr3").prop("disabled", true);
-							$("#attr4").prop("disabled", true);
-							$("#attr5").prop("disabled", true);
-							$("#attr6").prop("disabled", true);
-						} else {
-							$("#id").val(ui.item.id);
-							$('#status').val(ui.item.status);
-							if (ui.item.status == "2") {
-								$("#perentOfSubDept").html(
-										'Perent Department: ' + ui.item.pname);
-								$("#attr1").prop("disabled", false);
-								
-								$("#attr1Star").html("Attribute 1:<font color='red' size='4'>*</font>");
-								/* $("#attr2").prop("disabled", false);
-								$("#attr3").prop("disabled", false);
-								$("#attr4").prop("disabled", false);
-								$("#attr5").prop("disabled", false);
-								$("#attr6").prop("disabled", false); */
-							} else {
-								$("#perentOfSubDept").html("");
-								$("#attr1").prop("disabled", true);
-								$("#attr2").prop("disabled", true);
-								$("#attr3").prop("disabled", true);
-								$("#attr4").prop("disabled", true);
-								$("#attr5").prop("disabled", true);
-								$("#attr6").prop("disabled", true);
-								
-								$("#attr1Star").html("Attribute 1:");
-							}
-						}
-					},
-					select : function(event, ui) {
-						if (ui.item == null) {
-							$(this).val("");
-							$("#id").val("");
-							$('#status').val("");
-							$("#attr1").prop("disabled", true);
-							$("#attr2").prop("disabled", true);
-							$("#attr3").prop("disabled", true);
-							$("#attr4").prop("disabled", true);
-							$("#attr5").prop("disabled", true);
-							$("#attr6").prop("disabled", true);
-						} else {
-							$("#id").val(ui.item.id);
-							$('#status').val(ui.item.status);
-							if (ui.item.status == "2") {
-								$("#perentOfSubDept").html(
-										'Perent Department: ' + ui.item.pname);
-								$("#attr1").prop("disabled", false);
-								/* $("#attr2").prop("disabled", false);
-								$("#attr3").prop("disabled", false);
-								$("#attr4").prop("disabled", false);
-								$("#attr5").prop("disabled", false);
-								$("#attr6").prop("disabled", false); */
-							} else {
-								$("#perentOfSubDept").html("");
-								$("#attr1").prop("disabled", true);
-								$("#attr2").prop("disabled", true);
-								$("#attr3").prop("disabled", true);
-								$("#attr4").prop("disabled", true);
-								$("#attr5").prop("disabled", true);
-								$("#attr6").prop("disabled", true);
-							}
-						}
-					}
-				});
 	});
 	function addBtn() {
 		if ($("#dName").val() != "") {
@@ -229,7 +234,8 @@
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
 
-			<c:if test="${page.name.equals('Department/Sub-Department/Category')}">
+			<c:if
+				test="${page.name.equals('Department/Sub-Department/Category')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
@@ -274,35 +280,46 @@
 														<li>Add Department</li>
 													</ul>
 												</div>
-												<span>Department name:<font color="red" size="4">*</font> </span> <input type="text" id="dName"
+												<span>Department name:<font color="red" size="4">*</font>
+												</span> <input type="text"
+													onkeypress="return blockSpecialChar(event)" id="dName"
 													class="form-control"> <span>Parent</span>&nbsp; <input
 													type="radio" name="parent" value="y">&nbsp;Y &nbsp;<input
 													type="radio" name="parent" value="n" checked="checked">&nbsp;N
 												<br> <span id="parentNameStar">Parent name: </span><span
 													id="perentOfSubDept"></span> <input type="text"
-													class="form-control" id="prnt" disabled="disabled"><br>
-												<input type="button" value="submit" onclick="addBtn()"
+													class="form-control"
+													onkeypress="return blockSpecialChar(event)" id="prnt"
+													disabled="disabled"><br> <input type="button"
+													value="submit" onclick="addBtn()"
 													class="btn green pull-right">
 											</div>
 											<div class="widget-area" style="width: 40%">
-												<label for="" class="font"><span id="attr1Star">Attribute 1:</span></label><input
-													type="text" class="form-control" placeholder=""
-													disabled="disabled" id="attr1" onchange="attr1F();"><label
-													for="" class="font">Attribute 2:</label><input type="text"
-													class="form-control" placeholder="" disabled="disabled"
-													id="attr2" onchange="attr2F();"><label for=""
-													class="font">Attribute 3:</label><input type="text"
-													class="form-control" placeholder="" disabled="disabled"
-													id="attr3" onchange="attr3F();"><label for=""
-													class="font">Attribute 4:</label><input type="text"
-													class="form-control" placeholder="" disabled="disabled"
-													id="attr4" onchange="attr4F();"><label for=""
-													class="font">Attribute 5:</label><input type="text"
-													class="form-control" placeholder="" disabled="disabled"
-													id="attr5" onchange="attr5F();"><label for=""
-													class="font">Attribute 6:</label><input type="text"
-													class="form-control" placeholder="" disabled="disabled"
-													id="attr6" onchange="attr6F();">
+												<label for="" class="font"><span id="attr1Star">Attribute
+														1:</span></label><input type="text" class="form-control" placeholder=""
+													disabled="disabled" id="attr1"
+													onkeypress="return blockSpecialChar(event)"
+													onchange="attr1F();"><label for="" class="font">Attribute
+													2:</label><input type="text" class="form-control" placeholder=""
+													disabled="disabled" id="attr2"
+													onkeypress="return blockSpecialChar(event)"
+													onchange="attr2F();"><label for="" class="font">Attribute
+													3:</label><input type="text" class="form-control" placeholder=""
+													disabled="disabled" id="attr3"
+													onkeypress="return blockSpecialChar(event)"
+													onchange="attr3F();"><label for="" class="font">Attribute
+													4:</label><input type="text" class="form-control" placeholder=""
+													disabled="disabled" id="attr4"
+													onkeypress="return blockSpecialChar(event)"
+													onchange="attr4F();"><label for="" class="font">Attribute
+													5:</label><input type="text" class="form-control" placeholder=""
+													disabled="disabled" id="attr5"
+													onkeypress="return blockSpecialChar(event)"
+													onchange="attr5F();"><label for="" class="font">Attribute
+													6:</label><input type="text" class="form-control" placeholder=""
+													disabled="disabled" id="attr6"
+													onkeypress="return blockSpecialChar(event)"
+													onchange="attr6F();">
 											</div>
 										</form>
 									</div>
@@ -388,19 +405,23 @@
 	</div>
 
 	<script>
-		$("input:radio[name=parent]").click(function() {
-			var value = $(this).val();
-			//alert(value);
-			if (value == "y") {
-				$("#prnt").prop("disabled", false);
-				
-				$("#parentNameStar").html("Parent name:<font color='red' size='4'>*</font>");
-			} else {
-				$("#prnt").prop("disabled", true);
-				
-				$("#parentNameStar").html("Parent name:");
-			}
-		});
+		$("input:radio[name=parent]")
+				.click(
+						function() {
+							var value = $(this).val();
+							//alert(value);
+							if (value == "y") {
+								$("#prnt").prop("disabled", false);
+
+								$("#parentNameStar")
+										.html(
+												"Parent name:<font color='red' size='4'>*</font>");
+							} else {
+								$("#prnt").prop("disabled", true);
+
+								$("#parentNameStar").html("Parent name:");
+							}
+						});
 
 		$(function() {
 			$("#datepicker").datepicker();
@@ -449,6 +470,13 @@
 			$("#sSetupDept").attr("style", "color: #6a94ff;");
 			$('#tree').abixTreeList();
 		});
+	</script>
+	<script type="text/javascript">
+		function blockSpecialChar(e) {
+			var k = e.keyCode;
+			return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8
+					|| k == 32 || (k >= 48 && k <= 57));
+		}
 	</script>
 </body>
 

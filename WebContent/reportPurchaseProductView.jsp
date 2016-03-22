@@ -100,7 +100,9 @@
 														<c:set var="totPurQty"
 															value="${totPurQty+proedPurDet.quantity-proedPurDet.totalReturningQty}"></c:set>
 													</c:if>
-												</c:forEach> ${totPurQty}</td>
+												</c:forEach>
+												<fmt:formatNumber var="totPurQtyF" value="${totPurQty}"
+													maxFractionDigits="3" /> ${totPurQtyF}</td>
 										</tr>
 									</thead>
 								</table>

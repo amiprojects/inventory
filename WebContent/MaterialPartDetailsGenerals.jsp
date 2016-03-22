@@ -604,14 +604,15 @@
 												color="red" size="4">*</font></label> <input type="text"
 												name="productCode2" id="productCode" onkeyup="codeKeyUp();"
 												onchange="codeChange();" class="form-control"
-												onkeypress="return blockSpecialChar(event)">
+												onkeypress="return blockSpecialCharNspace(event)">
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div>
 											<label for="exampleInputPassword1">Description:<font
 												color="red" size="4">*</font></label> <input type="text"
-												name="description" id="description" class="form-control"><br>
+												name="description" id="description" class="form-control"
+												onkeypress="return blockSpecialChar(event)"><br>
 										</div>
 
 									</div>
@@ -620,7 +621,9 @@
 										<label for="exampleInputEmail1">Designer's Design
 											number:<font color="red" size="4">*</font>
 										</label> <input type="text" name="universalProductCode"
-											id="universalProductCode" placeholder="" class="form-control"><br>
+											id="universalProductCode"
+											onkeypress="return blockSpecialChar(event)" placeholder=""
+											class="form-control"><br>
 									</div>
 									<div class="col-md-5">
 										<div>
@@ -1065,7 +1068,8 @@
 										<tr>
 											<td>Description:</td>
 											<td><input type="text" class="form-control "
-												name="description" readonly id="description1"></td>
+												name="description" readonly id="description1"
+												onkeypress="return blockSpecialChar(event)"></td>
 										</tr>
 										<tr>
 											<td>&nbsp;</td>
@@ -1791,7 +1795,7 @@
 	<!-- 	*********************************************wsp mrp cost****************************************** -->
 	<script type="text/javascript">
 		function rateF() {
-
+			$("#ucO").val(Number($("#ucO").val()).toFixed(2));
 			if ($("#wspO").val() != ""
 					&& Number($("#ucO").val()) > Number($("#wspO").val())) {
 				alert("Rate should be less than or equals to wsp.");
@@ -1804,7 +1808,7 @@
 		}
 
 		function wspF() {
-
+			$("#wspO").val(Number($("#wspO").val()).toFixed(2));
 			if ($("#ucO").val() == "") {
 				alert("Please insert Rate first...");
 				$("#wspO").val("");
@@ -1819,7 +1823,7 @@
 		}
 
 		function mrpF() {
-
+			$("#mrpO").val(Number($("#mrpO").val()).toFixed(2));
 			if ($("#ucO").val() == "") {
 				alert("Please insert ucO first...");
 				$("#mrpO").val("");
@@ -2290,12 +2294,18 @@
 	</script>
 
 	<script type="text/javascript">
-		function blockSpecialChar(e) {
+		function blockSpecialCharNspace(e) {
 			var k = e.keyCode;
 			return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || (k >= 48 && k <= 57));
 		}
 	</script>
-
+	<script type="text/javascript">
+		function blockSpecialChar(e) {
+			var k = e.keyCode;
+			return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8
+					|| k == 32 || (k >= 48 && k <= 57));
+		}
+	</script>
 </body>
 
 </html>

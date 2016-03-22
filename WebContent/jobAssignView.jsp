@@ -197,7 +197,9 @@
 													<td>${jobp.qty}</td>
 													<td>${jobp.remaninQty}</td>
 													<td>${jobp.productsForDesignCostSheet.productDetail.qtyUnit.name}</td>
-													<td>${jobp.jobPlanProducts.totalProductCost}</td>
+													<td><fmt:formatNumber var="totProAmount"
+															value="${jobp.jobPlanProducts.totalProductCost}"
+															maxFractionDigits="2" />${totProAmount}</td>
 													<td><c:forEach items="${jobp.jobAssignmentJobDetails}"
 															var="jobProjob">
 																				${jobProjob.jobType.jobName}<hr>
@@ -243,13 +245,21 @@
 												<td colspan="2">Total No. Of Items:</td>
 												<td><h4>${count-1}</h4></td>
 												<td>Total Quantity:</td>
-												<td><h4>${total}</h4></td>
+												<td><h4>
+														<fmt:formatNumber var="totalQ" value="${total}"
+															maxFractionDigits="3" />${totalQ}</h4></td>
 												<td>Total Remaining:</td>
-												<td><h4>${totalt}</h4></td>
+												<td><h4>
+														<fmt:formatNumber var="totalRQ" value="${totalt}"
+															maxFractionDigits="3" />${totalRQ}</h4></td>
 												<td colspan="2">Total Product Cost:</td>
-												<td><h4>${totProCost}</h4></td>
+												<td><h4>
+														<fmt:formatNumber var="totPC" value="${totProCost}"
+															maxFractionDigits="2" />${totPC}</h4></td>
 												<td>Total Job Cost:</td>
-												<td><h4>${totJobCost}</h4></td>
+												<td><h4>
+														<fmt:formatNumber var="totJC" value="${totJobCost}"
+															maxFractionDigits="2" />${totJC}</h4></td>
 											</tr>
 										</tbody>
 									</table>

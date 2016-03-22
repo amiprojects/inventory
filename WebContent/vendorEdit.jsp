@@ -141,10 +141,16 @@ $(document).ready(function(){
 	}
 
 	function detailButtonNext() {
-		$("#detl").removeAttr("class");
-		$("#detail").attr("class", "tab-pane fade");
-		$("#addr").attr("class", "active");
-		$("#address").attr("class", "tab-pane fade active in");
+		if ($("#name").val() == 0) {
+			alert("please enter  name");
+		} else if ($("#phn1").val() == "") {
+			alert("please enter Ph No1");
+		} else {
+			$("#detl").removeAttr("class");
+			$("#detail").attr("class", "tab-pane fade");
+			$("#addr").attr("class", "active");
+			$("#address").attr("class", "tab-pane fade active in");
+		}
 	}
 
 	function addressButtonPrev() {
@@ -155,10 +161,14 @@ $(document).ready(function(){
 	}
 
 	function addressButtonNext() {
-		$("#addr").removeAttr("class");
-		$("#address").attr("class", "tab-pane fade");
-		$("#vAcc").attr("class", "active");
-		$("#vendorAccount").attr("class", "tab-pane fade active in");
+		if ($("#vendorCityId").val() == "") {
+			alert("please select cityname");
+		} else {
+			$("#addr").removeAttr("class");
+			$("#address").attr("class", "tab-pane fade");
+			$("#vAcc").attr("class", "active");
+			$("#vendorAccount").attr("class", "tab-pane fade active in");
+		}
 	}
 
 	$(function() {
@@ -260,7 +270,15 @@ $(document).ready(function(){
 	});
 
 	function submitVendorDetails() {
-		$("#vendordetails").submit();
+		if ($("#name").val() == "") {
+			alert("Enter the Name");
+		} else if ($("#phn1").val() == "") {
+			alert("Enter the phone number1");
+		} else if ($("#vendorcity").val() == "") {
+			alert("please Select City");
+		} else {
+			$("#vendordetails").submit();
+		}
 	}
 </script>
 
@@ -597,7 +615,8 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" name="vendorMail"
-															id="email" value="${vendor.email}">
+															id="email" value="${vendor.email}"
+															onkeypress="return blockOtherThanEmail(event)">
 													</div>
 
 													<div class="col-md-3">
@@ -761,6 +780,37 @@ $(document).ready(function(){
 		<!-- Page Container -->
 	</div>
 	<!-- main -->
+
+	<script src="js/numericInput.min.js"></script>
+	<script>
+		$(function() {
+			$("#phn1").numericInput({
+				allowFloat : false, // Accpets positive numbers (floating point)
+				allowNegative : false, // Accpets positive or negative integer
+			});
+			$("#phn2").numericInput({
+				allowFloat : false, // Accpets positive numbers (floating point)
+				allowNegative : false, // Accpets positive or negative integer
+			});
+			$("#pin").numericInput({
+				allowFloat : false, // Accpets positive numbers (floating point)
+				allowNegative : false, // Accpets positive or negative integer
+			});
+		});
+	</script>
+
+	<script type="text/javascript">
+		function blockSpecialChar(e) {
+			var k = e.keyCode;
+			return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8
+					|| k == 32 || (k >= 48 && k <= 57));
+		}
+		function blockOtherThanEmail(e) {
+			var k = e.keyCode;
+			return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8
+					|| k == 64 || k == 46 || (k >= 48 && k <= 57));
+		}
+	</script>
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->

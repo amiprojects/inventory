@@ -20,11 +20,11 @@
 
 
 <script src="js/jquery.dataTables.min.js"></script>
-	<script src="js/dataTables.fixedHeader.min.js"></script>
-	
-	<script src="js/dataTables.searchHighlight.min.js"></script>
+<script src="js/dataTables.fixedHeader.min.js"></script>
 
-	<script src="js/jquery.highlight.js"></script>
+<script src="js/dataTables.searchHighlight.min.js"></script>
+
+<script src="js/jquery.highlight.js"></script>
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -152,17 +152,16 @@ $(document).ready(function(){
 	}
 
 	function detailButtonNext() {
-		if($("#name").val()==""){
+		if ($("#name").val() == "") {
 			alert("Enter the Name");
-		}
-		else if($("#phn1").val()==""){
+		} else if ($("#phn1").val() == "") {
 			alert("Enter the phone number1");
-		} else{
+		} else {
 			$("#detl").removeAttr("class");
 			$("#detail").attr("class", "tab-pane fade");
 			$("#addr").attr("class", "active");
-			$("#address").attr("class", "tab-pane fade active in");			
-		}		
+			$("#address").attr("class", "tab-pane fade active in");
+		}
 	}
 
 	function addressButtonPrev() {
@@ -173,15 +172,14 @@ $(document).ready(function(){
 	}
 
 	function addressButtonNext() {
-		if($("#vendorCity").val()==""){
+		if ($("#vendorCity").val() == "") {
 			alert("please Select City");
-		}
-		else{
+		} else {
 			$("#addr").removeAttr("class");
 			$("#address").attr("class", "tab-pane fade");
 			$("#vAcc").attr("class", "active");
-			$("#vendorAccount").attr("class", "tab-pane fade active in");			
-		}			
+			$("#vendorAccount").attr("class", "tab-pane fade active in");
+		}
 	}
 
 	$(function() {
@@ -366,7 +364,7 @@ $(document).ready(function(){
 
 								</div>
 
-								<div class="widget-area" style="width:32% " >
+								<div class="widget-area" style="width: 32%">
 
 									<!-- <div class="form-group">
 											<form action="goSearchVendor" method="post">
@@ -384,37 +382,38 @@ $(document).ready(function(){
 
 
 									<br> <br>
-									
-										<table id="example" cellspacing="0" width="100%"
-											class="display">
-											<thead>
-												<tr>
-													<th>#</th>
-													<th>Name</th>
-													<th>Phone Number</th>
-													<th>View</th>
-												</tr>
-											</thead>
-											<tbody>
-												<c:set var="c" value="1" />
-												<c:forEach items="${sessionScope['ejb'].getAllVendors()}"
-													var="vendor">
-													<tr>
-														<td>${c}</td>
-														<td>${vendor.name}</td>
-														<td>${vendor.ph1}</td>
-														<td><a href="vendorEdit.jsp?id=${vendor.id}"><img
-																alt="click to view" src="images/eye.png" height="20"></a></td>
-													</tr>
-													<c:set var="c" value="${c+1}" />
-												</c:forEach>
-											</tbody>
-										</table>
-									
-								</div>
-								<div class="widget-area" style="width:68%">
 
-									<form role="form" class="sec" action="addVendor" method="post" id="addVendorid">
+									<table id="example" cellspacing="0" width="100%"
+										class="display">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>Name</th>
+												<th>Phone Number</th>
+												<th>View</th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:set var="c" value="1" />
+											<c:forEach items="${sessionScope['ejb'].getAllVendors()}"
+												var="vendor">
+												<tr>
+													<td>${c}</td>
+													<td>${vendor.name}</td>
+													<td>${vendor.ph1}</td>
+													<td><a href="vendorEdit.jsp?id=${vendor.id}"><img
+															alt="click to view" src="images/eye.png" height="20"></a></td>
+												</tr>
+												<c:set var="c" value="${c+1}" />
+											</c:forEach>
+										</tbody>
+									</table>
+
+								</div>
+								<div class="widget-area" style="width: 68%">
+
+									<form role="form" class="sec" action="addVendor" method="post"
+										id="addVendorid">
 										<ul class="nav nav-tabs">
 											<li class="active" id="detl"><a data-toggle="tab"
 												href="#detail">Details</a></li>
@@ -435,7 +434,7 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" name="bankName"
-															id="bankname">
+															id="bankname" onkeypress="return blockSpecialChar(event)">
 													</div>
 													<br>
 													<div class="col-md-3">
@@ -443,7 +442,7 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" name="bankAccNo"
-															id="acno">
+															id="acno" onkeypress="return blockSpecialChar(event)">
 													</div>
 													<br>
 													<div class="col-md-3">
@@ -451,7 +450,7 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" name="bankBranch"
-															id="branch">
+															id="branch" onkeypress="return blockSpecialChar(event)">
 													</div>
 													<br>
 													<div class="col-md-3">
@@ -468,7 +467,7 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" name="bankIFSC"
-															id="ifsc">
+															id="ifsc" onkeypress="return blockSpecialChar(event)">
 													</div>
 													<br>
 													<div class="col-md-3">
@@ -476,7 +475,7 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" name="bankMICR"
-															id="micrno">
+															id="micrno" onkeypress="return blockSpecialChar(event)">
 													</div>
 													<br>
 													<div class="col-md-3">
@@ -484,7 +483,7 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control" name="bankRTGS"
-															id="rtgscd">
+															id="rtgscd" onkeypress="return blockSpecialChar(event)">
 													</div>
 													<br>
 													<div class="col-md-3">
@@ -492,7 +491,8 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-9">
 														<input type="text" class="form-control"
-															name="bankCheckLebel" id="label"">
+															name="bankCheckLebel" id="label"
+															" onkeypress="return blockSpecialChar(event)">
 													</div>
 												</div>
 												<br>
@@ -502,7 +502,8 @@ $(document).ready(function(){
 													<!-- <input
 														class="btn green pull-left" type="button" value="Next"
 														onclick="partButtonNext();"> -->
-													<button class="btn green pull-right" onclick="subVenform()" type="button">Finish</button>
+													<button class="btn green pull-right" onclick="subVenform()"
+														type="button">Finish</button>
 												</div>
 												<!-- <div class="col-md-12">
 													<input type="button" value="Next"
@@ -519,7 +520,8 @@ $(document).ready(function(){
 														</div>
 														<div class="col-md-7">
 															<input type="text" class="form-control"
-																name="vendorVATno" id="vatno">
+																name="vendorVATno" id="vatno"
+																onkeypress="return blockSpecialChar(event)">
 														</div>
 													</div>
 
@@ -540,7 +542,8 @@ $(document).ready(function(){
 														</div>
 														<div class="col-md-7">
 															<input type="text" class="form-control"
-																name="vendorCSTno" id="cstno">
+																name="vendorCSTno" id="cstno"
+																onkeypress="return blockSpecialChar(event)">
 														</div>
 													</div>
 
@@ -561,7 +564,8 @@ $(document).ready(function(){
 														</div>
 														<div class="col-md-7">
 															<input type="text" class="form-control"
-																name="vendorPANno" id="pan">
+																name="vendorPANno" id="pan"
+																onkeypress="return blockSpecialChar(event)">
 														</div>
 													</div>
 
@@ -571,7 +575,8 @@ $(document).ready(function(){
 														</div>
 														<div class="col-md-7">
 															<input type="text" class="form-control"
-																name="vendorExciseRegNo" id="exciseno">
+																name="vendorExciseRegNo" id="exciseno"
+																onkeypress="return blockSpecialChar(event)">
 														</div>
 													</div>
 
@@ -592,7 +597,8 @@ $(document).ready(function(){
 														</div>
 														<div class="col-md-7">
 															<input type="text" class="form-control"
-																name="vendorServiceTaxRegNo" id="servtaxno">
+																name="vendorServiceTaxRegNo" id="servtaxno"
+																onkeypress="return blockSpecialChar(event)">
 														</div>
 													</div>
 
@@ -640,7 +646,8 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-8">
 														<input type="text" class="form-control" name="vendorName"
-															id="name"  required="required" value="${vendor.name}">
+															id="name" onkeypress="return blockSpecialChar(event)"
+															required="required" value="${vendor.name}">
 													</div>
 													<br>
 													<div class="col-md-4">
@@ -649,7 +656,8 @@ $(document).ready(function(){
 													<div class="col-md-8">
 														<input type="text" class="form-control"
 															name="vendorCompanyName" id="compname"
-															value="${vendor.companyName}">
+															value="${vendor.companyName}"
+															onkeypress="return blockSpecialChar(event)">
 													</div>
 													<div class="col-md-12"></div>
 													<div class="col-md-4">
@@ -657,7 +665,7 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-8">
 														<input type="text" class="form-control" name="vendorPh1"
-															id="phn1" required="required"   value="${vendor.ph1}">
+															id="phn1" required="required" value="${vendor.ph1}">
 													</div>
 
 													<div class="col-md-4">
@@ -673,7 +681,8 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-8">
 														<input type="text" class="form-control" name="vendorMail"
-															id="email"  value="${vendor.email}">
+															id="email" value="${vendor.email}"
+															onkeypress="return blockOtherThanEmail(event)">
 													</div>
 
 													<div class="col-md-4">
@@ -681,8 +690,8 @@ $(document).ready(function(){
 													</div>
 													<div class="col-md-8">
 														<input type="text" class="form-control" name="vendorAlias"
-															id="alias" 
-															value="${vendor.aliseName}">
+															id="alias" value="${vendor.aliseName}"
+															onkeypress="return blockSpecialChar(event)">
 													</div>
 
 													<div class="col-md-4">
@@ -709,22 +718,15 @@ $(document).ready(function(){
 											</div>
 											<div id="address" class="tab-pane fade ">
 												<div class="widget-area">
-													<%-- <div class="breadcrumbs">
-														<ul>
-															<li><a title="" class="font"><h6>Address</h6></a></li>
-														</ul>
-													</div>
-													<textarea rows="" cols="" class="form-control"
-														name="vendorAddress" id="addr"  
-														value="${vendor.address}"></textarea> --%>
-														<div class="row">
+													<div class="row">
 														<div class="col-md-3">
 															<b>Address :</b>
 														</div>
 														<div class="col-md-9">
 															<textarea rows="" cols="" class="form-control"
-														name="vendorAddress" id="addr"  
-														value="${vendor.address}"></textarea>
+																name="vendorAddress" id="addr"
+																onkeypress="return blockSpecialChar(event)"
+																value="${vendor.address}"></textarea>
 														</div>
 													</div>
 													<div class="row">
@@ -733,8 +735,8 @@ $(document).ready(function(){
 														</div>
 														<div class="col-md-9">
 															<input type="text" class="form-control cityAuto"
-																name="vendorCity"   id="vendorCity"
-																value="${vendor.city}" autocomplete="off"> <input type="hidden"
+																name="vendorCity" id="vendorCity" value="${vendor.city}"
+																autocomplete="off"> <input type="hidden"
 																name="vendorCityId" id="vendorCityId">
 														</div>
 													</div>
@@ -744,7 +746,7 @@ $(document).ready(function(){
 														</div>
 														<div class="col-md-9">
 															<input type="text" class="form-control" name="vendorPin"
-																id="pin"   value="${vendor.pinCode}">
+																id="pin" value="${vendor.pinCode}">
 														</div>
 													</div>
 												</div>
@@ -756,78 +758,6 @@ $(document).ready(function(){
 														onclick="addressButtonNext();">
 												</div>
 											</div>
-											<!-- <div id="part" class="tab-pane fade ">
-												<div class="widget-area">
-													<div class="breadcrumbs">
-														<ul>
-															<li><a title="" class="font"><h6>Purchase
-																		History</h6></a></li>
-														</ul>
-													</div>
-													<table id="stream_table"
-														class="table table-striped table-bordered">
-														<thead>
-															<tr>
-																<th>#</th>
-																<th>Part Number</th>
-																<th>Vendor number</th>
-																<th>Last cost</th>
-																<th>UOM</th>
-																<th>Last date</th>
-																<th>Lead time</th>
-																<th>Description</th>
-															</tr>
-														</thead>
-														<tbody>
-															<tr>
-																<td>1</td>
-																<td>---</td>
-																<td>---</td>
-																<td>---</td>
-																<td>---</td>
-																<td>---</td>
-																<td>---</td>
-																<td>---</td>
-															</tr>
-														</tbody>
-													</table>
-												</div>
-												<div class="widget-area">
-													<div class="breadcrumbs">
-														<ul>
-															<li><a title="" class="font"><h6>Vendor
-																		cost rules</h6></a></li>
-														</ul>
-													</div>
-													<table id="stream_table"
-														class="table table-striped table-bordered">
-														<thead>
-															<tr>
-																<th>#</th>
-																<th>Name</th>
-																<th>Part Number</th>
-																<th>Qty</th>
-																<th>Part UOM</th>
-																<th>Unit cost</th>
-																<th>Total cost</th>
-															</tr>
-														</thead>
-														<tbody>
-															<tr>
-																<td>1</td>
-																<td>---</td>
-																<td>---</td>
-																<td>---</td>
-																<td>---</td>
-																<td>---</td>
-																<td>---</td>
-															</tr>
-														</tbody>
-													</table>
-												</div>
-												<br>
-
-											</div> -->
 										</div>
 									</form>
 									<div class='toast' style='display: none'>
@@ -843,15 +773,15 @@ $(document).ready(function(){
 		</div>
 		<!-- Page Container -->
 	</div>
-	
-	
+
+
 	<script type="text/javascript">
 		$(document).ready(function() {
 			var table = $('#example').DataTable({
 
 				"scrollY" : 250,
 				"scrollX" : true,
-				"bLengthChange": false,
+				"bLengthChange" : false,
 			});
 
 			table.on('draw', function() {
@@ -863,26 +793,52 @@ $(document).ready(function(){
 		});
 	</script>
 	<script>
-	
-	function subVenform(){
-		
-		if($("#name").val()==""){
-			alert("Enter the Name");
-		}
-		else if($("#phn1").val()==""){
-			alert("Enter the phone number1");
-		}
-		else if($("#vendorCity").val()==""){
-			alert("please Select City");
-		}
-		else{
-			$("#addVendorid").submit();
-			
+		function subVenform() {
+
+			if ($("#name").val() == "") {
+				alert("Enter the Name");
+			} else if ($("#phn1").val() == "") {
+				alert("Enter the phone number1");
+			} else if ($("#vendorCity").val() == "") {
+				alert("please Select City");
+			} else {
+				$("#addVendorid").submit();
+
 			}
-	}
-	
+		}
 	</script>
-	
+
+	<script src="js/numericInput.min.js"></script>
+	<script>
+		$(function() {
+			$("#phn1").numericInput({
+				allowFloat : false, // Accpets positive numbers (floating point)
+				allowNegative : false, // Accpets positive or negative integer
+			});
+			$("#phn2").numericInput({
+				allowFloat : false, // Accpets positive numbers (floating point)
+				allowNegative : false, // Accpets positive or negative integer
+			});
+			$("#pin").numericInput({
+				allowFloat : false, // Accpets positive numbers (floating point)
+				allowNegative : false, // Accpets positive or negative integer
+			});
+		});
+	</script>
+
+	<script type="text/javascript">
+		function blockSpecialChar(e) {
+			var k = e.keyCode;
+			return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8
+					|| k == 32 || (k >= 48 && k <= 57));
+		}
+		function blockOtherThanEmail(e) {
+			var k = e.keyCode;
+			return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8
+					|| k == 64 || k == 46 || (k >= 48 && k <= 57));
+		}
+	</script>
+
 	<!-- main -->
 </body>
 

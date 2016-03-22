@@ -88,186 +88,170 @@ page[size="A4"] {
 	<c:set
 		value="${sessionScope['ejb'].getSalesReturnDetailsById(param.id)}"
 		var="salesReturn" />
-	<page id="print1" size="A4">
-	<h3 align="center">Sales Return Invoice</h3>
-	<table class="tg"
-		style="border: 1px solid; height: 1050px; width: 750px">
-		<tr style="height: 50px">
-			<td class="tg-031e" colspan="3" rowspan="3" style="width: 50%">
-				<strong>${companyInfo.compname}</strong><br> <br> <br>
-				${companyInfo.addr}<br> EMail: ${companyInfo.email}<br>
-				Mobile: ${companyInfo.mobile}
-			</td>
-			<td class="tg-031e" colspan="2" style="width: 25%">Sales Return
-				Invoice no:<br> ${salesReturn.challanNumber}
-			</td>
-			<td class="tg-031e" colspan="2" style="width: 25%">Dated:<fmt:formatDate
-					value="${sessionScope['ejb'].getCurrentDateTime()}"
-					pattern="dd-MM-yyyy" /></td>
-		</tr>
-		<tr style="height: 50px">
-			<td class="tg-031e" colspan="2">Reference Invoice No.</td>
-			<td class="tg-031e" colspan="2">${salesReturn.referenceSalesChallan}</td>
-		</tr>
-		<tr style="height: 50px">
-			<td class="tg-031e" colspan="2">Sales Return date :</td>
-			<td class="tg-031e" colspan="2"><fmt:formatDate
-					value="${salesReturn.returnDate}" pattern="dd-MM-yyyy" /></td>
-		</tr>
-		<tr style="height: 50px">
-			<td class="tg-031e" colspan="3" rowspan="4"><strong>Customer
-					Details:</strong> <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Name :</span>
-				${salesReturn.salesEntry.customer.name} <br>
-				&nbsp;&nbsp;&nbsp;&nbsp;<span>City :</span>
-				${salesReturn.salesEntry.customer.city} <br>
-				&nbsp;&nbsp;&nbsp;&nbsp;<span>Address :<br>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			</span> ${salesReturn.salesEntry.customer.address} <br>
-				&nbsp;&nbsp;&nbsp;&nbsp;<span>Ph :</span>
-				${salesReturn.salesEntry.customer.mobile}</td>
-			<td class="tg-031e" colspan="2">Mode of payment :</td>
-			<td class="tg-031e" colspan="2"><c:choose>
-					<c:when
-						test="${salesReturn.paymentDetails.get(0).paymentType.type!=null}">${salesReturn.paymentDetails.get(0).paymentType.type}</c:when>
-					<c:otherwise>NA</c:otherwise>
-				</c:choose></td>
-		</tr>
-		<tr style="height: 50px">
-			<td class="tg-031e" colspan="2">Supplier reference(Agent Alias
-				name):</td>
-			<td class="tg-031e" colspan="2"><c:choose>
-					<c:when test="${salesReturn.salesEntry.vendor!=null}">${salesReturn.salesEntry.vendor.aliseName}</c:when>
-					<c:otherwise>NA</c:otherwise>
-				</c:choose></td>
-		</tr>
-		<tr style="height: 50px">
-			<td class="tg-031e" colspan="2"></td>
-			<td class="tg-031e" colspan="2"></td>
-		</tr>
-		<tr style="height: 50px">
-			<td class="tg-031e" colspan="4"></td>
-		</tr>
-		<tr>
-			<td class="tg-031e" colspan="7">
-				<table class="tg"
-					style="height: auto; width: 750px; border-color: white; margin-left: -6px; margin-right: -4px; margin-top: -11px;">
-					<tr>
-						<th>Sl No</th>
-						<th>Description of returning goods</th>
-						<th>Returning Quantity</th>
-						<th>Cost</th>
-						<th>Per</th>
-						<th>Amount</th>
-					</tr>
 
-					<c:set value="${1}" var="sl" />
-					<c:set value="${0}" var="tqty" />
-					<c:set value="${0}" var="gtot" />
 
-					<c:forEach items="${salesReturn.salesProductReturnDetail}"
-						var="ppdet">
+	<c:set value="${salesReturn.salesProductReturnDetail.size()}"
+		var="proLength" />
+	<c:set value="${Math.ceil(proLength/8)}" var="qPage" />
 
+	<c:set value="${1}" var="sl" />
+	<c:forEach var="i" begin="1" end="${qPage}">
+		<page id="print1" size="A4">
+		<h3 align="center">
+			Sales Return Invoice
+			<c:if test="${i>1}">(Page ${i})</c:if>
+		</h3>
+		<table class="tg"
+			style="border: 1px solid; height: 1050px; width: 750px">
+			<tr style="height: 50px">
+				<td class="tg-031e" colspan="3" rowspan="3" style="width: 50%">
+					<strong>${companyInfo.compname}</strong><br> <br> <br>
+					${companyInfo.addr}<br> EMail: ${companyInfo.email}<br>
+					Mobile: ${companyInfo.mobile}
+				</td>
+				<td class="tg-031e" colspan="2" style="width: 25%">Sales Return
+					Invoice no:<br> ${salesReturn.challanNumber}
+				</td>
+				<td class="tg-031e" colspan="2" style="width: 25%">Dated:<fmt:formatDate
+						value="${sessionScope['ejb'].getCurrentDateTime()}"
+						pattern="dd-MM-yyyy" /></td>
+			</tr>
+			<tr style="height: 50px">
+				<td class="tg-031e" colspan="2">Reference Invoice No.</td>
+				<td class="tg-031e" colspan="2">${salesReturn.referenceSalesChallan}</td>
+			</tr>
+			<tr style="height: 50px">
+				<td class="tg-031e" colspan="2">Sales Return date :</td>
+				<td class="tg-031e" colspan="2"><fmt:formatDate
+						value="${salesReturn.returnDate}" pattern="dd-MM-yyyy" /></td>
+			</tr>
+			<tr style="height: 50px">
+				<td class="tg-031e" colspan="3" rowspan="4"><strong>Customer
+						Details:</strong> <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Name :</span>
+					${salesReturn.salesEntry.customer.name} <br>
+					&nbsp;&nbsp;&nbsp;&nbsp;<span>City :</span>
+					${salesReturn.salesEntry.customer.city} <br>
+					&nbsp;&nbsp;&nbsp;&nbsp;<span>Address :<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				</span> ${salesReturn.salesEntry.customer.address} <br>
+					&nbsp;&nbsp;&nbsp;&nbsp;<span>Ph :</span>
+					${salesReturn.salesEntry.customer.mobile}</td>
+				<td class="tg-031e" colspan="2">Mode of payment :</td>
+				<td class="tg-031e" colspan="2"><c:choose>
+						<c:when
+							test="${salesReturn.paymentDetails.get(0).paymentType.type!=null}">${salesReturn.paymentDetails.get(0).paymentType.type}</c:when>
+						<c:otherwise>NA</c:otherwise>
+					</c:choose></td>
+			</tr>
+			<tr style="height: 50px">
+				<td class="tg-031e" colspan="2">Supplier reference(Agent Alias
+					name):</td>
+				<td class="tg-031e" colspan="2"><c:choose>
+						<c:when test="${salesReturn.salesEntry.vendor!=null}">${salesReturn.salesEntry.vendor.aliseName}</c:when>
+						<c:otherwise>NA</c:otherwise>
+					</c:choose></td>
+			</tr>
+			<tr style="height: 50px">
+				<td class="tg-031e" colspan="2"></td>
+				<td class="tg-031e" colspan="2"></td>
+			</tr>
+			<tr style="height: 50px">
+				<td class="tg-031e" colspan="4"></td>
+			</tr>
+			<tr>
+				<td class="tg-031e" colspan="7">
+					<table class="tg"
+						style="height: auto; width: 750px; border-color: white; margin-left: -6px; margin-right: -4px; margin-top: -11px;">
 						<tr>
-							<td>${sl}</td>
-							<td>${ppdet.salesProductDetails.purchase_Product_Details.productDetail.description}</td>
-							<td>${ppdet.qtyReturn}</td>
-							<c:set value="${tqty+ppdet.qtyReturn}" var="tqty" />
-							<td>${ppdet.salesProductDetails.getSalesPrice()}</td>
-							<td>${ppdet.salesProductDetails.purchase_Product_Details.productDetail.qtyUnit.name}</td>
-							<td><fmt:formatNumber var="amount"
-									value="${ppdet.salesProductDetails.getSalesPrice()*ppdet.qtyReturn}"
-									maxFractionDigits="2" /> ${amount}</td>
-							<c:set
-								value="${gtot+ppdet.salesProductDetails.getSalesPrice()*ppdet.qtyReturn}"
-								var="gtot" />
+							<th>Sl No</th>
+							<th>Description of returning goods</th>
+							<th>Returning Quantity</th>
+							<th>Cost</th>
+							<th>Per</th>
+							<th>Amount</th>
 						</tr>
-						<c:set value="${sl+1}" var="sl" />
-					</c:forEach>
-					<%-- <tr>
-						<td colspan="2">Total</td>
-						<td>${tqty}</td>
-						<td>${gtot}</td>
-					</tr> --%>
-					<tr>
-						<td colspan="5" align="right">Discount Value <c:set var="dis"
-								value="${salesReturn.salesEntry.isFlatDiscount()?'Flat':'%'}" />
-							(${salesReturn.salesEntry.discountValue}(${dis})) :
-						</td>
-						<td><c:set var="disVal"
-								value="${salesReturn.salesEntry.isFlatDiscount()?gtot*salesReturn.salesEntry.discountValue/salesReturn.salesEntry.subTotal:gtot*salesReturn.salesEntry.discountValue/100}" />
-							${disVal}</td>
-					</tr>
-					<tr>
-						<td colspan="5" align="right">Tax Amount
-							(${salesReturn.salesEntry.tax_Type_Group.getTotalTaxValue()}%) :</td>
-						<td>${gtot*salesReturn.salesEntry.tax_Type_Group.getTotalTaxValue()/100}</td>
-					</tr>
-					<tr>
-						<td colspan="5" align="right">RoundOf :</td>
-						<td>${salesReturn.roundOff}</td>
-					</tr>
-					<tr>
-						<td colspan="2" align="right">Total Quantity :</td>
-						<td>${tqty}</td>
-						<td colspan="2" align="right">Grand Total :</td>
-						<td>${salesReturn.totalReCost}<%-- ${gtot} --%>
-						</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-		<%-- <c:if test="${salesReturn.salesEntry.salesReturn.size()!=0}">
-			<tr>
-				<td colspan="6" align="left">Previous Return Details :</td>
+
+						<c:set value="${0}" var="tqty" />
+						<c:set value="${0}" var="gtot" />
+
+						<c:forEach begin="${(i-1)*8}" end="${i*8-1}"
+							items="${salesReturn.salesProductReturnDetail}" var="ppdet">
+
+							<tr>
+								<td>${sl}</td>
+								<td>${ppdet.salesProductDetails.purchase_Product_Details.productDetail.description}</td>
+								<td><fmt:formatNumber var="qty" value="${ppdet.qtyReturn}"
+										maxFractionDigits="3" />${qty}</td>
+								<c:set value="${tqty+ppdet.qtyReturn}" var="tqty" />
+								<td>${ppdet.salesProductDetails.getSalesPrice()}</td>
+								<td>${ppdet.salesProductDetails.purchase_Product_Details.productDetail.qtyUnit.name}</td>
+								<td><fmt:formatNumber var="amount"
+										value="${ppdet.salesProductDetails.getSalesPrice()*ppdet.qtyReturn}"
+										maxFractionDigits="2" /> ${amount}</td>
+								<c:set
+									value="${gtot+ppdet.salesProductDetails.getSalesPrice()*ppdet.qtyReturn}"
+									var="gtot" />
+							</tr>
+							<c:set value="${sl+1}" var="sl" />
+						</c:forEach>
+						<c:if test="${i==qPage}">
+							<c:if test="${salesReturn.salesEntry.discountValue!=0}">
+								<tr>
+									<td colspan="5" align="right">Discount Value <c:set
+											var="dis"
+											value="${salesReturn.salesEntry.isFlatDiscount()?'Flat':'%'}" />
+										(${salesReturn.salesEntry.discountValue}(${dis})) :
+									</td>
+									<td><c:set var="disVal"
+											value="${salesReturn.salesEntry.isFlatDiscount()?gtot*salesReturn.salesEntry.discountValue/salesReturn.salesEntry.subTotal:gtot*salesReturn.salesEntry.discountValue/100}" />
+										${disVal}</td>
+								</tr>
+							</c:if>
+							<c:if test="${salesReturn.salesEntry.taxAmount!=0}">
+								<tr>
+									<td colspan="5" align="right">Tax Amount
+										(${salesReturn.salesEntry.tax_Type_Group.getTotalTaxValue()}%)
+										:</td>
+									<td>${gtot*salesReturn.salesEntry.tax_Type_Group.getTotalTaxValue()/100}</td>
+								</tr>
+							</c:if>
+							<c:if test="${salesReturn.roundOff!=0}">
+								<tr>
+									<td colspan="5" align="right">RoundOf :</td>
+									<td>${salesReturn.roundOff}</td>
+								</tr>
+							</c:if>
+							<tr>
+								<td colspan="2" align="right">Total Quantity :</td>
+								<td><fmt:formatNumber var="totalQ" value="${tqty}"
+										maxFractionDigits="3" />${totalQ}</td>
+								<td colspan="2" align="right">Grand Total :</td>
+								<td><fmt:formatNumber var="grandT"
+										value="${salesReturn.totalReCost}" maxFractionDigits="2" />${grandT}
+								</td>
+							</tr>
+						</c:if>
+					</table> <span style="float: right;"><c:if test="${i<qPage}">continued...</c:if></span>
+				</td>
 			</tr>
-			<tr>
-				<th>#</th>
-				<th>Return Date</th>
-				<th>Purchase Return challan no.</th>
-				<th>Product Code</th>
-				<th>Product Description</th>
-				<th>Returning Qty</th>
-			</tr>
-			<c:set value="${1}" var="slno" />
-			<c:forEach items="${salesReturn.salesEntry.salesReturn}" var="pret">
-				<tr>
-					<td>${slno}</td>
-					<td><fmt:formatDate value="${pret.returnDate}"
-							pattern="dd-MM-yy" /> ${pret.returnDate}</td>
-					<td>${pret.challanNumber}</td>
-					<td><c:forEach var="purchaseReturnProd"
-							items="${pret.salesProductReturnDetail}">
-						${purchaseReturnProd.salesProductDetails.purchase_Product_Details.productDetail.code}
-						<br>
-						</c:forEach></td>
-					<td><c:forEach var="purchaseReturnProd"
-							items="${pret.salesProductReturnDetail}">
-						${purchaseReturnProd.salesProductDetails.purchase_Product_Details.productDetail.description}
-						<br>
-						</c:forEach></td>
-					<td><c:forEach var="purchaseReturnProd"
-							items="${pret.salesProductReturnDetail}">
-						${purchaseReturnProd.qtyReturn}
-						<br>
-						</c:forEach></td>
+			<c:if test="${i==qPage}">
+				<tr style="height: 75px">
+					<td class="tg-031e" colspan="7"><span>Amount Chargeable
+							(in words)</span><br> <span>${sessionScope['ejb'].getNumberToWords(gtot)}</span></td>
 				</tr>
-				<c:set value="${slno+1}" var="slno" />
-			</c:forEach>
-		</c:if> --%>
-		<tr style="height: 75px">
-			<td class="tg-031e" colspan="7"><span>Amount Chargeable
-					(in words)</span><br> <span>${sessionScope['ejb'].getNumberToWords(gtot)}</span></td>
-		</tr>
-		<tr style="height: 75px">
-			<td class="tg-031e" colspan="4"><strong>Declaration:</strong><br>We
-				declare that this invoice shows the actual price of the goods
-				describe and that all particular are true and correct.</td>
-			<td class="tg-031e" colspan="3" style="text-align: right;">for <strong>${companyInfo.compname}</strong><br>
-				<br>Authorised Signatory
-			</td>
-		</tr>
-	</table>
-	<center>This is a Computer Generated Invoice</center>
-	</page>
+				<tr style="height: 75px">
+					<td class="tg-031e" colspan="4"><strong>Declaration:</strong><br>We
+						declare that this invoice shows the actual price of the goods
+						describe and that all particular are true and correct.</td>
+					<td class="tg-031e" colspan="3" style="text-align: right;">for
+						<strong>${companyInfo.compname}</strong><br> <br>Authorised
+						Signatory
+					</td>
+				</tr>
+			</c:if>
+		</table>
+		<center>This is a Computer Generated Invoice</center>
+		</page>
+	</c:forEach>
 </body>
 </html>

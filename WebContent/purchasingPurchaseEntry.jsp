@@ -769,7 +769,7 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="bankName"
-											id="idbankName">
+											id="idbankName" onkeypress="return blockSpecialChar(event)">
 									</div>
 									<br>
 									<div class="col-md-3">
@@ -777,7 +777,7 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="bankAccNo"
-											id="acno">
+											id="acno" onkeypress="return blockSpecialChar(event)">
 									</div>
 									<br>
 									<div class="col-md-3">
@@ -785,7 +785,7 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="bankBranch"
-											id="idbankBranch">
+											id="idbankBranch" onkeypress="return blockSpecialChar(event)">
 									</div>
 									<br>
 									<div class="col-md-3">
@@ -801,7 +801,7 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="bankIFSC"
-											id="idbankIFSC">
+											id="idbankIFSC" onkeypress="return blockSpecialChar(event)">
 									</div>
 									<br>
 									<div class="col-md-3">
@@ -809,7 +809,7 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="bankMICR"
-											id="idbankMICR">
+											id="idbankMICR" onkeypress="return blockSpecialChar(event)">
 									</div>
 									<br>
 									<div class="col-md-3">
@@ -817,7 +817,7 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="bankRTGS"
-											id="idbankRTGS">
+											id="idbankRTGS" onkeypress="return blockSpecialChar(event)">
 									</div>
 									<br>
 									<div class="col-md-3">
@@ -825,7 +825,8 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="bankCheckLebel"
-											id="idbankCheckLebel">
+											id="idbankCheckLebel"
+											onkeypress="return blockSpecialChar(event)">
 									</div>
 								</div>
 								<br>
@@ -847,7 +848,8 @@
 										</div>
 										<div class="col-md-7">
 											<input type="text" class="form-control" name="vendorVATno"
-												id="idvendorVATno">
+												id="idvendorVATno"
+												onkeypress="return blockSpecialChar(event)">
 										</div>
 									</div>
 
@@ -867,7 +869,8 @@
 										</div>
 										<div class="col-md-7">
 											<input type="text" class="form-control" name="vendorCSTno"
-												id="idvendorCSTno">
+												id="idvendorCSTno"
+												onkeypress="return blockSpecialChar(event)">
 										</div>
 									</div>
 
@@ -887,7 +890,8 @@
 										</div>
 										<div class="col-md-7">
 											<input type="text" class="form-control" name="vendorPANno"
-												id="idvendorPANno">
+												id="idvendorPANno"
+												onkeypress="return blockSpecialChar(event)">
 										</div>
 									</div>
 
@@ -897,7 +901,8 @@
 										</div>
 										<div class="col-md-7">
 											<input type="text" class="form-control"
-												name="vendorExciseRegNo" id="idvendorExciseRegNo">
+												name="vendorExciseRegNo" id="idvendorExciseRegNo"
+												onkeypress="return blockSpecialChar(event)">
 										</div>
 									</div>
 
@@ -918,7 +923,8 @@
 										</div>
 										<div class="col-md-7">
 											<input type="text" class="form-control"
-												name="vendorServiceTaxRegNo" id="idvendorServiceTaxRegNo">
+												name="vendorServiceTaxRegNo" id="idvendorServiceTaxRegNo"
+												onkeypress="return blockSpecialChar(event)">
 										</div>
 									</div>
 
@@ -966,7 +972,7 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorName"
-											id="idName">
+											id="idName" onkeypress="return blockSpecialChar(event)">
 									</div>
 									<br>
 									<div class="col-md-3">
@@ -974,7 +980,8 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control"
-											name="vendorCompanyName" id="idvendorCompanyName">
+											name="vendorCompanyName" id="idvendorCompanyName"
+											onkeypress="return blockSpecialChar(event)">
 									</div>
 
 									<div class="col-md-3">
@@ -998,7 +1005,8 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorMail"
-											style="text-transform: none;" id="idvendorMail">
+											style="text-transform: none;" id="idvendorMail"
+											onkeypress="return blockOtherThanEmail(event)">
 
 									</div>
 
@@ -1007,14 +1015,14 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorAlias"
-											id="idvendorAlias">
+											id="idvendorAlias"
+											onkeypress="return blockSpecialChar(event)">
 									</div>
 
 									<div class="col-md-3">
 										<b>Vendor type :</b>
 									</div>
 									<div class="col-md-9">
-
 										<select class="form-control" name="vendorType"
 											id="idvendorType" value="${vendor.vendorType}"
 											disabled="disabled">
@@ -1028,10 +1036,8 @@
 													<c:when
 														test="${vType.type.equals('Vendor') || vType.type.equals('Purchase Agent')}">
 														<option value="${vType.id}">${vType.type}</option>
-
 													</c:when>
 												</c:choose>
-
 											</c:forEach>
 										</select>
 									</div>
@@ -1053,7 +1059,8 @@
 
 										<div class="col-md-9">
 											<textarea rows="" cols="" class="form-control"
-												name="vendorAddress" id="idAdd"></textarea>
+												name="vendorAddress" id="idAdd"
+												onkeypress="return blockSpecialChar(event)"></textarea>
 										</div>
 									</div>
 									<br>
@@ -1138,7 +1145,7 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="bankName2"
-											id="idbankName2">
+											id="idbankName2" onkeypress="return blockSpecialChar(event)">
 									</div>
 									<br>
 									<div class="col-md-3">
@@ -1146,7 +1153,7 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="bankAccNo2"
-											id="acno2">
+											id="acno2" onkeypress="return blockSpecialChar(event)">
 									</div>
 									<br>
 									<div class="col-md-3">
@@ -1154,7 +1161,8 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="bankBranch2"
-											id="idbankBranch2">
+											id="idbankBranch2"
+											onkeypress="return blockSpecialChar(event)">
 									</div>
 									<br>
 									<div class="col-md-3">
@@ -1171,7 +1179,7 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="bankIFSC2"
-											id="idbankIFSC2">
+											id="idbankIFSC2" onkeypress="return blockSpecialChar(event)">
 									</div>
 									<br>
 									<div class="col-md-3">
@@ -1179,7 +1187,7 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="bankMICR2"
-											id="idbankMICR2">
+											id="idbankMICR2" onkeypress="return blockSpecialChar(event)">
 									</div>
 									<br>
 									<div class="col-md-3">
@@ -1187,7 +1195,7 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="bankRTGS2"
-											id="idbankRTGS2">
+											id="idbankRTGS2" onkeypress="return blockSpecialChar(event)">
 									</div>
 									<br>
 									<div class="col-md-3">
@@ -1195,7 +1203,8 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="bankCheckLebel2"
-											id="idbankCheckLebel2">
+											id="idbankCheckLebel2"
+											onkeypress="return blockSpecialChar(event)">
 									</div>
 								</div>
 								<br>
@@ -1217,7 +1226,8 @@
 										</div>
 										<div class="col-md-7">
 											<input type="text" class="form-control" name="vendorVATno2"
-												id="idvendorVATno2">
+												id="idvendorVATno2"
+												onkeypress="return blockSpecialChar(event)">
 										</div>
 									</div>
 
@@ -1238,7 +1248,8 @@
 										</div>
 										<div class="col-md-7">
 											<input type="text" class="form-control" name="vendorCSTno2"
-												id="idvendorCSTno2">
+												id="idvendorCSTno2"
+												onkeypress="return blockSpecialChar(event)">
 										</div>
 									</div>
 
@@ -1260,7 +1271,8 @@
 										</div>
 										<div class="col-md-7">
 											<input type="text" class="form-control" name="vendorPANno2"
-												id="idvendorPANno2">
+												id="idvendorPANno2"
+												onkeypress="return blockSpecialChar(event)">
 										</div>
 									</div>
 
@@ -1270,7 +1282,8 @@
 										</div>
 										<div class="col-md-7">
 											<input type="text" class="form-control"
-												name="vendorExciseRegNo2" id="idvendorExciseRegNo2">
+												name="vendorExciseRegNo2" id="idvendorExciseRegNo2"
+												onkeypress="return blockSpecialChar(event)">
 										</div>
 									</div>
 
@@ -1291,7 +1304,8 @@
 										</div>
 										<div class="col-md-7">
 											<input type="text" class="form-control"
-												name="vendorServiceTaxRegNo2" id="idvendorServiceTaxRegNo2">
+												name="vendorServiceTaxRegNo2" id="idvendorServiceTaxRegNo2"
+												onkeypress="return blockSpecialChar(event)">
 										</div>
 									</div>
 
@@ -1335,11 +1349,11 @@
 								<div class="widget-area">
 
 									<div class="col-md-3">
-										<b>Name:*</b>
+										<b>Name:<font color="red" size="4">*</font></b>
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorName2"
-											id="idName2">
+											id="idName2" onkeypress="return blockSpecialChar(event)">
 									</div>
 									<br>
 									<div class="col-md-3">
@@ -1347,11 +1361,12 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control"
-											name="vendorCompanyName2" id="idvendorCompanyName2">
+											name="vendorCompanyName2" id="idvendorCompanyName2"
+											onkeypress="return blockSpecialChar(event)">
 									</div>
 
 									<div class="col-md-3">
-										<b>Ph No1:*</b>
+										<b>Ph No1:<font color="red" size="4">*</font></b>
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorPh12"
@@ -1371,7 +1386,8 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorMail2"
-											style="text-transform: none;" id="idvendorMail2">
+											style="text-transform: none;" id="idvendorMail2"
+											onkeypress="return blockOtherThanEmail(event)">
 									</div>
 
 									<div class="col-md-3">
@@ -1379,7 +1395,8 @@
 									</div>
 									<div class="col-md-9">
 										<input type="text" class="form-control" name="vendorAlias2"
-											id="idvendorAlias2">
+											id="idvendorAlias2"
+											onkeypress="return blockSpecialChar(event)">
 									</div>
 
 									<div class="col-md-3">
@@ -1419,10 +1436,10 @@
 										<div class="col-md-9">
 											<textarea rows="" cols="" class="form-control"
 												name="vendorAddress2" id="idAdd2"></textarea>
-											<div class="row"></div>
+											<div class="row" onkeypress="return blockSpecialChar(event)"></div>
 										</div>
 										<div class="col-md-3">
-											<b>City :</b>
+											<b>City :<font color="red" size="4">*</font></b>
 										</div>
 										<div class="col-md-9">
 											<input type="text" class="form-control cityAuto"
@@ -1576,8 +1593,7 @@
 									Quantity:<font color="red" size="4">*</font>
 								</div>
 								<div class="col-md-9">
-									<input type="text" class="form-control" name="qty" id="qty"
-										onchange="qtyDecimalFixFunc();">
+									<input type="text" class="form-control" name="qty" id="qty">
 								</div>
 								<div class="col-md-3">UOM:</div>
 								<div class="col-md-9">
@@ -1994,7 +2010,7 @@
 												name="productCode2" id="productCodeAMI"
 												onkeyup="codeKeyUp();" onchange="codeChange();"
 												class="form-control"
-												onkeypress="return blockSpecialChar(event)"><input
+												onkeypress="return blockSpecialCharNspace(event)"><input
 												type="hidden" id="pcodeCheck">
 										</div>
 									</div>
@@ -2002,7 +2018,8 @@
 										<div>
 											<label for="exampleInputPassword1">Description:<font
 												color="red" size="4">*</font></label> <input type="text"
-												name="description" id="descriptionAMI" class="form-control"><br>
+												name="description" id="descriptionAMI" class="form-control"
+												onkeypress="return blockSpecialChar(event)"><br>
 										</div>
 
 									</div>
@@ -2011,7 +2028,8 @@
 										<label for="exampleInputEmail1">Designer's Design
 											number:<font color="red" size="4">*</font>
 										</label> <input type="text" name="universalProductCode"
-											id="universalProductCode" placeholder="" class="form-control"><br>
+											id="universalProductCode" placeholder="" class="form-control"
+											onkeypress="return blockSpecialChar(event)"><br>
 									</div>
 									<div class="col-md-5">
 										<div>
@@ -2300,7 +2318,8 @@
 
 									<label for="exampleInputEmail1">Lot Number:<font
 										color="red" size="4">*</font></label> <input id="lotnO" type="text"
-										name="lotNumber" required class="form-control"><br>
+										name="lotNumber" required class="form-control"
+										onkeypress="return blockSpecialChar(event)"><br>
 
 								</div>
 							</div>
@@ -2328,19 +2347,22 @@
 										<span id="sa1" style="font-size: 17px">Attribute 1</span><span
 											id="starNcolonsa1" style="font-size: 17px"></span> <input
 											name="a1" type="text" disabled="disabled" id="a10"
-											class="form-control">
+											class="form-control"
+											onkeypress="return blockSpecialChar(event)">
 									</div>
 									<div class="form-group">
 										<span id="sa2" style="font-size: 17px">Attribute 2</span><span
 											id="starNcolonsa2" style="font-size: 17px"></span> <input
 											name="a2" type="text" disabled="disabled" id="a20"
-											class="form-control">
+											class="form-control"
+											onkeypress="return blockSpecialChar(event)">
 									</div>
 									<div class="form-group">
 										<span id="sa3" style="font-size: 17px">Attribute 3</span><span
 											id="starNcolonsa3" style="font-size: 17px"></span> <input
 											name="a3" type="text" id="a30" disabled="disabled"
-											class="form-control">
+											class="form-control"
+											onkeypress="return blockSpecialChar(event)">
 									</div>
 								</div>
 								<div class="col-md-6">
@@ -2348,19 +2370,22 @@
 										<span id="sa4" style="font-size: 17px">Attribute 4</span><span
 											id="starNcolonsa4" style="font-size: 17px"></span> <input
 											name="a4" type="text" disabled="disabled" id="a40"
-											class="form-control">
+											class="form-control"
+											onkeypress="return blockSpecialChar(event)">
 									</div>
 									<div class="form-group">
 										<span id="sa5" style="font-size: 17px">Attribute 5</span><span
 											id="starNcolonsa5" style="font-size: 17px"></span> <input
 											name="a5" type="text" disabled="disabled" id="a50"
-											class="form-control">
+											class="form-control"
+											onkeypress="return blockSpecialChar(event)">
 									</div>
 									<div class="form-group">
 										<span id="sa6" style="font-size: 17px">Attribute 6</span><span
 											id="starNcolonsa6" style="font-size: 17px"></span> <input
 											name="a6" type="text" disabled="disabled" id="a60"
-											class="form-control">
+											class="form-control"
+											onkeypress="return blockSpecialChar(event)">
 									</div>
 								</div>
 							</div>
@@ -3291,10 +3316,6 @@
 			});
 
 		});
-		function blockSpecialChar(e) {
-			var k = e.keyCode;
-			return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || (k >= 48 && k <= 57));
-		}
 	</script>
 
 	<script>
@@ -3931,7 +3952,7 @@
 										+ '</td><td>'
 										+ $("#pDesc").val()
 										+ '</td><td>'
-										+ Number($("#qty").val()).toFixed(2)
+										+ Number($("#qty").val())
 										+ '</td><td>'
 										+ $("#uom").val()
 										+ '</td><td>'
@@ -3994,7 +4015,7 @@
 										+ $("#attr6").val()
 										+ '\'></td>'
 										+ '<td><input type="text" name="qtyH" value=\''
-										+ Number($("#qty").val()).toFixed(2)
+										+ Number($("#qty").val()).toFixed(3)
 										+ '\'></td>'
 										+ '<td><input type="text" name="uomH" value=\''
 										+ $("#uom").val()
@@ -4453,13 +4474,13 @@
 			$("#surcharge").val(Number($("#surcharge").val()).toFixed(2));
 			gtot();
 		}
-		function qtyDecimalFixFunc() {
+		/* function qtyDecimalFixFunc() {
 			if ($("#qty").val() != "") {
-				$("#qty").val(Number($("#qty").val()).toFixed(2));
+				$("#qty").val(Number($("#qty").val()).toFixed(3));
 			} else {
 				$("#qty").val("");
 			}
-		}
+		} */
 
 		function submit() {
 			document.getElementById("purchaseForm").submit();
@@ -4616,9 +4637,9 @@
 
 		function detailButtonNext() {
 			if ($("#idName").val() == 0) {
-				alert("please select  name");
+				alert("please enter  name");
 			} else if ($("#iphone").val() == "") {
-				alert("please select Ph No1");
+				alert("please enter Ph No1");
 			} else {
 				$("#detl").removeAttr("class");
 				$("#detail").attr("class", "tab-pane fade");
@@ -4682,10 +4703,16 @@
 		}
 
 		function detailButtonNext2() {
-			$("#detl2").removeAttr("class");
-			$("#detail2").attr("class", "tab-pane fade");
-			$("#addr2").attr("class", "active");
-			$("#address2").attr("class", "tab-pane fade active in");
+			if ($("#idName2").val() == 0) {
+				alert("please enter  name");
+			} else if ($("#iphone2").val() == "") {
+				alert("please enter Ph No1");
+			} else {
+				$("#detl2").removeAttr("class");
+				$("#detail2").attr("class", "tab-pane fade");
+				$("#addr2").attr("class", "active");
+				$("#address2").attr("class", "tab-pane fade active in");
+			}
 		}
 
 		function addressButtonPrev2() {
@@ -4696,10 +4723,14 @@
 		}
 
 		function addressButtonNext2() {
-			$("#addr2").removeAttr("class");
-			$("#address2").attr("class", "tab-pane fade");
-			$("#vAcc2").attr("class", "active");
-			$("#vendorAccount2").attr("class", "tab-pane fade active in");
+			if ($("#vendorCity2").val() == "") {
+				alert("please select city");
+			} else {
+				$("#addr2").removeAttr("class");
+				$("#address2").attr("class", "tab-pane fade");
+				$("#vAcc2").attr("class", "active");
+				$("#vendorAccount2").attr("class", "tab-pane fade active in");
+			}
 		}
 	</script>
 
@@ -4926,11 +4957,11 @@
 		var agentId;
 		function submitform2() {
 			if ($("#idName2").val() == 0) {
-				alert("please select  name");
+				alert("please enter  name");
 			} else if ($("#iphone2").val() == "") {
-				alert("please select Ph No1");
-			} else if ($("#cityname2").val() == "") {
-				alert("please select cityname");
+				alert("please enter Ph No1");
+			} else if ($("#vendorCity2").val() == "") {
+				alert("please select city");
 			} else {
 				var dataa2 = {
 					vendorName2 : $("#idName2").val(),
@@ -5533,6 +5564,37 @@
 											+ Number(1)));
 				}
 			});
+		}
+	</script>
+
+	<script src="js/numericInput.min.js"></script>
+	<script>
+		$(function() {
+			$("#idvendorPin2").numericInput({
+				allowFloat : false, // Accpets positive numbers (floating point)
+				allowNegative : false, // Accpets positive or negative integer
+			});
+			$("#idvendorPin").numericInput({
+				allowFloat : false, // Accpets positive numbers (floating point)
+				allowNegative : false, // Accpets positive or negative integer
+			});
+		});
+	</script>
+
+	<script type="text/javascript">
+		function blockSpecialChar(e) {
+			var k = e.keyCode;
+			return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8
+					|| k == 32 || (k >= 48 && k <= 57));
+		}
+		function blockSpecialCharNspace(e) {
+			var k = e.keyCode;
+			return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || (k >= 48 && k <= 57));
+		}
+		function blockOtherThanEmail(e) {
+			var k = e.keyCode;
+			return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8
+					|| k == 64 || k == 46 || (k >= 48 && k <= 57));
 		}
 	</script>
 </body>
