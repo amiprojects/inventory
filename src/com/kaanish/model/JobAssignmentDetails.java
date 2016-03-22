@@ -31,6 +31,10 @@ public class JobAssignmentDetails implements Serializable {
 	private Date assignDate;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date estimatedCompletionDate;
+	private float surcharge;
+	private float grandTotal;
+	private float profit;
+	private boolean isFlatProfit;
 
 	@ManyToOne
 	@JoinColumn(name = "companyInfoId")
@@ -122,6 +126,38 @@ public class JobAssignmentDetails implements Serializable {
 
 	public void setCompanyInfo(CompanyInfo companyInfo) {
 		this.companyInfo = companyInfo;
+	}
+
+	public float getSurcharge() {
+		return surcharge;
+	}
+
+	public void setSurcharge(float surcharge) {
+		this.surcharge = surcharge;
+	}
+
+	public float getGrandTotal() {
+		return grandTotal;
+	}
+
+	public void setGrandTotal(float grandTotal) {
+		this.grandTotal = grandTotal;
+	}
+
+	public float getProfit() {
+		return profit;
+	}
+
+	public void setProfit(float profit) {
+		this.profit = profit;
+	}
+
+	public boolean isFlatProfit() {
+		return isFlatProfit;
+	}
+
+	public void setFlatProfit(boolean isFlatProfit) {
+		this.isFlatProfit = isFlatProfit;
 	}
 
 }

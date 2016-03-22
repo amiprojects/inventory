@@ -29,20 +29,23 @@ public class SampleDesignCostSheet implements Serializable {
 	private float totalJobcost;
 	private float surcharge;
 	private float grandTotal;
-	
-	@ManyToOne@JoinColumn(name="designerId")
+	private float profit;
+	private boolean isFlatProfit;
+
+	@ManyToOne
+	@JoinColumn(name = "designerId")
 	private Vendor vendor;
 
-	@OneToMany(mappedBy = "designCostSheet",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "designCostSheet", cascade = CascadeType.ALL)
 	private List<DesignImage> designImages;
-	
-	@OneToMany(mappedBy="sampleDesignCostSheet",cascade=CascadeType.ALL)
+
+	@OneToMany(mappedBy = "sampleDesignCostSheet", cascade = CascadeType.ALL)
 	private List<ProductsForDesignCostSheet> productsForDesignCostSheets;
-	
-	@OneToMany(mappedBy="sampleDesignCostSheet",cascade=CascadeType.ALL)
+
+	@OneToMany(mappedBy = "sampleDesignCostSheet", cascade = CascadeType.ALL)
 	private List<JobsForDesignCostSheet> jobsForDesignCostSheets;
-	
-	@OneToMany(mappedBy="designCostSheet",cascade=CascadeType.ALL)
+
+	@OneToMany(mappedBy = "designCostSheet", cascade = CascadeType.ALL)
 	private List<JobPlan> jobPlans;
 
 	public int getId() {
@@ -97,7 +100,8 @@ public class SampleDesignCostSheet implements Serializable {
 		return productsForDesignCostSheets;
 	}
 
-	public void setProductsForDesignCostSheets(List<ProductsForDesignCostSheet> productsForDesignCostSheets) {
+	public void setProductsForDesignCostSheets(
+			List<ProductsForDesignCostSheet> productsForDesignCostSheets) {
 		this.productsForDesignCostSheets = productsForDesignCostSheets;
 	}
 
@@ -145,7 +149,8 @@ public class SampleDesignCostSheet implements Serializable {
 		return jobsForDesignCostSheets;
 	}
 
-	public void setJobsForDesignCostSheets(List<JobsForDesignCostSheet> jobsForDesignCostSheets) {
+	public void setJobsForDesignCostSheets(
+			List<JobsForDesignCostSheet> jobsForDesignCostSheets) {
 		this.jobsForDesignCostSheets = jobsForDesignCostSheets;
 	}
 
@@ -157,6 +162,20 @@ public class SampleDesignCostSheet implements Serializable {
 		this.jobPlans = jobPlans;
 	}
 
-	
-	
+	public float getProfit() {
+		return profit;
+	}
+
+	public void setProfit(float profit) {
+		this.profit = profit;
+	}
+
+	public boolean isFlatProfit() {
+		return isFlatProfit;
+	}
+
+	public void setFlatProfit(boolean isFlatProfit) {
+		this.isFlatProfit = isFlatProfit;
+	}
+
 }

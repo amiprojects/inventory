@@ -28,7 +28,7 @@ public class JobPlan implements Serializable {
 	private int qty;
 	private float estimatedCost;//sample cost * qty
 	private float totalJobExpanse;//0
-	private float totalProductCost;
+	private float totalProductCost;//purchaseproddet->prodqty*amount
 	private float totalExpanse;
 	private boolean isComplete;//false
 
