@@ -140,7 +140,7 @@
 												<img alt="sales Entry" src="img/financialImage.JPG"
 													style="height: 179px; width: 330px;"> <i
 													class="fa fa-user red"></i>
-												<h4 style="color: red">Stock Report</h4>
+												<h4 style="color: red">Financial Report</h4>
 											</div>
 										</a>
 									</div>

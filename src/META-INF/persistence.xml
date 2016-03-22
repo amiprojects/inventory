@@ -3,8 +3,8 @@
 	<persistence-unit name="kaanish_kouture" transaction-type="JTA">
 		<jta-data-source>jdbc/__kaanish</jta-data-source>
 		<properties>
-			<property name="javax.persistence.schema-generation.database.action" value="create"/>
 			<property name="javax.persistence.schema-generation.create-database-schemas" value="true"/>
+			<property name="javax.persistence.schema-generation.database.action" value="create"/>
 		</properties>
 	</persistence-unit>
 </persistence>

@@ -96,7 +96,7 @@ import com.kaanish.util.DateConverter;
 		"/purchaseReportByDate", "/purchaseReportByAgentName",
 		"/purchaseProductView", "/purchaseReportView", "/salesProductView",
 		"/salesReportView", "/salesReportByCustomerName",
-		"/salesReportByAgentName" })
+		"/salesReportByAgentName","/dayBookreport" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -3036,6 +3036,16 @@ public class Servlet extends HttpServlet {
 				ejb.updateSampleDesignCostSheet(sampleDesignCostSheet);
 
 				msg = "your request hasbeen successfully processed";
+				break;
+				
+			case "dayBookreport":
+				page = "finalcialReport.jsp";
+
+				List<Purchase_Entry> purchaseEty = ejb.getPurchaseEntryByDateForReport(DateConverter.getDate(req.getParameter("dayBookDate")));
+				List<SalesEntry> salesEty = ejb.getSalesEntryByDateForReport(DateConverter.getDate(req.getParameter("dayBookDate")));		
+				req.setAttribute("purchaseEty", purchaseEty);
+				req.setAttribute("salesEty", salesEty);
+
 				break;
 
 			default:
