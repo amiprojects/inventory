@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<jsp:include page="include.jsp" />
+<%-- <jsp:include page="include.jsp" /> --%>
 
 <aside class="sidebar" style="height: 100%; overflow-y: scroll;">
 	<div class="menu-sec">
@@ -150,8 +150,8 @@
 
 						<li><a id="jobSetup" href="jobSetup.jsp" title="">Job
 								Setup</a></li>
-						<!-- <li><a id="itemSetup" href="setupItem.jsp" title="">Item
-								Setup</a></li> -->
+						<li><a id="itemSetup" href="setupItem.jsp" title="">Item
+								Setup</a></li>
 
 					</ul>
 				</div>
