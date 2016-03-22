@@ -179,14 +179,16 @@
 
 												<label for="" class="font">Design No. :</label> <input
 													type="text" class="form-control" name="dNo"
-													required="required" id="dNo">
+													required="required" id="dNo"><input type="hidden"
+													id="dId" name="dId">
 											</div>
 
 											<div class="form-group">
 
-												<label for="" class="font">Qty :</label> <input type="text"
-													class="form-control" name="qty" required="required"
-													id="qty">
+												<label for="" class="font">Qty :</label> <input
+													type="number" class="form-control" name="qty"
+													required="required" id="qty" onkeyup="qtyF();"
+													onchange="qtyFC();">
 											</div>
 
 											<!-- <br> <input type="button" class="btn green pull-right"
@@ -312,6 +314,79 @@
 
 		</div>
 	</div>
+
+	<div id="purchaseDetails" class="modal fade" role="dialog"
+		style="top: 25px;" data-backdrop="static" data-keyboard="false">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						onclick="closeModal();">&times;</button>
+					<h4 class="modal-title">Product Details For the Design Number</h4>
+				</div>
+				<div class="modal-body">
+					<table id="stream_table" width="100%">
+						<thead>
+							<tr>
+								<th>Design No:</th>
+								<td colspan="2"><input type="text" readonly="readonly"
+									id="dNoModal" class="form-control"></td>
+							</tr>
+							<tr>
+								<th>Description :</th>
+								<td colspan="2"><input type="text" readonly="readonly"
+									id="dDescModal" class="form-control"></td>
+							</tr>
+						</thead>
+					</table>
+					<table id="ProductDetailsTable" class="table">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Product code</th>
+								<th>Product Description</th>
+								<th>UOM</th>
+								<th>Quantity</th>
+	<th>rate</th>
+	<th>Amount</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+				</div>
+			</div>
+
+		</div>
+		
+		
+	</div>
+	<div id="myModal" class="modal fade" role="dialog" style="top: 25px;" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Modal Header</h4>
+			</div>
+			<div class="modal-body">
+				<h1 id="purchaseDet"></h1>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
 	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
@@ -435,7 +510,8 @@
 							resp($.map(data, function(item) {
 								return ({
 									value : item.dNumber,
-									id : item.dId
+									id : item.dId,
+									dDEsc : item.dDEsc
 								});
 							}));
 						}
@@ -445,10 +521,102 @@
 				change : function(event, ui) {
 					if (ui.item == null) {
 						$(this).val("");
+						$("#dId").val("");
+						$("#dDescModal").val("");
+						$("#dNoModal").val("");
+					} else {
+						$("#dId").val(ui.item.id);
+						$("#dDescModal").val(ui.item.dDEsc);
+						$("#dNoModal").val($(this).val());
+					}
+				},
+				select : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#dId").val("");
+						$("#dDescModal").val("");
+						$("#dNoModal").val("");
+					} else {
+						$("#dId").val(ui.item.id);
+						$("#dDescModal").val(ui.item.dDEsc);
+						$("#dNoModal").val($(this).val());
 					}
 				}
 			});
 		});
+
+		function qtyF() {
+			if ($("#dNo").val() == "") {
+				alert("PLease enter design no. first...");
+				$("#qty").val("");
+			}
+		}
+		function qtyFC() {
+			if ($("#qty").val() != "") {
+				if ($("#qty").val() > 0) {
+					$("#purchaseDetails").modal("show");
+
+					$.ajax({
+						type : "post",
+						url : "getProductDetailsByDesignNumberAndQuantity",
+						dataType : "json",
+						data : {
+							did : $("#dId").val()
+						},
+						success : function(data2) {
+							$("#ProductDetailsTable tbody").empty();
+						
+							$.each(data2, function(index, item2) {
+
+								if(item2.ProductRemainingQty>=(Number($("#qty").val())*item2.ProductQtyForSample)){
+									$("#ProductDetailsTable").append(
+											"<tbody onclick='selectProduct(\""+item2.ProductCode+"\");'>" + "<tr>" + "<td>" + Number(1+index)
+													+ "</td>" + "<td>" + item2.ProductCode
+													+ "</td>" + "<td>"
+													+ item2.ProductDesc + "</td>"
+													+ "<td>" + item2.ProductUOMName
+													+ "</td>"
+													+ "<td>" + item2.ProductQtyForSample*$("#qty").val()
+													+ "</td>"
+													+ "<td>" + item2.ProductRateForSample*$("#qty").val()
+													+ "</td>"
+													+ "<td>" + (item2.ProductQtyForSample*$("#qty").val())*(item2.ProductRateForSample*$("#qty").val())
+													+ "</td>"
+													+ "</tr>"
+													+ "</tbody>");
+								}else{
+									alert("unsufficient product "+item2.ProductDesc);
+									$("#ProductDetailsTable tbody").empty();
+									$("#purchaseDetails").modal("hide");
+									return false;
+								}
+								
+
+							});
+						}
+					});
+				} else {
+					alert("Please enter valid quantity...");
+				}
+			}
+		}
+		function selectProduct(code){
+			$("#myModal").modal("show");
+			$.ajax({
+				url:'getPurchaseProductDetailsByProductCode',
+				type:'post',
+				dataType:"json",
+				data:{
+					code:code,
+					date:$("#datepicker").val()
+					},
+				success:function(data){
+					$.map(data,function(item){
+						$("#purchaseDet").html($("#purchaseDet").html()+item.purchaseDate+'\n');
+					});
+				}
+			});
+			}
 	</script>
 </body>
 
