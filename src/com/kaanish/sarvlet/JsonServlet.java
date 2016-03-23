@@ -64,7 +64,7 @@ import com.kaanish.util.DepartmentCotractor;
 		"/getVendorsByNameAndType", "/getVendorsByVendorTypeVendorAndName",
 		"/getVendorsByVendorTypePurchaseAgentAndName", "/getCustomerByName",
 		"/getCriticalStock", "/getSampleDesignCostSheetByDesignNumber",
-		"/getProductDetailsByDesignNumberAndQuantity", "/getPurchaseProductDetailsByProductCode"})
+		"/getProductDetailsByDesignNumberAndQuantity", "/getPurchaseProductDetailsByProductCode" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -1035,7 +1035,7 @@ public class JsonServlet extends HttpServlet {
 				}
 				generatorD.writeEnd().close();
 				break;
-
+				
 			default:
 				break;
 			}

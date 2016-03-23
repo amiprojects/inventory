@@ -1185,6 +1185,21 @@ public class Ejb {
 		q.setParameter("nm", "%" + name.toUpperCase() + "%");
 		return q.getResultList();
 	}
+	public List<Vendor> getAllAgenttypeAgent() {
+		TypedQuery<Vendor> q = em
+				.createQuery(
+						"select c from Vendor c where c.vendorType.type='Sales Agent' OR c.vendorType.type='Purchase Agent'",Vendor.class);
+		
+		return q.getResultList();
+	}
+	public List<Vendor> getAllVendtypeVen() {
+		TypedQuery<Vendor> q = em
+				.createQuery(
+						"select c from Vendor c where c.vendorType.type='Vendor'",
+						Vendor.class);
+		
+		return q.getResultList();
+	}
 
 	public List<Vendor> getVendorsWithVendorTypeJobberByProductID(String jobber) {
 		TypedQuery<Vendor> q = em.createQuery(
