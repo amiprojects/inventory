@@ -154,7 +154,7 @@
 									<hr width="100%">
 								</div>
 								<br> <br> <br> <br>
-								<c:if test="${requestScope['amj']!=null}">
+								<%-- <c:if test="${requestScope['amj']!=null}"> --%>
 									<div class="col-md-12" style="width: 100%;" id="jrecive">
 										<div>
 											<div class="col-md-6">
@@ -299,7 +299,7 @@
 											</form>
 										</div>
 									</div>
-								</c:if>
+								<%-- </c:if> --%>
 							</div>
 
 

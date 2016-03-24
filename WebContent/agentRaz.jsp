@@ -55,7 +55,7 @@ table {
 
 th {
 	width: 16.6% !important;
-	text-align: left !important;
+	text-align: center !important;
 }
 
 tbody {
@@ -70,7 +70,13 @@ td {
 tfoot {
 	width: 100% !important;
 }
+margin-bottom
+:
 
+3
+em
+
+;
 </style>
 
 </head>
@@ -112,7 +118,7 @@ tfoot {
 
 
 
-	<c:set var="customer"
+	<c:set var="agent"
 		value="${sessionScope['ejb'].getCustomerEntryById(param.id)}" />
 
 	<div class="main" style="height: 664px;">
@@ -128,14 +134,11 @@ tfoot {
 
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
-								<h3 style="margin-top: 11px;">Customer Ledger</h3>
+								<h3 style="margin-top: 11px;">Agent Ledger</h3>
 							</div>
 
 							<div class="widget-area">
-								<div class="col-md-12">
-									<h3 align="center" style="color: gray;">Customer Name:
-										${customer.name}</h3>
-
+								<d
 									<table id="example" class="display nowrap" cellspacing="0"
 										width="100%">
 										
@@ -196,6 +199,11 @@ tfoot {
 											</c:forEach>
 										</tbody>
 									</table>
+					iv class="col-md-12">
+									<h3 align="center" style="color: gray;">Customer Name:
+										${customer.name}</h3>
+								
+								
 								</div>
 
 							</div>
@@ -233,7 +241,7 @@ tfoot {
 		$(document).ready(function() {
 			  var table=$('#example').DataTable({
 
-				"scrollY" : 300,
+				"scrollY" : 200,
 				"scrollX" : true,
 				dom : 'Bfrtip',
 				buttons : [ 'copy', 'csv', 'excel', 'print' ]
@@ -247,7 +255,6 @@ tfoot {
 			    } );
 		});
 	</script>
-
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->

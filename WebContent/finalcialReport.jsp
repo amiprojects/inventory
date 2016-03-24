@@ -232,7 +232,8 @@ em
 															id="ledSel">
 															<option value="0">select ledger type</option>
 															<option value="vendorLed">Vendor</option>
-															<option value="AgentLed">Agent</option>
+															<option value="AgentLed">Purchase Agent</option>
+															<option value="salAge">Sales Agent</option>
 															<option value="CustomerLed">Customer</option>
 														</select>
 													</h4>
@@ -345,7 +346,7 @@ em
 																<td>${endor.name}</td>
 																<td>${endor.ph1}</td>
 																<td>${endor.address}</td>
-																<td><a href="endorRaz.jsp?id=${endor.id}"><img
+																<td><a href="agentRaz.jsp?id=${endor.id}"><img
 																alt="click to view" src="images/eye.png" height="20"></a></td>
 
 															</tr>
