@@ -322,14 +322,21 @@ td {
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 	<script>
 
-		$(document).ready(function() {
+		$(document).ready(function() {			
+			/* $('#table2').DataTable({
+				"scrollY" : 200,
+				"scrollX" : true
+			});
+			$('#table1').DataTable({
+				"scrollY" : 200,
+				"scrollX" : true
+			});		 */	
 			$('table.display').DataTable({
 				 fixedHeader: {
 			            header: true,
 			            footer: true
 			        }
 			});
-			
 		});
 	</script>
 

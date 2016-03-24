@@ -61,6 +61,12 @@
 			minDate : 0
 		});
 	});
+	$(function() {
+		$(".estSubmDate").datepicker({
+			dateFormat : "dd-mm-yy",
+			minDate : 0
+		});
+	});
 </script>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -120,7 +126,7 @@
 
 
 							<div class="col-md-12">
-								<form role="form" class="sec" method="post" id="jobForm"
+								<form role="form" class="sec" method="post" id="jobAssignmentForParticularDesignNumber"
 									action="jobAssignment">
 									<div class="widget-area">
 										<div class="col-md-6">
@@ -198,63 +204,31 @@
 										<div class='toast' style='display: none'>
 											<h3 id="msg">${requestScope['msg']}</h3>
 										</div>
-									</div>
-									<!-- <div class="widget-area">
-											<input type="button" class="btn green pull-right"
-												data-toggle="modal" data-target="#addProduct"
-												value="Add Product" style="width: 100%" onclick="manage();">
-										</div> -->
-									<!-- <h3>List of material use</h3>
-									<table id="products" class="table table-striped table-bordered">
-										<thead style="background-color: #F0F0F0;">
-											<tr>
-												<th>#</th>
-												<th>Product code</th>
-												<th>Description</th>
-												<th>Quantity</th>
-												<th>rate</th>
-											</tr>
-										</thead>
-									</table>									
-									<h3>List of jobs</h3>
-									<table id="jobs" class="table table-striped table-bordered">
-										<thead style="background-color: #F0F0F0;">
-											<tr>
-												<th>#</th>
-												<th>Job Name</th>
-												<th>Product Code</th>
-												<th>Qty</th>
-												<th>UOM</th>
-												<th>Rate</th>
-												<th>Amount</th>
-												<th>Estimated Submission Date</th>
-												<th>Remove</th>
-											</tr>
-										</thead>
-									</table> -->
+									</div>									
+									
 									<div id="productNjobsDiv"></div>
 									<table id="productNjobsTable" class="table table-striped table-bordered">
 										<thead style="background-color: #F0F0F0;">
 											<tr>
 												<th style="text-align: right;">Product code :</th>
-												<td>code</td>
+												<td>---</td>
 												<th style="text-align: right;">Description :</th>
-												<td colspan="2">code</td>
+												<td colspan="2">---</td>
 												<th style="text-align: right;">Quantity :</th>
 												<td>code</td>
 												<th style="text-align: right;">Rate :</th>
-												<td>code</td>
+												<td>---</td>
 											</tr>
 											<tr>
 												<th>#</th>
-												<th>Job Name</th>
-												<th>Product Code</th>
+												<th>Job</th>
+												<th>Job</th>											
+												<th>Sample Rate</th>
+												<th>Present Rate</th>
 												<th>Qty</th>
 												<th>UOM</th>
-												<th>Rate</th>
 												<th>Amount</th>
 												<th>Estimated Submission Date</th>
-												<th>Remove</th>
 											</tr>
 										</thead>
 									</table>
@@ -410,7 +384,7 @@
 							<tr>
 								<th>UOM :</th>
 								<td colspan="2"><input type="text" readonly="readonly"
-									id="pUOMModal" class="form-control"><input type="hidden" id="pIdModal"></td>
+									id="pUOMModal" class="form-control"><input type="hidden" id="pIdModal"><input type="hidden" id="pForSampleIdModal"></td>
 							</tr>
 						</thead>
 					</table>
@@ -459,7 +433,7 @@
 			} else if ($("#datepicker1").val() == "") {
 				alert("please select Estimated submission date");
 			} else {
-				$("#jobForm").submit();
+				$("#jobAssignmentForParticularDesignNumber").submit();
 			}
 		}
 
@@ -632,7 +606,7 @@
 																	.append(
 																			"<tbody id='prod"+item2.ProductId+"' onclick='selectProduct(\""
 																					+ item2.ProductCode
-																					+ "\",\""+ item2.ProductDesc +"\",\""+ item2.ProductUOMName +"\",\""+ item2.ProductId +"\");'>"
+																					+ "\",\""+ item2.ProductDesc +"\",\""+ item2.ProductUOMName +"\",\""+ item2.ProductForSampleId +"\",\""+ item2.ProductId +"\");'>"
 																					+ "<tr>"
 																					+ "<td>"
 																					+ Number(1 + index)
@@ -689,12 +663,13 @@
 				}
 			}
 		}
-		function selectProduct(code, desc, uom, id) {
+		function selectProduct(code, desc, uom, ProductForSampleId, id) {
 			$("#purchaseDetails").modal("show");
 			$("#pCodeModal").val(code);
 			$("#pDescModal").val(desc);
 			$("#pUOMModal").val(uom);
 			$("#pIdModal").val(id);
+			$("#pForSampleIdModal").val(ProductForSampleId);
 			$.ajax({
 				url : 'getPurchaseProductDetailsByProductCode',
 				type : 'post',
@@ -782,10 +757,11 @@
 			if(Number(sum)!=Number($("#prod" + $("#pIdModal").val() + " :nth-child(5)").html())){
 				alert("Selected Qty can not be more than or less than Required Qty! Total required qty is : "+ $("#prod" + $("#pIdModal").val() + " :nth-child(5)").html()+". PLease select valid qty...");
 			}else{				
-				$("#purchaseDetails").modal("hide");
+				$("#purchaseDetails").modal("hide");				
+				$("#productNjobsTable").hide();
 				
-				//error
-				$('#productNjobsDiv').append('<table class="table table-striped table-bordered"><thead style="background-color: #F0F0F0;"><tr><th style="text-align: right;">'
+				//error										
+				$('#productNjobsDiv').append('<table id="pDetTable'+$("#pForSampleIdModal").val()+'" class="table table-striped table-bordered"><thead style="background-color: #F0F0F0;"><tr><th style="text-align: right;">'
 				+ "Product code :" 
 				+ '</th><td>'
 				+ $("#prod" + $("#pIdModal").val() + " :nth-child(2)").html() +
@@ -796,12 +772,78 @@
 				'</td><th style="text-align: right;">'
 				+ "Qty :" 
 				+ '</th><td>'
-				+ $("#prod" + $("#pIdModal").val() + " :nth-child(4)").html() +
+				+ $("#prod" + $("#pIdModal").val() + " :nth-child(5)").html() +
 				'</td><th style="text-align: right;">'
 				+ "Rate :" 
 				+ '</th><td>'
-				+ $("#prod" + $("#pIdModal").val() + " :nth-child(5)").html() +
-				'</td></tr></thead></table>');
+				+ $("#prod" + $("#pIdModal").val() + " :nth-child(6)").html() +
+				'</td></tr><tr><th>'
+				+ "#" 
+				+ '</th><th>'
+				+ "Job" 
+				+ '</th><th>'
+				+ "Sample Rate" +
+				'</th><th>'
+				+ "Present Rate" 
+				+ '</th><th>'
+				+ "Qty" +
+				'</th><th>'
+				+ "UOM" 
+				+ '</th><th>'
+				+ "Amount" +
+				'</th><th>'
+				+ "Est. Submission Date" +
+				'</th></tr></thead></table>');
+				
+				 $
+				.ajax({
+					type : "post",
+					url : "getJobsForDesignCostSheetByProductSForSampleId",
+					dataType : "json",
+					data : {
+						pid : $("#pForSampleIdModal").val()
+					},
+					success : function(data2) {
+						$
+								.each(
+										data2,
+										function(index, item2) {											
+												$(
+														
+														"#pDetTable"+$("#pForSampleIdModal").val())
+														.append(
+																"<tbody id='pDetTable"+item2.JobId+"'>"
+																		+ "<tr>"
+																		+ "<td>"
+																		+ Number(1 + index)
+																		+ "</td>"
+																		+ "<td>"
+																		+ item2.JobName
+																		+ "</td>"
+																		+ "<td>"
+																		+ item2.JobRateOfSample
+																		+ "</td>"
+																		+ "<td>"
+																		+ "<input type='text' class='form-control' value='"+item2.JobRateOfSample+"'>"
+																		+ "</td>"
+																		+ "<td>"
+																		+ "<input type='text' class='form-control' value='"+item2.JobQtyOfSample+"'>"
+																		+ "</td>"
+																		+ "<td>"
+																		+ item2.JobUOMOfSample
+																		+ "</td>"
+																		+ "<td>"
+																		+ "<input type='text' readonly='readonly' class='form-control' value='"+item2.JobAmountOfSample+"'>"
+																		+ "</td>"
+																		+ "<td>"
+																		+ "<input type='text' class='form-control estSubmDate'>"
+																		+ "</td>"
+																		+ "</tr>"
+																		+ "</tbody>");										
+
+										});
+					}
+				});
 			}
 		}
 		function prodDetOkF(){
