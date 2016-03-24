@@ -106,7 +106,7 @@
 										<thead>
 											<tr>
 												<th>Item name</th>
-												<th>Edit/Delete</th>
+												<th>Edit</th>
 											</tr>
 										</thead>
 										<tbody>

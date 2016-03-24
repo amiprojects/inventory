@@ -114,7 +114,7 @@
 											<tr>
 												<th width="30%">Job name</th>
 												<th width="35%">Job Description</th>
-												<th width="20%">Edit/Delete</th>
+												<th width="20%">Edit</th>
 												<th></th>
 											</tr>
 										</thead>

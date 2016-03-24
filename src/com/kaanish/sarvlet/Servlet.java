@@ -39,7 +39,7 @@ import com.kaanish.model.JobRecievedDetails;
 import com.kaanish.model.JobStock;
 import com.kaanish.model.JobTypes;
 import com.kaanish.model.JobsForDesignCostSheet;
-import com.kaanish.model.ItemsForDesignCostSheet;
+import com.kaanish.model.ItemDetails;
 import com.kaanish.model.PageList;
 import com.kaanish.model.PaymentDetails;
 import com.kaanish.model.ProductDetail;
@@ -177,7 +177,7 @@ public class Servlet extends HttpServlet {
 	private JobPlanJobStock jobPlanJobStock;
 	private JobRecieveProductsDetails jobRecieveProductsDetails;
 	private JobReceiveJobDetails jobReceiveJobDetails;
-	private ItemsForDesignCostSheet itemsForDesignCostSheet;
+	private ItemDetails itemDetails;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -3156,18 +3156,18 @@ public class Servlet extends HttpServlet {
 			case "setItems":
 				page = "setupItem.jsp";
 				flag = 0;
-				for (ItemsForDesignCostSheet jt : ejb
-						.getAllItemsForDesignCostSheet()) {
+				for (ItemDetails jt : ejb
+						.getAllItemDetails()) {
 					if (jt.getName().equalsIgnoreCase(req.getParameter("name"))) {
 						flag = 1;
 						break;
 					}
 				}
 				if (flag == 0) {
-					itemsForDesignCostSheet = new ItemsForDesignCostSheet();
-					itemsForDesignCostSheet.setName(req.getParameter("name")
+					itemDetails = new ItemDetails();
+					itemDetails.setName(req.getParameter("name")
 							.toUpperCase());
-					ejb.setItemsForDesignCostSheet(itemsForDesignCostSheet);
+					ejb.setItemDetails(itemDetails);
 					msg = "Added successfully";
 				} else {
 					msg = "You can not Add duplicate name";
@@ -3176,22 +3176,22 @@ public class Servlet extends HttpServlet {
 
 			case "updateItems":
 				page = "setupItem.jsp";
-				itemsForDesignCostSheet = ejb
-						.getItemsForDesignCostSheetById(Integer.parseInt(req
+				itemDetails = ejb
+						.getItemDetailsById(Integer.parseInt(req
 								.getParameter("id")));
 				flag = 0;
-				for (ItemsForDesignCostSheet jt : ejb
-						.getAllItemsForDesignCostSheet()) {
+				for (ItemDetails jt : ejb
+						.getAllItemDetails()) {
 					if (jt.getName().equalsIgnoreCase(req.getParameter("name"))
-							&& !itemsForDesignCostSheet.getName()
+							&& !itemDetails.getName()
 									.equalsIgnoreCase(req.getParameter("name"))) {
 						flag = 1;
 						break;
 					}
 				}
 				if (flag == 0) {
-					itemsForDesignCostSheet.setName(req.getParameter("name").toUpperCase());
-					ejb.updateItemsForDesignCostSheet(itemsForDesignCostSheet);
+					itemDetails.setName(req.getParameter("name").toUpperCase());
+					ejb.updateItemDetails(itemDetails);
 					msg = "Updated successfully";
 				} else {
 					msg = "You can not update duplicate item name.";
@@ -3329,21 +3329,7 @@ public class Servlet extends HttpServlet {
 						productsForDesignCostSheet = null;
 
 						productIdList += productid[lc] + " ";
-					}
-					// itemsForDesignCostSheet = new ItemsForDesignCostSheet();
-					// itemsForDesignCostSheet.setProductIdList(productIdList);
-					// itemsForDesignCostSheet.setSampleId(sampleDesignCostSheet
-					// .getId());
-					// ejb.setItemsForDesignCostSheet(itemsForDesignCostSheet);
-					//
-					// String string =
-					// itemsForDesignCostSheet.getProductIdList();
-					// String[] parts = string.split(" ");
-					// for (String str : parts) {
-					// System.out.println(ejb.getProductDetailById(
-					// Integer.parseInt(str)).getDescription()
-					// + "," + str);
-					// }
+					}					
 
 					sampleDesignCostSheet.setTotalJobcost(jobtotal);
 					sampleDesignCostSheet.setTotalProductcost(prototal);

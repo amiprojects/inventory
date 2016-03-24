@@ -426,9 +426,9 @@
 														</tr>
 													</tbody>
 
-
+													<c:set var="count" value="${count+1}" />
 												</c:forEach>
-												<c:set var="count" value="${count+1}" />
+
 
 											</table>
 

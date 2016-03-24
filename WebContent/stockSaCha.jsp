@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title></title>
 <style type="text/css">
 body {
 	background: rgb(204, 204, 204);
@@ -90,7 +90,7 @@ page[size="A4"] {
 
 
 	<c:set value="${purEntry.salesProductDetails.size()}" var="proLength" />
-	<c:set value="${Math.ceil(proLength/8)}" var="qPage" />
+	<c:set value="${Math.ceil(proLength/6)}" var="qPage" />
 
 	<c:set value="${1}" var="sl" />
 	<c:forEach var="i" begin="1" end="${qPage}">
@@ -166,11 +166,18 @@ page[size="A4"] {
 						</tr>
 						<c:set value="${0}" var="tqty" />
 						<c:set value="${0}" var="gtot" />
-						<c:forEach begin="${(i-1)*8}" end="${i*8-1}"
+						<c:forEach begin="${(i-1)*6}" end="${i*6-1}"
 							items="${purEntry.salesProductDetails}" var="ppdet">
 							<tr>
 								<td>${sl}</td>
-								<td>${ppdet.purchase_Product_Details.productDetail.description}</td>
+								<td><%-- ${ppdet.purchase_Product_Details.productDetail.description} --%>
+
+									<b>${ppdet.purchase_Product_Details.productDetail.description}</b><br>Barcode
+									:
+									${ppdet.purchase_Product_Details.id}/${ppdet.purchase_Product_Details.lotNumber}/${ppdet.purchase_Product_Details.productDetail.code}<br>Design
+									No :
+									${ppdet.purchase_Product_Details.productDetail.universalCode}
+								</td>
 								<td><fmt:formatNumber var="qty" value="${ppdet.quantity}"
 										maxFractionDigits="3" />${qty}</td>
 								<c:set value="${tqty+ppdet.quantity}" var="tqty" />

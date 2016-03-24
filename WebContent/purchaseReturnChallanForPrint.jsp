@@ -99,7 +99,7 @@ page[size="A4"] {
 
 	<c:set value="${purEntry.purchaseReturnProductDetails.size()}"
 		var="proLength" />
-	<c:set value="${Math.ceil(proLength/8)}" var="qPage" />
+	<c:set value="${Math.ceil(proLength/6)}" var="qPage" />
 
 	<c:set value="${1}" var="sl" />
 	<c:forEach var="i" begin="1" end="${qPage}">
@@ -192,11 +192,19 @@ page[size="A4"] {
 						</tr>
 						<c:set value="${0}" var="tqty" />
 						<c:set value="${0}" var="gtot" />
-						<c:forEach begin="${(i-1)*8}" end="${i*8-1}"
+						<c:forEach begin="${(i-1)*6}" end="${i*6-1}"
 							items="${purEntry.purchaseReturnProductDetails}" var="ppdet">
 							<tr>
 								<td>${sl}</td>
-								<td>${ppdet.purchaseProductDetails.productDetail.description}</td>
+								<td>
+									<%-- ${ppdet.purchaseProductDetails.productDetail.description} --%>
+
+									<b>${ppdet.purchaseProductDetails.productDetail.description}</b><br>Barcode
+									:
+									${ppdet.purchaseProductDetails.id}/${ppdet.purchaseProductDetails.lotNumber}/${ppdet.purchaseProductDetails.productDetail.code}<br>Design
+									No :
+									${ppdet.purchaseProductDetails.productDetail.universalCode}
+								</td>
 								<td><fmt:formatNumber var="qty" value="${ppdet.qtyReturn}"
 										maxFractionDigits="3" />${qty}</td>
 								<c:set value="${tqty+ppdet.qtyReturn}" var="tqty" />
