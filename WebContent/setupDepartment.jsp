@@ -354,12 +354,28 @@
 																				href="deleteCategory?id=${cat.id}"><span
 																					style="color: red;">X</span></a>
 																				<ul>
-
-
-																					<c:forEach var="pro"
+																					<%-- <c:forEach var="pro"
 																						items="${sessionScope['ejb'].getAllProductDetailByCategoryId(cat.id)}">
 																						<li>${pro.description}</li>
-																					</c:forEach>
+																					</c:forEach> --%>
+																					<c:if test="${cat.attrNmae1!=null}">
+																						<li>${cat.attrNmae1}</li>
+																					</c:if>
+																					<c:if test="${cat.attrNmae2!=null}">
+																						<li>${cat.attrNmae2}</li>
+																					</c:if>
+																					<c:if test="${cat.attrNmae3!=null}">
+																						<li>${cat.attrNmae3}</li>
+																					</c:if>
+																					<c:if test="${cat.attrNmae4!=null}">
+																						<li>${cat.attrNmae4}</li>
+																					</c:if>
+																					<c:if test="${cat.attrNmae5!=null}">
+																						<li>${cat.attrNmae5}</li>
+																					</c:if>
+																					<c:if test="${cat.attrNmae6!=null}">
+																						<li>${cat.attrNmae6}</li>
+																					</c:if>
 																				</ul>
 																			</li>
 																		</c:forEach>

@@ -49,26 +49,6 @@
 		}
 	}
 </script>
-<!-- <script type="text/javascript">
-	function readURL(input) {
-		if (input.files && input.files[0]) {
-			var reader = new FileReader();
-
-			reader.onload = function(e) {
-				$('#image').attr('src', e.target.result).width(120).height(85);
-				str = e.target.result;
-				$("#proImage1").val(str.substring(str.lastIndexOf(',') + 1));
-
-			};
-
-			reader.readAsDataURL(input.files[0]);
-		}
-	}
-</script> -->
-
-
-
-
 
 <script>
 	var i = 2;
@@ -204,9 +184,6 @@
 	}
 	/* function */
 </script>
-
-
-
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 
@@ -256,8 +233,6 @@
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
 								<h3 style="margin-top: 11px;">Product/Material</h3>
-
-
 							</div>
 
 							<div class="col-md-12">
@@ -281,7 +256,6 @@
 									<!-- ************************************************endSearch*************************************************************** -->
 									<br> <br>
 									<table class="table">
-
 										<tr>
 											<th align="center">#</th>
 											<th align="center">Product Code:</th>
@@ -294,12 +268,9 @@
 										style="overflow-y: scroll; overflow-x: scroll; height: 147px; border: 1px;">
 										<table class="table">
 											<c:set var="countt" value="${1}" />
-
 											<c:forEach
 												items="${sessionScope['ejb'].getAllProductDetail()}"
 												var="productt">
-
-
 												<tr>
 													<td align="left">${countt}</td>
 													<td align="left">${productt.code}</td>
@@ -326,9 +297,6 @@
 											<li><a href="#" id="editId"><button
 														class="btn btn-info btn-sm" id="sAnDfield"
 														disabled="disabled" type="button">Edit</button></a></li>
-
-
-
 										</ul>
 									</div>
 
@@ -340,7 +308,6 @@
 									</ul>
 									<br>
 									<div class="tab-content">
-
 										<div id="general" class="tab-pane fade active in">
 											<div class="row">
 												<div class="col-md-3">
@@ -358,27 +325,22 @@
 														class="form-control">
 												</div>
 												<br> <br> <br>
-
 												<div class="col-md-3">
 													<label>Description:</label>
 												</div>
 
 												<div class="col-md-9">
-
 													<textarea readonly="readonly" id="descc"
 														class="form-control" name="adress" rows="5" cols="53"></textarea>
 													<br>
 												</div>
-
 												<br>
-
 												<div class="col-md-1">
 													<label>Active</label>
 												</div>
 												<div class="col-md-1">
 													<input id="actact" disabled type="checkbox" name="active">
 												</div>
-
 
 												<a href="#" id="proImg">
 													<button id="sooImage" class="btn btn-info btn-sm"
@@ -393,8 +355,6 @@
 										</div>
 
 										<div id="Custom" class="tab-pane fade ">
-
-
 											<fieldset>
 												<legend> Products attribute fields </legend>
 
@@ -439,17 +399,12 @@
 															class="form-control"><br>
 													</div>
 												</div>
-
 											</fieldset>
-
 										</div>
 
 
 										<div id="details" class="tab-pane fade ">
-
-
 											<div class="col-md-12">
-
 												<label>Designer's Design number:</label> <br> <input
 													readonly type="text" id="upcupc" class="form-control">
 												<br> <br>
@@ -461,7 +416,6 @@
 										</div>
 										<div id="inventory" class="tab-pane fade ">
 											<table>
-
 												<tr>
 													<td>&nbsp;</td>
 												</tr>
@@ -470,9 +424,6 @@
 													<td><input id="mrp111" class="form-control " readonly
 														type="text" name="mrp1"></td>
 												</tr>
-
-
-
 												<tr>
 													<td>&nbsp;</td>
 												</tr>
@@ -511,24 +462,14 @@
 												</tr>
 											</table>
 										</div>
-
-
-
-
 									</div>
 								</div>
-
-
 							</div>
 							<div class='toast' style='display: none'>
 								<h3 id="msg">${requestScope['msg']}</h3>
 							</div>
-
 						</div>
-
 					</div>
-
-
 				</div>
 			</div>
 		</div>
@@ -540,18 +481,13 @@
 
 	<!-- main -->
 
-
-
 	<div id="newMP" class="modal fade" role="dialog">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
-
 				<div class="widget-area"
 					style="width: 751px; height: 557px; padding: 2px; font-family: arial;">
-
 					<div id="side"
 						style="position: absolute; top: 33px; left: -1px; width: 167px; height: 555px; padding: 2px; font-family: arial;">
-
 						<table id="stream_table"
 							class="table table-striped table-bordered">
 							<thead>
@@ -580,15 +516,11 @@
 								<tr>
 									<td id="menu6">step6</td>
 								</tr>
-
-
 								<tr>
 									<td id="menu7">summary</td>
 								</tr>
-
 							</tbody>
 						</table>
-
 					</div>
 
 					<div id="step1"
@@ -614,9 +546,7 @@
 												name="description" id="description" class="form-control"
 												onkeypress="return blockSpecialChar(event)"><br>
 										</div>
-
 									</div>
-
 									<div class="col-md-6">
 										<label for="exampleInputEmail1">Designer's Design
 											number:<font color="red" size="4">*</font>
@@ -647,7 +577,6 @@
 											src="img/add.png">
 										</a>
 									</div>
-
 								</form>
 							</fieldset>
 						</div>
@@ -662,14 +591,12 @@
 								<input type="radio" name="isReady" id="raw" onclick=""
 									value="raw">Raw &nbsp; &nbsp; &nbsp;<input type="radio"
 									name="isReady" id="ready" onclick="" value="ready">Ready
-								&nbsp;&nbsp;&nbsp; <input type="checkbox" onclick="isSaledata()"
-									id="salepart">This Products is for sale
+								&nbsp;&nbsp;&nbsp; <input type="checkbox" id="salepart">This
+								Products is for sale
 							</p>
 
 							<hr width="100%">
 						</div>
-
-
 
 						<script type="text/javascript">
 							$('#salepart').click(
@@ -691,55 +618,33 @@
 										}
 									});
 						</script>
-
-
 					</div>
 
 					<div id="step3"
 						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial;">
 						<fieldset>
-
 							<legend> Add Product Image </legend>
-
 							<p style="font-size: 14px">(Enter the Products Image .)</p>
-
-
 							<div>
 								<label> Upload logo:</label>
 								<div>
 									<img id="image" alt="" src="data:image/jpeg;base64,"
 										style="width: 100px; height: 50px;">
 								</div>
-
-
 								<input type="file" name="proImg" size="20"
 									onchange="readURL(this);"><br> <img id="image"
 									alt="" src=""><a href="javascript:void(take_snapshot())"><button
 										class="btn blue btn-default" type="button">Take
 										Snapshot</button></a>
 								<div id="my_camera" style="width: 320px; height: 240px;"></div>
-
-
-
-
 							</div>
-							<!-- <div id="companyLogo">
-								<input type="file" name="proImg" size="60" id="image"
-									onchange="readURL(this);" value="">
-							</div> -->
-
 						</fieldset>
 					</div>
 
 					<div id="step4"
 						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial;">
-
-
-
-
 						<fieldset>
 							<legend> Add Initial Inventory </legend>
-
 							<p style="font-size: 14px">(Enter the Products's initial
 								inventory.)</p>
 							<br> <br> <input type="radio" name="do" checked
@@ -748,9 +653,6 @@
 								name="do" id="openn" onclick="openn1();" value="add">Add
 							initial inventory <br>
 							<hr width="100%">
-
-
-
 							<script type="text/javascript">
 								$(document).ready(function() {
 									$("#divshow").hide();
@@ -762,7 +664,6 @@
 									$("#trackkDiv").hide();
 								});
 								function openn1() {
-
 									if ($("[name='do']:checked").val() == "add") {
 										$("#showhide").hide();
 
@@ -774,7 +675,6 @@
 										$("#trackkDiv").show();
 										$("#addini").val(
 												$("[name='do']:checked").val());
-
 									} else {
 										$("#divshow").hide();
 										$("#divhide").show();
@@ -786,20 +686,16 @@
 										$("#addini").val(
 												$("[name='do']:checked").val());
 									}
-
 								}
 							</script>
 
-
 							<div id="divshow">
-
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="" class="font">Per Unit Cost:<font
 											color="red" size="4">*</font></label> <input name="unitCost"
 											type="text" placeholder="" id="ucO" onchange="rateF()"
 											class="form-control">
-
 									</div>
 									<div class="form-group">
 										<label for="" class="font">Wholesale Price :<font
@@ -812,27 +708,18 @@
 									<div class="form-group">
 										<label for="" class="font">Quantity:<font color="red"
 											size="4">*</font></label> <input name="quantity" type="text"
-											pattern="\d*" id="quantity" onkeyup="setLimit()"
-											class="form-control">
+											pattern="\d*" id="quantity" class="form-control">
 									</div>
-
-
 									<div class="form-group">
 										<label for="" class="font">Maximum Retail Price :<font
 											color="red" size="4">*</font></label> <input type="text" name="mrp"
 											placeholder="" id="mrpO" onchange="mrpF()"
 											class="form-control">
 									</div>
-
 								</div>
-
-
 							</div>
 
-
-
 							<div id="divhide">
-
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="" class="font">Maximum Retail Price :</label> <input
@@ -851,29 +738,18 @@
 											readonly="readonly" type="text" placeholder="" id=""
 											class="form-control">
 									</div>
-
-
-
 									<div class="form-group">
 										<label for="" class="font">Per Unit Cost:</label> <input
 											readonly="readonly" type="number" placeholder="" id=""
 											class="form-control">
-
-
 									</div>
 								</div>
 							</div>
-
-
 						</fieldset>
-
 					</div>
-
-
 
 					<div id="step2"
 						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial;">
-
 						<div class="masonary-grids">
 							<div class="col-md-12">
 								<div class="widget-area" align="left">
@@ -1436,7 +1312,6 @@
 								class="font">Attribute 6:</label><input type="text"
 								class="form-control" placeholder="" disabled="disabled"
 								id="attr6" onchange="attr6F();">
-
 							<center>
 								<input type="button" value="submit" onclick="addBtn()"
 									class="btn green pull-right">
@@ -1444,21 +1319,11 @@
 						</div>
 					</form>
 				</div>
-
 				<div class="modal-footer"></div>
-
 			</div>
 		</div>
-
 	</div>
-
-
-
 	<!-- Script -->
-
-
-
-
 
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -1479,7 +1344,6 @@
 		});
 	</script>
 
-
 	<script type="text/javascript" src="js/modernizr.js"></script>
 	<script type="text/javascript" src="js/script.js"></script>
 	<script type="text/javascript" src="js/bootstrap.js"></script>
@@ -1488,8 +1352,6 @@
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 	<script type="text/javascript" src="js/abixTreeList.min.js"></script>
 	<script src="js/numericInput.min.js"></script>
-
-
 
 	<script type="text/javascript">
 		function codeKeyUp() {
@@ -1505,9 +1367,7 @@
 						$("#pcodeCheck").val(data.code);
 					}
 				}
-
 			});
-
 		}
 
 		function codeChange() {
@@ -1525,11 +1385,8 @@
 		});
 	</script> -->
 	<!-- <script type="text/javascript" src="js/abixTreeList.min.js"></script> -->
-	<script type="text/javascript">
-		function setLimit() {
-			$("#limit").val($("#quantity").val());
-		}
 
+	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#lotdiv").hide();
 			$("#serdiv").hide();
@@ -1642,7 +1499,6 @@
 		}
 	</script>
 
-
 	<script type="text/javascript">
 		$(document).ready(function() {
 			if ($('#msg').html() != "") {
@@ -1650,8 +1506,6 @@
 			}
 		});
 	</script>
-
-
 
 	<script>
 		function viewProduct(id) {

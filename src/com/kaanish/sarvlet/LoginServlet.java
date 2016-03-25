@@ -62,6 +62,7 @@ public class LoginServlet extends HttpServlet {
 	private SecurityQuestionGroup securityQuestionGroup;
 	private SequrityQuestions securityQuestions;
 	private City city;
+	private CompanyInfo companyInfo;
 
 	@Override
 	public void init() throws ServletException {
@@ -262,7 +263,6 @@ public class LoginServlet extends HttpServlet {
 			str.add("Cash");
 			str.add("Cheque");
 			str.add("Bank Transfer");
-			// str.add("Voucher");
 			str.add("Credit Note");
 			str.add("Debit Note");
 
@@ -291,9 +291,9 @@ public class LoginServlet extends HttpServlet {
 		}
 
 		if (!ejb.isCompanyInfoExist()) {
-			companyInfoKaanish = new CompanyInfo();
-			companyInfoKaanish.setCompname("Kaanish Kouture");
-			ejb.setCompanyInfo(companyInfoKaanish);
+			// companyInfoKaanish = new CompanyInfo();
+			// companyInfoKaanish.setCompname("Kaanish Kouture");
+			// ejb.setCompanyInfo(companyInfoKaanish);
 
 			// companyInfoKaanish = new CompanyInfo();
 			// companyInfoKaanish.setCompname("KK");
@@ -303,11 +303,11 @@ public class LoginServlet extends HttpServlet {
 			companyInfoKainat.setCompname("Kainat Kreation");
 			ejb.setCompanyInfo(companyInfoKainat);
 		}
-		if (ejb.getAllUsers().size() < 2) {
+		if (ejb.getAllUsers().size() < 1) {
 			// usersKaanish = new Users();
 			// usersKaanish.setUserId("adminKaanish");
 			// usersKaanish.setPassword("admin");
-			// usersKaanish.setName("Production Admin");
+			// usersKaanish.setName("Kaanish Admin");
 			// usersKaanish.setPh("0");
 			// usersKaanish.setCompanyInfo(companyInfoKaanish);
 			// ejb.setUser(usersKaanish);
@@ -327,154 +327,151 @@ public class LoginServlet extends HttpServlet {
 			usersKainat.setPh("0");
 			usersKainat.setCompanyInfo(companyInfoKainat);
 			ejb.setUser(usersKainat);
-			
-			usersKaanish = new Users();
-			usersKaanish.setUserId("adminaaaaaaaaKaanish");
-			usersKaanish.setPassword("adminaaaaaaaa");
-			usersKaanish.setName("Production Admin");
-			usersKaanish.setPh("0");
-			usersKaanish.setCompanyInfo(companyInfoKaanish);
-			ejb.setUser(usersKaanish);
 		}
 
-		/*
-		 * if(ejb.getAllCity().size()<1){ city = new City(); city.setId(0);
-		 * city.setCityName("null"); }
-		 */
-		if (ejb.getAllBillSetup().size() < 16) {
-			/*
-			 * companyInfoKaanish = ejb.getUserById("adminKaanish")
-			 * .getCompanyInfo(); companyInfoKainat =
-			 * ejb.getUserById("adminKainat").getCompanyInfo();
-			 */
+		if (ejb.getAllBillSetup().size() < 8) {
+			// companyInfoKaanish = ejb.getUserById("adminKaanish")
+			// .getCompanyInfo();
+			// companyInfoKainat =
+			// ejb.getUserById("adminKainat").getCompanyInfo();
+
+			companyInfo = ejb.getUserById("adminKainat").getCompanyInfo();
 
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("PUR");
 			bill_setup.setCompanyInitial("KK");
 			bill_setup.setSufix("000");
-			bill_setup.setCompanyInfo(companyInfoKaanish);
+			// bill_setup.setCompanyInfo(companyInfoKaanish);
+			bill_setup.setCompanyInfo(companyInfo);
 			ejb.setBillSetup(bill_setup);
 			bill_setup = null;
 
-			bill_setup = new Bill_setup();
-			bill_setup.setBillType("PUR");
-			bill_setup.setCompanyInitial("KK");
-			bill_setup.setSufix("000");
-			bill_setup.setCompanyInfo(companyInfoKainat);
-			ejb.setBillSetup(bill_setup);
-			bill_setup = null;
-
-			bill_setup = new Bill_setup();
-			bill_setup.setBillType("RPUR");
-			bill_setup.setCompanyInitial("KK");
-			bill_setup.setSufix("000");
-			bill_setup.setCompanyInfo(companyInfoKaanish);
-			ejb.setBillSetup(bill_setup);
-			bill_setup = null;
+			// bill_setup = new Bill_setup();
+			// bill_setup.setBillType("PUR");
+			// bill_setup.setCompanyInitial("KK");
+			// bill_setup.setSufix("000");
+			// bill_setup.setCompanyInfo(companyInfoKainat);
+			// ejb.setBillSetup(bill_setup);
+			// bill_setup = null;
 
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("RPUR");
 			bill_setup.setCompanyInitial("KK");
 			bill_setup.setSufix("000");
-			bill_setup.setCompanyInfo(companyInfoKainat);
+			// bill_setup.setCompanyInfo(companyInfoKaanish);
+			bill_setup.setCompanyInfo(companyInfo);
 			ejb.setBillSetup(bill_setup);
 			bill_setup = null;
+
+			// bill_setup = new Bill_setup();
+			// bill_setup.setBillType("RPUR");
+			// bill_setup.setCompanyInitial("KK");
+			// bill_setup.setSufix("000");
+			// bill_setup.setCompanyInfo(companyInfoKainat);
+			// ejb.setBillSetup(bill_setup);
+			// bill_setup = null;
 
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("PURO");
 			bill_setup.setCompanyInitial("KK");
 			bill_setup.setSufix("000");
-			bill_setup.setCompanyInfo(companyInfoKaanish);
+			// bill_setup.setCompanyInfo(companyInfoKaanish);
+			bill_setup.setCompanyInfo(companyInfo);
 			ejb.setBillSetup(bill_setup);
 			bill_setup = null;
 
-			bill_setup = new Bill_setup();
-			bill_setup.setBillType("PURO");
-			bill_setup.setCompanyInitial("KK");
-			bill_setup.setSufix("000");
-			bill_setup.setCompanyInfo(companyInfoKainat);
-			ejb.setBillSetup(bill_setup);
-			bill_setup = null;
-
-			bill_setup = new Bill_setup();
-			bill_setup.setBillType("INV");
-			bill_setup.setCompanyInitial("KK");
-			bill_setup.setSufix("000");
-			bill_setup.setCompanyInfo(companyInfoKaanish);
-			ejb.setBillSetup(bill_setup);
-			bill_setup = null;
+			// bill_setup = new Bill_setup();
+			// bill_setup.setBillType("PURO");
+			// bill_setup.setCompanyInitial("KK");
+			// bill_setup.setSufix("000");
+			// bill_setup.setCompanyInfo(companyInfoKainat);
+			// ejb.setBillSetup(bill_setup);
+			// bill_setup = null;
 
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("INV");
 			bill_setup.setCompanyInitial("KK");
 			bill_setup.setSufix("000");
-			bill_setup.setCompanyInfo(companyInfoKainat);
+			// bill_setup.setCompanyInfo(companyInfoKaanish);
+			bill_setup.setCompanyInfo(companyInfo);
 			ejb.setBillSetup(bill_setup);
 			bill_setup = null;
+
+			// bill_setup = new Bill_setup();
+			// bill_setup.setBillType("INV");
+			// bill_setup.setCompanyInitial("KK");
+			// bill_setup.setSufix("000");
+			// bill_setup.setCompanyInfo(companyInfoKainat);
+			// ejb.setBillSetup(bill_setup);
+			// bill_setup = null;
 
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("SRINV");
 			bill_setup.setCompanyInitial("KK");
 			bill_setup.setSufix("000");
-			bill_setup.setCompanyInfo(companyInfoKaanish);
+			// bill_setup.setCompanyInfo(companyInfoKaanish);
+			bill_setup.setCompanyInfo(companyInfo);
 			ejb.setBillSetup(bill_setup);
 			bill_setup = null;
 
-			bill_setup = new Bill_setup();
-			bill_setup.setBillType("SRINV");
-			bill_setup.setCompanyInitial("KK");
-			bill_setup.setSufix("000");
-			bill_setup.setCompanyInfo(companyInfoKainat);
-			ejb.setBillSetup(bill_setup);
-			bill_setup = null;
-
-			bill_setup = new Bill_setup();
-			bill_setup.setBillType("JOB");
-			bill_setup.setCompanyInitial("KK");
-			bill_setup.setSufix("000");
-			bill_setup.setCompanyInfo(companyInfoKaanish);
-			ejb.setBillSetup(bill_setup);
-			bill_setup = null;
+			// bill_setup = new Bill_setup();
+			// bill_setup.setBillType("SRINV");
+			// bill_setup.setCompanyInitial("KK");
+			// bill_setup.setSufix("000");
+			// bill_setup.setCompanyInfo(companyInfoKainat);
+			// ejb.setBillSetup(bill_setup);
+			// bill_setup = null;
 
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("JOB");
 			bill_setup.setCompanyInitial("KK");
 			bill_setup.setSufix("000");
-			bill_setup.setCompanyInfo(companyInfoKainat);
+			// bill_setup.setCompanyInfo(companyInfoKaanish);
+			bill_setup.setCompanyInfo(companyInfo);
 			ejb.setBillSetup(bill_setup);
 			bill_setup = null;
+
+			// bill_setup = new Bill_setup();
+			// bill_setup.setBillType("JOB");
+			// bill_setup.setCompanyInitial("KK");
+			// bill_setup.setSufix("000");
+			// bill_setup.setCompanyInfo(companyInfoKainat);
+			// ejb.setBillSetup(bill_setup);
+			// bill_setup = null;
 
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("JOBR");
 			bill_setup.setCompanyInitial("KK");
 			bill_setup.setSufix("000");
-			bill_setup.setCompanyInfo(companyInfoKaanish);
+			// bill_setup.setCompanyInfo(companyInfoKaanish);
+			bill_setup.setCompanyInfo(companyInfo);
 			ejb.setBillSetup(bill_setup);
 			bill_setup = null;
 
-			bill_setup = new Bill_setup();
-			bill_setup.setBillType("JOBR");
-			bill_setup.setCompanyInitial("KK");
-			bill_setup.setSufix("000");
-			bill_setup.setCompanyInfo(companyInfoKainat);
-			ejb.setBillSetup(bill_setup);
-			bill_setup = null;
-
-			bill_setup = new Bill_setup();
-			bill_setup.setBillType("ROAD");
-			bill_setup.setCompanyInitial("KK");
-			bill_setup.setSufix("000");
-			bill_setup.setCompanyInfo(companyInfoKaanish);
-			ejb.setBillSetup(bill_setup);
-			bill_setup = null;
+			// bill_setup = new Bill_setup();
+			// bill_setup.setBillType("JOBR");
+			// bill_setup.setCompanyInitial("KK");
+			// bill_setup.setSufix("000");
+			// bill_setup.setCompanyInfo(companyInfoKainat);
+			// ejb.setBillSetup(bill_setup);
+			// bill_setup = null;
 
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("ROAD");
 			bill_setup.setCompanyInitial("KK");
 			bill_setup.setSufix("000");
-			bill_setup.setCompanyInfo(companyInfoKainat);
+			// bill_setup.setCompanyInfo(companyInfoKaanish);
+			bill_setup.setCompanyInfo(companyInfo);
 			ejb.setBillSetup(bill_setup);
 			bill_setup = null;
+
+			// bill_setup = new Bill_setup();
+			// bill_setup.setBillType("ROAD");
+			// bill_setup.setCompanyInitial("KK");
+			// bill_setup.setSufix("000");
+			// bill_setup.setCompanyInfo(companyInfoKainat);
+			// ejb.setBillSetup(bill_setup);
+			// bill_setup = null;
 		}
 		if (ejb.getAllStoct().size() < 1) {
 			LocalDateTime afterThreeMonths = currentDateTime.plusMonths(3);

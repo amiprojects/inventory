@@ -341,7 +341,7 @@
 												<c:set var="fy"
 													value="${sessionScope['ejb'].getCurrentFinancialYear()}" />
 												<c:set var="cno"
-													value="${sessionScope['ejb'].getLastPurchaseChallanNumberByCompany(compInfo.id)+1}" />
+													value="${sessionScope['ejb'].getLastPurchaseReturnChallanNumber()+1}" />
 												<c:set var="csuf"
 													value="${sessionScope['ejb'].getLastPurchaseReturnChallanSuffix()+1}" />
 												<c:set var="suf" value="RPUR" />
@@ -431,13 +431,15 @@
 												</td>
 												<td>${purchaseProducts.productDetail.description}</td>
 												<td>${purchaseProducts.quantity}</td>
-												<td id="qty${purchaseProducts.id}">
-												<fmt:formatNumber type="number" maxFractionDigits="2" value="${purchaseProducts.quantity-purchaseProducts.totalReturningQty}" />
+												<td id="qty${purchaseProducts.id}"><fmt:formatNumber
+														type="number" maxFractionDigits="2"
+														value="${purchaseProducts.quantity-purchaseProducts.totalReturningQty}" />
 												</td>
 												<td>${purchaseProducts.productDetail.qtyUnit.name}</td>
 												<td id="cost${purchaseProducts.id}">${purchaseProducts.cost}</td>
-												<td>
-												<fmt:formatNumber type="number" maxFractionDigits="2" value="${purchaseProducts.quantity*purchaseProducts.cost}" />
+												<td><fmt:formatNumber type="number"
+														maxFractionDigits="2"
+														value="${purchaseProducts.quantity*purchaseProducts.cost}" />
 												</td>
 												<td><input type="text" class="form-control rQty"
 													id="rQty${purchaseProducts.id}" name="rQty"
@@ -512,8 +514,9 @@
 										<thead>
 											<tr>
 												<td colspan="2">Sub Total :</td>
-												<td><input type="text" class="form-control" name="subTotalname"
-													id="subTotal" value="0" readonly="readonly"></td>
+												<td><input type="text" class="form-control"
+													name="subTotalname" id="subTotal" value="0"
+													readonly="readonly"></td>
 											</tr>
 										</thead>
 										<tbody>
@@ -934,8 +937,8 @@
 		function changeNcheck(id) {
 			if (Number($("#rQty" + id).val()) <= Number($("#qty" + id).html())) {
 				$("#rAmount" + id).val(
-						(Number($("#rQty" + id).val())
-								* Number($("#cost" + id).html())).toFixed(2));
+						(Number($("#rQty" + id).val()) * Number($("#cost" + id)
+								.html())).toFixed(2));
 				var sum = 0;
 				$(".rAmount").each(function() {
 					if (!isNaN(this.value) && this.value.length != 0) {

@@ -26,19 +26,17 @@ public class JobAssignmentProducts implements Serializable {
 	private int id;
 	private float qty;
 	private float remaninQty;
+	private float totalJobCost;	
 	private float estimatedCost;//total amount of product
+	
 	@Column(length = 800)
-	private String workDescription;//old concept
-	private float totalJobCost;
+	private String workDescription;//old concept	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date estimatedCompletionDate;//old concept
+	
 
 	@OneToMany(mappedBy = "jobAssignmentProducts")
-	private List<JobRecievedDetails> jobRecievedDetails;
-
-	@ManyToOne
-	@JoinColumn(name = "designerID")
-	private Vendor vendor;//old concept
+	private List<JobRecievedDetails> jobRecievedDetails;	
 
 	@ManyToOne
 	@JoinColumn(name = "jobAsignmentDetailsId")
@@ -54,19 +52,21 @@ public class JobAssignmentProducts implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "jobPlanProductsId")
-	private JobPlanProducts jobPlanProducts;
-
-	@OneToOne
-	@JoinColumn(name = "jobStockId")
-	private JobStock jobStock;//old concept
+	private JobPlanProducts jobPlanProducts;	
 
 	@OneToMany(mappedBy="jobAssignmentProducts",cascade=CascadeType.ALL)
 	private List<JobPlanProductStock> jobPlanProductStock;
 	
 	@OneToMany(mappedBy="assignmentProducts",cascade=CascadeType.ALL)
-	private List<JobAssignmentJobDetails> jobAssignmentJobDetails;
+	private List<JobAssignmentJobDetails> jobAssignmentJobDetails;	
 	
+	@ManyToOne
+	@JoinColumn(name = "designerID")
+	private Vendor vendor;//old concept
 
+	@OneToOne
+	@JoinColumn(name = "jobStockId")
+	private JobStock jobStock;//old concept
 
 	public int getId() {
 		return id;

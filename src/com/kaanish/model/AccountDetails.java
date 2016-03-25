@@ -224,20 +224,6 @@ public class AccountDetails implements Serializable{
 	public void setUsers(Users users) {
 		this.users = users;
 	}
-
-	/*
-	 * @Override public String toString() { return "{\"tax_Type_Group\":\"" +
-	 * tax_Type_Group.getId() + "\", " + "\"id\":\"" + id + "\", " +
-	 * "\"taxTotal\":\"" + tax_Type_Group.getTotalTaxValue() + "\"}";
-	 */
-
-	/*" + "\"cityId\":\"" + city.getId() + "\",\"city\":\""
-	+ city.getCityName() + "\",
-*/	
-	
-	/*"\"," + "\"tax_Type_Group\":\""
-	+ tax_Type_Group.getId() + "\", " + "\"taxTotal\":\""
-	+ tax_Type_Group.getTotalTaxValue() +*/
 	
 	@Override
 	public String toString() {

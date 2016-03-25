@@ -1067,12 +1067,6 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	/*
-	 * public List<String> getAllVendorBillNumber() { TypedQuery<String> q =
-	 * em.createQuery( "select c.vendor_bill_no from Purchase_Entry c",
-	 * String.class); return q.getResultList(); }
-	 */
-
 	public List<String> getAllFinancialForPurchase() {
 		List<String> lst = new ArrayList<String>();
 		HashSet<String> hash = new HashSet<String>();
@@ -1160,10 +1154,9 @@ public class Ejb {
 		return em.find(PurchaseReturn.class, id);
 	}
 
-	public int getLastPurchaseReturnChallanNumberByCompany(int cId) {
+	public int getLastPurchaseReturnChallanNumber() {
 		TypedQuery<PurchaseReturn> q = em.createQuery(
-				"select c from PurchaseReturn c WHERE c.companyInfo.id=:cId ORDER BY c.id DESC", PurchaseReturn.class);
-		q.setParameter("cId", cId);
+				"select c from PurchaseReturn c ORDER BY c.id DESC", PurchaseReturn.class);
 		if (q.getResultList().size() > 0) {
 			return q.getResultList().get(0).getChallanNo();
 		} else {
@@ -2813,16 +2806,6 @@ public class Ejb {
 	/******************************
 	 * Search Job Assignment Details by ChallanID
 	 ****************/
-
-	/*
-	 * public JobAssignmentDetails getJobAssignmentDetailsbyChallanNumber(String
-	 * challanNumber) { TypedQuery<JobAssignmentDetails> q = em.createQuery(
-	 * "select c from JobAssignmentDetails c where c.challanNumber=:challanNumber"
-	 * , JobAssignmentDetails.class); q.setParameter("challanNumber",
-	 * challanNumber); if (q.getResultList().size() > 0) { return
-	 * q.getResultList().get(0); } else { return null; } }
-	 */
-
 	public List<JobAssignmentDetails> getJobAssignmentDetailsbyChallanNumber(String challanNumber) {
 		TypedQuery<JobAssignmentDetails> q = em.createQuery(
 				"select c from JobAssignmentDetails c where UPPER(c.challanNumber)=:challanNumber ORDER BY c.id DESC",
@@ -2923,10 +2906,6 @@ public class Ejb {
 		TypedQuery<VoucherAssign> q = em.createQuery("select c from VoucherAssign c where c.vendor.id=:id",
 				VoucherAssign.class);
 		q.setParameter("id", id);
-		/*
-		 * if (q.getResultList().size() > 0) { return q.getResultList().get(0);
-		 * } else { return null; }
-		 */
 		return q.getResultList();
 	}
 

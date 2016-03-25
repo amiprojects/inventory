@@ -110,7 +110,7 @@
 											</tr>
 										</thead>
 										<tbody>
-											<c:forEach items="${sessionScope['ejb'].getAllItemsForDesignCostSheet()}"
+											<c:forEach items="${sessionScope['ejb'].getAllItemDetails()}"
 												var="jobtype">
 												<tr>
 													<td>${jobtype.name}</td>
@@ -139,7 +139,7 @@
 																				value="${jobtype.name}" class="form-control"
 																				required> <input type="hidden"
 																				id="jobUsedSize${jobtype.id}"
-																				value="${jobtype.sampleId}">
+																				value="${jobtype.itemsForSampleDesignCoseSheet.size()}">
 																		</div>
 																	</div>
 																	<div class="col-md-12">

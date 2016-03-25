@@ -66,16 +66,6 @@
 		});
 		$("#datepicker").datepicker('setDate', new Date());
 	});
-	/* $(function() {
-		var d = new Date();
-		var n = d.getFullYear();
-		$("#datepicker2").datepicker({
-			dateFormat : "dd-mm-yy",
-			minDate : new Date(n, 0, 1),
-			maxDate : 0
-		});
-		$("#datepicker2").datepicker('setDate', new Date());
-	}); */
 	function paymentDate() {
 		if ($("#vendorType").val() == 0) {
 			alert("please select Vendor type");
@@ -123,7 +113,6 @@
 	function pStatusDiv() {
 		var val = $('[name="pstatus"]').val();
 		$("#payDetail").show();
-		//alert(val);
 		if (val == '-') {
 			alert('Please select Payment status...');
 			$("#payDetail").hide();
@@ -434,18 +423,7 @@
 											</tr>
 										</thead>
 									</table>
-									<!-- <div style="width: 60%; float: left;">
-										<div class="col-md-12">
-											<div class="widget-area">
-												<div>
-													<img id="image2" alt="productImage" src="data:image/jpeg;base64," 
-														style="width: 100px; height: 50px;">
-														<div id="peoImg"></div>
-												</div>
 
-											</div>
-										</div>
-									</div> -->
 									<div style="width: 40%; float: right;">
 										<table id="stream_table"
 											class="table table-striped table-bordered">
@@ -711,30 +689,16 @@
 									</div>
 									<input type="hidden" name="isSalable" id="isSalable"> <input
 										type="hidden" name="isBarPrint" id="isBarPrint"> <input
-										type="hidden" name="isSerial" id="isSerial"> <input
-										type="hidden" name="isLot" id="isLot"> <input
 										type="hidden" name="isAgent" id="isAgent">
 								</form>
-								<!-- <input type="radio" name="a" value="x" onclick="first()" id="a">1
-									<input type="radio" name="a" value="y" onclick="second()"
-										id="b">2 -->
 							</div>
 						</div>
 					</div>
 				</div>
-
-
-
-
-
-
-
 			</div>
 		</div>
 		<!-- Content Sec -->
 	</div>
-
-
 
 	<div id="addV" class="modal fade" role="dialog" style="top: 25px;">
 		<div class="modal-dialog modal-lg">
@@ -1007,7 +971,6 @@
 										<input type="text" class="form-control" name="vendorMail"
 											style="text-transform: none;" id="idvendorMail"
 											onkeypress="return blockOtherThanEmail(event)">
-
 									</div>
 
 									<div class="col-md-3">
@@ -1110,10 +1073,7 @@
 		</div>
 	</div>
 
-
-
 	<div id="addA" class="modal fade" role="dialog" style="top: 25px;">
-
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -1214,7 +1174,6 @@
 										class="btn green pull-right" type="button" value="Finish"
 										onclick="submitform2();">
 								</div>
-
 							</div>
 							<div id="vendorAccount2" class="tab-pane fade">
 								<div class="widget-area">
@@ -1266,7 +1225,6 @@
 
 									<div class="row">
 										<div class="col-md-5">
-
 											<b>PAN no:</b>
 										</div>
 										<div class="col-md-7">
@@ -1408,21 +1366,17 @@
 											disabled="disabled" id="idvendorType2">
 											<c:forEach items="${sessionScope['ejb'].getAllVendorType()}"
 												var="vType">
-
 												<c:choose>
 													<c:when test="${vType.type.equals('Purchase Agent')}">
 														<option value="${vType.id}" selected="selected">${vType.type}</option>
-
 													</c:when>
 												</c:choose>
-
 											</c:forEach>
 										</select>
 									</div>
 								</div>
 								<br>
 								<div class="col-md-12">
-
 									<input class="btn green pull-right" type="button" value="Next"
 										onclick="detailButtonNext2();">
 								</div>
@@ -1634,12 +1588,6 @@
 							</div>
 						</div>
 						<div class="widget-area" style="width: 100%; top: 0px;">
-							<!-- <div class="row">
-								&nbsp; &nbsp; <span>Lot no : &nbsp;</span> <input type="radio"
-									name="lot" value="yesLot" checked="checked">&nbsp; Yes
-								<input type="radio" name="lot" value="noLot">&nbsp; No
-							</div> -->
-
 							<div class="row">
 								<div class="col-md-2">
 									<b>Lot No. :<font color="red" size="4">*</font></b>
@@ -1649,32 +1597,8 @@
 										name="lotText" onkeypress="return blockSpecialChar(event)">
 								</div>
 							</div>
-							<!-- <br>
-							<div class="row">
-								&nbsp; &nbsp; <span>Serial : &nbsp; </span> <input type="radio"
-									name="serial" value="yesSerial">&nbsp; Yes <input
-									type="radio" name="serial" value="noSerial" checked="checked">&nbsp;
-								No
-							</div>
-
-							<div class="row">
-								<div class="col-md-2">
-									<b>Initial Serial. :</b>
-								</div>
-								<div class="col-md-10">
-									<input type="number" class="form-control" id="serialText"
-										name="serialText" dis>
-								</div>
-							</div> -->
 							<br>
 							<div class="row">
-								<!-- <div style="float: left;">
-									&nbsp; &nbsp; <span><b>Bar code :</b> &nbsp; </span> <input
-										type="radio" name="bar" value="yesBar" checked="checked">&nbsp;
-									Yes <input type="radio" name="bar" value="noBar">&nbsp;
-									No
-								</div> -->
-
 								<div style="float: right; right: 25px;">
 									<input type="button" class="btn green pull-left" width=""
 										value="Add Product" data-toggle="modal"
@@ -1685,9 +1609,7 @@
 							</div>
 						</div>
 					</div>
-
 				</div>
-
 			</div>
 		</div>
 	</div>
@@ -1751,8 +1673,6 @@
 
 		</div>
 	</div>
-
-
 
 	<div id="addCitySC" class="modal fade" role="dialog" style="top: 25px;">
 		<div class="modal-dialog">
@@ -2035,8 +1955,7 @@
 										<div>
 											<label for="exampleInputPassword1">Unit Of
 												Measurement:<font color="red" size="4">*</font>
-											</label> <select required name="uom" id="uomO"
-												onchange="uomFunction()" class="form-control"
+											</label> <select required name="uom" id="uomO" class="form-control"
 												style="width: 205px; height: 34px">
 												<option value="0">select an UOM</option>
 												<c:forEach items="${sessionScope['ejb'].getAllQtyUnit()}"
@@ -2068,18 +1987,11 @@
 								<input type="radio" name="isReady" id="raw" onclick=""
 									value="raw">Raw &nbsp; &nbsp; &nbsp;<input type="radio"
 									name="isReady" id="ready" onclick="" value="ready">Ready
-								&nbsp;&nbsp;&nbsp; <input type="checkbox" onclick="isSaledata()"
-									id="salepart">This Products is for sale
+								&nbsp;&nbsp;&nbsp; <input type="checkbox" id="salepart">This
+								Products is for sale
 							</p>
-
 							<hr width="100%">
 						</div>
-
-
-
-
-
-
 					</div>
 
 					<div id="step3"
@@ -2089,8 +2001,6 @@
 							<legend> Add Product Image </legend>
 
 							<p style="font-size: 14px">(Enter the Products Image .)</p>
-
-
 							<div>
 								<label> Upload logo:</label>
 								<div>
@@ -2162,7 +2072,7 @@
 									<div class="form-group">
 										<label for="" class="font">Quantity:<font color="red"
 											size="4">*</font></label> <input name="quantity" type="text"
-											id="quantity" onkeyup="setLimit()" class="form-control">
+											id="quantity" class="form-control">
 									</div>
 
 
@@ -2782,6 +2692,24 @@
 			$("#menu5").attr("style", "");
 			$("#menu6").attr("style", "");
 			$("#menu7").attr("style", "");
+			
+			
+			$("#descriptionAMI").val("");
+			$("#productCodeAMI").val("");
+			$("#universalProductCode").val("");
+			$("#uomO").val(0);
+			$("#ucO").val("");
+			$("#quantity").val("");
+			$("#wspO").val("");
+			$("#mrpO").val("");			
+			$("#a10").val("");
+			$("#a20").val("");
+			$("#a30").val("");
+			$("#a40").val("");
+			$("#a50").val("");
+			$("#a60").val("");
+			$("#lotnO").val("");
+			$("#uomnamedisplay").val("");
 		}
 	</script>
 	<script type="text/javascript">
@@ -3403,53 +3331,6 @@
 		}
 	</script>
 
-	<!-- <script type="text/javascript">
-		function submitform1() {
-
-			var dataa2 = {
-				descriptionuom : $("#descriptionuom").val(),
-				nameuom : $("#nameuom").val(),
-				abbreviationuom : $("#abbreviationuom").val(),
-				qtyUnitTypeIduom : $("#qtyUnitTypeIduom").val()
-
-			};
-			$
-					.ajax({
-						url : "addUOMjson",
-						dataType : "json",
-						data : dataa2,
-						type : "post",
-						success : function(data2) {
-							alert(data2.result);
-							$("#addUoM").modal('hide');
-						},
-						complete : function() {
-							$
-									.ajax({
-										url : "getuomByType",
-										data : {
-											id : $("#qtyUnitTypeIduom").val()
-										},
-										dataType : "json",
-										success : function(data) {
-											$("#uomO").empty();
-											$("#uomO")
-													.append(
-															'<option value="0">select an UOM</option>');
-											$.map(data, function(item) {
-												$("#uomO").append(
-														'<option value="'+item.id+'">'
-																+ item.name
-																+ '</option>');
-											});
-										}
-									});
-						}
-
-					});
-		}
-	</script> -->
-
 	<script>
 		$("input:radio[name=parent]").click(function() {
 			var value = $(this).val();
@@ -3505,8 +3386,6 @@
 		$(document).ready(function() {
 			$("#isSalable").val('no');
 			$("#isBarPrint").val('no');
-			$("#isSerial").val('no');
-			$("#isLot").val('yes');
 			$("#isAgent").val('no');
 			$("#aNameDiv").hide();
 			$("#aDetailDiv").hide();
@@ -3682,27 +3561,6 @@
 				$("#wsp").prop("readonly", true);
 				$("#mrp").prop("readonly", true);
 			}
-			/* $.ajax({
-				url : 'getCategoryById',
-				type : 'post',
-				dataType : "json",
-				data : {
-					id : $("#catId").val()
-				},
-				success : function(data) {
-					if ((data.attrNmae1) != null) {
-						$("#attr1Name").html(data.attrNmae1);
-					}
-					//$("#attr2Name").html(data.attrNmae2);
-					//$("#attr3Name").html(data.attrNmae3);
-					//$("#attr4Name").html(data.attrNmae4);
-					//$("#attr5Name").html(data.attrNmae5);
-					//$("#attr6Name").html(data.attrNmae6);
-				},
-				error : function(a, b, c) {
-					alert(b + ": " + c);
-				}
-			}); */
 		}
 		function getAgentDetail() {
 			if ($("#agentName").val() != 0) {
@@ -3731,7 +3589,6 @@
 			}
 		}
 		function salable() {
-
 			if ($('#sale').is(":checked")) {
 				$("#isSalable").val('yes');
 				$("#wsp").attr("readonly", false);
@@ -3821,40 +3678,12 @@
 		}
 		$("input:radio[name=bar]").click(function() {
 			var value = $(this).val();
-			//alert(value);
 			if (value == "yesBar") {
 				$("#isBarPrint").val('yes');
 			} else {
 				$("#isBarPrint").val('no');
 			}
 		});
-		/* $("input:radio[name=lot]").click(function() {
-			var value = $(this).val();
-			//alert(value);
-			if (value == "yesLot") {
-				$("#lotText").prop("disabled", false);
-				$("#isLot").val('yes');
-			} else {
-				$("#lotText").prop("disabled", true);
-				$("#isLot").val('no');
-			}
-		}); */
-		$("input:radio[name=serial]").click(function() {
-			var value = $(this).val();
-			//alert(value);
-			if (value == "yesSerial") {
-				$("#serialText").prop("disabled", false);
-				$("#isSerial").val('yes');
-			} else {
-				$("#serialText").prop("disabled", true);
-				$("#isSerial").val('no');
-			}
-		});
-		/* function first() {
-			if ($('#a').is(":checked")) {
-				alert("hi");
-			}
-		} */
 
 		$("#close").click(function() {
 			$("#addProduct").modal("hide");
@@ -3897,12 +3726,6 @@
 							Math
 									.round((Number($("#subTotal").val())
 											* Number($("#taxTot").val()) / Number(100)) * 100) / 100);
-
-			/* $("#gt").val(
-					Math.round((Number($("#subTotal").val())
-							+ Number($("#taxAmount").val())
-							+ Number($("#transportCost").val()) + Number($(
-							"#surcharge").val())) * 100) / 100); */
 			$("#totalvalue").val(
 					Math.round((Number($("#subTotal").val())
 							+ Number($("#taxAmount").val())
@@ -3942,7 +3765,6 @@
 				alert("Please insert " + $("#attr6Name").html() + " value");
 			} else {
 				$("#another").modal("show");
-				//$("#amount").val(Number($("#qty").val()) * Number($("#rate").val()));
 				$("#purProTable")
 						.append(
 								'<tbody><tr class="trRemove" id="trRemove'+ind+'"><td>'
@@ -3977,7 +3799,6 @@
 								Math
 										.round((Number($("#subTotal").val())
 												* Number($("#taxTot").val()) / Number(100)) * 100) / 100);
-
 				$("#totalvalue").val(
 						Math.round((Number($("#subTotal").val())
 								+ Number($("#taxAmount").val())
@@ -4070,32 +3891,6 @@
 				$("#attr5").prop("readonly", true);
 				$("#attr6").prop("readonly", true);
 			}
-
-			/* KaJAX */
-
-			/* //alert("lolt");
-			var img = "";
-			$
-					.ajax({
-						type : "get",
-						url : "getProductImagejson",
-						data : {
-							id : $("#productCode").val(),
-						},
-						dataType : "json",
-						success : function(data1) {
-							$
-									.map(
-											data1,
-											function(item) {
-												alert(item.image + "1233");
-												img = img
-														+ '<img width="100" height="100" style="" alt="" src="data:image/jpeg;base64,'+item.image+'">';
-											});
-							$("#peoImg").html(img);
-						}
-					}); */
-
 		}
 
 		function closeProduct() {
@@ -4180,12 +3975,6 @@
 				$("#taxGroup").val(0).prop("selected", true);
 				$("#taxTot").val('0');
 				$("#taxAmount").val('0');
-				/* $("#gt").val(
-						Math.round((Number($("#subTotal").val())
-								+ Number($("#taxAmount").val())
-								+ Number($("#transportCost").val()) + Number($(
-								"#surcharge").val())) * 100) / 100); */
-
 				$("#totalvalue").val(
 						Math.round((Number($("#subTotal").val())
 								+ Number($("#taxAmount").val())
@@ -4241,20 +4030,6 @@
 										$("#taxTot").val('0');
 										$("#taxAmount").val('0');
 										$("#totalCredit").val('0');
-										/* $("#gt")
-												.val(
-														Math
-																.round((Number($(
-																		"#subTotal")
-																		.val())
-																		+ Number($(
-																				"#taxAmount")
-																				.val())
-																		+ Number($(
-																				"#transportCost")
-																				.val()) + Number($(
-																		"#surcharge")
-																		.val())) * 100) / 100); */
 										$("#totalvalue")
 												.val(
 														Math
@@ -4305,53 +4080,6 @@
 														+ ui.item.ph1
 														+ "\nPhone2 : "
 														+ ui.item.ph2);
-
-										/* $
-												.ajax({
-													type : "post",
-													url : "getAccountDetails",
-													data : {
-														id : ui.item.id
-													},
-													dataType : "json",
-													success : function(data5) {
-														$("#taxGroup")
-																.val(
-																		data5.tax_Type_Group)
-																.prop(
-																		"selected",
-																		true);
-														$("#taxTot").val(
-																data5.taxTotal);
-														$("#taxAmount")
-																.val(
-																		Number($(
-																				"#subTotal")
-																				.val())
-										 * Number($(
-																						"#taxTot")
-																						.val())
-																				/ Number(100));
-														$("#gt")
-																.val(
-																		Math
-																				.round((Number($(
-																						"#subTotal")
-																						.val())
-																						+ Number($(
-																								"#taxAmount")
-																								.val())
-																						+ Number($(
-																								"#transportCost")
-																								.val()) + Number($(
-																						"#surcharge")
-																						.val())) * 100) / 100);
-													},
-													error : function(a, b, c) {
-														alert(b + " error: "
-																+ c);
-													}
-												}); */
 									}
 								}
 							});
@@ -4376,20 +4104,6 @@
 																* Number($(
 																		"#taxTot")
 																		.val()) / Number(100)) * 100) / 100);
-								/* $("#gt")
-										.val(
-												Math
-														.round((Number($(
-																"#subTotal")
-																.val())
-																+ Number($(
-																		"#taxAmount")
-																		.val())
-																+ Number($(
-																		"#transportCost")
-																		.val()) + Number($(
-																"#surcharge")
-																.val())) * 100) / 100); */
 								$("#totalvalue")
 										.val(
 												Math
@@ -4417,11 +4131,6 @@
 			} else {
 				$("#taxTot").val('0');
 				$("#taxAmount").val('0');
-				/* $("#gt").val(
-						Math.round((Number($("#subTotal").val())
-								+ Number($("#taxAmount").val())
-								+ Number($("#transportCost").val()) + Number($(
-								"#surcharge").val())) * 100) / 100); */
 				$("#totalvalue").val(
 						Math.round((Number($("#subTotal").val())
 								+ Number($("#taxAmount").val())
@@ -4437,11 +4146,6 @@
 		function gtot() {
 			if (($("#transportCost").val() != "")
 					|| ($("#surcharge").val() != "")) {
-				/* $("#gt").val(
-						Math.round((Number($("#subTotal").val())
-								+ Number($("#taxAmount").val())
-								+ Number($("#transportCost").val()) + Number($(
-								"#surcharge").val())) * 100) / 100); */
 				$("#totalvalue").val(
 						Math.round((Number($("#subTotal").val())
 								+ Number($("#taxAmount").val())
@@ -4452,11 +4156,6 @@
 				$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
 				$("#gt").val(Math.round((round) * 100) / 100);
 			} else {
-				/* $("#gt").val(
-						Math.round((Number($("#subTotal").val())
-								+ Number($("#taxAmount").val())
-								+ Number($("#transportCost").val()) + Number($(
-								"#surcharge").val())) * 100) / 100); */
 				$("#totalvalue").val(
 						Math.round((Number($("#subTotal").val())
 								+ Number($("#taxAmount").val())
@@ -4474,13 +4173,6 @@
 			$("#surcharge").val(Number($("#surcharge").val()).toFixed(2));
 			gtot();
 		}
-		/* function qtyDecimalFixFunc() {
-			if ($("#qty").val() != "") {
-				$("#qty").val(Number($("#qty").val()).toFixed(3));
-			} else {
-				$("#qty").val("");
-			}
-		} */
 
 		function submit() {
 			document.getElementById("purchaseForm").submit();
@@ -4601,10 +4293,8 @@
 	</script>
 	<script>
 		function addVendor() {
-
 			$("#addV").modal("show");
 			$("#header").show();
-
 		}
 
 		function bankButtonPrev() {
@@ -4669,7 +4359,6 @@
 
 	<script>
 		function addAgentDetails() {
-
 			$("#addA").modal("show");
 			$("#header").show();
 		}
@@ -4929,17 +4618,14 @@
 					type : "post",
 					success : function(data1) {
 						alert(data1.result);
-
 						vID = data1.vid;
 						vvName = data1.vname;
 						vvphone1 = data1.vph1;
 						vvphone2 = data1.vph2;
 						vvadres = data1.vvadd;
-
 					},
 
 					complete : function() {
-
 						$("#vName").val(vvName);
 						$("#vId").val(vID);
 						$("#vDetail").val(

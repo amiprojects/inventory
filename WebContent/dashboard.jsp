@@ -89,56 +89,64 @@
 							<div class="row">
 								<div class="masonary-grids">
 
-									<div class="col-md-4"><a href="purchasingPurchaseEntry.jsp">
-										<div class="stats-counter">
-											<img alt="purchase Entry" src="images/purchase.jpg"
-												style="height: 179px; width: 330px;"> <i
-												class="fa fa-user red"></i>
-											<h4 style="color: red">Purchase Entry</h4>
-										</div></a>
-
-									</div>
-
-									
-
-
-									<div class="col-md-4"><a href="salesSalesEntry.jsp">
-										<div class="stats-counter">
-											<img alt="sales Entry" src="images/sales.jpg"
-												style="height: 179px; width: 330px;"> <i
-												class="fa fa-user red"></i>
-											<h4 style="color: red">Sales Entry</h4>
-										</div></a>
-
-									</div>
-									
-
- 									<div class="col-md-4"></div>
-
-
-
-
-								<div class="col-md-4"><a href="jobAssign.jsp">
-
-										<div class="stats-counter">
-											<img alt="sales Entry" src="images/jobs.PNG"
-												style="height: 179px; width: 330px;"> <i
-												class="fa fa-user red"></i>
-											<h4 style="color: red">Job Assignment</h4>
-										</div></a>
+									<div class="col-md-4">
+										<a href="purchasingPurchaseEntry.jsp">
+											<div class="stats-counter">
+												<img alt="purchase Entry" src="images/purchase.jpg"
+													style="height: 179px; width: 330px;"> <i
+													class="fa fa-user red"></i>
+												<h4 style="color: red">Purchase Entry</h4>
+											</div>
+										</a>
 
 									</div>
 
 
-									
 
-									<div class="col-md-4"><a href="stockView.jsp">
-										<div class="stats-counter">
-											<img alt="sales Entry" src="images/stock.jpg"
-												style="height: 179px; width: 330px;"> <i
-												class="fa fa-user red"></i>
-											<h4 style="color: red">Stock View</h4>
-										</div></a>
+
+									<div class="col-md-4">
+										<a href="salesSalesEntry.jsp">
+											<div class="stats-counter">
+												<img alt="sales Entry" src="images/sales.jpg"
+													style="height: 179px; width: 330px;"> <i
+													class="fa fa-user red"></i>
+												<h4 style="color: red">Sales Entry</h4>
+											</div>
+										</a>
+
+									</div>
+
+
+									<div class="col-md-4"></div>
+
+
+
+
+									<div class="col-md-4">
+										<a href="jobAssign.jsp">
+
+											<div class="stats-counter">
+												<img alt="sales Entry" src="images/jobs.PNG"
+													style="height: 179px; width: 330px;"> <i
+													class="fa fa-user red"></i>
+												<h4 style="color: red">Job Assignment</h4>
+											</div>
+										</a>
+
+									</div>
+
+
+
+
+									<div class="col-md-4">
+										<a href="stockView.jsp">
+											<div class="stats-counter">
+												<img alt="sales Entry" src="images/stock.jpg"
+													style="height: 179px; width: 330px;"> <i
+													class="fa fa-user red"></i>
+												<h4 style="color: red">Stock View</h4>
+											</div>
+										</a>
 									</div>
 									<div class="col-md-4"></div>
 
@@ -154,7 +162,7 @@
 		<!-- Content Sec -->
 	</div>
 	<!-- Page Container -->
-	
+
 	<!-- main -->
 
 	<!-- Script -->
@@ -218,8 +226,6 @@
 
 			$("#dash").attr("id", "activeSubMenu");
 			$("#sDash").attr("style", "color: #6a94ff;");
-
-			
 
 		});
 	</script>

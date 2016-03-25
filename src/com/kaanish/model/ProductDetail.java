@@ -166,11 +166,6 @@ public class ProductDetail implements Serializable {
 		this.qtyUnit = qtyUnit;
 	}
 
-	/*
-	 * @Override public String toString() { return
-	 * "{\"aaaa\":\""+description+"\"}"; }
-	 */
-
 	@Override
 	public String toString() {
 		return "{\"id\":\"" + id + "\"," + "\"name\":\"" + name + "\","

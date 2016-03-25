@@ -43,7 +43,6 @@ public class Purchase_Entry implements Serializable {
 	private boolean isFlatDiscount;
 	private float discountValue;
 	private boolean isCommisionTotal;
-//	private float dueAmount;
 
 	@OneToMany(mappedBy = "purchase_Entry")
 	private List<NotificationDetails> notificationDetails;

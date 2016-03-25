@@ -26,7 +26,7 @@ public class ItemsForSampleDesignCoseSheet implements Serializable {
 	private ItemDetails itemDetails;
 
 	@OneToMany(mappedBy = "itemsForSampleDesignCoseSheet")
-	private List<IProductsForSampleDesignCoseSheet> iProductsForSampleDesignCoseSheet;
+	private List<ItmProductsForSampleDesignCostSheet> itmProductsForSampleDesignCostSheet;
 
 	public int getId() {
 		return id;
@@ -50,15 +50,6 @@ public class ItemsForSampleDesignCoseSheet implements Serializable {
 
 	public void setSampleId(int sampleId) {
 		this.sampleId = sampleId;
-	}
-
-	public List<IProductsForSampleDesignCoseSheet> getiProductsForSampleDesignCoseSheet() {
-		return iProductsForSampleDesignCoseSheet;
-	}
-
-	public void setiProductsForSampleDesignCoseSheet(
-			List<IProductsForSampleDesignCoseSheet> iProductsForSampleDesignCoseSheet) {
-		this.iProductsForSampleDesignCoseSheet = iProductsForSampleDesignCoseSheet;
 	}
 
 }

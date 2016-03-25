@@ -11,7 +11,8 @@ import javax.persistence.ManyToOne;
 
 @Entity
 @Cacheable(false)
-public class IProductsForSampleDesignCoseSheet implements Serializable {
+public class ItmProductsForSampleDesignCostSheet implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
@@ -31,14 +32,6 @@ public class IProductsForSampleDesignCoseSheet implements Serializable {
 		this.id = id;
 	}
 
-	public ItemsForSampleDesignCoseSheet getItemsForSampleDesignCoseSheet() {
-		return itemsForSampleDesignCoseSheet;
-	}
-
-	public void setItemsForSampleDesignCoseSheet(ItemsForSampleDesignCoseSheet itemsForSampleDesignCoseSheet) {
-		this.itemsForSampleDesignCoseSheet = itemsForSampleDesignCoseSheet;
-	}
-
 	public int getProductId() {
 		return productId;
 	}
@@ -54,5 +47,14 @@ public class IProductsForSampleDesignCoseSheet implements Serializable {
 	public void setProductForDesignCostSheetId(int productForDesignCostSheetId) {
 		this.productForDesignCostSheetId = productForDesignCostSheetId;
 	}
+
+	public ItemsForSampleDesignCoseSheet getItemsForSampleDesignCoseSheet() {
+		return itemsForSampleDesignCoseSheet;
+	}
+
+	public void setItemsForSampleDesignCoseSheet(
+			ItemsForSampleDesignCoseSheet itemsForSampleDesignCoseSheet) {
+		this.itemsForSampleDesignCoseSheet = itemsForSampleDesignCoseSheet;
+	}	
 
 }

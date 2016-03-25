@@ -37,7 +37,7 @@ public class JobPlanProductStock implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "jobAssignmentProductsId")
-	private JobAssignmentProducts jobAssignmentProducts;
+	private JobAssignmentProducts jobAssignmentProducts; //to get last JobAssignmentProducts
 	
 	@ManyToOne
 	@JoinColumn(name = "ProductsForDesignCostSheetId")

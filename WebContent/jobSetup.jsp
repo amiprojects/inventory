@@ -89,7 +89,7 @@
 									<form action="setJobTypes" method="post">
 										<div class="col-md-12">
 											<div class="form-group">
-												<label for="" class="font">Jab Name :<font
+												<label for="" class="font">Job Name :<font
 													color="red" size="4">*</font></label> <input type="text"
 													placeholder="Enter job name" id=""
 													onkeypress="return blockSpecialChar(event)" name="name"
