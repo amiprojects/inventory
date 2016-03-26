@@ -3062,8 +3062,13 @@ public class Servlet extends HttpServlet {
 
 				List<Purchase_Entry> purchaseEty = ejb.getPurchaseEntryByDateForReport(DateConverter.getDate(req.getParameter("dayBookDate")));
 				List<SalesEntry> salesEty = ejb.getSalesEntryByDateForReport(DateConverter.getDate(req.getParameter("dayBookDate")));		
+				List<PurchaseReturn> purchaseReturn = ejb.getPurchaseReturnByDateForReport(DateConverter.getDate(req.getParameter("dayBookDate")));
+				List<SalesReturn> salesReturn = ejb.getSalesReturnByDateForReport(DateConverter.getDate(req.getParameter("dayBookDate")));		
+				
 				req.setAttribute("purchaseEty", purchaseEty);
 				req.setAttribute("salesEty", salesEty);
+				req.setAttribute("purchaseReturn", purchaseReturn);
+				req.setAttribute("salesReturn", salesReturn);
 
 				break;
 

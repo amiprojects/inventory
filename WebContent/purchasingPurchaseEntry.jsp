@@ -415,6 +415,13 @@
 											</tr>
 										</thead>
 									</table>
+									<div style="width: 60%; float: left;">
+									<div class="col-md-12">
+									<div class="widget-area">
+									
+									</div>
+									</div>
+									</div>
 									<div style="width: 40%; float: right;">
 										<table id="stream_table"
 											class="table table-striped table-bordered">
@@ -3748,11 +3755,7 @@
 								Math
 										.round((Number($("#subTotal").val())
 												* Number($("#taxTot").val()) / Number(100)) * 100) / 100);
-				/* $("#gt").val(
-						Math.round((Number($("#subTotal").val())
-								+ Number($("#taxAmount").val())
-								+ Number($("#transportCost").val()) + Number($(
-								"#surcharge").val())) * 100) / 100); */
+				
 				$("#totalvalue").val(
 						Math.round((Number($("#subTotal").val())
 								+ Number($("#taxAmount").val())
@@ -3762,7 +3765,7 @@
 				var round = Math.round(tot);
 				$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
 				$("#gt").val(Math.round((round) * 100) / 100);
-				//$("#qty").val("");
+				
 				i++;
 
 				$("#hiddenTable")

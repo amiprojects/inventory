@@ -112,8 +112,8 @@ tfoot {
 
 
 
-	<c:set var="customer"
-		value="${sessionScope['ejb'].getCustomerEntryById(param.id)}" />
+	<c:set var="vendorr"
+		value="${sessionScope['ejb'].getVendorById(param.id)}" />
 
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
@@ -133,8 +133,8 @@ tfoot {
 
 							<div class="widget-area">
 								<div class="col-md-12">
-									<h3 align="center" style="color: gray;">Customer Name:
-										${customer.name}</h3>
+									<h3 align="center" style="color: gray;">Vendor Name:
+										${vendorr.name}</h3>
 
 									<table id="example" class="display nowrap" cellspacing="0"
 										width="100%">
@@ -151,50 +151,58 @@ tfoot {
 												<th>Credit Amount</th>
 											</tr>
 										</thead>
+										
+									 <tbody>
+									<c:set var="total1" value="${0}"/>
+									<c:set var="total2" value="${0}"/>
+									<c:set var="total3" value="${0}"/>
+									<c:set var="total4" value="${0}"/>
+											<c:forEach
+												items="${sessionScope['ejb'].getAllPurchaseEntryByVendorIdTypeVendor(param.id)}"
+												var="purVendor">
+											<tr>
+												
+												<td><fmt:formatDate value="${purVendor.purchase_date}" pattern="dd-MM-yyyy" /></td>
+												<td>${purVendor.paymentDetails.get(0).paymentType.type}<br><br>kaanish</td>
+												<td>Purchase</td>
+												<td>${purVendor.challanNumber}</td>
+												<td>0<br><br>${purVendor.totalCost}</td>
+												<td>${purVendor.paymentDetails.get(0).paidAmount}<br><br>0</td>
+												
+											</tr>
+											<c:set var="total1" value="${total1 + purVendor.totalCost}" />
+											<c:set var="total2" value="${total2 + purVendor.paymentDetails.get(0).paidAmount}" />
+											
+											</c:forEach>
+											
+											<c:forEach
+												items="${sessionScope['ejb'].getAllPurchaseReturnByVendorIdTypePurchaseAgent(param.id)}"
+												var="purReVendor">
+											<tr>
+																		<td><fmt:formatDate value="${purReVendor.returnDate}"
+																		pattern="dd-MM-yyyy" /></td>
+																		<td>Credit note <br><br>kaanish </td>
+																		<td>Purchase Return</td>
+																		<td>${purReVendor.challanNumber}</td>
+																		<td>${purReVendor.totalReCost}<br><br>0</td>
+																		<td>0<br><br>${purReVendor.totalReCost}</td>
+											</tr>
+											<c:set var="total3" value="${total3 + purReVendor.totalReCost}" />
+											<c:set var="total4" value="${total4 + purReVendor.totalReCost}" />
+											</c:forEach>
+										</tbody>
 										<tfoot>
 											<tr>
 												
 												<th>&nbsp;</th>
 												<th>&nbsp;</th>
 												<th>&nbsp;</th>
-												<th>Total </th>
-												<th>&nbsp;</th>
+												<th><h4>Total:</h4> </th>
+												<th><h4>${total3+total1}</h4></th>
+												<th><h4>${total2+total4}</h4></th>
 												
 											</tr>
 										</tfoot>
-										<tbody>
-									
-											<c:forEach
-												items="${sessionScope['ejb'].getAllSalesEntrybyCustomerID(param.id)}"
-												var="salCus">
-											<tr>
-												
-												<td><fmt:formatDate value="${salCus.sales_date}" pattern="dd-MM-yyyy" /></td>
-												<td>${salCus.paymentDetails.get(0).paymentType.type}<br><br>kaanish</td>
-												<td>Sales</td>
-												<td>${salCus.challanNumber}</td>
-												<td>${salCus.totalCost}<br><br>0</td>
-												<td>0<br><br>${salCus.paymentDetails.get(0).paidAmount}</td>
-												
-											</tr>
-											
-											</c:forEach>
-											
-											<c:forEach
-												items="${sessionScope['ejb'].getAllSalesReEntrybyCustomerID(param.id)}"
-												var="salCusR">
-											<tr>
-																		<td><fmt:formatDate value="${salCusR.returnDate}"
-																		pattern="dd-MM-yyyy" /></td>
-																		<td>Debit note <br><br>kaanish </td>
-																		<td>Sales Return</td>
-																		<td>${salCusR.challanNumber}</td>
-																		<td>0<br><br>${salCusR.totalReCost}</td>
-																		<td>${salCusR.totalReCost}<br><br>0</td>
-											</tr>
-											
-											</c:forEach>
-										</tbody>
 									</table>
 								</div>
 
@@ -247,7 +255,7 @@ tfoot {
 			    } );
 		});
 	</script>
-
+	
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->

@@ -69,16 +69,9 @@ tfoot {
 	width: 100% !important;
 }
 margin-bottom
-
-
 :
-
- 
-
 3
 em
-
-
 ;
 </style>
 
@@ -180,6 +173,15 @@ em
 													</thead>
 
 													<tbody>
+														<c:set var="total1" value="${0}" />
+														<c:set var="total2" value="${0}" />
+														<c:set var="total3" value="${0}" />
+														<c:set var="total4" value="${0}" />
+														<c:set var="total5" value="${0}" />
+														<c:set var="total6" value="${0}" />
+														<c:set var="total7" value="${0}" />
+														<c:set var="total8" value="${0}" />
+
 														<c:forEach items="${requestScope['salesEty']}" var="sRepo">
 															<tr>
 																<td><fmt:formatDate value="${sRepo.sales_date}"
@@ -188,10 +190,12 @@ em
 																</td>
 																<td>Sales Payment</td>
 																<td>${sRepo.challanNumber}</td>
-																<td>${sRepo.totalCost}<br> <br>&nbsp;
-																</td>
-																<td>&nbsp;&nbsp;<br>${sRepo.totalCost}</td>
+																<td>${sRepo.totalCost}<br>
+																<br>0
+																<td>0<br> <br>${sRepo.totalCost}</td>
 															</tr>
+															<c:set var="total1" value="${total1 + sRepo.totalCost}" />
+															<c:set var="total2" value="${total2 + sRepo.totalCost}" />
 														</c:forEach>
 
 														<c:forEach items="${requestScope['purchaseEty']}"
@@ -203,14 +207,62 @@ em
 																</td>
 																<td>Purchase Payment</td>
 																<td>${pRepo.challanNumber}</td>
-																<td>&nbsp;<br> <br>${pRepo.totalCost}</td>
-																<td>${pRepo.totalCost}<br> <br>&nbsp;
+																<td>0<br> <br>${pRepo.totalCost}</td>
+																<td>${pRepo.totalCost}<br> <br>0
 																</td>
 															</tr>
+
+															<c:set var="total3" value="${total3 + pRepo.totalCost}" />
+															<c:set var="total4" value="${total4 + pRepo.totalCost}" />
 														</c:forEach>
 
+														<c:forEach items="${requestScope['salesReturn']}"
+															var="srRepo">
+															<tr>
+																<td><fmt:formatDate value="${srRepo.returnDate}"
+																		pattern="dd-MM-yyyy" /></td>
+																<td>${srRepo.salesEntry.customer.name}&nbsp;<br>
+																	<br>&nbsp;${srRepo.salesEntry.paymentDetails.get(0).paymentType.type}
+																</td>
+																<td>Sales Return Payment</td>
+																<td>${srRepo.challanNumber}</td>
+																<td>0<br> <br>${srRepo.totalReCost}</td>
+																<td>${srRepo.totalReCost}<br> <br>0
+																</td>
+															</tr>
+															<c:set var="total5" value="${total5 + pRepo.totalCost}" />
+															<c:set var="total6" value="${total6 + pRepo.totalCost}" />
+														</c:forEach>
+														<c:forEach items="${requestScope['purchaseReturn']}"
+															var="prRepo">
+															<tr>
+																<td><fmt:formatDate value="${prRepo.sales_date}"
+																		pattern="dd-MM-yyyy" /></td>
+																<td>${prRepo.purchaseEntry.vendor.name}&nbsp;<br>
+																	<br>&nbsp;${prRepo.paymentDetails.get(0).paymentType.type}
+																</td>
+																<td>Purchase Return Payment</td>
+																<td>${prRepo.challanNumber}</td>
+																<td>${prRepo.totalReCost}<br> <br>0;
+																</td>
+																<td>0<br> <br>${prRepo.totalReCost}</td>
+															</tr>
+															<c:set var="total7"
+																value="${total7 + prRepo.totalReCost}" />
+															<c:set var="total8"
+																value="${total8 + prRepo.totalReCost}" />
+														</c:forEach>
 													</tbody>
+													<tfoot>
+														<tr>
 
+															
+															<th colspan="4"><h4>Total:</h4></th>
+															<th><h4>${total3+total1+total5+total7}</h4></th>
+															<th><h4>${total2+total4+total6+total8}</h4></th>
+
+														</tr>
+													</tfoot>
 												</table>
 											</div>
 										</div>
@@ -232,8 +284,8 @@ em
 															id="ledSel">
 															<option value="0">select ledger type</option>
 															<option value="vendorLed">Vendor</option>
-															<option value="AgentLed">Purchase Agent</option>
-															<option value="salAge">Sales Agent</option>
+															<option value="AgentLedP">Purchase Agent</option>
+															<option value="AgentLedS">Sales Agent</option>
 															<option value="CustomerLed">Customer</option>
 														</select>
 													</h4>
@@ -243,16 +295,7 @@ em
 
 
 											<div class="col-md-12" id="cus">
-												<!-- <div class="col-md-4">
-													<h4>Enter your Customer Name:</h4>
-
-
-												</div>
-												<div class="col-md-4" style="margin-left: -60px;">
-													<input class="form-control" type="text">
-												</div>
-												<br> <br>-->
-												<br> <br> 
+												<br> <br>
 												<div>
 													<table id="" class="table table-bordered display"
 														cellspacing="0" width="100%">
@@ -263,32 +306,36 @@ em
 																<th>Phone Number</th>
 																<th>Address</th>
 																<th>Details/view</th>
-																
+
 															</tr>
 														</thead>
 
 														<tbody>
 															<c:set var="c" value="1" />
-												<c:forEach items="${sessionScope['ejb'].getAllCustomerEntry()}"
-													var="ccustomer">
-													<tr>
-														<td>${c}</td>
-																<td>${ccustomer.name}</td>
-																<td>${ccustomer.mobile}</td>
-																<td>${ccustomer.address}</td>
-																<td><a href="ccustomerRaz.jsp?id=${ccustomer.id}"><img
-																alt="click to view" src="images/eye.png" height="20"></a></td>
+															<c:forEach
+																items="${sessionScope['ejb'].getAllCustomerEntry()}"
+																var="ccustomer">
+																<tr>
+																	<td>${c}</td>
+																	<td>${ccustomer.name}</td>
+																	<td>${ccustomer.mobile}</td>
+																	<td>${ccustomer.address}</td>
+																	<td><a
+																		href="reportCustomerRaz.jsp?id=${ccustomer.id}"><img
+																			alt="click to view" src="images/eye.png" height="20"></a></td>
 
-															</tr>
-															<c:set var="c" value="${c+1}" />
-												</c:forEach>
+																</tr>
+																<c:set var="c" value="${c+1}" />
+															</c:forEach>
 
 														</tbody>
 													</table>
 												</div>
 											</div>
 											<div class="col-md-12" id="vend">
-												<table id="" class="table table-bordered display"
+												<br> <br>
+												<div>
+													<table id="" class="table table-bordered display"
 														cellspacing="0" width="100%">
 														<thead>
 															<tr>
@@ -297,34 +344,77 @@ em
 																<th>Phone Number</th>
 																<th>Address</th>
 																<th>Details/view</th>
-																
+
 															</tr>
 														</thead>
 
 														<tbody>
 															<c:set var="c" value="1" />
-												<c:forEach items="${sessionScope['ejb'].getAllVendtypeVen()}"
-													var="vvendor">
-													<tr>
-														<td>${c}</td>
-																<td>${vvendor.name}</td>
-																<td>${vvendor.ph1}</td>
-																<td>${vvendor.address}</td>
-																<td><a href="vendorRaz.jsp?id=${vvendor.id}"><img
-																alt="click to view" src="images/eye.png" height="20"></a></td>
+															<c:forEach
+																items="${sessionScope['ejb'].getAllVendtypeVen()}"
+																var="vvendor">
+																<tr>
+																	<td>${c}</td>
+																	<td>${vvendor.name}</td>
+																	<td>${vvendor.ph1}</td>
+																	<td>${vvendor.address}</td>
+																	<td><a href="reportVendorRaz.jsp?id=${vvendor.id}"><img
+																			alt="click to view" src="images/eye.png" height="20"></a></td>
+
+																</tr>
+																<c:set var="c" value="${c+1}" />
+															</c:forEach>
+														</tbody>
+													</table>
+												</div>
+											</div>
+											<div class="col-md-12" id="agenS">
+
+
+												<br> <br>
+												<div>
+													<table id="" class="table table-bordered display"
+														cellspacing="0" width="100%">
+														<thead>
+															<tr>
+																<th>#</th>
+																<th>Name</th>
+																<th>Phone Number</th>
+																<th>Address</th>
+																<th>Details/view</th>
 
 															</tr>
-															<c:set var="c" value="${c+1}" />
-												</c:forEach>
+														</thead>
+
+														<tbody>
+															<c:set var="c" value="1" />
+															<c:forEach
+																items="${sessionScope['ejb'].getAllAgenttypeSalesAgent()}"
+																var="endor">
+																<tr>
+																	<td>${c}</td>
+																	<td>${endor.name}</td>
+																	<td>${endor.ph1}</td>
+																	<td>${endor.address}</td>
+																	<td><a
+																		href="reportSalesAgentRaz.jsp?id=${endor.id}"><img
+																			alt="click to view" src="images/eye.png" height="20"></a></td>
+
+																</tr>
+																<c:set var="c" value="${c+1}" />
+															</c:forEach>
 
 														</tbody>
 													</table>
+												</div>
 											</div>
-											<div class="col-md-12" id="agen">
-												
-												
-												<br> <br><br> <br><div>
-												<table id="" class="table table-bordered display"
+
+											<div class="col-md-12" id="agenP">
+
+
+												<br> <br>
+												<div>
+													<table id="" class="table table-bordered display"
 														cellspacing="0" width="100%">
 														<thead>
 															<tr>
@@ -333,25 +423,26 @@ em
 																<th>Phone Number</th>
 																<th>Address</th>
 																<th>Details/view</th>
-																
+
 															</tr>
 														</thead>
 
 														<tbody>
 															<c:set var="c" value="1" />
-												<c:forEach items="${sessionScope['ejb'].getAllAgenttypeAgent()}"
-													var="endor">
-													<tr>
-														<td>${c}</td>
-																<td>${endor.name}</td>
-																<td>${endor.ph1}</td>
-																<td>${endor.address}</td>
-																<td><a href="agentRaz.jsp?id=${endor.id}"><img
-																alt="click to view" src="images/eye.png" height="20"></a></td>
+															<c:forEach
+																items="${sessionScope['ejb'].getAllAgenttypePurchaseAgent()}"
+																var="endor">
+																<tr>
+																	<td>${c}</td>
+																	<td>${endor.name}</td>
+																	<td>${endor.ph1}</td>
+																	<td>${endor.address}</td>
+																	<td><a href="reportPurAgentRaz.jsp?id=${endor.id}"><img
+																			alt="click to view" src="images/eye.png" height="20"></a></td>
 
-															</tr>
-															<c:set var="c" value="${c+1}" />
-												</c:forEach>
+																</tr>
+																<c:set var="c" value="${c+1}" />
+															</c:forEach>
 
 														</tbody>
 													</table>
@@ -386,7 +477,8 @@ em
 			var table = $('table.display').DataTable({
 				fixedHeader : {
 					header : true,
-					footer : true
+					footer : true,
+					
 				}
 			});
 		});
@@ -404,121 +496,123 @@ em
 		$(document).ready(function() {
 			$("#cus").hide();
 			$("#vend").hide();
-			$("#agen").hide();
-			/* $("#agenTable").hide();
-			$("#venTable").hide();
-			$("#custTable").hide(); */
+			$("#agenP").hide();
+			$("#agenS").hide();
+
 		});
 		function ledger() {
 			if ($("#ledSel").val() == "vendorLed") {
 				$("#cus").hide();
 				$("#vend").show();
-				$("#agen").hide();
-				/* $("#agenTable").hide();
-				$("#venTable").show();
-				$("#custTable").hide(); */
-			} else if ($("#ledSel").val() == "AgentLed") {
+				$("#agenP").hide();
+				$("#agenS").hide();
+
+			} else if ($("#ledSel").val() == "AgentLedP") {
 				$("#cus").hide();
 				$("#vend").hide();
-				$("#agen").show();
-				/* $("#agenTable").show();
-				$("#venTable").hide();
-				$("#custTable").hide(); */
+				$("#agenP").show();
+				$("#agenS").hide();
+
 			} else if ($("#ledSel").val() == "CustomerLed") {
 				$("#cus").show();
 				$("#vend").hide();
-				$("#agen").hide();
-				/* $("#agenTable").hide();
-				$("#venTable").hide();
-				$("#custTable").show(); */
-			} else {
+				$("#agenP").hide();
+				$("#agenS").hide();
+
+			} else if ($("#ledSel").val() == "AgentLedS") {
 				$("#cus").hide();
 				$("#vend").hide();
-				$("#agen").hide();
-				/* $("#agenTable").hide();
-				$("#venTable").hide();
-				$("#custTable").hide(); */
+				$("#agenP").hide();
+				$("#agenS").show();
+
+			}
+
+			else {
+				$("#cus").hide();
+				$("#vend").hide();
+				$("#agenP").hide();
+				$("#agenS").hide();
+
 			}
 
 		}
 	</script>
 	<script>
-	
-	$(function() {
-		$("#vendorName").autocomplete({
-			source : function(req, resp) {
-				$.ajax({
-					type : "post",
-					url : "getVendorsByVendorTypeVendorAndName",
-					data : {
-						name : req.term
-					},
-					dataType : "json",
-					success : function(data) {
-						resp($.map(data, function(item) {
-							return ({
-								value : item.name,
-								id : item.id
-							});
-						}));
-					},
+		$(function() {
+			$("#vendorName").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getVendorsByVendorTypeVendorAndName",
+						data : {
+							name : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.name,
+									id : item.id
+								});
+							}));
+						},
 
-					error : function(a, b, c) {
-						alert(a + b + c);
+						error : function(a, b, c) {
+							alert(a + b + c);
+						}
+
+					});
+				},
+
+				select : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#vendorName").val("");
+					} else {
+						$("#vendorName").val(ui.item.name);
 					}
 
-				});
-			},
-			
-			select : function(event, ui) {
-				if (ui.item == null) {
-					$(this).val("");
-					$("#vendorName").val("");
-				} else {
-					$("#vendorName").val(ui.item.name);
 				}
-
-			}
+			});
 		});
-	});
-	
-	$(function() {
-		$("#agentName").autocomplete({
-			source : function(req, resp) {
-				$.ajax({
-					type : "post",
-					url : "getVendorsByVendorTypeVendorAndName",
-					data : {
-						name : req.term
-					},
-					dataType : "json",
-					success : function(data) {
-						resp($.map(data, function(item) {
-							return ({
-								value : item.name,
-								id : item.id
-							});
-						}));
-					},
 
-					error : function(a, b, c) {
-						alert(a + b + c);
+		$(function() {
+			$("#agentName").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getVendorsByVendorTypeVendorAndName",
+						data : {
+							name : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.name,
+									id : item.id
+								});
+							}));
+						},
+
+						error : function(a, b, c) {
+							alert(a + b + c);
+						}
+
+					});
+				},
+
+				select : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#agentName").val("");
+					} else {
+						$("#agentName").val(ui.item.name);
 					}
 
-				});
-			},
-		
-			select : function(event, ui) {
-				if (ui.item == null) {
-					$(this).val("");
-					$("#agentName").val("");
-				} else {
-					$("#agentName").val(ui.item.name);
 				}
-
-			}
+			});
 		});
-	});
 	</script>
 
 </body>

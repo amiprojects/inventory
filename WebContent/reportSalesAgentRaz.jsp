@@ -26,7 +26,7 @@
 <link rel="stylesheet" href="css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="css/fixedHeader.dataTables.min.css">
 <link rel="stylesheet" href="css/buttons.dataTables.min.css">
-<link rel="stylesheet" href="css/dataTables.searchHighlight.css"/>
+<link rel="stylesheet" href="css/dataTables.searchHighlight.css" />
 <link rel="stylesheet" href="css/style.css" type="text/css" />
 
 
@@ -71,10 +71,14 @@ tfoot {
 	width: 100% !important;
 }
 margin-bottom
+
+
 :
+
 
 3
 em
+
 
 ;
 </style>
@@ -118,8 +122,8 @@ em
 
 
 
-	<c:set var="agent"
-		value="${sessionScope['ejb'].getCustomerEntryById(param.id)}" />
+	<c:set var="agentp"
+		value="${sessionScope['ejb'].getVendorById(param.id)}" />
 
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
@@ -134,88 +138,106 @@ em
 
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
-								<h3 style="margin-top: 11px;">Agent Ledger</h3>
+								<h3 style="margin-top: 11px;">Sales Agent Ledger</h3>
 							</div>
 
 							<div class="widget-area">
-								<d
-									<table id="example" class="display nowrap" cellspacing="0"
-										width="100%">
-										
-										<thead>
-											<tr>
-										
-												<th>Date</th>
-												<th>Particulars</th>
-												<th align="left">Type</th>
-												<th>Voucher Number</th>
-												<th>Debit Amount</th>
-												
-												<th>Credit Amount</th>
-											</tr>
-										</thead>
-										<tfoot>
-											<tr>
-												
-												<th>&nbsp;</th>
-												<th>&nbsp;</th>
-												<th>&nbsp;</th>
-												<th>Total </th>
-												<th>&nbsp;</th>
-												
-											</tr>
-										</tfoot>
-										<tbody>
-									
-											<c:forEach
-												items="${sessionScope['ejb'].getAllSalesEntrybyCustomerID(param.id)}"
-												var="salCus">
-											<tr>
-												
-												<td><fmt:formatDate value="${salCus.sales_date}" pattern="dd-MM-yyyy" /></td>
-												<td>${salCus.paymentDetails.get(0).paymentType.type}<br><br>kaanish</td>
-												<td>Sales</td>
-												<td>${salCus.challanNumber}</td>
-												<td>${salCus.totalCost}<br><br>0</td>
-												<td>0<br><br>${salCus.paymentDetails.get(0).paidAmount}</td>
-												
-											</tr>
-											
-											</c:forEach>
-											
-											<c:forEach
-												items="${sessionScope['ejb'].getAllSalesReEntrybyCustomerID(param.id)}"
-												var="salCusR">
-											<tr>
-																		<td><fmt:formatDate value="${salCusR.returnDate}"
-																		pattern="dd-MM-yyyy" /></td>
-																		<td>Debit note <br><br>kaanish </td>
-																		<td>Sales Return</td>
-																		<td>${salCusR.challanNumber}</td>
-																		<td>0<br><br>${salCusR.totalReCost}</td>
-																		<td>${salCusR.totalReCost}<br><br>0</td>
-											</tr>
-											
-											</c:forEach>
-										</tbody>
-									</table>
-					iv class="col-md-12">
-									<h3 align="center" style="color: gray;">Customer Name:
-										${customer.name}</h3>
-								
-								
-								</div>
 
+								<h3 align="center" style="color: gray;">Sales agent name:
+									${agentp.name}</h3>
+								<table id="example" class="display nowrap" cellspacing="0"
+									width="100%">
+
+									<thead>
+										<tr>
+
+											<th>Date</th>
+											<th>Particulars</th>
+											<th align="left">Type</th>
+											<th>Voucher Number</th>
+											<th>Debit Amount</th>
+											<th>Credit Amount</th>
+										</tr>
+									</thead>
+
+									<tbody>
+										<c:set var="total1" value="${0}" />
+										<c:set var="total2" value="${0}" />
+										<c:set var="total3" value="${0}" />
+										<c:set var="total4" value="${0}" />
+
+										<c:forEach
+											items="${sessionScope['ejb'].getAllSalesEntryByVendorIdTypeSalesAgent(param.id)}"
+											var="salAgent">
+											<tr>
+
+												<td><fmt:formatDate value="${salAgent.sales_date}"
+														pattern="dd-MM-yyyy" /></td>
+												<td>${salAgent.paymentDetails.get(0).paymentType.type}<br>
+												<br>kaanish
+												</td>
+												<td>Sales</td>
+												<td>${salAgent.challanNumber}</td>
+												<td>${salAgent.totalCost}<br>
+												<br>0
+												</td>
+												<td>0<br>
+												<br>${salAgent.paymentDetails.get(0).paidAmount}</td>
+											</tr>
+											<c:set var="total1" value="${total1 + salAgent.totalCost}" />
+											<c:set var="total2"
+												value="${total2 + salAgent.paymentDetails.get(0).paidAmount}" />
+
+										</c:forEach>
+
+										<c:forEach
+											items="${sessionScope['ejb'].getAllSalesReturnByVendorIdTypeSalesAgent(param.id)}"
+											var="salReAgen">
+											<tr>
+
+												<td><fmt:formatDate value="${salReAgen.returnDate}"
+														pattern="dd-MM-yyyy" /></td>
+												<td>Debit note <br>
+												<br>kaanish
+												</td>
+												<td>Sales Return</td>
+												<td>${salReAgen.challanNumber}</td>
+												<td>0<br>
+												<br>${salReAgen.totalReCost}</td>
+												<td>${salReAgen.totalReCost}<br>
+												<br>0
+												</td>
+											</tr>
+											<c:set var="total3" value="${total3 + salReAgen.totalReCost}" />
+											<c:set var="total4" value="${total4 + salReAgen.totalReCost}" />
+
+										</c:forEach>
+									</tbody>
+									<tfoot>
+											<tr>
+												
+												<th>&nbsp;</th>
+												<th>&nbsp;</th>
+												<th>&nbsp;</th>
+												<th><h4>Total:</h4> </th>
+												<th><h4>${total3+total1}</h4></th>
+												<th><h4>${total2+total4}</h4></th>
+												
+											</tr>
+																		</tfoot>
+								</table>
 							</div>
+
 						</div>
 					</div>
-					<!-- Content Sec -->
 				</div>
-				<!-- Page Container -->
+				<!-- Content Sec -->
 			</div>
-			<!-- main -->
+			<!-- Page Container -->
 		</div>
+		<!-- main -->
 	</div>
+
 	<!-- Script -->
 
 	<script type="text/javascript" src="js/modernizr.js"></script>
@@ -239,20 +261,20 @@ em
 
 	<script type="text/javascript">
 		$(document).ready(function() {
-			  var table=$('#example').DataTable({
+			var table = $('#example').DataTable({
 
 				"scrollY" : 200,
 				"scrollX" : true,
 				dom : 'Bfrtip',
 				buttons : [ 'copy', 'csv', 'excel', 'print' ]
 			});
-			  
-			  table.on( 'draw', function () {
-			        var body = $( table.table().body() );
-			 
-			        body.unhighlight();
-			        body.highlight( table.search() );  
-			    } );
+
+			table.on('draw', function() {
+				var body = $(table.table().body());
+
+				body.unhighlight();
+				body.highlight(table.search());
+			});
 		});
 	</script>
 </body>

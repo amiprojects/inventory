@@ -979,6 +979,43 @@ public class Ejb {
 		lst.addAll(hash);
 		return lst;
 	}
+	public List<Purchase_Entry> getAllPurchaseEntryByVendorIdTypeVendor(int id){
+		TypedQuery<Purchase_Entry> q = em.createQuery("select c from Purchase_Entry c Where c.vendor.vendorType.type='Vendor' and c.vendor.id = :id",Purchase_Entry.class);
+		q.setParameter("id", id);
+		return q.getResultList();
+		
+	}
+
+	public List<PurchaseReturn> getAllPurchaseReturnByVendorIdTypeVendor(int id){
+		TypedQuery<PurchaseReturn> q = em.createQuery("select c from PurchaseReturn c Where c.purchaseEntry.vendor.vendorType.type='Vendor' and c.purchaseEntry.vendor.id = :id",PurchaseReturn.class);
+		q.setParameter("id", id);
+		return q.getResultList();
+		
+	}
+	public List<Purchase_Entry> getAllPurchaseEntryByVendorIdTypePurchaseAgent(int id){
+		TypedQuery<Purchase_Entry> q = em.createQuery("select c from Purchase_Entry c Where c.vendor.vendorType.type='Purchase Agent' and c.vendor.id = :id",Purchase_Entry.class);
+		q.setParameter("id", id);
+		return q.getResultList();
+		
+	}
+	public List<PurchaseReturn> getAllPurchaseReturnByVendorIdTypePurchaseAgent(int id){
+		TypedQuery<PurchaseReturn> q = em.createQuery("select c from PurchaseReturn c Where c.purchaseEntry.vendor.vendorType.type='Purchase Agent' and c.purchaseEntry.vendor.id = :id",PurchaseReturn.class);
+		q.setParameter("id", id);
+		return q.getResultList();
+		
+	}
+	public List<SalesEntry> getAllSalesEntryByVendorIdTypeSalesAgent(int id){
+		TypedQuery<SalesEntry> q = em.createQuery("select c from SalesEntry c Where c.vendor.vendorType.type='Sales Agent' and c.vendor.id = :id",SalesEntry.class);
+		q.setParameter("id", id);
+		return q.getResultList();
+		
+	}
+	public List<SalesReturn> getAllSalesReturnByVendorIdTypeSalesAgent(int id){
+		TypedQuery<SalesReturn> q = em.createQuery("select c from SalesReturn c Where c.salesEntry.vendor.vendorType.type='Sales Agent' and c.salesEntry.vendor.id = :id",SalesReturn.class);
+		q.setParameter("id", id);
+		return q.getResultList();
+		
+	}
 
 	/***************** for Purchase Return ***********************/
 	public void setPurchaseReturn(PurchaseReturn purchaseReturn) {
@@ -1024,9 +1061,7 @@ public class Ejb {
 		}
 	}
 
-	/*****************
-	 * for Purchase Product Return Details
-	 ***********************/
+	/*****************for Purchase Product Return Details***********************/
 	public void setPurchaseProdReturnDetails(PurchaseReturnProductDetails purchaseReturnProductDetails) {
 		em.persist(purchaseReturnProductDetails);
 	}
@@ -1076,9 +1111,16 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	public List<Vendor> getAllAgenttypeAgent() {
+	public List<Vendor> getAllAgenttypePurchaseAgent() {
 		TypedQuery<Vendor> q = em.createQuery(
-				"select c from Vendor c where c.vendorType.type='Sales Agent' OR c.vendorType.type='Purchase Agent'",
+				"select c from Vendor c where c.vendorType.type='Purchase Agent'",
+				Vendor.class);
+
+		return q.getResultList();
+	}
+	public List<Vendor> getAllAgenttypeSalesAgent() {
+		TypedQuery<Vendor> q = em.createQuery(
+				"select c from Vendor c where c.vendorType.type='Sales Agent'",
 				Vendor.class);
 
 		return q.getResultList();
@@ -2753,6 +2795,17 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<PurchaseReturn> getPurchaseReturnByDateForReport(Date pDate) {
+
+		TypedQuery<PurchaseReturn> q = em.createQuery("select c from PurchaseReturn c WHERE c.returnDate = :pDate",
+				PurchaseReturn.class);
+		q.setParameter("pDate", pDate);
+		System.out.println(q.getResultList().size());
+
+		return q.getResultList();
+	}
+
+	
 	public List<SalesEntry> getSalesEntryByDateForReport(Date sDate) {
 
 		TypedQuery<SalesEntry> q = em.createQuery("select c from SalesEntry c WHERE c.sales_date = :sDate",
@@ -2761,4 +2814,14 @@ public class Ejb {
 
 		return q.getResultList();
 	}
+	
+	public List<SalesReturn> getSalesReturnByDateForReport(Date sDate) {
+
+		TypedQuery<SalesReturn> q = em.createQuery("select c from SalesReturn c WHERE c.returnDate = :sDate",
+				SalesReturn.class);
+		q.setParameter("sDate", sDate);
+
+		return q.getResultList();
+	}
+	
 }
