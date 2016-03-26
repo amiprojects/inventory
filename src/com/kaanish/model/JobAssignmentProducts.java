@@ -5,13 +5,11 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Cacheable;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -46,10 +44,6 @@ public class JobAssignmentProducts implements Serializable {
 	@JoinColumn(name = "jobAsignmentDetailsId")
 	private JobAssignmentDetails jobAssignmentDetails;
 
-	@ManyToOne
-	@JoinColumn(name = "purchaseProductDetailsId")
-	private Purchase_Product_Details purchase_Product_Details;
-
 	@OneToOne
 	@JoinColumn(name = "jobStockId")
 	private JobStock jobStock;
@@ -57,9 +51,11 @@ public class JobAssignmentProducts implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "jobPlanProStockId")
 	private JobPlanProductStock jobPlanProductStock;
+	
+	@OneToMany(mappedBy="assignmentProducts")
+	private List<JobAssignmentJobDetails> jobAssignmentJobDetails;
+	
 
-	@ManyToMany(mappedBy = "jobAssignmentProducts", cascade = CascadeType.ALL)
-	private List<JobTypes> jobTypes;
 
 	public int getId() {
 		return id;
@@ -100,15 +96,6 @@ public class JobAssignmentProducts implements Serializable {
 	public void setJobAssignmentDetails(
 			JobAssignmentDetails jobAssignmentDetails) {
 		this.jobAssignmentDetails = jobAssignmentDetails;
-	}
-
-	public Purchase_Product_Details getPurchase_Product_Details() {
-		return purchase_Product_Details;
-	}
-
-	public void setPurchase_Product_Details(
-			Purchase_Product_Details purchase_Product_Details) {
-		this.purchase_Product_Details = purchase_Product_Details;
 	}
 
 	public Vendor getVendor() {
@@ -152,13 +139,14 @@ public class JobAssignmentProducts implements Serializable {
 		this.jobPlanProductStock = jobPlanProductStock;
 	}
 
-	public List<JobTypes> getJobTypes() {
-		return jobTypes;
+	public List<JobAssignmentJobDetails> getJobAssignmentJobDetails() {
+		return jobAssignmentJobDetails;
 	}
 
-	public void setJobTypes(List<JobTypes> jobTypes) {
-		this.jobTypes = jobTypes;
+	public void setJobAssignmentJobDetails(List<JobAssignmentJobDetails> jobAssignmentJobDetails) {
+		this.jobAssignmentJobDetails = jobAssignmentJobDetails;
 	}
+
 
 	public Date getEstimatedCompletionDate() {
 		return estimatedCompletionDate;
@@ -175,4 +163,5 @@ public class JobAssignmentProducts implements Serializable {
 	public void setTotalJobCost(float totalJobCost) {
 		this.totalJobCost = totalJobCost;
 	}
+
 }

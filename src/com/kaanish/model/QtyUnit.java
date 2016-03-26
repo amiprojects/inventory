@@ -40,6 +40,9 @@ public class QtyUnit implements Serializable {
 	
 	@OneToMany(mappedBy="qtyUnit")
 	private List<JobsForDesignCostSheet> jobsForDesignCostSheets;
+	
+	@OneToMany(mappedBy="qtyUnit")
+	private List<JobAssignmentJobDetails> jobAssignmentJobDetails;
 
 	public int getId() {
 		return id;
@@ -117,6 +120,14 @@ public class QtyUnit implements Serializable {
 
 	public void setJobsForDesignCostSheets(List<JobsForDesignCostSheet> jobsForDesignCostSheets) {
 		this.jobsForDesignCostSheets = jobsForDesignCostSheets;
+	}
+
+	public List<JobAssignmentJobDetails> getJobAssignmentJobDetails() {
+		return jobAssignmentJobDetails;
+	}
+
+	public void setJobAssignmentJobDetails(List<JobAssignmentJobDetails> jobAssignmentJobDetails) {
+		this.jobAssignmentJobDetails = jobAssignmentJobDetails;
 	}
 
 }

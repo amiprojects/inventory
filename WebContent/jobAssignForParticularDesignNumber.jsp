@@ -40,6 +40,13 @@
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 <script src="js/jquery-ui/jquery-ui.js"></script>
 <script>
+function showDatePicker() {
+	$(".estSubmDate").datepicker({
+		dateFormat : "dd-mm-yy",
+		minDate : 0
+	});
+}
+
 	$(function() {
 		var d = new Date();
 		var m = d.getMonth();
@@ -61,12 +68,7 @@
 			minDate : 0
 		});
 	});
-	$(function() {
-		$(".estSubmDate").datepicker({
-			dateFormat : "dd-mm-yy",
-			minDate : 0
-		});
-	});
+
 </script>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -127,7 +129,7 @@
 
 							<div class="col-md-12">
 								<form role="form" class="sec" method="post" id="jobAssignmentForParticularDesignNumber"
-									action="jobAssignment">
+									action="jobAssignmentForParticularDesignNumber">
 									<div class="widget-area">
 										<div class="col-md-6">
 											<div class="col-md-12"></div>
@@ -175,14 +177,12 @@
 													name="challanSuffix" value="${lastSuf}">
 											</div>
 											<div class="form-group">
-
 												<label for="" class="font">Asigned Date :</label> <input
 													type="text" class="form-control" name="assignedDate"
 													required="required" id="datepicker" readonly="readonly">
 											</div>
 
 											<div class="form-group">
-
 												<label for="" class="font">Design No. :</label> <input
 													type="text" class="form-control" name="dNo"
 													required="required" id="dNo"><input type="hidden"
@@ -190,7 +190,6 @@
 											</div>
 
 											<div class="form-group">
-
 												<label for="" class="font">Qty :</label> <input
 													type="number" class="form-control" name="qty"
 													required="required" id="qty" onkeyup="qtyF();"
@@ -207,6 +206,9 @@
 									</div>									
 									
 									<div id="productNjobsDiv"></div>
+									<div id="productNpurchasesDiv"></div>
+									<!-- <div id="productNpurchasesDiv" style="display: none;"></div> -->
+									
 									<table id="productNjobsTable" class="table table-striped table-bordered">
 										<thead style="background-color: #F0F0F0;">
 											<tr>
@@ -231,23 +233,7 @@
 												<th>Estimated Submission Date</th>
 											</tr>
 										</thead>
-									</table>
-									<div class="row">
-										<div class="col-md-2">
-											<span><b>Total Products: </b></span>
-										</div>
-										<div class="col-md-5">
-											<input type="text" readonly="readonly" class="form-control"
-												id="totProd" name="totProd" value="0">
-										</div>
-										<div class="col-md-1">
-											<span><b>Quantity: </b></span>
-										</div>
-										<div class="col-md-4">
-											<input type="text" readonly="readonly" class="form-control"
-												id="totQty" name="totQty" value="0">
-										</div>
-									</div>
+									</table>									
 									<br>
 									<div class="row">
 										<div class="col-md-3">
@@ -315,7 +301,7 @@
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
 					<h4 class="modal-title">Product Details For the Design Number</h4>
 				</div>
 				<div class="modal-body">
@@ -384,7 +370,12 @@
 							<tr>
 								<th>UOM :</th>
 								<td colspan="2"><input type="text" readonly="readonly"
-									id="pUOMModal" class="form-control"><input type="hidden" id="pIdModal"><input type="hidden" id="pForSampleIdModal"></td>
+									id="pUOMModal" class="form-control"><input type="hidden" id="pIdModal"><input value="" type="hidden" id="pForSampleIdModal"></td>
+							</tr>							
+							<tr>
+								<th>Required Quantity :</th>
+								<td colspan="2"><input type="text" readonly="readonly"
+									id="reqQtyModal" class="form-control"></td>
 							</tr>
 						</thead>
 					</table>
@@ -432,6 +423,10 @@
 				alert("please select Assigning date");
 			} else if ($("#datepicker1").val() == "") {
 				alert("please select Estimated submission date");
+			} else if ($("#dNo").val() == "") {
+				alert("please enter design no.");
+			} else if ($("#qty").val() == "") {
+				alert("please enter Qty");
 			} else {
 				$("#jobAssignmentForParticularDesignNumber").submit();
 			}
@@ -517,7 +512,7 @@
 			$("#cancelOrNot").modal("show");
 		}
 		$("#yesC").click(function() {
-			window.location = 'jobAssign.jsp';
+			window.location = 'jobAssignForParticularDesignNumber.jsp';
 		});
 		$("#noC").click(function() {
 			$("#cancelOrNot").modal("hide");
@@ -664,11 +659,13 @@
 			}
 		}
 		function selectProduct(code, desc, uom, ProductForSampleId, id) {
-			$("#purchaseDetails").modal("show");
+			if($(document).find("#pDetTable"+ProductForSampleId).length==0){
+				$("#purchaseDetails").modal("show");					
 			$("#pCodeModal").val(code);
 			$("#pDescModal").val(desc);
 			$("#pUOMModal").val(uom);
 			$("#pIdModal").val(id);
+			$("#reqQtyModal").val($("#prod" + $("#pIdModal").val() + " :nth-child(5)").html());
 			$("#pForSampleIdModal").val(ProductForSampleId);
 			$.ajax({
 				url : 'getPurchaseProductDetailsByProductCode',
@@ -703,7 +700,8 @@
 																+ item2.remaining_quantity
 																+ "</td>"
 																+ "<td>"
-																+ '<input type="text" class="form-control qtySelected" onkeyup="selectedQtyF('+item2.id+','+$("#pIdModal").val()+')">'
+																+ '<input type="text" class="form-control qtySelected" onkeyup="selectedQtyF('+item2.id+','+$("#pIdModal").val()+')" id="qtySelected'+item2.id+'">'+
+																'<input type="hidden" class="form-control" value="'+item2.id+'" id="purProDetId'+item2.id+'">'
 																+ "</td>"
 																+ "</tr>"
 																+ "</tbody>");
@@ -721,23 +719,19 @@
 											+ item2.remaining_quantity
 											+ "</td>"
 											+ "<td>"
-											+ '<input type="text" class="form-control qtySelected" onkeyup="selectedQtyF('+item2.id+','+$("#pIdModal").val()+')">'
+											+ '<input type="text" class="form-control qtySelected" onkeyup="selectedQtyF('+item2.id+','+$("#pIdModal").val()+')" id="qtySelected'+item2.id+'">'+
+											'<input type="hidden" class="form-control" value="'+item2.id+'" id="purProDetId'+item2.id+'">'
 											+ "</td>"
 											+ "</tr>"
 											+ "</tbody>");
 						}
-									
-								$(
-										"#viewAttr"
-												+ item2.id)
-										.tooltip(
-												{
-													track : true
-												});
 
 							});
 				}
 			});
+			}else{
+				alert("This product is already selected.");
+			}
 		}
 		
 		function selectedQtyF(id, prodId){			
@@ -753,30 +747,29 @@
 					if (!isNaN(this.value) && this.value.length != 0) {	
 						sum += parseFloat(this.value);
 					}
-				});					
+				});	
 			if(Number(sum)!=Number($("#prod" + $("#pIdModal").val() + " :nth-child(5)").html())){
-				alert("Selected Qty can not be more than or less than Required Qty! Total required qty is : "+ $("#prod" + $("#pIdModal").val() + " :nth-child(5)").html()+". PLease select valid qty...");
+				alert("Selected Qty can not be more than or less than Required Qty! Total required qty is : "+ $("#prod" + $("#pIdModal").val() + " :nth-child(5)").html()+". You selected : "+ sum+". PLease select valid qty...");
 			}else{				
 				$("#purchaseDetails").modal("hide");				
-				$("#productNjobsTable").hide();
-				
-				//error										
+				$("#productNjobsTable").hide();				
+													
 				$('#productNjobsDiv').append('<table id="pDetTable'+$("#pForSampleIdModal").val()+'" class="table table-striped table-bordered"><thead style="background-color: #F0F0F0;"><tr><th style="text-align: right;">'
-				+ "Product code :" 
+				+ "Product code:" 
 				+ '</th><td>'
-				+ $("#prod" + $("#pIdModal").val() + " :nth-child(2)").html() +
+				+ "<input type='text' class='form-control' readonly='readonly' value='"+$("#prod" + $("#pIdModal").val() + " :nth-child(2)").html()+"'>" +
 				'</td><th style="text-align: right;">'
-				+ "Description :" 
+				+ "Description:" 
 				+ '</th><td>'
-				+ $("#prod" + $("#pIdModal").val() + " :nth-child(3)").html() +
+				+ "<input type='text' class='form-control' readonly='readonly' value='"+$("#prod" + $("#pIdModal").val() + " :nth-child(3)").html()+"'>" +
 				'</td><th style="text-align: right;">'
-				+ "Qty :" 
+				+ "Qty:" 
 				+ '</th><td>'
-				+ $("#prod" + $("#pIdModal").val() + " :nth-child(5)").html() +
+				+ "<input type='text' class='form-control' readonly='readonly' value='"+$("#prod" + $("#pIdModal").val() + " :nth-child(5)").html()+"'>" +
 				'</td><th style="text-align: right;">'
-				+ "Rate :" 
+				+ "Rate:" 
 				+ '</th><td>'
-				+ $("#prod" + $("#pIdModal").val() + " :nth-child(6)").html() +
+				+ "<input type='text' class='form-control' readonly='readonly' value='"+$("#prod" + $("#pIdModal").val() + " :nth-child(6)").html()+"'>" +
 				'</td></tr><tr><th>'
 				+ "#" 
 				+ '</th><th>'
@@ -824,19 +817,22 @@
 																		+ item2.JobRateOfSample
 																		+ "</td>"
 																		+ "<td>"
-																		+ "<input type='text' class='form-control' value='"+item2.JobRateOfSample+"'>"
+																		+ "<input type='text' class='form-control' id='jobPresentRate"+item2.JobId+"' onkeyup='presentRateKU("+item2.JobId+");' value='"+item2.JobRateOfSample+"'>"
 																		+ "</td>"
 																		+ "<td>"
-																		+ "<input type='text' class='form-control' value='"+item2.JobQtyOfSample+"'>"
+																		+ "<input type='text' class='form-control' id='jobQty"+item2.JobId+"' onkeyup='qtyKU("+item2.JobId+");' value='"+item2.JobQtyOfSample+"'>"
 																		+ "</td>"
 																		+ "<td>"
 																		+ item2.JobUOMOfSample
 																		+ "</td>"
 																		+ "<td>"
-																		+ "<input type='text' readonly='readonly' class='form-control' value='"+item2.JobAmountOfSample+"'>"
+																		+ "<input type='text' readonly='readonly' class='form-control' id='jobAmount"+item2.JobId+"' value='"+item2.JobAmountOfSample+"'>"
 																		+ "</td>"
 																		+ "<td>"
-																		+ "<input type='text' class='form-control estSubmDate'>"
+																		+ "<input onclick='showDatePicker();' type='text' class='form-control estSubmDate'>"
+																		+ "</td>"
+																		+ "<td>"
+																		+ "<input type='checkbox' name='selectedJobs' value='"+item2.JobId+"'>"
 																		+ "</td>"
 																		+ "</tr>"
 																		+ "</tbody>");										
@@ -844,14 +840,97 @@
 										});
 					}
 				});
+				 
+				 
+				//error	
+				 $('#productNpurchasesDiv').append('<table id="productDetTable'+$("#pIdModal").val()+'" class="table table-striped table-bordered"><thead style="background-color: #F0F0F0;"><tr><th style="text-align: right;">'
+							+ "Product code:" 
+							+ '</th><td>'
+							+ "<input type='text' class='form-control' readonly='readonly' name='productCode' value='"+$("#prod" + $("#pIdModal").val() + " :nth-child(2)").html()+"'>" +
+							'</td><th style="text-align: right;">'
+							+ "Product Id:" 
+							+ '</th><td>'
+							+ "<input type='text' class='form-control' readonly='readonly' name='productId' value='"+ $("#pIdModal").val()+ "'>" +
+							'</td><th style="text-align: right;">'
+							+ "Qty:" 
+							+ '</th><td>'
+							+ "<input type='text' class='form-control' readonly='readonly' value='"+$("#prod" + $("#pIdModal").val() + " :nth-child(5)").html()+"'>" +
+							'</td></tr><tr><th>'
+							+ "Purchase Product Detail Id" 
+							+ '</th><th>'
+							+ "Qty Selected" +
+							'</th></tr></thead></table>');
+				
+				 $.ajax({
+						url : 'getPurchaseProductDetailsByProductCode',
+						type : 'post',
+						dataType : "json",
+						data : {
+							code : $("#pCodeModal").val(),
+							date : $("#datepicker").val()
+						},
+						success : function(data) {
+							$.map(data, function(item2) {
+								if (!isNaN($("#qtySelected"+item2.id).val()) && $("#qtySelected"+item2.id).val().length != 0) {
+												$("#productDetTable"+$("#pIdModal").val()).append(
+																"<tbody id='purchaseDetail"+item2.id+"'>"
+																		+ "<tr>"
+																		+ "<td>"
+																		+ '<input type="text" class="form-control" name="purProDetId'+$("#pIdModal").val()+'" value="'+$("#purProDetId"+item2.id).val()+'">'
+																		+ "</td>"
+																		+ "<td>"
+																		+ '<input type="text" class="form-control" name="qtySelected'+$("#pIdModal").val()+'" value="'+$("#qtySelected"+item2.id).val()+'">'																		
+																		+ "</td>"
+																		+ "</tr>"
+																		+ "</tbody>");
+								}
+
+									});
+						}
+					});
 			}
 		}
 		function prodDetOkF(){
-			alert("///");
+			var flag = 0;
+			$
+			.ajax({
+				type : "post",
+				url : "getProductDetailsByDesignNumberAndQuantity",
+				dataType : "json",
+				data : {
+					did : $("#dId").val()
+				},
+				success : function(data2) {
+					$
+							.each(
+									data2,
+									function(index, item2) {											
+										if($(document).find("#pDetTable"+item2.ProductForSampleId).length==0){
+											flag=1;
+										}										
+
+									});
+				},
+				complete : function(){
+					if(flag==0){
+						$("#productDetails").modal("hide");
+					}else{
+						alert('Please select all product');
+					}
+				}
+			});
+			$("#dNo").prop("disabled", true);
+			 $("#qty").prop("disabled", true);
 		}
 		function formatDate(d) {
 			var dateparts = d.split(" ");
 			return dateparts[2] + "-" + dateparts[1] + "-" + dateparts[5];
+		}
+		function presentRateKU(jobId){
+			$("#jobAmount"+jobId).val($("#jobPresentRate"+jobId).val()*$("#jobQty"+jobId).val());
+		}
+		function qtyKU(jobId){
+			$("#jobAmount"+jobId).val($("#jobPresentRate"+jobId).val()*$("#jobQty"+jobId).val());
 		}
 	</script>
 </body>

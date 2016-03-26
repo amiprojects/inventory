@@ -47,6 +47,9 @@ public class JobAssignmentDetails implements Serializable {
 	@OneToMany(mappedBy = "jobAssignmentDetails")
 	private List<JobAssignmentProducts> jobAssignmentProducts;
 
+	@OneToMany(mappedBy = "jobAssignmentDetails")
+	private List<JobAssignmentJobDetails> jobAssignmentJobDetails;
+
 	public int getId() {
 		return id;
 	}
@@ -83,8 +86,7 @@ public class JobAssignmentDetails implements Serializable {
 		return jobAssignmentProducts;
 	}
 
-	public void setJobAssignmentProducts(
-			List<JobAssignmentProducts> jobAssignmentProducts) {
+	public void setJobAssignmentProducts(List<JobAssignmentProducts> jobAssignmentProducts) {
 		this.jobAssignmentProducts = jobAssignmentProducts;
 	}
 
@@ -126,6 +128,14 @@ public class JobAssignmentDetails implements Serializable {
 
 	public void setCompanyInfo(CompanyInfo companyInfo) {
 		this.companyInfo = companyInfo;
+	}
+
+	public List<JobAssignmentJobDetails> getJobAssignmentJobDetails() {
+		return jobAssignmentJobDetails;
+	}
+
+	public void setJobAssignmentJobDetails(List<JobAssignmentJobDetails> jobAssignmentJobDetails) {
+		this.jobAssignmentJobDetails = jobAssignmentJobDetails;
 	}
 
 	public float getSurcharge() {

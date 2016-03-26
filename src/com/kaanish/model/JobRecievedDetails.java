@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -28,9 +27,6 @@ public class JobRecievedDetails implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "jobAssignmentProductsId")
 	private JobAssignmentProducts jobAssignmentProducts;
-
-	@OneToOne
-	private Purchase_Product_Details purchase_Product_Details;
 
 	public int getId() {
 		return id;
@@ -64,13 +60,6 @@ public class JobRecievedDetails implements Serializable {
 		this.jobAssignmentProducts = jobAssignmentProducts;
 	}
 
-	public Purchase_Product_Details getPurchase_Product_Details() {
-		return purchase_Product_Details;
-	}
-
-	public void setPurchase_Product_Details(Purchase_Product_Details purchase_Product_Details) {
-		this.purchase_Product_Details = purchase_Product_Details;
-	}
 
 	public boolean isComplete() {
 		return isComplete;

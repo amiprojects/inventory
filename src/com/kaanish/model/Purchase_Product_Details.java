@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 @Entity
@@ -50,9 +49,6 @@ public class Purchase_Product_Details implements Serializable {
 	@JoinColumn(name = "companyInfoId")
 	private CompanyInfo companyInfo;
 
-	@OneToMany(mappedBy = "purchase_Product_Details")
-	private List<JobAssignmentProducts> jobAssignmentProducts;
-
 	@OneToMany(mappedBy = "purchase_Product_Details", cascade = CascadeType.ALL)
 	private List<SerialNumber> serialNumbers;
 
@@ -64,14 +60,10 @@ public class Purchase_Product_Details implements Serializable {
 	@JoinColumn(name = "purchaseEntryId")
 	private Purchase_Entry purchase_Entry;
 
-	@OneToOne
-	@JoinColumn(name = "jobRecievedDetailsId")
-	private JobRecievedDetails recievedDetails;
-
 	@OneToMany(mappedBy = "purchase_Product_Details", cascade = CascadeType.PERSIST)
 	private List<SalesProductDetails> salesProductDetails;
-	
-	@OneToMany(mappedBy="purchase_Product_Details")
+
+	@OneToMany(mappedBy = "purchase_Product_Details")
 	private List<JobPlanProductStock> jobPlanProductStocks;
 
 	public List<PurchaseReturnProductDetails> getPurchaseReturnProductDetails() {
@@ -210,14 +202,6 @@ public class Purchase_Product_Details implements Serializable {
 		this.purchase_Entry = purchase_Entry;
 	}
 
-	public List<JobAssignmentProducts> getJobAssignmentProducts() {
-		return jobAssignmentProducts;
-	}
-
-	public void setJobAssignmentProducts(List<JobAssignmentProducts> jobAssignmentProducts) {
-		this.jobAssignmentProducts = jobAssignmentProducts;
-	}
-
 	@Override
 	public String toString() {
 		String str;
@@ -261,14 +245,6 @@ public class Purchase_Product_Details implements Serializable {
 		}
 		return str;
 
-	}
-
-	public JobRecievedDetails getRecievedDetails() {
-		return recievedDetails;
-	}
-
-	public void setRecievedDetails(JobRecievedDetails recievedDetails) {
-		this.recievedDetails = recievedDetails;
 	}
 
 	public String getLotNumber() {
