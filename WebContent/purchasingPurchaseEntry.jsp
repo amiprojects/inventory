@@ -415,19 +415,24 @@
 											</tr>
 										</thead>
 									</table>
-									<div style="width: 60%; float: left;">
-									<div class="col-md-12">
-									<div class="widget-area">
-									
-									</div>
-									</div>
-									</div>
-									<div style="width: 40%; float: right;">
+									<!-- <div style="width: 60%; float: left;">
+										<div class="col-md-12">
+											<div class="widget-area">
+												<div>
+													<img id="image2" alt="productImage" src="data:image/jpeg;base64," 
+														style="width: 100px; height: 50px;">
+														<div id="peoImg"></div>
+												</div>
+
+											</div>
+										</div>
+									</div> -->
+									<div style="width: 40%; float: left;">
 										<table id="stream_table"
 											class="table table-striped table-bordered">
 											<thead>
 												<tr>
-													<td colspan="2">Sub Total :</td>
+													<td colspan="2">Sub Total:</td>
 													<td><input type="text" class="form-control"
 														id="subTotal" value="0" readonly="readonly"
 														name="subTotal"></td>
@@ -443,8 +448,7 @@
 																var="taxTypeGroup">
 																<option value="${taxTypeGroup.id}">${taxTypeGroup.name}</option>
 															</c:forEach>
-													</select>
-													</td>
+													</select></td>
 													<td>%</td>
 													<td><input type="text" class="form-control"
 														readonly="readonly" value="0" id="taxTot"></td>
@@ -3755,7 +3759,7 @@
 								Math
 										.round((Number($("#subTotal").val())
 												* Number($("#taxTot").val()) / Number(100)) * 100) / 100);
-				
+
 				$("#totalvalue").val(
 						Math.round((Number($("#subTotal").val())
 								+ Number($("#taxAmount").val())
@@ -3765,7 +3769,7 @@
 				var round = Math.round(tot);
 				$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
 				$("#gt").val(Math.round((round) * 100) / 100);
-				
+
 				i++;
 
 				$("#hiddenTable")
@@ -3848,6 +3852,32 @@
 				$("#attr5").prop("readonly", true);
 				$("#attr6").prop("readonly", true);
 			}
+
+			/* AVIKaJAX */
+			
+			alert("lolt");
+			var img = "";
+			$
+					.ajax({
+						type : "get",
+						url : "getProductImagejson",
+						data : {
+							id : $("#productCode").val(),
+						},
+						dataType : "json",
+						success : function(data1) {
+							$
+									.map(
+											data1,
+											function(item) {
+											alert(item.image+"1233");
+												img = img
+														+ '<img width="100" height="100" style="" alt="" src="data:image/jpeg;base64,'+item.image+'">';
+											});
+							$("#peoImg").html(img);
+						}
+					});
+
 		}
 		function closeProduct() {
 			$("#dept").val("");
@@ -4759,7 +4789,7 @@
 											success : function(data) {
 
 												$("#agentName").empty();
-									 	$("#agentName")
+												$("#agentName")
 														.append(
 																'<option value="0">Select Agent name</option>');
 												$
@@ -4772,7 +4802,7 @@
 																					'<option value="'+item.id+'">'
 																							+ item.name
 																							+ '</option>');
-																}); 
+																});
 											},
 										/* 	complete : function() {
 												$("#agentName").val(agentId);
@@ -5275,11 +5305,9 @@
 		}
 	</script>
 	<script>
-	function addTaxNo(){
-		
-		
-	}
-		
+		function addTaxNo() {
+
+		}
 	</script>
 </body>
 

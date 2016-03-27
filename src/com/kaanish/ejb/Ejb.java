@@ -2116,7 +2116,10 @@ public class Ejb {
 	public void updateSalesEntry(SalesEntry salesEntry) {
 		em.merge(salesEntry);
 	}
-
+	
+	
+	
+	
 	public int getLastSalesReturnChallanNumber() {
 		TypedQuery<SalesReturn> q = em.createQuery("select c from SalesReturn c ORDER BY c.id DESC", SalesReturn.class);
 		if (q.getResultList().size() > 0) {
@@ -2823,5 +2826,31 @@ public class Ejb {
 
 		return q.getResultList();
 	}
+	
+	/******report for profit loss*************************************************/
+	
+	public List<SalesEntry> getAllSalesEntry(){
+		TypedQuery<SalesEntry> q=em.createQuery("select c from SalesEntry c",SalesEntry.class);
+		return q.getResultList();
+		
+	}
+
+	
+	public List<PurchaseReturn> getAllPurchaseReturn(){
+		TypedQuery<PurchaseReturn> q=em.createQuery("select c from PurchaseReturn c",PurchaseReturn.class);
+		return q.getResultList();
+	}
+	
+public List<SalesReturn> getAllSalesReturn(){
+	TypedQuery<SalesReturn> q=em.createQuery("select c from SalesReturn c",SalesReturn.class);
+	return q.getResultList();
+	}
+
+
+public List<SalesProductDetails> getAllSalesProductDetails(){
+	TypedQuery<SalesProductDetails> q=em.createQuery("select c from SalesProductDetails c",SalesProductDetails.class);
+	return q.getResultList();
+}
+/**************************************************************************************************/
 	
 }

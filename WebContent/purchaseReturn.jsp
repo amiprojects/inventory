@@ -508,7 +508,7 @@
 										<thead>
 											<tr>
 												<td colspan="2">Sub Total :</td>
-												<td><input type="text" class="form-control"
+												<td><input type="text" class="form-control" name="subTotalname"
 													id="subTotal" value="0" readonly="readonly"></td>
 											</tr>
 										</thead>

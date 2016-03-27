@@ -69,9 +69,15 @@ tfoot {
 	width: 100% !important;
 }
 margin-bottom
+
+
 :
+
+
 3
 em
+
+
 ;
 </style>
 
@@ -190,8 +196,7 @@ em
 																</td>
 																<td>Sales Payment</td>
 																<td>${sRepo.challanNumber}</td>
-																<td>${sRepo.totalCost}<br>
-																<br>0
+																<td>${sRepo.totalCost}<br> <br>0
 																<td>0<br> <br>${sRepo.totalCost}</td>
 															</tr>
 															<c:set var="total1" value="${total1 + sRepo.totalCost}" />
@@ -256,7 +261,7 @@ em
 													<tfoot>
 														<tr>
 
-															
+
 															<th colspan="4"><h4>Total:</h4></th>
 															<th><h4>${total3+total1+total5+total7}</h4></th>
 															<th><h4>${total2+total4+total6+total8}</h4></th>
@@ -267,7 +272,231 @@ em
 											</div>
 										</div>
 										<!-- .......................................**********************profitLoss****************************************************......... -->
-										<div id="profitLoss" class="tab-pane fade"></div>
+										<div id="profitLoss" class="tab-pane fade">
+
+											<div class="col-md-6">
+												<h4 align="center">Total Income</h4>
+
+												<table class="table table-striped table-bordered">
+													<c:set value="${0}" var="totalSE" />
+													<c:forEach
+														items="${sessionScope['ejb'].getAllSalesEntry()}"
+														var="gAs">
+														<c:set value="${totalSE+gAs.totalCost}" var="totalSE" />
+
+													</c:forEach>
+
+													<c:set value="${0}" var="totalSE1" />
+													<c:forEach
+														items="${sessionScope['ejb'].getAllSalesEntry()}"
+														var="gAs1">
+														<c:set value="${totalSE1+gAs1.surcharge}" var="totalSE1" />
+
+													</c:forEach>
+
+													<c:set value="${0}" var="totalSE2" />
+													<c:forEach
+														items="${sessionScope['ejb'].getAllSalesEntry()}"
+														var="gAs2">
+														<c:set value="${totalSE2+gAs2.taxAmount}" var="totalSE2" />
+
+													</c:forEach>
+
+													<c:set value="${0}" var="totalSE3" />
+													<c:forEach
+														items="${sessionScope['ejb'].getAllSalesEntry()}"
+														var="gAs3">
+														<c:set value="${totalSE3+gAs3.transportcCharge}"
+															var="totalSE3" />
+
+													</c:forEach>
+													<c:set value="${0}" var="spd" />
+													<c:set value="${0}" var="spd1" />
+													<c:forEach var="salesProDet"
+														items="${sessionScope['ejb'].getAllSalesProductDetails()}">
+
+														<c:set value="${salesProDet.quantity+spd}" var="spd" />
+														<c:set value="${salesProDet.salesReQty+spd1}" var="spd1" />
+
+													</c:forEach>
+													
+													<c:set value="${0}" var="srta"/>
+													<c:forEach items="${sessionScope['ejb'].getAllSalesReturn()}" var="sReturnToAmo">
+													
+													<c:set value="${srta+sReturnToAmo.totalReCost}" var="srta"/>
+													
+													
+													</c:forEach>
+													<tr>
+														<td colspan="2">Product Sold</td>
+														<td>Amount</td>
+													</tr>
+
+													<tr>
+														<td><h2 style="color:red;">Sales</h2>
+														</td>
+														<td>Quantity<br>
+														<br>${spd-spd1}</td>
+														
+														<td>${totalSE-srta}<br>
+														<br>&#8721; of Grand total
+														</td>
+													</tr>
+
+													<tr>
+														<td colspan="2">Total Transport Charge</td>
+														<td>${totalSE3}<br>
+														<br>-&#8721; of Transport
+														</td>
+													</tr>
+
+													<tr>
+														<td colspan="2">Total Surcharge</td>
+														<td>${totalSE1}<br>
+														<br>-&#8721; of Transport
+														</td>
+													</tr>
+
+													<tr>
+														<td colspan="2">Total Tax</td>
+														<td><fmt:formatNumber type="number" 
+            maxFractionDigits="2" value="${totalSE2}"/><br>
+														<br>-&#8721; of Tax
+														</td>
+													</tr>
+
+
+
+													<tr>
+														<td colspan="2">Total:</td>
+														<td><fmt:formatNumber type="number" 
+            maxFractionDigits="2" value="${totalSE-srta-totalSE3-totalSE2-totalSE1}"/></td>
+													</tr>
+
+
+
+												</table>
+
+											</div>
+
+											<!-- total expance........................... -->
+
+											<div class="col-md-6">
+												<h4 align="center">Total Expense</h4>
+												<table class="table table-striped table-bordered">
+													<c:set value="${0}" var="totalPE" />
+													<c:forEach
+														items="${sessionScope['ejb'].getAllPurchaseEntry()}"
+														var="gAp">
+														<c:set value="${totalPE+gAp.subTotal}" var="totalPE" />
+
+													</c:forEach>
+
+													<c:set value="${0}" var="totalSE1" />
+													<c:forEach
+														items="${sessionScope['ejb'].getAllSalesEntry()}"
+														var="gAs1">
+														<c:set value="${totalSE1+gAs1.surcharge}" var="totalSE1" />
+
+													</c:forEach>
+
+													<c:set value="${0}" var="totalSE2" />
+													<c:forEach
+														items="${sessionScope['ejb'].getAllSalesEntry()}"
+														var="gAs2">
+														<c:set value="${totalSE2+gAs2.taxAmount}" var="totalSE2" />
+
+													</c:forEach>
+
+													<c:set value="${0}" var="totalSE3" />
+													<c:forEach
+														items="${sessionScope['ejb'].getAllSalesEntry()}" var="gAs3">
+														<c:set value="${totalSE3+gAs3.transportcCharge}" var="totalSE3" />
+
+													</c:forEach>
+													<c:set value="${0}" var="spd" />
+													<c:set value="${0}" var="spd1" />
+													
+													<c:forEach var="salesProDet"
+														items="${sessionScope['ejb'].getAllSalesProductDetails()}">
+
+														<c:set value="${salesProDet.quantity+spd}" var="spd" />
+														<c:set value="${salesProDet.salesReQty+spd1}" var="spd1" />
+
+													</c:forEach>
+
+
+
+													<tr>
+														<td colspan="2">Product Purchased</td>
+														<td>Amount</td>
+													</tr>
+
+													<tr>
+														<td><h2 style="color:red;">Purchase</h2>
+														</td>
+														<td>Quantity<br>
+														<br>2360
+														</td>
+														<td>236000<br>
+														<br>&#8721; of sub total
+														</td>
+													</tr>
+
+													<tr>
+														<td colspan="2">Total Transport Charge</td>
+														<td>236000<br>
+														<br>+&#8721; of Transport
+														</td>
+													</tr>
+
+													<tr>
+														<td colspan="2">Total Surcharge</td>
+														<td>236000<br>
+														<br>+&#8721; of Transport
+														</td>
+													</tr>
+
+													<tr>
+														<td colspan="2">Total Tax</td>
+														<td>236000<br>
+														<br>+&#8721; of Tax
+														</td>
+													</tr>
+
+
+
+													<tr>
+														<td colspan="2">Total:</td>
+														<td>236000</td>
+													</tr>
+
+												</table>
+											</div>
+											<div class="col-md-12">
+												<br>
+
+												<table class="table table-striped table-bordered">
+
+													<tr>
+														<td><h4 align="center">Total Profit</h4></td>
+														<td><h4>=</h4></td>
+														<td><h4 align="center">Total Income</h4></td>
+														<td><h4>__</h4></td>
+														<td><h4 align="center">Total Expanse</h4></td>
+													</tr>
+													<tr>
+														<td>9999</td>
+														<td>&nbsp;</td>
+														<td><fmt:formatNumber type="number" 
+            maxFractionDigits="2" value="${totalSE-srta-totalSE3-totalSE2-totalSE1}"/></td>
+														<td>&nbsp;</td>
+														<td>77777</td>
+													</tr>
+												</table>
+											</div>
+
+										</div>
 
 
 										<!-- .......................................**********************ledgerAcount****************************************************......... -->
@@ -474,13 +703,7 @@ em
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 	<script>
 		$(document).ready(function() {
-			var table = $('table.display').DataTable({
-				fixedHeader : {
-					header : true,
-					footer : true,
-					
-				}
-			});
+			$('table.display').DataTable();
 		});
 	</script>
 
