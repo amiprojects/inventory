@@ -26,6 +26,7 @@ import com.kaanish.model.CustomerEntry;
 import com.kaanish.model.Department;
 import com.kaanish.model.DesignImage;
 import com.kaanish.model.JobAssignmentDetails;
+import com.kaanish.model.JobAssignmentJobDetails;
 import com.kaanish.model.JobAssignmentProducts;
 import com.kaanish.model.JobClass;
 import com.kaanish.model.JobPlan;
@@ -1281,6 +1282,15 @@ public class Ejb {
 		lst.clear();
 		lst.addAll(hash);
 		return lst;
+	}
+	
+	/***************** for Job Assignment Job ***********************/
+	public void setJobAssignmentJobDetails(JobAssignmentJobDetails jobAssignmentJobDetails) {
+		em.persist(jobAssignmentJobDetails);
+	}
+
+	public void updateJobAssignmentJobDetails(JobAssignmentJobDetails jobAssignmentJobDetails) {
+		em.merge(jobAssignmentJobDetails);
 	}
 
 	/***************** for Job Assignment Products ***********************/
@@ -2730,6 +2740,14 @@ public class Ejb {
 
 	public JobPlanProductStock getJobPlanProductStockById(int id) {
 		return em.find(JobPlanProductStock.class, id);
+	}
+	
+	public JobPlanProductStock getJobPlanProductStockByPurchaseProductDetailsIdAndJobPlanId(int ppdId, int jpId){
+		TypedQuery<JobPlanProductStock> q = em.createQuery("select c from JobPlanProductStock c where c.jobPlan.id=:jpId AND c.purchase_Product_Details.id=:ppdId",
+				JobPlanProductStock.class);
+		q.setParameter("jpId", jpId);
+		q.setParameter("ppdId", ppdId);
+		return q.getResultList().get(0);
 	}
 
 	public List<JobPlanProductStock> getAllJobPlanProductStock() {

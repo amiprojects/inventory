@@ -206,8 +206,8 @@ function showDatePicker() {
 									</div>									
 									
 									<div id="productNjobsDiv"></div>
-									<div id="productNpurchasesDiv"></div>
-									<!-- <div id="productNpurchasesDiv" style="display: none;"></div> -->
+									<!-- <div id="productNpurchasesDiv"></div> -->
+									<div id="productNpurchasesDiv" style="display: none;"></div>
 									
 									<table id="productNjobsTable" class="table table-striped table-bordered">
 										<thead style="background-color: #F0F0F0;">
@@ -236,6 +236,31 @@ function showDatePicker() {
 									</table>									
 									<br>
 									<div class="row">
+									<div class="col-md-12">
+									<table style="float: right;">
+									<tr>
+									<td>Surcharge :</td>
+									<td><input type="number" name="surcharge" value="0.00" id="surcharge"
+												onkeyup="surchargeF();" autocomplete="off"></td>
+									</tr>
+									<tr>
+									<td><!-- Profit  --><select style="display: none;" name="profitType" id="profitType" onchange="profitTypeF();">
+												<option value="profitPer">%</option>
+												<option value="profitFlat">Flat</option>
+												</select> <!-- : --></td>
+									<td><input type="hidden" name="profitVal" value="0.00" id="profitVal"
+												onkeyup="profitValF();" autocomplete="off"></td></tr>
+									<tr>
+									<td><!-- Profit Value : --></td>
+									<td><input type="hidden" name="totProfit" value="0.00" id="totProfit"
+												readonly="readonly" autocomplete="off"></td></tr>
+									<tr>
+									<td>GrandTotal :</td>
+									<td><input type="number" name="grandtot" value="0.00" readonly="readonly"
+												id="grandtot"><input type="hidden" name="gtot" value="0.00" readonly="readonly"
+												id="gtot"><input type="hidden" name="gt"
+												value="0.00" readonly="readonly" id="gt"></td></tr>
+									</table></div>
 										<div class="col-md-3">
 											<!-- <span><b>Estimated Submission Date: </b></span> -->
 										</div>
@@ -398,6 +423,7 @@ function showDatePicker() {
 					</table>
 				</div>
 				<div class="modal-footer">
+				<input type="hidden" id="totalAmount" name="totalAmount">
 					<button type="button" class="btn btn-default" onclick="purDetOkF();">Ok</button>
 				</div>
 			</div>
@@ -701,7 +727,8 @@ function showDatePicker() {
 																+ "</td>"
 																+ "<td>"
 																+ '<input type="text" class="form-control qtySelected" onkeyup="selectedQtyF('+item2.id+','+$("#pIdModal").val()+')" id="qtySelected'+item2.id+'">'+
-																'<input type="hidden" class="form-control" value="'+item2.id+'" id="purProDetId'+item2.id+'">'
+																'<input type="hidden" class="form-control" value="'+item2.id+'" id="purProDetId'+item2.id+'">'+
+																'<input type="hidden" class="form-control purProDetTotAmount" id="purProDetTotAmount'+item2.id+'">'
 																+ "</td>"
 																+ "</tr>"
 																+ "</tbody>");
@@ -720,7 +747,8 @@ function showDatePicker() {
 											+ "</td>"
 											+ "<td>"
 											+ '<input type="text" class="form-control qtySelected" onkeyup="selectedQtyF('+item2.id+','+$("#pIdModal").val()+')" id="qtySelected'+item2.id+'">'+
-											'<input type="hidden" class="form-control" value="'+item2.id+'" id="purProDetId'+item2.id+'">'
+											'<input type="hidden" class="form-control" value="'+item2.id+'" id="purProDetId'+item2.id+'">'+
+											'<input type="hidden" class="form-control purProDetTotAmount" id="purProDetTotAmount'+item2.id+'">'
 											+ "</td>"
 											+ "</tr>"
 											+ "</tbody>");
@@ -738,9 +766,27 @@ function showDatePicker() {
 			//alert($("#prod" + prodId + " :nth-child(5)").html());
 			if(Number($("#viewAttr" + id + " :nth-child(3)").html()) < Number($("#viewAttr" + id + " :nth-child(4) input[type=text]").val())){
 				alert("You can not select more than remaining qty!");
-				$("#viewAttr" + id + " :nth-child(4) input[type=text]").val("");
+				$("#qtySelected" + id).val("");
+				$("#purProDetTotAmount"+id).val("");
+				$("#purProDetTotAmount"+id).val(Number($("#viewAttr" + id + " :nth-child(2)").html())*Number($("#qtySelected" + id ).val()));
+				var sum = 0;						
+				$(".purProDetTotAmount").each(function() {
+					if (!isNaN(this.value) && this.value.length != 0) {	
+						sum += parseFloat(this.value);
+					}
+				});
+				$("#totalAmount").val(sum);
+			}else{
+			$("#purProDetTotAmount"+id).val(Number($("#viewAttr" + id + " :nth-child(2)").html())*Number($("#qtySelected" + id ).val()));
+			var sum = 0;						
+			$(".purProDetTotAmount").each(function() {
+				if (!isNaN(this.value) && this.value.length != 0) {	
+					sum += parseFloat(this.value);
+				}
+			});
+			$("#totalAmount").val(sum);
 			}
-		}
+			}
 		function purDetOkF(){
 			var sum = 0;						
 				$(".qtySelected").each(function() {
@@ -752,7 +798,7 @@ function showDatePicker() {
 				alert("Selected Qty can not be more than or less than Required Qty! Total required qty is : "+ $("#prod" + $("#pIdModal").val() + " :nth-child(5)").html()+". You selected : "+ sum+". PLease select valid qty...");
 			}else{				
 				$("#purchaseDetails").modal("hide");				
-				$("#productNjobsTable").hide();				
+				$("#productNjobsTable").hide();											
 													
 				$('#productNjobsDiv').append('<table id="pDetTable'+$("#pForSampleIdModal").val()+'" class="table table-striped table-bordered"><thead style="background-color: #F0F0F0;"><tr><th style="text-align: right;">'
 				+ "Product code:" 
@@ -767,9 +813,9 @@ function showDatePicker() {
 				+ '</th><td>'
 				+ "<input type='text' class='form-control' readonly='readonly' value='"+$("#prod" + $("#pIdModal").val() + " :nth-child(5)").html()+"'>" +
 				'</td><th style="text-align: right;">'
-				+ "Rate:" 
+				+ "Total Amount:" 
 				+ '</th><td>'
-				+ "<input type='text' class='form-control' readonly='readonly' value='"+$("#prod" + $("#pIdModal").val() + " :nth-child(6)").html()+"'>" +
+				+ "<input type='text' class='form-control' readonly='readonly' value='"+$("#totalAmount").val()+"'>" +
 				'</td></tr><tr><th>'
 				+ "#" 
 				+ '</th><th>'
@@ -811,28 +857,28 @@ function showDatePicker() {
 																		+ Number(1 + index)
 																		+ "</td>"
 																		+ "<td>"
-																		+ item2.JobName
+																		+ item2.JobName+"<input type='hidden' name='jobId"+$("#pForSampleIdModal").val()+"' value='"+item2.JobId+"'>"
 																		+ "</td>"
 																		+ "<td>"
 																		+ item2.JobRateOfSample
 																		+ "</td>"
 																		+ "<td>"
-																		+ "<input type='text' class='form-control' id='jobPresentRate"+item2.JobId+"' onkeyup='presentRateKU("+item2.JobId+");' value='"+item2.JobRateOfSample+"'>"
+																		+ "<input type='text' class='form-control' name='jobPresentRate"+$("#pForSampleIdModal").val()+"' id='jobPresentRate"+item2.JobId+"' onkeyup='presentRateKU("+item2.JobId+");' value='"+item2.JobRateOfSample+"'>"
 																		+ "</td>"
 																		+ "<td>"
-																		+ "<input type='text' class='form-control' id='jobQty"+item2.JobId+"' onkeyup='qtyKU("+item2.JobId+");' value='"+item2.JobQtyOfSample+"'>"
+																		+ "<input type='text' class='form-control' name='jobQty"+$("#pForSampleIdModal").val()+"' id='jobQty"+item2.JobId+"' onkeyup='qtyKU("+item2.JobId+");' value='"+item2.JobQtyOfSample+"'>"
 																		+ "</td>"
 																		+ "<td>"
 																		+ item2.JobUOMOfSample
 																		+ "</td>"
 																		+ "<td>"
-																		+ "<input type='text' readonly='readonly' class='form-control' id='jobAmount"+item2.JobId+"' value='"+item2.JobAmountOfSample+"'>"
+																		+ "<input type='text' readonly='readonly' name='jobAmount"+$("#pForSampleIdModal").val()+"' class='form-control eachtotalvalue' id='jobAmount"+item2.JobId+"' value='"+item2.JobAmountOfSample+"'>"
 																		+ "</td>"
 																		+ "<td>"
-																		+ "<input onclick='showDatePicker();' type='text' class='form-control estSubmDate'>"
+																		+ "<input onclick='showDatePicker();' type='text' name='estSubmDate"+$("#pForSampleIdModal").val()+"' class='form-control estSubmDate'>"
 																		+ "</td>"
 																		+ "<td>"
-																		+ "<input type='checkbox' name='selectedJobs' value='"+item2.JobId+"'>"
+																		+ "<input type='checkbox' name='selectedJobs"+$("#pForSampleIdModal").val()+"' value='"+item2.JobId+"'>"
 																		+ "</td>"
 																		+ "</tr>"
 																		+ "</tbody>");										
@@ -842,7 +888,6 @@ function showDatePicker() {
 				});
 				 
 				 
-				//error	
 				 $('#productNpurchasesDiv').append('<table id="productDetTable'+$("#pIdModal").val()+'" class="table table-striped table-bordered"><thead style="background-color: #F0F0F0;"><tr><th style="text-align: right;">'
 							+ "Product code:" 
 							+ '</th><td>'
@@ -852,9 +897,9 @@ function showDatePicker() {
 							+ '</th><td>'
 							+ "<input type='text' class='form-control' readonly='readonly' name='productId' value='"+ $("#pIdModal").val()+ "'>" +
 							'</td><th style="text-align: right;">'
-							+ "Qty:" 
+							+ "Product For sample id:" 
 							+ '</th><td>'
-							+ "<input type='text' class='form-control' readonly='readonly' value='"+$("#prod" + $("#pIdModal").val() + " :nth-child(5)").html()+"'>" +
+							+ "<input type='text' class='form-control' readonly='readonly' name='productForSampleId' value='"+$("#pForSampleIdModal").val()+"'>" +
 							'</td></tr><tr><th>'
 							+ "Purchase Product Detail Id" 
 							+ '</th><th>'
@@ -876,10 +921,10 @@ function showDatePicker() {
 																"<tbody id='purchaseDetail"+item2.id+"'>"
 																		+ "<tr>"
 																		+ "<td>"
-																		+ '<input type="text" class="form-control" name="purProDetId'+$("#pIdModal").val()+'" value="'+$("#purProDetId"+item2.id).val()+'">'
+																		+ '<input type="text" class="form-control" name="purProDetId'+$("#pForSampleIdModal").val()+'" value="'+$("#purProDetId"+item2.id).val()+'">'
 																		+ "</td>"
 																		+ "<td>"
-																		+ '<input type="text" class="form-control" name="qtySelected'+$("#pIdModal").val()+'" value="'+$("#qtySelected"+item2.id).val()+'">'																		
+																		+ '<input type="text" class="form-control" name="qtySelected'+$("#pForSampleIdModal").val()+'" value="'+$("#qtySelected"+item2.id).val()+'">'																		
 																		+ "</td>"
 																		+ "</tr>"
 																		+ "</tbody>");
@@ -887,7 +932,8 @@ function showDatePicker() {
 
 									});
 						}
-					});
+					});				 
+				
 			}
 		}
 		function prodDetOkF(){
@@ -919,8 +965,24 @@ function showDatePicker() {
 					}
 				}
 			});
-			$("#dNo").prop("disabled", true);
-			 $("#qty").prop("disabled", true);
+			$("#dNo").prop("readonly", "readonly");
+			 $("#qty").prop("readonly", "readonly");
+			 
+			 
+			//error
+				$("#gt").val(
+						Number($("#gt").val()) + Number($("#totalAmount").val()));
+				var sum = 0;
+				$(".eachtotalvalue").each(function() {
+					sum += parseFloat(this.value);
+				});
+				$("#gtot").val(
+						Number($("#gt").val()) + Number(sum.toFixed(2))
+								+ Number($("#surcharge").val()));
+				profitValF();
+				$("#grandtot").val(
+						Number($("#gtot").val())
+								+ Number($("#totProfit").val()));
 		}
 		function formatDate(d) {
 			var dateparts = d.split(" ");
@@ -928,9 +990,101 @@ function showDatePicker() {
 		}
 		function presentRateKU(jobId){
 			$("#jobAmount"+jobId).val($("#jobPresentRate"+jobId).val()*$("#jobQty"+jobId).val());
+			
+			//error
+			var sum = 0;
+			$(".eachtotalvalue").each(function() {
+				sum += parseFloat(this.value);
+			});
+			$("#gtot").val(
+					Number($("#gt").val()) + Number(sum.toFixed(2))
+							+ Number($("#surcharge").val()));
+			profitValF();
+			$("#grandtot").val(
+					Number($("#gtot").val())
+							+ Number($("#totProfit").val()));
 		}
 		function qtyKU(jobId){
 			$("#jobAmount"+jobId).val($("#jobPresentRate"+jobId).val()*$("#jobQty"+jobId).val());
+			
+			//error
+			var sum = 0;
+			$(".eachtotalvalue").each(function() {
+				sum += parseFloat(this.value);
+			});
+			$("#gtot").val(
+					Number($("#gt").val()) + Number(sum.toFixed(2))
+							+ Number($("#surcharge").val()));
+			profitValF();
+			$("#grandtot").val(
+					Number($("#gtot").val())
+							+ Number($("#totProfit").val()));
+		}
+		function profitTypeF(){
+			//error
+		$("#profitVal").val("0.00");
+		$("#totProfit").val("0.00");
+		var sum = 0;
+		$(".eachtotalvalue").each(function() {
+			sum += parseFloat(this.value);
+		});
+		$("#gtot").val(
+				Number($("#gt").val()) + Number(sum.toFixed(2))
+						+ Number($("#surcharge").val()));
+		$("#grandtot").val(
+				Number($("#gtot").val())
+						+ Number($("#totProfit").val()));
+		}
+		function profitValF(){
+			//error
+			if ($("#profitType").val() == 'profitPer') {
+				$("#totProfit")
+						.val(
+								Math
+										.round((Number($("#gtot")
+												.val())
+												* Number($("#profitVal").val()) / 100) * 100) / 100);
+				var sum = 0;
+				$(".eachtotalvalue").each(function() {
+					sum += parseFloat(this.value);
+				});
+				$("#gtot").val(
+						Number($("#gt").val()) + Number(sum.toFixed(2))
+								+ Number($("#surcharge").val()));
+				$("#grandtot").val(
+						Number($("#gtot").val())
+								+ Number($("#totProfit").val()));
+			} else {			
+					$("#totProfit")
+							.val(
+									Math
+											.round(Number($("#profitVal").val()) * 100) / 100);
+					var sum = 0;
+					$(".eachtotalvalue").each(function() {
+						sum += parseFloat(this.value);
+					});
+					$("#gtot").val(
+							Number($("#gt").val()) + Number(sum.toFixed(2))
+									+ Number($("#surcharge").val()));
+					$("#grandtot").val(
+							Number($("#gtot").val())
+									+ Number($("#totProfit").val()));
+
+			}
+		}
+		function surchargeF() {
+			//error
+			var sum = 0;
+			$(".eachtotalvalue").each(function() {
+				sum += parseFloat(this.value);
+			});
+			$("#gtot").val(
+					Number($("#gt").val()) + Number(sum.toFixed(2))
+							+ Number($("#surcharge").val()));
+			profitValF();
+			$("#grandtot").val(
+					Number($("#gtot").val())
+							+ Number($("#totProfit").val()));
 		}
 	</script>
 </body>

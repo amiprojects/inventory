@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,19 +27,19 @@ public class JobAssignmentProducts implements Serializable {
 	private int id;
 	private int qty;
 	private int remaninQty;
-	private float estimatedCost;
+	private float estimatedCost;//old concept
 	@Column(length = 800)
-	private String workDescription;
+	private String workDescription;//old concept
 	private float totalJobCost;
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date estimatedCompletionDate;
+	private Date estimatedCompletionDate;//old concept
 
 	@OneToMany(mappedBy = "jobAssignmentProducts")
 	private List<JobRecievedDetails> jobRecievedDetails;
 
 	@ManyToOne
 	@JoinColumn(name = "designerID")
-	private Vendor vendor;
+	private Vendor vendor;//old concept
 
 	@ManyToOne
 	@JoinColumn(name = "jobAsignmentDetailsId")
@@ -46,13 +47,15 @@ public class JobAssignmentProducts implements Serializable {
 
 	@OneToOne
 	@JoinColumn(name = "jobStockId")
-	private JobStock jobStock;
+	private JobStock jobStock;//old concept
 
-	@ManyToOne
+	/*@ManyToOne
 	@JoinColumn(name = "jobPlanProStockId")
-	private JobPlanProductStock jobPlanProductStock;
+	private JobPlanProductStock jobPlanProductStock;*/
+	@OneToMany(mappedBy="jobAssignmentProducts",cascade=CascadeType.ALL)
+	private List<JobPlanProductStock> jobPlanProductStock;
 	
-	@OneToMany(mappedBy="assignmentProducts")
+	@OneToMany(mappedBy="assignmentProducts",cascade=CascadeType.ALL)
 	private List<JobAssignmentJobDetails> jobAssignmentJobDetails;
 	
 
@@ -131,13 +134,13 @@ public class JobAssignmentProducts implements Serializable {
 		this.workDescription = workDescription;
 	}
 
-	public JobPlanProductStock getJobPlanProductStock() {
+	/*public JobPlanProductStock getJobPlanProductStock() {
 		return jobPlanProductStock;
 	}
 
 	public void setJobPlanProductStock(JobPlanProductStock jobPlanProductStock) {
 		this.jobPlanProductStock = jobPlanProductStock;
-	}
+	}*/
 
 	public List<JobAssignmentJobDetails> getJobAssignmentJobDetails() {
 		return jobAssignmentJobDetails;
@@ -162,6 +165,14 @@ public class JobAssignmentProducts implements Serializable {
 
 	public void setTotalJobCost(float totalJobCost) {
 		this.totalJobCost = totalJobCost;
+	}
+
+	public List<JobPlanProductStock> getJobPlanProductStock() {
+		return jobPlanProductStock;
+	}
+
+	public void setJobPlanProductStock(List<JobPlanProductStock> jobPlanProductStock) {
+		this.jobPlanProductStock = jobPlanProductStock;
 	}
 
 }
