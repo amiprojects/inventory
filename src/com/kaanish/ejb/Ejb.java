@@ -2482,7 +2482,7 @@ public class Ejb {
 	 * Search Job Assignment Details by ChallanID
 	 ****************/
 
-	public JobAssignmentDetails getJobAssignmentDetailsbyChallanNumber(String challanNumber) {
+	/*public JobAssignmentDetails getJobAssignmentDetailsbyChallanNumber(String challanNumber) {
 		TypedQuery<JobAssignmentDetails> q = em.createQuery(
 				"select c from JobAssignmentDetails c where c.challanNumber=:challanNumber",
 				JobAssignmentDetails.class);
@@ -2492,6 +2492,14 @@ public class Ejb {
 		} else {
 			return null;
 		}
+	}*/
+	
+	public List<JobAssignmentDetails> getJobAssignmentDetailsbyChallanNumber(String challanNumber) {
+		TypedQuery<JobAssignmentDetails> q = em.createQuery(
+				"select c from JobAssignmentDetails c where UPPER(c.challanNumber)=:challanNumber ORDER BY c.id DESC",
+				JobAssignmentDetails.class);
+		q.setParameter("challanNumber", challanNumber);
+			return q.getResultList();
 	}
 
 	public JobAssignmentDetails getJobAssignmentDetailsbyChallanNumberAndCompany(String challanNumber) {
@@ -2646,6 +2654,19 @@ public class Ejb {
 				SampleDesignCostSheet.class);
 		q.setParameter("dn", dn.toUpperCase() + "%");
 		return q.getResultList();
+	}
+	
+	public List<SampleDesignCostSheet> getPlannedSampleDesignCostSheetByDesignNumber(String dn) {		
+		TypedQuery<JobPlan> q = em.createQuery(
+				"select c from JobPlan c where UPPER(c.designCostSheet.designNumber) like :dn",
+				JobPlan.class);
+		q.setParameter("dn", dn.toUpperCase() + "%");
+		
+		List<SampleDesignCostSheet> lst=new ArrayList<>();
+		for(JobPlan jp: q.getResultList()){
+			lst.add(jp.getDesignCostSheet());
+		}
+		return lst;
 	}
 
 	/***************************

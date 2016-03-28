@@ -27,7 +27,7 @@ public class JobAssignmentProducts implements Serializable {
 	private int id;
 	private int qty;
 	private int remaninQty;
-	private float estimatedCost;//old concept
+	private float estimatedCost;//total amount of product
 	@Column(length = 800)
 	private String workDescription;//old concept
 	private float totalJobCost;

@@ -236,7 +236,7 @@
 																<tr style="color: black; background-color: #f4f4f0">
 																	<th style="text-align: center" width="5%">#</th>
 
-																	<th width="15%" style="text-align: center">Product Code</th>
+																	<th width="15%" style="text-align: center">Designer Number</th>
 																	<th width="15%" style="text-align: center">Product
 																		Description</th>
 																	<th width="10%" style="text-align: center">Quantity</th>
@@ -265,11 +265,11 @@
 
 																			<td style="text-align: center" width="5%">${count}</td>
 
-																			<td width="15%" style="text-align: center">${jobPro.jobPlanProductStock.get(0).purchase_Product_Details.productDetail.code}</td>
-																			<td width="15%" style="text-align: center">${jobPro.jobPlanProductStock.get(0).purchase_Product_Details.productDetail.description}</td>
+																			<td width="15%" style="text-align: center">${jobPro.purchase_Product_Details.productDetail.code}</td>
+																			<td width="15%" style="text-align: center">${jobPro.purchase_Product_Details.productDetail.description}</td>
 																			<td width="10%" style="text-align: center"><span
 																				id="qtty${jobPro.id}">${jobPro.qty}</span></td>
-																			<td width="10%" style="text-align: center">${jobPro.jobPlanProductStock.get(0).purchase_Product_Details.productDetail.qtyUnit.name}</td>
+																			<td width="10%" style="text-align: center">${jobPro.purchase_Product_Details.productDetail.qtyUnit.name}</td>
 																			<td width="15%" style="text-align: center">${jobPro.workDescription}</td>
 																			<td width="10%"
 																				style="text-align: center; padding: 2px"><span
@@ -341,11 +341,11 @@
 		$("#qtyRe").val()
 
 	});
-	/* $(document).ready(function() {
+	$(document).ready(function() {
 		if ($('#msg').html() == "error: null") {
 			$('#msg').html("Wrong challan number...");
 		}
-	}); */
+	});
 
 	$(function() {
 		$("#datepicker").datepicker({
@@ -375,7 +375,7 @@
 	}
 </script>
 
-<%-- <c:if test="${requestScope['msg']!=''}">
+<c:if test="${requestScope['msg']!=''}">
 	<script>
 		if ($('#msg').html() != "") {
 			$('.toast').fadeIn(400).delay(3000).fadeOut(400);
@@ -390,7 +390,7 @@
 			$('.toast').fadeIn(400).delay(3000).fadeOut(400);
 		}
 	</script>
-</c:if> --%>
+</c:if>
 
 
 </html>

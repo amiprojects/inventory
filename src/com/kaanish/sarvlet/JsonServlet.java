@@ -67,7 +67,7 @@ import com.kaanish.util.DepartmentCotractor;
 		"/getCriticalStock", "/getSampleDesignCostSheetByDesignNumber",
 		"/getProductDetailsByDesignNumberAndQuantity",
 		"/getPurchaseProductDetailsByProductCode",
-		"/getJobsForDesignCostSheetByProductSForSampleId","/getProductImagejson" })
+		"/getJobsForDesignCostSheetByProductSForSampleId","/getProductImagejson", "/getPlannedSampleDesignCostSheetByDesignNumber" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -1075,6 +1075,24 @@ public class JsonServlet extends HttpServlet {
 							.writeEnd();
 				}
 				generatorD.writeEnd().close();
+				break;
+				
+			case "getPlannedSampleDesignCostSheetByDesignNumber":
+				JsonGeneratorFactory factoryDP = Json
+						.createGeneratorFactory(null);
+				JsonGenerator generatorDP = factoryDP.createGenerator(resp
+						.getOutputStream());
+				generatorDP.writeStartArray();
+
+				for (SampleDesignCostSheet sdcs : ejb
+						.getPlannedSampleDesignCostSheetByDesignNumber(req
+								.getParameter("dNo"))) {
+					generatorDP.writeStartObject().write("dId", sdcs.getId())
+							.write("dNumber", sdcs.getDesignNumber())
+							.write("dDEsc", sdcs.getDesignDescription())
+							.writeEnd();
+				}
+				generatorDP.writeEnd().close();
 				break;
 
 			case "getProductImagejson":

@@ -88,7 +88,7 @@
 </script>
 </head>
 <body>
-<div class="se-pre-con"></div>
+<!-- <div class="se-pre-con"></div> -->
 	<c:if test="${sessionScope['user']==null}">
 		<c:redirect url="index.jsp" />
 	</c:if>
@@ -122,7 +122,7 @@
 
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
-								<h3 style="margin-top: 11px;">Job Assignment</h3>
+								<h3 style="margin-top: 11px;">Job Assignment For Ongoing Jobs</h3>
 							</div>
 
 							<!-- <div class="widget-area"> -->
@@ -274,14 +274,14 @@
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 	<script src="js/numericInput.min.js"></script>
 	<script>
-	window.addEventListener("beforeunload", function (e) {
+	/* window.addEventListener("beforeunload", function (e) {
 		
 	    var confirmationMessage = 'It looks like you have been editing something. '
 	                            + 'If you leave before saving, your changes will be lost.';
 
 	   (e || window.event).returnValue = JSON.stringify(e||window.event); //Gecko + IE
 	   return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
-	});
+	}); */
 		function submitForm() {
 			if ($("#jName").val() == 0) {
 				alert("please select jobber name");
@@ -374,7 +374,7 @@
 			$("#cancelOrNot").modal("show");
 		}
 		$("#yesC").click(function() {
-			window.location = 'jobAssign.jsp';
+			window.location = 'jobAssignForOngoingJobs.jsp';
 		});
 		$("#noC").click(function() {
 			$("#cancelOrNot").modal("hide");
@@ -392,11 +392,11 @@
 
 		});
 	</script>
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 	$(window).load(function() {
 		// Animate loader off screen
-		$(".se-pre-con").fadeOut("slow");;
-	});
+		$(".se-pre-con").fadeOut("fast");;
+	}); -->
 	</script>
 </body>
 

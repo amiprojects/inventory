@@ -109,8 +109,8 @@
 					<ul>
 						<li><a id="jAssign" href="jobAssign.jsp" title="">Job
 								Assignment</a></li>
-						<li><a id="jSearch" href="jobAssignSearch.jsp" title="">Job
-								Assignment Search</a></li>
+						<!-- <li><a id="jSearch" href="jobAssignSearch.jsp" title="">Job
+								Assignment Search</a></li> -->
 						<li><a id="jR" href="jobReceive.jsp" title="">Job Receive</a></li>
 						<li><a id="designCostSheet" href="designCostSheet.jsp"
 							title="">Sample Job CostSheet</a></li>

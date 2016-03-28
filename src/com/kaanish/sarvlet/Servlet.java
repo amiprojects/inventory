@@ -1660,18 +1660,17 @@ public class Servlet extends HttpServlet {
 			case "jChallanSearch":
 				page = "jobReceive.jsp";
 
-				JobAssignmentDetails jobAssignListr = ejb.getJobAssignmentDetailsbyChallanNumber(
+				List<JobAssignmentDetails> jobAssignListr = ejb.getJobAssignmentDetailsbyChallanNumber(
 						req.getParameter("companyInitial") + "/" + req.getParameter("fynYear") + "/"
 								+ req.getParameter("month") + "/" + req.getParameter("billType") + "/"
-								+ req.getParameter("autoNum") + "/" + req.getParameter("suffix"));
-
-				req.setAttribute("amj", jobAssignListr);
-
-				if (!jobAssignListr.equals(null)) {
+								+ req.getParameter("autoNum") + "/" + req.getParameter("suffix"));							
+				
+				if (jobAssignListr.size()>0) {
+					req.setAttribute("amj", jobAssignListr.get(0));
 					msg = "Your search for Job challan number : " + req.getParameter("companyInitial") + "/"
 							+ req.getParameter("fynYear") + "/" + req.getParameter("month") + "/"
 							+ req.getParameter("billType") + "/" + req.getParameter("autoNum") + "/"
-							+ req.getParameter("suffix");
+							+ req.getParameter("suffix");					
 				} else {
 					msg = "No result found for Job challan number : " + req.getParameter("companyInitial") + "/"
 							+ req.getParameter("fynYear") + "/" + req.getParameter("month") + "/"
@@ -2502,7 +2501,7 @@ public class Servlet extends HttpServlet {
 			case "jobAssignmentForParticularDesignNumber":
 				page = "jobAssignForParticularDesignNumber.jsp";
 				sampleDesignCostSheet = ejb.getSampleDesignCostSheetById(Integer.parseInt(req.getParameter("dId")));
-
+				
 				jobPlan = new JobPlan();
 				jobPlan.setPlanDate(DateConverter.getDate(req.getParameter("assignedDate")));
 				jobPlan.setQty(Integer.parseInt(req.getParameter("qty")));
@@ -2526,7 +2525,6 @@ public class Servlet extends HttpServlet {
 						jobPlanProductStock.setJobPlan(jobPlan);
 						jobPlanProductStock.setPurchase_Product_Details(purchaseProductDetails);
 						jobPlanProductStock.setJobCycle(0);
-						jobPlanProductStock.setTotalJobCost(0);
 						jobPlanProductStock.setUndergoingProcess(false);
 						jobPlanProductStock.setComplete(false);
 						jobPlanProductStock.setQty(Integer.parseInt(qtySelected[l1]));						
@@ -2572,31 +2570,43 @@ public class Servlet extends HttpServlet {
 					jobAssignmentDetails.setChallanSuffix(Integer.parseInt(req.getParameter("challanSuffix")));
 					jobAssignmentDetails.setEntryDate(dt);
 					jobAssignmentDetails.setVendor(ejb.getVendorById(Integer.parseInt(req.getParameter("jName"))));
+					
+					jobAssignmentDetails.setSurcharge(Float.parseFloat(req.getParameter("surcharge")));
+					jobAssignmentDetails.setGrandTotal(Float.parseFloat(req.getParameter("grandtot")));
+					jobAssignmentDetails.setProfit(Float.parseFloat(req.getParameter("totProfit")));
+					if (req.getParameter("profitType").equals("profitFlat")) {
+						jobAssignmentDetails.setFlatProfit(true);
+					} else {
+						jobAssignmentDetails.setFlatProfit(false);
+					}
 					ejb.setJobAssignment(jobAssignmentDetails);					
 					
-					String[] productForSampleId1 = req.getParameterValues("productForSampleId");
-					String[] prodId = req.getParameterValues("productId");
-					float totalJobCost = 0;
+					String[] productForSampleId1 = req.getParameterValues("productForSampleId1");
+					String[] prodId = req.getParameterValues("productId1");
+					String[] qtyOfSampleProduct=req.getParameterValues("qtyOfSampleProduct");
+					String[] productEachTotal=req.getParameterValues("productEachTotal");
+					float totalJobExpanse=0;
+					
 					for (int l1 = 0; l1 < productForSampleId1.length; l1++) {
+						
 					jobAssignmentProducts = new JobAssignmentProducts();					
 					jobAssignmentProducts.setJobAssignmentDetails(jobAssignmentDetails);
 					//jobAssignmentProducts.setJobPlanProductStock(jobPlanProductStock);
+					jobAssignmentProducts.setQty(Integer.parseInt(qtyOfSampleProduct[l1]));
+					jobAssignmentProducts.setRemaninQty(Integer.parseInt(qtyOfSampleProduct[l1]));
+					jobAssignmentProducts.setEstimatedCost(Float.parseFloat(productEachTotal[l1]));
 					ejb.setJobAssignmentProducts(jobAssignmentProducts);
 					
 					String[] purProDetId1 = req.getParameterValues("purProDetId" + productForSampleId1[l1]);
 					String[] qtySelected1 = req.getParameterValues("qtySelected" + productForSampleId1[l1]);
-					int totQtySelected=0;
 					for (int l2 = 0; l2 < purProDetId1.length; l2++) {
 						jobPlanProductStock = ejb.getJobPlanProductStockByPurchaseProductDetailsIdAndJobPlanId(Integer.parseInt(purProDetId1[l2]),jobPlan.getId());
 						jobPlanProductStock.setJobAssignQty(Integer.parseInt(qtySelected1[l2]));
+						jobPlanProductStock.setRemainingQty(jobPlanProductStock.getRemainingQty()-Integer.parseInt(qtySelected1[l2]));
+						jobPlanProductStock.setUndergoingProcess(true);
 						jobPlanProductStock.setJobAssignmentProducts(jobAssignmentProducts);
 						ejb.updateJobPlanProductStock(jobPlanProductStock);
-						
-						totQtySelected=totQtySelected+Integer.parseInt(qtySelected1[l2]);
-					}
-					jobAssignmentProducts.setQty(totQtySelected);
-					jobAssignmentProducts.setRemaninQty(totQtySelected);
-					ejb.updateJobAssignmentProductDetails(jobAssignmentProducts);
+					}				
 					
 
 					String[] jobid = req.getParameterValues("jobId" + productForSampleId1[l1]);
@@ -2604,6 +2614,7 @@ public class Servlet extends HttpServlet {
 					String[] jobrate = req.getParameterValues("jobPresentRate" + productForSampleId1[l1]);
 					String[] jobamount = req.getParameterValues("jobAmount" + productForSampleId1[l1]);
 					String[] estSubmDate = req.getParameterValues("estSubmDate" + productForSampleId1[l1]);
+					float totalJobCost = 0;
 
 					for (int lc1 = 0; lc1 < jobid.length; lc1++) {
 						jobAssignmentJobDetails = new JobAssignmentJobDetails();
@@ -2613,6 +2624,7 @@ public class Servlet extends HttpServlet {
 						jobAssignmentJobDetails.setEstimatedCompletionDate(DateConverter.getDate(estSubmDate[lc1]));
 						jobAssignmentJobDetails
 								.setQtyUnit(ejb.getProductDetailById(Integer.parseInt(prodId[l1])).getQtyUnit());
+						jobAssignmentJobDetails.setJobType(ejb.getJobTypeById(Integer.parseInt(jobid[lc1])));
 						jobAssignmentJobDetails.setJobAssignmentDetails(jobAssignmentDetails);
 						jobAssignmentJobDetails.setAssignmentProducts(jobAssignmentProducts);
 						ejb.setJobAssignmentJobDetails(jobAssignmentJobDetails);
@@ -2621,7 +2633,12 @@ public class Servlet extends HttpServlet {
 					}
 					jobAssignmentProducts.setTotalJobCost(totalJobCost);
 					ejb.updateJobAssignmentProductDetails(jobAssignmentProducts);
-				}			
+					
+					totalJobExpanse=totalJobExpanse+totalJobCost;
+				}
+					jobPlan.setTotalJobExpanse(totalJobExpanse);
+					jobPlan.setTotalExpanse(jobPlan.getTotalExpanse()+totalJobExpanse);
+					ejb.updateJobPlan(jobPlan);
 				
 
 				msg = "Job Assigned Successfully";
