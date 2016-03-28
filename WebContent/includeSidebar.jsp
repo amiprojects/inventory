@@ -100,7 +100,7 @@
 				</div>
 			</div>
 
-			<div class="single-menu">
+			<!-- <div class="single-menu">
 
 				<h2 id="jobs">
 					<a title=""><span>Jobs Module</span></a>
@@ -116,7 +116,7 @@
 							title="">Sample Job CostSheet</a></li>
 					</ul>
 				</div>
-			</div>
+			</div> -->
 			<div class="single-menu">
 				<h2 id="setup">
 					<a title=""><span>Setup Module</span></a>
