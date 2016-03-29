@@ -33,6 +33,10 @@ public class NotificationDetails implements Serializable{
 	private Purchase_Entry purchase_Entry;
 	
 	@ManyToOne
+	@JoinColumn(name = "purchaseOrderEntry")
+	private PurchaseOrderEntry purchaseOrderEntry;
+	
+	@ManyToOne
 	@JoinColumn(name = "salesEntryId")
 	private SalesEntry salesEntry;
 	
@@ -105,6 +109,14 @@ public class NotificationDetails implements Serializable{
 
 	public void setNotificationView(List<NotificationView> notificationView) {
 		this.notificationView = notificationView;
+	}
+
+	public PurchaseOrderEntry getPurchaseOrderEntry() {
+		return purchaseOrderEntry;
+	}
+
+	public void setPurchaseOrderEntry(PurchaseOrderEntry purchaseOrderEntry) {
+		this.purchaseOrderEntry = purchaseOrderEntry;
 	}
 
 

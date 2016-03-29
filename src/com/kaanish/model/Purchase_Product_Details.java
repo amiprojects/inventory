@@ -39,7 +39,10 @@ public class Purchase_Product_Details implements Serializable {
 	private int numberForBarcodePrint;
 
 	@OneToMany(mappedBy = "purchaseProductDetails")
-	private List<PurchaseReturnProductDetails> purchaseReturnProductDetails;
+	private List<PurchaseReturnProductDetails> purchaseReturnProductDetails; 
+	
+	@OneToMany(mappedBy = "purchase_Product_Details")
+	private List<PurchaseOrderProductdetails> purchaseOrderProductdetails;
 
 	@ManyToOne
 	@JoinColumn(name = "purchaseReturnId")
@@ -301,6 +304,14 @@ public class Purchase_Product_Details implements Serializable {
 
 	public void setJobPlanProductStocks(List<JobPlanProductStock> jobPlanProductStocks) {
 		this.jobPlanProductStocks = jobPlanProductStocks;
+	}
+
+	public List<PurchaseOrderProductdetails> getPurchaseOrderProductdetails() {
+		return purchaseOrderProductdetails;
+	}
+
+	public void setPurchaseOrderProductdetails(List<PurchaseOrderProductdetails> purchaseOrderProductdetails) {
+		this.purchaseOrderProductdetails = purchaseOrderProductdetails;
 	}
 
 }

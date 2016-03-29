@@ -313,7 +313,7 @@ public class LoginServlet extends HttpServlet {
 			usersKainat.setCompanyInfo(companyInfoKainat);
 			ejb.setUser(usersKainat);
 		}
-		if (ejb.getAllBillSetup().size() < 12) {
+		if (ejb.getAllBillSetup().size() < 14) {
 			/*
 			 * companyInfoKaanish = ejb.getUserById("adminKaanish")
 			 * .getCompanyInfo(); companyInfoKainat =
@@ -351,7 +351,23 @@ public class LoginServlet extends HttpServlet {
 			bill_setup.setCompanyInfo(companyInfoKainat);
 			ejb.setBillSetup(bill_setup);
 			bill_setup = null;
+			
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("PURO");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfoKaanish);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
 
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("PURO");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfoKainat);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+			
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("INV");
 			bill_setup.setCompanyInitial("KK");

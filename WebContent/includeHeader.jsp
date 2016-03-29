@@ -1,7 +1,7 @@
 <header class="header" id="header">
 	<div class="logo">
-		 <a href="dashboard.html" title=""><img src="images/logo2.png"
-			alt="" /></a> 
+		<!-- <a href="dashboard.html" title=""><img src="images/logo2.png"
+			alt="" /></a>  -->
 		<a title="" class="toggle-menu"><i class="fa fa-bars"></i></a>
 	</div>
 	<div class="custom-dropdowns">
