@@ -139,11 +139,9 @@ function showDatePicker() {
 													type="hidden" id="jName" name="jName">
 											</div>
 											<div class="col-md-12">
-
 												&nbsp; &nbsp; &nbsp; <b class="font">Jobber Details :</b>
 												<textarea rows="5" cols="" id="jDetail" class="form-control"
 													readonly="readonly"></textarea>
-
 											</div>
 										</div>
 										<div class="col-md-6">
@@ -561,6 +559,8 @@ function showDatePicker() {
 										.each(
 												data2,
 												function(index, item2) {
+													//alert(data2.length);
+													if(data2.length>0){
 														$(
 																
 																"#jobPlansTable")
@@ -588,6 +588,9 @@ function showDatePicker() {
 																				+ "</td>"
 																				+ "</tr>"
 																				+ "</tbody>");
+													}else{
+														alert("There is no plans for this design number.")
+													}
 
 												});
 							}
@@ -776,6 +779,7 @@ function showDatePicker() {
 		function JobPlanOkF(){
 			if($("#planNo").val()!=""){
 			$("#jobPlans").modal("hide");
+			$( ".estSubmDate" ).trigger( "click" );
 			}else{
 				alert("Please select a plan.")
 			}
@@ -789,13 +793,14 @@ function showDatePicker() {
 			$
 			.ajax({
 				type : "post",
-				url : "getProductDetailsByDesignNumberAndQuantity",
+				url : "getProductAndDesignDetailsAndJobPlanByJobPlanId",
 				dataType : "json",
 				data : {
-					did : $("#dId").val()
+					pId : pId
 				},
 				success : function(data2) {
-					$("#ProductDetailsTable tbody").empty();
+					//$("#ProductDetailsTable tbody").empty();
+					$("#productNjobsDiv table").empty();
 
 					$
 							.each(
@@ -820,7 +825,7 @@ function showDatePicker() {
 										'</td><th style="text-align: right;">'
 										+ "Total Amount:" 
 										+ '</th><td>'
-										+ "<input type='text' class='form-control' id='productEachTotal"+item2.ProductForSampleId+"' readonly='readonly' value='"+0+"'>" +
+										+ "<input type='text' class='form-control' id='productEachTotal"+item2.ProductForSampleId+"' readonly='readonly' value='"+item2.ProductTotalAmount+"'>" +
 										'</td></tr><tr><th>'
 										+ "#" 
 										+ '</th><th>'
@@ -837,11 +842,70 @@ function showDatePicker() {
 										+ "Amount" +
 										'</th><th>'
 										+ "Est. Submission Date" +
+										'</th><th>'
+										+ "Status" +
 										'</th></tr></thead></table>');
+										
+										var ProductForSampleId= item2.ProductForSampleId;
+										$
+										.ajax({
+											type : "post",
+											url : "getJobsForDesignCostSheetByPlanId",
+											dataType : "json",
+											data : {
+												pid : ProductForSampleId
+											},
+											success : function(data2) {
+												$
+														.each(
+																data2,
+																function(index, item2) {											
+																		$(
+																				
+																				"#pDetTable"+ProductForSampleId)
+																				.append(
+																						"<tbody id='pDetTable"+item2.JobId+"'>"
+																								+ "<tr>"
+																								+ "<td>"
+																								+ Number(1 + index)
+																								+ "</td>"
+																								+ "<td>"
+																								+ item2.JobName+"<input type='hidden' id='jobId"+item2.JobId+"' value='"+item2.JobId+"'>"
+																								+ "</td>"
+																								+ "<td>"
+																								+ item2.JobRateOfSample
+																								+ "</td>"
+																								+ "<td>"
+																								+ "<input type='text' class='form-control' id='jobPresentRate"+item2.JobId+"' onkeyup='presentRateKU("+item2.JobId+");' value='"+item2.JobRateOfSample+"'>"
+																								+ "</td>"
+																								+ "<td>"
+																								+ "<input type='text' class='form-control' id='jobQty"+item2.JobId+"' onkeyup='qtyKU("+item2.JobId+");' value='"+item2.JobQtyOfSample+"'>"
+																								+ "</td>"
+																								+ "<td>"
+																								+ item2.JobUOMOfSample
+																								+ "</td>"
+																								+ "<td>"
+																								+ "<input type='text' readonly='readonly' id='jobAmount"+item2.JobId+"' class='form-control' value='"+item2.JobAmountOfSample+"'>"
+																								+ "</td>"
+																								+ "<td>"
+																								+ "<input onclick='showDatePicker();' type='text' id='estSubmDate"+item2.JobId+"' class='form-control estSubmDate'>"
+																								+ "</td>"
+																								+ "<td>"
+																								+ "status"
+																								+ "</td>"
+																								+ "<td>"
+																								+ "<input type='checkbox' onclick='isSelectedF("+ProductForSampleId+","+item2.JobId+");' name='selectedJobs"+item2.JobId+"' class='isSelected"+ProductForSampleId+"' id='isSelected"+item2.JobId+"' value='"+item2.JobId+"'>"
+																								+ "</td>"
+																								+ "</tr>"
+																								+ "</tbody>");										
+
+																});
+											}
+										});
 
 									});
 				}
-			});
+			});			
 		}
 	</script>
 </body>

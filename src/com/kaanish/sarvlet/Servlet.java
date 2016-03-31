@@ -26,6 +26,7 @@ import com.kaanish.model.Country;
 import com.kaanish.model.CustomerEntry;
 import com.kaanish.model.Department;
 import com.kaanish.model.DesignImage;
+import com.kaanish.model.JobAsignmentProductsFromStock;
 import com.kaanish.model.JobAssignmentDetails;
 import com.kaanish.model.JobAssignmentJobDetails;
 import com.kaanish.model.JobAssignmentProducts;
@@ -161,6 +162,7 @@ public class Servlet extends HttpServlet {
 	private JobPlan jobPlan;
 	private JobPlanProductStock jobPlanProductStock;
 	private JobAssignmentJobDetails jobAssignmentJobDetails;
+	private JobAsignmentProductsFromStock jobAsignmentProductsFromStock;
 	private PurchaseOrderEntry purchaseOrderEntry;
 	private PurchaseOrderProductdetails purchaseOrderProductdetails;
 
@@ -2630,6 +2632,7 @@ public class Servlet extends HttpServlet {
 					jobAssignmentProducts.setQty(Integer.parseInt(qtyOfSampleProduct[l1]));
 					jobAssignmentProducts.setRemaninQty(Integer.parseInt(qtyOfSampleProduct[l1]));
 					jobAssignmentProducts.setEstimatedCost(Float.parseFloat(productEachTotal[l1]));
+					jobAssignmentProducts.setJobPlan(jobPlan);
 					ejb.setJobAssignmentProducts(jobAssignmentProducts);
 					
 					String[] purProDetId1 = req.getParameterValues("purProDetId" + productForSampleId1[l1]);
@@ -2641,6 +2644,15 @@ public class Servlet extends HttpServlet {
 						jobPlanProductStock.setUndergoingProcess(true);
 						jobPlanProductStock.setJobAssignmentProducts(jobAssignmentProducts);
 						ejb.updateJobPlanProductStock(jobPlanProductStock);
+						
+						jobAsignmentProductsFromStock=new JobAsignmentProductsFromStock();
+						jobAsignmentProductsFromStock.setQty(Integer.parseInt(qtySelected1[l2]));
+						jobAsignmentProductsFromStock.setJobAssignmentDetails(jobAssignmentDetails);
+						jobAsignmentProductsFromStock.setJobPlanProductStock(jobPlanProductStock);
+						jobAsignmentProductsFromStock.setJobAssignmentProducts(jobAssignmentProducts);
+						jobAsignmentProductsFromStock.setJobPlan(jobPlan);
+						ejb.setJobAsignmentProductsFromStock(jobAsignmentProductsFromStock);
+						
 					}				
 					
 
