@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 
 @Entity
 @Cacheable(false)
-public class ItmProductsForSampleDesignCostSheet implements Serializable {
+public class ItmProductsForSample implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -19,10 +19,11 @@ public class ItmProductsForSampleDesignCostSheet implements Serializable {
 	private int id;
 	private int productId;
 	private int productForDesignCostSheetId;
+	private int sampleId;
 
 	@ManyToOne
-	@JoinColumn(name = "itemsForSampleDesignCoseSheetId")
-	private ItemsForSampleDesignCoseSheet itemsForSampleDesignCoseSheet;
+	@JoinColumn(name = "itemId")
+	private ItemDetails itemDetails;
 
 	public int getId() {
 		return id;
@@ -48,13 +49,25 @@ public class ItmProductsForSampleDesignCostSheet implements Serializable {
 		this.productForDesignCostSheetId = productForDesignCostSheetId;
 	}
 
-	public ItemsForSampleDesignCoseSheet getItemsForSampleDesignCoseSheet() {
-		return itemsForSampleDesignCoseSheet;
+	public int getSampleId() {
+		return sampleId;
 	}
 
-	public void setItemsForSampleDesignCoseSheet(
-			ItemsForSampleDesignCoseSheet itemsForSampleDesignCoseSheet) {
-		this.itemsForSampleDesignCoseSheet = itemsForSampleDesignCoseSheet;
-	}	
+	public void setSampleId(int sampleId) {
+		this.sampleId = sampleId;
+	}
+
+	public ItemDetails getItemDetails() {
+		return itemDetails;
+	}
+
+	public void setItemDetails(ItemDetails itemDetails) {
+		this.itemDetails = itemDetails;
+	}
+	
+	@Override
+	public String toString() {
+		return "{\"id\":\"" + id + "\", \"itemName\":\"" + itemDetails.getName() + "\"}";
+	}
 
 }

@@ -26,6 +26,7 @@ import com.kaanish.model.Country;
 import com.kaanish.model.CustomerEntry;
 import com.kaanish.model.Department;
 import com.kaanish.model.DesignImage;
+import com.kaanish.model.ItmProductsForSample;
 import com.kaanish.model.JobAssignmentDetails;
 import com.kaanish.model.JobAssignmentJobDetails;
 import com.kaanish.model.JobAssignmentProducts;
@@ -178,6 +179,7 @@ public class Servlet extends HttpServlet {
 	private JobRecieveProductsDetails jobRecieveProductsDetails;
 	private JobReceiveJobDetails jobReceiveJobDetails;
 	private ItemDetails itemDetails;
+	private ItmProductsForSample itmProductsForSample;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -1202,7 +1204,7 @@ public class Servlet extends HttpServlet {
 						purchaseProductDetails.setProductDetail(ejb
 								.getProductDetailsById(Integer
 										.parseInt(productId[l])));
-						
+
 						if (purchaseProductDetails.getProductDetail()
 								.isSaleble()) {
 							purchaseProductDetails.setMrp(Float
@@ -1223,7 +1225,7 @@ public class Servlet extends HttpServlet {
 								.toUpperCase());
 						purchaseProductDetails.setCompanyInfo(companyInfo);
 						ejb.setPurchaseProductDetails(purchaseProductDetails);
-						
+
 						if (purchaseProductDetails.getProductDetail().isRaw()) {
 							rawMaterialsStock = ejb
 									.getRawMeterialStoctByProductAndCompanyId(
@@ -2656,14 +2658,14 @@ public class Servlet extends HttpServlet {
 				}
 				msg = "image added successfully";
 				break;
-				
+
 			case "deleteProductImage":
 				page = "addNewProductImage.jsp?id=" + req.getParameter("id");
 				ejb.removeImageById(Integer.parseInt(req
 						.getParameter("imageId")));
 				msg = "Image deleted successfully";
 				break;
-				
+
 			case "createUserGroup":
 				int fl = 0;
 				for (UserGroup ug : ejb.getAllUserGroup()) {
@@ -2692,7 +2694,7 @@ public class Servlet extends HttpServlet {
 					msg = "User group name already exist";
 				}
 				break;
-				
+
 			case "updateUserGroup":
 				page = "setupUserGroup.jsp";
 				userGroup = ejb.getUserGroupById(Integer.parseInt(req
@@ -2707,7 +2709,7 @@ public class Servlet extends HttpServlet {
 				ejb.updateUserGroup(userGroup);
 				msg = "User group update successfully";
 				break;
-				
+
 			case "createNewUser":
 				page = "setupUser.jsp";
 				int uf = 0;
@@ -2756,7 +2758,7 @@ public class Servlet extends HttpServlet {
 					msg = "User mobile/id already exists";
 				}
 				break;
-				
+
 			case "updateUser":
 				page = "setupUser.jsp";
 				usr = ejb.getUserById(req.getParameter("userId"));
@@ -2952,7 +2954,7 @@ public class Servlet extends HttpServlet {
 				}
 
 				break;
-				
+
 			case "setJobTypes":
 				page = "jobSetup.jsp";
 				flag = 0;
@@ -3101,11 +3103,10 @@ public class Servlet extends HttpServlet {
 					String[] prorate = req.getParameterValues("rate");
 					String[] proamount = req.getParameterValues("amount");
 					String[] proqtyUnitId = req.getParameterValues("qtyUnitId");
-					String productIdList = "";
+					String[] itemId = req.getParameterValues("itemId");
 
 					for (int lc = 0; lc < productid.length; lc++) {
 						productsForDesignCostSheet = new ProductsForDesignCostSheet();
-
 						productsForDesignCostSheet.setProductDetail(ejb
 								.getProductDetailById(Integer
 										.parseInt(productid[lc])));
@@ -3120,11 +3121,22 @@ public class Servlet extends HttpServlet {
 										.parseInt(proqtyUnitId[lc])));
 						productsForDesignCostSheet
 								.setSampleDesignCostSheet(sampleDesignCostSheet);
-
 						ejb.setProductsForDesignCostSheet(productsForDesignCostSheet);
 
-						prototal = prototal + Float.parseFloat(prorate[lc]);
+						itmProductsForSample = new ItmProductsForSample();
+						itmProductsForSample.setProductId(Integer
+								.parseInt(productid[lc]));
+						itmProductsForSample
+								.setProductForDesignCostSheetId(productsForDesignCostSheet
+										.getId());
+						itmProductsForSample.setSampleId(sampleDesignCostSheet
+								.getId());
+						itmProductsForSample.setItemDetails(ejb
+								.getItemDetailsById(Integer
+										.parseInt(itemId[lc])));
+						ejb.setItmProductsForSample(itmProductsForSample);
 
+						prototal = prototal + Float.parseFloat(prorate[lc]);
 						String[] jobid = req.getParameterValues("jobId"
 								+ productid[lc]);
 						String[] jobqty = req.getParameterValues("jobqty"
@@ -3167,8 +3179,6 @@ public class Servlet extends HttpServlet {
 									+ Float.parseFloat(jobamount[lc1]);
 						}
 						productsForDesignCostSheet = null;
-
-						productIdList += productid[lc] + " ";
 					}
 
 					sampleDesignCostSheet.setTotalJobcost(jobtotal);
@@ -3939,7 +3949,7 @@ public class Servlet extends HttpServlet {
 								.setPurchaseOrderEntry(purchaseOrderEntry);
 						purchaseOrderProductdetails.setCompanyInfo(companyInfo);
 						ejb.setPurchaseOrderProductdetails(purchaseOrderProductdetails);
-						
+
 						purchaseOrderProductdetails = null;
 					}
 

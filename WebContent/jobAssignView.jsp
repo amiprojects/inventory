@@ -175,11 +175,11 @@
 												<th>Remaining Quantity</th>
 												<th>UOM</th>
 												<th>Total Product Amount</th>
+												<th>Item</th>
 												<th>Job</th>
 												<th>Total Job Qty</th>
 												<th>Job Rate</th>
 												<th>Job Amount</th>
-												<!-- <th>Job qty done</th> -->
 												<th>Status</th>
 											</tr>
 										</thead>
@@ -200,6 +200,7 @@
 													<td><fmt:formatNumber var="totProAmount"
 															value="${jobp.jobPlanProducts.totalProductCost}"
 															maxFractionDigits="2" />${totProAmount}</td>
+													<td>${sessionScope['ejb'].getItmProductsForSampleByProductForDesignCostSheetId(jobp.productsForDesignCostSheet.id).itemDetails.name}</td>
 													<td><c:forEach items="${jobp.jobAssignmentJobDetails}"
 															var="jobProjob">
 																				${jobProjob.jobType.jobName}<hr>
@@ -256,7 +257,7 @@
 												<td><h4>
 														<fmt:formatNumber var="totPC" value="${totProCost}"
 															maxFractionDigits="2" />${totPC}</h4></td>
-												<td>Total Job Cost:</td>
+												<td colspan="2">Total Job Cost:</td>
 												<td><h4>
 														<fmt:formatNumber var="totJC" value="${totJobCost}"
 															maxFractionDigits="2" />${totJC}</h4></td>

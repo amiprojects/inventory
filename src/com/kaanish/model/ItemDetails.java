@@ -17,35 +17,9 @@ public class ItemDetails implements Serializable {
 	@GeneratedValue
 	private int id;
 	private String name;
-	// private int sampleId;
-	// private String productIdList;
 
 	@OneToMany(mappedBy = "itemDetails")
-	private List<ItemsForSampleDesignCoseSheet> itemsForSampleDesignCoseSheet;
-
-	// public int getSampleId() {
-	// return sampleId;
-	// }
-	//
-	// public void setSampleId(int sampleId) {
-	// this.sampleId = sampleId;
-	// }
-	//
-	// public String getProductIdList() {
-	// return productIdList;
-	// }
-	//
-	// public void setProductIdList(String productIdList) {
-	// this.productIdList = productIdList;
-	// }
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
+	private List<ItmProductsForSample> itmProductsForSample;
 
 	public int getId() {
 		return id;
@@ -55,11 +29,21 @@ public class ItemDetails implements Serializable {
 		this.id = id;
 	}
 
-	public List<ItemsForSampleDesignCoseSheet> getItemsForSampleDesignCoseSheet() {
-		return itemsForSampleDesignCoseSheet;
+	public String getName() {
+		return name;
 	}
 
-	public void setItemsForSampleDesignCoseSheet(List<ItemsForSampleDesignCoseSheet> itemsForSampleDesignCoseSheet) {
-		this.itemsForSampleDesignCoseSheet = itemsForSampleDesignCoseSheet;
+	public void setName(String name) {
+		this.name = name;
 	}
+
+	public List<ItmProductsForSample> getItmProductsForSample() {
+		return itmProductsForSample;
+	}
+
+	public void setItmProductsForSample(
+			List<ItmProductsForSample> itmProductsForSample) {
+		this.itmProductsForSample = itmProductsForSample;
+	}
+
 }

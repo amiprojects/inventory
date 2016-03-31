@@ -430,7 +430,8 @@
 								<td colspan="2"><input type="text" readonly="readonly"
 									id="pUOMModal" class="form-control"><input
 									type="hidden" id="pIdModal"><input value=""
-									type="hidden" id="pForSampleIdModal"></td>
+									type="hidden" id="pForSampleIdModal"><input value=""
+									type="hidden" id="pItemModal"></td>
 							</tr>
 							<tr>
 								<th>Required Quantity :</th>
@@ -786,6 +787,20 @@
 										.map(
 												data,
 												function(item2) {
+													$.ajax({
+														url : 'getItmProductsForSampleByProductId',
+														type : 'post',
+														dataType : "json",
+														data : {
+															id : item2.productId
+														},
+														success : function(data) {
+															$("#pItemModal").val(data.itemName);
+														},
+														error : function(a, b, c) {
+															alert(b + ": " + c);
+														}
+													});
 													if (item2.purchaseDate != 'Initial Inventory') {
 														$(
 																"#purchaseDetailsTable")
@@ -915,7 +930,7 @@
 						.append(
 								'<table id="pDetTable'
 										+ $("#pForSampleIdModal").val()
-										+ '" class="table table-striped table-bordered"><thead style="background-color: #F0F0F0;"><tr><th style="text-align: right;" colspan="2">'
+										+ '" class="table table-striped table-bordered"><thead style="background-color: #F0F0F0;"><tr><th style="text-align: right;">'
 										+ "Pcode:"
 										+ '</th><td>'
 										+ "<input type='text' class='form-control' readonly='readonly' value='"
@@ -936,7 +951,7 @@
 										+ "'>"
 										+ '</td><th style="text-align: right;">'
 										+ "Description:"
-										+ '</th><td colspan="2">'
+										+ '</th><td>'
 										+ "<input type='text' class='form-control' readonly='readonly' value='"
 										+ $(
 												"#prod" + $("#pIdModal").val()
@@ -961,6 +976,12 @@
 										+ $("#pForSampleIdModal").val()
 										+ "' readonly='readonly' value='"
 										+ $("#totalAmount").val()
+										+ "'>"
+										+ '</td><th style="text-align: right;">'
+										+ "Item:"
+										+ '</th><td>'
+										+ "<input type='text' class='form-control' readonly='readonly' value='"
+										+ $("#pItemModal").val()
 										+ "'>"
 										+ '</td></tr><tr><th>'
 										+ "#"
@@ -1551,7 +1572,7 @@
 				}
 			});
 			if (i == 0) {
-				// alert("Please select atleast one users");
+				// alert("Please select atleast one job");
 
 				$("#productForSampleId" + psId).removeAttr("name");
 				$("#productId" + psId).removeAttr("name");

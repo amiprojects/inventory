@@ -84,7 +84,8 @@ import com.kaanish.util.DepartmentCotractor;
 		"/updatePurchaseEntry", "/updatePurchaseproduct",
 		"/getAllJobPlanByDesignNumber", "/getAllJobPlans",
 		"/setPurchaseProduct",
-		"/getSampleDesignCostSheetByDesignNumberForDuplicateCheck" })
+		"/getSampleDesignCostSheetByDesignNumberForDuplicateCheck",
+		"/getItmProductsForSampleByProductId" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -150,6 +151,12 @@ public class JsonServlet extends HttpServlet {
 										.getFinancialYearByDate(req
 												.getParameter("date"))))
 						.writeEnd().close();
+				break;
+				
+			case "getItmProductsForSampleByProductId":
+				resp.getWriter().print(
+						ejb.getItmProductsForSampleByProductId(Integer.parseInt(req
+								.getParameter("id"))));
 				break;
 
 			case "getUOMtype":

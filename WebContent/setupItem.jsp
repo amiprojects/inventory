@@ -139,7 +139,7 @@
 																				value="${jobtype.name}" class="form-control"
 																				required> <input type="hidden"
 																				id="jobUsedSize${jobtype.id}"
-																				value="${jobtype.itemsForSampleDesignCoseSheet.size()}">
+																				value="${jobtype.itmProductsForSample.size()}">
 																		</div>
 																	</div>
 																	<div class="col-md-12">

@@ -160,8 +160,9 @@
 												<th>Product Description</th>
 												<th>Quantity</th>
 												<th>UOM</th>
-												<th>rate</th>
+												<th>Rate</th>
 												<th>Amount</th>
+												<th>Item</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -175,6 +176,7 @@
 													<td>${jobp.qtyUnit.name}</td>
 													<td>${jobp.rate}</td>
 													<td>${jobp.ammount}</td>
+													<td>${sessionScope['ejb'].getItmProductsForSampleByProductForDesignCostSheetId(jobp.id).itemDetails.name}</td>
 												</tr>
 											</c:forEach>
 										</tbody>

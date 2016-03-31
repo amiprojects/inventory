@@ -206,6 +206,7 @@
 												<th>UOM</th>
 												<th>rate</th>
 												<th>Amount</th>
+												<th>Item</th>
 												<th>Remove</th>
 											</tr>
 										</thead>
@@ -319,55 +320,68 @@
 							</div>
 							<br>
 							<div class="row">
-								<table>
-									<tr>
-										<td><label for="proCode" class="font">Product
-												Code :<font color="red" size="4">*</font>
-										</label></td>
-										<td><input type="hidden" id="proId"> <input
-											type="text" id="proCode" name="proCode"></td>
-									</tr>
-									<tr>
-										<td><label for="proDesc" class="font">Product
-												Description :</label></td>
-										<td><textarea rows="" cols="" id="proDesc" name="proDesc"
-												readonly="readonly"></textarea></td>
-									</tr>
-									<tr>
-										<td><label for="proQty" class="font">Product Qty
-												:<font color="red" size="4">*</font>
-										</label></td>
-										<td><input type="text" class="numChk" id="proQty"></td>
-									</tr>
-									<tr>
-										<td><label for="proUOM" class="font">UOM :</label></td>
-										<td><input type="text" name="proUOM" id="proUOM"
-											readonly="readonly"> <input type="hidden" id="UOMid"
-											name="UOMid"></td>
-									</tr>
-									<tr>
-										<td><label for="rate" class="font">Product Rate :<font
-												color="red" size="4">*</font></label></td>
-										<td><input type="text" id="rate" class="numChk"></td>
-									</tr>
-									<tr>
-										<td><label for="rate" class="font">Select Job :<font
-												color="red" size="4">*</font></label></td>
-										<td><c:forEach
-												items="${sessionScope['ejb'].getAllJobTypes()}" var="job">
-												<input type="checkbox" class="isSelected" name="jobName"
-													value="${job.id}">
-												<span id="jobName${job.id}">${job.jobName}</span>
-												<br>
-											</c:forEach></td>
-									</tr>
-								</table>
+								<div class="col-md-8">
+									<table>
+										<tr>
+											<td><label for="proCode" class="font">Product
+													Code :<font color="red" size="4">*</font>
+											</label></td>
+											<td><input type="hidden" id="proId"> <input
+												type="text" id="proCode" name="proCode"></td>
+										</tr>
+										<tr>
+											<td><label for="proDesc" class="font">Product
+													Description :</label></td>
+											<td><textarea rows="" cols="" id="proDesc"
+													name="proDesc" readonly="readonly"></textarea></td>
+										</tr>
+										<tr>
+											<td><label for="proQty" class="font">Product Qty
+													:<font color="red" size="4">*</font>
+											</label></td>
+											<td><input type="text" class="numChk" id="proQty"></td>
+										</tr>
+										<tr>
+											<td><label for="proUOM" class="font">UOM :</label></td>
+											<td><input type="text" name="proUOM" id="proUOM"
+												readonly="readonly"> <input type="hidden" id="UOMid"
+												name="UOMid"></td>
+										</tr>
+										<tr>
+											<td><label for="rate" class="font">Product Rate
+													:<font color="red" size="4">*</font>
+											</label></td>
+											<td><input type="text" id="rate" class="numChk"></td>
+										</tr>
+										<tr>
+											<td><label for="rate" class="font">Select Job :<font
+													color="red" size="4">*</font></label></td>
+											<td><c:forEach
+													items="${sessionScope['ejb'].getAllJobTypes()}" var="job">
+													<input type="checkbox" class="isSelected" name="jobName"
+														value="${job.id}">
+													<span id="jobName${job.id}">${job.jobName}</span>
+													<br>
+												</c:forEach></td>
+										</tr>
+									</table>
 
-								<div class="form-group">
-									<input type="button" class="btn btn-success medium" id="yesC"
-										value="Add" onclick="addProductRow();">
+									<div class="form-group">
+										<input type="button" class="btn btn-success medium" id="yesC"
+											value="Add" onclick="addProductRow();">
+									</div>
 								</div>
-
+								<div class="col-md-4">
+									Select Item : <br><br>
+									<c:forEach items="${sessionScope['ejb'].getAllItemDetails()}"
+										var="item">
+										<input type="radio" class="isSelectedItem"
+											name="item" onclick="itemF('${item.name}','${item.id}');">${item.name}&nbsp;													
+																	<br>
+									</c:forEach>
+									<input type="hidden" id="itemName">
+									<input type="hidden" id="itemId">
+								</div>
 							</div>
 						</div>
 					</div>
@@ -456,6 +470,13 @@
 				i = 1;
 			}
 		});
+		
+		var item = 0;
+		$(".isSelectedItem").each(function() {
+			if ($(this).is(':checked')) {
+				item = 1;
+			}
+		});
 		if ($("#proCode").val() == "") {
 			alert("please select product code.");
 		} else if ($("#proQty").val() == "") {
@@ -464,6 +485,8 @@
 			alert("please enter product rate");
 		} else if (i == 0) {
 			alert("Please select job");
+		} else if (item == 0) {
+			alert("Please select item");
 		} else {
 			//error
 
@@ -546,6 +569,9 @@
 																+ $(this).val()
 																+ $("#proId")
 																		.val()
+																+ '\',\''
+																+ $("#proId")
+																		.val()
 																+ '\');"><font color="red"><u>remove</u></font></a></td>'
 																+ '</tr>'
 																+ '</tbody>');
@@ -567,6 +593,8 @@
 										+ '<td>'
 										+ '<input type="hidden" name="productId" value="'
 										+ $("#proId").val()
+										+ '"><input type="hidden" name="itemId" value="'
+										+ $("#itemId").val()
 										+ '"><input type="hidden" name="proQty" value="'
 										+ $("#proQty").val()
 										+ '"><input type="hidden" name="rate" value="'
@@ -600,6 +628,9 @@
 														* Number($("#rate")
 																.val()))
 												.toFixed(2)
+										+ '</td>'
+										+ '<td>'
+										+ $("#itemName").val()
 										+ '</td>'
 										+ '<td><a href="#" onclick="removeProductRow(\''
 										+ $("#proId").val()
@@ -666,7 +697,10 @@
 															+ '<td><a href="#" onclick="removeJobRow(\''
 															+ $(this).val()
 															+ $("#proId").val()
-															+ '\');"><font color="red"><u>remove</u></font></a></td>'
+															+ '\',\''
+															+ $("#proId")
+															.val()
+													+ '\');"><font color="red"><u>remove</u></font></a></td>'
 															+ '</tr>'
 															+ '</tbody>');
 									$("#jobQty").val("0");
@@ -772,7 +806,7 @@
 								.toFixed(2));
 	}
 
-	function removeJobRow(id) {
+	function removeJobRow(id,proId) {
 		//error
 		$("#jobRow" + id).remove();
 
@@ -790,6 +824,10 @@
 								Number($("#gtot").val())
 										+ Number($("#totProfit").val()))
 								.toFixed(2));
+		
+		if($('.proTable'+proId).length==0){
+			removeProductRow(proId);
+		}
 	}
 
 	function surchargeF() {
@@ -1017,5 +1055,10 @@
 			$("#surcharge").val(Number($("#surcharge").val()).toFixed(2));
 		});
 	});
+	
+	function itemF(name,id){
+		$("#itemName").val(name);
+		$("#itemId").val(id);
+	}
 </script>
 </html>

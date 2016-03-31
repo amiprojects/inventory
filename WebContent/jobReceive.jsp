@@ -268,15 +268,15 @@
 															<tr style="color: black; background-color: #f4f4f0">
 																<th style="text-align: center" width="5%">#</th>
 
-																<th width="10%" style="text-align: center">Product
-																	Code</th>
-																<th width="15%" style="text-align: center">Product
+																<th width="8%" style="text-align: center">Pcode</th>
+																<th width="12%" style="text-align: center">Product
 																	Description</th>
 																<th width="5%" style="text-align: center">Qty</th>
 																<th width="10%" style="text-align: center">Remaining
 																	Qty</th>
 																<th width="10%" style="text-align: center">UOM</th>
-																<th width="10%" style="text-align: center">Job</th>
+																<th width="7%" style="text-align: center">Item</th>
+																<th width="8%" style="text-align: center">Job</th>
 																<th width="10%" style="text-align: center">Total
 																	Job Qty</th>
 																<th width="15%" style="text-align: center">Receiving
@@ -308,15 +308,16 @@
 																			type="hidden" id="jobAssgnProductsId${jobPro.id}"
 																			value="${jobPro.id}"></td>
 
-																		<td width="10%" style="text-align: center">${jobPro.jobPlanProducts.jobPlanProductStock.get(0).purchase_Product_Details.productDetail.code}</td>
-																		<td width="15%" style="text-align: center">${jobPro.jobPlanProducts.jobPlanProductStock.get(0).purchase_Product_Details.productDetail.description}</td>
+																		<td width="8%" style="text-align: center">${jobPro.jobPlanProducts.jobPlanProductStock.get(0).purchase_Product_Details.productDetail.code}</td>
+																		<td width="12%" style="text-align: center">${jobPro.jobPlanProducts.jobPlanProductStock.get(0).purchase_Product_Details.productDetail.description}</td>
 																		<td width="5%" style="text-align: center"><span
 																			id="qtty${jobPro.id}">${jobPro.qty}</span></td>
 																		<td width="10%"
 																			style="text-align: center; padding: 2px"><span
 																			id="prodRemQty${jobPro.id}">${jobPro.remaninQty}</span></td>
 																		<td width="10%" style="text-align: center">${jobPro.jobPlanProducts.jobPlanProductStock.get(0).purchase_Product_Details.productDetail.qtyUnit.name}</td>
-																		<td width="10%" style="text-align: center"><c:forEach
+																		<td width="7%" style="text-align: center">${sessionScope['ejb'].getItmProductsForSampleByProductForDesignCostSheetId(jobPro.productsForDesignCostSheet.id).itemDetails.name}</td>
+																		<td width="8%" style="text-align: center"><c:forEach
 																				items="${jobPro.jobAssignmentJobDetails}"
 																				var="jobProjob">
 																				${jobProjob.jobType.jobName}<hr>
