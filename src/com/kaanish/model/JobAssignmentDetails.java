@@ -37,6 +37,10 @@ public class JobAssignmentDetails implements Serializable {
 	private boolean isFlatProfit;
 
 	@ManyToOne
+	@JoinColumn(name = "JobPlanId")
+	private JobPlan jobPlan;
+	
+	@ManyToOne
 	@JoinColumn(name = "companyInfoId")
 	private CompanyInfo companyInfo;//old concept
 
@@ -168,6 +172,14 @@ public class JobAssignmentDetails implements Serializable {
 
 	public void setFlatProfit(boolean isFlatProfit) {
 		this.isFlatProfit = isFlatProfit;
+	}
+
+	public JobPlan getJobPlan() {
+		return jobPlan;
+	}
+
+	public void setJobPlan(JobPlan jobPlan) {
+		this.jobPlan = jobPlan;
 	}
 
 }

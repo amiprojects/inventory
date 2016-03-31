@@ -216,15 +216,14 @@ function showDatePicker() {
 												<th style="text-align: right;">Product code :</th>
 												<td>---</td>
 												<th style="text-align: right;">Description :</th>
-												<td colspan="2">---</td>
+												<td>---</td>
 												<th style="text-align: right;">Quantity :</th>
 												<td>code</td>
-												<th style="text-align: right;">Rate :</th>
+												<th style="text-align: right;">Total Amount :</th>
 												<td>---</td>
 											</tr>
 											<tr>
 												<th>#</th>
-												<th>Job</th>
 												<th>Job</th>											
 												<th>Sample Rate</th>
 												<th>Present Rate</th>

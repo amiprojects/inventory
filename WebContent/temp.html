@@ -1,5 +1,56 @@
-"
-<input type='text' class='form-control'
-	id='productEachTotal"+$("#pForSampleIdModal").val()+"'
-	readonly='readonly' value='"+$("#totalAmount").val()+"'>
-"
+if (item2.ProductRemainingQty >= (Number($(
+												"#qty").val()) * item2.ProductQtyForSample)) {
+											$(
+													
+													"#ProductDetailsTable")
+													.append(
+															"<tbody id='prod"+item2.ProductId+"' onclick='selectProduct(\""
+																	+ item2.ProductCode
+																	+ "\",\""+ item2.ProductDesc +"\",\""+ item2.ProductUOMName +"\",\""+ item2.ProductForSampleId +"\",\""+ item2.ProductId +"\");'>"
+																	+ "<tr>"
+																	+ "<td>"
+																	+ Number(1 + index)
+																	+ "</td>"
+																	+ "<td>"
+																	+ item2.ProductCode
+																	+ "</td>"
+																	+ "<td>"
+																	+ item2.ProductDesc
+																	+ "</td>"
+																	+ "<td>"
+																	+ item2.ProductUOMName
+																	+ "</td>"
+																	+ "<td>"
+																	+ item2.ProductQtyForSample
+																			* $(
+																					"#qty")
+																					.val()
+																	+ "</td>"
+																	+ "<td>"
+																	+ item2.ProductRateForSample
+																			* $(
+																					"#qty")
+																					.val()
+																	+ "</td>"
+																	+ "<td>"
+																	+ (item2.ProductQtyForSample * $(
+																			"#qty")
+																			.val())
+																	* (item2.ProductRateForSample * $(
+																			"#qty")
+																			.val())
+																	+ "</td>"
+																	+ "</tr>"
+																	+ "</tbody>");
+										} else {
+											alert("unsufficient product "
+													+ item2.ProductDesc);
+											$(
+													"#ProductDetailsTable tbody")
+													.empty();
+											$(
+													"#productDetails")
+													.modal(
+															"hide");
+											return false;
+										}
