@@ -62,8 +62,8 @@
 		}
 		$("#datepicker").datepicker({
 			dateFormat : "dd-mm-yy",
-			minDate : new Date(n, 3, 1),
-			maxDate : 0
+			minDate : 0,
+			
 		});
 		$("#datepicker").datepicker('setDate', new Date());
 	});
@@ -109,7 +109,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#purch").attr("id", "activeSubMenu");
-		$("#sPurchEntry").attr("style", "color: #6a94ff;");
+		$("#sPurchPOgive").attr("style", "color: #6a94ff;");
 		$("#payDetail").hide();
 		$("#description").hide();
 		$("#AMi2").hide();
@@ -268,13 +268,13 @@
 
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
-								<h3 style="margin-top: 11px;">Purchase Entry</h3>
+								<h3 style="margin-top: 11px;">Purchase Order</h3>
 
 							</div>
 
 							<div class="col-md-12">
 								<form role="form" class="sec" method="post" id="purchaseForm"
-									action="purchaseEntry">
+									action="purchaseOrderEntry">
 									<div class="widget-area">
 										<div class="col-md-6">
 											<div class="col-md-12">
@@ -354,7 +354,7 @@
 													required="required">
 											</div>
 											<div class="form-group">
-												<label for="" class="font">Purchase challan no. :</label>
+												<label for="" class="font">Purchase Order challan no. :</label>
 												<c:set var="fy"
 													value="${sessionScope['ejb'].getCurrentFinancialYear()}" />
 												<c:set var="cno"
@@ -379,10 +379,13 @@
 													name="challanSuffix" value="${lastSuf}">
 											</div>
 											<div class="form-group">
-												<label for="" class="font">Purchase Date :</label> <input
+												<label for="" class="font">Expected Delivery Date:</label> <input
 													type="text" id="datepicker" class="form-control"
 													name="purchaseDate" required="required" readonly="readonly">
 											</div>
+											
+											
+
 											<div class="form-group" id="aDetailDiv">
 												<label for="" class="font">Agent Details:</label>
 												<textarea rows="5" cols="" class="form-control"
@@ -415,19 +418,8 @@
 											</tr>
 										</thead>
 									</table>
-									<!-- <div style="width: 60%; float: left;">
-										<div class="col-md-12">
-											<div class="widget-area">
-												<div>
-													<img id="image2" alt="productImage" src="data:image/jpeg;base64," 
-														style="width: 100px; height: 50px;">
-														<div id="peoImg"></div>
-												</div>
-
-											</div>
-										</div>
-									</div> -->
-									<div style="width: 40%; float: left;">
+									
+									<div style="width: 40%; float: right;">
 										<table id="stream_table"
 											class="table table-striped table-bordered">
 											<thead>

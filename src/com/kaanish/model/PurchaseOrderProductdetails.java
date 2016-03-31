@@ -49,6 +49,10 @@ public class PurchaseOrderProductdetails implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "purchaseOrderEntryId")
 	private PurchaseOrderEntry purchaseOrderEntry;
+		
+	@ManyToOne
+	@JoinColumn(name = "companyInfoId")
+	private CompanyInfo companyInfo;
 
 	public int getId() {
 		return id;
@@ -192,6 +196,14 @@ public class PurchaseOrderProductdetails implements Serializable {
 
 	public void setPurchaseOrderEntry(PurchaseOrderEntry purchaseOrderEntry) {
 		this.purchaseOrderEntry = purchaseOrderEntry;
+	}
+
+	public CompanyInfo getCompanyInfo() {
+		return companyInfo;
+	}
+
+	public void setCompanyInfo(CompanyInfo companyInfo) {
+		this.companyInfo = companyInfo;
 	}
 
 	

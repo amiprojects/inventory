@@ -809,6 +809,15 @@ public class Ejb {
 		q.setParameter("chNo", chNo.toUpperCase());
 		return q.getResultList();
 	}
+	
+	public List<PurchaseOrderEntry> getPurchaseOrderByChallanNo(String chNo) {
+		TypedQuery<PurchaseOrderEntry> q = em.createQuery(
+				"select c from PurchaseOrderEntry c where UPPER(c.challanNumber)=:chNo ORDER BY c.id DESC",
+				PurchaseOrderEntry.class);
+		q.setParameter("chNo", chNo.toUpperCase());
+		return q.getResultList();
+	}
+
 
 	public List<Purchase_Entry> getPurchaseEntryByVendorName(String name) {
 		TypedQuery<Purchase_Entry> q = em.createQuery(
