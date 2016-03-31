@@ -41,6 +41,7 @@
 	padding-right: 20px;
 }
 </style>
+
 <style>
 div.dataTables_wrapper {
 	width: 100%;

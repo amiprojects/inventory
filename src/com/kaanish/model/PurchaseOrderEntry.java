@@ -53,7 +53,7 @@ public class PurchaseOrderEntry implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "usersId")
 	private Users users;
-	
+	 
 	@ManyToOne
 	@JoinColumn(name = "taxGroupID")
 	private Tax_Type_Group tax_Type_Group;
@@ -73,6 +73,10 @@ public class PurchaseOrderEntry implements Serializable {
 
 	@OneToMany(mappedBy = "purchaseOrderEntry", cascade = CascadeType.ALL)
 	private List<PaymentDetails> paymentDetails;
+	
+	
+	@OneToMany(mappedBy = "purchaseOrderEntry", cascade = CascadeType.ALL)
+	private List<Purchase_Entry> purchase_Entry;
 
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "purchaseOrderEntry")
 	private VoucherDetails voucherDetails;
@@ -283,6 +287,14 @@ public class PurchaseOrderEntry implements Serializable {
 
 	public void setCompanyInfo(CompanyInfo companyInfo) {
 		this.companyInfo = companyInfo;
+	}
+
+	public List<Purchase_Entry> getPurchase_Entry() {
+		return purchase_Entry;
+	}
+
+	public void setPurchase_Entry(List<Purchase_Entry> purchase_Entry) {
+		this.purchase_Entry = purchase_Entry;
 	}
 	
 	

@@ -1032,6 +1032,20 @@ public class Ejb {
 		lst.addAll(hash);
 		return lst;
 	}
+	
+	
+	public List<String> getAllFinancialForPurchaseOrder() {
+		List<String> lst = new ArrayList<String>();
+		HashSet<String> hash = new HashSet<String>();
+		for (PurchaseOrderEntry poe : getAllPurchaseOrderEntry()) {
+			lst.add(poe.getChallanNumber().split("/")[1]);
+		}
+		hash.addAll(lst);
+		lst.clear();
+		lst.addAll(hash);
+		return lst;
+	}
+	
 	public List<Purchase_Entry> getAllPurchaseEntryByVendorIdTypeVendor(int id){
 		TypedQuery<Purchase_Entry> q = em.createQuery("select c from Purchase_Entry c Where c.vendor.vendorType.type='Vendor' and c.vendor.id = :id",Purchase_Entry.class);
 		q.setParameter("id", id);

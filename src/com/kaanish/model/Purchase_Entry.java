@@ -49,6 +49,11 @@ public class Purchase_Entry implements Serializable {
 	
 	@OneToMany(mappedBy = "purchaseEntry")
 	private List<PurchaseReturn> purchaseReturn;
+	
+	@ManyToOne
+	@JoinColumn(name = "purchaseOrderEntryId")
+	private PurchaseOrderEntry purchaseOrderEntry;
+
 
 	@ManyToOne
 	@JoinColumn(name = "companyInfoId")
@@ -284,6 +289,14 @@ public class Purchase_Entry implements Serializable {
 
 	public void setNotificationDetails(List<NotificationDetails> notificationDetails) {
 		this.notificationDetails = notificationDetails;
+	}
+
+	public PurchaseOrderEntry getPurchaseOrderEntry() {
+		return purchaseOrderEntry;
+	}
+
+	public void setPurchaseOrderEntry(PurchaseOrderEntry purchaseOrderEntry) {
+		this.purchaseOrderEntry = purchaseOrderEntry;
 	}
 
 	

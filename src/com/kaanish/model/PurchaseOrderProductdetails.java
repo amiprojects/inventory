@@ -33,7 +33,7 @@ public class PurchaseOrderProductdetails implements Serializable {
 	private String attrValue4;
 	private String attrValue5;
 	private String attrValue6;
-	private String lotNumber;
+	//private String lotNumber;
 
 	@ManyToOne
 	@JoinColumn(name = "productId")
@@ -158,13 +158,13 @@ public class PurchaseOrderProductdetails implements Serializable {
 		this.attrValue6 = attrValue6;
 	}
 
-	public String getLotNumber() {
+	/*public String getLotNumber() {
 		return lotNumber;
 	}
 
 	public void setLotNumber(String lotNumber) {
 		this.lotNumber = lotNumber;
-	}
+	}*/
 
 	public ProductDetail getProductDetail() {
 		return productDetail;
