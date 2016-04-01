@@ -143,20 +143,11 @@
 											<h3 align="left">Current Status</h3>
 										</div>
 										<div class="col-md-6" align="right">
-											<!-- <button class="btn pull-right" type="button"
-											onclick="cancelF();">
-											<h5>All job assignments of this plan</h5>
-										</button> -->
-
-
-											<a href="#" target="_blank" onclick="jobSearchByPlanNoF();"><input
+											<!-- <a href="#" target="_blank" onclick="jobSearchByPlanNoF();"><input
 												type="hidden" value="" name="planIdForAssign"
 												id="planIdForAssign"><u><h3>All job
-														assignments of this plan</h3></u></a>
+														assignments of this plan</h3></u></a> -->
 										</div>
-									</div>
-									<div id="productNjobsDiv">
-										<input type="hidden" id="orItem">
 									</div>
 									<table id="productNjobsTable"
 										class="table table-striped table-bordered">
@@ -183,6 +174,11 @@
 											</tr>
 										</thead>
 									</table>
+									<div id="productNjobsDiv">
+										<input type="hidden" id="orItem">
+									</div>
+									<button class="btn btn-primary large" onclick="jobSearchByPlanNoF();" type="button">All job
+														assignments of this plan</button>									
 									<br>
 								</form>
 							</div>
