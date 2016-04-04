@@ -152,11 +152,11 @@ public class JsonServlet extends HttpServlet {
 												.getParameter("date"))))
 						.writeEnd().close();
 				break;
-				
+
 			case "getItmProductsForSampleByProductId":
 				resp.getWriter().print(
-						ejb.getItmProductsForSampleByProductId(Integer.parseInt(req
-								.getParameter("id"))));
+						ejb.getItmProductsForSampleByProductId(Integer
+								.parseInt(req.getParameter("id"))));
 				break;
 
 			case "getUOMtype":
@@ -454,6 +454,13 @@ public class JsonServlet extends HttpServlet {
 														.getParameter("pId")))
 												.getId())
 								.write("japYesOrNo", "yes")
+								.write("jobCycle",
+										ejb.getJobAssignmentProductDetailsByproductAndJobPlanId(
+												pdcs.getProductDetail().getId(),
+												Integer.parseInt(req
+														.getParameter("pId")))
+												.getJobPlanProducts()
+												.getJobCycle())
 
 								.write("IsComplete",
 										ejb.getJobAssignmentProductDetailsByproductAndJobPlanId(

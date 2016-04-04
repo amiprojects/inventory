@@ -1073,7 +1073,7 @@
 																var japId = 0;
 															} else if (item2.japYesOrNo == "yes"
 																	&& item2.japRemQty == 0) {
-																var Assigned = "Not completed";
+																var Assigned = "Job Cycle:"+ item2.jobCycle;
 																var japId = item2.japId;
 															}
 															$('#productNjobsDiv')

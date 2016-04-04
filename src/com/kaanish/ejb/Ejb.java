@@ -1719,6 +1719,8 @@ public class Ejb {
 		return q.getResultList().get(0);
 	}
 
+	
+	//to get last JobAssignmentProducts
 	public JobAssignmentProducts getJobAssignmentProductDetailsByproductAndJobPlanId(
 			int id, int jpId) {
 		TypedQuery<JobPlanProductStock> q = em
