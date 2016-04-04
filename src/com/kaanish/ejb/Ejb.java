@@ -221,13 +221,11 @@ public class Ejb {
 		q.setParameter("id", id);
 		return q.getResultList().get(0);
 	}
-	
-	public ItmProductsForSample getItmProductsForSampleByProductId(
-			int id) {
-		TypedQuery<ItmProductsForSample> q = em
-				.createQuery(
-						"select c from ItmProductsForSample c where c.productId=:id",
-						ItmProductsForSample.class);
+
+	public ItmProductsForSample getItmProductsForSampleByProductId(int id) {
+		TypedQuery<ItmProductsForSample> q = em.createQuery(
+				"select c from ItmProductsForSample c where c.productId=:id",
+				ItmProductsForSample.class);
 		q.setParameter("id", id);
 		return q.getResultList().get(0);
 	}
@@ -1719,8 +1717,7 @@ public class Ejb {
 		return q.getResultList().get(0);
 	}
 
-	
-	//to get last JobAssignmentProducts
+	// to get last JobAssignmentProducts
 	public JobAssignmentProducts getJobAssignmentProductDetailsByproductAndJobPlanId(
 			int id, int jpId) {
 		TypedQuery<JobPlanProductStock> q = em
@@ -3561,6 +3558,14 @@ public class Ejb {
 		q.setParameter("jpId", jpId);
 		q.setParameter("sId", sId);
 		return q.getResultList().get(0);
+	}
+
+	public List<JobPlanProducts> getJobPlanProductsByPlanId(int jpId) {
+		TypedQuery<JobPlanProducts> q = em.createQuery(
+				"select c from JobPlanProducts c where c.jobPlan.id=:jpId",
+				JobPlanProducts.class);
+		q.setParameter("jpId", jpId);
+		return q.getResultList();
 	}
 
 	/***************************

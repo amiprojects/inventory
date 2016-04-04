@@ -25,6 +25,7 @@ import com.kaanish.model.Country;
 import com.kaanish.model.Department;
 import com.kaanish.model.JobAssignmentProducts;
 import com.kaanish.model.JobPlan;
+import com.kaanish.model.JobPlanProducts;
 import com.kaanish.model.JobsForDesignCostSheet;
 import com.kaanish.model.PaymentDetails;
 import com.kaanish.model.ProductDetail;
@@ -85,7 +86,7 @@ import com.kaanish.util.DepartmentCotractor;
 		"/getAllJobPlanByDesignNumber", "/getAllJobPlans",
 		"/setPurchaseProduct",
 		"/getSampleDesignCostSheetByDesignNumberForDuplicateCheck",
-		"/getItmProductsForSampleByProductId" })
+		"/getItmProductsForSampleByProductId", "/getJobPlanProductsByPlanId" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -773,6 +774,23 @@ public class JsonServlet extends HttpServlet {
 							.writeEnd();
 				}
 				generatorJA.writeEnd().close();
+				break;
+
+			case "getJobPlanProductsByPlanId":
+				JsonGeneratorFactory factoryJPP = Json
+						.createGeneratorFactory(null);
+				JsonGenerator generatorJPP = factoryJPP.createGenerator(resp
+						.getOutputStream());
+				generatorJPP.writeStartArray();
+				for (JobPlanProducts jpp : ejb
+						.getJobPlanProductsByPlanId(Integer.parseInt(req
+								.getParameter("pId")))) {
+					generatorJPP.writeStartObject()
+							.write("jppQty", jpp.getQty())
+							.write("jppRemQty", jpp.getRemainingQty())
+							.writeEnd();
+				}
+				generatorJPP.writeEnd().close();
 				break;
 
 			case "getProductByDescription":
