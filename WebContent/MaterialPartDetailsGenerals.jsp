@@ -132,32 +132,32 @@
 	function submitSumary() {
 
 		if ($("#productCode").val() == 0) {
-			alert("please select Product Code:");
+			alert("please enter Product Code:");
 		} else if ($("#description").val() == "") {
-			alert("please select Description");
+			alert("please enter Description");
 		} else if ($("#universalProductCode").val() == "") {
-			alert("please select Designer's Design number:");
+			alert("please enter Designer's Design number:");
 		} else if ($("#uomnamedisplay").val() == "") {
 			alert("please select Unit of measurement");
 		} else if ($("#isRaw").val() == "") {
 			alert("please select Raw or Ready product");
 		} else if (!$("[name='same']").is(':checked')) {
-			alert("please select product Category");
+			alert("please enter product Category");
 		} else if ($("#openn").is(':checked')) {
 
 			if ($("#quantity").val() == 0) {
-				alert("please select quantity");
+				alert("please enter quantity");
 			} else if ($("#mrpO").val() == 0) {
 
-				alert("please select MRP");
+				alert("please enter MRP");
 
 			} else if ($("#wspO").val() == 0) {
-				alert("please select WSP");
+				alert("please enter WSP");
 			} else if ($("#ucO").val() == 0) {
 				alert("please select per unit cost");
 
 			} else if ($("#lotnumberS").val() == 0) {
-				alert("please select lot number");
+				alert("please enter lot number");
 
 			} else if (!$('#a10').attr("disabled") && $("#a10").val() == "") {
 				alert("Please insert " + $("#sa1").html() + " value");
@@ -536,7 +536,8 @@
 												color="red" size="4">*</font></label> <input type="text"
 												name="productCode2" id="productCode" onkeyup="codeKeyUp();"
 												onchange="codeChange();" class="form-control"
-												onkeypress="return blockSpecialCharNspace(event)">
+												onkeypress="return blockSpecialCharNspace(event)"
+												autocomplete="off">
 										</div>
 									</div>
 									<div class="col-md-6">
@@ -553,15 +554,16 @@
 										</label> <input type="text" name="universalProductCode"
 											id="universalProductCode"
 											onkeypress="return blockSpecialChar(event)" placeholder=""
-											class="form-control"><br>
+											class="form-control" onkeyup="dNoKeyUp();"
+											onchange="dNoChange();" autocomplete="off"><input
+											type="hidden" id="dNoCheck" name="dNoCheck"><br>
 									</div>
 									<div class="col-md-5">
 										<div>
 											<label for="exampleInputPassword1">Unit Of
 												Measurement:<font color="red" size="4">*</font>
-											</label> <select required name="uom" id="uomO"
-												onchange="uomFunction()" class="form-control"
-												style="width: 205px; height: 34px">
+											</label> <select required id="uomO" onchange="uomFunction()"
+												class="form-control" style="width: 205px; height: 34px">
 												<option value="0">select an UOM</option>
 												<c:forEach items="${sessionScope['ejb'].getAllQtyUnit()}"
 													var="qqty">
@@ -962,8 +964,7 @@
 											<td>Unit of Measurement:</td>
 											<td><input type="hidden" class="form-control " readonly
 												name="uom" id="uom1"> <input type="text"
-												class="form-control " readonly name="uom"
-												id="uomnamedisplay"></td>
+												class="form-control " readonly id="uomnamedisplay"></td>
 
 										</tr>
 
@@ -1365,6 +1366,8 @@
 				success : function(data) {
 					if (data.code != "") {
 						$("#pcodeCheck").val(data.code);
+					} else {
+						$("#pcodeCheck").val("");
 					}
 				}
 			});
@@ -2158,6 +2161,38 @@
 			var k = e.keyCode;
 			return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8
 					|| k == 32 || (k >= 48 && k <= 57));
+		}
+	</script>
+	<script type="text/javascript">
+		function dNoKeyUp() {
+			$("#dNoCheck").val("");
+			$
+					.ajax({
+						url : "getAllDesignNoFromSampleDesignCostSheetAndProductsByDesignNumberForDuplicateCheck",
+						dataType : "json",
+						data : {
+							dNo : $("#universalProductCode").val()
+						},
+						success : function(data) {
+							$.map(data, function(item) {
+								if (item.dNumber != "") {
+									$("#dNoCheck").val(item.dNumber);
+								} else {
+									$("#dNoCheck").val("");
+								}
+							});
+						}
+
+					});
+
+		}
+
+		function dNoChange() {
+			if ($("#dNoCheck").val() != "") {
+				alert("Duplicate Design Number");
+				$("#dNoCheck").val("");
+				$("#universalProductCode").val("");
+			}
 		}
 	</script>
 </body>

@@ -48,29 +48,64 @@ import com.kaanish.util.Base64;
 import com.kaanish.util.DateConverter;
 import com.kaanish.util.DepartmentCotractor;
 
-@WebServlet({ "/getcountry", "/addNewUOMtype", "/getUOMtype",
-		"/getAllDepartments", "/getProductByDescription", "/getStateByCountry",
-		"/getStateByCountryByStateName", "/getCity", "/getCityByName",
-		"/getQtyUnit", "/getQtyUnitConversion", "/getVendorByVendorType",
-		"/getQtyConversion", "/getVendorByVendorId", "/getAccountByVendorId",
-		"/getTaxGroupById", "/getproductPro", "/getPurchasebyPro",
-		"/getAccountDetails", "/getProductDetailById", "/getCategoryById",
-		"/getProductImageByProductid", "/getJobberDetailsByName",
-		"/getProdDetByPurchaseProdDetailsId", "/getStateByCityName",
-		"/getAllQtyUnitByNameOrAbv", "/getAgentDetails",
-		"/getCityByStateByCityName", "/getVendorTypeById",
+@WebServlet({
+		"/getcountry",
+		"/addNewUOMtype",
+		"/getUOMtype",
+		"/getAllDepartments",
+		"/getProductByDescription",
+		"/getStateByCountry",
+		"/getStateByCountryByStateName",
+		"/getCity",
+		"/getCityByName",
+		"/getQtyUnit",
+		"/getQtyUnitConversion",
+		"/getVendorByVendorType",
+		"/getQtyConversion",
+		"/getVendorByVendorId",
+		"/getAccountByVendorId",
+		"/getTaxGroupById",
+		"/getproductPro",
+		"/getPurchasebyPro",
+		"/getAccountDetails",
+		"/getProductDetailById",
+		"/getCategoryById",
+		"/getProductImageByProductid",
+		"/getJobberDetailsByName",
+		"/getProdDetByPurchaseProdDetailsId",
+		"/getStateByCityName",
+		"/getAllQtyUnitByNameOrAbv",
+		"/getAgentDetails",
+		"/getCityByStateByCityName",
+		"/getVendorTypeById",
 		"/getProductbyProductCode",
 		"/getSaleblePurchaseProductDetailsByProductCodeAndQuantity",
-		"/getVendorsByVendorTypeJobberAndName", "/getProductsForSaleByCode",
-		"/deleteUOM", "/getVendorsByVendorTypeSalesAgentAndName",
-		"/getSalesAgentDetailsById", "/getPurchaseProductDetailsByIdForSale",
-		"/getCustomerByPh", "/checkPcode", "/addVendorbyjson", "/addAgen",
-		"/getVendorByType", "/addUOMjson", "/getuomByType", "/getDeptjson",
-		"/getSubByDepjson", "/getCatBySubjson", "/addJsonCity",
-		"/addJsonState", "/addJsonCountry", "/productSumaryJson",
-		"/getVendorsByNameAndType", "/getVendorsByVendorTypeVendorAndName",
-		"/getVendorsByVendorTypePurchaseAgentAndName", "/getCustomerByName",
-		"/getCriticalStock", "/getSampleDesignCostSheetByDesignNumber",
+		"/getVendorsByVendorTypeJobberAndName",
+		"/getProductsForSaleByCode",
+		"/deleteUOM",
+		"/getVendorsByVendorTypeSalesAgentAndName",
+		"/getSalesAgentDetailsById",
+		"/getPurchaseProductDetailsByIdForSale",
+		"/getCustomerByPh",
+		"/checkPcode",
+		"/addVendorbyjson",
+		"/addAgen",
+		"/getVendorByType",
+		"/addUOMjson",
+		"/getuomByType",
+		"/getDeptjson",
+		"/getSubByDepjson",
+		"/getCatBySubjson",
+		"/addJsonCity",
+		"/addJsonState",
+		"/addJsonCountry",
+		"/productSumaryJson",
+		"/getVendorsByNameAndType",
+		"/getVendorsByVendorTypeVendorAndName",
+		"/getVendorsByVendorTypePurchaseAgentAndName",
+		"/getCustomerByName",
+		"/getCriticalStock",
+		"/getSampleDesignCostSheetByDesignNumber",
 		"/getProductDetailsByDesignNumberAndQuantity",
 		"/getPurchaseProductDetailsByProductCode",
 		"/getJobsForDesignCostSheetByProductSForSampleId",
@@ -79,14 +114,20 @@ import com.kaanish.util.DepartmentCotractor;
 		"/getAllOngoingJobPlanByDesignNumber",
 		"/getProductAndDesignDetailsAndJobPlanByJobPlanId",
 		"/getJobsForDesignCostSheetByPlanId",
-		"/getOngoingJobAssignmentsByPlanId", "/getJonsonDateFinancial",
+		"/getOngoingJobAssignmentsByPlanId",
+		"/getJonsonDateFinancial",
 		"/getVendorsByVendorTypeDesignerAndName",
-		"/getDesignImageBySampleJobId", "/getPlanNumbersById",
-		"/updatePurchaseEntry", "/updatePurchaseproduct",
-		"/getAllJobPlanByDesignNumber", "/getAllJobPlans",
+		"/getDesignImageBySampleJobId",
+		"/getPlanNumbersById",
+		"/updatePurchaseEntry",
+		"/updatePurchaseproduct",
+		"/getAllJobPlanByDesignNumber",
+		"/getAllJobPlans",
 		"/setPurchaseProduct",
 		"/getSampleDesignCostSheetByDesignNumberForDuplicateCheck",
-		"/getItmProductsForSampleByProductId", "/getJobPlanProductsByPlanId" })
+		"/getItmProductsForSampleByProductId",
+		"/getJobPlanProductsByPlanId",
+		"/getAllDesignNoFromSampleDesignCostSheetAndProductsByDesignNumberForDuplicateCheck" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -1545,6 +1586,25 @@ public class JsonServlet extends HttpServlet {
 							.writeEnd();
 				}
 				generatorDC.writeEnd().close();
+				break;
+
+			case "getAllDesignNoFromSampleDesignCostSheetAndProductsByDesignNumberForDuplicateCheck":
+				JsonGeneratorFactory factoryDN = Json
+						.createGeneratorFactory(null);
+				JsonGenerator generatorDN = factoryDN.createGenerator(resp
+						.getOutputStream());
+				generatorDN.writeStartArray();
+				for (int i = 0; i < ejb
+						.getAllDesignNoFromSampleDesignCostSheetAndProductsByDesignNumberForDuplicateCheck(
+								req.getParameter("dNo")).size(); i++) {
+					generatorDN
+							.writeStartObject()
+							.write("dNumber",
+									ejb.getAllDesignNoFromSampleDesignCostSheetAndProductsByDesignNumberForDuplicateCheck(
+											req.getParameter("dNo")).get(i))
+							.writeEnd();
+				}
+				generatorDN.writeEnd().close();
 				break;
 
 			case "getAllOngoingJobPlanByDesignNumber":

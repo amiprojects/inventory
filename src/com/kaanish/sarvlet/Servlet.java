@@ -113,7 +113,8 @@ import com.kaanish.util.DateConverter;
 		"/jobAssignmentForOngoingJobs", "/sampleJobSearchAll",
 		"/sampleJobSearchByDesignNo", "/sampleJobSearchByDesignerName",
 		"/sampleJobCostSheetView", "/jobSearchByPlanNo", "/purchaseEdit",
-		"/jobReceiveFromSearch", "/setItems", "/updateItems" })
+		"/jobReceiveFromSearch", "/setItems", "/updateItems",
+		"/completePlanAndProductSumaryProduction" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -427,6 +428,13 @@ public class Servlet extends HttpServlet {
 				}
 
 				break;
+
+			case "completePlanAndProductSumaryProduction":
+				page = "jobPlanSearch.jsp";
+
+				msg = "Successful";
+				break;
+
 			case "addBillSetup":
 				page = "billSetup.jsp";
 				billSetup = new Bill_setup();

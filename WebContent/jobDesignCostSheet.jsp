@@ -372,15 +372,16 @@
 									</div>
 								</div>
 								<div class="col-md-4">
-									Select Item : <br><br>
+									Select Item : <br>
+									<br>
 									<c:forEach items="${sessionScope['ejb'].getAllItemDetails()}"
 										var="item">
-										<input type="radio" class="isSelectedItem"
-											name="item" onclick="itemF('${item.name}','${item.id}');">${item.name}&nbsp;													
+										<input type="radio" class="isSelectedItem" name="item"
+											onclick="itemF('${item.name}','${item.id}');">${item.name}&nbsp;													
 																	<br>
 									</c:forEach>
-									<input type="hidden" id="itemName">
-									<input type="hidden" id="itemId">
+									<input type="hidden" id="itemName"> <input
+										type="hidden" id="itemId">
 								</div>
 							</div>
 						</div>
@@ -470,7 +471,7 @@
 				i = 1;
 			}
 		});
-		
+
 		var item = 0;
 		$(".isSelectedItem").each(function() {
 			if ($(this).is(':checked')) {
@@ -698,9 +699,8 @@
 															+ $(this).val()
 															+ $("#proId").val()
 															+ '\',\''
-															+ $("#proId")
-															.val()
-													+ '\');"><font color="red"><u>remove</u></font></a></td>'
+															+ $("#proId").val()
+															+ '\');"><font color="red"><u>remove</u></font></a></td>'
 															+ '</tr>'
 															+ '</tbody>');
 									$("#jobQty").val("0");
@@ -806,7 +806,7 @@
 								.toFixed(2));
 	}
 
-	function removeJobRow(id,proId) {
+	function removeJobRow(id, proId) {
 		//error
 		$("#jobRow" + id).remove();
 
@@ -824,8 +824,8 @@
 								Number($("#gtot").val())
 										+ Number($("#totProfit").val()))
 								.toFixed(2));
-		
-		if($('.proTable'+proId).length==0){
+
+		if ($('.proTable' + proId).length == 0) {
 			removeProductRow(proId);
 		}
 	}
@@ -972,23 +972,24 @@
 <script type="text/javascript">
 	function dNoKeyUp() {
 		$("#dNoCheck").val("");
-		$.ajax({
-			url : "getSampleDesignCostSheetByDesignNumberForDuplicateCheck",
-			dataType : "json",
-			data : {
-				dNo : $("#designNo").val()
-			},
-			success : function(data) {
-				$.map(data, function(item) {
-					if (item.dNumber != "") {
-						$("#dNoCheck").val(item.dNumber);
-					} else {
-						$("#dNoCheck").val("");
+		$
+				.ajax({
+					url : "getAllDesignNoFromSampleDesignCostSheetAndProductsByDesignNumberForDuplicateCheck",
+					dataType : "json",
+					data : {
+						dNo : $("#designNo").val()
+					},
+					success : function(data) {
+						$.map(data, function(item) {
+							if (item.dNumber != "") {
+								$("#dNoCheck").val(item.dNumber);
+							} else {
+								$("#dNoCheck").val("");
+							}
+						});
 					}
-				});
-			}
 
-		});
+				});
 
 	}
 
@@ -1055,8 +1056,8 @@
 			$("#surcharge").val(Number($("#surcharge").val()).toFixed(2));
 		});
 	});
-	
-	function itemF(name,id){
+
+	function itemF(name, id) {
 		$("#itemName").val(name);
 		$("#itemId").val(id);
 	}

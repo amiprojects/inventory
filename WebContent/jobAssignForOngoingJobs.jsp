@@ -646,16 +646,10 @@
 			var dateparts = d.split(" ");
 			return dateparts[2] + "-" + dateparts[1] + "-" + dateparts[5];
 		}
-		function presentRateOC(jobId) {
-			$("#jobPresentRate" + jobId).val(
-					Number($("#jobPresentRate" + jobId).val()).toFixed(2));
-			presentRateKU(jobId);
-		}
 		function presentRateKU(jobId) {
 			$("#jobAmount" + jobId).val(
-					Number(
-							$("#jobPresentRate" + jobId).val()
-									* $("#jobQty" + jobId).val()).toFixed(2));
+					$("#jobPresentRate" + jobId).val()
+							* $("#jobQty" + jobId).val());
 
 			//error
 			var sum = 0;
@@ -666,12 +660,8 @@
 					Number($("#gt").val()) + Number(sum.toFixed(2))
 							+ Number($("#surcharge").val()));
 			profitValF();
-			$("#grandtot")
-					.val(
-							Number(
-									Number($("#gtot").val())
-											+ Number($("#totProfit").val()))
-									.toFixed(2));
+			$("#grandtot").val(
+					Number($("#gtot").val()) + Number($("#totProfit").val()));
 		}
 		function qtyKU(jobId) {
 			if ($("#jobQty" + jobId).val() > $("#jobRemQty" + jobId).val()) {
@@ -692,10 +682,8 @@
 								+ Number($("#surcharge").val()));
 				profitValF();
 				$("#grandtot").val(
-						Number(
-								Number($("#gtot").val())
-										+ Number($("#totProfit").val()))
-								.toFixed(2));
+						Number($("#gtot").val())
+								+ Number($("#totProfit").val()));
 			}
 		}
 		function profitTypeF() {
@@ -709,12 +697,8 @@
 			$("#gtot").val(
 					Number($("#gt").val()) + Number(sum.toFixed(2))
 							+ Number($("#surcharge").val()));
-			$("#grandtot")
-					.val(
-							Number(
-									Number($("#gtot").val())
-											+ Number($("#totProfit").val()))
-									.toFixed(2));
+			$("#grandtot").val(
+					Number($("#gtot").val()) + Number($("#totProfit").val()));
 		}
 		function profitValF() {
 			//error
@@ -732,10 +716,8 @@
 						Number($("#gt").val()) + Number(sum.toFixed(2))
 								+ Number($("#surcharge").val()));
 				$("#grandtot").val(
-						Number(
-								Number($("#gtot").val())
-										+ Number($("#totProfit").val()))
-								.toFixed(2));
+						Number($("#gtot").val())
+								+ Number($("#totProfit").val()));
 			} else {
 				$("#totProfit").val(
 						Math.round(Number($("#profitVal").val()) * 100) / 100);
@@ -747,10 +729,8 @@
 						Number($("#gt").val()) + Number(sum.toFixed(2))
 								+ Number($("#surcharge").val()));
 				$("#grandtot").val(
-						Number(
-								Number($("#gtot").val())
-										+ Number($("#totProfit").val()))
-								.toFixed(2));
+						Number($("#gtot").val())
+								+ Number($("#totProfit").val()));
 
 			}
 		}
@@ -764,12 +744,8 @@
 					Number($("#gt").val()) + Number(sum.toFixed(2))
 							+ Number($("#surcharge").val()));
 			profitValF();
-			$("#grandtot")
-					.val(
-							Number(
-									Number($("#gtot").val())
-											+ Number($("#totProfit").val()))
-									.toFixed(2));
+			$("#grandtot").val(
+					Number($("#gtot").val()) + Number($("#totProfit").val()));
 		}
 
 		function isSelectedF(psId, jobId) {
@@ -845,12 +821,8 @@
 					Number($("#gt").val()) + Number(sum.toFixed(2))
 							+ Number($("#surcharge").val()));
 			profitValF();
-			$("#grandtot")
-					.val(
-							Number(
-									Number($("#gtot").val())
-											+ Number($("#totProfit").val()))
-									.toFixed(2));
+			$("#grandtot").val(
+					Number($("#gtot").val()) + Number($("#totProfit").val()));
 		}
 
 		function JobPlanOkF() {
@@ -880,386 +852,340 @@
 							$("#productNjobsDiv table").empty();
 							$("#dNo").attr("readonly", "readonly");
 							$
-									.map(
+									.each(
 											data2,
-											function(item2) {
-												$.ajax({
-													url : 'getItmProductsForSampleByProductId',
-													type : 'post',
-													dataType : "json",
-													data : {
-														id : item2.ProductId
-													},
-													success : function(data) {
-														$("#orItem").val(data.itemName);
-													},
-													error : function(a, b, c) {
-														alert(b + ": " + c);
-													},
-													complete : function(){
-														$("#productNjobsTable").hide();
-														if ((item2.japYesOrNo == "yes" && item2.IsComplete == true)
-																|| (item2.japYesOrNo == "yes"
-																		&& item2.japRemQty > 0 && item2.IsComplete == false)) {
-															if (item2.japRemQty > 0
-																	&& item2.IsComplete == false) {
-																var Assigned = "Assigned";
-															} else if (item2.IsComplete == true) {
-																var Assigned = "Completed";
+											function(index, item2) {
+												$
+														.ajax({
+															url : 'getItmProductsForSampleByProductId',
+															type : 'post',
+															dataType : "json",
+															data : {
+																id : item2.ProductId
+															},
+															success : function(
+																	data) {
+																$("#orItem")
+																		.val(
+																				data.itemName);
+															},
+															error : function(a,
+																	b, c) {
+																alert(b + ": "
+																		+ c);
+															},
+															complete : function() {
+
+																$(
+																		"#productNjobsTable")
+																		.hide();
+																if ((item2.japYesOrNo == "yes" && item2.IsComplete == true)
+																		|| (item2.japYesOrNo == "yes"
+																				&& item2.japRemQty > 0 && item2.IsComplete == false)) {
+																	if (item2.japRemQty > 0
+																			&& item2.IsComplete == false) {
+																		var Assigned = "Assigned";
+																	} else if (item2.IsComplete == true) {
+																		var Assigned = "Completed";
+																	}
+																	$(
+																			'#productNjobsDiv')
+																			.append(
+																					'<table id="pDetTable'+item2.ProductForSampleId+'" class="table table-striped table-bordered"><thead style="background-color: #F0F0F0;"><tr><th style="text-align: right;" colspan="2">'
+																							+ "Pcode:"
+																							+ '</th><td>'
+																							+ "<input type='text' class='form-control' readonly='readonly' value='"+item2.ProductCode+"'>"
+																							+ "<input type='hidden' class='form-control' readonly='readonly' id='productForSampleId"+item2.ProductForSampleId+"' value='"+item2.ProductForSampleId+"'>"
+																							+ "<input type='hidden' class='form-control' readonly='readonly' id='productId"+item2.ProductForSampleId+"' value='"+ item2.ProductId+ "'>"
+																							+ '</td><th style="text-align: right;">'
+																							+ "Description:"
+																							+ '</th><td>'
+																							+ "<input type='text' class='form-control' readonly='readonly' value='"+item2.ProductDesc+"'>"
+																							+ '</td><th style="text-align: right;">'
+																							+ "Qty:"
+																							+ '</th><td>'
+																							+ "<input type='text' id='qtyOfSampleProduct"+item2.ProductForSampleId+"' class='form-control' readonly='readonly' value='"+item2.ProductQtyForSample*pQty+"'>"
+																							+ '</td><th style="text-align: right;">'
+																							+ "Total Amount:"
+																							+ '</th><td>'
+																							+ "<input type='text' class='form-control' id='productEachTotal"+item2.ProductForSampleId+"' readonly='readonly' value='"+item2.ProductTotalAmount+"'>"
+																							+ '</td><td>'
+																							+ "<b>Status: </b>"
+																							+ Assigned
+																							+ '</td><td>'
+																							+ "<b>Item: </b>"
+																							+ $(
+																									'#orItem')
+																									.val()
+																							+ '</td></tr><tr><th>'
+																							+ "#"
+																							+ '</th><th>'
+																							+ "Job"
+																							+ '</th><th>'
+																							+ "Sample Rate"
+																							+ '</th><th>'
+																							+ "Present Rate"
+																							+ '</th><th>'
+																							+ "Qty per sample"
+																							+ '</th><th>'
+																							+ "Total Qty"
+																							+ '</th><th>'
+																							+ "UOM"
+																							+ '</th><th>'
+																							+ "Total Amount"
+																							+ '</th><th colspan="2">'
+																							+ "Est. Submission Date"
+																							+ '</th><th>'
+																							+ "Status"
+																							+ '</th></tr></thead></table>');
+
+																	var ProductForSampleId = item2.ProductForSampleId;
+																	var planId = pId;
+																	var prodId = item2.ProductId;
+																	var japId = item2.japId;
+																	$
+																			.ajax({
+																				type : "post",
+																				url : "getJobsForDesignCostSheetByPlanId",
+																				dataType : "json",
+																				data : {
+																					pid : ProductForSampleId,
+																					planId : planId,
+																					prodId : prodId,
+																					japId : japId
+																				},
+																				success : function(
+																						data2) {
+																					$
+																							.each(
+																									data2,
+																									function(
+																											index,
+																											item2) {
+																										if (item2.EstSubDate != "NA") {
+																											var EstSubDate = formatDate(item2.EstSubDate);
+																										} else {
+																											var EstSubDate = item2.EstSubDate;
+																										}
+																										$(
+
+																												"#pDetTable"
+																														+ ProductForSampleId)
+																												.append(
+																														"<tbody id='pDetTable"+item2.JobId+"'>"
+																																+ "<tr>"
+																																+ "<td>"
+																																+ Number(1 + index)
+																																+ "</td>"
+																																+ "<td>"
+																																+ item2.JobName
+																																+ "<input type='hidden' id='jobId"+item2.JobId+"' value='"+item2.JobId+"'>"
+																																+ "</td>"
+																																+ "<td>"
+																																+ item2.JobRateOfSample
+																																+ "</td>"
+																																+ "<td>"
+																																+ "<input type='text' readonly='readonly' class='form-control' id='jobPresentRate"
+																																+ item2.JobId
+																																+ "' onkeyup='presentRateKU("
+																																+ item2.JobId
+																																+ ");' value='"
+																																+ item2.PresentRate
+																																+ "'>"
+																																+ "</td>"
+																																+ "<td>"
+																																+ item2.JobQtyOfSample
+																																+ "</td>"
+																																+ "<td>"
+																																+ "<input type='text' readonly='readonly' class='form-control' id='jobQty"
+																																+ item2.JobId
+																																+ "' onkeyup='qtyKU("
+																																+ item2.JobId
+																																+ ");' value='"
+																																+ item2.AssignQty
+																																+ "'>"
+																																+ "</td>"
+																																+ "<td>"
+																																+ item2.JobUOMOfSample
+																																+ "</td>"
+																																+ "<td>"
+																																+ "<input type='text' readonly='readonly' id='jobAmount"+item2.JobId+"' class='form-control' value='"+item2.Amount+"'>"
+																																+ "</td>"
+																																+ "<td colspan='2'>"
+																																+ "<input type='text' readonly='readonly' id='estSubmDate"+item2.JobId+"' value='"+EstSubDate+"' class='form-control'>"
+																																+ "</td>"
+																																+ "<td>"
+																																+ item2.Status
+																																+ "</td>"
+																																+ "</tr>"
+																																+ "</tbody>");
+
+																									});
+																				}
+																			});
+
+																} else if (item2.japYesOrNo == "no"
+																		|| (item2.japYesOrNo == "yes" && item2.japRemQty == 0)) {
+																	if (item2.japYesOrNo == "no") {
+																		var Assigned = "Not Assigned";
+																		var japId = 0;
+																	} else if (item2.japYesOrNo == "yes"
+																			&& item2.japRemQty == 0) {
+																		var Assigned = "Job Cycle:"
+																				+ item2.jobCycle;
+																		var japId = item2.japId;
+																	}
+																	$(
+																			'#productNjobsDiv')
+																			.append(
+																					'<table id="pDetTable'+item2.ProductForSampleId+'" class="table table-striped table-bordered"><thead style="background-color: #F0F0F0;"><tr><th style="text-align: right;" colspan="2">'
+																							+ "Pcode:"
+																							+ '</th><td>'
+																							+ "<input type='text' class='form-control' readonly='readonly' value='"+item2.ProductCode+"'>"
+																							+ "<input type='hidden' class='form-control' readonly='readonly' id='productForSampleId"+item2.ProductForSampleId+"' value='"+item2.ProductForSampleId+"'>"
+																							+ "<input type='hidden' class='form-control' readonly='readonly' id='productId"+item2.ProductForSampleId+"' value='"+ item2.ProductId+ "'>"
+																							+ '</td><th style="text-align: right;">'
+																							+ "Description:"
+																							+ '</th><td>'
+																							+ "<input type='text' class='form-control' readonly='readonly' value='"+item2.ProductDesc+"'>"
+																							+ '</td><th style="text-align: right;">'
+																							+ "Qty:"
+																							+ '</th><td>'
+																							+ "<input type='text' id='qtyOfSampleProduct"+item2.ProductForSampleId+"' class='form-control' readonly='readonly' value='"+item2.ProductQtyForSample*pQty+"'>"
+																							+ '</td><th style="text-align: right;">'
+																							+ "Total Amount:"
+																							+ '</th><td>'
+																							+ "<input type='text' class='form-control' id='productEachTotal"+item2.ProductForSampleId+"' readonly='readonly' value='"+item2.ProductTotalAmount+"'>"
+																							+ '</td><td>'
+																							+ "<b>Status: </b>"
+																							+ Assigned
+																							+ '</td><td>'
+																							+ "<b>Item: </b>"
+																							+ $(
+																									'#orItem')
+																									.val()
+																							+ '</td></tr><tr><th>'
+																							+ "#"
+																							+ '</th><th>'
+																							+ "Job"
+																							+ '</th><th>'
+																							+ "Sample Rate"
+																							+ '</th><th>'
+																							+ "Present Rate<font color='red' size='4'>*</font>"
+																							+ '</th><th>'
+																							+ "Qty per sample"
+																							+ '</th><th>'
+																							+ "Total Qty"
+																							+ '</th><th>'
+																							+ "UOM"
+																							+ '</th><th>'
+																							+ "Total Amount"
+																							+ '</th><th colspan="2">'
+																							+ "Est. Submission Date<font color='red' size='4'>*</font>"
+																							+ '</th><th>'
+																							+ "Status"
+																							+ '</th></tr></thead></table>');
+
+																	var ProductForSampleId = item2.ProductForSampleId;
+																	var planId = pId;
+																	var prodId = item2.ProductId;
+																	$
+																			.ajax({
+																				type : "post",
+																				url : "getJobsForDesignCostSheetByPlanId",
+																				dataType : "json",
+																				data : {
+																					pid : ProductForSampleId,
+																					planId : planId,
+																					prodId : prodId,
+																					japId : japId
+																				},
+																				success : function(
+																						data2) {
+																					$
+																							.each(
+																									data2,
+																									function(
+																											index,
+																											item2) {
+																										$(
+
+																												"#pDetTable"
+																														+ ProductForSampleId)
+																												.append(
+																														"<tbody id='pDetTable"+item2.JobId+"'>"
+																																+ "<tr>"
+																																+ "<td>"
+																																+ Number(1 + index)
+																																+ "</td>"
+																																+ "<td>"
+																																+ item2.JobName
+																																+ "<input type='hidden' id='jobId"+item2.JobId+"' value='"+item2.JobId+"'>"
+																																+ "</td>"
+																																+ "<td>"
+																																+ item2.JobRateOfSample
+																																+ "</td>"
+																																+ "<td>"
+																																+ "<input type='text' class='form-control' id='jobPresentRate"
+																																+ item2.JobId
+																																+ "' onkeyup='presentRateKU("
+																																+ item2.JobId
+																																+ ");' value='"
+																																+ item2.JobRateOfSample
+																																+ "'>"
+																																+ "</td>"
+																																+ "<td>"
+																																+ "<input type='text' class='form-control' id='jobRemQty"+item2.JobId+"' readonly='readonly' value='"+item2.JobQtyOfSample
+																										+"'>"
+																																+ "</td>"
+																																+ "<td>"
+																																+ "<input type='text' readonly='readonly' class='form-control' id='jobQty"
+																																+ item2.JobId
+																																+ "' onkeyup='qtyKU("
+																																+ item2.JobId
+																																+ ");' value='"
+																																+ item2.JobQtyOfSample
+																																* pQty
+																																+ "'>"
+																																+ "</td>"
+																																+ "<td>"
+																																+ item2.JobUOMOfSample
+																																+ "</td>"
+																																+ "<td>"
+																																+ "<input type='text' readonly='readonly' id='jobAmount"+item2.JobId+"' class='form-control' value='"+item2.JobAmountOfSample*pQty+"'>"
+																																+ "</td>"
+																																+ "<td colspan='2'>"
+																																+ "<input onclick='showDatePicker();' type='text' id='estSubmDate"
+																																+ item2.JobId
+																																+ "' class='form-control estSubmDate'>"
+																																+ "</td>"
+																																+ "<td>"
+																																+ item2.Status
+																																+ "</td>"
+																																+ "<td>"
+																																+ "<input type='checkbox' onclick='isSelectedF("
+																																+ ProductForSampleId
+																																+ ","
+																																+ item2.JobId
+																																+ ");' name='selectedJobs"
+																																+ item2.JobId
+																																+ "' class='isSelected"
+																																+ ProductForSampleId
+																																+ "' id='isSelected"
+																																+ item2.JobId
+																																+ "' value='"
+																																+ item2.JobId
+																																+ "'>"
+																																+ "</td>"
+																																+ "</tr>"
+																																+ "</tbody>");
+
+																									});
+																				}
+																			});
+																}
 															}
-															$('#productNjobsDiv')
-																	.append(
-																			'<table id="pDetTable'+item2.ProductForSampleId+'" class="table table-striped table-bordered"><thead style="background-color: #F0F0F0;"><tr><th style="text-align: right;">'
-																					+ "Pcode:"
-																					+ '</th><td>'
-																					+ "<input type='text' class='form-control' readonly='readonly' value='"+item2.ProductCode+"'>"
-																					+ "<input type='hidden' class='form-control' readonly='readonly' id='productForSampleId"+item2.ProductForSampleId+"' value='"+item2.ProductForSampleId+"'>"
-																					+ "<input type='hidden' class='form-control' readonly='readonly' id='productId"+item2.ProductForSampleId+"' value='"+ item2.ProductId+ "'>"
-																					+ '</td><th style="text-align: right;">'
-																					+ "Description:"
-																					+ '</th><td>'
-																					+ "<input type='text' class='form-control' readonly='readonly' value='"+item2.ProductDesc+"'>"
-																					+ '</td><th style="text-align: right;">'
-																					+ "Qty:"
-																					+ '</th><td>'
-																					+ "<input type='text' id='qtyOfSampleProduct"
-																					+ item2.ProductForSampleId
-																					+ "' class='form-control' readonly='readonly' value='"
-																					+ Number(
-																							item2.ProductQtyForSample
-																									* pQty)
-																							.toFixed(
-																									3)
-																					+ "'>"
-																					+ '</td><th style="text-align: right;">'
-																					+ "Total Amount:"
-																					+ '</th><td>'
-																					+ "<input type='text' class='form-control' id='productEachTotal"
-																					+ item2.ProductForSampleId
-																					+ "' readonly='readonly' value='"
-																					+ Number(
-																							item2.ProductTotalAmount)
-																							.toFixed(
-																									2)
-																					+ "'>"
-																					+ '</td><th style="text-align: right;">'
-																					+ "Status:"
-																					+ '</th><td>'
-																					+ Assigned
-																					+ '</td><td>'
-																					+ "<b>Item: </b>"+ $('#orItem').val()
-																					+ '</td></tr><tr><th>'
-																					+ "#"
-																					+ '</th><th>'
-																					+ "Job"
-																					+ '</th><th>'
-																					+ "Sample Rate"
-																					+ '</th><th>'
-																					+ "Present Rate"
-																					+ '</th><th>'
-																					+ "Qty per sample"
-																					+ '</th><th>'
-																					+ "Total Qty"
-																					+ '</th><th>'
-																					+ "UOM"
-																					+ '</th><th>'
-																					+ "Total Amount"
-																					+ '</th><th colspan="2">'
-																					+ "Est. Submission Date"
-																					+ '</th><th>'
-																					+ "Status"
-																					+ '</th></tr></thead></table>');
-
-															var ProductForSampleId = item2.ProductForSampleId;
-															var planId = pId;
-															var prodId = item2.ProductId;
-															var japId = item2.japId;
-															$
-																	.ajax({
-																		type : "post",
-																		url : "getJobsForDesignCostSheetByPlanId",
-																		dataType : "json",
-																		data : {
-																			pid : ProductForSampleId,
-																			planId : planId,
-																			prodId : prodId,
-																			japId : japId
-																		},
-																		success : function(
-																				data2) {
-																			$
-																					.each(
-																							data2,
-																							function(
-																									index,
-																									item2) {
-																								if (item2.EstSubDate != "NA") {
-																									var EstSubDate = formatDate(item2.EstSubDate);
-																								} else {
-																									var EstSubDate = item2.EstSubDate;
-																								}
-																								$(
-
-																										"#pDetTable"
-																												+ ProductForSampleId)
-																										.append(
-																												"<tbody id='pDetTable"+item2.JobId+"'>"
-																														+ "<tr>"
-																														+ "<td>"
-																														+ Number(1 + index)
-																														+ "</td>"
-																														+ "<td>"
-																														+ item2.JobName
-																														+ "<input type='hidden' id='jobId"+item2.JobId+"' value='"+item2.JobId+"'>"
-																														+ "</td>"
-																														+ "<td>"
-																														+ item2.JobRateOfSample
-																																.toFixed(2)
-																														+ "</td>"
-																														+ "<td>"
-																														+ "<input type='text' readonly='readonly' class='form-control' id='jobPresentRate"
-																														+ item2.JobId
-																														+ "' onkeyup='presentRateKU("
-																														+ item2.JobId
-																														+ ");' onchange='presentRateOC("
-																														+ item2.JobId
-																														+ ");' value='"
-																														+ item2.PresentRate
-																																.toFixed(2)
-																														+ "'>"
-																														+ "</td>"
-																														+ "<td>"
-																														+ item2.JobQtyOfSample
-																																.toFixed(3)
-																														+ "</td>"
-																														+ "<td>"
-																														+ "<input type='text' readonly='readonly' class='form-control' id='jobQty"
-																														+ item2.JobId
-																														+ "' onkeyup='qtyKU("
-																														+ item2.JobId
-																														+ ");' value='"
-																														+ item2.AssignQty
-																																.toFixed(3)
-																														+ "'>"
-																														+ "</td>"
-																														+ "<td>"
-																														+ item2.JobUOMOfSample
-																														+ "</td>"
-																														+ "<td>"
-																														+ "<input type='text' readonly='readonly' id='jobAmount"
-																														+ item2.JobId
-																														+ "' class='form-control' value='"
-																														+ item2.Amount
-																																.toFixed(2)
-																														+ "'>"
-																														+ "</td>"
-																														+ "<td colspan='2'>"
-																														+ "<input type='text' readonly='readonly' id='estSubmDate"+item2.JobId+"' value='"+EstSubDate+"' class='form-control'>"
-																														+ "</td>"
-																														+ "<td>"
-																														+ item2.Status
-																														+ "</td>"
-																														+ "</tr>"
-																														+ "</tbody>");
-
-																							});
-																		}
-																	});
-
-														} else if (item2.japYesOrNo == "no"
-																|| (item2.japYesOrNo == "yes" && item2.japRemQty == 0)) {
-															if (item2.japYesOrNo == "no") {
-																var Assigned = "Not Assigned";
-																var japId = 0;
-															} else if (item2.japYesOrNo == "yes"
-																	&& item2.japRemQty == 0) {
-																var Assigned = "Job Cycle:"+ item2.jobCycle;
-																var japId = item2.japId;
-															}
-															$('#productNjobsDiv')
-																	.append(
-																			'<table id="pDetTable'+item2.ProductForSampleId+'" class="table table-striped table-bordered"><thead style="background-color: #F0F0F0;"><tr><th style="text-align: right;">'
-																					+ "Pcode:"
-																					+ '</th><td>'
-																					+ "<input type='text' class='form-control' readonly='readonly' value='"+item2.ProductCode+"'>"
-																					+ "<input type='hidden' class='form-control' readonly='readonly' id='productForSampleId"+item2.ProductForSampleId+"' value='"+item2.ProductForSampleId+"'>"
-																					+ "<input type='hidden' class='form-control' readonly='readonly' id='productId"+item2.ProductForSampleId+"' value='"+ item2.ProductId+ "'>"
-																					+ '</td><th style="text-align: right;">'
-																					+ "Description:"
-																					+ '</th><td>'
-																					+ "<input type='text' class='form-control' readonly='readonly' value='"+item2.ProductDesc+"'>"
-																					+ '</td><th style="text-align: right;">'
-																					+ "Qty:"
-																					+ '</th><td>'
-																					+ "<input type='text' id='qtyOfSampleProduct"
-																					+ item2.ProductForSampleId
-																					+ "' class='form-control' readonly='readonly' value='"
-																					+ Number(
-																							item2.ProductQtyForSample
-																									* pQty)
-																							.toFixed(
-																									3)
-																					+ "'>"
-																					+ '</td><th style="text-align: right;">'
-																					+ "Total Amount:"
-																					+ '</th><td>'
-																					+ "<input type='text' class='form-control' id='productEachTotal"
-																					+ item2.ProductForSampleId
-																					+ "' readonly='readonly' value='"
-																					+ Number(
-																							item2.ProductTotalAmount)
-																							.toFixed(
-																									2)
-																					+ "'>"
-																					+ '</td><th style="text-align: right;">'
-																					+ "Status:"
-																					+ '</th><td>'
-																					+ Assigned
-																					+ '</td><td>'
-																					+ "<b>Item: </b>"+ $('#orItem').val()
-																					+ '</td></tr><tr><th>'
-																					+ "#"
-																					+ '</th><th>'
-																					+ "Job"
-																					+ '</th><th>'
-																					+ "Sample Rate"
-																					+ '</th><th>'
-																					+ "Present Rate<font color='red' size='4'>*</font>"
-																					+ '</th><th>'
-																					+ "Qty per sample"
-																					+ '</th><th>'
-																					+ "Total Qty"
-																					+ '</th><th>'
-																					+ "UOM"
-																					+ '</th><th>'
-																					+ "Total Amount"
-																					+ '</th><th colspan="2">'
-																					+ "Est. Submission Date<font color='red' size='4'>*</font>"
-																					+ '</th><th>'
-																					+ "Status"
-																					+ '</th></tr></thead></table>');
-
-															var ProductForSampleId = item2.ProductForSampleId;
-															var planId = pId;
-															var prodId = item2.ProductId;
-															$
-																	.ajax({
-																		type : "post",
-																		url : "getJobsForDesignCostSheetByPlanId",
-																		dataType : "json",
-																		data : {
-																			pid : ProductForSampleId,
-																			planId : planId,
-																			prodId : prodId,
-																			japId : japId
-																		},
-																		success : function(
-																				data2) {
-																			$
-																					.each(
-																							data2,
-																							function(
-																									index,
-																									item2) {
-																								$(
-
-																										"#pDetTable"
-																												+ ProductForSampleId)
-																										.append(
-																												"<tbody id='pDetTable"+item2.JobId+"'>"
-																														+ "<tr>"
-																														+ "<td>"
-																														+ Number(1 + index)
-																														+ "</td>"
-																														+ "<td>"
-																														+ item2.JobName
-																														+ "<input type='hidden' id='jobId"+item2.JobId+"' value='"+item2.JobId+"'>"
-																														+ "</td>"
-																														+ "<td>"
-																														+ item2.JobRateOfSample
-																																.toFixed(2)
-																														+ "</td>"
-																														+ "<td>"
-																														+ "<input type='text' class='form-control' id='jobPresentRate"
-																														+ item2.JobId
-																														+ "' onkeyup='presentRateKU("
-																														+ item2.JobId
-																														+ ");' onchange='presentRateOC("
-																														+ item2.JobId
-																														+ ");' value='"
-																														+ item2.JobRateOfSample
-																																.toFixed(2)
-																														+ "'>"
-																														+ "</td>"
-																														+ "<td>"
-																														+ "<input type='text' class='form-control' id='jobRemQty"
-																														+ item2.JobId
-																														+ "' readonly='readonly' value='"
-																														+ item2.JobQtyOfSample
-																																.toFixed(3)
-																														+ "'>"
-																														+ "</td>"
-																														+ "<td>"
-																														+ "<input type='text' readonly='readonly' class='form-control' id='jobQty"
-																														+ item2.JobId
-																														+ "' onkeyup='qtyKU("
-																														+ item2.JobId
-																														+ ");' value='"
-																														+ Number(
-																																item2.JobQtyOfSample
-																																		* pQty)
-																																.toFixed(
-																																		3)
-																														+ "'>"
-																														+ "</td>"
-																														+ "<td>"
-																														+ item2.JobUOMOfSample
-																														+ "</td>"
-																														+ "<td>"
-																														+ "<input type='text' readonly='readonly' id='jobAmount"
-																														+ item2.JobId
-																														+ "' class='form-control' value='"
-																														+ Number(
-																																item2.JobAmountOfSample
-																																		* pQty)
-																																.toFixed(
-																																		2)
-																														+ "'>"
-																														+ "</td>"
-																														+ "<td colspan='2'>"
-																														+ "<input onclick='showDatePicker();' type='text' id='estSubmDate"
-																														+ item2.JobId
-																														+ "' class='form-control estSubmDate'>"
-																														+ "</td>"
-																														+ "<td>"
-																														+ item2.Status
-																														+ "</td>"
-																														+ "<td>"
-																														+ "<input type='checkbox' onclick='isSelectedF("
-																														+ ProductForSampleId
-																														+ ","
-																														+ item2.JobId
-																														+ ");' name='selectedJobs"
-																														+ item2.JobId
-																														+ "' class='isSelected"
-																														+ ProductForSampleId
-																														+ "' id='isSelected"
-																														+ item2.JobId
-																														+ "' value='"
-																														+ item2.JobId
-																														+ "'>"
-																														+ "</td>"
-																														+ "</tr>"
-																														+ "</tbody>");
-
-																							});
-																		}
-																	});
-														}
-													}
-												});
-												
-												
+														});
 											});
 						}
 					});
@@ -1276,14 +1202,6 @@
 				allowNegative : false,
 			// Accpets positive or negative integer
 
-			});
-		});
-	</script>
-	<script>
-		$(document).ready(function() {
-			$("#surcharge").change(function() {
-				$("#surcharge").val(Number($("#surcharge").val()).toFixed(2));
-				surchargeF();
 			});
 		});
 	</script>

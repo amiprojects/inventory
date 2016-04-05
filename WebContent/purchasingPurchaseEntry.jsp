@@ -74,7 +74,7 @@
 		} else if ($("#vendorBillNo").val() == "") {
 			alert("please enter Vendor bill no.");
 		} else if ($("#isAgent").val() == 'yes' && $("#agentName").val() == 0) {
-			alert("please select agent name");
+			alert("please enter agent name");
 		} else if ($("#datepicker").val() == "") {
 			alert("please select Purchase entry date");
 		} else if (i == 1) {
@@ -1930,8 +1930,9 @@
 												name="productCode2" id="productCodeAMI"
 												onkeyup="codeKeyUp();" onchange="codeChange();"
 												class="form-control"
-												onkeypress="return blockSpecialCharNspace(event)"><input
-												type="hidden" id="pcodeCheck">
+												onkeypress="return blockSpecialCharNspace(event)"
+												autocomplete="off"><input type="hidden"
+												id="pcodeCheck">
 										</div>
 									</div>
 									<div class="col-md-6">
@@ -1949,7 +1950,10 @@
 											number:<font color="red" size="4">*</font>
 										</label> <input type="text" name="universalProductCode"
 											id="universalProductCode" placeholder="" class="form-control"
-											onkeypress="return blockSpecialChar(event)"><br>
+											onkeypress="return blockSpecialChar(event)"
+											onkeyup="dNoKeyUp();" onchange="dNoChange();"
+											autocomplete="off"><input type="hidden" id="dNoCheck"
+											name="dNoCheck"><br>
 									</div>
 									<div class="col-md-5">
 										<div>
@@ -2692,8 +2696,7 @@
 			$("#menu5").attr("style", "");
 			$("#menu6").attr("style", "");
 			$("#menu7").attr("style", "");
-			
-			
+
 			$("#descriptionAMI").val("");
 			$("#productCodeAMI").val("");
 			$("#universalProductCode").val("");
@@ -2701,7 +2704,7 @@
 			$("#ucO").val("");
 			$("#quantity").val("");
 			$("#wspO").val("");
-			$("#mrpO").val("");			
+			$("#mrpO").val("");
 			$("#a10").val("");
 			$("#a20").val("");
 			$("#a30").val("");
@@ -2747,6 +2750,8 @@
 				success : function(data) {
 					if (data.code != "") {
 						$("#pcodeCheck").val(data.code);
+					} else {
+						$("#pcodeCheck").val("");
 					}
 				}
 
@@ -2956,11 +2961,11 @@
 		function submitSumary() {
 
 			if ($("#productCodeAMI").val() == 0) {
-				alert("please select Product Code:");
+				alert("please enter Product Code:");
 			} else if ($("#description1").val() == "") {
-				alert("please select Description");
+				alert("please enter Description");
 			} else if ($("#universalProductCode").val() == "") {
-				alert("please select Designer's Design number:");
+				alert("please enter Designer's Design number:");
 			} else if ($("#uomnamedisplay").val() == "") {
 				alert("please select Unit of measurement");
 			} else if ($("#isRaw").val() == "") {
@@ -2970,18 +2975,18 @@
 			} else if ($("#openn").is(':checked')) {
 
 				if ($("#quantity").val() == 0) {
-					alert("please select quantity");
+					alert("please enter quantity");
 				} else if ($("#mrpO").val() == 0) {
 
-					alert("please select MRP");
+					alert("please enter MRP");
 
 				} else if ($("#wspO").val() == 0) {
-					alert("please select WSP");
+					alert("please enter WSP");
 				} else if ($("#ucO").val() == 0) {
-					alert("please select per unit cost");
+					alert("please enter per unit cost");
 
 				} else if ($("#lotnumberS").val() == 0) {
-					alert("please select lot number");
+					alert("please enter lot number");
 
 				} else if (!$('#a10').attr("disabled") && $("#a10").val() == "") {
 					alert("Please insert " + $("#sa1").html() + " value");
@@ -5281,6 +5286,37 @@
 			var k = e.keyCode;
 			return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8
 					|| k == 64 || k == 46 || (k >= 48 && k <= 57));
+		}
+	</script>
+	<script type="text/javascript">
+		function dNoKeyUp() {
+			$("#dNoCheck").val("");
+			$
+					.ajax({
+						url : "getAllDesignNoFromSampleDesignCostSheetAndProductsByDesignNumberForDuplicateCheck",
+						dataType : "json",
+						data : {
+							dNo : $("#universalProductCode").val()
+						},
+						success : function(data) {
+							$.map(data, function(item) {
+								if (item.dNumber != "") {
+									$("#dNoCheck").val(item.dNumber);
+								} else {
+									$("#dNoCheck").val("");
+								}
+							});
+						}
+
+					});
+
+		}
+		function dNoChange() {
+			if ($("#dNoCheck").val() != "") {
+				alert("Duplicate Design Number");
+				$("#dNoCheck").val("");
+				$("#universalProductCode").val("");
+			}
 		}
 	</script>
 </body>

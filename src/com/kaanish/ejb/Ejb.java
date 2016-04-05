@@ -3400,6 +3400,32 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<String> getAllDesignNoFromSampleDesignCostSheetAndProductsByDesignNumberForDuplicateCheck(
+			String dn) {
+		List<String> dNoLst = new ArrayList<String>();
+
+		TypedQuery<SampleDesignCostSheet> q = em
+				.createQuery(
+						"select c from SampleDesignCostSheet c where UPPER(c.designNumber) =:dn order by c.id desc",
+						SampleDesignCostSheet.class);
+		q.setParameter("dn", dn.toUpperCase());
+
+		TypedQuery<ProductDetail> p = em
+				.createQuery(
+						"select c from ProductDetail c where UPPER(c.universalCode) =:dn order by c.id desc",
+						ProductDetail.class);
+		p.setParameter("dn", dn.toUpperCase());
+
+		for (SampleDesignCostSheet sdcs : q.getResultList()) {
+			dNoLst.add(sdcs.getDesignNumber());
+		}
+		for (ProductDetail pd : p.getResultList()) {
+			dNoLst.add(pd.getUniversalCode());
+		}
+
+		return dNoLst;
+	}
+
 	public List<SampleDesignCostSheet> getSampleDesignCostSheetByDesignerName(
 			String name) {
 		TypedQuery<SampleDesignCostSheet> q = em
