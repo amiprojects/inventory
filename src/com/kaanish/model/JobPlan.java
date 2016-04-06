@@ -42,6 +42,9 @@ public class JobPlan implements Serializable {
 
 	@OneToMany(mappedBy = "jobPlan", cascade = CascadeType.ALL)
 	private List<JobPlanProductStock> jobPlanProductStocks;
+	
+	@OneToMany(mappedBy = "jobPlan", cascade = CascadeType.ALL)
+	private List<JobPlanProducts> jobPlanProducts;
 
 	@OneToMany(mappedBy = "jobPlan", cascade = CascadeType.ALL)
 	private List<JobAssignmentProducts> jobAssignmentProducts;
@@ -167,10 +170,20 @@ public class JobPlan implements Serializable {
 
 	@Override
 	public String toString() {
-		return "{\"id\":\"" + id + "\", " + "\"totalProductCost\":\""
+		return "{\"id\":\"" + id + "\", " + "\"isComplete\":\""
+				+ isComplete + "\", " + "\"qty\":\""
+				+ qty + "\", " + "\"totalProductCost\":\""
 				+ totalProductCost + "\", " + "\"totalJobExpanse\":\""
 				+ totalJobExpanse + "\", " + "\"totalExpanse\":\""
 				+ totalExpanse + "\"}";
+	}
+
+	public List<JobPlanProducts> getJobPlanProducts() {
+		return jobPlanProducts;
+	}
+
+	public void setJobPlanProducts(List<JobPlanProducts> jobPlanProducts) {
+		this.jobPlanProducts = jobPlanProducts;
 	}
 
 }

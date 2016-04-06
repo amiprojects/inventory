@@ -558,6 +558,7 @@ public class JsonServlet extends HttpServlet {
 												Integer.parseInt(req
 														.getParameter("pId"))))
 								.write("japYesOrNo", "no")
+								.write("jobCycle", 0)
 
 								.write("ProductQtyForSample", pdcs.getQty())
 								.write("ProductRateForSample", pdcs.getRate())
@@ -612,22 +613,6 @@ public class JsonServlet extends HttpServlet {
 										.write("Amount", "NA")
 										.write("EstSubDate", "NA").writeEnd();
 							} else {
-
-								// if
-								// (ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
-								// Integer.parseInt(req
-								// .getParameter("japId")),
-								// jdcs.getId()).getRemQty() > 0
-								// &&
-								// ejb.getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
-								// Integer.parseInt(req
-								// .getParameter("japId")),
-								// jdcs.getId()).getRemQty() == ejb
-								// .getJobAssignmentJobDetailsByJobAssignmentProductIdAndJobsForDesignCostSheetId(
-								// Integer.parseInt(req
-								// .getParameter("japId")),
-								// jdcs.getId()).getQty()) {
-
 								if (ejb.getJobAssignmentProductById(
 										Integer.parseInt(req
 												.getParameter("japId")))

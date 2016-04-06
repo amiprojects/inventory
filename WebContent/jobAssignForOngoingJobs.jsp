@@ -891,7 +891,7 @@
 																	$(
 																			'#productNjobsDiv')
 																			.append(
-																					'<table id="pDetTable'+item2.ProductForSampleId+'" class="table table-striped table-bordered"><thead style="background-color: #F0F0F0;"><tr><th style="text-align: right;" colspan="2">'
+																					'<table id="pDetTable'+item2.ProductForSampleId+'" class="table table-striped table-bordered"><thead style="background-color: #F0F0F0;"><tr><th style="text-align: right;">'
 																							+ "Pcode:"
 																							+ '</th><td>'
 																							+ "<input type='text' class='form-control' readonly='readonly' value='"+item2.ProductCode+"'>"
@@ -912,6 +912,9 @@
 																							+ '</td><td>'
 																							+ "<b>Status: </b>"
 																							+ Assigned
+																							+ '</td><td>'
+																							+ "<b>Job Cycle: </b>"
+																							+ item2.jobCycle
 																							+ '</td><td>'
 																							+ "<b>Item: </b>"
 																							+ $(
@@ -1031,14 +1034,13 @@
 																		var japId = 0;
 																	} else if (item2.japYesOrNo == "yes"
 																			&& item2.japRemQty == 0) {
-																		var Assigned = "Job Cycle:"
-																				+ item2.jobCycle;
+																		var Assigned = "Not Completed";
 																		var japId = item2.japId;
 																	}
 																	$(
 																			'#productNjobsDiv')
 																			.append(
-																					'<table id="pDetTable'+item2.ProductForSampleId+'" class="table table-striped table-bordered"><thead style="background-color: #F0F0F0;"><tr><th style="text-align: right;" colspan="2">'
+																					'<table id="pDetTable'+item2.ProductForSampleId+'" class="table table-striped table-bordered"><thead style="background-color: #F0F0F0;"><tr><th style="text-align: right;">'
 																							+ "Pcode:"
 																							+ '</th><td>'
 																							+ "<input type='text' class='form-control' readonly='readonly' value='"+item2.ProductCode+"'>"
@@ -1059,6 +1061,9 @@
 																							+ '</td><td>'
 																							+ "<b>Status: </b>"
 																							+ Assigned
+																							+ '</td><td>'
+																							+ "<b>Job Cycle: </b>"
+																							+ item2.jobCycle
 																							+ '</td><td>'
 																							+ "<b>Item: </b>"
 																							+ $(

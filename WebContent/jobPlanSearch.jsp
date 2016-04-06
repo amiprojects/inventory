@@ -139,7 +139,7 @@
 	}
 
 	function submitSumary() {
-		
+
 		if ($("#productCode").val() == 0) {
 			alert("please enter Product Code:");
 		} else if ($("#description").val() == "") {
@@ -175,7 +175,13 @@
 		} else if (!$('#a60').attr("disabled") && $("#a60").val() == "") {
 			alert("Please insert " + $("#sa6").html() + " value");
 		} else {
-			$("#fs").submit();
+			$("#confirmOrNot").modal("show");
+			$("#yesCon").click(function() {
+				$("#fs").submit();
+			});
+			$("#noCon").click(function() {
+				$("#confirmOrNot").modal("hide");
+			});
 		}
 	}
 </script>
@@ -249,8 +255,7 @@
 												<label for="" class="font">Design No. :</label> <input
 													type="text" class="form-control" name="dNo"
 													required="required" id="dNo" autocomplete="off"> <input
-													type="hidden" id="dId" name="dId"> <input
-													type="hidden" id="dNoCheck" name="dNoCheck">
+													type="hidden" id="dId" name="dId">
 											</div>
 											<div class="form-group">
 												<!-- <label for="" class="font">Plan No. :</label> -->
@@ -292,7 +297,18 @@
 											<th>Total Job expanse till now :</th>
 											<td><span id="totJobExpanse"></span></td>
 											<th>Total Expanse till now :</th>
-											<td><span id="totExpanse"></span></td>
+											<td><input type="text" class="form-control"
+												id="totExpanse" readonly="readonly"></td>
+										</tr>
+									</thead>
+									<thead>
+										<tr>
+											<th colspan="1">Sample Quantity :</th>
+											<td colspan="2"><input type="text" readonly="readonly"
+												class="form-control" id="sampleQty"></td>
+											<th colspan="1">Plan Status :</th>
+											<td colspan="2"><input type="text" readonly="readonly"
+												class="form-control" id="planStatus"></td>
 										</tr>
 									</thead>
 								</table>
@@ -340,8 +356,7 @@
 									assignments of this plan</button>
 								<button class="btn btn-primary large" id="completeBtn"
 									type="button" style="float: right;" disabled="disabled"
-									data-toggle="modal" data-target="#newMP">Complete This
-									Plan</button>
+									onclick="completeF();">Complete This Plan</button>
 								<br>
 							</div>
 							<!-- </div> -->
@@ -545,9 +560,7 @@
 										</label> <input type="text" name="universalProductCode"
 											id="universalProductCode"
 											onkeypress="return blockSpecialChar(event)" placeholder=""
-											class="form-control" onkeyup="dNoKeyUp();"
-											onchange="dNoChange();" autocomplete="off"><input
-											type="hidden" id="dNoCheck" name="dNoCheck"><br>
+											class="form-control" autocomplete="off" readonly="readonly"><br>
 									</div>
 									<div class="col-md-5">
 										<div>
@@ -659,7 +672,7 @@
 										<label for="" class="font">Per Unit Cost:<font
 											color="red" size="4">*</font></label> <input name="unitCost"
 											type="text" placeholder="" id="ucO" onchange="rateF()"
-											class="form-control">
+											class="form-control" readonly="readonly">
 									</div>
 									<div class="form-group">
 										<label for="" class="font">Wholesale Price :<font
@@ -672,7 +685,8 @@
 									<div class="form-group">
 										<label for="" class="font">Quantity:<font color="red"
 											size="4">*</font></label> <input name="quantity" type="text"
-											pattern="\d*" id="quantity" class="form-control">
+											pattern="\d*" id="quantity" class="form-control"
+											readonly="readonly">
 									</div>
 									<div class="form-group">
 										<label for="" class="font">Maximum Retail Price :<font
@@ -840,8 +854,8 @@
 						<div>
 							<fieldset>
 								<legend> Summary </legend>
-								<form action="completePlanAndProductSumaryProduction" id="fs" method="Post"
-									enctype="multipart/form-data">
+								<form action="completePlanAndProductSumaryProduction" id="fs"
+									method="Post" enctype="multipart/form-data">
 									<input type="hidden" name="proImage1" id="proImage1" value="">
 									<input type="hidden" name="catagoryId" id="catagoryId" value="">
 									<h4>
@@ -1042,6 +1056,9 @@
 										</tr>
 									</table>
 									<hr width="100%">
+
+									<input readonly="readonly" type="hidden" class="form-control"
+										value="" name="planNo1" id="planNo1">
 								</form>
 							</fieldset>
 						</div>
@@ -1155,6 +1172,34 @@
 				</div>
 			</div>
 		</form>
+	</div>
+	<div id="confirmOrNot" class="modal fade" role="dialog"
+		style="top: 25px;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<!-- <h4 class="modal-title">Modal Header</h4> -->
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="widget-area">
+							<div class="row">
+								<span>Do you want to submit?</span>
+							</div>
+							<br>
+							<div class="row">
+								<button type="button" class="btn btn-success medium" id="yesCon">Yes</button>
+								<button type="button" class="btn btn-danger medium" id="noCon">No</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<!-- Script -->
@@ -1372,24 +1417,28 @@
 			$("#jobPlansAll").modal("hide");
 			$(".estSubmDate").trigger("click");
 
-			$
-					.ajax({
-						type : "post",
-						url : "getPlanNumbersById",
-						dataType : "json",
-						data : {
-							id : pId
-						},
-						success : function(data) {
-							//alert(data.id);
-							$("#totProCost").html(
-									Number(data.totalProductCost).toFixed(2));
-							$("#totJobExpanse").html(
-									Number(data.totalJobExpanse).toFixed(2));
-							$("#totExpanse").html(
-									Number(data.totalExpanse).toFixed(2));
-						}
-					});
+			$.ajax({
+				type : "post",
+				url : "getPlanNumbersById",
+				dataType : "json",
+				data : {
+					id : pId
+				},
+				success : function(data) {
+					//alert(data.id);
+					$("#totProCost").html(
+							Number(data.totalProductCost).toFixed(2));
+					$("#totJobExpanse").html(
+							Number(data.totalJobExpanse).toFixed(2));
+					$("#totExpanse").val(Number(data.totalExpanse).toFixed(2));
+					$("#sampleQty").val(Number(data.qty));
+					if (data.isComplete == "true") {
+						$("#planStatus").val("Completed");
+					} else {
+						$("#planStatus").val("Ongoing");
+					}
+				}
+			});
 
 			var flag = 0;
 			$
@@ -1466,10 +1515,12 @@
 																							+ "Total Amount:"
 																							+ '</th><td>'
 																							+ "<input type='text' class='form-control' id='productEachTotal"+item2.ProductForSampleId+"' readonly='readonly' value='"+item2.ProductTotalAmount+"'>"
-																							+ '</td><th style="text-align: right;">'
-																							+ "Status:"
-																							+ '</th><td>'
+																							+ '</td><td>'
+																							+ "<b>Status: </b>"
 																							+ Assigned
+																							+ '</td><td>'
+																							+ "<b>Job Cycle: </b>"
+																							+ item2.jobCycle
 																							+ '</td><td>'
 																							+ "<b>Item: </b>"
 																							+ $(
@@ -1525,6 +1576,13 @@
 																										} else {
 																											var EstSubDate = item2.EstSubDate;
 																										}
+																										if ($(
+																												"#planStatus")
+																												.val() == "Completed") {
+																											var jobStatus = "Completed";
+																										} else {
+																											var jobStatus = item2.Status;
+																										}
 																										$(
 
 																												"#pDetTable"
@@ -1573,7 +1631,7 @@
 																																+ "<input type='text' readonly='readonly' id='estSubmDate"+item2.JobId+"' value='"+EstSubDate+"' class='form-control'>"
 																																+ "</td>"
 																																+ "<td>"
-																																+ item2.Status
+																																+ jobStatus
 																																+ "</td>"
 																																+ "</tr>"
 																																+ "</tbody>");
@@ -1589,8 +1647,7 @@
 																		var japId = 0;
 																	} else if (item2.japYesOrNo == "yes"
 																			&& item2.japRemQty == 0) {
-																		var Assigned = "Job Cycle:"
-																				+ item2.jobCycle;
+																		var Assigned = "Not Completed";
 																		var japId = item2.japId;
 																	}
 																	$(
@@ -1614,10 +1671,12 @@
 																							+ "Total Amount:"
 																							+ '</th><td>'
 																							+ "<input type='text' class='form-control' id='productEachTotal"+item2.ProductForSampleId+"' readonly='readonly' value='"+item2.ProductTotalAmount+"'>"
-																							+ '</td><th style="text-align: right;">'
-																							+ "Status:"
-																							+ '</th><td>'
+																							+ '</td><td>'
+																							+ "<b>Status: </b>"
 																							+ Assigned
+																							+ '</td><td>'
+																							+ "<b>Job Cycle: </b>"
+																							+ item2.jobCycle
 																							+ '</td><td>'
 																							+ "<b>Item: </b>"
 																							+ $(
@@ -1661,6 +1720,13 @@
 																									function(
 																											index,
 																											item2) {
+																										if ($(
+																												"#planStatus")
+																												.val() == "Completed") {
+																											var jobStatus = "Completed";
+																										} else {
+																											var jobStatus = item2.Status;
+																										}
 																										$(
 
 																												"#pDetTable"
@@ -1690,7 +1756,7 @@
 																																+ item2.JobUOMOfSample
 																																+ "</td>"
 																																+ "<td colspan='2'>"
-																																+ item2.Status
+																																+ jobStatus
 																																+ "</td>"
 																																+ "</tr>"
 																																+ "</tbody>");
@@ -1704,30 +1770,35 @@
 											});
 						},
 						complete : function() {
-							$.ajax({
-								url : 'getJobPlanProductsByPlanId',
-								type : 'post',
-								dataType : "json",
-								data : {
-									pId : pId
-								},
-								success : function(data) {
-									$.map(data, function(item) {
-										if (item.jppQty != item.jppRemQty) {
-											flag = 1;
+							$
+									.ajax({
+										url : 'getJobPlanProductsByPlanId',
+										type : 'post',
+										dataType : "json",
+										data : {
+											pId : pId
+										},
+										success : function(data) {
+											$
+													.map(
+															data,
+															function(item) {
+																if (item.jppQty != item.jppRemQty) {
+																	flag = 1;
+																}
+															});
+										},
+										complete : function() {
+											if (flag == 0
+													&& $("#planStatus").val() == "Ongoing") {
+												$("#completeBtn").removeAttr(
+														"disabled");
+											} else {
+												$("#completeBtn").attr(
+														"disabled", "disabled");
+											}
 										}
 									});
-								},
-								complete : function() {
-									if (flag == 0) {
-										$("#completeBtn")
-												.removeAttr("disabled");
-									} else {
-										$("#completeBtn").attr("disabled",
-												"disabled");
-									}
-								}
-							});
 						}
 					});
 			$(".estSubmDate").trigger("click");
@@ -2000,39 +2071,6 @@
 					|| k == 32 || (k >= 48 && k <= 57));
 		}
 	</script>
-	<script type="text/javascript">
-		function dNoKeyUp() {
-			$("#dNoCheck").val("");
-			$
-					.ajax({
-						url : "getAllDesignNoFromSampleDesignCostSheetAndProductsByDesignNumberForDuplicateCheck",
-						dataType : "json",
-						data : {
-							dNo : $("#universalProductCode").val()
-						},
-						success : function(data) {
-							$.map(data, function(item) {
-								if (item.dNumber != "") {
-									$("#dNoCheck").val(item.dNumber);
-								} else {
-									$("#dNoCheck").val("");
-								}
-							});
-						}
-
-					});
-
-		}
-
-		function dNoChange() {
-			if ($("#dNoCheck").val() != "") {
-				alert("Duplicate Design Number");
-				$("#dNoCheck").val("");
-				$("#universalProductCode").val("");
-			}
-		}
-	</script>
-
 	<script type="text/javascript" src="js/webcam.js"></script>
 	<script>
 		Webcam.set({
@@ -2165,6 +2203,19 @@
 				alert("MRP should be greater than or equals to WSP.");
 				$("#mrpO").val("");
 			}
+		}
+
+		function completeF() {
+			$("#universalProductCode").val($("#dNo").val());
+			$("#ucO")
+					.val(
+							Number(
+									Number($("#totExpanse").val())
+											/ Number($("#sampleQty").val()))
+									.toFixed(2));
+			$("#quantity").val($("#sampleQty").val());
+			$("#planNo1").val($("#planNo").val());
+			$("#newMP").modal("show");
 		}
 	</script>
 </body>

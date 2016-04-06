@@ -432,7 +432,94 @@ public class Servlet extends HttpServlet {
 			case "completePlanAndProductSumaryProduction":
 				page = "jobPlanSearch.jsp";
 
+				// companyInfo = ejb.getUserById(
+				// (String) httpSession.getAttribute("user"))
+				// .getCompanyInfo();
+				//
+				// productDetail = new ProductDetail();
+				// productDetail.setCode(req.getParameter("productCode")
+				// .toUpperCase());
+				// productDetail.setDescription(req.getParameter("description")
+				// .toUpperCase());
+				// productDetail.setUniversalCode(req.getParameter("upc")
+				// .toUpperCase());
+				// productDetail.setQtyUnit(ejb.getQtyUnitById(Integer
+				// .parseInt(req.getParameter("uom"))));
+				// productDetail.setRaw(false);
+				// productDetail.setSaleble(true);
+				// productDetail.setCategory(ejb.getCategoryById(Integer
+				// .parseInt(req.getParameter("catagoryId"))));
+				// productDetail.setActive(true);
+				// ejb.setProductDetail(productDetail);
+				//
+				// readyGoodsStock = new ReadyGoodsStock();
+				// readyGoodsStock.setProductDetail(productDetail);
+				// readyGoodsStock.setRemainingQty(0);
+				// readyGoodsStock.setCompanyInfo(companyInfo);
+				// ejb.setReadyGoodsStockDetail(readyGoodsStock);
+				// readyGoodsStock = null;
+				//
+				// purchaseProductDetails = new Purchase_Product_Details();
+				// purchaseProductDetails.setMrp(Float.parseFloat(req
+				// .getParameter("mrp1")));
+				// purchaseProductDetails.setWsp(Float.parseFloat(req
+				// .getParameter("wsp1")));
+				// purchaseProductDetails.setQuantity(Float.parseFloat(req
+				// .getParameter("qty1")));
+				// purchaseProductDetails.setCost(Float.parseFloat(req
+				// .getParameter("ucost")));
+				// purchaseProductDetails.setAttrValue1(req.getParameter("att1"));
+				// purchaseProductDetails.setAttrValue2(req.getParameter("att2"));
+				// purchaseProductDetails.setAttrValue3(req.getParameter("att3"));
+				// purchaseProductDetails.setAttrValue4(req.getParameter("att4"));
+				// purchaseProductDetails.setAttrValue5(req.getParameter("att5"));
+				// purchaseProductDetails.setAttrValue6(req.getParameter("att6"));
+				// purchaseProductDetails.setRemaining_quantity(Float
+				// .parseFloat(req.getParameter("qty1")));
+				// purchaseProductDetails.setProductDetail(productDetail);
+				// purchaseProductDetails.setLotNumber(req
+				// .getParameter("lotnumberS"));
+				// purchaseProductDetails.setCompanyInfo(ejb.getUserById(
+				// (String) httpSession.getAttribute("user"))
+				// .getCompanyInfo());
+				// ejb.setPurchaseProductDetails(purchaseProductDetails);
+				//
+				// readyGoodsStock = ejb.getReadyGoodStoctByProductAndCompanyId(
+				// productDetail.getId(), companyInfo.getId());
+				// readyGoodsStock.setRemainingQty(readyGoodsStock
+				// .getRemainingQty()
+				// + Float.parseFloat(req.getParameter("qty1")));
+				// ejb.updateReadyGoodsStockDetail(readyGoodsStock);
+				//
+				// String imgstrng = req.getParameter("proImage1");
+				// ProductImage prodimg = new ProductImage();
+				// prodimg.setProductDetail(productDetail);
+				// prodimg.setImage(Base64.decode(imgstrng));
+				// ejb.setProductImage(prodimg);
+				//
+				// jobPlan = ejb.getJobPlanById(Integer.parseInt(req
+				// .getParameter("planNo1")));
+				// jobPlan.setComplete(true);
+				// ejb.updateJobPlan(jobPlan);
+				// for (JobPlanProducts jpp : jobPlan.getJobPlanProducts()) {
+				// for (int i = 0; i < jobPlan.getJobPlanProducts().size(); i++)
+				// {
+				// jobPlanProducts = ejb.getJobPlanProductsById(jpp
+				// .getId());
+				// jobPlanProducts.setComplete(true);
+				// ejb.updateJobPlanProducts(jobPlanProducts);
+				// for (JobPlanJobStock jpjs : jobPlanProducts
+				// .getJobPlanJobStock()) {
+				// jobPlanJobStock = ejb.getJobPlanJobStockById(jpjs
+				// .getId());
+				// jobPlanJobStock.setComplete(true);
+				// ejb.updateJobPlanJobStock(jobPlanJobStock);
+				// }
+				// }
+				// }
+
 				msg = "Successful";
+
 				break;
 
 			case "addBillSetup":
@@ -860,7 +947,7 @@ public class Servlet extends HttpServlet {
 					if (!req.getParameter("vendorAlias").equals("")) {
 						vendor.setAliseName(req.getParameter("vendorAlias"));
 					} else {
-						vendor.setAddress("NA");
+						vendor.setAliseName("NA");
 					}
 					vendor.setCity(ejb.getCityById(Integer.parseInt(req
 							.getParameter("vendorCityId"))));

@@ -3538,8 +3538,8 @@ public class Ejb {
 	}
 
 	public List<JobPlan> getAllJobPlan() {
-		TypedQuery<JobPlan> q = em.createQuery("select c from JobPlan c",
-				JobPlan.class);
+		TypedQuery<JobPlan> q = em.createQuery(
+				"select c from JobPlan c order by c.id desc", JobPlan.class);
 		return q.getResultList();
 	}
 
@@ -3603,6 +3603,10 @@ public class Ejb {
 
 	public void updateJobPlanJobStock(JobPlanJobStock sample) {
 		em.merge(sample);
+	}
+
+	public JobPlanJobStock getJobPlanJobStockById(int id) {
+		return em.find(JobPlanJobStock.class, id);
 	}
 
 	public JobPlanJobStock getJobPlanJobStockByJobPlanProductIdAndJobForSampleId(

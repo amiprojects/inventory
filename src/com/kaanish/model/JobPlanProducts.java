@@ -145,4 +145,12 @@ public class JobPlanProducts implements Serializable {
 		this.jobRecieveProductsDetails = jobRecieveProductsDetails;
 	}
 
+	public List<JobPlanJobStock> getJobPlanJobStock() {
+		return JobPlanJobStock;
+	}
+
+	public void setJobPlanJobStock(List<JobPlanJobStock> jobPlanJobStock) {
+		JobPlanJobStock = jobPlanJobStock;
+	}
+
 }
