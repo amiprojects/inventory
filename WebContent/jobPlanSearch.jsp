@@ -579,7 +579,7 @@
 									</div>
 									<div class="col-md-1">
 										<b class="font">&nbsp;&nbsp; </b> <a onclick="addUOM()"
-											title="Add New unit of measurement"> <img
+											title="Add New unit of measurement" id="addUOM"> <img
 											style="margin-top: 4px;" height="30px" width="30px" alt=""
 											src="img/add.png">
 										</a>
@@ -632,8 +632,8 @@
 					<div id="step3"
 						style="position: absolute; top: 57px; right: 2px; width: 568px; height: 439px; padding: 2px; font-family: arial;">
 						<fieldset>
-							<legend> Add Product Image </legend>
-							<p style="font-size: 14px">(Enter the Products Image .)</p>
+							<legend> Product Image </legend>
+							<p style="font-size: 14px">(The Products Image .)</p>
 							<div>
 								<label> Upload logo:</label>
 								<div>
@@ -641,9 +641,9 @@
 										style="width: 100px; height: 50px;">
 								</div>
 								<input type="file" name="proImg" size="20"
-									onchange="readURL(this);"><br> <img id="image"
-									alt="" src=""><a href="javascript:void(take_snapshot())"><button
-										class="btn blue btn-default" type="button">Take
+									onchange="readURL(this);"><br> <a
+									href="javascript:void(take_snapshot())"><button
+										id="snapBtn" class="btn blue btn-default" type="button">Take
 										Snapshot</button></a>
 								<div id="my_camera" style="width: 320px; height: 240px;"></div>
 							</div>
@@ -729,8 +729,8 @@
 																	<c:forEach var="cat"
 																		items="${sessionScope['ejb'].getAllCategoryBySubDepartmentId(subDept.id)}">
 																		<li><input type="radio" name="same"
-																			onclick="catProblem('${cat.id}')" value="${cat.id}">
-																			${cat.name} <%-- <ul>
+																			onclick="catProblem('${cat.id}')" value="${cat.id}"
+																			id="catId${cat.id}"> ${cat.name} <%-- <ul>
 																				<c:forEach var="pro"
 																					items="${sessionScope['ejb'].getAllProductDetailByCategoryId(cat.id)}">
 																					<li>${pro.description}</li>
@@ -927,11 +927,6 @@
 											</td>
 										</tr>
 									</table>
-									<!-- <hr width="100%">
-
-									<h4>Image</h4>
-									<br> <br>
-									<div id="imageSummary"></div> -->
 
 									<hr width="100%">
 									<h4>
@@ -2247,27 +2242,57 @@
 			$("#planNo1").val($("#planNo").val());
 			$("#newMP").modal("show");
 
-			$.ajax({
-				url : "isExistProductDetailByDesignNumber",
-				dataType : "json",
-				data : {
-					dNo : $("#dNo").val()
-				},
-				success : function(data) {
-					if (data.isExist) {
-						$.ajax({
-							url : "getProductDetailByDesignNumber",
-							dataType : "json",
-							data : {
-								dNo : $("#dNo").val()
-							},
-							success : function(data) {
-								alert(data.code);
+			$
+					.ajax({
+						url : "isExistProductDetailByDesignNumber",
+						dataType : "json",
+						data : {
+							dNo : $("#dNo").val()
+						},
+						success : function(data) {
+							if (data.isExist) {
+								$
+										.ajax({
+											url : "getProductDetailByDesignNumber",
+											dataType : "json",
+											data : {
+												dNo : $("#dNo").val()
+											},
+											success : function(data) {
+												$("#productCode")
+														.val(data.code);
+												$("#productCode").attr(
+														"readonly", "readonly");
+												$("#description").val(
+														data.description);
+												$("#description").attr(
+														"readonly", "readonly");
+												$("#uomO").val(data.qtyUnitId);
+												$("#uomO").attr("disabled",
+														"disabled");
+												$("#catId" + data.categoryId)
+														.attr("checked",
+																"checked");
+												catProblem(data.categoryId);
+												$("#addUOM").removeAttr(
+														"onclick");
+												$("[name='same']").attr(
+														"disabled", "disabled");
+												$("#image").attr(
+														'src',
+														'data:image/jpeg;base64,'
+																+ data.aimage);
+												$("[name='proImg']").attr(
+														"type", "hidden");
+												$("#snapBtn").attr("type",
+														"hidden");
+												$("#my_camera").attr("style",
+														"display : none;");
+											}
+										});
 							}
-						});
-					}
-				}
-			});
+						}
+					});
 		}
 	</script>
 </body>
