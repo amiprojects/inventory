@@ -867,6 +867,16 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public Vendor getVendorByVendorTypeAndName(String type, String name) {
+		TypedQuery<Vendor> q = em
+				.createQuery(
+						"select c from Vendor c where UPPER(c.name) like :name and UPPER(c.vendorType.type)=:type",
+						Vendor.class);
+		q.setParameter("name", name.toUpperCase());
+		q.setParameter("type", type.toUpperCase());
+		return q.getResultList().get(0);
+	}
+
 	/******************** for vendor type *******************************/
 	public void setVendorType(VendorType vendorType) {
 		em.persist(vendorType);
@@ -888,6 +898,14 @@ public class Ejb {
 		TypedQuery<VendorType> q = em.createQuery("select c from VendorType c",
 				VendorType.class);
 		return q.getResultList();
+	}
+
+	public VendorType getVendorTypeByName(String name) {
+		TypedQuery<VendorType> q = em.createQuery(
+				"select c from VendorType c where c.type=:name",
+				VendorType.class);
+		q.setParameter("name", name);
+		return q.getResultList().get(0);
 	}
 
 	/******************* foe account details ***************************/
@@ -2013,6 +2031,28 @@ public class Ejb {
 		}
 
 		return pdArr;
+	}
+
+	public ProductDetail getProductDetailByDesignNumber(String dNo) {
+		TypedQuery<ProductDetail> q = em
+				.createQuery(
+						"select c from ProductDetail c where UPPER(c.universalCode)=:dNo",
+						ProductDetail.class);
+		q.setParameter("dNo", dNo.toUpperCase());
+		return q.getResultList().get(0);
+	}
+
+	public boolean isExistProductDetailByDesignNumber(String dNo) {
+		TypedQuery<ProductDetail> q = em
+				.createQuery(
+						"select c from ProductDetail c where UPPER(c.universalCode)=:dNo",
+						ProductDetail.class);
+		q.setParameter("dNo", dNo.toUpperCase());
+		if (q.getResultList().size() > 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public List<Purchase_Product_Details> getReadyPurchaseProductDetailsByQty() {

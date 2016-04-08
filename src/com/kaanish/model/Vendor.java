@@ -57,8 +57,7 @@ public class Vendor implements Serializable {
 
 	@OneToMany(mappedBy = "vendor")
 	private List<Purchase_Entry> purchaseEntry;
-	
-	
+
 	@OneToMany(mappedBy = "vendor")
 	private List<PurchaseOrderEntry> purchaseOrderEntry;
 
@@ -254,6 +253,12 @@ public class Vendor implements Serializable {
 
 	@Override
 	public String toString() {
+		String cityName;
+		if (city != null) {
+			cityName = city.getCityName();
+		} else {
+			cityName = "NA";
+		}
 		if (voucherAssign != null) {
 			if (voucherAssign.getVoucherDetails().size() != 0) {
 				return "{\"id\":\""
@@ -268,8 +273,7 @@ public class Vendor implements Serializable {
 						+ "\", " + "\"ph1\":\"" + ph1 + "\", " + "\"ph2\":\""
 						+ ph2 + "\", " + "\"address\":\"" + address + "\", "
 						+ "\"pinCode\":\"" + pinCode + "\", " + "\"email\":\""
-						+ email + "\", " + "\"city\":\"" + city.getCityName()
-						+ "\"}";
+						+ email + "\", " + "\"city\":\"" + cityName + "\"}";
 			} else {
 				return "{\"id\":\"" + id + "\", " + "\"currentCreditNote\":\""
 						+ 0 + "\", " + "\"name\":\"" + name + "\", "
@@ -277,8 +281,7 @@ public class Vendor implements Serializable {
 						+ "\"ph1\":\"" + ph1 + "\", " + "\"ph2\":\"" + ph2
 						+ "\", " + "\"address\":\"" + address + "\", "
 						+ "\"pinCode\":\"" + pinCode + "\", " + "\"email\":\""
-						+ email + "\", " + "\"city\":\"" + city.getCityName()
-						+ "\"}";
+						+ email + "\", " + "\"city\":\"" + cityName + "\"}";
 			}
 		} else {
 			return "{\"id\":\"" + id + "\", " + "\"currentCreditNote\":\"" + 0
@@ -287,7 +290,7 @@ public class Vendor implements Serializable {
 					+ "\"ph1\":\"" + ph1 + "\", " + "\"ph2\":\"" + ph2 + "\", "
 					+ "\"address\":\"" + address + "\", " + "\"pinCode\":\""
 					+ pinCode + "\", " + "\"email\":\"" + email + "\", "
-					+ "\"city\":\"" + city.getCityName() + "\"}";
+					+ "\"city\":\"" + cityName + "\"}";
 		}
 
 	}
@@ -322,7 +325,8 @@ public class Vendor implements Serializable {
 		return purchaseOrderEntry;
 	}
 
-	public void setPurchaseOrderEntry(List<PurchaseOrderEntry> purchaseOrderEntry) {
+	public void setPurchaseOrderEntry(
+			List<PurchaseOrderEntry> purchaseOrderEntry) {
 		this.purchaseOrderEntry = purchaseOrderEntry;
 	}
 

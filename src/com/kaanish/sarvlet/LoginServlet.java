@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.kaanish.ejb.Ejb;
+import com.kaanish.model.AccountDetails;
 import com.kaanish.model.Bill_setup;
 import com.kaanish.model.City;
 import com.kaanish.model.CompanyInfo;
@@ -30,6 +31,7 @@ import com.kaanish.model.SecurityQuestionGroup;
 import com.kaanish.model.SequrityQuestions;
 import com.kaanish.model.Stoct;
 import com.kaanish.model.Users;
+import com.kaanish.model.Vendor;
 import com.kaanish.model.VendorType;
 import com.kaanish.util.GetMacId;
 
@@ -63,6 +65,9 @@ public class LoginServlet extends HttpServlet {
 	private SequrityQuestions securityQuestions;
 	private City city;
 	private CompanyInfo companyInfo;
+	private Vendor vendor;
+	private Date dt;
+	private AccountDetails accountDetails;
 
 	@Override
 	public void init() throws ServletException {
@@ -327,6 +332,38 @@ public class LoginServlet extends HttpServlet {
 			usersKainat.setPh("0");
 			usersKainat.setCompanyInfo(companyInfoKainat);
 			ejb.setUser(usersKainat);
+		}
+
+		// adding vendor
+		int flagV = 0;
+		for (Vendor v : ejb.getAllVendors()) {
+			if (v.getName().equals("Production Vendor")) {
+				flagV = 1;
+				break;
+			}
+		}
+		if (flagV == 0) {
+			dt = new Date();
+			vendor = new Vendor();
+			vendor.setName("Production Vendor");
+			vendor.setPh1("Production Phone");
+			vendor.setAddress("NA");
+			vendor.setAliseName("NA");
+			vendor.setCompanyName("NA");
+			vendor.setEmail("NA");
+			vendor.setPh2("NA");
+			vendor.setPinCode("NA");
+			vendor.setLastModifiedDate(dt);
+			vendor.setVendorType(ejb.getVendorTypeByName("Vendor"));
+			vendor.setUsers(ejb.getUserById("adminKainat"));
+			// vendor.setUsers(ejb.getUserById("adminKaanish"));
+			ejb.setVendor(vendor);
+
+			accountDetails = new AccountDetails();
+			accountDetails.setUsers(ejb.getUserById("adminKainat"));
+			// accountDetails.setUsers(ejb.getUserById("adminKaanish"));
+			accountDetails.setVendor(vendor);
+			ejb.setAccountDetails(accountDetails);
 		}
 
 		if (ejb.getAllBillSetup().size() < 8) {

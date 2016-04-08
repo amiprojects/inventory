@@ -120,6 +120,7 @@
 			$("#att6").val($("#a60").val());
 			$("#lotnumberS").val($("#lotnO").val());
 
+			$("#totalCost").val(Number($("#totExpanse").val()));
 		}
 	}
 
@@ -1059,6 +1060,35 @@
 
 									<input readonly="readonly" type="hidden" class="form-control"
 										value="" name="planNo1" id="planNo1">
+									<div class="form-group" style="display: none;">
+										<c:set var="compInfo"
+											value="${sessionScope[ 'ejb'].getUserById(sessionScope['user']).getCompanyInfo()}" />
+										<label for="" class="font">Purchase challan no. :</label>
+										<c:set var="fy"
+											value="${sessionScope['ejb'].getCurrentFinancialYear()}" />
+										<c:set var="cno"
+											value="${sessionScope['ejb'].getLastPurchaseChallanNumberByCompany(compInfo.id)+1}" />
+										<c:set var="csuf"
+											value="${sessionScope['ejb'].getLastPurchaseChallanSuffixByCompany(compInfo.id)+1}" />
+										<c:set var="suf" value="PUR" />
+										<c:set var="bs"
+											value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompanyId(suf, compInfo.id)}" />
+										<fmt:formatNumber value="${cno}" var="lastChNo"
+											minIntegerDigits="4" groupingUsed="false" />
+										<fmt:formatNumber value="${csuf}" var="lastSuf"
+											minIntegerDigits="3" groupingUsed="false" />
+										<fmt:formatDate
+											value="${sessionScope['ejb'].getCurrentDateTime()}"
+											pattern="MM" var="yr" />
+										<input readonly="readonly" type="text" placeholder=""
+											name="challanNumber" class="form-control" id="chaId"
+											value="${bs.companyInitial}/${fy}/${yr}/${bs.billType}/${lastChNo}/${lastSuf}">
+										<input type="hidden" name="challanNo" value="${lastChNo}"
+											id="challanNo"> <input type="hidden"
+											name="challanSuffix" value="${lastSuf}">
+									</div>
+									<input readonly="readonly" type="hidden" class="form-control"
+										value="" name="totalCost" id="totalCost">
 								</form>
 							</fieldset>
 						</div>
@@ -2216,6 +2246,28 @@
 			$("#quantity").val($("#sampleQty").val());
 			$("#planNo1").val($("#planNo").val());
 			$("#newMP").modal("show");
+
+			$.ajax({
+				url : "isExistProductDetailByDesignNumber",
+				dataType : "json",
+				data : {
+					dNo : $("#dNo").val()
+				},
+				success : function(data) {
+					if (data.isExist) {
+						$.ajax({
+							url : "getProductDetailByDesignNumber",
+							dataType : "json",
+							data : {
+								dNo : $("#dNo").val()
+							},
+							success : function(data) {
+								alert(data.code);
+							}
+						});
+					}
+				}
+			});
 		}
 	</script>
 </body>

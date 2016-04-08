@@ -127,7 +127,9 @@ import com.kaanish.util.DepartmentCotractor;
 		"/getSampleDesignCostSheetByDesignNumberForDuplicateCheck",
 		"/getItmProductsForSampleByProductId",
 		"/getJobPlanProductsByPlanId",
-		"/getAllDesignNoFromSampleDesignCostSheetAndProductsByDesignNumberForDuplicateCheck" })
+		"/getAllDesignNoFromSampleDesignCostSheetAndProductsByDesignNumberForDuplicateCheck",
+		"/getProductDetailByDesignNumber",
+		"/isExistProductDetailByDesignNumber" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -199,6 +201,25 @@ public class JsonServlet extends HttpServlet {
 				resp.getWriter().print(
 						ejb.getItmProductsForSampleByProductId(Integer
 								.parseInt(req.getParameter("id"))));
+				break;
+
+			case "getProductDetailByDesignNumber":
+				resp.getWriter().print(
+						ejb.getProductDetailByDesignNumber(req
+								.getParameter("dNo")));
+				break;
+
+			case "isExistProductDetailByDesignNumber":
+				JsonGeneratorFactory factoryIE = Json
+						.createGeneratorFactory(null);
+				JsonGenerator generatorIE = factoryIE.createGenerator(resp
+						.getOutputStream());
+				generatorIE
+						.writeStartObject()
+						.write("isExist",
+								ejb.isExistProductDetailByDesignNumber(req
+										.getParameter("dNo"))).writeEnd()
+						.close();
 				break;
 
 			case "getUOMtype":
