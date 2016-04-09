@@ -51,6 +51,9 @@
 							title="">Purchase Entry</a></li>
 						<li><a id="sPurchSearch" href="purchasingPurchaseSearch.jsp"
 							title="">Search Purchase Entry</a></li>
+						<li><a id="sProdPurchSearch"
+							href="purchasingProductionSearch.jsp" title="">Search
+								Production Entry</a></li>
 						<li><a id="sPurchReturn" href="purchaseReturn.jsp" title="">Purchase
 								Return</a></li>
 						<!-- <li><a id="sPurchPOgive" href="purchasingPurchaseOrderGive.jsp" title="">Purchase

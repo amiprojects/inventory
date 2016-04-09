@@ -230,6 +230,15 @@ public class Ejb {
 		return q.getResultList().get(0);
 	}
 
+	public List<ItmProductsForSample> getItmProductsForSampleBySampleId(int id) {
+		TypedQuery<ItmProductsForSample> q = em.createQuery(
+				"select c from ItmProductsForSample c where c.sampleId=:id",
+				ItmProductsForSample.class);
+		q.setParameter("id", id);
+		return q.getResultList();
+
+	}
+
 	/***************** for Security Questions group **********************/
 	public void setSecurityQueGroup(SecurityQuestionGroup questionGroup) {
 		em.persist(questionGroup);

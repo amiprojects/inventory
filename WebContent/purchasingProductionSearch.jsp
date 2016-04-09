@@ -65,12 +65,12 @@
 
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
-								<h3 style="margin-top: 11px;">Purchase Search</h3>
+								<h3 style="margin-top: 11px;">Purchase Production Search</h3>
 							</div>
 
 							<div class="widget-area">
-								<form role="form" class="sec" action="purchaseSearchAll"
-									method="post">
+								<form role="form" class="sec"
+									action="purchaseProductionSearchAll" method="post">
 									<div class="row">
 										<div class="col-md-12">
 											<button class="btn green pull-right" type="submit"
@@ -78,8 +78,9 @@
 										</div>
 									</div>
 								</form>
-								<form role="form" class="sec" action="purchaseSearchByDate"
-									method="post" id="purchaseSearchByDateId">
+								<form role="form" class="sec"
+									action="purchaseProductionSearchByDate" method="post"
+									id="purchaseSearchByDateId">
 									<div class="row">
 										<div class="col-md-5">
 											<div class="form-group">
@@ -108,12 +109,12 @@
 								</form>
 
 								<form role="form" class="sec"
-									action="purchaseSearchByPurchaseChallanNo" method="post">
+									action="purchaseProductionSearchByPurchaseChallanNo"
+									method="post">
 									<div class="row">
 										<div class="col-md-12">
 											<div class="form-group">
-												<label for="" style="float: left;">Purchase challan
-													no. :</label>
+												<label for="" style="float: left;">Challan no. :</label>
 											</div>
 										</div>
 									</div>
@@ -167,7 +168,7 @@
 									</div>
 								</form>
 								<form role="form" class="sec"
-									action="purchaseSearchByProductCode" method="post">
+									action="purchaseProductionSearchByProductCode" method="post">
 									<div class="row">
 										<div class="col-md-10">
 											<div class="form-group">
@@ -182,40 +183,6 @@
 										</div>
 									</div>
 								</form>
-								<form role="form" class="sec"
-									action="purchaseSearchByVendorName" method="post">
-									<div class="row">
-										<div class="col-md-10">
-											<div class="form-group">
-												<label for="" style="float: left;">Vendor Name :</label> <input
-													type="" placeholder="Enter Vendor Name" id="vendorName"
-													name="vendorName" class="form-control">
-											</div>
-										</div>
-										<div class="col-md-2">
-											<button class="btn green pull-left" style="margin-top: 25px;"
-												type="submit">Search</button>
-										</div>
-
-									</div>
-								</form>
-								<form role="form" class="sec" action="purchaseSearchByAgentName"
-									method="post">
-									<div class="row">
-										<div class="col-md-10">
-											<div class="form-group">
-												<label for="" style="float: left;">Agent Name :</label> <input
-													type="" placeholder="Enter Agent Name" id="agentName"
-													name="agentName" class="form-control">
-											</div>
-										</div>
-										<div class="col-md-2">
-											<button class="btn green pull-left" style="margin-top: 25px;"
-												type="submit">Search</button>
-										</div>
-
-									</div>
-								</form>
 								<br>
 								<h3 align="center" style="color: #6a94ff;">${requestScope['msg']}</h3>
 								<br>
@@ -223,68 +190,53 @@
 								<table class="table table-fixedheader">
 									<thead>
 										<tr>
-											<th width="2%">#</th>
-											<th width="19%">Purchase challan no.</th>
-											<th width="12%">Vendor Name</th>
-											<th width="11%">Agent Name</th>
+											<th width="5%">#</th>
+											<th width="30%">Challan no.</th>
+											<th width="15%">Vendor Name</th>
 											<th width="15%">Vendor Bill no.</th>
-											<th width="13%">Purchase Date</th>
-											<th width="12%">Total Amount</th>
-											<th width="8%">Barcode</th>
-											<!-- <th width="4%"></th>
-											<th width="4%"></th> -->
+											<th width="15%">Completion Date</th>
+											<th width="10%">Barcode</th>
 										</tr>
 									</thead>
 									<tbody style="height: 300px;">
 										<c:set var="count" value="${1}" />
 										<c:forEach items="${requestScope['purEntryList']}"
 											var="pEntryByD">
-											<c:if test="${pEntryByD.vendor.name!='Production Vendor'}">
+											<c:if test="${pEntryByD.vendor.name=='Production Vendor'}">
 												<tr>
-													<td width="2%">${count}</td>
-													<td width="19%"><a href="#"
-														onclick="viewInvoice(${pEntryByD.id});"><b>${pEntryByD.challanNumber}</b></a>
+													<td width="5%">${count}</td>
+													<td width="30%">
+														<%-- <a href="#"
+													onclick="viewInvoice(${pEntryByD.id});"><b>${pEntryByD.challanNumber}</b></a> --%>
+														${pEntryByD.challanNumber}
 													</td>
 													<c:if test="${pEntryByD.vendor.vendorType.type=='Vendor'}">
-														<td width="12%">${pEntryByD.vendor.name}</td>
+														<td width="15%">${pEntryByD.vendor.name}</td>
 													</c:if>
 													<c:if test="${pEntryByD.vendor.vendorType.type!='Vendor'}">
-														<td width="12%">NIL</td>
+														<td width="15%">NIL</td>
 													</c:if>
-													<c:choose>
-														<c:when
-															test="${pEntryByD.vendor.vendorType.type=='Purchase Agent'}">
-															<td width="11%">${pEntryByD.vendor.name}</td>
-														</c:when>
-														<c:when test="${pEntryByD.agentId!=0}">
-															<td width="11%">${sessionScope['ejb'].getVendorById(pEntryByD.agentId).name}</td>
-														</c:when>
-														<c:otherwise>
-															<td width="11%">NIL</td>
-														</c:otherwise>
-													</c:choose>
 													<td width="15%">${pEntryByD.vendor_bill_no}</td>
-													<td width="13%"><fmt:formatDate
+													<td width="15%"><fmt:formatDate
 															value="${pEntryByD.purchase_date}" pattern="dd-MM-yy" /></td>
-													<td width="12%">${pEntryByD.totalCost}</td>
-													<td width="8%"><a href="#"
+													<td width="10%"><a href="#"
 														onclick="window.open('purchaseBarcodePrint.jsp?id=${pEntryByD.id}','mywindow','width=1100,height=500')">
 															<img alt="click to view" src="Capture.PNG" height="20">
 													</a></td>
-													<td width="4%">
-														<form action="purchaseView" method="post"
+													<td width="10%">
+														<form action="purchaseProductionView" method="post"
 															id="pView${pEntryByD.id}">
 															<a href="#" onclick="purchaseViewF('${pEntryByD.id}');"><input
 																type="hidden" value="${pEntryByD.id}" name="pId"><img
 																alt="" src="images/eye.png" height="25px"></a>
 														</form>
 													</td>
-													<td width="4%">
-														<form action="purchaseEdit" method="post">
-															<input type="hidden" value="${pEntryByD.id}" name="pId">
-															<input type="image" src="img/edit.png">
-														</form>
-													</td>
+													<%-- <td width="4%">
+													<form action="purchaseEdit" method="post">
+														<input type="hidden" value="${pEntryByD.id}" name="pId">
+														<input type="image" src="img/edit.png">
+													</form>
+												</td> --%>
 												</tr>
 												<c:set var="count" value="${count+1}" />
 											</c:if>
@@ -313,7 +265,7 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#purch").attr("id", "activeSubMenu");
-			$("#sPurchSearch").attr("style", "color: #6a94ff;");
+			$("#sProdPurchSearch").attr("style", "color: #6a94ff;");
 		});
 	</script>
 	<script src="js/jquery-ui/jquery-ui.js"></script>
@@ -492,13 +444,11 @@
 				$("#purchaseSearchByDateId").submit();
 			}
 		}
-		
-		function viewInvoice(id){
-			window
-			.open(
-					"stockPurCha.jsp?id="+id,
-					'name', 'width=900,height=700');
-			
+
+		function viewInvoice(id) {
+			window.open("stockPurCha.jsp?id=" + id, 'name',
+					'width=900,height=700');
+
 		}
 	</script>
 </body>

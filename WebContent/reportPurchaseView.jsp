@@ -40,8 +40,8 @@
 <script src="js/jquery-ui/jquery-ui.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("#purch").attr("id", "activeSubMenu");
-		$("#sPurchSearch").attr("style", "color: #6a94ff;");
+		$("#reports").attr("id", "activeSubMenu");
+		$("#report").attr("style", "color: #6a94ff;");
 	});
 </script>
 <link rel="stylesheet" href="css/toast.css" type="text/css" />

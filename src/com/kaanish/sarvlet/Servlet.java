@@ -114,7 +114,10 @@ import com.kaanish.util.DateConverter;
 		"/sampleJobSearchByDesignNo", "/sampleJobSearchByDesignerName",
 		"/sampleJobCostSheetView", "/jobSearchByPlanNo", "/purchaseEdit",
 		"/jobReceiveFromSearch", "/setItems", "/updateItems",
-		"/completePlanAndProductSumaryProduction" })
+		"/completePlanAndProductSumaryProduction", "/purchaseProductionView",
+		"/purchaseProductionSearchAll", "/purchaseProductionSearchByDate",
+		"/purchaseProductionSearchByPurchaseChallanNo",
+		"/purchaseProductionSearchByProductCode" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -446,28 +449,33 @@ public class Servlet extends HttpServlet {
 					}
 				}
 				if (chP == 0) {
-					productDetail = new ProductDetail();
-					productDetail.setCode(req.getParameter("productCode")
-							.toUpperCase());
-					productDetail.setDescription(req
-							.getParameter("description").toUpperCase());
-					productDetail.setUniversalCode(req.getParameter("upc")
-							.toUpperCase());
-					productDetail.setQtyUnit(ejb.getQtyUnitById(Integer
-							.parseInt(req.getParameter("uom"))));
-					productDetail.setRaw(false);
-					productDetail.setSaleble(true);
-					productDetail.setCategory(ejb.getCategoryById(Integer
-							.parseInt(req.getParameter("catagoryId"))));
-					productDetail.setActive(true);
-					ejb.setProductDetail(productDetail);
+					if (req.getParameter("isExistProdInSample").equals("yes")) {
+						productDetail = ejb.getProductDetailByDesignNumber(req
+								.getParameter("upc"));
+					} else {
+						productDetail = new ProductDetail();
+						productDetail.setCode(req.getParameter("productCode")
+								.toUpperCase());
+						productDetail.setDescription(req.getParameter(
+								"description").toUpperCase());
+						productDetail.setUniversalCode(req.getParameter("upc")
+								.toUpperCase());
+						productDetail.setQtyUnit(ejb.getQtyUnitById(Integer
+								.parseInt(req.getParameter("uom"))));
+						productDetail.setRaw(false);
+						productDetail.setSaleble(true);
+						productDetail.setCategory(ejb.getCategoryById(Integer
+								.parseInt(req.getParameter("catagoryId"))));
+						productDetail.setActive(true);
+						ejb.setProductDetail(productDetail);
 
-					readyGoodsStock = new ReadyGoodsStock();
-					readyGoodsStock.setProductDetail(productDetail);
-					readyGoodsStock.setRemainingQty(0);
-					readyGoodsStock.setCompanyInfo(companyInfo);
-					ejb.setReadyGoodsStockDetail(readyGoodsStock);
-					readyGoodsStock = null;
+						readyGoodsStock = new ReadyGoodsStock();
+						readyGoodsStock.setProductDetail(productDetail);
+						readyGoodsStock.setRemainingQty(0);
+						readyGoodsStock.setCompanyInfo(companyInfo);
+						ejb.setReadyGoodsStockDetail(readyGoodsStock);
+						readyGoodsStock = null;
+					}
 
 					// ///////////////////////////////////////////
 					purchaseEntry = new Purchase_Entry();
@@ -1464,7 +1472,9 @@ public class Servlet extends HttpServlet {
 								+ "/"
 								+ req.getParameter("suffix"));
 
-				if (purEntryListR.size() > 0) {
+				if (purEntryListR.size() > 0
+						&& !purEntryListR.get(0).getVendor().getName()
+								.equals("Production Vendor")) {
 					req.setAttribute("pId", purEntryListR.get(0).getId());
 
 					msg = "Your search for Purchase challan number : "
@@ -1909,6 +1919,28 @@ public class Servlet extends HttpServlet {
 				}
 				break;
 
+			case "purchaseProductionSearchByDate":
+				page = "purchasingProductionSearch.jsp";
+				List<Purchase_Entry> purEntryListP = ejb
+						.getPurchaseEntryByDateAndCompany(
+								DateConverter
+										.getDate(req.getParameter("fDate")),
+								DateConverter.getDate(req.getParameter("lDate")),
+								ejb.getUserById(
+										(String) httpSession
+												.getAttribute("user"))
+										.getCompanyInfo().getId());
+				req.setAttribute("purEntryList", purEntryListP);
+				if (purEntryListP.size() > 0) {
+					msg = "Your search for dated " + req.getParameter("fDate")
+							+ " to " + req.getParameter("lDate");
+				} else {
+					msg = "No result found for dated "
+							+ req.getParameter("fDate") + " to "
+							+ req.getParameter("lDate") + "...";
+				}
+				break;
+
 			case "purchaseReportByDate":
 				page = "reportPurchaseReport.jsp";
 				List<Purchase_Entry> purEntryListRp = ejb
@@ -1951,6 +1983,43 @@ public class Servlet extends HttpServlet {
 
 				if (purEntryList1.size() > 0) {
 					msg = "Your search for Purchase challan number : "
+							+ req.getParameter("companyInitial") + "/"
+							+ req.getParameter("fynYear") + "/"
+							+ req.getParameter("month") + "/"
+							+ req.getParameter("billType") + "/"
+							+ req.getParameter("autoNum") + "/"
+							+ req.getParameter("suffix");
+				} else {
+					msg = "No result found for Purchase challan number : "
+							+ req.getParameter("companyInitial") + "/"
+							+ req.getParameter("fynYear") + "/"
+							+ req.getParameter("month") + "/"
+							+ req.getParameter("billType") + "/"
+							+ req.getParameter("autoNum") + "/"
+							+ req.getParameter("suffix");
+				}
+				break;
+
+			case "purchaseProductionSearchByPurchaseChallanNo":
+				page = "purchasingProductionSearch.jsp";
+				List<Purchase_Entry> purEntryList1P = ejb
+						.getPurchaseEntryByChallanNo(req
+								.getParameter("companyInitial")
+								+ "/"
+								+ req.getParameter("fynYear")
+								+ "/"
+								+ req.getParameter("month")
+								+ "/"
+								+ req.getParameter("billType")
+								+ "/"
+								+ req.getParameter("autoNum")
+								+ "/"
+								+ req.getParameter("suffix"));
+
+				req.setAttribute("purEntryList", purEntryList1P);
+
+				if (purEntryList1P.size() > 0) {
+					msg = "Your search for Challan number : "
 							+ req.getParameter("companyInitial") + "/"
 							+ req.getParameter("fynYear") + "/"
 							+ req.getParameter("month") + "/"
@@ -2044,6 +2113,21 @@ public class Servlet extends HttpServlet {
 				}
 				break;
 
+			case "purchaseProductionSearchByProductCode":
+				page = "purchasingProductionSearch.jsp";
+				List<Purchase_Entry> purEntryList4P = ejb
+						.getPurchaseEntryByProductCodeAndCompany(req
+								.getParameter("prodCode"));
+				req.setAttribute("purEntryList", purEntryList4P);
+				if (purEntryList4P.size() > 0) {
+					msg = "Your search for Product code : "
+							+ req.getParameter("prodCode").toUpperCase();
+				} else {
+					msg = "No result found for product code : "
+							+ req.getParameter("prodCode").toUpperCase();
+				}
+				break;
+
 			case "purchaseReportByProductCode":
 				page = "reportPurchaseReport.jsp";
 				List<Purchase_Entry> purEntryList4R = ejb
@@ -2063,9 +2147,21 @@ public class Servlet extends HttpServlet {
 				page = "purchasingPurchaseSearch.jsp";
 				List<Purchase_Entry> purEntryListA = ejb
 						.getAllPurchaseEntryByCompany();
-				req.setAttribute("purEntryList", purEntryListA);
 				if (purEntryListA.size() > 0) {
 					msg = "All Purchase List";
+					req.setAttribute("purEntryList", purEntryListA);
+				} else {
+					msg = "No result found...";
+				}
+				break;
+
+			case "purchaseProductionSearchAll":
+				page = "purchasingProductionSearch.jsp";
+				List<Purchase_Entry> purEntryListAP = ejb
+						.getAllPurchaseEntryByCompany();
+				if (purEntryListAP.size() > 0) {
+					msg = "All Purchase Production List";
+					req.setAttribute("purEntryList", purEntryListAP);
 				} else {
 					msg = "No result found...";
 				}
@@ -2100,6 +2196,15 @@ public class Servlet extends HttpServlet {
 
 			case "purchaseView":
 				page = "purchaseView.jsp";
+
+				req.setAttribute("pId", req.getParameter("pId"));
+
+				msg = "";
+
+				break;
+
+			case "purchaseProductionView":
+				page = "purchaseProductionView.jsp";
 
 				req.setAttribute("pId", req.getParameter("pId"));
 
@@ -3360,6 +3465,7 @@ public class Servlet extends HttpServlet {
 					ejb.updateSampleDesignCostSheet(sampleDesignCostSheet);
 
 					msg = "your request hasbeen successfully processed";
+					req.setAttribute("sampleId", sampleDesignCostSheet.getId());
 				} else {
 					msg = "Duplicate Entry! Not Allowed!";
 				}
@@ -3650,6 +3756,8 @@ public class Servlet extends HttpServlet {
 					jobPlan.setTotalExpanse(jobPlan.getTotalExpanse()
 							+ totalJobExpanse);
 					ejb.updateJobPlan(jobPlan);
+					req.setAttribute("jobAssignId",
+							jobAssignmentDetails.getId());
 					msg = "Job Assigned Successfully";
 				} else {
 					msg = "Duplicate Entry! Not Allowed!";

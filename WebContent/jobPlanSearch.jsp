@@ -635,17 +635,18 @@
 							<legend> Product Image </legend>
 							<p style="font-size: 14px">(The Products Image .)</p>
 							<div>
-								<label> Upload logo:</label>
 								<div>
 									<img id="image" alt="" src="data:image/jpeg;base64,"
 										style="width: 100px; height: 50px;">
 								</div>
-								<input type="file" name="proImg" size="20"
-									onchange="readURL(this);"><br> <a
-									href="javascript:void(take_snapshot())"><button
-										id="snapBtn" class="btn blue btn-default" type="button">Take
-										Snapshot</button></a>
-								<div id="my_camera" style="width: 320px; height: 240px;"></div>
+								<div id="snapBtn">
+									<input type="file" name="proImg" size="20"
+										onchange="readURL(this);"><br> <a
+										href="javascript:void(take_snapshot())"><button
+											class="btn blue btn-default" type="button">Take
+											Snapshot</button></a>
+									<div id="my_camera" style="width: 320px; height: 240px;"></div>
+								</div>
 							</div>
 						</fieldset>
 					</div>
@@ -1083,7 +1084,9 @@
 											name="challanSuffix" value="${lastSuf}">
 									</div>
 									<input readonly="readonly" type="hidden" class="form-control"
-										value="" name="totalCost" id="totalCost">
+										value="" name="totalCost" id="totalCost"> <input
+										readonly="readonly" type="hidden" class="form-control"
+										value="" name="isExistProdInSample" id="isExistProdInSample">
 								</form>
 							</fieldset>
 						</div>
@@ -2282,12 +2285,10 @@
 														'src',
 														'data:image/jpeg;base64,'
 																+ data.aimage);
-												$("[name='proImg']").attr(
-														"type", "hidden");
-												$("#snapBtn").attr("type",
-														"hidden");
-												$("#my_camera").attr("style",
+												$("#snapBtn").attr("style",
 														"display : none;");
+												$("#isExistProdInSample").val(
+														"yes");
 											}
 										});
 							}

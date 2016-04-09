@@ -107,7 +107,6 @@ myWindow.print();
 				window.location = "dashboard.jsp";
 			</script>
 		</c:if>
-	</c:if>
-	
+	</c:if>	
 </body>
 </html>
