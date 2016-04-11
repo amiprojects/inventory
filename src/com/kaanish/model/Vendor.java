@@ -34,7 +34,7 @@ public class Vendor implements Serializable {
 	private String pinCode;
 	private String email;
 	private String aliseName;
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date lastModifiedDate;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "vendor")

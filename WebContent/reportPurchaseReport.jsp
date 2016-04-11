@@ -139,25 +139,27 @@
 												items="${sessionScope['ejb'].getAllVendorsByAssendingMaxPurchase('Vendor')}"
 												var="vendor">
 												<c:if test="${vendor.vendorType.type=='Vendor'}">
-													<tr>
-														<td>${count}</td>
-														<td>${vendor.name}</td>
-														<td>${vendor.companyName}</td>
-														<td>${vendor.ph1}</td>
-														<td>${vendor.ph2}</td>
-														<td><fmt:formatNumber var="totPurSub"
-																value="${vendor.getTotPurchase()}" maxFractionDigits="2" />
-															${totPurSub}</td>
-														<td>
-															<form action="purchaseReportByVendorName" method="post"
-																id="pView${vendor.id}">
-																<a href="#" onclick="purchaseViewF('${vendor.id}');"><input
-																	type="hidden" value="${vendor.id}" name="pId"><input
-																	type="hidden" value="${vendor.name}" name="vendorName"><img
-																	alt="" src="images/eye.png" height="25px"></a>
-															</form>
-														</td>
-													</tr>
+													<c:if test="${vendor.name!='Production Vendor'}">
+														<tr>
+															<td>${count}</td>
+															<td>${vendor.name}</td>
+															<td>${vendor.companyName}</td>
+															<td>${vendor.ph1}</td>
+															<td>${vendor.ph2}</td>
+															<td><fmt:formatNumber var="totPurSub"
+																	value="${vendor.getTotPurchase()}"
+																	maxFractionDigits="2" /> ${totPurSub}</td>
+															<td>
+																<form action="purchaseReportByVendorName" method="post"
+																	id="pView${vendor.id}">
+																	<a href="#" onclick="purchaseViewF('${vendor.id}');"><input
+																		type="hidden" value="${vendor.id}" name="pId"><input
+																		type="hidden" value="${vendor.name}" name="vendorName"><img
+																		alt="" src="images/eye.png" height="25px"></a>
+																</form>
+															</td>
+														</tr>
+													</c:if>
 												</c:if>
 												<c:set var="count" value="${count+1}" />
 											</c:forEach>

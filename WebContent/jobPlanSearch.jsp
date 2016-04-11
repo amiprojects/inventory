@@ -243,11 +243,11 @@
 								style="height: 50px; text-align: center;">
 								<h3 style="margin-top: 11px;">Job Plan View</h3>
 							</div>
-
 							<!-- <div class="widget-area"> -->
-
-
 							<div class="col-md-12">
+								<div class='toast' style='display: none'>
+									<h3 id="msg">${requestScope['msg']}</h3>
+								</div>
 								<form action="jobSearchByPlanNo" method="post"
 									id="jobSearchByPlanNoId">
 									<div class="widget-area" style="margin-bottom: 20px;">
@@ -282,9 +282,6 @@
 									<span id="planNoMsg"></span>
 								</h3>
 								<br>
-								<div class='toast' style='display: none'>
-									<h3 id="msg">${requestScope['msg']}</h3>
-								</div>
 								<table class="table table-striped table-bordered">
 									<thead>
 										<tr>

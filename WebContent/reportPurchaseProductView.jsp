@@ -100,8 +100,7 @@
 														<c:set var="totPurQty"
 															value="${totPurQty+proedPurDet.quantity-proedPurDet.totalReturningQty}"></c:set>
 													</c:if>
-												</c:forEach>
-												<fmt:formatNumber var="totPurQtyF" value="${totPurQty}"
+												</c:forEach> <fmt:formatNumber var="totPurQtyF" value="${totPurQty}"
 													maxFractionDigits="3" /> ${totPurQtyF}</td>
 										</tr>
 									</thead>
@@ -185,12 +184,15 @@
 												<td>${pEntryByD.sur_charge}</td>
 												<td>${pEntryByD.roundOf}</td>
 												<td>${pEntryByD.totalCost}</td> --%>
-												<td><form action="purchaseReportView" method="post"
-														id="pView${pEntryByD.id}">
-														<a href="#" onclick="purchaseViewF('${pEntryByD.id}');"><input
-															type="hidden" value="${pEntryByD.id}" name="pId"><img
-															alt="" src="images/eye.png" height="25px"></a>
-													</form></td>
+												<td><c:if
+														test="${pEntryByD.vendor.name!='Production Vendor'}">
+														<form action="purchaseReportView" method="post"
+															id="pView${pEntryByD.id}">
+															<a href="#" onclick="purchaseViewF('${pEntryByD.id}');"><input
+																type="hidden" value="${pEntryByD.id}" name="pId"><img
+																alt="" src="images/eye.png" height="25px"></a>
+														</form>
+													</c:if></td>
 											</tr>
 											<c:set var="count" value="${count+1}" />
 										</c:forEach>

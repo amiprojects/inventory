@@ -23,7 +23,7 @@ public class JobPlan implements Serializable {
 	@Id
 	@GeneratedValue
 	private int id;
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date planDate;
 	private String description;
 	private float qty;
@@ -42,7 +42,7 @@ public class JobPlan implements Serializable {
 
 	@OneToMany(mappedBy = "jobPlan", cascade = CascadeType.ALL)
 	private List<JobPlanProductStock> jobPlanProductStocks;
-	
+
 	@OneToMany(mappedBy = "jobPlan", cascade = CascadeType.ALL)
 	private List<JobPlanProducts> jobPlanProducts;
 
@@ -170,12 +170,11 @@ public class JobPlan implements Serializable {
 
 	@Override
 	public String toString() {
-		return "{\"id\":\"" + id + "\", " + "\"isComplete\":\""
-				+ isComplete + "\", " + "\"qty\":\""
-				+ qty + "\", " + "\"totalProductCost\":\""
-				+ totalProductCost + "\", " + "\"totalJobExpanse\":\""
-				+ totalJobExpanse + "\", " + "\"totalExpanse\":\""
-				+ totalExpanse + "\"}";
+		return "{\"id\":\"" + id + "\", " + "\"isComplete\":\"" + isComplete
+				+ "\", " + "\"qty\":\"" + qty + "\", "
+				+ "\"totalProductCost\":\"" + totalProductCost + "\", "
+				+ "\"totalJobExpanse\":\"" + totalJobExpanse + "\", "
+				+ "\"totalExpanse\":\"" + totalExpanse + "\"}";
 	}
 
 	public List<JobPlanProducts> getJobPlanProducts() {

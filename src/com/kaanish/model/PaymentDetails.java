@@ -23,11 +23,11 @@ public class PaymentDetails implements Serializable {
 	private int id;
 	@Column(length = 800)
 	private String description;
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date paymentDate;
 	private float totalAmount;
 	private float paidAmount;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "purchaseReturnId")
 	private PurchaseReturn purchaseReturn;
@@ -35,7 +35,7 @@ public class PaymentDetails implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "purchaseEntryId")
 	private Purchase_Entry purchase_Entry;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "purchaseOrderEntryId")
 	private PurchaseOrderEntry purchaseOrderEntry;
@@ -43,7 +43,7 @@ public class PaymentDetails implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "salesEntryId")
 	private SalesEntry salesEntry;
-	
+
 	public SalesReturn getSalesReturn() {
 		return salesReturn;
 	}

@@ -26,6 +26,7 @@ import com.kaanish.model.Country;
 import com.kaanish.model.CustomerEntry;
 import com.kaanish.model.Department;
 import com.kaanish.model.DesignImage;
+import com.kaanish.model.ItemDetails;
 import com.kaanish.model.ItmProductsForSample;
 import com.kaanish.model.JobAssignmentDetails;
 import com.kaanish.model.JobAssignmentJobDetails;
@@ -40,7 +41,6 @@ import com.kaanish.model.JobRecievedDetails;
 import com.kaanish.model.JobStock;
 import com.kaanish.model.JobTypes;
 import com.kaanish.model.JobsForDesignCostSheet;
-import com.kaanish.model.ItemDetails;
 import com.kaanish.model.PageList;
 import com.kaanish.model.PaymentDetails;
 import com.kaanish.model.ProductDetail;
@@ -2027,7 +2027,7 @@ public class Servlet extends HttpServlet {
 							+ req.getParameter("autoNum") + "/"
 							+ req.getParameter("suffix");
 				} else {
-					msg = "No result found for Purchase challan number : "
+					msg = "No result found for Challan number : "
 							+ req.getParameter("companyInitial") + "/"
 							+ req.getParameter("fynYear") + "/"
 							+ req.getParameter("month") + "/"
@@ -2160,7 +2160,7 @@ public class Servlet extends HttpServlet {
 				List<Purchase_Entry> purEntryListAP = ejb
 						.getAllPurchaseEntryByCompany();
 				if (purEntryListAP.size() > 0) {
-					msg = "All Purchase Production List";
+					msg = "All Ready Production List";
 					req.setAttribute("purEntryList", purEntryListAP);
 				} else {
 					msg = "No result found...";

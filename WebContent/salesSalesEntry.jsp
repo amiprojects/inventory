@@ -242,7 +242,7 @@
 								</div>
 								<div class="widget-area">
 									<b>Quantity :<font color="red" size="4">*</font></b> <input
-										type="text" name="qty" id="qty" style="width: 70px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										value="1" type="text" name="qty" id="qty" style="width: 70px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									<b>Product :<font color="red" size="4">*</font></b><input
 										type="text" id="pCode" name="pCode" onkeyup="pcodeF();"
 										autocomplete="off"><input type="hidden" id="pCodeId"

@@ -441,14 +441,11 @@
 												id="remaining_qty" required> <input
 												class="btn green pull-right" type="button"
 												style="float: right" value="Save" onclick="saveF()">
-
 										</div>
 									</div>
 								</form>
 								<%-- </c:if> --%>
 							</div>
-
-
 						</div>
 					</div>
 				</div>

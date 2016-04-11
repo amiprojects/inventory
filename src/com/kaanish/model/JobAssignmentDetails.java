@@ -25,9 +25,9 @@ public class JobAssignmentDetails implements Serializable {
 	private int challan_no;
 	private String challanNumber;
 	private int challanSuffix;
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date entryDate;
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date assignDate;
 	@Temporal(TemporalType.DATE)
 	private Date estimatedCompletionDate;// old concept
@@ -191,7 +191,8 @@ public class JobAssignmentDetails implements Serializable {
 		return jobRecievedDetails;
 	}
 
-	public void setJobRecievedDetails(List<JobRecievedDetails> jobRecievedDetails) {
+	public void setJobRecievedDetails(
+			List<JobRecievedDetails> jobRecievedDetails) {
 		this.jobRecievedDetails = jobRecievedDetails;
 	}
 

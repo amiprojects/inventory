@@ -31,7 +31,7 @@ public class Purchase_Entry implements Serializable {
 	private String vendor_bill_no;
 	@Temporal(TemporalType.DATE)
 	private Date purchase_date;
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date entry_date;
 	private float transport_cost;
 	private float sur_charge;
@@ -46,14 +46,13 @@ public class Purchase_Entry implements Serializable {
 
 	@OneToMany(mappedBy = "purchase_Entry")
 	private List<NotificationDetails> notificationDetails;
-	
+
 	@OneToMany(mappedBy = "purchaseEntry")
 	private List<PurchaseReturn> purchaseReturn;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "purchaseOrderEntryId")
 	private PurchaseOrderEntry purchaseOrderEntry;
-
 
 	@ManyToOne
 	@JoinColumn(name = "companyInfoId")
@@ -81,7 +80,7 @@ public class Purchase_Entry implements Serializable {
 
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "purchase_Entry")
 	private VoucherDetails voucherDetails;
-	
+
 	public int getId() {
 		return id;
 	}
@@ -114,14 +113,6 @@ public class Purchase_Entry implements Serializable {
 		this.vendor_bill_no = vendor_bill_no;
 	}
 
-	public Date getPurchase_date() {
-		return purchase_date;
-	}
-
-	public void setPurchase_date(Date purchase_date) {
-		this.purchase_date = purchase_date;
-	}
-
 	public Date getEntry_date() {
 		return entry_date;
 	}
@@ -144,9 +135,10 @@ public class Purchase_Entry implements Serializable {
 
 	/**
 	 * it takes float type surcharge
+	 * 
 	 * @param sur_charge
 	 */
-	
+
 	public void setSur_charge(float sur_charge) {
 		this.sur_charge = sur_charge;
 	}
@@ -292,7 +284,8 @@ public class Purchase_Entry implements Serializable {
 		return notificationDetails;
 	}
 
-	public void setNotificationDetails(List<NotificationDetails> notificationDetails) {
+	public void setNotificationDetails(
+			List<NotificationDetails> notificationDetails) {
 		this.notificationDetails = notificationDetails;
 	}
 
@@ -312,6 +305,12 @@ public class Purchase_Entry implements Serializable {
 		this.isCommisionTotal = isCommisionTotal;
 	}
 
-	
+	public Date getPurchase_date() {
+		return purchase_date;
+	}
+
+	public void setPurchase_date(Date purchase_date) {
+		this.purchase_date = purchase_date;
+	}
 
 }
