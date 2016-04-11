@@ -1627,7 +1627,7 @@
 				$("#mrp").prop("disabled", true);
 				$("#wsp").prop("disabled", true);
 				$("#qty").prop("readonly", false);
-				$("#qty").val("");
+				$("#qty").val(1);
 			}
 		}
 		function disTypeF() {
@@ -2142,7 +2142,7 @@
 			if ($("#qty").val() == 0 || $("#qty").val() == "") {
 				alert("Please select a valid quantity first");
 				$("#pCode").val("");
-				$("#qty").val("");
+				$("#qty").val(1);
 			}
 		}
 
@@ -2150,7 +2150,7 @@
 			if ($("#qty").val() == 0 || $("#qty").val() == "") {
 				alert("Please select a valid quantity first");
 				$("#salesbar").val("");
-				$("#qty").val("");
+				$("#qty").val(1);
 			}
 		} */
 		function cancelF() {
@@ -2484,7 +2484,7 @@
 									$("#mrp").prop("disabled", true);
 									$("#wsp").prop("disabled", true);
 									$("#qty").prop("readonly", false);
-									$("#qty").val("");
+									$("#qty").val(1);
 								} else {
 									alert("no product found");
 								}

@@ -100,7 +100,7 @@
 			</script>
 		</c:if>
 	</c:if>
-	<c:if test="${requestScope['sampleId']!=null}">
+	<%-- <c:if test="${requestScope['sampleId']!=null}">
 		<script type="text/javascript">
 			var myWindow = window
 					.open(
@@ -108,7 +108,7 @@
 							'name', 'width=600,height=400');
 			myWindow.print();
 		</script>
-	</c:if>
+	</c:if> --%>
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">

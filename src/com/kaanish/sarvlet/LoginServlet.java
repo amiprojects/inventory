@@ -55,12 +55,14 @@ public class LoginServlet extends HttpServlet {
 	private PageList pageList;
 	private VendorType vendorType;
 	private Users usersKainat;
+	private Users usersKaanish;
 	private CompanyInfo companyInfoKainat;
 	private Stoct stoct;
 	private Bill_setup bill_setup;
 	private SecurityQuestionGroup securityQuestionGroup;
 	private SequrityQuestions securityQuestions;
 	private CompanyInfo companyInfo;
+	private CompanyInfo companyInfoKaanish;
 	private Vendor vendor;
 	private Date dt;
 	private AccountDetails accountDetails;
@@ -296,13 +298,13 @@ public class LoginServlet extends HttpServlet {
 			// companyInfoKaanish.setCompname("Kaanish Kouture");
 			// ejb.setCompanyInfo(companyInfoKaanish);
 
-			// companyInfoKaanish = new CompanyInfo();
-			// companyInfoKaanish.setCompname("KK");
-			// ejb.setCompanyInfo(companyInfoKaanish);
+			companyInfoKaanish = new CompanyInfo();
+			companyInfoKaanish.setCompname("KK");
+			ejb.setCompanyInfo(companyInfoKaanish);
 
-			companyInfoKainat = new CompanyInfo();
-			companyInfoKainat.setCompname("Kainat Kreation");
-			ejb.setCompanyInfo(companyInfoKainat);
+			// companyInfoKainat = new CompanyInfo();
+			// companyInfoKainat.setCompname("Kainat Kreation");
+			// ejb.setCompanyInfo(companyInfoKainat);
 		}
 		if (ejb.getAllUsers().size() < 1) {
 			// usersKaanish = new Users();
@@ -313,21 +315,21 @@ public class LoginServlet extends HttpServlet {
 			// usersKaanish.setCompanyInfo(companyInfoKaanish);
 			// ejb.setUser(usersKaanish);
 			//
-			// usersKaanish = new Users();
-			// usersKaanish.setUserId("adminKaanish");
-			// usersKaanish.setPassword("productionKaanish");
-			// usersKaanish.setName("Production Admin");
-			// usersKaanish.setPh("0");
-			// usersKaanish.setCompanyInfo(companyInfoKaanish);
-			// ejb.setUser(usersKaanish);
+			usersKaanish = new Users();
+			usersKaanish.setUserId("adminKaanish");
+			usersKaanish.setPassword("productionKaanish");
+			usersKaanish.setName("Production Admin");
+			usersKaanish.setPh("0");
+			usersKaanish.setCompanyInfo(companyInfoKaanish);
+			ejb.setUser(usersKaanish);
 
-			usersKainat = new Users();
-			usersKainat.setUserId("adminKainat");
-			usersKainat.setPassword("admin");
-			usersKainat.setName("Kainat Admin");
-			usersKainat.setPh("0");
-			usersKainat.setCompanyInfo(companyInfoKainat);
-			ejb.setUser(usersKainat);
+			// usersKainat = new Users();
+			// usersKainat.setUserId("adminKainat");
+			// usersKainat.setPassword("admin");
+			// usersKainat.setName("Kainat Admin");
+			// usersKainat.setPh("0");
+			// usersKainat.setCompanyInfo(companyInfoKainat);
+			// ejb.setUser(usersKainat);
 		}
 
 		// adding vendor
@@ -351,13 +353,13 @@ public class LoginServlet extends HttpServlet {
 			vendor.setPinCode("NA");
 			vendor.setLastModifiedDate(dt);
 			vendor.setVendorType(ejb.getVendorTypeByName("Vendor"));
-			vendor.setUsers(ejb.getUserById("adminKainat"));
-			// vendor.setUsers(ejb.getUserById("adminKaanish"));
+			//vendor.setUsers(ejb.getUserById("adminKainat"));
+			vendor.setUsers(ejb.getUserById("adminKaanish"));
 			ejb.setVendor(vendor);
 
 			accountDetails = new AccountDetails();
-			accountDetails.setUsers(ejb.getUserById("adminKainat"));
-			// accountDetails.setUsers(ejb.getUserById("adminKaanish"));
+			//accountDetails.setUsers(ejb.getUserById("adminKainat"));
+			accountDetails.setUsers(ejb.getUserById("adminKaanish"));
 			accountDetails.setVendor(vendor);
 			ejb.setAccountDetails(accountDetails);
 		}
@@ -368,7 +370,7 @@ public class LoginServlet extends HttpServlet {
 			// companyInfoKainat =
 			// ejb.getUserById("adminKainat").getCompanyInfo();
 
-			companyInfo = ejb.getUserById("adminKainat").getCompanyInfo();
+			companyInfo = ejb.getUserById("adminKaanish").getCompanyInfo();
 
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("PUR");

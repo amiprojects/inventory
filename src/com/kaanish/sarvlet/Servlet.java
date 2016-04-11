@@ -1014,7 +1014,6 @@ public class Servlet extends HttpServlet {
 				for (Vendor ven : vend) {
 
 					if (ven.getPh1().equals(req.getParameter("vendorPh1"))) {
-
 						counter2 = 1;
 						break;
 					}
