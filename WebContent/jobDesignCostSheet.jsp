@@ -147,11 +147,9 @@
 
 											</div>
 											<div class="col-md-12">
-
 												&nbsp; &nbsp; &nbsp; <b class="font">Designer Details :</b>
 												<textarea rows="5" cols="" id="jDetail" class="form-control"
 													readonly="readonly"></textarea>
-
 											</div>
 										</div>
 										<div class="col-md-6">
@@ -160,11 +158,9 @@
 													<label class="font" for="designDescription">Design
 														Descripton :<font color="red" size="4">*</font>
 													</label>
-
 													<textarea class="form-control" rows="" cols=""
 														name="designDescription" id="designDescription"
 														onkeypress="return blockSpecialCharWS(event)"></textarea>
-
 												</div>
 											</div>
 											<div class="col-md-12">

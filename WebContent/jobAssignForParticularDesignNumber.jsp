@@ -41,9 +41,13 @@
 <script src="js/jquery-ui/jquery-ui.js"></script>
 <script>
 	function showDatePicker() {
+		var d = $("#datepicker").datepicker('getDate');
+		var n = d.getFullYear();
+		var m = d.getMonth();
+		var dt = d.getDate();
 		$(".estSubmDate").datepicker({
 			dateFormat : "dd-mm-yy",
-			minDate : 0
+			minDate : new Date(n, m, dt)
 		});
 	}
 
@@ -122,7 +126,7 @@
 		
 	</c:if> --%>
 
-	<%-- <c:if test="${requestScope['jobAssignId']!=null}">
+	<c:if test="${requestScope['jobAssignId']!=null}">
 		<script type="text/javascript">
 			var myWindow = window
 					.open(
@@ -130,7 +134,7 @@
 							'name', 'width=600,height=400');
 			myWindow.print();
 		</script>
-	</c:if> --%>
+	</c:if>
 
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
@@ -797,20 +801,28 @@
 										.map(
 												data,
 												function(item2) {
-													$.ajax({
-														url : 'getItmProductsForSampleByProductId',
-														type : 'post',
-														dataType : "json",
-														data : {
-															id : item2.productId
-														},
-														success : function(data) {
-															$("#pItemModal").val(data.itemName);
-														},
-														error : function(a, b, c) {
-															alert(b + ": " + c);
-														}
-													});
+													$
+															.ajax({
+																url : 'getItmProductsForSampleByProductId',
+																type : 'post',
+																dataType : "json",
+																data : {
+																	id : item2.productId
+																},
+																success : function(
+																		data) {
+																	$(
+																			"#pItemModal")
+																			.val(
+																					data.itemName);
+																},
+																error : function(
+																		a, b, c) {
+																	alert(b
+																			+ ": "
+																			+ c);
+																}
+															});
 													if (item2.purchaseDate != 'Initial Inventory') {
 														$(
 																"#purchaseDetailsTable")
@@ -1453,7 +1465,7 @@
 					Number($("#jobPresentRate" + jobId).val()).toFixed(2));
 			presentRateKU(jobId);
 		}
-		function presentRateKU(jobId) {			
+		function presentRateKU(jobId) {
 			$("#jobAmount" + jobId).val(
 					Number(
 							$("#jobPresentRate" + jobId).val()

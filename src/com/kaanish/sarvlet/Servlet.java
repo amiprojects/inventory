@@ -3919,6 +3919,8 @@ public class Servlet extends HttpServlet {
 							+ totalJobExpanse1);
 					ejb.updateJobPlan(jobPlan);
 
+					req.setAttribute("jobAssignId",
+							jobAssignmentDetails.getId());
 					msg = "Job Assigned Successfully";
 				} else {
 					msg = "Duplicate Entry! Not Allowed!";

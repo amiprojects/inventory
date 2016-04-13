@@ -155,7 +155,6 @@
 								Setup</a></li>
 						<li><a id="itemSetup" href="setupItem.jsp" title="">Item
 								Setup</a></li>
-
 					</ul>
 				</div>
 			</div>

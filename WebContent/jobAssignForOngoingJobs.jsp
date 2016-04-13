@@ -41,9 +41,13 @@
 <script src="js/jquery-ui/jquery-ui.js"></script>
 <script>
 	function showDatePicker() {
+		var d = $("#datepicker").datepicker('getDate');
+		var n = d.getFullYear();
+		var m = d.getMonth();
+		var dt = d.getDate();
 		$(".estSubmDate").datepicker({
 			dateFormat : "dd-mm-yy",
-			minDate : 0
+			minDate : new Date(n, m, dt)
 		});
 	}
 
@@ -106,6 +110,16 @@
 				window.location = "dashboard.jsp";
 			</script>
 		</c:if>
+	</c:if>
+
+	<c:if test="${requestScope['jobAssignId']!=null}">
+		<script type="text/javascript">
+			var myWindow = window
+					.open(
+							"JobChalanForAssignment.jsp?id=${requestScope['jobAssignId']}",
+							'name', 'width=600,height=400');
+			myWindow.print();
+		</script>
 	</c:if>
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>

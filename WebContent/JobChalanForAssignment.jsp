@@ -104,34 +104,41 @@ Url = {
 
 
 	<page size="A4">
-	<h2 align="center">Job Challan For Assignment</h2>
+	<h2 align="center">Job Challan</h2>
 
 	<table class="tg"
-		style="border: 1px solid; height: 950px; width: 750px">
+		style="border: 1px solid; height: 1050px; width: 750px">
 		<tr style="height: 50px">
 
-			<td class="tg-031e" style="width: 60%">
-				<span style="padding-left: 20px"><strong>Company Name</strong></span>
-				<span style="padding-left: 05px"><strong> : ${jobAssi.vendor.companyName}</strong></span> <br> <br>
-				<span style="padding-left: 20px"><strong>Jober Name</strong></span>
-				<span style="padding-left: 31px"><strong>: ${jobAssi.vendor.name}</strong></span><br> <br>
-				<span style="padding-left: 20px"><strong>Jober Details</strong></span>
-				<span style="padding-left: 22px"><strong>: 
-						 <br><br><span style="padding-left: 67px"> Address : ${jobAssi.vendor.address}</span><br>
-						<br><span style="padding-left: 23px">	Phone Number  :${jobAssi.vendor.ph1}</span><br>
-						<br><span style="padding-left: 31px">Email Number :${jobAssi.vendor.email}</span><br>
-						<br><span style="padding-left: 19px">Company Name :${jobAssi.vendor.companyName}</span></strong></span><br> <br><br> <br> <br> <br>
-			</td>
+			<td class="tg-031e" style="width: 60%"><span
+				style="padding-left: 20px"><strong>Company Name</strong></span> <span
+				style="padding-left: 05px"><strong> :
+						${jobAssi.vendor.companyName}</strong></span> <br> <br> <span
+				style="padding-left: 20px"><strong>Jober Name</strong></span> <span
+				style="padding-left: 31px"><strong>:
+						${jobAssi.vendor.name}</strong></span><br> <br> <span
+				style="padding-left: 20px"><strong>Jober Details</strong></span> <span
+				style="padding-left: 22px"><strong>: <br> <br>
+						<span style="padding-left: 67px"> Address :
+							${jobAssi.vendor.address}</span><br> <br> <span
+						style="padding-left: 23px"> Phone Number :
+							${jobAssi.vendor.ph1}</span><br> <br> <span
+						style="padding-left: 84px">Email : ${jobAssi.vendor.email}</span><br>
+						<br> <span style="padding-left: 19px">Company Name :
+							${jobAssi.vendor.companyName}</span></strong></span><br> <br> <br> <br>
+				<br> <br></td>
 
 
-			<td class="tg-031e" style="width: 40%">
-					<span style="padding-left: 20px"><strong>Job Challan No</strong></span>
-					<span><strong>: ${jobAssi.challanNumber}</strong></span><br> <br>
-					<span style="padding-left: 20px"><strong>Asign Date</strong></span>
-					<span style="padding-left: 30px"><strong>: ${jobAssi.assignDate} </strong></span><br><br>
-					<span style="padding-left: 20px"><strong>Design No</strong></span>
-					<span style="padding-left: 34px"><strong> : ${jobAssi.jobPlan.designCostSheet.designNumber} </strong></span><br><br><br><br> <br> <br>
-			</td>
+			<td class="tg-031e" style="width: 40%"><span
+				style="padding-left: 20px"><strong>Job Challan No</strong></span> <span><strong>:
+						${jobAssi.challanNumber}</strong></span><br> <br> <span
+				style="padding-left: 20px"><strong>Asign Date</strong></span> <span
+				style="padding-left: 30px"><strong>: <fmt:formatDate
+							value="${jobAssi.assignDate}" pattern="dd-MM-yyyy" />
+				</strong></span><br> <br> <span style="padding-left: 20px"><strong>Design
+						No</strong></span> <span style="padding-left: 34px"><strong> :
+						${jobAssi.jobPlan.designCostSheet.designNumber} </strong></span><br> <br>
+				<br> <br> <br> <br></td>
 
 		</tr>
 
@@ -153,7 +160,7 @@ Url = {
 
 					<tbody>
 						<c:set var="i" value="1"></c:set>
-						<c:forEach  var="jobp" items="${jobAssi.jobAssignmentProducts}">
+						<c:forEach var="jobp" items="${jobAssi.jobAssignmentProducts}">
 							<tr>
 								<td>${i}</td>
 								<td>${jobp.productsForDesignCostSheet.productDetail.code}</td>
@@ -162,11 +169,66 @@ Url = {
 								<td>${jobp.qty}</td>
 								<td>${jobp.productsForDesignCostSheet.productDetail.qtyUnit.name}</td>
 							</tr>
-						<c:set var="i" value="${i+1}"></c:set>
+							<c:set var="i" value="${i+1}"></c:set>
 						</c:forEach>
-					</tbody>	
+					</tbody>
 				</table>
 			</td>
+		</tr>
+		<tr style="height: 100px">
+			<td class="tg-031e" style="width: 60%"><span><u><strong>Declaration
+							:</strong></u></span><br> <br> <span><strong>We declare
+						that this challan shows the actual goods and jobs assigned to the
+						particulars are true and correct.</strong></span></td>
+
+			<td class="tg-031e" style="width: 60%"><span
+				style="padding-left: 198px"><strong>For KAANISH
+						KOUTURE.</strong></span><br> <br> <br> <br> <span
+				style="padding-left: 219px"><strong>Authorised
+						Signature</strong></span></td>
+
+		</tr>
+
+	</table>
+
+	</page>
+	<page size="A4">
+	<h2 align="center">Job Challan (Page-2)</h2>
+
+	<table class="tg"
+		style="border: 1px solid; height: 1050px; width: 750px">
+		<tr style="height: 50px">
+
+			<td class="tg-031e" style="width: 60%"><span
+				style="padding-left: 20px"><strong>Company Name</strong></span> <span
+				style="padding-left: 05px"><strong> :
+						${jobAssi.vendor.companyName}</strong></span> <br> <br> <span
+				style="padding-left: 20px"><strong>Jober Name</strong></span> <span
+				style="padding-left: 31px"><strong>:
+						${jobAssi.vendor.name}</strong></span><br> <br> <span
+				style="padding-left: 20px"><strong>Jober Details</strong></span> <span
+				style="padding-left: 22px"><strong>: <br> <br>
+						<span style="padding-left: 67px"> Address :
+							${jobAssi.vendor.address}</span><br> <br> <span
+						style="padding-left: 23px"> Phone Number :
+							${jobAssi.vendor.ph1}</span><br> <br> <span
+						style="padding-left: 84px">Email : ${jobAssi.vendor.email}</span><br>
+						<br> <span style="padding-left: 19px">Company Name :
+							${jobAssi.vendor.companyName}</span></strong></span><br> <br> <br> <br>
+				<br> <br></td>
+
+
+			<td class="tg-031e" style="width: 40%"><span
+				style="padding-left: 20px"><strong>Job Challan No</strong></span> <span><strong>:
+						${jobAssi.challanNumber}</strong></span><br> <br> <span
+				style="padding-left: 20px"><strong>Asign Date</strong></span> <span
+				style="padding-left: 30px"><strong>: <fmt:formatDate
+							value="${jobAssi.assignDate}" pattern="dd-MM-yyyy" />
+				</strong></span><br> <br> <span style="padding-left: 20px"><strong>Design
+						No</strong></span> <span style="padding-left: 34px"><strong> :
+						${jobAssi.jobPlan.designCostSheet.designNumber} </strong></span><br> <br>
+				<br> <br> <br> <br></td>
+
 		</tr>
 
 		<tr>
@@ -190,30 +252,32 @@ Url = {
 
 					<tbody>
 						<c:set var="i" value="1"></c:set>
+						<c:set var="totJobCost" value="${0}" />
 						<c:forEach var="jobp" items="${jobAssi.jobAssignmentProducts}">
-							<tr>
+							<c:forEach items="${jobp.jobAssignmentJobDetails}"
+								var="jobProjob">
+								<tr>
 									<td>${i}</td>
-									<td><c:forEach items="${jobp.jobAssignmentJobDetails}"
-															var="jobProjob">
-																				${jobProjob.jobType.jobName}
-														</c:forEach></td>
-									<td>${jobp.productsForDesignCostSheet.productDetail.code}</td>
-									<td>${jobp.qty}</td>
-									<td>${jobp.productsForDesignCostSheet.productDetail.qtyUnit.name}</td>
-									<td><c:forEach items="${jobp.jobAssignmentJobDetails}"
-															var="jobProjob">
-																				${jobProjob.rate}
-														</c:forEach></td>
-									<td><c:forEach items="${jobp.jobAssignmentJobDetails}"
-															var="jobProjob">
-																				${jobProjob.ammount}
-														</c:forEach></td>
-									<td>........</td>
-							</tr>
-						<c:set var="i" value="${i+1}"></c:set>
+									<td>${jobProjob.jobType.jobName}</td>
+									<td>${jobProjob.assignmentProducts.productsForDesignCostSheet.productDetail.code}</td>
+									<td>${jobProjob.qty}</td>
+									<td>${jobProjob.assignmentProducts.productsForDesignCostSheet.productDetail.qtyUnit.name}</td>
+									<td>${jobProjob.rate}</td>
+									<td>${jobProjob.ammount}</td>
+									<td><fmt:formatDate
+											value="${jobProjob.estimatedCompletionDate}"
+											pattern="dd-MM-yyyy" /></td>
+								</tr>
+								<c:set var="i" value="${i+1}"></c:set>
+							</c:forEach>
+							<c:set var="totJobCost" value="${totJobCost+jobp.totalJobCost}" />
 						</c:forEach>
+						<tr>
+							<td colspan="6" align="right">Total Job Cost :</td>
+							<td colspan="2"><fmt:formatNumber var="totJC"
+									value="${totJobCost}" maxFractionDigits="2" />${totJC}</td>
+						</tr>
 					</tbody>
-
 				</table>
 			</td>
 		</tr>

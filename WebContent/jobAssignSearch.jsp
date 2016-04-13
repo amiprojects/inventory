@@ -245,7 +245,8 @@
 
 												<tr>
 													<td width="5%">${count}</td>
-													<td width="20%">${jobAssignByDate.challanNumber}</td>
+													<td width="20%"><a href="#"
+														onclick="viewInvoice(${jobAssignByDate.id});"><b>${jobAssignByDate.challanNumber}</b></a></td>
 													<td width="15%"><fmt:formatDate
 															value="${jobAssignByDate.assignDate}" pattern="dd-MM-yy" /></td>
 													<td width="15%">${jobAssignByDate.vendor.name}</td>
@@ -515,6 +516,14 @@
 			} else {
 				$("#jobSearchByPlanNoId").submit();
 			}
+		}
+		
+		function viewInvoice(id){
+			window
+			.open(
+					"JobChalanForAssignment.jsp?id="+id,
+					'name', 'width=900,height=700');
+			
 		}
 	</script>
 </body>
