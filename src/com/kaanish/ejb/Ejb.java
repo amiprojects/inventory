@@ -190,6 +190,23 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<ItemDetails> getItemsForSampleBySampleId(int id) {
+		List<ItemDetails> lst = new ArrayList<ItemDetails>();
+		Set<ItemDetails> hs = new HashSet<>();
+		TypedQuery<ItmProductsForSample> q = em.createQuery(
+				"select c from ItmProductsForSample c where c.sampleId=:id",
+				ItmProductsForSample.class);
+		q.setParameter("id", id);
+
+		for (ItmProductsForSample p : q.getResultList()) {
+			lst.add(p.getItemDetails());
+		}
+		hs.addAll(lst);
+		lst.clear();
+		lst.addAll(hs);
+		return lst;
+	}
+
 	/***************** for ItmProductsForSample **********************/
 	public void setItmProductsForSample(
 			ItmProductsForSample itmProductsForSample) {
@@ -604,7 +621,6 @@ public class Ejb {
 			return q.getResultList().get(0);
 		} else {
 			return null;
-
 		}
 	}
 
@@ -1717,6 +1733,17 @@ public class Ejb {
 		em.merge(jobAssignmentJobDetails);
 	}
 
+	public JobAssignmentJobDetails getJobAssignmentJobDetailsByJobPlanJobIdAndJobAssignmentId(
+			int jpjsId, int jaId) {
+		TypedQuery<JobAssignmentJobDetails> q = em
+				.createQuery(
+						"select c from JobAssignmentJobDetails c where c.jobPlanJobStock.id=:jpjsId AND c.jobAssignmentDetails.id=:jaId",
+						JobAssignmentJobDetails.class);
+		q.setParameter("jpjsId", jpjsId);
+		q.setParameter("jaId", jaId);
+		return q.getResultList().get(0);
+	}
+
 	/***************** for Job Assignment Products ***********************/
 	public void setJobAssignmentProducts(
 			JobAssignmentProducts jobAssignmentProducts) {
@@ -2117,9 +2144,23 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public Purchase_Product_Details getPurchaseProductDetailsByLotNumber(
+			String lotNo) {
+		TypedQuery<Purchase_Product_Details> q = em
+				.createQuery(
+						"select c from Purchase_Product_Details c where UPPER(c.lotNumber) = :lotNo ",
+						Purchase_Product_Details.class);
+		q.setParameter("lotNo", lotNo.toUpperCase());
+		return q.getResultList().get(0);
+	}
+
 	/********************* for job recieve *********************/
 	public void setJobRecieve(JobRecievedDetails jobRecievedDetails) {
 		em.persist(jobRecievedDetails);
+	}
+
+	public JobRecievedDetails getJobRecievedDetailsById(int id) {
+		return em.find(JobRecievedDetails.class, id);
 	}
 
 	public List<JobRecievedDetails> getAllJobRecievedDetails() {
@@ -3587,12 +3628,20 @@ public class Ejb {
 	}
 
 	public List<JobPlan> getAllJobPlan() {
-		TypedQuery<JobPlan> q = em.createQuery(
-				"select c from JobPlan c order by c.id desc", JobPlan.class);
+		// TypedQuery<JobPlan> q = em.createQuery(
+		// "select c from JobPlan c order by c.id desc", JobPlan.class); khapla
+
+		TypedQuery<JobPlan> q = em.createQuery("select c from JobPlan c",
+				JobPlan.class);
 		return q.getResultList();
 	}
 
 	public List<JobPlan> getAllOngoingJobPlanByDesignNumber(int dn) {
+		// TypedQuery<JobPlan> q = em
+		// .createQuery(
+		// "select c from JobPlan c where c.designCostSheet.id =:dn and c.isComplete=false order by c.id desc",
+		// JobPlan.class); khapla
+
 		TypedQuery<JobPlan> q = em
 				.createQuery(
 						"select c from JobPlan c where c.designCostSheet.id =:dn and c.isComplete=false",
@@ -3602,6 +3651,11 @@ public class Ejb {
 	}
 
 	public List<JobPlan> getAllJobPlanByDesignNumber(int dn) {
+		// TypedQuery<JobPlan> q = em
+		// .createQuery(
+		// "select c from JobPlan c where c.designCostSheet.id =:dn order by c.id desc",
+		// JobPlan.class);
+
 		TypedQuery<JobPlan> q = em.createQuery(
 				"select c from JobPlan c where c.designCostSheet.id =:dn",
 				JobPlan.class);

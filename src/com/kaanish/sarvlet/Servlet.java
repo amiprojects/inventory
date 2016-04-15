@@ -419,7 +419,6 @@ public class Servlet extends HttpServlet {
 					}
 
 					String imgstr = req.getParameter("proImage1");
-
 					ProductImage proimg = new ProductImage();
 					proimg.setProductDetail(productDetail);
 					proimg.setImage(Base64.decode(imgstr));

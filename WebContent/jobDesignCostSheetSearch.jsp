@@ -136,7 +136,8 @@
 
 												<tr>
 													<td width="5%">${count}</td>
-													<td width="20%">${sampleDesignCostSheet.designNumber.toUpperCase()}</td>
+													<td width="20%"><a href="#"
+														onclick="viewInvoice(${sampleDesignCostSheet.id});"><b>${sampleDesignCostSheet.designNumber.toUpperCase()}</b></a></td>
 													<td width="35%">${sampleDesignCostSheet.designDescription.toUpperCase()}</td>
 													<td width="30%">${sampleDesignCostSheet.vendor.name}</td>
 													<td width="10%">
@@ -299,6 +300,11 @@
 			} else {
 				$("#jobSearchByDateId").submit();
 			}
+		}
+
+		function viewInvoice(id) {
+			window.open("jobChallanForSampleDesignCostSheet.jsp?id=" + id, 'name',
+					'width=900,height=700');
 		}
 	</script>
 </body>

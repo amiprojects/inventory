@@ -847,8 +847,11 @@
 
 									<label for="exampleInputEmail1">Lot Number:<font
 										color="red" size="4">*</font></label> <input id="lotnO" type="text"
-										name="lotNumber" required class="form-control"><br>
-
+										name="lotNumber" required class="form-control"
+										onkeypress="return blockSpecialChar(event)"
+										onkeyup="lotNoKeyUp();" onchange="lotNoChange();"
+										autocomplete="off"><input type="hidden"
+										id="lotNoCheck" name="lotNoCheck"><br>
 								</div>
 							</div>
 							<div id="nottrack">
@@ -2192,6 +2195,34 @@
 				alert("Duplicate Design Number");
 				$("#dNoCheck").val("");
 				$("#universalProductCode").val("");
+			}
+		}
+	</script>
+	<script type="text/javascript">
+		function lotNoKeyUp() {
+			$("#lotNoCheck").val("");
+			$.ajax({
+				url : "getPurchaseProductDetailsByLotNumber",
+				dataType : "json",
+				data : {
+					lotNo : $("#lotnO").val()
+				},
+				success : function(data) {
+					if (data.lotNo != "") {
+						$("#lotNoCheck").val(data.lotNo);
+					} else {
+						$("#lotNoCheck").val("");
+					}
+				}
+
+			});
+		}
+
+		function lotNoChange() {
+			if ($("#lotNoCheck").val() != "") {
+				alert("Duplicate Lot Number");
+				$("#lotNoCheck").val("");
+				$("#lotnO").val("");
 			}
 		}
 	</script>

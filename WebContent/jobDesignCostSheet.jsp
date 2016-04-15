@@ -100,7 +100,7 @@
 			</script>
 		</c:if>
 	</c:if>
-	<%-- <c:if test="${requestScope['sampleId']!=null}">
+	<c:if test="${requestScope['sampleId']!=null}">
 		<script type="text/javascript">
 			var myWindow = window
 					.open(
@@ -108,7 +108,7 @@
 							'name', 'width=600,height=400');
 			myWindow.print();
 		</script>
-	</c:if> --%>
+	</c:if>
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
@@ -140,6 +140,14 @@
 													type="hidden" id="dNoCheck" name="dNoCheck">
 											</div>
 											<div class="col-md-12">
+												<label class="font" for="designDescription">Design
+													Descripton :<font color="red" size="4">*</font>
+												</label>
+												<textarea class="form-control" rows="" cols=""
+													name="designDescription" id="designDescription"
+													onkeypress="return blockSpecialCharWS(event)"></textarea>
+											</div>
+											<div class="col-md-12">
 												<b class="font">Designer Name :<font color="red"
 													size="4">*</font></b> <input type="text" class="form-control"
 													id="designerName" name="designerName" autocomplete="off">
@@ -151,9 +159,14 @@
 												<textarea rows="5" cols="" id="jDetail" class="form-control"
 													readonly="readonly"></textarea>
 											</div>
+											<div class="col-md-12">
+												<label for="qty" class="font">Qty :</label> <input
+													type="number" name="qty" class="form-control" value="1"
+													readonly="readonly">
+											</div>
 										</div>
 										<div class="col-md-6">
-											<div class="col-md-12">
+											<!-- <div class="col-md-12">
 												<div class="form-group">
 													<label class="font" for="designDescription">Design
 														Descripton :<font color="red" size="4">*</font>
@@ -169,7 +182,7 @@
 														type="number" name="qty" class="form-control" value="1"
 														readonly="readonly">
 												</div>
-											</div>
+											</div> -->
 											<br>
 											<!-- <div class="form-group">
 												<label for="" class="font">Sample
@@ -186,11 +199,17 @@
 												<div class="form-group">
 													<label> Sample Design Image :</label>
 													<div>
-														<img id="image" alt="" style="width: 100px; height: 50px;">
+														<img id="image" alt="" src="data:image/jpeg;base64,"
+															style="width: 100px; height: 50px;">
 													</div>
 													<input type="file" onchange="readURL(this);"
 														name="productImage"> <input type="hidden"
-														name="proImage1" id="proImage1" value="">
+														name="proImage1" id="proImage1" value=""> <br>
+													<a href="javascript:void(take_snapshot())"><button
+															class="btn blue btn-default" type="button">Take
+															Snapshot</button></a>
+													<div id="my_camera" style="width: 320px; height: 240px;">
+													</div>
 												</div>
 											</div>
 										</div>
@@ -356,8 +375,16 @@
 											<td><label for="rate" class="font">Product Rate
 													:<font color="red" size="4">*</font>
 											</label></td>
-											<td><input type="text" id="rate" class="numChk"></td>
+											<td>
+												<!-- <input type="text" id="rate" class="numChk"
+												readonly="readonly"> khapla --> <input type="text" id="rate"
+												class="numChk">
+											</td>
 										</tr>
+										<!-- <tr>
+											<td colspan="2">(This is latest rate. It may vary as per
+												selection of lot)</td>
+										</tr> khapla-->
 										<tr>
 											<td><label for="rate" class="font">Select Job :<font
 													color="red" size="4">*</font></label></td>
@@ -377,8 +404,7 @@
 									</div>
 								</div>
 								<div class="col-md-4">
-									Select Item : <br>
-									<br>
+									Select Item : <br> <br>
 									<c:forEach items="${sessionScope['ejb'].getAllItemDetails()}"
 										var="item">
 										<input type="radio" class="isSelectedItem" name="item"
@@ -435,7 +461,8 @@
 									id : item.id,
 									description : item.description,
 									qtyUnitId : item.qtyUnitId,
-									qtyUnitName : item.qtyUnit
+									qtyUnitName : item.qtyUnit,
+									latestCost : item.latestCost
 								});
 							}));
 						}
@@ -452,6 +479,7 @@
 					}
 				},
 				select : function(evt, ui) {
+					// khapla
 					$("#rate").prop("readonly", false);
 					if ($(document).find("#proTable" + ui.item.id).length > 0) {
 						$("#rate")
@@ -461,11 +489,13 @@
 														+ " td:nth-child(6)")
 												.html());
 						$("#rate").prop("readonly", true);
+						//$("#proQty").val(0); khapla
 					}
 					$("#proId").val(ui.item.id);
 					$("#proDesc").val(ui.item.description);
 					$("#proUOM").val(ui.item.qtyUnitName);
 					$("#UOMid").val(ui.item.qtyUnitId);
+					//$("#rate").val(ui.item.latestCost); khapla
 				}
 			});
 
@@ -905,9 +935,10 @@
 		if (input.files && input.files[0]) {
 			var reader = new FileReader();
 
-			reader.onload = function(e) {
+			reader.onload = function(e) {				
 				$('#image').attr('src', e.target.result).width(120).height(85);
 				var str = e.target.result;
+				//alert(str);
 				$("#proImage1").val(str.substring(str.lastIndexOf(',') + 1));
 			};
 
@@ -1065,6 +1096,24 @@
 	function itemF(name, id) {
 		$("#itemName").val(name);
 		$("#itemId").val(id);
+	}
+</script>
+<script type="text/javascript" src="js/webcam.js"></script>
+<script>
+	Webcam.set({
+		width : 320,
+		height : 240,
+		image_format : 'jpeg',
+		jpeg_quality : 90
+	});
+	Webcam.attach('#my_camera');
+
+	function take_snapshot() {
+		Webcam.snap(function(data_uri) {
+			$('#image').attr('src', data_uri).width(120).height(85);
+			str = data_uri;
+			$("#proImage1").val(str.substring(str.lastIndexOf(',') + 1));
+		});
 	}
 </script>
 </html>

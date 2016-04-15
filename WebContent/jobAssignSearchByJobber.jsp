@@ -244,7 +244,8 @@
 
 												<tr>
 													<td width="5%">${count}</td>
-													<td width="20%">${jobAssignByDate.challanNumber}</td>
+													<td width="20%"><a href="#"
+														onclick="viewInvoice(${jobAssignByDate.id});"><b>${jobAssignByDate.challanNumber}</b></a></td>
 													<td width="15%"><fmt:formatDate
 															value="${jobAssignByDate.assignDate}" pattern="dd-MM-yy" /></td>
 													<td width="20%">${jobAssignByDate.vendor.name}</td>
@@ -305,7 +306,8 @@
 												<c:if test="${totREMqty>0}">
 													<tr>
 														<td width="4%">${count}</td>
-														<td width="17%">${jobAssignByDate.challanNumber}</td>
+														<td width="17%"><a href="#"
+															onclick="viewInvoice(${jobAssignByDate.id});"><b>${jobAssignByDate.challanNumber}</b></a></td>
 														<td width="14%"><fmt:formatDate
 																value="${jobAssignByDate.assignDate}" pattern="dd-MM-yy" /></td>
 														<td width="15%">${jobAssignByDate.vendor.name}</td>
@@ -379,7 +381,8 @@
 												<c:if test="${totREMqty==0}">
 													<tr>
 														<td width="5%">${count}</td>
-														<td width="20%">${jobAssignByDate.challanNumber}</td>
+														<td width="20%"><a href="#"
+															onclick="viewInvoice(${jobAssignByDate.id});"><b>${jobAssignByDate.challanNumber}</b></a></td>
 														<td width="15%"><fmt:formatDate
 																value="${jobAssignByDate.assignDate}" pattern="dd-MM-yy" /></td>
 														<td width="20%">${jobAssignByDate.vendor.name}</td>
@@ -570,6 +573,14 @@
 		function jobReceiveFromSearchF(id) {
 			//alert(id);
 			$("#jobReceiveFromSearch" + id).submit();
+		}
+		
+		function viewInvoice(id){
+			window
+			.open(
+					"JobChalanForAssignment.jsp?id="+id,
+					'name', 'width=900,height=700');
+			
 		}
 	</script>
 </body>

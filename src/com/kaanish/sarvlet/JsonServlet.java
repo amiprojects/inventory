@@ -128,7 +128,8 @@ import com.kaanish.util.DepartmentCotractor;
 		"/getJobPlanProductsByPlanId",
 		"/getAllDesignNoFromSampleDesignCostSheetAndProductsByDesignNumberForDuplicateCheck",
 		"/getProductDetailByDesignNumber",
-		"/isExistProductDetailByDesignNumber" })
+		"/isExistProductDetailByDesignNumber",
+		"/getPurchaseProductDetailsByLotNumber" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -1612,6 +1613,16 @@ public class JsonServlet extends HttpServlet {
 				generatorDN.writeEnd().close();
 				break;
 
+			case "getPurchaseProductDetailsByLotNumber":
+				JsonGeneratorFactory jgf = Json.createGeneratorFactory(null);
+				JsonGenerator jg = jgf.createGenerator(resp.getOutputStream());
+				jg.writeStartObject()
+						.write("lotNo",
+								ejb.getPurchaseProductDetailsByLotNumber(
+										req.getParameter("lotNo"))
+										.getLotNumber()).writeEnd().close();
+				break;
+
 			case "getAllOngoingJobPlanByDesignNumber":
 				JsonGeneratorFactory factoryJP = Json
 						.createGeneratorFactory(null);
@@ -1622,7 +1633,6 @@ public class JsonServlet extends HttpServlet {
 						.getAllOngoingJobPlanByDesignNumber(Integer
 								.parseInt(req.getParameter("dId")))) {
 					generatorJP.writeStartObject().write("jpId", jp.getId())
-							// .write("jpDesc", jp.getDescription())
 							.write("jpDate", jp.getPlanDate().toString())
 							.write("jpQty", jp.getQty()).writeEnd();
 				}

@@ -104,9 +104,8 @@ Url = {
 	<h2 align="center">Sample Design Cost Sheet Challan</h2>
 
 	<table class="tg"
-		style="border: 1px solid; height: 900px; width: 750px">
+		style="border: 1px solid; height: 1050px; width: 750px">
 		<tr style="height: 50px">
-
 			<td class="tg-031e" style="width: 60%"><span
 				style="padding-left: 20px"><strong>Company Name</strong></span> <span
 				style="padding-left: 05px"><strong> :
@@ -138,22 +137,22 @@ Url = {
 				<span style="padding-left: 73px"><strong> :1</strong></span> <br>
 				<br> <br> <br>
 			</td>
-
 		</tr>
 
 		<tr style="height: 50px">
-			<td class="tg-031e" colspan="2" width="50px"><img
-				src="images/Desert.jpg" alt="Image" width="300px"></td>
+			<td class="tg-031e" colspan="2"><img
+				src="data:image/jpeg;base64,${sampleJCS.designImages.get(0).getImageAsString()}"
+				width="300px"></td>
 		</tr>
 
 		<tr style="height: 50px">
 			<td class="tg-031e" colspan="2"><strong>List of Items :</strong><br>
 				<c:set var="i" value="1"></c:set> <c:forEach var="itmProd"
-					items="${sessionScope['ejb'].getItmProductsForSampleBySampleId(sampleJCS.id)}">
+					items="${sessionScope['ejb'].getItemsForSampleBySampleId(sampleJCS.id)}">
 					<br>
-					<strong>${i}</strong>
+					${i}
 					<span>. </span>
-					<strong>${itmProd.itemDetails.name}</strong>
+					${itmProd.name}
 					<br>
 					<c:set var="i" value="${i+1}"></c:set>
 				</c:forEach><br></td>
@@ -195,8 +194,16 @@ Url = {
 							<c:set var="i" value="${i+1}"></c:set>
 						</c:forEach>
 					</tbody>
-
 				</table> <span style="float: right;">Continued...</span>
+			</td>
+		</tr>
+		<tr style="height: 75px">
+			<td class="tg-031e" style="width: 60%"><strong>Declaration:</strong><br>We
+				declare that this invoice shows the actual price of the goods
+				describe and that all particular are true and correct.</td>
+
+			<td class="tg-031e" style="width: 40%; text-align: right;">for <strong>${companyInfo.compname}</strong><br>
+				<br>Authorised Signatory
 			</td>
 		</tr>
 	</table>
@@ -207,7 +214,7 @@ Url = {
 	<h2 align="center">Sample Design Cost Sheet Challan(Page-2)</h2>
 
 	<table class="tg"
-		style="border: 1px solid; height: 850px; width: 750px">
+		style="border: 1px solid; height: 1050px; width: 750px">
 		<tr style="height: 50px">
 
 			<td class="tg-031e" style="width: 60%"><span
@@ -246,7 +253,7 @@ Url = {
 		</tr>
 
 		<tr>
-			<td class="tg-031e" colspan="7">
+			<td class="tg-031e" colspan="2">
 				<table class="tg"
 					style="height: auto; width: 750px; border-color: white; margin-left: -4px; margin-right: -5px; margin-top: -11px;">
 					<tr>
@@ -302,25 +309,19 @@ Url = {
 			</td>
 		</tr>
 
-
-
-		<tr style="height: 30px">
-			<td class="tg-031e" style="width: 40%"><span><u><strong>Declaration
-							:</strong></u></span><br>
-			<br> <span><strong>We declare that this challan
-						shows the actual goods and jobs assigned to the particulars are
-						true and correct.</strong></span></td>
-
-			<td class="tg-031e" style="width: 60%"><span
-				style="padding-left: 200px"><strong>For KAANISH
-						KOUTURE.</strong></span><br>
-			<br>
-			<br>
-			<br> <span style="padding-left: 220px"><strong>Authorised
-						Signature</strong></span></td>
-
+		<tr style="height: 75px">
+			<td class="tg-031e" colspan="2"><span>Est. Amount (in
+					words)</span><br> <span>${sessionScope['ejb'].getNumberToWords(sampleJCS.grandTotal)}</span></td>
 		</tr>
+		<tr style="height: 75px">
+			<td class="tg-031e" style="width: 60%"><strong>Declaration:</strong><br>We
+				declare that this invoice shows the actual price of the goods
+				describe and that all particular are true and correct.</td>
 
+			<td class="tg-031e" style="width: 40%; text-align: right;">for <strong>${companyInfo.compname}</strong><br>
+				<br>Authorised Signatory
+			</td>
+		</tr>
 	</table>
 
 	</page>

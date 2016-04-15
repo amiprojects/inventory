@@ -300,7 +300,8 @@
 													<td><fmt:formatDate
 															value="${jobReceive.recievingDate}" pattern="dd-MM-yy" />
 													</td>
-													<td>${jobReceive.challanNumber}</td>
+													<td><a href="#"
+														onclick="viewInvoice(${jobReceive.id});"><b>${jobReceive.challanNumber}</b></a></td>
 													<td><c:forEach var="jobReceivedProd"
 															items="${jobReceive.jobRecieveProductsDetails}">														
 													${jobReceivedProd.jobPlanProducts.productsForDesignCostSheet.productDetail.code}
@@ -386,6 +387,14 @@
 	<script type="text/javascript" src="js/grid-filter.js"></script>
 
 	<script src="js/jquery-ui/jquery-ui.js"></script>
+	<script type="text/javascript">
+	function viewInvoice(id){
+		window
+		.open(
+				"JobReceiveChallan.jsp?id="+id,
+				'name', 'width=900,height=700');			
+	}
+	</script>
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
