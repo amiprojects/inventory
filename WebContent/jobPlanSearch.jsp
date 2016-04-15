@@ -784,11 +784,13 @@
 							<br> <br>
 							<div id="trackkDiv">
 								<div class="col-md-6">
-
 									<label for="exampleInputEmail1">Lot Number:<font
 										color="red" size="4">*</font></label> <input id="lotnO" type="text"
-										name="lotNumber" required class="form-control"><br>
-
+										name="lotNumber" required class="form-control"
+										onkeypress="return blockSpecialChar(event)"
+										onkeyup="lotNoKeyUp();" onchange="lotNoChange();"
+										autocomplete="off"> <input type="hidden"
+										id="lotNoCheck" name="lotNoCheck"><br>
 								</div>
 							</div>
 						</fieldset>
@@ -2293,6 +2295,34 @@
 					});
 		}
 	</script>
+	<!-- <script type="text/javascript">
+		function lotNoKeyUp() {
+			$("#lotNoCheck").val("");
+			$.ajax({
+				url : "getPurchaseProductDetailsByLotNumber",
+				dataType : "json",
+				data : {
+					lotNo : $("#lotnO").val()
+				},
+				success : function(data) {
+					if (data.lotNo != "") {
+						$("#lotNoCheck").val(data.lotNo);
+					} else {
+						$("#lotNoCheck").val("");
+					}
+				}
+
+			});
+		}
+
+		function lotNoChange() {
+			if ($("#lotNoCheck").val() != "") {
+				alert("Duplicate Lot Number");
+				$("#lotNoCheck").val("");
+				$("#lotnO").val("");
+			}
+		}
+	</script> khapla-->
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->

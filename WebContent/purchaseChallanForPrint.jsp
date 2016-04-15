@@ -216,7 +216,8 @@ myWindow.print();
 								<td><b>${ppdet.productDetail.description}</b><br>Barcode
 									: ${ppdet.id}/${ppdet.lotNumber}/${ppdet.productDetail.code}<br>Design
 									No : ${ppdet.productDetail.universalCode}</td>
-								<td><%-- <fmt:formatNumber var="qty" value="${ppdet.quantity}"
+								<td>
+									<%-- <fmt:formatNumber var="qty" value="${ppdet.quantity}"
 										maxFractionDigits="3" />${qty} --%>${ppdet.quantity}</td>
 								<c:set value="${tqty+qty}" var="tqty" />
 								<td>${ppdet.cost}</td>
@@ -270,7 +271,7 @@ myWindow.print();
 			<c:if test="${i==qPage}">
 				<tr style="height: 75px">
 					<td class="tg-031e" colspan="7"><span>Amount Chargeable
-							(in words)</span><br> <span>${sessionScope['ejb'].getNumberToWords(gtot)}</span></td>
+							(in words)</span><br> <span>${sessionScope['ejb'].getNumberToWords(purEntry.totalCost)}</span></td>
 				</tr>
 				<tr style="height: 75px">
 					<td class="tg-031e" colspan="4"><strong>Declaration:</strong><br>We

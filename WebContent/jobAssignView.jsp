@@ -392,7 +392,7 @@
 		window
 		.open(
 				"JobReceiveChallan.jsp?id="+id,
-				'name', 'width=900,height=700');			
+				'name', 'width=900,height=700').print();			
 	}
 	</script>
 </body>

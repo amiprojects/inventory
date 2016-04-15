@@ -304,7 +304,7 @@
 
 		function viewInvoice(id) {
 			window.open("jobChallanForSampleDesignCostSheet.jsp?id=" + id, 'name',
-					'width=900,height=700');
+					'width=900,height=700').print();
 		}
 	</script>
 </body>

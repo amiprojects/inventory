@@ -65,7 +65,7 @@
 		window
 		.open(
 				"stockPurCha.jsp?id="+id,
-				'name', 'width=900,height=700');
+				'name', 'width=900,height=700').print();
 		
 	}
 	function viewInvoiceS(id){
@@ -73,7 +73,7 @@
 		window
 		.open(
 				"stockSaCha.jsp?id="+id,
-				'name', 'width=900,height=700');
+				'name', 'width=900,height=700').print();
 	}
 </script>
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />

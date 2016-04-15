@@ -1594,7 +1594,10 @@
 								</div>
 								<div class="col-md-10">
 									<input type="text" class="form-control" id="lotText"
-										name="lotText" onkeypress="return blockSpecialChar(event)">
+										name="lotText" onkeypress="return blockSpecialChar(event)"
+										onkeyup="lotNoKeyUpT();" onchange="lotNoChangeT();"
+										autocomplete="off"><input type="hidden"
+										id="lotNoCheckT" name="lotNoCheckT">
 								</div>
 							</div>
 							<br>
@@ -2229,12 +2232,13 @@
 							<br> <br>
 							<div id="trackkDiv">
 								<div class="col-md-6">
-
-									<label for="exampleInputEmail1">Lot Number:<font
-										color="red" size="4">*</font></label> <input id="lotnO" type="text"
-										name="lotNumber" required class="form-control"
-										onkeypress="return blockSpecialChar(event)"><br>
-
+									<label for="">Lot Number:<font color="red" size="4">*</font></label>
+									<input id="lotnO" type="text" name="lotNumber" required
+										class="form-control"
+										onkeypress="return blockSpecialChar(event)"
+										onkeyup="lotNoKeyUp();" onchange="lotNoChange();"
+										autocomplete="off"> <input type="hidden"
+										id="lotNoCheck" name="lotNoCheck"><br>
 								</div>
 							</div>
 							<div id="nottrack">
@@ -5319,6 +5323,62 @@
 			}
 		}
 	</script>
+	<!-- <script type="text/javascript">
+		function lotNoKeyUp() {
+			$("#lotNoCheck").val("");
+			$.ajax({
+				url : "getPurchaseProductDetailsByLotNumber",
+				dataType : "json",
+				data : {
+					lotNo : $("#lotnO").val()
+				},
+				success : function(data) {
+					if (data.lotNo != "") {
+						$("#lotNoCheck").val(data.lotNo);
+					} else {
+						$("#lotNoCheck").val("");
+					}
+				}
+
+			});
+		}
+
+		function lotNoChange() {
+			if ($("#lotNoCheck").val() != "") {
+				alert("Duplicate Lot Number");
+				$("#lotNoCheck").val("");
+				$("#lotnO").val("");
+			}
+		}
+	</script>
+	<script type="text/javascript">
+		function lotNoKeyUpT() {
+			$("#lotNoCheckT").val("");
+			$.ajax({
+				url : "getPurchaseProductDetailsByLotNumber",
+				dataType : "json",
+				data : {
+					lotNo : $("#lotText").val()
+				},
+				success : function(data) {
+					if (data.lotNo != "") {
+						$("#lotNoCheckT").val(data.lotNo);
+					} else {
+						$("#lotNoCheckT").val("");
+					}
+				}
+
+			});
+		}
+
+		function lotNoChangeT() {
+			if ($("#lotNoCheckT").val() != "") {
+				alert("Duplicate Lot Number");
+				$("#lotNoCheckT").val("");
+				$("#lotText").val("");
+			}
+		}
+	</script> khapla-->
 </body>
 <!-- `lastr er number change koro barite -->
 

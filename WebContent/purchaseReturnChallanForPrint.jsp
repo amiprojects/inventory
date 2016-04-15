@@ -250,7 +250,7 @@ page[size="A4"] {
 			<c:if test="${i==qPage}">
 				<tr style="height: 75px">
 					<td class="tg-031e" colspan="7"><span>Amount Chargeable
-							(in words)</span><br> <span>${sessionScope['ejb'].getNumberToWords(gtot)}</span></td>
+							(in words)</span><br> <span>${sessionScope['ejb'].getNumberToWords(purEntry.totalReCost)}</span></td>
 				</tr>
 				<tr style="height: 75px">
 					<td class="tg-031e" colspan="4"><strong>Declaration:</strong><br>We

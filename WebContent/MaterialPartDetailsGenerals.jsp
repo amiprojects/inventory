@@ -2198,7 +2198,7 @@
 			}
 		}
 	</script>
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		function lotNoKeyUp() {
 			$("#lotNoCheck").val("");
 			$.ajax({
@@ -2225,7 +2225,7 @@
 				$("#lotnO").val("");
 			}
 		}
-	</script>
+	</script> khapla -->
 </body>
 
 </html>

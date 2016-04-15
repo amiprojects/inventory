@@ -1,1 +1,1 @@
-khapla ejb sample job cost sheet
+khapla ejb samplejobcostsheet purchaseentry jobplansearch materialpartdetailgeneral jobreceive
