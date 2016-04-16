@@ -3628,37 +3628,25 @@ public class Ejb {
 	}
 
 	public List<JobPlan> getAllJobPlan() {
-		// TypedQuery<JobPlan> q = em.createQuery(
-		// "select c from JobPlan c order by c.id desc", JobPlan.class); khapla
-
-		TypedQuery<JobPlan> q = em.createQuery("select c from JobPlan c",
-				JobPlan.class);
+		TypedQuery<JobPlan> q = em.createQuery(
+				"select c from JobPlan c order by c.id desc", JobPlan.class);
 		return q.getResultList();
 	}
 
 	public List<JobPlan> getAllOngoingJobPlanByDesignNumber(int dn) {
-		// TypedQuery<JobPlan> q = em
-		// .createQuery(
-		// "select c from JobPlan c where c.designCostSheet.id =:dn and c.isComplete=false order by c.id desc",
-		// JobPlan.class); khapla
-
 		TypedQuery<JobPlan> q = em
 				.createQuery(
-						"select c from JobPlan c where c.designCostSheet.id =:dn and c.isComplete=false",
+						"select c from JobPlan c where c.designCostSheet.id =:dn and c.isComplete=false order by c.id desc",
 						JobPlan.class);
 		q.setParameter("dn", dn);
 		return q.getResultList();
 	}
 
 	public List<JobPlan> getAllJobPlanByDesignNumber(int dn) {
-		// TypedQuery<JobPlan> q = em
-		// .createQuery(
-		// "select c from JobPlan c where c.designCostSheet.id =:dn order by c.id desc",
-		// JobPlan.class);
-
-		TypedQuery<JobPlan> q = em.createQuery(
-				"select c from JobPlan c where c.designCostSheet.id =:dn",
-				JobPlan.class);
+		TypedQuery<JobPlan> q = em
+				.createQuery(
+						"select c from JobPlan c where c.designCostSheet.id =:dn order by c.id desc",
+						JobPlan.class);
 		q.setParameter("dn", dn);
 		return q.getResultList();
 	}

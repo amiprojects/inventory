@@ -68,11 +68,16 @@
 				'name', 'width=900,height=700').print();
 		
 	}
-	function viewInvoiceS(id){
-		
+	function viewInvoiceS(id){		
 		window
 		.open(
 				"stockSaCha.jsp?id="+id,
+				'name', 'width=900,height=700').print();
+	}
+	function viewInvoiceSoldOnly(id){		
+		window
+		.open(
+				"salesChallanForSoldOnly.jsp?id="+id,
 				'name', 'width=900,height=700').print();
 	}
 </script>
@@ -670,6 +675,10 @@
 
 																<td><a href="#"
 																	onclick="viewInvoiceS(${sPro.salesEntry.id});"><b>${sPro.salesEntry.challanNumber}</b></a></td>
+
+																<td><a href="#"
+																	onclick="viewInvoiceSoldOnly(${sPro.salesEntry.id});"><b>Challan
+																			for sold only</b></a></td>
 																<!-- Invoice -->
 															</tr>
 														</c:forEach>

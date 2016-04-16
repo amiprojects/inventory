@@ -248,10 +248,12 @@
 													<td><fmt:formatDate value="${sEntryByD.sales_date}"
 															pattern="dd-MM-yy" /></td>
 													<td>${sEntryByD.totalCost}</td>
+													<td><a href="#"
+														onclick="viewInvoiceSoldOnly(${sEntryByD.id});"><b>Challan
+																for sold only</b></a></td>
 													<td>
 														<form action="salesView" method="post"
 															id="sView${sEntryByD.id}">
-
 															<a href="#" onclick="salesViewF('${sEntryByD.id}');"><input
 																type="hidden" value="${sEntryByD.id}" name="sId"><img
 																alt="" src="images/eye.png" height="25px"></a>
@@ -463,11 +465,16 @@
 				$("#salesSearchByDateId").submit();
 			}
 		}
-		function viewInvoiceS(id){
-			
+		function viewInvoiceS(id){			
 			window
 			.open(
 					"stockSaCha.jsp?id="+id,
+					'name', 'width=900,height=700').print();
+		}
+		function viewInvoiceSoldOnly(id){		
+			window
+			.open(
+					"salesChallanForSoldOnly.jsp?id="+id,
 					'name', 'width=900,height=700').print();
 		}
 	</script>

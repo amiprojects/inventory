@@ -674,6 +674,12 @@
 											class="form-control" readonly="readonly">
 									</div>
 									<div class="form-group">
+										<label for="" class="font">Profit :<font color="red"
+											size="4">*</font></label> <input type="text" name="profitPP"
+											onkeyup="profitPPF()" placeholder="" id="profitPP"
+											class="form-control" value="0">
+									</div>
+									<div class="form-group">
 										<label for="" class="font">Wholesale Price :<font
 											color="red" size="4">*</font></label> <input type="text" name="wsp"
 											onchange="wspF()" placeholder="" id="wspO"
@@ -2185,6 +2191,17 @@
 			});
 
 		});
+		$(function() {
+			$("#profitPP").numericInput({
+
+				allowFloat : true, // Accpets positive numbers (floating point)
+
+				allowNegative : false,
+			// Accpets positive or negative integer
+
+			});
+
+		});
 	</script>
 	<script type="text/javascript">
 		function rateF() {
@@ -2232,9 +2249,20 @@
 			}
 		}
 
+		function profitPPF() {
+			$("#wspO").val(
+					Number($("#profitPP").val()) + Number($("#ucO").val()));
+		}
+
 		function completeF() {
 			$("#universalProductCode").val($("#dNo").val());
 			$("#ucO")
+					.val(
+							Number(
+									Number($("#totExpanse").val())
+											/ Number($("#sampleQty").val()))
+									.toFixed(2));
+			$("#wspO")
 					.val(
 							Number(
 									Number($("#totExpanse").val())

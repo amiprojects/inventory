@@ -1,1 +1,1 @@
-khapla ejb samplejobcostsheet purchaseentry jobplansearch materialpartdetailgeneral jobreceive
+khapla samplejobcostsheet purchaseentry jobplansearch materialpartdetailgeneral jobreceive

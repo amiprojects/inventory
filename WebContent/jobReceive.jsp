@@ -53,7 +53,7 @@
 			</script>
 		</c:if>
 	</c:if>
-	<%-- <c:if test="${requestScope['jobRcvId']!=null}">
+	<c:if test="${requestScope['jobRcvId']!=null}">
 		<script type="text/javascript">
 			var myWindow = window
 					.open(
@@ -61,7 +61,7 @@
 							'name', 'width=600,height=400');
 			myWindow.print();
 		</script>
-	</c:if> khapla --%>
+	</c:if>
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
