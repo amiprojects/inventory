@@ -298,7 +298,9 @@
 																		var="purProductionQtyt" />
 																</c:when>
 																<c:otherwise>
-																	<c:set value="${purQtyt+pro.quantity}" var="purQtyt" />
+																	<c:set
+																		value="${purQtyt+pro.quantity-pro.totalReturningQty}"
+																		var="purQtyt" />
 																</c:otherwise>
 															</c:choose>
 														</c:forEach>
@@ -325,7 +327,8 @@
 														<%-- <td><b>In Jobwork:</b>&nbsp;&nbsp;${total}</td> --%>
 
 														<c:forEach items="${sProduct}" var="sP">
-															<c:set var="sTotal" value="${sTotal+sP.quantity}" />
+															<c:set var="sTotal"
+																value="${sTotal+sP.quantity-sP.salesReQty}" />
 														</c:forEach>
 
 														<td><b>Total Sold:</b> &nbsp;&nbsp;${sTotal}</td>

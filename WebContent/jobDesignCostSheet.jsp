@@ -489,7 +489,7 @@
 														+ " td:nth-child(6)")
 												.html());
 						$("#rate").prop("readonly", true);
-						//$("#proQty").val(0); khapla
+						$("#proQty").val(0);
 					}
 					$("#proId").val(ui.item.id);
 					$("#proDesc").val(ui.item.description);
@@ -935,7 +935,7 @@
 		if (input.files && input.files[0]) {
 			var reader = new FileReader();
 
-			reader.onload = function(e) {				
+			reader.onload = function(e) {
 				$('#image').attr('src', e.target.result).width(120).height(85);
 				var str = e.target.result;
 				//alert(str);

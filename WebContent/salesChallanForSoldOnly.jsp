@@ -168,29 +168,33 @@ page[size="A4"] {
 						<c:set value="${0}" var="gtot" />
 						<c:forEach begin="${(i-1)*6}" end="${i*6-1}"
 							items="${purEntry.salesProductDetails}" var="ppdet">
-							<tr>
-								<td>${sl}</td>
-								<td>
-									<%-- ${ppdet.purchase_Product_Details.productDetail.description} --%>
+							<c:if test="${ppdet.quantity-ppdet.salesReQty>0}">
+								<tr>
+									<td>${sl}</td>
+									<td>
+										<%-- ${ppdet.purchase_Product_Details.productDetail.description} --%>
 
-									<b>${ppdet.purchase_Product_Details.productDetail.description}</b><br>Barcode
-									:
-									${ppdet.purchase_Product_Details.id}/${ppdet.purchase_Product_Details.lotNumber}/${ppdet.purchase_Product_Details.productDetail.code}<br>Design
-									No :
-									${ppdet.purchase_Product_Details.productDetail.universalCode}
-								</td>
-								<td><fmt:formatNumber var="qty" value="${ppdet.quantity}"
-										maxFractionDigits="3" />${qty}</td>
-								<c:set value="${tqty+ppdet.quantity}" var="tqty" />
-								<td>${ppdet.getSalesPrice()}</td>
-								<td>${ppdet.purchase_Product_Details.productDetail.qtyUnit.name}</td>
-								<td><fmt:formatNumber var="amount"
-										value="${ppdet.getSalesPrice()*ppdet.quantity}"
-										maxFractionDigits="2" /> ${amount}</td>
-								<c:set value="${gtot+ppdet.getSalesPrice()*ppdet.quantity}"
-									var="gtot" />
-							</tr>
-							<c:set value="${sl+1}" var="sl" />
+										<b>${ppdet.purchase_Product_Details.productDetail.description}</b><br>Barcode
+										:
+										${ppdet.purchase_Product_Details.id}/${ppdet.purchase_Product_Details.lotNumber}/${ppdet.purchase_Product_Details.productDetail.code}<br>Design
+										No :
+										${ppdet.purchase_Product_Details.productDetail.universalCode}
+									</td>
+									<td><fmt:formatNumber var="qty"
+											value="${ppdet.quantity-ppdet.salesReQty}"
+											maxFractionDigits="3" />${qty}</td>
+									<c:set value="${tqty+ppdet.quantity-ppdet.salesReQty}" var="tqty" />
+									<td>${ppdet.getSalesPrice()}</td>
+									<td>${ppdet.purchase_Product_Details.productDetail.qtyUnit.name}</td>
+									<td><fmt:formatNumber var="amount"
+											value="${ppdet.getSalesPrice()*(ppdet.quantity-ppdet.salesReQty)}"
+											maxFractionDigits="2" /> ${amount}</td>
+									<c:set
+										value="${gtot+ppdet.getSalesPrice()*(ppdet.quantity-ppdet.salesReQty)}"
+										var="gtot" />
+								</tr>
+								<c:set value="${sl+1}" var="sl" />
+							</c:if>
 						</c:forEach>
 						<c:if test="${i==qPage}">
 							<c:if test="${purEntry.discountValue!=0}">
@@ -235,7 +239,7 @@ page[size="A4"] {
 										maxFractionDigits="3" />${totalQ}</td>
 								<td colspan="2" align="right">Grand Total :</td>
 								<td><fmt:formatNumber var="grandT"
-										value="${purEntry.totalCost}" maxFractionDigits="2" />${grandT}
+										value="${gtot}" maxFractionDigits="2" />${grandT}
 								</td>
 							</tr>
 						</c:if>

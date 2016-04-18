@@ -1,3 +1,10 @@
+UPDATE PURCHASE_PRODUCT_DETAILS 
+	SET REMAINING_QUANTITY = 24
+	WHERE PRODUCTID = 4634;
+	
+select * from READYGOODSSTOCK where PRODUCTID in (select ID from PRODUCTDETAIL where CODE like '0%');
+
+
 <script>
 	$(document).ready(function() {
 		$("#taxVal").change(function() {

@@ -1,1 +1,1 @@
-khapla samplejobcostsheet purchaseentry jobplansearch materialpartdetailgeneral jobreceive
+khapla samplejobcostsheet jobreceive

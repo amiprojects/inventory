@@ -5323,7 +5323,7 @@
 			}
 		}
 	</script>
-	<!-- <script type="text/javascript">
+	<script type="text/javascript">
 		function lotNoKeyUp() {
 			$("#lotNoCheck").val("");
 			$.ajax({
@@ -5378,7 +5378,7 @@
 				$("#lotText").val("");
 			}
 		}
-	</script> khapla-->
+	</script>
 </body>
 <!-- `lastr er number change koro barite -->
 

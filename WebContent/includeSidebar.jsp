@@ -52,8 +52,8 @@
 						<li><a id="sPurchSearch" href="purchasingPurchaseSearch.jsp"
 							title="">Search Purchase Entry</a></li>
 						<li><a id="sProdPurchSearch"
-							href="purchasingProductionSearch.jsp" title="">Search
-								Ready Production</a></li>
+							href="purchasingProductionSearch.jsp" title="">Search Ready
+								Production</a></li>
 						<li><a id="sPurchReturn" href="purchaseReturn.jsp" title="">Purchase
 								Return</a></li>
 						<!-- <li><a id="sPurchPOgive" href="purchasingPurchaseOrderGive.jsp" title="">Purchase
@@ -127,6 +127,7 @@
 								Search</a></li>
 						<li><a id="jobPlan" href="jobPlanSearch.jsp" title="">Job
 								Plan Search</a></li>
+						<li><a id="jobPayment" href="jobPayment.jsp" title="">Payment</a></li>
 					</ul>
 				</div>
 			</div>

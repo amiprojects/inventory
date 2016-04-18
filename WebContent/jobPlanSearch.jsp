@@ -2323,7 +2323,7 @@
 					});
 		}
 	</script>
-	<!-- <script type="text/javascript">
+	<script type="text/javascript">
 		function lotNoKeyUp() {
 			$("#lotNoCheck").val("");
 			$.ajax({
@@ -2350,7 +2350,7 @@
 				$("#lotnO").val("");
 			}
 		}
-	</script> khapla-->
+	</script>
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
