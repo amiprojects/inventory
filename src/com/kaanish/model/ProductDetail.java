@@ -166,14 +166,16 @@ public class ProductDetail implements Serializable {
 
 	@Override
 	public String toString() {
-		return "{\"id\":\""
-				+ id
-				+ "\","
-				+ "\"latestCost\":\""
-				+ purchase_Product_Details.get(
-						purchase_Product_Details.size() - 1).getCost() + "\","
-				+ "\"name\":\"" + name + "\"," + "\"code\":\"" + code + "\","
-				+ "\"universalCode\":\"" + universalCode + "\","
+		float latestCost;
+		if (getPurchase_Product_Details().size() > 0) {
+			latestCost = purchase_Product_Details.get(
+					purchase_Product_Details.size() - 1).getCost();
+		} else {
+			latestCost = 0;
+		}
+		return "{\"id\":\"" + id + "\"," + "\"latestCost\":\"" + latestCost
+				+ "\"," + "\"name\":\"" + name + "\"," + "\"code\":\"" + code
+				+ "\"," + "\"universalCode\":\"" + universalCode + "\","
 				+ "\"isSaleble\":\"" + isSaleble + "\"," + "\"isActive\":\""
 				+ isActive + "\"," + "\"description\":\"" + description + "\","
 				+ "\"qtyUnit\":\"" + qtyUnit.getName() + "\","

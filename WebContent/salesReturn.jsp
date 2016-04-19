@@ -660,15 +660,11 @@
 																							var="k">
 																							<c:choose>
 																								<c:when test="${k.isCredit().equals(true)}">
-
 																									<c:set var="totCr" value="${totCr+k.value}" />
-
 																								</c:when>
 																								<c:otherwise>
 																									<c:set var="totDb" value="${totDb+k.value}" />
-
 																								</c:otherwise>
-
 																							</c:choose>
 																						</c:forEach>
 																						<c:set value="${totDb-totCr}" var="totDb" />

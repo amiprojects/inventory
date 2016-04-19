@@ -32,6 +32,8 @@ import com.kaanish.model.Stoct;
 import com.kaanish.model.Users;
 import com.kaanish.model.Vendor;
 import com.kaanish.model.VendorType;
+import com.kaanish.model.VoucherAssign;
+import com.kaanish.model.VoucherDetails;
 import com.kaanish.util.GetMacId;
 
 @WebServlet({ "/login", "/test" })
@@ -353,16 +355,45 @@ public class LoginServlet extends HttpServlet {
 			vendor.setPinCode("NA");
 			vendor.setLastModifiedDate(dt);
 			vendor.setVendorType(ejb.getVendorTypeByName("Vendor"));
-			//vendor.setUsers(ejb.getUserById("adminKainat"));
+			// vendor.setUsers(ejb.getUserById("adminKainat"));
 			vendor.setUsers(ejb.getUserById("adminKaanish"));
 			ejb.setVendor(vendor);
 
 			accountDetails = new AccountDetails();
-			//accountDetails.setUsers(ejb.getUserById("adminKainat"));
+			// accountDetails.setUsers(ejb.getUserById("adminKainat"));
 			accountDetails.setUsers(ejb.getUserById("adminKaanish"));
 			accountDetails.setVendor(vendor);
 			ejb.setAccountDetails(accountDetails);
 		}
+		// adding vendor
+
+		// correcting voucher details
+		for (VoucherAssign va : ejb.getAllVoucherAssign()) {
+			float totCr = 0;
+			float totDb = 0;
+
+			// for (VoucherDetails vd : ejb
+			// .getAllVoucherDetailsByVoucherAssignId(va.getId())) {
+			for (int i = 0; i < ejb.getAllVoucherDetailsByVoucherAssignId(
+					va.getId()).size(); i++) {
+				VoucherDetails vd = ejb.getAllVoucherDetailsByVoucherAssignId(
+						va.getId()).get(i);
+				if (vd.isCredit()) {
+					totCr = totCr + vd.getValue();
+				} else {
+					totDb = totDb + vd.getValue();
+				}
+
+				if (vd.getVoucherAssign().getVendor() != null) {
+					vd.setTotalCreditNote(totCr - totDb);
+					ejb.updateVoucherDetails(vd);
+				} else if (vd.getVoucherAssign().getCustomerEntry() != null) {
+					vd.setTotalDebitNote(totDb - totCr);
+					ejb.updateVoucherDetails(vd);
+				}
+			}
+		}
+		// correcting voucher details
 
 		if (ejb.getAllBillSetup().size() < 8) {
 			// companyInfoKaanish = ejb.getUserById("adminKaanish")

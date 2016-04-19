@@ -2549,8 +2549,8 @@
 						$("#addr").val("");
 						$("#city").val("");
 						$("#vatcst").val(""); */
-
-						$("#totalDebit").val('0');
+						
+						$("#totalDebit").val("0");
 					} else {
 						$("#isExistingCust").val(1);
 						$("#existingCustId").val(ui.item.id);

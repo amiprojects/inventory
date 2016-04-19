@@ -3282,22 +3282,23 @@ public class Ejb {
 				.createQuery(
 						"select c from ProductDetail c where c.code=:code OR c.description=:description OR c.category.name=:name ",
 						ProductDetail.class);
-		q.setParameter("code", code);
-		q.setParameter("description", description);
-		q.setParameter("name", name);
+		q.setParameter("code", code.toUpperCase());
+		q.setParameter("description", description.toUpperCase());
+		q.setParameter("name", name.toUpperCase());
 		List<ProductDetail> listpro = new ArrayList<ProductDetail>();
-		HashSet<ProductDetail> hash = new HashSet<ProductDetail>();
-		for (ProductDetail pd : q.getResultList()) {
-			for (Purchase_Product_Details ppd : pd
-					.getPurchase_Product_Details()) {
-				if (ppd.getCompanyInfo().getId() == cId) {
-					listpro.add(ppd.getProductDetail());
-				}
-			}
-		}
-		hash.addAll(listpro);
-		listpro.clear();
-		listpro.addAll(hash);
+		// HashSet<ProductDetail> hash = new HashSet<ProductDetail>();
+		// for (ProductDetail pd : q.getResultList()) {
+		// for (Purchase_Product_Details ppd : pd
+		// .getPurchase_Product_Details()) {
+		// if (ppd.getCompanyInfo().getId() == cId) {
+		// listpro.add(ppd.getProductDetail());
+		// }
+		// }
+		// }
+		// hash.addAll(listpro);
+		// listpro.clear();
+		// listpro.addAll(hash);
+		listpro.addAll(q.getResultList());
 		return listpro;
 	}
 
@@ -3390,12 +3391,31 @@ public class Ejb {
 		return em.find(VoucherDetails.class, id);
 	}
 
+	public void updateVoucherDetails(VoucherDetails voucherd) {
+		em.merge(voucherd);
+	}
+
 	public List<VoucherDetails> getVoucherDetailsByVendorId(int id) {
 		TypedQuery<VoucherDetails> q = em
 				.createQuery(
 						"select c from VoucherDetails c where c.voucherAssign.vendor.id=:id",
 						VoucherDetails.class);
 		q.setParameter("id", id);
+		return q.getResultList();
+	}
+
+	public List<VoucherDetails> getAllVoucherDetails() {
+		TypedQuery<VoucherDetails> q = em.createQuery(
+				"select c from VoucherDetails c", VoucherDetails.class);
+		return q.getResultList();
+	}
+
+	public List<VoucherDetails> getAllVoucherDetailsByVoucherAssignId(int vaId) {
+		TypedQuery<VoucherDetails> q = em
+				.createQuery(
+						"select c from VoucherDetails c where c.voucherAssign.id=:vaId order by c.id ASC",
+						VoucherDetails.class);
+		q.setParameter("vaId", vaId);
 		return q.getResultList();
 	}
 
@@ -3410,6 +3430,12 @@ public class Ejb {
 
 	public VoucherAssign getVoucherAssignById(int id) {
 		return em.find(VoucherAssign.class, id);
+	}
+
+	public List<VoucherAssign> getAllVoucherAssign() {
+		TypedQuery<VoucherAssign> q = em.createQuery(
+				"select c from VoucherAssign c", VoucherAssign.class);
+		return q.getResultList();
 	}
 
 	public List<VoucherAssign> getVoucherAssignByVendorId(int id) {
