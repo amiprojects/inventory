@@ -419,7 +419,7 @@
 							$("#paymentDetailsTable").append('<tbody><tr><td>'+formatDate(item.paymentDate)+'</td><td>'+item.paymentMethod+'</td><td>'+item.paymentDescription+'</td><td>'+item.payTotalAmount+'</td><td>'+item.paymentAmount+'</td><td>'+Number(item.payTotalAmount-item.paymentAmount)+'</td><td>'+item.paymentStatus+'</td></tr></tbody>');
 							if(index==0){
 								$("#dueAmount").html(Number(item.payTotalAmount-item.paymentAmount));
-								/* if(item.paymentStatus=='Full Paid'){ */
+								//if(item.paymentStatus=='Full Paid'){
 								if(Number(item.payTotalAmount-item.paymentAmount)>0){
 									$("#payButton").removeAttr("disabled");
 								}else{
