@@ -375,16 +375,13 @@
 											<td><label for="rate" class="font">Product Rate
 													:<font color="red" size="4">*</font>
 											</label></td>
-											<td>
-												<!-- <input type="text" id="rate" class="numChk"
-												readonly="readonly"> khapla --> <input type="text" id="rate"
-												class="numChk">
-											</td>
+											<td><input type="text" id="rate" class="numChk"
+												readonly="readonly"></td>
 										</tr>
-										<!-- <tr>
+										<tr>
 											<td colspan="2">(This is latest rate. It may vary as per
 												selection of lot)</td>
-										</tr> khapla-->
+										</tr>
 										<tr>
 											<td><label for="rate" class="font">Select Job :<font
 													color="red" size="4">*</font></label></td>
@@ -479,8 +476,7 @@
 					}
 				},
 				select : function(evt, ui) {
-					// khapla
-					$("#rate").prop("readonly", false);
+					//$("#rate").prop("readonly", false);
 					if ($(document).find("#proTable" + ui.item.id).length > 0) {
 						$("#rate")
 								.val(
@@ -495,7 +491,7 @@
 					$("#proDesc").val(ui.item.description);
 					$("#proUOM").val(ui.item.qtyUnitName);
 					$("#UOMid").val(ui.item.qtyUnitId);
-					//$("#rate").val(ui.item.latestCost); khapla
+					$("#rate").val(ui.item.latestCost);
 				}
 			});
 

@@ -129,7 +129,8 @@ import com.kaanish.util.DepartmentCotractor;
 		"/getAllDesignNoFromSampleDesignCostSheetAndProductsByDesignNumberForDuplicateCheck",
 		"/getProductDetailByDesignNumber",
 		"/isExistProductDetailByDesignNumber",
-		"/getPurchaseProductDetailsByLotNumber" })
+		"/getPurchaseProductDetailsByLotNumber",
+		"/getPaymentDetailsByJobAssignId" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -821,6 +822,37 @@ public class JsonServlet extends HttpServlet {
 							.writeEnd();
 				}
 				generatorJA.writeEnd().close();
+				break;
+
+			case "getPaymentDetailsByJobAssignId":
+				JsonGeneratorFactory factoryPD = Json
+						.createGeneratorFactory(null);
+				JsonGenerator generatorPD = factoryPD.createGenerator(resp
+						.getOutputStream());
+				generatorPD.writeStartArray();
+				for (PaymentDetails pd : ejb
+						.getPaymentDetailsByJobAssignId(Integer.parseInt(req
+								.getParameter("id")))) {
+					String desc;
+					if (pd.getDescription() != null) {
+						desc = pd.getDescription();
+					} else {
+						desc = "NA";
+					}
+					generatorPD
+							.writeStartObject()
+							.write("paymentId", pd.getId())
+							.write("paymentDescription", desc)
+							.write("paymentAmount", pd.getPaidAmount())
+							.write("paymentDate",
+									pd.getPaymentDate().toString())
+							.write("payTotalAmount", pd.getTotalAmount())
+							.write("paymentStatus",
+									pd.getPaymentStatus().getStatus())
+							.write("paymentMethod",
+									pd.getPaymentType().getType()).writeEnd();
+				}
+				generatorPD.writeEnd().close();
 				break;
 
 			case "getJobPlanProductsByPlanId":

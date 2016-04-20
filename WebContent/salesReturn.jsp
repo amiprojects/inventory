@@ -629,9 +629,8 @@
 																				<div class="col-md-5">Payment type :</div>
 																				<div class="col-md-7">
 																					<select class="form-control" id="pType"
-																						name="pType" disabled="disabled"
+																						name="pType" readonly="readonly"
 																						onchange="pTypeFunc()">
-
 																						<c:forEach
 																							items="${sessionScope['ejb'].getAllPaymentType()}"
 																							var="payType">
@@ -741,81 +740,6 @@
 														</div>
 													</div>
 												</div>
-
-												<%-- <div id="cVouDetails" class="modal fade" role="dialog"
-													style="top: 25px;">
-
-													<div class="modal-dialog modal-lg">
-														<div class="modal-content">
-															<div class="modal-header">
-																<button type="button" class="close" data-dismiss="modal">&times;</button>
-																<h4 class="modal-title">Customer Vouture Details</h4>
-															</div>
-															<div class="modal-body">
-																<h2>Customer: ${salre.customer.name}</h2>
-																<div class="row">
-																	<table class="table table-striped table-bordered">
-
-																		<thead>
-																			<tr>
-																				<th>#</th>
-																				<th>Date</th>
-																				<th>Amount</th>
-
-																			</tr>
-																		</thead>
-
-																		<tbody>
-																			<tr>
-
-																				<td>1</td>
-																				<td>vou/123/256</td>
-																				<td>23</td>
-
-
-																			</tr>
-
-																			<tr>
-
-																				<td>2</td>
-																				<td>vou/123/256</td>
-																				<td>23</td>
-
-
-																			</tr>
-																			<tr>
-
-																				<td>3</td>
-																				<td>vou/123/256</td>
-																				<td>23</td>
-
-
-																			</tr>
-
-
-																		</tbody>
-																		<tfoot>
-
-																			<tr>
-																				<td>&nbsp;</td>
-																				<td colspan="2">Total Cost</td>
-																			</tr>
-
-																		</tfoot>
-
-																	</table>
-																	<input type="button" class="btn green pull-right"
-																		style="float: right;" value="Back">
-																		
-
-																</div>
-															</div>
-														</div>
-														<div class="modal-footer"></div>
-													</div>
-												</div> --%>
-
-
 											</div>
 										</div>
 										<input type="hidden" name="salesentryid" value="${salre.id}">

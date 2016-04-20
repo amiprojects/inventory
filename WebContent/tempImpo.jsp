@@ -117,15 +117,39 @@ $("#id").modal("show"); //for toast
 
 // http://localhost:8088/kaanish_kouture/getProductDetailById?id=1
 
-//Math.round((num) * 100) / 100 //autocomplete $(function() {
-$("#bankCity").autocomplete({ source : function(req, resp) { $.ajax({
-type : "post", url : "getCityByName", data : { name : req.term },
-dataType : "json", success : function(data) { resp($.map(data,
-function(item) { return ({ value : item.cityName, id : item.id }); }));
-} }); }, change : function(event, ui) { if (ui.item == null) {
-$(this).val(""); $("#bankCityId").val(""); } else {
-$("#bankCityId").val(ui.item.id); } }, select : function(event, ui) {
-$("#bankCityId").val(ui.item.id); } }); });
+//Math.round((num) * 100) / 100 
+//autocomplete
+autocomplete $(function() {
+$("#bankCity").autocomplete({
+ source : function(req, resp) { 
+ 	$.ajax({
+		type : "post",
+		url : "getCityByName",
+ 		data : { name : req.term },
+		dataType : "json",
+ 		success : function(data) {
+  			resp($.map(data, function(item) {
+ 				return ({
+  					value : item.cityName,
+  					id : item.id
+    			});
+     		}));
+		}
+ 	});
+  },
+  change : function(event, ui) {
+    if (ui.item == null) {
+		$(this).val("");
+ 		$("#bankCityId").val("");
+  	} else {
+		$("#bankCityId").val(ui.item.id);
+ 	}
+ },
+ select : function(event, ui) {
+	$("#bankCityId").val(ui.item.id);
+ }
+});
+});
 
 <c:choose>
 	<c:when test="${pCode.initialInventory.equals(false)}">
@@ -161,22 +185,25 @@ $("#bankCityId").val(ui.item.id); } }); });
 	</tbody>
 </table>
 
-//if (!isNaN(this.value) && this.value.length != 0) { var sum = 0;
-$(".rQtyAm").each(function() { sum += parseFloat(this.value); });
-$("#subtotalvalue").val(sum.toFixed(2));
+//sum by class
+if (!isNaN(this.value) && this.value.length != 0) {
+	var sum = 0;
+	$(".rQtyAm").each(function() {
+ 		sum += parseFloat(this.value);
+  	});
+	$("#subtotalvalue").val(sum.toFixed(2));
+}
 
 
-$("input:radio[name=bar]").click(function() { var value = $(this).val();
-//alert(value); if (value == "yesBar") { $("#isBarPrint").val('yes'); }
-else { $("#isBarPrint").val('no'); } }); var count = $('#purProTable
-tbody').length; alert(count); /*Only number*/
-$(".numberOnly").keydown(function(event) { if ( event.keyCode == 190 ||
-event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 ||
-event.keyCode == 27 || event.keyCode == 13 || (event.keyCode == 65 &&
-event.ctrlKey === true) || (event.keyCode >= 35 && event.keyCode <= 39))
-{ if(event.keyCode == 190){ if($(this).val().indexOf('.')!=-1){
-event.preventDefault(); } } return; } else { if (event.shiftKey ||
-(event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 ||
-event.keyCode > 105 )) { event.preventDefault(); } } });
+$("input:radio[name=bar]").click(function() {
+	var value = $(this).val();
+	//alert(value);
+	if (value == "yesBar") {
+		$("#isBarPrint").val('yes');
+	}else {
+		$("#isBarPrint").val('no');
+	}
+});
 
-
+var count = $('#purProTable tbody').length;
+alert(count);

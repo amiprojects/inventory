@@ -78,8 +78,9 @@
 											</div>
 										</div>
 									</form>
-									<form role="form" class="sec" action="jobAssignSearchByDate"
-										method="post" id="jobSearchByDateId">
+									<form role="form" class="sec"
+										action="jobAssignSearchByDateForPayment" method="post"
+										id="jobSearchByDateId">
 										<div class="row">
 											<div class="col-md-5">
 												<div class="form-group">
@@ -105,8 +106,8 @@
 											</div>
 										</div>
 									</form>
-									<form role="form" class="sec" action="jobSearchByJobChallanNo"
-										method="post">
+									<form role="form" class="sec"
+										action="jobSearchByJobChallanNoForPayment" method="post">
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
@@ -165,8 +166,8 @@
 											</div>
 										</div>
 									</form>
-									<form role="form" class="sec" action="jobSearchByProductCode"
-										method="post">
+									<form role="form" class="sec"
+										action="jobSearchByProductCodeForPayment" method="post">
 										<div class="row">
 											<div class="col-md-10">
 												<div class="form-group">
@@ -181,8 +182,8 @@
 											</div>
 										</div>
 									</form>
-									<form role="form" class="sec" action="jobSearchByJobberName"
-										method="post">
+									<form role="form" class="sec"
+										action="jobSearchByJobberNameForPayment" method="post">
 										<div class="row">
 											<div class="col-md-10">
 												<div class="form-group">
@@ -198,8 +199,9 @@
 
 										</div>
 									</form>
-									<form role="form" class="sec" action="jobSearchByPlanNo"
-										method="post" id="jobSearchByPlanNoId">
+									<form role="form" class="sec"
+										action="jobSearchByPlanNoForPayment" method="post"
+										id="jobSearchByPlanNoId">
 										<div class="row">
 											<div class="col-md-10">
 												<div class="form-group">
@@ -252,32 +254,27 @@
 													</c:forEach>
 													<td width="10%"><fmt:formatNumber var="totalQ"
 															value="${totqty}" maxFractionDigits="3" />${totalQ}</td>
-													<td width="10%"><c:set value="${0}" var="totREMqty" />
-														<c:forEach
-															items="${jobAssignByDate.jobAssignmentProducts}"
-															var="proDetl">
-															<c:set value="${totREMqty+proDetl.remaninQty}"
-																var="totREMqty" />
-															<c:if test="${totREMqty==0}">
-																<c:set value="Received" var="Status" />
-															</c:if>
-															<c:if test="${totREMqty>0}">
-																<c:set value="Processing" var="Status" />
-															</c:if>
-														</c:forEach>${Status}</td>
-													<%-- <td width="8%"><form action="jobReceiveFromSearch"
-															method="post"
-															id="jobReceiveFromSearch${jobAssignByDate.id}">
-															<a href="#"
-																onclick="jobReceiveFromSearchF('${jobAssignByDate.id}');"><input
-																type="hidden" value="${jobAssignByDate.challanNumber}"
-																name="joChallan"> <span style="color: #6a94ff;"><u>
-																		Receive</u></span></a>
-														</form></td> --%>
-													<td width="8%"><form action="" method="post"
+													<td width="10%"><c:if
+															test="${sessionScope['ejb'].getPaymentDetailsByJobAssignId(jobAssignByDate.id).size()>0}">
+															<c:set
+																value="${sessionScope['ejb'].getPaymentDetailsByJobAssignId(jobAssignByDate.id).get(0).paymentStatus.status}"
+																var="Status"></c:set>
+														</c:if> <c:if
+															test="${sessionScope['ejb'].getPaymentDetailsByJobAssignId(jobAssignByDate.id).size()==0}">
+															<c:set value="Not Paid" var="Status"></c:set>
+														</c:if> <%-- ${sessionScope['ejb'].getPaymentDetailsByJobAssignId(jobAssignByDate.id).size()}
+														&nbsp;  --%>${Status}</td>
+													<td width="8%"><c:set var="totJobCost" value="${0}" />
+														<c:forEach var="jobp"
+															items="${jobAssignByDate.jobAssignmentProducts}">
+															<c:set var="totJobCost"
+																value="${totJobCost+jobp.totalJobCost}" />
+														</c:forEach> <fmt:formatNumber var="totJC" value="${totJobCost}"
+															maxFractionDigits="2" />
+														<form action="" method="post"
 															id="jobPayment${jobAssignByDate.id}">
 															<a href="#"
-																onclick="jobPaymentOCF('${jobAssignByDate.id}');"><input
+																onclick="jobPaymentOCF('${jobAssignByDate.id}','${jobAssignByDate.challanNumber}','${totJC}');"><input
 																type="hidden" value="${jobAssignByDate.challanNumber}"
 																name="joChallan"> <span style="color: #6a94ff;"><u>
 																		Payment</u></span></a>
@@ -292,6 +289,7 @@
 														</form>
 													</td>
 												</tr>
+
 												<c:set var="count" value="${count+1}" />
 											</c:forEach>
 										</tbody>
@@ -307,6 +305,49 @@
 		<!-- Page Container -->
 	</div>
 	<!-- main -->
+
+	<div id="jobPayModal" class="modal fade" role="dialog"
+		style="top: 25px;">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">
+						Payment details for job : <span id="jobChallan"></span>
+					</h4>
+				</div>
+				<div class="modal-body">
+					<table id="paymentDetailsTable" class="table">
+						<thead>
+							<tr>
+								<th>Payment date</th>
+								<th>Payment method</th>
+								<th>Payment description</th>
+								<th>Payable Amount</th>
+								<th>Paid Amount</th>
+								<th>Due Amount</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<b style="float: left;"><span>Current Due : </span><span
+						id="dueAmount"></span></b> <input type="button" value="Pay"
+						id="payButton" class="btn green pull-right" disabled="disabled">
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
@@ -361,8 +402,36 @@
 			//alert(id);
 			$("#jobReceiveFromSearch" + id).submit();
 		}
-		function jobPaymentOCF(id) {
-			alert("Payment for job assignment id : "+id);
+		function jobPaymentOCF(id, challanNo, totJC) {
+			$("#jobChallan").html(challanNo+" (Total Payable: "+totJC+" Rs.)");
+			$("#jobPayModal").modal("show");	
+			$.ajax({
+				type : "post",
+				url : "getPaymentDetailsByJobAssignId",
+				data : {
+					id : id
+				},
+				dataType : "json",
+				success : function(data) {
+					$("#paymentDetailsTable tbody").empty();
+					$.each(data, function(index, item) {
+							//alert(item.paymentId);
+							$("#paymentDetailsTable").append('<tbody><tr><td>'+formatDate(item.paymentDate)+'</td><td>'+item.paymentMethod+'</td><td>'+item.paymentDescription+'</td><td>'+item.payTotalAmount+'</td><td>'+item.paymentAmount+'</td><td>'+Number(item.payTotalAmount-item.paymentAmount)+'</td><td>'+item.paymentStatus+'</td></tr></tbody>');
+							if(index==0){
+								$("#dueAmount").html(Number(item.payTotalAmount-item.paymentAmount));
+								/* if(item.paymentStatus=='Full Paid'){ */
+								if(Number(item.payTotalAmount-item.paymentAmount)>0){
+									$("#payButton").removeAttr("disabled");
+								}else{
+									$("#payButton").attr("disabled","disabled");
+								}
+							}
+					});
+				},
+				error : function(a, b, c) {
+					alert(a + b + c);
+				}
+			});
 		}
 
 		$(function() {
@@ -405,7 +474,6 @@
 					} else {
 						$("#prodCode").val(ui.item.code);
 					}
-
 				}
 			});
 		});
@@ -528,6 +596,10 @@
 			.open(
 					"JobChalanForAssignment.jsp?id="+id,
 					'name', 'width=900,height=700').print();			
+		}
+		function formatDate(d) {
+			var dateparts = d.split(" ");
+			return dateparts[2] + "-" + dateparts[1] + "-" + dateparts[5];
 		}
 	</script>
 </body>

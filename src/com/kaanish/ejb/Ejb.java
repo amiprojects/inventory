@@ -553,6 +553,15 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<PaymentDetails> getPaymentDetailsByJobAssignId(int id) {
+		TypedQuery<PaymentDetails> q = em
+				.createQuery(
+						"select c from PaymentDetails c where c.jobAssignId=:id order by c.id desc",
+						PaymentDetails.class);
+		q.setParameter("id", id);
+		return q.getResultList();
+	}
+
 	/************** for UOM type ***************/
 	public void setQtyUnit(QtyUnit qtyUnit) {
 		em.persist(qtyUnit);

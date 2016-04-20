@@ -117,7 +117,11 @@ import com.kaanish.util.DateConverter;
 		"/completePlanAndProductSumaryProduction", "/purchaseProductionView",
 		"/purchaseProductionSearchAll", "/purchaseProductionSearchByDate",
 		"/purchaseProductionSearchByPurchaseChallanNo",
-		"/purchaseProductionSearchByProductCode", "/jobSearchAllForPayment" })
+		"/purchaseProductionSearchByProductCode", "/jobSearchAllForPayment",
+		"/jobAssignSearchByDateForPayment",
+		"/jobSearchByJobChallanNoForPayment",
+		"/jobSearchByProductCodeForPayment",
+		"/jobSearchByJobberNameForPayment", "/jobSearchByPlanNoForPayment" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -2382,6 +2386,23 @@ public class Servlet extends HttpServlet {
 				}
 				break;
 
+			case "jobAssignSearchByDateForPayment":
+				page = "jobPayment.jsp";
+				List<JobAssignmentDetails> jobAssignListFP = ejb
+						.getJobAsignmentByDate(DateConverter.getDate(req
+								.getParameter("fDate")), DateConverter
+								.getDate(req.getParameter("lDate")));
+				req.setAttribute("jobAssignList", jobAssignListFP);
+				if (jobAssignListFP.size() > 0) {
+					msg = "Your search for dated " + req.getParameter("fDate")
+							+ " to " + req.getParameter("lDate");
+				} else {
+					msg = "No result found for dated "
+							+ req.getParameter("fDate") + " to "
+							+ req.getParameter("lDate") + "...";
+				}
+				break;
+
 			case "jobSearchByJobChallanNo":
 				page = "jobAssignSearch.jsp";
 				List<JobAssignmentDetails> jobAssignList1 = ejb
@@ -2418,12 +2439,62 @@ public class Servlet extends HttpServlet {
 				}
 				break;
 
+			case "jobSearchByJobChallanNoForPayment":
+				page = "jobPayment.jsp";
+				List<JobAssignmentDetails> jobAssignListCP = ejb
+						.getJobAssignByChallanNo(req
+								.getParameter("companyInitial")
+								+ "/"
+								+ req.getParameter("fynYear")
+								+ "/"
+								+ req.getParameter("month")
+								+ "/"
+								+ req.getParameter("billType")
+								+ "/"
+								+ req.getParameter("autoNum")
+								+ "/"
+								+ req.getParameter("suffix"));
+				req.setAttribute("jobAssignList", jobAssignListCP);
+
+				if (jobAssignListCP.size() > 0) {
+					msg = "Your search for Job challan number : "
+							+ req.getParameter("companyInitial") + "/"
+							+ req.getParameter("fynYear") + "/"
+							+ req.getParameter("month") + "/"
+							+ req.getParameter("billType") + "/"
+							+ req.getParameter("autoNum") + "/"
+							+ req.getParameter("suffix");
+				} else {
+					msg = "No result found for Job challan number : "
+							+ req.getParameter("companyInitial") + "/"
+							+ req.getParameter("fynYear") + "/"
+							+ req.getParameter("month") + "/"
+							+ req.getParameter("billType") + "/"
+							+ req.getParameter("autoNum") + "/"
+							+ req.getParameter("suffix");
+				}
+				break;
+
 			case "jobSearchByJobberName":
 				page = "jobAssignSearchByJobber.jsp";
 				List<JobAssignmentDetails> jobAssignList2 = ejb
 						.getJobAssignByJoberName(req.getParameter("jobberName"));
 				req.setAttribute("jobAssignList", jobAssignList2);
 				if (jobAssignList2.size() > 0) {
+					msg = "Your search for Jobber name : "
+							+ req.getParameter("jobberName").toUpperCase();
+				} else {
+					msg = "No result found for jobber name : "
+							+ req.getParameter("jobberName").toUpperCase();
+				}
+				break;
+
+			case "jobSearchByJobberNameForPayment":
+				page = "jobPayment.jsp";
+				List<JobAssignmentDetails> jobAssignListJP = ejb
+						.getJobAssignByJoberName(req.getParameter("jobberName"));
+				req.setAttribute("jobAssignList", jobAssignListJP);
+				if (jobAssignListJP.size() > 0) {
 					msg = "Your search for Jobber name : "
 							+ req.getParameter("jobberName").toUpperCase();
 				} else {
@@ -2447,12 +2518,41 @@ public class Servlet extends HttpServlet {
 				}
 				break;
 
+			case "jobSearchByPlanNoForPayment":
+				page = "jobPayment.jsp";
+				List<JobAssignmentDetails> jobAssignListPFP = ejb
+						.getJobAssignByPlanNumber(Integer.parseInt(req
+								.getParameter("planNo")));
+				req.setAttribute("jobAssignList", jobAssignListPFP);
+				if (jobAssignListPFP.size() > 0) {
+					msg = "Your search for Plan Number : "
+							+ req.getParameter("planNo").toUpperCase();
+				} else {
+					msg = "No result found for Plan Number : "
+							+ req.getParameter("planNo").toUpperCase();
+				}
+				break;
+
 			case "jobSearchByProductCode":
 				page = "jobAssignSearch.jsp";
 				List<JobAssignmentDetails> jobAssignList3 = ejb
 						.getJobAssignByProdCode(req.getParameter("prodCode"));
 				req.setAttribute("jobAssignList", jobAssignList3);
 				if (jobAssignList3.size() > 0) {
+					msg = "Your search for Product code : "
+							+ req.getParameter("prodCode").toUpperCase();
+				} else {
+					msg = "No result found for product code : "
+							+ req.getParameter("prodCode").toUpperCase();
+				}
+				break;
+
+			case "jobSearchByProductCodeForPayment":
+				page = "jobPayment.jsp";
+				List<JobAssignmentDetails> jobAssignListPP = ejb
+						.getJobAssignByProdCode(req.getParameter("prodCode"));
+				req.setAttribute("jobAssignList", jobAssignListPP);
+				if (jobAssignListPP.size() > 0) {
 					msg = "Your search for Product code : "
 							+ req.getParameter("prodCode").toUpperCase();
 				} else {

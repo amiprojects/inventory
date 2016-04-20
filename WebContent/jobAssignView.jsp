@@ -300,8 +300,10 @@
 													<td><fmt:formatDate
 															value="${jobReceive.recievingDate}" pattern="dd-MM-yy" />
 													</td>
-													<td><a href="#"
-														onclick="viewInvoice(${jobReceive.id});"><b>${jobReceive.challanNumber}</b></a></td>
+													<td>
+														<%-- <a href="#"
+														onclick="viewInvoice(${jobReceive.id});"><b> khapla --%>${jobReceive.challanNumber}<!-- </b></a> -->
+													</td>
 													<td><c:forEach var="jobReceivedProd"
 															items="${jobReceive.jobRecieveProductsDetails}">														
 													${jobReceivedProd.jobPlanProducts.productsForDesignCostSheet.productDetail.code}
@@ -388,12 +390,10 @@
 
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 	<script type="text/javascript">
-	function viewInvoice(id){
-		window
-		.open(
-				"JobReceiveChallan.jsp?id="+id,
-				'name', 'width=900,height=700').print();			
-	}
+		function viewInvoice(id) {
+			window.open("JobReceiveChallan.jsp?id=" + id, 'name',
+					'width=900,height=700').print();
+		}
 	</script>
 </body>
 

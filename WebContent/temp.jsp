@@ -1,1 +1,1 @@
-khapla samplejobcostsheet jobreceive
+khapla jobreceive jobassignview
