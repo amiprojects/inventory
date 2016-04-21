@@ -250,6 +250,7 @@ Url = {
 					</tr>
 					<tbody>
 						<c:set var="i" value="1"></c:set>
+						<c:set var="totJobCost" value="${0}" />
 						<c:forEach var="jobp" items="${jobAssi.jobRecieveProductsDetails}">
 							<c:forEach items="${jobp.jobReceiveJobDetails}" var="jobProjob">
 								<tr>
@@ -258,20 +259,32 @@ Url = {
 									<td>${jobProjob.jobRecieveProductsDetails.jobPlanProducts.productsForDesignCostSheet.productDetail.code}</td>
 									<td>${jobProjob.qtyDone}</td>
 									<td>${jobProjob.jobRecieveProductsDetails.jobPlanProducts.productsForDesignCostSheet.productDetail.qtyUnit.name}</td>
-									<td>${sessionScope['ejb'].getJobAssignmentJobDetailsByJobPlanJobIdAndJobAssignmentId(jobProjob.jobPlanJobStock.id, jobAssi.jobAssignmentDetails.id).rate}</td>
+									<td><c:set var="rate"
+											value="${sessionScope['ejb'].getJobAssignmentJobDetailsByJobPlanJobIdAndJobAssignmentId(jobProjob.jobPlanJobStock.id, jobAssi.jobAssignmentDetails.id).rate}"></c:set>${rate}</td>
 									<td>${sessionScope['ejb'].getJobAssignmentJobDetailsByJobPlanJobIdAndJobAssignmentId(jobProjob.jobPlanJobStock.id, jobAssi.jobAssignmentDetails.id).ammount}</td>
 									<td><fmt:formatDate
 											value="${jobProjob.jobRecieveProductsDetails.jobRecievedDetails.recievingDate}"
 											pattern="dd-MM-yyyy" /></td>
 								</tr>
 								<c:set var="i" value="${i+1}"></c:set>
+								<c:set var="totJobCost"
+									value="${totJobCost+(jobProjob.qtyDone*rate)}" />
 							</c:forEach>
 						</c:forEach>
+						<%-- <tr>
+							<td colspan="6" align="right">Total Job Cost :</td>
+							<td colspan="2"><fmt:formatNumber var="totJC"
+									value="${totJobCost}" maxFractionDigits="2" />${totJC}</td>
+						</tr> --%>
 					</tbody>
 				</table>
 			</td>
 		</tr>
 
+		<%-- <tr style="height: 75px">
+			<td class="tg-031e" colspan="2"><span>Amount Chargeable
+					(in words)</span><br> <span>${sessionScope['ejb'].getNumberToWords(totJobCost)}</span></td>
+		</tr> --%>
 		<tr style="height: 100px">
 			<td class="tg-031e" style="width: 60%"><strong>Declaration:</strong><br>We
 				declare that this invoice shows the actual price of the goods

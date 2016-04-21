@@ -263,7 +263,7 @@
 															test="${sessionScope['ejb'].getPaymentDetailsByJobAssignId(jobAssignByDate.id).size()==0}">
 															<c:set value="Not Paid" var="Status"></c:set>
 														</c:if> <%-- ${sessionScope['ejb'].getPaymentDetailsByJobAssignId(jobAssignByDate.id).size()}
-														&nbsp;  --%>${Status}</td>
+														&nbsp;  --%> <span id="status">${Status}</span></td>
 													<td width="8%"><c:set var="totJobCost" value="${0}" />
 														<c:forEach var="jobp"
 															items="${jobAssignByDate.jobAssignmentProducts}">
@@ -274,7 +274,7 @@
 														<form action="" method="post"
 															id="jobPayment${jobAssignByDate.id}">
 															<a href="#"
-																onclick="jobPaymentOCF('${jobAssignByDate.id}','${jobAssignByDate.challanNumber}','${totJC}');"><input
+																onclick="jobPaymentOCF('${jobAssignByDate.id}','${jobAssignByDate.challanNumber}','${totJobCost}');"><input
 																type="hidden" value="${jobAssignByDate.challanNumber}"
 																name="joChallan"> <span style="color: #6a94ff;"><u>
 																		Payment</u></span></a>
@@ -403,6 +403,14 @@
 			$("#jobReceiveFromSearch" + id).submit();
 		}
 		function jobPaymentOCF(id, challanNo, totJC) {
+			if($("#status").html()=="Not Paid"){
+				$("#dueAmount").html(totJC);		
+				if(Number(totJC)>0){
+					$("#payButton").removeAttr("disabled");
+				}else{
+					$("#payButton").attr("disabled","disabled");
+				}
+			}			
 			$("#jobChallan").html(challanNo+" (Total Payable: "+totJC+" Rs.)");
 			$("#jobPayModal").modal("show");	
 			$.ajax({

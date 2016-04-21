@@ -1,1 +1,0 @@
-khapla jobreceive jobassignview
