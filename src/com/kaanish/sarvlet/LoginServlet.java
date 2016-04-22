@@ -236,7 +236,21 @@ public class LoginServlet extends HttpServlet {
 		}
 		if (flagPpr == 0) {
 			pageList = new PageList();
-			pageList.setName("RPurchase Return");
+			pageList.setName("Purchase Return");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+		int flagPpedit = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Purchase Edit")) {
+				flagPpedit = 1;
+				break;
+			}
+		}
+		if (flagPpedit == 0) {
+			pageList = new PageList();
+			pageList.setName("Purchase Edit");
 			pageList.setModule(module);
 			ejb.setPageList(pageList);
 			pageList = null;
@@ -568,10 +582,8 @@ public class LoginServlet extends HttpServlet {
 
 			// for (VoucherDetails vd : ejb
 			// .getAllVoucherDetailsByVoucherAssignId(va.getId())) {
-			for (int i = 0; i < ejb.getAllVoucherDetailsByVoucherAssignId(
-					va.getId()).size(); i++) {
-				VoucherDetails vd = ejb.getAllVoucherDetailsByVoucherAssignId(
-						va.getId()).get(i);
+			for (int i = 0; i < ejb.getAllVoucherDetailsByVoucherAssignId(va.getId()).size(); i++) {
+				VoucherDetails vd = ejb.getAllVoucherDetailsByVoucherAssignId(va.getId()).get(i);
 				if (vd.isCredit()) {
 					totCr = totCr + vd.getValue();
 				} else {
@@ -736,10 +748,8 @@ public class LoginServlet extends HttpServlet {
 		if (ejb.getAllStoct().size() < 1) {
 			LocalDateTime afterThreeMonths = currentDateTime.plusMonths(3);
 			stoct = new Stoct();
-			stoct.setStartDate(Date.from(currentDateTime.toInstant(ZoneOffset
-					.ofHoursMinutes(5, 30))));
-			stoct.setEndDate(Date.from(afterThreeMonths.toInstant(ZoneOffset
-					.ofHoursMinutes(5, 30))));
+			stoct.setStartDate(Date.from(currentDateTime.toInstant(ZoneOffset.ofHoursMinutes(5, 30))));
+			stoct.setEndDate(Date.from(afterThreeMonths.toInstant(ZoneOffset.ofHoursMinutes(5, 30))));
 			stoct.setStockNumber(GetMacId.getMacId());
 			ejb.setStoct(stoct);
 		}
@@ -756,74 +766,62 @@ public class LoginServlet extends HttpServlet {
 		}
 		if (ejb.getAllSecurityQuestions().size() < 10) {
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb
-					.getSecurityQueGroupByGroupName("First"));
+			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("First"));
 			securityQuestions.setQuestion("What is the place you borned?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb
-					.getSecurityQueGroupByGroupName("First"));
+			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("First"));
 			securityQuestions.setQuestion("What is your first friend's name?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb
-					.getSecurityQueGroupByGroupName("First"));
+			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("First"));
 			securityQuestions.setQuestion("What is your first teacher's name?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb
-					.getSecurityQueGroupByGroupName("First"));
-			securityQuestions
-					.setQuestion("What is the name of your first school?");
+			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("First"));
+			securityQuestions.setQuestion("What is the name of your first school?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb
-					.getSecurityQueGroupByGroupName("First"));
+			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("First"));
 			securityQuestions.setQuestion("What is your pet's name?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb
-					.getSecurityQueGroupByGroupName("Favourite"));
+			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("Favourite"));
 			securityQuestions.setQuestion("What is your favourite food?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb
-					.getSecurityQueGroupByGroupName("Favourite"));
+			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("Favourite"));
 			securityQuestions.setQuestion("What is your favourite movie?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb
-					.getSecurityQueGroupByGroupName("Favourite"));
+			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("Favourite"));
 			securityQuestions.setQuestion("Who is your favourite person?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb
-					.getSecurityQueGroupByGroupName("Favourite"));
+			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("Favourite"));
 			securityQuestions.setQuestion("Who is your favourite player?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb
-					.getSecurityQueGroupByGroupName("Favourite"));
-			securityQuestions
-					.setQuestion("Who is your favourite Actor/Actress?");
+			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("Favourite"));
+			securityQuestions.setQuestion("Who is your favourite Actor/Actress?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 		}
@@ -831,8 +829,7 @@ public class LoginServlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		date = new Date();
 		url = req.getRequestURL().toString();
@@ -892,15 +889,10 @@ public class LoginServlet extends HttpServlet {
 						page = "dashboard.jsp";
 
 						LocalDateTime afterThreeMonths = LocalDateTime
-								.ofInstant(ejb.getAllStoct().get(0)
-										.getEndDate().toInstant(),
-										ZoneId.systemDefault());
-						LocalDateTime before21Days = afterThreeMonths
-								.minusDays(21);
-						if (date.after(Date.from(before21Days
-								.toInstant(ZoneOffset.ofHoursMinutes(5, 30))))) {
-							msg = "Validity will be ended on "
-									+ ejb.getAllStoct().get(0).getEndDate()
+								.ofInstant(ejb.getAllStoct().get(0).getEndDate().toInstant(), ZoneId.systemDefault());
+						LocalDateTime before21Days = afterThreeMonths.minusDays(21);
+						if (date.after(Date.from(before21Days.toInstant(ZoneOffset.ofHoursMinutes(5, 30))))) {
+							msg = "Validity will be ended on " + ejb.getAllStoct().get(0).getEndDate()
 									+ ". Please contact to your vendor...";
 						} else {
 
@@ -934,8 +926,7 @@ public class LoginServlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doGet(req, resp);
 	}
 }
