@@ -581,8 +581,15 @@ $(document).ready(function(){
 														<b>Name:</b>
 													</div>
 													<div class="col-md-9">
-														<input type="text" class="form-control" name="vendorName"
-															id="name" value="${vendor.name}">
+														<c:if test="${vendor.name=='Production Vendor'}">
+															<input type="text" readonly="readonly"
+																class="form-control" name="vendorName" id="name"
+																value="${vendor.name}">
+														</c:if>
+														<c:if test="${vendor.name!='Production Vendor'}">
+															<input type="text" class="form-control" name="vendorName"
+																id="name" value="${vendor.name}">
+														</c:if>
 													</div>
 													<br>
 													<div class="col-md-3">

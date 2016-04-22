@@ -376,11 +376,10 @@
 													:<font color="red" size="4">*</font>
 											</label></td>
 											<td><input type="text" id="rate" class="numChk"
-												readonly="readonly"></td>
+												onkeyup="rateDescF();"></td>
 										</tr>
-										<tr>
-											<td colspan="2">(This is latest rate. It may vary as per
-												selection of lot)</td>
+										<tr id="rateDesc">
+											<td colspan="2">(This is latest rate. It can be changed)</td>
 										</tr>
 										<tr>
 											<td><label for="rate" class="font">Select Job :<font
@@ -492,6 +491,7 @@
 					$("#proUOM").val(ui.item.qtyUnitName);
 					$("#UOMid").val(ui.item.qtyUnitId);
 					$("#rate").val(ui.item.latestCost);
+					$("#rateDesc").removeAttr("style");
 				}
 			});
 
@@ -1110,6 +1110,9 @@
 			str = data_uri;
 			$("#proImage1").val(str.substring(str.lastIndexOf(',') + 1));
 		});
+	}
+	function rateDescF() {
+		$("#rateDesc").attr("style", "display : none;");
 	}
 </script>
 </html>

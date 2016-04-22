@@ -443,7 +443,7 @@
 													<tr>
 														<th>#</th>
 														<th>Return Date</th>
-														<th>Purchase Return challan no.</th>
+														<th>Sales Return challan no.</th>
 														<th>Product Code</th>
 														<th>Product Description</th>
 														<th>Returning Qty</th>
@@ -460,7 +460,10 @@
 															<td><fmt:formatDate
 																	value="${salesReturn.returnDate}" pattern="dd-MM-yy" />
 															</td>
-															<td>${salesReturn.challanNumber}</td>
+															<td><a href="#"
+																onclick="viewInvoiceS(${salesReturn.id});"><b>${salesReturn.challanNumber}</b><br>
+																	<input type="button" class="btn btn-primary small"
+																	value="Print"></a></td>
 															<td><c:forEach var="salesReturnProd"
 																	items="${salesReturn.salesProductReturnDetail}">
 														
@@ -943,6 +946,12 @@
 				$("#datepickerA").datepicker('setDate', new Date());
 			}
 		});
+		function viewInvoiceS(id){		
+			window
+			.open(
+					"salesReturnInvoiceForPrint.jsp?id="+id,
+					'name', 'width=900,height=700').print();
+		}
 	</script>
 
 

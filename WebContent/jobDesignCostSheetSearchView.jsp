@@ -215,6 +215,12 @@
 
 									<br>
 									<div class="col-md-12">
+										<table style="float: left;">
+											<tr>
+												<td><input type="button" class="btn btn-primary large"
+													value="Print" onclick="viewInvoice(${sampleJCS.id});"></td>
+											</tr>
+										</table>
 										<table style="float: right;">
 											<tr>
 												<td>Surcharge :</td>
@@ -298,5 +304,10 @@
 					$("#image").html(img);
 				}
 			});
+
+	function viewInvoice(id) {
+		window.open("jobChallanForSampleDesignCostSheet.jsp?id=" + id, 'name',
+				'width=900,height=700').print();
+	}
 </script>
 </html>

@@ -1648,11 +1648,20 @@ public class JsonServlet extends HttpServlet {
 			case "getPurchaseProductDetailsByLotNumber":
 				JsonGeneratorFactory jgf = Json.createGeneratorFactory(null);
 				JsonGenerator jg = jgf.createGenerator(resp.getOutputStream());
-				jg.writeStartObject()
-						.write("lotNo",
-								ejb.getPurchaseProductDetailsByLotNumber(
-										req.getParameter("lotNo"))
-										.getLotNumber()).writeEnd().close();
+				int flagPPD = 0;
+				for (Purchase_Product_Details ppd : ejb
+						.getAllPurchase_Product_Details()) {
+					if (ppd.getLotNumber().equals(req.getParameter("lotNo"))) {
+						flagPPD = 1;
+					}
+				}
+				if (flagPPD == 1) {
+					jg.writeStartObject()
+							.write("lotNo",
+									ejb.getPurchaseProductDetailsByLotNumber(
+											req.getParameter("lotNo"))
+											.getLotNumber()).writeEnd().close();
+				}
 				break;
 
 			case "getAllOngoingJobPlanByDesignNumber":

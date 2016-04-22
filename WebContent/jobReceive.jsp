@@ -420,7 +420,9 @@
 																	value="${jobReceive.recievingDate}" pattern="dd-MM-yy" />
 															</td>
 															<td><a href="#"
-																onclick="viewInvoice(${jobReceive.id});"><b>${jobReceive.challanNumber}</b></a></td>
+																onclick="viewInvoice(${jobReceive.id});"><b>${jobReceive.challanNumber}</b><br>
+																	<input type="button" class="btn btn-primary small"
+																	value="Print"> </a></td>
 															<td><c:forEach var="jobReceivedProd"
 																	items="${jobReceive.jobRecieveProductsDetails}">														
 													${jobReceivedProd.jobPlanProducts.productsForDesignCostSheet.productDetail.code}

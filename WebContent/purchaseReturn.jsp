@@ -480,7 +480,10 @@
 												<td><fmt:formatDate
 														value="${purchaseReturn.returnDate}" pattern="dd-MM-yy" />
 												</td>
-												<td>${purchaseReturn.challanNumber}</td>
+												<td><a href="#"
+													onclick="viewInvoice(${purchaseReturn.id});"><b>${purchaseReturn.challanNumber}</b><br>
+														<input type="button" class="btn btn-primary small"
+														value="Print"></a></td>
 												<td><c:forEach var="purchaseReturnProd"
 														items="${purchaseReturn.purchaseReturnProductDetails}">														
 													${purchaseReturnProd.purchaseProductDetails.productDetail.code}
@@ -1061,6 +1064,13 @@
 			});
 			$("#datepicker1").datepicker('setDate', new Date());
 		});
+		
+		function viewInvoice(id){
+			window
+			.open(
+					"purchaseReturnChallanForPrint.jsp?id="+id,
+					'name', 'width=900,height=700').print();		
+		}
 	</script>
 </body>
 

@@ -251,7 +251,9 @@
 														value="${purchaseReturn.returnDate}" pattern="dd-MM-yy" />
 												</td>
 												<td><a href="#"
-													onclick="viewInvoice(${purchaseReturn.id});"><b>${purchaseReturn.challanNumber}</b></a></td>
+													onclick="viewInvoice(${purchaseReturn.id});"><b>${purchaseReturn.challanNumber}</b><br>
+														<input type="button" class="btn btn-primary small"
+														value="Print"></a></td>
 												<td><c:forEach var="purchaseReturnProd"
 														items="${purchaseReturn.purchaseReturnProductDetails}">														
 													${purchaseReturnProd.purchaseProductDetails.productDetail.code}
@@ -279,6 +281,15 @@
 									</c:forEach>
 								</table>
 
+								<div style="width: 60%; float: left;">
+									<table style="float: left; margin-top: 60%;">
+										<tr>
+											<td><input type="button" class="btn btn-primary large"
+												value="Print"
+												onclick="viewInvoicePEC(${purchaseSearchView.id});"></td>
+										</tr>
+									</table>
+								</div>
 								<div style="width: 40%; float: right;">
 									<table id="stream_table"
 										class="table table-striped table-bordered">
@@ -421,6 +432,13 @@
 		.open(
 				"purchaseReturnChallanForPrint.jsp?id="+id,
 				'name', 'width=900,height=700').print();		
+	}
+	function viewInvoicePEC(id){
+		window
+		.open(
+				"stockPurCha.jsp?id="+id,
+				'name', 'width=900,height=700').print();
+		
 	}
 	</script>
 </body>

@@ -71,165 +71,359 @@ public class LoginServlet extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
+		// adding module and pages
 
-		if (ejb.getAllPageList().size() < 5) {
+		// dashboard
+		int flagMdashboard = 0;
+		for (Module m : ejb.getAllModule()) {
+			if (m.getName().equals("Dashboard")) {
+				flagMdashboard = 1;
+				module = ejb.getModuleByName("Dashboard");
+				break;
+			}
+		}
+		if (flagMdashboard == 0) {
 			module = new Module();
 			module.setName("Dashboard");
 			ejb.setModule(module);
+		}
+		int flagPdashboard = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Dashboard")) {
+				flagPdashboard = 1;
+				break;
+			}
+		}
+		if (flagPdashboard == 0) {
 			pageList = new PageList();
-			pageList.setName("dashboard");
+			pageList.setName("Dashboard");
 			pageList.setModule(module);
 			ejb.setPageList(pageList);
-			module = null;
 			pageList = null;
+		}
+		module = null;
+		// dashboard
 
+		// reports
+		int flagMreport = 0;
+		for (Module m : ejb.getAllModule()) {
+			if (m.getName().equals("Reports")) {
+				flagMreport = 1;
+				module = ejb.getModuleByName("Reports");
+				break;
+			}
+		}
+		if (flagMreport == 0) {
+			module = new Module();
+			module.setName("Reports");
+			ejb.setModule(module);
+		}
+		int flagPreport = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Report")) {
+				flagPreport = 1;
+				break;
+			}
+		}
+		if (flagPreport == 0) {
+			pageList = new PageList();
+			pageList.setName("Report");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+		module = null;
+		// reports
+
+		// products
+		int flagMproduct = 0;
+		for (Module m : ejb.getAllModule()) {
+			if (m.getName().equals("Product/Material")) {
+				flagMproduct = 1;
+				module = ejb.getModuleByName("Product/Material");
+				break;
+			}
+		}
+		if (flagMproduct == 0) {
 			module = new Module();
 			module.setName("Product/Material");
 			ejb.setModule(module);
-
+		}
+		int flagPproduct = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Product/Material")) {
+				flagPproduct = 1;
+				break;
+			}
+		}
+		if (flagPproduct == 0) {
 			pageList = new PageList();
-			pageList.setName("MaterialPartDetailsGenerals");
+			pageList.setName("Product/Material");
 			pageList.setModule(module);
 			ejb.setPageList(pageList);
-			module = null;
 			pageList = null;
+		}
+		module = null;
+		// products
 
+		// purchase
+		int flagMpurchase = 0;
+		for (Module m : ejb.getAllModule()) {
+			if (m.getName().equals("Purchase Module")) {
+				flagMpurchase = 1;
+				module = ejb.getModuleByName("Purchase Module");
+				break;
+			}
+		}
+		if (flagMpurchase == 0) {
 			module = new Module();
 			module.setName("Purchase Module");
 			ejb.setModule(module);
-
+		}
+		int flagPpe = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Purchase Entry")) {
+				flagPpe = 1;
+				break;
+			}
+		}
+		if (flagPpe == 0) {
 			pageList = new PageList();
 			pageList.setName("Purchase Entry");
 			pageList.setModule(module);
 			ejb.setPageList(pageList);
-
 			pageList = null;
+		}
+		int flagPps = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Purchase Search")) {
+				flagPps = 1;
+				break;
+			}
+		}
+		if (flagPps == 0) {
 			pageList = new PageList();
 			pageList.setName("Purchase Search");
 			pageList.setModule(module);
 			ejb.setPageList(pageList);
-
-			pageList = null;
-			pageList = new PageList();
-			pageList.setName("Vendor Management");
-			pageList.setModule(module);
-			ejb.setPageList(pageList);
-			module = null;
-			pageList = null;
-
-			module = new Module();
-			module.setName("Sales module");
-			ejb.setModule(module);
-
-			pageList = new PageList();
-			pageList.setName("Sales Entry");
-			pageList.setModule(module);
-			ejb.setPageList(pageList);
-
-			pageList = null;
-			pageList = new PageList();
-			pageList.setName("Sales Return");
-			pageList.setModule(module);
-			ejb.setPageList(pageList);
-
-			pageList = null;
-			pageList = new PageList();
-			pageList.setName("Discount");
-			pageList.setModule(module);
-			ejb.setPageList(pageList);
-			module = null;
-			pageList = null;
-
-			module = new Module();
-			module.setName("Stock");
-			ejb.setModule(module);
-
-			pageList = new PageList();
-			pageList.setName("Stock");
-			pageList.setModule(module);
-			ejb.setPageList(pageList);
-			module = null;
-			pageList = null;
-
-			module = new Module();
-			module.setName("JOB");
-			ejb.setModule(module);
-
-			pageList = new PageList();
-			pageList.setName("Job Assignment");
-			pageList.setModule(module);
-			ejb.setPageList(pageList);
-
-			pageList = null;
-			pageList = new PageList();
-			pageList.setName("Job Recieve");
-			pageList.setModule(module);
-			ejb.setPageList(pageList);
-
-			pageList = null;
-			pageList = new PageList();
-			pageList.setName("Job Search");
-			pageList.setModule(module);
-			ejb.setPageList(pageList);
-
-			module = null;
-			pageList = null;
-
-			module = new Module();
-			module.setName("Setup");
-			ejb.setModule(module);
-
-			pageList = null;
-			pageList = new PageList();
-			pageList.setName("Company Info");
-			pageList.setModule(module);
-			ejb.setPageList(pageList);
-
-			pageList = null;
-			pageList = new PageList();
-			pageList.setName("Unit Of Measure");
-			pageList.setModule(module);
-			ejb.setPageList(pageList);
-
-			pageList = null;
-			pageList = new PageList();
-			pageList.setName("User");
-			pageList.setModule(module);
-			ejb.setPageList(pageList);
-
-			pageList = null;
-			pageList = new PageList();
-			pageList.setName("User Group");
-			pageList.setModule(module);
-			ejb.setPageList(pageList);
-
-			pageList = null;
-			pageList = new PageList();
-			pageList.setName("Department/Sub-Department/Category");
-			pageList.setModule(module);
-			ejb.setPageList(pageList);
-
-			pageList = null;
-			pageList = new PageList();
-			pageList.setName("TaxManagement");
-			pageList.setModule(module);
-			ejb.setPageList(pageList);
-
-			pageList = null;
-			pageList = new PageList();
-			pageList.setName("Country/State/City");
-			pageList.setModule(module);
-			ejb.setPageList(pageList);
-
-			pageList = null;
-			pageList = new PageList();
-			pageList.setName("Bill Setup");
-			pageList.setModule(module);
-			ejb.setPageList(pageList);
-
-			module = null;
 			pageList = null;
 		}
+		if (flagMpurchase == 0) {
+			module = new Module();
+			module.setName("Purchase Module");
+			ejb.setModule(module);
+		}
+		int flagPrps = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Ready Production Search")) {
+				flagPrps = 1;
+				break;
+			}
+		}
+		if (flagPrps == 0) {
+			pageList = new PageList();
+			pageList.setName("Ready Production Search");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+		int flagPpr = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Purchase Return")) {
+				flagPpr = 1;
+				break;
+			}
+		}
+		if (flagPpr == 0) {
+			pageList = new PageList();
+			pageList.setName("RPurchase Return");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+		module = null;
+		// purchase
+
+		// adding module and pages
+
+		// if (ejb.getAllPageList().size() < 20) {
+		// module = new Module();
+		// module.setName("Dashboard");
+		// ejb.setModule(module);
+		//
+		// pageList = new PageList();
+		// pageList.setName("dashboard");
+		// pageList.setModule(module);
+		// ejb.setPageList(pageList);
+		//
+		// module = null;
+		// pageList = null;
+		//
+		// module = new Module();
+		// module.setName("Product/Material");
+		// ejb.setModule(module);
+		//
+		// pageList = new PageList();
+		// pageList.setName("MaterialPartDetailsGenerals");
+		// pageList.setModule(module);
+		// ejb.setPageList(pageList);
+		//
+		// module = null;
+		// pageList = null;
+		//
+		// module = new Module();
+		// module.setName("Purchase Module");
+		// ejb.setModule(module);
+		//
+		// pageList = new PageList();
+		// pageList.setName("Purchase Entry");
+		// pageList.setModule(module);
+		// ejb.setPageList(pageList);
+		//
+		// pageList = null;
+		//
+		// pageList = new PageList();
+		// pageList.setName("Purchase Search");
+		// pageList.setModule(module);
+		// ejb.setPageList(pageList);
+		//
+		// pageList = null;
+		//
+		// pageList = new PageList();
+		// pageList.setName("Vendor Management");
+		// pageList.setModule(module);
+		// ejb.setPageList(pageList);
+		//
+		// module = null;
+		// pageList = null;
+		//
+		// module = new Module();
+		// module.setName("Sales module");
+		// ejb.setModule(module);
+		//
+		// pageList = new PageList();
+		// pageList.setName("Sales Entry");
+		// pageList.setModule(module);
+		// ejb.setPageList(pageList);
+		//
+		// pageList = null;
+		//
+		// pageList = new PageList();
+		// pageList.setName("Sales Return");
+		// pageList.setModule(module);
+		// ejb.setPageList(pageList);
+		//
+		// pageList = null;
+		//
+		// pageList = new PageList();
+		// pageList.setName("Discount");
+		// pageList.setModule(module);
+		// ejb.setPageList(pageList);
+		//
+		// module = null;
+		// pageList = null;
+		//
+		// module = new Module();
+		// module.setName("Stock");
+		// ejb.setModule(module);
+		//
+		// pageList = new PageList();
+		// pageList.setName("Stock");
+		// pageList.setModule(module);
+		// ejb.setPageList(pageList);
+		//
+		// module = null;
+		// pageList = null;
+		//
+		// module = new Module();
+		// module.setName("JOB");
+		// ejb.setModule(module);
+		//
+		// pageList = new PageList();
+		// pageList.setName("Job Assignment");
+		// pageList.setModule(module);
+		// ejb.setPageList(pageList);
+		//
+		// pageList = null;
+		//
+		// pageList = new PageList();
+		// pageList.setName("Job Recieve");
+		// pageList.setModule(module);
+		// ejb.setPageList(pageList);
+		//
+		// pageList = null;
+		//
+		// pageList = new PageList();
+		// pageList.setName("Job Search");
+		// pageList.setModule(module);
+		// ejb.setPageList(pageList);
+		//
+		// module = null;
+		// pageList = null;
+		//
+		// module = new Module();
+		// module.setName("Setup");
+		// ejb.setModule(module);
+		//
+		// pageList = null;
+		//
+		// pageList = new PageList();
+		// pageList.setName("Company Info");
+		// pageList.setModule(module);
+		// ejb.setPageList(pageList);
+		//
+		// pageList = null;
+		//
+		// pageList = new PageList();
+		// pageList.setName("Unit Of Measure");
+		// pageList.setModule(module);
+		// ejb.setPageList(pageList);
+		//
+		// pageList = null;
+		//
+		// pageList = new PageList();
+		// pageList.setName("User");
+		// pageList.setModule(module);
+		// ejb.setPageList(pageList);
+		//
+		// pageList = null;
+		//
+		// pageList = new PageList();
+		// pageList.setName("User Group");
+		// pageList.setModule(module);
+		// ejb.setPageList(pageList);
+		//
+		// pageList = null;
+		//
+		// pageList = new PageList();
+		// pageList.setName("Department/Sub-Department/Category");
+		// pageList.setModule(module);
+		// ejb.setPageList(pageList);
+		//
+		// pageList = null;
+		//
+		// pageList = new PageList();
+		// pageList.setName("TaxManagement");
+		// pageList.setModule(module);
+		// ejb.setPageList(pageList);
+		//
+		// pageList = null;
+		//
+		// pageList = new PageList();
+		// pageList.setName("Country/State/City");
+		// pageList.setModule(module);
+		// ejb.setPageList(pageList);
+		//
+		// pageList = null;
+		//
+		// pageList = new PageList();
+		// pageList.setName("Bill Setup");
+		// pageList.setModule(module);
+		// ejb.setPageList(pageList);
+		//
+		// module = null;
+		// pageList = null;
+		// }
 
 		if (ejb.getAllQtyUnitTypes().size() < 6) {
 

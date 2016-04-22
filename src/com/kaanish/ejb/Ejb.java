@@ -416,6 +416,17 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public PageList getPageByName(String name) {
+		TypedQuery<PageList> q = em.createQuery(
+				"select c from PageList c where c.name=:name", PageList.class);
+		q.setParameter("name", name);
+		if (q.getResultList().size() > 0) {
+			return q.getResultList().get(0);
+		} else {
+			return null;
+		}
+	}
+
 	public List<Module> getAllModuleListAccordingUserGroupId(int id) {
 		List<PageList> pglst = getUserGroupById(id).getPageLists();
 		List<Module> modules = getAllModule();
@@ -459,6 +470,13 @@ public class Ejb {
 		TypedQuery<Module> q = em.createQuery("select c from Module c",
 				Module.class);
 		return q.getResultList();
+	}
+
+	public Module getModuleByName(String name) {
+		TypedQuery<Module> q = em.createQuery(
+				"select c from Module c where c.name=:name", Module.class);
+		q.setParameter("name", name);
+		return q.getResultList().get(0);
 	}
 
 	/************** for qty unit type ***************/

@@ -260,12 +260,7 @@
 											</tr>
 										</tbody>
 									</table>
-
-
-
 									<br>
-
-
 								</div>
 							</div>
 							<div class="widget-area">
@@ -274,8 +269,6 @@
 										style="height: 50px; text-align: center;">
 										<h3 style="margin-top: -13px; float: left;">Job Received
 											Details:</h3>
-
-
 									</div>
 									<table class="table table-striped table-bordered">
 										<thead>
@@ -293,7 +286,6 @@
 										<c:set var="j" value="${1}"></c:set>
 										<c:forEach var="jobReceive"
 											items="${jobAssi.jobRecievedDetails}">
-
 											<tbody>
 												<tr>
 													<td>${j}</td>
@@ -301,8 +293,9 @@
 															value="${jobReceive.recievingDate}" pattern="dd-MM-yy" />
 													</td>
 													<td><a href="#"
-														onclick="viewInvoice(${jobReceive.id});"><b>${jobReceive.challanNumber}</b></a>
-													</td>
+														onclick="viewInvoice(${jobReceive.id});"><b>${jobReceive.challanNumber}</b><br>
+															<input type="button" class="btn btn-primary small"
+															value="Print"></a></td>
 													<td><c:forEach var="jobReceivedProd"
 															items="${jobReceive.jobRecieveProductsDetails}">														
 													${jobReceivedProd.jobPlanProducts.productsForDesignCostSheet.productDetail.code}
@@ -333,6 +326,12 @@
 							</div>
 							<br>
 							<div class="col-md-12" style="margin-top: 10px;">
+								<table style="float: left;">
+									<tr>
+										<td><input type="button" class="btn btn-primary large"
+											value="Print" onclick="viewInvoiceJAC(${jobAssi.id});"></td>
+									</tr>
+								</table>
 								<table style="float: right;">
 									<tr>
 										<td>Surcharge :</td>
@@ -392,6 +391,13 @@
 		function viewInvoice(id) {
 			window.open("JobReceiveChallan.jsp?id=" + id, 'name',
 					'width=900,height=700').print();
+		}
+		
+		function viewInvoiceJAC(id){
+			window
+			.open(
+					"JobChalanForAssignment.jsp?id="+id,
+					'name', 'width=900,height=700').print();			
 		}
 	</script>
 </body>

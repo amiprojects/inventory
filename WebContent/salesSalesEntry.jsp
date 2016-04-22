@@ -147,8 +147,6 @@
 													<td>Phone No. :<font color="red" size="4">*</font></td>
 													<td><input type="number" name="phone" id="phone"
 														style="length: 40px;" autocomplete="off"></input></td>
-
-
 												</tr>
 
 												<tr>
@@ -1174,6 +1172,7 @@
 								<th>MRP</th>
 								<th>WSP</th>
 								<th>Remaining Qty.</th>
+								<th>UOM</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -2054,6 +2053,9 @@
 																											+ remQ
 																											+ "</td>"
 																											+ "<td>"
+																											+ item2.uom
+																											+ "</td>"
+																											+ "<td>"
 																											+ '<input type="button" onclick="chooseF('
 																											+ item2.id
 																											+ ');" value="Choose">'
@@ -2086,6 +2088,9 @@
 																											+ "</td>"
 																											+ "<td>"
 																											+ remQ
+																											+ "</td>"
+																											+ "<td>"
+																											+ item2.uom
 																											+ "</td>"
 																											+ "<td>"
 																											+ '<input type="button" onclick="chooseF('
@@ -2545,11 +2550,7 @@
 					if (ui.item == null) {
 						$("#isExistingCust").val(0);
 						$("#existingCustId").val("");
-						/* $("#custName").val("");
-						$("#addr").val("");
-						$("#city").val("");
-						$("#vatcst").val(""); */
-						
+
 						$("#totalDebit").val("0");
 					} else {
 						$("#isExistingCust").val(1);
@@ -2557,8 +2558,11 @@
 						$("#custName").val(ui.item.name);
 						$("#addr").val(ui.item.address);
 						$("#city").val(ui.item.city);
-						$("#vatcst").val(ui.item.vat_cst_no);
-
+						if (ui.item.vat_cst_no != 'null') {
+							$("#vatcst").val(ui.item.vat_cst_no);
+						} else {
+							$("#vatcst").val("");
+						}
 						$("#totalDebit").val(ui.item.currentDebitNote);
 					}
 				},
@@ -2569,11 +2573,84 @@
 						$("#custName").val(ui.item.name);
 						$("#addr").val(ui.item.address);
 						$("#city").val(ui.item.city);
-						$("#vatcst").val(ui.item.vat_cst_no);
+						if (ui.item.vat_cst_no != 'null') {
+							$("#vatcst").val(ui.item.vat_cst_no);
+						} else {
+							$("#vatcst").val("");
+						}
 					} else {
 						$("#isExistingCust").val(0);
 						$("#existingCustId").val("");
 						$("#custName").val("");
+						$("#addr").val("");
+						$("#city").val("");
+						$("#vatcst").val("");
+					}
+				}
+			});
+		});
+		$(function() {
+			$("#custName").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getCustomerByName",
+						data : {
+							name : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.name,
+									id : item.id,
+									mobile : item.mobile,
+									address : item.address,
+									city : item.city,
+									vat_cst_no : item.vat_cst_no,
+									currentDebitNote : item.currentDebitNote
+								});
+							}));
+						}
+
+					});
+				},
+				change : function(event, ui) {
+					if (ui.item == null) {
+						$("#isExistingCust").val(0);
+						$("#existingCustId").val("");
+
+						$("#totalDebit").val("0");
+					} else {
+						$("#isExistingCust").val(1);
+						$("#existingCustId").val(ui.item.id);
+						$("#phone").val(ui.item.mobile);
+						$("#addr").val(ui.item.address);
+						$("#city").val(ui.item.city);
+						if (ui.item.vat_cst_no != 'null') {
+							$("#vatcst").val(ui.item.vat_cst_no);
+						} else {
+							$("#vatcst").val("");
+						}
+						$("#totalDebit").val(ui.item.currentDebitNote);
+					}
+				},
+				select : function(event, ui) {
+					if (ui.item != null) {
+						$("#isExistingCust").val(1);
+						$("#existingCustId").val(ui.item.id);
+						$("#phone").val(ui.item.mobile);
+						$("#addr").val(ui.item.address);
+						$("#city").val(ui.item.city);
+						if (ui.item.vat_cst_no != 'null') {
+							$("#vatcst").val(ui.item.vat_cst_no);
+						} else {
+							$("#vatcst").val("");
+						}
+					} else {
+						$("#isExistingCust").val(0);
+						$("#existingCustId").val("");
+						$("#phone").val("");
 						$("#addr").val("");
 						$("#city").val("");
 						$("#vatcst").val("");

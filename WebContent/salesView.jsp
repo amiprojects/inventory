@@ -289,7 +289,9 @@
 												<td><fmt:formatDate value="${salesReturn.returnDate}"
 														pattern="dd-MM-yy" /></td>
 												<td><a href="#"
-													onclick="viewInvoiceS(${salesReturn.id});"><b>${salesReturn.challanNumber}</b></a></td>
+													onclick="viewInvoiceS(${salesReturn.id});"><b>${salesReturn.challanNumber}</b><br>
+														<input type="button" class="btn btn-primary small"
+														value="Print"></a></td>
 												<td><c:forEach var="salesReturnProd"
 														items="${salesReturn.salesProductReturnDetail}">
 														
@@ -326,6 +328,19 @@
 
 								</table>
 
+							</div>
+							<div style="width: 60%; float: left;">
+								<table style="float: left; margin-top: 70%;">
+									<tr>
+										<td><input type="button" class="btn btn-primary large"
+											value="Print Sales Invoice"
+											onclick="viewInvoice(${salesSearchView.id});"></td>
+										<td><input type="button" style="margin-left: 15px;"
+											class="btn btn-primary large"
+											value="Print Invoice for Sold Only"
+											onclick="viewInvoiceSoldOnly(${salesSearchView.id});"></td>
+									</tr>
+								</table>
 							</div>
 							<div style="width: 40%; float: right;">
 								<input type="hidden" id="totalvalue" name="totalvalue" value="0">
@@ -458,6 +473,18 @@
 		window
 		.open(
 				"salesReturnInvoiceForPrint.jsp?id="+id,
+				'name', 'width=900,height=700').print();
+	}
+	function viewInvoice(id){			
+		window
+		.open(
+				"stockSaCha.jsp?id="+id,
+				'name', 'width=900,height=700').print();
+	}
+	function viewInvoiceSoldOnly(id){			
+		window
+		.open(
+				"salesChallanForSoldOnly.jsp?id="+id,
 				'name', 'width=900,height=700').print();
 	}
 	</script>

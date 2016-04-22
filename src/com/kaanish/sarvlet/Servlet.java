@@ -1146,7 +1146,7 @@ public class Servlet extends HttpServlet {
 				vendor = ejb.getVendorById(Integer.parseInt(req
 						.getParameter("vendoeId")));// vendorid
 
-				vendor.setName(req.getParameter("vendorName"));
+				vendor.setName(req.getParameter("vendorName").toUpperCase());
 				vendor.setCompanyName(req.getParameter("vendorCompanyName"));
 				vendor.setPh1(req.getParameter("vendorPh1"));
 				vendor.setPh2(req.getParameter("vendorPh2"));
