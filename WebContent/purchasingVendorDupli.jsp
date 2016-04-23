@@ -265,7 +265,7 @@ $(document).ready(function(){
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
 
-			<c:if test="${page.name.equals('Vendor Management')}">
+			<c:if test="${page.name.equals('Vendor/Agent/Jobber/Designer')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>

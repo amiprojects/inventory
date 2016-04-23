@@ -153,7 +153,7 @@
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
 
-			<c:if test="${page.name.equals('Purchase Entry')}">
+			<c:if test="${page.name.equals('Purchase Return')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>

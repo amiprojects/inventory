@@ -79,24 +79,7 @@ Url = {
 	<c:if test="${sessionScope['user']==null}">
 		<c:redirect url="index.jsp" />
 	</c:if>
-	<c:if
-		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminKainat')}">
-		<c:forEach
-			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
-			var="page">
-
-			<c:if test="${page.name.equals('Job Assignment')}">
-				<c:set var="i" value="5" />
-			</c:if>
-		</c:forEach>
-		<c:if test="${i!=5}">
-			<script type="text/javascript">
-				alert('you have no permission to view this page');
-				window.location = "dashboard.jsp";
-			</script>
-		</c:if>
-	</c:if>
-
+	
 	<c:set value="${sessionScope['ejb'].getCompanyInfo()}"
 		var="companyInfo" />
 	<c:set var="jobAssi"

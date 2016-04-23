@@ -96,7 +96,11 @@ margin-bottom
 
 
 
+
+
 :
+
+
 
 
 
@@ -151,6 +155,8 @@ em
 
 
 
+
+
 ;
 </style>
 
@@ -179,7 +185,7 @@ em
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
 
-			<c:if test="${page.name.equals('Stock')}">
+			<c:if test="${page.name.equals('Report')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
@@ -190,11 +196,6 @@ em
 			</script>
 		</c:if>
 	</c:if>
-
-
-
-
-
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">

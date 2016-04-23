@@ -30,8 +30,6 @@
 </head>
 
 <body style="background-image: url('images/resource/login-bg.jpg')">
-
-
 	<div class="login-sec">
 		<div class="login">
 			<div class="login-form">

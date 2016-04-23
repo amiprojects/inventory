@@ -73,7 +73,7 @@ public class LoginServlet extends HttpServlet {
 	public void init() throws ServletException {
 		// adding module and pages
 
-		// deleting and editing bekars, production kainat kaanish
+		// deleting and editing bekars, kainat kaanish
 		for (Module m : ejb.getAllModule()) {
 			if (m.getName().equals("JOB")) {
 				module = ejb.getModuleByName("JOB");
