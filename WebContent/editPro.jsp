@@ -47,7 +47,6 @@
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
-
 			<c:if test="${page.name.equals('MaterialPartDetailsGenerals')}">
 				<c:set var="i" value="5" />
 			</c:if>
@@ -92,7 +91,7 @@
 
 										<div class="col-md-6">
 											<div class="form-group">
-												<label for="exampleInputEmail1">Designer Number:</label> <input
+												<label for="exampleInputEmail1">Product Code:</label> <input
 													readonly="readonly" type="text" value="${editpro.code}"
 													name="productCode123" class="form-control"><br>
 											</div>
@@ -106,7 +105,7 @@
 										<div class="col-md-6">
 											<div class="form-group">
 												<label for="exampleInputEmail1">Designer's Design
-													number: </label> <input type="text"
+													number: </label> <input type="text" readonly="readonly"
 													value="${editpro.universalCode}" name="upc123"
 													onkeypress="return blockSpecialChar(event)"
 													class="form-control"><br>

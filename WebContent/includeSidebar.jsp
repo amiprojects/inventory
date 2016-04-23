@@ -126,8 +126,9 @@
 							href="jobDesignCostSheetSearch.jsp" title="">SampleJobCostSheet
 								Search</a></li>
 						<li><a id="jobPlan" href="jobPlanSearch.jsp" title="">Job
-								Plan Search</a></li>
-						<li><a id="jobPayment" href="jobPayment.jsp" title="">Payment</a></li>
+								Plan</a></li>
+						<li><a id="jobPayment" href="jobPayment.jsp" title="">Job
+								Payment</a></li>
 					</ul>
 				</div>
 			</div>

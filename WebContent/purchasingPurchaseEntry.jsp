@@ -441,7 +441,7 @@
 														name="taxGroup" onchange="selectedTaxGroup();">
 															<option value="0">TAX type</option>
 															<c:forEach
-																items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
+																items="${sessionScope['ejb'].getAllActiveTax_Type_Groups()}"
 																var="taxTypeGroup">
 																<option value="${taxTypeGroup.id}">${taxTypeGroup.name}</option>
 															</c:forEach>
@@ -911,7 +911,7 @@
 												id="taxgroupV">
 												<option value="0">select a tax group</option>
 												<c:forEach
-													items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
+													items="${sessionScope['ejb'].getAllActiveTax_Type_Groups()}"
 													var="taxTypeGroup">
 													<option value="${taxTypeGroup.id}">${taxTypeGroup.name}</option>
 												</c:forEach>
@@ -1286,7 +1286,7 @@
 												id="taxgroup2">
 												<option value="0">select a tax group</option>
 												<c:forEach
-													items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
+													items="${sessionScope['ejb'].getAllActiveTax_Type_Groups()}"
 													var="taxTypeGroup">
 													<option value="${taxTypeGroup.id}">${taxTypeGroup.name}</option>
 												</c:forEach>

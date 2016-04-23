@@ -73,18 +73,28 @@ public class LoginServlet extends HttpServlet {
 	public void init() throws ServletException {
 		// adding module and pages
 
-		// deleting bekars, production kainat kaanish
+		// deleting and editing bekars, production kainat kaanish
 		for (Module m : ejb.getAllModule()) {
 			if (m.getName().equals("JOB")) {
 				module = ejb.getModuleByName("JOB");
-				for (PageList p : ejb.getAllPageList()) {
-					if (p.getModule().getId() == module.getId()) {
-						pageList = p;
-						ejb.deletePageListById(pageList.getId());
-						break;
-					}
-				}
-				ejb.deleteModuleById(module.getId());
+				module.setName("Job");
+				ejb.updateModule(module);
+				break;
+			}
+		}
+		for (Module m : ejb.getAllModule()) {
+			if (m.getName().equals("Sales module")) {
+				module = ejb.getModuleByName("Sales module");
+				module.setName("Sales");
+				ejb.updateModule(module);
+				break;
+			}
+		}
+		for (Module m : ejb.getAllModule()) {
+			if (m.getName().equals("Purchase Module")) {
+				module = ejb.getModuleByName("Purchase Module");
+				module.setName("Purchase");
+				ejb.updateModule(module);
 				break;
 			}
 		}
@@ -98,7 +108,8 @@ public class LoginServlet extends HttpServlet {
 		for (PageList p : ejb.getAllPageList()) {
 			if (p.getName().equals("dashboard")) {
 				pageList = ejb.getPageByName("dashboard");
-				ejb.deletePageListById(pageList.getId());
+				pageList.setName("Dashboard");
+				ejb.updatePageList(pageList);
 				break;
 			}
 		}
@@ -112,11 +123,12 @@ public class LoginServlet extends HttpServlet {
 		for (PageList p : ejb.getAllPageList()) {
 			if (p.getName().equals("MaterialPartDetailsGenerals")) {
 				pageList = ejb.getPageByName("MaterialPartDetailsGenerals");
-				ejb.deletePageListById(pageList.getId());
+				pageList.setName("Product/Material");
+				ejb.updatePageList(pageList);
 				break;
 			}
 		}
-		// deleting bekars
+		// deleting and editing bekars
 
 		// dashboard
 		int flagMdashboard = 0;
@@ -132,6 +144,7 @@ public class LoginServlet extends HttpServlet {
 			module.setName("Dashboard");
 			ejb.setModule(module);
 		}
+
 		int flagPdashboard = 0;
 		for (PageList p : ejb.getAllPageList()) {
 			if (p.getName().equals("Dashboard")) {
@@ -163,6 +176,7 @@ public class LoginServlet extends HttpServlet {
 			module.setName("Reports");
 			ejb.setModule(module);
 		}
+
 		int flagPreport = 0;
 		for (PageList p : ejb.getAllPageList()) {
 			if (p.getName().equals("Report")) {
@@ -194,6 +208,7 @@ public class LoginServlet extends HttpServlet {
 			module.setName("Product/Material");
 			ejb.setModule(module);
 		}
+
 		int flagPproduct = 0;
 		for (PageList p : ejb.getAllPageList()) {
 			if (p.getName().equals("Product/Material")) {
@@ -214,17 +229,18 @@ public class LoginServlet extends HttpServlet {
 		// purchase
 		int flagMpurchase = 0;
 		for (Module m : ejb.getAllModule()) {
-			if (m.getName().equals("Purchase Module")) {
+			if (m.getName().equals("Purchase")) {
 				flagMpurchase = 1;
-				module = ejb.getModuleByName("Purchase Module");
+				module = ejb.getModuleByName("Purchase");
 				break;
 			}
 		}
 		if (flagMpurchase == 0) {
 			module = new Module();
-			module.setName("Purchase Module");
+			module.setName("Purchase");
 			ejb.setModule(module);
 		}
+
 		int flagPpe = 0;
 		for (PageList p : ejb.getAllPageList()) {
 			if (p.getName().equals("Purchase Entry")) {
@@ -239,6 +255,7 @@ public class LoginServlet extends HttpServlet {
 			ejb.setPageList(pageList);
 			pageList = null;
 		}
+
 		int flagPps = 0;
 		for (PageList p : ejb.getAllPageList()) {
 			if (p.getName().equals("Purchase Search")) {
@@ -253,11 +270,7 @@ public class LoginServlet extends HttpServlet {
 			ejb.setPageList(pageList);
 			pageList = null;
 		}
-		if (flagMpurchase == 0) {
-			module = new Module();
-			module.setName("Purchase Module");
-			ejb.setModule(module);
-		}
+
 		int flagPrps = 0;
 		for (PageList p : ejb.getAllPageList()) {
 			if (p.getName().equals("Ready Production Search")) {
@@ -272,6 +285,7 @@ public class LoginServlet extends HttpServlet {
 			ejb.setPageList(pageList);
 			pageList = null;
 		}
+
 		int flagPpr = 0;
 		for (PageList p : ejb.getAllPageList()) {
 			if (p.getName().equals("Purchase Return")) {
@@ -286,6 +300,7 @@ public class LoginServlet extends HttpServlet {
 			ejb.setPageList(pageList);
 			pageList = null;
 		}
+
 		int flagPpedit = 0;
 		for (PageList p : ejb.getAllPageList()) {
 			if (p.getName().equals("Purchase Edit")) {
@@ -302,6 +317,511 @@ public class LoginServlet extends HttpServlet {
 		}
 		module = null;
 		// purchase
+
+		// sales
+		int flagMsale = 0;
+		for (Module m : ejb.getAllModule()) {
+			if (m.getName().equals("Sales")) {
+				flagMsale = 1;
+				module = ejb.getModuleByName("Sales");
+				break;
+			}
+		}
+		if (flagMsale == 0) {
+			module = new Module();
+			module.setName("Sales");
+			ejb.setModule(module);
+		}
+
+		int flagPse = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Sales Entry")) {
+				flagPse = 1;
+				break;
+			}
+		}
+		if (flagPse == 0) {
+			pageList = new PageList();
+			pageList.setName("Sales Entry");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+
+		int flagPss = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Sales Search")) {
+				flagPss = 1;
+				break;
+			}
+		}
+		if (flagPss == 0) {
+			pageList = new PageList();
+			pageList.setName("Sales Search");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+
+		int flagPsr = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Sales Return")) {
+				flagPsr = 1;
+				break;
+			}
+		}
+		if (flagPsr == 0) {
+			pageList = new PageList();
+			pageList.setName("Sales Return");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+		module = null;
+		// sales
+
+		// vendor
+		int flagMvendor = 0;
+		for (Module m : ejb.getAllModule()) {
+			if (m.getName().equals("Vendor")) {
+				flagMvendor = 1;
+				module = ejb.getModuleByName("Vendor");
+				break;
+			}
+		}
+		if (flagMvendor == 0) {
+			module = new Module();
+			module.setName("Vendor");
+			ejb.setModule(module);
+		}
+
+		int flagPve = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Vendor/Agent/Jobber/Designer")) {
+				flagPve = 1;
+				break;
+			}
+		}
+		if (flagPve == 0) {
+			pageList = new PageList();
+			pageList.setName("Vendor/Agent/Jobber/Designer");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+
+		int flagPvedit = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Vendor/Agent/Jobber/Designer Edit")) {
+				flagPvedit = 1;
+				break;
+			}
+		}
+		if (flagPvedit == 0) {
+			pageList = new PageList();
+			pageList.setName("Vendor/Agent/Jobber/Designer Edit");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+		module = null;
+		// vendor
+
+		// stock
+		int flagMstock = 0;
+		for (Module m : ejb.getAllModule()) {
+			if (m.getName().equals("Stock")) {
+				flagMstock = 1;
+				module = ejb.getModuleByName("Stock");
+				break;
+			}
+		}
+		if (flagMstock == 0) {
+			module = new Module();
+			module.setName("Stock");
+			ejb.setModule(module);
+		}
+
+		int flagPs = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Stock")) {
+				flagPs = 1;
+				break;
+			}
+		}
+		if (flagPs == 0) {
+			pageList = new PageList();
+			pageList.setName("Stock");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+		module = null;
+		// stock
+
+		// job
+		int flagMjob = 0;
+		for (Module m : ejb.getAllModule()) {
+			if (m.getName().equals("Job")) {
+				flagMjob = 1;
+				module = ejb.getModuleByName("Job");
+				break;
+			}
+		}
+		if (flagMjob == 0) {
+			module = new Module();
+			module.setName("Job");
+			ejb.setModule(module);
+		}
+
+		int flagPja = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Job Assignment")) {
+				flagPja = 1;
+				break;
+			}
+		}
+		if (flagPja == 0) {
+			pageList = new PageList();
+			pageList.setName("Job Assignment");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+
+		int flagPjs = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Job Search")) {
+				flagPjs = 1;
+				break;
+			}
+		}
+		if (flagPjs == 0) {
+			pageList = new PageList();
+			pageList.setName("Job Search");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+
+		int flagPjr = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Job Recieve")) {
+				flagPjr = 1;
+				break;
+			}
+		}
+		if (flagPjr == 0) {
+			pageList = new PageList();
+			pageList.setName("Job Recieve");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+
+		int flagPsjcs = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Sample Job CostSheet")) {
+				flagPsjcs = 1;
+				break;
+			}
+		}
+		if (flagPsjcs == 0) {
+			pageList = new PageList();
+			pageList.setName("Sample Job CostSheet");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+
+		int flagPsjcss = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Sample Job CostSheet Search")) {
+				flagPsjcss = 1;
+				break;
+			}
+		}
+		if (flagPsjcss == 0) {
+			pageList = new PageList();
+			pageList.setName("Sample Job CostSheet Search");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+
+		int flagPsjplan = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Job Plan")) {
+				flagPsjplan = 1;
+				break;
+			}
+		}
+		if (flagPsjplan == 0) {
+			pageList = new PageList();
+			pageList.setName("Job Plan");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+
+		int flagPsjpay = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Job Payment")) {
+				flagPsjpay = 1;
+				break;
+			}
+		}
+		if (flagPsjpay == 0) {
+			pageList = new PageList();
+			pageList.setName("Job Payment");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+		module = null;
+		// job
+
+		// setup
+		int flagMsetup = 0;
+		for (Module m : ejb.getAllModule()) {
+			if (m.getName().equals("Setup")) {
+				flagMsetup = 1;
+				module = ejb.getModuleByName("Setup");
+				break;
+			}
+		}
+		if (flagMsetup == 0) {
+			module = new Module();
+			module.setName("Setup");
+			ejb.setModule(module);
+		}
+
+		int flagPci = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Company Info")) {
+				flagPci = 1;
+				break;
+			}
+		}
+		if (flagPci == 0) {
+			pageList = new PageList();
+			pageList.setName("Company Info");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+
+		int flagPcie = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Company Info Edit")) {
+				flagPcie = 1;
+				break;
+			}
+		}
+		if (flagPcie == 0) {
+			pageList = new PageList();
+			pageList.setName("Company Info Edit");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+
+		int flagPuom = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Unit Of Measure")) {
+				flagPuom = 1;
+				break;
+			}
+		}
+		if (flagPuom == 0) {
+			pageList = new PageList();
+			pageList.setName("Unit Of Measure");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+
+		int flagPu = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("User")) {
+				flagPu = 1;
+				break;
+			}
+		}
+		if (flagPu == 0) {
+			pageList = new PageList();
+			pageList.setName("User");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+
+		int flagPug = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("User Group")) {
+				flagPug = 1;
+				break;
+			}
+		}
+		if (flagPug == 0) {
+			pageList = new PageList();
+			pageList.setName("User Group");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+
+		int flagPd = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Department/Sub-Department/Category")) {
+				flagPd = 1;
+				break;
+			}
+		}
+		if (flagPd == 0) {
+			pageList = new PageList();
+			pageList.setName("Department/Sub-Department/Category");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+
+		int flagPtm = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("TaxManagement")) {
+				flagPtm = 1;
+				break;
+			}
+		}
+		if (flagPtm == 0) {
+			pageList = new PageList();
+			pageList.setName("TaxManagement");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+
+		int flagPtme = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("TaxManagement Edit")) {
+				flagPtme = 1;
+				break;
+			}
+		}
+		if (flagPtme == 0) {
+			pageList = new PageList();
+			pageList.setName("TaxManagement Edit");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+
+		int flagPcsc = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Country/State/City")) {
+				flagPcsc = 1;
+				break;
+			}
+		}
+		if (flagPcsc == 0) {
+			pageList = new PageList();
+			pageList.setName("Country/State/City");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+
+		int flagPbs = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Bill Setup")) {
+				flagPbs = 1;
+				break;
+			}
+		}
+		if (flagPbs == 0) {
+			pageList = new PageList();
+			pageList.setName("Bill Setup");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+
+		int flagPbse = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Bill Setup Edit")) {
+				flagPbse = 1;
+				break;
+			}
+		}
+		if (flagPbse == 0) {
+			pageList = new PageList();
+			pageList.setName("Bill Setup Edit");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+
+		int flagPjsetup = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Job Setup")) {
+				flagPjsetup = 1;
+				break;
+			}
+		}
+		if (flagPjsetup == 0) {
+			pageList = new PageList();
+			pageList.setName("Job Setup");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+
+		int flagPjse = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Job Setup Edit")) {
+				flagPjse = 1;
+				break;
+			}
+		}
+		if (flagPjse == 0) {
+			pageList = new PageList();
+			pageList.setName("Job Setup Edit");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+
+		int flagPis = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Item Setup")) {
+				flagPis = 1;
+				break;
+			}
+		}
+		if (flagPis == 0) {
+			pageList = new PageList();
+			pageList.setName("Item Setup");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+
+		int flagPise = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Item Setup Edit")) {
+				flagPise = 1;
+				break;
+			}
+		}
+		if (flagPise == 0) {
+			pageList = new PageList();
+			pageList.setName("Item Setup Edit");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+		module = null;
+		// setup
 
 		// adding module and pages
 
@@ -627,8 +1147,10 @@ public class LoginServlet extends HttpServlet {
 
 			// for (VoucherDetails vd : ejb
 			// .getAllVoucherDetailsByVoucherAssignId(va.getId())) {
-			for (int i = 0; i < ejb.getAllVoucherDetailsByVoucherAssignId(va.getId()).size(); i++) {
-				VoucherDetails vd = ejb.getAllVoucherDetailsByVoucherAssignId(va.getId()).get(i);
+			for (int i = 0; i < ejb.getAllVoucherDetailsByVoucherAssignId(
+					va.getId()).size(); i++) {
+				VoucherDetails vd = ejb.getAllVoucherDetailsByVoucherAssignId(
+						va.getId()).get(i);
 				if (vd.isCredit()) {
 					totCr = totCr + vd.getValue();
 				} else {
@@ -793,8 +1315,10 @@ public class LoginServlet extends HttpServlet {
 		if (ejb.getAllStoct().size() < 1) {
 			LocalDateTime afterThreeMonths = currentDateTime.plusMonths(3);
 			stoct = new Stoct();
-			stoct.setStartDate(Date.from(currentDateTime.toInstant(ZoneOffset.ofHoursMinutes(5, 30))));
-			stoct.setEndDate(Date.from(afterThreeMonths.toInstant(ZoneOffset.ofHoursMinutes(5, 30))));
+			stoct.setStartDate(Date.from(currentDateTime.toInstant(ZoneOffset
+					.ofHoursMinutes(5, 30))));
+			stoct.setEndDate(Date.from(afterThreeMonths.toInstant(ZoneOffset
+					.ofHoursMinutes(5, 30))));
 			stoct.setStockNumber(GetMacId.getMacId());
 			ejb.setStoct(stoct);
 		}
@@ -811,62 +1335,74 @@ public class LoginServlet extends HttpServlet {
 		}
 		if (ejb.getAllSecurityQuestions().size() < 10) {
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("First"));
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("First"));
 			securityQuestions.setQuestion("What is the place you borned?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("First"));
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("First"));
 			securityQuestions.setQuestion("What is your first friend's name?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("First"));
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("First"));
 			securityQuestions.setQuestion("What is your first teacher's name?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("First"));
-			securityQuestions.setQuestion("What is the name of your first school?");
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("First"));
+			securityQuestions
+					.setQuestion("What is the name of your first school?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("First"));
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("First"));
 			securityQuestions.setQuestion("What is your pet's name?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("Favourite"));
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("Favourite"));
 			securityQuestions.setQuestion("What is your favourite food?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("Favourite"));
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("Favourite"));
 			securityQuestions.setQuestion("What is your favourite movie?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("Favourite"));
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("Favourite"));
 			securityQuestions.setQuestion("Who is your favourite person?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("Favourite"));
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("Favourite"));
 			securityQuestions.setQuestion("Who is your favourite player?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("Favourite"));
-			securityQuestions.setQuestion("Who is your favourite Actor/Actress?");
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("Favourite"));
+			securityQuestions
+					.setQuestion("Who is your favourite Actor/Actress?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 		}
@@ -874,7 +1410,8 @@ public class LoginServlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 
 		date = new Date();
 		url = req.getRequestURL().toString();
@@ -934,10 +1471,15 @@ public class LoginServlet extends HttpServlet {
 						page = "dashboard.jsp";
 
 						LocalDateTime afterThreeMonths = LocalDateTime
-								.ofInstant(ejb.getAllStoct().get(0).getEndDate().toInstant(), ZoneId.systemDefault());
-						LocalDateTime before21Days = afterThreeMonths.minusDays(21);
-						if (date.after(Date.from(before21Days.toInstant(ZoneOffset.ofHoursMinutes(5, 30))))) {
-							msg = "Validity will be ended on " + ejb.getAllStoct().get(0).getEndDate()
+								.ofInstant(ejb.getAllStoct().get(0)
+										.getEndDate().toInstant(),
+										ZoneId.systemDefault());
+						LocalDateTime before21Days = afterThreeMonths
+								.minusDays(21);
+						if (date.after(Date.from(before21Days
+								.toInstant(ZoneOffset.ofHoursMinutes(5, 30))))) {
+							msg = "Validity will be ended on "
+									+ ejb.getAllStoct().get(0).getEndDate()
 									+ ". Please contact to your vendor...";
 						} else {
 
@@ -971,7 +1513,8 @@ public class LoginServlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 		doGet(req, resp);
 	}
 }

@@ -1146,7 +1146,9 @@ public class Servlet extends HttpServlet {
 				vendor = ejb.getVendorById(Integer.parseInt(req
 						.getParameter("vendoeId")));// vendorid
 
-				vendor.setName(req.getParameter("vendorName").toUpperCase());
+				if (!req.getParameter("vendorName").equals("Production Vendor")) {
+					vendor.setName(req.getParameter("vendorName").toUpperCase());
+				}
 				vendor.setCompanyName(req.getParameter("vendorCompanyName"));
 				vendor.setPh1(req.getParameter("vendorPh1"));
 				vendor.setPh2(req.getParameter("vendorPh2"));
@@ -1154,8 +1156,10 @@ public class Servlet extends HttpServlet {
 				vendor.setAliseName(req.getParameter("vendorAlias"));
 				vendor.setAddress(req.getParameter("vendorAddress"));
 				vendor.setPinCode(req.getParameter("vendorPin"));
-				vendor.setVendorType(ejb.getVendorTypeById(Integer.parseInt(req
-						.getParameter("vendorType"))));
+				if (!req.getParameter("vendorName").equals("Production Vendor")) {
+					vendor.setVendorType(ejb.getVendorTypeById(Integer
+							.parseInt(req.getParameter("vendorType"))));
+				}
 				if (!req.getParameter("vendorCityId").equals("")) {
 					vendor.setCity(ejb.getCityById(Integer.parseInt(req
 							.getParameter("vendorCityId"))));

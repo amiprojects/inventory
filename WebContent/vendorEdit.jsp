@@ -544,7 +544,7 @@ $(document).ready(function(){
 																	<option selected="selected"
 																		value="${account.tax_Type_Group.id}">${account.tax_Type_Group.name}</option>
 																	<c:forEach
-																		items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
+																		items="${sessionScope['ejb'].getAllActiveTax_Type_Groups()}"
 																		var="taxTypeGroup">
 																		<c:if
 																			test="${taxTypeGroup.id!=account.tax_Type_Group.id}">
@@ -556,7 +556,7 @@ $(document).ready(function(){
 																	<option selected="selected" value="0">Select A
 																		Tax Group</option>
 																	<c:forEach
-																		items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
+																		items="${sessionScope['ejb'].getAllActiveTax_Type_Groups()}"
 																		var="taxTypeGroup">
 																		<option value="${taxTypeGroup.id}">${taxTypeGroup.name}</option>
 																	</c:forEach>
@@ -638,15 +638,29 @@ $(document).ready(function(){
 														<b>Vendor type :</b>
 													</div>
 													<div class="col-md-9">
-														<input type="hidden" id="oldVendortypeID"
-															value="${vendor.vendorType.id}"> <select
-															class="form-control" name="vendorType" id="type">
-															<c:forEach
-																items="${sessionScope['ejb'].getAllVendorType()}"
-																var="vType">
-																<option value="${vType.id}">${vType.type}</option>
-															</c:forEach>
-														</select>
+														<c:if test="${vendor.name=='Production Vendor'}">
+															<input type="hidden" id="oldVendortypeID"
+																value="${vendor.vendorType.id}">
+															<select class="form-control" name="vendorType" id="type"
+																disabled="disabled">
+																<c:forEach
+																	items="${sessionScope['ejb'].getAllVendorType()}"
+																	var="vType">
+																	<option value="${vType.id}">${vType.type}</option>
+																</c:forEach>
+															</select>
+														</c:if>
+														<c:if test="${vendor.name!='Production Vendor'}">
+															<input type="hidden" id="oldVendortypeID"
+																value="${vendor.vendorType.id}">
+															<select class="form-control" name="vendorType" id="type">
+																<c:forEach
+																	items="${sessionScope['ejb'].getAllVendorType()}"
+																	var="vType">
+																	<option value="${vType.id}">${vType.type}</option>
+																</c:forEach>
+															</select>
+														</c:if>
 													</div>
 												</div>
 												<br>

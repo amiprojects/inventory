@@ -819,6 +819,13 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<Tax_Type_Group> getAllActiveTax_Type_Groups() {
+		TypedQuery<Tax_Type_Group> q = em.createQuery(
+				"select s from Tax_Type_Group s where s.isActive=true",
+				Tax_Type_Group.class);
+		return q.getResultList();
+	}
+
 	public void deleteTax(int id) {
 		em.remove(getTaxById(id));
 	}

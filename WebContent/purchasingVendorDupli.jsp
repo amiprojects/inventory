@@ -544,7 +544,7 @@ $(document).ready(function(){
 																id="taxgroup">
 																<!-- <option value="0">select a tax group</option> -->
 																<c:forEach
-																	items="${sessionScope['ejb'].getAllTax_Type_Groups()}"
+																	items="${sessionScope['ejb'].getAllActiveTax_Type_Groups()}"
 																	var="taxTypeGroup">
 																	<option value="${taxTypeGroup.id}">${taxTypeGroup.name}</option>
 																</c:forEach>

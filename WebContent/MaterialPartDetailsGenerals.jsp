@@ -292,9 +292,9 @@
 														class="btn btn-info btn-sm" data-toggle="modal"
 														data-target="#newMP">New</button></a></li>
 
-											<li><a href="#" id="editId"><button
+											<!-- <li><a href="#" id="editId"><button
 														class="btn btn-info btn-sm" id="sAnDfield"
-														disabled="disabled" type="button">Edit</button></a></li>
+														disabled="disabled" type="button">Edit</button></a></li> -->
 										</ul>
 									</div>
 
