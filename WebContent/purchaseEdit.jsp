@@ -71,7 +71,7 @@
 		<c:if test="${i!=5}">
 			<script type="text/javascript">
 				alert('you have no permission to view this page');
-				window.location = "dashboard.jsp";
+				window.location = "purchasingPurchaseSearch.jsp";
 			</script>
 		</c:if>
 	</c:if>
@@ -486,8 +486,8 @@
 
 								</div>
 								<div class="col-md-2">
-									<input type="hidden" name="isSalable" id="isSalable">
-									<span id="wspStar">WSP:</span>
+									<input type="hidden" name="isSalable" id="isSalable"> <span
+										id="wspStar">WSP:</span>
 								</div>
 								<div class="col-md-10">
 									<input type="number" class="form-control" id="wsp"
@@ -503,7 +503,7 @@
 							</div>
 						</div>
 						<div class="widget-area" style="width: 100%; top: 0px;">
-							
+
 
 							<div class="row">
 								<div class="col-md-2">
@@ -514,9 +514,9 @@
 										name="lotText">
 								</div>
 							</div>
-							
+
 							<br>
-							<div class="row">								
+							<div class="row">
 
 								<div style="float: right; right: 25px;">
 									<input type="button" class="btn green pull-left" width=""
@@ -536,9 +536,9 @@
 	</div>
 
 	<!-- end of adding product dialog -->
-	
+
 	<!-- add button clicked div -->
-	
+
 	<div id="another" class="modal fade" role="dialog" style="top: -25px;">
 		<div class="modal-dialog">
 			<div class="modal-content">

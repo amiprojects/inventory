@@ -300,7 +300,7 @@ $(document).ready(function(){
 		<c:if test="${i!=5}">
 			<script type="text/javascript">
 				alert('you have no permission to view this page');
-				window.location = "dashboard.jsp";
+				window.location = "purchasingVendor.jsp";
 			</script>
 		</c:if>
 	</c:if>
