@@ -96,8 +96,7 @@ tfoot {
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
-
-			<c:if test="${page.name.equals('Stock')}">
+			<c:if test="${page.name.equals('Report')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
@@ -165,19 +164,18 @@ tfoot {
 													<td><fmt:formatDate value="${salCus.sales_date}"
 															pattern="dd-MM-yyyy" /></td>
 													<td>${salCus.paymentDetails.get(0).paymentType.type}<br>
-													<br>kaanish
+														<br>kaanish
 													</td>
 													<td>Sales</td>
 													<td>${salCus.challanNumber}</td>
-													<td>${salCus.totalCost}<br>
-													<br>0
+													<td>${salCus.totalCost}<br> <br>0
 													</td>
-													<td>0<br>
-													<br>${salCus.paymentDetails.get(0).paidAmount}</td>
+													<td>0<br> <br>${salCus.paymentDetails.get(0).paidAmount}</td>
 
 												</tr>
 												<c:set var="total1" value="${total1 + salCus.totalCost}" />
-												<c:set var="total2" value="${total2 + salCus.paymentDetails.get(0).paidAmount}" />
+												<c:set var="total2"
+													value="${total2 + salCus.paymentDetails.get(0).paidAmount}" />
 											</c:forEach>
 
 											<c:forEach
@@ -186,19 +184,17 @@ tfoot {
 												<tr>
 													<td><fmt:formatDate value="${salCusR.returnDate}"
 															pattern="dd-MM-yyyy" /></td>
-													<td>Debit note <br>
-													<br>kaanish
+													<td>Debit note <br> <br>kaanish
 													</td>
 													<td>Sales Return</td>
 													<td>${salCusR.challanNumber}</td>
-													<td>0<br>
-													<br>${salCusR.totalReCost}</td>
-													<td>${salCusR.totalReCost}<br>
-													<br>0
+													<td>0<br> <br>${salCusR.totalReCost}</td>
+													<td>${salCusR.totalReCost}<br> <br>0
 													</td>
 												</tr>
 												<c:set var="total3" value="${total3 + salCus.totalCost}" />
-												<c:set var="total4" value="${total4 + salCus.paymentDetails.get(0).paidAmount}" />
+												<c:set var="total4"
+													value="${total4 + salCus.paymentDetails.get(0).paidAmount}" />
 											</c:forEach>
 										</tbody>
 

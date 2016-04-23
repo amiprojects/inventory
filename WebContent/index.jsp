@@ -17,7 +17,6 @@
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
 <!-- Responsive -->
 <link rel="stylesheet" href="css/toast.css" type="text/css" />
-
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -26,12 +25,8 @@
 		}
 	});
 </script>
-
 </head>
-
 <body style="background-image: url('images/resource/login-bg.jpg')">
-
-
 	<div class="login-sec">
 		<div class="login">
 			<div class="login-form">

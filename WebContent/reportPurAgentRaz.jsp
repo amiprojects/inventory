@@ -71,9 +71,15 @@ tfoot {
 	width: 100% !important;
 }
 margin-bottom
+
+
 :
+
+
 3
 em
+
+
 ;
 </style>
 
@@ -101,8 +107,7 @@ em
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
-
-			<c:if test="${page.name.equals('Stock')}">
+			<c:if test="${page.name.equals('Report')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
@@ -153,12 +158,12 @@ em
 											<th>Credit Amount</th>
 										</tr>
 									</thead>
-									
+
 									<tbody>
-									<c:set var="total1" value="${0}"/>
-									<c:set var="total2" value="${0}"/>
-									<c:set var="total3" value="${0}"/>
-									<c:set var="total4" value="${0}"/>
+										<c:set var="total1" value="${0}" />
+										<c:set var="total2" value="${0}" />
+										<c:set var="total3" value="${0}" />
+										<c:set var="total4" value="${0}" />
 
 										<c:forEach
 											items="${sessionScope['ejb'].getAllPurchaseEntryByVendorIdTypePurchaseAgent(param.id)}"
@@ -168,19 +173,19 @@ em
 												<td><fmt:formatDate value="${purAgent.purchase_date}"
 														pattern="dd-MM-yyyy" /></td>
 												<td>${purAgent.paymentDetails.get(0).paymentType.type}<br>
-												<br>kaanish
+													<br>kaanish
 												</td>
 												<td>Purchase</td>
 												<td>${purAgent.challanNumber}</td>
-												<td>0<br>
-												<br>${purAgent.totalCost}</td>
+												<td>0<br> <br>${purAgent.totalCost}</td>
 												<td>${purAgent.paymentDetails.get(0).paidAmount}<br>
-												<br>0
+													<br>0
 												</td>
 
 											</tr>
 											<c:set var="total1" value="${total1 + purAgent.totalCost}" />
-											<c:set var="total2" value="${total2 + purAgent.paymentDetails.get(0).paidAmount}" />
+											<c:set var="total2"
+												value="${total2 + purAgent.paymentDetails.get(0).paidAmount}" />
 
 										</c:forEach>
 
@@ -190,35 +195,32 @@ em
 											<tr>
 												<td><fmt:formatDate value="${purReAgen.returnDate}"
 														pattern="dd-MM-yyyy" /></td>
-												<td>Credit note <br>
-												<br>kaanish
+												<td>Credit note <br> <br>kaanish
 												</td>
 												<td>Purchase Return</td>
-												
+
 												<td>${purReAgen.challanNumber}</td>
-												<td>${purReAgen.totalReCost}<br>
-												<br>0
+												<td>${purReAgen.totalReCost}<br> <br>0
 												</td>
-												<td>0<br>
-												<br>${purReAgen.totalReCost}</td>
+												<td>0<br> <br>${purReAgen.totalReCost}</td>
 											</tr>
-												<c:set var="total3" value="${total3 + purReAgen.totalReCost}" />
-												<c:set var="total4" value="${total4 + purReAgen.totalReCost}" />
+											<c:set var="total3" value="${total3 + purReAgen.totalReCost}" />
+											<c:set var="total4" value="${total4 + purReAgen.totalReCost}" />
 
 										</c:forEach>
 									</tbody>
 									<tfoot>
-											<tr>
-												
-												<th>&nbsp;</th>
-												<th>&nbsp;</th>
-												<th>&nbsp;</th>
-												<th><h4>Total:</h4> </th>
-												<th><h4>${total3+total1}</h4></th>
-												<th><h4>${total2+total4}</h4></th>
-												
-											</tr>
-										</tfoot>
+										<tr>
+
+											<th>&nbsp;</th>
+											<th>&nbsp;</th>
+											<th>&nbsp;</th>
+											<th><h4>Total:</h4></th>
+											<th><h4>${total3+total1}</h4></th>
+											<th><h4>${total2+total4}</h4></th>
+
+										</tr>
+									</tfoot>
 								</table>
 							</div>
 

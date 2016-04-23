@@ -26,7 +26,7 @@
 <link rel="stylesheet" href="css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="css/fixedHeader.dataTables.min.css">
 <link rel="stylesheet" href="css/buttons.dataTables.min.css">
-<link rel="stylesheet" href="css/dataTables.searchHighlight.css"/>
+<link rel="stylesheet" href="css/dataTables.searchHighlight.css" />
 <link rel="stylesheet" href="css/style.css" type="text/css" />
 
 
@@ -70,7 +70,6 @@ td {
 tfoot {
 	width: 100% !important;
 }
-
 </style>
 
 </head>
@@ -97,8 +96,7 @@ tfoot {
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
-
-			<c:if test="${page.name.equals('Stock')}">
+			<c:if test="${page.name.equals('Report')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
@@ -138,69 +136,79 @@ tfoot {
 
 									<table id="example" class="display nowrap" cellspacing="0"
 										width="100%">
-										
+
 										<thead>
 											<tr>
-										
+
 												<th>Date</th>
 												<th>Particulars</th>
 												<th align="left">Type</th>
 												<th>Voucher Number</th>
 												<th>Debit Amount</th>
-												
+
 												<th>Credit Amount</th>
 											</tr>
 										</thead>
-										
-									 <tbody>
-									<c:set var="total1" value="${0}"/>
-									<c:set var="total2" value="${0}"/>
-									<c:set var="total3" value="${0}"/>
-									<c:set var="total4" value="${0}"/>
+
+										<tbody>
+											<c:set var="total1" value="${0}" />
+											<c:set var="total2" value="${0}" />
+											<c:set var="total3" value="${0}" />
+											<c:set var="total4" value="${0}" />
 											<c:forEach
 												items="${sessionScope['ejb'].getAllPurchaseEntryByVendorIdTypeVendor(param.id)}"
 												var="purVendor">
-											<tr>
-												
-												<td><fmt:formatDate value="${purVendor.purchase_date}" pattern="dd-MM-yyyy" /></td>
-												<td>${purVendor.paymentDetails.get(0).paymentType.type}<br><br>kaanish</td>
-												<td>Purchase</td>
-												<td>${purVendor.challanNumber}</td>
-												<td>0<br><br>${purVendor.totalCost}</td>
-												<td>${purVendor.paymentDetails.get(0).paidAmount}<br><br>0</td>
-												
-											</tr>
-											<c:set var="total1" value="${total1 + purVendor.totalCost}" />
-											<c:set var="total2" value="${total2 + purVendor.paymentDetails.get(0).paidAmount}" />
-											
+												<tr>
+
+													<td><fmt:formatDate value="${purVendor.purchase_date}"
+															pattern="dd-MM-yyyy" /></td>
+													<td>${purVendor.paymentDetails.get(0).paymentType.type}<br>
+														<br>kaanish
+													</td>
+													<td>Purchase</td>
+													<td>${purVendor.challanNumber}</td>
+													<td>0<br> <br>${purVendor.totalCost}</td>
+													<td>${purVendor.paymentDetails.get(0).paidAmount}<br>
+														<br>0
+													</td>
+
+												</tr>
+												<c:set var="total1" value="${total1 + purVendor.totalCost}" />
+												<c:set var="total2"
+													value="${total2 + purVendor.paymentDetails.get(0).paidAmount}" />
+
 											</c:forEach>
-											
+
 											<c:forEach
 												items="${sessionScope['ejb'].getAllPurchaseReturnByVendorIdTypePurchaseAgent(param.id)}"
 												var="purReVendor">
-											<tr>
-																		<td><fmt:formatDate value="${purReVendor.returnDate}"
-																		pattern="dd-MM-yyyy" /></td>
-																		<td>Credit note <br><br>kaanish </td>
-																		<td>Purchase Return</td>
-																		<td>${purReVendor.challanNumber}</td>
-																		<td>${purReVendor.totalReCost}<br><br>0</td>
-																		<td>0<br><br>${purReVendor.totalReCost}</td>
-											</tr>
-											<c:set var="total3" value="${total3 + purReVendor.totalReCost}" />
-											<c:set var="total4" value="${total4 + purReVendor.totalReCost}" />
+												<tr>
+													<td><fmt:formatDate value="${purReVendor.returnDate}"
+															pattern="dd-MM-yyyy" /></td>
+													<td>Credit note <br> <br>kaanish
+													</td>
+													<td>Purchase Return</td>
+													<td>${purReVendor.challanNumber}</td>
+													<td>${purReVendor.totalReCost}<br> <br>0
+													</td>
+													<td>0<br> <br>${purReVendor.totalReCost}</td>
+												</tr>
+												<c:set var="total3"
+													value="${total3 + purReVendor.totalReCost}" />
+												<c:set var="total4"
+													value="${total4 + purReVendor.totalReCost}" />
 											</c:forEach>
 										</tbody>
 										<tfoot>
 											<tr>
-												
+
 												<th>&nbsp;</th>
 												<th>&nbsp;</th>
 												<th>&nbsp;</th>
-												<th><h4>Total:</h4> </th>
+												<th><h4>Total:</h4></th>
 												<th><h4>${total3+total1}</h4></th>
 												<th><h4>${total2+total4}</h4></th>
-												
+
 											</tr>
 										</tfoot>
 									</table>
@@ -239,23 +247,23 @@ tfoot {
 
 	<script type="text/javascript">
 		$(document).ready(function() {
-			  var table=$('#example').DataTable({
+			var table = $('#example').DataTable({
 
 				"scrollY" : 300,
 				"scrollX" : true,
 				dom : 'Bfrtip',
 				buttons : [ 'copy', 'csv', 'excel', 'print' ]
 			});
-			  
-			  table.on( 'draw', function () {
-			        var body = $( table.table().body() );
-			 
-			        body.unhighlight();
-			        body.highlight( table.search() );  
-			    } );
+
+			table.on('draw', function() {
+				var body = $(table.table().body());
+
+				body.unhighlight();
+				body.highlight(table.search());
+			});
 		});
 	</script>
-	
+
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->

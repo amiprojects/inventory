@@ -206,8 +206,7 @@
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
-
-			<c:if test="${page.name.equals('MaterialPartDetailsGenerals')}">
+			<c:if test="${page.name.equals('Product/Material')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
@@ -218,8 +217,7 @@
 			</script>
 		</c:if>
 	</c:if>
-
-
+	
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">

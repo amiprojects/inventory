@@ -109,8 +109,7 @@
 									<ul id="tree">
 										<c:forEach items="${sessionScope['ejb'].getAllModule()}"
 											var="module">
-											<li>
-												<!-- <input type="checkbox" value=""> -->${module.name}
+											<li>${module.name}
 												<ul>
 													<c:forEach items="${module.pageLists}" var="page">
 														<li><input name="pageId" type="checkbox"

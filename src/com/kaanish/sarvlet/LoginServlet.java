@@ -73,6 +73,51 @@ public class LoginServlet extends HttpServlet {
 	public void init() throws ServletException {
 		// adding module and pages
 
+		// deleting bekars, production kainat kaanish
+		for (Module m : ejb.getAllModule()) {
+			if (m.getName().equals("JOB")) {
+				module = ejb.getModuleByName("JOB");
+				for (PageList p : ejb.getAllPageList()) {
+					if (p.getModule().getId() == module.getId()) {
+						pageList = p;
+						ejb.deletePageListById(pageList.getId());
+						break;
+					}
+				}
+				ejb.deleteModuleById(module.getId());
+				break;
+			}
+		}
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Discount")) {
+				pageList = ejb.getPageByName("Discount");
+				ejb.deletePageListById(pageList.getId());
+				break;
+			}
+		}
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("dashboard")) {
+				pageList = ejb.getPageByName("dashboard");
+				ejb.deletePageListById(pageList.getId());
+				break;
+			}
+		}
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Vendor Management")) {
+				pageList = ejb.getPageByName("Vendor Management");
+				ejb.deletePageListById(pageList.getId());
+				break;
+			}
+		}
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("MaterialPartDetailsGenerals")) {
+				pageList = ejb.getPageByName("MaterialPartDetailsGenerals");
+				ejb.deletePageListById(pageList.getId());
+				break;
+			}
+		}
+		// deleting bekars
+
 		// dashboard
 		int flagMdashboard = 0;
 		for (Module m : ejb.getAllModule()) {

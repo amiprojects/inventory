@@ -73,11 +73,17 @@ tfoot {
 margin-bottom
 
 
+
+
 :
+
+
 
 
 3
 em
+
+
 
 
 ;
@@ -107,8 +113,7 @@ em
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
-
-			<c:if test="${page.name.equals('Stock')}">
+			<c:if test="${page.name.equals('Report')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
@@ -174,15 +179,13 @@ em
 												<td><fmt:formatDate value="${salAgent.sales_date}"
 														pattern="dd-MM-yyyy" /></td>
 												<td>${salAgent.paymentDetails.get(0).paymentType.type}<br>
-												<br>kaanish
+													<br>kaanish
 												</td>
 												<td>Sales</td>
 												<td>${salAgent.challanNumber}</td>
-												<td>${salAgent.totalCost}<br>
-												<br>0
+												<td>${salAgent.totalCost}<br> <br>0
 												</td>
-												<td>0<br>
-												<br>${salAgent.paymentDetails.get(0).paidAmount}</td>
+												<td>0<br> <br>${salAgent.paymentDetails.get(0).paidAmount}</td>
 											</tr>
 											<c:set var="total1" value="${total1 + salAgent.totalCost}" />
 											<c:set var="total2"
@@ -197,15 +200,12 @@ em
 
 												<td><fmt:formatDate value="${salReAgen.returnDate}"
 														pattern="dd-MM-yyyy" /></td>
-												<td>Debit note <br>
-												<br>kaanish
+												<td>Debit note <br> <br>kaanish
 												</td>
 												<td>Sales Return</td>
 												<td>${salReAgen.challanNumber}</td>
-												<td>0<br>
-												<br>${salReAgen.totalReCost}</td>
-												<td>${salReAgen.totalReCost}<br>
-												<br>0
+												<td>0<br> <br>${salReAgen.totalReCost}</td>
+												<td>${salReAgen.totalReCost}<br> <br>0
 												</td>
 											</tr>
 											<c:set var="total3" value="${total3 + salReAgen.totalReCost}" />
@@ -214,17 +214,17 @@ em
 										</c:forEach>
 									</tbody>
 									<tfoot>
-											<tr>
-												
-												<th>&nbsp;</th>
-												<th>&nbsp;</th>
-												<th>&nbsp;</th>
-												<th><h4>Total:</h4> </th>
-												<th><h4>${total3+total1}</h4></th>
-												<th><h4>${total2+total4}</h4></th>
-												
-											</tr>
-																		</tfoot>
+										<tr>
+
+											<th>&nbsp;</th>
+											<th>&nbsp;</th>
+											<th>&nbsp;</th>
+											<th><h4>Total:</h4></th>
+											<th><h4>${total3+total1}</h4></th>
+											<th><h4>${total2+total4}</h4></th>
+
+										</tr>
+									</tfoot>
 								</table>
 							</div>
 
