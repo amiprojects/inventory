@@ -1281,7 +1281,6 @@ public class Servlet extends HttpServlet {
 							.getParameter("subTotal")));
 					purchaseEntry.setTaxAmount(Float.parseFloat(req
 							.getParameter("taxAmount")));
-
 					purchaseEntry.setCompanyInfo(ejb.getUserById(
 							(String) httpSession.getAttribute("user"))
 							.getCompanyInfo());
@@ -1290,6 +1289,40 @@ public class Servlet extends HttpServlet {
 					if (req.getParameter("isAgent").equals("yes")) {
 						purchaseEntry.setAgentId(Integer.parseInt(req
 								.getParameter("agentName")));
+					}
+
+					// ////////////////////////////////////////////////
+					if (req.getParameter("disType").equals("disFlat")) {
+						purchaseEntry.setFlatDiscount(true);
+					} else {
+						purchaseEntry.setFlatDiscount(false);
+					}
+					purchaseEntry.setDiscountValue(Float.parseFloat(req
+							.getParameter("disValue"))); // this is not total
+															// discount.
+					if (req.getParameter("isInclusive").equals("inclusiveNo")) {
+						purchaseEntry.setInclusiveAgent(false);
+						if (req.getParameter("isEffective").equals(
+								"efectiveYes")) {
+							purchaseEntry.setEfectiveProfit(true);
+						} else {
+							purchaseEntry.setEfectiveProfit(false);
+						}
+						if (req.getParameter("profitType").equals("profitFlat")) {
+							purchaseEntry.setFlatProfitAgent(true);
+						} else {
+							purchaseEntry.setFlatProfitAgent(false);
+						}
+						purchaseEntry.setAgentProfitValue(Float.parseFloat(req
+								.getParameter("profitVal"))); // this is not
+																// total
+																// profit.
+						purchaseEntry.setAgentProfitTotal(Float.parseFloat(req
+								.getParameter("profitValue"))); // this is
+																// total
+																// profit.
+					} else {
+						purchaseEntry.setInclusiveAgent(true);
 					}
 					ejb.setPurchaseEntry(purchaseEntry);
 
@@ -1772,7 +1805,8 @@ public class Servlet extends HttpServlet {
 					}
 
 					salesEntry.setDiscountValue(Float.parseFloat(req
-							.getParameter("disValue")));
+							.getParameter("disValue"))); // this is not total
+															// discount.
 
 					ejb.setSalesEntry(salesEntry);
 					if (!req.getParameter("pstatus").equals("Full Paid")) {

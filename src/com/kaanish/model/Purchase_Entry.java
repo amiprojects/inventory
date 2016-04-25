@@ -42,7 +42,11 @@ public class Purchase_Entry implements Serializable {
 	private int agentId;
 	private boolean isFlatDiscount;
 	private float discountValue;
-	private boolean isCommisionTotal;
+	private boolean isInclusiveAgent;
+	private boolean isFlatProfitAgent;
+	private boolean isEfectiveProfit;
+	private float agentProfitValue;
+	private float agentProfitTotal;
 
 	@OneToMany(mappedBy = "purchase_Entry")
 	private List<NotificationDetails> notificationDetails;
@@ -297,20 +301,52 @@ public class Purchase_Entry implements Serializable {
 		this.purchaseOrderEntry = purchaseOrderEntry;
 	}
 
-	public boolean isCommisionTotal() {
-		return isCommisionTotal;
-	}
-
-	public void setCommisionTotal(boolean isCommisionTotal) {
-		this.isCommisionTotal = isCommisionTotal;
-	}
-
 	public Date getPurchase_date() {
 		return purchase_date;
 	}
 
 	public void setPurchase_date(Date purchase_date) {
 		this.purchase_date = purchase_date;
+	}
+
+	public boolean isInclusiveAgent() {
+		return isInclusiveAgent;
+	}
+
+	public void setInclusiveAgent(boolean isInclusiveAgent) {
+		this.isInclusiveAgent = isInclusiveAgent;
+	}
+
+	public boolean isFlatProfitAgent() {
+		return isFlatProfitAgent;
+	}
+
+	public void setFlatProfitAgent(boolean isFlatProfitAgent) {
+		this.isFlatProfitAgent = isFlatProfitAgent;
+	}
+
+	public float getAgentProfitValue() {
+		return agentProfitValue;
+	}
+
+	public void setAgentProfitValue(float agentProfitValue) {
+		this.agentProfitValue = agentProfitValue;
+	}
+
+	public boolean isEfectiveProfit() {
+		return isEfectiveProfit;
+	}
+
+	public void setEfectiveProfit(boolean isEfectiveProfit) {
+		this.isEfectiveProfit = isEfectiveProfit;
+	}
+
+	public float getAgentProfitTotal() {
+		return agentProfitTotal;
+	}
+
+	public void setAgentProfitTotal(float agentProfitTotal) {
+		this.agentProfitTotal = agentProfitTotal;
 	}
 
 }

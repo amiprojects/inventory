@@ -341,6 +341,20 @@
 
 	<!-- main -->
 
+	<c:set var="isAdmin" value="1"></c:set>
+	<c:set var="canEdit" value="0" />
+	<c:if
+		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminKainat')}">
+		<c:forEach
+			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
+			var="page">
+			<c:if test="${page.name.equals('Company Info Edit')}">
+				<c:set var="canEdit" value="1" />
+			</c:if>
+		</c:forEach>
+		<c:set var="isAdmin" value="0"></c:set>
+	</c:if>
+
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
 
@@ -363,28 +377,31 @@
 		});
 
 		function activatefields() {
-			$('#compname').attr("readonly", false);
-			$('#email').attr("readonly", false);
-			$('#mobile').attr("readonly", false);
-			$('#phone').attr("readonly", false);
-			$('#addr').attr("disabled", false);
-			$('#city').attr("readonly", false);
-			$('#state').attr("readonly", false);
-			$('#country1').attr("readonly", false);
-			$('#subBId').show();
-			//	$('#state').attr("readonly", false);
-			$('#vat').attr("readonly", false);
-			$('#cst').attr("readonly", false);
-			$('#tin').attr("readonly", false);
-			$('#service').attr("readonly", false);
-			$('#vatdate').attr("readonly", false);
-			$('#cstdate').attr("readonly", false);
-			$('#tindate').attr("readonly", false);
-			$('#servicedate').attr("readonly", false);
-			$("#companyinfo").hide();
-			$('#imageUP').attr("readonly", false);
-			$("#companyLogo").show();
-
+			if ("${isAdmin}" == 0 && "${canEdit}" == 0) {
+				alert("You have no permission to edit this!");
+			} else {
+				$('#compname').attr("readonly", false);
+				$('#email').attr("readonly", false);
+				$('#mobile').attr("readonly", false);
+				$('#phone').attr("readonly", false);
+				$('#addr').attr("disabled", false);
+				$('#city').attr("readonly", false);
+				$('#state').attr("readonly", false);
+				$('#country1').attr("readonly", false);
+				$('#subBId').show();
+				//	$('#state').attr("readonly", false);
+				$('#vat').attr("readonly", false);
+				$('#cst').attr("readonly", false);
+				$('#tin').attr("readonly", false);
+				$('#service').attr("readonly", false);
+				$('#vatdate').attr("readonly", false);
+				$('#cstdate').attr("readonly", false);
+				$('#tindate').attr("readonly", false);
+				$('#servicedate').attr("readonly", false);
+				$("#companyinfo").hide();
+				$('#imageUP').attr("readonly", false);
+				$("#companyLogo").show();
+			}
 		}
 
 		function readURL(input) {
@@ -418,32 +435,32 @@
 			if ($("#compname").val() == 0) {
 				alert("please enter Company name");
 			} /* else if ($("#mobile").val() == "") {
-						alert("please select Mobile Number");
-					} else if ($("#addr").val() == "") {
-						alert("please select Address");
-					} else if ($("#email").val() == "") {
-						alert("please select email");
-					} else if ($("#phone").val() == "") {
-						alert("please select Phone");
-					} else if ($("#cityname").val() == "") {
-						alert("please select cityname");
-					} else if ($("#vat").val() == "") {
-						alert("please select VAT");
-					} else if ($("#cst").val() == "") {
-						alert("please select CST");
-					} else if ($("#tin").val() == "") {
-						alert("please select TIN");
-					} else if ($("#service").val() == "") {
-						alert("please select Service Tax");
-					} else if ($("#vatdate").val() == "") {
-						alert("please select VAT resistration Date");
-					} else if ($("#cstdate").val() == "") {
-						alert("please select CST resistration Date");
-					} else if ($("#tinDate").val() == "") {
-						alert("please select TIN resistration Date");
-					} else if ($("#servicedate").val() == "") {
-						alert("please select Service resistration Date");
-					} */
+												alert("please select Mobile Number");
+											} else if ($("#addr").val() == "") {
+												alert("please select Address");
+											} else if ($("#email").val() == "") {
+												alert("please select email");
+											} else if ($("#phone").val() == "") {
+												alert("please select Phone");
+											} else if ($("#cityname").val() == "") {
+												alert("please select cityname");
+											} else if ($("#vat").val() == "") {
+												alert("please select VAT");
+											} else if ($("#cst").val() == "") {
+												alert("please select CST");
+											} else if ($("#tin").val() == "") {
+												alert("please select TIN");
+											} else if ($("#service").val() == "") {
+												alert("please select Service Tax");
+											} else if ($("#vatdate").val() == "") {
+												alert("please select VAT resistration Date");
+											} else if ($("#cstdate").val() == "") {
+												alert("please select CST resistration Date");
+											} else if ($("#tinDate").val() == "") {
+												alert("please select TIN resistration Date");
+											} else if ($("#servicedate").val() == "") {
+												alert("please select Service resistration Date");
+											} */
 
 			else {
 				$("#companydetails").submit();

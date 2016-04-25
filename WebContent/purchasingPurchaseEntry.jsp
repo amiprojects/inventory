@@ -437,6 +437,28 @@
 											</thead>
 											<tbody>
 												<tr>
+													<td colspan="2">Discount &nbsp; <select name="disType"
+														id="disType" onchange="disTypeF();">
+															<option value="disFlat">Flat</option>
+															<option value="disPer">%</option>
+													</select>
+													</td>
+													<td><input type="text" value="0" class="form-control"
+														name="disValue" id="discount" placeholder=""
+														onkeyup="gtot();" autocomplete="off"></td>
+												</tr>
+											</tbody>
+
+											<tbody>
+												<tr>
+													<td colspan="2" id="disc">Discount Value:</td>
+													<td><input type="text" class="form-control"
+														readonly="readonly" id="discountValue"
+														name="discountValue" value="0"></td>
+												</tr>
+											</tbody>
+											<tbody>
+												<tr>
 													<td><select class="form-control" id="taxGroup"
 														name="taxGroup" onchange="selectedTaxGroup();">
 															<option value="0">TAX type</option>
@@ -457,6 +479,46 @@
 													<td><input type="text" class="form-control"
 														readonly="readonly" value="0" id="taxAmount"
 														name="taxAmount"></td>
+												</tr>
+											</tbody>
+											<tbody>
+												<tr>
+													<td colspan="2">Agent Profit:</td>
+													<td>Is inclusive :&nbsp; <select name="isInclusive"
+														id="isInclusive" onchange="isInclusiveF();">
+															<option value="inclusiveYes" selected="selected">Yes</option>
+															<option value="inclusiveNo">No</option>
+													</select>
+														<div id="effectiveDiv" style="display: none;">
+															<br> Is Effective On Return:&nbsp; <select
+																name="isEffective" id="isEffective">
+																<option value="efectiveYes">Yes</option>
+																<option value="efectiveNo" selected="selected">No</option>
+															</select>
+														</div>
+													</td>
+												</tr>
+											</tbody>
+											<tbody id="profitTypeTR" style="display: none;">
+												<tr>
+													<td colspan="2">Agent Profit: &nbsp; <select
+														name="profitType" id="profitType"
+														onchange="profitTypeF();" disabled="disabled">
+															<option value="profitFlat">Flat</option>
+															<option value="profitPer">%</option>
+													</select>
+													</td>
+													<td><input type="text" value="0" class="form-control"
+														name="profitVal" id="profitVal" placeholder=""
+														onkeyup="gtot();" autocomplete="off" readonly="readonly"></td>
+												</tr>
+											</tbody>
+											<tbody id="profitValueTR" style="display: none;">
+												<tr>
+													<td colspan="2" id="disc">Agent Profit Value:</td>
+													<td><input type="text" class="form-control"
+														readonly="readonly" id="profitValue" name="profitValue"
+														value="0"></td>
 												</tr>
 											</tbody>
 											<tbody>
@@ -3722,29 +3784,9 @@
 			$("#subTotal").val(
 					Math.round((Number(n2) - Number(n1)) * 100) / 100);
 
-			/* var sum = 0;
-			$(".trRemove:nth-child(7)").each(function() {
-				sum += parseFloat(this.value);
-			});
-			$("#subTotal").val(sum.toFixed(2)); */
-
 			$("#trRemove" + a).remove();
 			$("#trRemoveH" + a).remove();
-			$("#taxAmount")
-					.val(
-							Math
-									.round((Number($("#subTotal").val())
-											* Number($("#taxTot").val()) / Number(100)) * 100) / 100);
-			$("#totalvalue").val(
-					Math.round((Number($("#subTotal").val())
-							+ Number($("#taxAmount").val())
-							+ Number($("#transportCost").val()) + Number($(
-							"#surcharge").val())) * 100) / 100);
-			var tot = $("#totalvalue").val();
-			var round = Math.round(tot);
-			$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
-			$("#gt").val(Math.round((round) * 100) / 100);
-
+			gtot();
 		}
 		var k = 1;
 		function anotherShow() {
@@ -3803,21 +3845,7 @@
 						Math.round((Number($("#subTotal").val()) + Number($(
 								"#qty").val())
 								* Number($("#rate").val())) * 100) / 100);
-				$("#taxAmount")
-						.val(
-								Math
-										.round((Number($("#subTotal").val())
-												* Number($("#taxTot").val()) / Number(100)) * 100) / 100);
-				$("#totalvalue").val(
-						Math.round((Number($("#subTotal").val())
-								+ Number($("#taxAmount").val())
-								+ Number($("#transportCost").val()) + Number($(
-								"#surcharge").val())) * 100) / 100);
-				var tot = $("#totalvalue").val();
-				var round = Math.round(tot);
-				$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
-				$("#gt").val(Math.round((round) * 100) / 100);
-
+				gtot();
 				k++;
 
 				$("#hiddenTable")
@@ -3981,18 +4009,7 @@
 			if ($("#vName").val() == "") {
 				$("#vName").val("");
 				$("#vDetail").val("");
-				$("#taxGroup").val(0).prop("selected", true);
-				$("#taxTot").val('0');
-				$("#taxAmount").val('0');
-				$("#totalvalue").val(
-						Math.round((Number($("#subTotal").val())
-								+ Number($("#taxAmount").val())
-								+ Number($("#transportCost").val()) + Number($(
-								"#surcharge").val())) * 100) / 100);
-				var tot = $("#totalvalue").val();
-				var round = Math.round(tot);
-				$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
-				$("#gt").val(Math.round((round) * 100) / 100);
+				$("#totalCredit").val('0');
 			}
 		}
 
@@ -4034,35 +4051,7 @@
 									if (ui.item == null) {
 										$("#vName").val("");
 										$("#vDetail").val("");
-										$("#taxGroup").val(0).prop("selected",
-												true);
-										$("#taxTot").val('0');
-										$("#taxAmount").val('0');
 										$("#totalCredit").val('0');
-										$("#totalvalue")
-												.val(
-														Math
-																.round((Number($(
-																		"#subTotal")
-																		.val())
-																		+ Number($(
-																				"#taxAmount")
-																				.val())
-																		+ Number($(
-																				"#transportCost")
-																				.val()) + Number($(
-																		"#surcharge")
-																		.val())) * 100) / 100);
-										var tot = $("#totalvalue").val();
-										var round = Math.round(tot);
-										$("#roundvalue")
-												.val(
-														Math
-																.round((round - tot) * 100) / 100);
-										$("#gt")
-												.val(
-														Math
-																.round((round) * 100) / 100);
 									} else {
 										$("#vId").val(ui.item.id)
 										$("#vDetail").val(
@@ -4093,89 +4082,6 @@
 								}
 							});
 		});
-		function selectedTaxGroup() {
-			if ($("#taxGroup").val() != 0) {
-				$
-						.ajax({
-							url : "getTaxGroupById",
-							data : {
-								id : $("#taxGroup").val()
-							},
-							dataType : "json",
-							success : function(data) {
-								$("#taxTot").val(data.taxtot);
-								$("#taxAmount")
-										.val(
-												Math
-														.round((Number($(
-																"#subTotal")
-																.val())
-																* Number($(
-																		"#taxTot")
-																		.val()) / Number(100)) * 100) / 100);
-								$("#totalvalue")
-										.val(
-												Math
-														.round((Number($(
-																"#subTotal")
-																.val())
-																+ Number($(
-																		"#taxAmount")
-																		.val())
-																+ Number($(
-																		"#transportCost")
-																		.val()) + Number($(
-																"#surcharge")
-																.val())) * 100) / 100);
-								var tot = $("#totalvalue").val();
-								var round = Math.round(tot);
-								$("#roundvalue").val(
-										Math.round((round - tot) * 100) / 100);
-								$("#gt").val(Math.round((round) * 100) / 100);
-							},
-							error : function(a, b, c) {
-								alert(c);
-							}
-						});
-			} else {
-				$("#taxTot").val('0');
-				$("#taxAmount").val('0');
-				$("#totalvalue").val(
-						Math.round((Number($("#subTotal").val())
-								+ Number($("#taxAmount").val())
-								+ Number($("#transportCost").val()) + Number($(
-								"#surcharge").val())) * 100) / 100);
-				var tot = $("#totalvalue").val();
-				var round = Math.round(tot);
-				$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
-				$("#gt").val(Math.round((round) * 100) / 100);
-			}
-
-		}
-		function gtot() {
-			if (($("#transportCost").val() != "")
-					|| ($("#surcharge").val() != "")) {
-				$("#totalvalue").val(
-						Math.round((Number($("#subTotal").val())
-								+ Number($("#taxAmount").val())
-								+ Number($("#transportCost").val()) + Number($(
-								"#surcharge").val())) * 100) / 100);
-				var tot = $("#totalvalue").val();
-				var round = Math.round(tot);
-				$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
-				$("#gt").val(Math.round((round) * 100) / 100);
-			} else {
-				$("#totalvalue").val(
-						Math.round((Number($("#subTotal").val())
-								+ Number($("#taxAmount").val())
-								+ Number($("#transportCost").val()) + Number($(
-								"#surcharge").val())) * 100) / 100);
-				var tot = $("#totalvalue").val();
-				var round = Math.round(tot);
-				$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
-				$("#gt").val(Math.round((round) * 100) / 100);
-			}
-		}
 		function decimalFixF() {
 			$("#transportCost").val(
 					Number($("#transportCost").val()).toFixed(2));
@@ -5274,6 +5180,18 @@
 				allowNegative : false, // Accpets positive or negative integer
 			});
 		});
+		$(function() {
+
+			$("#discount").numericInput({
+
+				allowFloat : true, // Accpets positive numbers (floating point)
+
+				allowNegative : false,
+			// Accpets positive or negative integer
+
+			});
+
+		});
 	</script>
 
 	<script type="text/javascript">
@@ -5378,9 +5296,111 @@
 				$("#lotText").val("");
 			}
 		}
+		function isInclusiveF() {
+			if ($("#isInclusive").val() == 'inclusiveNo') {
+				$("#profitType").removeAttr("disabled");
+				$("#profitVal").removeAttr("readonly");
+				$("#effectiveDiv").removeAttr("style");				
+				$("#profitTypeTR").removeAttr("style");
+				$("#profitValueTR").removeAttr("style");
+			} else {
+				$("#profitType").attr("disabled", "disabled");
+				$("#profitVal").attr("readonly", "readonly");
+				$("#effectiveDiv").attr("style", "display : none;");
+				$("#profitTypeTR").attr("style", "display : none;");
+				$("#profitValueTR").attr("style", "display : none;");
+			}
+		}
+		function profitTypeF() {
+			$("#profitVal").val(0);
+			gtot();
+		}
+		function disTypeF() {
+			$("#discount").val(0);
+			gtot();
+		}
+		function selectedTaxGroup() {
+			if ($("#taxGroup").val() != 0) {
+				$.ajax({
+					url : "getTaxGroupById",
+					data : {
+						id : $("#taxGroup").val()
+					},
+					dataType : "json",
+					success : function(data) {
+						$("#taxTot").val(data.taxtot);
+						gtot();
+					},
+					error : function(a, b, c) {
+						alert(c);
+					}
+				});
+			} else {
+				$("#taxTot").val('0');
+				gtot();
+			}
+		}
+		function gtot() {
+			if ($("#disType").val() == 'disPer') {
+				$("#discountValue")
+						.val(
+								Math
+										.round((Number($("#subTotal").val())
+												* Number($("#discount").val()) / 100) * 100) / 100);
+			} else {
+				if (Number($("#discount").val()) > Number($("#subTotal").val())) {
+					alert("Discount can not be greater than sub total value");
+					$("#discount").val(0);
+					$("#discountValue").val(0);
+				} else {
+					$("#discountValue")
+							.val(
+									Math
+											.round(Number($("#discount").val()) * 100) / 100);
+				}
+			}
+
+			$("#taxAmount")
+					.val(
+							Math
+									.round((Number(Number($("#subTotal").val())
+											- Number($("#discountValue").val()))
+											* Number($("#taxTot").val()) / Number(100)) * 100) / 100);
+
+			if ($("#profitType").val() == 'profitPer') {
+				$("#profitValue")
+						.val(
+								Math
+										.round((Number(Number($("#subTotal")
+												.val())
+												- Number($("#discountValue")
+														.val())
+												+ Number($("#taxAmount").val()))
+												* Number($("#profitVal").val()) / 100) * 100) / 100);
+			} else {
+				$("#profitValue").val(
+						Math.round(Number($("#profitVal").val()) * 100) / 100);
+			}
+
+			$("#totalvalue").val(
+					Math.round((Number($("#subTotal").val())
+							- Number($("#discountValue").val())
+							+ Number($("#taxAmount").val())
+							+ Number($("#profitValue").val())
+							+ Number($("#transportCost").val()) + Number($(
+							"#surcharge").val())) * 100) / 100);
+
+			var tot = $("#totalvalue").val();
+			var round = Math.round(tot);
+			$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
+			$("#gt").val(Math.round((round) * 100) / 100);
+		}
+		$("#discount").change(function() {
+			$("#discount").val(Number($("#discount").val()).toFixed(2));
+			gtot();
+		});
 	</script>
 </body>
-<!-- `lastr er number change koro barite -->
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
 </html>

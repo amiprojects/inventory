@@ -152,7 +152,7 @@
 																	class="form-control" value="${ug.groupName}">
 															</div>
 															<div class="col-md-4">
-																<input type="submit" value="Create Group"
+																<input type="submit" value="Update Group"
 																	class="btn green pull-right">
 															</div>
 															<p></p>

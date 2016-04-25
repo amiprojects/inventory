@@ -57,7 +57,6 @@
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
-
 			<c:if test="${page.name.equals('Item Setup')}">
 				<c:set var="i" value="5" />
 			</c:if>
@@ -69,7 +68,6 @@
 			</script>
 		</c:if>
 	</c:if>
-
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
@@ -201,6 +199,20 @@
 		</div>
 	</div>
 
+	<c:set var="isAdmin" value="1"></c:set>
+	<c:set var="canEdit" value="0" />
+	<c:if
+		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminKainat')}">
+		<c:forEach
+			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
+			var="page">
+			<c:if test="${page.name.equals('Item Setup Edit')}">
+				<c:set var="canEdit" value="1" />
+			</c:if>
+		</c:forEach>
+		<c:set var="isAdmin" value="0"></c:set>
+	</c:if>
+
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
 	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
@@ -212,7 +224,11 @@
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 	<script>
 		function editJobTypes(id) {
-			$("#jobEdit" + id).modal('show');
+			if ("${isAdmin}" == 0 && "${canEdit}" == 0) {
+				alert("You have no permission to edit this!");
+			} else {
+				$("#jobEdit" + id).modal('show');
+			}
 		}
 
 		function cancelF(id) {

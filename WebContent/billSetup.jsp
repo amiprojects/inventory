@@ -182,7 +182,7 @@
 									</div>
 									<br> <br> <br>
 								</div>
-								<div class="widget-area">
+								<%-- <div class="widget-area">
 									<div>
 										<h1>Purchase Order Invoice Setup</h1>
 									</div>
@@ -234,7 +234,7 @@
 										</form>
 									</div>
 									<br> <br> <br>
-								</div>
+								</div> --%>
 
 
 
@@ -460,7 +460,7 @@
 									<br> <br> <br>
 								</div>
 
-								<div class="widget-area">
+								<%-- <div class="widget-area">
 									<div>
 										<h1>Road Challan</h1>
 									</div>
@@ -512,7 +512,7 @@
 
 									</div>
 									<br> <br> <br>
-								</div>
+								</div> --%>
 							</div>
 						</div>
 					</div>
@@ -524,7 +524,19 @@
 
 	<!-- main -->
 
-
+	<c:set var="isAdmin" value="1"></c:set>
+	<c:set var="canEdit" value="0" />
+	<c:if
+		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminKainat')}">
+		<c:forEach
+			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
+			var="page">
+			<c:if test="${page.name.equals('Bill Setup Edit')}">
+				<c:set var="canEdit" value="1" />
+			</c:if>
+		</c:forEach>
+		<c:set var="isAdmin" value="0"></c:set>
+	</c:if>
 
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
@@ -571,59 +583,91 @@
 		});
 
 		function editPurchaseInvoce() {
-			$("#purInvImgEdit").attr("style", "display: none;");
-			$("#purInvImgAdd").attr("style", "display: block;");
-			$('#pcomname').attr("readonly", false);
-			$('#psuffix').attr("readonly", false);
+			if ("${isAdmin}" == 0 && "${canEdit}" == 0) {
+				alert("You have no permission to edit this!");
+			} else {
+				$("#purInvImgEdit").attr("style", "display: none;");
+				$("#purInvImgAdd").attr("style", "display: block;");
+				$('#pcomname').attr("readonly", false);
+				$('#psuffix').attr("readonly", false);
+			}
 		}
 
 		function editPurchaseReturnInvoce() {
-			$("#purRetInvImgEdit").attr("style", "display: none;");
-			$("#purRetInvImgAdd").attr("style", "display: block;");
-			$('#pRetcomname').attr("readonly", false);
-			$('#pRetsuffix').attr("readonly", false);
+			if ("${isAdmin}" == 0 && "${canEdit}" == 0) {
+				alert("You have no permission to edit this!");
+			} else {
+				$("#purRetInvImgEdit").attr("style", "display: none;");
+				$("#purRetInvImgAdd").attr("style", "display: block;");
+				$('#pRetcomname').attr("readonly", false);
+				$('#pRetsuffix').attr("readonly", false);
+			}
 		}
 
 		function editSalesInvoice() {
-			$("#salInvImgEdit").attr("style", "display:none");
-			$("#salInvImgAdd").attr("style", "display:block");
-			$('#scomname').attr("readonly", false);
-			$('#ssuffix').attr("readonly", false);
+			if ("${isAdmin}" == 0 && "${canEdit}" == 0) {
+				alert("You have no permission to edit this!");
+			} else {
+				$("#salInvImgEdit").attr("style", "display:none");
+				$("#salInvImgAdd").attr("style", "display:block");
+				$('#scomname').attr("readonly", false);
+				$('#ssuffix').attr("readonly", false);
+			}
 		}
 
 		function editSalesRInvoice() {
-			$("#salInvImgEditR").attr("style", "display:none");
-			$("#salInvImgAddR").attr("style", "display:block");
-			$('#scomnameR').attr("readonly", false);
-			$('#ssuffixR').attr("readonly", false);
+			if ("${isAdmin}" == 0 && "${canEdit}" == 0) {
+				alert("You have no permission to edit this!");
+			} else {
+				$("#salInvImgEditR").attr("style", "display:none");
+				$("#salInvImgAddR").attr("style", "display:block");
+				$('#scomnameR').attr("readonly", false);
+				$('#ssuffixR').attr("readonly", false);
+			}
 		}
 
 		function editJobberChallan() {
-			$("#jobChaImgEdit").attr("style", "display:none");
-			$("#jobChaImgAdd").attr("style", "display:block");
-			$('#jcomname').attr("readonly", false);
-			$('#jsuffix').attr("readonly", false);
+			if ("${isAdmin}" == 0 && "${canEdit}" == 0) {
+				alert("You have no permission to edit this!");
+			} else {
+				$("#jobChaImgEdit").attr("style", "display:none");
+				$("#jobChaImgAdd").attr("style", "display:block");
+				$('#jcomname').attr("readonly", false);
+				$('#jsuffix').attr("readonly", false);
+			}
 		}
 
 		function editJobberReChallan() {
-			$("#jobChaReImgEdit").attr("style", "display:none");
-			$("#jobChaReImgAdd").attr("style", "display:block");
-			$('#jrcomname').attr("readonly", false);
-			$('#jrsuffix').attr("readonly", false);
+			if ("${isAdmin}" == 0 && "${canEdit}" == 0) {
+				alert("You have no permission to edit this!");
+			} else {
+				$("#jobChaReImgEdit").attr("style", "display:none");
+				$("#jobChaReImgAdd").attr("style", "display:block");
+				$('#jrcomname').attr("readonly", false);
+				$('#jrsuffix').attr("readonly", false);
+			}
 		}
 
 		function editRoadChallan() {
-			$("#roadChaImgEdit").attr("style", "display:none");
-			$("#roadChaImgAdd").attr("style", "display:block");
-			$('#rcomname').attr("readonly", false);
-			$('#rsuffix').attr("readonly", false);
+			if ("${isAdmin}" == 0 && "${canEdit}" == 0) {
+				alert("You have no permission to edit this!");
+			} else {
+				$("#roadChaImgEdit").attr("style", "display:none");
+				$("#roadChaImgAdd").attr("style", "display:block");
+				$('#rcomname').attr("readonly", false);
+				$('#rsuffix').attr("readonly", false);
+			}
 		}
 
 		function editPurchaseOrderInvoce() {
-			$("#purOrdrInvImgEdit").attr("style", "display: none;");
-			$("#purOrImgAdd").attr("style", "display: block;");
-			$('#pormname').attr("readonly", false);
-			$('#posuffix').attr("readonly", false);
+			if ("${isAdmin}" == 0 && "${canEdit}" == 0) {
+				alert("You have no permission to edit this!");
+			} else {
+				$("#purOrdrInvImgEdit").attr("style", "display: none;");
+				$("#purOrImgAdd").attr("style", "display: block;");
+				$('#pormname').attr("readonly", false);
+				$('#posuffix').attr("readonly", false);
+			}
 		}
 	</script>
 	<script>

@@ -333,7 +333,7 @@
 												</td>
 												<td><input type="text" value="0" class="form-control"
 													name="disValue" id="discount" placeholder=""
-													onkeyup="discountF();" autocomplete="off"></td>
+													onkeyup="gtot();" autocomplete="off"></td>
 											</tr>
 										</tbody>
 
@@ -1374,7 +1374,7 @@
 										.val(
 												Number($("#discount").val())
 														.toFixed(2));
-								discountF();
+								gtot();
 							});
 				});
 	</script>
@@ -1392,12 +1392,6 @@
 			}
 		});
 	</script>
-
-
-
-
-
-
 	<script>
 		ind = 0;
 		var k = 0;
@@ -1409,32 +1403,7 @@
 				sum += parseFloat(this.value);
 			});
 			$("#subtotalvalue").val(sum.toFixed(2));
-
-			/* $("#subtotalvalue").val(
-					Math.round((Number($("#subtotalvalue").val()) + Number($(
-							"#eachtotalvalue").val())) * 100) / 100); */
-			discountF();
-			$("#taxAmount").val(
-					Math.round((Number($("#subtotalvalue").val())
-							* Number($("#taxTot").val()) * 100) / 100)
-							/ Number(100));
-			$("#totalvalue").val(
-					Math.round((Number($("#subtotalvalue").val())
-							- Number($("#discountValue").val())
-							+ Number($("#taxAmount").val())
-							+ Number($("#transcharge").val()) + Number($(
-							"#surcharge").val())) * 100) / 100);
-			var tot = $("#totalvalue").val();
-			var round = Math.round(tot);
-			if (tot > round) {
-				$("#roundvalue").val(Math.round((round + 1 - tot) * 100) / 100);
-			} else {
-				$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
-			}
-
-			$("#grandtotal").val(
-					Number($("#totalvalue").val())
-							+ Number($("#roundvalue").val()));
+			gtot();
 		}
 
 		function probar() {
@@ -1494,54 +1463,7 @@
 																.val()) + Number($(
 																"#eachtotalvalue")
 																.val())) * 100) / 100);
-								discountF();
-								$("#taxAmount")
-										.val(
-												Math
-														.round((Number($(
-																"#subtotalvalue")
-																.val())
-																* Number($(
-																		"#taxTot")
-																		.val()) * 100) / 100)
-														/ Number(100));
-								$("#totalvalue")
-										.val(
-												Math
-														.round((Number($(
-																"#subtotalvalue")
-																.val())
-																- Number($(
-																		"#discountValue")
-																		.val())
-																+ Number($(
-																		"#taxAmount")
-																		.val())
-																+ Number($(
-																		"#transcharge")
-																		.val()) + Number($(
-																"#surcharge")
-																.val())) * 100) / 100);
-								var tot = $("#totalvalue").val();
-								var round = Math.round(tot);
-								if (tot > round) {
-									$("#roundvalue")
-											.val(
-													Math
-															.round((round + 1 - tot) * 100) / 100);
-								} else {
-									$("#roundvalue")
-											.val(
-													Math
-															.round((round - tot) * 100) / 100);
-								}
-
-								$("#grandtotal")
-										.val(
-												Number($("#totalvalue").val())
-														+ Number($(
-																"#roundvalue")
-																.val()));
+								gtot();
 
 								if (document.getElementById("trRemove"
 										+ $("#salesbarH").val()) === null) {
@@ -1629,189 +1551,11 @@
 				$("#qty").val("");
 			}
 		}
-		function disTypeF() {
-			$("#discount").val("");
-			$("#discountValue").val(0);
-			$("#totalvalue").val(
-					Math.round((Number($("#subtotalvalue").val())
-							- Number($("#discountValue").val())
-							+ Number($("#taxAmount").val())
-							+ Number($("#transcharge").val()) + Number($(
-							"#surcharge").val())) * 100) / 100);
-			var tot = $("#totalvalue").val();
-			var round = Math.round(tot);
-			if (tot > round) {
-				$("#roundvalue").val(Math.round((round + 1 - tot) * 100) / 100);
-			} else {
-				$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
-			}
-
-			$("#grandtotal").val(
-					Number($("#totalvalue").val())
-							+ Number($("#roundvalue").val()));
-		}
-		function discountF() {
-			if ($("#disType").val() == 'disPer') {
-				$("#discountValue")
-						.val(
-								Math
-										.round((Number($("#subtotalvalue")
-												.val())
-												* Number($("#discount").val()) / 100) * 100) / 100);
-			} else {
-				if (Number($("#discount").val()) > Number($("#subtotalvalue")
-						.val())) {
-					alert("Discount can not be greater than sub total value");
-					$("#discount").val("");
-				} else {
-					$("#discountValue")
-							.val(
-									Math
-											.round(Number($("#discount").val()) * 100) / 100);
-				}
-			}
-			$("#totalvalue").val(
-					Math.round((Number($("#subtotalvalue").val())
-							- Number($("#discountValue").val())
-							+ Number($("#taxAmount").val())
-							+ Number($("#transcharge").val()) + Number($(
-							"#surcharge").val())) * 100) / 100);
-			var tot = $("#totalvalue").val();
-			var round = Math.round(tot);
-			if (tot > round) {
-				$("#roundvalue").val(Math.round((round + 1 - tot) * 100) / 100);
-			} else {
-				$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
-			}
-
-			$("#grandtotal").val(
-					Number($("#totalvalue").val())
-							+ Number($("#roundvalue").val()));
-		}
 		function transchargeF() {
-			$("#totalvalue").val(
-					Math.round((Number($("#subtotalvalue").val())
-							- Number($("#discountValue").val())
-							+ Number($("#taxAmount").val())
-							+ Number($("#transcharge").val()) + Number($(
-							"#surcharge").val())) * 100) / 100);
-			var tot = $("#totalvalue").val();
-			var round = Math.round(tot);
-			if (tot > round) {
-				$("#roundvalue").val(Math.round((round + 1 - tot) * 100) / 100);
-			} else {
-				$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
-			}
-
-			$("#grandtotal").val(
-					Number($("#totalvalue").val())
-							+ Number($("#roundvalue").val()));
+			gtot();
 		}
 		function surchargeF() {
-			$("#totalvalue").val(
-					Math.round((Number($("#subtotalvalue").val())
-							- Number($("#discountValue").val())
-							+ Number($("#taxAmount").val())
-							+ Number($("#transcharge").val()) + Number($(
-							"#surcharge").val())) * 100) / 100);
-			var tot = $("#totalvalue").val();
-			var round = Math.round(tot);
-			if (tot > round) {
-				$("#roundvalue").val(Math.round((round + 1 - tot) * 100) / 100);
-			} else {
-				$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
-			}
-
-			$("#grandtotal").val(
-					Number($("#totalvalue").val())
-							+ Number($("#roundvalue").val()));
-		}
-		function selectedTaxGroup() {
-			if ($("#taxGroup").val() != 0) {
-				$
-						.ajax({
-							url : "getTaxGroupById",
-							data : {
-								id : $("#taxGroup").val()
-							},
-							dataType : "json",
-							success : function(data) {
-								$("#taxTot").val(data.taxtot);
-								$("#taxAmount")
-										.val(
-												Math
-														.round((Number($(
-																"#subtotalvalue")
-																.val())
-																* Number($(
-																		"#taxTot")
-																		.val()) * 100) / 100)
-														/ Number(100));
-								$("#totalvalue")
-										.val(
-												Math
-														.round((Number($(
-																"#subtotalvalue")
-																.val())
-																- Number($(
-																		"#discountValue")
-																		.val())
-																+ Number($(
-																		"#taxAmount")
-																		.val())
-																+ Number($(
-																		"#transcharge")
-																		.val()) + Number($(
-																"#surcharge")
-																.val())) * 100) / 100);
-								var tot = $("#totalvalue").val();
-								var round = Math.round(tot);
-								if (tot > round) {
-									$("#roundvalue")
-											.val(
-													Math
-															.round((round + 1 - tot) * 100) / 100);
-								} else {
-									$("#roundvalue")
-											.val(
-													Math
-															.round((round - tot) * 100) / 100);
-								}
-
-								$("#grandtotal")
-										.val(
-												Number($("#totalvalue").val())
-														+ Number($(
-																"#roundvalue")
-																.val()));
-							},
-							error : function(a, b, c) {
-								alert(c);
-							}
-						});
-			} else {
-				$("#taxTot").val('0');
-				$("#taxAmount").val('0');
-				$("#totalvalue").val(
-						Math.round((Number($("#subtotalvalue").val())
-								- Number($("#discountValue").val())
-								+ Number($("#taxAmount").val())
-								+ Number($("#transcharge").val()) + Number($(
-								"#surcharge").val())) * 100) / 100);
-				var tot = $("#totalvalue").val();
-				var round = Math.round(tot);
-				if (tot > round) {
-					$("#roundvalue").val(
-							Math.round((round + 1 - tot) * 100) / 100);
-				} else {
-					$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
-				}
-
-				$("#grandtotal").val(
-						Number($("#totalvalue").val())
-								+ Number($("#roundvalue").val()));
-			}
-
+			gtot();
 		}
 	</script>
 	<script type="text/javascript">
@@ -2362,53 +2106,7 @@
 																		.val()) + Number($(
 																		"#eachtotalvalue")
 																		.val())) * 100) / 100);
-										discountF();
-										$("#taxAmount")
-												.val(
-														Math
-																.round((Number($(
-																		"#subtotalvalue")
-																		.val())
-																		* Number($(
-																				"#taxTot")
-																				.val()) * 100) / 100)
-																/ Number(100));
-										$("#totalvalue")
-												.val(
-														Math
-																.round((Number($(
-																		"#subtotalvalue")
-																		.val())
-																		- Number($(
-																				"#discountValue")
-																				.val())
-																		+ Number($(
-																				"#taxAmount")
-																				.val())
-																		+ Number($(
-																				"#transcharge")
-																				.val()) + Number($(
-																		"#surcharge")
-																		.val())) * 100) / 100);
-										var tot = $("#totalvalue").val();
-										var round = Math.round(tot);
-										if (tot > round) {
-											$("#roundvalue")
-													.val(
-															Math
-																	.round((round + 1 - tot) * 100) / 100);
-										} else {
-											$("#roundvalue")
-													.val(
-															Math
-																	.round((round - tot) * 100) / 100);
-										}
-
-										$("#grandtotal").val(
-												Number($("#totalvalue").val())
-														+ Number($(
-																"#roundvalue")
-																.val()));
+										gtot();
 
 										if (document.getElementById("trRemove"
 												+ $("#salesbarH").val()) === null) {
@@ -3266,6 +2964,80 @@
 			var k = e.keyCode;
 			return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8
 					|| k == 64 || k == 46 || (k >= 48 && k <= 57));
+		}
+		function disTypeF() {
+			$("#discount").val(0);
+			gtot();
+		}
+		function selectedTaxGroup() {
+			if ($("#taxGroup").val() != 0) {
+				$.ajax({
+					url : "getTaxGroupById",
+					data : {
+						id : $("#taxGroup").val()
+					},
+					dataType : "json",
+					success : function(data) {
+						$("#taxTot").val(data.taxtot);
+						gtot();
+					},
+					error : function(a, b, c) {
+						alert(c);
+					}
+				});
+			} else {
+				$("#taxTot").val('0');
+				gtot();
+			}
+		}
+		function gtot() {
+			if ($("#disType").val() == 'disPer') {
+				$("#discountValue")
+						.val(
+								Math
+										.round((Number($("#subtotalvalue")
+												.val())
+												* Number($("#discount").val()) / 100) * 100) / 100);
+			} else {
+				if (Number($("#discount").val()) > Number($("#subtotalvalue")
+						.val())) {
+					alert("Discount can not be greater than sub total value");
+					$("#discount").val(0);
+					$("#discountValue").val(0);
+				} else {
+					$("#discountValue")
+							.val(
+									Math
+											.round(Number($("#discount").val()) * 100) / 100);
+				}
+			}
+			$("#taxAmount").val(
+					Math.round((Number($("#subtotalvalue").val())
+							* Number($("#taxTot").val()) * 100) / 100)
+							/ Number(100));
+
+			/* $("#taxAmount").val(
+						Math.round((Number(Number($("#subtotalvalue").val())
+								- Number($("#discountValue").val()))
+			 * Number($("#taxTot").val()) * 100) / 100)
+								/ Number(100)); */
+			$("#totalvalue").val(
+					Math.round((Number($("#subtotalvalue").val())
+							- Number($("#discountValue").val())
+							+ Number($("#taxAmount").val())
+							+ Number($("#transcharge").val()) + Number($(
+							"#surcharge").val())) * 100) / 100);
+			var tot = $("#totalvalue").val();
+			var round = Math.round(tot);
+			if (tot > round) {
+				$("#roundvalue").val(Math.round((round + 1 - tot) * 100) / 100);
+			} else {
+				$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
+			}
+
+			$("#grandtotal").val(
+					Number($("#totalvalue").val())
+							+ Number($("#roundvalue").val()));
 		}
 	</script>
 </body>

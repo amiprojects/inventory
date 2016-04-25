@@ -97,12 +97,12 @@
 			<ul>
 				<li><a href="changePassword.jsp" title="")><i
 						class="fa fa-edit"></i>Change Password</a></li>
-				<li><a href="#" title=""><i class="fa fa-wrench"></i>
+				<!-- <li><a href="#" title=""><i class="fa fa-wrench"></i>
 						Setting</a></li>
 				<li><a href="profile.html" title=""><i class="fa fa-user"></i>
 						Profile</a></li>
 				<li><a href="faq.html" title=""><i class="fa fa-info"></i>
-						Help</a></li>
+						Help</a></li> -->
 				<li><a href="logout" title=""><i class="fa fa-info"></i>
 						Logout</a></li>
 			</ul>
