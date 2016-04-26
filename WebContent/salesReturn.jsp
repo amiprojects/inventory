@@ -570,17 +570,6 @@
 															readonly="readonly" value="0" id="taxAmount2"></td>
 													</tr>
 												</tbody>
-												<%-- <tbody>
-													<tr>
-														<td colspan="2" id="trans">Transport charge :</td>
-														<td><input type="text" class="form-control"
-															readonly="readonly" value="${salre.transportcCharge}"
-															id="transcharge" name="transcharge"></td>
-
-													</tr>
-												</tbody> --%>
-
-
 												<tbody>
 													<tr>
 														<td colspan="2" id="round">Round Off :</td>
@@ -589,8 +578,6 @@
 															value=""></td>
 													</tr>
 												</tbody>
-
-
 												<thead>
 													<tr>
 														<td colspan="2" id="grand">Grand Total :</td>
@@ -606,16 +593,12 @@
 													data-toggle="modal"> <input type="button"
 													class="btn btn-info btn-sm" data-toggle="modal"
 													value="Save" onclick="paymentDate();">
-
-
 												<div id="saveSales" class="modal fade" role="dialog"
 													style="top: 25px;">
-
 													<div class="modal-dialog modal-lg">
 														<div class="modal-content">
 															<div class="modal-header">
 																<button type="button" class="close" data-dismiss="modal">&times;</button>
-
 																<h4 class="modal-title">Payment Details</h4>
 															</div>
 															<div class="modal-body">

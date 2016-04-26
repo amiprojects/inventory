@@ -91,7 +91,7 @@
 
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
-								<h3 style="margin-top: 11px;">Purchase Edit</h3>
+								<h3 style="margin-top: 11px;">Purchase View</h3>
 
 							</div>
 							<div class="col-md-12">
@@ -254,42 +254,17 @@
 										<thead>
 											<tr>
 												<td colspan="2">Sub Total :</td>
-												<td><fmt:formatNumber var="subt"
+												<td>
+													<%-- <fmt:formatNumber var="subt"
+														value="${(100*(purchaseSearchView.totalCost-purchaseSearchView.sur_charge-purchaseSearchView.transport_cost-purchaseSearchView.roundOf))/(100+purchaseSearchView.tax_Type_Group.totalTaxValue)}"
+														maxFractionDigits="2" /> --%> <fmt:formatNumber var="subt"
 														value="${purchaseSearchView.subTotal}"
 														maxFractionDigits="2" /> <input type="text"
 													class="form-control" id="subTotal" value="${subt}"
-													readonly="readonly"></td>
+													readonly="readonly">
+												</td>
 											</tr>
 										</thead>
-										<tbody>
-											<tr>
-												<td colspan="2">Discount &nbsp; <select name="disType"
-													id="disType" disabled="disabled">
-														<c:choose>
-															<c:when
-																test="${purchaseSearchView.isFlatDiscount()==true}">
-																<option value="disFlat">Flat</option>
-															</c:when>
-															<c:otherwise>
-																<option value="disPer">%</option>
-															</c:otherwise>
-														</c:choose>
-												</select>
-												</td>
-												<td><input type="number" class="form-control"
-													name="disValue" id="discount" placeholder=""
-													readonly="readonly"
-													value="<fmt:formatNumber value="${purchaseSearchView.discountValue}" maxFractionDigits="2" />"></td>
-											</tr>
-										</tbody>
-										<tbody>
-											<tr>
-												<td colspan="2" id="disc">Discount Value:</td>
-												<td><input type="number" class="form-control"
-													readonly="readonly" id="discountValue" name="discountValue"
-													value="<fmt:formatNumber value="${purchaseSearchView.discountTotal}" maxFractionDigits="2" />"></td>
-											</tr>
-										</tbody>
 										<tbody>
 											<tr>
 												<td>${purchaseSearchView.tax_Type_Group.name}</td>
@@ -303,77 +278,17 @@
 										<tbody>
 											<tr>
 												<td colspan="2">Tax Amount :</td>
-												<td><fmt:formatNumber var="ta"
+												<td>
+													<%-- <fmt:formatNumber var="subt"
+														value="${((100*(purchaseSearchView.totalCost-purchaseSearchView.sur_charge-purchaseSearchView.transport_cost-purchaseSearchView.roundOf))/(100+purchaseSearchView.tax_Type_Group.totalTaxValue))*purchaseSearchView.tax_Type_Group.totalTaxValue/100}"
+														maxFractionDigits="2" /> --%> <fmt:formatNumber var="ta"
 														value="${purchaseSearchView.taxAmount}"
 														maxFractionDigits="2" /> <input type="text"
 													class="form-control" readonly="readonly" value="${ta}"
-													id="taxAmount"></td>
-											</tr>
-										</tbody>
-										<tbody>
-											<tr>
-												<td colspan="2">Agent Profit:</td>
-												<td>Is inclusive :&nbsp; <select name="isInclusive"
-													id="isInclusive" disabled="disabled">
-														<c:choose>
-															<c:when
-																test="${purchaseSearchView.isInclusiveAgent()==true}">
-																<option>Yes</option>
-															</c:when>
-															<c:otherwise>
-																<option>No</option>
-															</c:otherwise>
-														</c:choose>
-												</select> <c:if
-														test="${purchaseSearchView.isInclusiveAgent()==false}">
-														<br> Is Effective On Return:&nbsp; <select
-															name="isEffective" id="isEffective" disabled="disabled">
-															<c:choose>
-																<c:when
-																	test="${purchaseSearchView.isEfectiveProfit()==true}">
-																	<option>Yes</option>
-																</c:when>
-																<c:otherwise>
-																	<option>No</option>
-																</c:otherwise>
-															</c:choose>
-														</select>
-													</c:if>
+													id="taxAmount">
 												</td>
 											</tr>
 										</tbody>
-										<c:if test="${purchaseSearchView.isInclusiveAgent()==false}">
-											<tbody>
-												<tr>
-													<td colspan="2">Agent Profit: &nbsp; <select
-														name="profitType" id="profitType"
-														onchange="profitTypeF();" disabled="disabled">
-															<c:choose>
-																<c:when
-																	test="${purchaseSearchView.isFlatProfitAgent()==true}">
-																	<option value="profitFlat">Flat</option>
-																</c:when>
-																<c:otherwise>
-																	<option value="profitPer">%</option>
-																</c:otherwise>
-															</c:choose>
-													</select>
-													</td>
-													<td><input type="text"
-														value="${purchaseSearchView.agentProfitValue}"
-														class="form-control" name="profitVal" id="profitVal"
-														placeholder="" readonly="readonly"></td>
-												</tr>
-											</tbody>
-											<tbody>
-												<tr>
-													<td colspan="2" id="disc">Agent Profit Value:</td>
-													<td><input type="text" class="form-control"
-														readonly="readonly" id="profitValue" name="profitValue"
-														value="${purchaseSearchView.agentProfitTotal}"></td>
-												</tr>
-											</tbody>
-										</c:if>
 										<tbody>
 											<tr>
 												<td colspan="2">Transport charge :</td>
@@ -466,7 +381,14 @@
 									<input type="text" id="pCode" name="pCode" class="form-control"
 										onchange="emptyForm();" autocomplete="off"><input
 										type="hidden" id="productCode" name="productCode">
+
 								</div>
+								<!-- <div class="col-md-1">
+									<a onclick="addDesineNo()" title="Add New Product"> <img
+										style="margin-top: 4px; cursor: pointer; margin-left: -23px;"
+										height="27px" width="27px" alt="" src="img/add.png">
+									</a>
+								</div> -->
 								<div class="col-md-5">Product Descripsion:</div>
 								<div class="col-md-7">
 									<input type="text" class="form-control" name="pDesc" id="pDesc"
@@ -589,10 +511,7 @@
 								</div>
 								<div class="col-md-10">
 									<input type="text" class="form-control" id="lotText"
-										name="lotText" onkeypress="return blockSpecialChar(event)"
-										onkeyup="lotNoKeyUpT();" onchange="lotNoChangeT();"
-										autocomplete="off"><input type="hidden"
-										id="lotNoCheckT" name="lotNoCheckT">
+										name="lotText">
 								</div>
 							</div>
 
@@ -816,7 +735,12 @@
 			$("#addProduct").modal("hide");
 			$("#header").show();
 		});
-		ind = 0;	
+		ind = 0;
+	
+	
+	
+	
+	
 	function emptyForm() {
 			if ($("#pCode").val() == "") {
 				getProductDetailsByProductCode(0);
@@ -869,10 +793,22 @@
 
 				}
 			});
-		});		
+		});
+		
+		
+		
 		
 		$(document).ready(function() {
 			$("#isSalable").val('no');
+			$("#isBarPrint").val('no');
+			$("#isSerial").val('no');
+			$("#isLot").val('yes');
+			$("#isAgent").val('no');
+			$("#aNameDiv").hide();
+			$("#aDetailDiv").hide();
+		});
+		$(function() {
+			$("#datepicker").datepicker();
 		});
 		function getProductDetailsByProductCode(id1) {
 			if (id1 != 0) {
@@ -1026,11 +962,6 @@
 		}
 		
 		function rateF() {
-			if ($("#rate").val() != "") {
-				$("#rate").val(Number($("#rate").val()).toFixed(2));
-			} else {
-				$("#rate").val("");
-			}
 			if ($("#isSalable").val() == 'yes') {
 				if ($("#wsp").val() != ""
 						&& Number($("#rate").val()) > Number($("#wsp").val())) {
@@ -1045,11 +976,6 @@
 		}
 
 		function wspF() {
-			if ($("#wsp").val() != "") {
-				$("#wsp").val(Number($("#wsp").val()).toFixed(2));
-			} else {
-				$("#wsp").val("");
-			}
 			if ($("#isSalable").val() == 'yes') {
 				if ($("#rate").val() == "") {
 					alert("Please insert Rate first...");
@@ -1066,11 +992,6 @@
 		}
 
 		function mrpF() {
-			if ($("#mrp").val() != "") {
-				$("#mrp").val(Number($("#mrp").val()).toFixed(2));
-			} else {
-				$("#mrp").val("");
-			}
 			if ($("#isSalable").val() == 'yes') {
 				if ($("#rate").val() == "") {
 					alert("Please insert Rate first...");
@@ -1090,7 +1011,9 @@
 		
 		
 		var k = Number("${i}");
-		function anotherShow() {			
+		function anotherShow() {
+			
+			
 			if ($("#productCode").val() == 0) {
 				alert("please select Product Code:");
 			} else if ($("#qty").val() == "") {
@@ -1146,7 +1069,11 @@
 					},error:function(a,b,c){
 						alert(JSON.stringify(a));
 					}
-				});					
+				});
+				
+				
+				
+				
 			}
 		}
 		
@@ -1183,8 +1110,38 @@
 			$("#attr5").prop("readonly", true);
 			$("#attr6").prop("readonly", true);
 		}
+		
+/*************remove product**********/	
+function removeProduct(a) {
 
-function displayProductIntable(ppid){	
+	n1 = $("#trRemove" + a + " :nth-child(7)").html();
+	n2 = $("#subTotal").val();
+	$("#subTotal").val(
+			Math.round((Number(n2) - Number(n1)) * 100) / 100);
+
+	/* var sum = 0;
+	$(".trRemove:nth-child(7)").each(function() {
+		sum += parseFloat(this.value);
+	});
+	$("#subTotal").val(sum.toFixed(2)); */
+
+	$("#trRemove" + a).remove();
+	
+	
+	$("#totalvalue").val(
+			Math.round((Number($("#subTotal").val())
+					+ Number($("#taxAmount").val())
+					+ Number($("#transportCost").val()) + Number($(
+					"#surcharge").val())) * 100) / 100);
+	var tot = $("#totalvalue").val();
+	var round = Math.round(tot);
+	$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
+	$("#gt").val(Math.round((round) * 100) / 100);
+}
+
+function displayProductIntable(ppid){
+	
+	
 	$("#purPro tbody")
 			.append(
 					'<tr class="trRemove" id="trRemove'+ind+'"><td>'
@@ -1202,14 +1159,34 @@ function displayProductIntable(ppid){
 							+ '</td><td>'
 							+ Number($("#qty").val())
 							* Number($("#rate").val())
-							+ '</td>'+'</tr>');
+							+ '</td>'/* <td>
+							+ '<a href="#" onclick="removeProduct('
+							+ ind
+							+ ');"><img src="img/cross.png" height="16px" width="16px"></a>'
+							+ '</td> */+'</tr>');
 	$("#subTotal").val(
 			Math.round(Number($("#subTotal").val()) + Number($(
 					"#qty").val())
 					* Number($("#rate").val())));
-	gtot();
+	$("#taxAmount")
+			.val(
+					Math
+							.round((Number($("#subTotal").val())
+									* Number($("#taxTot").val()) / Number(100)) * 100) / 100);
+
+	$("#totalvalue").val(
+			Math.round((Number($("#subTotal").val())
+					+ Number($("#taxAmount").val())
+					+ Number($("#transportCost").val()) + Number($(
+					"#surcharge").val())) * 100) / 100);
+	var tot = $("#totalvalue").val();
+	var round = Math.round(tot);
+	$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
+	$("#gt").val(Math.round((round) * 100) / 100);
+
+	k++;
+
 	
-	k++;	
 	ind++;
 
 	$("#dept").val("");
@@ -1242,14 +1219,21 @@ function displayProductIntable(ppid){
 	$("#attr3").prop("readonly", true);
 	$("#attr4").prop("readonly", true);
 	$("#attr5").prop("readonly", true);
-	$("#attr6").prop("readonly", true);	
+	$("#attr6").prop("readonly", true);
+	
+	
+	
 
 	var st = $("#subTotal").val();
 	st = st.replace(",", "");
 	var scharge = $("#surcharge").val();
 	var tcharge = $("#transportCost").val();
-	var gt = $("#gt").val();
-	var roundvalue = $("#roundvalue").val();
+	var tot = Number(st) + Number(scharge) + Number(tcharge);
+	var gt = Math.round(tot, 0);
+	var roundvalue = gt - tot;
+	roundvalue = roundvalue.toFixed(2);
+	$("#roundvalue").val(roundvalue);
+	$("#gt").val(Number(gt));
 
 	$.ajax({
 		url : "updatePurchaseEntry",
@@ -1260,10 +1244,7 @@ function displayProductIntable(ppid){
 			trCharge : tcharge,
 			gt:gt,
 			roundvalue:roundvalue,
-			st:st,
-			discountValue : $("#discountValue").val(),
-			taxAmount : $("#taxAmount").val(),
-			profitValue : $("#profitValue").val()
+			st:st
 		},
 		success : function(data) {
 			if (data.error) {					
@@ -1273,122 +1254,10 @@ function displayProductIntable(ppid){
 				$("#another").modal("show");
 			}
 		}
-	});	
-}
-
-function lotNoKeyUpT() {
-	$("#lotNoCheckT").val("");
-	$.ajax({
-		url : "getPurchaseProductDetailsByLotNumber",
-		dataType : "json",
-		data : {
-			lotNo : $("#lotText").val()
-		},
-		success : function(data) {
-			if (data.lotNo != "") {
-				$("#lotNoCheckT").val(data.lotNo);
-			} else {
-				$("#lotNoCheckT").val("");
-			}
-		}
 
 	});
-}
-
-function lotNoChangeT() {
-	if ($("#lotNoCheckT").val() != "") {
-		alert("Duplicate Lot Number");
-		$("#lotNoCheckT").val("");
-		$("#lotText").val("");
-	}
-}
-
-function gtot() {
-	if ($("#disType").val() == 'disPer') {
-		$("#discountValue")
-				.val(
-						Math
-								.round((Number($("#subTotal").val())
-										* Number($("#discount").val()) / 100) * 100) / 100);
-	} else {
-		if (Number($("#discount").val()) > Number($("#subTotal").val())) {
-			alert("Discount can not be greater than sub total value");
-			$("#discount").val(0);
-			$("#discountValue").val(0);
-		} else {
-			$("#discountValue")
-					.val(
-							Math
-									.round(Number($("#discount").val()) * 100) / 100);
-		}
-	}
-
-	$("#taxAmount")
-			.val(
-					Math
-							.round((Number(Number($("#subTotal").val())
-									- Number($("#discountValue").val()))
-									* Number($("#taxTot").val()) / Number(100)) * 100) / 100);
-
-	if ($("#profitType").val() == 'profitPer') {
-		$("#profitValue")
-				.val(
-						Math
-								.round((Number(Number($("#subTotal")
-										.val())
-										- Number($("#discountValue")
-												.val())
-										+ Number($("#taxAmount").val()))
-										* Number($("#profitVal").val()) / 100) * 100) / 100);
-	} else {
-		$("#profitValue").val(
-				Math.round(Number($("#profitVal").val()) * 100) / 100);
-	}
-
-	$("#totalvalue").val(
-			Math.round((Number($("#subTotal").val())
-					- Number($("#discountValue").val())
-					+ Number($("#taxAmount").val())
-					+ Number($("#profitValue").val())
-					+ Number($("#transportCost").val()) + Number($(
-					"#surcharge").val())) * 100) / 100);
-
-	var tot = $("#totalvalue").val();
-	var round = Math.round(tot);
-	$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
-	$("#gt").val(Math.round((round) * 100) / 100);
+	
 }
 </script>
-<script src="js/numericInput.min.js"></script>
-<script>
-		$(function() {
-			$("#qty").numericInput({
-				allowFloat : true, // Accpets positive numbers (floating point)
-				allowNegative : false,
-			// Accpets positive or negative integer
-			});
-			$("#mrp").numericInput({
-				allowFloat : true, // Accpets positive numbers (floating point)
-				allowNegative : false,
-			// Accpets positive or negative integer
-			});
-			$("#wsp").numericInput({
-				allowFloat : true, // Accpets positive numbers (floating point)
-				allowNegative : false,
-			// Accpets positive or negative integer
-			});
-			$("#rate").numericInput({
-				allowFloat : true, // Accpets positive numbers (floating point)
-				allowNegative : false,
-			// Accpets positive or negative integer
-			});
-		});
-	</script>
-<script type="text/javascript">
-		function blockSpecialChar(e) {
-			var k = e.keyCode;
-			return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8
-					|| k == 32 || (k >= 48 && k <= 57));
-		}
-	</script>
+
 </html>

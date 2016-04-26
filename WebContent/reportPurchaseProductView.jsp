@@ -123,11 +123,6 @@
 											<th>Vendor Bill no.</th>
 											<th>Qty</th>
 											<th>Sub Total</th>
-											<th>Tax Amount</th>
-											<!-- <th>Transport Cost</th>
-											<th>Surcharge</th>
-											<th>RoundOf</th>
-											<th>Grand Total</th> -->
 											<th></th>
 										</tr>
 									</thead>
@@ -177,13 +172,6 @@
 																value="${subot+(proedPurDet.quantity-proedPurDet.totalReturningQty)*proedPurDet.cost}"></c:set>
 														</c:if>
 													</c:forEach> ${subot}</td>
-												<td><fmt:formatNumber var="taxAmount"
-														value="${subot*pEntryByD.tax_Type_Group.getTotalTaxValue()/100}"
-														maxFractionDigits="2" />${taxAmount}</td>
-												<%-- <td>${pEntryByD.transport_cost}</td>
-												<td>${pEntryByD.sur_charge}</td>
-												<td>${pEntryByD.roundOf}</td>
-												<td>${pEntryByD.totalCost}</td> --%>
 												<td><c:if
 														test="${pEntryByD.vendor.name!='Production Vendor'}">
 														<form action="purchaseReportView" method="post"

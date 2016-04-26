@@ -42,6 +42,7 @@ public class Purchase_Entry implements Serializable {
 	private int agentId;
 	private boolean isFlatDiscount;
 	private float discountValue;
+	private float discountTotal;
 	private boolean isInclusiveAgent;
 	private boolean isFlatProfitAgent;
 	private boolean isEfectiveProfit;
@@ -347,6 +348,14 @@ public class Purchase_Entry implements Serializable {
 
 	public void setAgentProfitTotal(float agentProfitTotal) {
 		this.agentProfitTotal = agentProfitTotal;
+	}
+
+	public float getDiscountTotal() {
+		return discountTotal;
+	}
+
+	public void setDiscountTotal(float discountTotal) {
+		this.discountTotal = discountTotal;
 	}
 
 }

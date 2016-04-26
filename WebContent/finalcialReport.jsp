@@ -69,95 +69,6 @@ td {
 tfoot {
 	width: 100% !important;
 }
-margin-bottom
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-:
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-3
-em
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-;
 </style>
 
 </head>
@@ -505,6 +416,15 @@ em
 
 													</c:forEach>
 
+													<c:set value="${0}" var="totalAP" />
+													<c:forEach
+														items="${sessionScope['ejb'].getAllPurchaseEntry()}"
+														var="purEntry">
+														<c:set value="${totalAP+purEntry.agentProfitTotal}"
+															var="totalAP" />
+
+													</c:forEach>
+
 													<c:set value="${0}" var="totalPE3" />
 													<c:forEach
 														items="${sessionScope['ejb'].getAllPurchaseEntry()}"
@@ -534,7 +454,7 @@ em
 
 													</c:forEach>
 													<tr>
-														<td colspan="2">Product Sold</td>
+														<td colspan="2">Product Purchased</td>
 														<td>Amount</td>
 													</tr>
 
@@ -568,13 +488,18 @@ em
 															of Tax</td>
 													</tr>
 
-
+													<tr>
+														<td colspan="2">Total Agent Profit</td>
+														<td><fmt:formatNumber type="number"
+																maxFractionDigits="2" value="${totalAP}" /><br> <br>+&#8721;
+															of Agent Profit</td>
+													</tr>
 
 													<tr>
 														<td colspan="2">Total:</td>
 														<td><fmt:formatNumber type="number"
 																maxFractionDigits="2"
-																value="${totalPE-prta+totalPE3+totalPE2+totalPE1}" /></td>
+																value="${totalPE-prta+totalPE3+totalPE2+totalPE1+totalAP}" /></td>
 													</tr>
 
 
@@ -598,7 +523,7 @@ em
 
 														<td><fmt:formatNumber type="number"
 																maxFractionDigits="2"
-																value="${totalSE-srta-totalSE3-totalSE2-totalSE1-totalPE+prta-totalPE3-totalPE2-totalPE1}" /></td>
+																value="${totalSE-srta-totalSE3-totalSE2-totalSE1-totalPE+prta-totalPE3-totalPE2-totalPE1-totalAP}" /></td>
 														<td>&nbsp;</td>
 
 														<td><fmt:formatNumber type="number"
@@ -607,7 +532,7 @@ em
 														<td>&nbsp;</td>
 														<td><fmt:formatNumber type="number"
 																maxFractionDigits="2"
-																value="${totalPE-prta-totalPE3-totalPE2-totalPE1}" /></td>
+																value="${totalPE-prta+totalPE3+totalPE2+totalPE1+totalAP}" /></td>
 													</tr>
 												</table>
 											</div>
@@ -697,16 +622,19 @@ em
 															<c:forEach
 																items="${sessionScope['ejb'].getAllVendtypeVen()}"
 																var="vvendor">
-																<tr>
-																	<td>${c}</td>
-																	<td>${vvendor.name}</td>
-																	<td>${vvendor.ph1}</td>
-																	<td>${vvendor.address}</td>
-																	<td><a href="reportVendorRaz.jsp?id=${vvendor.id}"><img
-																			alt="click to view" src="images/eye.png" height="20"></a></td>
+																<c:if test="${vvendor.name!='Production Vendor'}">
+																	<tr>
+																		<td>${c}</td>
+																		<td>${vvendor.name}</td>
+																		<td>${vvendor.ph1}</td>
+																		<td>${vvendor.address}</td>
+																		<td><a
+																			href="reportVendorRaz.jsp?id=${vvendor.id}"><img
+																				alt="click to view" src="images/eye.png" height="20"></a></td>
 
-																</tr>
-																<c:set var="c" value="${c+1}" />
+																	</tr>
+																	<c:set var="c" value="${c+1}" />
+																</c:if>
 															</c:forEach>
 														</tbody>
 													</table>

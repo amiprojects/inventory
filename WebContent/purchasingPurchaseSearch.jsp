@@ -283,7 +283,10 @@
 														<form action="purchaseEdit" method="post">
 															<input type="hidden" value="${pEntryByD.id}" name="pId">
 															<input type="image" src="img/edit.png">
-														</form>
+														</form> <%-- <form action="#" method="post">
+															<input type="hidden" value="${pEntryByD.id}" name="pId">
+															<input type="image" src="img/edit.png">
+														</form> --%>
 													</td>
 												</tr>
 												<c:set var="count" value="${count+1}" />

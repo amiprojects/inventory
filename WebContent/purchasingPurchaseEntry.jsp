@@ -2782,12 +2782,6 @@
 		}
 	</script>
 	<script type="text/javascript">
-		function blockSpecialChar(e) {
-			var k = e.keyCode;
-			return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || (k >= 48 && k <= 57));
-		}
-	</script>
-	<script type="text/javascript">
 		function readURL(input) {
 			if (input.files && input.files[0]) {
 				var reader = new FileReader();

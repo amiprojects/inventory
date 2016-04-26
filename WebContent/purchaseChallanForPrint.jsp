@@ -213,11 +213,29 @@ myWindow.print();
 							<c:set value="${sl+1}" var="sl" />
 						</c:forEach>
 						<c:if test="${i==qPage}">
+							<c:if test="${purEntry.discountTotal!=0}">
+								<tr>
+									<td colspan="5" align="right">Discount <c:set var="dis"
+											value="${purEntry.isFlatDiscount()?'Flat':'%'}" />
+										(${purEntry.discountValue}(${dis})) :
+									</td>
+									<td>${purEntry.discountTotal}</td>
+								</tr>
+							</c:if>
 							<c:if test="${purEntry.taxAmount!=0}">
 								<tr>
 									<td colspan="5" align="right">Tax Amount
 										(${purEntry.tax_Type_Group.getTotalTaxValue()}%) :</td>
 									<td>${purEntry.taxAmount}</td>
+								</tr>
+							</c:if>
+							<c:if test="${purEntry.agentProfitTotal!=0}">
+								<tr>
+									<td colspan="5" align="right">Agent Profit <c:set
+											var="prof" value="${purEntry.isFlatProfitAgent()?'Flat':'%'}" />
+										(${purEntry.agentProfitValue}(${prof})) :
+									</td>
+									<td>${purEntry.agentProfitTotal}</td>
 								</tr>
 							</c:if>
 							<c:if test="${purEntry.transport_cost!=0}">

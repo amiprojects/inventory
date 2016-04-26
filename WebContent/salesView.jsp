@@ -369,8 +369,6 @@
 														</c:when>
 														<c:otherwise>
 															<option value="disPer">%</option>
-															<%-- <c:set var="dis"
-																value="${salesSearchView.discountValue*100/subTotal}"></c:set> --%>
 															<c:set var="dis"
 																value="${salesSearchView.subTotal*salesSearchView.discountValue/100}"></c:set>
 														</c:otherwise>

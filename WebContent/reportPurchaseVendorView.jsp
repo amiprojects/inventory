@@ -111,73 +111,76 @@
 								<hr style="width: 100%;">
 								<br>
 
-
-								<table id="stream_table"
-									class="table table-striped table-bordered">
-									<thead>
-										<tr>
-											<th>#</th>
-											<th>Purchase Date</th>
-											<th>Vendor Name</th>
-											<th>Agent Name</th>
-											<th>Purchase challan no.</th>
-											<th>Vendor Bill no.</th>
-											<!-- <th>Qty</th> -->
-											<th>Sub Total</th>
-											<th>Tax Amount</th>
-											<th>Transport Cost</th>
-											<th>Surcharge</th>
-											<th>RoundOf</th>
-											<th>Grand Total</th>
-											<th></th>
-										</tr>
-									</thead>
-									<tbody style="height: 300px;">
-										<c:set var="count" value="${1}" />
-										<c:forEach items="${requestScope['purEntryList']}"
-											var="pEntryByD">
+								<div style="width: 100%; overflow: auto;">
+									<table id="stream_table"
+										class="table table-striped table-bordered">
+										<thead>
 											<tr>
-												<td>${count}</td>
-												<td><fmt:formatDate value="${pEntryByD.purchase_date}"
-														pattern="dd-MM-yy" /></td>
-												<c:if test="${pEntryByD.vendor.vendorType.type=='Vendor'}">
-													<td>${pEntryByD.vendor.name}</td>
-												</c:if>
-												<c:if test="${pEntryByD.vendor.vendorType.type!='Vendor'}">
-													<td>NIL</td>
-												</c:if>
-												<c:choose>
-													<c:when
-														test="${pEntryByD.vendor.vendorType.type=='Purchase Agent'}">
-														<td>${pEntryByD.vendor.name}</td>
-													</c:when>
-													<c:when test="${pEntryByD.agentId!=0}">
-														<td>${sessionScope['ejb'].getVendorById(pEntryByD.agentId).name}</td>
-													</c:when>
-													<c:otherwise>
-														<td>NIL</td>
-													</c:otherwise>
-												</c:choose>
-												<td>${pEntryByD.challanNumber}</td>
-												<td>${pEntryByD.vendor_bill_no}</td>
-												<!-- <td>Qty</td> -->
-												<td>${pEntryByD.subTotal}</td>
-												<td>${pEntryByD.taxAmount}</td>
-												<td>${pEntryByD.transport_cost}</td>
-												<td>${pEntryByD.sur_charge}</td>
-												<td>${pEntryByD.roundOf}</td>
-												<td>${pEntryByD.totalCost}</td>
-												<td><form action="purchaseReportView" method="post"
-														id="pView${pEntryByD.id}">
-														<a href="#" onclick="purchaseViewF('${pEntryByD.id}');"><input
-															type="hidden" value="${pEntryByD.id}" name="pId"><img
-															alt="" src="images/eye.png" height="25px"></a>
-													</form></td>
+												<th>#</th>
+												<th>Purchase Date</th>
+												<th>Vendor Name</th>
+												<th>Agent Name</th>
+												<th>Purchase challan no.</th>
+												<th>Vendor Bill no.</th>
+												<th>Sub Total</th>
+												<th>Discount</th>
+												<th>Tax Amount</th>
+												<th>Agent Profit</th>
+												<th>Transport Cost</th>
+												<th>Surcharge</th>
+												<th>RoundOf</th>
+												<th>Grand Total</th>
+												<th></th>
 											</tr>
-											<c:set var="count" value="${count+1}" />
-										</c:forEach>
-									</tbody>
-								</table>
+										</thead>
+										<tbody style="height: 300px;">
+											<c:set var="count" value="${1}" />
+											<c:forEach items="${requestScope['purEntryList']}"
+												var="pEntryByD">
+												<tr>
+													<td>${count}</td>
+													<td><fmt:formatDate value="${pEntryByD.purchase_date}"
+															pattern="dd-MM-yy" /></td>
+													<c:if test="${pEntryByD.vendor.vendorType.type=='Vendor'}">
+														<td>${pEntryByD.vendor.name}</td>
+													</c:if>
+													<c:if test="${pEntryByD.vendor.vendorType.type!='Vendor'}">
+														<td>NIL</td>
+													</c:if>
+													<c:choose>
+														<c:when
+															test="${pEntryByD.vendor.vendorType.type=='Purchase Agent'}">
+															<td>${pEntryByD.vendor.name}</td>
+														</c:when>
+														<c:when test="${pEntryByD.agentId!=0}">
+															<td>${sessionScope['ejb'].getVendorById(pEntryByD.agentId).name}</td>
+														</c:when>
+														<c:otherwise>
+															<td>NIL</td>
+														</c:otherwise>
+													</c:choose>
+													<td>${pEntryByD.challanNumber}</td>
+													<td>${pEntryByD.vendor_bill_no}</td>
+													<td>${pEntryByD.subTotal}</td>
+													<td>${pEntryByD.discountTotal}</td>
+													<td>${pEntryByD.taxAmount}</td>
+													<td>${pEntryByD.agentProfitTotal}</td>
+													<td>${pEntryByD.transport_cost}</td>
+													<td>${pEntryByD.sur_charge}</td>
+													<td>${pEntryByD.roundOf}</td>
+													<td>${pEntryByD.totalCost}</td>
+													<td><form action="purchaseReportView" method="post"
+															id="pView${pEntryByD.id}">
+															<a href="#" onclick="purchaseViewF('${pEntryByD.id}');"><input
+																type="hidden" value="${pEntryByD.id}" name="pId"><img
+																alt="" src="images/eye.png" height="25px"></a>
+														</form></td>
+												</tr>
+												<c:set var="count" value="${count+1}" />
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
 							</div>
 						</div>
 					</div>

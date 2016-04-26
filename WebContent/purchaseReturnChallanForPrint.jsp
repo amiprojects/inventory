@@ -201,12 +201,38 @@ page[size="A4"] {
 							<c:set value="${sl+1}" var="sl" />
 						</c:forEach>
 						<c:if test="${i==qPage}">
+							<c:if test="${purEntry.purchaseEntry.discountTotal!=0}">
+								<tr>
+									<td colspan="5" align="right">Discount <c:set var="dis"
+											value="${purEntry.purchaseEntry.isFlatDiscount()?'Flat':'%'}" />
+										(${purEntry.purchaseEntry.discountValue}(${dis})) :
+									</td>
+									<td><c:set var="disTot"
+											value="${gtot*purEntry.purchaseEntry.discountTotal/purEntry.purchaseEntry.subTotal}" />
+										${disTot}</td>
+								</tr>
+							</c:if>
 							<c:if test="${purEntry.purchaseEntry.taxAmount!=0}">
 								<tr>
 									<td colspan="5" align="right">Tax Amount
 										(${purEntry.purchaseEntry.tax_Type_Group.getTotalTaxValue()}%)
 										:</td>
-									<td>${gtot*purEntry.purchaseEntry.tax_Type_Group.getTotalTaxValue()/100}</td>
+									<td>
+										${gtot*purEntry.purchaseEntry.taxAmount/purEntry.purchaseEntry.subTotal}
+									</td>
+								</tr>
+							</c:if>
+							<c:if
+								test="${purEntry.purchaseEntry.agentProfitTotal!=0 && purEntry.purchaseEntry.isEfectiveProfit()==true}">
+								<tr>
+									<td colspan="5" align="right">Agent Profit <c:set
+											var="prof"
+											value="${purEntry.purchaseEntry.isFlatProfitAgent()?'Flat':'%'}" />
+										(${purEntry.purchaseEntry.agentProfitValue}(${prof})) :
+									</td>
+									<td><fmt:formatNumber var="profTot"
+											value="${gtot*purEntry.purchaseEntry.agentProfitTotal/purEntry.purchaseEntry.subTotal}"
+											maxFractionDigits="2" /> ${profTot}</td>
 								</tr>
 							</c:if>
 							<c:if test="${purEntry.roundOff!=0}">

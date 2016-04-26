@@ -296,15 +296,11 @@
 										<thead>
 											<tr>
 												<td colspan="2">Sub Total :</td>
-												<td>
-													<%-- <fmt:formatNumber var="subt"
-														value="${(100*(purchaseSearchView.totalCost-purchaseSearchView.sur_charge-purchaseSearchView.transport_cost-purchaseSearchView.roundOf))/(100+purchaseSearchView.tax_Type_Group.totalTaxValue)}"
-														maxFractionDigits="2" /> --%> <fmt:formatNumber var="subt"
+												<td><fmt:formatNumber var="subt"
 														value="${purchaseSearchView.subTotal}"
 														maxFractionDigits="2" /> <input type="text"
 													class="form-control" id="subTotal" value="${subt}"
-													readonly="readonly">
-												</td>
+													readonly="readonly"></td>
 											</tr>
 										</thead>
 										<tbody>
@@ -315,13 +311,9 @@
 															<c:when
 																test="${purchaseSearchView.isFlatDiscount()==true}">
 																<option value="disFlat">Flat</option>
-																<c:set var="dis"
-																	value="${purchaseSearchView.discountValue}"></c:set>
 															</c:when>
 															<c:otherwise>
 																<option value="disPer">%</option>
-																<c:set var="dis"
-																	value="${purchaseSearchView.subTotal*purchaseSearchView.discountValue/100}"></c:set>
 															</c:otherwise>
 														</c:choose>
 												</select>
@@ -337,7 +329,7 @@
 												<td colspan="2" id="disc">Discount Value:</td>
 												<td><input type="number" class="form-control"
 													readonly="readonly" id="discountValue" name="discountValue"
-													value="<fmt:formatNumber value="${dis}" maxFractionDigits="2" />"></td>
+													value="<fmt:formatNumber value="${purchaseSearchView.discountTotal}" maxFractionDigits="2" />"></td>
 											</tr>
 
 										</tbody>
@@ -354,15 +346,11 @@
 										<tbody>
 											<tr>
 												<td colspan="2">Tax Amount :</td>
-												<td>
-													<%-- <fmt:formatNumber var="subt"
-														value="${((100*(purchaseSearchView.totalCost-purchaseSearchView.sur_charge-purchaseSearchView.transport_cost-purchaseSearchView.roundOf))/(100+purchaseSearchView.tax_Type_Group.totalTaxValue))*purchaseSearchView.tax_Type_Group.totalTaxValue/100}"
-														maxFractionDigits="2" /> --%> <fmt:formatNumber var="ta"
+												<td><fmt:formatNumber var="ta"
 														value="${purchaseSearchView.taxAmount}"
 														maxFractionDigits="2" /> <input type="text"
 													class="form-control" readonly="readonly" value="${ta}"
-													id="taxAmount">
-												</td>
+													id="taxAmount"></td>
 											</tr>
 										</tbody>
 										<tbody>
@@ -383,8 +371,15 @@
 														test="${purchaseSearchView.isInclusiveAgent()==false}">
 														<br> Is Effective On Return:&nbsp; <select
 															name="isEffective" id="isEffective" disabled="disabled">
-															<option value="efectiveYes">Yes</option>
-															<option value="efectiveNo">No</option>
+															<c:choose>
+																<c:when
+																	test="${purchaseSearchView.isEfectiveProfit()==true}">
+																	<option>Yes</option>
+																</c:when>
+																<c:otherwise>
+																	<option>No</option>
+																</c:otherwise>
+															</c:choose>
 														</select>
 													</c:if>
 												</td>

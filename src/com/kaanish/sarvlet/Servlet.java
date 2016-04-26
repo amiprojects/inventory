@@ -1300,6 +1300,9 @@ public class Servlet extends HttpServlet {
 					purchaseEntry.setDiscountValue(Float.parseFloat(req
 							.getParameter("disValue"))); // this is not total
 															// discount.
+					purchaseEntry.setDiscountTotal(Float.parseFloat(req
+							.getParameter("discountValue"))); // this is total
+																// discount.
 					if (req.getParameter("isInclusive").equals("inclusiveNo")) {
 						purchaseEntry.setInclusiveAgent(false);
 						if (req.getParameter("isEffective").equals(
@@ -1324,6 +1327,7 @@ public class Servlet extends HttpServlet {
 					} else {
 						purchaseEntry.setInclusiveAgent(true);
 					}
+					////////////////////////////////////////////////////////////////
 					ejb.setPurchaseEntry(purchaseEntry);
 
 					if (ejb.getVoucherAssignByVendorId(

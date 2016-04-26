@@ -1755,6 +1755,15 @@ public class JsonServlet extends HttpServlet {
 					purchase_Entry.setSubTotal(Float.parseFloat(req
 							.getParameter("st")));
 
+					// //////////////////////////////////////////////////
+					purchase_Entry.setDiscountTotal(Float.parseFloat(req
+							.getParameter("discountValue")));
+					purchase_Entry.setTaxAmount(Float.parseFloat(req
+							.getParameter("taxAmount")));
+					purchase_Entry.setAgentProfitTotal(Float.parseFloat(req
+							.getParameter("profitValue")));
+					// //////////////////////////////////////////////////
+
 					ejb.updatePurchaseEntry(purchase_Entry);
 
 					VoucherDetails vd = new VoucherDetails();

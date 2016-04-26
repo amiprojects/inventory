@@ -64,61 +64,6 @@
 		$("#pType").val('-');
 		$("#AMi2").hide();
 	}
-	/* function pStatusDiv() {
-		var val = $('[name="pstatus"]').val();
-		$("#payDetail").show();
-		//alert(val);
-		if (val == '-') {
-			alert('Please select Payment status...');
-			$("#payDetail").hide();
-			$("#description").hide();
-			$("#pType").val("-");
-		} else if (val == 'Not Paid') {
-			$("#pType").val("-");
-			$("#pPayAmount").hide();
-			$("#pAmount").hide();
-			$("#pDate").hide();
-			$("#pTypeDiv").hide();
-			$("#pDueAmount").show();
-			$("#description").show();
-			$("#spAmount").val(Number($("#gt").val()));
-			$("#spPaymentAmount").val(Number(0));
-			$("#spDueAmount").val(
-					Math.round((Number($("#spAmount").val()) - Number($(
-							"#spPaymentAmount").val())) * 100) / 100);
-		} else if (val == 'Full Paid') {
-			$("#pType").val("-");
-			$("#pPayAmount").hide();
-			$("#pDueAmount").hide();
-			$("#pAmount").show();
-			$("#pDate").show();
-			$("#pTypeDiv").show();
-			$("#description").hide();
-			$("#spAmount").val(Number($("#gt").val()));
-			$("#spPaymentAmount").val(Number($("#gt").val()));
-			$("#spDueAmount").val(
-					Math.round((Number($("#spAmount").val()) - Number($(
-							"#spPaymentAmount").val())) * 100) / 100);
-		} else if (val == 'Semi Paid') {
-			$("#pType").val("-");
-			$("#pPayAmount").show();
-			$("#pDueAmount").show();
-			$("#pAmount").show();
-			$("#pDate").show();
-			$("#pTypeDiv").show();
-			$("#description").hide();
-			$("#spAmount").val(Number($("#gt").val()));
-			$("#spPaymentAmount").val(Number($("#gt").val()));
-			$("#spDueAmount").val(
-					Math.round((Number($("#spAmount").val()) - Number($(
-							"#spPaymentAmount").val())) * 100) / 100);
-		}
-	} 
-	function spPaymentAmountFunc() {
-		$("#spDueAmount").val(
-				Math.round((Number($("#spAmount").val()) - Number($(
-						"#spPaymentAmount").val())) * 100) / 100);
-	}*/
 	function pTypeFunc() {
 		$("#description").show();
 		var val = $('[name="pType"]').val();
@@ -193,76 +138,77 @@
 
 							</div>
 							<div class="col-md-12">
-								<div class="widget-area">
-									<div class="col-md-12">
-										<form role="form" class="sec" action="purchaseSearchForReturn"
-											method="post">
-											<div class="row">
-												<div class="col-md-12">
-													<div class="form-group">
-														<label for="" style="float: left;">Purchase
-															challan no. :</label>
-													</div>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-md-1"
-													style="margin-right: 0; padding-right: 0;">
-													<input type="text" class="form-control" readonly="readonly"
-														name="companyInitial"
-														value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompanyId('PUR', compInfo.id).companyInitial}">
-												</div>
-												<div class="col-md-2" style="margin: 0; padding: 0;">
-													<select class="form-control" name="fynYear">
-														<c:forEach
-															items="${sessionScope['ejb'].getAllFinancialForPurchase()}"
-															var="fyr">
-															<option value="${fyr}">${fyr}</option>
-														</c:forEach>
-													</select>
-												</div>
-												<div class="col-md-2" style="margin: 0; padding: 0;">
-													<!-- <input type="text" class="form-control" name="month"> -->
-													<select name="month" class="form-control">
-														<option value="01">01</option>
-														<option value="02">02</option>
-														<option value="03">03</option>
-														<option value="04">04</option>
-														<option value="05">05</option>
-														<option value="06">06</option>
-														<option value="07">07</option>
-														<option value="08">08</option>
-														<option value="09">09</option>
-														<option value="10">10</option>
-														<option value="11">11</option>
-														<option value="12">12</option>
-													</select>
-												</div>
-												<div class="col-md-1" style="margin: 0; padding: 0;">
-													<input type="text" class="form-control" readonly="readonly"
-														name="billType"
-														value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompanyId('PUR', compInfo.id).billType}">
-												</div>
-												<div class="col-md-2" style="margin: 0; padding: 0;">
-													<input type="text" class="form-control" name="autoNum">
-												</div>
-												<div class="col-md-2"
-													style="margin-left: 0; padding-left: 0;">
-													<input type="text" class="form-control" name="suffix">
-												</div>
-												<div class="col-md-2">
-													<button class="btn green pull-left" type="submit">Go</button>
-												</div>
-											</div>
-										</form>
-										<hr width="100%">
 
-										<h3 align="center" style="color: #6a94ff;" id="msg">${requestScope['msg']}</h3>
-
-										<hr width="100%">
-									</div>
-									<form role="form" class="sec" action="purchaseReturn"
+								<div class="col-md-12">
+									<form role="form" class="sec" action="purchaseSearchForReturn"
 										method="post">
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label for="" style="float: left;">Purchase challan
+														no. :</label>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-1"
+												style="margin-right: 0; padding-right: 0;">
+												<input type="text" class="form-control" readonly="readonly"
+													name="companyInitial"
+													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompanyId('PUR', compInfo.id).companyInitial}">
+											</div>
+											<div class="col-md-2" style="margin: 0; padding: 0;">
+												<select class="form-control" name="fynYear">
+													<c:forEach
+														items="${sessionScope['ejb'].getAllFinancialForPurchase()}"
+														var="fyr">
+														<option value="${fyr}">${fyr}</option>
+													</c:forEach>
+												</select>
+											</div>
+											<div class="col-md-2" style="margin: 0; padding: 0;">
+												<!-- <input type="text" class="form-control" name="month"> -->
+												<select name="month" class="form-control">
+													<option value="01">01</option>
+													<option value="02">02</option>
+													<option value="03">03</option>
+													<option value="04">04</option>
+													<option value="05">05</option>
+													<option value="06">06</option>
+													<option value="07">07</option>
+													<option value="08">08</option>
+													<option value="09">09</option>
+													<option value="10">10</option>
+													<option value="11">11</option>
+													<option value="12">12</option>
+												</select>
+											</div>
+											<div class="col-md-1" style="margin: 0; padding: 0;">
+												<input type="text" class="form-control" readonly="readonly"
+													name="billType"
+													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompanyId('PUR', compInfo.id).billType}">
+											</div>
+											<div class="col-md-2" style="margin: 0; padding: 0;">
+												<input type="text" class="form-control" name="autoNum">
+											</div>
+											<div class="col-md-2"
+												style="margin-left: 0; padding-left: 0;">
+												<input type="text" class="form-control" name="suffix">
+											</div>
+											<div class="col-md-2">
+												<button class="btn green pull-left" type="submit">Go</button>
+											</div>
+										</div>
+									</form>
+									<hr width="100%">
+
+									<h3 align="center" style="color: #6a94ff;" id="msg">${requestScope['msg']}</h3>
+
+									<hr width="100%">
+								</div>
+								<form role="form" class="sec" action="purchaseReturn"
+									method="post">
+									<div class="widget-area">
 										<div class="col-md-6">
 											<div class="col-md-12">
 												&nbsp; &nbsp; &nbsp; <b class="font">Vendor Type :</b> <input
@@ -400,425 +346,414 @@
 
 											</div>
 										</div>
-								</div>
+									</div>
 
-								<table id="productList"
-									class="table table-striped table-bordered">
-									<thead style="background-color: #F0F0F0;">
-										<tr>
-											<th>#</th>
-											<th>Product Code</th>
-											<th>Product Description</th>
-											<th>Qty</th>
-											<th>Remaining Qty</th>
-											<th>UOM</th>
-											<th>Rate</th>
-											<th>Amount</th>
-											<th>Returning Qty</th>
-											<th>Returning amount</th>
-											<th>Drawback</th>
-										</tr>
-									</thead>
-									<c:set var="i" value="${1}"></c:set>
-									<c:forEach var="purchaseProducts"
-										items="${purchaseSearchView.purchase_Product_Details}">
-										<tbody>
+									<table id="productList"
+										class="table table-striped table-bordered">
+										<thead style="background-color: #F0F0F0;">
 											<tr>
-												<td>${i}</td>
-												<td>${purchaseProducts.productDetail.code}<input
-													type="hidden" name="purProductDetailsID"
-													value="${purchaseProducts.id}">
-												</td>
-												<td>${purchaseProducts.productDetail.description}</td>
-												<td>${purchaseProducts.quantity}</td>
-												<td id="qty${purchaseProducts.id}"><fmt:formatNumber
-														type="number" maxFractionDigits="2"
-														value="${purchaseProducts.quantity-purchaseProducts.totalReturningQty}" />
-												</td>
-												<td>${purchaseProducts.productDetail.qtyUnit.name}</td>
-												<td id="cost${purchaseProducts.id}">${purchaseProducts.cost}</td>
-												<td><fmt:formatNumber type="number"
-														maxFractionDigits="2"
-														value="${purchaseProducts.quantity*purchaseProducts.cost}" />
-												</td>
-												<td><input type="text" class="form-control rQty"
-													id="rQty${purchaseProducts.id}" name="rQty"
-													onkeyup="changeNcheck('${purchaseProducts.id}');" value="0"
-													autocomplete="off"></td>
-												<td><input type="text" readonly="readonly"
-													class="form-control rAmount"
-													id="rAmount${purchaseProducts.id}"></td>
-												<td><input type="text" class="form-control"
-													name="drawBack"></td>
+												<th>#</th>
+												<th>Product Code</th>
+												<th>Product Description</th>
+												<th>Qty</th>
+												<th>Remaining Qty</th>
+												<th>UOM</th>
+												<th>Rate</th>
+												<th>Amount</th>
+												<th>Returning Qty</th>
+												<th>Returning amount</th>
+												<th>Drawback</th>
 											</tr>
-										</tbody>
-										<c:set var="i" value="${i+1}" />
-									</c:forEach>
-								</table>
-
-								<table class="table table-striped table-bordered">
-
-									<thead>
-										<tr>
-											<th>#</th>
-											<th>Return Date</th>
-											<th>Purchase Return challan no.</th>
-											<th>Product Code</th>
-											<th>Product Description</th>
-											<th>Returning Qty</th>
-											<th>Drawback</th>
-										</tr>
-									</thead>
-
-									<c:set var="j" value="${1}"></c:set>
-									<c:forEach var="purchaseReturn"
-										items="${purchaseSearchView.purchaseReturn}">
-
-										<tbody>
+										</thead>
+										<c:set var="i" value="${1}"></c:set>
+										<c:set value="${0}" var="tota" />
+										<c:forEach var="purchaseProducts"
+											items="${purchaseSearchView.purchase_Product_Details}">
+											<tbody>
+												<tr>
+													<td>${i}</td>
+													<td>${purchaseProducts.productDetail.code}<input
+														type="hidden" name="purProductDetailsID"
+														value="${purchaseProducts.id}">
+													</td>
+													<td>${purchaseProducts.productDetail.description}</td>
+													<td>${purchaseProducts.quantity}</td>
+													<td id="qty${purchaseProducts.id}"><fmt:formatNumber
+															type="number" maxFractionDigits="2"
+															value="${purchaseProducts.quantity-purchaseProducts.totalReturningQty}" />
+													</td>
+													<td>${purchaseProducts.productDetail.qtyUnit.name}</td>
+													<td id="cost${purchaseProducts.id}">${purchaseProducts.cost}</td>
+													<td><fmt:formatNumber type="number"
+															maxFractionDigits="2"
+															value="${purchaseProducts.quantity*purchaseProducts.cost}" />
+													</td>
+													<td><input type="text" class="form-control rQty"
+														id="rQty${purchaseProducts.id}" name="rQty"
+														onkeyup="changeNcheck('${purchaseProducts.id}');"
+														value="0" autocomplete="off"></td>
+													<td><input type="text" readonly="readonly"
+														class="form-control rAmount"
+														id="rAmount${purchaseProducts.id}"></td>
+													<td><input type="text" class="form-control"
+														name="drawBack"></td>
+													<c:set
+														value="${tota+purchaseProducts.quantity*purchaseProducts.cost}"
+														var="tota" />
+												</tr>
+											</tbody>
+											<c:set var="i" value="${i+1}" />
+										</c:forEach>
+									</table>
+									<input type="hidden" value="${tota}" id="totalPurchasedSubTot">
+									<table class="table table-striped table-bordered">
+										<thead>
 											<tr>
-												<td>${j}</td>
-												<td><fmt:formatDate
-														value="${purchaseReturn.returnDate}" pattern="dd-MM-yy" />
-												</td>
-												<td><a href="#"
-													onclick="viewInvoice(${purchaseReturn.id});"><b>${purchaseReturn.challanNumber}</b><br>
-														<input type="button" class="btn btn-primary small"
-														value="Print"></a></td>
-												<td><c:forEach var="purchaseReturnProd"
-														items="${purchaseReturn.purchaseReturnProductDetails}">														
+												<th>#</th>
+												<th>Return Date</th>
+												<th>Purchase Return challan no.</th>
+												<th>Product Code</th>
+												<th>Product Description</th>
+												<th>Returning Qty</th>
+												<th>Drawback</th>
+											</tr>
+										</thead>
+
+										<c:set var="j" value="${1}"></c:set>
+										<c:forEach var="purchaseReturn"
+											items="${purchaseSearchView.purchaseReturn}">
+
+											<tbody>
+												<tr>
+													<td>${j}</td>
+													<td><fmt:formatDate
+															value="${purchaseReturn.returnDate}" pattern="dd-MM-yy" />
+													</td>
+													<td><a href="#"
+														onclick="viewInvoice(${purchaseReturn.id});"><b>${purchaseReturn.challanNumber}</b><br>
+															<input type="button" class="btn btn-primary small"
+															value="Print"></a></td>
+													<td><c:forEach var="purchaseReturnProd"
+															items="${purchaseReturn.purchaseReturnProductDetails}">														
 													${purchaseReturnProd.purchaseProductDetails.productDetail.code}
 														<hr>
-													</c:forEach></td>
-												<td><c:forEach var="purchaseReturnProd"
-														items="${purchaseReturn.purchaseReturnProductDetails}">														
+														</c:forEach></td>
+													<td><c:forEach var="purchaseReturnProd"
+															items="${purchaseReturn.purchaseReturnProductDetails}">														
 													${purchaseReturnProd.purchaseProductDetails.productDetail.description}
 														<hr>
-													</c:forEach></td>
-												<td><c:forEach var="purchaseReturnProd"
-														items="${purchaseReturn.purchaseReturnProductDetails}">														
+														</c:forEach></td>
+													<td><c:forEach var="purchaseReturnProd"
+															items="${purchaseReturn.purchaseReturnProductDetails}">														
 													${purchaseReturnProd.qtyReturn}
 														<hr>
-													</c:forEach></td>
-												<td><c:forEach var="purchaseReturnProd"
-														items="${purchaseReturn.purchaseReturnProductDetails}">
-														<%-- <c:if test="${purchaseReturnProd.qtyReturn!=0}"> --%>
+														</c:forEach></td>
+													<td><c:forEach var="purchaseReturnProd"
+															items="${purchaseReturn.purchaseReturnProductDetails}">
+															<%-- <c:if test="${purchaseReturnProd.qtyReturn!=0}"> --%>
 													${purchaseReturnProd.fault}
 														<hr>
-													</c:forEach></td>
-											</tr>
-										</tbody>
-										<c:set var="j" value="${j+1}" />
-									</c:forEach>
-								</table>
-
-								<div style="width: 40%; float: right;">
-									<table id="stream_table"
-										class="table table-striped table-bordered">
-										<thead>
-											<tr>
-												<td colspan="2">Sub Total :</td>
-												<td><input type="text" class="form-control"
-													name="subTotalname" id="subTotal" value="0"
-													readonly="readonly"></td>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>${purchaseSearchView.tax_Type_Group.name}</td>
-												<td>%</td>
-												<td><input type="text" class="form-control"
-													readonly="readonly"
-													value="${purchaseSearchView.tax_Type_Group.getTotalTaxValue()}"
-													id="taxTot"></td>
-											</tr>
-										</tbody>
-										<tbody>
-											<tr>
-												<td colspan="2">Tax Amount :</td>
-												<td><input type="text" class="form-control"
-													readonly="readonly" value="0" id="taxAmount"></td>
-											</tr>
-										</tbody>
-										<%-- <tbody>
-											<tr>
-												<td colspan="2">Transport charge :</td>
-												<td><input type="text" class="form-control"
-													name="transportCost" id="transportCost"
-													value="${purchaseSearchView.transport_cost}"
-													readonly="readonly"></td>
-											</tr>
-										</tbody>
-										<tbody>
-											<tr>
-												<td colspan="2">Surcharge :</td>
-												<td><input type="text" class="form-control"
-													id="surcharge" name="surcharge"
-													value="${purchaseSearchView.sur_charge}"
-													readonly="readonly"></td>
-											</tr>
-										</tbody> --%>
-										<tbody>
-											<tr>
-												<td colspan="2" id="round">Round Of :</td>
-												<td><input type="hidden" id="totalvalue"
-													name="totalvalue" value="0"><input type="number"
-													class="form-control" placeholder="" readonly="readonly"
-													id="roundvalue" name="roundvalue" value="0"></td>
-											</tr>
-										</tbody>
-										<%-- <tbody>
-											<tr>
-												<td colspan="2" id="due">Due Amount :</td>
-												<td>
-													<input type="text" class="form-control"
-													readonly="readonly" id="dueAmount" name="dueAmount"
-													value="${purchaseSearchView.totalCost-purchaseSearchView.paymentDetails.get(0).paidAmount}">
-													<input type="text" class="form-control" readonly="readonly"
-													id="dueAmount" name="dueAmount"
-													value="${purchaseSearchView.getVoucherDetails().getValue()}">
-												</td>
-											</tr>
-										</tbody> --%>
-										<thead>
-											<tr>
-												<td colspan="2">Grand Total :</td>
-												<td><input type="text" class="form-control" id="gt"
-													name="gTotal" placeholder="0" readonly="readonly" value="0"></td>
-											</tr>
-										</thead>
+														</c:forEach></td>
+												</tr>
+											</tbody>
+											<c:set var="j" value="${j+1}" />
+										</c:forEach>
 									</table>
 
-									<div class="row">
-										<div style="float: right;">
-											<input type="button" class="btn green pull-right"
-												data-toggle="modal" value="Save" onclick="paymentDate();">
-											<input type="button" onclick="cancelF();"
-												class="btn btn-danger small" value="Cancel">
-										</div>
-									</div>
-								</div>
+									<div style="width: 40%; float: right;">
+										<table id="stream_table"
+											class="table table-striped table-bordered">
+											<thead>
+												<tr>
+													<td colspan="2">Sub Total :</td>
+													<td><input type="text" class="form-control"
+														name="subTotalname" id="subTotal" value="0"
+														readonly="readonly"></td>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td colspan="2">Discount &nbsp; <select name="disType"
+														id="disType" disabled="disabled">
+															<c:choose>
+																<c:when
+																	test="${purchaseSearchView.isFlatDiscount()==true}">
+																	<option value="disFlat">Flat</option>
+																	<c:set var="dis"
+																		value="${purchaseSearchView.discountValue}"></c:set>
+																</c:when>
+																<c:otherwise>
+																	<option value="disPer">%</option>
+																	<c:set var="dis"
+																		value="${purchaseSearchView.discountValue}"></c:set>
+																</c:otherwise>
+															</c:choose>
+													</select>
+													</td>
+													<td><input type="text" class="form-control"
+														id="discount" name="discount" readonly="readonly"
+														value="<fmt:formatNumber value="${dis}" maxFractionDigits="2" />">
+													</td>
+												</tr>
+											</tbody>
+											<tbody>
+												<tr>
+													<td colspan="2" id="disc">Discount Value:</td>
+													<td><input type="text" class="form-control" value="0"
+														readonly="readonly" id="discountValue"
+														name="discountValue"></td>
+												</tr>
+											</tbody>
+											<tbody>
+												<tr>
+													<td>${purchaseSearchView.tax_Type_Group.name}</td>
+													<td>%</td>
+													<td><input type="text" class="form-control"
+														readonly="readonly"
+														value="${purchaseSearchView.tax_Type_Group.getTotalTaxValue()}"
+														id="taxTot"></td>
+												</tr>
+											</tbody>
+											<tbody>
+												<tr>
+													<td colspan="2">Tax Amount :</td>
+													<td><input type="text" class="form-control"
+														readonly="readonly" value="0" id="taxAmount"></td>
+												</tr>
+											</tbody>
+											<c:if test="${purchaseSearchView.isEfectiveProfit()==true}">
+												<tbody>
+													<tr>
+														<td colspan="2">Agent Profit: &nbsp; <select
+															name="profitType" id="profitType"
+															onchange="profitTypeF();" disabled="disabled">
+																<c:choose>
+																	<c:when
+																		test="${purchaseSearchView.isFlatProfitAgent()==true}">
+																		<option value="profitFlat">Flat</option>
+																	</c:when>
+																	<c:otherwise>
+																		<option value="profitPer">%</option>
+																	</c:otherwise>
+																</c:choose>
+														</select>
+														</td>
+														<td><input type="text"
+															value="${purchaseSearchView.agentProfitValue}"
+															class="form-control" name="profitVal" id="profitVal"
+															placeholder="" readonly="readonly"></td>
+													</tr>
+												</tbody>
+												<tbody>
+													<tr>
+														<td colspan="2" id="disc">Agent Profit Value:</td>
+														<td><input type="text" class="form-control"
+															readonly="readonly" id="profitValue" name="profitValue"
+															value="0"></td>
+													</tr>
+												</tbody>
+											</c:if>
+											<c:if test="${purchaseSearchView.isEfectiveProfit()==false}">
+												<tbody style="display: none;">
+													<tr>
+														<td colspan="2">Agent Profit: &nbsp; <select
+															name="profitType" id="profitType"
+															onchange="profitTypeF();" disabled="disabled">
+																<c:choose>
+																	<c:when
+																		test="${purchaseSearchView.isFlatProfitAgent()==true}">
+																		<option value="profitFlat">Flat</option>
+																	</c:when>
+																	<c:otherwise>
+																		<option value="profitPer">%</option>
+																	</c:otherwise>
+																</c:choose>
+														</select>
+														</td>
+														<td><input type="text" value="0" class="form-control"
+															name="profitVal" id="profitVal" placeholder=""
+															readonly="readonly"></td>
+													</tr>
+												</tbody>
+												<tbody style="display: none;">
+													<tr>
+														<td colspan="2" id="disc">Agent Profit Value:</td>
+														<td><input type="text" class="form-control"
+															readonly="readonly" id="profitValue" name="profitValue"
+															value="0"></td>
+													</tr>
+												</tbody>
+											</c:if>
+											<tbody>
+												<tr>
+													<td colspan="2" id="round">Round Of :</td>
+													<td><input type="hidden" id="totalvalue"
+														name="totalvalue" value="0"><input type="number"
+														class="form-control" placeholder="" readonly="readonly"
+														id="roundvalue" name="roundvalue" value="0"></td>
+												</tr>
+											</tbody>
+											<thead>
+												<tr>
+													<td colspan="2">Grand Total :</td>
+													<td><input type="text" class="form-control" id="gt"
+														name="gTotal" placeholder="0" readonly="readonly"
+														value="0"></td>
+												</tr>
+											</thead>
+										</table>
 
-								<div id="savePurchase" class="modal fade" role="dialog"
-									style="top: 25px;">
-									<div class="modal-dialog modal-lg">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal"
-													onclick="closePayment();">&times;</button>
-												<h4 class="modal-title">Payment Details</h4>
+										<div class="row">
+											<div style="float: right;">
+												<input type="button" class="btn green pull-right"
+													data-toggle="modal" value="Save" onclick="paymentDate();">
+												<input type="button" onclick="cancelF();"
+													class="btn btn-danger small" value="Cancel">
 											</div>
-											<div class="modal-body">
-												<div class="row">
-													<div class="col-md-6">
-														<div class="widget-area">
-															<%-- <div class="breadcrumbs">
-									<ul>
-										<li><a title="">Select Payment status : </a></li>
-									</ul>
-								</div>
-								<br> <br> <br>
-								<div class="row">
-									<div class="col-md-5">Payment status :</div>
-									<div class="col-md-7">
-										<div class="sec">
-
-											<select class="form-control" id="pstatus" name="pstatus"
-												onchange="pStatusDiv()">
-												<option value="-" selected="selected">---</option>
-												<c:forEach
-													items="${sessionScope['ejb'].getAllPaymentStatus()}"
-													var="payStatus">
-													<option value="${payStatus.status}">${payStatus.status}</option>
-												</c:forEach>
-											</select>
 										</div>
 									</div>
-								</div> --%>
-															<div id="payDetail">
-																<div class="breadcrumbs">
-																	<ul>
-																		<li><a title="">Payment Details : </a></li>
-																	</ul>
-																</div>
-																<br> <br> <br>
-																<div class="row">
-																	<div class="sec" id="pTypeDiv">
-																		<div class="col-md-5">Payment type :</div>
-																		<div class="col-md-7">
-																			<select class="form-control" id="pType" name="pType"
-																				onchange="pTypeFunc()">
-																				<option value="-" selected="selected">---</option>
-																				<c:forEach
-																					items="${sessionScope['ejb'].getAllPaymentType()}"
-																					var="payType">
-																					<c:if test="${payType.getType()!='Debit Note'}">
-																						<option value="${payType.getType()}">${payType.getType()}</option>
-																					</c:if>
-																				</c:forEach>
-																			</select>
-																		</div>
+
+									<div id="savePurchase" class="modal fade" role="dialog"
+										style="top: 25px;">
+										<div class="modal-dialog modal-lg">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal"
+														onclick="closePayment();">&times;</button>
+													<h4 class="modal-title">Payment Details</h4>
+												</div>
+												<div class="modal-body">
+													<div class="row">
+														<div class="col-md-6">
+															<div class="widget-area">
+																<div id="payDetail">
+																	<div class="breadcrumbs">
+																		<ul>
+																			<li><a title="">Payment Details : </a></li>
+																		</ul>
 																	</div>
-																	<div id="pDate">
-																		<div class="col-md-5">Payment Date :</div>
-																		<div class="col-md-7">
-																			<input type="text" id="datepicker2"
-																				class="form-control" readonly="readonly"
-																				name="payDate">
-																		</div>
-																	</div>
-																	<div id="pAmount">
-																		<div class="col-md-5">
-																			<!-- Full  -->
-																			Amount :
-																		</div>
-																		<div class="col-md-7">
-																			<input type="text" class="form-control"
-																				readonly="readonly" id="spAmount" name="spAmount">
-																		</div>
-																	</div>
-																	<div id="AMi2">
-																		<div>
-																			<div class="col-md-5">Current Credit Note :</div>
+																	<br> <br> <br>
+																	<div class="row">
+																		<div class="sec" id="pTypeDiv">
+																			<div class="col-md-5">Payment type :</div>
 																			<div class="col-md-7">
-																				<c:set value="${0}" var="totCr" />
-																				<c:set value="${0}" var="totDb" />
-																				<c:forEach
-																					items="${purchaseSearchView.vendor.voucherAssign.voucherDetails}"
-																					var="vDet">
-																					<%-- <c:set value="${totCr+vDet.value}" var="totCr" /> --%>
-																					<c:choose>
-																						<c:when test="${vDet.isCredit().equals(true)}">
-																							<c:set value="${totCr+vDet.value}" var="totCr" />
-																						</c:when>
-																						<c:otherwise>
-																							<c:set value="${totDb+vDet.value}" var="totDb" />
-																						</c:otherwise>
-																					</c:choose>
-																				</c:forEach>
-																				<c:set value="${totCr-totDb}" var="totCr" />
-																				<input type="text" id="totalCredit"
-																					name="totalCredit" class="form-control"
-																					readonly="readonly" value="${totCr}">
+																				<select class="form-control" id="pType" name="pType"
+																					onchange="pTypeFunc()">
+																					<option value="-" selected="selected">---</option>
+																					<c:forEach
+																						items="${sessionScope['ejb'].getAllPaymentType()}"
+																						var="payType">
+																						<c:if test="${payType.getType()!='Debit Note'}">
+																							<option value="${payType.getType()}">${payType.getType()}</option>
+																						</c:if>
+																					</c:forEach>
+																				</select>
 																			</div>
 																		</div>
-																		<!-- <div>
+																		<div id="pDate">
+																			<div class="col-md-5">Payment Date :</div>
+																			<div class="col-md-7">
+																				<input type="text" id="datepicker2"
+																					class="form-control" readonly="readonly"
+																					name="payDate">
+																			</div>
+																		</div>
+																		<div id="pAmount">
+																			<div class="col-md-5">
+																				<!-- Full  -->
+																				Amount :
+																			</div>
+																			<div class="col-md-7">
+																				<input type="text" class="form-control"
+																					readonly="readonly" id="spAmount" name="spAmount">
+																			</div>
+																		</div>
+																		<div id="AMi2">
+																			<div>
+																				<div class="col-md-5">Current Credit Note :</div>
+																				<div class="col-md-7">
+																					<c:set value="${0}" var="totCr" />
+																					<c:set value="${0}" var="totDb" />
+																					<c:forEach
+																						items="${purchaseSearchView.vendor.voucherAssign.voucherDetails}"
+																						var="vDet">
+																						<%-- <c:set value="${totCr+vDet.value}" var="totCr" /> --%>
+																						<c:choose>
+																							<c:when test="${vDet.isCredit().equals(true)}">
+																								<c:set value="${totCr+vDet.value}" var="totCr" />
+																							</c:when>
+																							<c:otherwise>
+																								<c:set value="${totDb+vDet.value}" var="totDb" />
+																							</c:otherwise>
+																						</c:choose>
+																					</c:forEach>
+																					<c:set value="${totCr-totDb}" var="totCr" />
+																					<input type="text" id="totalCredit"
+																						name="totalCredit" class="form-control"
+																						readonly="readonly" value="${totCr}">
+																				</div>
+																			</div>
+																			<!-- <div>
 																			<div class="col-md-5">Total Bill VAlue :</div>
 																			<div class="col-md-7">
 																				<input type="text" class="form-control"
 																					readonly="readonly" id="spAmount" name="spAmount">
 																			</div>
 																		</div> -->
-																		<div>
-																			<div class="col-md-5">
-																				<span id="dORc">Final Debit/Credit Note :</span>
+																			<div>
+																				<div class="col-md-5">
+																					<span id="dORc">Final Debit/Credit Note :</span>
+																				</div>
+																				<div class="col-md-7">
+																					<input type="text" class="form-control"
+																						id="finalDC" name="finalDC" readonly="readonly">
+																				</div>
 																			</div>
-																			<div class="col-md-7">
-																				<input type="text" class="form-control" id="finalDC"
-																					name="finalDC" readonly="readonly">
-																			</div>
-																		</div>
-																		<!-- <div>
+																			<!-- <div>
 																			<div class="col-md-5">Payment Date :</div>
 																			<div class="col-md-7">
 																				<input type="text" id="datepicker" name="payDate"
 																					class="form-control" readonly="readonly">
 																			</div>
 																		</div> -->
+																		</div>
 																	</div>
-																	<!-- <div id="pPayAmount">
-											<div class="col-md-5">Payment Amount :</div>
-											<div class="col-md-7">
-												<input type="text" class="form-control" value="0"
-													id="spPaymentAmount" name="spPaymentAmount"
-													onkeyup="spPaymentAmountFunc();" autocomplete="off">
-											</div>
-										</div>
-										<div id="pDueAmount">
-											<div class="col-md-5">Due Amount :</div>
-											<div class="col-md-7">
-												<input type="text" class="form-control" readonly="readonly"
-													id="spDueAmount" name="spDueAmount">
-											</div>
-										</div> -->
 																</div>
 															</div>
 														</div>
-													</div>
 
-													<div class="col-md-6" style="float: right;"
-														id="description">
-														<div class="widget-area">
-															<div class="breadcrumbs">
-																<ul>
-																	<li><a title="">Provide Description : </a></li>
-																</ul>
-															</div>
-															<br> <br> <br>
-															<div class="row">
-																<div class="col-md-5">Description :</div>
-																<div class="col-md-7">
-																	<textarea rows="" cols="" class="form-control"
-																		id="desc" name="desc"></textarea>
+														<div class="col-md-6" style="float: right;"
+															id="description">
+															<div class="widget-area">
+																<div class="breadcrumbs">
+																	<ul>
+																		<li><a title="">Provide Description : </a></li>
+																	</ul>
 																</div>
-															</div>
-															<br>
-															<div class="breadcrumbs">
-																<button type="button" class="btn green pull-right"
-																	onclick="submit();">Save</button>
+																<br> <br> <br>
+																<div class="row">
+																	<div class="col-md-5">Description :</div>
+																	<div class="col-md-7">
+																		<textarea rows="" cols="" class="form-control"
+																			id="desc" name="desc"></textarea>
+																	</div>
+																</div>
+																<br>
+																<div class="breadcrumbs">
+																	<button type="button" class="btn green pull-right"
+																		onclick="submit();">Save</button>
+																</div>
 															</div>
 														</div>
 													</div>
 												</div>
-											</div>
-											<div class="modal-footer">
-												<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+												<div class="modal-footer">
+													<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
 								</form>
-
-								<%-- <table id="" class="table table-striped table-bordered">
-									<thead style="background-color: #F0F0F0;">
-										<tr>
-											<th>#</th>
-											<th>Payment date</th>
-											<th>Payment method</th>
-											<th>Payment description</th>
-											<th>Amount</th>
-										</tr>
-									</thead>
-									<c:set var="j" value="${1}"></c:set>
-									<c:forEach var="paymentDetails"
-										items="${purchaseSearchView.paymentDetails}">
-										<tbody>
-											<tr>
-												<td>${j}</td>
-												<td><fmt:formatDate
-														value="${paymentDetails.paymentDate}" pattern="dd-MM-yy" />
-												</td>
-												<c:choose>
-													<c:when test="${paymentDetails.paymentType.type!=null}">
-														<td>${paymentDetails.paymentType.type}</td>
-													</c:when>
-													<c:otherwise>
-														<td>NA</td>
-													</c:otherwise>
-												</c:choose>
-												<c:choose>
-													<c:when test="${paymentDetails.description!=null}">
-														<td>${paymentDetails.description}</td>
-													</c:when>
-													<c:otherwise>
-														<td>NIL</td>
-													</c:otherwise>
-												</c:choose>
-												<td>${paymentDetails.paidAmount}</td>
-											</tr>
-										</tbody>
-										<c:set var="j" value="${j+1}" />
-									</c:forEach>
-								</table> --%>
 							</div>
 						</div>
 					</div>
@@ -857,78 +792,6 @@
 		</div>
 	</div>
 
-	<!-- <div id="cVouDetails" class="modal fade" role="dialog"
-		style="top: 25px;">
-
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">Vendor Credit Note Details</h4>
-				</div>
-				<div class="modal-body">
-					<h2>Vendor: Mr Sairas Mistri</h2>
-					<div class="row">
-						<table class="table table-striped table-bordered">
-
-							<thead>
-								<tr>
-									<th>#</th>
-									<th>Date</th>
-									<th>Amount</th>
-
-								</tr>
-							</thead>
-
-							<tbody>
-								<tr>
-
-									<td>1</td>
-									<td>---</td>
-									<td>23</td>
-
-
-								</tr>
-
-								<tr>
-
-									<td>2</td>
-									<td>---</td>
-									<td>23</td>
-
-
-								</tr>
-								<tr>
-
-									<td>3</td>
-									<td>----</td>
-									<td>23</td>
-
-
-								</tr>
-
-
-							</tbody>
-							<tfoot>
-
-								<tr>
-									<td>&nbsp;</td>
-									<td colspan="2">Total Credit Note :</td>
-								</tr>
-
-							</tfoot>
-
-						</table>
-						<input type="button" class="btn green pull-right"
-							style="float: right;" value="what?" onclick="plzClose()">
-
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer"></div>
-		</div>
-	</div> -->
-
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
 	<script type="text/javascript" src="js/script.js"></script>
@@ -941,62 +804,64 @@
 			if (Number($("#rQty" + id).val()) <= Number($("#qty" + id).html())) {
 				$("#rAmount" + id).val(
 						(Number($("#rQty" + id).val()) * Number($("#cost" + id)
-								.html())).toFixed(2));
-				var sum = 0;
-				$(".rAmount").each(function() {
-					if (!isNaN(this.value) && this.value.length != 0) {
-						sum += parseFloat(this.value);
-					}
-				});
-				$("#subTotal").val(sum.toFixed(2));
-				$("#taxAmount")
-						.val(
-								Math
-										.round((Number($("#subTotal").val())
-												* Number($("#taxTot").val()) / Number(100)) * 100) / 100);
-				/* $("#totalvalue").val(
-						Math.round((Number($("#subTotal").val())
-								+ Number($("#taxAmount").val())
-								+ Number($("#transportCost").val()) + Number($(
-								"#surcharge").val())) * 100) / 100); */
-				$("#totalvalue").val(
-						Math.round((Number($("#subTotal").val()) + Number($(
-								"#taxAmount").val())) * 100) / 100);
-				var tot = $("#totalvalue").val();
-				var round = Math.round(tot);
-				$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
-				$("#gt").val(Math.round((round) * 100) / 100);
+								.html())).toFixed(2));						
 			}
-
 			else {
-
 				alert("Returning quantity should be less than Remaining quantity...");
 				$("#rQty" + id).val("0");
 				$("#rAmount" + id).val("0");
-				var sum = 0;
-				$(".rAmount").each(function() {
-					sum += parseFloat(this.value);
-				});
-				$("#subTotal").val(sum.toFixed(2));
-				$("#taxAmount")
-						.val(
-								Math
-										.round((Number($("#subTotal").val())
-												* Number($("#taxTot").val()) / Number(100)) * 100) / 100);
-				/* $("#totalvalue").val(
-						Math.round((Number($("#subTotal").val())
-								+ Number($("#taxAmount").val())
-								+ Number($("#transportCost").val()) + Number($(
-								"#surcharge").val())) * 100) / 100); */
-				$("#totalvalue").val(
-						Math.round((Number($("#subTotal").val()) + Number($(
-								"#taxAmount").val())) * 100) / 100);
-				var tot = $("#totalvalue").val();
-				var round = Math.round(tot);
-				$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
-				$("#gt").val(Math.round((round) * 100) / 100);
-
 			}
+			var sum = 0;
+			$(".rAmount").each(function() {
+				if (!isNaN(this.value) && this.value.length != 0) {
+					sum += parseFloat(this.value);
+				}
+			});
+			$("#subTotal").val(sum.toFixed(2));
+			gtot();
+		}
+		
+		function gtot() {
+			if ($("#disType option:selected").val() == 'disPer') {
+				$("#discountValue").val(
+						(Number($("#subTotal").val())
+								* Number($("#discount").val()) / 100)
+								.toFixed(2));
+			} else {
+				$("#discountValue").val(
+						(Number($("#subTotal").val())
+								* Number($("#discount").val()) / Number($(
+								"#totalPurchasedSubTot").val())).toFixed(2));
+			}
+			$("#taxAmount")
+			.val(
+					Math
+							.round((Number(Number($("#subTotal").val())
+									- Number($("#discountValue").val()))
+									* Number($("#taxTot").val()) / Number(100)) * 100) / 100);
+			if ($("#profitType option:selected").val() == 'profitPer') {
+				$("#profitValue")
+				.val(
+						Math
+								.round((Number(Number($("#subTotal")
+										.val())
+										- Number($("#discountValue")
+												.val())
+										+ Number($("#taxAmount").val()))
+										* Number($("#profitVal").val()) / 100) * 100) / 100);
+			} else {
+				$("#profitValue").val(
+						(Number($("#subTotal").val())
+								* Number($("#profitVal").val()) / Number($(
+								"#totalPurchasedSubTot").val())).toFixed(2));
+			}
+			$("#totalvalue").val(
+			Math.round((Number($("#subTotal").val()) - Number($("#discountValue").val()) + Number($(
+					"#taxAmount").val()) + Number($("#profitValue").val())) * 100) / 100);
+			var tot = $("#totalvalue").val();
+			var round = Math.round(tot);
+			$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
+			$("#gt").val(Math.round((round) * 100) / 100);
 		}
 
 		function paymentDate() {
