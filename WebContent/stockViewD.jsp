@@ -174,7 +174,7 @@
 											<thead>
 												<tr>
 													<th>#</th>
-													<th>Designer Number:</th>
+													<th>Product code:</th>
 													<th>Product Description:</th>
 													<th>UOM</th>
 													<th>Quantity</th>
