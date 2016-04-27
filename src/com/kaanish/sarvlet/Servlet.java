@@ -524,10 +524,6 @@ public class Servlet extends HttpServlet {
 
 					paymentDetails = new PaymentDetails();
 					paymentDetails.setPaymentDate(dt);
-					// paymentDetails.setTotalAmount(Float.parseFloat(req
-					// .getParameter("totalCost")));
-					// paymentDetails.setPaidAmount(Float.parseFloat(req
-					// .getParameter("totalCost")));
 					paymentDetails.setTotalAmount(0);
 					paymentDetails.setPaidAmount(0);
 					paymentDetails.setDescription("This is Production Entry");
@@ -1327,7 +1323,7 @@ public class Servlet extends HttpServlet {
 					} else {
 						purchaseEntry.setInclusiveAgent(true);
 					}
-					////////////////////////////////////////////////////////////////
+					// //////////////////////////////////////////////////////////////
 					ejb.setPurchaseEntry(purchaseEntry);
 
 					if (ejb.getVoucherAssignByVendorId(
@@ -1376,6 +1372,33 @@ public class Servlet extends HttpServlet {
 						voucherDetails.setPurchase_Entry(purchaseEntry);
 						ejb.setVoucherDetails(voucherDetails);
 					}
+					// correcting voucher details
+					for (VoucherAssign va : ejb.getAllVoucherAssign()) {
+						float totCr = 0;
+						float totDb = 0;
+
+						for (int ind = 0; ind < ejb
+								.getAllVoucherDetailsByVoucherAssignId(
+										va.getId()).size(); ind++) {
+							VoucherDetails vd = ejb
+									.getAllVoucherDetailsByVoucherAssignId(
+											va.getId()).get(ind);
+							if (vd.isCredit()) {
+								totCr = totCr + vd.getValue();
+							} else {
+								totDb = totDb + vd.getValue();
+							}
+
+							if (vd.getVoucherAssign().getVendor() != null) {
+								vd.setTotalCreditNote(totCr - totDb);
+								ejb.updateVoucherDetails(vd);
+							} else if (vd.getVoucherAssign().getCustomerEntry() != null) {
+								vd.setTotalDebitNote(totDb - totCr);
+								ejb.updateVoucherDetails(vd);
+							}
+						}
+					}
+					// correcting voucher details
 
 					paymentDetails.setPaymentDate(DateConverter.getDate(req
 							.getParameter("payDate")));
@@ -1391,6 +1414,24 @@ public class Servlet extends HttpServlet {
 							.getPaymentStatusByStatus(req
 									.getParameter("pstatus")));
 					ejb.setPaymentDetails(paymentDetails);
+					// correcting purchase entry payment details
+					for (Purchase_Entry pe : ejb.getAllPurchaseEntry()) {
+						int pSize = ejb.getPaymentDetailsByPurchaseEntryId(
+								pe.getId()).size();
+						float tot = ejb
+								.getPaymentDetailsByPurchaseEntryId(pe.getId())
+								.get(pSize - 1).getTotalAmount();
+						for (int ind = ejb.getPaymentDetailsByPurchaseEntryId(
+								pe.getId()).size() - 1; ind > -1; ind--) {
+							PaymentDetails paymentDetails = ejb
+									.getPaymentDetailsByPurchaseEntryId(
+											pe.getId()).get(ind);
+							paymentDetails.setTotalAmount(tot);
+							tot = tot - paymentDetails.getPaidAmount();
+							ejb.updatePaymentDetails(paymentDetails);
+						}
+					}
+					// correcting purchase entry payment details
 
 					String attr1[] = req.getParameterValues("attr1H");
 					String attr2[] = req.getParameterValues("attr2H");
@@ -1596,7 +1637,6 @@ public class Servlet extends HttpServlet {
 					purchaseReturn = new PurchaseReturn();
 					purchaseReturn.setChallanNumber(req
 							.getParameter("challanNumber"));
-					purchaseReturn.setPurchaseEntry(purchaseEntry);
 					purchaseReturn.setRoundOff(Float.parseFloat(req
 							.getParameter("roundvalue")));
 					purchaseReturn.setReturnDate(DateConverter.getDate(req
@@ -1629,8 +1669,36 @@ public class Servlet extends HttpServlet {
 								.getUserById((String) httpSession
 										.getAttribute("user")));
 						voucherDetails.setPurchaseReturn(purchaseReturn);
+						voucherDetails.setPurchase_Entry(purchaseEntry);
 						ejb.setVoucherDetails(voucherDetails);
 					}
+					// correcting voucher details
+					for (VoucherAssign va : ejb.getAllVoucherAssign()) {
+						float totCr = 0;
+						float totDb = 0;
+
+						for (int ind = 0; ind < ejb
+								.getAllVoucherDetailsByVoucherAssignId(
+										va.getId()).size(); ind++) {
+							VoucherDetails vd = ejb
+									.getAllVoucherDetailsByVoucherAssignId(
+											va.getId()).get(ind);
+							if (vd.isCredit()) {
+								totCr = totCr + vd.getValue();
+							} else {
+								totDb = totDb + vd.getValue();
+							}
+
+							if (vd.getVoucherAssign().getVendor() != null) {
+								vd.setTotalCreditNote(totCr - totDb);
+								ejb.updateVoucherDetails(vd);
+							} else if (vd.getVoucherAssign().getCustomerEntry() != null) {
+								vd.setTotalDebitNote(totDb - totCr);
+								ejb.updateVoucherDetails(vd);
+							}
+						}
+					}
+					// correcting voucher details
 
 					paymentDetails = new PaymentDetails();
 					paymentDetails.setPaymentDate(DateConverter.getDate(req
@@ -1639,10 +1707,40 @@ public class Servlet extends HttpServlet {
 							.getParameter("spAmount")));
 					paymentDetails.setDescription(req.getParameter("desc"));
 					paymentDetails.setPurchaseReturn(purchaseReturn);
+					paymentDetails.setPurchase_Entry(purchaseEntry);
 					paymentDetails.setPaymentType(ejb.getPaymentTypeByType(req
 							.getParameter("pType")));
-
+					if (ejb.getPaymentDetailsByPurchaseEntryId(
+							purchaseEntry.getId()).get(0).getTotalAmount()
+							- ejb.getPaymentDetailsByPurchaseEntryId(
+									purchaseEntry.getId()).get(0)
+									.getPaidAmount() > Float.parseFloat(req
+							.getParameter("spAmount"))) {
+						paymentDetails.setPaymentStatus(ejb
+								.getPaymentStatusByStatus("Semi Paid"));
+					} else {
+						paymentDetails.setPaymentStatus(ejb
+								.getPaymentStatusByStatus("Full Paid"));
+					}
 					ejb.setPaymentDetails(paymentDetails);
+					// correcting purchase entry payment details
+					for (Purchase_Entry pe : ejb.getAllPurchaseEntry()) {
+						int pSize = ejb.getPaymentDetailsByPurchaseEntryId(
+								pe.getId()).size();
+						float tot = ejb
+								.getPaymentDetailsByPurchaseEntryId(pe.getId())
+								.get(pSize - 1).getTotalAmount();
+						for (int ind = ejb.getPaymentDetailsByPurchaseEntryId(
+								pe.getId()).size() - 1; ind > -1; ind--) {
+							PaymentDetails paymentDetails = ejb
+									.getPaymentDetailsByPurchaseEntryId(
+											pe.getId()).get(ind);
+							paymentDetails.setTotalAmount(tot);
+							tot = tot - paymentDetails.getPaidAmount();
+							ejb.updatePaymentDetails(paymentDetails);
+						}
+					}
+					// correcting purchase entry payment details
 
 					String db[] = req.getParameterValues("drawBack");
 					String rQty[] = req.getParameterValues("rQty");
@@ -1847,6 +1945,33 @@ public class Servlet extends HttpServlet {
 						voucherDetails.setVoucherAssign(voucherAssign);
 						ejb.setVoucherDetails(voucherDetails);
 					}
+					// correcting voucher details
+					for (VoucherAssign va : ejb.getAllVoucherAssign()) {
+						float totCr = 0;
+						float totDb = 0;
+
+						for (int ind = 0; ind < ejb
+								.getAllVoucherDetailsByVoucherAssignId(
+										va.getId()).size(); ind++) {
+							VoucherDetails vd = ejb
+									.getAllVoucherDetailsByVoucherAssignId(
+											va.getId()).get(ind);
+							if (vd.isCredit()) {
+								totCr = totCr + vd.getValue();
+							} else {
+								totDb = totDb + vd.getValue();
+							}
+
+							if (vd.getVoucherAssign().getVendor() != null) {
+								vd.setTotalCreditNote(totCr - totDb);
+								ejb.updateVoucherDetails(vd);
+							} else if (vd.getVoucherAssign().getCustomerEntry() != null) {
+								vd.setTotalDebitNote(totDb - totCr);
+								ejb.updateVoucherDetails(vd);
+							}
+						}
+					}
+					// correcting voucher details
 
 					paymentDetails = new PaymentDetails();
 					paymentDetails.setPaymentDate(DateConverter.getDate(req
@@ -1863,6 +1988,24 @@ public class Servlet extends HttpServlet {
 							.getPaymentStatusByStatus(req
 									.getParameter("pstatus")));
 					ejb.setPaymentDetails(paymentDetails);
+					// correcting sales entry payment details
+					for (SalesEntry se : ejb.getAllSalesEntries()) {
+						int pSize = ejb.getPaymentDetailsBySalesEntryId(
+								se.getId()).size();
+						float tot = ejb
+								.getPaymentDetailsBySalesEntryId(se.getId())
+								.get(pSize - 1).getTotalAmount();
+						for (int ind = ejb.getPaymentDetailsBySalesEntryId(
+								se.getId()).size() - 1; ind > -1; ind--) {
+							PaymentDetails paymentDetails = ejb
+									.getPaymentDetailsBySalesEntryId(se.getId())
+									.get(ind);
+							paymentDetails.setTotalAmount(tot);
+							tot = tot - paymentDetails.getPaidAmount();
+							ejb.updatePaymentDetails(paymentDetails);
+						}
+					}
+					// correcting sales entry payment details
 
 					String productId[] = req.getParameterValues("productId");
 					String qtyvalue[] = req.getParameterValues("qtyvalue");
@@ -3270,14 +3413,43 @@ public class Servlet extends HttpServlet {
 					paymentDetails = new PaymentDetails();
 					paymentDetails.setPaidAmount(Float.parseFloat(req
 							.getParameter("tbv")));
-
 					paymentDetails.setPaymentDate(DateConverter.getDate(req
 							.getParameter("payDate")));
 					paymentDetails.setDescription(req.getParameter("desc"));
 					paymentDetails.setSalesReturn(salesReturn);
+					paymentDetails.setSalesEntry(salesEntry);
 					paymentDetails.setPaymentType(ejb.getPaymentTypeByType(req
 							.getParameter("pType")));
+					if (ejb.getPaymentDetailsBySalesEntryId(salesEntry.getId())
+							.get(0).getTotalAmount()
+							- ejb.getPaymentDetailsBySalesEntryId(
+									salesEntry.getId()).get(0).getPaidAmount() > Float
+								.parseFloat(req.getParameter("tbv"))) {
+						paymentDetails.setPaymentStatus(ejb
+								.getPaymentStatusByStatus("Semi Paid"));
+					} else {
+						paymentDetails.setPaymentStatus(ejb
+								.getPaymentStatusByStatus("Full Paid"));
+					}
 					ejb.setPaymentDetails(paymentDetails);
+					// correcting sales entry payment details
+					for (SalesEntry se : ejb.getAllSalesEntries()) {
+						int pSize = ejb.getPaymentDetailsBySalesEntryId(
+								se.getId()).size();
+						float tot = ejb
+								.getPaymentDetailsBySalesEntryId(se.getId())
+								.get(pSize - 1).getTotalAmount();
+						for (int ind = ejb.getPaymentDetailsBySalesEntryId(
+								se.getId()).size() - 1; ind > -1; ind--) {
+							PaymentDetails paymentDetails = ejb
+									.getPaymentDetailsBySalesEntryId(se.getId())
+									.get(ind);
+							paymentDetails.setTotalAmount(tot);
+							tot = tot - paymentDetails.getPaidAmount();
+							ejb.updatePaymentDetails(paymentDetails);
+						}
+					}
+					// correcting sales entry payment details
 
 					voucherDetails = new VoucherDetails();
 					voucherDetails.setTotalDebitNote(Float.parseFloat(req
@@ -3288,7 +3460,6 @@ public class Servlet extends HttpServlet {
 					voucherDetails.setUsers(ejb
 							.getUserById((String) httpSession
 									.getAttribute("user")));
-
 					voucherDetails.setCredit(true);
 					voucherDetails.setValue(Float.parseFloat(req
 							.getParameter("tbv")));
@@ -3296,7 +3467,36 @@ public class Servlet extends HttpServlet {
 							.getVoucherAssignByCustomerId(Integer.parseInt(req
 									.getParameter("customerId"))));
 					voucherDetails.setSalesReturn(salesReturn);
+					voucherDetails.setSalesEntry(salesEntry);
 					ejb.setVoucherDetails(voucherDetails);
+
+					// correcting voucher details
+					for (VoucherAssign va : ejb.getAllVoucherAssign()) {
+						float totCr = 0;
+						float totDb = 0;
+
+						for (int ind = 0; ind < ejb
+								.getAllVoucherDetailsByVoucherAssignId(
+										va.getId()).size(); ind++) {
+							VoucherDetails vd = ejb
+									.getAllVoucherDetailsByVoucherAssignId(
+											va.getId()).get(ind);
+							if (vd.isCredit()) {
+								totCr = totCr + vd.getValue();
+							} else {
+								totDb = totDb + vd.getValue();
+							}
+
+							if (vd.getVoucherAssign().getVendor() != null) {
+								vd.setTotalCreditNote(totCr - totDb);
+								ejb.updateVoucherDetails(vd);
+							} else if (vd.getVoucherAssign().getCustomerEntry() != null) {
+								vd.setTotalDebitNote(totDb - totCr);
+								ejb.updateVoucherDetails(vd);
+							}
+						}
+					}
+					// correcting voucher details
 
 					String p3[] = req.getParameterValues("rQtyDe");
 					String qty4[] = req.getParameterValues("rQtySa");
@@ -4593,18 +4793,7 @@ public class Servlet extends HttpServlet {
 											.parseInt(productIdaa[l]));
 					float g = purchaseOrderProductdetails
 							.getRemaining_quantity() - Float.parseFloat(qty[l]);
-					System.out
-							.println("restProduct in purchaseOrderProductdetails"
-									+ ".............." + g);
-					System.out.println("restProduct in ourchase receive"
-							+ ".............." + Float.parseFloat(qty[l]));
-					System.out.println("Hello"
-							+ purchaseOrderProductdetails
-									.getRemaining_quantity());
 					purchaseOrderProductdetails.setRemaining_quantity(g);
-					System.out.println("object print"
-							+ purchaseOrderProductdetails);
-
 					ejb.updatePurchaseOrderProductdetails(purchaseOrderProductdetails);
 					purchaseProductDetails = null;
 

@@ -476,7 +476,10 @@
 												</td>
 												<c:choose>
 													<c:when test="${paymentDetails.paymentType.type!=null}">
-														<td>${paymentDetails.paymentType.type}</td>
+														<td>${paymentDetails.paymentType.type}<c:if
+																test="${paymentDetails.purchaseReturn!=null}">
+																<br>(Return Value)</c:if>
+														</td>
 													</c:when>
 													<c:otherwise>
 														<td>NA</td>

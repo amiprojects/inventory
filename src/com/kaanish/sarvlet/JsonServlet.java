@@ -42,6 +42,7 @@ import com.kaanish.model.SampleDesignCostSheet;
 import com.kaanish.model.State;
 import com.kaanish.model.SubDepartment;
 import com.kaanish.model.Vendor;
+import com.kaanish.model.VoucherAssign;
 import com.kaanish.model.VoucherDetails;
 import com.kaanish.util.Base64;
 import com.kaanish.util.DateConverter;
@@ -1463,7 +1464,6 @@ public class JsonServlet extends HttpServlet {
 							.toUpperCase());
 					productDetail.setQtyUnit(ejb.getQtyUnitById(Integer
 							.parseInt(req.getParameter("uom"))));
-					System.out.println(req.getParameter("isRaw"));
 					productDetail.setRaw(Boolean.parseBoolean(req
 							.getParameter("isRaw")));
 					productDetail.setSaleble(Boolean.parseBoolean(req
@@ -1742,7 +1742,7 @@ public class JsonServlet extends HttpServlet {
 					Purchase_Entry purchase_Entry = ejb
 							.getPurchaseEntryById(Integer.parseInt(req
 									.getParameter("id")));
-					float oldGT = purchase_Entry.getTotalCost();
+					// float oldGT = purchase_Entry.getTotalCost();
 
 					purchase_Entry.setSur_charge(Float.parseFloat(req
 							.getParameter("surCharge")));
@@ -1766,46 +1766,79 @@ public class JsonServlet extends HttpServlet {
 
 					ejb.updatePurchaseEntry(purchase_Entry);
 
-					VoucherDetails vd = new VoucherDetails();
-					vd.setCredit(true);
-					vd.setUsers(ejb.getUserById((String) httpSession
-							.getAttribute("user")));
-					vd.setVoucherAssign(purchase_Entry.getVendor()
-							.getVoucherAssign());
-					vd.setPurchase_Entry(purchase_Entry);
-					vd.setValue(Float.parseFloat(req.getParameter("gt"))
-							- oldGT);
-					vd.setVoucherDate(new Date());
+					// VoucherDetails vd = new VoucherDetails();
+					// vd.setCredit(true);
+					// vd.setUsers(ejb.getUserById((String) httpSession
+					// .getAttribute("user")));
+					// vd.setVoucherAssign(purchase_Entry.getVendor()
+					// .getVoucherAssign());
+					// vd.setPurchase_Entry(purchase_Entry);
+					// vd.setValue(Float.parseFloat(req.getParameter("gt"))
+					// - oldGT);
+					// vd.setVoucherDate(new Date());
+					// if (!(purchase_Entry.getVendor().getVoucherAssign()
+					// .getVoucherDetails().size() > 0)) {
+					// vd.setTotalCreditNote(Float.parseFloat(req
+					// .getParameter("gt")));
+					// } else {
+					// float totalCreditNote = ejb
+					// .getVoucherDetailsByVendorId(
+					// purchase_Entry.getVendor().getId())
+					// .get(ejb.getVoucherDetailsByVendorId(
+					// purchase_Entry.getVendor().getId())
+					// .size() - 1).getTotalCreditNote();
+					// vd.setTotalCreditNote(vd.getValue() + totalCreditNote);
+					// }
+					// ejb.setVoucherDetails(vd);
 
-					if (!(purchase_Entry.getVendor().getVoucherAssign()
-							.getVoucherDetails().size() > 0)) {
-						vd.setTotalCreditNote(Float.parseFloat(req
+					// PaymentDetails paymentDetails = new PaymentDetails();
+					// paymentDetails.setPaymentDate(new Date());
+					// paymentDetails.setTotalAmount(Float.parseFloat(req
+					// .getParameter("gt")) - oldGT);
+					// paymentDetails.setPaidAmount(Float.parseFloat(req
+					// .getParameter("gt")) - oldGT);
+					// paymentDetails.setPurchase_Entry(purchase_Entry);
+					// paymentDetails.setPaymentStatus(ejb
+					// .getPaymentStatusByStatus("Not Paid"));
+					// ejb.setPaymentDetails(paymentDetails);
+
+					// //////////////////////////////////////////////////
+					int paySize = ejb.getPaymentDetailsByPurchaseEntryId(
+							purchase_Entry.getId()).size();
+					PaymentDetails paymentDetails = ejb
+							.getPaymentDetailsByPurchaseEntryId(
+									purchase_Entry.getId()).get(paySize - 1);
+					if (paymentDetails.getPaymentStatus().getStatus()
+							.equals("Full Paid")) {
+						paymentDetails.setTotalAmount(Float.parseFloat(req
+								.getParameter("gt")));
+						paymentDetails.setPaidAmount(Float.parseFloat(req
 								.getParameter("gt")));
 					} else {
-						float totalCreditNote = ejb
-								.getVoucherDetailsByVendorId(
-										purchase_Entry.getVendor().getId())
-								.get(ejb.getVoucherDetailsByVendorId(
-										purchase_Entry.getVendor().getId())
-										.size() - 1).getTotalCreditNote();
-						vd.setTotalCreditNote(vd.getValue() + totalCreditNote);
+						paymentDetails.setTotalAmount(Float.parseFloat(req
+								.getParameter("gt")));
 					}
+					ejb.updatePaymentDetails(paymentDetails);
 
-					ejb.setVoucherDetails(vd);
-
-					PaymentDetails paymentDetails = new PaymentDetails();
-
-					paymentDetails.setPaymentDate(new Date());
-					paymentDetails.setTotalAmount(Float.parseFloat(req
-							.getParameter("gt")) - oldGT);
-					paymentDetails.setPaidAmount(Float.parseFloat(req
-							.getParameter("gt")) - oldGT);
-
-					paymentDetails.setPurchase_Entry(purchase_Entry);
-
-					paymentDetails.setPaymentStatus(ejb
-							.getPaymentStatusByStatus("Not Paid"));
-					ejb.setPaymentDetails(paymentDetails);
+					// correcting purchase entry payment details
+					for (Purchase_Entry pe : ejb.getAllPurchaseEntry()) {
+						int pSize = ejb.getPaymentDetailsByPurchaseEntryId(
+								pe.getId()).size();
+						float tot = ejb
+								.getPaymentDetailsByPurchaseEntryId(pe.getId())
+								.get(pSize - 1).getTotalAmount();
+						for (int ind = ejb.getPaymentDetailsByPurchaseEntryId(
+								pe.getId()).size() - 1; ind > -1; ind--) {
+							PaymentDetails paymentDet = ejb
+									.getPaymentDetailsByPurchaseEntryId(
+											pe.getId()).get(ind);
+							paymentDet.setTotalAmount(tot);
+							tot = tot - paymentDet.getPaidAmount();
+							ejb.updatePaymentDetails(paymentDet);
+						}
+					}
+					// correcting purchase entry payment details
+					// //////////////////////////////////////////////////////
 
 					generator2.writeStartObject().write("error", false)
 							.writeEnd().close();
@@ -1813,7 +1846,6 @@ public class JsonServlet extends HttpServlet {
 				} catch (Exception e) {
 					generator2.writeStartObject().write("error", true)
 							.writeEnd().close();
-					System.out.println(e.getMessage());
 					e.printStackTrace();
 				}
 				break;

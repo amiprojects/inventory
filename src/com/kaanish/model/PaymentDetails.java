@@ -43,15 +43,7 @@ public class PaymentDetails implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "salesEntryId")
-	private SalesEntry salesEntry;
-
-	public SalesReturn getSalesReturn() {
-		return salesReturn;
-	}
-
-	public void setSalesReturn(SalesReturn salesReturn) {
-		this.salesReturn = salesReturn;
-	}
+	private SalesEntry salesEntry;	
 
 	@ManyToOne
 	@JoinColumn(name = "salesReEntryId")
@@ -159,6 +151,14 @@ public class PaymentDetails implements Serializable {
 
 	public void setJobAssignId(int jobAssignId) {
 		this.jobAssignId = jobAssignId;
+	}
+	
+	public SalesReturn getSalesReturn() {
+		return salesReturn;
+	}
+
+	public void setSalesReturn(SalesReturn salesReturn) {
+		this.salesReturn = salesReturn;
 	}
 
 }

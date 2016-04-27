@@ -201,7 +201,7 @@
 									<thead style="background-color: #F0F0F0;">
 										<tr>
 											<th>#</th>
-											<th>Designer Number:</th>
+											<th>Product Code:</th>
 											<th>Product Description</th>
 											<th>Qty</th>
 											<th>UOM</th>
@@ -671,18 +671,17 @@
 		var qty=$("#proRow"+id+" :nth-child(4) input[type=text]").val();
 		var rate=$("#proRow"+id+" :nth-child(6) input[type=text]").val();
 		
-		var subTot=Number(qty)*Number(rate);
+		var amount=Number(qty)*Number(rate);
 		$.ajax({
 			url:"getProdDetByPurchaseProdDetailsId",
 			dataType:"json",
 			data:{id:id},
 			success:function(data){
-				var sellQty=data.quantity-data.remaining_quantity;				
-				if(qty<sellQty){
+				if(data.quantity>data.remaining_quantity){
 					$("#proRow"+id+" :nth-child(4) input[type=text]").val(data.quantity);
 					$(a).prop("readonly", true);
 					$(a).attr("style", "background-color: grey;");	
-					sweetAlert('Oops...', sellQty+' prodct is alresdy in use', 'error');
+					sweetAlert('Oops...', 'This prodct is alresdy in use', 'error');
 				}else{
 					$.ajax({
 						url:"updatePurchaseproduct",
@@ -698,11 +697,11 @@
 								$("#proRow"+id+" :nth-child(4) input[type=text]").val(data.quantity);
 								$(a).prop("readonly", true);
 								$(a).attr("style", "background-color: grey;");	
-								sweetAlert('Oops...', 'prodct update failure....', 'error');
+								sweetAlert('Oops...', 'prodct update failed....', 'error');
 							}else{
 								$(a).prop("readonly", true);
 								$(a).attr("style", "background-color: pink;");		
-								$("#proRow"+id+" :nth-child(7)").html(subTot);		
+								$("#proRow"+id+" :nth-child(7)").html(amount);		
 								updateSubtotal();	
 							}
 						}
@@ -715,16 +714,13 @@
 	}
 
 	function updatePe(a) {
+		gtot();
 		var st = $("#subTotal").val();
 		st = st.replace(",", "");
 		var scharge = $("#surcharge").val();
 		var tcharge = $("#transportCost").val();
-		var tot = Number(st) + Number(scharge) + Number(tcharge);
-		var gt = Math.round(tot, 0);
-		var roundvalue = gt - tot;
-		roundvalue = roundvalue.toFixed(2);
-		$("#roundvalue").val(roundvalue);
-		$("#gt").val(Number(gt));
+		var gt = $("#gt").val();
+		var roundvalue = $("#roundvalue").val();
 
 		$.ajax({
 			url : "updatePurchaseEntry",
@@ -735,7 +731,10 @@
 				trCharge : tcharge,
 				gt:gt,
 				roundvalue:roundvalue,
-				st:st
+				st:st,
+				discountValue : $("#discountValue").val(),
+				taxAmount : $("#taxAmount").val(),
+				profitValue : $("#profitValue").val()
 			},
 			success : function(data) {
 				if (data.error) {					
@@ -759,16 +758,13 @@
 			sum=sum+Number($( this ).html());
 		});
 		$("#subTotal").val(sum);
+		gtot();
 		var st = $("#subTotal").val();
 		st = st.replace(",", "");
 		var scharge = $("#surcharge").val();
 		var tcharge = $("#transportCost").val();
-		var tot = Number(st) + Number(scharge) + Number(tcharge);
-		var gt = Math.round(tot, 0);
-		var roundvalue = gt - tot;
-		roundvalue = roundvalue.toFixed(2);
-		$("#roundvalue").val(roundvalue);
-		$("#gt").val(Number(gt));
+		var gt = $("#gt").val();
+		var roundvalue = $("#roundvalue").val();
 
 		$.ajax({
 			url : "updatePurchaseEntry",
@@ -779,7 +775,10 @@
 				trCharge : tcharge,
 				gt:gt,
 				roundvalue:roundvalue,
-				st:st
+				st:st,
+				discountValue : $("#discountValue").val(),
+				taxAmount : $("#taxAmount").val(),
+				profitValue : $("#profitValue").val()
 			},
 			success : function(data) {
 				if (data.error) {					
@@ -1187,7 +1186,7 @@
 function displayProductIntable(ppid){	
 	$("#purPro tbody")
 			.append(
-					'<tr class="trRemove" id="trRemove'+ind+'"><td>'
+					'<tr class="trRemove" id="proRow'+ppid+'"><td>'
 							+ k
 							+ '</td><td>'
 							+ $("#pCode").val()
@@ -1199,7 +1198,7 @@ function displayProductIntable(ppid){
 							+ $("#uom").val()
 							+ '</td><td>'
 							+'<input type="text" value="'+ $("#rate").val()+'" style="background-color: gray;" readonly="readonly" name="pprocost"	onchange="update(this,\''+ppid+'\'});"	ondblclick="enable(this);">'
-							+ '</td><td>'
+							+ '</td><td class="proTotCost">'
 							+ Number($("#qty").val())
 							* Number($("#rate").val())
 							+ '</td>'+'</tr>');
@@ -1260,7 +1259,7 @@ function displayProductIntable(ppid){
 			trCharge : tcharge,
 			gt:gt,
 			roundvalue:roundvalue,
-			st:st,
+			st : st,
 			discountValue : $("#discountValue").val(),
 			taxAmount : $("#taxAmount").val(),
 			profitValue : $("#profitValue").val()

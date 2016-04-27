@@ -23,9 +23,14 @@ import com.kaanish.model.CompanyInfo;
 import com.kaanish.model.JobClass;
 import com.kaanish.model.Module;
 import com.kaanish.model.PageList;
+import com.kaanish.model.PaymentDetails;
 import com.kaanish.model.PaymentStatus;
 import com.kaanish.model.PaymentType;
+import com.kaanish.model.PurchaseReturn;
+import com.kaanish.model.Purchase_Entry;
 import com.kaanish.model.QtyUnitType;
+import com.kaanish.model.SalesEntry;
+import com.kaanish.model.SalesReturn;
 import com.kaanish.model.SecurityQuestionGroup;
 import com.kaanish.model.SequrityQuestions;
 import com.kaanish.model.Stoct;
@@ -1141,12 +1146,32 @@ public class LoginServlet extends HttpServlet {
 		// adding vendor
 
 		// correcting voucher details
+		// purchase id
+		for (PurchaseReturn pr : ejb.getAllPurchaseReturn()) {
+			for (int i = 0; i < ejb.getAllVoucherDetailsByPurchaseReturnId(
+					pr.getId()).size(); i++) {
+				VoucherDetails vd = ejb.getAllVoucherDetailsByPurchaseReturnId(
+						pr.getId()).get(i);
+				vd.setPurchase_Entry(pr.getPurchaseEntry());
+				ejb.updateVoucherDetails(vd);
+			}
+		}
+		// purchase id
+		// sales id
+		for (SalesReturn sr : ejb.getAllSalesReturn()) {
+			for (int i = 0; i < ejb.getAllVoucherDetailsBySalesReturnId(
+					sr.getId()).size(); i++) {
+				VoucherDetails vd = ejb.getAllVoucherDetailsBySalesReturnId(
+						sr.getId()).get(i);
+				vd.setSalesEntry(sr.getSalesEntry());
+				ejb.updateVoucherDetails(vd);
+			}
+		}
+		// sales id
 		for (VoucherAssign va : ejb.getAllVoucherAssign()) {
 			float totCr = 0;
 			float totDb = 0;
 
-			// for (VoucherDetails vd : ejb
-			// .getAllVoucherDetailsByVoucherAssignId(va.getId())) {
 			for (int i = 0; i < ejb.getAllVoucherDetailsByVoucherAssignId(
 					va.getId()).size(); i++) {
 				VoucherDetails vd = ejb.getAllVoucherDetailsByVoucherAssignId(
@@ -1167,6 +1192,88 @@ public class LoginServlet extends HttpServlet {
 			}
 		}
 		// correcting voucher details
+
+		// correcting purchase entry payment details
+		for (PurchaseReturn pr : ejb.getAllPurchaseReturn()) {
+			for (int i = 0; i < ejb.getPaymentDetailsByPurchaseReturnId(
+					pr.getId()).size(); i++) {
+				PaymentDetails paymentDetails = ejb
+						.getPaymentDetailsByPurchaseReturnId(pr.getId()).get(i);
+				paymentDetails.setPurchase_Entry(pr.getPurchaseEntry());
+				ejb.updatePaymentDetails(paymentDetails);
+			}
+		}
+		for (Purchase_Entry pe : ejb.getAllPurchaseEntry()) {
+			int pSize = ejb.getPaymentDetailsByPurchaseEntryId(pe.getId())
+					.size();
+			float tot = ejb.getPaymentDetailsByPurchaseEntryId(pe.getId())
+					.get(pSize - 1).getTotalAmount();
+			for (int i = ejb.getPaymentDetailsByPurchaseEntryId(pe.getId())
+					.size() - 1; i > -1; i--) {
+				PaymentDetails paymentDetails = ejb
+						.getPaymentDetailsByPurchaseEntryId(pe.getId()).get(i);
+				paymentDetails.setTotalAmount(tot);
+				tot = tot - paymentDetails.getPaidAmount();
+				ejb.updatePaymentDetails(paymentDetails);
+			}
+		}
+		for (PurchaseReturn pr : ejb.getAllPurchaseReturn()) {
+			for (int i = 0; i < ejb.getPaymentDetailsByPurchaseReturnId(
+					pr.getId()).size(); i++) {
+				PaymentDetails paymentDetails = ejb
+						.getPaymentDetailsByPurchaseReturnId(pr.getId()).get(i);
+				if (paymentDetails.getTotalAmount() > paymentDetails
+						.getPaidAmount()) {
+					paymentDetails.setPaymentStatus(ejb
+							.getPaymentStatusByStatus("Semi Paid"));
+				} else {
+					paymentDetails.setPaymentStatus(ejb
+							.getPaymentStatusByStatus("Full Paid"));
+				}
+				ejb.updatePaymentDetails(paymentDetails);
+			}
+		}
+		// correcting purchase entry payment details
+
+		// correcting sales entry payment details
+		for (SalesReturn sr : ejb.getAllSalesReturn()) {
+			for (int i = 0; i < ejb
+					.getPaymentDetailsBySalesReturnId(sr.getId()).size(); i++) {
+				PaymentDetails paymentDetails = ejb
+						.getPaymentDetailsBySalesReturnId(sr.getId()).get(i);
+				paymentDetails.setSalesEntry(sr.getSalesEntry());
+				ejb.updatePaymentDetails(paymentDetails);
+			}
+		}
+		for (SalesEntry se : ejb.getAllSalesEntries()) {
+			int pSize = ejb.getPaymentDetailsBySalesEntryId(se.getId()).size();
+			float tot = ejb.getPaymentDetailsBySalesEntryId(se.getId())
+					.get(pSize - 1).getTotalAmount();
+			for (int i = ejb.getPaymentDetailsBySalesEntryId(se.getId()).size() - 1; i > -1; i--) {
+				PaymentDetails paymentDetails = ejb
+						.getPaymentDetailsBySalesEntryId(se.getId()).get(i);
+				paymentDetails.setTotalAmount(tot);
+				tot = tot - paymentDetails.getPaidAmount();
+				ejb.updatePaymentDetails(paymentDetails);
+			}
+		}
+		for (SalesReturn sr : ejb.getAllSalesReturn()) {
+			for (int i = 0; i < ejb
+					.getPaymentDetailsBySalesReturnId(sr.getId()).size(); i++) {
+				PaymentDetails paymentDetails = ejb
+						.getPaymentDetailsBySalesReturnId(sr.getId()).get(i);
+				if (paymentDetails.getTotalAmount() > paymentDetails
+						.getPaidAmount()) {
+					paymentDetails.setPaymentStatus(ejb
+							.getPaymentStatusByStatus("Semi Paid"));
+				} else {
+					paymentDetails.setPaymentStatus(ejb
+							.getPaymentStatusByStatus("Full Paid"));
+				}
+				ejb.updatePaymentDetails(paymentDetails);
+			}
+		}
+		// correcting sales entry payment details
 
 		if (ejb.getAllBillSetup().size() < 8) {
 			// companyInfoKaanish = ejb.getUserById("adminKaanish")

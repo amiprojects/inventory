@@ -18,7 +18,7 @@
 
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
 <!-- Responsive -->
-
+<link rel="stylesheet" href="js/dist/sweetalert2.css" type="text/css" />
 </head>
 <body>
 	<table id="example" cellspacing="0" width="100%" class="display">
@@ -31,7 +31,7 @@
 				<th>Quantity</th>
 				<th>WSP</th>
 				<th>MRP</th>
-				<th>view</th>
+				<th onclick="viewF();">view</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -43,7 +43,7 @@
 				<th>Quantity</th>
 				<th>WSP</th>
 				<th>MRP</th>
-				<th>view</th>
+				<th onclick="viewF();">view</th>
 			</tr>
 			<tr>
 				<th>#</th>
@@ -53,7 +53,7 @@
 				<th>Quantity</th>
 				<th>WSP</th>
 				<th>MRP</th>
-				<th>view</th>
+				<th onclick="viewF();">view</th>
 			</tr>
 			<tr>
 				<th>#</th>
@@ -63,7 +63,7 @@
 				<th>Quantity</th>
 				<th>WSP</th>
 				<th>MRP</th>
-				<th>view</th>
+				<th onclick="viewF();">view</th>
 			</tr>
 		</tbody>
 	</table>
@@ -82,6 +82,7 @@
 	<script src="js/dataTables.searchHighlight.min.js"></script>
 	<script src="js/pdfmake.min.js"></script>
 	<script src="js/jquery.highlight.js"></script>
+	<script type="text/javascript" src="js/dist/sweetalert2.min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			var table = $('#example').DataTable({
@@ -99,6 +100,12 @@
 				body.highlight(table.search());
 			});
 		});
+
+		function viewF() {
+			//sweetAlert('Oops...', 'Hi' , 'error');
+			//sweetAlert('Hi');
+			//swal('Update', 'Data successfully saved!', 'success');
+		}
 	</script>
 
 </body>

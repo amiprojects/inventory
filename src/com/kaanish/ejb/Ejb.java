@@ -571,12 +571,52 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public void updatePaymentDetails(PaymentDetails paymentDetails) {
+		em.merge(paymentDetails);
+	}
+
 	public List<PaymentDetails> getPaymentDetailsByJobAssignId(int id) {
 		TypedQuery<PaymentDetails> q = em
 				.createQuery(
 						"select c from PaymentDetails c where c.jobAssignId=:id order by c.id desc",
 						PaymentDetails.class);
 		q.setParameter("id", id);
+		return q.getResultList();
+	}
+
+	public List<PaymentDetails> getPaymentDetailsByPurchaseReturnId(int prId) {
+		TypedQuery<PaymentDetails> q = em
+				.createQuery(
+						"select c from PaymentDetails c where c.purchaseReturn.id=:prId order by c.id ASC",
+						PaymentDetails.class);
+		q.setParameter("prId", prId);
+		return q.getResultList();
+	}
+
+	public List<PaymentDetails> getPaymentDetailsByPurchaseEntryId(int peId) {
+		TypedQuery<PaymentDetails> q = em
+				.createQuery(
+						"select c from PaymentDetails c where c.purchase_Entry.id=:peId order by c.id DESC",
+						PaymentDetails.class);
+		q.setParameter("peId", peId);
+		return q.getResultList();
+	}
+
+	public List<PaymentDetails> getPaymentDetailsBySalesEntryId(int seId) {
+		TypedQuery<PaymentDetails> q = em
+				.createQuery(
+						"select c from PaymentDetails c where c.salesEntry.id=:seId order by c.id DESC",
+						PaymentDetails.class);
+		q.setParameter("seId", seId);
+		return q.getResultList();
+	}
+
+	public List<PaymentDetails> getPaymentDetailsBySalesReturnId(int srId) {
+		TypedQuery<PaymentDetails> q = em
+				.createQuery(
+						"select c from PaymentDetails c where c.salesReturn.id=:srId order by c.id ASC",
+						PaymentDetails.class);
+		q.setParameter("srId", srId);
 		return q.getResultList();
 	}
 
@@ -3450,6 +3490,33 @@ public class Ejb {
 						"select c from VoucherDetails c where c.voucherAssign.id=:vaId order by c.id ASC",
 						VoucherDetails.class);
 		q.setParameter("vaId", vaId);
+		return q.getResultList();
+	}
+
+	public List<VoucherDetails> getAllVoucherDetailsByPurchaseReturnId(int prId) {
+		TypedQuery<VoucherDetails> q = em
+				.createQuery(
+						"select c from VoucherDetails c where c.purchaseReturn.id=:prId order by c.id ASC",
+						VoucherDetails.class);
+		q.setParameter("prId", prId);
+		return q.getResultList();
+	}
+
+	public List<VoucherDetails> getAllVoucherDetailsByPurchaseEntryId(int peId) {
+		TypedQuery<VoucherDetails> q = em
+				.createQuery(
+						"select c from VoucherDetails c where c.purchase_Entry.id=:peId order by c.id ASC",
+						VoucherDetails.class);
+		q.setParameter("peId", peId);
+		return q.getResultList();
+	}
+
+	public List<VoucherDetails> getAllVoucherDetailsBySalesReturnId(int srId) {
+		TypedQuery<VoucherDetails> q = em
+				.createQuery(
+						"select c from VoucherDetails c where c.salesReturn.id=:srId order by c.id ASC",
+						VoucherDetails.class);
+		q.setParameter("srId", srId);
 		return q.getResultList();
 	}
 
