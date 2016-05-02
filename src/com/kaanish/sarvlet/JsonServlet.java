@@ -949,12 +949,6 @@ public class JsonServlet extends HttpServlet {
 								Integer.parseInt(req.getParameter("id")),
 								req.getParameter("date")));
 				break;
-			case "checkPcode":
-
-				resp.getWriter().print(
-						ejb.getProductByProductCode(req
-								.getParameter("productCode4")));
-				break;
 
 			case "addVendorbyjson":
 				resp.setContentType("application/json");
@@ -1645,23 +1639,35 @@ public class JsonServlet extends HttpServlet {
 				generatorDN.writeEnd().close();
 				break;
 
+			// case "getPurchaseProductDetailsByLotNumber":
+			// JsonGeneratorFactory jgf = Json.createGeneratorFactory(null);
+			// JsonGenerator jg = jgf.createGenerator(resp.getOutputStream());
+			// int flagPPD = 0;
+			// for (Purchase_Product_Details ppd : ejb
+			// .getAllPurchase_Product_Details()) {
+			// if (ppd.getLotNumber().equals(req.getParameter("lotNo"))) {
+			// flagPPD = 1;
+			// }
+			// }
+			// if (flagPPD == 1) {
+			// jg.writeStartObject()
+			// .write("lotNo",
+			// ejb.getPurchaseProductDetailsByLotNumber(
+			// req.getParameter("lotNo"))
+			// .getLotNumber()).writeEnd().close();
+			// }
+			// break;
+
 			case "getPurchaseProductDetailsByLotNumber":
-				JsonGeneratorFactory jgf = Json.createGeneratorFactory(null);
-				JsonGenerator jg = jgf.createGenerator(resp.getOutputStream());
-				int flagPPD = 0;
-				for (Purchase_Product_Details ppd : ejb
-						.getAllPurchase_Product_Details()) {
-					if (ppd.getLotNumber().equals(req.getParameter("lotNo"))) {
-						flagPPD = 1;
-					}
-				}
-				if (flagPPD == 1) {
-					jg.writeStartObject()
-							.write("lotNo",
-									ejb.getPurchaseProductDetailsByLotNumber(
-											req.getParameter("lotNo"))
-											.getLotNumber()).writeEnd().close();
-				}
+				resp.getWriter().print(
+						ejb.getPurchaseProductDetailsByLotNumber(req
+								.getParameter("lotNo")));
+				break;
+
+			case "checkPcode":
+				resp.getWriter().print(
+						ejb.getProductByProductCode(req
+								.getParameter("productCode4")));
 				break;
 
 			case "getAllOngoingJobPlanByDesignNumber":

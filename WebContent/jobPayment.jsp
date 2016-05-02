@@ -269,12 +269,13 @@
 															items="${jobAssignByDate.jobAssignmentProducts}">
 															<c:set var="totJobCost"
 																value="${totJobCost+jobp.totalJobCost}" />
-														</c:forEach> <fmt:formatNumber var="totJC" value="${totJobCost}"
+														</c:forEach> <fmt:formatNumber var="totJC"
+															value="${totJobCost+jobAssignByDate.surcharge}"
 															maxFractionDigits="2" />
 														<form action="" method="post"
 															id="jobPayment${jobAssignByDate.id}">
 															<a href="#"
-																onclick="jobPaymentOCF('${jobAssignByDate.id}','${jobAssignByDate.challanNumber}','${totJobCost}');"><input
+																onclick="jobPaymentOCF('${jobAssignByDate.id}','${jobAssignByDate.challanNumber}','${totJobCost+jobAssignByDate.surcharge}');"><input
 																type="hidden" value="${jobAssignByDate.challanNumber}"
 																name="joChallan"> <span style="color: #6a94ff;"><u>
 																		Payment</u></span></a>
@@ -343,7 +344,8 @@
 				<div class="modal-footer">
 					<b style="float: left;"><span>Current Due : </span><span
 						id="dueAmount"></span></b> <input type="button" value="Pay"
-						id="payButton" class="btn green pull-right" disabled="disabled">
+						id="payButton" onclick="payButtonOCF();"
+						class="btn green pull-right" disabled="disabled">
 				</div>
 			</div>
 		</div>
@@ -404,14 +406,14 @@
 		}
 		function jobPaymentOCF(id, challanNo, totJC) {
 			if($("#status").html()=="Not Paid"){
-				$("#dueAmount").html(totJC);		
+				$("#dueAmount").html(Number(totJC).toFixed(2));		
 				if(Number(totJC)>0){
 					$("#payButton").removeAttr("disabled");
 				}else{
 					$("#payButton").attr("disabled","disabled");
 				}
 			}			
-			$("#jobChallan").html(challanNo+" (Total Payable: "+totJC+" Rs.)");
+			$("#jobChallan").html(challanNo+" (Total Payable: "+Number(totJC).toFixed(2)+" Rs.)");
 			$("#jobPayModal").modal("show");	
 			$.ajax({
 				type : "post",
@@ -423,11 +425,9 @@
 				success : function(data) {
 					$("#paymentDetailsTable tbody").empty();
 					$.each(data, function(index, item) {
-							//alert(item.paymentId);
 							$("#paymentDetailsTable").append('<tbody><tr><td>'+formatDate(item.paymentDate)+'</td><td>'+item.paymentMethod+'</td><td>'+item.paymentDescription+'</td><td>'+item.payTotalAmount+'</td><td>'+item.paymentAmount+'</td><td>'+Number(item.payTotalAmount-item.paymentAmount)+'</td><td>'+item.paymentStatus+'</td></tr></tbody>');
 							if(index==0){
 								$("#dueAmount").html(Number(item.payTotalAmount-item.paymentAmount));
-								//if(item.paymentStatus=='Full Paid'){
 								if(Number(item.payTotalAmount-item.paymentAmount)>0){
 									$("#payButton").removeAttr("disabled");
 								}else{
@@ -440,6 +440,10 @@
 					alert(a + b + c);
 				}
 			});
+		}
+		
+		function payButtonOCF(){
+			alert("...");
 		}
 
 		$(function() {

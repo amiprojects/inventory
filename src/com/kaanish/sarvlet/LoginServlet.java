@@ -76,6 +76,26 @@ public class LoginServlet extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
+		// Stiching on sample
+		// for (Module m : ejb.getAllModule()) {
+		// int flagPdashboard = 0;
+		// for (PageList p : ejb.getAllPageList()) {
+		// if (p.getName().equals("Dashboard")) {
+		// flagPdashboard = 1;
+		// break;
+		// }
+		// }
+		// if (flagPdashboard == 0) {
+		// pageList = new PageList();
+		// pageList.setName("Dashboard");
+		// pageList.setModule(module);
+		// ejb.setPageList(pageList);
+		// pageList = null;
+		// }
+		// module = null;
+		// }
+		// Stiching on sample
+
 		// adding module and pages
 
 		// deleting and editing bekars, kainat kaanish

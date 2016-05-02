@@ -2333,8 +2333,8 @@
 					lotNo : $("#lotnO").val()
 				},
 				success : function(data) {
-					if (data.lotNo != "") {
-						$("#lotNoCheck").val(data.lotNo);
+					if (data.lotNumber != "") {
+						$("#lotNoCheck").val(data.lotNumber);
 					} else {
 						$("#lotNoCheck").val("");
 					}

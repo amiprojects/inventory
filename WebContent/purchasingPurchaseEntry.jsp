@@ -5245,8 +5245,8 @@
 					lotNo : $("#lotnO").val()
 				},
 				success : function(data) {
-					if (data.lotNo != "") {
-						$("#lotNoCheck").val(data.lotNo);
+					if (data.lotNumber != "") {
+						$("#lotNoCheck").val(data.lotNumber);
 					} else {
 						$("#lotNoCheck").val("");
 					}
@@ -5273,8 +5273,8 @@
 					lotNo : $("#lotText").val()
 				},
 				success : function(data) {
-					if (data.lotNo != "") {
-						$("#lotNoCheckT").val(data.lotNo);
+					if (data.lotNumber != "") {
+						$("#lotNoCheckT").val(data.lotNumber);
 					} else {
 						$("#lotNoCheckT").val("");
 					}

@@ -79,7 +79,7 @@ Url = {
 	<c:if test="${sessionScope['user']==null}">
 		<c:redirect url="index.jsp" />
 	</c:if>
-	
+
 	<c:set value="${sessionScope['ejb'].getCompanyInfo()}"
 		var="companyInfo" />
 	<c:set var="jobAssi"
@@ -251,10 +251,17 @@ Url = {
 							</c:forEach>
 							<c:set var="totJobCost" value="${totJobCost+jobp.totalJobCost}" />
 						</c:forEach>
+						<c:if test="${jobAssi.surcharge>0}">
+							<tr>
+								<td colspan="6" align="right">Surcharger :</td>
+								<td colspan="2"><fmt:formatNumber var="totJC"
+										value="${jobAssi.surcharge}" maxFractionDigits="2" />${totJC}</td>
+							</tr>
+						</c:if>
 						<tr>
 							<td colspan="6" align="right">Total Job Cost :</td>
 							<td colspan="2"><fmt:formatNumber var="totJC"
-									value="${totJobCost}" maxFractionDigits="2" />${totJC}</td>
+									value="${jobAssi.surcharge+totJobCost}" maxFractionDigits="2" />${totJC}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -263,7 +270,7 @@ Url = {
 
 		<tr style="height: 75px">
 			<td class="tg-031e" colspan="2"><span>Amount Chargeable
-					(in words)</span><br> <span>${sessionScope['ejb'].getNumberToWords(totJobCost)}</span></td>
+					(in words)</span><br> <span>${sessionScope['ejb'].getNumberToWords(jobAssi.surcharge+totJobCost)}</span></td>
 		</tr>
 		<tr style="height: 75px">
 			<td class="tg-031e" style="width: 60%"><strong>Declaration:</strong><br>We
