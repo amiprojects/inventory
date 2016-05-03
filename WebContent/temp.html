@@ -1,11 +1,2 @@
-discountValue : $("#discountValue").val(),
-			taxAmount : $("#taxAmount").val(),
-			profitValue : $("#profitValue").val()
-			
-			
-var st = $("#subTotal").val();
-	st = st.replace(",", "");
-	var scharge = $("#surcharge").val();
-	var tcharge = $("#transportCost").val();
-	var gt = $("#gt").val();
-	var roundvalue = $("#roundvalue").val();
+STITCHING
+select * from SAMPLEDESIGNCOSTSHEET where ID not in (select distinct SAMPLEDESIGNCOSTSHEETID from JOBSFORDESIGNCOSTSHEET where JOBTYPE=480);

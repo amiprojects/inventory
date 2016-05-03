@@ -21,11 +21,13 @@ import com.kaanish.model.AccountDetails;
 import com.kaanish.model.Bill_setup;
 import com.kaanish.model.CompanyInfo;
 import com.kaanish.model.JobClass;
+import com.kaanish.model.JobsForDesignCostSheet;
 import com.kaanish.model.Module;
 import com.kaanish.model.PageList;
 import com.kaanish.model.PaymentDetails;
 import com.kaanish.model.PaymentStatus;
 import com.kaanish.model.PaymentType;
+import com.kaanish.model.ProductsForDesignCostSheet;
 import com.kaanish.model.PurchaseReturn;
 import com.kaanish.model.Purchase_Entry;
 import com.kaanish.model.QtyUnitType;
@@ -77,22 +79,33 @@ public class LoginServlet extends HttpServlet {
 	@Override
 	public void init() throws ServletException {
 		// Stiching on sample
-		// for (Module m : ejb.getAllModule()) {
-		// int flagPdashboard = 0;
-		// for (PageList p : ejb.getAllPageList()) {
-		// if (p.getName().equals("Dashboard")) {
-		// flagPdashboard = 1;
+		// for (ProductsForDesignCostSheet p : ejb
+		// .getAllProductsForDesignCostSheet()) {
+		// if (p.getSampleDesignCostSheet().getJobPlans().size() == 0) {
+		// int flag = 0;
+		// for (JobsForDesignCostSheet j : p.getJobsForDesignCostSheets()) {
+		// if (j.getJobTypes().getJobName().equals("STITCHING")) {
+		// flag = 1;
 		// break;
 		// }
 		// }
-		// if (flagPdashboard == 0) {
-		// pageList = new PageList();
-		// pageList.setName("Dashboard");
-		// pageList.setModule(module);
-		// ejb.setPageList(pageList);
-		// pageList = null;
+		// if (flag == 0) {
+		// JobsForDesignCostSheet jobsForDesignCostSheet = new
+		// JobsForDesignCostSheet();
+		// jobsForDesignCostSheet.setAmmount(0);
+		// jobsForDesignCostSheet.setQty(0);
+		// jobsForDesignCostSheet.setRate(0);
+		// jobsForDesignCostSheet.setJobTypes(ejb
+		// .getJobTypeByJobName("STITCHING"));
+		// jobsForDesignCostSheet.setProductsForDesignCostSheet(p);
+		// jobsForDesignCostSheet.setQtyUnit(p.getQtyUnit());
+		// jobsForDesignCostSheet.setSampleDesignCostSheet(p
+		// .getSampleDesignCostSheet());
+		// jobsForDesignCostSheet.setVendor(p
+		// .getSampleDesignCostSheet().getVendor());
+		// ejb.setJobsForDesignCostSheet(jobsForDesignCostSheet);
 		// }
-		// module = null;
+		// }
 		// }
 		// Stiching on sample
 

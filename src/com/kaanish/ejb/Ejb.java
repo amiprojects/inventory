@@ -3578,6 +3578,14 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public JobTypes getJobTypeByJobName(String jobName) {
+		TypedQuery<JobTypes> q = em.createQuery(
+				"select c from JobTypes c where c.jobName=:jobName",
+				JobTypes.class);
+		q.setParameter("jobName", jobName);
+		return q.getResultList().get(0);
+	}
+
 	/***************************
 	 * for SampleDesignCostSheet
 	 *********************/
