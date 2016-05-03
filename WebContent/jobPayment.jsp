@@ -263,7 +263,7 @@
 															test="${sessionScope['ejb'].getPaymentDetailsByJobAssignId(jobAssignByDate.id).size()==0}">
 															<c:set value="Not Paid" var="Status"></c:set>
 														</c:if> <%-- ${sessionScope['ejb'].getPaymentDetailsByJobAssignId(jobAssignByDate.id).size()}
-														&nbsp;  --%> <span id="status">${Status}</span></td>
+														&nbsp;  --%> <span id="status${jobAssignByDate.id}">${Status}</span></td>
 													<td width="8%"><c:set var="totJobCost" value="${0}" />
 														<c:forEach var="jobp"
 															items="${jobAssignByDate.jobAssignmentProducts}">
@@ -275,7 +275,7 @@
 														<form action="" method="post"
 															id="jobPayment${jobAssignByDate.id}">
 															<a href="#"
-																onclick="jobPaymentOCF('${jobAssignByDate.id}','${jobAssignByDate.challanNumber}','${totJobCost+jobAssignByDate.surcharge}');"><input
+																onclick="jobPaymentOCF('${jobAssignByDate.id}','${jobAssignByDate.challanNumber}','${totJobCost+jobAssignByDate.surcharge}','${jobAssignByDate.vendor.id}');"><input
 																type="hidden" value="${jobAssignByDate.challanNumber}"
 																name="joChallan"> <span style="color: #6a94ff;"><u>
 																		Payment</u></span></a>
@@ -350,6 +350,164 @@
 			</div>
 		</div>
 	</div>
+	<form role="form" class="sec" method="post" id="paymentForm"
+		action="jobPayment">
+		<div id="paymentModal" class="modal fade" role="dialog"
+			style="top: 25px;">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							onclick="closePayment();">&times;</button>
+						<h4 class="modal-title">Payment Details</h4>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="widget-area">
+									<div class="breadcrumbs">
+										<ul>
+											<li><a title="">Select Payment status : </a></li>
+										</ul>
+									</div>
+									<br> <br> <br>
+									<div class="row">
+										<div class="col-md-5">
+											Payment status :<font color="red" size="4">*</font>
+										</div>
+										<div class="col-md-7">
+											<div class="sec">
+
+												<select class="form-control" id="pstatus" name="pstatus"
+													onchange="pStatusDiv()">
+													<option value="-" selected="selected">---</option>
+													<c:forEach
+														items="${sessionScope['ejb'].getAllPaymentStatus()}"
+														var="payStatus">
+														<%-- <c:if test="${payStatus.status!='Not Paid'}"> --%>
+														<option value="${payStatus.status}">${payStatus.status}</option>
+														<%-- </c:if> --%>
+													</c:forEach>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div id="payDetail">
+										<div class="breadcrumbs">
+											<ul>
+												<li><a title="">Payment Details : </a></li>
+											</ul>
+										</div>
+										<br> <br> <br>
+										<div class="row">
+											<div class="sec" id="pTypeDiv">
+												<div class="col-md-5">
+													Payment type :<font color="red" size="4">*</font>
+												</div>
+												<div class="col-md-7">
+													<select class="form-control" id="pType" name="pType"
+														onchange="pTypeFunc()">
+														<option value="-" selected="selected">---</option>
+														<c:forEach
+															items="${sessionScope['ejb'].getAllPaymentType()}"
+															var="payType">
+															<c:if
+																test="${payType.getType()!='Debit Note' && payType.getType()!='Credit Note'}">
+																<option value="${payType.getType()}">${payType.getType()}</option>
+															</c:if>
+														</c:forEach>
+													</select>
+												</div>
+											</div>
+											<div id="pDate">
+												<div class="col-md-5">Payment Date :</div>
+												<div class="col-md-7">
+													<input type="text" id="datepicker2" class="form-control"
+														readonly="readonly" name="payDate">
+												</div>
+											</div>
+											<div id="pAmount">
+												<div class="col-md-5">Full Amount :</div>
+												<div class="col-md-7">
+													<input type="text" class="form-control" readonly="readonly"
+														id="spAmount" name="spAmount">
+												</div>
+											</div>
+											<div id="pPayAmount">
+												<div class="col-md-5">
+													Payment Amount :<font color="red" size="4">*</font>
+												</div>
+												<div class="col-md-7">
+													<input type="text" class="form-control" value="0"
+														id="spPaymentAmount" name="spPaymentAmount"
+														onkeyup="spPaymentAmountFunc();" autocomplete="off"
+														onchange="spPaymentAmountDecimalFixF();">
+												</div>
+											</div>
+											<div id="pDueAmount">
+												<div class="col-md-5">Due Amount :</div>
+												<div class="col-md-7">
+													<input type="text" class="form-control" readonly="readonly"
+														id="spDueAmount" name="spDueAmount">
+												</div>
+											</div>
+											<div id="AMi2">
+												<div>
+													<div class="col-md-5">Current Credit Note :</div>
+													<div class="col-md-7">
+														<input type="text" id="totalCredit" name="totalCredit"
+															class="form-control" readonly="readonly" value="0">
+													</div>
+												</div>
+												<div>
+													<div class="col-md-5">
+														<span id="dORc">Final Credit Note :</span>
+													</div>
+													<div class="col-md-7">
+														<input type="text" class="form-control" id="finalDC"
+															name="finalDC" readonly="readonly" value="0">
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-md-6" style="float: right;" id="description">
+								<div class="widget-area">
+									<div class="breadcrumbs">
+										<ul>
+											<li><a title="">Provide Description : </a></li>
+										</ul>
+									</div>
+									<br> <br> <br>
+									<div class="row">
+										<div class="col-md-5">Description :</div>
+										<div class="col-md-7">
+											<textarea rows="" cols="" class="form-control" id="desc"
+												name="desc"></textarea>
+										</div>
+									</div>
+									<br>
+									<div class="breadcrumbs">
+										<button type="button" class="btn green pull-right"
+											onclick="submit();">Save</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<input type="hidden" id="vId" name="vId"> <input type="hidden"
+			id="jaId" name="jaId"><input type="hidden"
+			id="voucherDetailSize" name="voucherDetailSize">
+	</form>
 
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
@@ -399,52 +557,7 @@
 		function jobShowDetails(id) {
 			//alert(id);
 			$("#JobDetails" + id).submit();
-		}
-		function jobReceiveFromSearchF(id) {
-			//alert(id);
-			$("#jobReceiveFromSearch" + id).submit();
-		}
-		function jobPaymentOCF(id, challanNo, totJC) {
-			if($("#status").html()=="Not Paid"){
-				$("#dueAmount").html(Number(totJC).toFixed(2));		
-				if(Number(totJC)>0){
-					$("#payButton").removeAttr("disabled");
-				}else{
-					$("#payButton").attr("disabled","disabled");
-				}
-			}			
-			$("#jobChallan").html(challanNo+" (Total Payable: "+Number(totJC).toFixed(2)+" Rs.)");
-			$("#jobPayModal").modal("show");	
-			$.ajax({
-				type : "post",
-				url : "getPaymentDetailsByJobAssignId",
-				data : {
-					id : id
-				},
-				dataType : "json",
-				success : function(data) {
-					$("#paymentDetailsTable tbody").empty();
-					$.each(data, function(index, item) {
-							$("#paymentDetailsTable").append('<tbody><tr><td>'+formatDate(item.paymentDate)+'</td><td>'+item.paymentMethod+'</td><td>'+item.paymentDescription+'</td><td>'+item.payTotalAmount+'</td><td>'+item.paymentAmount+'</td><td>'+Number(item.payTotalAmount-item.paymentAmount)+'</td><td>'+item.paymentStatus+'</td></tr></tbody>');
-							if(index==0){
-								$("#dueAmount").html(Number(item.payTotalAmount-item.paymentAmount));
-								if(Number(item.payTotalAmount-item.paymentAmount)>0){
-									$("#payButton").removeAttr("disabled");
-								}else{
-									$("#payButton").attr("disabled","disabled");
-								}
-							}
-					});
-				},
-				error : function(a, b, c) {
-					alert(a + b + c);
-				}
-			});
-		}
-		
-		function payButtonOCF(){
-			alert("...");
-		}
+		}					
 
 		$(function() {
 			$("#prodCode").autocomplete({
@@ -558,43 +671,6 @@
 
 		});
 
-		/* $(function() {
-			$("#planNo").autocomplete({
-				source : function(req, resp) {
-					$.ajax({
-						type : "post",
-						url : "getPlanNumbersById",
-						data : {
-							id : req.term
-						},
-						dataType : "json",
-						success : function(data) {
-							resp($.map(data, function(item) {
-								return ({
-									value : item.id,
-									id : item.id
-								});
-							}));
-						},
-
-						error : function(a, b, c) {
-							alert(a + b + c);
-						}
-
-					});
-				},
-				select : function(event, ui) {
-					if (ui.item == null) {
-						$(this).val("");
-						$("#planNo").val("");
-					} else {
-						$("#planNo").val(ui.item.id);
-					}
-
-				}
-			});
-		}); */
-
 		function planNoF() {
 			if ($("#planNo").val() == "") {
 				alert("Please enter plan number")
@@ -613,6 +689,204 @@
 			var dateparts = d.split(" ");
 			return dateparts[2] + "-" + dateparts[1] + "-" + dateparts[5];
 		}
+		
+		function jobPaymentOCF(id, challanNo, totJC, vendorId) {
+			$("#vId").val(vendorId);
+			$("#jaId").val(id);
+			$.ajax({
+				url : "getAllVoucherDetailsByJobAssignId",
+				type : "post",
+				dataType : "json",
+				data : {
+					id : id
+				},
+				success : function(data) {
+					$("#voucherDetailSize").val(data.voucherDetailSize);
+				}
+			});			
+			$.ajax({
+				url : "getVendorByVendorId",
+				type : "post",
+				dataType : "json",
+				data : {
+					id : vendorId
+				},
+				success : function(data) {
+					$("#totalCredit").val(data.currentCreditNote);
+				}
+			});
+			if($("#status"+id).html()=="Not Paid"){
+				$("#dueAmount").html(Number(totJC).toFixed(2));		
+				if(Number(totJC)>0){
+					$("#payButton").removeAttr("disabled");
+				}else{
+					$("#payButton").attr("disabled","disabled");
+				}
+			}			
+			$("#jobChallan").html(challanNo+" (Total Payable: "+Number(totJC).toFixed(2)+" Rs.)");
+			$("#jobPayModal").modal("show");	
+			$.ajax({
+				type : "post",
+				url : "getPaymentDetailsByJobAssignId",
+				data : {
+					id : id
+				},
+				dataType : "json",
+				success : function(data) {
+					$("#paymentDetailsTable tbody").empty();
+					$.each(data, function(index, item) {
+							$("#paymentDetailsTable").append('<tbody><tr><td>'+formatDate(item.paymentDate)+'</td><td>'+item.paymentMethod+'</td><td>'+item.paymentDescription+'</td><td>'+item.payTotalAmount+'</td><td>'+item.paymentAmount+'</td><td>'+Number(item.payTotalAmount-item.paymentAmount)+'</td><td>'+item.paymentStatus+'</td></tr></tbody>');
+							if(index==0){
+								$("#dueAmount").html(Number(item.payTotalAmount-item.paymentAmount));
+								if(Number(item.payTotalAmount-item.paymentAmount)>0){
+									$("#payButton").removeAttr("disabled");
+								}else{
+									$("#payButton").attr("disabled","disabled");
+								}
+							}
+					});
+				},
+				error : function(a, b, c) {
+					alert(a + b + c);
+				}
+			});
+		}
+	</script>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		$("#payDetail").hide();
+		$("#description").hide();
+		$("#AMi2").hide();
+	});
+	
+	function payButtonOCF(){
+		$("#paymentModal").modal("show");
+	}
+	
+	function closePayment() {
+		$("#payDetail").hide();
+		$("#description").hide();
+		$("#pstatus").val('-');
+		$("#pType").val('-');
+		$("#AMi2").hide();
+	}
+	
+	function pStatusDiv() {
+		var val = $('[name="pstatus"]').val();
+		$("#payDetail").show();
+		if (val == '-') {
+			alert('Please select Payment status...');
+			$("#payDetail").hide();
+			$("#description").hide();
+			$("#AMi2").hide();
+			$("#pType").val("-");
+		} else if (val == 'Not Paid') {
+			$("#pType").val("-");
+			$("#pPayAmount").hide();
+			$("#pAmount").hide();
+			$("#pDate").hide();
+			$("#pTypeDiv").hide();
+			$("#pDueAmount").show();
+			$("#description").show();
+			$("#spAmount").val(Number($("#dueAmount").html()));
+			$("#spPaymentAmount").val(Number(0));
+			$("#spDueAmount").val(
+					Math.round((Number($("#spAmount").val()) - Number($(
+							"#spPaymentAmount").val())) * 100) / 100);
+
+			$("#AMi2").show();
+			finalCreditFunc();
+		} else if (val == 'Full Paid') {
+			$("#pType").val("-");
+			$("#pPayAmount").hide();
+			$("#pDueAmount").hide();
+			$("#pAmount").show();
+			$("#pDate").show();
+			$("#pTypeDiv").show();
+			$("#description").hide();
+			$("#AMi2").hide();
+			$("#spAmount").val(Number($("#dueAmount").html()));
+			$("#spPaymentAmount").val(Number($("#dueAmount").html()));
+			$("#spDueAmount").val(
+					Math.round((Number($("#spAmount").val()) - Number($(
+							"#spPaymentAmount").val())) * 100) / 100);
+		} else if (val == 'Semi Paid') {
+			$("#pType").val("-");
+			$("#pPayAmount").show();
+			$("#pDueAmount").show();
+			$("#pAmount").show();
+			$("#pDate").show();
+			$("#pTypeDiv").show();
+			$("#description").hide();
+			$("#spAmount").val(Number($("#dueAmount").html()));
+			$("#spPaymentAmount").val(Number($("#dueAmount").html()));
+			$("#spDueAmount").val(
+					Math.round((Number($("#spAmount").val()) - Number($(
+							"#spPaymentAmount").val())) * 100) / 100);
+
+			$("#AMi2").show();
+			finalCreditFunc();
+		}
+	}
+	function spPaymentAmountFunc() {
+		if (Number($("#spPaymentAmount").val()) > Number($("#spAmount").val())) {
+			alert("Payment amount can not be greater than full amount...");
+			$("#spPaymentAmount").val(Number($("#dueAmount").html()));
+			$("#spDueAmount").val(
+					Math.round((Number($("#spAmount").val()) - Number($(
+							"#spPaymentAmount").val())) * 100) / 100);			
+		} else {
+			$("#spDueAmount").val(
+					Math.round((Number($("#spAmount").val()) - Number($(
+							"#spPaymentAmount").val())) * 100) / 100);
+		}
+		finalCreditFunc();				
+	}
+	function finalCreditFunc(){
+		if($("#voucherDetailSize").val()==0){
+			$("#finalDC").val(
+					Math.round((Number($("#spDueAmount").val()) + Number($(
+							"#totalCredit").val())) * 100) / 100);
+		}else{
+			$("#finalDC").val(
+					Math.round((Number($("#totalCredit").val())- Number($("#spPaymentAmount").val())) * 100) / 100);
+		}
+	}
+	function spPaymentAmountDecimalFixF() {
+		$("#spPaymentAmount").val(
+				Number($("#spPaymentAmount").val()).toFixed(2));
+		spPaymentAmountFunc();
+	}
+	function pTypeFunc() {
+		$("#description").show();
+		var val = $('[name="pType"]').val();
+		if (val == '-') {
+			alert('Please select Payment Type...');
+			$("#description").hide();
+		}
+	}	
+	$(function() {		
+		$("#spPaymentAmount").numericInput({
+			allowFloat : true,
+			allowNegative : false,
+		});
+	});
+	function submit() {
+		document.getElementById("paymentForm").submit();
+	}
+	$(function() {
+		var d = new Date();
+		var m = d.getMonth();
+		if (m > 3) {
+			var n = d.getFullYear();
+		} else {
+			var n = d.getFullYear() - 1;
+		}
+		$("#datepicker2").datepicker({
+			dateFormat : "dd-mm-yy"
+		});
+		$("#datepicker2").datepicker('setDate', new Date());
+	});
 	</script>
 </body>
 

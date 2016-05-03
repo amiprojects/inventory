@@ -17,6 +17,11 @@ UPDATE PURCHASE_ENTRY
 	SET AGENTPROFITTOTAL = 0
 	WHERE ID IN (select ID from PURCHASE_ENTRY);
 	
+	
+Payment details and voucher details
+.....................................
+jobAssignId 10,0, null
+	
 ////////////////////////////////////////////////////
 
 UPDATE PURCHASE_PRODUCT_DETAILS 

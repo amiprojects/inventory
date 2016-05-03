@@ -25,11 +25,10 @@ public class VoucherDetails implements Serializable {
 	private float value;
 	private float totalDebitNote;
 	private float totalCreditNote;
-
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date voucherDate;
-
 	private boolean isCredit;
+	private int jobAssignId;
 
 	@OneToOne
 	@JoinColumn(name = "salesEntryId")
@@ -161,6 +160,14 @@ public class VoucherDetails implements Serializable {
 
 	public void setPurchaseOrderEntry(PurchaseOrderEntry purchaseOrderEntry) {
 		this.purchaseOrderEntry = purchaseOrderEntry;
+	}
+
+	public int getJobAssignId() {
+		return jobAssignId;
+	}
+
+	public void setJobAssignId(int jobAssignId) {
+		this.jobAssignId = jobAssignId;
 	}
 
 }

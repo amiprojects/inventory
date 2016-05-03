@@ -611,6 +611,15 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<PaymentDetails> getPaymentDetailsByJobAsignId(int jaId) {
+		TypedQuery<PaymentDetails> q = em
+				.createQuery(
+						"select c from PaymentDetails c where c.jobAssignId=:jaId order by c.id DESC",
+						PaymentDetails.class);
+		q.setParameter("jaId", jaId);
+		return q.getResultList();
+	}
+
 	public List<PaymentDetails> getPaymentDetailsBySalesReturnId(int srId) {
 		TypedQuery<PaymentDetails> q = em
 				.createQuery(
@@ -3494,6 +3503,15 @@ public class Ejb {
 						"select c from VoucherDetails c where c.voucherAssign.id=:vaId order by c.id ASC",
 						VoucherDetails.class);
 		q.setParameter("vaId", vaId);
+		return q.getResultList();
+	}
+
+	public List<VoucherDetails> getAllVoucherDetailsByJobAssignId(int jaId) {
+		TypedQuery<VoucherDetails> q = em
+				.createQuery(
+						"select c from VoucherDetails c where c.jobAssignId=:jaId order by c.id ASC",
+						VoucherDetails.class);
+		q.setParameter("jaId", jaId);
 		return q.getResultList();
 	}
 

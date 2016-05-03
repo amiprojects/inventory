@@ -20,6 +20,7 @@ import com.kaanish.ejb.Ejb;
 import com.kaanish.model.AccountDetails;
 import com.kaanish.model.Bill_setup;
 import com.kaanish.model.CompanyInfo;
+import com.kaanish.model.JobAssignmentDetails;
 import com.kaanish.model.JobClass;
 import com.kaanish.model.JobsForDesignCostSheet;
 import com.kaanish.model.Module;
@@ -1307,6 +1308,24 @@ public class LoginServlet extends HttpServlet {
 			}
 		}
 		// correcting sales entry payment details
+
+		// correcting job assignment payment details
+		for (JobAssignmentDetails ja : ejb.getAllJobassignmentDetails()) {
+			int pSize = ejb.getPaymentDetailsByJobAsignId(ja.getId()).size();
+			if (pSize > 0) {
+				float tot = ejb.getPaymentDetailsByJobAsignId(ja.getId())
+						.get(pSize - 1).getTotalAmount();
+				for (int ind = ejb.getPaymentDetailsByJobAsignId(ja.getId())
+						.size() - 1; ind > -1; ind--) {
+					PaymentDetails paymentDetails = ejb
+							.getPaymentDetailsByJobAsignId(ja.getId()).get(ind);
+					paymentDetails.setTotalAmount(tot);
+					tot = tot - paymentDetails.getPaidAmount();
+					ejb.updatePaymentDetails(paymentDetails);
+				}
+			}
+		}
+		// correcting job assignment payment details
 
 		if (ejb.getAllBillSetup().size() < 8) {
 			// companyInfoKaanish = ejb.getUserById("adminKaanish")

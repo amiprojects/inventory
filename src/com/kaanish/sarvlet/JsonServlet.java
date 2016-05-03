@@ -131,7 +131,7 @@ import com.kaanish.util.DepartmentCotractor;
 		"/getProductDetailByDesignNumber",
 		"/isExistProductDetailByDesignNumber",
 		"/getPurchaseProductDetailsByLotNumber",
-		"/getPaymentDetailsByJobAssignId" })
+		"/getPaymentDetailsByJobAssignId", "/getAllVoucherDetailsByJobAssignId" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -351,7 +351,6 @@ public class JsonServlet extends HttpServlet {
 				resp.getWriter().print(
 						ejb.getVendorById(Integer.parseInt(req
 								.getParameter("id"))));
-
 				break;
 
 			case "getAccountByVendorId":
@@ -835,10 +834,16 @@ public class JsonServlet extends HttpServlet {
 						.getPaymentDetailsByJobAssignId(Integer.parseInt(req
 								.getParameter("id")))) {
 					String desc;
+					String pType;
 					if (pd.getDescription() != null) {
 						desc = pd.getDescription();
 					} else {
 						desc = "NA";
+					}
+					if (pd.getPaymentType() != null) {
+						pType = pd.getPaymentType().getType();
+					} else {
+						pType = "NA";
 					}
 					generatorPD
 							.writeStartObject()
@@ -850,8 +855,7 @@ public class JsonServlet extends HttpServlet {
 							.write("payTotalAmount", pd.getTotalAmount())
 							.write("paymentStatus",
 									pd.getPaymentStatus().getStatus())
-							.write("paymentMethod",
-									pd.getPaymentType().getType()).writeEnd();
+							.write("paymentMethod", pType).writeEnd();
 				}
 				generatorPD.writeEnd().close();
 				break;
@@ -1639,24 +1643,21 @@ public class JsonServlet extends HttpServlet {
 				generatorDN.writeEnd().close();
 				break;
 
-			// case "getPurchaseProductDetailsByLotNumber":
-			// JsonGeneratorFactory jgf = Json.createGeneratorFactory(null);
-			// JsonGenerator jg = jgf.createGenerator(resp.getOutputStream());
-			// int flagPPD = 0;
-			// for (Purchase_Product_Details ppd : ejb
-			// .getAllPurchase_Product_Details()) {
-			// if (ppd.getLotNumber().equals(req.getParameter("lotNo"))) {
-			// flagPPD = 1;
-			// }
-			// }
-			// if (flagPPD == 1) {
-			// jg.writeStartObject()
-			// .write("lotNo",
-			// ejb.getPurchaseProductDetailsByLotNumber(
-			// req.getParameter("lotNo"))
-			// .getLotNumber()).writeEnd().close();
-			// }
-			// break;
+			case "getAllVoucherDetailsByJobAssignId":
+				JsonGeneratorFactory jgf = Json.createGeneratorFactory(null);
+				JsonGenerator jg = jgf.createGenerator(resp.getOutputStream());
+				int voucherDetailSize = 0;
+				if (ejb.getAllVoucherDetailsByJobAssignId(
+						Integer.parseInt(req.getParameter("id"))).size() == 0) {
+					voucherDetailSize = 0;
+				} else {
+					voucherDetailSize = ejb.getAllVoucherDetailsByJobAssignId(
+							Integer.parseInt(req.getParameter("id"))).size();
+				}
+				jg.writeStartObject()
+						.write("voucherDetailSize", voucherDetailSize)
+						.writeEnd().close();
+				break;
 
 			case "getPurchaseProductDetailsByLotNumber":
 				resp.getWriter().print(
