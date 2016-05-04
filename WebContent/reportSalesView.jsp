@@ -49,8 +49,8 @@
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("#sales").attr("id", "activeSubMenu");
-		$("#sSalesSearch").attr("style", "color: #6a94ff;");
+		$("#reports").attr("id", "activeSubMenu");
+		$("#report").attr("style", "color: #6a94ff;");
 	});
 </script>
 </head>

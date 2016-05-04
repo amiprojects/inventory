@@ -3533,6 +3533,15 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<VoucherDetails> getAllVoucherDetailsBySalesEntryId(int seId) {
+		TypedQuery<VoucherDetails> q = em
+				.createQuery(
+						"select c from VoucherDetails c where c.salesEntry.id=:seId order by c.id ASC",
+						VoucherDetails.class);
+		q.setParameter("seId", seId);
+		return q.getResultList();
+	}
+
 	public List<VoucherDetails> getAllVoucherDetailsBySalesReturnId(int srId) {
 		TypedQuery<VoucherDetails> q = em
 				.createQuery(

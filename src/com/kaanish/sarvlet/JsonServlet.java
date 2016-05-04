@@ -131,7 +131,8 @@ import com.kaanish.util.DepartmentCotractor;
 		"/getProductDetailByDesignNumber",
 		"/isExistProductDetailByDesignNumber",
 		"/getPurchaseProductDetailsByLotNumber",
-		"/getPaymentDetailsByJobAssignId", "/getAllVoucherDetailsByJobAssignId" })
+		"/getPaymentDetailsByJobAssignId",
+		"/getAllVoucherDetailsByJobAssignId", "/getCustomerById" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -350,6 +351,12 @@ public class JsonServlet extends HttpServlet {
 			case "getVendorByVendorId":
 				resp.getWriter().print(
 						ejb.getVendorById(Integer.parseInt(req
+								.getParameter("id"))));
+				break;
+
+			case "getCustomerById":
+				resp.getWriter().print(
+						ejb.getCustomerEntryById(Integer.parseInt(req
 								.getParameter("id"))));
 				break;
 
