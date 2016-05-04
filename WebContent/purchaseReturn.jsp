@@ -639,11 +639,12 @@
 																			<div class="col-md-7">
 																				<select class="form-control" id="pType" name="pType"
 																					onchange="pTypeFunc()">
-																					<option value="-" selected="selected">---</option>
+																					<!-- <option value="-" selected="selected">---</option> -->
 																					<c:forEach
 																						items="${sessionScope['ejb'].getAllPaymentType()}"
 																						var="payType">
-																						<c:if test="${payType.getType()!='Debit Note'}">
+																						<%-- <c:if test="${payType.getType()!='Debit Note'}"> --%>
+																						<c:if test="${payType.getType()=='Credit Note'}">
 																							<option value="${payType.getType()}">${payType.getType()}</option>
 																						</c:if>
 																					</c:forEach>

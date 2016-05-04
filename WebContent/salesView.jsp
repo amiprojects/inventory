@@ -53,6 +53,14 @@
 		$("#sSalesSearch").attr("style", "color: #6a94ff;");
 	});
 </script>
+<link rel="stylesheet" href="css/toast.css" type="text/css" />
+<script type="text/javascript">
+	$(document).ready(function() {
+		if ($('#msg').html() != "") {
+			$('.toast').fadeIn(400).delay(3000).fadeOut(400);
+		}
+	});
+</script>
 </head>
 <body>
 	<c:if test="${sessionScope['user']==null}">
@@ -188,6 +196,9 @@
 								</div>
 							</div>
 							<div class="widget-area" style="padding: 3px 3px;">
+								<div class='toast' style='display: none'>
+									<h3 id="msg">${requestScope['msg']}</h3>
+								</div>
 								<div style="background-color: lightgrey; padding: 3px 3px;">
 									<span class="head_style">Sale Product at:</span>
 								</div>
@@ -474,7 +485,7 @@
 											<c:choose>
 												<c:when test="${paymentDetails.paymentType.type!=null}">
 													<td>${paymentDetails.paymentType.type}<c:if
-															test="${paymentDetails.purchaseReturn!=null}">
+															test="${paymentDetails.salesReturn!=null}">
 															<br>(Return Value)</c:if>
 													</td>
 												</c:when>
@@ -501,8 +512,10 @@
 											value="${sessionScope['ejb'].getPaymentDetailsBySalesEntryId(salesSearchView.id).get(0)}"></c:set>
 										<th colspan="5">Current Due : <span id="dueAmount">${lastPayment.totalAmount-lastPayment.paidAmount}</span>
 											<c:choose>
+												<%-- <c:when
+													test="${lastPayment.totalAmount-lastPayment.paidAmount>0}"> --%>
 												<c:when
-													test="${lastPayment.totalAmount-lastPayment.paidAmount>0}">
+													test="${lastPayment.totalAmount-lastPayment.paidAmount!=0}">
 													<input type="button" value="Pay"
 														class="btn green pull-right" id="payButton"
 														onclick="payButtonOCF();">
@@ -791,13 +804,14 @@
 			$("#pAmount").show();
 			$("#pDate").show();
 			$("#pTypeDiv").show();
-			$("#description").hide();
-			$("#AMi2").hide();
+			$("#description").hide();			
 			$("#spAmount").val(Number($("#dueAmount").html()));
 			$("#spPaymentAmount").val(Number($("#dueAmount").html()));
 			$("#spDueAmount").val(
 					Math.round((Number($("#spAmount").val()) - Number($(
 							"#spPaymentAmount").val())) * 100) / 100);
+			$("#AMi2").show();
+			finalCreditFunc();
 		} else if (val == 'Semi Paid') {
 			$("#pType").val("-");
 			$("#pPayAmount").show();

@@ -504,8 +504,10 @@
 												value="${sessionScope['ejb'].getPaymentDetailsByPurchaseEntryId(purchaseSearchView.id).get(0)}"></c:set>
 											<th colspan="5">Current Due : <span id="dueAmount">${lastPayment.totalAmount-lastPayment.paidAmount}</span>
 												<c:choose>
+													<%-- <c:when
+														test="${lastPayment.totalAmount-lastPayment.paidAmount>0}"> --%>
 													<c:when
-														test="${lastPayment.totalAmount-lastPayment.paidAmount>0}">
+														test="${lastPayment.totalAmount-lastPayment.paidAmount!=0}">
 														<input type="button" value="Pay"
 															class="btn green pull-right" id="payButton"
 															onclick="payButtonOCF();">
@@ -771,13 +773,14 @@
 			$("#pAmount").show();
 			$("#pDate").show();
 			$("#pTypeDiv").show();
-			$("#description").hide();
-			$("#AMi2").hide();
+			$("#description").hide();			
 			$("#spAmount").val(Number($("#dueAmount").html()));
 			$("#spPaymentAmount").val(Number($("#dueAmount").html()));
 			$("#spDueAmount").val(
 					Math.round((Number($("#spAmount").val()) - Number($(
 							"#spPaymentAmount").val())) * 100) / 100);
+			$("#AMi2").show();
+			finalCreditFunc();
 		} else if (val == 'Semi Paid') {
 			$("#pType").val("-");
 			$("#pPayAmount").show();

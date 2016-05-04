@@ -160,7 +160,6 @@ tfoot {
 												items="${sessionScope['ejb'].getAllSalesEntrybyCustomerID(param.id)}"
 												var="salCus">
 												<tr>
-
 													<td><fmt:formatDate value="${salCus.sales_date}"
 															pattern="dd-MM-yyyy" /></td>
 													<td>${salCus.paymentDetails.get(0).paymentType.type}<br>

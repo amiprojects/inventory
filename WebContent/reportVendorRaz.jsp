@@ -168,14 +168,19 @@ tfoot {
 													<td>Purchase</td>
 													<td>${purVendor.challanNumber}</td>
 													<td>0<br> <br>${purVendor.totalCost}</td>
-													<td>${purVendor.paymentDetails.get(0).paidAmount}<br>
-														<br>0
-													</td>
+													<td><c:set var="lastPayment"
+															value="${sessionScope['ejb'].getPaymentDetailsByPurchaseEntryId(purVendor.id).get(0)}"></c:set>
+														<c:set var="currentDue"
+															value="${lastPayment.totalAmount-lastPayment.paidAmount}"></c:set>
+														<%-- ${purVendor.paymentDetails.get(0).paidAmount} --%>${purVendor.totalCost-currentDue}<br>
+														<br>0</td>
 
 												</tr>
 												<c:set var="total1" value="${total1 + purVendor.totalCost}" />
+												<%-- <c:set var="total2"
+													value="${total2 + purVendor.paymentDetails.get(0).paidAmount}" /> --%>
 												<c:set var="total2"
-													value="${total2 + purVendor.paymentDetails.get(0).paidAmount}" />
+													value="${total2 + purVendor.totalCost-currentDue}" />
 
 											</c:forEach>
 

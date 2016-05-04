@@ -3583,7 +3583,11 @@ public class Ejb {
 				"select c from VoucherAssign c where c.customerEntry.id=:id",
 				VoucherAssign.class);
 		q.setParameter("id", id);
-		return q.getResultList().get(0);
+		if (q.getResultList().size() > 0) {
+			return q.getResultList().get(0);
+		} else {
+			return null;
+		}
 	}
 
 	/*************************** for job_types ******************************/
