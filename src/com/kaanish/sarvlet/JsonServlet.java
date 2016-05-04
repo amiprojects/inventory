@@ -1831,17 +1831,21 @@ public class JsonServlet extends HttpServlet {
 					for (Purchase_Entry pe : ejb.getAllPurchaseEntry()) {
 						int pSize = ejb.getPaymentDetailsByPurchaseEntryId(
 								pe.getId()).size();
-						float tot = ejb
-								.getPaymentDetailsByPurchaseEntryId(pe.getId())
-								.get(pSize - 1).getTotalAmount();
-						for (int ind = ejb.getPaymentDetailsByPurchaseEntryId(
-								pe.getId()).size() - 1; ind > -1; ind--) {
-							PaymentDetails paymentDet = ejb
+						if (pSize > 0) {
+							float tot = ejb
 									.getPaymentDetailsByPurchaseEntryId(
-											pe.getId()).get(ind);
-							paymentDet.setTotalAmount(tot);
-							tot = tot - paymentDet.getPaidAmount();
-							ejb.updatePaymentDetails(paymentDet);
+											pe.getId()).get(pSize - 1)
+									.getTotalAmount();
+							for (int ind = ejb
+									.getPaymentDetailsByPurchaseEntryId(
+											pe.getId()).size() - 1; ind > -1; ind--) {
+								PaymentDetails paymentDet = ejb
+										.getPaymentDetailsByPurchaseEntryId(
+												pe.getId()).get(ind);
+								paymentDet.setTotalAmount(tot);
+								tot = tot - paymentDet.getPaidAmount();
+								ejb.updatePaymentDetails(paymentDet);
+							}
 						}
 					}
 					// correcting purchase entry payment details

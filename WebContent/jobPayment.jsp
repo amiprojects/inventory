@@ -226,12 +226,12 @@
 										<thead>
 											<tr>
 												<th width="5%">#</th>
-												<th width="20%">Job Assigned No.</th>
+												<th width="30%">Job Assigned No.</th>
 												<th width="15%">Assigned Date</th>
 												<th width="15%">Jobber Name</th>
 												<th width="12%">No. of Items</th>
 												<th width="10%">Quantity</th>
-												<th width="10%">Status</th>
+												<!-- <th width="10%">Status</th> -->
 											</tr>
 										</thead>
 										<tbody style="height: 300px;">
@@ -241,7 +241,7 @@
 
 												<tr>
 													<td width="5%">${count}</td>
-													<td width="20%"><a href="#"
+													<td width="30%"><a href="#"
 														onclick="viewInvoice(${jobAssignByDate.id});"><b>${jobAssignByDate.challanNumber}</b></a></td>
 													<td width="15%"><fmt:formatDate
 															value="${jobAssignByDate.assignDate}" pattern="dd-MM-yy" /></td>
@@ -254,7 +254,7 @@
 													</c:forEach>
 													<td width="10%"><fmt:formatNumber var="totalQ"
 															value="${totqty}" maxFractionDigits="3" />${totalQ}</td>
-													<td width="10%"><c:if
+													<%-- <td width="10%"><c:if
 															test="${sessionScope['ejb'].getPaymentDetailsByJobAssignId(jobAssignByDate.id).size()>0}">
 															<c:set
 																value="${sessionScope['ejb'].getPaymentDetailsByJobAssignId(jobAssignByDate.id).get(0).paymentStatus.status}"
@@ -262,8 +262,8 @@
 														</c:if> <c:if
 															test="${sessionScope['ejb'].getPaymentDetailsByJobAssignId(jobAssignByDate.id).size()==0}">
 															<c:set value="Not Paid" var="Status"></c:set>
-														</c:if> <%-- ${sessionScope['ejb'].getPaymentDetailsByJobAssignId(jobAssignByDate.id).size()}
-														&nbsp;  --%> <span id="status${jobAssignByDate.id}">${Status}</span></td>
+														</c:if> ${sessionScope['ejb'].getPaymentDetailsByJobAssignId(jobAssignByDate.id).size()}
+														&nbsp;  <span id="status${jobAssignByDate.id}">${Status}</span></td> --%>
 													<td width="8%"><c:set var="totJobCost" value="${0}" />
 														<c:forEach var="jobp"
 															items="${jobAssignByDate.jobAssignmentProducts}">
@@ -326,8 +326,8 @@
 								<th>Payment description</th>
 								<th>Payable Amount</th>
 								<th>Paid Amount</th>
-								<th>Due Amount</th>
-								<th>Status</th>
+								<!-- <th>Due Amount</th>
+								<th>Status</th> -->
 							</tr>
 						</thead>
 						<tbody>
@@ -735,7 +735,8 @@
 				success : function(data) {
 					$("#paymentDetailsTable tbody").empty();
 					$.each(data, function(index, item) {
-							$("#paymentDetailsTable").append('<tbody><tr><td>'+formatDate(item.paymentDate)+'</td><td>'+item.paymentMethod+'</td><td>'+item.paymentDescription+'</td><td>'+item.payTotalAmount+'</td><td>'+item.paymentAmount+'</td><td>'+Number(item.payTotalAmount-item.paymentAmount)+'</td><td>'+item.paymentStatus+'</td></tr></tbody>');
+						//<td>'+Number(item.payTotalAmount-item.paymentAmount)+'</td><td>'+item.paymentStatus+'</td>
+							$("#paymentDetailsTable").append('<tbody><tr><td>'+formatDate(item.paymentDate)+'</td><td>'+item.paymentMethod+'</td><td>'+item.paymentDescription+'</td><td>'+item.payTotalAmount+'</td><td>'+item.paymentAmount+'</td></tr></tbody>');
 							if(index==0){
 								$("#dueAmount").html(Number(item.payTotalAmount-item.paymentAmount));
 								if(Number(item.payTotalAmount-item.paymentAmount)>0){

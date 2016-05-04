@@ -1240,15 +1240,18 @@ public class LoginServlet extends HttpServlet {
 		for (Purchase_Entry pe : ejb.getAllPurchaseEntry()) {
 			int pSize = ejb.getPaymentDetailsByPurchaseEntryId(pe.getId())
 					.size();
-			float tot = ejb.getPaymentDetailsByPurchaseEntryId(pe.getId())
-					.get(pSize - 1).getTotalAmount();
-			for (int i = ejb.getPaymentDetailsByPurchaseEntryId(pe.getId())
-					.size() - 1; i > -1; i--) {
-				PaymentDetails paymentDetails = ejb
-						.getPaymentDetailsByPurchaseEntryId(pe.getId()).get(i);
-				paymentDetails.setTotalAmount(tot);
-				tot = tot - paymentDetails.getPaidAmount();
-				ejb.updatePaymentDetails(paymentDetails);
+			if (pSize > 0) {
+				float tot = ejb.getPaymentDetailsByPurchaseEntryId(pe.getId())
+						.get(pSize - 1).getTotalAmount();
+				for (int i = ejb.getPaymentDetailsByPurchaseEntryId(pe.getId())
+						.size() - 1; i > -1; i--) {
+					PaymentDetails paymentDetails = ejb
+							.getPaymentDetailsByPurchaseEntryId(pe.getId())
+							.get(i);
+					paymentDetails.setTotalAmount(tot);
+					tot = tot - paymentDetails.getPaidAmount();
+					ejb.updatePaymentDetails(paymentDetails);
+				}
 			}
 		}
 		for (PurchaseReturn pr : ejb.getAllPurchaseReturn()) {
@@ -1281,14 +1284,17 @@ public class LoginServlet extends HttpServlet {
 		}
 		for (SalesEntry se : ejb.getAllSalesEntries()) {
 			int pSize = ejb.getPaymentDetailsBySalesEntryId(se.getId()).size();
-			float tot = ejb.getPaymentDetailsBySalesEntryId(se.getId())
-					.get(pSize - 1).getTotalAmount();
-			for (int i = ejb.getPaymentDetailsBySalesEntryId(se.getId()).size() - 1; i > -1; i--) {
-				PaymentDetails paymentDetails = ejb
-						.getPaymentDetailsBySalesEntryId(se.getId()).get(i);
-				paymentDetails.setTotalAmount(tot);
-				tot = tot - paymentDetails.getPaidAmount();
-				ejb.updatePaymentDetails(paymentDetails);
+			if (pSize > 0) {
+				float tot = ejb.getPaymentDetailsBySalesEntryId(se.getId())
+						.get(pSize - 1).getTotalAmount();
+				for (int i = ejb.getPaymentDetailsBySalesEntryId(se.getId())
+						.size() - 1; i > -1; i--) {
+					PaymentDetails paymentDetails = ejb
+							.getPaymentDetailsBySalesEntryId(se.getId()).get(i);
+					paymentDetails.setTotalAmount(tot);
+					tot = tot - paymentDetails.getPaidAmount();
+					ejb.updatePaymentDetails(paymentDetails);
+				}
 			}
 		}
 		for (SalesReturn sr : ejb.getAllSalesReturn()) {

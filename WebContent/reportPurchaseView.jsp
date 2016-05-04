@@ -448,47 +448,6 @@
 										</thead>
 									</table>
 								</div>
-								<table id="" class="table table-striped table-bordered">
-									<thead style="background-color: #F0F0F0;">
-										<tr>
-											<th>#</th>
-											<th>Payment date</th>
-											<th>Payment method</th>
-											<th>Payment description</th>
-											<th>Amount</th>
-										</tr>
-									</thead>
-									<c:set var="j" value="${1}"></c:set>
-									<c:forEach var="paymentDetails"
-										items="${purchaseSearchView.paymentDetails}">
-										<tbody>
-											<tr>
-												<td>${j}</td>
-												<td><fmt:formatDate
-														value="${paymentDetails.paymentDate}" pattern="dd-MM-yy" />
-												</td>
-												<c:choose>
-													<c:when test="${paymentDetails.paymentType.type!=null}">
-														<td>${paymentDetails.paymentType.type}</td>
-													</c:when>
-													<c:otherwise>
-														<td>NA</td>
-													</c:otherwise>
-												</c:choose>
-												<c:choose>
-													<c:when test="${paymentDetails.description!=null}">
-														<td>${paymentDetails.description}</td>
-													</c:when>
-													<c:otherwise>
-														<td>NIL</td>
-													</c:otherwise>
-												</c:choose>
-												<td>${paymentDetails.paidAmount}</td>
-											</tr>
-										</tbody>
-										<c:set var="j" value="${j+1}" />
-									</c:forEach>
-								</table>
 							</div>
 						</div>
 					</div>

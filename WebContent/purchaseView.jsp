@@ -462,7 +462,7 @@
 											<th>Payment date</th>
 											<th>Payment method</th>
 											<th>Payment description</th>
-											<th>Amount</th>
+											<th>Paid Amount</th>
 										</tr>
 									</thead>
 									<c:set var="j" value="${1}"></c:set>
@@ -498,6 +498,26 @@
 										</tbody>
 										<c:set var="j" value="${j+1}" />
 									</c:forEach>
+									<thead style="background-color: #F0F0F0;">
+										<tr>
+											<c:set var="lastPayment"
+												value="${sessionScope['ejb'].getPaymentDetailsByPurchaseEntryId(purchaseSearchView.id).get(0)}"></c:set>
+											<th colspan="5">Current Due : <span id="dueAmount">${lastPayment.totalAmount-lastPayment.paidAmount}</span>
+												<c:choose>
+													<c:when
+														test="${lastPayment.totalAmount-lastPayment.paidAmount>0}">
+														<input type="button" value="Pay"
+															class="btn green pull-right" id="payButton"
+															onclick="payButtonOCF();">
+													</c:when>
+													<c:otherwise>
+														<input type="button" value="Pay"
+															class="btn green pull-right" disabled="disabled">
+													</c:otherwise>
+												</c:choose>
+											</th>
+										</tr>
+									</thead>
 								</table>
 							</div>
 						</div>
@@ -507,14 +527,173 @@
 		</div>
 		<!-- Content Sec -->
 	</div>
+	<form role="form" class="sec" method="post" id="paymentForm"
+		action="purchasePayment">
+		<div id="paymentModal" class="modal fade" role="dialog"
+			style="top: 25px;">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							onclick="closePayment();">&times;</button>
+						<h4 class="modal-title">Payment Details</h4>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="widget-area">
+									<div class="breadcrumbs">
+										<ul>
+											<li><a title="">Select Payment status : </a></li>
+										</ul>
+									</div>
+									<br> <br> <br>
+									<div class="row">
+										<div class="col-md-5">
+											Payment status :<font color="red" size="4">*</font>
+										</div>
+										<div class="col-md-7">
+											<div class="sec">
 
+												<select class="form-control" id="pstatus" name="pstatus"
+													onchange="pStatusDiv()">
+													<option value="-" selected="selected">---</option>
+													<c:forEach
+														items="${sessionScope['ejb'].getAllPaymentStatus()}"
+														var="payStatus">
+														<%-- <c:if test="${payStatus.status!='Not Paid'}"> --%>
+														<option value="${payStatus.status}">${payStatus.status}</option>
+														<%-- </c:if> --%>
+													</c:forEach>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div id="payDetail">
+										<div class="breadcrumbs">
+											<ul>
+												<li><a title="">Payment Details : </a></li>
+											</ul>
+										</div>
+										<br> <br> <br>
+										<div class="row">
+											<div class="sec" id="pTypeDiv">
+												<div class="col-md-5">
+													Payment type :<font color="red" size="4">*</font>
+												</div>
+												<div class="col-md-7">
+													<select class="form-control" id="pType" name="pType"
+														onchange="pTypeFunc()">
+														<option value="-" selected="selected">---</option>
+														<c:forEach
+															items="${sessionScope['ejb'].getAllPaymentType()}"
+															var="payType">
+															<c:if
+																test="${payType.getType()!='Debit Note' && payType.getType()!='Credit Note'}">
+																<option value="${payType.getType()}">${payType.getType()}</option>
+															</c:if>
+														</c:forEach>
+													</select>
+												</div>
+											</div>
+											<div id="pDate">
+												<div class="col-md-5">Payment Date :</div>
+												<div class="col-md-7">
+													<input type="text" id="datepicker2" class="form-control"
+														readonly="readonly" name="payDate">
+												</div>
+											</div>
+											<div id="pAmount">
+												<div class="col-md-5">Full Amount :</div>
+												<div class="col-md-7">
+													<input type="text" class="form-control" readonly="readonly"
+														id="spAmount" name="spAmount">
+												</div>
+											</div>
+											<div id="pPayAmount">
+												<div class="col-md-5">
+													Payment Amount :<font color="red" size="4">*</font>
+												</div>
+												<div class="col-md-7">
+													<input type="text" class="form-control" value="0"
+														id="spPaymentAmount" name="spPaymentAmount"
+														onkeyup="spPaymentAmountFunc();" autocomplete="off"
+														onchange="spPaymentAmountDecimalFixF();">
+												</div>
+											</div>
+											<div id="pDueAmount">
+												<div class="col-md-5">Due Amount :</div>
+												<div class="col-md-7">
+													<input type="text" class="form-control" readonly="readonly"
+														id="spDueAmount" name="spDueAmount">
+												</div>
+											</div>
+											<div id="AMi2">
+												<div>
+													<div class="col-md-5">Current Credit Note :</div>
+													<div class="col-md-7">
+														<input type="text" id="totalCredit" name="totalCredit"
+															class="form-control" readonly="readonly" value="0">
+													</div>
+												</div>
+												<div>
+													<div class="col-md-5">
+														<span id="dORc">Final Credit Note :</span>
+													</div>
+													<div class="col-md-7">
+														<input type="text" class="form-control" id="finalDC"
+															name="finalDC" readonly="readonly" value="0">
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-md-6" style="float: right;" id="description">
+								<div class="widget-area">
+									<div class="breadcrumbs">
+										<ul>
+											<li><a title="">Provide Description : </a></li>
+										</ul>
+									</div>
+									<br> <br> <br>
+									<div class="row">
+										<div class="col-md-5">Description :</div>
+										<div class="col-md-7">
+											<textarea rows="" cols="" class="form-control" id="desc"
+												name="desc"></textarea>
+										</div>
+									</div>
+									<br>
+									<div class="breadcrumbs">
+										<button type="button" class="btn green pull-right"
+											onclick="submit();">Save</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<input type="hidden" id="vId" name="vId"
+			value="${purchaseSearchView.vendor.id}"> <input type="hidden"
+			id="peId" name="peId" value="${purchaseSearchView.id}"><input
+			type="hidden" id="voucherDetailSize" name="voucherDetailSize"
+			value="${sessionScope['ejb'].getAllVoucherDetailsByPurchaseEntryId(purchaseSearchView.id)}">
+	</form>
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
 	<script type="text/javascript" src="js/script.js"></script>
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="js/enscroll.js"></script>
 	<script type="text/javascript" src="js/grid-filter.js"></script>
-
+	<script src="js/numericInput.min.js"></script>
 	<script type="text/javascript">
 	function viewInvoice(id){
 		window
@@ -529,6 +708,153 @@
 				'name', 'width=900,height=700').print();
 		
 	}
+	</script>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		$("#payDetail").hide();
+		$("#description").hide();
+		$("#AMi2").hide();
+	});
+	
+	function payButtonOCF(){
+		$("#paymentModal").modal("show");
+		$.ajax({
+			url : "getVendorByVendorId",
+			type : "post",
+			dataType : "json",
+			data : {
+				id : "${purchaseSearchView.vendor.id}"
+			},
+			success : function(data) {
+				$("#totalCredit").val(data.currentCreditNote);
+			}
+		});
+	}
+	
+	function closePayment() {
+		$("#payDetail").hide();
+		$("#description").hide();
+		$("#pstatus").val('-');
+		$("#pType").val('-');
+		$("#AMi2").hide();
+	}
+	
+	function pStatusDiv() {
+		var val = $('[name="pstatus"]').val();
+		$("#payDetail").show();
+		if (val == '-') {
+			alert('Please select Payment status...');
+			$("#payDetail").hide();
+			$("#description").hide();
+			$("#AMi2").hide();
+			$("#pType").val("-");
+		} else if (val == 'Not Paid') {
+			$("#pType").val("-");
+			$("#pPayAmount").hide();
+			$("#pAmount").hide();
+			$("#pDate").hide();
+			$("#pTypeDiv").hide();
+			$("#pDueAmount").show();
+			$("#description").show();
+			$("#spAmount").val(Number($("#dueAmount").html()));
+			$("#spPaymentAmount").val(Number(0));
+			$("#spDueAmount").val(
+					Math.round((Number($("#spAmount").val()) - Number($(
+							"#spPaymentAmount").val())) * 100) / 100);
+
+			$("#AMi2").show();
+			finalCreditFunc();
+		} else if (val == 'Full Paid') {
+			$("#pType").val("-");
+			$("#pPayAmount").hide();
+			$("#pDueAmount").hide();
+			$("#pAmount").show();
+			$("#pDate").show();
+			$("#pTypeDiv").show();
+			$("#description").hide();
+			$("#AMi2").hide();
+			$("#spAmount").val(Number($("#dueAmount").html()));
+			$("#spPaymentAmount").val(Number($("#dueAmount").html()));
+			$("#spDueAmount").val(
+					Math.round((Number($("#spAmount").val()) - Number($(
+							"#spPaymentAmount").val())) * 100) / 100);
+		} else if (val == 'Semi Paid') {
+			$("#pType").val("-");
+			$("#pPayAmount").show();
+			$("#pDueAmount").show();
+			$("#pAmount").show();
+			$("#pDate").show();
+			$("#pTypeDiv").show();
+			$("#description").hide();
+			$("#spAmount").val(Number($("#dueAmount").html()));
+			$("#spPaymentAmount").val(Number($("#dueAmount").html()));
+			$("#spDueAmount").val(
+					Math.round((Number($("#spAmount").val()) - Number($(
+							"#spPaymentAmount").val())) * 100) / 100);
+
+			$("#AMi2").show();
+			finalCreditFunc();
+		}
+	}
+	function spPaymentAmountFunc() {
+		if (Number($("#spPaymentAmount").val()) > Number($("#spAmount").val())) {
+			alert("Payment amount can not be greater than full amount...");
+			$("#spPaymentAmount").val(Number($("#dueAmount").html()));
+			$("#spDueAmount").val(
+					Math.round((Number($("#spAmount").val()) - Number($(
+							"#spPaymentAmount").val())) * 100) / 100);			
+		} else {
+			$("#spDueAmount").val(
+					Math.round((Number($("#spAmount").val()) - Number($(
+							"#spPaymentAmount").val())) * 100) / 100);
+		}
+		finalCreditFunc();				
+	}
+	function finalCreditFunc(){
+		if($("#voucherDetailSize").val()==0){
+			$("#finalDC").val(
+					Math.round((Number($("#spDueAmount").val()) + Number($(
+							"#totalCredit").val())) * 100) / 100);
+		}else{
+			$("#finalDC").val(
+					Math.round((Number($("#totalCredit").val())- Number($("#spPaymentAmount").val())) * 100) / 100);
+		}
+	}
+	function spPaymentAmountDecimalFixF() {
+		$("#spPaymentAmount").val(
+				Number($("#spPaymentAmount").val()).toFixed(2));
+		spPaymentAmountFunc();
+	}
+	function pTypeFunc() {
+		$("#description").show();
+		var val = $('[name="pType"]').val();
+		if (val == '-') {
+			alert('Please select Payment Type...');
+			$("#description").hide();
+		}
+	}	
+	$(function() {		
+		$("#spPaymentAmount").numericInput({
+			allowFloat : true,
+			allowNegative : false,
+		});
+	});
+	function submit() {
+		document.getElementById("paymentForm").submit();
+	}
+	$(function() {
+		var d = new Date();
+		var m = d.getMonth();
+		if (m > 3) {
+			var n = d.getFullYear();
+		} else {
+			var n = d.getFullYear() - 1;
+		}
+		$("#datepicker2").datepicker({
+			dateFormat : "dd-mm-yy"
+		});
+		$("#datepicker2").datepicker('setDate', new Date());
+	});
 	</script>
 </body>
 
