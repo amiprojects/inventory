@@ -75,13 +75,37 @@ margin-bottom
 
 
 
+
+
+
+
+
+
+
+
 :
+
+
+
+
+
+
+
+
 
 
 
 
 3
 em
+
+
+
+
+
+
+
+
 
 
 
@@ -175,7 +199,6 @@ em
 											items="${sessionScope['ejb'].getAllSalesEntryByVendorIdTypeSalesAgent(param.id)}"
 											var="salAgent">
 											<tr>
-
 												<td><fmt:formatDate value="${salAgent.sales_date}"
 														pattern="dd-MM-yyyy" /></td>
 												<td>${salAgent.paymentDetails.get(0).paymentType.type}<br>
@@ -185,12 +208,18 @@ em
 												<td>${salAgent.challanNumber}</td>
 												<td>${salAgent.totalCost}<br> <br>0
 												</td>
-												<td>0<br> <br>${salAgent.paymentDetails.get(0).paidAmount}</td>
+												<td>0<br> <br> <c:set var="lastPayment"
+														value="${sessionScope['ejb'].getPaymentDetailsBySalesEntryId(salAgent.id).get(0)}"></c:set>
+													<c:set var="currentDue"
+														value="${lastPayment.totalAmount-lastPayment.paidAmount}"></c:set>
+													${salAgent.totalCost-currentDue} <%-- ${salAgent.paymentDetails.get(0).paidAmount} --%>
+												</td>
 											</tr>
 											<c:set var="total1" value="${total1 + salAgent.totalCost}" />
+											<%-- <c:set var="total2"
+												value="${total2 + salAgent.paymentDetails.get(0).paidAmount}" /> --%>
 											<c:set var="total2"
-												value="${total2 + salAgent.paymentDetails.get(0).paidAmount}" />
-
+												value="${total2 + salAgent.totalCost-currentDue}" />
 										</c:forEach>
 
 										<c:forEach

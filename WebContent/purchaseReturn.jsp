@@ -55,16 +55,16 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		//$("#payDetail").hide();
-		$("#description").hide();
+		//$("#description").hide();
 	});
-	function closePayment() {
+	/* function closePayment() {
 		//$("#payDetail").hide();
 		$("#description").hide();
 		$("#pstatus").val('-');
 		$("#pType").val('-');
 		$("#AMi2").hide();
-	}
-	function pTypeFunc() {
+	} */
+	/* function pTypeFunc() {
 		$("#description").show();
 		var val = $('[name="pType"]').val();
 		if (val == '-') {
@@ -72,7 +72,7 @@
 			$("#description").hide();
 			$("#AMi2").hide();
 		} else if (val == 'Credit Note') {
-			/* $("#cVouDetails").modal("show"); */
+			// $("#cVouDetails").modal("show");
 			$("#AMi2").show();
 		} else if (val == 'Cash') {
 			$("#AMi2").hide();
@@ -81,7 +81,7 @@
 		} else if (val == 'Bank Transfer') {
 			$("#AMi2").hide();
 		}
-	}
+	} */
 	/* function plzClose() {
 		$("#cVouDetails").modal('hide');
 
@@ -645,7 +645,8 @@
 																						var="payType">
 																						<%-- <c:if test="${payType.getType()!='Debit Note'}"> --%>
 																						<c:if test="${payType.getType()=='Credit Note'}">
-																							<option value="${payType.getType()}">${payType.getType()}</option>
+																							<option value="${payType.getType()}"
+																								selected="selected">${payType.getType()}</option>
 																						</c:if>
 																					</c:forEach>
 																				</select>
@@ -866,7 +867,7 @@
 		}
 
 		function paymentDate() {
-			$("#AMi2").hide();
+			//$("#AMi2").hide();
 			var count = $('#productList tbody').length;
 
 			var chk = 0;

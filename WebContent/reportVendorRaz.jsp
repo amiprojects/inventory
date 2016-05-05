@@ -159,7 +159,6 @@ tfoot {
 												items="${sessionScope['ejb'].getAllPurchaseEntryByVendorIdTypeVendor(param.id)}"
 												var="purVendor">
 												<tr>
-
 													<td><fmt:formatDate value="${purVendor.purchase_date}"
 															pattern="dd-MM-yyyy" /></td>
 													<td>${purVendor.paymentDetails.get(0).paymentType.type}<br>
@@ -185,7 +184,7 @@ tfoot {
 											</c:forEach>
 
 											<c:forEach
-												items="${sessionScope['ejb'].getAllPurchaseReturnByVendorIdTypePurchaseAgent(param.id)}"
+												items="${sessionScope['ejb'].getAllPurchaseReturnByVendorIdTypeVendor(param.id)}"
 												var="purReVendor">
 												<tr>
 													<td><fmt:formatDate value="${purReVendor.returnDate}"

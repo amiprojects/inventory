@@ -169,12 +169,19 @@ tfoot {
 													<td>${salCus.challanNumber}</td>
 													<td>${salCus.totalCost}<br> <br>0
 													</td>
-													<td>0<br> <br>${salCus.paymentDetails.get(0).paidAmount}</td>
+													<td>0<br> <br> <c:set var="lastPayment"
+															value="${sessionScope['ejb'].getPaymentDetailsBySalesEntryId(salCus.id).get(0)}"></c:set>
+														<c:set var="currentDue"
+															value="${lastPayment.totalAmount-lastPayment.paidAmount}"></c:set>
+														${salCus.totalCost-currentDue} <%-- ${salCus.paymentDetails.get(0).paidAmount} --%>
+													</td>
 
 												</tr>
 												<c:set var="total1" value="${total1 + salCus.totalCost}" />
+												<%-- <c:set var="total2"
+													value="${total2 + salCus.paymentDetails.get(0).paidAmount}" /> --%>
 												<c:set var="total2"
-													value="${total2 + salCus.paymentDetails.get(0).paidAmount}" />
+													value="${total2 + salCus.totalCost-currentDue}" />
 											</c:forEach>
 
 											<c:forEach
@@ -191,9 +198,9 @@ tfoot {
 													<td>${salCusR.totalReCost}<br> <br>0
 													</td>
 												</tr>
-												<c:set var="total3" value="${total3 + salCus.totalCost}" />
+												<c:set var="total3" value="${total3 + salCusR.totalReCost}" />
 												<c:set var="total4"
-													value="${total4 + salCus.paymentDetails.get(0).paidAmount}" />
+													value="${total4 + salCusR.totalReCost}" />
 											</c:forEach>
 										</tbody>
 

@@ -73,11 +73,47 @@ tfoot {
 margin-bottom
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 :
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 3
 em
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ;
@@ -169,7 +205,6 @@ em
 											items="${sessionScope['ejb'].getAllPurchaseEntryByVendorIdTypePurchaseAgent(param.id)}"
 											var="purAgent">
 											<tr>
-
 												<td><fmt:formatDate value="${purAgent.purchase_date}"
 														pattern="dd-MM-yyyy" /></td>
 												<td>${purAgent.paymentDetails.get(0).paymentType.type}<br>
@@ -178,15 +213,18 @@ em
 												<td>Purchase</td>
 												<td>${purAgent.challanNumber}</td>
 												<td>0<br> <br>${purAgent.totalCost}</td>
-												<td>${purAgent.paymentDetails.get(0).paidAmount}<br>
-													<br>0
-												</td>
-
+												<td><c:set var="lastPayment"
+														value="${sessionScope['ejb'].getPaymentDetailsByPurchaseEntryId(purAgent.id).get(0)}"></c:set>
+													<c:set var="currentDue"
+														value="${lastPayment.totalAmount-lastPayment.paidAmount}"></c:set>
+													${purAgent.totalCost-currentDue} <%-- ${purAgent.paymentDetails.get(0).paidAmount} --%>
+													<br> <br>0</td>
 											</tr>
 											<c:set var="total1" value="${total1 + purAgent.totalCost}" />
+											<%-- <c:set var="total2"
+												value="${total2 + purAgent.paymentDetails.get(0).paidAmount}" /> --%>
 											<c:set var="total2"
-												value="${total2 + purAgent.paymentDetails.get(0).paidAmount}" />
-
+												value="${total2 + purAgent.totalCost-currentDue}" />
 										</c:forEach>
 
 										<c:forEach
