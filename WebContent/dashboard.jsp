@@ -211,10 +211,11 @@
 		}
 
 		function display_ct() {
-			var strcount
 			var x = new Date()
 			//var x1=x.toUTCString();// changing the display to UTC string
-			var x1 = x.getDate() + "/" + x.getMonth() + "/" + x.getYear();
+			var x1 = x.getDate() + "/"
+					+ Number(Number(x.getMonth()) + Number(1)) + "/"
+					+ x.getFullYear();
 			x1 = x1 + " - " + x.getHours() + ":" + x.getMinutes() + ":"
 					+ x.getSeconds();
 			document.getElementById('reportrange').innerHTML = x1;

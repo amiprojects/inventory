@@ -1183,6 +1183,24 @@ public class Ejb {
 		return lst;
 	}
 
+	public List<Purchase_Entry> getPurchaseEntryByProductId(int id) {
+		List<Purchase_Entry> lst = new ArrayList<Purchase_Entry>();
+		Set<Purchase_Entry> hs = new HashSet<>();
+		TypedQuery<Purchase_Product_Details> q = em
+				.createQuery(
+						"select c from Purchase_Product_Details c where c.productDetail.id=:id and c.purchase_Entry!=null ORDER BY c.id DESC",
+						Purchase_Product_Details.class);
+		q.setParameter("id", id);
+
+		for (Purchase_Product_Details p : q.getResultList()) {
+			lst.add(p.getPurchase_Entry());
+		}
+		hs.addAll(lst);
+		lst.clear();
+		lst.addAll(hs);
+		return lst;
+	}
+
 	public int getLastPurchaseChallanNumber() {
 		TypedQuery<Purchase_Entry> q = em.createQuery(
 				"select c from Purchase_Entry c ORDER BY c.id DESC",
@@ -3215,6 +3233,18 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<SalesEntry> getSalesEntryByAgentId(int id) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<SalesEntry> q = em
+				.createQuery(
+						"select c from SalesEntry c where c.companyInfo.id=:cId AND c.vendor.id=:id order by c.id desc",
+						SalesEntry.class);
+		q.setParameter("id", id);
+		q.setParameter("cId", cId);
+		return q.getResultList();
+	}
+
 	public List<SalesEntry> getSalesEntryByCustomerName(String name) {
 		cId = getUserById((String) httpSession.getAttribute("user"))
 				.getCompanyInfo().getId();
@@ -3223,6 +3253,18 @@ public class Ejb {
 						"select c from SalesEntry c where c.companyInfo.id=:cId AND UPPER(c.customer.name)=:name order by c.id desc",
 						SalesEntry.class);
 		q.setParameter("name", name.toUpperCase());
+		q.setParameter("cId", cId);
+		return q.getResultList();
+	}
+
+	public List<SalesEntry> getSalesEntryByCustomerId(int id) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		TypedQuery<SalesEntry> q = em
+				.createQuery(
+						"select c from SalesEntry c where c.companyInfo.id=:cId AND c.customer.id=:id order by c.id desc",
+						SalesEntry.class);
+		q.setParameter("id", id);
 		q.setParameter("cId", cId);
 		return q.getResultList();
 	}
@@ -3238,6 +3280,27 @@ public class Ejb {
 						SalesProductDetails.class);
 
 		q.setParameter("code", code.toUpperCase());
+		q.setParameter("cId", cId);
+		for (SalesProductDetails s : q.getResultList()) {
+			lst.add(s.getSalesEntry());
+		}
+		hs.addAll(lst);
+		lst.clear();
+		lst.addAll(hs);
+		return lst;
+	}
+
+	public List<SalesEntry> getSalesEntriesByProductId(int id) {
+		cId = getUserById((String) httpSession.getAttribute("user"))
+				.getCompanyInfo().getId();
+		List<SalesEntry> lst = new ArrayList<SalesEntry>();
+		HashSet<SalesEntry> hs = new HashSet<SalesEntry>();
+		TypedQuery<SalesProductDetails> q = em
+				.createQuery(
+						"select c from SalesProductDetails c where c.salesEntry.companyInfo.id=:cId AND c.purchase_Product_Details.productDetail.id=:id ORDER BY c.salesEntry.id DESC",
+						SalesProductDetails.class);
+
+		q.setParameter("id", id);
 		q.setParameter("cId", cId);
 		for (SalesProductDetails s : q.getResultList()) {
 			lst.add(s.getSalesEntry());
@@ -3485,10 +3548,19 @@ public class Ejb {
 	public List<VoucherDetails> getVoucherDetailsByVendorId(int id) {
 		TypedQuery<VoucherDetails> q = em
 				.createQuery(
-						"select c from VoucherDetails c where c.voucherAssign.vendor.id=:id",
+						"select c from VoucherDetails c where c.voucherAssign.vendor.id=:id order by c.id asc",
 						VoucherDetails.class);
 		q.setParameter("id", id);
 		return q.getResultList();
+	}
+
+	public VoucherDetails getLastVoucherDetailsByVendorId(int id) {
+		TypedQuery<VoucherDetails> q = em
+				.createQuery(
+						"select c from VoucherDetails c where c.voucherAssign.vendor.id=:id order by c.id desc",
+						VoucherDetails.class);
+		q.setParameter("id", id);
+		return q.getResultList().get(0);
 	}
 
 	public List<VoucherDetails> getAllVoucherDetails() {

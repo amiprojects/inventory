@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -119,7 +120,8 @@ import com.kaanish.util.DateConverter;
 		"/jobSearchByJobChallanNoForPayment",
 		"/jobSearchByProductCodeForPayment",
 		"/jobSearchByJobberNameForPayment", "/jobSearchByPlanNoForPayment",
-		"/jobPayment", "/purchasePayment", "/salesPayment" })
+		"/jobPayment", "/purchasePayment", "/salesPayment",
+		"/creditNoteByVendorName", "/creditNoteByAgentName" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -2206,8 +2208,8 @@ public class Servlet extends HttpServlet {
 			case "purchaseReportByVendorName":
 				page = "reportPurchaseVendorView.jsp";
 				List<Purchase_Entry> purEntryList2R = ejb
-						.getPurchaseEntryByVendorNameAndCompany(req
-								.getParameter("vendorName"));
+						.getAllPurchaseEntryByVendorIdTypeVendor(Integer
+								.parseInt(req.getParameter("pId")));
 				req.setAttribute("purEntryList", purEntryList2R);
 				req.setAttribute("pId", req.getParameter("pId"));
 				if (purEntryList2R.size() > 0) {
@@ -2236,8 +2238,8 @@ public class Servlet extends HttpServlet {
 			case "purchaseReportByAgentName":
 				page = "reportPurchaseAgentView.jsp";
 				List<Purchase_Entry> purEntryList3R = ejb
-						.getPurchaseEntryByAgentNameAndCompany(req
-								.getParameter("agentName"));
+						.getAllPurchaseEntryByVendorIdTypePurchaseAgent(Integer
+								.parseInt(req.getParameter("pId")));
 				req.setAttribute("purEntryList", purEntryList3R);
 				req.setAttribute("pId", req.getParameter("pId"));
 				if (purEntryList3R.size() > 0) {
@@ -2282,8 +2284,8 @@ public class Servlet extends HttpServlet {
 			case "purchaseReportByProductCode":
 				page = "reportPurchaseReport.jsp";
 				List<Purchase_Entry> purEntryList4R = ejb
-						.getPurchaseEntryByProductCodeAndCompany(req
-								.getParameter("prodCode"));
+						.getPurchaseEntryByProductId(Integer.parseInt(req
+								.getParameter("pId")));
 				req.setAttribute("purEntryList", purEntryList4R);
 				if (purEntryList4R.size() > 0) {
 					msg = "Your search for Product code : "
@@ -3287,7 +3289,8 @@ public class Servlet extends HttpServlet {
 			case "salesReportByAgentName":
 				page = "reportSalesAgentView.jsp";
 				List<SalesEntry> salesEntryLst2R = ejb
-						.getSalesEntryByAgentName(req.getParameter("agentName"));
+						.getSalesEntryByAgentId(Integer.parseInt(req
+								.getParameter("pId")));
 				req.setAttribute("purEntryList", salesEntryLst2R);
 				req.setAttribute("pId", req.getParameter("pId"));
 				if (salesEntryLst2R.size() > 0) {
@@ -3317,8 +3320,8 @@ public class Servlet extends HttpServlet {
 			case "salesReportByCustomerName":
 				page = "reportSalesCustomerView.jsp";
 				List<SalesEntry> salesEntryLst3R = ejb
-						.getSalesEntryByCustomerName(req
-								.getParameter("custoName"));
+						.getSalesEntryByCustomerId(Integer.parseInt(req
+								.getParameter("pId")));
 				req.setAttribute("purEntryList", salesEntryLst3R);
 				req.setAttribute("pId", req.getParameter("pId"));
 				if (salesEntryLst3R.size() > 0) {
@@ -3380,8 +3383,8 @@ public class Servlet extends HttpServlet {
 
 				req.setAttribute("pId", req.getParameter("pId"));
 				req.setAttribute("purEntryList", ejb
-						.getSalesEntriesByProductCode(req
-								.getParameter("prodCode")));
+						.getSalesEntriesByProductId(Integer.parseInt(req
+								.getParameter("pId"))));
 
 				msg = "";
 
@@ -4795,6 +4798,24 @@ public class Servlet extends HttpServlet {
 				req.setAttribute("purchaseReturn", purchaseReturn);
 				req.setAttribute("salesReturn", salesReturn);
 
+				break;
+
+			case "creditNoteByVendorName":
+				page = "noteCreditVendorView.jsp";
+				List<VoucherDetails> voucherDetailsV = ejb
+						.getVoucherDetailsByVendorId(Integer.parseInt(req
+								.getParameter("vId")));
+				req.setAttribute("vouDetList", voucherDetailsV);
+				req.setAttribute("vId", req.getParameter("vId"));
+				break;
+
+			case "creditNoteByAgentName":
+				page = "noteCreditAgentView.jsp";
+				List<VoucherDetails> voucherDetailsPA = ejb
+						.getVoucherDetailsByVendorId(Integer.parseInt(req
+								.getParameter("paId")));
+				req.setAttribute("vouDetList", voucherDetailsPA);
+				req.setAttribute("paId", req.getParameter("paId"));
 				break;
 
 			default:

@@ -6,7 +6,7 @@
 	</div>
 	<div class="custom-dropdowns">
 		<div class="notification-list dropdown">
-			<a title=""><span class="green" id="notification">0</span><i
+			<a title=""><span class="green" id="notification">3</span><i
 				class="fa fa-bell-o"></i></a>
 			<div class="notification drop-list">
 				<span id="notificationStatement">You have 3 New Notifications</span>

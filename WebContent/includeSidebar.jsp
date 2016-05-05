@@ -4,7 +4,6 @@
 <aside class="sidebar" style="height: 100%; overflow-y: scroll;">
 	<div class="menu-sec">
 		<div id="menu-toogle" class="menus">
-
 			<div class="single-menu">
 				<h2 class="" id="dash">
 					<a title=""><span>Dashboard</span></a>
@@ -16,7 +15,6 @@
 					</ul>
 				</div>
 			</div>
-
 			<div class="single-menu">
 				<h2 id="reports">
 					<a title=""><span>Reports</span></a>
@@ -27,7 +25,6 @@
 					</ul>
 				</div>
 			</div>
-
 			<div class="single-menu">
 				<h2 id="prodact">
 					<a href="#" title=""><span>Product/Material Module</span></a>
@@ -36,11 +33,9 @@
 					<ul>
 						<li><a id="sProduct" href="MaterialPartDetailsGenerals.jsp"
 							title="">Product/Material </a></li>
-
 					</ul>
 				</div>
 			</div>
-
 			<div class="single-menu">
 				<h2 id="purch">
 					<a title=""><span>Purchase Module</span></a>
@@ -59,8 +54,6 @@
 					</ul>
 				</div>
 			</div>
-
-
 			<div class="single-menu">
 				<h2 id="sales">
 					<a title=""><span>Sales Module</span></a>
@@ -73,13 +66,9 @@
 								Return</a></li>
 						<li><a id="sSalesSearch" href="salesSearch.jsp" title="">Sales
 								Search</a></li>
-
-						<!--  <li><a id="sSalesDiscount" href="salesDiscount.jsp" title="">Discount</a></li> -->
-
 					</ul>
 				</div>
 			</div>
-
 			<div class="single-menu">
 				<h2 id="vendor">
 					<a title=""><span>Vendor Module</span></a>
@@ -90,7 +79,6 @@
 					</ul>
 				</div>
 			</div>
-
 			<div class="single-menu">
 				<h2 id="stock">
 					<a title=""><span>Stock Module</span></a>
@@ -99,12 +87,9 @@
 					<ul>
 						<li><a id="sStock" href="stockView.jsp" title="">Stock
 								View</a></li>
-
 					</ul>
 				</div>
 			</div>
-
-
 			<div class="single-menu">
 				<h2 id="jobs">
 					<a title=""><span>Jobs Module</span></a>
@@ -128,6 +113,19 @@
 					</ul>
 				</div>
 			</div>
+			<!-- <div class="single-menu">
+				<h2 id="debitCreditNote">
+					<a title=""><span>Debit/Credit Note</span></a>
+				</h2>
+				<div class="sub-menu">
+					<ul>
+						<li><a id="debitNote" href="noteDebit.jsp" title="">Customer's
+								Debit Note</a></li>
+						<li><a id="creditNote" href="noteCredit.jsp" title="">Vendor's
+								Credit Note</a></li>
+					</ul>
+				</div>
+			</div> -->
 			<div class="single-menu">
 				<h2 id="setup">
 					<a title=""><span>Setup Module</span></a>
