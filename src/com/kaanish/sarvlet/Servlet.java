@@ -121,7 +121,8 @@ import com.kaanish.util.DateConverter;
 		"/jobSearchByProductCodeForPayment",
 		"/jobSearchByJobberNameForPayment", "/jobSearchByPlanNoForPayment",
 		"/jobPayment", "/purchasePayment", "/salesPayment",
-		"/creditNoteByVendorName", "/creditNoteByAgentName" })
+		"/creditNoteByVendorName", "/creditNoteByAgentName",
+		"/creditNoteByJobber", "/debitNoteByCustomer" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -4803,8 +4804,8 @@ public class Servlet extends HttpServlet {
 			case "creditNoteByVendorName":
 				page = "noteCreditVendorView.jsp";
 				List<VoucherDetails> voucherDetailsV = ejb
-						.getVoucherDetailsByVendorId(Integer.parseInt(req
-								.getParameter("vId")));
+						.getDecendingVoucherDetailsByVendorId(Integer
+								.parseInt(req.getParameter("vId")));
 				req.setAttribute("vouDetList", voucherDetailsV);
 				req.setAttribute("vId", req.getParameter("vId"));
 				break;
@@ -4812,10 +4813,28 @@ public class Servlet extends HttpServlet {
 			case "creditNoteByAgentName":
 				page = "noteCreditAgentView.jsp";
 				List<VoucherDetails> voucherDetailsPA = ejb
-						.getVoucherDetailsByVendorId(Integer.parseInt(req
-								.getParameter("paId")));
+						.getDecendingVoucherDetailsByVendorId(Integer
+								.parseInt(req.getParameter("paId")));
 				req.setAttribute("vouDetList", voucherDetailsPA);
 				req.setAttribute("paId", req.getParameter("paId"));
+				break;
+
+			case "creditNoteByJobber":
+				page = "noteCreditJobberView.jsp";
+				List<VoucherDetails> voucherDetailsJ = ejb
+						.getDecendingVoucherDetailsByVendorId(Integer
+								.parseInt(req.getParameter("jId")));
+				req.setAttribute("vouDetList", voucherDetailsJ);
+				req.setAttribute("jId", req.getParameter("jId"));
+				break;
+
+			case "debitNoteByCustomer":
+				page = "noteDebitCustomerView.jsp";
+				List<VoucherDetails> voucherDetailsC = ejb
+						.getDescendingVoucherDetailsbyCustomerId(Integer
+								.parseInt(req.getParameter("cId")));
+				req.setAttribute("vouDetList", voucherDetailsC);
+				req.setAttribute("cId", req.getParameter("cId"));
 				break;
 
 			default:

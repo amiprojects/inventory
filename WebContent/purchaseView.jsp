@@ -594,6 +594,10 @@
 																test="${payType.getType()!='Debit Note' && payType.getType()!='Credit Note'}">
 																<option value="${payType.getType()}">${payType.getType()}</option>
 															</c:if>
+															<c:if test="${payType.getType()=='Credit Note'}">
+																<option value="${payType.getType()}">Redeem
+																	Credit Note</option>
+															</c:if>
 														</c:forEach>
 													</select>
 												</div>
@@ -839,7 +843,7 @@
 	$(function() {		
 		$("#spPaymentAmount").numericInput({
 			allowFloat : true,
-			allowNegative : false,
+			allowNegative : true,
 		});
 	});
 	function submit() {

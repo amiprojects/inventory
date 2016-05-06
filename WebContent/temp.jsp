@@ -86,7 +86,6 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			var table = $('#example').DataTable({
-
 				"scrollY" : 200,
 				"scrollX" : true,
 				dom : 'Bfrtip',
@@ -108,6 +107,24 @@
 		}
 	</script>
 
+
+	//class and no print excel or anything
+	<!-- <link rel="stylesheet" href="css/jquery.dataTables.min.css">
+	<link rel="stylesheet" href="css/fixedHeader.dataTables.min.css">
+	<link rel="stylesheet" href="css/style.css" type="text/css" />
+	<link rel="stylesheet" href="css/responsive.css" type="text/css" />
+
+	<table id="" class="table table-bordered display" cellspacing="0"
+		width="100%"></table>
+
+
+	<script src="js/jquery.dataTables.min.js"></script>
+	<script src="js/dataTables.fixedHeader.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$('table.display').DataTable();
+		});
+	</script> -->
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->

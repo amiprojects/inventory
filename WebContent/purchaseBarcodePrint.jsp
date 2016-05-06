@@ -61,7 +61,10 @@
 									</ul>
 								</div>
 								<div class="widget-area">
-									<form action="purchaseBarCode" method="post">
+									<!-- <form action="purchaseBarCode" method="post"> -->
+									<form action="barcode" method="post">
+										<c:set value="${sessionScope['ejb'].getCompanyInfo()}"
+											var="companyInfo" />
 										<table class="table table-striped table-bordered">
 											<thead>
 												<tr>
@@ -82,7 +85,8 @@
 															id="prodCheck${purchaseProducts.id}"
 															onclick="qtyPrF(${purchaseProducts.id});"><input
 															type="hidden" value="${purchaseProducts.id}"
-															name="prodCheck"></td>
+															name="prodCheck"><input type="hidden"
+															value="${companyInfo.compname}" name="compname"></td>
 														<td><input type="number"
 															id="qtyPr${purchaseProducts.id}" class="form-control"
 															readonly="readonly" name="qtyProd" value="0"></td>

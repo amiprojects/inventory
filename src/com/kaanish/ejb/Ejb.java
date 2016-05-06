@@ -922,6 +922,14 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<Vendor> getAllVendorsByType(String type) {
+		TypedQuery<Vendor> q = em.createQuery(
+				"select c from Vendor c where UPPER(c.vendorType.type)=:type",
+				Vendor.class);
+		q.setParameter("type", type.toUpperCase());
+		return q.getResultList();
+	}
+
 	public List<Vendor> getAllVendorsByAssendingMaxPurchase(String type) {
 		List<Vendor> vendors = new ArrayList<Vendor>();
 		TypedQuery<Vendor> q = em.createQuery(
@@ -931,7 +939,8 @@ public class Ejb {
 
 		vendors = q.getResultList();
 		vendors.sort((Vendor v2, Vendor v1) -> Float.compare(
-				v1.getTotPurchase(), v2.getTotPurchase()));
+				v1.getTotPurchase(), v2.getTotPurchase())); // sort by lamda
+															// expression
 		return vendors;
 	}
 
@@ -943,7 +952,7 @@ public class Ejb {
 
 		vendors = q.getResultList();
 		vendors.sort((Vendor v2, Vendor v1) -> Float.compare(v1.getTotSale(),
-				v2.getTotSale()));
+				v2.getTotSale())); // sort by lamda expression
 		return vendors;
 	}
 
@@ -983,6 +992,92 @@ public class Ejb {
 		q.setParameter("name", name.toUpperCase());
 		q.setParameter("type", type.toUpperCase());
 		return q.getResultList().get(0);
+	}
+
+	public List<Vendor> getVendorsByVendorTypeJobber(String jobber) {
+		TypedQuery<Vendor> q = em.createQuery(
+				"select c from Vendor c where c.vendorType.type=:jobber",
+				Vendor.class);
+		q.setParameter("jobber", jobber);
+		return q.getResultList();
+	}
+
+	public List<Vendor> getVendorsByVendorTypeJobberAndName(String name) {
+		TypedQuery<Vendor> q = em
+				.createQuery(
+						"select c from Vendor c where c.vendorType.type='Jobber' and UPPER(c.name) like :nm",
+						Vendor.class);
+		q.setParameter("nm", "%" + name.toUpperCase() + "%");
+		return q.getResultList();
+	}
+
+	public List<Vendor> getVendorsByVendorTypeDesignerAndName(String name) {
+		TypedQuery<Vendor> q = em
+				.createQuery(
+						"select c from Vendor c where c.vendorType.type='Designer' and UPPER(c.name) like :nm",
+						Vendor.class);
+		q.setParameter("nm", "%" + name.toUpperCase() + "%");
+		return q.getResultList();
+	}
+
+	public List<Vendor> getVendorsByVendorTypeVendorAndName(String name) {
+		TypedQuery<Vendor> q = em
+				.createQuery(
+						"select c from Vendor c where c.vendorType.type='Vendor' and UPPER(c.name) like :nm",
+						Vendor.class);
+		q.setParameter("nm", "%" + name.toUpperCase() + "%");
+		return q.getResultList();
+	}
+
+	public List<Vendor> getVendorsByVendorTypePurchaseAgentAndName(String name) {
+		TypedQuery<Vendor> q = em
+				.createQuery(
+						"select c from Vendor c where c.vendorType.type='Purchase Agent' and UPPER(c.name) like :nm",
+						Vendor.class);
+		q.setParameter("nm", "%" + name.toUpperCase() + "%");
+		return q.getResultList();
+	}
+
+	public List<Vendor> getVendorsByVendorTypeSalesAgentAndName(String name) {
+		TypedQuery<Vendor> q = em
+				.createQuery(
+						"select c from Vendor c where c.vendorType.type='Sales Agent' and UPPER(c.name) like :nm",
+						Vendor.class);
+		q.setParameter("nm", "%" + name.toUpperCase() + "%");
+		return q.getResultList();
+	}
+
+	public List<Vendor> getAllAgenttypePurchaseAgent() {
+		TypedQuery<Vendor> q = em
+				.createQuery(
+						"select c from Vendor c where c.vendorType.type='Purchase Agent'",
+						Vendor.class);
+
+		return q.getResultList();
+	}
+
+	public List<Vendor> getAllAgenttypeSalesAgent() {
+		TypedQuery<Vendor> q = em.createQuery(
+				"select c from Vendor c where c.vendorType.type='Sales Agent'",
+				Vendor.class);
+
+		return q.getResultList();
+	}
+
+	public List<Vendor> getAllVendtypeVen() {
+		TypedQuery<Vendor> q = em.createQuery(
+				"select c from Vendor c where c.vendorType.type='Vendor'",
+				Vendor.class);
+
+		return q.getResultList();
+	}
+
+	public List<Vendor> getVendorsWithVendorTypeJobberByProductID(String jobber) {
+		TypedQuery<Vendor> q = em.createQuery(
+				"select c from Vendor c where c.vendorType.type=:jobber",
+				Vendor.class);
+		q.setParameter("jobber", jobber);
+		return q.getResultList();
 	}
 
 	/******************** for vendor type *******************************/
@@ -1516,92 +1611,6 @@ public class Ejb {
 						JobAssignmentDetails.class);
 		q.setParameter("pid", pid);
 		return q.getResultList().get(0);
-	}
-
-	public List<Vendor> getVendorsByVendorTypeJobber(String jobber) {
-		TypedQuery<Vendor> q = em.createQuery(
-				"select c from Vendor c where c.vendorType.type=:jobber",
-				Vendor.class);
-		q.setParameter("jobber", jobber);
-		return q.getResultList();
-	}
-
-	public List<Vendor> getVendorsByVendorTypeJobberAndName(String name) {
-		TypedQuery<Vendor> q = em
-				.createQuery(
-						"select c from Vendor c where c.vendorType.type='Jobber' and UPPER(c.name) like :nm",
-						Vendor.class);
-		q.setParameter("nm", "%" + name.toUpperCase() + "%");
-		return q.getResultList();
-	}
-
-	public List<Vendor> getVendorsByVendorTypeDesignerAndName(String name) {
-		TypedQuery<Vendor> q = em
-				.createQuery(
-						"select c from Vendor c where c.vendorType.type='Designer' and UPPER(c.name) like :nm",
-						Vendor.class);
-		q.setParameter("nm", "%" + name.toUpperCase() + "%");
-		return q.getResultList();
-	}
-
-	public List<Vendor> getVendorsByVendorTypeVendorAndName(String name) {
-		TypedQuery<Vendor> q = em
-				.createQuery(
-						"select c from Vendor c where c.vendorType.type='Vendor' and UPPER(c.name) like :nm",
-						Vendor.class);
-		q.setParameter("nm", "%" + name.toUpperCase() + "%");
-		return q.getResultList();
-	}
-
-	public List<Vendor> getVendorsByVendorTypePurchaseAgentAndName(String name) {
-		TypedQuery<Vendor> q = em
-				.createQuery(
-						"select c from Vendor c where c.vendorType.type='Purchase Agent' and UPPER(c.name) like :nm",
-						Vendor.class);
-		q.setParameter("nm", "%" + name.toUpperCase() + "%");
-		return q.getResultList();
-	}
-
-	public List<Vendor> getVendorsByVendorTypeSalesAgentAndName(String name) {
-		TypedQuery<Vendor> q = em
-				.createQuery(
-						"select c from Vendor c where c.vendorType.type='Sales Agent' and UPPER(c.name) like :nm",
-						Vendor.class);
-		q.setParameter("nm", "%" + name.toUpperCase() + "%");
-		return q.getResultList();
-	}
-
-	public List<Vendor> getAllAgenttypePurchaseAgent() {
-		TypedQuery<Vendor> q = em
-				.createQuery(
-						"select c from Vendor c where c.vendorType.type='Purchase Agent'",
-						Vendor.class);
-
-		return q.getResultList();
-	}
-
-	public List<Vendor> getAllAgenttypeSalesAgent() {
-		TypedQuery<Vendor> q = em.createQuery(
-				"select c from Vendor c where c.vendorType.type='Sales Agent'",
-				Vendor.class);
-
-		return q.getResultList();
-	}
-
-	public List<Vendor> getAllVendtypeVen() {
-		TypedQuery<Vendor> q = em.createQuery(
-				"select c from Vendor c where c.vendorType.type='Vendor'",
-				Vendor.class);
-
-		return q.getResultList();
-	}
-
-	public List<Vendor> getVendorsWithVendorTypeJobberByProductID(String jobber) {
-		TypedQuery<Vendor> q = em.createQuery(
-				"select c from Vendor c where c.vendorType.type=:jobber",
-				Vendor.class);
-		q.setParameter("jobber", jobber);
-		return q.getResultList();
 	}
 
 	public int getLastJobChallanNumber() {
@@ -3183,6 +3192,26 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<VoucherDetails> getVoucherDetailsbyCustomerId(int id) {
+		TypedQuery<VoucherDetails> q = em
+				.createQuery(
+
+						"select s from VoucherDetails s where s.voucherAssign.customerEntry.id=:Id ORDER BY s.id ASC",
+						VoucherDetails.class);
+		q.setParameter("Id", id);
+		return q.getResultList();
+	}
+
+	public List<VoucherDetails> getDescendingVoucherDetailsbyCustomerId(int id) {
+		TypedQuery<VoucherDetails> q = em
+				.createQuery(
+
+						"select s from VoucherDetails s where s.voucherAssign.customerEntry.id=:Id ORDER BY s.id desc",
+						VoucherDetails.class);
+		q.setParameter("Id", id);
+		return q.getResultList();
+	}
+
 	public List<SalesEntry> getAllSalesEntries() {
 		TypedQuery<SalesEntry> q = em.createQuery("select c from SalesEntry c",
 				SalesEntry.class);
@@ -3554,13 +3583,39 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<VoucherDetails> getDecendingVoucherDetailsByVendorId(int id) {
+		TypedQuery<VoucherDetails> q = em
+				.createQuery(
+						"select c from VoucherDetails c where c.voucherAssign.vendor.id=:id order by c.id desc",
+						VoucherDetails.class);
+		q.setParameter("id", id);
+		return q.getResultList();
+	}
+
 	public VoucherDetails getLastVoucherDetailsByVendorId(int id) {
 		TypedQuery<VoucherDetails> q = em
 				.createQuery(
 						"select c from VoucherDetails c where c.voucherAssign.vendor.id=:id order by c.id desc",
 						VoucherDetails.class);
 		q.setParameter("id", id);
-		return q.getResultList().get(0);
+		if (q.getResultList().size() > 0) {
+			return q.getResultList().get(0);
+		} else {
+			return null;
+		}
+	}
+
+	public VoucherDetails getLastVoucherDetailsByCustomerId(int id) {
+		TypedQuery<VoucherDetails> q = em
+				.createQuery(
+						"select c from VoucherDetails c where c.voucherAssign.customerEntry.id=:id order by c.id desc",
+						VoucherDetails.class);
+		q.setParameter("id", id);
+		if (q.getResultList().size() > 0) {
+			return q.getResultList().get(0);
+		} else {
+			return null;
+		}
 	}
 
 	public List<VoucherDetails> getAllVoucherDetails() {

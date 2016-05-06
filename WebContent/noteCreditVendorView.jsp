@@ -8,7 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Panel</title>
+<title>Vendor's Credit Note Statement</title>
 
 <link
 	href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700,900'
@@ -29,6 +29,12 @@
 <!-- Responsive -->
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+<link rel="stylesheet" href="css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="css/fixedHeader.dataTables.min.css">
+<link rel="stylesheet" href="css/buttons.dataTables.min.css">
+<link rel="stylesheet" href="css/dataTables.searchHighlight.css" />
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+<link rel="stylesheet" href="css/responsive.css" type="text/css" />
 </head>
 <body>
 	<c:if test="${sessionScope['user']==null}">
@@ -113,8 +119,8 @@
 								<br>
 
 								<div style="width: 100%; overflow: auto;">
-									<table id="stream_table"
-										class="table table-striped table-bordered">
+									<table id="statement" cellspacing="0" width="100%"
+										class="display">
 										<thead>
 											<tr>
 												<th>#</th>
@@ -132,11 +138,19 @@
 												var="vouDetList">
 												<tr>
 													<td>${count}</td>
-													<td>${vouDetList.voucherDate}</td>
-													<td>${vouDetList.isCredit}</td>
+													<td><fmt:formatDate value="${vouDetList.voucherDate}"
+															pattern="dd-MM-yy" /></td>
+													<td><c:if test="${vouDetList.isCredit()}">Credit</c:if>
+														<c:if test="${!vouDetList.isCredit()}">Debit</c:if></td>
 													<td>${vouDetList.value}</td>
-													<td>${vouDetList.id}</td>
-													<td>${vouDetList.id}</td>
+													<td><c:if
+															test="${vouDetList.purchase_Entry!=null && vouDetList.purchaseReturn==null}">Purchase Payment</c:if>
+														<c:if
+															test="${vouDetList.purchase_Entry!=null && vouDetList.purchaseReturn!=null}">Purchase Return</c:if></td>
+													<td><c:if
+															test="${vouDetList.purchase_Entry!=null && vouDetList.purchaseReturn==null}">${vouDetList.purchase_Entry.challanNumber}</c:if>
+														<c:if
+															test="${vouDetList.purchase_Entry!=null && vouDetList.purchaseReturn!=null}">${vouDetList.purchaseReturn.challanNumber}</c:if></td>
 													<td>${vouDetList.totalCreditNote}</td>
 												</tr>
 												<c:set var="count" value="${count+1}" />
@@ -177,37 +191,40 @@
 	</script>
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 	<script>
-		$(function() {
-			$("#datepicker").datepicker({
-				dateFormat : "dd-mm-yy",
-				maxDate : 0
-			});
-			$("#datepicker1").datepicker({
-				dateFormat : "dd-mm-yy",
-				maxDate : 0
-			});
-		});
-	</script>
-	<script>
-		function dateSet() {
-			var dt = $("#datepicker").datepicker('getDate');
-			var dt1 = $("#datepicker1").datepicker('getDate');
-			if ($("#datepicker1").val() != "" && dt >= dt1) {
-				alert("Start date must be before than end date...");
-				$("#datepicker").val("");
-			}
-		}
-		function checkDate() {
-			var d = $("#datepicker").datepicker('getDate');
-			var d1 = $("#datepicker1").datepicker('getDate');
-			if ($("#datepicker").val() != "" && d >= d1) {
-				alert("End date must be later than start date...");
-				$("#datepicker1").val("");
-			}
-		}
 		function purchaseViewF(id) {
 			$("#pView" + id).submit();
 		}
+	</script>
+	<script src="js/jquery.dataTables.min.js"></script>
+	<script src="js/dataTables.fixedHeader.min.js"></script>
+	<script src="js/buttons.flash.min.js"></script>
+	<script src="js/buttons.html5.min.js"></script>
+	<script src="js/buttons.print.min.js"></script>
+	<script src="js/dataTables.buttons.min.js"></script>
+	<script src="js/jszip.min.js"></script>
+	<script src="js/vfs_fonts.js"></script>
+	<script src="js/pdfmake.min.js"></script>
+	<script src="js/pdfmake.min.js"></script>
+	<script src="js/dataTables.searchHighlight.min.js"></script>
+	<script src="js/pdfmake.min.js"></script>
+	<script src="js/jquery.highlight.js"></script>
+	<script type="text/javascript" src="js/dist/sweetalert2.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var table = $('#statement').DataTable({
+				"scrollY" : 200,
+				"scrollX" : true,
+				dom : 'Bfrtip',
+				buttons : [ 'copy', 'excel', 'print' ]
+			});
+
+			table.on('draw', function() {
+				var body = $(table.table().body());
+
+				body.unhighlight();
+				body.highlight(table.search());
+			});
+		});
 	</script>
 </body>
 

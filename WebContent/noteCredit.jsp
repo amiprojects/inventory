@@ -78,6 +78,7 @@
 									<li class="active"><a data-toggle="tab" href="#byVendor">Vendor</a></li>
 									<li><a data-toggle="tab" href="#byAgent">Purchase
 											Agent</a></li>
+									<li><a data-toggle="tab" href="#byJobber">Jobber</a></li>
 								</ul>
 								<div class="tab-content">
 									<div id="byVendor" class="tab-pane fade active in">
@@ -160,6 +161,50 @@
 																	<a href="#" onclick="creditNoteViewF('${vendor.id}');"><input
 																		type="hidden" value="${vendor.id}" name="paId"><input
 																		type="hidden" value="${vendor.name}" name="agentName"><img
+																		alt="" src="images/eye.png" height="25px"></a>
+																</form>
+															</td>
+														</tr>
+													</c:if>
+													<c:set var="count" value="${count+1}" />
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
+									<div id="byJobber" class="tab-pane fade">
+										<table class="table">
+											<thead>
+												<tr>
+													<th>#</th>
+													<th>Jobber Name</th>
+													<th>Company Name</th>
+													<th>Phone1</th>
+													<th>Phone2</th>
+													<th>Current Credit</th>
+												</tr>
+											</thead>
+											<tbody style="height: 300px;">
+												<c:set var="count" value="${1}" />
+
+												<c:forEach
+													items="${sessionScope['ejb'].getAllVendorsByType('Jobber')}"
+													var="vendor">
+													<c:if test="${vendor.vendorType.type=='Jobber'}">
+														<tr>
+															<td>${count}</td>
+															<td>${vendor.name}</td>
+															<td>${vendor.companyName}</td>
+															<td>${vendor.ph1}</td>
+															<td>${vendor.ph2}</td>
+															<td><fmt:formatNumber var="currentCredit"
+																	value="${sessionScope['ejb'].getLastVoucherDetailsByVendorId(vendor.id).getTotalCreditNote()}"
+																	maxFractionDigits="2" /> ${currentCredit}</td>
+															<td>
+																<form action="creditNoteByJobber" method="post"
+																	id="cnView${vendor.id}">
+																	<a href="#" onclick="creditNoteViewF('${vendor.id}');"><input
+																		type="hidden" value="${vendor.id}" name="jId"><input
+																		type="hidden" value="${vendor.name}" name="jobberName"><img
 																		alt="" src="images/eye.png" height="25px"></a>
 																</form>
 															</td>

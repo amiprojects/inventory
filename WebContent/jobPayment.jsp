@@ -254,7 +254,7 @@
 													</c:forEach>
 													<td width="10%"><fmt:formatNumber var="totalQ"
 															value="${totqty}" maxFractionDigits="3" />${totalQ}</td>
-													<%-- <td width="10%"><c:if
+													<td style="display: none;"><c:if
 															test="${sessionScope['ejb'].getPaymentDetailsByJobAssignId(jobAssignByDate.id).size()>0}">
 															<c:set
 																value="${sessionScope['ejb'].getPaymentDetailsByJobAssignId(jobAssignByDate.id).get(0).paymentStatus.status}"
@@ -262,8 +262,9 @@
 														</c:if> <c:if
 															test="${sessionScope['ejb'].getPaymentDetailsByJobAssignId(jobAssignByDate.id).size()==0}">
 															<c:set value="Not Paid" var="Status"></c:set>
-														</c:if> ${sessionScope['ejb'].getPaymentDetailsByJobAssignId(jobAssignByDate.id).size()}
-														&nbsp;  <span id="status${jobAssignByDate.id}">${Status}</span></td> --%>
+														</c:if>
+														${sessionScope['ejb'].getPaymentDetailsByJobAssignId(jobAssignByDate.id).size()}
+														&nbsp; <span id="status${jobAssignByDate.id}">${Status}</span></td>
 													<td width="8%"><c:set var="totJobCost" value="${0}" />
 														<c:forEach var="jobp"
 															items="${jobAssignByDate.jobAssignmentProducts}">
