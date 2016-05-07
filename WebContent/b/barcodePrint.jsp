@@ -43,7 +43,7 @@ page[size="A4"] {
 	<c:set value="${sessionScope['ejb'].getPurchaseEntryById(param.id)}"
 		var="purentry" />
 	<c:forEach items="${purentry.purchase_Product_Details}" var="purProDet">
-		<c:forEach begin="1" end="${purProDet.quantity}">
+		<c:forEach begin="1" end="${purProDet.numberForBarcodePrint}">
 			<page size="A4">
 			<center style="padding-top: 12px;">
 				<span style="font-weight: bold; font-size: 9px">${companyInfo.compname}</span><br>

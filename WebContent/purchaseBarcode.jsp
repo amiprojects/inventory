@@ -49,9 +49,6 @@ page[size="A4"] {
 			<page size="A4">
 			<center style="padding-top: 12px;">
 				<span style="font-weight: bold; font-size: 9px">${companyInfo.compname}</span><br>
-				<%-- <span style="font-size: 9px">Pcode:${purProDet.productDetail.code}</span><br>
-				<span style="font-size: 9px">Design No. :
-					${purProDet.productDetail.universalCode}</span><br> --%>
 				<span style="font-size: 9px">${purProDet.productDetail.universalCode}</span>&nbsp;&nbsp;&nbsp;<span
 					style="font-size: 9px">${sessionScope['ejb'].getMRPlh(purProDet.mrp)}</span><br>
 				<img
