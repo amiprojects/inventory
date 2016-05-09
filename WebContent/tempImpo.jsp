@@ -21,6 +21,9 @@ UPDATE PURCHASE_ENTRY
 Payment details and voucher details
 .....................................
 jobAssignId 10,0, null
+
+update VOUCHERDETAILS set JOBASSIGNID=0;
+update PAYMENTDETAILS set JOBASSIGNID=0;
 	
 ////////////////////////////////////////////////////
 
@@ -30,6 +33,9 @@ UPDATE PURCHASE_PRODUCT_DETAILS
 	
 select * from READYGOODSSTOCK where PRODUCTID in (select ID from PRODUCTDETAIL where CODE like '0%');
 
+select * from SAMPLEDESIGNCOSTSHEET where ID not in (select
+distinct SAMPLEDESIGNCOSTSHEETID from JOBSFORDESIGNCOSTSHEET where
+JOBTYPE=480);
 
 <script>
 	$(document).ready(function() {

@@ -24,6 +24,7 @@ import com.kaanish.model.CompanyInfo;
 import com.kaanish.model.Country;
 import com.kaanish.model.Department;
 import com.kaanish.model.JobAssignmentProducts;
+import com.kaanish.model.JobClass;
 import com.kaanish.model.JobPlan;
 import com.kaanish.model.JobPlanProducts;
 import com.kaanish.model.JobsForDesignCostSheet;
@@ -132,7 +133,8 @@ import com.kaanish.util.DepartmentCotractor;
 		"/isExistProductDetailByDesignNumber",
 		"/getPurchaseProductDetailsByLotNumber",
 		"/getPaymentDetailsByJobAssignId",
-		"/getAllVoucherDetailsByJobAssignId", "/getCustomerById" })
+		"/getAllVoucherDetailsByJobAssignId", "/getCustomerById", "/testcase",
+		"/testcase1" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -399,11 +401,6 @@ public class JsonServlet extends HttpServlet {
 				pw.print(ejb.getCustomerByName(req.getParameter("name")));
 				break;
 
-			case "getProductbyProductCode":
-				pw = resp.getWriter();
-				pw.print(ejb.getAllProductByProductCode(req
-						.getParameter("code")));
-				break;
 			case "getSaleblePurchaseProductDetailsByProductCodeAndQuantity":
 				pw = resp.getWriter();
 				pw.print(ejb
@@ -411,11 +408,18 @@ public class JsonServlet extends HttpServlet {
 								req.getParameter("code"),
 								DateConverter.getDate(req.getParameter("date"))));
 				break;
+
 			case "getPurchaseProductDetailsByProductCode":
 				pw = resp.getWriter();
 				pw.print(ejb.getPurchaseProductDetailsByProductCode(
 						req.getParameter("code"),
 						DateConverter.getDate(req.getParameter("date"))));
+				break;
+
+			case "getProductbyProductCode":
+				pw = resp.getWriter();
+				pw.print(ejb.getAllProductByProductCode(req
+						.getParameter("code")));
 				break;
 
 			case "getProductDetailsByDesignNumberAndQuantity":
@@ -2010,6 +2014,29 @@ public class JsonServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 
+				break;
+			case "testcase":
+				JsonGeneratorFactory factory7 = Json
+						.createGeneratorFactory(null);
+				JsonGenerator jsongen = factory7.createGenerator(resp
+						.getOutputStream());
+				jsongen.writeStartObject().writeStartArray("array");
+
+				jsongen.writeStartObject().write("testObj", "hello").writeEnd();
+
+				for (int j = 0; j < 5; j++) {
+					jsongen.writeStartObject().writeStartArray("array" + j);
+					for (int i = 0; i < 5; i++) {
+						jsongen.writeStartObject().write("count", i).writeEnd();
+					}
+					jsongen.writeEnd().writeEnd();
+				}
+
+				jsongen.writeEnd().writeEnd().close();
+				break;
+
+			case "testcase1":
+				resp.getWriter().print(new JobClass());
 				break;
 
 			default:
