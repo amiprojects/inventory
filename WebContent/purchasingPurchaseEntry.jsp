@@ -258,7 +258,6 @@
 					<div class="row">
 						<div class="masonary-grids">
 
-
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
 								<h3 style="margin-top: 11px;">Purchase Entry</h3>
@@ -481,7 +480,7 @@
 														name="taxAmount"></td>
 												</tr>
 											</tbody>
-											<tbody>
+											<tbody style="display: none;">
 												<tr>
 													<td colspan="2">Agent Profit:</td>
 													<td>Is inclusive :&nbsp; <select name="isInclusive"
@@ -5294,7 +5293,7 @@
 			if ($("#isInclusive").val() == 'inclusiveNo') {
 				$("#profitType").removeAttr("disabled");
 				$("#profitVal").removeAttr("readonly");
-				$("#effectiveDiv").removeAttr("style");				
+				$("#effectiveDiv").removeAttr("style");
 				$("#profitTypeTR").removeAttr("style");
 				$("#profitValueTR").removeAttr("style");
 			} else {

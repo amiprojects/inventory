@@ -76,11 +76,8 @@ Url = {
 $(document).ready(function(){
 	if(Url.get.print==1){
 		var myWindow = window
-		/* .open(
-				"barcodePrint.jsp?id=${param.id}&ip=${sessionScope['sip']}&port=${sessionScope['port']}",
-				'name', 'width=600,height=400'); */
 		.open(
-				"purchaseEntryBarcodePrint.jsp?id=${param.id}",
+				"purchaseBarcodePrint.jsp?id=${param.id}",
 				'name', 'width=600,height=400');
 myWindow.print();
 	}
@@ -91,7 +88,7 @@ myWindow.print();
 	<script type="text/javascript">
 		var myWindow = window
 				.open(
-						"barcodePrint.jsp?id=${param.id}&ip=${sessionScope['sip']}&port=${sessionScope['port']}",
+						"purchaseBarcode.jsp?id=${param.id}&ip=${sessionScope['sip']}&port=${sessionScope['port']}",
 						'name', 'width=600,height=400');
 		myWindow.print();
 	</script>
