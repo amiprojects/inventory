@@ -108,9 +108,7 @@
 
 						<div class="breadcrumbs" style="height: 50px; text-align: center;">
 							<h3 style="margin-top: 11px;">Sales Entry</h3>
-
 						</div>
-
 
 						<div class="col-md-12" style="height: 800px;">
 							<form class="sec" action="salesEntry" method="post">
@@ -214,12 +212,10 @@
 													name="challanSuffix" value="${lastSuf}">
 											</div>
 
-
 											<div class="form-group">
 												<label style="font-size: 15px" class="font">Date :</label> <input
 													class="form-control" type="text" name="salesDate"
 													id="datepicker" readonly="readonly">
-
 											</div>
 										</div>
 									</div>
@@ -3011,16 +3007,17 @@
 											.round(Number($("#discount").val()) * 100) / 100);
 				}
 			}
-			$("#taxAmount").val(
-					Math.round((Number($("#subtotalvalue").val())
-							* Number($("#taxTot").val()) * 100) / 100)
-							/ Number(100));
 
 			/* $("#taxAmount").val(
-						Math.round((Number(Number($("#subtotalvalue").val())
-								- Number($("#discountValue").val()))
+						Math.round((Number($("#subtotalvalue").val())
 			 * Number($("#taxTot").val()) * 100) / 100)
 								/ Number(100)); */
+			
+		$("#taxAmount").val(
+					Math.round((Number(Number($("#subtotalvalue").val())
+							- Number($("#discountValue").val()))
+							* Number($("#taxTot").val()) * 100) / 100)
+							/ Number(100));
 			$("#totalvalue").val(
 					Math.round((Number($("#subtotalvalue").val())
 							- Number($("#discountValue").val())

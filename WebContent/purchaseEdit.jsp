@@ -205,7 +205,7 @@
 											<th>Product Description</th>
 											<th>Qty</th>
 											<th>UOM</th>
-											<th>Rate</th>
+											<th>Cost</th>
 											<th>Amount</th>
 										</tr>
 									</thead>
@@ -344,6 +344,38 @@
 										</tbody>
 										<c:if test="${purchaseSearchView.isInclusiveAgent()==false}">
 											<tbody>
+												<tr>
+													<td colspan="2">Agent Profit: &nbsp; <select
+														name="profitType" id="profitType"
+														onchange="profitTypeF();" disabled="disabled">
+															<c:choose>
+																<c:when
+																	test="${purchaseSearchView.isFlatProfitAgent()==true}">
+																	<option value="profitFlat">Flat</option>
+																</c:when>
+																<c:otherwise>
+																	<option value="profitPer">%</option>
+																</c:otherwise>
+															</c:choose>
+													</select>
+													</td>
+													<td><input type="text"
+														value="${purchaseSearchView.agentProfitValue}"
+														class="form-control" name="profitVal" id="profitVal"
+														placeholder="" readonly="readonly"></td>
+												</tr>
+											</tbody>
+											<tbody>
+												<tr>
+													<td colspan="2" id="disc">Agent Profit Value:</td>
+													<td><input type="text" class="form-control"
+														readonly="readonly" id="profitValue" name="profitValue"
+														value="${purchaseSearchView.agentProfitTotal}"></td>
+												</tr>
+											</tbody>
+										</c:if>
+										<c:if test="${purchaseSearchView.isInclusiveAgent()==true}">
+											<tbody style="display: none;">
 												<tr>
 													<td colspan="2">Agent Profit: &nbsp; <select
 														name="profitType" id="profitType"
@@ -1343,7 +1375,7 @@ function gtot() {
 		$("#profitValue").val(
 				Math.round(Number($("#profitVal").val()) * 100) / 100);
 	}
-
+	
 	$("#totalvalue").val(
 			Math.round((Number($("#subTotal").val())
 					- Number($("#discountValue").val())

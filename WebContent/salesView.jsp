@@ -418,14 +418,9 @@
 									<tbody>
 										<tr>
 											<td colspan="2">Tax Amount :</td>
-											<td>
-												<%-- <input type="text" class="form-control"
-												readonly="readonly"
-												value="${subTotal*salesSearchView.tax_Type_Group.getTotalTaxValue()/100}"
-												id="taxAmount"> --%> <input type="text" class="form-control"
+											<td><input type="text" class="form-control"
 												readonly="readonly" value="${salesSearchView.taxAmount}"
-												id="taxAmount">
-											</td>
+												id="taxAmount"></td>
 										</tr>
 									</tbody>
 									<tbody>
