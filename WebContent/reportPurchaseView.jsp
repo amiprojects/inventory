@@ -199,6 +199,8 @@
 											<th>#</th>
 											<th>Designer Number:</th>
 											<th>Product Description</th>
+											<th>WSP</th>
+											<th>MRP</th>
 											<th>Qty</th>
 											<th>UOM</th>
 											<th>Rate</th>
@@ -213,6 +215,8 @@
 												<td>${i}</td>
 												<td>${purchaseProducts.productDetail.code}</td>
 												<td>${purchaseProducts.productDetail.description}</td>
+												<td>${purchaseProducts.wsp}</td>
+												<td>${purchaseProducts.mrp}</td>
 												<td>${purchaseProducts.quantity}</td>
 												<td>${purchaseProducts.productDetail.qtyUnit.name}</td>
 												<td>${purchaseProducts.cost}</td>

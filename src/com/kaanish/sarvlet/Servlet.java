@@ -122,7 +122,7 @@ import com.kaanish.util.DateConverter;
 		"/jobSearchByJobberNameForPayment", "/jobSearchByPlanNoForPayment",
 		"/jobPayment", "/purchasePayment", "/salesPayment",
 		"/creditNoteByVendorName", "/creditNoteByAgentName",
-		"/creditNoteByJobber", "/debitNoteByCustomer" })
+		"/creditNoteByJobber", "/debitNoteByCustomer", "/testServManage" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -206,6 +206,31 @@ public class Servlet extends HttpServlet {
 		try {
 			switch (url) {
 
+			case "testServManage":
+				String name = req.getParameter("name");
+				String desc = req.getParameter("desc");
+
+				if (verifyParams(req, resp, "name", "desc")) {
+					page = "tempTestServManage.jsp";
+					// req.setAttribute("msg", "Errorname!");
+					req.getRequestDispatcher(page).forward(req, resp);
+					return;
+				}
+				/*
+				 * if (verifyParams(req, resp, desc)) { page =
+				 * "tempTestServManage.jsp"; req.setAttribute("msg",
+				 * "Errordesc!"); req.getRequestDispatcher(page).forward(req,
+				 * resp); return; }
+				 */
+
+				page = "tempTestServManage.jsp";
+				jobTypes = new JobTypes();
+				jobTypes.setJobName(req.getParameter("name"));
+				jobTypes.setJobDescription(req.getParameter("desc"));
+				ejb.setJobTypes(jobTypes);
+				msg = "Successfull";
+				break;
+
 			case "logout":
 				page = "index.jsp";
 				httpSession.removeAttribute("user");
@@ -263,39 +288,38 @@ public class Servlet extends HttpServlet {
 						(String) httpSession.getAttribute("user"))
 						.getCompanyInfo();
 
-				if (companyInfo.getChangeCount() < 3) {
-					companyInfo.setCompname(req.getParameter("name"));
-					companyInfo.setEmail(req.getParameter("email"));
-					companyInfo.setMobile(req.getParameter("mono"));
-					companyInfo.setPhone(req.getParameter("phno"));
-					companyInfo.setAddr(req.getParameter("adress"));
-					companyInfo.setCity(req.getParameter("city"));
-					companyInfo.setCountry1(req.getParameter("country1"));
-					companyInfo.setState(req.getParameter("state"));
-					companyInfo.setVatno(req.getParameter("vatno"));
-					companyInfo.setCstno(req.getParameter("cstno"));
-					companyInfo.setTinno(req.getParameter("tinno"));
-					companyInfo.setServicetaxno(req.getParameter("servicet"));
-					companyInfo.setVatdate(req.getParameter("vatdate"));
-					companyInfo.setCstdate(req.getParameter("cstDate"));
-					companyInfo.setTindate(req.getParameter("tinDate"));
-					companyInfo.setServtaxdate(req.getParameter("serviceDate"));
-					companyInfo
-							.setChangeCount(companyInfo.getChangeCount() + 1);
+				// if (companyInfo.getChangeCount() < 3) {
+				companyInfo.setCompname(req.getParameter("name"));
+				companyInfo.setEmail(req.getParameter("email"));
+				companyInfo.setMobile(req.getParameter("mono"));
+				companyInfo.setPhone(req.getParameter("phno"));
+				companyInfo.setAddr(req.getParameter("adress"));
+				companyInfo.setCity(req.getParameter("city"));
+				companyInfo.setCountry1(req.getParameter("country1"));
+				companyInfo.setState(req.getParameter("state"));
+				companyInfo.setVatno(req.getParameter("vatno"));
+				companyInfo.setCstno(req.getParameter("cstno"));
+				companyInfo.setTinno(req.getParameter("tinno"));
+				companyInfo.setServicetaxno(req.getParameter("servicet"));
+				companyInfo.setVatdate(req.getParameter("vatdate"));
+				companyInfo.setCstdate(req.getParameter("cstDate"));
+				companyInfo.setTindate(req.getParameter("tinDate"));
+				companyInfo.setServtaxdate(req.getParameter("serviceDate"));
+				companyInfo.setChangeCount(companyInfo.getChangeCount() + 1);
 
-					Part p = req.getPart("proImg");
-					InputStream is = p.getInputStream();
-					byte[] content = new byte[is.available()];
-					is.read(content);
-					if (!(content.length == 0)) {
-						companyInfo.setImage(content);
-					}
-
-					ejb.updateCompanyInfo(companyInfo);
-					msg = "Company info updated successfully.";
-				} else {
-					msg = "You have already change companyinfo maximum limit.";
+				Part p = req.getPart("proImg");
+				InputStream is = p.getInputStream();
+				byte[] content = new byte[is.available()];
+				is.read(content);
+				if (!(content.length == 0)) {
+					companyInfo.setImage(content);
 				}
+
+				ejb.updateCompanyInfo(companyInfo);
+				msg = "Company info updated successfully.";
+				// } else {
+				// msg = "You have already change companyinfo maximum limit.";
+				// }
 
 				break;
 			case "createProduct":
@@ -4891,5 +4915,24 @@ public class Servlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		doGet(req, resp);
+	}
+
+	public boolean verifyParams(HttpServletRequest req,
+			HttpServletResponse resp, String... params)
+			throws ServletException, IOException {
+		String str = "";
+		int flag = 1;
+		for (String data : params) {
+			if (req.getParameter(data) != null
+					&& !req.getParameter(data).isEmpty()) {
+			} else {
+				str = str + data + ", ";
+				flag = 0;
+			}
+		}
+		str=str.substring(0,str.lastIndexOf(","));
+		str = str + " required.";
+		req.setAttribute("msg", str);
+		return flag == 0;
 	}
 }

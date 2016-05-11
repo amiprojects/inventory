@@ -203,6 +203,8 @@
 											<th>#</th>
 											<th>Product Code:</th>
 											<th>Product Description</th>
+											<th>WSP</th>
+											<th>MRP</th>
 											<th>Qty</th>
 											<th>UOM</th>
 											<th>Cost</th>
@@ -220,6 +222,8 @@
 												<td>${i}</td>
 												<td>${purchaseProducts.productDetail.code}</td>
 												<td>${purchaseProducts.productDetail.description}</td>
+												<td>${purchaseProducts.wsp}</td>
+												<td>${purchaseProducts.mrp}</td>
 												<td><input type="text"
 													value="${purchaseProducts.quantity}"
 													style="background-color: gray;" readonly="readonly"
@@ -700,8 +704,8 @@
 	}
 
 	function update(a,id) {	
-		var qty=$("#proRow"+id+" :nth-child(4) input[type=text]").val();
-		var rate=$("#proRow"+id+" :nth-child(6) input[type=text]").val();
+		var qty=$("#proRow"+id+" :nth-child(6) input[type=text]").val();
+		var rate=$("#proRow"+id+" :nth-child(8) input[type=text]").val();
 		
 		var amount=Number(qty)*Number(rate);
 		$.ajax({
@@ -710,7 +714,7 @@
 			data:{id:id},
 			success:function(data){
 				if(data.quantity>data.remaining_quantity){
-					$("#proRow"+id+" :nth-child(4) input[type=text]").val(data.quantity);
+					$("#proRow"+id+" :nth-child(6) input[type=text]").val(data.quantity);
 					$(a).prop("readonly", true);
 					$(a).attr("style", "background-color: grey;");	
 					sweetAlert('Oops...', 'This prodct is alresdy in use', 'error');
@@ -726,14 +730,14 @@
 						},
 						success:function(data1){
 							if(data1.error){
-								$("#proRow"+id+" :nth-child(4) input[type=text]").val(data.quantity);
+								$("#proRow"+id+" :nth-child(6) input[type=text]").val(data.quantity);
 								$(a).prop("readonly", true);
 								$(a).attr("style", "background-color: grey;");	
 								sweetAlert('Oops...', 'prodct update failed....', 'error');
 							}else{
 								$(a).prop("readonly", true);
 								$(a).attr("style", "background-color: pink;");		
-								$("#proRow"+id+" :nth-child(7)").html(amount);		
+								$("#proRow"+id+" :nth-child(9)").html(amount);		
 								updateSubtotal();	
 							}
 						}
