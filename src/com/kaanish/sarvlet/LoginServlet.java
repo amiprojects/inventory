@@ -1303,7 +1303,12 @@ public class LoginServlet extends HttpServlet {
 					.ofHoursMinutes(5, 30))));
 			stoct.setEndDate(Date.from(afterThreeMonths.toInstant(ZoneOffset
 					.ofHoursMinutes(5, 30))));
-			stoct.setStockNumber(GetMacId.getMacId());
+			try {
+				stoct.setStockNumber(GetMacId.getMacId());
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.out.println("Error in getting HDD serial number: "+e.getMessage());
+			}
 			ejb.setStoct(stoct);
 		}
 

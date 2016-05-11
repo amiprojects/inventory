@@ -1,14 +1,14 @@
 package com.kaanish.util;
 
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.net.UnknownHostException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Enumeration;
+import java.util.Properties;
 
 public class GetMacId {
 	
-	public static String getMacId(){
-		InetAddress ip;
+	public static String getMacId() throws IOException{
+		/*InetAddress ip;
 		String macid=new String();
 		try {
 				
@@ -39,7 +39,16 @@ public class GetMacId {
 				
 		}
 		//System.out.print("Current MAC address : "+macid);
-		return macid;
+		return macid;*/
+		
+		Process p = Runtime.getRuntime().exec("cmd /C wmic diskdrive get serialnumber");
+		InputStream fis = p.getInputStream();		
+		Properties pro = new Properties();
+		pro.load(fis);
+		fis.close();
+		Properties props = pro;
+		Enumeration<?> e = props.propertyNames();		
+		return (String) e.nextElement();
 		
 	}
 
