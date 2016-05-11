@@ -12,7 +12,8 @@ public class GetMacId {
 	 * getting the hdd serial number instead of machine mac id
 	 * 
 	 * @return String hdd serial number
-	 * @param no param needed
+	 * @param no
+	 *            param needed
 	 * 
 	 * @throws IOException
 	 */
@@ -51,15 +52,15 @@ public class GetMacId {
 		// //System.out.print("Current MAC address : "+macid);
 		// return macid;
 
-		Process p = Runtime.getRuntime().exec("cmd /C wmic diskdrive get serialnumber");
+		Process p = Runtime.getRuntime().exec(
+				"cmd /C wmic diskdrive get serialnumber");
 		InputStream fis = p.getInputStream();
 		Properties pro = new Properties();
 		pro.load(fis);
 		fis.close();
 		Enumeration<?> e = pro.propertyNames();
-		System.out.print("Current Serial number : " + e.nextElement());
+		e.nextElement();
 		return (String) e.nextElement();
-
 	}
 
 }
