@@ -2254,6 +2254,30 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<Purchase_Product_Details> getPurchaseProductDetailsByProductIdAsc(
+			int pId) {
+		TypedQuery<Purchase_Product_Details> q = em
+				.createQuery(
+						"select c from Purchase_Product_Details c where c.productDetail.id=:pId order by c.id asc",
+						Purchase_Product_Details.class);
+		q.setParameter("pId", pId);
+		return q.getResultList();
+	}
+
+	public Purchase_Product_Details getLastPurchaseProductDetailsByProductId(
+			int pId) {
+		TypedQuery<Purchase_Product_Details> q = em
+				.createQuery(
+						"select c from Purchase_Product_Details c where c.productDetail.id=:pId order by c.id desc",
+						Purchase_Product_Details.class);
+		q.setParameter("pId", pId);
+		if (q.getResultList().size() > 0) {
+			return q.getResultList().get(0);
+		} else {
+			return null;
+		}
+	}
+
 	public Purchase_Product_Details getPurchaseProductDetailsByLotNumber(
 			String lotNo) {
 		TypedQuery<Purchase_Product_Details> q = em

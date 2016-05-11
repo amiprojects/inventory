@@ -120,15 +120,10 @@
 											<th>Customer Name</th>
 											<th>Agent Name</th>
 											<th>Sales Invoice no.</th>
-											<!-- <th>Vendor Bill no.</th> -->
 											<th>Qty</th>
 											<th>Sub Total</th>
 											<th>Discount Value</th>
 											<th>Tax Amount</th>
-											<!-- <th>Transport Cost</th>
-											<th>Surcharge</th>
-											<th>RoundOf</th>
-											<th>Grand Total</th> -->
 											<th></th>
 										</tr>
 									</thead>
@@ -150,7 +145,6 @@
 													</c:otherwise>
 												</c:choose>
 												<td>${pEntryByD.challanNumber}</td>
-												<%-- <td>${pEntryByD.vendor_bill_no}</td> --%>
 												<td><c:set var="totPurQty" value="${0}"></c:set> <c:forEach
 														var="proedPurDet" items="${pEntryByD.salesProductDetails}">
 														<c:if
@@ -171,12 +165,7 @@
 														value="${pEntryByD.isFlatDiscount()?subot*pEntryByD.discountValue/pEntryByD.subTotal:subot*pEntryByD.discountValue/100}" />
 													${disVal}</td>
 												<td><fmt:formatNumber var="taxAmount"
-														value="${subot*pEntryByD.tax_Type_Group.getTotalTaxValue()/100}"
-														maxFractionDigits="2" />${taxAmount}</td>
-												<%-- <td>${pEntryByD.transport_cost}</td>
-												<td>${pEntryByD.sur_charge}</td>
-												<td>${pEntryByD.roundOf}</td>
-												<td>${pEntryByD.totalCost}</td> --%>
+														value="${pEntryByD.taxAmount}" maxFractionDigits="2" />${taxAmount}</td>
 												<td><form action="salesReportView" method="post"
 														id="pView${pEntryByD.id}">
 														<a href="#" onclick="purchaseViewF('${pEntryByD.id}');"><input

@@ -167,34 +167,43 @@ td {
 													<c:forEach
 														items="${sessionScope['ejb'].getAllProductDetailByCompany()}"
 														var="amiProStock1">
-														<%-- <c:set var="qty"
-															value="${!amiProStock1.isRaw()?sessionScope['ejb'].getReadyGoodsStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty:sessionScope['ejb'].getRawMaterialStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty}" /> --%>
-														<fmt:formatNumber var="qty"
+														<c:set var="qty"
+															value="${!amiProStock1.isRaw()?sessionScope['ejb'].getReadyGoodsStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty:sessionScope['ejb'].getRawMaterialStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty}" />
+														<%-- <fmt:formatNumber var="qty"
 															value="${!amiProStock1.isRaw()?sessionScope['ejb'].getReadyGoodsStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty:sessionScope['ejb'].getRawMaterialStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty}"
-															maxFractionDigits="2" />
+															maxFractionDigits="2" /> --%>
 														<tr>
 															<td>${amiProStock1.code}</td>
 
 															<c:set var="purSize"
 																value="${amiProStock1.purchase_Product_Details.size()}" />
 
-															<td><fmt:formatNumber var="wsp"
+															<td>
+																<%-- <fmt:formatNumber var="wsp"
 																	value="${purSize>0?amiProStock1.purchase_Product_Details.get(purSize-1).wsp:'nill'}"
-																	maxFractionDigits="2" /> ${wsp}</td>
-															<td><fmt:formatNumber var="mrp"
+																	maxFractionDigits="2" /> ${wsp} --%> <c:set var="wsp"
+																	value="${purSize>0?amiProStock1.purchase_Product_Details.get(purSize-1).wsp:'nill'}" />
+																${wsp}
+															</td>
+															<td>
+																<%-- <fmt:formatNumber var="mrp"
 																	value="${purSize>0?amiProStock1.purchase_Product_Details.get(purSize-1).mrp:'nill'}"
-																	maxFractionDigits="2" /> ${mrp}</td>
+																	maxFractionDigits="2" /> ${mrp} --%>
+																<c:set var="mrp"
+																	value="${purSize>0?amiProStock1.purchase_Product_Details.get(purSize-1).mrp:'nill'}" />
+																${mrp}
+															</td>
 															<td>${qty}</td>
 															<c:set value="${0}" var="remainqt" />
 
 															<c:forEach
 																items="${sessionScope['ejb'].getAgeingPurProductDetailsLes45daysbyproId(amiProStock1.id)}"
 																var="rem">
-																<%-- <c:set var="remainqt"
-																	value="${remainqt+rem.remaining_quantity}" /> --%>
-																<fmt:formatNumber var="remainqt"
+																<c:set var="remainqt"
+																	value="${remainqt+rem.remaining_quantity}" />
+																<%-- <fmt:formatNumber var="remainqt"
 																	value="${remainqt+rem.remaining_quantity}"
-																	maxFractionDigits="2" />
+																	maxFractionDigits="2" /> --%>
 															</c:forEach>
 															<td>${remainqt}</td>
 															<c:set value="${0}" var="remainqtt" />
@@ -264,12 +273,21 @@ td {
 																<td>${qty}</td>
 																<c:set var="purSizeq"
 																	value="${amiProStock1.purchase_Product_Details.size()}" />
-																<td><fmt:formatNumber var="wsp"
+																<td>
+																	<%-- <fmt:formatNumber var="wsp"
 																		value="${purSizeq>0?amiProStock1.purchase_Product_Details.get(purSizeq-1).wsp:'nill'}"
-																		maxFractionDigits="2" /> ${wsp}</td>
-																<td><fmt:formatNumber var="mrp"
+																		maxFractionDigits="2" /> ${wsp} --%> <c:set var="wsp"
+																		value="${purSizeq>0?amiProStock1.purchase_Product_Details.get(purSizeq-1).wsp:'nill'}" />
+																	${wsp}
+																</td>
+																<td>
+																	<%-- <fmt:formatNumber var="mrp"
 																		value="${purSizeq>0?amiProStock1.purchase_Product_Details.get(purSizeq-1).mrp:'nill'}"
-																		maxFractionDigits="2" /> ${mrp}</td>
+																		maxFractionDigits="2" /> ${mrp} --%> <c:set var="mrp"
+																		value="${purSizeq>0?amiProStock1.purchase_Product_Details.get(purSizeq-1).mrp:'nill'}" />
+																	${mrp}
+																	${purSizeq>0?amiProStock1.purchase_Product_Details.get(purSizeq-1).mrp:'nill'}
+																</td>
 															</tr>
 															<c:set var="count" value="${count+1}" />
 														</c:if>

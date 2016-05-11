@@ -812,15 +812,21 @@
 
 			$("#taxAmount2").val(
 					Number($("#taxTot").val())
-							* Number($("#subtotalvalue").val()) / 100);
+							* Number(Number($("#subtotalvalue").val())
+									- Number($("#discountValue2").val())) / 100);
 			var r = Number($("#subtotalvalue").val())
 					+ Number($("#taxAmount2").val())
 					- Number($("#discountValue2").val());
-			$("#grandtotal").val(Math.floor(r));
-
+			
+			/* $("#grandtotal").val(Math.floor(r));
 			var va = Math.floor(r);
 			var vi = (r - va).toFixed(2);
-			$("#roundvalue").val(vi);
+			$("#roundvalue").val(vi); */			
+			
+			var tot = r;
+			var round = Math.round(tot);
+			$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
+			$("#grandtotal").val(Math.round((round) * 100) / 100);
 		}
 
 		function cancelF() {

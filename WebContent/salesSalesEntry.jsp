@@ -3012,8 +3012,8 @@
 						Math.round((Number($("#subtotalvalue").val())
 			 * Number($("#taxTot").val()) * 100) / 100)
 								/ Number(100)); */
-			
-		$("#taxAmount").val(
+
+			$("#taxAmount").val(
 					Math.round((Number(Number($("#subtotalvalue").val())
 							- Number($("#discountValue").val()))
 							* Number($("#taxTot").val()) * 100) / 100)
@@ -3026,15 +3026,18 @@
 							"#surcharge").val())) * 100) / 100);
 			var tot = $("#totalvalue").val();
 			var round = Math.round(tot);
-			if (tot > round) {
+
+			/* if (tot > round) {
 				$("#roundvalue").val(Math.round((round + 1 - tot) * 100) / 100);
 			} else {
 				$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
 			}
-
 			$("#grandtotal").val(
 					Number($("#totalvalue").val())
-							+ Number($("#roundvalue").val()));
+							+ Number($("#roundvalue").val())); */
+
+			$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
+			$("#grandtotal").val(Math.round((round) * 100) / 100);
 		}
 	</script>
 </body>

@@ -28,9 +28,11 @@ import com.kaanish.model.PageList;
 import com.kaanish.model.PaymentDetails;
 import com.kaanish.model.PaymentStatus;
 import com.kaanish.model.PaymentType;
+import com.kaanish.model.ProductDetail;
 import com.kaanish.model.ProductsForDesignCostSheet;
 import com.kaanish.model.PurchaseReturn;
 import com.kaanish.model.Purchase_Entry;
+import com.kaanish.model.Purchase_Product_Details;
 import com.kaanish.model.QtyUnitType;
 import com.kaanish.model.SalesEntry;
 import com.kaanish.model.SalesReturn;
@@ -79,6 +81,20 @@ public class LoginServlet extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
+		// correcting lot number
+		for (ProductDetail pd : ejb.getAllProductDetail()) {
+			for (int i = 0; i < ejb.getPurchaseProductDetailsByProductIdAsc(
+					pd.getId()).size(); i++) {
+				Purchase_Product_Details purchase_Product_Details = ejb
+						.getPurchaseProductDetailsByProductIdAsc(pd.getId())
+						.get(i);
+				int j = i + 1;
+				purchase_Product_Details.setLotNumber("" + j);
+				ejb.updatePurchaseProductDetails(purchase_Product_Details);
+			}
+		}
+		// correcting lot number
+
 		if (!ejb.isCompanyInfoExist()) {
 			// companyInfoKaanish = new CompanyInfo();
 			// companyInfoKaanish.setCompname("Kaanish Kouture");

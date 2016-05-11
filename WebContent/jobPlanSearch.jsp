@@ -541,7 +541,8 @@
 												name="productCode2" id="productCode" onkeyup="codeKeyUp();"
 												onchange="codeChange();" class="form-control"
 												onkeypress="return blockSpecialCharNspace(event)"
-												autocomplete="off">
+												autocomplete="off"><input type="hidden"
+												id="productId">
 										</div>
 									</div>
 									<div class="col-md-6">
@@ -795,8 +796,8 @@
 										name="lotNumber" required class="form-control"
 										onkeypress="return blockSpecialChar(event)"
 										onkeyup="lotNoKeyUp();" onchange="lotNoChange();"
-										autocomplete="off"> <input type="hidden"
-										id="lotNoCheck" name="lotNoCheck"><br>
+										autocomplete="off" readonly="readonly"> <input
+										type="hidden" id="lotNoCheck" name="lotNoCheck"><br>
 								</div>
 							</div>
 						</fieldset>
@@ -2289,6 +2290,7 @@
 												dNo : $("#dNo").val()
 											},
 											success : function(data) {
+												$("#productId").val(data.id);
 												$("#productCode")
 														.val(data.code);
 												$("#productCode").attr(
@@ -2316,8 +2318,31 @@
 														"display : none;");
 												$("#isExistProdInSample").val(
 														"yes");
+											},
+											complete : function() {
+												alert($("#productId").val());//errornew
+												$.ajax({
+													url : "getLastPurchaseProductDetailsByProductId",
+													dataType : "json",
+													data : {
+														pId : $("#productId").val()
+													},
+													success : function(data) {
+														if (data != null) {
+															$("#lotnO")
+																	.val(
+																			Number(data.lotNumber)
+																					+ Number(1));
+														} else {
+															$("#lotnO")
+																	.val(1);
+														}
+													}
+												});
 											}
 										});
+							} else {
+								$("#lotnO").val("1");
 							}
 						}
 					});

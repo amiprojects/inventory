@@ -1657,8 +1657,8 @@
 									<input type="text" class="form-control" id="lotText"
 										name="lotText" onkeypress="return blockSpecialChar(event)"
 										onkeyup="lotNoKeyUpT();" onchange="lotNoChangeT();"
-										autocomplete="off"><input type="hidden"
-										id="lotNoCheckT" name="lotNoCheckT">
+										autocomplete="off" readonly="readonly"><input
+										type="hidden" id="lotNoCheckT" name="lotNoCheckT">
 								</div>
 							</div>
 							<br>
@@ -2298,8 +2298,8 @@
 										class="form-control"
 										onkeypress="return blockSpecialChar(event)"
 										onkeyup="lotNoKeyUp();" onchange="lotNoChange();"
-										autocomplete="off"> <input type="hidden"
-										id="lotNoCheck" name="lotNoCheck"><br>
+										autocomplete="off" readonly="readonly" value="1"> <input
+										type="hidden" id="lotNoCheck" name="lotNoCheck"><br>
 								</div>
 							</div>
 							<div id="nottrack">
@@ -2776,7 +2776,6 @@
 			$("#a40").val("");
 			$("#a50").val("");
 			$("#a60").val("");
-			$("#lotnO").val("");
 			$("#uomnamedisplay").val("");
 		}
 	</script>
@@ -3597,6 +3596,7 @@
 				$("#wsp").val("");
 				$("#mrp").val("");
 				$("#rate").val("");
+				$("#lotText").val("");
 				$("#attr1").val("");
 				$("#attr2").val("");
 				$("#attr3").val("");
@@ -4091,52 +4091,92 @@
 			}
 		}
 		$(function() {
-			$("#pCode").autocomplete({
-				source : function(req, resp) {
-					$.ajax({
-						type : "post",
-						url : "getProductbyProductCode",
-						data : {
-							code : req.term
-						},
-						dataType : "json",
-						success : function(data) {
-							resp($.map(data, function(item) {
-								return ({
-									value : item.code,
-									id : item.id
-								});
-							}));
-						},
+			$("#pCode")
+					.autocomplete(
+							{
+								source : function(req, resp) {
+									$.ajax({
+										type : "post",
+										url : "getProductbyProductCode",
+										data : {
+											code : req.term
+										},
+										dataType : "json",
+										success : function(data) {
+											resp($.map(data, function(item) {
+												return ({
+													value : item.code,
+													id : item.id
+												});
+											}));
+										},
 
-						error : function(a, b, c) {
-							alert(a + b + c);
-						}
+										error : function(a, b, c) {
+											alert(a + b + c);
+										}
 
-					});
-				},
-				change : function(event, ui) {
-					if (ui.item == null) {
-						$(this).val("");
-						$("#productCode").val("");
-						getProductDetailsByProductCode(0);
-					} else {
-						$("#productCode").val(ui.item.id);
-						getProductDetailsByProductCode(ui.item.id);
-					}
-				},
-				select : function(event, ui) {
-					if (ui.item != null) {
-						$("#productCode").val(ui.item.id);
-						getProductDetailsByProductCode(ui.item.id);
-					} else {
-						$(this).val("");
-						$("#productCode").val("");
-						getProductDetailsByProductCode(0);
-					}
+									});
+								},
+								change : function(event, ui) {
+									if (ui.item == null) {
+										$(this).val("");
+										$("#productCode").val("");
+										getProductDetailsByProductCode(0);
+									} else {
+										$("#productCode").val(ui.item.id);
+										getProductDetailsByProductCode(ui.item.id);
+										$
+												.ajax({
+													url : "getLastPurchaseProductDetailsByProductId",
+													dataType : "json",
+													data : {
+														pId : ui.item.id
+													},
+													success : function(data) {
+														if (data != null) {
+															$("#lotText")
+																	.val(
+																			Number(data.lotNumber)
+																					+ Number(1));
+														} else {
+															$("#lotText")
+																	.val(1);
+														}
+													}
+												});
+									}
+								},
+								select : function(event, ui) {
+									if (ui.item != null) {
+										$("#productCode").val(ui.item.id);
+										getProductDetailsByProductCode(ui.item.id);
+										$
+												.ajax({
+													url : "getLastPurchaseProductDetailsByProductId",
+													dataType : "json",
+													data : {
+														pId : ui.item.id
+													},
+													success : function(data) {
+														if (data != null) {
+															$("#lotText")
+																	.val(
+																			Number(data.lotNumber)
+																					+ Number(1));
+														} else {
+															$("#lotText")
+																	.val(1);
+														}
+													}
+												});
+									} else {
+										$(this).val("");
+										$("#productCode").val("");
+										getProductDetailsByProductCode(0);
+									}
 
-				}
-			});
+								}
+							});
 		});
 		function cancelF() {
 			$("#cancelOrNot").modal("show");

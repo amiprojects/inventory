@@ -134,7 +134,7 @@ import com.kaanish.util.DepartmentCotractor;
 		"/getPurchaseProductDetailsByLotNumber",
 		"/getPaymentDetailsByJobAssignId",
 		"/getAllVoucherDetailsByJobAssignId", "/getCustomerById", "/testcase",
-		"/testcase1" })
+		"/testcase1", "/getLastPurchaseProductDetailsByProductId" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -2015,6 +2015,13 @@ public class JsonServlet extends HttpServlet {
 				}
 
 				break;
+				
+			case "getLastPurchaseProductDetailsByProductId":
+				resp.getWriter().print(
+						ejb.getLastPurchaseProductDetailsByProductId(Integer
+								.parseInt(req.getParameter("pId"))));
+				break;
+				
 			case "testcase":
 				JsonGeneratorFactory factory7 = Json
 						.createGeneratorFactory(null);
@@ -2037,7 +2044,7 @@ public class JsonServlet extends HttpServlet {
 
 			case "testcase1":
 				resp.getWriter().print(new JobClass());
-				break;
+				break;			
 
 			default:
 				break;

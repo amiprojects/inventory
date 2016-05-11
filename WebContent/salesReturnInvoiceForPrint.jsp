@@ -203,7 +203,7 @@ page[size="A4"] {
 									<td colspan="5" align="right">Tax Amount
 										(${salesReturn.salesEntry.tax_Type_Group.getTotalTaxValue()}%)
 										:</td>
-									<td>${gtot*salesReturn.salesEntry.tax_Type_Group.getTotalTaxValue()/100}</td>
+									<td>${(gtot-disVal)*salesReturn.salesEntry.tax_Type_Group.getTotalTaxValue()/100}</td>
 								</tr>
 							</c:if>
 							<c:if test="${salesReturn.roundOff!=0}">

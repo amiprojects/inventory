@@ -217,7 +217,7 @@
 			</script>
 		</c:if>
 	</c:if>
-	
+
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
@@ -848,8 +848,8 @@
 										name="lotNumber" required class="form-control"
 										onkeypress="return blockSpecialChar(event)"
 										onkeyup="lotNoKeyUp();" onchange="lotNoChange();"
-										autocomplete="off"><input type="hidden"
-										id="lotNoCheck" name="lotNoCheck"><br>
+										autocomplete="off" readonly="readonly" value="1"><input
+										type="hidden" id="lotNoCheck" name="lotNoCheck"><br>
 								</div>
 							</div>
 							<div id="nottrack">

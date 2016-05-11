@@ -112,7 +112,6 @@
 											<th>Customer Name</th>
 											<th>Agent Name</th>
 											<th>Sales Invoice no.</th>
-											<!-- <th>Vendor Bill no.</th> -->
 											<th>Sub Total</th>
 											<th>Discount Value</th>
 											<th>Tax Amount</th>
@@ -141,7 +140,6 @@
 													</c:otherwise>
 												</c:choose>
 												<td>${pEntryByD.challanNumber}</td>
-												<%-- <td>${pEntryByD.vendor_bill_no}</td> --%>
 												<td>${pEntryByD.subTotal}</td>
 												<td><c:set var="disVal"
 														value="${pEntryByD.isFlatDiscount()?pEntryByD.discountValue:pEntryByD.subTotal*pEntryByD.discountValue/100}" />
