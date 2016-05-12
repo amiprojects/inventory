@@ -207,27 +207,32 @@ public class Servlet extends HttpServlet {
 			switch (url) {
 
 			case "testServManage":
-				String name = req.getParameter("name");
-				String desc = req.getParameter("desc");
-
 				if (verifyParams(req, resp, "name", "desc")) {
 					page = "tempTestServManage.jsp";
-					// req.setAttribute("msg", "Errorname!");
+					req.setAttribute("msg", "Please try again!");
 					req.getRequestDispatcher(page).forward(req, resp);
 					return;
 				}
-				/*
-				 * if (verifyParams(req, resp, desc)) { page =
-				 * "tempTestServManage.jsp"; req.setAttribute("msg",
-				 * "Errordesc!"); req.getRequestDispatcher(page).forward(req,
-				 * resp); return; }
-				 */
+
+				if (req.getParameter("yn").equals("yes")) {
+					if (verifyParams(req, resp, "iName")) {
+						page = "tempTestServManage.jsp";
+						req.setAttribute("msg", "Please try again (i)!");
+						req.getRequestDispatcher(page).forward(req, resp);
+						return;
+					}
+				}
 
 				page = "tempTestServManage.jsp";
 				jobTypes = new JobTypes();
 				jobTypes.setJobName(req.getParameter("name"));
 				jobTypes.setJobDescription(req.getParameter("desc"));
 				ejb.setJobTypes(jobTypes);
+				if (req.getParameter("yn").equals("yes")) {
+					itemDetails = new ItemDetails();
+					itemDetails.setName(req.getParameter("iName"));
+					ejb.setItemDetails(itemDetails);
+				}
 				msg = "Successfull";
 				break;
 
@@ -4920,19 +4925,14 @@ public class Servlet extends HttpServlet {
 	public boolean verifyParams(HttpServletRequest req,
 			HttpServletResponse resp, String... params)
 			throws ServletException, IOException {
-		String str = "";
 		int flag = 1;
 		for (String data : params) {
 			if (req.getParameter(data) != null
 					&& !req.getParameter(data).isEmpty()) {
 			} else {
-				str = str + data + ", ";
 				flag = 0;
 			}
 		}
-		str=str.substring(0,str.lastIndexOf(","));
-		str = str + " required.";
-		req.setAttribute("msg", str);
 		return flag == 0;
 	}
 }
