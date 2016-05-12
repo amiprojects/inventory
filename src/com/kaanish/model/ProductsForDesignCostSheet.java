@@ -46,12 +46,9 @@ public class ProductsForDesignCostSheet implements Serializable {
 	private List<JobPlanProductStock> jobPlanProductStock;
 
 	@OneToMany(mappedBy = "productsForDesignCostSheet")
-	private List<JobPlanProducts> jobPlanProducts;
+	private List<JobAssignmentJobDetails> jobAssignmentJobDetails;
 
 	@OneToMany(mappedBy = "productsForDesignCostSheet")
-	private List<JobAssignmentJobDetails> jobAssignmentJobDetails;
-	
-	@OneToMany(mappedBy="productsForDesignCostSheet")
 	private List<JobPlanProducts> jobPlanProducts;
 
 	public int getId() {
