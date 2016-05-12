@@ -1,5 +1,6 @@
 package com.kaanish.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,8 +16,9 @@ import com.sun.xml.rpc.processor.modeler.j2ee.xml.string;
 
 @Cacheable(false)
 @Entity
-public class JobClass {
+public class JobClass implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
 	private int id;
