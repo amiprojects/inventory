@@ -42,7 +42,7 @@ public class JobPlanProducts implements Serializable {
 	private List<JobAssignmentProducts> jobAssignmentProducts;
 
 	@ManyToOne
-	@JoinColumn(name = "ProductsForDesignCostSheetId")
+	@JoinColumn(name = "ProdForDsnCstShtId")
 	private ProductsForDesignCostSheet productsForDesignCostSheet;
 
 	public int getId() {
