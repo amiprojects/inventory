@@ -4,11 +4,14 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import org.eclipse.persistence.jpa.config.Cascade;
 
 @Entity
 @Cacheable(false)
@@ -40,7 +43,7 @@ public class Users implements Serializable {
 	List<Tax_Type_Group> tax_Type_Groups;
 	@OneToMany(mappedBy = "users")
 	private List<Vendor> vendors;
-	@OneToMany(mappedBy = "users")
+	@OneToMany(mappedBy = "users",cascade=CascadeType.PERSIST)
 	private List<AccountDetails> accountDetails;
 	@OneToMany(mappedBy = "users")
 	private List<Purchase_Entry> purchase_Entries;

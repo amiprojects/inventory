@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -20,7 +21,7 @@ public class VendorType implements Serializable {
 	private int id;
 	private String type;
 
-	@OneToMany(mappedBy = "vendorType")
+	@OneToMany(mappedBy = "vendorType", cascade=CascadeType.PERSIST)
 	private List<Vendor> vendors;
 
 	public int getId() {

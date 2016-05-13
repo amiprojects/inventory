@@ -27,10 +27,10 @@ public class City implements Serializable{
 	@JoinColumn(name = "stateId")
 	private State state;
 
-	@OneToMany(mappedBy = "city",cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "city",cascade=CascadeType.PERSIST,fetch=FetchType.EAGER)
 	private List<Vendor> vendors;
 
-	@OneToMany(mappedBy = "city",cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "city",cascade=CascadeType.PERSIST,fetch=FetchType.EAGER)
 	private List<AccountDetails> accountDetails;
 
 	public int getId() {

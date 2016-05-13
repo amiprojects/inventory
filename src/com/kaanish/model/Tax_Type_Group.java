@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -28,7 +29,7 @@ public class Tax_Type_Group implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "userId")
 	private Users users;
-	@OneToMany(mappedBy = "tax_Type_Group")
+	@OneToMany(mappedBy = "tax_Type_Group",cascade=CascadeType.PERSIST)
 	private List<AccountDetails> accountDetails;
 	@OneToMany(mappedBy = "tax_Type_Group")
 	private List<SalesEntry> salesEntry;
