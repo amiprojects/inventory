@@ -267,7 +267,6 @@
 										<table class="table">
 											<c:set var="countt" value="${1}" />
 											<c:if test="${requestScope['amii'].size()<=0}">
-
 												<script>
 													alert("No search result found");
 												</script>
@@ -284,6 +283,7 @@
 												</tr>
 												<c:set var="countt" value="${countt+1}" />
 											</c:forEach>
+
 										</table>
 									</div>
 								</div>
@@ -851,8 +851,8 @@
 										name="lotNumber" required class="form-control"
 										onkeypress="return blockSpecialChar(event)"
 										onkeyup="lotNoKeyUp();" onchange="lotNoChange();"
-										autocomplete="off"><input type="hidden"
-										id="lotNoCheck" name="lotNoCheck"><br>
+										autocomplete="off" readonly="readonly" value="1"><input
+										type="hidden" id="lotNoCheck" name="lotNoCheck"><br>
 								</div>
 							</div>
 							<div id="nottrack">

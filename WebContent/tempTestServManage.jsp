@@ -7,10 +7,13 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="testServManage">
+	<form action="testServManage" method="post">
 		<input type="text" placeholder="Job Name" name="name"> <input
-			type="text" placeholder="Job Desc" name="desc"> <input
-			type="submit" value="Submit">
+			type="text" placeholder="Job Desc" name="desc"><br> <input
+			type="radio" name="yn" value="yes" checked="checked">Yes<input
+			type="radio" name="yn" value="no">No <input type="text"
+			placeholder="Item Name" name="iName"> <input type="submit"
+			value="Submit">
 	</form>
 	<h1>${requestScope['msg']}</h1>
 </body>

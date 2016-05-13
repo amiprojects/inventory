@@ -199,7 +199,7 @@ myWindow.print();
 								<td>
 									<%-- <fmt:formatNumber var="qty" value="${ppdet.quantity}"
 										maxFractionDigits="3" />${qty} --%>${ppdet.quantity}</td>
-								<c:set value="${tqty+qty}" var="tqty" />
+								<c:set value="${ppdet.quantity+qty}" var="tqty" />
 								<td>${ppdet.cost}</td>
 								<td>${ppdet.productDetail.qtyUnit.name}</td>
 								<td><fmt:formatNumber var="amount"

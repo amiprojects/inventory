@@ -19,33 +19,36 @@ public class ProductsForDesignCostSheet implements Serializable {
 	@Id
 	@GeneratedValue
 	private int id;
-	
+
 	private float qty;
 	private float rate;
 	private float ammount;
-	
-	@ManyToOne@JoinColumn(name="sampleDesignCostSheetId")
+
+	@ManyToOne
+	@JoinColumn(name = "sampleDesignCostSheetId")
 	private SampleDesignCostSheet sampleDesignCostSheet;
-	
-	@ManyToOne@JoinColumn(name="productId")
+
+	@ManyToOne
+	@JoinColumn(name = "productId")
 	private ProductDetail productDetail;
-	
-	@ManyToOne@JoinColumn(name="uomID")
+
+	@ManyToOne
+	@JoinColumn(name = "uomID")
 	private QtyUnit qtyUnit;
-	
-	@OneToMany(mappedBy="productsForDesignCostSheet")
+
+	@OneToMany(mappedBy = "productsForDesignCostSheet")
 	private List<JobsForDesignCostSheet> jobsForDesignCostSheets;
-	
-	@OneToMany(mappedBy="productsForDesignCostSheet")
+
+	@OneToMany(mappedBy = "productsForDesignCostSheet")
 	private List<JobAssignmentProducts> jobAssignmentProducts;
-	
-	@OneToMany(mappedBy="productsForDesignCostSheet")
+
+	@OneToMany(mappedBy = "productsForDesignCostSheet")
 	private List<JobPlanProductStock> jobPlanProductStock;
-	
-	@OneToMany(mappedBy="productsForDesignCostSheet")
+
+	@OneToMany(mappedBy = "productsForDesignCostSheet")
 	private List<JobAssignmentJobDetails> jobAssignmentJobDetails;
-	
-	@OneToMany(mappedBy="productsForDesignCostSheet")
+
+	@OneToMany(mappedBy = "productsForDesignCostSheet")
 	private List<JobPlanProducts> jobPlanProducts;
 
 	public int getId() {
@@ -76,7 +79,8 @@ public class ProductsForDesignCostSheet implements Serializable {
 		return sampleDesignCostSheet;
 	}
 
-	public void setSampleDesignCostSheet(SampleDesignCostSheet sampleDesignCostSheet) {
+	public void setSampleDesignCostSheet(
+			SampleDesignCostSheet sampleDesignCostSheet) {
 		this.sampleDesignCostSheet = sampleDesignCostSheet;
 	}
 
@@ -108,7 +112,8 @@ public class ProductsForDesignCostSheet implements Serializable {
 		return jobsForDesignCostSheets;
 	}
 
-	public void setJobsForDesignCostSheets(List<JobsForDesignCostSheet> jobsForDesignCostSheets) {
+	public void setJobsForDesignCostSheets(
+			List<JobsForDesignCostSheet> jobsForDesignCostSheets) {
 		this.jobsForDesignCostSheets = jobsForDesignCostSheets;
 	}
 
@@ -116,7 +121,8 @@ public class ProductsForDesignCostSheet implements Serializable {
 		return jobAssignmentProducts;
 	}
 
-	public void setJobAssignmentProducts(List<JobAssignmentProducts> jobAssignmentProducts) {
+	public void setJobAssignmentProducts(
+			List<JobAssignmentProducts> jobAssignmentProducts) {
 		this.jobAssignmentProducts = jobAssignmentProducts;
 	}
 
@@ -124,7 +130,8 @@ public class ProductsForDesignCostSheet implements Serializable {
 		return jobPlanProductStock;
 	}
 
-	public void setJobPlanProductStock(List<JobPlanProductStock> jobPlanProductStock) {
+	public void setJobPlanProductStock(
+			List<JobPlanProductStock> jobPlanProductStock) {
 		this.jobPlanProductStock = jobPlanProductStock;
 	}
 
@@ -132,7 +139,8 @@ public class ProductsForDesignCostSheet implements Serializable {
 		return jobAssignmentJobDetails;
 	}
 
-	public void setJobAssignmentJobDetails(List<JobAssignmentJobDetails> jobAssignmentJobDetails) {
+	public void setJobAssignmentJobDetails(
+			List<JobAssignmentJobDetails> jobAssignmentJobDetails) {
 		this.jobAssignmentJobDetails = jobAssignmentJobDetails;
 	}
 

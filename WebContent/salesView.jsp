@@ -596,8 +596,7 @@
 																<option value="${payType.getType()}">${payType.getType()}</option>
 															</c:if>
 															<c:if test="${payType.getType()=='Debit Note'}">
-																<option value="${payType.getType()}">Redeem
-																	Debit Note</option>
+																<option value="${payType.getType()}">Debit Note</option>
 															</c:if>
 														</c:forEach>
 													</select>
