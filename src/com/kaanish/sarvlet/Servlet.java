@@ -199,7 +199,8 @@ public class Servlet extends HttpServlet {
 			if (!(url.equals("forgotPassUserCheck")
 					|| url.equals("forgotPassVarify") || url
 						.equals("resetPass"))) {
-				System.exit(0);
+				//System.exit(0);
+				page = "index.jsp";
 			}
 		}
 

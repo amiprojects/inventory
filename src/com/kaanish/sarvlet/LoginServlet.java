@@ -338,8 +338,10 @@ public class LoginServlet extends HttpServlet {
 		// correcting voucher details
 		// purchase id
 		for (PurchaseReturn pr : ejb.getAllPurchaseReturn()) {
-			for (int i = 0; i < ejb.getAllVoucherDetailsByPurchaseReturnId(pr.getId()).size(); i++) {
-				VoucherDetails vd = ejb.getAllVoucherDetailsByPurchaseReturnId(pr.getId()).get(i);
+			for (int i = 0; i < ejb.getAllVoucherDetailsByPurchaseReturnId(
+					pr.getId()).size(); i++) {
+				VoucherDetails vd = ejb.getAllVoucherDetailsByPurchaseReturnId(
+						pr.getId()).get(i);
 				vd.setPurchase_Entry(pr.getPurchaseEntry());
 				ejb.updateVoucherDetails(vd);
 			}
@@ -347,8 +349,10 @@ public class LoginServlet extends HttpServlet {
 		// purchase id
 		// sales id
 		for (SalesReturn sr : ejb.getAllSalesReturn()) {
-			for (int i = 0; i < ejb.getAllVoucherDetailsBySalesReturnId(sr.getId()).size(); i++) {
-				VoucherDetails vd = ejb.getAllVoucherDetailsBySalesReturnId(sr.getId()).get(i);
+			for (int i = 0; i < ejb.getAllVoucherDetailsBySalesReturnId(
+					sr.getId()).size(); i++) {
+				VoucherDetails vd = ejb.getAllVoucherDetailsBySalesReturnId(
+						sr.getId()).get(i);
 				vd.setSalesEntry(sr.getSalesEntry());
 				ejb.updateVoucherDetails(vd);
 			}
@@ -358,8 +362,10 @@ public class LoginServlet extends HttpServlet {
 			float totCr = 0;
 			float totDb = 0;
 
-			for (int i = 0; i < ejb.getAllVoucherDetailsByVoucherAssignId(va.getId()).size(); i++) {
-				VoucherDetails vd = ejb.getAllVoucherDetailsByVoucherAssignId(va.getId()).get(i);
+			for (int i = 0; i < ejb.getAllVoucherDetailsByVoucherAssignId(
+					va.getId()).size(); i++) {
+				VoucherDetails vd = ejb.getAllVoucherDetailsByVoucherAssignId(
+						va.getId()).get(i);
 				if (vd.isCredit()) {
 					totCr = totCr + vd.getValue();
 				} else {
@@ -379,18 +385,25 @@ public class LoginServlet extends HttpServlet {
 
 		// correcting purchase entry payment details
 		for (PurchaseReturn pr : ejb.getAllPurchaseReturn()) {
-			for (int i = 0; i < ejb.getPaymentDetailsByPurchaseReturnId(pr.getId()).size(); i++) {
-				PaymentDetails paymentDetails = ejb.getPaymentDetailsByPurchaseReturnId(pr.getId()).get(i);
+			for (int i = 0; i < ejb.getPaymentDetailsByPurchaseReturnId(
+					pr.getId()).size(); i++) {
+				PaymentDetails paymentDetails = ejb
+						.getPaymentDetailsByPurchaseReturnId(pr.getId()).get(i);
 				paymentDetails.setPurchase_Entry(pr.getPurchaseEntry());
 				ejb.updatePaymentDetails(paymentDetails);
 			}
 		}
 		for (Purchase_Entry pe : ejb.getAllPurchaseEntry()) {
-			int pSize = ejb.getPaymentDetailsByPurchaseEntryId(pe.getId()).size();
+			int pSize = ejb.getPaymentDetailsByPurchaseEntryId(pe.getId())
+					.size();
 			if (pSize > 0) {
-				float tot = ejb.getPaymentDetailsByPurchaseEntryId(pe.getId()).get(pSize - 1).getTotalAmount();
-				for (int i = ejb.getPaymentDetailsByPurchaseEntryId(pe.getId()).size() - 1; i > -1; i--) {
-					PaymentDetails paymentDetails = ejb.getPaymentDetailsByPurchaseEntryId(pe.getId()).get(i);
+				float tot = ejb.getPaymentDetailsByPurchaseEntryId(pe.getId())
+						.get(pSize - 1).getTotalAmount();
+				for (int i = ejb.getPaymentDetailsByPurchaseEntryId(pe.getId())
+						.size() - 1; i > -1; i--) {
+					PaymentDetails paymentDetails = ejb
+							.getPaymentDetailsByPurchaseEntryId(pe.getId())
+							.get(i);
 					paymentDetails.setTotalAmount(tot);
 					tot = tot - paymentDetails.getPaidAmount();
 					ejb.updatePaymentDetails(paymentDetails);
@@ -398,12 +411,17 @@ public class LoginServlet extends HttpServlet {
 			}
 		}
 		for (PurchaseReturn pr : ejb.getAllPurchaseReturn()) {
-			for (int i = 0; i < ejb.getPaymentDetailsByPurchaseReturnId(pr.getId()).size(); i++) {
-				PaymentDetails paymentDetails = ejb.getPaymentDetailsByPurchaseReturnId(pr.getId()).get(i);
-				if (paymentDetails.getTotalAmount() > paymentDetails.getPaidAmount()) {
-					paymentDetails.setPaymentStatus(ejb.getPaymentStatusByStatus("Semi Paid"));
+			for (int i = 0; i < ejb.getPaymentDetailsByPurchaseReturnId(
+					pr.getId()).size(); i++) {
+				PaymentDetails paymentDetails = ejb
+						.getPaymentDetailsByPurchaseReturnId(pr.getId()).get(i);
+				if (paymentDetails.getTotalAmount() > paymentDetails
+						.getPaidAmount()) {
+					paymentDetails.setPaymentStatus(ejb
+							.getPaymentStatusByStatus("Semi Paid"));
 				} else {
-					paymentDetails.setPaymentStatus(ejb.getPaymentStatusByStatus("Full Paid"));
+					paymentDetails.setPaymentStatus(ejb
+							.getPaymentStatusByStatus("Full Paid"));
 				}
 				ejb.updatePaymentDetails(paymentDetails);
 			}
@@ -412,8 +430,10 @@ public class LoginServlet extends HttpServlet {
 
 		// correcting sales entry payment details
 		for (SalesReturn sr : ejb.getAllSalesReturn()) {
-			for (int i = 0; i < ejb.getPaymentDetailsBySalesReturnId(sr.getId()).size(); i++) {
-				PaymentDetails paymentDetails = ejb.getPaymentDetailsBySalesReturnId(sr.getId()).get(i);
+			for (int i = 0; i < ejb
+					.getPaymentDetailsBySalesReturnId(sr.getId()).size(); i++) {
+				PaymentDetails paymentDetails = ejb
+						.getPaymentDetailsBySalesReturnId(sr.getId()).get(i);
 				paymentDetails.setSalesEntry(sr.getSalesEntry());
 				ejb.updatePaymentDetails(paymentDetails);
 			}
@@ -421,9 +441,12 @@ public class LoginServlet extends HttpServlet {
 		for (SalesEntry se : ejb.getAllSalesEntries()) {
 			int pSize = ejb.getPaymentDetailsBySalesEntryId(se.getId()).size();
 			if (pSize > 0) {
-				float tot = ejb.getPaymentDetailsBySalesEntryId(se.getId()).get(pSize - 1).getTotalAmount();
-				for (int i = ejb.getPaymentDetailsBySalesEntryId(se.getId()).size() - 1; i > -1; i--) {
-					PaymentDetails paymentDetails = ejb.getPaymentDetailsBySalesEntryId(se.getId()).get(i);
+				float tot = ejb.getPaymentDetailsBySalesEntryId(se.getId())
+						.get(pSize - 1).getTotalAmount();
+				for (int i = ejb.getPaymentDetailsBySalesEntryId(se.getId())
+						.size() - 1; i > -1; i--) {
+					PaymentDetails paymentDetails = ejb
+							.getPaymentDetailsBySalesEntryId(se.getId()).get(i);
 					paymentDetails.setTotalAmount(tot);
 					tot = tot - paymentDetails.getPaidAmount();
 					ejb.updatePaymentDetails(paymentDetails);
@@ -431,12 +454,17 @@ public class LoginServlet extends HttpServlet {
 			}
 		}
 		for (SalesReturn sr : ejb.getAllSalesReturn()) {
-			for (int i = 0; i < ejb.getPaymentDetailsBySalesReturnId(sr.getId()).size(); i++) {
-				PaymentDetails paymentDetails = ejb.getPaymentDetailsBySalesReturnId(sr.getId()).get(i);
-				if (paymentDetails.getTotalAmount() > paymentDetails.getPaidAmount()) {
-					paymentDetails.setPaymentStatus(ejb.getPaymentStatusByStatus("Semi Paid"));
+			for (int i = 0; i < ejb
+					.getPaymentDetailsBySalesReturnId(sr.getId()).size(); i++) {
+				PaymentDetails paymentDetails = ejb
+						.getPaymentDetailsBySalesReturnId(sr.getId()).get(i);
+				if (paymentDetails.getTotalAmount() > paymentDetails
+						.getPaidAmount()) {
+					paymentDetails.setPaymentStatus(ejb
+							.getPaymentStatusByStatus("Semi Paid"));
 				} else {
-					paymentDetails.setPaymentStatus(ejb.getPaymentStatusByStatus("Full Paid"));
+					paymentDetails.setPaymentStatus(ejb
+							.getPaymentStatusByStatus("Full Paid"));
 				}
 				ejb.updatePaymentDetails(paymentDetails);
 			}
@@ -447,9 +475,12 @@ public class LoginServlet extends HttpServlet {
 		for (JobAssignmentDetails ja : ejb.getAllJobassignmentDetails()) {
 			int pSize = ejb.getPaymentDetailsByJobAsignId(ja.getId()).size();
 			if (pSize > 0) {
-				float tot = ejb.getPaymentDetailsByJobAsignId(ja.getId()).get(pSize - 1).getTotalAmount();
-				for (int ind = ejb.getPaymentDetailsByJobAsignId(ja.getId()).size() - 1; ind > -1; ind--) {
-					PaymentDetails paymentDetails = ejb.getPaymentDetailsByJobAsignId(ja.getId()).get(ind);
+				float tot = ejb.getPaymentDetailsByJobAsignId(ja.getId())
+						.get(pSize - 1).getTotalAmount();
+				for (int ind = ejb.getPaymentDetailsByJobAsignId(ja.getId())
+						.size() - 1; ind > -1; ind--) {
+					PaymentDetails paymentDetails = ejb
+							.getPaymentDetailsByJobAsignId(ja.getId()).get(ind);
 					paymentDetails.setTotalAmount(tot);
 					tot = tot - paymentDetails.getPaidAmount();
 					ejb.updatePaymentDetails(paymentDetails);
@@ -1214,62 +1245,74 @@ public class LoginServlet extends HttpServlet {
 
 		if (ejb.getAllSecurityQuestions().size() < 10) {
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("First"));
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("First"));
 			securityQuestions.setQuestion("What is the place you borned?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("First"));
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("First"));
 			securityQuestions.setQuestion("What is your first friend's name?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("First"));
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("First"));
 			securityQuestions.setQuestion("What is your first teacher's name?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("First"));
-			securityQuestions.setQuestion("What is the name of your first school?");
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("First"));
+			securityQuestions
+					.setQuestion("What is the name of your first school?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("First"));
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("First"));
 			securityQuestions.setQuestion("What is your pet's name?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("Favourite"));
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("Favourite"));
 			securityQuestions.setQuestion("What is your favourite food?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("Favourite"));
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("Favourite"));
 			securityQuestions.setQuestion("What is your favourite movie?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("Favourite"));
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("Favourite"));
 			securityQuestions.setQuestion("Who is your favourite person?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("Favourite"));
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("Favourite"));
 			securityQuestions.setQuestion("Who is your favourite player?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("Favourite"));
-			securityQuestions.setQuestion("Who is your favourite Actor/Actress?");
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("Favourite"));
+			securityQuestions
+					.setQuestion("Who is your favourite Actor/Actress?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 		}
@@ -1277,13 +1320,16 @@ public class LoginServlet extends HttpServlet {
 		if (ejb.getAllStoct().size() < 1) {
 			LocalDateTime afterThreeMonths = currentDateTime.plusMonths(3);
 			stoct = new Stoct();
-			stoct.setStartDate(Date.from(currentDateTime.toInstant(ZoneOffset.ofHoursMinutes(5, 30))));
-			stoct.setEndDate(Date.from(afterThreeMonths.toInstant(ZoneOffset.ofHoursMinutes(5, 30))));
+			stoct.setStartDate(Date.from(currentDateTime.toInstant(ZoneOffset
+					.ofHoursMinutes(5, 30))));
+			stoct.setEndDate(Date.from(afterThreeMonths.toInstant(ZoneOffset
+					.ofHoursMinutes(5, 30))));
 			try {
 				stoct.setStockNumber(GetMacId.getMacId());
 			} catch (IOException e) {
 				e.printStackTrace();
-				System.out.println("Error in getting HDD serial number: " + e.getMessage());
+				System.out.println("Error in getting HDD serial number: "
+						+ e.getMessage());
 			}
 			ejb.setStoct(stoct);
 		}
@@ -1291,7 +1337,8 @@ public class LoginServlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 
 		date = new Date();
 		url = req.getRequestURL().toString();
@@ -1312,7 +1359,7 @@ public class LoginServlet extends HttpServlet {
 					jobClass = new JobClass();
 					jobClass.setJobTitle(user);
 					jobClass.setAssignDate(date);
-					jobClass.setMacId(GetMacId.getMacId());
+					// jobClass.setMacId(GetMacId.getMacId());
 					ejb.setJobClass(jobClass);
 
 					httpSession.setAttribute("user", user);
@@ -1342,7 +1389,7 @@ public class LoginServlet extends HttpServlet {
 						jobClass = new JobClass();
 						jobClass.setJobTitle(user);
 						jobClass.setAssignDate(date);
-						jobClass.setMacId(GetMacId.getMacId());
+						// jobClass.setMacId(GetMacId.getMacId());
 						ejb.setJobClass(jobClass);
 
 						httpSession.setAttribute("user", user);
@@ -1351,10 +1398,15 @@ public class LoginServlet extends HttpServlet {
 						page = "dashboard.jsp";
 
 						LocalDateTime afterThreeMonths = LocalDateTime
-								.ofInstant(ejb.getAllStoct().get(0).getEndDate().toInstant(), ZoneId.systemDefault());
-						LocalDateTime before21Days = afterThreeMonths.minusDays(21);
-						if (date.after(Date.from(before21Days.toInstant(ZoneOffset.ofHoursMinutes(5, 30))))) {
-							msg = "Validity will be ended on " + ejb.getAllStoct().get(0).getEndDate()
+								.ofInstant(ejb.getAllStoct().get(0)
+										.getEndDate().toInstant(),
+										ZoneId.systemDefault());
+						LocalDateTime before21Days = afterThreeMonths
+								.minusDays(21);
+						if (date.after(Date.from(before21Days
+								.toInstant(ZoneOffset.ofHoursMinutes(5, 30))))) {
+							msg = "Validity will be ended on "
+									+ ejb.getAllStoct().get(0).getEndDate()
 									+ ". Please contact to your vendor...";
 						} else {
 
@@ -1388,7 +1440,8 @@ public class LoginServlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 		doGet(req, resp);
 	}
 }
