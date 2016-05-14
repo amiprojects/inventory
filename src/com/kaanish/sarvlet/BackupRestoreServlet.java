@@ -170,10 +170,13 @@ public class BackupRestoreServlet extends HttpServlet {
 			restoreDataFromFile(City.class);
 			restoreDataFromFile(Tax.class);
 			restoreDataFromFile(Tax_Type_Group.class);
+			restoreDataFromFile(Module.class);
+			restoreDataFromFile(Users.class);			
 			restoreDataFromFile(PageList.class);
+			
 			restoreDataFromFile(UserGroup.class);
 			restoreDataFromFile(CompanyInfo.class);
-			restoreDataFromFile(Users.class);
+			
 			restoreDataFromFile(VendorType.class);
 			restoreDataFromFile(Stoct.class);
 			restoreDataFromFile(Department.class);
@@ -183,7 +186,7 @@ public class BackupRestoreServlet extends HttpServlet {
 			restoreDataFromFile(ProductImage.class);
 			restoreDataFromFile(JobStock.class);
 			restoreDataFromFile(JobTypes.class);
-			restoreDataFromFile(Module.class);
+			
 			restoreDataFromFile(NotificationDetails.class);
 			restoreDataFromFile(NotificationView.class);
 			restoreDataFromFile(QtyUnitType.class);
