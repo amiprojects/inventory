@@ -199,7 +199,7 @@ public class Servlet extends HttpServlet {
 			if (!(url.equals("forgotPassUserCheck")
 					|| url.equals("forgotPassVarify") || url
 						.equals("resetPass"))) {
-				//System.exit(0);
+				// System.exit(0);
 				page = "index.jsp";
 			}
 		}
@@ -3937,7 +3937,7 @@ public class Servlet extends HttpServlet {
 								salesProductDetails
 										.setSalesReQty(salesProductDetails
 												.getSalesReQty()
-												+ Integer.parseInt(qty4[l]));
+												+ Float.parseFloat(qty4[l]));
 								ejb.updateSalesProductDetails(salesProductDetails);
 
 								salesProductReturnDetail = new SalesProductReturnDetail();
@@ -3945,8 +3945,8 @@ public class Servlet extends HttpServlet {
 										.setSalesReturn(salesReturn);
 
 								salesProductReturnDetail.setFault(p3[l]);
-								salesProductReturnDetail.setQtyReturn(Integer
-										.parseInt(qty4[l]));
+								salesProductReturnDetail.setQtyReturn(Float
+										.parseFloat(qty4[l]));
 								salesProductReturnDetail
 										.setSalesProductDetails(salesProductDetails);
 								ejb.setSalesProductReturnDetails(salesProductReturnDetail);

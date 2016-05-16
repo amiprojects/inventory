@@ -17,14 +17,11 @@
 <link rel="stylesheet" href="bootstrapcdn.css">
 <script src="maxcdn.bootstrapcdn.js"></script>
 
-
-
 <link rel="stylesheet" href="css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="css/fixedHeader.dataTables.min.css">
 <link rel="stylesheet" href="css/buttons.dataTables.min.css">
 <link rel="stylesheet" href="css/dataTables.searchHighlight.css" />
 <link rel="stylesheet" href="css/style.css" type="text/css" />
-
 
 <style>
 .font {
@@ -95,7 +92,7 @@
 									<br> <br>
 									<div class="form-group">
 										<form action="goStockView" method="post">
-											<label for="" class="">Product code: </label> <input
+											<label for="" class="">Designer Number: </label> <input
 												type="text" id="prodcode" name="pCodeSearch"
 												class="form-control"> <label class="">Product
 												Description: </label> <input type="text" id="prodesc"
@@ -108,13 +105,8 @@
 										</form>
 									</div>
 
-
-
-
 									<br> <br>
-
-
-
+									
 								</div>
 								<div class="widget-area" style="width: 60%; height: 550px">
 
@@ -134,13 +126,18 @@
 												<th>Quantity</th>
 												<th>WSP</th>
 												<th>MRP</th>
-												<th>view</th>
+
+												<th></th>
 
 											</tr>
 										</thead>
+										<%-- <c:forEach items="${requestScope['ami']}" var="amiProStock"> --%>
 										<tbody>
 											<c:set var="count" value="${1}" />
-
+											<%-- <c:forEach
+														items="${param.pCodeSearch.equals(null)?sessionScope['ejb'].getAllProductDetail():sessionScope['ejb'].getProductDetailsByCodeDescriptionCategory(param.pCodeSearch)}"
+														var="pro"> --%>
+											<%-- 	<c:forEach items="${requestScope['ami']}" var="amiProStock"> --%>
 											<c:forEach items="${requestScope['ami']}" var="amiProStock">
 												<c:set var="qty"
 													value="${!amiProStock.isRaw()?sessionScope['ejb'].getReadyGoodsStocktDetailByProductIdAndCompany(amiProStock.id).remainingQty:sessionScope['ejb'].getRawMaterialStocktDetailByProductIdAndCompany(amiProStock.id).remainingQty}" />
@@ -189,17 +186,24 @@
 												<c:set var="count" value="${count+1}" />
 											</c:forEach>
 										</tbody>
-									</table>
 
+
+									</table>
 								</div>
+
 							</div>
 						</div>
+
+
+
+
 					</div>
 				</div>
 			</div>
 		</div>
-		<!-- Content Sec -->
 	</div>
+	<!-- Content Sec -->
+
 	<!-- Page Container -->
 
 	<!-- main -->

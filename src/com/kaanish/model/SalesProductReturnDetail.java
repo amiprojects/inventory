@@ -37,14 +37,6 @@ public class SalesProductReturnDetail implements Serializable {
 		this.id = id;
 	}
 
-	public float getQtyReturn() {
-		return qtyReturn;
-	}
-
-	public void setQtyReturn(int qtyReturn) {
-		this.qtyReturn = qtyReturn;
-	}
-
 	public String getFault() {
 		return fault;
 	}
@@ -67,6 +59,14 @@ public class SalesProductReturnDetail implements Serializable {
 
 	public void setSalesReturn(SalesReturn salesReturn) {
 		this.salesReturn = salesReturn;
+	}
+
+	public float getQtyReturn() {
+		return qtyReturn;
+	}
+
+	public void setQtyReturn(float qtyReturn) {
+		this.qtyReturn = qtyReturn;
 	}
 
 	

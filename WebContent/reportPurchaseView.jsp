@@ -197,7 +197,7 @@
 									<thead style="background-color: #F0F0F0;">
 										<tr>
 											<th>#</th>
-											<th>Designer Number:</th>
+											<th>Product Code:</th>
 											<th>Product Description</th>
 											<th>WSP</th>
 											<th>MRP</th>
@@ -215,6 +215,7 @@
 												<td>${i}</td>
 												<td>${purchaseProducts.productDetail.code}</td>
 												<td>${purchaseProducts.productDetail.description}</td>
+												<td>${purchaseProducts.lotNumber}</td>
 												<td>${purchaseProducts.wsp}</td>
 												<td>${purchaseProducts.mrp}</td>
 												<td>${purchaseProducts.quantity}</td>

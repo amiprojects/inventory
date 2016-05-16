@@ -392,18 +392,18 @@
 															<td id="qtttyR${srr.id}">${srr.quantity-srr.salesReQty}</td>
 															<td id="qttyC${srr.id}"><c:choose>
 																	<c:when test="${salre.MRP}">
-																		${srr.purchase_Product_Details.mrp}
+																		${srr.salesPrice}
 																	</c:when>
 																	<c:otherwise>
-																		${srr.purchase_Product_Details.wsp}
+																		${srr.salesPrice}
 																	</c:otherwise>
 																</c:choose></td>
 															<td><c:choose>
 																	<c:when test="${salre.MRP}">																		
-																			${srr.quantity*srr.purchase_Product_Details.mrp}
+																			${srr.quantity*srr.salesPrice}
 																	</c:when>
 																	<c:otherwise>
-																		${srr.quantity*srr.purchase_Product_Details.wsp}
+																		${srr.quantity*srr.salesPrice}
 																	</c:otherwise>
 																</c:choose></td>
 															<td style="padding: 4px"><input id="rQtySa${srr.id}"
@@ -420,8 +420,7 @@
 																id="drabackIid" class="form-control" name="rQtyDe"
 																style="width: 120px"></td>
 
-															<c:set
-																value="${tota+srr.quantity*srr.purchase_Product_Details.cost}"
+															<c:set value="${tota+srr.quantity*srr.salesPrice}"
 																var="tota" />
 														</tr>
 													</tbody>

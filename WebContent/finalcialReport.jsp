@@ -184,13 +184,16 @@ tfoot {
 																<td><fmt:formatNumber var="totalCost"
 																		value="${sRepo.totalCost}" maxFractionDigits="2" />
 																	${totalCost}<br> <br>0
-																<td>0<br> <br> <fmt:formatNumber
-																		var="totalCost" value="${sRepo.totalCost}"
-																		maxFractionDigits="2" /> ${totalCost}
+																<td>0<br> <br> <c:set var="lastPayment"
+																		value="${sessionScope['ejb'].getPaymentDetailsBySalesEntryId(sRepo.id).get(0)}"></c:set>
+																	<c:set var="currentDue"
+																		value="${lastPayment.totalAmount-lastPayment.paidAmount}"></c:set>
+																	${sRepo.totalCost-currentDue}
 																</td>
 															</tr>
 															<c:set var="total1" value="${total1 + sRepo.totalCost}" />
-															<c:set var="total2" value="${total2 + sRepo.totalCost}" />
+															<c:set var="total2"
+																value="${total2 + sRepo.totalCost-currentDue}" />
 														</c:forEach>
 
 														<c:forEach items="${requestScope['purchaseEty']}"
@@ -206,13 +209,16 @@ tfoot {
 																		var="totalCost" value="${pRepo.totalCost}"
 																		maxFractionDigits="2" /> ${totalCost}
 																</td>
-																<td><fmt:formatNumber var="totalCost"
-																		value="${pRepo.totalCost}" maxFractionDigits="2" />
-																	${totalCost}<br> <br>0</td>
+																<td><c:set var="lastPayment"
+																		value="${sessionScope['ejb'].getPaymentDetailsByPurchaseEntryId(pRepo.id).get(0)}"></c:set>
+																	<c:set var="currentDue"
+																		value="${lastPayment.totalAmount-lastPayment.paidAmount}"></c:set>
+																	${pRepo.totalCost-currentDue}<br> <br>0</td>
 															</tr>
 
 															<c:set var="total3" value="${total3 + pRepo.totalCost}" />
-															<c:set var="total4" value="${total4 + pRepo.totalCost}" />
+															<c:set var="total4"
+																value="${total4 + pRepo.totalCost-currentDue}" />
 														</c:forEach>
 
 														<c:forEach items="${requestScope['salesReturn']}"
@@ -250,7 +256,7 @@ tfoot {
 																<td>${prRepo.challanNumber}</td>
 																<td><fmt:formatNumber var="totalCost"
 																		value="${prRepo.totalReCost}" maxFractionDigits="2" />
-																	${totalCost}<br> <br>0;</td>
+																	${totalCost}<br> <br>0</td>
 																<td>0<br> <br> <fmt:formatNumber
 																		var="totalCost" value="${prRepo.totalReCost}"
 																		maxFractionDigits="2" /> ${totalCost}

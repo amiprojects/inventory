@@ -218,6 +218,7 @@
 											<th>#</th>
 											<th>Product code</th>
 											<th>Product Description</th>
+											<th>Lot No.</th>
 											<th>Qty.</th>
 											<c:choose>
 												<c:when test="${salesSearchView.isMRP()==true}">
@@ -239,23 +240,24 @@
 												<td>${i}</td>
 												<td>${salesProducts.purchase_Product_Details.productDetail.code}</td>
 												<td>${salesProducts.purchase_Product_Details.productDetail.description}</td>
+												<td>${salesProducts.purchase_Product_Details.lotNumber}</td>
 												<td>${salesProducts.quantity}</td>
 												<c:choose>
 													<c:when test="${salesSearchView.isMRP()==true}">
-														<td>${salesProducts.purchase_Product_Details.mrp}</td>
+														<td>${salesProducts.salesPrice}</td>
 														<td><fmt:formatNumber var="amount"
-																value="${salesProducts.quantity*salesProducts.purchase_Product_Details.mrp}"
+																value="${salesProducts.quantity*salesProducts.salesPrice}"
 																maxFractionDigits="2" /> ${amount}</td>
 														<%-- <c:set var="subTotal"
-															value="${subTotal+salesProducts.quantity*salesProducts.purchase_Product_Details.mrp}"></c:set> --%>
+															value="${subTotal+salesProducts.quantity*salesProducts.salesPrice}"></c:set> --%>
 													</c:when>
 													<c:otherwise>
-														<td>${salesProducts.purchase_Product_Details.wsp}</td>
+														<td>${salesProducts.salesPrice}</td>
 														<td><fmt:formatNumber var="amount"
-																value="${salesProducts.quantity*salesProducts.purchase_Product_Details.wsp}"
+																value="${salesProducts.quantity*salesProducts.salesPrice}"
 																maxFractionDigits="2" /> ${amount}</td>
 														<%-- <c:set var="subTotal"
-															value="${subTotal+salesProducts.quantity*salesProducts.purchase_Product_Details.wsp}"></c:set> --%>
+															value="${subTotal+salesProducts.quantity*salesProducts.salesPrice}"></c:set> --%>
 													</c:otherwise>
 												</c:choose>
 											</tr>
