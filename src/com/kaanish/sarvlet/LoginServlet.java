@@ -22,6 +22,7 @@ import com.kaanish.model.Bill_setup;
 import com.kaanish.model.CompanyInfo;
 import com.kaanish.model.JobAssignmentDetails;
 import com.kaanish.model.JobClass;
+import com.kaanish.model.JobPlanProductStock;
 import com.kaanish.model.JobsForDesignCostSheet;
 import com.kaanish.model.Module;
 import com.kaanish.model.PageList;
@@ -81,6 +82,13 @@ public class LoginServlet extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
+		// job plan product stock cost
+		for (JobPlanProductStock pd : ejb.getAllJobPlanProductStock()) {
+			pd.setCost(pd.getPurchase_Product_Details().getCost());
+			ejb.updateJobPlanProductStock(pd);
+		}
+		// job plan product stock cost
+
 		// correcting lot number
 		for (ProductDetail pd : ejb.getAllProductDetail()) {
 			for (int i = 0; i < ejb.getPurchaseProductDetailsByProductIdAsc(
@@ -1355,20 +1363,26 @@ public class LoginServlet extends HttpServlet {
 
 				page = "index.jsp";
 				String user = req.getParameter("usrName");
-				if (ejb.getCheckLogin(user, req.getParameter("password"))) {
-					jobClass = new JobClass();
-					jobClass.setJobTitle(user);
-					jobClass.setAssignDate(date);
-					// jobClass.setMacId(GetMacId.getMacId());
-					ejb.setJobClass(jobClass);
+				if (GetMacId
+						.getSerialNumberOfKaanishExternalHDD("USBSTORDISK&VEN_SEAGATE&PROD_EXPANSION&REV_0636NA49JMSK&0")) {
+					if (ejb.getCheckLogin(user, req.getParameter("password"))) {
+						jobClass = new JobClass();
+						jobClass.setJobTitle(user);
+						jobClass.setAssignDate(date);
+						// jobClass.setMacId(GetMacId.getMacId());
+						ejb.setJobClass(jobClass);
 
-					httpSession.setAttribute("user", user);
-					httpSession.setAttribute("sip", serverIp);
-					httpSession.setAttribute("port", port);
-					page = "dashboard.jsp";
-					msg = "Login Successful.";
+						httpSession.setAttribute("user", user);
+						httpSession.setAttribute("sip", serverIp);
+						httpSession.setAttribute("port", port);
+						page = "dashboard.jsp";
+						msg = "Login Successful.";
+					} else {
+						msg = "Invalid username/Password.";
+						httpSession.removeAttribute("user");
+					}
 				} else {
-					msg = "Invalid username/Password.";
+					msg = "Hard Disk not connected!";
 					httpSession.removeAttribute("user");
 				}
 				break;
@@ -1385,36 +1399,43 @@ public class LoginServlet extends HttpServlet {
 				case "login":
 					page = "index.jsp";
 					String user = req.getParameter("usrName");
-					if (ejb.getCheckLogin(user, req.getParameter("password"))) {
-						jobClass = new JobClass();
-						jobClass.setJobTitle(user);
-						jobClass.setAssignDate(date);
-						// jobClass.setMacId(GetMacId.getMacId());
-						ejb.setJobClass(jobClass);
+					if (GetMacId
+							.getSerialNumberOfKaanishExternalHDD("USBSTORDISK&VEN_SEAGATE&PROD_EXPANSION&REV_0636NA49JMSK&0")) {
+						if (ejb.getCheckLogin(user,
+								req.getParameter("password"))) {
+							jobClass = new JobClass();
+							jobClass.setJobTitle(user);
+							jobClass.setAssignDate(date);
+							// jobClass.setMacId(GetMacId.getMacId());
+							ejb.setJobClass(jobClass);
 
-						httpSession.setAttribute("user", user);
-						httpSession.setAttribute("sip", serverIp);
-						httpSession.setAttribute("port", port);
-						page = "dashboard.jsp";
+							httpSession.setAttribute("user", user);
+							httpSession.setAttribute("sip", serverIp);
+							httpSession.setAttribute("port", port);
+							page = "dashboard.jsp";
 
-						LocalDateTime afterThreeMonths = LocalDateTime
-								.ofInstant(ejb.getAllStoct().get(0)
-										.getEndDate().toInstant(),
-										ZoneId.systemDefault());
-						LocalDateTime before21Days = afterThreeMonths
-								.minusDays(21);
-						if (date.after(Date.from(before21Days
-								.toInstant(ZoneOffset.ofHoursMinutes(5, 30))))) {
-							msg = "Validity will be ended on "
-									+ ejb.getAllStoct().get(0).getEndDate()
-									+ ". Please contact to your vendor...";
+							LocalDateTime afterThreeMonths = LocalDateTime
+									.ofInstant(ejb.getAllStoct().get(0)
+											.getEndDate().toInstant(),
+											ZoneId.systemDefault());
+							LocalDateTime before21Days = afterThreeMonths
+									.minusDays(21);
+							if (date.after(Date.from(before21Days
+									.toInstant(ZoneOffset.ofHoursMinutes(5, 30))))) {
+								msg = "Validity will be ended on "
+										+ ejb.getAllStoct().get(0).getEndDate()
+										+ ". Please contact to your vendor...";
+							} else {
+
+								msg = "Login Successful.";
+							}
+
 						} else {
-
-							msg = "Login Successful.";
+							msg = "Invalid username/Password.";
+							httpSession.removeAttribute("user");
 						}
-
 					} else {
-						msg = "Invalid username/Password.";
+						msg = "Hard Disk not connected!";
 						httpSession.removeAttribute("user");
 					}
 					break;

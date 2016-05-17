@@ -12,33 +12,31 @@ import javax.persistence.ManyToOne;
 @Entity
 @Cacheable(false)
 public class JobPlanProductStock implements Serializable {
-//purchase product wise
+	// purchase product wise
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
 	private int id;
 	private float qty;
-	//private float remainingQty;//same as qty
-	//private int jobCycle;//0
-	//private boolean isUndergoingProcess;//false
-	//private boolean isComplete;//false
+	private float cost;
 
 	@ManyToOne
 	@JoinColumn(name = "planId")
 	private JobPlan jobPlan;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "jobPlanProductsId")
 	private JobPlanProducts jobPlanProducts;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "purchaseProductId")
 	private Purchase_Product_Details purchase_Product_Details;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "jobAssignmentProductsId")
-	private JobAssignmentProducts jobAssignmentProducts; //to get last JobAssignmentProducts
-	
+	private JobAssignmentProducts jobAssignmentProducts; // to get last
+															// JobAssignmentProducts
+
 	@ManyToOne
 	@JoinColumn(name = "ProductsForDesignCostSheetId")
 	private ProductsForDesignCostSheet productsForDesignCostSheet;
@@ -50,32 +48,6 @@ public class JobPlanProductStock implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	
-
-//	public int getJobCycle() {
-//		return jobCycle;
-//	}
-//
-//	public void setJobCycle(int jobCycle) {
-//		this.jobCycle = jobCycle;
-//	}
-//
-//	public boolean isUndergoingProcess() {
-//		return isUndergoingProcess;
-//	}
-//
-//	public void setUndergoingProcess(boolean isUndergoingProcess) {
-//		this.isUndergoingProcess = isUndergoingProcess;
-//	}
-
-	// public boolean isComplete() {
-	// return isComplete;
-	// }
-	//
-	// public void setComplete(boolean isComplete) {
-	// this.isComplete = isComplete;
-	// }
 
 	public JobPlan getJobPlan() {
 		return jobPlan;
@@ -89,7 +61,8 @@ public class JobPlanProductStock implements Serializable {
 		return jobAssignmentProducts;
 	}
 
-	public void setJobAssignmentProducts(JobAssignmentProducts jobAssignmentProducts) {
+	public void setJobAssignmentProducts(
+			JobAssignmentProducts jobAssignmentProducts) {
 		this.jobAssignmentProducts = jobAssignmentProducts;
 	}
 
@@ -97,7 +70,8 @@ public class JobPlanProductStock implements Serializable {
 		return purchase_Product_Details;
 	}
 
-	public void setPurchase_Product_Details(Purchase_Product_Details purchase_Product_Details) {
+	public void setPurchase_Product_Details(
+			Purchase_Product_Details purchase_Product_Details) {
 		this.purchase_Product_Details = purchase_Product_Details;
 	}
 
@@ -109,19 +83,12 @@ public class JobPlanProductStock implements Serializable {
 		this.qty = qty;
 	}
 
-//	public float getRemainingQty() {
-//		return remainingQty;
-//	}
-//
-//	public void setRemainingQty(float remainingQty) {
-//		this.remainingQty = remainingQty;
-//	}
-
 	public ProductsForDesignCostSheet getProductsForDesignCostSheet() {
 		return productsForDesignCostSheet;
 	}
 
-	public void setProductsForDesignCostSheet(ProductsForDesignCostSheet productsForDesignCostSheet) {
+	public void setProductsForDesignCostSheet(
+			ProductsForDesignCostSheet productsForDesignCostSheet) {
 		this.productsForDesignCostSheet = productsForDesignCostSheet;
 	}
 
@@ -131,6 +98,14 @@ public class JobPlanProductStock implements Serializable {
 
 	public void setJobPlanProducts(JobPlanProducts jobPlanProducts) {
 		this.jobPlanProducts = jobPlanProducts;
+	}
+
+	public float getCost() {
+		return cost;
+	}
+
+	public void setCost(float cost) {
+		this.cost = cost;
 	}
 
 }

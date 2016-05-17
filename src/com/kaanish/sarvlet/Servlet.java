@@ -4331,6 +4331,8 @@ public class Servlet extends HttpServlet {
 									.setPurchase_Product_Details(purchaseProductDetails);
 							jobPlanProductStock.setQty(Float
 									.parseFloat(qtySelected[l1]));
+							jobPlanProductStock.setCost(purchaseProductDetails
+									.getCost());
 							ejb.setJobPlanProductStock(jobPlanProductStock);
 
 							purchaseProductDetails

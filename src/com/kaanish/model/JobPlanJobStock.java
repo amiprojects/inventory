@@ -70,14 +70,6 @@ public class JobPlanJobStock implements Serializable {
 		this.jobPlanProducts = jobPlanProducts;
 	}
 
-//	public float getRemQty() {
-//		return remQty;
-//	}
-//
-//	public void setRemQty(float remQty) {
-//		this.remQty = remQty;
-//	}
-
 	public List<JobAssignmentJobDetails> getJobAssignmentJobDetails() {
 		return jobAssignmentJobDetails;
 	}
