@@ -2730,6 +2730,14 @@
 																	+ '" value=\''
 																	+ $("#wspH")
 																			.val()
+																	+ '\'><input readonly="readonly" type="hidden" id="selectedCost'
+																	+ $(
+																			"#salesbarH")
+																			.val()
+																	+ '" value=\''
+																	+ $(
+																			"#mrpQty")
+																			.val()
 																	+ '\'></td>'
 																	+ '<td>'
 																	+ data.productDesc
@@ -2744,7 +2752,7 @@
 																			"#qtyvalue")
 																			.val()
 																	+ '\'></td>'
-																	+ '<td><input type="text" name="mrpQty" onkeyup="mrpQtyF('
+																	+ '<td><input type="text" name="mrpQty" onchange="mrpQtyF('
 																	+ $(
 																			"#salesbarH")
 																			.val()
@@ -2796,7 +2804,7 @@
 																	.val()
 															+ " :nth-child(6)")
 													.html(
-															'<input type="text" name="mrpQty" onkeyup="mrpQtyF('
+															'<input type="text" name="mrpQty" onchange="mrpQtyF('
 																	+ $(
 																			"#salesbarH")
 																			.val()
@@ -2924,6 +2932,12 @@
 																	.val()
 															+ '" value=\''
 															+ $("#wspH").val()
+															+ '\'><input readonly="readonly" type="hidden" id="selectedCost'
+															+ $("#salesbarH")
+																	.val()
+															+ '" value=\''
+															+ $("#mrpQty")
+																	.val()
 															+ '\'></td>'
 															+ '<td>'
 															+ data.productDesc
@@ -2935,7 +2949,7 @@
 															+ $("#qtyvalue")
 																	.val()
 															+ '\'></td>'
-															+ '<td><input type="text" name="mrpQty" onkeyup="mrpQtyF('
+															+ '<td><input type="text" name="mrpQty" onchange="mrpQtyF('
 															+ $("#salesbarH")
 																	.val()
 															+ ');" value=\''
@@ -2976,7 +2990,7 @@
 									$(
 											"#trRemove" + $("#salesbarH").val()
 													+ " :nth-child(6)").html(
-											'<input type="text" name="mrpQty" onkeyup="mrpQtyF('
+											'<input type="text" name="mrpQty" onchange="mrpQtyF('
 													+ $("#salesbarH").val()
 													+ ');" value=\''
 													+ $("#mrpQty").val()
@@ -3093,19 +3107,27 @@
 		}
 
 		function mrpQtyF(a) {
+			var wsp = $("#wspForCheck" + a).val();
+			var selectedCost = $("#selectedCost" + a).val();
 			var qty = $("#trRemove" + a + " :nth-child(5) input[type=text]")
 					.val();
 			var price = $("#trRemove" + a + " :nth-child(6) input[type=text]")
 					.val();
-			$("#trRemove" + a + " :nth-child(7) input[type=text]").val(
-					Number(qty) * Number(price));
+			if (price < wsp) {
+				alert("Saling price can not be less than WSP : Rs. " + wsp);
+				$("#trRemove" + a + " :nth-child(6) input[type=text]").val(
+						selectedCost);
+			} else {
+				$("#trRemove" + a + " :nth-child(7) input[type=text]").val(
+						Number(qty) * Number(price));
 
-			var sum = 0;
-			$(".eachtotalvalue").each(function() {
-				sum += parseFloat(this.value);
-			});
-			$("#subtotalvalue").val(sum.toFixed(2));
-			gtot();
+				var sum = 0;
+				$(".eachtotalvalue").each(function() {
+					sum += parseFloat(this.value);
+				});
+				$("#subtotalvalue").val(sum.toFixed(2));
+				gtot();
+			}
 		};
 	</script>
 </body>

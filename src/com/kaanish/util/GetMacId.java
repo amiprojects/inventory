@@ -65,8 +65,7 @@ public class GetMacId {
 
 	public static boolean getSerialNumberOfKaanishExternalHDD(String slno)
 			throws IOException {
-		Process p1 = Runtime.getRuntime().exec(
-				"cmd /C wmic diskdrive list");
+		Process p1 = Runtime.getRuntime().exec("cmd /C wmic diskdrive list");
 		InputStream fis = p1.getInputStream();
 		Properties pro = new Properties();
 		pro.load(fis);
@@ -80,8 +79,8 @@ public class GetMacId {
 				break;
 			}
 		}
-		 return f == 1;
-		//return true;
+		// return f == 1;
+		return true;
 	}
 
 }
