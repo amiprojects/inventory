@@ -1581,6 +1581,99 @@
 																							+ '</th><th>'
 																							+ "Status"
 																							+ '</th></tr></thead></table>');
+
+																	var ProductForSampleId = item2.ProductForSampleId;
+																	var planId = pId;
+																	var prodId = item2.ProductId;
+																	var japId = item2.japId;
+																	$
+																			.ajax({
+																				type : "post",
+																				url : "getJobsForDesignCostSheetByPlanId",
+																				dataType : "json",
+																				data : {
+																					pid : ProductForSampleId,
+																					planId : planId,
+																					prodId : prodId,
+																					japId : japId
+																				},
+																				success : function(
+																						data2) {
+																					$
+																							.each(
+																									data2,
+																									function(
+																											index,
+																											item2) {
+																										if (item2.EstSubDate != "NA") {
+																											var EstSubDate = formatDate(item2.EstSubDate);
+																										} else {
+																											var EstSubDate = item2.EstSubDate;
+																										}
+																										if ($(
+																												"#planStatus")
+																												.val() == "Completed") {
+																											var jobStatus = "Completed";
+																										} else {
+																											var jobStatus = item2.Status;
+																										}
+																										$(
+
+																												"#pDetTable"
+																														+ ProductForSampleId)
+																												.append(
+																														"<tbody id='pDetTable"+item2.JobId+"'>"
+																																+ "<tr>"
+																																+ "<td>"
+																																+ Number(1 + index)
+																																+ "</td>"
+																																+ "<td>"
+																																+ item2.JobName
+																																+ "<input type='hidden' id='jobId"+item2.JobId+"' value='"+item2.JobId+"'>"
+																																+ "</td>"
+																																+ "<td>"
+																																+ item2.JobRateOfSample
+																																+ "</td>"
+																																+ "<td>"
+																																+ "<input type='text' readonly='readonly' class='form-control' id='jobPresentRate"
+																																+ item2.JobId
+																																+ "' onkeyup='presentRateKU("
+																																+ item2.JobId
+																																+ ");' value='"
+																																+ item2.PresentRate
+																																+ "'>"
+																																+ "</td>"
+																																+ "<td>"
+																																+ item2.JobQtyOfSample
+																																+ "</td>"
+																																+ "<td>"
+																																+ "<input type='text' readonly='readonly' class='form-control' id='jobQty"
+																																+ item2.JobId
+																																+ "' onkeyup='qtyKU("
+																																+ item2.JobId
+																																+ ");' value='"
+																																+ item2.AssignQty
+																																+ "'>"
+																																+ "</td>"
+																																+ "<td>"
+																																+ item2.JobUOMOfSample
+																																+ "</td>"
+																																+ "<td>"
+																																+ "<input type='text' readonly='readonly' id='jobAmount"+item2.JobId+"' class='form-control' value='"+item2.Amount+"'>"
+																																+ "</td>"
+																																+ "<td colspan='3'>"
+																																+ "<input type='text' readonly='readonly' id='estSubmDate"+item2.JobId+"' value='"+EstSubDate+"' class='form-control'>"
+																																+ "</td>"
+																																+ "<td>"
+																																+ jobStatus
+																																+ "</td>"
+																																+ "</tr>"
+																																+ "</tbody>");
+
+																									});
+																				}
+																			});
+
 																} else if (item2.japYesOrNo == "no"
 																		|| (item2.japYesOrNo == "yes" && item2.japRemQty == 0)) {
 																	if (item2.japYesOrNo == "no") {
@@ -1638,185 +1731,79 @@
 																							+ '</th><th colspan="2">'
 																							+ "Status"
 																							+ '</th></tr></thead></table>');
+
+																	var ProductForSampleId = item2.ProductForSampleId;
+																	var planId = pId;
+																	var prodId = item2.ProductId;
+																	$
+																			.ajax({
+																				type : "post",
+																				url : "getJobsForDesignCostSheetByPlanId",
+																				dataType : "json",
+																				data : {
+																					pid : ProductForSampleId,
+																					planId : planId,
+																					prodId : prodId,
+																					japId : japId
+																				},
+																				success : function(
+																						data2) {
+																					$
+																							.each(
+																									data2,
+																									function(
+																											index,
+																											item2) {
+																										if ($(
+																												"#planStatus")
+																												.val() == "Completed") {
+																											var jobStatus = "Completed";
+																										} else {
+																											var jobStatus = item2.Status;
+																										}
+																										$(
+
+																												"#pDetTable"
+																														+ ProductForSampleId)
+																												.append(
+																														"<tbody id='pDetTable"+item2.JobId+"'>"
+																																+ "<tr>"
+																																+ "<td>"
+																																+ Number(1 + index)
+																																+ "</td>"
+																																+ "<td colspan='2'>"
+																																+ item2.JobName
+																																+ "<input type='hidden' id='jobId"+item2.JobId+"' value='"+item2.JobId+"'>"
+																																+ "</td>"
+																																+ "<td colspan='2'>"
+																																+ item2.JobRateOfSample
+																																+ "</td>"
+																																+ "<td colspan='2'>"
+																																+ "<input type='text' class='form-control' id='jobRemQty"+item2.JobId+"' readonly='readonly' value='"+item2.JobQtyOfSample
+																																+"'>"
+																																+ "</td>"
+																																+ "<td>"
+																																+ "<input type='text' class='form-control' id='jobRemQty"+item2.JobId+"' readonly='readonly' value='"+item2.JobQtyOfSample
+																																* pQty+"'>"
+																																+ "</td>"
+																																+ "<td>"
+																																+ item2.JobUOMOfSample
+																																+ "</td>"
+																																+ "<td colspan='2'>"
+																																+ jobStatus
+																																+ "</td>"
+																																+ "</tr>"
+																																+ "</tbody>");
+
+																									});
+																				}
+																			});
 																}
 															}
 														});
 											});
 						},
-						complete : function(data2) {
-							$
-									.each(
-											data2.responseJSON,
-											function(index, item2) {
-												if ((item2.japYesOrNo == "yes" && item2.IsComplete == true)
-														|| (item2.japYesOrNo == "yes"
-																&& item2.japRemQty > 0 && item2.IsComplete == false)) {
-													var ProductForSampleId = item2.ProductForSampleId;
-													var planId = pId;
-													var prodId = item2.ProductId;
-													var japId = item2.japId;
-													$
-															.ajax({
-																type : "post",
-																url : "getJobsForDesignCostSheetByPlanId",
-																dataType : "json",
-																data : {
-																	pid : ProductForSampleId,
-																	planId : planId,
-																	prodId : prodId,
-																	japId : japId
-																},
-																success : function(
-																		data2) {
-																	$
-																			.each(
-																					data2,
-																					function(
-																							index,
-																							item2) {
-																						if (item2.EstSubDate != "NA") {
-																							var EstSubDate = formatDate(item2.EstSubDate);
-																						} else {
-																							var EstSubDate = item2.EstSubDate;
-																						}
-																						if ($(
-																								"#planStatus")
-																								.val() == "Completed") {
-																							var jobStatus = "Completed";
-																						} else {
-																							var jobStatus = item2.Status;
-																						}
-																						$(
-
-																								"#pDetTable"
-																										+ ProductForSampleId)
-																								.append(
-																										"<tbody id='pDetTable"+item2.JobId+"'>"
-																												+ "<tr>"
-																												+ "<td>"
-																												+ Number(1 + index)
-																												+ "</td>"
-																												+ "<td>"
-																												+ item2.JobName
-																												+ "<input type='hidden' id='jobId"+item2.JobId+"' value='"+item2.JobId+"'>"
-																												+ "</td>"
-																												+ "<td>"
-																												+ item2.JobRateOfSample
-																												+ "</td>"
-																												+ "<td>"
-																												+ "<input type='text' readonly='readonly' class='form-control' id='jobPresentRate"
-																												+ item2.JobId
-																												+ "' onkeyup='presentRateKU("
-																												+ item2.JobId
-																												+ ");' value='"
-																												+ item2.PresentRate
-																												+ "'>"
-																												+ "</td>"
-																												+ "<td>"
-																												+ item2.JobQtyOfSample
-																												+ "</td>"
-																												+ "<td>"
-																												+ "<input type='text' readonly='readonly' class='form-control' id='jobQty"
-																												+ item2.JobId
-																												+ "' onkeyup='qtyKU("
-																												+ item2.JobId
-																												+ ");' value='"
-																												+ item2.AssignQty
-																												+ "'>"
-																												+ "</td>"
-																												+ "<td>"
-																												+ item2.JobUOMOfSample
-																												+ "</td>"
-																												+ "<td>"
-																												+ "<input type='text' readonly='readonly' id='jobAmount"+item2.JobId+"' class='form-control' value='"+item2.Amount+"'>"
-																												+ "</td>"
-																												+ "<td colspan='3'>"
-																												+ "<input type='text' readonly='readonly' id='estSubmDate"+item2.JobId+"' value='"+EstSubDate+"' class='form-control'>"
-																												+ "</td>"
-																												+ "<td>"
-																												+ jobStatus
-																												+ "</td>"
-																												+ "</tr>"
-																												+ "</tbody>");
-
-																					});
-																}
-															});
-												} else if (item2.japYesOrNo == "no"
-														|| (item2.japYesOrNo == "yes" && item2.japRemQty == 0)) {
-													if (item2.japYesOrNo == "no") {
-														var japId = 0;
-													} else if (item2.japYesOrNo == "yes"
-															&& item2.japRemQty == 0) {
-														var japId = item2.japId;
-													}
-													var ProductForSampleId = item2.ProductForSampleId;
-													var planId = pId;
-													var prodId = item2.ProductId;
-													$
-															.ajax({
-																type : "post",
-																url : "getJobsForDesignCostSheetByPlanId",
-																dataType : "json",
-																data : {
-																	pid : ProductForSampleId,
-																	planId : planId,
-																	prodId : prodId,
-																	japId : japId
-																},
-																success : function(
-																		data2) {
-																	$
-																			.each(
-																					data2,
-																					function(
-																							index,
-																							item2) {
-																						if ($(
-																								"#planStatus")
-																								.val() == "Completed") {
-																							var jobStatus = "Completed";
-																						} else {
-																							var jobStatus = item2.Status;
-																						}
-																						$(
-
-																								"#pDetTable"
-																										+ ProductForSampleId)
-																								.append(
-																										"<tbody id='pDetTable"+item2.JobId+"'>"
-																												+ "<tr>"
-																												+ "<td>"
-																												+ Number(1 + index)
-																												+ "</td>"
-																												+ "<td colspan='2'>"
-																												+ item2.JobName
-																												+ "<input type='hidden' id='jobId"+item2.JobId+"' value='"+item2.JobId+"'>"
-																												+ "</td>"
-																												+ "<td colspan='2'>"
-																												+ item2.JobRateOfSample
-																												+ "</td>"
-																												+ "<td colspan='2'>"
-																												+ "<input type='text' class='form-control' id='jobRemQty"+item2.JobId+"' readonly='readonly' value='"+item2.JobQtyOfSample
-																												+"'>"
-																												+ "</td>"
-																												+ "<td>"
-																												+ "<input type='text' class='form-control' id='jobRemQty"+item2.JobId+"' readonly='readonly' value='"+item2.JobQtyOfSample
-																												* pQty+"'>"
-																												+ "</td>"
-																												+ "<td>"
-																												+ item2.JobUOMOfSample
-																												+ "</td>"
-																												+ "<td colspan='2'>"
-																												+ jobStatus
-																												+ "</td>"
-																												+ "</tr>"
-																												+ "</tbody>");
-																					});
-																}
-															});
-												}
-											});
+						complete : function() {
 							$
 									.ajax({
 										url : 'getJobPlanProductsByPlanId',
@@ -2334,29 +2321,24 @@
 											},
 											complete : function() {
 												alert($("#productId").val());//errornew
-												$
-														.ajax({
-															url : "getLastPurchaseProductDetailsByProductId",
-															dataType : "json",
-															data : {
-																pId : $(
-																		"#productId")
-																		.val()
-															},
-															success : function(
-																	data) {
-																if (data != null) {
-																	$("#lotnO")
-																			.val(
-																					Number(data.lotNumber)
-																							+ Number(1));
-																} else {
-																	$("#lotnO")
-																			.val(
-																					1);
-																}
-															}
-														});
+												$.ajax({
+													url : "getLastPurchaseProductDetailsByProductId",
+													dataType : "json",
+													data : {
+														pId : $("#productId").val()
+													},
+													success : function(data) {
+														if (data != null) {
+															$("#lotnO")
+																	.val(
+																			Number(data.lotNumber)
+																					+ Number(1));
+														} else {
+															$("#lotnO")
+																	.val(1);
+														}
+													}
+												});
 											}
 										});
 							} else {

@@ -275,27 +275,45 @@
 														<table cellspacing="0" cellpadding="1" border="1"
 															width="900">
 															<tr style="color: black; background-color: #f4f4f0">
-																<th style="text-align: center" width="5%">#</th>
+																<th width="34%" style="text-align: center">Design
+																	No. :
+																	${requestScope['amj'].jobPlan.designCostSheet.designNumber}</th>
+																<th width="33%" style="text-align: center">Total
+																	Qty : <span id="totalSampleQty">${requestScope['amj'].jobPlan.qty}</span>
+																</th>
+																<th width="33%" style="text-align: center">Remaining
+																	Qty : <span id="remSampleQty">${requestScope['amj'].jobPlan.qty*requestScope['amj'].jobAssignmentProducts.get(0).remaninQty/requestScope['amj'].jobAssignmentProducts.get(0).qty}</span>
+																</th>
+															</tr>
+														</table>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<table cellspacing="0" cellpadding="1" border="1"
+															width="900">
+															<tr style="color: black; background-color: #f4f4f0">
+																<th style="text-align: center" width="4%">#</th>
 
-																<th width="8%" style="text-align: center">Pcode</th>
-																<th width="12%" style="text-align: center">Product
+																<th width="7%" style="text-align: center">Pcode</th>
+																<th width="10%" style="text-align: center">Product
 																	Description</th>
 																<th width="5%" style="text-align: center">Qty</th>
-																<th width="10%" style="text-align: center">Remaining
+																<th width="8%" style="text-align: center">Remaining
 																	Qty</th>
-																<th width="10%" style="text-align: center">UOM</th>
+																<th width="6%" style="text-align: center">UOM</th>
 																<th width="7%" style="text-align: center">Item</th>
 																<th width="8%" style="text-align: center">Job</th>
 																<th width="10%" style="text-align: center">Total
 																	Job Qty</th>
-																<th width="15%" style="text-align: center">Receiving
-																	Product Qty<font color="red" size="4">*</font>
+																<th width="10%" style="text-align: center">Receiving
+																	Sample Qty<font color="red" size="4">*</font>
 																</th>
+																<th width="10%" style="text-align: center">Receiving
+																	Product Qty</th>
 																<th width="10%" style="text-align: center">Select
 																	Product<font color="red" size="4">*</font>
 																</th>
-																<!-- <th width="20%" style="text-align: center">Reoson,
-																	If not receiving all products</th> -->
 															</tr>
 														</table>
 													</td>
@@ -311,20 +329,20 @@
 																<c:forEach items="${jjjjj.jobAssignmentProducts}"
 																	var="jobPro">
 																	<tr>
-																		<td style="text-align: center" width="5%">${count}<input
+																		<td style="text-align: center" width="4%">${count}<input
 																			type="hidden" id="jobPlanProductsId${jobPro.id}"
 																			value="${jobPro.jobPlanProducts.id}"><input
 																			type="hidden" id="jobAssgnProductsId${jobPro.id}"
 																			value="${jobPro.id}"></td>
 
-																		<td width="8%" style="text-align: center">${jobPro.jobPlanProducts.jobPlanProductStock.get(0).purchase_Product_Details.productDetail.code}</td>
-																		<td width="12%" style="text-align: center">${jobPro.jobPlanProducts.jobPlanProductStock.get(0).purchase_Product_Details.productDetail.description}</td>
+																		<td width="7%" style="text-align: center">${jobPro.jobPlanProducts.jobPlanProductStock.get(0).purchase_Product_Details.productDetail.code}</td>
+																		<td width="10%" style="text-align: center">${jobPro.jobPlanProducts.jobPlanProductStock.get(0).purchase_Product_Details.productDetail.description}</td>
 																		<td width="5%" style="text-align: center"><span
 																			id="qtty${jobPro.id}">${jobPro.qty}</span></td>
-																		<td width="10%"
+																		<td width="8%"
 																			style="text-align: center; padding: 2px"><span
 																			id="prodRemQty${jobPro.id}">${jobPro.remaninQty}</span></td>
-																		<td width="10%" style="text-align: center">${jobPro.jobPlanProducts.jobPlanProductStock.get(0).purchase_Product_Details.productDetail.qtyUnit.name}</td>
+																		<td width="6%" style="text-align: center">${jobPro.jobPlanProducts.jobPlanProductStock.get(0).purchase_Product_Details.productDetail.qtyUnit.name}</td>
 																		<td width="7%" style="text-align: center">${sessionScope['ejb'].getItmProductsForSampleByProductForDesignCostSheetId(jobPro.productsForDesignCostSheet.id).itemDetails.name}</td>
 																		<td width="8%" style="text-align: center"><c:forEach
 																				items="${jobPro.jobAssignmentJobDetails}"
@@ -337,7 +355,21 @@
 																				<span id="remainQtyRe${jobProjob.id}">${jobProjob.qty}</span>
 																				<hr>
 																			</c:forEach></td>
-																		<td width="15%"
+																		<td width="10%"
+																			style="text-align: center; padding: 4px"><c:if
+																				test="${jobPro.remaninQty>0}">
+																				<input type="text" class="form-control"
+																					value="${requestScope['amj'].jobPlan.qty*requestScope['amj'].jobAssignmentProducts.get(0).remaninQty/requestScope['amj'].jobAssignmentProducts.get(0).qty}"
+																					onkeyup="qtySubtractionSample('${jobPro.id}');"
+																					id="sampleQtyRe${jobPro.id}">
+																			</c:if> <c:if test="${jobPro.remaninQty==0}">
+																				<input type="text" readonly="readonly"
+																					class="form-control"
+																					value="${requestScope['amj'].jobPlan.qty*requestScope['amj'].jobAssignmentProducts.get(0).remaninQty/requestScope['amj'].jobAssignmentProducts.get(0).qty}"
+																					onkeyup="qtySubtractionSample('${jobPro.id}');"
+																					id="sampleQtyRe${jobPro.id}">
+																			</c:if></td>
+																		<td width="10%"
 																			style="text-align: center; padding: 4px"><c:forEach
 																				items="${jobPro.jobAssignmentJobDetails}"
 																				var="jobProjob">
@@ -362,7 +394,7 @@
 																				<!-- <hr> -->
 																			</c:forEach> <c:if test="${jobPro.remaninQty>0}">
 																				<input type="text" class="form-control"
-																					id="prodQtyRe${jobPro.id}"
+																					id="prodQtyRe${jobPro.id}" readonly="readonly"
 																					value="${jobPro.remaninQty}"
 																					onkeyup="qtySubtractionProd('${jobPro.id}');">
 																			</c:if> <c:if test="${jobPro.remaninQty==0}">
@@ -383,9 +415,6 @@
 																					name="isSelected${jobPro.id}"
 																					onclick="isSelectedF(${jobPro.id});">
 																			</c:if></td>
-
-																		<!-- <td width="20%" style="text-align: center"><input
-																			type="text" class="form-control" name="reoson"></td> -->
 																	</tr>
 																	<c:set var="count" value="${count+1}" />
 																</c:forEach>
@@ -492,10 +521,15 @@
 
 		});
 	}
+	function qtySubtractionSample(g) {
+		$("#prodQtyRe" + g).val(Number(Number($("#qtty" + g).html())*Number($("#sampleQtyRe" + g).val()))/Number($("#totalSampleQty").html()));
+		qtySubtractionProd(g);
+	}
 	function qtySubtractionProd(g) {
 
 		if (Number($("#prodQtyRe" + g).val()) > Number($("#prodRemQty" + g).html())) {
 			$("#prodQtyRe" + g).val($("#prodRemQty" + g).html());
+			$("#sampleQtyRe" + g).val($("#remSampleQty").html());
 			alert("Receiving qty can not be more than Remaining qty.");
 		}
 
