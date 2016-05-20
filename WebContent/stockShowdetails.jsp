@@ -263,52 +263,44 @@
 													</tr>
 
 													<tr>
-
-
-
 													</tr>
+													<c:set
+														value="${sessionScope['ejb'].getPurchaseProductDetailsByProductIdAndCompany(requestScope['proid1'])}"
+														var="prolst" />
+													<c:set var="sProduct"
+														value="${sessionScope['ejb'].getSales_Product_DetailsByProductIdAndCompany(requestScope['proid1'])}" />
+													<c:set var="jpL"
+														value="${sessionScope['ejb'].getJobPlanProductStockByproductId(requestScope['proid1'])}" />
+													<c:set value="${0}" var="total" />
+													<c:set value="${0}" var="sTotal" />
+													<c:set value="${0}" var="initialQty" />
+													<c:set value="${0}" var="purQtyt" />
+													<c:set value="${0}" var="purProductionQtyt" />
+													<c:forEach items="${prolst}" var="pro">
+														<c:choose>
+															<c:when test="${pro.isInitialInventory()}">
+																<c:set value="${pro.quantity}" var="initialQty" />
+															</c:when>
+															<c:when
+																test="${pro.purchase_Entry.vendor.name=='Production Vendor'}">
+																<c:set value="${purProductionQtyt+pro.quantity}"
+																	var="purProductionQtyt" />
+															</c:when>
+															<c:otherwise>
+																<c:set
+																	value="${purQtyt+pro.quantity-pro.totalReturningQty}"
+																	var="purQtyt" />
+															</c:otherwise>
+														</c:choose>
+													</c:forEach>
+													<c:forEach items="${jpL}" var="jppL">
+														<c:set var="total" value="${total+jppL.qty}" />
+													</c:forEach>
+													<c:forEach items="${sProduct}" var="sP">
+														<c:set var="sTotal"
+															value="${sTotal+sP.quantity-sP.salesReQty}" />
+													</c:forEach>
 													<tr style="width: 100%">
-
-														<td><b>In Stock:</b> &nbsp;&nbsp;${qty}</td>
-														<c:set
-															value="${sessionScope['ejb'].getPurchaseProductDetailsByProductIdAndCompany(requestScope['proid1'])}"
-															var="prolst" />
-
-														<c:set var="sProduct"
-															value="${sessionScope['ejb'].getSales_Product_DetailsByProductIdAndCompany(requestScope['proid1'])}" />
-
-														<%-- <c:set var="jpL"
-															value="${sessionScope['ejb'].getJobAssignmentProductDetailsByproductIdAndCompany(requestScope['proid1'])}" />
- --%>
-
-
-														<c:set value="${0}" var="total" />
-														<c:set value="${0}" var="sTotal" />
-														<c:set value="${0}" var="initialQty" />
-														<c:set value="${0}" var="purQtyt" />
-														<c:set value="${0}" var="purProductionQtyt" />
-														<c:forEach items="${prolst}" var="pro">
-															<c:choose>
-																<c:when test="${pro.isInitialInventory()}">
-																	<c:set value="${pro.quantity}" var="initialQty" />
-																</c:when>
-																<c:when
-																	test="${pro.purchase_Entry.vendor.name=='Production Vendor'}">
-																	<c:set value="${purProductionQtyt+pro.quantity}"
-																		var="purProductionQtyt" />
-																</c:when>
-																<c:otherwise>
-																	<c:set
-																		value="${purQtyt+pro.quantity-pro.totalReturningQty}"
-																		var="purQtyt" />
-																</c:otherwise>
-															</c:choose>
-														</c:forEach>
-
-														<td><b>Total Purchased:</b> &nbsp;&nbsp;${purQtyt} <br>
-															<b>Production Inventory:</b>
-															&nbsp;&nbsp;${purProductionQtyt}</td>
-
 														<td><b>Initial Inventory:</b> ${initialQty} <c:if
 																test="${initialQty!=0}">
 																<a href="#"
@@ -316,32 +308,20 @@
 																	<img alt="click to view" src="Capture.PNG" height="20">
 																</a>
 															</c:if></td>
-
-
-													</tr>
-
-													<%-- <c:forEach items="${jpL}" var="jppL">
-														<c:set var="total" value="${total+jppL.remaninQty}" />
-													</c:forEach> --%>
-													<tr>
-														<%-- <td><b>In Jobwork:</b>&nbsp;&nbsp;${total}</td> --%>
-
-														<c:forEach items="${sProduct}" var="sP">
-															<c:set var="sTotal"
-																value="${sTotal+sP.quantity-sP.salesReQty}" />
-														</c:forEach>
-
 														<td><b>Total Sold:</b> &nbsp;&nbsp;${sTotal}</td>
-
+														<td><b>In Stock:</b> &nbsp;&nbsp;${qty}</td>
+													</tr>
+													<tr>
+														<td><b>Total Purchased:</b> &nbsp;&nbsp;${purQtyt} <br>
+															<b>Production Inventory:</b>
+															&nbsp;&nbsp;${purProductionQtyt}</td>
+														<td><b>In Jobwork:</b>&nbsp;&nbsp;${total}</td>
 													</tr>
 												</table>
 											</div>
 
 											<hr width="100%">
 											<table>
-												<%-- <tr>
-													<td><b>To receive from jobber:&nbsp;&nbsp;</b>${total}</td>
-												</tr> --%>
 												<tr>
 													<td></td>
 												</tr>
