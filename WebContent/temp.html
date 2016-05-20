@@ -1,0 +1,28 @@
++ '<td>'
+										+ '<input type="hidden" name="productId" value="'
+										+ $("#proId").val()
+										+ '"><input type="hidden" name="itemId" id="itemIdH'
+										+ $("#proId").val()
+										+ '" value="'
+										+ $("#itemId").val()
+										+ '"><input type="hidden" name="proQty" id="proQtyH'
+										+ $("#proId").val()
+										+ '" value="'
+										+ $("#proQty").val()
+										+ '"><input type="hidden" name="rate" id="rateH'
+										+ $("#proId").val()
+										+ '" value="'
+										+ $("#rate").val()
+										+ '"><input type="hidden" name="amount" id="amountH'
+										+ $("#proId").val()
+										+ '" value="'
+										+ Number(
+												Number($("#proQty").val())
+														* Number($("#rate")
+																.val()))
+												.toFixed(2)
+										+ '"><input type="hidden" name="qtyUnitId" value="'
+										+ $("#UOMid").val()
+										+ '">'
+										+ $("#proCode").val()
+										+ '</td>'
