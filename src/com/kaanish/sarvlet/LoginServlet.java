@@ -21,20 +21,22 @@ import com.kaanish.model.AccountDetails;
 import com.kaanish.model.Bill_setup;
 import com.kaanish.model.CompanyInfo;
 import com.kaanish.model.JobAssignmentDetails;
+import com.kaanish.model.JobAssignmentJobDetails;
 import com.kaanish.model.JobClass;
+import com.kaanish.model.JobPlanJobStock;
 import com.kaanish.model.JobPlanProductStock;
-import com.kaanish.model.JobsForDesignCostSheet;
 import com.kaanish.model.Module;
 import com.kaanish.model.PageList;
 import com.kaanish.model.PaymentDetails;
 import com.kaanish.model.PaymentStatus;
 import com.kaanish.model.PaymentType;
 import com.kaanish.model.ProductDetail;
-import com.kaanish.model.ProductsForDesignCostSheet;
 import com.kaanish.model.PurchaseReturn;
 import com.kaanish.model.Purchase_Entry;
 import com.kaanish.model.Purchase_Product_Details;
 import com.kaanish.model.QtyUnitType;
+import com.kaanish.model.RawMaterialsStock;
+import com.kaanish.model.ReadyGoodsStock;
 import com.kaanish.model.SalesEntry;
 import com.kaanish.model.SalesReturn;
 import com.kaanish.model.SecurityQuestionGroup;
@@ -82,12 +84,28 @@ public class LoginServlet extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
-		// job plan product stock cost
-		for (JobPlanProductStock pd : ejb.getAllJobPlanProductStock()) {
-			pd.setCost(pd.getPurchase_Product_Details().getCost());
-			ejb.updateJobPlanProductStock(pd);
+		// stock manage
+		for (RawMaterialsStock rms : ejb.getAllRawMaterialStockDetail()) {
+			float remQty = 0;
+			for (Purchase_Product_Details ppd : rms.getProductDetail()
+					.getPurchase_Product_Details()) {
+				remQty = remQty + ppd.getRemaining_quantity();
+			}
+			rms.setRemainingQty(remQty);
+			ejb.updateRawMaterialStockDetail(rms);
+			// System.out.println("Product " + rms.getProductDetail().getCode()
+			// + ": " + qty + ", " + remQty);
 		}
-		// job plan product stock cost
+		for (ReadyGoodsStock rgs : ejb.getAllReadyGoodStockDetails()) {
+			float remQty = 0;
+			for (Purchase_Product_Details ppd : rgs.getProductDetail()
+					.getPurchase_Product_Details()) {
+				remQty = remQty + ppd.getRemaining_quantity();
+			}
+			rgs.setRemainingQty(remQty);
+			ejb.updateReadyGoodsStockDetail(rgs);
+		}
+		// stock manage
 
 		// correcting lot number
 		for (ProductDetail pd : ejb.getAllProductDetail()) {
@@ -342,6 +360,24 @@ public class LoginServlet extends HttpServlet {
 		}
 
 		// ////////////////////////////////////////////////////////
+
+		// job assignment job details jobPlanJobStockId
+		for (JobAssignmentJobDetails jajd : ejb.getAllJobAssignmentJobDetails()) {
+			JobPlanJobStock jobPlanJobStock = ejb
+					.getJobPlanJobStockByJobPlanProductIdAndJobTypeId(jajd
+							.getAssignmentProducts().getJobPlanProducts()
+							.getId(), jajd.getJobType().getId());
+			jajd.setJobPlanJobStock(jobPlanJobStock);
+			ejb.updateJobAssignmentJobDetails(jajd);
+		}
+		// job assignment job details jobPlanJobStockId
+
+		// job plan product stock cost
+		for (JobPlanProductStock pd : ejb.getAllJobPlanProductStock()) {
+			pd.setCost(pd.getPurchase_Product_Details().getCost());
+			ejb.updateJobPlanProductStock(pd);
+		}
+		// job plan product stock cost
 
 		// correcting voucher details
 		// purchase id

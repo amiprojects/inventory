@@ -2996,6 +2996,12 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<ReadyGoodsStock> getAllReadyGoodStockDetails() {
+		TypedQuery<ReadyGoodsStock> q = em.createQuery(
+				"select c from ReadyGoodsStock c", ReadyGoodsStock.class);
+		return q.getResultList();
+	}
+
 	public ReadyGoodsStock getReadyGoodsStoctByProductId(int id) {
 		TypedQuery<ReadyGoodsStock> q = em.createQuery(
 				"select s from ReadyGoodsStock s where s.productDetail.id=:id",
@@ -4054,6 +4060,18 @@ public class Ejb {
 						JobPlanJobStock.class);
 		q.setParameter("jppId", jppId);
 		q.setParameter("jsId", jsId);
+		return q.getResultList().get(0);
+	}
+
+	public JobPlanJobStock getJobPlanJobStockByJobPlanProductIdAndJobTypeId(
+			int jppId, int jtId) {
+		TypedQuery<JobPlanJobStock> q = em
+				.createQuery(
+						"select c from JobPlanJobStock c where c.jobPlanProducts.id=:jppId AND c.jobsForDesignCostSheet.jobTypes.id=:jtId",
+						JobPlanJobStock.class);
+		q.setParameter("jppId", jppId);
+		q.setParameter("jtId", jtId);
+		System.out.println(q.getResultList().size());
 		return q.getResultList().get(0);
 	}
 
