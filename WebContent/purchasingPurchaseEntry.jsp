@@ -355,8 +355,8 @@
 												<label for="" class="font">Vendor Bill no :<font
 													color="red" size="4">*</font></label> <input type="text"
 													placeholder="" id="vendorBillNo" class="form-control"
-													name="vendorBillNo" required="required"
-													onkeypress="return blockSpecialChar(event)">
+													name="vendorBillNo" required="required">
+												<!-- onkeypress="return blockSpecialChar(event)" -->
 											</div>
 											<div class="form-group">
 												<label for="" class="font">Purchase challan no. :</label>

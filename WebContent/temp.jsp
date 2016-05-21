@@ -1,5 +1,5 @@
-login servlet,
-include sidebar
-dashboard
-stockshowdetails
+login servlet, 
+include sidebar (include, production entry, job module, setup module), 
+dashboard (job assignment)
+stockshowdetails (job work, production inventory)
 getmacid

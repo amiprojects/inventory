@@ -1,3 +1,30 @@
+// not received assigns delete
+		// for (JobPlan jp : ejb.getAllJobPlan()) {
+		// for (JobAssignmentDetails jad : jp.getJobAssignmentDetails()) {
+		// float totREMqty = 0;
+		// for (JobAssignmentProducts jap : jad.getJobAssignmentProducts()) {
+		// totREMqty = totREMqty + jap.getRemaninQty();
+		// }
+		// if (totREMqty > 0) {
+		// System.out.println("Plan No : " + jp.getId()
+		// + ", JobAssignId : " + jad.getId());
+		// for (JobAssignmentJobDetails jajd : jad
+		// .getJobAssignmentJobDetails()) {
+		// ejb.deleteJobAssignmentJobDetailsById(jajd.getId());
+		// }
+		// for (JobAssignmentProducts jap : jad
+		// .getJobAssignmentProducts()) {
+		// ejb.deleteJobAssignmentProductsById(jap.getId());
+		// }
+		// ejb.deleteJobAssignmentDetailsById(jad.getId());
+		// System.out.println("Job " + jad.getChallanNumber()
+		// + " deleted");
+		// }
+		// }
+		// }
+		// not received assigns delete
+
+
 // Stiching on sample
 		// for (ProductsForDesignCostSheet p : ejb
 		// .getAllProductsForDesignCostSheet()) {
