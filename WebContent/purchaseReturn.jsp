@@ -504,24 +504,7 @@
 														name="discountValue"></td>
 												</tr>
 											</tbody>
-											<tbody>
-												<tr>
-													<td>${purchaseSearchView.tax_Type_Group.name}</td>
-													<td>%</td>
-													<td><input type="text" class="form-control"
-														readonly="readonly"
-														value="${purchaseSearchView.tax_Type_Group.getTotalTaxValue()}"
-														id="taxTot"></td>
-												</tr>
-											</tbody>
-											<tbody>
-												<tr>
-													<td colspan="2">Tax Amount :</td>
-													<td><input type="text" class="form-control"
-														readonly="readonly" value="0" id="taxAmount"></td>
-												</tr>
-											</tbody>
-											<c:if test="${purchaseSearchView.isEfectiveProfit()==true}">
+											<c:if test="${purchaseSearchView.isEfectiveProfit()==true && purchaseSearchView.agentId!=0}">
 												<tbody>
 													<tr>
 														<td colspan="2">Agent Profit: &nbsp; <select
@@ -553,7 +536,7 @@
 													</tr>
 												</tbody>
 											</c:if>
-											<c:if test="${purchaseSearchView.isEfectiveProfit()==false}">
+											<c:if test="${purchaseSearchView.isEfectiveProfit()==false || purchaseSearchView.agentId==0}">
 												<tbody style="display: none;">
 													<tr>
 														<td colspan="2">Agent Profit: &nbsp; <select
@@ -584,6 +567,23 @@
 													</tr>
 												</tbody>
 											</c:if>
+											<tbody>
+												<tr>
+													<td>${purchaseSearchView.tax_Type_Group.name}</td>
+													<td>%</td>
+													<td><input type="text" class="form-control"
+														readonly="readonly"
+														value="${purchaseSearchView.tax_Type_Group.getTotalTaxValue()}"
+														id="taxTot"></td>
+												</tr>
+											</tbody>
+											<tbody>
+												<tr>
+													<td colspan="2">Tax Amount :</td>
+													<td><input type="text" class="form-control"
+														readonly="readonly" value="0" id="taxAmount"></td>
+												</tr>
+											</tbody>
 											<tbody>
 												<tr>
 													<td colspan="2" id="round">Round Of :</td>
@@ -835,12 +835,6 @@
 								* Number($("#discount").val()) / Number($(
 								"#totalPurchasedSubTot").val())).toFixed(2));
 			}
-			$("#taxAmount")
-			.val(
-					Math
-							.round((Number(Number($("#subTotal").val())
-									- Number($("#discountValue").val()))
-									* Number($("#taxTot").val()) / Number(100)) * 100) / 100);
 			if ($("#profitType option:selected").val() == 'profitPer') {
 				$("#profitValue")
 				.val(
@@ -848,8 +842,7 @@
 								.round((Number(Number($("#subTotal")
 										.val())
 										- Number($("#discountValue")
-												.val())
-										+ Number($("#taxAmount").val()))
+												.val()))
 										* Number($("#profitVal").val()) / 100) * 100) / 100);
 			} else {
 				$("#profitValue").val(
@@ -857,9 +850,15 @@
 								* Number($("#profitVal").val()) / Number($(
 								"#totalPurchasedSubTot").val())).toFixed(2));
 			}
+			$("#taxAmount")
+			.val(
+					Math
+							.round((Number(Number($("#subTotal").val())
+									- Number($("#discountValue").val()))
+									* Number($("#taxTot").val()) / Number(100)) * 100) / 100);			
 			$("#totalvalue").val(
 			Math.round((Number($("#subTotal").val()) - Number($("#discountValue").val()) + Number($(
-					"#taxAmount").val()) + Number($("#profitValue").val())) * 100) / 100);
+					"#taxAmount").val())) * 100) / 100);
 			var tot = $("#totalvalue").val();
 			var round = Math.round(tot);
 			$("#roundvalue").val(Math.round((round - tot) * 100) / 100);

@@ -43,7 +43,6 @@ public class Purchase_Entry implements Serializable {
 	private boolean isFlatDiscount;
 	private float discountValue;
 	private float discountTotal;
-	private boolean isInclusiveAgent;
 	private boolean isFlatProfitAgent;
 	private boolean isEfectiveProfit;
 	private float agentProfitValue;
@@ -308,14 +307,6 @@ public class Purchase_Entry implements Serializable {
 
 	public void setPurchase_date(Date purchase_date) {
 		this.purchase_date = purchase_date;
-	}
-
-	public boolean isInclusiveAgent() {
-		return isInclusiveAgent;
-	}
-
-	public void setInclusiveAgent(boolean isInclusiveAgent) {
-		this.isInclusiveAgent = isInclusiveAgent;
 	}
 
 	public boolean isFlatProfitAgent() {

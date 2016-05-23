@@ -41,10 +41,14 @@ public class SalesEntry implements Serializable {
 	private boolean isMRP;
 	private boolean isFlatDiscount;
 	private float discountValue;
-		
+	private boolean isFlatProfitAgent;
+	private boolean isEfectiveProfit;
+	private float agentProfitValue;
+	private float agentProfitTotal;
+
 	@OneToMany(mappedBy = "salesEntry")
 	private List<NotificationDetails> notificationDetails;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "companyInfoId")
 	private CompanyInfo companyInfo;
@@ -69,11 +73,10 @@ public class SalesEntry implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "taxtypeId")
 	private Tax_Type_Group tax_Type_Group;
-	
+
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "salesEntry")
 	private VoucherDetails voucherDetails;
 
-	
 	@ManyToOne
 	@JoinColumn(name = "bill_setupId")
 	private Bill_setup bill_setup;
@@ -94,8 +97,6 @@ public class SalesEntry implements Serializable {
 		this.challanNo = challanNo;
 	}
 
-	
-
 	public List<SalesReturn> getSalesReturn() {
 		return salesReturn;
 	}
@@ -103,8 +104,6 @@ public class SalesEntry implements Serializable {
 	public void setSalesReturn(List<SalesReturn> salesReturn) {
 		this.salesReturn = salesReturn;
 	}
-
-
 
 	public VoucherDetails getVoucherDetails() {
 		return voucherDetails;
@@ -166,7 +165,8 @@ public class SalesEntry implements Serializable {
 		return salesProductDetails;
 	}
 
-	public void setSalesProductDetails(List<SalesProductDetails> salesProductDetails) {
+	public void setSalesProductDetails(
+			List<SalesProductDetails> salesProductDetails) {
 		this.salesProductDetails = salesProductDetails;
 	}
 
@@ -209,7 +209,6 @@ public class SalesEntry implements Serializable {
 	public void setTotalCost(float totalCost) {
 		this.totalCost = totalCost;
 	}
-	
 
 	public Vendor getVendor() {
 		return vendor;
@@ -274,6 +273,7 @@ public class SalesEntry implements Serializable {
 	public void setTaxAmount(float taxAmount) {
 		this.taxAmount = taxAmount;
 	}
+
 	public Date getEntry_Date() {
 		return entry_Date;
 	}
@@ -286,9 +286,41 @@ public class SalesEntry implements Serializable {
 		return notificationDetails;
 	}
 
-	public void setNotificationDetails(List<NotificationDetails> notificationDetails) {
+	public void setNotificationDetails(
+			List<NotificationDetails> notificationDetails) {
 		this.notificationDetails = notificationDetails;
 	}
 
-	
+	public boolean isFlatProfitAgent() {
+		return isFlatProfitAgent;
+	}
+
+	public void setFlatProfitAgent(boolean isFlatProfitAgent) {
+		this.isFlatProfitAgent = isFlatProfitAgent;
+	}
+
+	public boolean isEfectiveProfit() {
+		return isEfectiveProfit;
+	}
+
+	public void setEfectiveProfit(boolean isEfectiveProfit) {
+		this.isEfectiveProfit = isEfectiveProfit;
+	}
+
+	public float getAgentProfitValue() {
+		return agentProfitValue;
+	}
+
+	public void setAgentProfitValue(float agentProfitValue) {
+		this.agentProfitValue = agentProfitValue;
+	}
+
+	public float getAgentProfitTotal() {
+		return agentProfitTotal;
+	}
+
+	public void setAgentProfitTotal(float agentProfitTotal) {
+		this.agentProfitTotal = agentProfitTotal;
+	}
+
 }

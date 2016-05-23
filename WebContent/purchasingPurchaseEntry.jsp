@@ -456,6 +456,40 @@
 														name="discountValue" value="0"></td>
 												</tr>
 											</tbody>
+											<!-- <tbody style="display: none;"> -->
+											<tbody id="isEffectiveTR" style="display: none;">
+												<tr>
+													<td colspan="2">Agent Profit:</td>
+													<td>Is Effective On Return:&nbsp; <select
+														name="isEffective" id="isEffective">
+															<option value="efectiveYes" selected="selected">Yes</option>
+															<option value="efectiveNo">No</option>
+													</select>
+													</td>
+												</tr>
+											</tbody>
+											<tbody id="profitTypeTR" style="display: none;">
+												<tr>
+													<td colspan="2">Agent Profit: &nbsp; <select
+														name="profitType" id="profitType"
+														onchange="profitTypeF();">
+															<option value="profitFlat">Flat</option>
+															<option value="profitPer">%</option>
+													</select>
+													</td>
+													<td><input type="text" value="0" class="form-control"
+														name="profitVal" id="profitVal" placeholder=""
+														onkeyup="gtot();" autocomplete="off"></td>
+												</tr>
+											</tbody>
+											<tbody id="profitValueTR" style="display: none;">
+												<tr>
+													<td colspan="2" id="disc">Agent Profit Value:</td>
+													<td><input type="text" class="form-control"
+														readonly="readonly" id="profitValue" name="profitValue"
+														value="0"></td>
+												</tr>
+											</tbody>
 											<tbody>
 												<tr>
 													<td><select class="form-control" id="taxGroup"
@@ -478,47 +512,6 @@
 													<td><input type="text" class="form-control"
 														readonly="readonly" value="0" id="taxAmount"
 														name="taxAmount"></td>
-												</tr>
-											</tbody>
-											<tbody style="display: none;">
-												<!-- <tbody> -->
-												<tr>
-													<td colspan="2">Agent Profit:</td>
-													<td>Is inclusive :&nbsp; <select name="isInclusive"
-														id="isInclusive" onchange="isInclusiveF();">
-															<option value="inclusiveYes" selected="selected">Yes</option>
-															<option value="inclusiveNo">No</option>
-													</select>
-														<div id="effectiveDiv" style="display: none;">
-															<br> Is Effective On Return:&nbsp; <select
-																name="isEffective" id="isEffective">
-																<option value="efectiveYes">Yes</option>
-																<option value="efectiveNo" selected="selected">No</option>
-															</select>
-														</div>
-													</td>
-												</tr>
-											</tbody>
-											<tbody id="profitTypeTR" style="display: none;">
-												<tr>
-													<td colspan="2">Agent Profit: &nbsp; <select
-														name="profitType" id="profitType"
-														onchange="profitTypeF();" disabled="disabled">
-															<option value="profitFlat">Flat</option>
-															<option value="profitPer">%</option>
-													</select>
-													</td>
-													<td><input type="text" value="0" class="form-control"
-														name="profitVal" id="profitVal" placeholder=""
-														onkeyup="gtot();" autocomplete="off" readonly="readonly"></td>
-												</tr>
-											</tbody>
-											<tbody id="profitValueTR" style="display: none;">
-												<tr>
-													<td colspan="2" id="disc">Agent Profit Value:</td>
-													<td><input type="text" class="form-control"
-														readonly="readonly" id="profitValue" name="profitValue"
-														value="0"></td>
 												</tr>
 											</tbody>
 											<tbody>
@@ -3733,12 +3726,20 @@
 				$("#isAgent").val('yes');
 				$("#aNameDiv").show();
 				$("#aDetailDiv").show();
+
+				$("#isEffectiveTR").removeAttr("style");
+				$("#profitTypeTR").removeAttr("style");
+				$("#profitValueTR").removeAttr("style");
 			} else {
 				$("#isAgent").val('no');
 				$("#aNameDiv").hide();
 				$("#aDetailDiv").hide();
 				$("#agentName").val(0);
 				$("#agentDet").val("");
+
+				$("#isEffectiveTR").attr("style", "display: none;");
+				$("#profitTypeTR").attr("style", "display: none;");
+				$("#profitValueTR").attr("style", "display: none;");
 			}
 		}
 		$("input:radio[name=bar]").click(function() {
@@ -5330,21 +5331,6 @@
 				$("#lotText").val("");
 			}
 		}
-		function isInclusiveF() {
-			if ($("#isInclusive").val() == 'inclusiveNo') {
-				$("#profitType").removeAttr("disabled");
-				$("#profitVal").removeAttr("readonly");
-				$("#effectiveDiv").removeAttr("style");
-				$("#profitTypeTR").removeAttr("style");
-				$("#profitValueTR").removeAttr("style");
-			} else {
-				$("#profitType").attr("disabled", "disabled");
-				$("#profitVal").attr("readonly", "readonly");
-				$("#effectiveDiv").attr("style", "display : none;");
-				$("#profitTypeTR").attr("style", "display : none;");
-				$("#profitValueTR").attr("style", "display : none;");
-			}
-		}
 		function profitTypeF() {
 			$("#profitVal").val(0);
 			gtot();
@@ -5394,6 +5380,20 @@
 				}
 			}
 
+			if ($("#profitType").val() == 'profitPer') {
+				$("#profitValue")
+						.val(
+								Math
+										.round(Number(Number(Number($("#subTotal")
+												.val())
+												- Number($("#discountValue")
+														.val()))
+												* Number($("#profitVal").val()) / 100) * 100) / 100);
+			} else {
+				$("#profitValue").val(
+						Math.round(Number($("#profitVal").val()) * 100) / 100);
+			}
+
 			$("#taxAmount")
 					.val(
 							Math
@@ -5401,26 +5401,10 @@
 											- Number($("#discountValue").val()))
 											* Number($("#taxTot").val()) / Number(100)) * 100) / 100);
 
-			if ($("#profitType").val() == 'profitPer') {
-				$("#profitValue")
-						.val(
-								Math
-										.round((Number(Number($("#subTotal")
-												.val())
-												- Number($("#discountValue")
-														.val())
-												+ Number($("#taxAmount").val()))
-												* Number($("#profitVal").val()) / 100) * 100) / 100);
-			} else {
-				$("#profitValue").val(
-						Math.round(Number($("#profitVal").val()) * 100) / 100);
-			}
-
 			$("#totalvalue").val(
 					Math.round((Number($("#subTotal").val())
 							- Number($("#discountValue").val())
 							+ Number($("#taxAmount").val())
-							+ Number($("#profitValue").val())
 							+ Number($("#transportCost").val()) + Number($(
 							"#surcharge").val())) * 100) / 100);
 

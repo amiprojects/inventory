@@ -1428,37 +1428,31 @@ public class Servlet extends HttpServlet {
 																		// is
 																		// total
 																		// discount.
-							if (req.getParameter("isInclusive").equals(
-									"inclusiveNo")) {
-								purchaseEntry.setInclusiveAgent(false);
-								if (req.getParameter("isEffective").equals(
-										"efectiveYes")) {
-									purchaseEntry.setEfectiveProfit(true);
-								} else {
-									purchaseEntry.setEfectiveProfit(false);
-								}
-								if (req.getParameter("profitType").equals(
-										"profitFlat")) {
-									purchaseEntry.setFlatProfitAgent(true);
-								} else {
-									purchaseEntry.setFlatProfitAgent(false);
-								}
-								purchaseEntry.setAgentProfitValue(Float
-										.parseFloat(req
-												.getParameter("profitVal"))); // this
-																				// is
-																				// not
-																				// total
-																				// profit.
-								purchaseEntry.setAgentProfitTotal(Float
-										.parseFloat(req
-												.getParameter("profitValue"))); // this
-																				// is
-																				// total
-																				// profit.
+
+							if (req.getParameter("isEffective").equals(
+									"efectiveYes")) {
+								purchaseEntry.setEfectiveProfit(true);
 							} else {
-								purchaseEntry.setInclusiveAgent(true);
+								purchaseEntry.setEfectiveProfit(false);
 							}
+							if (req.getParameter("profitType").equals(
+									"profitFlat")) {
+								purchaseEntry.setFlatProfitAgent(true);
+							} else {
+								purchaseEntry.setFlatProfitAgent(false);
+							}
+							purchaseEntry.setAgentProfitValue(Float
+									.parseFloat(req.getParameter("profitVal"))); // this
+																					// is
+																					// not
+																					// total
+																					// profit.
+							purchaseEntry
+									.setAgentProfitTotal(Float.parseFloat(req
+											.getParameter("profitValue"))); // this
+																			// is
+																			// total
+																			// profit.
 							// //////////////////////////////////////////////////////////////
 							ejb.setPurchaseEntry(purchaseEntry);
 
@@ -2064,6 +2058,31 @@ public class Servlet extends HttpServlet {
 																	// total
 																	// discount.
 
+							// ////////////////////////////////////////////////
+							if (req.getParameter("isEffective").equals(
+									"efectiveYes")) {
+								salesEntry.setEfectiveProfit(true);
+							} else {
+								salesEntry.setEfectiveProfit(false);
+							}
+							if (req.getParameter("profitType").equals(
+									"profitFlat")) {
+								salesEntry.setFlatProfitAgent(true);
+							} else {
+								salesEntry.setFlatProfitAgent(false);
+							}
+							salesEntry.setAgentProfitValue(Float.parseFloat(req
+									.getParameter("profitVal"))); // this
+																	// is
+																	// not
+																	// total
+																	// profit.
+							salesEntry.setAgentProfitTotal(Float.parseFloat(req
+									.getParameter("profitValue"))); // this
+																	// is
+																	// total
+																	// profit.
+							// //////////////////////////////////////////////////////////////
 							ejb.setSalesEntry(salesEntry);
 							if (!req.getParameter("pstatus")
 									.equals("Full Paid")) {

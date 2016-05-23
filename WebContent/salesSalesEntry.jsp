@@ -348,6 +348,37 @@
 											</tr>
 
 										</tbody>
+										<tbody id="isEffectiveTR" style="display: none;">
+											<tr>
+												<td colspan="2">Agent Profit:</td>
+												<td>Is Effective On Return:&nbsp; <select
+													name="isEffective" id="isEffective">
+														<option value="efectiveYes" selected="selected">Yes</option>
+														<option value="efectiveNo">No</option>
+												</select></td>
+											</tr>
+										</tbody>
+										<tbody id="profitTypeTR" style="display: none;">
+											<tr>
+												<td colspan="2">Agent Profit: &nbsp; <select
+													name="profitType" id="profitType" onchange="profitTypeF();">
+														<option value="profitFlat">Flat</option>
+														<option value="profitPer">%</option>
+												</select>
+												</td>
+												<td><input type="text" value="0" class="form-control"
+													name="profitVal" id="profitVal" placeholder=""
+													onkeyup="gtot();" autocomplete="off"></td>
+											</tr>
+										</tbody>
+										<tbody id="profitValueTR" style="display: none;">
+											<tr>
+												<td colspan="2" id="disc">Agent Profit Value:</td>
+												<td><input type="text" class="form-control"
+													readonly="readonly" id="profitValue" name="profitValue"
+													value="0"></td>
+											</tr>
+										</tbody>
 										<tbody>
 											<tr>
 												<td><select class="form-control" id="taxGroup"
@@ -1770,6 +1801,10 @@
 
 				$("#aNameStar").html(
 						"Via Agent :<font color='red' size='4'>*</font>");
+
+				$("#isEffectiveTR").removeAttr("style");
+				$("#profitTypeTR").removeAttr("style");
+				$("#profitValueTR").removeAttr("style");
 			} else {
 				$("#isAgent").val('no');
 				$("#agentName").prop("readonly", true);
@@ -1777,6 +1812,10 @@
 				$("#agentName").val("");
 
 				$("#aNameStar").html("Via Agent :");
+
+				$("#isEffectiveTR").attr("style", "display: none;");
+				$("#profitTypeTR").attr("style", "display: none;");
+				$("#profitValueTR").attr("style", "display: none;");
 			}
 		}
 		$(function() {
@@ -3052,6 +3091,10 @@
 				gtot();
 			}
 		}
+		function profitTypeF() {
+			$("#profitVal").val(0);
+			gtot();
+		}
 		function gtot() {
 			if ($("#disType").val() == 'disPer') {
 				$("#discountValue")
@@ -3072,6 +3115,21 @@
 									Math
 											.round(Number($("#discount").val()) * 100) / 100);
 				}
+			}
+
+			if ($("#profitType").val() == 'profitPer') {
+				$("#profitValue")
+						.val(
+								Math
+										.round(Number(Number(Number($(
+												"#subtotalvalue").val())
+												- Number($("#discountValue")
+														.val()))
+												* Number($("#profitVal").val())
+												/ 100) * 100) / 100);
+			} else {
+				$("#profitValue").val(
+						Math.round(Number($("#profitVal").val()) * 100) / 100);
 			}
 
 			/* $("#taxAmount").val(
