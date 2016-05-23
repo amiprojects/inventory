@@ -1491,7 +1491,7 @@ public class LoginServlet extends HttpServlet {
 						httpSession.removeAttribute("user");
 					}
 				} else {
-					msg = "Hard Disk not connected!";
+					msg = "No Data Found!";
 					httpSession.removeAttribute("user");
 				}
 				break;
@@ -1544,7 +1544,7 @@ public class LoginServlet extends HttpServlet {
 							httpSession.removeAttribute("user");
 						}
 					} else {
-						msg = "Hard Disk not connected!";
+						msg = "No Data Found!";
 						httpSession.removeAttribute("user");
 					}
 					break;

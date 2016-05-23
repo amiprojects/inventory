@@ -26,7 +26,8 @@
 	$(document).jkey('ctrl+shift+i', function() {
 	});
 
-	$(document).ready(function() {
+	
+	/* $(document).ready(function() {
 		function disableBack() {
 			window.history.forward()
 		}
@@ -36,7 +37,7 @@
 			if (evt.persisted)
 				disableBack()
 		}
-	});
+	}); */
 
 	document.onmousedown = disableclick;
 

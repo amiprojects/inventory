@@ -134,7 +134,8 @@ import com.kaanish.util.DepartmentCotractor;
 		"/getPurchaseProductDetailsByLotNumber",
 		"/getPaymentDetailsByJobAssignId",
 		"/getAllVoucherDetailsByJobAssignId", "/getCustomerById", "/testcase",
-		"/testcase1", "/getLastPurchaseProductDetailsByProductId" })
+		"/testcase1", "/getLastPurchaseProductDetailsByProductId",
+		"/getProductByCategory", "/getAllCategoryByCategoryName" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -890,8 +891,12 @@ public class JsonServlet extends HttpServlet {
 
 			case "getProductByDescription":
 				pw = resp.getWriter();
-				pw.print(ejb.getProductDetailByCode(req
+				pw.print(ejb.getAllProductByProductDescription(req
 						.getParameter("descriptionName")));
+				break;
+			case "getProductByCategory":
+				pw = resp.getWriter();
+				pw.print(ejb.getAllProductByCategory(req.getParameter("cat")));
 				break;
 			case "getQtyUnit":
 				pw = resp.getWriter();
@@ -1331,6 +1336,12 @@ public class JsonServlet extends HttpServlet {
 				resp.getWriter().print(
 						ejb.getAllCategoryBySubDepartmentId(Integer
 								.parseInt(req.getParameter("id"))));
+				break;
+
+			case "getAllCategoryByCategoryName":
+				resp.getWriter().print(
+						ejb.getAllCategoryByCategoryName(req
+								.getParameter("cat")));
 				break;
 
 			case "addJsonCountry":
@@ -2015,13 +2026,13 @@ public class JsonServlet extends HttpServlet {
 				}
 
 				break;
-				
+
 			case "getLastPurchaseProductDetailsByProductId":
 				resp.getWriter().print(
 						ejb.getLastPurchaseProductDetailsByProductId(Integer
 								.parseInt(req.getParameter("pId"))));
 				break;
-				
+
 			case "testcase":
 				JsonGeneratorFactory factory7 = Json
 						.createGeneratorFactory(null);
@@ -2044,7 +2055,7 @@ public class JsonServlet extends HttpServlet {
 
 			case "testcase1":
 				resp.getWriter().print(new JobClass());
-				break;			
+				break;
 
 			default:
 				break;

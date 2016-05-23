@@ -215,7 +215,7 @@ public class Servlet extends HttpServlet {
 				httpSession.removeAttribute("user");
 				httpSession.removeAttribute("sip");
 				httpSession.removeAttribute("port");
-				msg = "Hard Disk not connected!";
+				msg = "No Data Found!";
 			} else {
 
 				try {
@@ -1361,18 +1361,12 @@ public class Servlet extends HttpServlet {
 						int fm = 0;
 						int chP1 = 0;
 						for (Purchase_Entry pe : purEntry1) {
-							if (pe.getVendor_bill_no().equals(
-									req.getParameter("vendorBillNo"))) {
-								fm = 1;
-								break;
-							}
 							if (pe.getChallanNumber().equals(
 									req.getParameter("challanNumber"))) {
 								chP1 = 1;
 								break;
 							}
 						}
-						// if (fm == 0 && chP1 == 0) {
 						if (chP1 == 0) {
 							purchaseEntry.setVendor_bill_no(req.getParameter(
 									"vendorBillNo").toUpperCase());
@@ -3473,7 +3467,7 @@ public class Servlet extends HttpServlet {
 					case "sampleJobSearchByDesignNo":
 						page = "jobDesignCostSheetSearch.jsp";
 						List<SampleDesignCostSheet> sampleDesignCostSheetListD = ejb
-								.getSampleDesignCostSheetByDesignNumber(req
+								.getSampleCostSheetByDesignNumber(req
 										.getParameter("designNo"));
 						req.setAttribute("sampleDesignCostSheetList",
 								sampleDesignCostSheetListD);

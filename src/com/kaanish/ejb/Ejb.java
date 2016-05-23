@@ -970,7 +970,7 @@ public class Ejb {
 						"select c from Vendor c where c.vendorType.id=:Id AND UPPER(c.name) LIKE :name ORDER BY c.id ASC",
 						Vendor.class);
 		q.setParameter("Id", id);
-		q.setParameter("name", "%" + nm.toUpperCase() + "%");
+		q.setParameter("name", nm.toUpperCase() + "%");
 		return q.getResultList();
 	}
 
@@ -987,7 +987,7 @@ public class Ejb {
 				.createQuery(
 						"select c from Vendor c where UPPER(c.name) like :name and UPPER(c.vendorType.type)=:type",
 						Vendor.class);
-		q.setParameter("name", "%" + name.toUpperCase() + "%");
+		q.setParameter("name", name.toUpperCase() + "%");
 		q.setParameter("type", type.toUpperCase());
 		return q.getResultList();
 	}
@@ -1015,7 +1015,7 @@ public class Ejb {
 				.createQuery(
 						"select c from Vendor c where c.vendorType.type='Jobber' and UPPER(c.name) like :nm",
 						Vendor.class);
-		q.setParameter("nm", "%" + name.toUpperCase() + "%");
+		q.setParameter("nm", name.toUpperCase() + "%");
 		return q.getResultList();
 	}
 
@@ -1024,7 +1024,7 @@ public class Ejb {
 				.createQuery(
 						"select c from Vendor c where c.vendorType.type='Designer' and UPPER(c.name) like :nm",
 						Vendor.class);
-		q.setParameter("nm", "%" + name.toUpperCase() + "%");
+		q.setParameter("nm", name.toUpperCase() + "%");
 		return q.getResultList();
 	}
 
@@ -1033,7 +1033,7 @@ public class Ejb {
 				.createQuery(
 						"select c from Vendor c where c.vendorType.type='Vendor' and UPPER(c.name) like :nm",
 						Vendor.class);
-		q.setParameter("nm", "%" + name.toUpperCase() + "%");
+		q.setParameter("nm", name.toUpperCase() + "%");
 		return q.getResultList();
 	}
 
@@ -1042,7 +1042,7 @@ public class Ejb {
 				.createQuery(
 						"select c from Vendor c where c.vendorType.type='Purchase Agent' and UPPER(c.name) like :nm",
 						Vendor.class);
-		q.setParameter("nm", "%" + name.toUpperCase() + "%");
+		q.setParameter("nm", name.toUpperCase() + "%");
 		return q.getResultList();
 	}
 
@@ -1051,7 +1051,7 @@ public class Ejb {
 				.createQuery(
 						"select c from Vendor c where c.vendorType.type='Sales Agent' and UPPER(c.name) like :nm",
 						Vendor.class);
-		q.setParameter("nm", "%" + name.toUpperCase() + "%");
+		q.setParameter("nm", name.toUpperCase() + "%");
 		return q.getResultList();
 	}
 
@@ -2644,6 +2644,14 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<Category> getAllCategoryByCategoryName(String catName) {
+		TypedQuery<Category> q = em.createQuery(
+				"select s from Category s where upper(s.name) like :catName",
+				Category.class);
+		q.setParameter("catName", catName.toUpperCase() + "%");
+		return q.getResultList();
+	}
+
 	public List<Category> getAllCategoryBySubDepartmentId(int id) {
 		TypedQuery<Category> q = em.createQuery(
 				"select s from Category s where s.subDepartment.id=:Id",
@@ -2721,7 +2729,7 @@ public class Ejb {
 		TypedQuery<ProductDetail> q = em.createQuery(
 				"select c from ProductDetail c where UPPER(c.code) like :nm",
 				ProductDetail.class);
-		q.setParameter("nm", "%" + name.toUpperCase() + "%");
+		q.setParameter("nm", name.toUpperCase() + "%");
 		return q.getResultList();
 	}
 
@@ -2734,7 +2742,7 @@ public class Ejb {
 				.createQuery(
 						"select c from ProductDetail c where c.readyGoodsStock.companyInfo.id=:cId AND c.isSaleble=:sal AND c.readyGoodsStock.remainingQty>0 AND UPPER(c.code) like :codeName",
 						ProductDetail.class);
-		query.setParameter("codeName", "%" + nm.toUpperCase() + "%");
+		query.setParameter("codeName", nm.toUpperCase() + "%");
 		query.setParameter("sal", true);
 		query.setParameter("cId", cId);
 		lst = query.getResultList();
@@ -2744,7 +2752,7 @@ public class Ejb {
 						ProductDetail.class);
 		q.setParameter("sal", true);
 		q.setParameter("cId", cId);
-		q.setParameter("codeName", "%" + nm.toUpperCase() + "%");
+		q.setParameter("codeName", nm.toUpperCase() + "%");
 		lst.addAll(q.getResultList());
 		return lst;
 	}
@@ -3494,7 +3502,7 @@ public class Ejb {
 		TypedQuery<CustomerEntry> q = em.createQuery(
 				"select c from CustomerEntry c where c.mobile like :ph",
 				CustomerEntry.class);
-		q.setParameter("ph", "%" + ph + "%");
+		q.setParameter("ph", ph + "%");
 		return q.getResultList();
 	}
 
@@ -3502,7 +3510,7 @@ public class Ejb {
 		TypedQuery<CustomerEntry> q = em.createQuery(
 				"select c from CustomerEntry c where UPPER(c.name) like :name",
 				CustomerEntry.class);
-		q.setParameter("name", "%" + name.toUpperCase() + "%");
+		q.setParameter("name", name.toUpperCase() + "%");
 		return q.getResultList();
 	}
 
@@ -3838,6 +3846,16 @@ public class Ejb {
 						"select c from SampleDesignCostSheet c where UPPER(c.designNumber) like :dn order by c.id desc",
 						SampleDesignCostSheet.class);
 		q.setParameter("dn", dn.toUpperCase() + "%");
+		return q.getResultList();
+	}
+
+	public List<SampleDesignCostSheet> getSampleCostSheetByDesignNumber(
+			String dn) {
+		TypedQuery<SampleDesignCostSheet> q = em
+				.createQuery(
+						"select c from SampleDesignCostSheet c where UPPER(c.designNumber) = :dn order by c.id desc",
+						SampleDesignCostSheet.class);
+		q.setParameter("dn", dn.toUpperCase());
 		return q.getResultList();
 	}
 

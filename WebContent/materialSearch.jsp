@@ -2226,6 +2226,115 @@
 				$("#lotnO").val("");
 			}
 		}
+
+		$(function() {
+			$("#prodcode").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getProductbyProductCode",
+						data : {
+							code : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.code,
+									id : item.id
+								});
+							}));
+						},
+
+						error : function(a, b, c) {
+							alert(a + b + c);
+						}
+
+					});
+				},
+				select : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#prodcode").val("");
+					} else {
+						$("#prodcode").val(ui.item.code);
+					}
+
+				}
+			});
+		});
+		$(function() {
+			$("#prodesc").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getProductByDescription",
+						data : {
+							descriptionName : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.description,
+									id : item.id
+								});
+							}));
+						},
+
+						error : function(a, b, c) {
+							alert(a + b + c);
+						}
+
+					});
+				},
+				select : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#prodesc").val("");
+					} else {
+						$("#prodesc").val(ui.item.description);
+					}
+
+				}
+			});
+		});
+		$(function() {
+			$("#deptcat").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getAllCategoryByCategoryName",
+						data : {
+							cat : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.name,
+									id : item.id
+								});
+							}));
+						},
+
+						error : function(a, b, c) {
+							alert(a + b + c);
+						}
+
+					});
+				},
+				select : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#deptcat").val("");
+					} else {
+						$("#deptcat").val(ui.item.name);
+					}
+
+				}
+			});
+		});
 	</script>
 </body>
 

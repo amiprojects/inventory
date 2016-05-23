@@ -481,6 +481,7 @@
 												</tr>
 											</tbody>
 											<tbody style="display: none;">
+												<!-- <tbody> -->
 												<tr>
 													<td colspan="2">Agent Profit:</td>
 													<td>Is inclusive :&nbsp; <select name="isInclusive"

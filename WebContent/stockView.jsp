@@ -17,8 +17,6 @@
 <link rel="stylesheet" href="bootstrapcdn.css">
 <script src="maxcdn.bootstrapcdn.js"></script>
 
-
-
 <link rel="stylesheet" href="css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="css/fixedHeader.dataTables.min.css">
 <link rel="stylesheet" href="css/buttons.dataTables.min.css">
@@ -47,7 +45,7 @@
 <!-- Style -->
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
 <!-- Responsive -->
-
+<link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
 </head>
 <body>
 	<c:if test="${sessionScope['user']==null}">
@@ -90,117 +88,108 @@
 
 
 							<div class="row">
-								<div class="widget-area" style="width: 40%; height: 550px">
+								<div class="widget-area" style="width: 30%; height: 550px">
 									<h3>Stock Search</h3>
 									<br> <br>
 									<div class="form-group">
 										<form action="goStockView" method="post">
 											<label for="" class="">Product code: </label> <input
 												type="text" id="prodcode" name="pCodeSearch"
-												class="form-control"> <label class="">Product
-												Description: </label> <input type="text" id="prodesc"
-												name="pDesSearch" class="form-control"> <label
-												class="">Category: </label> <input type="text" id="deptcat"
-												name="pCatSearch" class="form-control"> <br> <input
-												class="btn green btn-default" type="submit" value="Search">
-											<a href="stockView.jsp"> <input
+												class="form-control" autocomplete="off"> <label
+												class="">Product Description: </label> <input type="text"
+												id="prodesc" name="pDesSearch" class="form-control">
+											<label class="">Category: </label> <input type="text"
+												id="deptcat" name="pCatSearch" class="form-control">
+											<br> <input class="btn green btn-default" type="submit"
+												value="Search"> <a href="stockView.jsp"> <input
 												class="btn green btn-default" type="button" value="Show All"></a>
 										</form>
 									</div>
-
-
-
-
 									<br> <br>
-
-
-
 								</div>
-								<div class="widget-area" style="width: 60%; height: 550px">
+								<div class="widget-area" style="width: 70%; height: 550px">
 
 									<h3>Stock</h3>
 
 									<br>
-									
 
-										<table id="example" cellspacing="0" width="100%"
-											class="display">
-											<thead>
-												<tr>
-													<th>#</th>
-													<th>Product code:</th>
-													<th>Product Description:</th>
-													<th>UOM</th>
-													<th>Quantity</th>
-													<th>WSP</th>
-													<th>MRP</th>
-													<th>view</th>
 
-												</tr>
-											</thead>
-											<tbody>
-												<c:set var="count" value="${1}" />
+									<table id="example" cellspacing="0" width="100%"
+										class="display">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>Product code:</th>
+												<th>Product Description:</th>
+												<th>UOM</th>
+												<th>Quantity</th>
+												<th>WSP</th>
+												<th>MRP</th>
+												<th>view</th>
 
-												<c:forEach
-													items="${sessionScope['ejb'].getAllProductDetailByCompany()}"
-													var="amiProStock1">
-													<c:if
-														test="${amiProStock1.purchase_Product_Details.size()>0}">
-														<c:set var="qty"
-															value="${!amiProStock1.isRaw()?sessionScope['ejb'].getReadyGoodsStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty:sessionScope['ejb'].getRawMaterialStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty}" />
-														<c:choose>
-															<c:when test="${qty==0}">
-																<tr>
-																	<td style="color: red;">${count}</td>
-																	<td style="color: red;">${amiProStock1.code}</td>
-																	<td style="color: red;">${amiProStock1.description}</td>
-																	<td style="color: red;">${amiProStock1.qtyUnit.name}</td>
-																	<td style="color: red;">${qty}</td>
-																	<c:set var="purSize"
-																		value="${amiProStock1.purchase_Product_Details.size()}" />
-																	<td style="color: red;">${purSize>0?amiProStock1.purchase_Product_Details.get(purSize-1).wsp:'nill'}</td>
-																	<td style="color: red;">${purSize>0?amiProStock1.purchase_Product_Details.get(purSize-1).mrp:'nill'}</td>
-																	<td style="color: red;"><form
-																			action="stockDetailShow" method="post"
-																			id="StockDetails${amiProStock1.id}">
-																			<a href="#"
-																				onclick="showDetails('${amiProStock1.id}');"><input
-																				type="hidden" value="${amiProStock1.id}"
-																				name="proId"> <img alt=""
-																				src="images/eye.png" height="25px"></a>
-																		</form></td>
-																</tr>
-															</c:when>
-															<c:otherwise>
-																<tr>
-																	<td>${count}</td>
-																	<td>${amiProStock1.code}</td>
-																	<td>${amiProStock1.description}</td>
-																	<td>${amiProStock1.qtyUnit.name}</td>
-																	<td>${qty}</td>
-																	<c:set var="purSize"
-																		value="${amiProStock1.purchase_Product_Details.size()}" />
-																	<td>${purSize>0?amiProStock1.purchase_Product_Details.get(purSize-1).wsp:'nill'}</td>
-																	<td>${purSize>0?amiProStock1.purchase_Product_Details.get(purSize-1).mrp:'nill'}</td>
-																	<td><form action="stockDetailShow" method="post"
-																			id="StockDetails${amiProStock1.id}">
-																			<a href="#"
-																				onclick="showDetails('${amiProStock1.id}');"><input
-																				type="hidden" value="${amiProStock1.id}"
-																				name="proId"><img alt=""
-																				src="images/eye.png" height="25px"></a>
-																		</form></td>
-																</tr>
+											</tr>
+										</thead>
+										<tbody>
+											<c:set var="count" value="${1}" />
 
-															</c:otherwise>
-														</c:choose>
-														<c:set var="count" value="${count+1}" />
-													</c:if>
-												</c:forEach>
-											</tbody>
-										</table>
-										
-										</div>
+											<c:forEach
+												items="${sessionScope['ejb'].getAllProductDetailByCompany()}"
+												var="amiProStock1">
+												<c:if
+													test="${amiProStock1.purchase_Product_Details.size()>0}">
+													<c:set var="qty"
+														value="${!amiProStock1.isRaw()?sessionScope['ejb'].getReadyGoodsStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty:sessionScope['ejb'].getRawMaterialStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty}" />
+													<c:choose>
+														<c:when test="${qty==0}">
+															<tr>
+																<td style="color: red;">${count}</td>
+																<td style="color: red;">${amiProStock1.code}</td>
+																<td style="color: red;">${amiProStock1.description}</td>
+																<td style="color: red;">${amiProStock1.qtyUnit.name}</td>
+																<td style="color: red;">${qty}</td>
+																<c:set var="purSize"
+																	value="${amiProStock1.purchase_Product_Details.size()}" />
+																<td style="color: red;">${purSize>0?amiProStock1.purchase_Product_Details.get(purSize-1).wsp:'nill'}</td>
+																<td style="color: red;">${purSize>0?amiProStock1.purchase_Product_Details.get(purSize-1).mrp:'nill'}</td>
+																<td style="color: red;"><form
+																		action="stockDetailShow" method="post"
+																		id="StockDetails${amiProStock1.id}">
+																		<a href="#"
+																			onclick="showDetails('${amiProStock1.id}');"><input
+																			type="hidden" value="${amiProStock1.id}" name="proId">
+																			<img alt="" src="images/eye.png" height="25px"></a>
+																	</form></td>
+															</tr>
+														</c:when>
+														<c:otherwise>
+															<tr>
+																<td>${count}</td>
+																<td>${amiProStock1.code}</td>
+																<td>${amiProStock1.description}</td>
+																<td>${amiProStock1.qtyUnit.name}</td>
+																<td>${qty}</td>
+																<c:set var="purSize"
+																	value="${amiProStock1.purchase_Product_Details.size()}" />
+																<td>${purSize>0?amiProStock1.purchase_Product_Details.get(purSize-1).wsp:'nill'}</td>
+																<td>${purSize>0?amiProStock1.purchase_Product_Details.get(purSize-1).mrp:'nill'}</td>
+																<td><form action="stockDetailShow" method="post"
+																		id="StockDetails${amiProStock1.id}">
+																		<a href="#"
+																			onclick="showDetails('${amiProStock1.id}');"><input
+																			type="hidden" value="${amiProStock1.id}" name="proId"><img
+																			alt="" src="images/eye.png" height="25px"></a>
+																	</form></td>
+															</tr>
+
+														</c:otherwise>
+													</c:choose>
+													<c:set var="count" value="${count+1}" />
+												</c:if>
+											</c:forEach>
+										</tbody>
+									</table>
+
+								</div>
 							</div>
 						</div>
 					</div>
@@ -220,7 +209,7 @@
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="js/enscroll.js"></script>
 	<script type="text/javascript" src="js/grid-filter.js"></script>
-	
+
 	<script src="js/jquery.dataTables.min.js"></script>
 	<script src="js/dataTables.fixedHeader.min.js"></script>
 	<script src="js/buttons.flash.min.js"></script>
@@ -234,8 +223,9 @@
 	<script src="js/dataTables.searchHighlight.min.js"></script>
 	<script src="js/pdfmake.min.js"></script>
 	<script src="js/jquery.highlight.js"></script>
-	
-	
+	<script src="js/jquery-ui/jquery-ui.js"></script>
+
+
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#stock").attr("id", "activeSubMenu");
@@ -251,15 +241,125 @@
 		function viewPage() {
 			window.location = 'productDisplay.jsp';
 		}
+
+		$(function() {
+			$("#prodcode").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getProductbyProductCode",
+						data : {
+							code : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.code,
+									id : item.id
+								});
+							}));
+						},
+
+						error : function(a, b, c) {
+							alert(a + b + c);
+						}
+
+					});
+				},
+				select : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#prodcode").val("");
+					} else {
+						$("#prodcode").val(ui.item.code);
+					}
+
+				}
+			});
+		});
+		$(function() {
+			$("#prodesc").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getProductByDescription",
+						data : {
+							descriptionName : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.description,
+									id : item.id
+								});
+							}));
+						},
+
+						error : function(a, b, c) {
+							alert(a + b + c);
+						}
+
+					});
+				},
+				select : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#prodesc").val("");
+					} else {
+						$("#prodesc").val(ui.item.description);
+					}
+
+				}
+			});
+		});
+		$(function() {
+			$("#deptcat").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getAllCategoryByCategoryName",
+						data : {
+							cat : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.name,
+									id : item.id
+								});
+							}));
+						},
+
+						error : function(a, b, c) {
+							alert(a + b + c);
+						}
+
+					});
+				},
+				select : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#deptcat").val("");
+					} else {
+						$("#deptcat").val(ui.item.name);
+					}
+
+				}
+			});
+		});
 	</script>
-	
-	
+
+
 	<script type="text/javascript">
 		$(document).ready(function() {
 			var table = $('#example').DataTable({
 
-				"scrollY" : 200,
+				"scrollY" : 300,
 				"scrollX" : true,
+				"bPaginate": false,
 				dom : 'Bfrtip',
 				buttons : [ 'copy', 'excel', 'print' ]
 			});

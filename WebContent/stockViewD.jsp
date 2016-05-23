@@ -17,8 +17,6 @@
 <link rel="stylesheet" href="bootstrapcdn.css">
 <script src="maxcdn.bootstrapcdn.js"></script>
 
-
-
 <link rel="stylesheet" href="css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="css/fixedHeader.dataTables.min.css">
 <link rel="stylesheet" href="css/buttons.dataTables.min.css">
@@ -47,7 +45,7 @@
 <!-- Style -->
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
 <!-- Responsive -->
-
+<link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
 </head>
 <body>
 	<c:if test="${sessionScope['user']==null}">
@@ -90,33 +88,26 @@
 
 
 							<div class="row">
-								<div class="widget-area" style="width: 40%; height: 550px">
+								<div class="widget-area" style="width: 30%; height: 550px">
 									<h3>Stock Search</h3>
 									<br> <br>
 									<div class="form-group">
 										<form action="goStockView" method="post">
 											<label for="" class="">Product code: </label> <input
 												type="text" id="prodcode" name="pCodeSearch"
-												class="form-control"> <label class="">Product
-												Description: </label> <input type="text" id="prodesc"
-												name="pDesSearch" class="form-control"> <label
-												class="">Category: </label> <input type="text" id="deptcat"
-												name="pCatSearch" class="form-control"> <br> <input
-												class="btn green btn-default" type="submit" value="Search">
-											<a href="stockView.jsp"> <input
+												class="form-control" autocomplete="off"> <label
+												class="">Product Description: </label> <input type="text"
+												id="prodesc" name="pDesSearch" class="form-control">
+											<label class="">Category: </label> <input type="text"
+												id="deptcat" name="pCatSearch" class="form-control">
+											<br> <input class="btn green btn-default" type="submit"
+												value="Search"> <a href="stockView.jsp"> <input
 												class="btn green btn-default" type="button" value="Show All"></a>
 										</form>
 									</div>
-
-
-
-
 									<br> <br>
-
-
-
 								</div>
-								<div class="widget-area" style="width: 60%; height: 550px">
+								<div class="widget-area" style="width: 70%; height: 550px">
 
 									<h3>Stock</h3>
 
@@ -225,6 +216,7 @@
 	<script src="js/dataTables.searchHighlight.min.js"></script>
 	<script src="js/pdfmake.min.js"></script>
 	<script src="js/jquery.highlight.js"></script>
+	<script src="js/jquery-ui/jquery-ui.js"></script>
 
 
 	<script type="text/javascript">
@@ -242,6 +234,115 @@
 		function viewPage() {
 			window.location = 'productDisplay.jsp';
 		}
+
+		$(function() {
+			$("#prodcode").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getProductbyProductCode",
+						data : {
+							code : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.code,
+									id : item.id
+								});
+							}));
+						},
+
+						error : function(a, b, c) {
+							alert(a + b + c);
+						}
+
+					});
+				},
+				select : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#prodcode").val("");
+					} else {
+						$("#prodcode").val(ui.item.code);
+					}
+
+				}
+			});
+		});
+		$(function() {
+			$("#prodesc").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getProductByDescription",
+						data : {
+							descriptionName : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.description,
+									id : item.id
+								});
+							}));
+						},
+
+						error : function(a, b, c) {
+							alert(a + b + c);
+						}
+
+					});
+				},
+				select : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#prodesc").val("");
+					} else {
+						$("#prodesc").val(ui.item.description);
+					}
+
+				}
+			});
+		});
+		$(function() {
+			$("#deptcat").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getAllCategoryByCategoryName",
+						data : {
+							cat : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.name,
+									id : item.id
+								});
+							}));
+						},
+
+						error : function(a, b, c) {
+							alert(a + b + c);
+						}
+
+					});
+				},
+				select : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#deptcat").val("");
+					} else {
+						$("#deptcat").val(ui.item.name);
+					}
+
+				}
+			});
+		});
 	</script>
 
 
@@ -249,8 +350,9 @@
 		$(document).ready(function() {
 			var table = $('#example').DataTable({
 
-				"scrollY" : 200,
+				"scrollY" : 300,
 				"scrollX" : true,
+				"bPaginate": false,
 				dom : 'Bfrtip',
 				buttons : [ 'copy', 'excel', 'print' ]
 			});
