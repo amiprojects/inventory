@@ -226,15 +226,6 @@ myWindow.print();
 									<td>${purEntry.taxAmount}</td>
 								</tr>
 							</c:if>
-							<c:if test="${purEntry.agentProfitTotal!=0}">
-								<tr>
-									<td colspan="5" align="right">Agent Profit <c:set
-											var="prof" value="${purEntry.isFlatProfitAgent()?'Flat':'%'}" />
-										(${purEntry.agentProfitValue}(${prof})) :
-									</td>
-									<td>${purEntry.agentProfitTotal}</td>
-								</tr>
-							</c:if>
 							<c:if test="${purEntry.transport_cost!=0}">
 								<tr>
 									<td colspan="5" align="right">Transport Charge :</td>

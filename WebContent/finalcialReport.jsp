@@ -374,10 +374,25 @@ tfoot {
 													</tr>
 
 													<tr>
+														<c:set value="${0}" var="rettaxtot" />
+														<c:forEach
+															items="${sessionScope['ejb'].getAllSalesProductReturnDetail()}"
+															var="ppdet">
+															<c:set value="${0}" var="stot" />
+															<c:set
+																value="${stot+ppdet.salesProductDetails.getSalesPrice()*ppdet.qtyReturn}"
+																var="stot" />
+															<c:set value="${0}" var="disVal" />
+															<c:set var="disVal"
+																value="${ppdet.salesReturn.salesEntry.isFlatDiscount()?stot*ppdet.salesReturn.salesEntry.discountValue/ppdet.salesReturn.salesEntry.subTotal:stot*ppdet.salesReturn.salesEntry.discountValue/100}" />
+															<c:set
+																value="${rettaxtot+(stot-disVal)*ppdet.salesReturn.salesEntry.tax_Type_Group.getTotalTaxValue()/100}"
+																var="rettaxtot" />
+														</c:forEach>
 														<td colspan="2">Total Tax</td>
-														<td><fmt:formatNumber type="number"
-																maxFractionDigits="2" value="${totalSE2}" /><br> <br>-&#8721;
-															of Tax</td>
+														<td><fmt:formatNumber type="number" var="totalSE2"
+																maxFractionDigits="2" value="${totalSE2-rettaxtot}" />${totalSE2}<br>
+															<br>-&#8721; of Tax</td>
 													</tr>
 
 
@@ -422,22 +437,12 @@ tfoot {
 
 													</c:forEach>
 
-													<c:set value="${0}" var="totalAP" />
-													<c:forEach
-														items="${sessionScope['ejb'].getAllPurchaseEntry()}"
-														var="purEntry">
-														<c:set value="${totalAP+purEntry.agentProfitTotal}"
-															var="totalAP" />
-
-													</c:forEach>
-
 													<c:set value="${0}" var="totalPE3" />
 													<c:forEach
 														items="${sessionScope['ejb'].getAllPurchaseEntry()}"
 														var="gAp3">
 														<c:set value="${totalPE3+gAp3.transport_cost}"
 															var="totalPE3" />
-
 													</c:forEach>
 													<c:set value="${0}" var="ppd" />
 													<c:set value="${0}" var="ppd1" />
@@ -488,24 +493,30 @@ tfoot {
 													</tr>
 
 													<tr>
+														<c:set value="${0}" var="rettaxtot" />
+														<c:forEach
+															items="${sessionScope['ejb'].getAllPurchase_Product_Details()}"
+															var="ppdet">
+															<c:set value="${0}" var="stot" />
+															<c:set value="${stot+ppdet.cost*ppdet.totalReturningQty}"
+																var="stot" />
+															<c:set value="${0}" var="disVal" />
+															<c:set var="disVal"
+																value="${ppdet.purchase_Entry.isFlatDiscount()?stot*ppdet.purchase_Entry.discountValue/ppdet.purchase_Entry.subTotal:stot*ppdet.purchase_Entry.discountValue/100}" />
+															<c:set
+																value="${rettaxtot+(stot-disVal)*ppdet.purchase_Entry.tax_Type_Group.getTotalTaxValue()/100}"
+																var="rettaxtot" />
+														</c:forEach>
 														<td colspan="2">Total Tax</td>
-														<td><fmt:formatNumber type="number"
-																maxFractionDigits="2" value="${totalPE2}" /><br> <br>+&#8721;
-															of Tax</td>
+														<td><fmt:formatNumber type="number" var="totalPE2"
+																maxFractionDigits="2" value="${totalPE2-rettaxtot}" />${totalPE2}<br>
+															<br>+&#8721; of Tax</td>
 													</tr>
-
-													<tr>
-														<td colspan="2">Total Agent Profit</td>
-														<td><fmt:formatNumber type="number"
-																maxFractionDigits="2" value="${totalAP}" /><br> <br>+&#8721;
-															of Agent Profit</td>
-													</tr>
-
 													<tr>
 														<td colspan="2">Total:</td>
 														<td><fmt:formatNumber type="number"
 																maxFractionDigits="2"
-																value="${totalPE-prta+totalPE3+totalPE2+totalPE1+totalAP}" /></td>
+																value="${totalPE-prta+totalPE3+totalPE2+totalPE1}" /></td>
 													</tr>
 
 
@@ -529,7 +540,7 @@ tfoot {
 
 														<td><fmt:formatNumber type="number"
 																maxFractionDigits="2"
-																value="${totalSE-srta-totalSE3-totalSE2-totalSE1-totalPE+prta-totalPE3-totalPE2-totalPE1-totalAP}" /></td>
+																value="${totalSE-srta-totalSE3-totalSE2-totalSE1-totalPE+prta-totalPE3-totalPE2-totalPE1}" /></td>
 														<td>&nbsp;</td>
 
 														<td><fmt:formatNumber type="number"
@@ -538,7 +549,7 @@ tfoot {
 														<td>&nbsp;</td>
 														<td><fmt:formatNumber type="number"
 																maxFractionDigits="2"
-																value="${totalPE-prta+totalPE3+totalPE2+totalPE1+totalAP}" /></td>
+																value="${totalPE-prta+totalPE3+totalPE2+totalPE1}" /></td>
 													</tr>
 												</table>
 											</div>

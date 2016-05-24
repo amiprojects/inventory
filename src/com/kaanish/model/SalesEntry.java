@@ -31,7 +31,7 @@ public class SalesEntry implements Serializable {
 	private Date sales_date;
 	private float surcharge;
 	private float transportcCharge;
-	private float totalCost;
+	private float totalCost; //grandtotal
 	private float roundOf;
 	private float subTotal;
 	private float taxAmount;

@@ -221,20 +221,7 @@ page[size="A4"] {
 										${gtot*purEntry.purchaseEntry.taxAmount/purEntry.purchaseEntry.subTotal}
 									</td>
 								</tr>
-							</c:if>
-							<c:if
-								test="${purEntry.purchaseEntry.agentProfitTotal!=0 && purEntry.purchaseEntry.isEfectiveProfit()==true}">
-								<tr>
-									<td colspan="5" align="right">Agent Profit <c:set
-											var="prof"
-											value="${purEntry.purchaseEntry.isFlatProfitAgent()?'Flat':'%'}" />
-										(${purEntry.purchaseEntry.agentProfitValue}(${prof})) :
-									</td>
-									<td><fmt:formatNumber var="profTot"
-											value="${gtot*purEntry.purchaseEntry.agentProfitTotal/purEntry.purchaseEntry.subTotal}"
-											maxFractionDigits="2" /> ${profTot}</td>
-								</tr>
-							</c:if>
+							</c:if>							
 							<c:if test="${purEntry.roundOff!=0}">
 								<tr>
 									<td colspan="5" align="right">RoundOf :</td>
