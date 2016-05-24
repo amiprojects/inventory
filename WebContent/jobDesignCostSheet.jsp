@@ -1047,7 +1047,7 @@
 		$("#dNoCheck").val("");
 		$
 				.ajax({
-					url : "getAllDesignNoFromSampleDesignCostSheetAndProductsByDesignNumberForDuplicateCheck",
+					url : "getSampleDesignCostSheetByDesignNumberForDuplicateCheck",
 					dataType : "json",
 					data : {
 						dNo : $("#designNo").val()

@@ -2333,7 +2333,6 @@
 														"yes");
 											},
 											complete : function() {
-												alert($("#productId").val());//errornew
 												$
 														.ajax({
 															url : "getLastPurchaseProductDetailsByProductId",
