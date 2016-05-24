@@ -330,6 +330,12 @@ public class LoginServlet extends HttpServlet {
 		}
 
 		// ////////////////////////////////////////////////////////
+		//correcting design number in product details
+		for (ProductDetail pd : ejb.getAllProductDetail()) {
+			pd.setUniversalCode(pd.getCode());
+			ejb.updateProductDetail(pd);
+		}
+		//correcting design number in product details
 
 		// stock manage
 		// delete bekar job plans
