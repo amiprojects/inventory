@@ -2791,36 +2791,6 @@
 		}
 	</script>
 	<script type="text/javascript">
-		function codeKeyUp() {
-			$("#pcodeCheck").val("");
-			$.ajax({
-				url : "checkPcode",
-				dataType : "json",
-				data : {
-					productCode4 : $("#productCodeAMI").val()
-				},
-				success : function(data) {
-					if (data.code != "") {
-						$("#pcodeCheck").val(data.code);
-					} else {
-						$("#pcodeCheck").val("");
-					}
-				}
-
-			});
-
-		}
-
-		function codeChange() {
-			if ($("#pcodeCheck").val() != "") {
-				alert("this designer number: already exist.");
-				$("#pcodeCheck").val("");
-				$("#productCodeAMI").val("");
-			}
-		}
-	</script>
-
-	<script type="text/javascript">
 		function submitform11() {
 
 			if ($("#abbreviationuom").val() == "") {
@@ -5244,38 +5214,7 @@
 			return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8
 					|| k == 64 || k == 46 || (k >= 48 && k <= 57));
 		}
-	</script>
-	<script type="text/javascript">
-		function dNoKeyUp() {
-			$("#dNoCheck").val("");
-			$
-					.ajax({
-						url : "getAllDesignNoFromSampleDesignCostSheetAndProductsByDesignNumberForDuplicateCheck",
-						dataType : "json",
-						data : {
-							dNo : $("#universalProductCode").val()
-						},
-						success : function(data) {
-							$.map(data, function(item) {
-								if (item.dNumber != "") {
-									$("#dNoCheck").val(item.dNumber);
-								} else {
-									$("#dNoCheck").val("");
-								}
-							});
-						}
-
-					});
-
-		}
-		function dNoChange() {
-			if ($("#dNoCheck").val() != "") {
-				alert("Duplicate Design Number");
-				$("#dNoCheck").val("");
-				$("#universalProductCode").val("");
-			}
-		}
-	</script>
+	</script>	
 	<script type="text/javascript">
 		function lotNoKeyUp() {
 			$("#lotNoCheck").val("");
@@ -5417,6 +5356,90 @@
 			$("#discount").val(Number($("#discount").val()).toFixed(2));
 			gtot();
 		});
+	</script>
+	<script type="text/javascript">
+		/* function dNoKeyUp() {
+			$("#dNoCheck").val("");
+			$
+					.ajax({
+						url : "getAllDesignNoFromSampleDesignCostSheetAndProductsByDesignNumberForDuplicateCheck",
+						dataType : "json",
+						data : {
+							dNo : $("#universalProductCode").val()
+						},
+						success : function(data) {
+							$.map(data, function(item) {
+								if (item.dNumber != "") {
+									$("#dNoCheck").val(item.dNumber);
+								} else {
+									$("#dNoCheck").val("");
+								}
+							});
+						}
+
+					});
+
+		}
+
+		function dNoChange() {
+			if ($("#dNoCheck").val() != "") {
+				alert("Duplicate Design Number");
+				$("#dNoCheck").val("");
+				$("#universalProductCode").val("");
+			}
+		} */
+		function dNoKeyUp() {
+			$("#dNoCheck").val("");
+			$.ajax({
+				url : "getProductByDesignNo",
+				dataType : "json",
+				data : {
+					dNo : $("#universalProductCode").val()
+				},
+				success : function(data) {
+					if (data.universalCode != "") {
+						$("#dNoCheck").val(data.universalCode);
+					} else {
+						$("#dNoCheck").val("");
+					}
+				}
+
+			});
+
+		}
+		function dNoChange() {
+			if ($("#dNoCheck").val() != "") {
+				alert("Duplicate Design Number");
+				$("#dNoCheck").val("");
+				$("#universalProductCode").val("");
+			}
+		}
+
+		function codeKeyUp() {
+			$("#pcodeCheck").val("");
+			$.ajax({
+				url : "checkPcode",
+				dataType : "json",
+				data : {
+					productCode4 : $("#productCodeAMI").val()
+				},
+				success : function(data) {
+					if (data.code != "") {
+						$("#pcodeCheck").val(data.code);
+					} else {
+						$("#pcodeCheck").val("");
+					}
+				}
+			});
+		}
+
+		function codeChange() {
+			if ($("#pcodeCheck").val() != "") {
+				alert("this Product Code: already exist.");
+				$("#pcodeCheck").val("");
+				$("#productCodeAMI").val("");
+			}
+		}
 	</script>
 </body>
 
