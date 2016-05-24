@@ -330,7 +330,6 @@ public class LoginServlet extends HttpServlet {
 		}
 
 		// ////////////////////////////////////////////////////////
-
 		// stock manage
 		// delete bekar job plans
 		for (JobPlan jp : ejb.getAllJobPlan()) {

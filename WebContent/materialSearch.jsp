@@ -1357,35 +1357,6 @@
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 	<script type="text/javascript" src="js/abixTreeList.min.js"></script>
 	<script src="js/numericInput.min.js"></script>
-
-	<script type="text/javascript">
-		function codeKeyUp() {
-			$("#pcodeCheck").val("");
-			$.ajax({
-				url : "checkPcode",
-				dataType : "json",
-				data : {
-					productCode4 : $("#productCode").val()
-				},
-				success : function(data) {
-					if (data.code != "") {
-						$("#pcodeCheck").val(data.code);
-					} else {
-						$("#pcodeCheck").val("");
-					}
-				}
-			});
-		}
-
-		function codeChange() {
-			if ($("#pcodeCheck").val() != "") {
-				alert("this Product Code: already exist.");
-				$("#pcodeCheck").val("");
-				$("#productCode").val("");
-			}
-		}
-	</script>
-
 	<!-- <script>
 		$(document).ready(function() {
 			$('#tree').abixTreeList();
@@ -2168,7 +2139,7 @@
 		}
 	</script>
 	<script type="text/javascript">
-		function dNoKeyUp() {
+		/* function dNoKeyUp() {
 			$("#dNoCheck").val("");
 			$
 					.ajax({
@@ -2196,6 +2167,59 @@
 				alert("Duplicate Design Number");
 				$("#dNoCheck").val("");
 				$("#universalProductCode").val("");
+			}
+		} */
+		function dNoKeyUp() {
+			$("#dNoCheck").val("");
+			$.ajax({
+				url : "getProductByDesignNo",
+				dataType : "json",
+				data : {
+					dNo : $("#universalProductCode").val()
+				},
+				success : function(data) {
+					if (data.universalCode != "") {
+						$("#dNoCheck").val(data.universalCode);
+					} else {
+						$("#dNoCheck").val("");
+					}
+				}
+
+			});
+
+		}
+
+		function dNoChange() {
+			if ($("#dNoCheck").val() != "") {
+				alert("Duplicate Design Number");
+				$("#dNoCheck").val("");
+				$("#universalProductCode").val("");
+			}
+		}
+
+		function codeKeyUp() {
+			$("#pcodeCheck").val("");
+			$.ajax({
+				url : "checkPcode",
+				dataType : "json",
+				data : {
+					productCode4 : $("#productCode").val()
+				},
+				success : function(data) {
+					if (data.code != "") {
+						$("#pcodeCheck").val(data.code);
+					} else {
+						$("#pcodeCheck").val("");
+					}
+				}
+			});
+		}
+
+		function codeChange() {
+			if ($("#pcodeCheck").val() != "") {
+				alert("this Product Code: already exist.");
+				$("#pcodeCheck").val("");
+				$("#productCode").val("");
 			}
 		}
 	</script>
