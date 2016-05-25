@@ -1327,6 +1327,9 @@ public class JsonServlet extends HttpServlet {
 						paymentDetails.setPaidAmount(Float.parseFloat(req.getParameter("gt")));
 					} else {
 						paymentDetails.setTotalAmount(Float.parseFloat(req.getParameter("gt")));
+						VoucherDetails vd = ejb.getAllVoucherDetailsByPurchaseEntryId(purchase_Entry.getId()).get(0);
+						vd.setValue(Float.parseFloat(req.getParameter("gt")) - paymentDetails.getPaidAmount());
+						ejb.updateVoucherDetails(vd);
 					}
 					ejb.updatePaymentDetails(paymentDetails);
 
@@ -1346,6 +1349,29 @@ public class JsonServlet extends HttpServlet {
 						}
 					}
 					// correcting purchase entry payment details
+					// correcting voucher details
+					for (VoucherAssign va : ejb.getAllVoucherAssign()) {
+						float totCr = 0;
+						float totDb = 0;
+
+						for (int ind = 0; ind < ejb.getAllVoucherDetailsByVoucherAssignId(va.getId()).size(); ind++) {
+							VoucherDetails vd = ejb.getAllVoucherDetailsByVoucherAssignId(va.getId()).get(ind);
+							if (vd.isCredit()) {
+								totCr = totCr + vd.getValue();
+							} else {
+								totDb = totDb + vd.getValue();
+							}
+
+							if (vd.getVoucherAssign().getVendor() != null) {
+								vd.setTotalCreditNote(totCr - totDb);
+								ejb.updateVoucherDetails(vd);
+							} else if (vd.getVoucherAssign().getCustomerEntry() != null) {
+								vd.setTotalDebitNote(totDb - totCr);
+								ejb.updateVoucherDetails(vd);
+							}
+						}
+					}
+					// correcting voucher details
 					// //////////////////////////////////////////////////////
 
 					generator2.writeStartObject().write("error", false).writeEnd().close();

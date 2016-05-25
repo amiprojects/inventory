@@ -625,15 +625,14 @@
 							</div>
 						</div>
 						<div class="widget-area" style="width: 100%; top: 0px;">
-
-
 							<div class="row">
 								<div class="col-md-2">
 									<b>Lot No. :<font color="red" size="4">*</font></b>
 								</div>
 								<div class="col-md-10">
 									<input type="text" class="form-control" id="lotText"
-										name="lotText" onkeypress="return blockSpecialChar(event)"
+										readonly="readonly" name="lotText"
+										onkeypress="return blockSpecialChar(event)"
 										onkeyup="lotNoKeyUpT();" onchange="lotNoChangeT();"
 										autocomplete="off"><input type="hidden"
 										id="lotNoCheckT" name="lotNoCheckT">
@@ -713,7 +712,7 @@
 
 	function update(a,id) {	
 		var qty=$("#proRow"+id+" :nth-child(6) input[type=text]").val();
-		var rate=$("#proRow"+id+" :nth-child(8) input[type=text]").val();
+		var rate=$("#proRow"+id+" :nth-child(9) input[type=text]").val();
 		
 		var amount=Number(qty)*Number(rate);
 		$.ajax({
@@ -722,10 +721,10 @@
 			data:{id:id},
 			success:function(data){
 				var outQty=data.quantity-data.remaining_quantity;	
-				 if(data.quantity>data.remaining_quantity){
-				// if(qty<outQty){
+				 //if(data.quantity>data.remaining_quantity){
+				if(qty<outQty){
 					$("#proRow"+id+" :nth-child(6) input[type=text]").val(data.quantity);
-					$("#proRow"+id+" :nth-child(8) input[type=text]").val(data.cost);
+					$("#proRow"+id+" :nth-child(9) input[type=text]").val(data.cost);
 					$(a).prop("readonly", true);
 					$(a).attr("style", "background-color: grey;");	
 					sweetAlert('Oops...',  outQty+data.uom+' product is already in use', 'error');
@@ -748,7 +747,7 @@
 							}else{
 								$(a).prop("readonly", true);
 								$(a).attr("style", "background-color: pink;");		
-								$("#proRow"+id+" :nth-child(9)").html(amount);		
+								$("#proRow"+id+" :nth-child(10)").html(amount);		
 								updateSubtotal();	
 							}
 						}
@@ -868,54 +867,94 @@
 				getProductDetailsByProductCode(0);
 			}
 		}
-		$(function() {
-			$("#pCode").autocomplete({
-				source : function(req, resp) {
-					$.ajax({
-						type : "post",
-						url : "getProductbyProductCode",
-						data : {
-							code : req.term
-						},
-						dataType : "json",
-						success : function(data) {
-							resp($.map(data, function(item) {
-								return ({
-									value : item.code,
-									id : item.id
+	$(function() {
+		$("#pCode")
+				.autocomplete(
+						{
+							source : function(req, resp) {
+								$.ajax({
+									type : "post",
+									url : "getProductbyProductCode",
+									data : {
+										code : req.term
+									},
+									dataType : "json",
+									success : function(data) {
+										resp($.map(data, function(item) {
+											return ({
+												value : item.code,
+												id : item.id
+											});
+										}));
+									},
+
+									error : function(a, b, c) {
+										alert(a + b + c);
+									}
+
 								});
-							}));
-						},
+							},
+							change : function(event, ui) {
+								if (ui.item == null) {
+									$(this).val("");
+									$("#productCode").val("");
+									getProductDetailsByProductCode(0);
+								} else {
+									$("#productCode").val(ui.item.id);
+									getProductDetailsByProductCode(ui.item.id);
+									$
+											.ajax({
+												url : "getLastPurchaseProductDetailsByProductId",
+												dataType : "json",
+												data : {
+													pId : ui.item.id
+												},
+												success : function(data) {
+													if (data != null) {
+														$("#lotText")
+																.val(
+																		Number(data.lotNumber)
+																				+ Number(1));
+													} else {
+														$("#lotText")
+																.val(1);
+													}
+												}
+											});
+								}
+							},
+							select : function(event, ui) {
+								if (ui.item != null) {
+									$("#productCode").val(ui.item.id);
+									getProductDetailsByProductCode(ui.item.id);
+									$
+											.ajax({
+												url : "getLastPurchaseProductDetailsByProductId",
+												dataType : "json",
+												data : {
+													pId : ui.item.id
+												},
+												success : function(data) {
+													if (data != null) {
+														$("#lotText")
+																.val(
+																		Number(data.lotNumber)
+																				+ Number(1));
+													} else {
+														$("#lotText")
+																.val(1);
+													}
+												}
+											});
+								} else {
+									$(this).val("");
+									$("#productCode").val("");
+									getProductDetailsByProductCode(0);
+								}
 
-						error : function(a, b, c) {
-							alert(a + b + c);
-						}
-
-					});
-				},
-				change : function(event, ui) {
-					if (ui.item == null) {
-						$(this).val("");
-						$("#productCode").val("");
-						getProductDetailsByProductCode(0);
-					} else {
-						$("#productCode").val(ui.item.id);
-						getProductDetailsByProductCode(ui.item.id);
-					}
-				},
-				select : function(event, ui) {
-					if (ui.item != null) {
-						$("#productCode").val(ui.item.id);
-						getProductDetailsByProductCode(ui.item.id);
-					} else {
-						$(this).val("");
-						$("#productCode").val("");
-						getProductDetailsByProductCode(0);
-					}
-
-				}
-			});
-		});		
+							}
+						});
+	});		
 		
 		$(document).ready(function() {
 			$("#isSalable").val('no');
@@ -1240,7 +1279,13 @@ function displayProductIntable(ppid){
 							+ '</td><td>'
 							+ $("#pDesc").val()
 							+ '</td><td>'
+							+ $("#wsp").val()
+							+ '</td><td>'
+							+ $("#mrp").val()
+							+ '</td><td>'
 							+'<input type="text" value="'+ $("#qty").val()+'" style="background-color: gray;" readonly="readonly"	name="pproqty"	onchange="update(this,\''+ppid+'\');"	ondblclick="enable(this);">'
+							+ '</td><td>'
+							+ $("#qty").val()
 							+ '</td><td>'
 							+ $("#uom").val()
 							+ '</td><td>'

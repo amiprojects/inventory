@@ -625,7 +625,7 @@ public class Ejb {
 	 ********************************************/
 
 	public List<ProductDetail> getAllProductByProductCode(String code) {
-		TypedQuery<ProductDetail> q = em.createQuery("select c from ProductDetail c where UPPER(c.code) like :nm ",
+		TypedQuery<ProductDetail> q = em.createQuery("select c from ProductDetail c where UPPER(c.code) like :nm order by c.code asc",
 				ProductDetail.class);
 		q.setParameter("nm", code.toUpperCase() + "%");
 
