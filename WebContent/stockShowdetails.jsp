@@ -304,7 +304,7 @@
 														<td><b>Initial Inventory:</b> ${initialQty} <c:if
 																test="${initialQty!=0}">
 																<a href="#"
-																	onclick="window.open('initialBarcodePrint.jsp?id=${requestScope['proid1']}','mywindow','width=1100,height=500')">
+																	onclick="window.open('barcodeInitialPrint.jsp?id=${requestScope['proid1']}','mywindow','width=1100,height=500')">
 																	<img alt="click to view" src="Capture.PNG" height="20">
 																</a>
 															</c:if></td>
@@ -312,9 +312,20 @@
 														<td><b>In Stock:</b> &nbsp;&nbsp;${qty}</td>
 													</tr>
 													<tr>
-														<td><b>Total Purchased:</b> &nbsp;&nbsp;${purQtyt} <br>
-															<b>Production Inventory:</b>
-															&nbsp;&nbsp;${purProductionQtyt}</td>
+														<td><b>Total Purchased:</b> &nbsp;&nbsp;${purQtyt} <c:if
+																test="${purQtyt!=0}">
+																<a href="#"
+																	onclick="window.open('barcodePurchasePrint.jsp?id=${requestScope['proid1']}','mywindow','width=1100,height=500')">
+																	<img alt="click to view" src="Capture.PNG" height="20">
+																</a>
+															</c:if> <br> <b>Production Inventory:</b>
+															&nbsp;&nbsp;${purProductionQtyt}<c:if
+																test="${purProductionQtyt!=0}">
+																<a href="#"
+																	onclick="window.open('barcodeProductionInventoryPrint.jsp?id=${requestScope['proid1']}','mywindow','width=1100,height=500')">
+																	<img alt="click to view" src="Capture.PNG" height="20">
+																</a>
+															</c:if></td>
 														<td><b>In Jobwork:</b>&nbsp;&nbsp;${total}</td>
 													</tr>
 												</table>

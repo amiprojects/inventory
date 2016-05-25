@@ -33,6 +33,8 @@ public class PurchaseReturn implements Serializable {
 	private String challanNumber;
 	private int challanSuffix;
 	private String referencePurchaseChallan;
+	
+	private float retAgentProfitTotal;
 
 	@OneToMany(mappedBy = "purchaseReturn")
 	private List<PurchaseReturnProductDetails> purchaseReturnProductDetails;
@@ -142,6 +144,14 @@ public class PurchaseReturn implements Serializable {
 
 	public void setVoucherDetails(VoucherDetails voucherDetails) {
 		this.voucherDetails = voucherDetails;
+	}
+
+	public float getRetAgentProfitTotal() {
+		return retAgentProfitTotal;
+	}
+
+	public void setRetAgentProfitTotal(float retAgentProfitTotal) {
+		this.retAgentProfitTotal = retAgentProfitTotal;
 	}
 
 }

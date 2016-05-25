@@ -90,7 +90,7 @@ public class BarcodeServlet extends HttpServlet {
 					Barcode128 code128 = new Barcode128();
 					code128.setBaseline(15);
 					code128.setSize(17);
-					//code128.setX(1.7F);
+					// code128.setX(1.7F);
 					code128.setBarHeight(50F);
 
 					code128.setCode(code);
@@ -98,14 +98,14 @@ public class BarcodeServlet extends HttpServlet {
 					Image code128Image = code128.createImageWithBarcode(cb,
 							null, null);
 
+					code128Image.setScaleToFitLineWhenOverflow(true);
+					document.add(code128Image);
+
 					// PdfPTable table = new PdfPTable(1);
 					// // PdfPCell cellOne = new PdfPCell(code128Image);
 					// // cellOne.setBorder(Rectangle.NO_BORDER);
 					// table.addCell(code128Image);
 					// document.add(table);
-
-					code128Image.setScaleToFitLineWhenOverflow(true);
-					document.add(code128Image);
 				}
 			}
 

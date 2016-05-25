@@ -97,11 +97,14 @@
 															var="proedPurDet"
 															items="${prod.purchase_Product_Details}">
 															<c:if test="${proedPurDet.purchase_Entry!=null}">
-																<c:set var="totPurQty"
-																	value="${totPurQty+proedPurDet.quantity-proedPurDet.totalReturningQty}"></c:set>
-																<%-- <fmt:formatNumber var="totPurQty"
+																<c:if
+																	test="${proedPurDet.purchase_Entry.vendor.name!='Production Vendor'}">
+																	<c:set var="totPurQty"
+																		value="${totPurQty+proedPurDet.quantity-proedPurDet.totalReturningQty}"></c:set>
+																	<%-- <fmt:formatNumber var="totPurQty"
 																	value="${totPurQty+proedPurDet.quantity-proedPurDet.totalReturningQty}"
 																	maxFractionDigits="2" /> --%>
+																</c:if>
 															</c:if>
 														</c:forEach> ${totPurQty}</td>
 													<td>${prod.qtyUnit.name}</td>

@@ -123,13 +123,6 @@
 												<th>Purchase challan no.</th>
 												<th>Vendor Bill no.</th>
 												<th>Sub Total</th>
-												<th>Discount</th>
-												<th>Tax Amount</th>
-												<th>Agent Profit</th>
-												<th>Transport Cost</th>
-												<th>Surcharge</th>
-												<th>RoundOf</th>
-												<th>Grand Total</th>
 												<th></th>
 											</tr>
 										</thead>
@@ -161,14 +154,15 @@
 													</c:choose>
 													<td>${pEntryByD.challanNumber}</td>
 													<td>${pEntryByD.vendor_bill_no}</td>
-													<td>${pEntryByD.subTotal}</td>
-													<td>${pEntryByD.discountTotal}</td>
-													<td>${pEntryByD.taxAmount}</td>
-													<td>${pEntryByD.agentProfitTotal}</td>
-													<td>${pEntryByD.transport_cost}</td>
-													<td>${pEntryByD.sur_charge}</td>
-													<td>${pEntryByD.roundOf}</td>
-													<td>${pEntryByD.totalCost}</td>
+													<td><c:set value="${0}" var="totCost" /> <c:set
+															value="${0}" var="totRetCost" /> <c:forEach
+															items="${pEntryByD.purchase_Product_Details}" var="ppd">
+															<c:set value="${totCost+ppd.quantity*ppd.cost}"
+																var="totCost" />
+															<c:set
+																value="${totRetCost+ppd.totalReturningQty*ppd.cost}"
+																var="totRetCost" />
+														</c:forEach> ${totCost-totRetCost}</td>
 													<td><form action="purchaseReportView" method="post"
 															id="pView${pEntryByD.id}">
 															<a href="#" onclick="purchaseViewF('${pEntryByD.id}');"><input

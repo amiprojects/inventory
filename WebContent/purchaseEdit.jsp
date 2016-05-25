@@ -206,6 +206,7 @@
 											<th>WSP</th>
 											<th>MRP</th>
 											<th>Qty</th>
+											<th>Remaining Qty</th>
 											<th>UOM</th>
 											<th>Cost</th>
 											<th>Amount</th>
@@ -230,6 +231,7 @@
 													name="pproqty"
 													onchange="update(this,${purchaseProducts.id});"
 													ondblclick="enable(this);"></td>
+												<td>${purchaseProducts.remaining_quantity}</td>
 												<td>${purchaseProducts.productDetail.qtyUnit.name}</td>
 												<td><input type="text" value="${purchaseProducts.cost}"
 													style="background-color: gray;" readonly="readonly"
@@ -719,11 +721,14 @@
 			dataType:"json",
 			data:{id:id},
 			success:function(data){
-				if(data.quantity>data.remaining_quantity){
+				var outQty=data.quantity-data.remaining_quantity;	
+				 if(data.quantity>data.remaining_quantity){
+				// if(qty<outQty){
 					$("#proRow"+id+" :nth-child(6) input[type=text]").val(data.quantity);
+					$("#proRow"+id+" :nth-child(8) input[type=text]").val(data.cost);
 					$(a).prop("readonly", true);
 					$(a).attr("style", "background-color: grey;");	
-					sweetAlert('Oops...', 'This prodct is alresdy in use', 'error');
+					sweetAlert('Oops...',  outQty+data.uom+' product is already in use', 'error');
 				}else{
 					$.ajax({
 						url:"updatePurchaseproduct",

@@ -16,6 +16,32 @@ PURCHASE_ENTRY
 .....................................
 update PURCHASE_ENTRY set ISFLATPROFITAGENT=1;
 update PURCHASE_ENTRY set ISEFECTIVEPROFIT=1;
+
+delete ISINCLUSIVEAGENT
+
+PURCHASERETURN
+...............
+retAgentProfitTotal 19,4 null
+
+UPDATE PURCHASERETURN
+	SET RETAGENTPROFITTOTAL = 0
+	WHERE ID IN (select ID from PURCHASERETURN);
+
+SALESRETURN
+...............
+retAgentProfitTotal 19,4 null
+
+UPDATE SALESRETURN
+	SET RETAGENTPROFITTOTAL = 0
+	WHERE ID IN (select ID from SALESRETURN);
+	
+JOBPLANPRODUCTSTOCK
+.....................
+cost 19,4 null
+
+JOBPLANPRODUCTS
+..................
+ProductsForDesignCostSheetId->PRODFORDSNCSTSHTID
 	
 ////////////////////////////////////////////////////
 

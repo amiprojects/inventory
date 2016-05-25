@@ -61,7 +61,6 @@
 									</ul>
 								</div>
 								<div class="widget-area">
-									<!-- <form action="purchaseBarCode" method="post"> -->
 									<form action="barcode" method="post">
 										<c:set value="${sessionScope['ejb'].getCompanyInfo()}"
 											var="companyInfo" />
@@ -75,23 +74,27 @@
 													<th>Qty to print</th>
 											</thead>
 											<c:forEach var="purchaseProducts"
-												items="${sessionScope['ejb'].getPurchaseEntryById(param.id).purchase_Product_Details}">
-												<tbody>
-													<tr>
-														<td>${purchaseProducts.productDetail.code}</td>
-														<td>${purchaseProducts.productDetail.description}</td>
-														<td>${purchaseProducts.lotNumber}</td>
-														<td><input type="checkbox"
-															id="prodCheck${purchaseProducts.id}"
-															onclick="qtyPrF(${purchaseProducts.id});"><input
-															type="hidden" value="${purchaseProducts.id}"
-															name="prodCheck"><input type="hidden"
-															value="${companyInfo.compname}" name="compname"></td>
-														<td><input type="number"
-															id="qtyPr${purchaseProducts.id}" class="form-control"
-															readonly="readonly" name="qtyProd" value="0"></td>
-													</tr>
-												</tbody>
+												items="${sessionScope['ejb'].getPurchaseProductDetailsByProductIdAndCompany(param.id)}">
+												<c:if
+													test="${purchaseProducts.purchase_Entry!=null && purchaseProducts.purchase_Entry.vendor.name!='Production Vendor'}">
+													<tbody>
+														<tr>
+															<td>${purchaseProducts.productDetail.code}</td>
+															<td>${purchaseProducts.productDetail.description}</td>
+															<td>${purchaseProducts.lotNumber}</td>
+															<td><input type="checkbox"
+																id="prodCheck${purchaseProducts.id}"
+																onclick="qtyPrF(${purchaseProducts.id});"><input
+																type="hidden" value="${purchaseProducts.id}"
+																name="prodCheck"></td>
+															<td><input type="number"
+																id="qtyPr${purchaseProducts.id}" class="form-control"
+																readonly="readonly" name="qtyProd" value="0"><input
+																type="hidden" value="${companyInfo.compname}"
+																name="compname"></td>
+														</tr>
+													</tbody>
+												</c:if>
 											</c:forEach>
 										</table>
 										<button type="submit" class="btn btn-info btn-lg"

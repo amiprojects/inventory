@@ -69,18 +69,19 @@
 												<tr>
 													<th>Product Code</th>
 													<th>product Description</th>
-													<th>Qty</th>
+													<th>Lot No.</th>
 													<th>Select</th>
 													<th>Qty to print</th>
 											</thead>
 											<c:forEach var="purchaseProducts"
 												items="${sessionScope['ejb'].getPurchaseProductDetailsByProductIdAndCompany(param.id)}">
-												<c:if test="${purchaseProducts.isInitialInventory()}">
+												<c:if
+													test="${purchaseProducts.purchase_Entry!=null && purchaseProducts.purchase_Entry.vendor.name=='Production Vendor'}">
 													<tbody>
 														<tr>
 															<td>${purchaseProducts.productDetail.code}</td>
 															<td>${purchaseProducts.productDetail.description}</td>
-															<td>${purchaseProducts.quantity}</td>
+															<td>${purchaseProducts.lotNumber}</td>
 															<td><input type="checkbox"
 																id="prodCheck${purchaseProducts.id}"
 																onclick="qtyPrF(${purchaseProducts.id});"><input

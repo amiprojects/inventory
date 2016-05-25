@@ -3999,14 +3999,16 @@
 																	data,
 																	function(
 																			item) {
-																		return ({
-																			value : item.name,
-																			addr : item.address,
-																			id : item.id,
-																			ph1 : item.ph1,
-																			ph2 : item.ph2,
-																			currentCreditNote : item.currentCreditNote
-																		});
+																		if (item.name != 'Production Vendor') {
+																			return ({
+																				value : item.name,
+																				addr : item.address,
+																				id : item.id,
+																				ph1 : item.ph1,
+																				ph2 : item.ph2,
+																				currentCreditNote : item.currentCreditNote
+																			});
+																		}
 																	}));
 												}
 											});
@@ -5214,7 +5216,7 @@
 			return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8
 					|| k == 64 || k == 46 || (k >= 48 && k <= 57));
 		}
-	</script>	
+	</script>
 	<script type="text/javascript">
 		function lotNoKeyUp() {
 			$("#lotNoCheck").val("");
@@ -5323,11 +5325,12 @@
 				$("#profitValue")
 						.val(
 								Math
-										.round(Number(Number(Number($("#subTotal")
-												.val())
+										.round(Number(Number(Number($(
+												"#subTotal").val())
 												- Number($("#discountValue")
 														.val()))
-												* Number($("#profitVal").val()) / 100) * 100) / 100);
+												* Number($("#profitVal").val())
+												/ 100) * 100) / 100);
 			} else {
 				$("#profitValue").val(
 						Math.round(Number($("#profitVal").val()) * 100) / 100);

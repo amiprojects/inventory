@@ -24,37 +24,35 @@ public class SalesReturn implements Serializable {
 	@Id
 	@GeneratedValue
 	private int id;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date returnDate;
-	
-	
+
 	private float totalReCost;
 	private float roundOff;
 	private int challanNo;
 	private String challanNumber;
 	private int challanSuffix;
 	private String referenceSalesChallan;
-	
-	
+
+	private float retAgentProfitTotal;
 
 	@OneToMany(mappedBy = "salesReturn")
 	private List<SalesProductReturnDetail> salesProductReturnDetail;
 
 	@OneToMany(mappedBy = "salesReturn")
 	private List<PaymentDetails> paymentDetails;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "salesEntryID")
 	private SalesEntry salesEntry;
-	
+
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "salesReturn")
 	private VoucherDetails VoucherDetails;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "usersId")
 	private Users users;
-	
 
 	public int getId() {
 		return id;
@@ -128,13 +126,12 @@ public class SalesReturn implements Serializable {
 		this.referenceSalesChallan = referenceSalesChallan;
 	}
 
-	
-
 	public List<SalesProductReturnDetail> getSalesProductReturnDetail() {
 		return salesProductReturnDetail;
 	}
 
-	public void setSalesProductReturnDetail(List<SalesProductReturnDetail> salesProductReturnDetail) {
+	public void setSalesProductReturnDetail(
+			List<SalesProductReturnDetail> salesProductReturnDetail) {
 		this.salesProductReturnDetail = salesProductReturnDetail;
 	}
 
@@ -145,6 +142,7 @@ public class SalesReturn implements Serializable {
 	public void setSalesEntry(SalesEntry salesEntry) {
 		this.salesEntry = salesEntry;
 	}
+
 	public VoucherDetails getVoucherDetails() {
 		return VoucherDetails;
 	}
@@ -159,5 +157,13 @@ public class SalesReturn implements Serializable {
 
 	public void setUsers(Users users) {
 		this.users = users;
+	}
+
+	public float getRetAgentProfitTotal() {
+		return retAgentProfitTotal;
+	}
+
+	public void setRetAgentProfitTotal(float retAgentProfitTotal) {
+		this.retAgentProfitTotal = retAgentProfitTotal;
 	}
 }

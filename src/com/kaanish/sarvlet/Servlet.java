@@ -1776,6 +1776,9 @@ public class Servlet extends HttpServlet {
 							purchaseReturn.setReferencePurchaseChallan(req
 									.getParameter("REFchallanNumber"));
 							purchaseReturn.setPurchaseEntry(purchaseEntry);
+							purchaseReturn
+									.setRetAgentProfitTotal(Float.parseFloat(req
+											.getParameter("profitValue")));
 							ejb.setPurchaseReturn(purchaseReturn);
 
 							if (req.getParameter("pType").equals("Credit Note")) {
@@ -4155,6 +4158,9 @@ public class Servlet extends HttpServlet {
 									.getParameter("grandtotal")));
 							salesReturn.setReferenceSalesChallan(req
 									.getParameter("saslesRChallanRId"));
+							salesReturn
+									.setRetAgentProfitTotal(Float.parseFloat(req
+											.getParameter("profitValue")));
 							ejb.setSalesReturn(salesReturn);
 
 							paymentDetails = new PaymentDetails();

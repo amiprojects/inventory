@@ -198,27 +198,28 @@ tfoot {
 
 														<c:forEach items="${requestScope['purchaseEty']}"
 															var="pRepo">
-															<tr>
-																<td><fmt:formatDate value="${pRepo.purchase_date}"
-																		pattern="dd-MM-yyyy" /></td>
-																<td>${pRepo.vendor.name}&nbsp;<br> <br>&nbsp;${pRepo.paymentDetails.get(0).paymentType.type}
-																</td>
-																<td>Purchase Payment</td>
-																<td>${pRepo.challanNumber}</td>
-																<td>0<br> <br> <fmt:formatNumber
-																		var="totalCost" value="${pRepo.totalCost}"
-																		maxFractionDigits="2" /> ${totalCost}
-																</td>
-																<td><c:set var="lastPayment"
-																		value="${sessionScope['ejb'].getPaymentDetailsByPurchaseEntryId(pRepo.id).get(0)}"></c:set>
-																	<c:set var="currentDue"
-																		value="${lastPayment.totalAmount-lastPayment.paidAmount}"></c:set>
-																	${pRepo.totalCost-currentDue}<br> <br>0</td>
-															</tr>
-
-															<c:set var="total3" value="${total3 + pRepo.totalCost}" />
-															<c:set var="total4"
-																value="${total4 + pRepo.totalCost-currentDue}" />
+															<c:if test="${pRepo.vendor.name!='Production Vendor'}">
+																<tr>
+																	<td><fmt:formatDate value="${pRepo.purchase_date}"
+																			pattern="dd-MM-yyyy" /></td>
+																	<td>${pRepo.vendor.name}&nbsp;<br> <br>&nbsp;${pRepo.paymentDetails.get(0).paymentType.type}
+																	</td>
+																	<td>Purchase Payment</td>
+																	<td>${pRepo.challanNumber}</td>
+																	<td>0<br> <br> <fmt:formatNumber
+																			var="totalCost" value="${pRepo.totalCost}"
+																			maxFractionDigits="2" /> ${totalCost}
+																	</td>
+																	<td><c:set var="lastPayment"
+																			value="${sessionScope['ejb'].getPaymentDetailsByPurchaseEntryId(pRepo.id).get(0)}"></c:set>
+																		<c:set var="currentDue"
+																			value="${lastPayment.totalAmount-lastPayment.paidAmount}"></c:set>
+																		${pRepo.totalCost-currentDue}<br> <br>0</td>
+																</tr>
+																<c:set var="total3" value="${total3 + pRepo.totalCost}" />
+																<c:set var="total4"
+																	value="${total4 + pRepo.totalCost-currentDue}" />
+															</c:if>
 														</c:forEach>
 
 														<c:forEach items="${requestScope['salesReturn']}"

@@ -504,69 +504,80 @@
 														name="discountValue"></td>
 												</tr>
 											</tbody>
-											<c:if test="${purchaseSearchView.isEfectiveProfit()==true && purchaseSearchView.agentId!=0}">
-												<tbody>
-													<tr>
-														<td colspan="2">Agent Profit: &nbsp; <select
-															name="profitType" id="profitType"
-															onchange="profitTypeF();" disabled="disabled">
-																<c:choose>
-																	<c:when
-																		test="${purchaseSearchView.isFlatProfitAgent()==true}">
-																		<option value="profitFlat">Flat</option>
-																	</c:when>
-																	<c:otherwise>
-																		<option value="profitPer">%</option>
-																	</c:otherwise>
-																</c:choose>
-														</select>
-														</td>
-														<td><input type="text"
-															value="${purchaseSearchView.agentProfitValue}"
-															class="form-control" name="profitVal" id="profitVal"
-															placeholder="" readonly="readonly"></td>
-													</tr>
-												</tbody>
-												<tbody>
-													<tr>
-														<td colspan="2" id="disc">Agent Profit Value:</td>
-														<td><input type="text" class="form-control"
-															readonly="readonly" id="profitValue" name="profitValue"
-															value="0"></td>
-													</tr>
-												</tbody>
+											<c:choose>
+												<c:when
+													test="${purchaseSearchView.isEfectiveProfit()==true && purchaseSearchView.agentId!=0}">
+													<tbody>
+														<tr>
+															<td colspan="2">Agent Profit: &nbsp; <select
+																name="profitType" id="profitType"
+																onchange="profitTypeF();" disabled="disabled">
+																	<c:choose>
+																		<c:when
+																			test="${purchaseSearchView.isFlatProfitAgent()==true}">
+																			<option value="profitFlat">Flat</option>
+																		</c:when>
+																		<c:otherwise>
+																			<option value="profitPer">%</option>
+																		</c:otherwise>
+																	</c:choose>
+															</select>
+															</td>
+															<td><input type="text"
+																value="${purchaseSearchView.agentProfitValue}"
+																class="form-control" name="profitVal" id="profitVal"
+																placeholder="" readonly="readonly"></td>
+														</tr>
+													</tbody>
+													<tbody>
+														<tr>
+															<td colspan="2" id="disc">Agent Profit Value:</td>
+															<td><input type="text" class="form-control"
+																readonly="readonly" id="profitValue" name="profitValue"
+																value="0"></td>
+														</tr>
+													</tbody>
+												</c:when>
+												<c:otherwise>
+													<tbody style="display: none;">
+														<tr>
+															<td colspan="2">Agent Profit: &nbsp; <select
+																name="profitType" id="profitType"
+																onchange="profitTypeF();" disabled="disabled">
+																	<c:choose>
+																		<c:when
+																			test="${purchaseSearchView.isFlatProfitAgent()==true}">
+																			<option value="profitFlat">Flat</option>
+																		</c:when>
+																		<c:otherwise>
+																			<option value="profitPer">%</option>
+																		</c:otherwise>
+																	</c:choose>
+															</select>
+															</td>
+															<td><input type="text" value="0"
+																class="form-control" name="profitVal" id="profitVal"
+																placeholder="" readonly="readonly"></td>
+														</tr>
+													</tbody>
+													<tbody style="display: none;">
+														<tr>
+															<td colspan="2" id="disc">Agent Profit Value:</td>
+															<td><input type="text" class="form-control"
+																readonly="readonly" id="profitValue" name="profitValue"
+																value="0"></td>
+														</tr>
+													</tbody>
+												</c:otherwise>
+											</c:choose>
+											<%-- <c:if
+												test="${purchaseSearchView.isEfectiveProfit()==true && purchaseSearchView.agentId!=0}">
+
 											</c:if>
-											<c:if test="${purchaseSearchView.isEfectiveProfit()==false || purchaseSearchView.agentId==0}">
-												<tbody style="display: none;">
-													<tr>
-														<td colspan="2">Agent Profit: &nbsp; <select
-															name="profitType" id="profitType"
-															onchange="profitTypeF();" disabled="disabled">
-																<c:choose>
-																	<c:when
-																		test="${purchaseSearchView.isFlatProfitAgent()==true}">
-																		<option value="profitFlat">Flat</option>
-																	</c:when>
-																	<c:otherwise>
-																		<option value="profitPer">%</option>
-																	</c:otherwise>
-																</c:choose>
-														</select>
-														</td>
-														<td><input type="text" value="0" class="form-control"
-															name="profitVal" id="profitVal" placeholder=""
-															readonly="readonly"></td>
-													</tr>
-												</tbody>
-												<tbody style="display: none;">
-													<tr>
-														<td colspan="2" id="disc">Agent Profit Value:</td>
-														<td><input type="text" class="form-control"
-															readonly="readonly" id="profitValue" name="profitValue"
-															value="0"></td>
-													</tr>
-												</tbody>
-											</c:if>
+											<c:if
+												test="${purchaseSearchView.isEfectiveProfit()==false || purchaseSearchView.agentId==0}">
+
+											</c:if> --%>
 											<tbody>
 												<tr>
 													<td>${purchaseSearchView.tax_Type_Group.name}</td>

@@ -97,8 +97,11 @@
 											<td><c:set var="totPurQty" value="${0}"></c:set> <c:forEach
 													var="proedPurDet" items="${prod.purchase_Product_Details}">
 													<c:if test="${proedPurDet.purchase_Entry!=null}">
-														<c:set var="totPurQty"
-															value="${totPurQty+proedPurDet.quantity-proedPurDet.totalReturningQty}"></c:set>
+														<c:if
+															test="${proedPurDet.purchase_Entry.vendor.name!='Production Vendor'}">
+															<c:set var="totPurQty"
+																value="${totPurQty+proedPurDet.quantity-proedPurDet.totalReturningQty}"></c:set>
+														</c:if>
 													</c:if>
 												</c:forEach> <fmt:formatNumber var="totPurQtyF" value="${totPurQty}"
 													maxFractionDigits="3" /> ${totPurQtyF}</td>
@@ -130,58 +133,60 @@
 										<c:set var="count" value="${1}" />
 										<c:forEach items="${requestScope['purEntryList']}"
 											var="pEntryByD">
-											<tr>
-												<td>${count}</td>
-												<td><fmt:formatDate value="${pEntryByD.purchase_date}"
-														pattern="dd-MM-yy" /></td>
-												<c:if test="${pEntryByD.vendor.vendorType.type=='Vendor'}">
-													<td>${pEntryByD.vendor.name}</td>
-												</c:if>
-												<c:if test="${pEntryByD.vendor.vendorType.type!='Vendor'}">
-													<td>NIL</td>
-												</c:if>
-												<c:choose>
-													<c:when
-														test="${pEntryByD.vendor.vendorType.type=='Purchase Agent'}">
+											<c:if test="${pEntryByD.vendor.name!='Production Vendor'}">
+												<tr>
+													<td>${count}</td>
+													<td><fmt:formatDate value="${pEntryByD.purchase_date}"
+															pattern="dd-MM-yy" /></td>
+													<c:if test="${pEntryByD.vendor.vendorType.type=='Vendor'}">
 														<td>${pEntryByD.vendor.name}</td>
-													</c:when>
-													<c:when test="${pEntryByD.agentId!=0}">
-														<td>${sessionScope['ejb'].getVendorById(pEntryByD.agentId).name}</td>
-													</c:when>
-													<c:otherwise>
+													</c:if>
+													<c:if test="${pEntryByD.vendor.vendorType.type!='Vendor'}">
 														<td>NIL</td>
-													</c:otherwise>
-												</c:choose>
-												<td>${pEntryByD.challanNumber}</td>
-												<td>${pEntryByD.vendor_bill_no}</td>
-												<td><c:set var="totPurQty" value="${0}"></c:set> <c:forEach
-														var="proedPurDet"
-														items="${pEntryByD.purchase_Product_Details}">
-														<c:if
-															test="${proedPurDet.productDetail.id==requestScope['pId']}">
-															<c:set var="totPurQty"
-																value="${totPurQty+proedPurDet.quantity-proedPurDet.totalReturningQty}"></c:set>
-														</c:if>
-													</c:forEach> ${totPurQty}</td>
-												<td><c:set var="subot" value="${0}"></c:set> <c:forEach
-														var="proedPurDet"
-														items="${pEntryByD.purchase_Product_Details}">
-														<c:if
-															test="${proedPurDet.productDetail.id==requestScope['pId']}">
-															<c:set var="subot"
-																value="${subot+(proedPurDet.quantity-proedPurDet.totalReturningQty)*proedPurDet.cost}"></c:set>
-														</c:if>
-													</c:forEach> ${subot}</td>
-												<td><c:if
-														test="${pEntryByD.vendor.name!='Production Vendor'}">
-														<form action="purchaseReportView" method="post"
-															id="pView${pEntryByD.id}">
-															<a href="#" onclick="purchaseViewF('${pEntryByD.id}');"><input
-																type="hidden" value="${pEntryByD.id}" name="pId"><img
-																alt="" src="images/eye.png" height="25px"></a>
-														</form>
-													</c:if></td>
-											</tr>
+													</c:if>
+													<c:choose>
+														<c:when
+															test="${pEntryByD.vendor.vendorType.type=='Purchase Agent'}">
+															<td>${pEntryByD.vendor.name}</td>
+														</c:when>
+														<c:when test="${pEntryByD.agentId!=0}">
+															<td>${sessionScope['ejb'].getVendorById(pEntryByD.agentId).name}</td>
+														</c:when>
+														<c:otherwise>
+															<td>NIL</td>
+														</c:otherwise>
+													</c:choose>
+													<td>${pEntryByD.challanNumber}</td>
+													<td>${pEntryByD.vendor_bill_no}</td>
+													<td><c:set var="totPurQty" value="${0}"></c:set> <c:forEach
+															var="proedPurDet"
+															items="${pEntryByD.purchase_Product_Details}">
+															<c:if
+																test="${proedPurDet.productDetail.id==requestScope['pId']}">
+																<c:set var="totPurQty"
+																	value="${totPurQty+proedPurDet.quantity-proedPurDet.totalReturningQty}"></c:set>
+															</c:if>
+														</c:forEach> ${totPurQty}</td>
+													<td><c:set var="subot" value="${0}"></c:set> <c:forEach
+															var="proedPurDet"
+															items="${pEntryByD.purchase_Product_Details}">
+															<c:if
+																test="${proedPurDet.productDetail.id==requestScope['pId']}">
+																<c:set var="subot"
+																	value="${subot+(proedPurDet.quantity-proedPurDet.totalReturningQty)*proedPurDet.cost}"></c:set>
+															</c:if>
+														</c:forEach> ${subot}</td>
+													<td><c:if
+															test="${pEntryByD.vendor.name!='Production Vendor'}">
+															<form action="purchaseReportView" method="post"
+																id="pView${pEntryByD.id}">
+																<a href="#" onclick="purchaseViewF('${pEntryByD.id}');"><input
+																	type="hidden" value="${pEntryByD.id}" name="pId"><img
+																	alt="" src="images/eye.png" height="25px"></a>
+															</form>
+														</c:if></td>
+												</tr>
+											</c:if>
 											<c:set var="count" value="${count+1}" />
 										</c:forEach>
 									</tbody>

@@ -122,8 +122,8 @@
 											<th>Sales Invoice no.</th>
 											<th>Qty</th>
 											<th>Sub Total</th>
-											<th>Discount Value</th>
-											<th>Tax Amount</th>
+											<!-- <th>Discount Value</th>
+											<th>Tax Amount</th> -->
 											<th></th>
 										</tr>
 									</thead>
@@ -161,11 +161,12 @@
 																value="${subot+(proedPurDet.quantity-proedPurDet.salesReQty)*proedPurDet.salesPrice}"></c:set>
 														</c:if>
 													</c:forEach> ${subot}</td>
-												<td><c:set var="disVal"
+												<%-- <td><c:set var="disVal"
 														value="${pEntryByD.isFlatDiscount()?subot*pEntryByD.discountValue/pEntryByD.subTotal:subot*pEntryByD.discountValue/100}" />
 													${disVal}</td>
 												<td><fmt:formatNumber var="taxAmount"
-														value="${pEntryByD.taxAmount}" maxFractionDigits="2" />${taxAmount}</td>
+														value="${(subot-disVal)*pEntryByD.tax_Type_Group.getTotalTaxValue()/100}"
+														maxFractionDigits="2" />${taxAmount}</td> --%>
 												<td><form action="salesReportView" method="post"
 														id="pView${pEntryByD.id}">
 														<a href="#" onclick="purchaseViewF('${pEntryByD.id}');"><input

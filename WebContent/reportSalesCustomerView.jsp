@@ -114,12 +114,6 @@
 											<th>Agent Name</th>
 											<th>Sales Invoice no.</th>
 											<th>Sub Total</th>
-											<th>Discount Value</th>
-											<th>Tax Amount</th>
-											<th>Transport Cost</th>
-											<th>Surcharge</th>
-											<th>RoundOf</th>
-											<th>Grand Total</th>
 											<th></th>
 										</tr>
 									</thead>
@@ -141,16 +135,14 @@
 													</c:otherwise>
 												</c:choose>
 												<td>${pEntryByD.challanNumber}</td>
-												<td>${pEntryByD.subTotal}</td>
-												<td><c:set var="disVal"
-														value="${pEntryByD.isFlatDiscount()?pEntryByD.discountValue:pEntryByD.subTotal*pEntryByD.discountValue/100}" />
-													${disVal}</td>
-												<td><fmt:formatNumber var="taxAmount"
-														value="${pEntryByD.taxAmount}" maxFractionDigits="2" />${taxAmount}</td>
-												<td>${pEntryByD.transportcCharge}</td>
-												<td>${pEntryByD.surcharge}</td>
-												<td>${pEntryByD.roundOf}</td>
-												<td>${pEntryByD.totalCost}</td>
+												<td><c:set value="${0}" var="totCost" /> <c:set
+														value="${0}" var="totRetCost" /> <c:forEach
+														items="${pEntryByD.salesProductDetails}" var="ppd">
+														<c:set value="${totCost+ppd.quantity*ppd.salesPrice}"
+															var="totCost" />
+														<c:set value="${totRetCost+ppd.salesReQty*ppd.salesPrice}"
+															var="totRetCost" />
+													</c:forEach> ${totCost-totRetCost}</td>
 												<td><form action="salesReportView" method="post"
 														id="pView${pEntryByD.id}">
 														<a href="#" onclick="purchaseViewF('${pEntryByD.id}');"><input
