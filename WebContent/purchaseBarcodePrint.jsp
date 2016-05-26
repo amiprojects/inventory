@@ -86,7 +86,7 @@
 															onclick="qtyPrF(${purchaseProducts.id});"><input
 															type="hidden" value="${purchaseProducts.id}"
 															name="prodCheck"><input type="hidden"
-															value="${companyInfo.compname}" name="compname"></td>
+															value="${companyInfo.barcodeHeader}" name="compname"></td>
 														<td><input type="number"
 															id="qtyPr${purchaseProducts.id}" class="form-control"
 															readonly="readonly" name="qtyProd" value="0"></td>

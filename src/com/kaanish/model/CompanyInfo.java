@@ -44,6 +44,8 @@ public class CompanyInfo implements Serializable {
 	private String servtaxdate;
 
 	private int changeCount;
+	
+	private String barcodeHeader;
 
 	@OneToMany(mappedBy = "companyInfo")
 	private List<Purchase_Product_Details> purchase_Product_Details;
@@ -325,6 +327,14 @@ public class CompanyInfo implements Serializable {
 
 	public void setPurchaseOrderProductdetails(List<PurchaseOrderProductdetails> purchaseOrderProductdetails) {
 		this.purchaseOrderProductdetails = purchaseOrderProductdetails;
+	}
+
+	public String getBarcodeHeader() {
+		return barcodeHeader;
+	}
+
+	public void setBarcodeHeader(String barcodeHeader) {
+		this.barcodeHeader = barcodeHeader;
 	}
 
 }

@@ -313,17 +313,25 @@ public class Servlet extends HttpServlet {
 								.getCompanyInfo();
 
 						// if (companyInfo.getChangeCount() < 3) {
-						companyInfo.setCompname(req.getParameter("name"));
+						companyInfo.setCompname(req.getParameter("name")
+								.toUpperCase());
 						companyInfo.setEmail(req.getParameter("email"));
 						companyInfo.setMobile(req.getParameter("mono"));
 						companyInfo.setPhone(req.getParameter("phno"));
-						companyInfo.setAddr(req.getParameter("adress"));
-						companyInfo.setCity(req.getParameter("city"));
-						companyInfo.setCountry1(req.getParameter("country1"));
-						companyInfo.setState(req.getParameter("state"));
-						companyInfo.setVatno(req.getParameter("vatno"));
-						companyInfo.setCstno(req.getParameter("cstno"));
-						companyInfo.setTinno(req.getParameter("tinno"));
+						companyInfo.setAddr(req.getParameter("adress")
+								.toUpperCase());
+						companyInfo.setCity(req.getParameter("city")
+								.toUpperCase());
+						companyInfo.setCountry1(req.getParameter("country1")
+								.toUpperCase());
+						companyInfo.setState(req.getParameter("state")
+								.toUpperCase());
+						companyInfo.setVatno(req.getParameter("vatno")
+								.toUpperCase());
+						companyInfo.setCstno(req.getParameter("cstno")
+								.toUpperCase());
+						companyInfo.setTinno(req.getParameter("tinno")
+								.toUpperCase());
 						companyInfo.setServicetaxno(req
 								.getParameter("servicet"));
 						companyInfo.setVatdate(req.getParameter("vatdate"));
@@ -341,6 +349,9 @@ public class Servlet extends HttpServlet {
 						if (!(content.length == 0)) {
 							companyInfo.setImage(content);
 						}
+
+						companyInfo.setBarcodeHeader(req
+								.getParameter("barcodeHeader").toUpperCase());
 
 						ejb.updateCompanyInfo(companyInfo);
 						msg = "Company info updated successfully.";
@@ -1635,6 +1646,22 @@ public class Servlet extends HttpServlet {
 								purchaseProductDetails
 										.setCompanyInfo(companyInfo);
 								ejb.setPurchaseProductDetails(purchaseProductDetails);
+								// correcting lot number
+								for (ProductDetail pd : ejb
+										.getAllProductDetail()) {
+									for (int pdQ = 0; pdQ < ejb
+											.getPurchaseProductDetailsByProductIdAsc(
+													pd.getId()).size(); pdQ++) {
+										Purchase_Product_Details purchase_Product_Details = ejb
+												.getPurchaseProductDetailsByProductIdAsc(
+														pd.getId()).get(pdQ);
+										int j = pdQ + 1;
+										purchase_Product_Details
+												.setLotNumber("" + j);
+										ejb.updatePurchaseProductDetails(purchase_Product_Details);
+									}
+								}
+								// correcting lot number
 
 								if (purchaseProductDetails.getProductDetail()
 										.isRaw()) {

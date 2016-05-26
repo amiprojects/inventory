@@ -1,3 +1,17 @@
+<style>
+.ui-autocomplete {
+	max-height: 150px;
+	overflow-y: auto;
+	/* prevent horizontal scrollbar */
+	overflow-x: hidden;
+}
+/* IE 6 doesn't support max-height
+   * we use height instead, but this forces the menu to always be this tall
+   */
+* html .ui-autocomplete {
+	height: 150px;
+}
+</style>
 <header class="header" id="header">
 	<div class="logo">
 		<!-- <a href="dashboard.html" title=""><img src="images/logo2.png"

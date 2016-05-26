@@ -90,7 +90,7 @@
 															<td><input type="number"
 																id="qtyPr${purchaseProducts.id}" class="form-control"
 																readonly="readonly" name="qtyProd" value="0"><input
-																type="hidden" value="${companyInfo.compname}"
+																type="hidden" value="${companyInfo.barcodeHeader}"
 																name="compname"></td>
 														</tr>
 													</tbody>

@@ -72,7 +72,7 @@
 		</c:if>
 	</c:if>
 
-	<div class="main" style="height: 664px;">
+	<div class="main" style="height: 664px;">		
 		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
 			<%@include file="includeSidebar.jsp"%>
@@ -156,8 +156,8 @@
 														<div class="col-md-4">The State Belongs to :</div>
 														<div class="col-md-6">
 															<input id="country" type="text" name="name"
-																class="form-control" autocomplete="off"> <input id="countryId"
-																type="hidden" name="id">
+																class="form-control" autocomplete="off"> <input
+																id="countryId" type="hidden" name="id">
 														</div>
 														<div class="col-md-2">
 															<input id="countryForStatebtn" type="submit"
