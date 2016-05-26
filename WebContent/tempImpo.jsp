@@ -1,3 +1,7 @@
+COMPANYINFO
+...............
+barcodeHeader String 255 null
+.........................................................
 ALTER TABLE SALESENTRY ADD (isFlatProfitAgent NUMBER(1) DEFAULT 1);
 ALTER TABLE SALESENTRY ADD (isEfectiveProfit NUMBER(1) DEFAULT 1);
 agentProfitValue 19,4 null
@@ -43,11 +47,11 @@ JOBPLANPRODUCTS
 ..................
 ProductsForDesignCostSheetId->PRODFORDSNCSTSHTID
 	
-////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
 UPDATE PURCHASE_PRODUCT_DETAILS 
 	SET REMAINING_QUANTITY = 24
-	WHERE PRODUCTID = 4634;
+	WHERE PRODUCTID = 54646666666666664;
 	
 select * from READYGOODSSTOCK where PRODUCTID in (select ID from PRODUCTDETAIL where CODE like '0%');
 
