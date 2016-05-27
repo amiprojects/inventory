@@ -193,7 +193,23 @@
 																		placeholder="enter barcode header" id="barcodeHeader"
 																		readonly="readonly" value="${compInfo.barcodeHeader}"
 																		class="form-control" name="barcodeHeader" type="text"><br>
-
+																</div>
+																<div>
+																	<label for=""> Barcode In:</label>&nbsp;
+																	<c:choose>
+																		<c:when test="${compInfo.isMRPbarcode()}">
+																			<input type="radio" name="isMRPbarcode"
+																				value="mrpBar" checked="checked">MRP
+																	&nbsp;<input type="radio" name="isMRPbarcode"
+																				value="wspBar">WSP<br>
+																		</c:when>
+																		<c:otherwise>
+																			<input type="radio" name="isMRPbarcode"
+																				value="mrpBar">MRP
+																	&nbsp;<input type="radio" name="isMRPbarcode"
+																				value="wspBar" checked="checked">WSP<br>
+																		</c:otherwise>
+																	</c:choose>
 																</div>
 															</div>
 														</div>
@@ -442,35 +458,9 @@
 
 			if ($("#compname").val() == 0) {
 				alert("please enter Company name");
-			} /* else if ($("#mobile").val() == "") {
-																				alert("please select Mobile Number");
-																			} else if ($("#addr").val() == "") {
-																				alert("please select Address");
-																			} else if ($("#email").val() == "") {
-																				alert("please select email");
-																			} else if ($("#phone").val() == "") {
-																				alert("please select Phone");
-																			} else if ($("#cityname").val() == "") {
-																				alert("please select cityname");
-																			} else if ($("#vat").val() == "") {
-																				alert("please select VAT");
-																			} else if ($("#cst").val() == "") {
-																				alert("please select CST");
-																			} else if ($("#tin").val() == "") {
-																				alert("please select TIN");
-																			} else if ($("#service").val() == "") {
-																				alert("please select Service Tax");
-																			} else if ($("#vatdate").val() == "") {
-																				alert("please select VAT resistration Date");
-																			} else if ($("#cstdate").val() == "") {
-																				alert("please select CST resistration Date");
-																			} else if ($("#tinDate").val() == "") {
-																				alert("please select TIN resistration Date");
-																			} else if ($("#servicedate").val() == "") {
-																				alert("please select Service resistration Date");
-																			} */
-
-			else {
+			} else if ($("#barcodeHeader").val() == "") {
+				alert("please enter Barcode Header");
+			} else {
 				$("#companydetails").submit();
 			}
 
@@ -514,6 +504,8 @@
 		function detailButtonNext() {
 			if ($("#compname").val() == 0) {
 				alert("please enter Company name");
+			} else if ($("#barcodeHeader").val() == "") {
+				alert("please enter Barcode Header");
 			} else {
 				$("#info1").removeAttr("class");
 				$("#comp").attr("class", "tab-pane fade");

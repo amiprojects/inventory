@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
 .ui-autocomplete {
 	max-height: 150px;
@@ -20,22 +21,27 @@
 	</div>
 	<div class="custom-dropdowns">
 		<div class="notification-list dropdown">
-			<a title=""><span class="green" id="notification">3</span><i
-				class="fa fa-bell-o"></i></a>
+			<a title=""> <c:if
+					test="${sessionScope['ejb'].getNotifications().size()>0}">
+					<span class="green" id="notification">${sessionScope['ejb'].getNotifications().size()}</span>
+				</c:if><i class="fa fa-bell-o"></i></a>
 			<div class="notification drop-list">
-				<span id="notificationStatement">You have 3 New Notifications</span>
-				<ul id="notificationDetails">
-					<li><a href="#" title=""><span><i
-								class="fa fa-bug red"></i></span>Server 3 is Over Loader Please
-							Check... </a></li>
-					<li><a href="#" title=""><span><img
-								src="images/resource/sender2.jpg" alt="" /></span><i>MD Daisal</i>New
-							User Registered</a></li>
-					<li><a href="#" title=""><span><i
-								class="fa fa-bullhorn green"></i></span>Envato Has change the policies
-					</a></li>
+				<span id="notificationStatement">You have
+					${sessionScope['ejb'].getNotifications().size()} New Notifications</span>
+				<ul id="notificationDetails" style="height: 300px; overflow: auto;">
+
+					<c:forEach var="i"
+						items="${sessionScope['ejb'].getNotifications()}"
+						end="${sessionScope['ejb'].getNotifications().size()>=5?4:sessionScope['ejb'].getNotifications().size()}"
+						begin="0">
+
+						<li><a href="${i.link}" title=""><span><i
+									class="fa fa-info green"></i></span>${i.description}</a></li>
+
+					</c:forEach>
+
+					<li><a href="notification.jsp">See all</a></li>
 				</ul>
-				<!-- <a href="#" title="">See All Notifications</a> -->
 			</div>
 		</div>
 		<!-- Notification List -->

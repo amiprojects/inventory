@@ -62,14 +62,14 @@
 								</div>
 								<div class="widget-area">
 									<form action="barcode" method="post">
-										<c:set value="${sessionScope['ejb'].getCompanyInfo()}"
-											var="companyInfo" />
 										<table class="table table-striped table-bordered">
 											<thead>
 												<tr>
 													<th>Product Code</th>
 													<th>product Description</th>
 													<th>Lot No.</th>
+													<th>Qty</th>
+													<th>Remaining Qty</th>
 													<th>Select</th>
 													<th>Qty to print</th>
 											</thead>
@@ -82,6 +82,8 @@
 															<td>${purchaseProducts.productDetail.code}</td>
 															<td>${purchaseProducts.productDetail.description}</td>
 															<td>${purchaseProducts.lotNumber}</td>
+															<td>${purchaseProducts.quantity}</td>
+															<td>${purchaseProducts.remaining_quantity}</td>
 															<td><input type="checkbox"
 																id="prodCheck${purchaseProducts.id}"
 																onclick="qtyPrF(${purchaseProducts.id});"><input
@@ -89,9 +91,7 @@
 																name="prodCheck"></td>
 															<td><input type="number"
 																id="qtyPr${purchaseProducts.id}" class="form-control"
-																readonly="readonly" name="qtyProd" value="0"><input
-																type="hidden" value="${companyInfo.barcodeHeader}"
-																name="compname"></td>
+																readonly="readonly" name="qtyProd" value="0"></td>
 														</tr>
 													</tbody>
 												</c:if>

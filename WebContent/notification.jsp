@@ -158,6 +158,8 @@
 </body>
 <script>
 	$(document).ready(function() {
+		$("#noti").attr("id", "activeSubMenu");
+		$("#sNoti").attr("style", "color: #6a94ff;");
 		$(".notification_tbl").DataTable({
 			"aaSorting" : [],
 			"scrollX" : true,

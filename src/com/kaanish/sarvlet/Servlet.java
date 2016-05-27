@@ -350,9 +350,13 @@ public class Servlet extends HttpServlet {
 							companyInfo.setImage(content);
 						}
 
-						companyInfo.setBarcodeHeader(req
-								.getParameter("barcodeHeader").toUpperCase());
-
+						companyInfo.setBarcodeHeader(req.getParameter(
+								"barcodeHeader").toUpperCase());
+						if (req.getParameter("isMRPbarcode").equals("mrpBar")) {
+							companyInfo.setMRPbarcode(true);
+						} else {
+							companyInfo.setMRPbarcode(false);
+						}
 						ejb.updateCompanyInfo(companyInfo);
 						msg = "Company info updated successfully.";
 						// } else {

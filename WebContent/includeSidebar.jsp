@@ -16,6 +16,18 @@
 				</div>
 			</div>
 			<div class="single-menu">
+				<h2 class="" id="noti">
+					<a title=""><span>Notification</span></a>
+				</h2>
+				<div class="sub-menu" style="" id="notiSub">
+					<ul>
+						<li><a id="sNoti" href="notification.jsp" title="">All
+								Notifications</a></li>
+
+					</ul>
+				</div>
+			</div>
+			<div class="single-menu">
 				<h2 id="reports">
 					<a title=""><span>Reports</span></a>
 				</h2>

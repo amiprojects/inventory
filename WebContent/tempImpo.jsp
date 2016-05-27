@@ -1,5 +1,16 @@
 COMPANYINFO
 ...............
+ALTER TABLE COMPANYINFO ADD (isMRPbarcode NUMBER(1) DEFAULT 1);
+
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+COMPANYINFO
+...............
 barcodeHeader String 255 null
 .........................................................
 ALTER TABLE SALESENTRY ADD (isFlatProfitAgent NUMBER(1) DEFAULT 1);
@@ -46,8 +57,6 @@ cost 19,4 null
 JOBPLANPRODUCTS
 ..................
 ProductsForDesignCostSheetId->PRODFORDSNCSTSHTID
-	
-/////////////////////////////////////////////////////////////////////////////////////
 
 UPDATE PURCHASE_PRODUCT_DETAILS 
 	SET REMAINING_QUANTITY = 24

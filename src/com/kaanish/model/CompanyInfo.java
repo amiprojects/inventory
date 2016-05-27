@@ -46,6 +46,7 @@ public class CompanyInfo implements Serializable {
 	private int changeCount;
 	
 	private String barcodeHeader;
+	private boolean isMRPbarcode;
 
 	@OneToMany(mappedBy = "companyInfo")
 	private List<Purchase_Product_Details> purchase_Product_Details;
@@ -335,6 +336,14 @@ public class CompanyInfo implements Serializable {
 
 	public void setBarcodeHeader(String barcodeHeader) {
 		this.barcodeHeader = barcodeHeader;
+	}
+
+	public boolean isMRPbarcode() {
+		return isMRPbarcode;
+	}
+
+	public void setMRPbarcode(boolean isMRPbarcode) {
+		this.isMRPbarcode = isMRPbarcode;
 	}
 
 }

@@ -64,25 +64,31 @@ public class BarcodeServlet extends HttpServlet {
 				}
 			}
 
-			String compName[] = req.getParameterValues("compname");
 			for (int i = 0; i < purProdDetLst.size(); i++) {
 				for (int j = 0; j < purProdDetLst.get(i)
 						.getNumberForBarcodePrint(); j++) {
 					document.newPage();
+					String barcodeHeader = ejb.getCompanyInfo()
+							.getBarcodeHeader();
+					float price;
+					if (ejb.getCompanyInfo().isMRPbarcode()) {
+						price = purProdDetLst.get(i).getMrp();
+					} else {
+						price = purProdDetLst.get(i).getWsp();
+					}
 
-					// document.add(new Paragraph(compName[i]));
+					// document.add(new Paragraph(barcodeHeader);
 					// document.add(new Paragraph(purProdDetLst.get(i)
 					// .getProductDetail().getUniversalCode()
 					// + "     "
-					// + ejb.getMRPlh(purProdDetLst.get(i).getMrp())));
+					// + ejb.getMRPlh(float price)));
 
-					document.add(new Paragraph(new Phrase(10F, compName[i],
+					document.add(new Paragraph(new Phrase(10F, barcodeHeader,
 							FontFactory.getFont(FontFactory.TIMES, 20f))));
 					document.add(new Paragraph(new Phrase(20F, purProdDetLst
 							.get(i).getProductDetail().getUniversalCode()
-							+ "     "
-							+ ejb.getMRPlh(purProdDetLst.get(i).getMrp()),
-							FontFactory.getFont(FontFactory.TIMES, 20f))));
+							+ "     " + ejb.getMRPlh(price), FontFactory
+							.getFont(FontFactory.TIMES, 20f))));
 					String code = purProdDetLst.get(i).getId() + "/"
 							+ purProdDetLst.get(i).getLotNumber() + "/"
 							+ purProdDetLst.get(i).getProductDetail().getCode();
