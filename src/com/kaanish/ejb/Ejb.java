@@ -3495,15 +3495,6 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	public List<SalesReturn> getAllSalesReEntrybyCustomerID(int id) {
-		TypedQuery<SalesReturn> q = em
-				.createQuery(
-						"select c from SalesReturn c where c.salesEntry.customer.id=:id",
-						SalesReturn.class);
-		q.setParameter("id", id);
-		return q.getResultList();
-	}
-
 	public List<CustomerEntry> getAllCustomerEntryByAssendingMaxSale() {
 		List<CustomerEntry> cList = new ArrayList<CustomerEntry>();
 		TypedQuery<CustomerEntry> q = em.createQuery(
@@ -3630,6 +3621,21 @@ public class Ejb {
 
 	public SalesReturn getSalesReturnDetailsById(int id) {
 		return em.find(SalesReturn.class, id);
+	}
+
+	public List<SalesReturn> getAllSalesReturn() {
+		TypedQuery<SalesReturn> q = em.createQuery(
+				"select c from SalesReturn c", SalesReturn.class);
+		return q.getResultList();
+	}
+
+	public List<SalesReturn> getAllSalesReEntrybyCustomerID(int id) {
+		TypedQuery<SalesReturn> q = em
+				.createQuery(
+						"select c from SalesReturn c where c.salesEntry.customer.id=:id",
+						SalesReturn.class);
+		q.setParameter("id", id);
+		return q.getResultList();
 	}
 
 	/*********************************************************** SalesProductReturnDetails ***********************/
@@ -4287,12 +4293,6 @@ public class Ejb {
 	public List<PurchaseReturn> getAllPurchaseReturn() {
 		TypedQuery<PurchaseReturn> q = em.createQuery(
 				"select c from PurchaseReturn c", PurchaseReturn.class);
-		return q.getResultList();
-	}
-
-	public List<SalesReturn> getAllSalesReturn() {
-		TypedQuery<SalesReturn> q = em.createQuery(
-				"select c from SalesReturn c", SalesReturn.class);
 		return q.getResultList();
 	}
 

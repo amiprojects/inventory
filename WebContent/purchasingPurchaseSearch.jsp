@@ -333,22 +333,22 @@
 		});
 	</script>
 	<script>
-		function dateSet() {
-			var dt = $("#datepicker").datepicker('getDate');
-			var dt1 = $("#datepicker1").datepicker('getDate');
-			if ($("#datepicker1").val() != "" && dt >= dt1) {
-				alert("Start date must be before than end date...");
-				$("#datepicker").val("");
-			}
+	function dateSet() {
+		var dt = $("#datepicker").datepicker('getDate');
+		var dt1 = $("#datepicker1").datepicker('getDate');
+		if ($("#datepicker1").val() != "" && dt > dt1) {
+			alert("Start date must be can not be later than end date...");
+			$("#datepicker").val("");
 		}
-		function checkDate() {
-			var d = $("#datepicker").datepicker('getDate');
-			var d1 = $("#datepicker1").datepicker('getDate');
-			if ($("#datepicker").val() != "" && d >= d1) {
-				alert("End date must be later than start date...");
-				$("#datepicker1").val("");
-			}
+	}
+	function checkDate() {
+		var d = $("#datepicker").datepicker('getDate');
+		var d1 = $("#datepicker1").datepicker('getDate');
+		if ($("#datepicker").val() != "" && d > d1) {
+			alert("End date can not be before than start date...");
+			$("#datepicker1").val("");
 		}
+	}
 		function purchaseViewF(id) {
 			$("#pView" + id).submit();
 		}

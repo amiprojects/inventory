@@ -62,11 +62,11 @@
 
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
-								<h3 style="margin-top: 11px;">Sales Search</h3>
+								<h3 style="margin-top: 11px;">Sales Return Search</h3>
 							</div>
 							<div class="widget-area">
 								<div class="col-md-12">
-									<form role="form" class="sec" action="salesSearchAll"
+									<form role="form" class="sec" action="salesReturnSearchAll"
 										method="post">
 										<div class="row">
 											<div class="col-md-12">
@@ -75,7 +75,7 @@
 											</div>
 										</div>
 									</form>
-									<form role="form" class="sec" action="salesSearchByDate"
+									<%-- <form role="form" class="sec" action="salesSearchByDate"
 										method="post" id="salesSearchByDateId">
 										<div class="row">
 											<div class="col-md-5">
@@ -107,8 +107,8 @@
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
-													<label for="" style="float: left;">Sales challan
-														no. :</label>
+													<label for="" style="float: left;">Sales Return
+														challan no. :</label>
 												</div>
 											</div>
 										</div>
@@ -211,7 +211,7 @@
 													style="margin-top: 25px;" type="submit">Search</button>
 											</div>
 										</div>
-									</form>
+									</form> --%>
 									<br>
 									<h3 align="center" style="color: #6a94ff;">${requestScope['msg']}</h3>
 									<br>
@@ -219,40 +219,41 @@
 										<thead>
 											<tr>
 												<th>#</th>
-												<th>Sales challan no.</th>
+												<th>Sales Return challan no.</th>
+												<th>Reference challan no.</th>
 												<th>Customer Name</th>
 												<th>Agent Name</th>
 												<th>Sales Date</th>
-												<th>Total Amount</th>
-												<!-- <th>Barcode</th> -->
+												<th>Return Date</th>
 											</tr>
 										</thead>
 
 										<c:set var="count" value="${1}" />
-										<c:forEach items="${requestScope['salesEntryLst']}"
+										<c:forEach items="${requestScope['salesRetLst']}"
 											var="sEntryByD">
 											<tbody>
 												<tr>
 													<td>${count}</td>
 													<td><a href="#"
 														onclick="viewInvoiceS(${sEntryByD.id});"><b>${sEntryByD.challanNumber}</b></a></td>
-													<td>${sEntryByD.customer.name}</td>
+													<td><a href="#"
+														onclick="viewInvoiceS(${sEntryByD.id});"><b>${sEntryByD.salesEntry.challanNumber}</b></a></td>
+													<td>${sEntryByD.salesEntry.customer.name}</td>
 													<c:choose>
-														<c:when test="${sEntryByD.vendor==null}">
+														<c:when test="${sEntryByD.salesEntry.vendor==null}">
 															<td>NIL</td>
 														</c:when>
 														<c:otherwise>
-															<td>${sEntryByD.vendor.name}</td>
+															<td>${sEntryByD.salesEntry.vendor.name}</td>
 														</c:otherwise>
 													</c:choose>
-													<td><fmt:formatDate value="${sEntryByD.sales_date}"
+													<td><fmt:formatDate
+															value="${sEntryByD.salesEntry.sales_date}"
 															pattern="dd-MM-yy" /></td>
-													<td>${sEntryByD.totalCost}</td>
-													<td><a href="#"
-														onclick="viewInvoiceSoldOnly(${sEntryByD.id});"><b>Challan
-																for sold only</b></a></td>
+													<td><fmt:formatDate value="${sEntryByD.returnDate}"
+															pattern="dd-MM-yy" /></td>
 													<td>
-														<form action="salesView" method="post"
+														<form action="salesReturnView" method="post"
 															id="sView${sEntryByD.id}">
 															<a href="#" onclick="salesViewF('${sEntryByD.id}');"><input
 																type="hidden" value="${sEntryByD.id}" name="sId"><img
@@ -286,7 +287,7 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#sales").attr("id", "activeSubMenu");
-			$("#sSalesSearch").attr("style", "color: #6a94ff;");
+			$("#sSalesRetSearch").attr("style", "color: #6a94ff;");
 		});
 	</script>
 	<script src="js/jquery-ui/jquery-ui.js"></script>

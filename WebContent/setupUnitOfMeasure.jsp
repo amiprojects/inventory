@@ -156,7 +156,7 @@
 																		<div class="col-md-12">
 																			<input type="radio" name="name1" value="2"
 																				onclick="relSelect();">1 <span>${unit.name}</span>
-																			is greater then 1 <span id="selectUnit2${unit.id}"></span>
+																			is greater than 1 <span id="selectUnit2${unit.id}"></span>
 
 																		</div>
 																		<br> <br> <br>

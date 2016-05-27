@@ -20,7 +20,6 @@ public class BackupRestoreServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	@EJB
 	private Ejb ejb;
-	private String filePath = "backup/";
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)

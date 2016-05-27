@@ -123,7 +123,8 @@ import com.kaanish.util.GetMacId;
 		"/jobSearchByJobberNameForPayment", "/jobSearchByPlanNoForPayment",
 		"/jobPayment", "/purchasePayment", "/salesPayment",
 		"/creditNoteByVendorName", "/creditNoteByAgentName",
-		"/creditNoteByJobber", "/debitNoteByCustomer", "/testServManage" })
+		"/creditNoteByJobber", "/debitNoteByCustomer", "/testServManage",
+		"/salesReturnSearchAll", "/salesReturnView" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -3723,13 +3724,27 @@ public class Servlet extends HttpServlet {
 						}
 						break;
 
+					case "salesReturnSearchAll":
+						page = "salesSearchReturn.jsp";
+						List<SalesReturn> salesRetLst = ejb.getAllSalesReturn();
+						req.setAttribute("salesRetLst", salesRetLst);
+						if (salesRetLst.size() > 0) {
+							msg = "All Sales Return List";
+						} else {
+							msg = "No result found...";
+						}
+						break;
+
 					case "salesView":
 						page = "salesView.jsp";
-
 						req.setAttribute("sId", req.getParameter("sId"));
-
 						msg = "";
+						break;
 
+					case "salesReturnView":
+						page = "salesViewReturn.jsp";
+						req.setAttribute("sId", req.getParameter("sId"));
+						msg = "";
 						break;
 
 					case "salesReportView":

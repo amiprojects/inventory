@@ -78,6 +78,8 @@
 								Return</a></li>
 						<li><a id="sSalesSearch" href="salesSearch.jsp" title="">Sales
 								Search</a></li>
+						<li><a id="sSalesRetSearch" href="salesSearchReturn.jsp" title="">Sales
+								Return Search</a></li>
 					</ul>
 				</div>
 			</div>

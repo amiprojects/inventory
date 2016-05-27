@@ -37,10 +37,11 @@
 
 						<li><a href="${i.link}" title=""><span><i
 									class="fa fa-info green"></i></span>${i.description}</a></li>
-
 					</c:forEach>
 
-					<li><a href="notification.jsp">See all</a></li>
+					<c:if test="${sessionScope['ejb'].getNotifications().size()>0}">
+						<li><a href="notification.jsp">See all</a></li>
+					</c:if>
 				</ul>
 			</div>
 		</div>
