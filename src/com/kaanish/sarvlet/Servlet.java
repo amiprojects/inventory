@@ -749,7 +749,10 @@ public class Servlet extends HttpServlet {
 						break;
 
 					case "editproductSummary":
-						page = "MaterialPartDetailsGenerals.jsp";
+						// page = "MaterialPartDetailsGenerals.jsp";
+						int proId = Integer.parseInt(req
+								.getParameter("productid"));
+						page = "editPro.jsp?id=" + proId;
 						productDetail = new ProductDetail();
 
 						productDetail = ejb.getProductDetailsById(Integer

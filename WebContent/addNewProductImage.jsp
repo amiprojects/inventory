@@ -135,9 +135,7 @@
 													class="btn green btn-default" type="submit" value="Save">
 											</div>
 										</form>
-										<br>
-										<br>
-										<br>
+										<br> <br> <br>
 										<div
 											style="overflow-y: scroll; overflow-x: hidden; height: 300px">
 											<div
@@ -148,9 +146,12 @@
 													<div style="float: left;">
 														<img width="100" height="100" style="" alt=""
 															src="data:image/jpeg;base64,${img.getImageAsString()}"><br>
-														<a
-															href="deleteProductImage?imageId=${img.id}&id=${param.id}">delete
-															Image</a>
+														<c:if
+															test="${sessionScope['ejb'].getAllProductImageByProductId(param.id).size()>1}">
+															<a
+																href="deleteProductImage?imageId=${img.id}&id=${param.id}">delete
+																Image</a>
+														</c:if>
 													</div>
 												</c:forEach>
 											</div>
@@ -202,7 +203,7 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#prodact").attr("id", "activeSubMenu");
-			$("#sProduct").attr("style", "color: red;");
+			$("#sProduct").attr("style", "color: #6a94ff;");
 		});
 	</script>
 

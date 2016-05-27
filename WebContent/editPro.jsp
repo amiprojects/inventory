@@ -118,18 +118,15 @@
 											 --%>
 												<select name="uom123" id="uomO" class="form-control"
 													style="width: 431px; height: 34px">
-
+													<option value="${editpro.qtyUnit.id}" selected="selected">${editpro.qtyUnit.name}</option>
 													<c:forEach items="${sessionScope['ejb'].getAllQtyUnit()}"
 														var="qqty">
-														<option value="${qqty.id}">${qqty.name}</option>
+														<c:if test="${editpro.qtyUnit.id!=qqty.id}">
+															<option value="${qqty.id}">${qqty.name}</option>
+														</c:if>
 													</c:forEach>
-
-
 												</select>
 											</div>
-
-
-
 
 											<input style="float: right;" class="btn green btn-default"
 												type="submit" value="submit">

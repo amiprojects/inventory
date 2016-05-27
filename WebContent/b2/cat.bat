@@ -56,16 +56,21 @@ C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/kaanish FILE=d:/bac
 C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/kaanish FILE=d:/backup/exp.DMP BUFFER=10000000 IGNORE=Y CONSTRAINTS=Y GRANTS=Y TABLES=JOBPLANPRODUCTS
 C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/kaanish FILE=d:/backup/exp.DMP BUFFER=10000000 IGNORE=Y CONSTRAINTS=Y GRANTS=Y TABLES=JOBSTOCK
 C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/kaanish FILE=d:/backup/exp.DMP BUFFER=10000000 IGNORE=Y CONSTRAINTS=Y GRANTS=Y TABLES=JOBASSIGNMENTPRODUCTS
+C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/kaanish FILE=d:/backup/exp.DMP BUFFER=10000000 IGNORE=Y CONSTRAINTS=Y GRANTS=Y TABLES=JOBPLANJOBSTOCK
 C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/kaanish FILE=d:/backup/exp.DMP BUFFER=10000000 IGNORE=Y CONSTRAINTS=Y GRANTS=Y TABLES=JOBASSIGNMENTJOBDETAILS
 C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/kaanish FILE=d:/backup/exp.DMP BUFFER=10000000 IGNORE=Y CONSTRAINTS=Y GRANTS=Y TABLES=JOBRECIEVEDDETAILS
 C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/kaanish FILE=d:/backup/exp.DMP BUFFER=10000000 IGNORE=Y CONSTRAINTS=Y GRANTS=Y TABLES=JOBRECIEVEPRODUCTSDETAILS
-C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/kaanish FILE=d:/backup/exp.DMP BUFFER=10000000 IGNORE=Y CONSTRAINTS=Y GRANTS=Y TABLES=JOBPLANJOBSTOCK
 C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/kaanish FILE=d:/backup/exp.DMP BUFFER=10000000 IGNORE=Y CONSTRAINTS=Y GRANTS=Y TABLES=JOBRECEIVEJOBDETAILS
+C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/kaanish FILE=d:/backup/exp.DMP BUFFER=10000000 IGNORE=Y CONSTRAINTS=Y GRANTS=Y TABLES=JOBPLANPRODUCTSTOCK
 C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/kaanish FILE=d:/backup/exp.DMP BUFFER=10000000 IGNORE=Y CONSTRAINTS=Y GRANTS=Y TABLES=PURCHASEORDERENTRY
 C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/kaanish FILE=d:/backup/exp.DMP BUFFER=10000000 IGNORE=Y CONSTRAINTS=Y GRANTS=Y TABLES=PAYMENTTYPE
 C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/kaanish FILE=d:/backup/exp.DMP BUFFER=10000000 IGNORE=Y CONSTRAINTS=Y GRANTS=Y TABLES=PAYMENTSTATUS
 C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/kaanish FILE=d:/backup/exp.DMP BUFFER=10000000 IGNORE=Y CONSTRAINTS=Y GRANTS=Y TABLES=PAYMENTDETAILS
+C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/kaanish FILE=d:/backup/exp.DMP BUFFER=10000000 IGNORE=Y CONSTRAINTS=Y GRANTS=Y TABLES=VOUCHERASSIGN
+C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/kaanish FILE=d:/backup/exp.DMP BUFFER=10000000 IGNORE=Y CONSTRAINTS=Y GRANTS=Y TABLES=VOUCHERDETAILS
+C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/kaanish FILE=d:/backup/exp.DMP BUFFER=10000000 IGNORE=Y CONSTRAINTS=Y GRANTS=Y TABLES=NOTIFICATIONDETAILS
+C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/kaanish FILE=d:/backup/exp.DMP BUFFER=10000000 IGNORE=Y CONSTRAINTS=Y GRANTS=Y TABLES=NOTIFICATIONVIEW
+C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/kaanish FILE=d:/backup/exp.DMP BUFFER=10000000 IGNORE=Y CONSTRAINTS=Y GRANTS=Y TABLES=PAGELIST_USERGROUP
 C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/kaanish FILE=d:/backup/exp.DMP BUFFER=10000000 IGNORE=Y CONSTRAINTS=Y GRANTS=Y TABLES=JOBCLASS
-
 
 exit

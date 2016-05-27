@@ -292,9 +292,9 @@
 														class="btn btn-info btn-sm" data-toggle="modal"
 														data-target="#newMP">New</button></a></li>
 
-											<!-- <li><a href="#" id="editId"><button
+											<li><a href="#" id="editId"><button
 														class="btn btn-info btn-sm" id="sAnDfield"
-														disabled="disabled" type="button">Edit</button></a></li> -->
+														disabled="disabled" type="button">Edit</button></a></li>
 										</ul>
 									</div>
 
@@ -442,7 +442,7 @@
 													<td>&nbsp;</td>
 												</tr>
 												<tr>
-													<td><b>Purchasing Quantity:</b></td>
+													<td><b>Quantity:</b></td>
 													<td><input id="quantity0101" class="form-control "
 														readonly name="qty111" type="text"></td>
 												</tr>
