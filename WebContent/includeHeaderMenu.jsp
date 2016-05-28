@@ -13,13 +13,18 @@
 	height: 150px;
 }
 </style>
-<header class="header" id="header">
-	<div class="logo">
-		<!-- <a href="dashboard.html" title=""><img src="images/logo2.png"
-			alt="" /></a>  -->
-		<!-- <a title="" class="toggle-menu"><i class="fa fa-bars"></i></a> -->
+<%-- <jsp:include page="include.jsp" /> --%>
+<header class="header">
+	<div class="responsive-header">
+		<span><i class="fa fa-align-justify"></i></span>
+		<%@include file="includeHeaderM.jsp"%>
 	</div>
-	<div class="custom-dropdowns">
+	<!--Responsive header-->
+
+	<nav class="horizontal-menu">
+		<%@include file="includeHeaderM.jsp"%>
+	</nav>
+	<div class="custom-dropdowns" style="margin-left: 180px;">
 		<div class="notification-list dropdown">
 			<a title=""> <c:if
 					test="${sessionScope['ejb'].getNotifications().size()>0}">
@@ -29,7 +34,6 @@
 				<span id="notificationStatement">You have
 					${sessionScope['ejb'].getNotifications().size()} Notifications</span>
 				<ul id="notificationDetails">
-
 					<c:forEach var="i"
 						items="${sessionScope['ejb'].getNotifications()}"
 						end="${sessionScope['ejb'].getNotifications().size()>=5?4:sessionScope['ejb'].getNotifications().size()}"
@@ -46,8 +50,17 @@
 			</div>
 		</div>
 		<!-- Notification List -->
+
+
+		<c:if test="${sessionScope['ejb'].is21Days()=='true'}">
+			<div style="color: #ff0000;">
+				<h6>Validity will be ended on
+					${sessionScope['ejb'].getAllStoct().get(0).getEndDate()} . Please
+					contact to your vendor...</h6>
+			</div>
+		</c:if>
+
 	</div>
-	<!-- <a title="" class="slide-panel-btn"><i class="fa fa-gear fa-spin"></i></a> -->
 	<div class="dropdown profile">
 		<a title=""> <!--  <img src="images/resource/me.jpg" alt="" /> -->${sessionScope['ejb'].getUserById(sessionScope['user']).name}<i
 			class="caret"></i>
@@ -61,7 +74,6 @@
 			</ul>
 		</div>
 		<!-- Profile DropDown -->
-
 	</div>
 </header>
 <!-- Header -->
