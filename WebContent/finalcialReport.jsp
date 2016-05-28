@@ -449,11 +449,12 @@ tfoot {
 													<c:set value="${0}" var="ppd1" />
 													<c:forEach var="purProDet"
 														items="${sessionScope['ejb'].getAllPurchase_Product_Details()}">
-
-														<c:set value="${purProDet.quantity+ppd}" var="ppd" />
-														<c:set value="${purProDet.totalReturningQty+ppd1}"
-															var="ppd1" />
-
+														<c:if
+															test="${purProDet.purchase_Entry.vendor.name!='Production Vendor'}">
+															<c:set value="${purProDet.quantity+ppd}" var="ppd" />
+															<c:set value="${purProDet.totalReturningQty+ppd1}"
+																var="ppd1" />
+														</c:if>
 													</c:forEach>
 
 													<c:set value="${0}" var="prta" />

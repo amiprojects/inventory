@@ -318,7 +318,7 @@ $(document).ready(function(){
 												<tr>
 													<th>#</th>
 													<th>Name</th>
-													<th>Number</th>
+													<th>Type</th>
 													<th></th>
 												</tr>
 											</thead>
@@ -326,13 +326,15 @@ $(document).ready(function(){
 												<c:set var="c" value="1" />
 												<c:forEach items="${sessionScope['ejb'].getAllVendors()}"
 													var="vendor">
-													<tr>
-														<td>${c}</td>
-														<td>${vendor.companyName}</td>
-														<td>${vendor.ph1}</td>
-														<td><a href="vendorEdit.jsp?id=${vendor.id}"><img
-																alt="click to view" src="images/eye.png" height="20"></a></td>
-													</tr>
+													<c:if test="${vendor.name!='Production Vendor'}">
+														<tr>
+															<td>${c}</td>
+															<td>${vendor.companyName}</td>
+															<td>${vendor.vendorType.type}</td>
+															<td><a href="vendorEdit.jsp?id=${vendor.id}"><img
+																	alt="click to view" src="images/eye.png" height="20"></a></td>
+														</tr>
+													</c:if>
 													<c:set var="c" value="${c+1}" />
 												</c:forEach>
 											</tbody>

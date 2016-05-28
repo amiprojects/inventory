@@ -191,10 +191,10 @@
 									<thead>
 										<tr>
 											<th width="5%">#</th>
-											<th width="30%">Challan no.</th>
-											<th width="15%">Vendor Name</th>
-											<th width="15%">Vendor Bill no.</th>
-											<th width="15%">Completion Date</th>
+											<th width="17%">Challan no.</th>
+											<th width="18%">Product Code</th>
+											<th width="20%">Product Description</th>
+											<th width="20%">Completion Date</th>
 											<th width="10%">Barcode</th>
 										</tr>
 									</thead>
@@ -205,19 +205,12 @@
 											<c:if test="${pEntryByD.vendor.name=='Production Vendor'}">
 												<tr>
 													<td width="5%">${count}</td>
-													<td width="30%">
-														<%-- <a href="#"
-													onclick="viewInvoice(${pEntryByD.id});"><b>${pEntryByD.challanNumber}</b></a> --%>
-														${pEntryByD.challanNumber}
-													</td>
-													<c:if test="${pEntryByD.vendor.vendorType.type=='Vendor'}">
-														<td width="15%">${pEntryByD.vendor.name}</td>
-													</c:if>
-													<c:if test="${pEntryByD.vendor.vendorType.type!='Vendor'}">
-														<td width="15%">NIL</td>
-													</c:if>
-													<td width="15%">${pEntryByD.vendor_bill_no}</td>
-													<td width="15%"><fmt:formatDate
+													<td width="17%"><%-- <a href="#"
+														onclick="viewInvoice(${pEntryByD.id});"><b>${pEntryByD.challanNumber}</b></a> --%>
+														${pEntryByD.challanNumber}</td>
+													<td width="18%">${pEntryByD.purchase_Product_Details.get(0).productDetail.code}</td>
+													<td width="20%">${pEntryByD.purchase_Product_Details.get(0).productDetail.description}</td>
+													<td width="20%"><fmt:formatDate
 															value="${pEntryByD.purchase_date}" pattern="dd-MM-yy" /></td>
 													<td width="10%"><a href="#"
 														onclick="window.open('purchaseBarcodePrint.jsp?id=${pEntryByD.id}','mywindow','width=1100,height=500')">

@@ -222,8 +222,8 @@
 											</div>
 										</div>
 									</form>
-									<!-- <form role="form" class="sec" action="salesSearchByAgentName"
-										method="post">
+									<form role="form" class="sec"
+										action="salesReturnSearchByAgentName" method="post">
 										<div class="row">
 											<div class="col-md-10">
 												<div class="form-group">
@@ -238,7 +238,7 @@
 											</div>
 
 										</div>
-									</form> -->
+									</form>
 									<form role="form" class="sec"
 										action="salesReturnSearchByCustomerName" method="post">
 										<div class="row">
@@ -256,8 +256,8 @@
 
 										</div>
 									</form>
-									<!-- <form role="form" class="sec" action="salesSearchByProductCode"
-										method="post">
+									<form role="form" class="sec"
+										action="salesReturnSearchByProductCode" method="post">
 										<div class="row">
 											<div class="col-md-10">
 												<div class="form-group">
@@ -271,7 +271,7 @@
 													style="margin-top: 25px;" type="submit">Search</button>
 											</div>
 										</div>
-									</form> -->
+									</form>
 									<br>
 									<h3 align="center" style="color: #6a94ff;">${requestScope['msg']}</h3>
 									<br>

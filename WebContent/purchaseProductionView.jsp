@@ -94,43 +94,14 @@
 							<div class="col-md-12">
 								<div class="widget-area">
 									<div class="col-md-6">
-										<div class="col-md-12">
-											&nbsp; &nbsp; &nbsp; <b class="font">Vendor Type :</b> <input
-												type="text" class="form-control" readonly="readonly"
-												name="vendorType" id="vendorType"
-												value="${purchaseSearchView.vendor.vendorType.type}">
-										</div>
-										<div class="col-md-12">
-											&nbsp; &nbsp; &nbsp; <b class="font">Vendor Name :</b> <input
-												type="text" class="form-control" id="vName" name="vName"
-												readonly="readonly"
-												value="${purchaseSearchView.vendor.name}">
-										</div>
-										<div class="col-md-12">
-											&nbsp; &nbsp; &nbsp; <b class="font">Vendor Details :</b>
-											<textarea rows="5" cols="" id="vDetail" class="form-control"
-												readonly="readonly">
-													Address : 
-														&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;${purchaseSearchView.vendor.address}
-													Ph1: ${purchaseSearchView.vendor.ph1}
-													Ph2: ${purchaseSearchView.vendor.ph2}
-													</textarea>
-
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group">
-											<label for="" class="font">Vendor Bill no :</label> <input
-												type="text" placeholder="" id="vendorBillNo"
-												class="form-control" name="vendorBillNo" readonly="readonly"
-												value="${purchaseSearchView.vendor_bill_no}">
-										</div>
 										<div class="form-group">
 											<label for="" class="font">Challan no. :</label> <input
 												readonly="readonly" type="text" placeholder=""
 												name="challanNumber" class="form-control"
 												value="${purchaseSearchView.challanNumber}">
 										</div>
+									</div>
+									<div class="col-md-6">
 										<div class="form-group">
 											<label for="" class="font">Completion Date :</label> <input
 												type="text" id="datepicker" class="form-control"
