@@ -3625,7 +3625,8 @@ public class Ejb {
 
 	public List<SalesReturn> getAllSalesReturn() {
 		TypedQuery<SalesReturn> q = em.createQuery(
-				"select c from SalesReturn c", SalesReturn.class);
+				"select c from SalesReturn c order by c.id desc",
+				SalesReturn.class);
 		return q.getResultList();
 	}
 
@@ -3635,6 +3636,55 @@ public class Ejb {
 						"select c from SalesReturn c where c.salesEntry.customer.id=:id",
 						SalesReturn.class);
 		q.setParameter("id", id);
+		return q.getResultList();
+	}
+
+	public List<SalesReturn> getSalesReturnByDate(Date startDate, Date endDate) {
+		TypedQuery<SalesReturn> q = em
+				.createQuery(
+						"select c from SalesReturn c WHERE c.returnDate BETWEEN :startDate AND :endDate order by c.id desc",
+						SalesReturn.class);
+		q.setParameter("startDate", startDate);
+		q.setParameter("endDate", endDate);
+		return q.getResultList();
+	}
+
+	public List<String> getAllFinancialForSalesReturn() {
+		List<String> lst = new ArrayList<String>();
+		HashSet<String> hash = new HashSet<String>();
+		for (SalesReturn sr : getAllSalesReturn()) {
+			lst.add(sr.getChallanNumber().split("/")[1]);
+		}
+		hash.addAll(lst);
+		lst.clear();
+		lst.addAll(hash);
+		return lst;
+	}
+
+	public List<SalesReturn> getSalesReturnByChallanNo(String chNo) {
+		TypedQuery<SalesReturn> q = em
+				.createQuery(
+						"select c from SalesReturn c where UPPER(c.challanNumber)=:chNo ORDER BY c.id DESC",
+						SalesReturn.class);
+		q.setParameter("chNo", chNo.toUpperCase());
+		return q.getResultList();
+	}
+
+	public List<SalesReturn> getSalesReturnByRefChallanNo(String chNo) {
+		TypedQuery<SalesReturn> q = em
+				.createQuery(
+						"select c from SalesReturn c where UPPER(c.salesEntry.challanNumber)=:chNo ORDER BY c.id DESC",
+						SalesReturn.class);
+		q.setParameter("chNo", chNo.toUpperCase());
+		return q.getResultList();
+	}
+
+	public List<SalesReturn> getSalesReturnByCustomerName(String name) {
+		TypedQuery<SalesReturn> q = em
+				.createQuery(
+						"select c from SalesReturn c where UPPER(c.salesEntry.customer.name)=:name order by c.id desc",
+						SalesReturn.class);
+		q.setParameter("name", name.toUpperCase());
 		return q.getResultList();
 	}
 

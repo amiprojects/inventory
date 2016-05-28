@@ -243,7 +243,6 @@
 										</tr>
 									</thead>
 									<c:set var="i" value="${1}"></c:set>
-									<%-- <c:set var="subTotal" value="0"></c:set> --%>
 									<c:forEach var="salesProducts"
 										items="${salesSearchView.salesProductDetails}">
 										<tbody>
@@ -259,16 +258,12 @@
 														<td><fmt:formatNumber var="amount"
 																value="${salesProducts.quantity*salesProducts.salesPrice}"
 																maxFractionDigits="2" /> ${amount}</td>
-														<%-- <c:set var="subTotal"
-															value="${subTotal+salesProducts.quantity*salesProducts.salesPrice}"></c:set> --%>
 													</c:when>
 													<c:otherwise>
 														<td>${salesProducts.salesPrice}</td>
 														<td><fmt:formatNumber var="amount"
 																value="${salesProducts.quantity*salesProducts.salesPrice}"
 																maxFractionDigits="2" /> ${amount}</td>
-														<%-- <c:set var="subTotal"
-															value="${subTotal+salesProducts.quantity*salesProducts.salesPrice}"></c:set> --%>
 													</c:otherwise>
 												</c:choose>
 											</tr>
@@ -363,9 +358,7 @@
 										<tr>
 											<td colspan="2" id="sub">Sub Total :</td>
 											<td>
-												<%-- <input type="number" class="form-control"
-												readonly="readonly" id="subtotalvalue" name="subtotalvalue"
-												value="${subTotal}"> --%> <input type="number"
+												<input type="number"
 												class="form-control" readonly="readonly" id="subtotalvalue"
 												name="subtotalvalue" value="${salesSearchView.subTotal}">
 											</td>

@@ -83,7 +83,7 @@
 			</script>
 		</c:if>
 	</c:if>
-	<c:set var="salesSearchView"
+	<c:set var="salesReturn"
 		value="${sessionScope['ejb'].getSalesReturnDetailsById(requestScope['sId'])}"></c:set>
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
@@ -111,7 +111,7 @@
 												<td>Name :</td>
 												<td><input type="text" name="custName" id="custName"
 													style="align: center;" readonly="readonly"
-													value="${salesSearchView.salesEntry.customer.name}"></input></td>
+													value="${salesReturn.salesEntry.customer.name}"></input></td>
 											</tr>
 
 											<tr>
@@ -119,31 +119,31 @@
 												<td><input type="text" name="addr" id="addr"
 													style="length: 40px;" style="align:center;"
 													readonly="readonly"
-													value="${salesSearchView.salesEntry.customer.address}"></input></td>
+													value="${salesReturn.salesEntry.customer.address}"></input></td>
 											</tr>
 											<tr>
 												<td>City :</td>
 												<td><input type="text" name="city" id="city"
 													style="length: 40px;" readonly="readonly"
-													value="${salesSearchView.salesEntry.customer.city}"></input></td>
+													value="${salesReturn.salesEntry.customer.city}"></input></td>
 											</tr>
 
 											<tr>
 												<td>Phone No. :</td>
 												<td><input type="number" name="phone" id="phone"
 													style="length: 40px;" readonly="readonly"
-													value="${salesSearchView.salesEntry.customer.mobile}"></input></td>
+													value="${salesReturn.salesEntry.customer.mobile}"></input></td>
 											</tr>
 
 											<tr>
 												<td>Vat No./CST No. :</td>
 												<td><input type="text" name="vatcst" id="vatcst"
 													style="length: 40px;" readonly="readonly"
-													value="${salesSearchView.salesEntry.customer.vat_cst_no}"></input></td>
+													value="${salesReturn.salesEntry.customer.vat_cst_no}"></input></td>
 											</tr>
 											<tr>
 												<td><c:choose>
-														<c:when test="${salesSearchView.salesEntry.vendor!=null}">
+														<c:when test="${salesReturn.salesEntry.vendor!=null}">
 															<input type="checkbox" checked="checked"
 																onclick="isAgentF();" id="agent" name="agent"
 																disabled="disabled">&nbsp; Via Agent :
@@ -154,7 +154,7 @@
 													</c:choose></td>
 												<td><input type="text" name="agentName" id="agentName"
 													style="length: 40px;" readonly="readonly"
-													value="${salesSearchView.salesEntry.vendor.name}"></input></td>
+													value="${salesReturn.salesEntry.vendor.name}"></input></td>
 											</tr>
 											<tr id="aDetailsDiv">
 												<td>Agent details :</td>
@@ -162,9 +162,9 @@
 														class="form-control" readonly="readonly"
 														style="width: 100%;">
 														Address : 
-															&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;${salesSearchView.salesEntry.vendor.address}
-															Ph1 : ${salesSearchView.salesEntry.vendor.ph1}
-															Ph2 : ${salesSearchView.salesEntry.vendor.ph2}
+															&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;${salesReturn.salesEntry.vendor.address}
+															Ph1 : ${salesReturn.salesEntry.vendor.ph1}
+															Ph2 : ${salesReturn.salesEntry.vendor.ph2}
 														</textarea></td>
 											</tr>
 										</table>
@@ -182,21 +182,21 @@
 											<label style="font-size: 15px" class="font">Sales
 												Return challan no. :</label> <input readonly="readonly" type="text"
 												placeholder="" name="challanNumber" class="form-control"
-												value="${salesSearchView.challanNumber}">
+												value="${salesReturn.challanNumber}">
 										</div>
 
 										<div class="form-group">
 											<label style="font-size: 15px" class="font">Reference
 												challan no. :</label> <input readonly="readonly" type="text"
 												placeholder="" name="challanNumber" class="form-control"
-												value="${salesSearchView.salesEntry.challanNumber}">
+												value="${salesReturn.salesEntry.challanNumber}">
 										</div>
 
 										<div class="form-group">
 											<label style="font-size: 15px" class="font">Return
 												Date :</label> <input class="form-control" type="text"
 												name="salesDate" id="datepicker" readonly="readonly"
-												value='<fmt:formatDate value="${salesSearchView.returnDate}" pattern="dd-MM-yyyy"/>'>
+												value='<fmt:formatDate value="${salesReturn.returnDate}" pattern="dd-MM-yyyy"/>'>
 
 										</div>
 									</div>
@@ -210,7 +210,7 @@
 									<span class="head_style">Sold Product at:</span>
 								</div>
 								<c:choose>
-									<c:when test="${salesSearchView.salesEntry.isMRP()==true}">
+									<c:when test="${salesReturn.salesEntry.isMRP()==true}">
 										<input type="radio" class="chk" name="saleAt" value="mrp"
 											id="mrp" style="display: none;" disabled="disabled"
 											checked="checked">
@@ -237,9 +237,9 @@
 											<th>Product code</th>
 											<th>Product Description</th>
 											<th>Lot No.</th>
-											<th>Qty.</th>
+											<th>Returned Qty.</th>
 											<c:choose>
-												<c:when test="${salesSearchView.salesEntry.isMRP()==true}">
+												<c:when test="${salesReturn.salesEntry.isMRP()==true}">
 													<th>MRP/Qty</th>
 												</c:when>
 												<c:otherwise>
@@ -250,67 +250,49 @@
 										</tr>
 									</thead>
 									<c:set var="i" value="${1}"></c:set>
-									<%-- <c:set var="subTotal" value="0"></c:set> --%>
-									<%-- <c:forEach var="salesProducts"
-										items="${salesSearchView.salesProductDetails}">
+									<c:set var="subTotal" value="0"></c:set>
+									<c:forEach var="salesRetProducts"
+										items="${salesReturn.salesProductReturnDetail}">
 										<tbody>
 											<tr>
 												<td>${i}</td>
-												<td>${salesProducts.purchase_Product_Details.productDetail.code}</td>
-												<td>${salesProducts.purchase_Product_Details.productDetail.description}</td>
-												<td>${salesProducts.purchase_Product_Details.lotNumber}</td>
-												<td>${salesProducts.quantity}</td>
-												<c:choose>
-													<c:when test="${salesSearchView.isMRP()==true}">
-														<td>${salesProducts.salesPrice}</td>
-														<td><fmt:formatNumber var="amount"
-																value="${salesProducts.quantity*salesProducts.salesPrice}"
-																maxFractionDigits="2" /> ${amount}</td>
-														<c:set var="subTotal"
-															value="${subTotal+salesProducts.quantity*salesProducts.salesPrice}"></c:set>
-													</c:when>
-													<c:otherwise>
-														<td>${salesProducts.salesPrice}</td>
-														<td><fmt:formatNumber var="amount"
-																value="${salesProducts.quantity*salesProducts.salesPrice}"
-																maxFractionDigits="2" /> ${amount}</td>
-														<c:set var="subTotal"
-															value="${subTotal+salesProducts.quantity*salesProducts.salesPrice}"></c:set>
-													</c:otherwise>
-												</c:choose>
+												<td>${salesRetProducts.salesProductDetails.purchase_Product_Details.productDetail.code}</td>
+												<td>${salesRetProducts.salesProductDetails.purchase_Product_Details.productDetail.description}</td>
+												<td>${salesRetProducts.salesProductDetails.purchase_Product_Details.lotNumber}</td>
+												<td>${salesRetProducts.qtyReturn}</td>
+												<td>${salesRetProducts.salesProductDetails.salesPrice}</td>
+												<td><fmt:formatNumber var="amount"
+														value="${salesRetProducts.qtyReturn*salesRetProducts.salesProductDetails.salesPrice}"
+														maxFractionDigits="2" /> ${amount} <c:set var="subTotal"
+														value="${subTotal+amount}"></c:set></td>
 											</tr>
 										</tbody>
 										<c:set var="i" value="${i+1}" />
-									</c:forEach> --%>
+									</c:forEach>
 								</table>
 							</div>
-							<%-- <div style="width: 60%; float: left;">
-								<table style="float: left; margin-top: 70%;">
+							<div style="width: 60%; float: left;">
+								<table style="float: left; margin-top: 30%;">
 									<tr>
 										<td><input type="button" class="btn btn-primary large"
-											value="Print Sales Invoice"
-											onclick="viewInvoice(${salesSearchView.id});"></td>
+											value="Print Sales Return Invoice"
+											onclick="viewInvoiceR(${salesReturn.id});"></td>
 										<td><input type="button" style="margin-left: 15px;"
-											class="btn btn-primary large"
-											value="Print Invoice for Sold Only"
-											onclick="viewInvoiceSoldOnly(${salesSearchView.id});"></td>
+											class="btn btn-primary large" value="Print Reference Invoice"
+											onclick="viewInvoice(${salesReturn.salesEntry.id});"></td>
 									</tr>
 								</table>
-							</div> --%>
-							<%-- <div style="width: 40%; float: right;">
+							</div>
+							<div style="width: 40%; float: right;">
 								<input type="hidden" id="totalvalue" name="totalvalue" value="0">
 								<table id="stream_table"
 									class="table table-striped table-bordered">
 									<thead>
 										<tr>
 											<td colspan="2" id="sub">Sub Total :</td>
-											<td>
-												<input type="number" class="form-control"
+											<td><input type="number" class="form-control"
 												readonly="readonly" id="subtotalvalue" name="subtotalvalue"
-												value="${subTotal}"> <input type="number"
-												class="form-control" readonly="readonly" id="subtotalvalue"
-												name="subtotalvalue" value="${salesSearchView.subTotal}">
-											</td>
+												value="${subTotal}"></td>
 										</tr>
 									</thead>
 									<tbody>
@@ -318,14 +300,16 @@
 											<td colspan="2">Discount &nbsp; <select name="disType"
 												id="disType" disabled="disabled">
 													<c:choose>
-														<c:when test="${salesSearchView.isFlatDiscount()==true}">
+														<c:when
+															test="${salesReturn.salesEntry.isFlatDiscount()==true}">
 															<option value="disFlat">Flat</option>
-															<c:set var="dis" value="${salesSearchView.discountValue}"></c:set>
+															<c:set var="dis"
+																value="${subTotal*salesReturn.salesEntry.discountValue/salesReturn.salesEntry.subTotal}"></c:set>
 														</c:when>
 														<c:otherwise>
 															<option value="disPer">%</option>
 															<c:set var="dis"
-																value="${salesSearchView.subTotal*salesSearchView.discountValue/100}"></c:set>
+																value="${subTotal*salesReturn.salesEntry.discountValue/100}"></c:set>
 														</c:otherwise>
 													</c:choose>
 											</select>
@@ -333,7 +317,7 @@
 											<td><input type="number" class="form-control"
 												name="disValue" id="discount" placeholder=""
 												readonly="readonly"
-												value="<fmt:formatNumber value="${salesSearchView.discountValue}" maxFractionDigits="2" />"></td>
+												value="<fmt:formatNumber value="${salesReturn.salesEntry.discountValue}" maxFractionDigits="2" />"></td>
 										</tr>
 									</tbody>
 
@@ -344,120 +328,50 @@
 												readonly="readonly" id="discountValue" name="discountValue"
 												value="${dis}"></td>
 										</tr>
-
 									</tbody>
-									<c:choose>
-										<c:when test="${salesSearchView.vendor==null}">
-											<tbody style="display: none;">
-												<tr>
-													<td colspan="2">Agent Profit:</td>
-													<td>Is Effective On Return:&nbsp; <select
-														name="isEffective" id="isEffective" disabled="disabled">
-															<c:choose>
-																<c:when
-																	test="${salesSearchView.isEfectiveProfit()==true}">
-																	<option>Yes</option>
-																</c:when>
-																<c:otherwise>
-																	<option>No</option>
-																</c:otherwise>
-															</c:choose>
-													</select>
-													</td>
-												</tr>
-											</tbody>
-											<tbody style="display: none;">
-												<tr>
-													<td colspan="2">Agent Profit: &nbsp; <select
-														name="profitType" id="profitType"
-														onchange="profitTypeF();" disabled="disabled">
-															<c:choose>
-																<c:when
-																	test="${salesSearchView.isFlatProfitAgent()==true}">
-																	<option value="profitFlat">Flat</option>
-																</c:when>
-																<c:otherwise>
-																	<option value="profitPer">%</option>
-																</c:otherwise>
-															</c:choose>
-													</select>
-													</td>
-													<td><input type="text"
-														value="${salesSearchView.agentProfitValue}"
-														class="form-control" name="profitVal" id="profitVal"
-														placeholder="" readonly="readonly"></td>
-												</tr>
-											</tbody>
-											<tbody style="display: none;">
-												<tr>
-													<td colspan="2" id="disc">Agent Profit Value:</td>
-													<td><input type="text" class="form-control"
-														readonly="readonly" id="profitValue" name="profitValue"
-														value="${salesSearchView.agentProfitTotal}"></td>
-												</tr>
-											</tbody>
-										</c:when>
-										<c:otherwise>
-											<tbody>
-												<tr>
-													<td colspan="2">Agent Profit:</td>
-													<td>Is Effective On Return:&nbsp; <select
-														name="isEffective" id="isEffective" disabled="disabled">
-															<c:choose>
-																<c:when
-																	test="${salesSearchView.isEfectiveProfit()==true}">
-																	<option>Yes</option>
-																</c:when>
-																<c:otherwise>
-																	<option>No</option>
-																</c:otherwise>
-															</c:choose>
-													</select>
-													</td>
-												</tr>
-											</tbody>
-											<tbody>
-												<tr>
-													<td colspan="2">Agent Profit: &nbsp; <select
-														name="profitType" id="profitType"
-														onchange="profitTypeF();" disabled="disabled">
-															<c:choose>
-																<c:when
-																	test="${salesSearchView.isFlatProfitAgent()==true}">
-																	<option value="profitFlat">Flat</option>
-																</c:when>
-																<c:otherwise>
-																	<option value="profitPer">%</option>
-																</c:otherwise>
-															</c:choose>
-													</select>
-													</td>
-													<td><input type="text"
-														value="${salesSearchView.agentProfitValue}"
-														class="form-control" name="profitVal" id="profitVal"
-														placeholder="" readonly="readonly"></td>
-												</tr>
-											</tbody>
-											<tbody>
-												<tr>
-													<td colspan="2" id="disc">Agent Profit Value:</td>
-													<td><input type="text" class="form-control"
-														readonly="readonly" id="profitValue" name="profitValue"
-														value="${salesSearchView.agentProfitTotal}"></td>
-												</tr>
-											</tbody>
-										</c:otherwise>
-									</c:choose>
+									<c:if
+										test="${salesReturn.salesEntry.isEfectiveProfit()==true && salesReturn.salesEntry.vendor!=null}">
+										<tbody>
+											<tr>
+												<td colspan="2">Agent Profit: &nbsp; <select
+													name="profitType" id="profitType" onchange="profitTypeF();"
+													disabled="disabled">
+														<c:choose>
+															<c:when
+																test="${salesReturn.salesEntry.isFlatProfitAgent()==true}">
+																<option value="profitFlat">Flat</option>
+															</c:when>
+															<c:otherwise>
+																<option value="profitPer">%</option>
+															</c:otherwise>
+														</c:choose>
+												</select>
+												</td>
+												<td><input type="text"
+													value="${salesReturn.salesEntry.agentProfitValue}"
+													class="form-control" name="profitVal" id="profitVal"
+													placeholder="" readonly="readonly"></td>
+											</tr>
+										</tbody>
+										<tbody>
+											<tr>
+												<td colspan="2" id="disc">Agent Profit Value:</td>
+												<td><input type="text" class="form-control"
+													readonly="readonly" id="profitValue" name="profitValue"
+													value="${salesReturn.retAgentProfitTotal}"></td>
+											</tr>
+										</tbody>
+									</c:if>
 									<tbody>
 										<tr>
 											<td><select class="form-control" id="taxGroup"
 												name="taxGroup" disabled="disabled">
-													<option>${salesSearchView.tax_Type_Group.name}</option>
+													<option>${salesReturn.salesEntry.tax_Type_Group.name}</option>
 											</select></td>
 											<td>%</td>
 											<td><input type="text" class="form-control"
 												readonly="readonly"
-												value="${salesSearchView.tax_Type_Group.getTotalTaxValue()}"
+												value="${salesReturn.salesEntry.tax_Type_Group.getTotalTaxValue()}"
 												id="taxTot"></td>
 										</tr>
 									</tbody>
@@ -465,25 +379,9 @@
 										<tr>
 											<td colspan="2">Tax Amount :</td>
 											<td><input type="text" class="form-control"
-												readonly="readonly" value="${salesSearchView.taxAmount}"
+												readonly="readonly"
+												value="<fmt:formatNumber value="${(subTotal-dis)*salesReturn.salesEntry.tax_Type_Group.getTotalTaxValue()/100}" maxFractionDigits="2" />"
 												id="taxAmount"></td>
-										</tr>
-									</tbody>
-									<tbody>
-										<tr>
-											<td colspan="2" id="trans">Transport charge :</td>
-											<td><input type="number" class="form-control"
-												value="${salesSearchView.transportcCharge}" id="transcharge"
-												name="transcharge" readonly="readonly"></td>
-										</tr>
-									</tbody>
-
-									<tbody>
-										<tr>
-											<td colspan="2" id="sur">Surcharge :</td>
-											<td><input type="number" class="form-control"
-												value="${salesSearchView.surcharge}" id="surcharge"
-												name="surcharge" readonly="readonly"></td>
 										</tr>
 									</tbody>
 									<tbody>
@@ -491,7 +389,7 @@
 											<td colspan="2" id="round">Round Of :</td>
 											<td><input type="number" class="form-control"
 												placeholder="" readonly="readonly" id="roundvalue"
-												name="roundvalue" value="${salesSearchView.roundOf}"></td>
+												name="roundvalue" value="${salesReturn.roundOff}"></td>
 										</tr>
 									</tbody>
 									<thead>
@@ -499,264 +397,17 @@
 											<td colspan="2" id="grand">Grand Total :</td>
 											<td><input type="number" class="form-control"
 												placeholder="" readonly="readonly" id="grandtotal"
-												name="grandtotal" value="${salesSearchView.totalCost}"></td>
+												name="grandtotal" value="${salesReturn.totalReCost}"></td>
 										</tr>
 									</thead>
 								</table>
-							</div> --%>
-							<%-- <table id="" class="table table-striped table-bordered">
-								<thead style="background-color: #F0F0F0;">
-									<tr>
-										<th>#</th>
-										<th>Payment date</th>
-										<th>Payment method</th>
-										<th>Payment description</th>
-										<th>Paid Amount</th>
-									</tr>
-								</thead>
-								<c:set var="j" value="${1}"></c:set>
-								<c:forEach var="paymentDetails"
-									items="${salesSearchView.paymentDetails}">
-									<tbody>
-										<tr>
-											<td>${j}</td>
-											<td><fmt:formatDate
-													value="${paymentDetails.paymentDate}" pattern="dd-MM-yy" />
-											</td>
-											<c:choose>
-												<c:when test="${paymentDetails.paymentType.type!=null}">
-													<td>${paymentDetails.paymentType.type}<c:if
-															test="${paymentDetails.salesReturn!=null}">
-															<br>(Return Value)</c:if>
-													</td>
-												</c:when>
-												<c:otherwise>
-													<td>NA</td>
-												</c:otherwise>
-											</c:choose>
-											<c:choose>
-												<c:when test="${paymentDetails.description!=null}">
-													<td>${paymentDetails.description}</td>
-												</c:when>
-												<c:otherwise>
-													<td>NIL</td>
-												</c:otherwise>
-											</c:choose>
-											<td>${paymentDetails.paidAmount}</td>
-										</tr>
-									</tbody>
-									<c:set var="j" value="${j+1}" />
-								</c:forEach>
-								<thead style="background-color: #F0F0F0;">
-									<tr>
-										<c:set var="lastPayment"
-											value="${sessionScope['ejb'].getPaymentDetailsBySalesEntryId(salesSearchView.id).get(0)}"></c:set>
-										<th colspan="5">Current Due : <span id="dueAmount">${lastPayment.totalAmount-lastPayment.paidAmount}</span>
-											<c:choose>
-												<c:when
-													test="${lastPayment.totalAmount-lastPayment.paidAmount>0}">
-												<c:when
-													test="${lastPayment.totalAmount-lastPayment.paidAmount!=0}">
-													<input type="button" value="Pay"
-														class="btn green pull-right" id="payButton"
-														onclick="payButtonOCF();">
-												</c:when>
-												<c:otherwise>
-													<input type="button" value="Pay"
-														class="btn green pull-right" disabled="disabled">
-												</c:otherwise>
-											</c:choose>
-										</th>
-									</tr>
-								</thead>
-							</table> --%>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<%-- <form role="form" class="sec" method="post" id="paymentForm"
-		action="salesPayment">
-		<div id="paymentModal" class="modal fade" role="dialog"
-			style="top: 25px;">
-			<div class="modal-dialog modal-lg">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"
-							onclick="closePayment();">&times;</button>
-						<h4 class="modal-title">Payment Details</h4>
-					</div>
-					<div class="modal-body">
-						<div class="row">
-							<div class="col-md-6">
-								<div class="widget-area">
-									<div class="breadcrumbs">
-										<ul>
-											<li><a title="">Select Payment status : </a></li>
-										</ul>
-									</div>
-									<br> <br> <br>
-									<div class="row">
-										<div class="col-md-5">
-											Payment status :<font color="red" size="4">*</font>
-										</div>
-										<div class="col-md-7">
-											<div class="sec">
-
-												<select class="form-control" id="pstatus" name="pstatus"
-													onchange="pStatusDiv()">
-													<option value="-" selected="selected">---</option>
-													<c:forEach
-														items="${sessionScope['ejb'].getAllPaymentStatus()}"
-														var="payStatus">
-														<c:if test="${payStatus.status!='Not Paid'}">
-														<option value="${payStatus.status}">${payStatus.status}</option>
-														</c:if>
-													</c:forEach>
-												</select>
-											</div>
-										</div>
-									</div>
-									<div id="payDetail">
-										<div class="breadcrumbs">
-											<ul>
-												<li><a title="">Payment Details : </a></li>
-											</ul>
-										</div>
-										<br> <br> <br>
-										<div class="row">
-											<div class="sec" id="pTypeDiv">
-												<div class="col-md-5">
-													Payment type :<font color="red" size="4">*</font>
-												</div>
-												<div class="col-md-7">
-													<select class="form-control" id="pType" name="pType"
-														onchange="pTypeFunc()">
-														<option value="-" selected="selected">---</option>
-														<c:forEach
-															items="${sessionScope['ejb'].getAllPaymentType()}"
-															var="payType">
-															<c:if
-																test="${payType.getType()!='Debit Note' && payType.getType()!='Credit Note'}">
-																<option value="${payType.getType()}">${payType.getType()}</option>
-															</c:if>
-															<c:if test="${payType.getType()=='Debit Note'}">
-																<option value="${payType.getType()}">Debit Note</option>
-															</c:if>
-														</c:forEach>
-													</select>
-												</div>
-											</div>
-											<div id="pDate">
-												<div class="col-md-5">Payment Date :</div>
-												<div class="col-md-7">
-													<input type="text" id="datepicker2" class="form-control"
-														readonly="readonly" name="payDate">
-												</div>
-											</div>
-											<div id="pAmount">
-												<div class="col-md-5">Full Amount :</div>
-												<div class="col-md-7">
-													<input type="text" class="form-control" readonly="readonly"
-														id="spAmount" name="spAmount">
-												</div>
-											</div>
-											<div id="pPayAmount">
-												<div class="col-md-5">
-													Payment Amount :<font color="red" size="4">*</font>
-												</div>
-												<div class="col-md-7">
-													<input type="text" class="form-control" value="0"
-														id="spPaymentAmount" name="spPaymentAmount"
-														onkeyup="spPaymentAmountFunc();" autocomplete="off"
-														onchange="spPaymentAmountDecimalFixF();">
-												</div>
-											</div>
-											<div id="pDueAmount">
-												<div class="col-md-5">Due Amount :</div>
-												<div class="col-md-7">
-													<input type="text" class="form-control" readonly="readonly"
-														id="spDueAmount" name="spDueAmount">
-												</div>
-											</div>
-											<!-- <div id="AMi2">
-												<div>
-													<div class="col-md-5">Current Credit Note :</div>
-													<div class="col-md-7">
-														<input type="text" id="totalCredit" name="totalCredit"
-															class="form-control" readonly="readonly" value="0">
-													</div>
-												</div>
-												<div>
-													<div class="col-md-5">
-														<span id="dORc">Final Credit Note :</span>
-													</div>
-													<div class="col-md-7">
-														<input type="text" class="form-control" id="finalDC"
-															name="finalDC" readonly="readonly" value="0">
-													</div>
-												</div>
-											</div> -->
-											<div id="AMi2">
-												<div>
-													<div class="col-md-5">Current Debit Note :</div>
-													<div class="col-md-7">
-														<input type="text" id="totalDebit" name="totalDebit"
-															class="form-control" readonly="readonly" value="0">
-													</div>
-												</div>
-												<div>
-													<div class="col-md-5">
-														<span id="dORc">Final Debit Note :</span>
-													</div>
-													<div class="col-md-7">
-														<input type="text" class="form-control" id="finalDC"
-															name="finalDC" readonly="readonly" value="0">
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="col-md-6" style="float: right;" id="description">
-								<div class="widget-area">
-									<div class="breadcrumbs">
-										<ul>
-											<li><a title="">Provide Description : </a></li>
-										</ul>
-									</div>
-									<br> <br> <br>
-									<div class="row">
-										<div class="col-md-5">Description :</div>
-										<div class="col-md-7">
-											<textarea rows="" cols="" class="form-control" id="desc"
-												name="desc"></textarea>
-										</div>
-									</div>
-									<br>
-									<div class="breadcrumbs">
-										<button type="button" class="btn green pull-right"
-											onclick="submit();">Save</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
-					</div>
-				</div>
-			</div>
-		</div>
-		<input type="hidden" id="cId" name="cId"
-			value="${salesSearchView.salesEntry.customer.id}"> <input type="hidden"
-			id="seId" name="seId" value="${salesSearchView.id}"><input
-			type="hidden" id="voucherDetailSize" name="voucherDetailSize"
-			value="${sessionScope['ejb'].getAllVoucherDetailsBySalesEntryId(salesSearchView.id)}">
-	</form> --%>
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
 	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
@@ -767,7 +418,7 @@
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 	<script src="js/numericInput.min.js"></script>
 	<script type="text/javascript">
-		function viewInvoiceS(id) {
+		function viewInvoiceR(id) {
 			window.open("salesReturnInvoiceForPrint.jsp?id=" + id, 'name',
 					'width=900,height=700').print();
 		}
@@ -775,160 +426,6 @@
 			window.open("stockSaCha.jsp?id=" + id, 'name',
 					'width=900,height=700').print();
 		}
-		function viewInvoiceSoldOnly(id) {
-			window.open("salesChallanForSoldOnly.jsp?id=" + id, 'name',
-					'width=900,height=700').print();
-		}
-	</script>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$("#payDetail").hide();
-			$("#description").hide();
-			$("#AMi2").hide();
-		});
-
-		function payButtonOCF() {
-			$("#paymentModal").modal("show");
-			$.ajax({
-				url : "getCustomerById",
-				type : "post",
-				dataType : "json",
-				data : {
-					id : "${salesSearchView.salesEntry.customer.id}"
-				},
-				success : function(data) {
-					$("#totalDebit").val(data.currentDebitNote);
-				}
-			});
-		}
-
-		function closePayment() {
-			$("#payDetail").hide();
-			$("#description").hide();
-			$("#pstatus").val('-');
-			$("#pType").val('-');
-			$("#AMi2").hide();
-		}
-
-		function pStatusDiv() {
-			var val = $('[name="pstatus"]').val();
-			$("#payDetail").show();
-			if (val == '-') {
-				alert('Please select Payment status...');
-				$("#payDetail").hide();
-				$("#description").hide();
-				$("#AMi2").hide();
-				$("#pType").val("-");
-			} else if (val == 'Not Paid') {
-				$("#pType").val("-");
-				$("#pPayAmount").hide();
-				$("#pAmount").hide();
-				$("#pDate").hide();
-				$("#pTypeDiv").hide();
-				$("#pDueAmount").show();
-				$("#description").show();
-				$("#spAmount").val(Number($("#dueAmount").html()));
-				$("#spPaymentAmount").val(Number(0));
-				$("#spDueAmount").val(
-						Math.round((Number($("#spAmount").val()) - Number($(
-								"#spPaymentAmount").val())) * 100) / 100);
-
-				$("#AMi2").show();
-				finalCreditFunc();
-			} else if (val == 'Full Paid') {
-				$("#pType").val("-");
-				$("#pPayAmount").hide();
-				$("#pDueAmount").hide();
-				$("#pAmount").show();
-				$("#pDate").show();
-				$("#pTypeDiv").show();
-				$("#description").hide();
-				$("#spAmount").val(Number($("#dueAmount").html()));
-				$("#spPaymentAmount").val(Number($("#dueAmount").html()));
-				$("#spDueAmount").val(
-						Math.round((Number($("#spAmount").val()) - Number($(
-								"#spPaymentAmount").val())) * 100) / 100);
-				$("#AMi2").show();
-				finalCreditFunc();
-			} else if (val == 'Semi Paid') {
-				$("#pType").val("-");
-				$("#pPayAmount").show();
-				$("#pDueAmount").show();
-				$("#pAmount").show();
-				$("#pDate").show();
-				$("#pTypeDiv").show();
-				$("#description").hide();
-				$("#spAmount").val(Number($("#dueAmount").html()));
-				$("#spPaymentAmount").val(Number($("#dueAmount").html()));
-				$("#spDueAmount").val(
-						Math.round((Number($("#spAmount").val()) - Number($(
-								"#spPaymentAmount").val())) * 100) / 100);
-
-				$("#AMi2").show();
-				finalCreditFunc();
-			}
-		}
-		function spPaymentAmountFunc() {
-			if (Number($("#spPaymentAmount").val()) > Number($("#spAmount")
-					.val())) {
-				alert("Payment amount can not be greater than full amount...");
-				$("#spPaymentAmount").val(Number($("#dueAmount").html()));
-				$("#spDueAmount").val(
-						Math.round((Number($("#spAmount").val()) - Number($(
-								"#spPaymentAmount").val())) * 100) / 100);
-			} else {
-				$("#spDueAmount").val(
-						Math.round((Number($("#spAmount").val()) - Number($(
-								"#spPaymentAmount").val())) * 100) / 100);
-			}
-			finalCreditFunc();
-		}
-		function finalCreditFunc() {
-			if ($("#voucherDetailSize").val() == 0) {
-				$("#finalDC").val(
-						Math.round((Number($("#spDueAmount").val()) + Number($(
-								"#totalDebit").val())) * 100) / 100);
-			} else {
-				$("#finalDC").val(
-						Math.round((Number($("#totalDebit").val()) - Number($(
-								"#spPaymentAmount").val())) * 100) / 100);
-			}
-		}
-		function spPaymentAmountDecimalFixF() {
-			$("#spPaymentAmount").val(
-					Number($("#spPaymentAmount").val()).toFixed(2));
-			spPaymentAmountFunc();
-		}
-		function pTypeFunc() {
-			$("#description").show();
-			var val = $('[name="pType"]').val();
-			if (val == '-') {
-				alert('Please select Payment Type...');
-				$("#description").hide();
-			}
-		}
-		$(function() {
-			$("#spPaymentAmount").numericInput({
-				allowFloat : true,
-				allowNegative : true,
-			});
-		});
-		function submit() {
-			document.getElementById("paymentForm").submit();
-		}
-		$(function() {
-			var d = new Date();
-			var m = d.getMonth();
-			if (m > 3) {
-				var n = d.getFullYear();
-			} else {
-				var n = d.getFullYear() - 1;
-			}
-			$("#datepicker2").datepicker({
-				dateFormat : "dd-mm-yy"
-			});
-			$("#datepicker2").datepicker('setDate', new Date());
-		});
 	</script>
 </body>
 

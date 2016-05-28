@@ -124,7 +124,9 @@ import com.kaanish.util.GetMacId;
 		"/jobPayment", "/purchasePayment", "/salesPayment",
 		"/creditNoteByVendorName", "/creditNoteByAgentName",
 		"/creditNoteByJobber", "/debitNoteByCustomer", "/testServManage",
-		"/salesReturnSearchAll", "/salesReturnView" })
+		"/salesReturnSearchAll", "/salesReturnView",
+		"/salesRerturnSearchByDate", "/salesReturnSearchByChallanNo",
+		"/salesReturnSearchByRefChallanNo", "/salesReturnSearchByCustomerName" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -3607,7 +3609,7 @@ public class Servlet extends HttpServlet {
 						req.setAttribute("salesEntryLst", salesEntryLst1);
 
 						if (salesEntryLst1.size() > 0) {
-							msg = "Your search for Job challan number : "
+							msg = "Your search for challan number : "
 									+ req.getParameter("companyInitial") + "/"
 									+ req.getParameter("fynYear") + "/"
 									+ req.getParameter("month") + "/"
@@ -3615,7 +3617,7 @@ public class Servlet extends HttpServlet {
 									+ req.getParameter("autoNum") + "/"
 									+ req.getParameter("suffix");
 						} else {
-							msg = "No result found for Job challan number : "
+							msg = "No result found for challan number : "
 									+ req.getParameter("companyInitial") + "/"
 									+ req.getParameter("fynYear") + "/"
 									+ req.getParameter("month") + "/"
@@ -3734,6 +3736,157 @@ public class Servlet extends HttpServlet {
 							msg = "No result found...";
 						}
 						break;
+
+					case "salesRerturnSearchByDate":
+						page = "salesSearchReturn.jsp";
+
+						List<SalesReturn> salesRetLstByDt = ejb
+								.getSalesReturnByDate(DateConverter.getDate(req
+										.getParameter("fDate")), DateConverter
+										.getDate(req.getParameter("lDate")));
+						req.setAttribute("salesRetLst", salesRetLstByDt);
+
+						if (salesRetLstByDt.size() > 0) {
+							msg = "Your search for dated "
+									+ req.getParameter("fDate") + " to "
+									+ req.getParameter("lDate");
+						} else {
+							msg = "No result found for dated "
+									+ req.getParameter("fDate") + " to "
+									+ req.getParameter("lDate") + "...";
+						}
+
+						break;
+
+					case "salesReturnSearchByChallanNo":
+						page = "salesSearchReturn.jsp";
+
+						List<SalesReturn> salesRetLstByCh = ejb
+								.getSalesReturnByChallanNo(req
+										.getParameter("companyInitial")
+										+ "/"
+										+ req.getParameter("fynYear")
+										+ "/"
+										+ req.getParameter("month")
+										+ "/"
+										+ req.getParameter("billType")
+										+ "/"
+										+ req.getParameter("autoNum")
+										+ "/"
+										+ req.getParameter("suffix"));
+						req.setAttribute("salesRetLst", salesRetLstByCh);
+
+						if (salesRetLstByCh.size() > 0) {
+							msg = "Your search for challan number : "
+									+ req.getParameter("companyInitial") + "/"
+									+ req.getParameter("fynYear") + "/"
+									+ req.getParameter("month") + "/"
+									+ req.getParameter("billType") + "/"
+									+ req.getParameter("autoNum") + "/"
+									+ req.getParameter("suffix");
+						} else {
+							msg = "No result found for challan number : "
+									+ req.getParameter("companyInitial") + "/"
+									+ req.getParameter("fynYear") + "/"
+									+ req.getParameter("month") + "/"
+									+ req.getParameter("billType") + "/"
+									+ req.getParameter("autoNum") + "/"
+									+ req.getParameter("suffix");
+						}
+						break;
+
+					case "salesReturnSearchByRefChallanNo":
+						page = "salesSearchReturn.jsp";
+
+						List<SalesReturn> salesRetLstByRef = ejb
+								.getSalesReturnByRefChallanNo(req
+										.getParameter("companyInitial")
+										+ "/"
+										+ req.getParameter("fynYear")
+										+ "/"
+										+ req.getParameter("month")
+										+ "/"
+										+ req.getParameter("billType")
+										+ "/"
+										+ req.getParameter("autoNum")
+										+ "/"
+										+ req.getParameter("suffix"));
+						req.setAttribute("salesRetLst", salesRetLstByRef);
+
+						if (salesRetLstByRef.size() > 0) {
+							msg = "Your search for reference challan number : "
+									+ req.getParameter("companyInitial") + "/"
+									+ req.getParameter("fynYear") + "/"
+									+ req.getParameter("month") + "/"
+									+ req.getParameter("billType") + "/"
+									+ req.getParameter("autoNum") + "/"
+									+ req.getParameter("suffix");
+						} else {
+							msg = "No result found for reference challan number : "
+									+ req.getParameter("companyInitial")
+									+ "/"
+									+ req.getParameter("fynYear")
+									+ "/"
+									+ req.getParameter("month")
+									+ "/"
+									+ req.getParameter("billType")
+									+ "/"
+									+ req.getParameter("autoNum")
+									+ "/"
+									+ req.getParameter("suffix");
+						}
+						break;
+
+					case "salesReturnSearchByCustomerName":
+						page = "salesSearchReturn.jsp";
+						List<SalesReturn> salesRetLstByc = ejb
+								.getSalesReturnByCustomerName(req
+										.getParameter("custoName"));
+						req.setAttribute("salesRetLst", salesRetLstByc);
+						if (salesRetLstByc.size() > 0) {
+							msg = "Your search for Customer name : "
+									+ req.getParameter("custoName")
+											.toUpperCase();
+						} else {
+							msg = "No result found for Customer name : "
+									+ req.getParameter("custoName")
+											.toUpperCase();
+						}
+						break;
+
+					// case "salesSearchByAgentName":
+					// page = "salesSearch.jsp";
+					// List<SalesEntry> salesEntryLst2 = ejb
+					// .getSalesEntryByAgentName(req
+					// .getParameter("agentName"));
+					// req.setAttribute("salesEntryLst", salesEntryLst2);
+					// if (salesEntryLst2.size() > 0) {
+					// msg = "Your search for Agent name : "
+					// + req.getParameter("agentName")
+					// .toUpperCase();
+					// } else {
+					// msg = "No result found for Agent name : "
+					// + req.getParameter("agentName")
+					// .toUpperCase();
+					// }
+					// break;
+
+					// case "salesSearchByProductCode":
+					// page = "salesSearch.jsp";
+					// List<SalesEntry> salesEntryLst4 = ejb
+					// .getSalesEntriesByProductCode(req
+					// .getParameter("prodCode"));
+					// req.setAttribute("salesEntryLst", salesEntryLst4);
+					// if (salesEntryLst4.size() > 0) {
+					// msg = "Your search for Product code : "
+					// + req.getParameter("prodCode")
+					// .toUpperCase();
+					// } else {
+					// msg = "No result found for product code : "
+					// + req.getParameter("prodCode")
+					// .toUpperCase();
+					// }
+					// break;
 
 					case "salesView":
 						page = "salesView.jsp";

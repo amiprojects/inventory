@@ -195,7 +195,8 @@ page[size="A4"] {
 									</td>
 									<td><c:set var="disVal"
 											value="${salesReturn.salesEntry.isFlatDiscount()?gtot*salesReturn.salesEntry.discountValue/salesReturn.salesEntry.subTotal:gtot*salesReturn.salesEntry.discountValue/100}" />
-										${disVal}</td>
+										<fmt:formatNumber value="${disVal}" maxFractionDigits="2" />
+									</td>
 								</tr>
 							</c:if>
 							<c:if test="${salesReturn.salesEntry.taxAmount!=0}">
@@ -203,7 +204,9 @@ page[size="A4"] {
 									<td colspan="5" align="right">Tax Amount
 										(${salesReturn.salesEntry.tax_Type_Group.getTotalTaxValue()}%)
 										:</td>
-									<td>${(gtot-disVal)*salesReturn.salesEntry.tax_Type_Group.getTotalTaxValue()/100}</td>
+									<td><fmt:formatNumber
+											value="${(gtot-disVal)*salesReturn.salesEntry.tax_Type_Group.getTotalTaxValue()/100}"
+											maxFractionDigits="2" /></td>
 								</tr>
 							</c:if>
 							<c:if test="${salesReturn.roundOff!=0}">

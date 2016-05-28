@@ -28,7 +28,7 @@ public class SalesReturn implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date returnDate;
 
-	private float totalReCost;
+	private float totalReCost; //grandtotal
 	private float roundOff;
 	private int challanNo;
 	private String challanNumber;

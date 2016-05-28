@@ -75,7 +75,7 @@
 											</div>
 										</div>
 									</form>
-									<%-- <form role="form" class="sec" action="salesSearchByDate"
+									<form role="form" class="sec" action="salesRerturnSearchByDate"
 										method="post" id="salesSearchByDateId">
 										<div class="row">
 											<div class="col-md-5">
@@ -103,11 +103,71 @@
 										</div>
 									</form>
 									<form role="form" class="sec"
-										action="salesSearchBySalesChallanNo" method="post">
+										action="salesReturnSearchByChallanNo" method="post">
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
 													<label for="" style="float: left;">Sales Return
+														challan no. :</label>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-1"
+												style="margin-right: 0; padding-right: 0;">
+												<input type="text" class="form-control" readonly="readonly"
+													name="companyInitial"
+													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompany('SRINV').companyInitial}">
+											</div>
+											<div class="col-md-2" style="margin: 0; padding: 0;">
+												<select class="form-control" name="fynYear">
+													<c:forEach
+														items="${sessionScope['ejb'].getAllFinancialForSales()}"
+														var="fyr">
+														<option value="${fyr}">${fyr}</option>
+													</c:forEach>
+												</select>
+											</div>
+											<div class="col-md-2" style="margin: 0; padding: 0;">
+												<!-- <input type="text" class="form-control" name="month"> -->
+												<select name="month" class="form-control">
+													<option value="01">01</option>
+													<option value="02">02</option>
+													<option value="03">03</option>
+													<option value="04">04</option>
+													<option value="05">05</option>
+													<option value="06">06</option>
+													<option value="07">07</option>
+													<option value="08">08</option>
+													<option value="09">09</option>
+													<option value="10">10</option>
+													<option value="11">11</option>
+													<option value="12">12</option>
+												</select>
+											</div>
+											<div class="col-md-1" style="margin: 0; padding: 0;">
+												<input type="text" class="form-control" readonly="readonly"
+													name="billType"
+													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompany('SRINV').billType}">
+											</div>
+											<div class="col-md-2" style="margin: 0; padding: 0;">
+												<input type="text" class="form-control" name="autoNum">
+											</div>
+											<div class="col-md-2"
+												style="margin-left: 0; padding-left: 0;">
+												<input type="text" class="form-control" name="suffix">
+											</div>
+											<div class="col-md-2">
+												<button class="btn green pull-left" type="submit">Search</button>
+											</div>
+										</div>
+									</form>
+									<form role="form" class="sec"
+										action="salesReturnSearchByRefChallanNo" method="post">
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label for="" style="float: left;">Reference
 														challan no. :</label>
 												</div>
 											</div>
@@ -162,7 +222,7 @@
 											</div>
 										</div>
 									</form>
-									<form role="form" class="sec" action="salesSearchByAgentName"
+									<!-- <form role="form" class="sec" action="salesSearchByAgentName"
 										method="post">
 										<div class="row">
 											<div class="col-md-10">
@@ -178,9 +238,9 @@
 											</div>
 
 										</div>
-									</form>
+									</form> -->
 									<form role="form" class="sec"
-										action="salesSearchByCustomerName" method="post">
+										action="salesReturnSearchByCustomerName" method="post">
 										<div class="row">
 											<div class="col-md-10">
 												<div class="form-group">
@@ -196,7 +256,7 @@
 
 										</div>
 									</form>
-									<form role="form" class="sec" action="salesSearchByProductCode"
+									<!-- <form role="form" class="sec" action="salesSearchByProductCode"
 										method="post">
 										<div class="row">
 											<div class="col-md-10">
@@ -211,7 +271,7 @@
 													style="margin-top: 25px;" type="submit">Search</button>
 											</div>
 										</div>
-									</form> --%>
+									</form> -->
 									<br>
 									<h3 align="center" style="color: #6a94ff;">${requestScope['msg']}</h3>
 									<br>
@@ -230,33 +290,33 @@
 
 										<c:set var="count" value="${1}" />
 										<c:forEach items="${requestScope['salesRetLst']}"
-											var="sEntryByD">
+											var="salesReturn">
 											<tbody>
 												<tr>
 													<td>${count}</td>
 													<td><a href="#"
-														onclick="viewInvoiceS(${sEntryByD.id});"><b>${sEntryByD.challanNumber}</b></a></td>
+														onclick="viewInvoiceR(${salesReturn.id});"><b>${salesReturn.challanNumber}</b></a></td>
 													<td><a href="#"
-														onclick="viewInvoiceS(${sEntryByD.id});"><b>${sEntryByD.salesEntry.challanNumber}</b></a></td>
-													<td>${sEntryByD.salesEntry.customer.name}</td>
+														onclick="viewInvoiceS(${salesReturn.salesEntry.id});"><b>${salesReturn.salesEntry.challanNumber}</b></a></td>
+													<td>${salesReturn.salesEntry.customer.name}</td>
 													<c:choose>
-														<c:when test="${sEntryByD.salesEntry.vendor==null}">
+														<c:when test="${salesReturn.salesEntry.vendor==null}">
 															<td>NIL</td>
 														</c:when>
 														<c:otherwise>
-															<td>${sEntryByD.salesEntry.vendor.name}</td>
+															<td>${salesReturn.salesEntry.vendor.name}</td>
 														</c:otherwise>
 													</c:choose>
 													<td><fmt:formatDate
-															value="${sEntryByD.salesEntry.sales_date}"
+															value="${salesReturn.salesEntry.sales_date}"
 															pattern="dd-MM-yy" /></td>
-													<td><fmt:formatDate value="${sEntryByD.returnDate}"
+													<td><fmt:formatDate value="${salesReturn.returnDate}"
 															pattern="dd-MM-yy" /></td>
 													<td>
 														<form action="salesReturnView" method="post"
-															id="sView${sEntryByD.id}">
-															<a href="#" onclick="salesViewF('${sEntryByD.id}');"><input
-																type="hidden" value="${sEntryByD.id}" name="sId"><img
+															id="sView${salesReturn.id}">
+															<a href="#" onclick="salesViewF('${salesReturn.id}');"><input
+																type="hidden" value="${salesReturn.id}" name="sId"><img
 																alt="" src="images/eye.png" height="25px"></a>
 														</form>
 													</td>
@@ -472,10 +532,10 @@
 					"stockSaCha.jsp?id="+id,
 					'name', 'width=900,height=700').print();
 		}
-		function viewInvoiceSoldOnly(id){		
+		function viewInvoiceR(id){		
 			window
 			.open(
-					"salesChallanForSoldOnly.jsp?id="+id,
+					"salesReturnInvoiceForPrint.jsp?id="+id,
 					'name', 'width=900,height=700').print();
 		}
 	</script>
