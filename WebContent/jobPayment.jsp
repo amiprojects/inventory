@@ -55,256 +55,249 @@
 		</c:if>
 	</c:if>
 	<div class="main" style="height: 664px;">
-		<%@include file="includeHeader.jsp"%>
-		<div class="page-container menu-left" style="height: 100%;">
-			<%@include file="includeSidebar.jsp"%>
-			<div class="content-sec"
-				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
-				<div class="container">
-					<div class="row">
-						<div class="masonary-grids">
-							<div class="breadcrumbs"
-								style="height: 50px; text-align: center;">
-								<h3 style="margin-top: 11px;">Job Payment</h3>
-							</div>
-							<div class="col-md-12">
-								<div class="widget-area">
-									<form role="form" class="sec" action="jobSearchAllForPayment"
-										method="post">
-										<div class="row">
-											<div class="col-md-12">
-												<button class="btn green pull-right" type="submit"
-													style="margin-right: 63px;">Show All</button>
+		<%@include file="includeLeftOrTop.jsp"%>
+		<div class="content-sec"
+			style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
+			<div class="container">
+				<div class="row">
+					<div class="masonary-grids">
+						<div class="breadcrumbs" style="height: 50px; text-align: center;">
+							<h3 style="margin-top: 11px;">Job Payment</h3>
+						</div>
+						<div class="col-md-12">
+							<div class="widget-area">
+								<form role="form" class="sec" action="jobSearchAllForPayment"
+									method="post">
+									<div class="row">
+										<div class="col-md-12">
+											<button class="btn green pull-right" type="submit"
+												style="margin-right: 63px;">Show All</button>
+										</div>
+									</div>
+								</form>
+								<form role="form" class="sec"
+									action="jobAssignSearchByDateForPayment" method="post"
+									id="jobSearchByDateId">
+									<div class="row">
+										<div class="col-md-5">
+											<div class="form-group">
+												<label for="">Search between two dates : (Start
+													Date)<font color="red" size="4">*</font>
+												</label> <input type="text" placeholder="Enter First Date"
+													id="datepicker" class="form-control" name="fDate"
+													autocomplete="off" onchange="dateSet();">
 											</div>
 										</div>
-									</form>
-									<form role="form" class="sec"
-										action="jobAssignSearchByDateForPayment" method="post"
-										id="jobSearchByDateId">
-										<div class="row">
-											<div class="col-md-5">
-												<div class="form-group">
-													<label for="">Search between two dates : (Start
-														Date)<font color="red" size="4">*</font>
-													</label> <input type="text" placeholder="Enter First Date"
-														id="datepicker" class="form-control" name="fDate"
-														autocomplete="off" onchange="dateSet();">
-												</div>
-											</div>
-											<div class="col-md-5">
-												<div class="form-group">
-													<label for="">(End Date)<font color="red" size="4">*</font></label>
-													<input type="text" placeholder="Enter last date"
-														id="datepicker1" onchange="checkDate();"
-														class="form-control" name="lDate" autocomplete="off">
-												</div>
-											</div>
-											<div class="col-md-2">
-												<button class="btn green pull-left"
-													style="margin-top: 25px;" type="button"
-													onclick="jobSearchByDateSubmit();">Search</button>
+										<div class="col-md-5">
+											<div class="form-group">
+												<label for="">(End Date)<font color="red" size="4">*</font></label>
+												<input type="text" placeholder="Enter last date"
+													id="datepicker1" onchange="checkDate();"
+													class="form-control" name="lDate" autocomplete="off">
 											</div>
 										</div>
-									</form>
-									<form role="form" class="sec"
-										action="jobSearchByJobChallanNoForPayment" method="post">
-										<div class="row">
-											<div class="col-md-12">
-												<div class="form-group">
-													<label for="" style="float: left;">Job challan no.
-														:</label>
-												</div>
+										<div class="col-md-2">
+											<button class="btn green pull-left" style="margin-top: 25px;"
+												type="button" onclick="jobSearchByDateSubmit();">Search</button>
+										</div>
+									</div>
+								</form>
+								<form role="form" class="sec"
+									action="jobSearchByJobChallanNoForPayment" method="post">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="form-group">
+												<label for="" style="float: left;">Job challan no. :</label>
 											</div>
 										</div>
-										<div class="row">
-											<div class="col-md-1"
-												style="margin-right: 0; padding-right: 0;">
-												<input type="text" class="form-control" readonly="readonly"
-													name="companyInitial"
-													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompany('JOB').companyInitial}">
-											</div>
-											<div class="col-md-2" style="margin: 0; padding: 0;">
-												<select class="form-control" name="fynYear">
-													<c:forEach
-														items="${sessionScope['ejb'].getAllFinancialForJob()}"
-														var="fyr">
-														<option value="${fyr}">${fyr}</option>
-													</c:forEach>
-												</select>
-											</div>
-											<div class="col-md-2" style="margin: 0; padding: 0;">
-												<!-- <input type="text" class="form-control" name="month"> -->
-												<select name="month" class="form-control">
-													<option value="01">01</option>
-													<option value="02">02</option>
-													<option value="03">03</option>
-													<option value="04">04</option>
-													<option value="05">05</option>
-													<option value="06">06</option>
-													<option value="07">07</option>
-													<option value="08">08</option>
-													<option value="09">09</option>
-													<option value="10">10</option>
-													<option value="11">11</option>
-													<option value="12">12</option>
-												</select>
-											</div>
-											<div class="col-md-1" style="margin: 0; padding: 0;">
-												<input type="text" class="form-control" readonly="readonly"
-													name="billType"
-													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompany('JOB').billType}">
-											</div>
-											<div class="col-md-2" style="margin: 0; padding: 0;">
-												<input type="text" class="form-control" name="autoNum">
-											</div>
-											<div class="col-md-2"
-												style="margin-left: 0; padding-left: 0;">
-												<input type="text" class="form-control" name="suffix">
-											</div>
-											<div class="col-md-2">
-												<button class="btn green pull-left" type="submit">Search</button>
+									</div>
+									<div class="row">
+										<div class="col-md-1"
+											style="margin-right: 0; padding-right: 0;">
+											<input type="text" class="form-control" readonly="readonly"
+												name="companyInitial"
+												value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompany('JOB').companyInitial}">
+										</div>
+										<div class="col-md-2" style="margin: 0; padding: 0;">
+											<select class="form-control" name="fynYear">
+												<c:forEach
+													items="${sessionScope['ejb'].getAllFinancialForJob()}"
+													var="fyr">
+													<option value="${fyr}">${fyr}</option>
+												</c:forEach>
+											</select>
+										</div>
+										<div class="col-md-2" style="margin: 0; padding: 0;">
+											<!-- <input type="text" class="form-control" name="month"> -->
+											<select name="month" class="form-control">
+												<option value="01">01</option>
+												<option value="02">02</option>
+												<option value="03">03</option>
+												<option value="04">04</option>
+												<option value="05">05</option>
+												<option value="06">06</option>
+												<option value="07">07</option>
+												<option value="08">08</option>
+												<option value="09">09</option>
+												<option value="10">10</option>
+												<option value="11">11</option>
+												<option value="12">12</option>
+											</select>
+										</div>
+										<div class="col-md-1" style="margin: 0; padding: 0;">
+											<input type="text" class="form-control" readonly="readonly"
+												name="billType"
+												value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompany('JOB').billType}">
+										</div>
+										<div class="col-md-2" style="margin: 0; padding: 0;">
+											<input type="text" class="form-control" name="autoNum">
+										</div>
+										<div class="col-md-2" style="margin-left: 0; padding-left: 0;">
+											<input type="text" class="form-control" name="suffix">
+										</div>
+										<div class="col-md-2">
+											<button class="btn green pull-left" type="submit">Search</button>
+										</div>
+									</div>
+								</form>
+								<form role="form" class="sec"
+									action="jobSearchByProductCodeForPayment" method="post">
+									<div class="row">
+										<div class="col-md-10">
+											<div class="form-group">
+												<label for="" style="float: left;">Product Code :</label> <input
+													type="" placeholder="Enter Product Code" id="prodCode"
+													name="prodCode" class="form-control" autocomplete="off">
 											</div>
 										</div>
-									</form>
-									<form role="form" class="sec"
-										action="jobSearchByProductCodeForPayment" method="post">
-										<div class="row">
-											<div class="col-md-10">
-												<div class="form-group">
-													<label for="" style="float: left;">Product Code :</label> <input
-														type="" placeholder="Enter Product Code" id="prodCode"
-														name="prodCode" class="form-control" autocomplete="off">
-												</div>
-											</div>
-											<div class="col-md-2">
-												<button class="btn green pull-left"
-													style="margin-top: 25px;" type="submit">Search</button>
+										<div class="col-md-2">
+											<button class="btn green pull-left" style="margin-top: 25px;"
+												type="submit">Search</button>
+										</div>
+									</div>
+								</form>
+								<form role="form" class="sec"
+									action="jobSearchByJobberNameForPayment" method="post">
+									<div class="row">
+										<div class="col-md-10">
+											<div class="form-group">
+												<label for="" style="float: left;">Jobber Name :</label> <input
+													type="" placeholder="Enter Jober Name" id="jobberName"
+													name="jobberName" class="form-control">
 											</div>
 										</div>
-									</form>
-									<form role="form" class="sec"
-										action="jobSearchByJobberNameForPayment" method="post">
-										<div class="row">
-											<div class="col-md-10">
-												<div class="form-group">
-													<label for="" style="float: left;">Jobber Name :</label> <input
-														type="" placeholder="Enter Jober Name" id="jobberName"
-														name="jobberName" class="form-control">
-												</div>
-											</div>
-											<div class="col-md-2">
-												<button class="btn green pull-left"
-													style="margin-top: 25px;" type="submit">Search</button>
-											</div>
+										<div class="col-md-2">
+											<button class="btn green pull-left" style="margin-top: 25px;"
+												type="submit">Search</button>
+										</div>
 
+									</div>
+								</form>
+								<form role="form" class="sec"
+									action="jobSearchByPlanNoForPayment" method="post"
+									id="jobSearchByPlanNoId">
+									<div class="row">
+										<div class="col-md-10">
+											<div class="form-group">
+												<label for="" style="float: left;">Plan Number :<font
+													color="red" size="4">*</font></label> <input type=""
+													placeholder="Enter Plan Number" id="planNo" name="planNo"
+													class="form-control">
+											</div>
 										</div>
-									</form>
-									<form role="form" class="sec"
-										action="jobSearchByPlanNoForPayment" method="post"
-										id="jobSearchByPlanNoId">
-										<div class="row">
-											<div class="col-md-10">
-												<div class="form-group">
-													<label for="" style="float: left;">Plan Number :<font
-														color="red" size="4">*</font></label> <input type=""
-														placeholder="Enter Plan Number" id="planNo" name="planNo"
-														class="form-control">
-												</div>
-											</div>
-											<div class="col-md-2">
-												<button class="btn green pull-left"
-													style="margin-top: 25px;" type="button"
-													onclick="planNoF();">Search</button>
-											</div>
+										<div class="col-md-2">
+											<button class="btn green pull-left" style="margin-top: 25px;"
+												type="button" onclick="planNoF();">Search</button>
+										</div>
 
-										</div>
-									</form>
-									<br>
-									<h3 align="center" style="color: #6a94ff;">${requestScope['msg']}</h3>
-									<br>
-									<table class="table table-fixedheader">
-										<thead>
+									</div>
+								</form>
+								<br>
+								<h3 align="center" style="color: #6a94ff;">${requestScope['msg']}</h3>
+								<br>
+								<table class="table table-fixedheader">
+									<thead>
+										<tr>
+											<th width="5%">#</th>
+											<th width="30%">Job Assigned No.</th>
+											<th width="15%">Assigned Date</th>
+											<th width="15%">Jobber Name</th>
+											<th width="12%">No. of Items</th>
+											<th width="10%">Quantity</th>
+											<!-- <th width="10%">Status</th> -->
+										</tr>
+									</thead>
+									<tbody style="height: 300px;">
+										<c:set var="count" value="${1}" />
+										<c:forEach items="${requestScope['jobAssignList']}"
+											var="jobAssignByDate">
+
 											<tr>
-												<th width="5%">#</th>
-												<th width="30%">Job Assigned No.</th>
-												<th width="15%">Assigned Date</th>
-												<th width="15%">Jobber Name</th>
-												<th width="12%">No. of Items</th>
-												<th width="10%">Quantity</th>
-												<!-- <th width="10%">Status</th> -->
+												<td width="5%">${count}</td>
+												<td width="30%"><a href="#"
+													onclick="viewInvoice(${jobAssignByDate.id});"><b>${jobAssignByDate.challanNumber}</b></a></td>
+												<td width="15%"><fmt:formatDate
+														value="${jobAssignByDate.assignDate}" pattern="dd-MM-yy" /></td>
+												<td width="15%">${jobAssignByDate.vendor.name}</td>
+												<td width="12%">${jobAssignByDate.jobAssignmentProducts.size()}</td>
+												<c:set value="${0}" var="totqty" />
+												<c:forEach items="${jobAssignByDate.jobAssignmentProducts}"
+													var="proDet">
+													<c:set value="${totqty+proDet.qty}" var="totqty" />
+												</c:forEach>
+												<td width="10%"><fmt:formatNumber var="totalQ"
+														value="${totqty}" maxFractionDigits="3" />${totalQ}</td>
+												<td style="display: none;"><c:if
+														test="${sessionScope['ejb'].getPaymentDetailsByJobAssignId(jobAssignByDate.id).size()>0}">
+														<c:set
+															value="${sessionScope['ejb'].getPaymentDetailsByJobAssignId(jobAssignByDate.id).get(0).paymentStatus.status}"
+															var="Status"></c:set>
+													</c:if> <c:if
+														test="${sessionScope['ejb'].getPaymentDetailsByJobAssignId(jobAssignByDate.id).size()==0}">
+														<c:set value="Not Paid" var="Status"></c:set>
+													</c:if>
+													${sessionScope['ejb'].getPaymentDetailsByJobAssignId(jobAssignByDate.id).size()}
+													&nbsp; <span id="status${jobAssignByDate.id}">${Status}</span></td>
+												<td width="8%"><c:set var="totJobCost" value="${0}" />
+													<c:forEach var="jobp"
+														items="${jobAssignByDate.jobAssignmentProducts}">
+														<c:set var="totJobCost"
+															value="${totJobCost+jobp.totalJobCost}" />
+													</c:forEach> <fmt:formatNumber var="totJC"
+														value="${totJobCost+jobAssignByDate.surcharge}"
+														maxFractionDigits="2" />
+													<form action="" method="post"
+														id="jobPayment${jobAssignByDate.id}">
+														<a href="#"
+															onclick="jobPaymentOCF('${jobAssignByDate.id}','${jobAssignByDate.challanNumber}','${totJobCost+jobAssignByDate.surcharge}','${jobAssignByDate.vendor.id}');"><input
+															type="hidden" value="${jobAssignByDate.challanNumber}"
+															name="joChallan"> <span style="color: #6a94ff;"><u>
+																	Payment</u></span></a>
+													</form></td>
+												<td width="5%">
+													<form action="goJobDetailShow" method="post"
+														id="JobDetails${jobAssignByDate.id}">
+														<a href="#"
+															onclick="jobShowDetails('${jobAssignByDate.id}');"><input
+															type="hidden" value="${jobAssignByDate.id}" name="joId"><img
+															alt="" src="images/eye.png" height="25px"></a>
+													</form>
+												</td>
 											</tr>
-										</thead>
-										<tbody style="height: 300px;">
-											<c:set var="count" value="${1}" />
-											<c:forEach items="${requestScope['jobAssignList']}"
-												var="jobAssignByDate">
 
-												<tr>
-													<td width="5%">${count}</td>
-													<td width="30%"><a href="#"
-														onclick="viewInvoice(${jobAssignByDate.id});"><b>${jobAssignByDate.challanNumber}</b></a></td>
-													<td width="15%"><fmt:formatDate
-															value="${jobAssignByDate.assignDate}" pattern="dd-MM-yy" /></td>
-													<td width="15%">${jobAssignByDate.vendor.name}</td>
-													<td width="12%">${jobAssignByDate.jobAssignmentProducts.size()}</td>
-													<c:set value="${0}" var="totqty" />
-													<c:forEach items="${jobAssignByDate.jobAssignmentProducts}"
-														var="proDet">
-														<c:set value="${totqty+proDet.qty}" var="totqty" />
-													</c:forEach>
-													<td width="10%"><fmt:formatNumber var="totalQ"
-															value="${totqty}" maxFractionDigits="3" />${totalQ}</td>
-													<td style="display: none;"><c:if
-															test="${sessionScope['ejb'].getPaymentDetailsByJobAssignId(jobAssignByDate.id).size()>0}">
-															<c:set
-																value="${sessionScope['ejb'].getPaymentDetailsByJobAssignId(jobAssignByDate.id).get(0).paymentStatus.status}"
-																var="Status"></c:set>
-														</c:if> <c:if
-															test="${sessionScope['ejb'].getPaymentDetailsByJobAssignId(jobAssignByDate.id).size()==0}">
-															<c:set value="Not Paid" var="Status"></c:set>
-														</c:if>
-														${sessionScope['ejb'].getPaymentDetailsByJobAssignId(jobAssignByDate.id).size()}
-														&nbsp; <span id="status${jobAssignByDate.id}">${Status}</span></td>
-													<td width="8%"><c:set var="totJobCost" value="${0}" />
-														<c:forEach var="jobp"
-															items="${jobAssignByDate.jobAssignmentProducts}">
-															<c:set var="totJobCost"
-																value="${totJobCost+jobp.totalJobCost}" />
-														</c:forEach> <fmt:formatNumber var="totJC"
-															value="${totJobCost+jobAssignByDate.surcharge}"
-															maxFractionDigits="2" />
-														<form action="" method="post"
-															id="jobPayment${jobAssignByDate.id}">
-															<a href="#"
-																onclick="jobPaymentOCF('${jobAssignByDate.id}','${jobAssignByDate.challanNumber}','${totJobCost+jobAssignByDate.surcharge}','${jobAssignByDate.vendor.id}');"><input
-																type="hidden" value="${jobAssignByDate.challanNumber}"
-																name="joChallan"> <span style="color: #6a94ff;"><u>
-																		Payment</u></span></a>
-														</form></td>
-													<td width="5%">
-														<form action="goJobDetailShow" method="post"
-															id="JobDetails${jobAssignByDate.id}">
-															<a href="#"
-																onclick="jobShowDetails('${jobAssignByDate.id}');"><input
-																type="hidden" value="${jobAssignByDate.id}" name="joId"><img
-																alt="" src="images/eye.png" height="25px"></a>
-														</form>
-													</td>
-												</tr>
-
-												<c:set var="count" value="${count+1}" />
-											</c:forEach>
-										</tbody>
-									</table>
-								</div>
+											<c:set var="count" value="${count+1}" />
+										</c:forEach>
+									</tbody>
+								</table>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<!-- Content Sec -->
 		</div>
-		<!-- Page Container -->
+		<!-- Content Sec -->
+	</div>
+	<!-- Page Container -->
 	</div>
 	<!-- main -->
 

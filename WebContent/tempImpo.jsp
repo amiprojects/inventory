@@ -4,19 +4,7 @@ ALTER TABLE COMPANYINFO ADD (isMRPbarcode NUMBER(1) DEFAULT 1);
 
 
 
-<%@include file="includeHeaderMenu.jsp"%>
-		<div class="page-container wide">
 
-
-<div class="responsive-logo">
-			<a href="dashboard.html" title=""><img src="images/logo2.png"
-				alt="Logo" /></a>
-		</div>
-		
-<div class="logo">
-			<a href="dashboard.html" title=""><img src="images/logo2.png"
-				alt="" /></a>
-		</div>
 
 /////////////////////////////////////////////////////////////////////////////////////
 COMPANYINFO

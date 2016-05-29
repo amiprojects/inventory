@@ -328,406 +328,401 @@ $(document).ready(function(){
 	<c:set var="account"
 		value="${sessionScope['ejb'].getAccountDetailsByVendorId(param.id)}" />
 	<div class="main" style="height: 664px;">
-		<%@include file="includeHeader.jsp"%>
-		<div class="page-container menu-left" style="height: 100%;">
-			<%@include file="includeSidebar.jsp"%>
-			<div class="content-sec"
-				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
-				<div class="container">
-					<div class="row">
-						<div class="masonary-grids">
+		<%@include file="includeLeftOrTop.jsp"%>
+		<div class="content-sec"
+			style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
+			<div class="container">
+				<div class="row">
+					<div class="masonary-grids">
 
 
-							<div class="breadcrumbs"
-								style="height: 50px; text-align: center;">
-								<h3 style="margin-top: 11px;">Vendor Details</h3>
+						<div class="breadcrumbs" style="height: 50px; text-align: center;">
+							<h3 style="margin-top: 11px;">Vendor Details</h3>
 
 
-							</div>
+						</div>
 
 
 
-							<div class="widget-area">
-								<div class="col-md-12">
-									<%-- <p>${requestScope['msg']}</p> --%>
-									<form role="form" class="sec" action="updateVendor"
-										method="post" id="vendordetails">
-										<input type="hidden" value="${param.id}" name="vendoeId"
-											id="vendorid">
+						<div class="widget-area">
+							<div class="col-md-12">
+								<%-- <p>${requestScope['msg']}</p> --%>
+								<form role="form" class="sec" action="updateVendor"
+									method="post" id="vendordetails">
+									<input type="hidden" value="${param.id}" name="vendoeId"
+										id="vendorid">
 
-										<ul class="nav nav-tabs">
-											<li class="active" id="detl"><a data-toggle="tab"
-												href="#detail">Details</a></li>
-											<li id="addr"><a data-toggle="tab" href="#address">Address</a></li>
-											<li id="vAcc"><a data-toggle="tab" href="#vendorAccount">Vendor
-													Account Info</a></li>
-											<li id="bAcc"><a data-toggle="tab" href="#bankAccount">Bank
-													Account info</a></li>
-											<!-- <li id="prts"><a data-toggle="tab" href="#part">Parts</a></li> -->
-										</ul>
-										<div class="tab-content">
-											<div id="bankAccount" class="tab-pane fade">
-												<div class="widget-area">
-													<div class="col-md-3">
-														<b>Bank Name:</b>
-													</div>
-													<div class="col-md-9">
-														<input type="text" class="form-control" name="bankName"
-															id="bankname" value="${account.bankName}">
-													</div>
-													<br>
-													<div class="col-md-3">
-														<b>A/C no.:</b>
-													</div>
-													<div class="col-md-9">
-														<input type="text" class="form-control" name="bankAccNo"
-															id="acno" value="${account.bankAccountNumber}">
-													</div>
-													<br>
-													<div class="col-md-3">
-														<b>Branch:</b>
-													</div>
-													<div class="col-md-9">
-														<input type="text" class="form-control" name="bankBranch"
-															id="branch" value="${account.branch}">
-													</div>
-													<br>
-													<div class="col-md-3">
-														<b>City:</b>
-													</div>
-													<div class="col-md-9">
-														<input type="text" class="form-control" id="bankcity"
-															value="${account.city.cityName}"> <input
-															type="hidden" value="${account.city.id}" name="bankCity"
-															id="bankCityId">
-													</div>
-													<br>
-													<div class="col-md-3">
-														<b>IFSC no.:</b>
-													</div>
-													<div class="col-md-9">
-														<input type="text" class="form-control" name="bankIFSC"
-															id="ifsc" value="${account.bankIFSCnumber}">
-													</div>
-													<br>
-													<div class="col-md-3">
-														<b>MICR no.:</b>
-													</div>
-													<div class="col-md-9">
-														<input type="text" class="form-control" name="bankMICR"
-															id="micrno" value="${account.bankMICRnumber}">
-													</div>
-													<br>
-													<div class="col-md-3">
-														<b>RTGS code:</b>
-													</div>
-													<div class="col-md-9">
-														<input type="text" class="form-control" name="bankRTGS"
-															id="rtgscd" value="${account.bankRTGCnumber}">
-													</div>
-													<br>
-													<div class="col-md-3">
-														<b>Check lebel:</b>
-													</div>
-													<div class="col-md-9">
-														<input type="text" class="form-control"
-															name="bankCheckLebel" id="label">
-													</div>
+									<ul class="nav nav-tabs">
+										<li class="active" id="detl"><a data-toggle="tab"
+											href="#detail">Details</a></li>
+										<li id="addr"><a data-toggle="tab" href="#address">Address</a></li>
+										<li id="vAcc"><a data-toggle="tab" href="#vendorAccount">Vendor
+												Account Info</a></li>
+										<li id="bAcc"><a data-toggle="tab" href="#bankAccount">Bank
+												Account info</a></li>
+										<!-- <li id="prts"><a data-toggle="tab" href="#part">Parts</a></li> -->
+									</ul>
+									<div class="tab-content">
+										<div id="bankAccount" class="tab-pane fade">
+											<div class="widget-area">
+												<div class="col-md-3">
+													<b>Bank Name:</b>
+												</div>
+												<div class="col-md-9">
+													<input type="text" class="form-control" name="bankName"
+														id="bankname" value="${account.bankName}">
 												</div>
 												<br>
-												<div class="col-md-12">
-													<input class="btn green pull-left" type="button"
-														value="Previous" onclick="bankButtonPrev();">
-
-
+												<div class="col-md-3">
+													<b>A/C no.:</b>
 												</div>
+												<div class="col-md-9">
+													<input type="text" class="form-control" name="bankAccNo"
+														id="acno" value="${account.bankAccountNumber}">
+												</div>
+												<br>
+												<div class="col-md-3">
+													<b>Branch:</b>
+												</div>
+												<div class="col-md-9">
+													<input type="text" class="form-control" name="bankBranch"
+														id="branch" value="${account.branch}">
+												</div>
+												<br>
+												<div class="col-md-3">
+													<b>City:</b>
+												</div>
+												<div class="col-md-9">
+													<input type="text" class="form-control" id="bankcity"
+														value="${account.city.cityName}"> <input
+														type="hidden" value="${account.city.id}" name="bankCity"
+														id="bankCityId">
+												</div>
+												<br>
+												<div class="col-md-3">
+													<b>IFSC no.:</b>
+												</div>
+												<div class="col-md-9">
+													<input type="text" class="form-control" name="bankIFSC"
+														id="ifsc" value="${account.bankIFSCnumber}">
+												</div>
+												<br>
+												<div class="col-md-3">
+													<b>MICR no.:</b>
+												</div>
+												<div class="col-md-9">
+													<input type="text" class="form-control" name="bankMICR"
+														id="micrno" value="${account.bankMICRnumber}">
+												</div>
+												<br>
+												<div class="col-md-3">
+													<b>RTGS code:</b>
+												</div>
+												<div class="col-md-9">
+													<input type="text" class="form-control" name="bankRTGS"
+														id="rtgscd" value="${account.bankRTGCnumber}">
+												</div>
+												<br>
+												<div class="col-md-3">
+													<b>Check lebel:</b>
+												</div>
+												<div class="col-md-9">
+													<input type="text" class="form-control"
+														name="bankCheckLebel" id="label">
+												</div>
+											</div>
+											<br>
+											<div class="col-md-12">
+												<input class="btn green pull-left" type="button"
+													value="Previous" onclick="bankButtonPrev();">
+
 
 											</div>
-											<div id="vendorAccount" class="tab-pane fade">
-												<div class="widget-area">
-													<div class="row">
-														<div class="col-md-5">
-															<b>VAT no.:</b>
-														</div>
-														<div class="col-md-7">
-															<input type="text" class="form-control"
-																name="vendorVATno" id="vatno"
-																value="${account.vatNumber}">
-														</div>
-													</div>
 
-													<div class="row">
-														<div class="col-md-5">
-															<b>VAT registration date:</b>
-														</div>
-														<div class="col-md-7">
-															<fmt:formatDate value="${account.vatRegistrationDate}"
-																var="vatregdate" pattern="dd-MM-yyyy" />
-															<input type="text" class="form-control"
-																name="vendorVATregDate" id="datepicker"
-																readonly="readonly" value="${vatregdate}">
-														</div>
+										</div>
+										<div id="vendorAccount" class="tab-pane fade">
+											<div class="widget-area">
+												<div class="row">
+													<div class="col-md-5">
+														<b>VAT no.:</b>
 													</div>
+													<div class="col-md-7">
+														<input type="text" class="form-control" name="vendorVATno"
+															id="vatno" value="${account.vatNumber}">
+													</div>
+												</div>
 
-													<div class="row">
-														<div class="col-md-5">
-															<b>CST no.:</b>
-														</div>
-														<div class="col-md-7">
-															<input type="text" class="form-control"
-																name="vendorCSTno" id="cstno"
-																value="${account.cstNumber}">
-														</div>
+												<div class="row">
+													<div class="col-md-5">
+														<b>VAT registration date:</b>
 													</div>
+													<div class="col-md-7">
+														<fmt:formatDate value="${account.vatRegistrationDate}"
+															var="vatregdate" pattern="dd-MM-yyyy" />
+														<input type="text" class="form-control"
+															name="vendorVATregDate" id="datepicker"
+															readonly="readonly" value="${vatregdate}">
+													</div>
+												</div>
 
-													<div class="row">
-														<div class="col-md-5">
-															<b>CST registration date:</b>
-														</div>
-														<div class="col-md-7">
-															<fmt:formatDate value="${account.cstRegistrationDate}"
-																var="cstregdate" pattern="dd-MM-yyyy" />
-															<input type="text" class="form-control"
-																name="vendorCSTregDate" id="datepicker1"
-																readonly="readonly" value="${cstregdate}">
-														</div>
+												<div class="row">
+													<div class="col-md-5">
+														<b>CST no.:</b>
 													</div>
+													<div class="col-md-7">
+														<input type="text" class="form-control" name="vendorCSTno"
+															id="cstno" value="${account.cstNumber}">
+													</div>
+												</div>
 
-													<div class="row">
-														<div class="col-md-5">
-															<b>PAN no.:</b>
-														</div>
-														<div class="col-md-7">
-															<input type="text" class="form-control"
-																name="vendorPANno" id="pan" value="${account.panNumber}">
-														</div>
+												<div class="row">
+													<div class="col-md-5">
+														<b>CST registration date:</b>
 													</div>
+													<div class="col-md-7">
+														<fmt:formatDate value="${account.cstRegistrationDate}"
+															var="cstregdate" pattern="dd-MM-yyyy" />
+														<input type="text" class="form-control"
+															name="vendorCSTregDate" id="datepicker1"
+															readonly="readonly" value="${cstregdate}">
+													</div>
+												</div>
 
-													<div class="row">
-														<div class="col-md-5">
-															<b>Excise registration no.:</b>
-														</div>
-														<div class="col-md-7">
-															<input type="text" class="form-control"
-																name="vendorExciseRegNo" id="exciseno"
-																value="${account.exciseRegistrationNumber}">
-														</div>
+												<div class="row">
+													<div class="col-md-5">
+														<b>PAN no.:</b>
 													</div>
+													<div class="col-md-7">
+														<input type="text" class="form-control" name="vendorPANno"
+															id="pan" value="${account.panNumber}">
+													</div>
+												</div>
 
-													<div class="row">
-														<div class="col-md-5">
-															<b>Excise registration date:</b>
-														</div>
-														<div class="col-md-7">
-															<fmt:formatDate value="${account.exciseRegistrationDate}"
-																var="exciseregdate" pattern="dd-MM-yyyy" />
-															<input type="text" class="form-control"
-																name="vendorExciseRegDate" id="datepicker2"
-																readonly="readonly" value="${exciseregdate}">
-														</div>
+												<div class="row">
+													<div class="col-md-5">
+														<b>Excise registration no.:</b>
 													</div>
+													<div class="col-md-7">
+														<input type="text" class="form-control"
+															name="vendorExciseRegNo" id="exciseno"
+															value="${account.exciseRegistrationNumber}">
+													</div>
+												</div>
 
-													<div class="row">
-														<div class="col-md-5">
-															<b>Service tax registration no.:</b>
-														</div>
-														<div class="col-md-7">
-															<input type="text" class="form-control"
-																name="vendorServiceTaxRegNo" id="servtaxno"
-																value="${account.serviceTaxRegistrationNumber}">
-														</div>
+												<div class="row">
+													<div class="col-md-5">
+														<b>Excise registration date:</b>
 													</div>
+													<div class="col-md-7">
+														<fmt:formatDate value="${account.exciseRegistrationDate}"
+															var="exciseregdate" pattern="dd-MM-yyyy" />
+														<input type="text" class="form-control"
+															name="vendorExciseRegDate" id="datepicker2"
+															readonly="readonly" value="${exciseregdate}">
+													</div>
+												</div>
 
-													<div class="row">
-														<div class="col-md-5">
-															<b>Service tax registration date:</b>
-														</div>
-														<div class="col-md-7">
-															<fmt:formatDate
-																value="${account.serviceTaxRegistrationDate}"
-																var="serviceregdate" pattern="dd-MM-yyyy" />
-															<input type="text" class="form-control"
-																name="vendorServiceTaxRegDate" id="datepicker3"
-																readonly="readonly" value="${serviceregdate}">
-														</div>
+												<div class="row">
+													<div class="col-md-5">
+														<b>Service tax registration no.:</b>
 													</div>
-													<div class="row">
-														<div class="col-md-5">
-															<b>Tax group id:</b>
-														</div>
-														<div class="col-md-7">
-															<select class="form-control" name="taxTypeGroupId"
-																id="taxgroup">
-																<c:if test="${account.tax_Type_Group!=null}">
-																	<option selected="selected"
-																		value="${account.tax_Type_Group.id}">${account.tax_Type_Group.name}</option>
-																	<c:forEach
-																		items="${sessionScope['ejb'].getAllActiveTax_Type_Groups()}"
-																		var="taxTypeGroup">
-																		<c:if
-																			test="${taxTypeGroup.id!=account.tax_Type_Group.id}">
-																			<option value="${taxTypeGroup.id}">${taxTypeGroup.name}</option>
-																		</c:if>
-																	</c:forEach>
-																</c:if>
-																<c:if test="${account.tax_Type_Group==null}">
-																	<option selected="selected" value="0">Select A
-																		Tax Group</option>
-																	<c:forEach
-																		items="${sessionScope['ejb'].getAllActiveTax_Type_Groups()}"
-																		var="taxTypeGroup">
+													<div class="col-md-7">
+														<input type="text" class="form-control"
+															name="vendorServiceTaxRegNo" id="servtaxno"
+															value="${account.serviceTaxRegistrationNumber}">
+													</div>
+												</div>
+
+												<div class="row">
+													<div class="col-md-5">
+														<b>Service tax registration date:</b>
+													</div>
+													<div class="col-md-7">
+														<fmt:formatDate
+															value="${account.serviceTaxRegistrationDate}"
+															var="serviceregdate" pattern="dd-MM-yyyy" />
+														<input type="text" class="form-control"
+															name="vendorServiceTaxRegDate" id="datepicker3"
+															readonly="readonly" value="${serviceregdate}">
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-5">
+														<b>Tax group id:</b>
+													</div>
+													<div class="col-md-7">
+														<select class="form-control" name="taxTypeGroupId"
+															id="taxgroup">
+															<c:if test="${account.tax_Type_Group!=null}">
+																<option selected="selected"
+																	value="${account.tax_Type_Group.id}">${account.tax_Type_Group.name}</option>
+																<c:forEach
+																	items="${sessionScope['ejb'].getAllActiveTax_Type_Groups()}"
+																	var="taxTypeGroup">
+																	<c:if
+																		test="${taxTypeGroup.id!=account.tax_Type_Group.id}">
 																		<option value="${taxTypeGroup.id}">${taxTypeGroup.name}</option>
-																	</c:forEach>
-																</c:if>
-															</select>
-														</div>
+																	</c:if>
+																</c:forEach>
+															</c:if>
+															<c:if test="${account.tax_Type_Group==null}">
+																<option selected="selected" value="0">Select A
+																	Tax Group</option>
+																<c:forEach
+																	items="${sessionScope['ejb'].getAllActiveTax_Type_Groups()}"
+																	var="taxTypeGroup">
+																	<option value="${taxTypeGroup.id}">${taxTypeGroup.name}</option>
+																</c:forEach>
+															</c:if>
+														</select>
 													</div>
-												</div>
-												<br>
-												<div class="col-md-12">
-													<input type="button" value="Next"
-														class="btn green pull-right" onclick="vendorButtonNext();">
-													<input type="button" value="Previous"
-														class="btn green pull-left" onclick="vendorButtonPrev();">
 												</div>
 											</div>
+											<br>
+											<div class="col-md-12">
+												<input type="button" value="Next"
+													class="btn green pull-right" onclick="vendorButtonNext();">
+												<input type="button" value="Previous"
+													class="btn green pull-left" onclick="vendorButtonPrev();">
+											</div>
+										</div>
 
-											<div id="detail" class="tab-pane fade active in">
-												<div class="widget-area">
+										<div id="detail" class="tab-pane fade active in">
+											<div class="widget-area">
 
-													<div class="col-md-3">
-														<b>Name:</b>
-													</div>
-													<div class="col-md-9">
-														<c:if test="${vendor.name=='Production Vendor'}">
-															<input type="text" readonly="readonly"
-																class="form-control" name="vendorName" id="name"
-																value="${vendor.name}">
-														</c:if>
-														<c:if test="${vendor.name!='Production Vendor'}">
-															<input type="text" class="form-control" name="vendorName"
-																id="name" value="${vendor.name}">
-														</c:if>
-													</div>
-													<br>
-													<div class="col-md-3">
-														<b>Company Name:</b>
-													</div>
-													<div class="col-md-9">
-														<input type="text" class="form-control"
-															name="vendorCompanyName" id="compname"
-															value="${vendor.companyName}">
-													</div>
-
-													<div class="col-md-3">
-														<b>Ph No1:</b>
-													</div>
-													<div class="col-md-9">
-														<input type="text" class="form-control" name="vendorPh1"
-															id="phn1" value="${vendor.ph1}">
-													</div>
-
-													<div class="col-md-3">
-														<b>Ph No2:</b>
-													</div>
-													<div class="col-md-9">
-														<input type="text" class="form-control" name="vendorPh2"
-															id="phn2" value="${vendor.ph2}">
-													</div>
-
-													<div class="col-md-3">
-														<b>Email :</b>
-													</div>
-													<div class="col-md-9">
-														<input type="text" class="form-control" name="vendorMail"
-															id="email" value="${vendor.email}"
-															onkeypress="return blockOtherThanEmail(event)">
-													</div>
-
-													<div class="col-md-3">
-														<b>Alias name :</b>
-													</div>
-													<div class="col-md-9">
-														<input type="text" class="form-control" name="vendorAlias"
-															id="alias" value="${vendor.aliseName}">
-													</div>
-
-													<div class="col-md-3">
-														<b>Vendor type :</b>
-													</div>
-													<div class="col-md-9">
-														<c:if test="${vendor.name=='Production Vendor'}">
-															<input type="hidden" id="oldVendortypeID"
-																value="${vendor.vendorType.id}">
-															<select class="form-control" name="vendorType" id="type"
-																disabled="disabled">
-																<c:forEach
-																	items="${sessionScope['ejb'].getAllVendorType()}"
-																	var="vType">
-																	<option value="${vType.id}">${vType.type}</option>
-																</c:forEach>
-															</select>
-														</c:if>
-														<c:if test="${vendor.name!='Production Vendor'}">
-															<input type="hidden" id="oldVendortypeID"
-																value="${vendor.vendorType.id}">
-															<select class="form-control" name="vendorType" id="type">
-																<c:forEach
-																	items="${sessionScope['ejb'].getAllVendorType()}"
-																	var="vType">
-																	<option value="${vType.id}">${vType.type}</option>
-																</c:forEach>
-															</select>
-														</c:if>
-													</div>
+												<div class="col-md-3">
+													<b>Name:</b>
+												</div>
+												<div class="col-md-9">
+													<c:if test="${vendor.name=='Production Vendor'}">
+														<input type="text" readonly="readonly"
+															class="form-control" name="vendorName" id="name"
+															value="${vendor.name}">
+													</c:if>
+													<c:if test="${vendor.name!='Production Vendor'}">
+														<input type="text" class="form-control" name="vendorName"
+															id="name" value="${vendor.name}">
+													</c:if>
 												</div>
 												<br>
-												<div class="col-md-12">
-													<!-- <input class="btn green pull-left" type="button"
+												<div class="col-md-3">
+													<b>Company Name:</b>
+												</div>
+												<div class="col-md-9">
+													<input type="text" class="form-control"
+														name="vendorCompanyName" id="compname"
+														value="${vendor.companyName}">
+												</div>
+
+												<div class="col-md-3">
+													<b>Ph No1:</b>
+												</div>
+												<div class="col-md-9">
+													<input type="text" class="form-control" name="vendorPh1"
+														id="phn1" value="${vendor.ph1}">
+												</div>
+
+												<div class="col-md-3">
+													<b>Ph No2:</b>
+												</div>
+												<div class="col-md-9">
+													<input type="text" class="form-control" name="vendorPh2"
+														id="phn2" value="${vendor.ph2}">
+												</div>
+
+												<div class="col-md-3">
+													<b>Email :</b>
+												</div>
+												<div class="col-md-9">
+													<input type="text" class="form-control" name="vendorMail"
+														id="email" value="${vendor.email}"
+														onkeypress="return blockOtherThanEmail(event)">
+												</div>
+
+												<div class="col-md-3">
+													<b>Alias name :</b>
+												</div>
+												<div class="col-md-9">
+													<input type="text" class="form-control" name="vendorAlias"
+														id="alias" value="${vendor.aliseName}">
+												</div>
+
+												<div class="col-md-3">
+													<b>Vendor type :</b>
+												</div>
+												<div class="col-md-9">
+													<c:if test="${vendor.name=='Production Vendor'}">
+														<input type="hidden" id="oldVendortypeID"
+															value="${vendor.vendorType.id}">
+														<select class="form-control" name="vendorType" id="type"
+															disabled="disabled">
+															<c:forEach
+																items="${sessionScope['ejb'].getAllVendorType()}"
+																var="vType">
+																<option value="${vType.id}">${vType.type}</option>
+															</c:forEach>
+														</select>
+													</c:if>
+													<c:if test="${vendor.name!='Production Vendor'}">
+														<input type="hidden" id="oldVendortypeID"
+															value="${vendor.vendorType.id}">
+														<select class="form-control" name="vendorType" id="type">
+															<c:forEach
+																items="${sessionScope['ejb'].getAllVendorType()}"
+																var="vType">
+																<option value="${vType.id}">${vType.type}</option>
+															</c:forEach>
+														</select>
+													</c:if>
+												</div>
+											</div>
+											<br>
+											<div class="col-md-12">
+												<!-- <input class="btn green pull-left" type="button"
 														value="Previous" onclick="detailButtonPrev();"> -->
-													<input class="btn green pull-left" type="button"
-														value="Edit" onclick="editVendor();"> <input
-														class="btn green pull-right" type="button" value="Next"
-														onclick="detailButtonNext();">
+												<input class="btn green pull-left" type="button"
+													value="Edit" onclick="editVendor();"> <input
+													class="btn green pull-right" type="button" value="Next"
+													onclick="detailButtonNext();">
+											</div>
+										</div>
+										<div id="address" class="tab-pane fade ">
+											<div class="widget-area">
+												<div class="breadcrumbs">
+													<ul>
+														<li><a title="" class="font"><h6>Address</h6></a></li>
+													</ul>
+												</div>
+												<textarea rows="" cols="" class="form-control"
+													name="vendorAddress" id="addr">${vendor.address}</textarea>
+												<div class="row">
+													<div class="col-md-3">City :</div>
+													<div class="col-md-9">
+														<input type="text" class="form-control cityAuto"
+															id="vendorcity" name="vendorCity"
+															value="${vendor.city.cityName}"> <input
+															type="hidden" name="vendorCityId"
+															value="${account.city.id}" id="vendorCityId">
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-3">Pin code :</div>
+													<div class="col-md-9">
+														<input type="text" class="form-control" name="vendorPin"
+															id="pin" value="${vendor.pinCode}">
+													</div>
 												</div>
 											</div>
-											<div id="address" class="tab-pane fade ">
-												<div class="widget-area">
-													<div class="breadcrumbs">
-														<ul>
-															<li><a title="" class="font"><h6>Address</h6></a></li>
-														</ul>
-													</div>
-													<textarea rows="" cols="" class="form-control"
-														name="vendorAddress" id="addr">${vendor.address}</textarea>
-													<div class="row">
-														<div class="col-md-3">City :</div>
-														<div class="col-md-9">
-															<input type="text" class="form-control cityAuto"
-																id="vendorcity" name="vendorCity"
-																value="${vendor.city.cityName}"> <input
-																type="hidden" name="vendorCityId"
-																value="${account.city.id}" id="vendorCityId">
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-md-3">Pin code :</div>
-														<div class="col-md-9">
-															<input type="text" class="form-control" name="vendorPin"
-																id="pin" value="${vendor.pinCode}">
-														</div>
-													</div>
-												</div>
-												<br>
-												<div class="col-md-12">
-													<input class="btn green pull-left" type="button"
-														value="Previous" onclick="addressButtonPrev();"> <input
-														class="btn green pull-right" type="button" value="Next"
-														onclick="addressButtonNext();">
-												</div>
-												<br>
+											<br>
+											<div class="col-md-12">
+												<input class="btn green pull-left" type="button"
+													value="Previous" onclick="addressButtonPrev();"> <input
+													class="btn green pull-right" type="button" value="Next"
+													onclick="addressButtonNext();">
 											</div>
-											<!-- <div id="part" class="tab-pane fade ">
+											<br>
+										</div>
+										<!-- <div id="part" class="tab-pane fade ">
 												<div class="widget-area">
 													<div class="breadcrumbs">
 														<ul>
@@ -798,25 +793,25 @@ $(document).ready(function(){
 												</div>
 												<br>
 											</div> -->
-										</div>
-										<div id="subVdet">
-											<input type="button" class="btn green pull-left"
-												type="submit" style="width: 100px; margin-top: 27px;"
-												value="Submit" onclick="submitVendorDetails();">
-										</div>
-									</form>
-									<div class='toast' style='display: none'>
-										<h3 id="msg">${requestScope['msg']}</h3>
 									</div>
+									<div id="subVdet">
+										<input type="button" class="btn green pull-left" type="submit"
+											style="width: 100px; margin-top: 27px;" value="Submit"
+											onclick="submitVendorDetails();">
+									</div>
+								</form>
+								<div class='toast' style='display: none'>
+									<h3 id="msg">${requestScope['msg']}</h3>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<!-- Content Sec -->
 		</div>
-		<!-- Page Container -->
+		<!-- Content Sec -->
+	</div>
+	<!-- Page Container -->
 	</div>
 	<!-- main -->
 

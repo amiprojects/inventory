@@ -62,82 +62,78 @@
 		value="${sessionScope['ejb'].getProductDetailsById(param.id)}" />
 
 	<div class="main" style="height: 664px;">
-		<%@include file="includeHeader.jsp"%>
-		<div class="page-container menu-left" style="height: 100%;">
-			<%@include file="includeSidebar.jsp"%>
-			<div class="content-sec"
-				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
-				<div class="container">
-					<div class="row">
-						<div class="masonary-grids">
-							<div class="breadcrumbs"
-								style="height: 50px; text-align: center;">
-								<h3 style="margin-top: 11px;">Edit Product</h3>
+		<%@include file="includeLeftOrTop.jsp"%>
+		<div class="content-sec"
+			style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
+			<div class="container">
+				<div class="row">
+					<div class="masonary-grids">
+						<div class="breadcrumbs" style="height: 50px; text-align: center;">
+							<h3 style="margin-top: 11px;">Edit Product</h3>
 
 
-							</div>
+						</div>
 
 
-							<div class="col-md-12">
-								<div class="widget-area" style="width: 100%">
+						<div class="col-md-12">
+							<div class="widget-area" style="width: 100%">
 
 
 
-									<form id="editSumPro" action="editproductSummary" method="post">
+								<form id="editSumPro" action="editproductSummary" method="post">
 
-										<input type="hidden" value="${param.id}" name="productid"
-											id="productid">
+									<input type="hidden" value="${param.id}" name="productid"
+										id="productid">
 
 
-										<div class="col-md-6">
-											<div class="form-group">
-												<label for="exampleInputEmail1">Product Code:</label> <input
-													readonly="readonly" type="text" value="${editpro.code}"
-													name="productCode123" class="form-control"><br>
-											</div>
-											<div class="form-group">
-												<label for="exampleInputEmail1">Description:</label> <input
-													type="text" name="description123"
-													onkeypress="return blockSpecialChar(event)"
-													value="${editpro.description}" class="form-control"><br>
-											</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="exampleInputEmail1">Product Code:</label> <input
+												readonly="readonly" type="text" value="${editpro.code}"
+												name="productCode123" class="form-control"><br>
 										</div>
-										<div class="col-md-6">
-											<div class="form-group">
-												<label for="exampleInputEmail1">Designer's Design
-													number: </label> <input type="text" readonly="readonly"
-													value="${editpro.universalCode}" name="upc123"
-													onkeypress="return blockSpecialChar(event)"
-													class="form-control"><br>
-											</div>
+										<div class="form-group">
+											<label for="exampleInputEmail1">Description:</label> <input
+												type="text" name="description123"
+												onkeypress="return blockSpecialChar(event)"
+												value="${editpro.description}" class="form-control"><br>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="exampleInputEmail1">Designer's Design
+												number: </label> <input type="text" readonly="readonly"
+												value="${editpro.universalCode}" name="upc123"
+												onkeypress="return blockSpecialChar(event)"
+												class="form-control"><br>
+										</div>
 
-											<div class="form-group">
-												<label for="exampleInputEmail1">Unit Of Measurement:</label>
-												<%--<input type="text" value="${editpro.qtyUnit.id}"
+										<div class="form-group">
+											<label for="exampleInputEmail1">Unit Of Measurement:</label>
+											<%--<input type="text" value="${editpro.qtyUnit.id}"
 													name="uom123" class="form-control"><br>
 											 --%>
-												<select name="uom123" id="uomO" class="form-control"
-													style="width: 431px; height: 34px">
-													<option value="${editpro.qtyUnit.id}" selected="selected">${editpro.qtyUnit.name}</option>
-													<c:forEach items="${sessionScope['ejb'].getAllQtyUnit()}"
-														var="qqty">
-														<c:if test="${editpro.qtyUnit.id!=qqty.id}">
-															<option value="${qqty.id}">${qqty.name}</option>
-														</c:if>
-													</c:forEach>
-												</select>
-											</div>
-
-											<input style="float: right;" class="btn green btn-default"
-												type="submit" value="submit">
+											<select name="uom123" id="uomO" class="form-control"
+												style="width: 431px; height: 34px">
+												<option value="${editpro.qtyUnit.id}" selected="selected">${editpro.qtyUnit.name}</option>
+												<c:forEach items="${sessionScope['ejb'].getAllQtyUnit()}"
+													var="qqty">
+													<c:if test="${editpro.qtyUnit.id!=qqty.id}">
+														<option value="${qqty.id}">${qqty.name}</option>
+													</c:if>
+												</c:forEach>
+											</select>
 										</div>
 
-									</form>
-
-
-									<div class='toast' style='display: none'>
-										<h3 id="msg">${requestScope['msg']}</h3>
+										<input style="float: right;" class="btn green btn-default"
+											type="submit" value="submit">
 									</div>
+
+								</form>
+
+
+								<div class='toast' style='display: none'>
+									<h3 id="msg">${requestScope['msg']}</h3>
 								</div>
 							</div>
 						</div>
@@ -145,6 +141,7 @@
 				</div>
 			</div>
 		</div>
+	</div>
 	</div>
 
 

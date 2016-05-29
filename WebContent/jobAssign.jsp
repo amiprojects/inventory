@@ -59,47 +59,45 @@
 		</c:if>
 	</c:if>
 	<div class="main" style="height: 664px;">
-		<%@include file="includeHeader.jsp"%>
-		<div class="page-container menu-left" style="height: 100%;">
-			<%@include file="includeSidebar.jsp"%>
-			<div class="content-sec"
-				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
-				<div class="row">
-					<div class="masonary-grids">
-						<div class="container">
-							<div class="title-date-range">
-								<div class="row">
-									<div class="col-md-6">
-										<div class="main-title">
-											<h1>Job Assign</h1>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<!-- <div id="reportrange" class="date-range">20/0/116 -
-											12:24:6</div> -->
+		<%@include file="includeLeftOrTop.jsp"%>
+		<div class="content-sec"
+			style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
+			<div class="row">
+				<div class="masonary-grids">
+					<div class="container">
+						<div class="title-date-range">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="main-title">
+										<h1>Job Assign</h1>
 									</div>
 								</div>
+								<div class="col-md-6">
+									<!-- <div id="reportrange" class="date-range">20/0/116 -
+											12:24:6</div> -->
+								</div>
 							</div>
-							<!-- title Date Range -->
+						</div>
+						<!-- title Date Range -->
 
-							<!-- Stats Counter Sec-->
-							<div class="row">
-								<div class="masonary-grids">
+						<!-- Stats Counter Sec-->
+						<div class="row">
+							<div class="masonary-grids">
 
-									<div class="col-md-4">
-										<a href="jobAssignForParticularDesignNumber.jsp">
-											<div class="stats-counter">
-												<img alt="sales Entry" src="images/jobs.PNG"
+								<div class="col-md-4">
+									<a href="jobAssignForParticularDesignNumber.jsp">
+										<div class="stats-counter">
+											<img alt="sales Entry" src="images/jobs.PNG"
 												style="height: 179px; width: 330px;"> <i
-													class="fa fa-user red"></i>
+												class="fa fa-user red"></i>
 
-												<h4 style="color: red">For Particular Design Number</h4>
-											</div>
-										</a>
+											<h4 style="color: red">For Particular Design Number</h4>
+										</div>
+									</a>
 
-									</div>
+								</div>
 
-									<!-- <div class="col-md-4">
+								<!-- <div class="col-md-4">
 										<a href="jobAssignForOnlyProduct.jsp">
 											<div class="stats-counter">
 
@@ -114,28 +112,28 @@
 
 
 
-									<div class="col-md-4">
-										<a href="jobAssignForOngoingJobs.jsp">
-											<div class="stats-counter">
-												<img alt="on going job" src="img/ongoing.png"
+								<div class="col-md-4">
+									<a href="jobAssignForOngoingJobs.jsp">
+										<div class="stats-counter">
+											<img alt="on going job" src="img/ongoing.png"
 												style="height: 179px; width: 330px;"> <i
-													class="fa fa-user red"></i>
-												<h4 style="color: red">For Ongoing Job</h4>
-											</div>
-										</a>
-									</div>
-									<div class="col-md-4"></div>
+												class="fa fa-user red"></i>
+											<h4 style="color: red">For Ongoing Job</h4>
+										</div>
+									</a>
 								</div>
-								<!-- END -->
+								<div class="col-md-4"></div>
 							</div>
+							<!-- END -->
 						</div>
 					</div>
-
-
 				</div>
+
+
 			</div>
 		</div>
-		<!-- Content Sec -->
+	</div>
+	<!-- Content Sec -->
 	</div>
 	<!-- Page Container -->
 

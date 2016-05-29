@@ -71,119 +71,115 @@
 	</c:if>
 
 	<div class="main" style="height: 664px;">
-		<%@include file="includeHeader.jsp"%>
-		<div class="page-container menu-left" style="height: 100%;">
-			<%@include file="includeSidebar.jsp"%>
-			<div class="content-sec"
-				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
-				<div class="container">
-					<div class="row">
-						<div class="masonary-grids">
-							<div class="breadcrumbs"
-								style="height: 50px; text-align: center;">
-								<h3 style="margin-top: 11px;">Job Setup Management</h3>
+		<%@include file="includeLeftOrTop.jsp"%>
+		<div class="content-sec"
+			style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
+			<div class="container">
+				<div class="row">
+					<div class="masonary-grids">
+						<div class="breadcrumbs" style="height: 50px; text-align: center;">
+							<h3 style="margin-top: 11px;">Job Setup Management</h3>
+						</div>
+						<div class="widget-area">
+							<div class="widget-area"
+								style="height: 380px; overflow: auto; width: 50%;">
+								<form action="setJobTypes" method="post">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label for="" class="font">Job Name :<font
+												color="red" size="4">*</font></label> <input type="text"
+												placeholder="Enter job name" id=""
+												onkeypress="return blockSpecialChar(event)" name="name"
+												class="form-control" required>
+										</div>
+									</div>
+									<div class="col-md-11">
+										<div class="form-group">
+											<label for="" class="font">Job Description :</label>
+											<textarea rows="" cols="" name="jobDesc"
+												onkeypress="return blockSpecialChar(event)"></textarea>
+										</div>
+									</div>
+									<div class="col-md-12">
+										<input class="btn green pull-left" type="submit" value="Add">
+									</div>
+								</form>
 							</div>
-							<div class="widget-area">
-								<div class="widget-area"
-									style="height: 380px; overflow: auto; width: 50%;">
-									<form action="setJobTypes" method="post">
-										<div class="col-md-12">
-											<div class="form-group">
-												<label for="" class="font">Job Name :<font
-													color="red" size="4">*</font></label> <input type="text"
-													placeholder="Enter job name" id=""
-													onkeypress="return blockSpecialChar(event)" name="name"
-													class="form-control" required>
-											</div>
-										</div>
-										<div class="col-md-11">
-											<div class="form-group">
-												<label for="" class="font">Job Description :</label>
-												<textarea rows="" cols="" name="jobDesc"
-													onkeypress="return blockSpecialChar(event)"></textarea>
-											</div>
-										</div>
-										<div class="col-md-12">
-											<input class="btn green pull-left" type="submit" value="Add">
-										</div>
-									</form>
-								</div>
-								<div class="widget-area" style="width: 50%;">
-									<table class="table">
-										<thead>
+							<div class="widget-area" style="width: 50%;">
+								<table class="table">
+									<thead>
+										<tr>
+											<th width="30%">Job name</th>
+											<th width="35%">Job Description</th>
+											<th width="20%">Edit</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach items="${sessionScope['ejb'].getAllJobTypes()}"
+											var="jobtype">
 											<tr>
-												<th width="30%">Job name</th>
-												<th width="35%">Job Description</th>
-												<th width="20%">Edit</th>
-												<th></th>
+												<td>${jobtype.jobName}</td>
+												<td>${jobtype.jobDescription}</td>
+												<td><a href="#" onclick="editJobTypes('${jobtype.id}')"><img
+														alt="" src="img/edit.png"></a></td>
 											</tr>
-										</thead>
-										<tbody>
-											<c:forEach items="${sessionScope['ejb'].getAllJobTypes()}"
-												var="jobtype">
-												<tr>
-													<td>${jobtype.jobName}</td>
-													<td>${jobtype.jobDescription}</td>
-													<td><a href="#"
-														onclick="editJobTypes('${jobtype.id}')"><img alt=""
-															src="img/edit.png"></a></td>
-												</tr>
-												<div id="jobEdit${jobtype.id}" class="modal fade"
-													role="dialog" style="top: 25px;">
-													<div class="modal-dialog">
-														<div class="modal-content">
-															<div class="modal-header">
-																<button type="button" class="close" data-dismiss="modal">&times;</button>
-																<h4 class="modal-title">Edit Job Types</h4>
-															</div>
-															<div class="modal-body">
-																<form action="updateJob" method="post"
-																	id="updateJobId${jobtype.id}">
-																	<input type="hidden" value="${jobtype.id}" name="id">
-																	<div class="col-md-12">
-																		<div class="form-group">
-																			<label for="name" class="font">Job Name :</label> <input
-																				type="text" placeholder="Enter job name" id=""
-																				name="name"
-																				onkeypress="return blockSpecialChar(event)"
-																				value="${jobtype.jobName}" class="form-control"
-																				required> <input type="hidden"
-																				id="jobUsedSize${jobtype.id}"
-																				value="${jobtype.jobsForDesignCostSheets.size()}">
-																		</div>
-																	</div>
-																	<div class="col-md-12">
-																		<div class="form-group">
-																			<label for="" class="font">Job Description :</label>
-																			<textarea rows="" cols="" name="jobDesc"
-																				onkeypress="return blockSpecialChar(event)">${jobtype.jobDescription}</textarea>
-																		</div>
-																	</div>
-																	<div class="col-md-12">
-																		<input class="btn green pull-left" type="button"
-																			value="Update" onclick="cancelF('${jobtype.id}');">
-																	</div>
-																</form>
-															</div>
-															<div class="modal-footer"></div>
+											<div id="jobEdit${jobtype.id}" class="modal fade"
+												role="dialog" style="top: 25px;">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<div class="modal-header">
+															<button type="button" class="close" data-dismiss="modal">&times;</button>
+															<h4 class="modal-title">Edit Job Types</h4>
 														</div>
-
+														<div class="modal-body">
+															<form action="updateJob" method="post"
+																id="updateJobId${jobtype.id}">
+																<input type="hidden" value="${jobtype.id}" name="id">
+																<div class="col-md-12">
+																	<div class="form-group">
+																		<label for="name" class="font">Job Name :</label> <input
+																			type="text" placeholder="Enter job name" id=""
+																			name="name"
+																			onkeypress="return blockSpecialChar(event)"
+																			value="${jobtype.jobName}" class="form-control"
+																			required> <input type="hidden"
+																			id="jobUsedSize${jobtype.id}"
+																			value="${jobtype.jobsForDesignCostSheets.size()}">
+																	</div>
+																</div>
+																<div class="col-md-12">
+																	<div class="form-group">
+																		<label for="" class="font">Job Description :</label>
+																		<textarea rows="" cols="" name="jobDesc"
+																			onkeypress="return blockSpecialChar(event)">${jobtype.jobDescription}</textarea>
+																	</div>
+																</div>
+																<div class="col-md-12">
+																	<input class="btn green pull-left" type="button"
+																		value="Update" onclick="cancelF('${jobtype.id}');">
+																</div>
+															</form>
+														</div>
+														<div class="modal-footer"></div>
 													</div>
+
 												</div>
-											</c:forEach>
-										</tbody>
-									</table>
-								</div>
-								<div class='toast' style='display: none'>
-									<h3 id="msg">${requestScope['msg']}</h3>
-								</div>
-								<%-- <p>${requestScope['msg']}</p> --%>
+											</div>
+										</c:forEach>
+									</tbody>
+								</table>
 							</div>
+							<div class='toast' style='display: none'>
+								<h3 id="msg">${requestScope['msg']}</h3>
+							</div>
+							<%-- <p>${requestScope['msg']}</p> --%>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 	</div>
 	<!-- main -->
 

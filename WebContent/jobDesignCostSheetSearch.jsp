@@ -55,115 +55,108 @@
 		</c:if>
 	</c:if>
 
-
-
-
-
 	<div class="main" style="height: 664px;">
-		<%@include file="includeHeader.jsp"%>
-		<div class="page-container menu-left" style="height: 100%;">
-			<%@include file="includeSidebar.jsp"%>
-			<div class="content-sec"
-				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
-				<div class="container">
-					<div class="row">
-						<div class="masonary-grids">
-							<div class="breadcrumbs"
-								style="height: 50px; text-align: center;">
-								<h3 style="margin-top: 11px;">Sample Job Cost Sheet Search</h3>
-							</div>
-							<div class="col-md-12">
-								<div class="widget-area">
-									<form role="form" class="sec" action="sampleJobSearchAll"
-										method="post">
-										<div class="row">
-											<div class="col-md-12">
-												<button class="btn green pull-right" type="submit"
-													style="margin-right: 63px;">Show All</button>
+		<%@include file="includeLeftOrTop.jsp"%>
+		<div class="content-sec"
+			style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
+			<div class="container">
+				<div class="row">
+					<div class="masonary-grids">
+						<div class="breadcrumbs" style="height: 50px; text-align: center;">
+							<h3 style="margin-top: 11px;">Sample Job Cost Sheet Search</h3>
+						</div>
+						<div class="col-md-12">
+							<div class="widget-area">
+								<form role="form" class="sec" action="sampleJobSearchAll"
+									method="post">
+									<div class="row">
+										<div class="col-md-12">
+											<button class="btn green pull-right" type="submit"
+												style="margin-right: 63px;">Show All</button>
+										</div>
+									</div>
+								</form>
+								<form role="form" class="sec" action="sampleJobSearchByDesignNo"
+									method="post">
+									<div class="row">
+										<div class="col-md-10">
+											<div class="form-group">
+												<label for="" style="float: left;">Design No. :</label> <input
+													type="" placeholder="Enter Design No." id="designNo"
+													name="designNo" class="form-control" autocomplete="off">
 											</div>
 										</div>
-									</form>
-									<form role="form" class="sec"
-										action="sampleJobSearchByDesignNo" method="post">
-										<div class="row">
-											<div class="col-md-10">
-												<div class="form-group">
-													<label for="" style="float: left;">Design No. :</label> <input
-														type="" placeholder="Enter Design No." id="designNo"
-														name="designNo" class="form-control" autocomplete="off">
-												</div>
-											</div>
-											<div class="col-md-2">
-												<button class="btn green pull-left"
-													style="margin-top: 25px;" type="submit">Search</button>
+										<div class="col-md-2">
+											<button class="btn green pull-left" style="margin-top: 25px;"
+												type="submit">Search</button>
+										</div>
+									</div>
+								</form>
+								<form role="form" class="sec"
+									action="sampleJobSearchByDesignerName" method="post">
+									<div class="row">
+										<div class="col-md-10">
+											<div class="form-group">
+												<label for="" style="float: left;">Designer Name :</label> <input
+													type="" placeholder="Enter Designer Name" id="designerName"
+													name="designerName" class="form-control">
 											</div>
 										</div>
-									</form>
-									<form role="form" class="sec"
-										action="sampleJobSearchByDesignerName" method="post">
-										<div class="row">
-											<div class="col-md-10">
-												<div class="form-group">
-													<label for="" style="float: left;">Designer Name :</label>
-													<input type="" placeholder="Enter Designer Name"
-														id="designerName" name="designerName" class="form-control">
-												</div>
-											</div>
-											<div class="col-md-2">
-												<button class="btn green pull-left"
-													style="margin-top: 25px;" type="submit">Search</button>
-											</div>
+										<div class="col-md-2">
+											<button class="btn green pull-left" style="margin-top: 25px;"
+												type="submit">Search</button>
+										</div>
 
-										</div>
-									</form>
-									<br>
-									<h3 align="center" style="color: #6a94ff;">${requestScope['msg']}</h3>
-									<br>
-									<table class="table table-fixedheader">
-										<thead>
+									</div>
+								</form>
+								<br>
+								<h3 align="center" style="color: #6a94ff;">${requestScope['msg']}</h3>
+								<br>
+								<table class="table table-fixedheader">
+									<thead>
+										<tr>
+											<th width="5%">#</th>
+											<th width="20%">Design No.</th>
+											<th width="35%">Design Description</th>
+											<th width="30%">Designer Name</th>
+										</tr>
+									</thead>
+									<tbody style="height: 300px;">
+										<c:set var="count" value="${1}" />
+										<c:forEach
+											items="${requestScope['sampleDesignCostSheetList']}"
+											var="sampleDesignCostSheet">
+
 											<tr>
-												<th width="5%">#</th>
-												<th width="20%">Design No.</th>
-												<th width="35%">Design Description</th>
-												<th width="30%">Designer Name</th>
+												<td width="5%">${count}</td>
+												<td width="20%"><a href="#"
+													onclick="viewInvoice(${sampleDesignCostSheet.id});"><b>${sampleDesignCostSheet.designNumber.toUpperCase()}</b></a></td>
+												<td width="35%">${sampleDesignCostSheet.designDescription.toUpperCase()}</td>
+												<td width="30%">${sampleDesignCostSheet.vendor.name}</td>
+												<td width="10%">
+													<form action="sampleJobCostSheetView" method="post"
+														id="JobDetails${sampleDesignCostSheet.id}">
+														<a href="#"
+															onclick="jobShowDetails('${sampleDesignCostSheet.id}');"><input
+															type="hidden" value="${sampleDesignCostSheet.id}"
+															name="sampleDesignCostSheetId"><img alt=""
+															src="images/eye.png" height="25px"></a>
+													</form>
+												</td>
 											</tr>
-										</thead>
-										<tbody style="height: 300px;">
-											<c:set var="count" value="${1}" />
-											<c:forEach
-												items="${requestScope['sampleDesignCostSheetList']}"
-												var="sampleDesignCostSheet">
-
-												<tr>
-													<td width="5%">${count}</td>
-													<td width="20%"><a href="#"
-														onclick="viewInvoice(${sampleDesignCostSheet.id});"><b>${sampleDesignCostSheet.designNumber.toUpperCase()}</b></a></td>
-													<td width="35%">${sampleDesignCostSheet.designDescription.toUpperCase()}</td>
-													<td width="30%">${sampleDesignCostSheet.vendor.name}</td>
-													<td width="10%">
-														<form action="sampleJobCostSheetView" method="post"
-															id="JobDetails${sampleDesignCostSheet.id}">
-															<a href="#"
-																onclick="jobShowDetails('${sampleDesignCostSheet.id}');"><input
-																type="hidden" value="${sampleDesignCostSheet.id}"
-																name="sampleDesignCostSheetId"><img alt=""
-																src="images/eye.png" height="25px"></a>
-														</form>
-													</td>
-												</tr>
-												<c:set var="count" value="${count+1}" />
-											</c:forEach>
-										</tbody>
-									</table>
-								</div>
+											<c:set var="count" value="${count+1}" />
+										</c:forEach>
+									</tbody>
+								</table>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<!-- Content Sec -->
 		</div>
-		<!-- Page Container -->
+		<!-- Content Sec -->
+	</div>
+	<!-- Page Container -->
 	</div>
 	<!-- main -->
 

@@ -20,6 +20,9 @@
 					Return</a></li>
 			<li><a id="sPurchSearch" href="purchasingPurchaseSearch.jsp"
 				title="">Search Purchase Entry</a></li>
+			<li><a id="sPurchRetSearch"
+				href="purchasingPurchaseSearchReturn.jsp" title="">Search
+					Purchase Return</a></li>
 			<li><a id="sProdPurchSearch"
 				href="purchasingProductionSearch.jsp" title="">Search Ready
 					Production</a></li>
