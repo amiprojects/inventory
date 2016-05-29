@@ -60,7 +60,9 @@
 
 
 	<div class="main" style="height: 664px;">
-		<%@include file="includeLeftOrTop.jsp"%>
+		<%@include file="includeHeader.jsp"%>
+		<div class="page-container menu-left" style="height: 100%;">
+			<%@include file="includeSidebar.jsp"%>
 			<div class="content-sec"
 				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
 				<div class="container">

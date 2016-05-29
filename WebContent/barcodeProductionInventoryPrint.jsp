@@ -43,60 +43,64 @@
 	</c:if>
 
 	<div class="main" style="height: 664px;">
-		<div class="content-sec"
-			style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
-			<div class="container">
-				<div class="row">
-					<div class="masonary-grids">
-						<div class="col-md-12">
-							<div class="breadcrumbs" style="height: 39px">
-								<ul>
-									<li><p
-											style="right: -422px; font-size: 20px; position: absolute;">
-											<b>Barcode</b>
-										</p></li>
-								</ul>
-							</div>
-							<div class="widget-area">
-								<form action="barcode" method="post">
-									<table class="table table-striped table-bordered">
-										<thead>
-											<tr>
-												<th>Product Code</th>
-												<th>product Description</th>
-												<th>Lot No.</th>
-												<th>Qty</th>
-												<th>Remaining Qty</th>
-												<th>Select</th>
-												<th>Qty to print</th>
-										</thead>
-										<c:forEach var="purchaseProducts"
-											items="${sessionScope['ejb'].getPurchaseProductDetailsByProductIdAndCompany(param.id)}">
-											<c:if
-												test="${purchaseProducts.purchase_Entry!=null && purchaseProducts.purchase_Entry.vendor.name=='Production Vendor'}">
-												<tbody>
-													<tr>
-														<td>${purchaseProducts.productDetail.code}</td>
-														<td>${purchaseProducts.productDetail.description}</td>
-														<td>${purchaseProducts.lotNumber}</td>
-														<td>${purchaseProducts.quantity}</td>
-														<td>${purchaseProducts.remaining_quantity}</td>
-														<td><input type="checkbox"
-															id="prodCheck${purchaseProducts.id}"
-															onclick="qtyPrF(${purchaseProducts.id});"><input
-															type="hidden" value="${purchaseProducts.id}"
-															name="prodCheck"></td>
-														<td><input type="number"
-															id="qtyPr${purchaseProducts.id}" class="form-control"
-															readonly="readonly" name="qtyProd" value="0"></td>
-													</tr>
-												</tbody>
-											</c:if>
-										</c:forEach>
-									</table>
-									<button type="submit" class="btn btn-info btn-lg"
-										style="float: right;" id="b1" value="print">Print</button>
-								</form>
+		<%@include file="includeHeader.jsp"%>
+		<div class="page-container menu-left" style="height: 100%;">
+			<%@include file="includeSidebar.jsp"%>
+			<div class="content-sec"
+				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
+				<div class="container">
+					<div class="row">
+						<div class="masonary-grids">
+							<div class="col-md-12">
+								<div class="breadcrumbs" style="height: 39px">
+									<ul>
+										<li><p
+												style="right: -422px; font-size: 20px; position: absolute;">
+												<b>Barcode</b>
+											</p></li>
+									</ul>
+								</div>
+								<div class="widget-area">
+									<form action="barcode" method="post">
+										<table class="table table-striped table-bordered">
+											<thead>
+												<tr>
+													<th>Product Code</th>
+													<th>product Description</th>
+													<th>Lot No.</th>
+													<th>Qty</th>
+													<th>Remaining Qty</th>
+													<th>Select</th>
+													<th>Qty to print</th>
+											</thead>
+											<c:forEach var="purchaseProducts"
+												items="${sessionScope['ejb'].getPurchaseProductDetailsByProductIdAndCompany(param.id)}">
+												<c:if
+													test="${purchaseProducts.purchase_Entry!=null && purchaseProducts.purchase_Entry.vendor.name=='Production Vendor'}">
+													<tbody>
+														<tr>
+															<td>${purchaseProducts.productDetail.code}</td>
+															<td>${purchaseProducts.productDetail.description}</td>
+															<td>${purchaseProducts.lotNumber}</td>
+															<td>${purchaseProducts.quantity}</td>
+															<td>${purchaseProducts.remaining_quantity}</td>
+															<td><input type="checkbox"
+																id="prodCheck${purchaseProducts.id}"
+																onclick="qtyPrF(${purchaseProducts.id});"><input
+																type="hidden" value="${purchaseProducts.id}"
+																name="prodCheck"></td>
+															<td><input type="number"
+																id="qtyPr${purchaseProducts.id}" class="form-control"
+																readonly="readonly" name="qtyProd" value="0"></td>
+														</tr>
+													</tbody>
+												</c:if>
+											</c:forEach>
+										</table>
+										<button type="submit" class="btn btn-info btn-lg"
+											style="float: right;" id="b1" value="print">Print</button>
+									</form>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -104,6 +108,7 @@
 			</div>
 		</div>
 	</div>
+
 
 	<!-- main -->
 

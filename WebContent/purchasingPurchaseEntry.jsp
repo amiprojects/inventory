@@ -249,503 +249,510 @@
 	<c:set var="compInfo"
 		value="${sessionScope[ 'ejb'].getUserById(sessionScope['user']).getCompanyInfo()}" />
 	<div class="main" style="height: 664px;">
-		<%@include file="includeLeftOrTop.jsp"%>
-		<div class="content-sec"
-			style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
-			<div class="container">
-				<div class="row">
-					<div class="masonary-grids">
+		<%@include file="includeHeader.jsp"%>
+		<div class="page-container menu-left" style="height: 100%;">
+			<%@include file="includeSidebar.jsp"%>
+			<div class="content-sec"
+				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
+				<div class="container">
+					<div class="row">
+						<div class="masonary-grids">
 
-						<div class="breadcrumbs" style="height: 50px; text-align: center;">
-							<h3 style="margin-top: 11px;">Purchase Entry</h3>
-						</div>
+							<div class="breadcrumbs"
+								style="height: 50px; text-align: center;">
+								<h3 style="margin-top: 11px;">Purchase Entry</h3>
+							</div>
 
-						<div class="col-md-12">
-							<form role="form" class="sec" method="post" id="purchaseForm"
-								action="purchaseEntry">
-								<div class="widget-area">
-									<div class="col-md-6">
-										<div class="col-md-12">
-											&nbsp; &nbsp; &nbsp; <b class="font">Vendor Type :<font
-												color="red" size="4">*</font></b> <select class="form-control"
-												name="vendorType" id="vendorType"
-												onchange="getVendorNameByType();" required="required">
-												<option value="0">Select Vendor Type</option>
-												<c:forEach items="${sessionScope['ejb'].getAllVendorType()}"
-													var="vType">
-													<c:choose>
-														<c:when
-															test="${vType.type.equals('Vendor') || vType.type.equals('Purchase Agent')}">
-															<option value="${vType.id}">${vType.type}</option>
-														</c:when>
-													</c:choose>
-												</c:forEach>
-											</select>
-										</div>
-										<div class="col-md-11">
-											&nbsp; &nbsp; &nbsp; <b class="font">Vendor Name :<font
-												color="red" size="4">*</font></b> <input type="text"
-												class="form-control" id="vName" name="vName"
-												required="required" onchange="emptyVender();"
-												autocomplete="off"><input type="hidden" id="vId"
-												name="vId">
-										</div>
-										<div class="col-md-1">
-											<b class="font">&nbsp;&nbsp; </b> <a onclick="addVendor()"
-												title="Add New Vendor."> <img
-												style="margin-top: 4px; cursor: pointer" height="30px"
-												width="30px" alt="" src="img/add.png">
-											</a>
-										</div>
-
-										<div class="col-md-12" style="margin-top: 15px;">
-											&nbsp; &nbsp; &nbsp; <b class="font">Vendor Details :</b>
-											<textarea rows="5" cols="" id="vDetail" class="form-control"
-												readonly="readonly"></textarea>
-
-										</div>
-										<div class="col-md-12">
-											<input type="checkbox" onclick="isAgentF();" id="agent"
-												name="agent" disabled="disabled">&nbsp;<span>Via
-												Agent</span>
-										</div>
-										<div class="col-md-12" id="aNameDiv">
-											<div class="col-md-11">
-												<label for="" class="font">Agent Name:<font
-													color="red" size="4">*</font></label>
-												<!-- <input
-															type="text" class="form-control" name="agentName"
-															id="agentName"> -->
-												<select class="form-control" id="agentName" name="agentName"
-													onchange="getAgentDetail();">
-													<option value="0">Select Agent name</option>
+							<div class="col-md-12">
+								<form role="form" class="sec" method="post" id="purchaseForm"
+									action="purchaseEntry">
+									<div class="widget-area">
+										<div class="col-md-6">
+											<div class="col-md-12">
+												&nbsp; &nbsp; &nbsp; <b class="font">Vendor Type :<font
+													color="red" size="4">*</font></b> <select class="form-control"
+													name="vendorType" id="vendorType"
+													onchange="getVendorNameByType();" required="required">
+													<option value="0">Select Vendor Type</option>
 													<c:forEach
-														items="${sessionScope['ejb'].getVendorsByVendorTypeJobber('Purchase Agent')}"
-														var="agents">
-														<option value="${agents.id}">${agents.name}</option>
+														items="${sessionScope['ejb'].getAllVendorType()}"
+														var="vType">
+														<c:choose>
+															<c:when
+																test="${vType.type.equals('Vendor') || vType.type.equals('Purchase Agent')}">
+																<option value="${vType.id}">${vType.type}</option>
+															</c:when>
+														</c:choose>
 													</c:forEach>
 												</select>
-
-												<div>
-
-													<!-- <input type="radio" name="agntMoney" id="perProduct"
-														value="perPro">Commission Per product<br>
-														
-														<input type="radio"	name="agntMoney" id="totProduct" value="totPro">Commission on grand total
- -->
-												</div>
+											</div>
+											<div class="col-md-11">
+												&nbsp; &nbsp; &nbsp; <b class="font">Vendor Name :<font
+													color="red" size="4">*</font></b> <input type="text"
+													class="form-control" id="vName" name="vName"
+													required="required" onchange="emptyVender();"
+													autocomplete="off"><input type="hidden" id="vId"
+													name="vId">
 											</div>
 											<div class="col-md-1">
-
-												<b class="font">&nbsp;&nbsp; </b> <a
-													onclick="addAgentDetails()" title="Add New Agent."> <img
+												<b class="font">&nbsp;&nbsp; </b> <a onclick="addVendor()"
+													title="Add New Vendor."> <img
 													style="margin-top: 4px; cursor: pointer" height="30px"
 													width="30px" alt="" src="img/add.png">
 												</a>
 											</div>
 
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group">
-											<label for="" class="font">Vendor Bill no :<font
-												color="red" size="4">*</font></label> <input type="text"
-												placeholder="" id="vendorBillNo" class="form-control"
-												name="vendorBillNo" required="required">
-											<!-- onkeypress="return blockSpecialChar(event)" -->
-										</div>
-										<div class="form-group">
-											<label for="" class="font">Purchase challan no. :</label>
-											<c:set var="fy"
-												value="${sessionScope['ejb'].getCurrentFinancialYear()}" />
-											<c:set var="cno"
-												value="${sessionScope['ejb'].getLastPurchaseChallanNumberByCompany(compInfo.id)+1}" />
-											<c:set var="csuf"
-												value="${sessionScope['ejb'].getLastPurchaseChallanSuffixByCompany(compInfo.id)+1}" />
-											<c:set var="suf" value="PUR" />
-											<c:set var="bs"
-												value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompanyId(suf, compInfo.id)}" />
-											<fmt:formatNumber value="${cno}" var="lastChNo"
-												minIntegerDigits="4" groupingUsed="false" />
-											<fmt:formatNumber value="${csuf}" var="lastSuf"
-												minIntegerDigits="3" groupingUsed="false" />
-											<fmt:formatDate
-												value="${sessionScope['ejb'].getCurrentDateTime()}"
-												pattern="MM" var="yr" />
-											<input readonly="readonly" type="text" placeholder=""
-												name="challanNumber" class="form-control" id="chaId"
-												value="${bs.companyInitial}/${fy}/${yr}/${bs.billType}/${lastChNo}/${lastSuf}">
-											<input type="hidden" name="challanNo" value="${lastChNo}"
-												id="challanNo"> <input type="hidden"
-												name="challanSuffix" value="${lastSuf}">
-										</div>
-										<div class="form-group">
-											<label for="" class="font">Purchase Date :<font
-												color="red" size="4">*</font></label> <input type="text"
-												id="datepicker" class="form-control"
-												onchange="financialyr()" name="purchaseDate"
-												required="required" readonly="readonly">
-										</div>
-										<div class="form-group" id="aDetailDiv">
-											<label for="" class="font">Agent Details:</label>
-											<textarea rows="5" cols="" class="form-control"
-												readonly="readonly" id="agentDet" name="agentDet"></textarea>
-										</div>
-									</div>
+											<div class="col-md-12" style="margin-top: 15px;">
+												&nbsp; &nbsp; &nbsp; <b class="font">Vendor Details :</b>
+												<textarea rows="5" cols="" id="vDetail" class="form-control"
+													readonly="readonly"></textarea>
 
-									<div class="col-md-12" style="left: 10px;">
-										&nbsp;<input type="button" class="btn green pull-right"
-											data-toggle="modal" data-target="#addProduct"
-											value="Add Product" style="width: 100%" onclick="manage();">
-									</div>
-									<div class='toast' style='display: none'>
-										<h3 id="msg">${requestScope['msg']}</h3>
-									</div>
-								</div>
-
-								<table id="purProTable"
-									class="table table-striped table-bordered">
-									<thead style="background-color: #F0F0F0;">
-										<tr>
-											<th>#</th>
-											<th>Product Code</th>
-											<th>Product Description</th>
-											<th>Qty</th>
-											<th>UOM</th>
-											<th>Rate</th>
-											<th>Amount</th>
-											<th>Remove</th>
-										</tr>
-									</thead>
-								</table>
-
-								<div style="width: 40%; float: right;">
-									<table id="stream_table"
-										class="table table-striped table-bordered">
-										<thead>
-											<tr>
-												<td colspan="2">Sub Total:</td>
-												<td><input type="text" class="form-control"
-													id="subTotal" value="0" readonly="readonly" name="subTotal"></td>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td colspan="2">Discount &nbsp; <select name="disType"
-													id="disType" onchange="disTypeF();">
-														<option value="disFlat">Flat</option>
-														<option value="disPer">%</option>
-												</select>
-												</td>
-												<td><input type="text" value="0" class="form-control"
-													name="disValue" id="discount" placeholder=""
-													onkeyup="gtot();" autocomplete="off"></td>
-											</tr>
-										</tbody>
-
-										<tbody>
-											<tr>
-												<td colspan="2" id="disc">Discount Value:</td>
-												<td><input type="text" class="form-control"
-													readonly="readonly" id="discountValue" name="discountValue"
-													value="0"></td>
-											</tr>
-										</tbody>
-										<!-- <tbody style="display: none;"> -->
-										<tbody id="isEffectiveTR" style="display: none;">
-											<tr>
-												<td colspan="2">Agent Profit:</td>
-												<td>Is Effective On Return:&nbsp; <select
-													name="isEffective" id="isEffective">
-														<option value="efectiveYes" selected="selected">Yes</option>
-														<option value="efectiveNo">No</option>
-												</select>
-												</td>
-											</tr>
-										</tbody>
-										<tbody id="profitTypeTR" style="display: none;">
-											<tr>
-												<td colspan="2">Agent Profit: &nbsp; <select
-													name="profitType" id="profitType" onchange="profitTypeF();">
-														<option value="profitFlat">Flat</option>
-														<option value="profitPer">%</option>
-												</select>
-												</td>
-												<td><input type="text" value="0" class="form-control"
-													name="profitVal" id="profitVal" placeholder=""
-													onkeyup="gtot();" autocomplete="off"></td>
-											</tr>
-										</tbody>
-										<tbody id="profitValueTR" style="display: none;">
-											<tr>
-												<td colspan="2" id="disc">Agent Profit Value:</td>
-												<td><input type="text" class="form-control"
-													readonly="readonly" id="profitValue" name="profitValue"
-													value="0"></td>
-											</tr>
-										</tbody>
-										<tbody>
-											<tr>
-												<td><select class="form-control" id="taxGroup"
-													name="taxGroup" onchange="selectedTaxGroup();">
-														<option value="0">TAX type</option>
+											</div>
+											<div class="col-md-12">
+												<input type="checkbox" onclick="isAgentF();" id="agent"
+													name="agent" disabled="disabled">&nbsp;<span>Via
+													Agent</span>
+											</div>
+											<div class="col-md-12" id="aNameDiv">
+												<div class="col-md-11">
+													<label for="" class="font">Agent Name:<font
+														color="red" size="4">*</font></label>
+													<!-- <input
+															type="text" class="form-control" name="agentName"
+															id="agentName"> -->
+													<select class="form-control" id="agentName"
+														name="agentName" onchange="getAgentDetail();">
+														<option value="0">Select Agent name</option>
 														<c:forEach
-															items="${sessionScope['ejb'].getAllActiveTax_Type_Groups()}"
-															var="taxTypeGroup">
-															<option value="${taxTypeGroup.id}">${taxTypeGroup.name}</option>
+															items="${sessionScope['ejb'].getVendorsByVendorTypeJobber('Purchase Agent')}"
+															var="agents">
+															<option value="${agents.id}">${agents.name}</option>
 														</c:forEach>
-												</select></td>
-												<td>%</td>
-												<td><input type="text" class="form-control"
-													readonly="readonly" value="0" id="taxTot"></td>
-											</tr>
-										</tbody>
-										<tbody>
+													</select>
+
+													<div>
+
+														<!-- <input type="radio" name="agntMoney" id="perProduct"
+														value="perPro">Commission Per product<br>
+														
+														<input type="radio"	name="agntMoney" id="totProduct" value="totPro">Commission on grand total
+ -->
+													</div>
+												</div>
+												<div class="col-md-1">
+
+													<b class="font">&nbsp;&nbsp; </b> <a
+														onclick="addAgentDetails()" title="Add New Agent."> <img
+														style="margin-top: 4px; cursor: pointer" height="30px"
+														width="30px" alt="" src="img/add.png">
+													</a>
+												</div>
+
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label for="" class="font">Vendor Bill no :<font
+													color="red" size="4">*</font></label> <input type="text"
+													placeholder="" id="vendorBillNo" class="form-control"
+													name="vendorBillNo" required="required">
+												<!-- onkeypress="return blockSpecialChar(event)" -->
+											</div>
+											<div class="form-group">
+												<label for="" class="font">Purchase challan no. :</label>
+												<c:set var="fy"
+													value="${sessionScope['ejb'].getCurrentFinancialYear()}" />
+												<c:set var="cno"
+													value="${sessionScope['ejb'].getLastPurchaseChallanNumberByCompany(compInfo.id)+1}" />
+												<c:set var="csuf"
+													value="${sessionScope['ejb'].getLastPurchaseChallanSuffixByCompany(compInfo.id)+1}" />
+												<c:set var="suf" value="PUR" />
+												<c:set var="bs"
+													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompanyId(suf, compInfo.id)}" />
+												<fmt:formatNumber value="${cno}" var="lastChNo"
+													minIntegerDigits="4" groupingUsed="false" />
+												<fmt:formatNumber value="${csuf}" var="lastSuf"
+													minIntegerDigits="3" groupingUsed="false" />
+												<fmt:formatDate
+													value="${sessionScope['ejb'].getCurrentDateTime()}"
+													pattern="MM" var="yr" />
+												<input readonly="readonly" type="text" placeholder=""
+													name="challanNumber" class="form-control" id="chaId"
+													value="${bs.companyInitial}/${fy}/${yr}/${bs.billType}/${lastChNo}/${lastSuf}">
+												<input type="hidden" name="challanNo" value="${lastChNo}"
+													id="challanNo"> <input type="hidden"
+													name="challanSuffix" value="${lastSuf}">
+											</div>
+											<div class="form-group">
+												<label for="" class="font">Purchase Date :<font
+													color="red" size="4">*</font></label> <input type="text"
+													id="datepicker" class="form-control"
+													onchange="financialyr()" name="purchaseDate"
+													required="required" readonly="readonly">
+											</div>
+											<div class="form-group" id="aDetailDiv">
+												<label for="" class="font">Agent Details:</label>
+												<textarea rows="5" cols="" class="form-control"
+													readonly="readonly" id="agentDet" name="agentDet"></textarea>
+											</div>
+										</div>
+
+										<div class="col-md-12" style="left: 10px;">
+											&nbsp;<input type="button" class="btn green pull-right"
+												data-toggle="modal" data-target="#addProduct"
+												value="Add Product" style="width: 100%" onclick="manage();">
+										</div>
+										<div class='toast' style='display: none'>
+											<h3 id="msg">${requestScope['msg']}</h3>
+										</div>
+									</div>
+
+									<table id="purProTable"
+										class="table table-striped table-bordered">
+										<thead style="background-color: #F0F0F0;">
 											<tr>
-												<td colspan="2">Tax Amount :</td>
-												<td><input type="text" class="form-control"
-													readonly="readonly" value="0" id="taxAmount"
-													name="taxAmount"></td>
-											</tr>
-										</tbody>
-										<tbody>
-											<tr>
-												<td colspan="2">Transport charge :</td>
-												<td><input type="text" class="form-control"
-													name="transportCost" id="transportCost" onkeyup="gtot();"
-													value="0" autocomplete="off" onchange="decimalFixF();"></td>
-											</tr>
-										</tbody>
-										<tbody>
-											<tr>
-												<td colspan="2">Surcharge :</td>
-												<td><input type="text" class="form-control"
-													id="surcharge" name="surcharge" onkeyup="gtot();" value="0"
-													autocomplete="off" onchange="decimalFixF();"></td>
-											</tr>
-										</tbody>
-										<tbody>
-											<tr>
-												<td colspan="2" id="round">Round Of :</td>
-												<td><input type="hidden" id="totalvalue"
-													name="totalvalue" value="0"><input type="number"
-													class="form-control" placeholder="" readonly="readonly"
-													id="roundvalue" name="roundvalue" value="0"></td>
-											</tr>
-										</tbody>
-										<thead>
-											<tr>
-												<td colspan="2">Grand Total :</td>
-												<td><input type="text" class="form-control" id="gt"
-													placeholder="0" readonly="readonly"></td>
+												<th>#</th>
+												<th>Product Code</th>
+												<th>Product Description</th>
+												<th>Qty</th>
+												<th>UOM</th>
+												<th>Rate</th>
+												<th>Amount</th>
+												<th>Remove</th>
 											</tr>
 										</thead>
 									</table>
-									<div class="widget-area" style="display: none;">
-										<!-- <div class="widget-area" style="overflow-x: scroll;"> -->
-										<table id="hiddenTable"
+
+									<div style="width: 40%; float: right;">
+										<table id="stream_table"
 											class="table table-striped table-bordered">
-											<thead style="background-color: #F0F0F0;">
+											<thead>
 												<tr>
-													<th>Designer Number id</th>
-													<th>Attribute1</th>
-													<th>Atribute2</th>
-													<th>Atribute3</th>
-													<th>Atribute4</th>
-													<th>Atribute5</th>
-													<th>Atribute6</th>
-													<th>Quantity</th>
-													<th>UOM</th>
-													<th>Rate</th>
-													<th>WSP</th>
-													<th>MRP</th>
-													<th>Lot no.</th>
-													<th>Initial Serial</th>
+													<td colspan="2">Sub Total:</td>
+													<td><input type="text" class="form-control"
+														id="subTotal" value="0" readonly="readonly"
+														name="subTotal"></td>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td colspan="2">Discount &nbsp; <select name="disType"
+														id="disType" onchange="disTypeF();">
+															<option value="disFlat">Flat</option>
+															<option value="disPer">%</option>
+													</select>
+													</td>
+													<td><input type="text" value="0" class="form-control"
+														name="disValue" id="discount" placeholder=""
+														onkeyup="gtot();" autocomplete="off"></td>
+												</tr>
+											</tbody>
+
+											<tbody>
+												<tr>
+													<td colspan="2" id="disc">Discount Value:</td>
+													<td><input type="text" class="form-control"
+														readonly="readonly" id="discountValue"
+														name="discountValue" value="0"></td>
+												</tr>
+											</tbody>
+											<!-- <tbody style="display: none;"> -->
+											<tbody id="isEffectiveTR" style="display: none;">
+												<tr>
+													<td colspan="2">Agent Profit:</td>
+													<td>Is Effective On Return:&nbsp; <select
+														name="isEffective" id="isEffective">
+															<option value="efectiveYes" selected="selected">Yes</option>
+															<option value="efectiveNo">No</option>
+													</select>
+													</td>
+												</tr>
+											</tbody>
+											<tbody id="profitTypeTR" style="display: none;">
+												<tr>
+													<td colspan="2">Agent Profit: &nbsp; <select
+														name="profitType" id="profitType"
+														onchange="profitTypeF();">
+															<option value="profitFlat">Flat</option>
+															<option value="profitPer">%</option>
+													</select>
+													</td>
+													<td><input type="text" value="0" class="form-control"
+														name="profitVal" id="profitVal" placeholder=""
+														onkeyup="gtot();" autocomplete="off"></td>
+												</tr>
+											</tbody>
+											<tbody id="profitValueTR" style="display: none;">
+												<tr>
+													<td colspan="2" id="disc">Agent Profit Value:</td>
+													<td><input type="text" class="form-control"
+														readonly="readonly" id="profitValue" name="profitValue"
+														value="0"></td>
+												</tr>
+											</tbody>
+											<tbody>
+												<tr>
+													<td><select class="form-control" id="taxGroup"
+														name="taxGroup" onchange="selectedTaxGroup();">
+															<option value="0">TAX type</option>
+															<c:forEach
+																items="${sessionScope['ejb'].getAllActiveTax_Type_Groups()}"
+																var="taxTypeGroup">
+																<option value="${taxTypeGroup.id}">${taxTypeGroup.name}</option>
+															</c:forEach>
+													</select></td>
+													<td>%</td>
+													<td><input type="text" class="form-control"
+														readonly="readonly" value="0" id="taxTot"></td>
+												</tr>
+											</tbody>
+											<tbody>
+												<tr>
+													<td colspan="2">Tax Amount :</td>
+													<td><input type="text" class="form-control"
+														readonly="readonly" value="0" id="taxAmount"
+														name="taxAmount"></td>
+												</tr>
+											</tbody>
+											<tbody>
+												<tr>
+													<td colspan="2">Transport charge :</td>
+													<td><input type="text" class="form-control"
+														name="transportCost" id="transportCost" onkeyup="gtot();"
+														value="0" autocomplete="off" onchange="decimalFixF();"></td>
+												</tr>
+											</tbody>
+											<tbody>
+												<tr>
+													<td colspan="2">Surcharge :</td>
+													<td><input type="text" class="form-control"
+														id="surcharge" name="surcharge" onkeyup="gtot();"
+														value="0" autocomplete="off" onchange="decimalFixF();"></td>
+												</tr>
+											</tbody>
+											<tbody>
+												<tr>
+													<td colspan="2" id="round">Round Of :</td>
+													<td><input type="hidden" id="totalvalue"
+														name="totalvalue" value="0"><input type="number"
+														class="form-control" placeholder="" readonly="readonly"
+														id="roundvalue" name="roundvalue" value="0"></td>
+												</tr>
+											</tbody>
+											<thead>
+												<tr>
+													<td colspan="2">Grand Total :</td>
+													<td><input type="text" class="form-control" id="gt"
+														placeholder="0" readonly="readonly"></td>
 												</tr>
 											</thead>
 										</table>
-									</div>
-									<div class="row">
-										<div style="float: left;">
-											&nbsp; &nbsp; <span><b>Print Barcode :</b> &nbsp; </span> <input
-												type="radio" name="bar" value="yesBar">&nbsp; Yes <input
-												type="radio" name="bar" value="noBar" checked="checked">&nbsp;
-											No
+										<div class="widget-area" style="display: none;">
+											<!-- <div class="widget-area" style="overflow-x: scroll;"> -->
+											<table id="hiddenTable"
+												class="table table-striped table-bordered">
+												<thead style="background-color: #F0F0F0;">
+													<tr>
+														<th>Designer Number id</th>
+														<th>Attribute1</th>
+														<th>Atribute2</th>
+														<th>Atribute3</th>
+														<th>Atribute4</th>
+														<th>Atribute5</th>
+														<th>Atribute6</th>
+														<th>Quantity</th>
+														<th>UOM</th>
+														<th>Rate</th>
+														<th>WSP</th>
+														<th>MRP</th>
+														<th>Lot no.</th>
+														<th>Initial Serial</th>
+													</tr>
+												</thead>
+											</table>
 										</div>
-										<div style="float: right;">
-											<input type="button" class="btn green pull-right"
-												data-toggle="modal" value="Save" onclick="paymentDate();">
-											<input type="button" onclick="cancelF();"
-												class="btn btn-danger small" value="Cancel">
+										<div class="row">
+											<div style="float: left;">
+												&nbsp; &nbsp; <span><b>Print Barcode :</b> &nbsp; </span> <input
+													type="radio" name="bar" value="yesBar">&nbsp; Yes <input
+													type="radio" name="bar" value="noBar" checked="checked">&nbsp;
+												No
+											</div>
+											<div style="float: right;">
+												<input type="button" class="btn green pull-right"
+													data-toggle="modal" value="Save" onclick="paymentDate();">
+												<input type="button" onclick="cancelF();"
+													class="btn btn-danger small" value="Cancel">
+											</div>
 										</div>
-									</div>
-									<div id="savePurchase" class="modal fade" role="dialog"
-										style="top: 25px;">
-										<div class="modal-dialog modal-lg">
-											<div class="modal-content">
-												<div class="modal-header">
-													<button type="button" class="close" data-dismiss="modal"
-														onclick="closePayment();">&times;</button>
-													<h4 class="modal-title">Payment Details</h4>
-												</div>
-												<div class="modal-body">
-													<div class="row">
-														<div class="col-md-6">
-															<div class="widget-area">
-																<div class="breadcrumbs">
-																	<ul>
-																		<li><a title="">Select Payment status : </a></li>
-																	</ul>
-																</div>
-																<br> <br> <br>
-																<div class="row">
-																	<div class="col-md-5">
-																		Payment status :<font color="red" size="4">*</font>
-																	</div>
-																	<div class="col-md-7">
-																		<div class="sec">
-
-																			<select class="form-control" id="pstatus"
-																				name="pstatus" onchange="pStatusDiv()">
-																				<option value="-" selected="selected">---</option>
-																				<c:forEach
-																					items="${sessionScope['ejb'].getAllPaymentStatus()}"
-																					var="payStatus">
-																					<option value="${payStatus.status}">${payStatus.status}</option>
-																				</c:forEach>
-																			</select>
-																		</div>
-																	</div>
-																</div>
-																<div id="payDetail">
+										<div id="savePurchase" class="modal fade" role="dialog"
+											style="top: 25px;">
+											<div class="modal-dialog modal-lg">
+												<div class="modal-content">
+													<div class="modal-header">
+														<button type="button" class="close" data-dismiss="modal"
+															onclick="closePayment();">&times;</button>
+														<h4 class="modal-title">Payment Details</h4>
+													</div>
+													<div class="modal-body">
+														<div class="row">
+															<div class="col-md-6">
+																<div class="widget-area">
 																	<div class="breadcrumbs">
 																		<ul>
-																			<li><a title="">Payment Details : </a></li>
+																			<li><a title="">Select Payment status : </a></li>
 																		</ul>
 																	</div>
 																	<br> <br> <br>
 																	<div class="row">
-																		<div class="sec" id="pTypeDiv">
-																			<div class="col-md-5">
-																				Payment type :<font color="red" size="4">*</font>
-																			</div>
-																			<div class="col-md-7">
-																				<select class="form-control" id="pType" name="pType"
-																					onchange="pTypeFunc()">
+																		<div class="col-md-5">
+																			Payment status :<font color="red" size="4">*</font>
+																		</div>
+																		<div class="col-md-7">
+																			<div class="sec">
+
+																				<select class="form-control" id="pstatus"
+																					name="pstatus" onchange="pStatusDiv()">
 																					<option value="-" selected="selected">---</option>
 																					<c:forEach
-																						items="${sessionScope['ejb'].getAllPaymentType()}"
-																						var="payType">
-																						<c:if
-																							test="${payType.getType()!='Debit Note' && payType.getType()!='Credit Note'}">
-																							<option value="${payType.getType()}">${payType.getType()}</option>
-																						</c:if>
+																						items="${sessionScope['ejb'].getAllPaymentStatus()}"
+																						var="payStatus">
+																						<option value="${payStatus.status}">${payStatus.status}</option>
 																					</c:forEach>
 																				</select>
 																			</div>
 																		</div>
-																		<div id="pDate">
-																			<div class="col-md-5">Payment Date :</div>
-																			<div class="col-md-7">
-																				<input type="text" id="datepicker2"
-																					class="form-control" readonly="readonly"
-																					name="payDate">
-																			</div>
+																	</div>
+																	<div id="payDetail">
+																		<div class="breadcrumbs">
+																			<ul>
+																				<li><a title="">Payment Details : </a></li>
+																			</ul>
 																		</div>
-																		<div id="pAmount">
-																			<div class="col-md-5">Full Amount :</div>
-																			<div class="col-md-7">
-																				<input type="text" class="form-control"
-																					readonly="readonly" id="spAmount" name="spAmount">
-																			</div>
-																		</div>
-																		<div id="pPayAmount">
-																			<div class="col-md-5">
-																				Payment Amount :<font color="red" size="4">*</font>
-																			</div>
-																			<div class="col-md-7">
-																				<input type="text" class="form-control" value="0"
-																					id="spPaymentAmount" name="spPaymentAmount"
-																					onkeyup="spPaymentAmountFunc();" autocomplete="off"
-																					onchange="spPaymentAmountDecimalFixF();">
-																			</div>
-																		</div>
-																		<div id="pDueAmount">
-																			<div class="col-md-5">Due Amount :</div>
-																			<div class="col-md-7">
-																				<input type="text" class="form-control"
-																					readonly="readonly" id="spDueAmount"
-																					name="spDueAmount">
-																			</div>
-																		</div>
-																		<div id="AMi2">
-																			<div>
-																				<div class="col-md-5">Current Credit Note :</div>
-																				<div class="col-md-7">
-																					<input type="text" id="totalCredit"
-																						name="totalCredit" class="form-control"
-																						readonly="readonly" value="0">
-																				</div>
-																			</div>
-																			<div>
+																		<br> <br> <br>
+																		<div class="row">
+																			<div class="sec" id="pTypeDiv">
 																				<div class="col-md-5">
-																					<span id="dORc">Final Credit Note :</span>
+																					Payment type :<font color="red" size="4">*</font>
 																				</div>
+																				<div class="col-md-7">
+																					<select class="form-control" id="pType"
+																						name="pType" onchange="pTypeFunc()">
+																						<option value="-" selected="selected">---</option>
+																						<c:forEach
+																							items="${sessionScope['ejb'].getAllPaymentType()}"
+																							var="payType">
+																							<c:if
+																								test="${payType.getType()!='Debit Note' && payType.getType()!='Credit Note'}">
+																								<option value="${payType.getType()}">${payType.getType()}</option>
+																							</c:if>
+																						</c:forEach>
+																					</select>
+																				</div>
+																			</div>
+																			<div id="pDate">
+																				<div class="col-md-5">Payment Date :</div>
+																				<div class="col-md-7">
+																					<input type="text" id="datepicker2"
+																						class="form-control" readonly="readonly"
+																						name="payDate">
+																				</div>
+																			</div>
+																			<div id="pAmount">
+																				<div class="col-md-5">Full Amount :</div>
 																				<div class="col-md-7">
 																					<input type="text" class="form-control"
-																						id="finalDC" name="finalDC" readonly="readonly"
-																						value="0">
+																						readonly="readonly" id="spAmount" name="spAmount">
+																				</div>
+																			</div>
+																			<div id="pPayAmount">
+																				<div class="col-md-5">
+																					Payment Amount :<font color="red" size="4">*</font>
+																				</div>
+																				<div class="col-md-7">
+																					<input type="text" class="form-control" value="0"
+																						id="spPaymentAmount" name="spPaymentAmount"
+																						onkeyup="spPaymentAmountFunc();"
+																						autocomplete="off"
+																						onchange="spPaymentAmountDecimalFixF();">
+																				</div>
+																			</div>
+																			<div id="pDueAmount">
+																				<div class="col-md-5">Due Amount :</div>
+																				<div class="col-md-7">
+																					<input type="text" class="form-control"
+																						readonly="readonly" id="spDueAmount"
+																						name="spDueAmount">
+																				</div>
+																			</div>
+																			<div id="AMi2">
+																				<div>
+																					<div class="col-md-5">Current Credit Note :</div>
+																					<div class="col-md-7">
+																						<input type="text" id="totalCredit"
+																							name="totalCredit" class="form-control"
+																							readonly="readonly" value="0">
+																					</div>
+																				</div>
+																				<div>
+																					<div class="col-md-5">
+																						<span id="dORc">Final Credit Note :</span>
+																					</div>
+																					<div class="col-md-7">
+																						<input type="text" class="form-control"
+																							id="finalDC" name="finalDC" readonly="readonly"
+																							value="0">
+																					</div>
 																				</div>
 																			</div>
 																		</div>
 																	</div>
 																</div>
 															</div>
-														</div>
 
-														<div class="col-md-6" style="float: right;"
-															id="description">
-															<div class="widget-area">
-																<div class="breadcrumbs">
-																	<ul>
-																		<li><a title="">Provide Description : </a></li>
-																	</ul>
-																</div>
-																<br> <br> <br>
-																<div class="row">
-																	<div class="col-md-5">Description :</div>
-																	<div class="col-md-7">
-																		<textarea rows="" cols="" class="form-control"
-																			id="desc" name="desc"></textarea>
+															<div class="col-md-6" style="float: right;"
+																id="description">
+																<div class="widget-area">
+																	<div class="breadcrumbs">
+																		<ul>
+																			<li><a title="">Provide Description : </a></li>
+																		</ul>
 																	</div>
-																</div>
-																<br>
-																<div class="breadcrumbs">
-																	<button type="button" class="btn green pull-right"
-																		onclick="submit();">Save</button>
+																	<br> <br> <br>
+																	<div class="row">
+																		<div class="col-md-5">Description :</div>
+																		<div class="col-md-7">
+																			<textarea rows="" cols="" class="form-control"
+																				id="desc" name="desc"></textarea>
+																		</div>
+																	</div>
+																	<br>
+																	<div class="breadcrumbs">
+																		<button type="button" class="btn green pull-right"
+																			onclick="submit();">Save</button>
+																	</div>
 																</div>
 															</div>
 														</div>
 													</div>
-												</div>
-												<div class="modal-footer">
-													<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+													<div class="modal-footer">
+														<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-								<input type="hidden" name="isSalable" id="isSalable"> <input
-									type="hidden" name="isBarPrint" id="isBarPrint"> <input
-									type="hidden" name="isAgent" id="isAgent">
-							</form>
+									<input type="hidden" name="isSalable" id="isSalable"> <input
+										type="hidden" name="isBarPrint" id="isBarPrint"> <input
+										type="hidden" name="isAgent" id="isAgent">
+								</form>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<!-- Content Sec -->
+		<!-- Content Sec -->
 	</div>
 
 	<div id="addV" class="modal fade" role="dialog" style="top: 25px;">

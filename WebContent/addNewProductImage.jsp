@@ -57,115 +57,118 @@
 		</c:if>
 	</c:if>
 	<div class="main" style="height: 664px;">
-		<%@include file="includeLeftOrTop.jsp"%>
-		<div class="content-sec"
-			style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
-			<div class="container">
-				<div class="row">
-					<div class="masonary-grids">
+		<%@include file="includeHeader.jsp"%>
+		<div class="page-container menu-left" style="height: 100%;">
+			<%@include file="includeSidebar.jsp"%>
+			<div class="content-sec"
+				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
+				<div class="container">
+					<div class="row">
+						<div class="masonary-grids">
 
-						<div class="breadcrumbs" style="height: 50px; text-align: center;">
-							<h3 style="margin-top: 11px;">Upload Multiple product Image</h3>
-						</div>
+							<div class="breadcrumbs"
+								style="height: 50px; text-align: center;">
+								<h3 style="margin-top: 11px;">Upload Multiple product Image</h3>
+							</div>
 
-						<div class="widget-area">
-							<div class="col-md-12">
-								<div align="center">
-									<form action="uploadProductImage" enctype="multipart/form-data"
-										method="post">
-										<input type="hidden" value="${param.id}" name="id"> <input
-											type="hidden" name="proImage1" id="proImage1" value="">
+							<div class="widget-area">
+								<div class="col-md-12">
+									<div align="center">
+										<form action="uploadProductImage"
+											enctype="multipart/form-data" method="post">
+											<input type="hidden" value="${param.id}" name="id"> <input
+												type="hidden" name="proImage1" id="proImage1" value="">
 
 
-										<div style="width: 100%; float: left;">
+											<div style="width: 100%; float: left;">
 
-											<!-- Choose -->
-											<div style="width: 40%; float: left; height: 262px;">
-												<div align="left">
+												<!-- Choose -->
+												<div style="width: 40%; float: left; height: 262px;">
+													<div align="left">
 
-													<h5>Upload From Computer</h5>
-													<br>
-													<center>
-														<input type="file" name="proImg" size="20"
-															onchange="readURL(this);">
-													</center>
+														<h5>Upload From Computer</h5>
+														<br>
+														<center>
+															<input type="file" name="proImg" size="20"
+																onchange="readURL(this);">
+														</center>
+													</div>
 												</div>
+
+												<div style="width: 20%; float: left;"></div>
+
+												<!-- Sanp -->
+												<div style="width: 40%; float: right;">
+													<div align="right">
+														<h5>Upload From Web Camp</h5>
+														<br>
+														<center>
+															<a href="javascript:void(take_snapshot())">
+
+																<button class="btn blue btn-default" type="button">Take
+																	Snapshot</button>
+															</a>
+														</center>
+
+														<div id="my_camera" style="width: 320px; height: 240px;"></div>
+													</div>
+												</div>
+
+
+
+
+
 											</div>
 
-											<div style="width: 20%; float: left;"></div>
 
-											<!-- Sanp -->
-											<div style="width: 40%; float: right;">
-												<div align="right">
-													<h5>Upload From Web Camp</h5>
-													<br>
-													<center>
-														<a href="javascript:void(take_snapshot())">
 
-															<button class="btn blue btn-default" type="button">Take
-																Snapshot</button>
-														</a>
-													</center>
-
-													<div id="my_camera" style="width: 320px; height: 240px;"></div>
-												</div>
+											<!-- Show -->
+											<div style="width: 50%; height: 100px; margin-top: 27px;">
+												<img id="image" alt="" src="">
 											</div>
 
 
 
-
-
-										</div>
-
-
-
-										<!-- Show -->
-										<div style="width: 50%; height: 100px; margin-top: 27px;">
-											<img id="image" alt="" src="">
-										</div>
-
-
-
-										<!-- submit -->
-										<div>
-											<input style="margin-top: 10%;" class="btn green btn-default"
-												type="submit" value="Save">
-										</div>
-									</form>
-									<br> <br> <br>
-									<div
-										style="overflow-y: scroll; overflow-x: hidden; height: 300px">
+											<!-- submit -->
+											<div>
+												<input style="margin-top: 10%;"
+													class="btn green btn-default" type="submit" value="Save">
+											</div>
+										</form>
+										<br> <br> <br>
 										<div
-											style="overflow-x: scroll; overflow-y: hidden; width: 500px;">
-											<c:forEach
-												items="${sessionScope['ejb'].getAllProductImageByProductId(param.id)}"
-												var="img">
-												<div style="float: left;">
-													<img width="100" height="100" style="" alt=""
-														src="data:image/jpeg;base64,${img.getImageAsString()}"><br>
-													<c:if
-														test="${sessionScope['ejb'].getAllProductImageByProductId(param.id).size()>1}">
-														<a
-															href="deleteProductImage?imageId=${img.id}&id=${param.id}">delete
-															Image</a>
-													</c:if>
-												</div>
-											</c:forEach>
+											style="overflow-y: scroll; overflow-x: hidden; height: 300px">
+											<div
+												style="overflow-x: scroll; overflow-y: hidden; width: 500px;">
+												<c:forEach
+													items="${sessionScope['ejb'].getAllProductImageByProductId(param.id)}"
+													var="img">
+													<div style="float: left;">
+														<img width="100" height="100" style="" alt=""
+															src="data:image/jpeg;base64,${img.getImageAsString()}"><br>
+														<c:if
+															test="${sessionScope['ejb'].getAllProductImageByProductId(param.id).size()>1}">
+															<a
+																href="deleteProductImage?imageId=${img.id}&id=${param.id}">delete
+																Image</a>
+														</c:if>
+													</div>
+												</c:forEach>
+											</div>
+										</div>
+										<div align="right">
+											<a href="MaterialPartDetailsGenerals.jsp"><button
+													class="btn blue btn-default" type="button">Back</button></a>
 										</div>
 									</div>
-									<div align="right">
-										<a href="MaterialPartDetailsGenerals.jsp"><button
-												class="btn blue btn-default" type="button">Back</button></a>
-									</div>
-								</div>
 
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 
 

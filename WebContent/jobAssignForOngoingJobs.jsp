@@ -122,209 +122,212 @@
 		</script>
 	</c:if>
 	<div class="main" style="height: 664px;">
-		<%@include file="includeLeftOrTop.jsp"%>
-		<div class="content-sec"
-			style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
-			<div class="container">
-				<div class="row">
-					<div class="masonary-grids">
+		<%@include file="includeHeader.jsp"%>
+		<div class="page-container menu-left" style="height: 100%;">
+			<%@include file="includeSidebar.jsp"%>
+			<div class="content-sec"
+				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
+				<div class="container">
+					<div class="row">
+						<div class="masonary-grids">
 
-						<div class="breadcrumbs" style="height: 50px; text-align: center;">
-							<h3 style="margin-top: 11px;">Job Assignment For Ongoing
-								Jobs</h3>
-						</div>
+							<div class="breadcrumbs"
+								style="height: 50px; text-align: center;">
+								<h3 style="margin-top: 11px;">Job Assignment For Ongoing
+									Jobs</h3>
+							</div>
 
-						<!-- <div class="widget-area"> -->
+							<!-- <div class="widget-area"> -->
 
 
-						<div class="col-md-12">
-							<form role="form" class="sec" method="post"
-								id="jobAssignmentForOngoingJob"
-								action="jobAssignmentForOngoingJobs">
-								<div class="widget-area">
-									<div class="col-md-6">
-										<div class="col-md-12"></div>
-										<div class="col-md-12">
-											<b class="font">Jobber Name :<font color="red" size="4">*</font></b>
-											<input type="text" class="form-control" id="jId" name="jId"
-												onchange="emptyForm();" autocomplete="off"> <input
-												type="hidden" id="jName" name="jName">
+							<div class="col-md-12">
+								<form role="form" class="sec" method="post"
+									id="jobAssignmentForOngoingJob"
+									action="jobAssignmentForOngoingJobs">
+									<div class="widget-area">
+										<div class="col-md-6">
+											<div class="col-md-12"></div>
+											<div class="col-md-12">
+												<b class="font">Jobber Name :<font color="red" size="4">*</font></b>
+												<input type="text" class="form-control" id="jId" name="jId"
+													onchange="emptyForm();" autocomplete="off"> <input
+													type="hidden" id="jName" name="jName">
+											</div>
+											<div class="col-md-12">
+												&nbsp; &nbsp; &nbsp; <b class="font">Jobber Details :<font
+													color="red" size="4">*</font></b>
+												<textarea rows="5" cols="" id="jDetail" class="form-control"
+													readonly="readonly"></textarea>
+											</div>
+											<div class="col-md-12" style="margin-bottom: 5px;"></div>
+											<div class="col-md-12">
+												<b class="font">Sample Quantity :</b> <input readonly="readonly" type="text"
+													class="form-control" id="sampleQty" name="sampleQty">
+											</div>
 										</div>
-										<div class="col-md-12">
-											&nbsp; &nbsp; &nbsp; <b class="font">Jobber Details :<font
-												color="red" size="4">*</font></b>
-											<textarea rows="5" cols="" id="jDetail" class="form-control"
-												readonly="readonly"></textarea>
-										</div>
-										<div class="col-md-12" style="margin-bottom: 5px;"></div>
-										<div class="col-md-12">
-											<b class="font">Sample Quantity :</b> <input
-												readonly="readonly" type="text" class="form-control"
-												id="sampleQty" name="sampleQty">
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group">
-											<label for="" class="font">Job Challan no :</label>
-											<!-- <input
+										<div class="col-md-6">
+											<div class="form-group">
+												<label for="" class="font">Job Challan no :</label>
+												<!-- <input
 														type="text" placeholder="" id="jobChallanNo"
 														class="form-control" name="jobChallanNo"> -->
-											<c:set var="fy"
-												value="${sessionScope['ejb'].getCurrentFinancialYear()}" />
-											<c:set var="cno"
-												value="${sessionScope['ejb'].getLastJobChallanNumber()+1}" />
-											<c:set var="csuf"
-												value="${sessionScope['ejb'].getLastJobChallanSuffix()+1}" />
-											<c:set var="suf" value="JOB" />
-											<c:set var="bs"
-												value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompany(suf)}" />
-											<fmt:formatNumber value="${cno}" var="lastChNo"
-												minIntegerDigits="4" groupingUsed="false" />
-											<fmt:formatNumber value="${csuf}" var="lastSuf"
-												minIntegerDigits="3" groupingUsed="false" />
-											<fmt:formatDate
-												value="${sessionScope['ejb'].getCurrentDateTime()}"
-												pattern="MM" var="yr" />
-											<input readonly="readonly" type="text" placeholder=""
-												name="jobChallanNo" id="jobChallanNo" class="form-control"
-												value="${bs.companyInitial}/${fy}/${yr}/${bs.billType}/${lastChNo}/${lastSuf}">
-											<input type="hidden" name="challanNo" value="${lastChNo}"
-												id="challanNo"> <input type="hidden"
-												name="challanSuffix" value="${lastSuf}">
-										</div>
-										<div class="form-group">
-											<label for="" class="font">Asigned Date :<font
-												color="red" size="4">*</font></label> <input type="text"
-												class="form-control" name="assignedDate" required="required"
-												id="datepicker" readonly="readonly">
-										</div>
+												<c:set var="fy"
+													value="${sessionScope['ejb'].getCurrentFinancialYear()}" />
+												<c:set var="cno"
+													value="${sessionScope['ejb'].getLastJobChallanNumber()+1}" />
+												<c:set var="csuf"
+													value="${sessionScope['ejb'].getLastJobChallanSuffix()+1}" />
+												<c:set var="suf" value="JOB" />
+												<c:set var="bs"
+													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompany(suf)}" />
+												<fmt:formatNumber value="${cno}" var="lastChNo"
+													minIntegerDigits="4" groupingUsed="false" />
+												<fmt:formatNumber value="${csuf}" var="lastSuf"
+													minIntegerDigits="3" groupingUsed="false" />
+												<fmt:formatDate
+													value="${sessionScope['ejb'].getCurrentDateTime()}"
+													pattern="MM" var="yr" />
+												<input readonly="readonly" type="text" placeholder=""
+													name="jobChallanNo" id="jobChallanNo" class="form-control"
+													value="${bs.companyInitial}/${fy}/${yr}/${bs.billType}/${lastChNo}/${lastSuf}">
+												<input type="hidden" name="challanNo" value="${lastChNo}"
+													id="challanNo"> <input type="hidden"
+													name="challanSuffix" value="${lastSuf}">
+											</div>
+											<div class="form-group">
+												<label for="" class="font">Asigned Date :<font
+													color="red" size="4">*</font></label> <input type="text"
+													class="form-control" name="assignedDate"
+													required="required" id="datepicker" readonly="readonly">
+											</div>
 
-										<div class="form-group">
-											<label for="" class="font">Design No. :<font
-												color="red" size="4">*</font></label> <input type="text"
-												class="form-control" name="dNo" required="required" id="dNo"
-												autocomplete="off"> <input type="hidden" id="dId"
-												name="dId"> <input type="hidden" id="dNoCheck"
-												name="dNoCheck">
-										</div>
+											<div class="form-group">
+												<label for="" class="font">Design No. :<font
+													color="red" size="4">*</font></label> <input type="text"
+													class="form-control" name="dNo" required="required"
+													id="dNo" autocomplete="off"> <input type="hidden"
+													id="dId" name="dId"> <input type="hidden"
+													id="dNoCheck" name="dNoCheck">
+											</div>
 
-										<!-- <div class="form-group">
+											<!-- <div class="form-group">
 												<label for="" class="font">Qty :</label> <input
 													type="number" class="form-control" name="qty"
 													required="required" id="qty" onkeyup="qtyF();"
 													onchange="qtyFC();">
 											</div> -->
 
-										<div class="form-group">
-											<label for="" class="font">Plan No. :</label> <input
-												readonly="readonly" type="text" class="form-control"
-												value="" name="planNo" id="planNo">
-										</div>
+											<div class="form-group">
+												<label for="" class="font">Plan No. :</label> <input
+													readonly="readonly" type="text" class="form-control"
+													value="" name="planNo" id="planNo">
+											</div>
 
-										<!-- <br> <input type="button" class="btn green pull-right"
+											<!-- <br> <input type="button" class="btn green pull-right"
 												data-toggle="modal" data-target="#addProduct"
 												value="Add Product" style="width: 100%"> -->
-									</div>
-									<div class='toast' style='display: none'>
-										<h3 id="msg">${requestScope['msg']}</h3>
-									</div>
-								</div>
-
-								<div id="productNjobsDiv">
-									<input type="hidden" id="orItem">
-								</div>
-
-								<table id="productNjobsTable"
-									class="table table-striped table-bordered">
-									<thead style="background-color: #F0F0F0;">
-										<tr>
-											<th style="text-align: right;">Product code :</th>
-											<td>---</td>
-											<th style="text-align: right;">Description :</th>
-											<td>---</td>
-											<th style="text-align: right;">Quantity :</th>
-											<td>code</td>
-											<th style="text-align: right;">Total Amount :</th>
-											<td>---</td>
-										</tr>
-										<tr>
-											<th>#</th>
-											<th>Job</th>
-											<th>Sample Rate</th>
-											<th>Present Rate</th>
-											<th>Qty</th>
-											<th>UOM</th>
-											<th>Amount</th>
-											<th>Estimated Submission Date</th>
-										</tr>
-									</thead>
-								</table>
-								<br>
-								<div class="row">
-									<div class="col-md-12">
-										<table style="float: right;">
-											<tr>
-												<td>Surcharge :</td>
-												<td><input type="text" name="surcharge" value="0.00"
-													id="surcharge" onkeyup="surchargeF();" autocomplete="off"></td>
-											</tr>
-											<tr>
-												<td>
-													<!-- Profit  --> <select style="display: none;"
-													name="profitType" id="profitType" onchange="profitTypeF();">
-														<option value="profitPer">%</option>
-														<option value="profitFlat">Flat</option>
-												</select> <!-- : -->
-												</td>
-												<td><input type="hidden" name="profitVal" value="0.00"
-													id="profitVal" onkeyup="profitValF();" autocomplete="off"></td>
-											</tr>
-											<tr>
-												<td>
-													<!-- Profit Value : -->
-												</td>
-												<td><input type="hidden" name="totProfit" value="0.00"
-													id="totProfit" readonly="readonly" autocomplete="off"></td>
-											</tr>
-											<tr>
-												<td>GrandTotal :</td>
-												<td><input type="number" name="grandtot" value="0.00"
-													readonly="readonly" id="grandtot"><input
-													type="hidden" name="gtot" value="0.00" readonly="readonly"
-													id="gtot"><input type="hidden" name="gt"
-													value="0.00" readonly="readonly" id="gt"></td>
-											</tr>
-										</table>
-									</div>
-									<div class="col-md-12" style="margin-top: 10px;">
-										<div class="col-md-3">
-											<!-- <span><b>Estimated Submission Date: </b></span> -->
 										</div>
-										<div class="col-md-7">
-											<!-- <input type="text" class="form-control"
+										<div class='toast' style='display: none'>
+											<h3 id="msg">${requestScope['msg']}</h3>
+										</div>
+									</div>
+
+									<div id="productNjobsDiv">
+										<input type="hidden" id="orItem">
+									</div>
+
+									<table id="productNjobsTable"
+										class="table table-striped table-bordered">
+										<thead style="background-color: #F0F0F0;">
+											<tr>
+												<th style="text-align: right;">Product code :</th>
+												<td>---</td>
+												<th style="text-align: right;">Description :</th>
+												<td>---</td>
+												<th style="text-align: right;">Quantity :</th>
+												<td>code</td>
+												<th style="text-align: right;">Total Amount :</th>
+												<td>---</td>
+											</tr>
+											<tr>
+												<th>#</th>
+												<th>Job</th>
+												<th>Sample Rate</th>
+												<th>Present Rate</th>
+												<th>Qty</th>
+												<th>UOM</th>
+												<th>Amount</th>
+												<th>Estimated Submission Date</th>
+											</tr>
+										</thead>
+									</table>
+									<br>
+									<div class="row">
+										<div class="col-md-12">
+											<table style="float: right;">
+												<tr>
+													<td>Surcharge :</td>
+													<td><input type="text" name="surcharge" value="0.00"
+														id="surcharge" onkeyup="surchargeF();" autocomplete="off"></td>
+												</tr>
+												<tr>
+													<td>
+														<!-- Profit  --> <select style="display: none;"
+														name="profitType" id="profitType"
+														onchange="profitTypeF();">
+															<option value="profitPer">%</option>
+															<option value="profitFlat">Flat</option>
+													</select> <!-- : -->
+													</td>
+													<td><input type="hidden" name="profitVal" value="0.00"
+														id="profitVal" onkeyup="profitValF();" autocomplete="off"></td>
+												</tr>
+												<tr>
+													<td>
+														<!-- Profit Value : -->
+													</td>
+													<td><input type="hidden" name="totProfit" value="0.00"
+														id="totProfit" readonly="readonly" autocomplete="off"></td>
+												</tr>
+												<tr>
+													<td>GrandTotal :</td>
+													<td><input type="number" name="grandtot" value="0.00"
+														readonly="readonly" id="grandtot"><input
+														type="hidden" name="gtot" value="0.00" readonly="readonly"
+														id="gtot"><input type="hidden" name="gt"
+														value="0.00" readonly="readonly" id="gt"></td>
+												</tr>
+											</table>
+										</div>
+										<div class="col-md-12" style="margin-top: 10px;">
+											<div class="col-md-3">
+												<!-- <span><b>Estimated Submission Date: </b></span> -->
+											</div>
+											<div class="col-md-7">
+												<!-- <input type="text" class="form-control"
 												name="estSubmissionDate" required="required"
 												id="datepicker1" readonly="readonly"> -->
-										</div>
-										<div class="col-md-2">
-											<input type="button" onclick="cancelF();"
-												class="btn btn-danger small" value="Cancel"
-												data-toggle="modal"><input type="button"
-												class="btn green pull-right" value="Save"
-												onclick="submitForm();">
+											</div>
+											<div class="col-md-2">
+												<input type="button" onclick="cancelF();"
+													class="btn btn-danger small" value="Cancel"
+													data-toggle="modal"><input type="button"
+													class="btn green pull-right" value="Save"
+													onclick="submitForm();">
+											</div>
 										</div>
 									</div>
-								</div>
-							</form>
+								</form>
 
+							</div>
+							<!-- </div> -->
 						</div>
-						<!-- </div> -->
 					</div>
 				</div>
 			</div>
+			<!-- Content Sec -->
 		</div>
-		<!-- Content Sec -->
-	</div>
-	<!-- Page Container -->
+		<!-- Page Container -->
 	</div>
 	<!-- main -->
 

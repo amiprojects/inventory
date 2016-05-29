@@ -77,86 +77,89 @@
 	<c:set var="purchaseSearchView"
 		value="${sessionScope['ejb'].getPurchaseEntryById(requestScope['pId'])}" />
 	<div class="main" style="height: 664px;">
-		<%@include file="includeLeftOrTop.jsp"%>
-		<div class="content-sec"
-			style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
-			<div class="container">
-				<div class="row">
-					<div class="masonary-grids">
+		<%@include file="includeHeader.jsp"%>
+		<div class="page-container menu-left" style="height: 100%;">
+			<%@include file="includeSidebar.jsp"%>
+			<div class="content-sec"
+				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
+				<div class="container">
+					<div class="row">
+						<div class="masonary-grids">
 
-						<div class="breadcrumbs" style="height: 50px; text-align: center;">
-							<h3 style="margin-top: 11px;">Ready Production View</h3>
+							<div class="breadcrumbs"
+								style="height: 50px; text-align: center;">
+								<h3 style="margin-top: 11px;">Ready Production View</h3>
 
-						</div>
-						<div class="col-md-12">
-							<div class="widget-area">
-								<div class="col-md-6">
-									<div class="form-group">
-										<label for="" class="font">Challan no. :</label> <input
-											readonly="readonly" type="text" placeholder=""
-											name="challanNumber" class="form-control"
-											value="${purchaseSearchView.challanNumber}">
+							</div>
+							<div class="col-md-12">
+								<div class="widget-area">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="" class="font">Challan no. :</label> <input
+												readonly="readonly" type="text" placeholder=""
+												name="challanNumber" class="form-control"
+												value="${purchaseSearchView.challanNumber}">
+										</div>
 									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="form-group">
-										<label for="" class="font">Completion Date :</label> <input
-											type="text" id="datepicker" class="form-control"
-											name="purchaseDate" required="required" readonly="readonly"
-											value="<fmt:formatDate
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="" class="font">Completion Date :</label> <input
+												type="text" id="datepicker" class="form-control"
+												name="purchaseDate" required="required" readonly="readonly"
+												value="<fmt:formatDate
 																			value="${purchaseSearchView.purchase_date}"
 																			pattern="dd-MM-yyyy" />">
+										</div>
+									</div>
+									<div class='toast' style='display: none'>
+										<h3 id="msg">${requestScope['msg']}</h3>
 									</div>
 								</div>
-								<div class='toast' style='display: none'>
-									<h3 id="msg">${requestScope['msg']}</h3>
-								</div>
-							</div>
 
-							<table id="" class="table table-striped table-bordered">
-								<thead style="background-color: #F0F0F0;">
-									<tr>
-										<th>#</th>
-										<th>Product Code:</th>
-										<th>Product Description</th>
-										<th>Lot No.</th>
-										<th>WSP</th>
-										<th>MRP</th>
-										<th>Qty</th>
-										<th>UOM</th>
-										<th>Rate</th>
-										<th>Amount</th>
-									</tr>
-								</thead>
-								<c:set var="i" value="${1}"></c:set>
-								<c:forEach var="purchaseProducts"
-									items="${purchaseSearchView.purchase_Product_Details}">
-									<tbody>
+								<table id="" class="table table-striped table-bordered">
+									<thead style="background-color: #F0F0F0;">
 										<tr>
-											<td>${i}</td>
-											<td>${purchaseProducts.productDetail.code}</td>
-											<td>${purchaseProducts.productDetail.description}</td>
-											<td>${purchaseProducts.lotNumber}</td>
-											<td>${purchaseProducts.wsp}</td>
-											<td>${purchaseProducts.mrp}</td>
-											<td>${purchaseProducts.quantity}</td>
-											<td>${purchaseProducts.productDetail.qtyUnit.name}</td>
-											<td>${purchaseProducts.cost}</td>
-											<td><fmt:formatNumber var="amount"
-													value="${purchaseProducts.quantity*purchaseProducts.cost}"
-													maxFractionDigits="2" />${amount}</td>
+											<th>#</th>
+											<th>Product Code:</th>
+											<th>Product Description</th>
+											<th>Lot No.</th>
+											<th>WSP</th>
+											<th>MRP</th>
+											<th>Qty</th>
+											<th>UOM</th>
+											<th>Rate</th>
+											<th>Amount</th>
 										</tr>
-									</tbody>
-									<c:set var="i" value="${i+1}" />
-								</c:forEach>
-							</table>
+									</thead>
+									<c:set var="i" value="${1}"></c:set>
+									<c:forEach var="purchaseProducts"
+										items="${purchaseSearchView.purchase_Product_Details}">
+										<tbody>
+											<tr>
+												<td>${i}</td>
+												<td>${purchaseProducts.productDetail.code}</td>
+												<td>${purchaseProducts.productDetail.description}</td>
+												<td>${purchaseProducts.lotNumber}</td>
+												<td>${purchaseProducts.wsp}</td>
+												<td>${purchaseProducts.mrp}</td>
+												<td>${purchaseProducts.quantity}</td>
+												<td>${purchaseProducts.productDetail.qtyUnit.name}</td>
+												<td>${purchaseProducts.cost}</td>
+												<td><fmt:formatNumber var="amount"
+														value="${purchaseProducts.quantity*purchaseProducts.cost}"
+														maxFractionDigits="2" />${amount}</td>
+											</tr>
+										</tbody>
+										<c:set var="i" value="${i+1}" />
+									</c:forEach>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<!-- Content Sec -->
+		<!-- Content Sec -->
 	</div>
 
 	<!-- Script -->

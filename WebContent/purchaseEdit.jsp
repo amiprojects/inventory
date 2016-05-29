@@ -80,386 +80,392 @@
 	<input type="hidden" value="${requestScope['pId']}" name="peId"
 		id="peId">
 	<div class="main" style="height: 664px;">
-		<%@include file="includeLeftOrTop.jsp"%>
-		<div class="content-sec"
-			style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
-			<div class="container">
-				<div class="row">
-					<div class="masonary-grids">
+		<%@include file="includeHeader.jsp"%>
+		<div class="page-container menu-left" style="height: 100%;">
+			<%@include file="includeSidebar.jsp"%>
+			<div class="content-sec"
+				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
+				<div class="container">
+					<div class="row">
+						<div class="masonary-grids">
 
-						<div class="breadcrumbs" style="height: 50px; text-align: center;">
-							<h3 style="margin-top: 11px;">Purchase Edit</h3>
+							<div class="breadcrumbs"
+								style="height: 50px; text-align: center;">
+								<h3 style="margin-top: 11px;">Purchase Edit</h3>
 
-						</div>
-						<div class="col-md-12">
-							<div class="widget-area">
-								<div class="col-md-6">
-									<div class="col-md-12">
-										&nbsp; &nbsp; &nbsp; <b class="font">Vendor Type :</b> <input
-											type="text" class="form-control" readonly="readonly"
-											name="vendorType" id="vendorType"
-											value="${purchaseSearchView.vendor.vendorType.type}">
-									</div>
-									<div class="col-md-12">
-										&nbsp; &nbsp; &nbsp; <b class="font">Vendor Name :</b> <input
-											type="text" class="form-control" id="vName" name="vName"
-											readonly="readonly" value="${purchaseSearchView.vendor.name}">
-									</div>
-									<div class="col-md-12">
-										&nbsp; &nbsp; &nbsp; <b class="font">Vendor Details :</b>
-										<textarea rows="5" cols="" id="vDetail" class="form-control"
-											readonly="readonly">
+							</div>
+							<div class="col-md-12">
+								<div class="widget-area">
+									<div class="col-md-6">
+										<div class="col-md-12">
+											&nbsp; &nbsp; &nbsp; <b class="font">Vendor Type :</b> <input
+												type="text" class="form-control" readonly="readonly"
+												name="vendorType" id="vendorType"
+												value="${purchaseSearchView.vendor.vendorType.type}">
+										</div>
+										<div class="col-md-12">
+											&nbsp; &nbsp; &nbsp; <b class="font">Vendor Name :</b> <input
+												type="text" class="form-control" id="vName" name="vName"
+												readonly="readonly"
+												value="${purchaseSearchView.vendor.name}">
+										</div>
+										<div class="col-md-12">
+											&nbsp; &nbsp; &nbsp; <b class="font">Vendor Details :</b>
+											<textarea rows="5" cols="" id="vDetail" class="form-control"
+												readonly="readonly">
 													Address : 
 														&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;${purchaseSearchView.vendor.address}
 													Ph1: ${purchaseSearchView.vendor.ph1}
 													Ph2: ${purchaseSearchView.vendor.ph2}
 													</textarea>
 
+										</div>
+										<div class="col-md-12">
+											<c:choose>
+												<c:when test="${purchaseSearchView.agentId==0}">
+													<input type="checkbox" id="agent" name="agent"
+														disabled="disabled">&nbsp;<span>Via Agent</span>
+												</c:when>
+												<c:otherwise>
+													<input type="checkbox" id="agent" name="agent"
+														disabled="disabled" checked="checked">&nbsp;<span>Via
+														Agent</span>
+												</c:otherwise>
+											</c:choose>
+										</div>
+										<div class="col-md-12" id="aNameDiv">
+											<label for="" class="font">Agent Name:</label>
+											<c:choose>
+												<c:when test="${purchaseSearchView.agentId!=0}">
+													<input class="form-control" type="text"
+														class="form-control" name="agentName" id="agentName"
+														readonly="readonly"
+														value="${sessionScope['ejb'].getVendorById(purchaseSearchView.agentId).getName()}">
+												</c:when>
+												<c:otherwise>
+													<input class="form-control" type="text"
+														class="form-control" name="agentName" id="agentName"
+														readonly="readonly">
+												</c:otherwise>
+											</c:choose>
+										</div>
 									</div>
-									<div class="col-md-12">
-										<c:choose>
-											<c:when test="${purchaseSearchView.agentId==0}">
-												<input type="checkbox" id="agent" name="agent"
-													disabled="disabled">&nbsp;<span>Via Agent</span>
-											</c:when>
-											<c:otherwise>
-												<input type="checkbox" id="agent" name="agent"
-													disabled="disabled" checked="checked">&nbsp;<span>Via
-													Agent</span>
-											</c:otherwise>
-										</c:choose>
-									</div>
-									<div class="col-md-12" id="aNameDiv">
-										<label for="" class="font">Agent Name:</label>
-										<c:choose>
-											<c:when test="${purchaseSearchView.agentId!=0}">
-												<input class="form-control" type="text" class="form-control"
-													name="agentName" id="agentName" readonly="readonly"
-													value="${sessionScope['ejb'].getVendorById(purchaseSearchView.agentId).getName()}">
-											</c:when>
-											<c:otherwise>
-												<input class="form-control" type="text" class="form-control"
-													name="agentName" id="agentName" readonly="readonly">
-											</c:otherwise>
-										</c:choose>
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="form-group">
-										<label for="" class="font">Vendor Bill no :</label> <input
-											type="text" placeholder="" id="vendorBillNo"
-											class="form-control" name="vendorBillNo" readonly="readonly"
-											value="${purchaseSearchView.vendor_bill_no}">
-									</div>
-									<div class="form-group">
-										<label for="" class="font">Purchase challan no. :</label> <input
-											readonly="readonly" type="text" placeholder=""
-											name="challanNumber" class="form-control"
-											value="${purchaseSearchView.challanNumber}">
-									</div>
-									<div class="form-group">
-										<label for="" class="font">Purchase Date :</label> <input
-											type="text" id="datepicker" class="form-control"
-											name="purchaseDate" required="required" readonly="readonly"
-											value="<fmt:formatDate
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="" class="font">Vendor Bill no :</label> <input
+												type="text" placeholder="" id="vendorBillNo"
+												class="form-control" name="vendorBillNo" readonly="readonly"
+												value="${purchaseSearchView.vendor_bill_no}">
+										</div>
+										<div class="form-group">
+											<label for="" class="font">Purchase challan no. :</label> <input
+												readonly="readonly" type="text" placeholder=""
+												name="challanNumber" class="form-control"
+												value="${purchaseSearchView.challanNumber}">
+										</div>
+										<div class="form-group">
+											<label for="" class="font">Purchase Date :</label> <input
+												type="text" id="datepicker" class="form-control"
+												name="purchaseDate" required="required" readonly="readonly"
+												value="<fmt:formatDate
 																			value="${purchaseSearchView.purchase_date}"
 																			pattern="dd-MM-yyyy" />">
-									</div>
-									<div class="form-group" id="aDetailDiv">
-										<label for="" class="font">Agent Details:</label>
+										</div>
+										<div class="form-group" id="aDetailDiv">
+											<label for="" class="font">Agent Details:</label>
 
-										<c:choose>
-											<c:when test="${purchaseSearchView.agentId!=0}">
-												<textarea rows="5" cols="" class="form-control"
-													readonly="readonly" id="agentDet" name="agentDet">
+											<c:choose>
+												<c:when test="${purchaseSearchView.agentId!=0}">
+													<textarea rows="5" cols="" class="form-control"
+														readonly="readonly" id="agentDet" name="agentDet">
 															Address : 
 															&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;${sessionScope['ejb'].getVendorById(purchaseSearchView.agentId).address}
 															Ph1 : ${sessionScope['ejb'].getVendorById(purchaseSearchView.agentId).ph1}
 															Ph2 : ${sessionScope['ejb'].getVendorById(purchaseSearchView.agentId).ph2}
 															</textarea>
-											</c:when>
-											<c:otherwise>
-												<textarea rows="5" cols="" class="form-control"
-													readonly="readonly" id="agentDet" name="agentDet"></textarea>
-											</c:otherwise>
-										</c:choose>
+												</c:when>
+												<c:otherwise>
+													<textarea rows="5" cols="" class="form-control"
+														readonly="readonly" id="agentDet" name="agentDet"></textarea>
+												</c:otherwise>
+											</c:choose>
 
+										</div>
+									</div>
+									<div class='toast' style='display: none'>
+										<h3 id="msg">${requestScope['msg']}</h3>
 									</div>
 								</div>
-								<div class='toast' style='display: none'>
-									<h3 id="msg">${requestScope['msg']}</h3>
-								</div>
-							</div>
 
-							<table id="purPro" class="table table-striped table-bordered">
-								<thead style="background-color: #F0F0F0;">
-									<tr>
-										<th>#</th>
-										<th>Product Code:</th>
-										<th>Product Description</th>
-										<th>WSP</th>
-										<th>MRP</th>
-										<th>Qty</th>
-										<th>Remaining Qty</th>
-										<th>UOM</th>
-										<th>Cost</th>
-										<th>Amount</th>
-									</tr>
-								</thead>
-								<c:set var="i" value="${1}"></c:set>
-
-								<tbody>
-
-									<c:forEach var="purchaseProducts"
-										items="${purchaseSearchView.purchase_Product_Details}">
-
-										<tr id="proRow${purchaseProducts.id}">
-											<td>${i}</td>
-											<td>${purchaseProducts.productDetail.code}</td>
-											<td>${purchaseProducts.productDetail.description}</td>
-											<td>${purchaseProducts.wsp}</td>
-											<td>${purchaseProducts.mrp}</td>
-											<td><input type="text"
-												value="${purchaseProducts.quantity}"
-												style="background-color: gray;" readonly="readonly"
-												name="pproqty"
-												onchange="update(this,${purchaseProducts.id});"
-												ondblclick="enable(this);"></td>
-											<td>${purchaseProducts.remaining_quantity}</td>
-											<td>${purchaseProducts.productDetail.qtyUnit.name}</td>
-											<td><input type="text" value="${purchaseProducts.cost}"
-												style="background-color: gray;" readonly="readonly"
-												name="pprocost"
-												onchange="update(this,${purchaseProducts.id});"
-												ondblclick="enable(this);"></td>
-											<td class="proTotCost">${purchaseProducts.quantity*purchaseProducts.cost}</td>
-										</tr>
-
-										<c:set var="i" value="${i+1}" />
-									</c:forEach>
-
-								</tbody>
-							</table>
-
-							<div class="col-md-12">
-								<input type="button" class="form-control btn-success"
-									data-toggle="modal" data-target="#addProduct"
-									value="Add Product" value="Add">
-							</div>
-
-
-							<div style="width: 40%; float: right;">
-								<table id="stream_table"
-									class="table table-striped table-bordered">
-									<thead>
+								<table id="purPro" class="table table-striped table-bordered">
+									<thead style="background-color: #F0F0F0;">
 										<tr>
-											<td colspan="2">Sub Total :</td>
-											<td><fmt:formatNumber var="subt"
-													value="${purchaseSearchView.subTotal}"
-													maxFractionDigits="2" /> <input type="text"
-												class="form-control" id="subTotal" value="${subt}"
-												readonly="readonly"></td>
+											<th>#</th>
+											<th>Product Code:</th>
+											<th>Product Description</th>
+											<th>WSP</th>
+											<th>MRP</th>
+											<th>Qty</th>
+											<th>Remaining Qty</th>
+											<th>UOM</th>
+											<th>Cost</th>
+											<th>Amount</th>
 										</tr>
 									</thead>
+									<c:set var="i" value="${1}"></c:set>
+
 									<tbody>
-										<tr>
-											<td colspan="2">Discount &nbsp; <select name="disType"
-												id="disType" disabled="disabled">
-													<c:choose>
-														<c:when
-															test="${purchaseSearchView.isFlatDiscount()==true}">
-															<option value="disFlat">Flat</option>
-														</c:when>
-														<c:otherwise>
-															<option value="disPer">%</option>
-														</c:otherwise>
-													</c:choose>
-											</select>
-											</td>
-											<td><input type="number" class="form-control"
-												name="disValue" id="discount" placeholder=""
-												readonly="readonly"
-												value="<fmt:formatNumber value="${purchaseSearchView.discountValue}" maxFractionDigits="2" />"></td>
-										</tr>
+
+										<c:forEach var="purchaseProducts"
+											items="${purchaseSearchView.purchase_Product_Details}">
+
+											<tr id="proRow${purchaseProducts.id}">
+												<td>${i}</td>
+												<td>${purchaseProducts.productDetail.code}</td>
+												<td>${purchaseProducts.productDetail.description}</td>
+												<td>${purchaseProducts.wsp}</td>
+												<td>${purchaseProducts.mrp}</td>
+												<td><input type="text"
+													value="${purchaseProducts.quantity}"
+													style="background-color: gray;" readonly="readonly"
+													name="pproqty"
+													onchange="update(this,${purchaseProducts.id});"
+													ondblclick="enable(this);"></td>
+												<td>${purchaseProducts.remaining_quantity}</td>
+												<td>${purchaseProducts.productDetail.qtyUnit.name}</td>
+												<td><input type="text" value="${purchaseProducts.cost}"
+													style="background-color: gray;" readonly="readonly"
+													name="pprocost"
+													onchange="update(this,${purchaseProducts.id});"
+													ondblclick="enable(this);"></td>
+												<td class="proTotCost">${purchaseProducts.quantity*purchaseProducts.cost}</td>
+											</tr>
+
+											<c:set var="i" value="${i+1}" />
+										</c:forEach>
+
 									</tbody>
-									<tbody>
-										<tr>
-											<td colspan="2" id="disc">Discount Value:</td>
-											<td><input type="number" class="form-control"
-												readonly="readonly" id="discountValue" name="discountValue"
-												value="<fmt:formatNumber value="${purchaseSearchView.discountTotal}" maxFractionDigits="2" />"></td>
-										</tr>
-									</tbody>
-									<c:choose>
-										<c:when test="${purchaseSearchView.agentId==0}">
-											<tbody style="display: none;">
-												<tr>
-													<td colspan="2">Agent Profit:</td>
-													<td>Is Effective On Return:&nbsp; <select
-														name="isEffective" id="isEffective" disabled="disabled">
-															<c:choose>
-																<c:when
-																	test="${purchaseSearchView.isEfectiveProfit()==true}">
-																	<option>Yes</option>
-																</c:when>
-																<c:otherwise>
-																	<option>No</option>
-																</c:otherwise>
-															</c:choose>
-													</select>
-													</td>
-												</tr>
-											</tbody>
-											<tbody style="display: none;">
-												<tr>
-													<td colspan="2">Agent Profit: &nbsp; <select
-														name="profitType" id="profitType"
-														onchange="profitTypeF();" disabled="disabled">
-															<c:choose>
-																<c:when
-																	test="${purchaseSearchView.isFlatProfitAgent()==true}">
-																	<option value="profitFlat">Flat</option>
-																</c:when>
-																<c:otherwise>
-																	<option value="profitPer">%</option>
-																</c:otherwise>
-															</c:choose>
-													</select>
-													</td>
-													<td><input type="text"
-														value="${purchaseSearchView.agentProfitValue}"
-														class="form-control" name="profitVal" id="profitVal"
-														placeholder="" readonly="readonly"></td>
-												</tr>
-											</tbody>
-											<tbody style="display: none;">
-												<tr>
-													<td colspan="2" id="disc">Agent Profit Value:</td>
-													<td><input type="text" class="form-control"
-														readonly="readonly" id="profitValue" name="profitValue"
-														value="${purchaseSearchView.agentProfitTotal}"></td>
-												</tr>
-											</tbody>
-										</c:when>
-										<c:otherwise>
-											<tbody>
-												<tr>
-													<td colspan="2">Agent Profit:</td>
-													<td>Is Effective On Return:&nbsp; <select
-														name="isEffective" id="isEffective" disabled="disabled">
-															<c:choose>
-																<c:when
-																	test="${purchaseSearchView.isEfectiveProfit()==true}">
-																	<option>Yes</option>
-																</c:when>
-																<c:otherwise>
-																	<option>No</option>
-																</c:otherwise>
-															</c:choose>
-													</select>
-													</td>
-												</tr>
-											</tbody>
-											<tbody>
-												<tr>
-													<td colspan="2">Agent Profit: &nbsp; <select
-														name="profitType" id="profitType"
-														onchange="profitTypeF();" disabled="disabled">
-															<c:choose>
-																<c:when
-																	test="${purchaseSearchView.isFlatProfitAgent()==true}">
-																	<option value="profitFlat">Flat</option>
-																</c:when>
-																<c:otherwise>
-																	<option value="profitPer">%</option>
-																</c:otherwise>
-															</c:choose>
-													</select>
-													</td>
-													<td><input type="text"
-														value="${purchaseSearchView.agentProfitValue}"
-														class="form-control" name="profitVal" id="profitVal"
-														placeholder="" readonly="readonly"></td>
-												</tr>
-											</tbody>
-											<tbody>
-												<tr>
-													<td colspan="2" id="disc">Agent Profit Value:</td>
-													<td><input type="text" class="form-control"
-														readonly="readonly" id="profitValue" name="profitValue"
-														value="${purchaseSearchView.agentProfitTotal}"></td>
-												</tr>
-											</tbody>
-										</c:otherwise>
-									</c:choose>
-									<tbody>
-										<tr>
-											<td>${purchaseSearchView.tax_Type_Group.name}</td>
-											<td>%</td>
-											<td><input type="text" class="form-control"
-												readonly="readonly"
-												value="${purchaseSearchView.tax_Type_Group.getTotalTaxValue()}"
-												id="taxTot"></td>
-										</tr>
-									</tbody>
-									<tbody>
-										<tr>
-											<td colspan="2">Tax Amount :</td>
-											<td><fmt:formatNumber var="ta"
-													value="${purchaseSearchView.taxAmount}"
-													maxFractionDigits="2" /> <input type="text"
-												class="form-control" readonly="readonly" value="${ta}"
-												id="taxAmount"></td>
-										</tr>
-									</tbody>
-									<tbody>
-										<tr>
-											<td colspan="2">Transport charge :</td>
-											<td><input type="text" class="form-control"
-												name="transportCost" id="transportCost"
-												value="${purchaseSearchView.transport_cost}"
-												style="background-color: gray;" readonly="readonly"
-												onchange="updatePe(this);" ondblclick="enable(this);"></td>
-										</tr>
-									</tbody>
-									<tbody>
-										<tr>
-											<td colspan="2">Surcharge :</td>
-											<td><input type="text" class="form-control"
-												id="surcharge" name="surcharge"
-												value="${purchaseSearchView.sur_charge}"
-												style="background-color: gray;" readonly="readonly"
-												onchange="updatePe(this);" ondblclick="enable(this);"></td>
-										</tr>
-									</tbody>
-									<tbody>
-										<tr>
-											<td colspan="2" id="round">Round Of :</td>
-											<td><input type="hidden" id="totalvalue"
-												name="totalvalue" value="0"><input type="number"
-												class="form-control" placeholder="" readonly="readonly"
-												id="roundvalue" name="roundvalue"
-												value="${purchaseSearchView.roundOf}"></td>
-										</tr>
-									</tbody>
-									<thead>
-										<tr>
-											<td colspan="2">Grand Total :</td>
-											<td><input type="text" class="form-control" id="gt"
-												placeholder="0" readonly="readonly"
-												value="${purchaseSearchView.totalCost}"></td>
-										</tr>
-									</thead>
 								</table>
-							</div>
 
+								<div class="col-md-12">
+									<input type="button" class="form-control btn-success"
+										data-toggle="modal" data-target="#addProduct"
+										value="Add Product" value="Add">
+								</div>
+
+
+								<div style="width: 40%; float: right;">
+									<table id="stream_table"
+										class="table table-striped table-bordered">
+										<thead>
+											<tr>
+												<td colspan="2">Sub Total :</td>
+												<td><fmt:formatNumber var="subt"
+														value="${purchaseSearchView.subTotal}"
+														maxFractionDigits="2" /> <input type="text"
+													class="form-control" id="subTotal" value="${subt}"
+													readonly="readonly"></td>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td colspan="2">Discount &nbsp; <select name="disType"
+													id="disType" disabled="disabled">
+														<c:choose>
+															<c:when
+																test="${purchaseSearchView.isFlatDiscount()==true}">
+																<option value="disFlat">Flat</option>
+															</c:when>
+															<c:otherwise>
+																<option value="disPer">%</option>
+															</c:otherwise>
+														</c:choose>
+												</select>
+												</td>
+												<td><input type="number" class="form-control"
+													name="disValue" id="discount" placeholder=""
+													readonly="readonly"
+													value="<fmt:formatNumber value="${purchaseSearchView.discountValue}" maxFractionDigits="2" />"></td>
+											</tr>
+										</tbody>
+										<tbody>
+											<tr>
+												<td colspan="2" id="disc">Discount Value:</td>
+												<td><input type="number" class="form-control"
+													readonly="readonly" id="discountValue" name="discountValue"
+													value="<fmt:formatNumber value="${purchaseSearchView.discountTotal}" maxFractionDigits="2" />"></td>
+											</tr>
+										</tbody>
+										<c:choose>
+											<c:when test="${purchaseSearchView.agentId==0}">
+												<tbody style="display: none;">
+													<tr>
+														<td colspan="2">Agent Profit:</td>
+														<td>Is Effective On Return:&nbsp; <select
+															name="isEffective" id="isEffective" disabled="disabled">
+																<c:choose>
+																	<c:when
+																		test="${purchaseSearchView.isEfectiveProfit()==true}">
+																		<option>Yes</option>
+																	</c:when>
+																	<c:otherwise>
+																		<option>No</option>
+																	</c:otherwise>
+																</c:choose>
+														</select>
+														</td>
+													</tr>
+												</tbody>
+												<tbody style="display: none;">
+													<tr>
+														<td colspan="2">Agent Profit: &nbsp; <select
+															name="profitType" id="profitType"
+															onchange="profitTypeF();" disabled="disabled">
+																<c:choose>
+																	<c:when
+																		test="${purchaseSearchView.isFlatProfitAgent()==true}">
+																		<option value="profitFlat">Flat</option>
+																	</c:when>
+																	<c:otherwise>
+																		<option value="profitPer">%</option>
+																	</c:otherwise>
+																</c:choose>
+														</select>
+														</td>
+														<td><input type="text"
+															value="${purchaseSearchView.agentProfitValue}"
+															class="form-control" name="profitVal" id="profitVal"
+															placeholder="" readonly="readonly"></td>
+													</tr>
+												</tbody>
+												<tbody style="display: none;">
+													<tr>
+														<td colspan="2" id="disc">Agent Profit Value:</td>
+														<td><input type="text" class="form-control"
+															readonly="readonly" id="profitValue" name="profitValue"
+															value="${purchaseSearchView.agentProfitTotal}"></td>
+													</tr>
+												</tbody>
+											</c:when>
+											<c:otherwise>
+												<tbody>
+													<tr>
+														<td colspan="2">Agent Profit:</td>
+														<td>Is Effective On Return:&nbsp; <select
+															name="isEffective" id="isEffective" disabled="disabled">
+																<c:choose>
+																	<c:when
+																		test="${purchaseSearchView.isEfectiveProfit()==true}">
+																		<option>Yes</option>
+																	</c:when>
+																	<c:otherwise>
+																		<option>No</option>
+																	</c:otherwise>
+																</c:choose>
+														</select>
+														</td>
+													</tr>
+												</tbody>
+												<tbody>
+													<tr>
+														<td colspan="2">Agent Profit: &nbsp; <select
+															name="profitType" id="profitType"
+															onchange="profitTypeF();" disabled="disabled">
+																<c:choose>
+																	<c:when
+																		test="${purchaseSearchView.isFlatProfitAgent()==true}">
+																		<option value="profitFlat">Flat</option>
+																	</c:when>
+																	<c:otherwise>
+																		<option value="profitPer">%</option>
+																	</c:otherwise>
+																</c:choose>
+														</select>
+														</td>
+														<td><input type="text"
+															value="${purchaseSearchView.agentProfitValue}"
+															class="form-control" name="profitVal" id="profitVal"
+															placeholder="" readonly="readonly"></td>
+													</tr>
+												</tbody>
+												<tbody>
+													<tr>
+														<td colspan="2" id="disc">Agent Profit Value:</td>
+														<td><input type="text" class="form-control"
+															readonly="readonly" id="profitValue" name="profitValue"
+															value="${purchaseSearchView.agentProfitTotal}"></td>
+													</tr>
+												</tbody>
+											</c:otherwise>
+										</c:choose>
+										<tbody>
+											<tr>
+												<td>${purchaseSearchView.tax_Type_Group.name}</td>
+												<td>%</td>
+												<td><input type="text" class="form-control"
+													readonly="readonly"
+													value="${purchaseSearchView.tax_Type_Group.getTotalTaxValue()}"
+													id="taxTot"></td>
+											</tr>
+										</tbody>
+										<tbody>
+											<tr>
+												<td colspan="2">Tax Amount :</td>
+												<td><fmt:formatNumber var="ta"
+														value="${purchaseSearchView.taxAmount}"
+														maxFractionDigits="2" /> <input type="text"
+													class="form-control" readonly="readonly" value="${ta}"
+													id="taxAmount"></td>
+											</tr>
+										</tbody>
+										<tbody>
+											<tr>
+												<td colspan="2">Transport charge :</td>
+												<td><input type="text" class="form-control"
+													name="transportCost" id="transportCost"
+													value="${purchaseSearchView.transport_cost}"
+													style="background-color: gray;" readonly="readonly"
+													onchange="updatePe(this);" ondblclick="enable(this);"></td>
+											</tr>
+										</tbody>
+										<tbody>
+											<tr>
+												<td colspan="2">Surcharge :</td>
+												<td><input type="text" class="form-control"
+													id="surcharge" name="surcharge"
+													value="${purchaseSearchView.sur_charge}"
+													style="background-color: gray;" readonly="readonly"
+													onchange="updatePe(this);" ondblclick="enable(this);"></td>
+											</tr>
+										</tbody>
+										<tbody>
+											<tr>
+												<td colspan="2" id="round">Round Of :</td>
+												<td><input type="hidden" id="totalvalue"
+													name="totalvalue" value="0"><input type="number"
+													class="form-control" placeholder="" readonly="readonly"
+													id="roundvalue" name="roundvalue"
+													value="${purchaseSearchView.roundOf}"></td>
+											</tr>
+										</tbody>
+										<thead>
+											<tr>
+												<td colspan="2">Grand Total :</td>
+												<td><input type="text" class="form-control" id="gt"
+													placeholder="0" readonly="readonly"
+													value="${purchaseSearchView.totalCost}"></td>
+											</tr>
+										</thead>
+									</table>
+								</div>
+
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<!-- Content Sec -->
+		<!-- Content Sec -->
 	</div>
 
 
