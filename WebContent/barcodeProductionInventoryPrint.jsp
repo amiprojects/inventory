@@ -68,6 +68,14 @@
 													<th>Product Code</th>
 													<th>product Description</th>
 													<th>Lot No.</th>
+													<c:choose>
+														<c:when test="${compInfo.isMRPbarcode()}">
+															<th>MRP</th>
+														</c:when>
+														<c:otherwise>
+															<th>WSP</th>
+														</c:otherwise>
+													</c:choose>
 													<th>Qty</th>
 													<th>Remaining Qty</th>
 													<th>Select</th>
@@ -82,6 +90,14 @@
 															<td>${purchaseProducts.productDetail.code}</td>
 															<td>${purchaseProducts.productDetail.description}</td>
 															<td>${purchaseProducts.lotNumber}</td>
+															<c:choose>
+																<c:when test="${compInfo.isMRPbarcode()}">
+																	<td>${purchaseProducts.mrp}</td>
+																</c:when>
+																<c:otherwise>
+																	<td>${purchaseProducts.wsp}</td>
+																</c:otherwise>
+															</c:choose>
 															<td>${purchaseProducts.quantity}</td>
 															<td>${purchaseProducts.remaining_quantity}</td>
 															<td><input type="checkbox"

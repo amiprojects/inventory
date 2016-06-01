@@ -772,6 +772,8 @@ public class Servlet extends HttpServlet {
 								.getParameter("qty")));
 						purchaseProductDetails.setRemaining_quantity(Float
 								.parseFloat(req.getParameter("remQty")));
+						purchaseProductDetails.setCost(Float.parseFloat(req
+								.getParameter("cost")));
 						purchaseProductDetails.setWsp(Float.parseFloat(req
 								.getParameter("wsp")));
 						purchaseProductDetails.setMrp(Float.parseFloat(req
@@ -1411,7 +1413,6 @@ public class Servlet extends HttpServlet {
 
 						List<Purchase_Entry> purEntry1 = ejb
 								.getAllPurchaseEntry();
-						int fm = 0;
 						int chP1 = 0;
 						for (Purchase_Entry pe : purEntry1) {
 							if (pe.getChallanNumber().equals(
@@ -1630,27 +1631,18 @@ public class Servlet extends HttpServlet {
 										.parseFloat(cost[l]));
 								purchaseProductDetails
 										.setPurchase_Entry(purchaseEntry);
-								purchaseProductDetails.setLotNumber(lot[l]
-										.toUpperCase());
+								// purchaseProductDetails.setLotNumber(lot[l]
+								// .toUpperCase());
+								int lotNo = Integer
+										.parseInt(ejb
+												.getLastPurchaseProductDetailsByProductId(
+														Integer.parseInt(productId[l]))
+												.getLotNumber()) + 1;
+								purchaseProductDetails.setLotNumber("" + lotNo);
+
 								purchaseProductDetails
 										.setCompanyInfo(companyInfo);
 								ejb.setPurchaseProductDetails(purchaseProductDetails);
-
-								// correcting lot number
-								for (int pdQ = 0; pdQ < ejb
-										.getPurchaseProductDetailsByProductIdAsc(
-												Integer.parseInt(productId[l]))
-										.size(); pdQ++) {
-									Purchase_Product_Details purchase_Product_Details = ejb
-											.getPurchaseProductDetailsByProductIdAsc(
-													Integer.parseInt(productId[l]))
-											.get(pdQ);
-									int j = pdQ + 1;
-									purchase_Product_Details.setLotNumber(""
-											+ j);
-									ejb.updatePurchaseProductDetails(purchase_Product_Details);
-								}
-								// correcting lot number
 
 								if (purchaseProductDetails.getProductDetail()
 										.isRaw()) {
@@ -1822,6 +1814,13 @@ public class Servlet extends HttpServlet {
 							paymentDetails = new PaymentDetails();
 							paymentDetails.setPaymentDate(DateConverter
 									.getDate(req.getParameter("payDate")));
+							paymentDetails.setTotalAmount(ejb
+									.getPaymentDetailsByPurchaseEntryId(
+											purchaseEntry.getId()).get(0)
+									.getTotalAmount()
+									- ejb.getPaymentDetailsByPurchaseEntryId(
+											purchaseEntry.getId()).get(0)
+											.getPaidAmount());
 							paymentDetails.setPaidAmount(Float.parseFloat(req
 									.getParameter("spAmount")));
 							paymentDetails.setDescription(req
@@ -4090,6 +4089,13 @@ public class Servlet extends HttpServlet {
 							paymentDetails = new PaymentDetails();
 							paymentDetails.setPaidAmount(Float.parseFloat(req
 									.getParameter("tbv")));
+							paymentDetails.setTotalAmount(ejb
+									.getPaymentDetailsBySalesEntryId(
+											salesEntry.getId()).get(0)
+									.getTotalAmount()
+									- ejb.getPaymentDetailsBySalesEntryId(
+											salesEntry.getId()).get(0)
+											.getPaidAmount());
 							paymentDetails.setPaymentDate(DateConverter
 									.getDate(req.getParameter("payDate")));
 							paymentDetails.setDescription(req

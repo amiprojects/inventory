@@ -746,6 +746,18 @@
 					$(a).prop("readonly", true);
 					$(a).attr("style", "background-color: grey;");
 					sweetAlert('Oops...', 'MRP can not be less than WSP', 'error');
+				} else if(Number(mrp)<Number(rate)){
+					$("#proRow"+id+" :nth-child(9) input[type=text]").val(data.cost);
+					$("#proRow"+id+" :nth-child(5) input[type=text]").val(data.mrp);
+					$(a).prop("readonly", true);
+					$(a).attr("style", "background-color: grey;");
+					sweetAlert('Oops...', 'MRP can not be less than Cost', 'error');
+				} else if(Number(wsp)<Number(rate)){
+					$("#proRow"+id+" :nth-child(9) input[type=text]").val(data.cost);
+					$("#proRow"+id+" :nth-child(4) input[type=text]").val(data.wsp);
+					$(a).prop("readonly", true);
+					$(a).attr("style", "background-color: grey;");
+					sweetAlert('Oops...', 'WSP can not be less than Cost', 'error');
 				} else{
 					$.ajax({
 						url:"updatePurchaseproduct",

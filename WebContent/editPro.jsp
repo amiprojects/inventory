@@ -78,6 +78,9 @@
 							<div class="widget-area" style="width: 100%">
 								<form id="editSumPro" action="editproductSummary" method="post">
 									<div class="col-md-12">
+										<h4>
+											<u>Product Details</u>
+										</h4>
 										<input type="hidden" value="${param.id}" name="productid"
 											id="productid">
 										<div class="col-md-6">
@@ -120,6 +123,10 @@
 									<c:if
 										test="${sessionScope['ejb'].getInitialPurchase_Product_DetailsByProductId(param.id).size()>0}">
 										<div class="col-md-12">
+											<h4>
+												<u>Initial Inventory</u>
+											</h4>
+											<br>
 											<c:set var="ppd"
 												value="${sessionScope['ejb'].getInitialPurchase_Product_DetailsByProductId(param.id).get(0)}" />
 											<div class="col-md-4">
@@ -148,16 +155,25 @@
 														name="usedQty" id="usedQty" class="form-control"><br>
 												</div>
 											</div>
-											<div class="col-md-6">
+											<div class="col-md-4">
+												<div class="form-group">
+													<label for="">Cost:</label> <input type="text"
+														value="${ppd.cost}" name="cost" id="cost"
+														class="form-control" onkeyup="costOKUF();"
+														onchange="costOCF();"><input type="hidden"
+														id="costH" value="${ppd.cost}" name="costH"> <br>
+												</div>
+											</div>
+											<div class="col-md-4">
 												<div class="form-group">
 													<label for="">WSP:</label> <input type="text"
 														value="${ppd.wsp}" name="wsp" id="wsp"
-														class="form-control" onkeyup="wspOKUF();"><input
+														class="form-control" onchange="wspOCF();"><input
 														type="hidden" id="wspH" value="${ppd.wsp}" name="wspH">
 													<br>
 												</div>
 											</div>
-											<div class="col-md-6">
+											<div class="col-md-4">
 												<div class="form-group">
 													<label for="">MRP:</label> <input type="text"
 														value="${ppd.mrp}" name="mrp" id="mrp"
@@ -209,6 +225,31 @@
 					|| k == 32 || (k >= 48 && k <= 57));
 		}
 	</script>
+	<script src="js/numericInput.min.js"></script>
+	<script>
+		$(function() {
+			$("#qty").numericInput({
+				allowFloat : true, // Accpets positive numbers (floating point)
+				allowNegative : false,
+			// Accpets positive or negative integer
+			});
+			$("#mrp").numericInput({
+				allowFloat : true, // Accpets positive numbers (floating point)
+				allowNegative : false,
+			// Accpets positive or negative integer
+			});
+			$("#wsp").numericInput({
+				allowFloat : true, // Accpets positive numbers (floating point)
+				allowNegative : false,
+			// Accpets positive or negative integer
+			});
+			$("#cost").numericInput({
+				allowFloat : true, // Accpets positive numbers (floating point)
+				allowNegative : false,
+			// Accpets positive or negative integer
+			});
+		});
+	</script>
 	<script type="text/javascript">
 		function qtyOKUF() {
 			$("#remQty").val(
@@ -221,15 +262,35 @@
 				$("#remQty").val($("#remQtyH").val());
 			}
 		}
-		function wspOKUF() {
+		function costOKUF() {
+			if (Number($("#mrp").val()) < Number($("#cost").val())) {
+				alert("Cost can not be greater than MRP");
+				$("#cost").val($("#costH").val());
+			} else if (Number($("#wsp").val()) < Number($("#cost").val())) {
+				alert("Cost can not be greater than WSP");
+				$("#cost").val($("#costH").val());
+			}
+		}
+		function costOCF() {
+			if ($("#cost").val() == "") {
+				$("#cost").val($("#costH").val());
+			}
+		}
+		function wspOCF() {
 			if (Number($("#mrp").val()) < Number($("#wsp").val())) {
 				alert("WSP can not be greater than MRP");
+				$("#wsp").val($("#wspH").val());
+			} else if (Number($("#cost").val()) > Number($("#wsp").val())) {
+				alert("WSP can not be less than Cost");
 				$("#wsp").val($("#wspH").val());
 			}
 		}
 		function mrpOCF() {
 			if (Number($("#mrp").val()) < Number($("#wsp").val())) {
 				alert("MRP can not be less than WSP");
+				$("#mrp").val($("#mrpH").val());
+			} else if (Number($("#mrp").val()) < Number($("#cost").val())) {
+				alert("MRP can not be less than Cost");
 				$("#mrp").val($("#mrpH").val());
 			}
 		}
