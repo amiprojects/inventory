@@ -3171,7 +3171,7 @@
 					.val();
 			var price = $("#trRemove" + a + " :nth-child(6) input[type=text]")
 					.val();
-			if (price < wsp) {
+			if (Number(price) < Number(wsp)) {
 				alert("Saling price can not be less than WSP : Rs. " + wsp);
 				$("#trRemove" + a + " :nth-child(6) input[type=text]").val(
 						selectedCost);

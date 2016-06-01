@@ -1,4 +1,4 @@
-login servlet, 
+login servlet / inits, 
 getmacid - production only
 
 

@@ -1865,55 +1865,6 @@ public class JsonServlet extends HttpServlet {
 					}
 					ejb.updatePaymentDetails(paymentDetails);
 
-					// correcting purchase entry payment details
-					for (Purchase_Entry pe : ejb.getAllPurchaseEntry()) {
-						int pSize = ejb.getPaymentDetailsByPurchaseEntryId(
-								pe.getId()).size();
-						if (pSize > 0) {
-							float tot = ejb
-									.getPaymentDetailsByPurchaseEntryId(
-											pe.getId()).get(pSize - 1)
-									.getTotalAmount();
-							for (int ind = ejb
-									.getPaymentDetailsByPurchaseEntryId(
-											pe.getId()).size() - 1; ind > -1; ind--) {
-								PaymentDetails paymentDet = ejb
-										.getPaymentDetailsByPurchaseEntryId(
-												pe.getId()).get(ind);
-								paymentDet.setTotalAmount(tot);
-								tot = tot - paymentDet.getPaidAmount();
-								ejb.updatePaymentDetails(paymentDet);
-							}
-						}
-					}
-					// correcting purchase entry payment details
-					// correcting voucher details
-					for (VoucherAssign va : ejb.getAllVoucherAssign()) {
-						float totCr = 0;
-						float totDb = 0;
-
-						for (int ind = 0; ind < ejb
-								.getAllVoucherDetailsByVoucherAssignId(
-										va.getId()).size(); ind++) {
-							VoucherDetails vd = ejb
-									.getAllVoucherDetailsByVoucherAssignId(
-											va.getId()).get(ind);
-							if (vd.isCredit()) {
-								totCr = totCr + vd.getValue();
-							} else {
-								totDb = totDb + vd.getValue();
-							}
-
-							if (vd.getVoucherAssign().getVendor() != null) {
-								vd.setTotalCreditNote(totCr - totDb);
-								ejb.updateVoucherDetails(vd);
-							} else if (vd.getVoucherAssign().getCustomerEntry() != null) {
-								vd.setTotalDebitNote(totDb - totCr);
-								ejb.updateVoucherDetails(vd);
-							}
-						}
-					}
-					// correcting voucher details
 					// //////////////////////////////////////////////////////
 
 					generator2.writeStartObject().write("error", false)
@@ -1959,6 +1910,8 @@ public class JsonServlet extends HttpServlet {
 					ppd.setRemaining_quantity(Float.parseFloat(req
 							.getParameter("qty")) - sellqty);
 					ppd.setCost(Float.parseFloat(req.getParameter("cost")));
+					ppd.setWsp(Float.parseFloat(req.getParameter("wsp")));
+					ppd.setMrp(Float.parseFloat(req.getParameter("mrp")));
 					ejb.updatePurchaseProductDetails(ppd);
 
 					generator5

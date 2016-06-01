@@ -73,22 +73,13 @@
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
 								<h3 style="margin-top: 11px;">Edit Product</h3>
-
-
 							</div>
 
-
-							<div class="col-md-12">
-								<div class="widget-area" style="width: 100%">
-
-
-
-									<form id="editSumPro" action="editproductSummary" method="post">
-
+							<div class="widget-area" style="width: 100%">
+								<form id="editSumPro" action="editproductSummary" method="post">
+									<div class="col-md-12">
 										<input type="hidden" value="${param.id}" name="productid"
 											id="productid">
-
-
 										<div class="col-md-6">
 											<div class="form-group">
 												<label for="exampleInputEmail1">Product Code:</label> <input
@@ -113,9 +104,6 @@
 
 											<div class="form-group">
 												<label for="exampleInputEmail1">Unit Of Measurement:</label>
-												<%--<input type="text" value="${editpro.qtyUnit.id}"
-													name="uom123" class="form-control"><br>
-											 --%>
 												<select name="uom123" id="uomO" class="form-control"
 													style="width: 431px; height: 34px">
 													<option value="${editpro.qtyUnit.id}" selected="selected">${editpro.qtyUnit.name}</option>
@@ -127,17 +115,63 @@
 													</c:forEach>
 												</select>
 											</div>
-
-											<input style="float: right;" class="btn green btn-default"
-												type="submit" value="submit">
 										</div>
-
-									</form>
-
-
-									<div class='toast' style='display: none'>
-										<h3 id="msg">${requestScope['msg']}</h3>
 									</div>
+									<c:if
+										test="${sessionScope['ejb'].getInitialPurchase_Product_DetailsByProductId(param.id).size()>0}">
+										<div class="col-md-12">
+											<c:set var="ppd"
+												value="${sessionScope['ejb'].getInitialPurchase_Product_DetailsByProductId(param.id).get(0)}" />
+											<div class="col-md-4">
+												<div class="form-group">
+													<label for="">Qty:</label> <input type="text"
+														value="${ppd.quantity}" name="qty" id="qty"
+														class="form-control" onchange="qtyOCF();"
+														onkeyup="qtyOKUF();"> <input type="hidden"
+														id="qtyH" value="${ppd.quantity}" name="qtyH"> <br>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group">
+													<label for="">Remaining Qty:</label> <input
+														readonly="readonly" type="text"
+														value="${ppd.remaining_quantity}" name="remQty"
+														id="remQty" class="form-control"><input
+														type="hidden" id="remQtyH" name="remQtyH"
+														value="${ppd.remaining_quantity}"><br>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group">
+													<label for="">Used Qty:</label> <input readonly="readonly"
+														type="text" value="${ppd.quantity-ppd.remaining_quantity}"
+														name="usedQty" id="usedQty" class="form-control"><br>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label for="">WSP:</label> <input type="text"
+														value="${ppd.wsp}" name="wsp" id="wsp"
+														class="form-control" onkeyup="wspOKUF();"><input
+														type="hidden" id="wspH" value="${ppd.wsp}" name="wspH">
+													<br>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label for="">MRP:</label> <input type="text"
+														value="${ppd.mrp}" name="mrp" id="mrp"
+														class="form-control" onchange="mrpOCF();"><input
+														type="hidden" id="mrpH" value="${ppd.mrp}" name="mrpH"><br>
+												</div>
+											</div>
+										</div>
+									</c:if>
+									<input style="float: right;" class="btn green btn-default"
+										type="submit" value="submit">
+								</form>
+								<div class='toast' style='display: none'>
+									<h3 id="msg">${requestScope['msg']}</h3>
 								</div>
 							</div>
 						</div>
@@ -173,6 +207,31 @@
 			var k = e.keyCode;
 			return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8
 					|| k == 32 || (k >= 48 && k <= 57));
+		}
+	</script>
+	<script type="text/javascript">
+		function qtyOKUF() {
+			$("#remQty").val(
+					Number($("#qty").val()) - Number($("#usedQty").val()));
+		}
+		function qtyOCF() {
+			if (Number($("#qty").val()) < Number($("#usedQty").val())) {
+				alert("Quantity can not be less than used quantity");
+				$("#qty").val($("#qtyH").val());
+				$("#remQty").val($("#remQtyH").val());
+			}
+		}
+		function wspOKUF() {
+			if (Number($("#mrp").val()) < Number($("#wsp").val())) {
+				alert("WSP can not be greater than MRP");
+				$("#wsp").val($("#wspH").val());
+			}
+		}
+		function mrpOCF() {
+			if (Number($("#mrp").val()) < Number($("#wsp").val())) {
+				alert("MRP can not be less than WSP");
+				$("#mrp").val($("#mrpH").val());
+			}
 		}
 	</script>
 </body>

@@ -196,57 +196,68 @@
 										<h3 id="msg">${requestScope['msg']}</h3>
 									</div>
 								</div>
-
-								<table id="purPro" class="table table-striped table-bordered">
-									<thead style="background-color: #F0F0F0;">
-										<tr>
-											<th>#</th>
-											<th>Product Code:</th>
-											<th>Product Description</th>
-											<th>WSP</th>
-											<th>MRP</th>
-											<th>Qty</th>
-											<th>Remaining Qty</th>
-											<th>UOM</th>
-											<th>Cost</th>
-											<th>Amount</th>
-										</tr>
-									</thead>
-									<c:set var="i" value="${1}"></c:set>
-
-									<tbody>
-
-										<c:forEach var="purchaseProducts"
-											items="${purchaseSearchView.purchase_Product_Details}">
-
-											<tr id="proRow${purchaseProducts.id}">
-												<td>${i}</td>
-												<td>${purchaseProducts.productDetail.code}</td>
-												<td>${purchaseProducts.productDetail.description}</td>
-												<td>${purchaseProducts.wsp}</td>
-												<td>${purchaseProducts.mrp}</td>
-												<td><input type="text"
-													value="${purchaseProducts.quantity}"
-													style="background-color: gray;" readonly="readonly"
-													name="pproqty"
-													onchange="update(this,${purchaseProducts.id});"
-													ondblclick="enable(this);"></td>
-												<td>${purchaseProducts.remaining_quantity}</td>
-												<td>${purchaseProducts.productDetail.qtyUnit.name}</td>
-												<td><input type="text" value="${purchaseProducts.cost}"
-													style="background-color: gray;" readonly="readonly"
-													name="pprocost"
-													onchange="update(this,${purchaseProducts.id});"
-													ondblclick="enable(this);"></td>
-												<td class="proTotCost">${purchaseProducts.quantity*purchaseProducts.cost}</td>
+								<div style="overflow: auto; width: 100%;">
+									<table id="purPro" class="table table-striped table-bordered">
+										<thead style="background-color: #F0F0F0;">
+											<tr>
+												<th>#</th>
+												<th>Product Code:</th>
+												<th>Product Description</th>
+												<th>WSP</th>
+												<th>MRP</th>
+												<th>Qty</th>
+												<th>Used Qty</th>
+												<th>UOM</th>
+												<th>Cost</th>
+												<th>Amount</th>
 											</tr>
+										</thead>
+										<c:set var="i" value="${1}"></c:set>
 
-											<c:set var="i" value="${i+1}" />
-										</c:forEach>
+										<tbody>
 
-									</tbody>
-								</table>
+											<c:forEach var="purchaseProducts"
+												items="${purchaseSearchView.purchase_Product_Details}">
 
+												<tr id="proRow${purchaseProducts.id}">
+													<td>${i}</td>
+													<td>${purchaseProducts.productDetail.code}</td>
+													<td>${purchaseProducts.productDetail.description}</td>
+													<td><input type="text" value="${purchaseProducts.wsp}"
+														style="background-color: gray;" readonly="readonly"
+														name="pprowsp"
+														onchange="update(this,${purchaseProducts.id});"
+														ondblclick="enable(this);"></td>
+													<td><input type="text" value="${purchaseProducts.mrp}"
+														style="background-color: gray;" readonly="readonly"
+														name="ppromrp"
+														onchange="update(this,${purchaseProducts.id});"
+														ondblclick="enable(this);"></td>
+													<td><input type="text"
+														value="${purchaseProducts.quantity}"
+														style="background-color: gray;" readonly="readonly"
+														name="pproqty"
+														onchange="update(this,${purchaseProducts.id});"
+														ondblclick="enable(this);"></td>
+													<td><fmt:formatNumber var="usedQty"
+															value="${purchaseProducts.quantity-purchaseProducts.remaining_quantity}"
+															maxFractionDigits="3" /> ${usedQty}</td>
+													<td>${purchaseProducts.productDetail.qtyUnit.name}</td>
+													<td><input type="text"
+														value="${purchaseProducts.cost}"
+														style="background-color: gray;" readonly="readonly"
+														name="pprocost"
+														onchange="update(this,${purchaseProducts.id});"
+														ondblclick="enable(this);"></td>
+													<td class="proTotCost">${purchaseProducts.quantity*purchaseProducts.cost}</td>
+												</tr>
+
+												<c:set var="i" value="${i+1}" />
+											</c:forEach>
+
+										</tbody>
+									</table>
+								</div>
 								<div class="col-md-12">
 									<input type="button" class="form-control btn-success"
 										data-toggle="modal" data-target="#addProduct"
@@ -711,6 +722,8 @@
 	}
 
 	function update(a,id) {	
+		var wsp=$("#proRow"+id+" :nth-child(4) input[type=text]").val();
+		var mrp=$("#proRow"+id+" :nth-child(5) input[type=text]").val();
 		var qty=$("#proRow"+id+" :nth-child(6) input[type=text]").val();
 		var rate=$("#proRow"+id+" :nth-child(9) input[type=text]").val();
 		
@@ -721,22 +734,28 @@
 			data:{id:id},
 			success:function(data){
 				var outQty=data.quantity-data.remaining_quantity;	
-				 //if(data.quantity>data.remaining_quantity){
-				if(qty<outQty){
+				if(Number(qty)<Number(outQty)){
 					$("#proRow"+id+" :nth-child(6) input[type=text]").val(data.quantity);
 					$("#proRow"+id+" :nth-child(9) input[type=text]").val(data.cost);
 					$(a).prop("readonly", true);
 					$(a).attr("style", "background-color: grey;");	
-					sweetAlert('Oops...',  outQty+data.uom+' product is already in use', 'error');
-				}else{
+					sweetAlert('Oops...',  outQty.toFixed(3)+data.uom+' product is already in use', 'error');
+				} else if(Number(mrp)<Number(wsp)){
+					$("#proRow"+id+" :nth-child(4) input[type=text]").val(data.wsp);
+					$("#proRow"+id+" :nth-child(5) input[type=text]").val(data.mrp);
+					$(a).prop("readonly", true);
+					$(a).attr("style", "background-color: grey;");
+					sweetAlert('Oops...', 'MRP can not be less than WSP', 'error');
+				} else{
 					$.ajax({
 						url:"updatePurchaseproduct",
 						dataType:"json",
 						data:{
 							id:id,
 							qty:qty,
-							cost:rate
-								
+							cost:rate,
+							wsp:wsp,
+							mrp:mrp
 						},
 						success:function(data1){
 							if(data1.error){
@@ -753,10 +772,8 @@
 						}
 					});
 				}
-			}
-			
-		});		
-		
+			}			
+		});	
 	}
 
 	function updatePe(a) {
@@ -1279,13 +1296,13 @@ function displayProductIntable(ppid){
 							+ '</td><td>'
 							+ $("#pDesc").val()
 							+ '</td><td>'
-							+ $("#wsp").val()
+							+'<input type="text" value="'+ $("#wsp").val()+'" style="background-color: gray;" readonly="readonly"	name="pproqty"	onchange="update(this,\''+ppid+'\');"	ondblclick="enable(this);">'
 							+ '</td><td>'
-							+ $("#mrp").val()
+							+'<input type="text" value="'+ $("#mrp").val()+'" style="background-color: gray;" readonly="readonly"	name="pproqty"	onchange="update(this,\''+ppid+'\');"	ondblclick="enable(this);">'
 							+ '</td><td>'
 							+'<input type="text" value="'+ $("#qty").val()+'" style="background-color: gray;" readonly="readonly"	name="pproqty"	onchange="update(this,\''+ppid+'\');"	ondblclick="enable(this);">'
 							+ '</td><td>'
-							+ $("#qty").val()
+							+ 0
 							+ '</td><td>'
 							+ $("#uom").val()
 							+ '</td><td>'
