@@ -691,51 +691,7 @@
 
 										<%-- <div id="jobber" class="tab-pane fade">
 											<div class="widget-area">
-												<div style="width: 100%; overflow-x: scroll">
-													<table class="table table-striped table-bordered">
-
-														<tr>
-															<td><b>Assigned Date</b></td>
-
-
-															<td><b>Quantity Given</b></td>
-
-
-															<td><b>Jobber Name</b></td>
-
-
-															<td><b>Status</b></td>
-
-
-															<td><b>Job Challan number</b></td>
-
-														</tr>
-
-														<c:forEach items="${jobProList}" var="jobPro">
-															<tr>
-																<td><b><fmt:formatDate
-																			value="${jobPro.jobAssignmentDetails.assignDate}"
-																			pattern="dd-MM-yyyy" /> </b></td>
-
-
-																<td><b>${jobPro.qty}</b></td>
-
-
-																<td><b>${jobPro.jobAssignmentDetails.vendor.name}</b></td>
-
-																<c:choose>
-																	<c:when test="${jobPro.remaninQty==0}">
-																		<td><b>Received</b></td>
-																	</c:when>
-																	<c:otherwise>
-																		<td><b>Processing</b></td>
-																	</c:otherwise>
-																</c:choose>
-																<td><b>${jobPro.jobAssignmentDetails.challanNumber}</b></td>
-															</tr>
-														</c:forEach>
-													</table>
-												</div>
+												
 											</div>
 											<br>
 										</div> --%>

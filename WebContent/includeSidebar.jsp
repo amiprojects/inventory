@@ -14,7 +14,7 @@
 					</ul>
 				</div>
 			</div>
-			<div class="single-menu">
+			<!-- <div class="single-menu">
 				<h2 class="" id="noti">
 					<a title=""><span>Notification</span></a>
 				</h2>
@@ -24,7 +24,7 @@
 								Notifications</a></li>
 					</ul>
 				</div>
-			</div>
+			</div> -->
 			<div class="single-menu">
 				<h2 id="reports">
 					<a title=""><span>Reports</span></a>
@@ -108,10 +108,6 @@
 				</h2>
 				<div class="sub-menu">
 					<ul>
-						<li><a id="jobSetup" href="jobSetup.jsp" title="">Job
-								Setup</a></li>
-						<li><a id="itemSetup" href="setupItem.jsp" title="">Item
-								Setup</a></li>
 						<li><a id="designCostSheet" href="jobDesignCostSheet.jsp"
 							title="">Sample Job CostSheet</a></li>
 						<li><a id="jAssign" href="jobAssign.jsp" title="">Job
@@ -126,6 +122,10 @@
 								Plan</a></li>
 						<li><a id="jSearch" href="jobAssignSearch.jsp" title="">Job
 								Assignment Search</a></li>
+						<li><a id="jobSetup" href="jobSetup.jsp" title="">Job
+								Setup</a></li>
+						<li><a id="itemSetup" href="setupItem.jsp" title="">Item
+								Setup</a></li>
 					</ul>
 				</div>
 			</div>
