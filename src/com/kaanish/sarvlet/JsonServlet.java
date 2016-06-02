@@ -42,6 +42,7 @@ import com.kaanish.model.QtyUnitConversionPK;
 import com.kaanish.model.QtyUnitType;
 import com.kaanish.model.RawMaterialsStock;
 import com.kaanish.model.ReadyGoodsStock;
+import com.kaanish.model.SalesProductDetails;
 import com.kaanish.model.SampleDesignCostSheet;
 import com.kaanish.model.State;
 import com.kaanish.model.Stoct;
@@ -140,7 +141,8 @@ import com.kaanish.util.DepartmentCotractor;
 		"/getAllVoucherDetailsByJobAssignId", "/getCustomerById", "/testcase",
 		"/testcase1", "/getLastPurchaseProductDetailsByProductId",
 		"/getProductByCategory", "/getAllCategoryByCategoryName",
-		"/getProductByDesignNo", "/validity" })
+		"/getProductByDesignNo", "/validity", "/updateSalesproduct",
+		"/updateSalesEntry" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -1772,6 +1774,81 @@ public class JsonServlet extends HttpServlet {
 				generatorDP.writeEnd().close();
 				break;
 
+			case "updateSalesproduct":
+				JsonGeneratorFactory factorySP = Json
+						.createGeneratorFactory(null);
+				JsonGenerator generatorSP = factorySP.createGenerator(resp
+						.getOutputStream());
+				try {
+					SalesProductDetails spd = ejb
+							.getSalesProductDetailsById(Integer.parseInt(req
+									.getParameter("id")));
+
+					purchaseProductDetails = spd.getPurchase_Product_Details();
+					purchaseProductDetails
+							.setRemaining_quantity(purchaseProductDetails
+									.getRemaining_quantity()
+									+ spd.getQuantity()
+									- Float.parseFloat(req.getParameter("qty")));
+					ejb.updatePurchaseProductDetails(purchaseProductDetails);
+
+					if (purchaseProductDetails.getProductDetail().isRaw()) {
+						rawMaterialsStock = ejb
+								.getRawMeterialStoctByProductId(purchaseProductDetails
+										.getProductDetail().getId());
+						rawMaterialsStock.setRemainingQty(rawMaterialsStock
+								.getRemainingQty()
+								+ spd.getQuantity()
+								- Float.parseFloat(req.getParameter("qty")));
+						ejb.updateRawMaterialStockDetail(rawMaterialsStock);
+					} else {
+						readyGoodsStock = ejb
+								.getReadyGoodsStoctByProductId(purchaseProductDetails
+										.getProductDetail().getId());
+						readyGoodsStock.setRemainingQty(readyGoodsStock
+								.getRemainingQty()
+								+ spd.getQuantity()
+								- Float.parseFloat(req.getParameter("qty")));
+						ejb.updateReadyGoodsStockDetail(readyGoodsStock);
+					}
+
+					SalesProductDetails salesProductDetails = ejb
+							.getSalesProductDetailsById(Integer.parseInt(req
+									.getParameter("id")));
+					salesProductDetails.setQuantity(Float.parseFloat(req
+							.getParameter("qty")));
+					ejb.updateSalesProductDetails(salesProductDetails);
+
+					generatorSP
+							.writeStartObject()
+							.write("error", false)
+							.write("msg",
+									"sales product details updated successfully")
+							.writeEnd().close();
+
+				} catch (Exception e) {
+					generatorSP.writeStartObject().write("error", true)
+							.write("msg", e.getMessage()).writeEnd().close();
+					e.printStackTrace();
+				}
+
+				break;
+
+			case "updateSalesEntry":
+				JsonGeneratorFactory factorySE = Json
+						.createGeneratorFactory(null);
+				JsonGenerator generatorSE = factorySE.createGenerator(resp
+						.getOutputStream());
+				try {
+					generatorSE.writeStartObject().write("error", false)
+							.write("msg", "Successful").writeEnd().close();
+				} catch (Exception e) {
+					generatorSE.writeStartObject().write("error", true)
+							.write("msg", "Eror").writeEnd().close();
+					e.printStackTrace();
+				}
+				break;
+
 			case "updatePurchaseEntry":
 				JsonGeneratorFactory factory2 = Json
 						.createGeneratorFactory(null);
@@ -2118,6 +2195,7 @@ public class JsonServlet extends HttpServlet {
 
 				break;
 
+			// streaming api
 			case "testcase":
 				JsonGeneratorFactory factory7 = Json
 						.createGeneratorFactory(null);
@@ -2137,7 +2215,7 @@ public class JsonServlet extends HttpServlet {
 
 				jsongen.writeEnd().writeEnd().close();
 				break;
-
+			// object model api
 			case "testcase1":
 				resp.getWriter().print(new JobClass());
 				break;

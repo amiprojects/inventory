@@ -243,12 +243,19 @@
 															value="${purchaseProducts.quantity-purchaseProducts.remaining_quantity}"
 															maxFractionDigits="3" /> ${usedQty}</td>
 													<td>${purchaseProducts.productDetail.qtyUnit.name}</td>
-													<td><input type="text"
-														value="${purchaseProducts.cost}"
-														style="background-color: gray;" readonly="readonly"
-														name="pprocost"
-														onchange="update(this,${purchaseProducts.id});"
-														ondblclick="enable(this);"></td>
+													<td><c:choose>
+															<c:when test="${purchaseProducts.totalReturningQty>0}">
+																<input type="text" value="${purchaseProducts.cost}"
+																	readonly="readonly" name="pprocost">
+															</c:when>
+															<c:otherwise>
+																<input type="text" value="${purchaseProducts.cost}"
+																	style="background-color: gray;" readonly="readonly"
+																	name="pprocost"
+																	onchange="update(this,${purchaseProducts.id});"
+																	ondblclick="enable(this);">
+															</c:otherwise>
+														</c:choose></td>
 													<td class="proTotCost">${purchaseProducts.quantity*purchaseProducts.cost}</td>
 												</tr>
 
@@ -779,7 +786,14 @@
 								$(a).prop("readonly", true);
 								$(a).attr("style", "background-color: pink;");		
 								$("#proRow"+id+" :nth-child(10)").html(amount);		
-								updateSubtotal();	
+
+
+								var sum=0.0;
+								$( ".proTotCost" ).each(function( index ) {
+									sum=sum+Number($( this ).html());
+								});
+								$("#subTotal").val(sum);
+								updatePurchaseEntry();
 							}
 						}
 					});
@@ -789,50 +803,13 @@
 	}
 
 	function updatePe(a) {
-		gtot();
-		var st = $("#subTotal").val();
-		st = st.replace(",", "");
-		var scharge = $("#surcharge").val();
-		var tcharge = $("#transportCost").val();
-		var gt = $("#gt").val();
-		var roundvalue = $("#roundvalue").val();
-
-		$.ajax({
-			url : "updatePurchaseEntry",
-			dataType : "json",
-			data : {
-				id : $("#peId").val(),
-				surCharge : scharge,
-				trCharge : tcharge,
-				gt:gt,
-				roundvalue:roundvalue,
-				st:st,
-				discountValue : $("#discountValue").val(),
-				taxAmount : $("#taxAmount").val(),
-				profitValue : $("#profitValue").val()
-			},
-			success : function(data) {
-				if (data.error) {					
-					sweetAlert('Oops...', data.msg, 'error')
-				} else {
-					swal('Update', 'Data successfully saved!', 'success')
-				}
-			}
-
-		});
+		updatePurchaseEntry();
 
 		$(a).prop("readonly", true);
 		$(a).attr("style", "background-color: pink;");
 	}
 	
-	
-	
-	function updateSubtotal(){
-		var sum=0.0;
-		$( ".proTotCost" ).each(function( index ) {
-			sum=sum+Number($( this ).html());
-		});
-		$("#subTotal").val(sum);
+	function updatePurchaseEntry() {
 		gtot();
 		var st = $("#subTotal").val();
 		st = st.replace(",", "");
@@ -864,9 +841,7 @@
 			}
 
 		});
-	}
-	
-	
+	}	
 	
 	/**********for adding new product**********/
 	$("#close").click(function() {
@@ -1308,9 +1283,9 @@ function displayProductIntable(ppid){
 							+ '</td><td>'
 							+ $("#pDesc").val()
 							+ '</td><td>'
-							+'<input type="text" value="'+ $("#wsp").val()+'" style="background-color: gray;" readonly="readonly"	name="pproqty"	onchange="update(this,\''+ppid+'\');"	ondblclick="enable(this);">'
+							+'<input type="text" value="'+ $("#wsp").val()+'" style="background-color: gray;" readonly="readonly"	name="pprowsp"	onchange="update(this,\''+ppid+'\');"	ondblclick="enable(this);">'
 							+ '</td><td>'
-							+'<input type="text" value="'+ $("#mrp").val()+'" style="background-color: gray;" readonly="readonly"	name="pproqty"	onchange="update(this,\''+ppid+'\');"	ondblclick="enable(this);">'
+							+'<input type="text" value="'+ $("#mrp").val()+'" style="background-color: gray;" readonly="readonly"	name="ppromrp"	onchange="update(this,\''+ppid+'\');"	ondblclick="enable(this);">'
 							+ '</td><td>'
 							+'<input type="text" value="'+ $("#qty").val()+'" style="background-color: gray;" readonly="readonly"	name="pproqty"	onchange="update(this,\''+ppid+'\');"	ondblclick="enable(this);">'
 							+ '</td><td>'
@@ -1326,9 +1301,7 @@ function displayProductIntable(ppid){
 	$("#subTotal").val(
 			Math.round(Number($("#subTotal").val()) + Number($(
 					"#qty").val())
-					* Number($("#rate").val())));
-	gtot();
-	
+					* Number($("#rate").val())));	
 	k++;	
 	ind++;
 
@@ -1364,36 +1337,7 @@ function displayProductIntable(ppid){
 	$("#attr5").prop("readonly", true);
 	$("#attr6").prop("readonly", true);	
 
-	var st = $("#subTotal").val();
-	st = st.replace(",", "");
-	var scharge = $("#surcharge").val();
-	var tcharge = $("#transportCost").val();
-	var gt = $("#gt").val();
-	var roundvalue = $("#roundvalue").val();
-
-	$.ajax({
-		url : "updatePurchaseEntry",
-		dataType : "json",
-		data : {
-			id : $("#peId").val(),
-			surCharge : scharge,
-			trCharge : tcharge,
-			gt:gt,
-			roundvalue:roundvalue,
-			st : st,
-			discountValue : $("#discountValue").val(),
-			taxAmount : $("#taxAmount").val(),
-			profitValue : $("#profitValue").val()
-		},
-		success : function(data) {
-			if (data.error) {					
-				sweetAlert('Oops...', data.msg, 'error');
-			} else {
-				swal('Update', 'Data successfully saved!', 'success');
-				$("#another").modal("show");
-			}
-		}
-	});	
+	updatePurchaseEntry();	
 }
 
 function lotNoKeyUpT() {

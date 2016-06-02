@@ -250,10 +250,10 @@
 													<td><a href="#"
 														onclick="viewInvoiceSoldOnly(${sEntryByD.id});"><b>Challan
 																for sold only</b></a></td>
-													<%-- <td><form action="salesEdit" method="post">
+													<td><form action="salesEdit" method="post">
 															<input type="hidden" value="${sEntryByD.id}" name="sId">
 															<input type="image" src="img/edit.png">
-														</form></td> --%>
+														</form></td>
 													<td>
 														<form action="salesView" method="post"
 															id="sView${sEntryByD.id}">

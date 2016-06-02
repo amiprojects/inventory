@@ -2785,8 +2785,7 @@
 																	+ $("#lotH")
 																			.val()
 																	+ '</td>'
-																	+ '<td><input readonly="readonly" type="text" id="qtyVal'
-																	+ '" name="qtyvalue" value=\''
+																	+ '<td><input readonly="readonly" type="text" name="qtyvalue" value=\''
 																	+ $(
 																			"#qtyvalue")
 																			.val()
@@ -3175,17 +3174,17 @@
 				alert("Saling price can not be less than WSP : Rs. " + wsp);
 				$("#trRemove" + a + " :nth-child(6) input[type=text]").val(
 						selectedCost);
-			} else {
-				$("#trRemove" + a + " :nth-child(7) input[type=text]").val(
-						Number(qty) * Number(price));
-
-				var sum = 0;
-				$(".eachtotalvalue").each(function() {
-					sum += parseFloat(this.value);
-				});
-				$("#subtotalvalue").val(sum.toFixed(2));
-				gtot();
+				var price = selectedCost;
 			}
+			$("#trRemove" + a + " :nth-child(7) input[type=text]").val(
+					Number(qty) * Number(price));
+
+			var sum = 0;
+			$(".eachtotalvalue").each(function() {
+				sum += parseFloat(this.value);
+			});
+			$("#subtotalvalue").val(sum.toFixed(2));
+			gtot();
 		};
 	</script>
 </body>

@@ -1,5 +1,5 @@
-COMPANYINFO
-...............
+COMPANYINFO - kainat
+....................
 ALTER TABLE COMPANYINFO ADD (isMRPbarcode NUMBER(1) DEFAULT 1);
 
 

@@ -126,7 +126,8 @@ import com.kaanish.util.GetMacId;
 		"/salesReturnSearchAll", "/salesReturnView",
 		"/salesRerturnSearchByDate", "/salesReturnSearchByChallanNo",
 		"/salesReturnSearchByRefChallanNo", "/salesReturnSearchByCustomerName",
-		"/salesReturnSearchByAgentName", "/salesReturnSearchByProductCode" })
+		"/salesReturnSearchByAgentName", "/salesReturnSearchByProductCode",
+		"/salesEdit" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -760,7 +761,7 @@ public class Servlet extends HttpServlet {
 						productDetail = ejb.getProductDetailsById(Integer
 								.parseInt(req.getParameter("productid")));
 						productDetail.setDescription(req
-								.getParameter("description123"));
+								.getParameter("description123").toUpperCase());
 						productDetail.setQtyUnit(ejb.getQtyUnitById(Integer
 								.parseInt(req.getParameter("uom123"))));
 						ejb.updateProductDetail(productDetail);
@@ -2646,8 +2647,17 @@ public class Servlet extends HttpServlet {
 						paymentDetails = new PaymentDetails();
 						paymentDetails.setPaymentDate(DateConverter.getDate(req
 								.getParameter("payDate")));
-						paymentDetails.setTotalAmount(Float.parseFloat(req
-								.getParameter("spAmount")));
+						// paymentDetails.setTotalAmount(Float.parseFloat(req
+						// .getParameter("spAmount")));
+						paymentDetails.setTotalAmount(ejb
+								.getPaymentDetailsByPurchaseEntryId(
+										Integer.parseInt(req
+												.getParameter("peId"))).get(0)
+								.getTotalAmount()
+								- ejb.getPaymentDetailsByPurchaseEntryId(
+										Integer.parseInt(req
+												.getParameter("peId"))).get(0)
+										.getPaidAmount());
 						paymentDetails.setPaidAmount(Float.parseFloat(req
 								.getParameter("spPaymentAmount")));
 						paymentDetails.setDescription(req.getParameter("desc"));
@@ -2742,8 +2752,17 @@ public class Servlet extends HttpServlet {
 						paymentDetails = new PaymentDetails();
 						paymentDetails.setPaymentDate(DateConverter.getDate(req
 								.getParameter("payDate")));
-						paymentDetails.setTotalAmount(Float.parseFloat(req
-								.getParameter("spAmount")));
+						// paymentDetails.setTotalAmount(Float.parseFloat(req
+						// .getParameter("spAmount")));
+						paymentDetails.setTotalAmount(ejb
+								.getPaymentDetailsBySalesEntryId(
+										Integer.parseInt(req
+												.getParameter("seId"))).get(0)
+								.getTotalAmount()
+								- ejb.getPaymentDetailsBySalesEntryId(
+										Integer.parseInt(req
+												.getParameter("seId"))).get(0)
+										.getPaidAmount());
 						paymentDetails.setPaidAmount(Float.parseFloat(req
 								.getParameter("spPaymentAmount")));
 						paymentDetails.setDescription(req.getParameter("desc"));
@@ -2847,8 +2866,22 @@ public class Servlet extends HttpServlet {
 						paymentDetails = new PaymentDetails();
 						paymentDetails.setPaymentDate(DateConverter.getDate(req
 								.getParameter("payDate")));
-						paymentDetails.setTotalAmount(Float.parseFloat(req
-								.getParameter("spAmount")));
+						if (ejb.getPaymentDetailsByJobAsignId(
+								Integer.parseInt(req.getParameter("jaId")))
+								.size() > 0) {
+							paymentDetails.setTotalAmount(ejb
+									.getPaymentDetailsByJobAsignId(
+											Integer.parseInt(req
+													.getParameter("jaId")))
+									.get(0).getTotalAmount()
+									- ejb.getPaymentDetailsByJobAsignId(
+											Integer.parseInt(req
+													.getParameter("jaId")))
+											.get(0).getPaidAmount());
+						} else {
+							paymentDetails.setTotalAmount(Float.parseFloat(req
+									.getParameter("spAmount")));
+						}
 						paymentDetails.setPaidAmount(Float.parseFloat(req
 								.getParameter("spPaymentAmount")));
 						paymentDetails.setDescription(req.getParameter("desc"));
@@ -3611,6 +3644,12 @@ public class Servlet extends HttpServlet {
 
 					case "salesView":
 						page = "salesView.jsp";
+						req.setAttribute("sId", req.getParameter("sId"));
+						msg = "";
+						break;
+
+					case "salesEdit":
+						page = "salesEdit.jsp";
 						req.setAttribute("sId", req.getParameter("sId"));
 						msg = "";
 						break;
