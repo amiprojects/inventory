@@ -157,11 +157,22 @@
 											</div>
 											<div class="col-md-4">
 												<div class="form-group">
-													<label for="">Cost:</label> <input type="text"
-														value="${ppd.cost}" name="cost" id="cost"
-														class="form-control" onkeyup="costOKUF();"
-														onchange="costOCF();"><input type="hidden"
-														id="costH" value="${ppd.cost}" name="costH"> <br>
+													<label for="">Cost:</label>
+													<c:choose>
+														<c:when test="${ppd.quantity==ppd.remaining_quantity}">
+															<input type="text" value="${ppd.cost}" name="cost"
+																id="cost" class="form-control" onkeyup="costOKUF();"
+																onchange="costOCF();">
+														</c:when>
+														<c:otherwise>
+															<input type="text" readonly="readonly"
+																value="${ppd.cost}" name="cost" id="cost"
+																class="form-control" onkeyup="costOKUF();"
+																onchange="costOCF();">
+														</c:otherwise>
+													</c:choose>
+													<input type="hidden" id="costH" value="${ppd.cost}"
+														name="costH"> <br>
 												</div>
 											</div>
 											<div class="col-md-4">

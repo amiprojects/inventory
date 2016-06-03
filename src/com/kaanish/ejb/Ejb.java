@@ -162,6 +162,10 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public void updateStoct(Stoct s) {
+		em.merge(s);
+	}
+
 	public boolean is21Days() {
 		Date date = new Date();
 		LocalDateTime afterThreeMonths = LocalDateTime.ofInstant(getAllStoct()

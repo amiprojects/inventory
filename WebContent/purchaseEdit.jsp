@@ -244,7 +244,8 @@
 															maxFractionDigits="3" /> ${usedQty}</td>
 													<td>${purchaseProducts.productDetail.qtyUnit.name}</td>
 													<td><c:choose>
-															<c:when test="${purchaseProducts.totalReturningQty>0}">
+															<c:when
+																test="${purchaseProducts.quantity>purchaseProducts.remaining_quantity}">
 																<input type="text" value="${purchaseProducts.cost}"
 																	readonly="readonly" name="pprocost">
 															</c:when>

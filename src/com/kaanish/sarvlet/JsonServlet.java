@@ -42,6 +42,7 @@ import com.kaanish.model.QtyUnitConversionPK;
 import com.kaanish.model.QtyUnitType;
 import com.kaanish.model.RawMaterialsStock;
 import com.kaanish.model.ReadyGoodsStock;
+import com.kaanish.model.SalesEntry;
 import com.kaanish.model.SalesProductDetails;
 import com.kaanish.model.SampleDesignCostSheet;
 import com.kaanish.model.State;
@@ -1840,6 +1841,91 @@ public class JsonServlet extends HttpServlet {
 				JsonGenerator generatorSE = factorySE.createGenerator(resp
 						.getOutputStream());
 				try {
+					SalesEntry salesEntry = ejb.getSalesEntryById(Integer
+							.parseInt(req.getParameter("id")));
+					salesEntry.setSubTotal(Float.parseFloat(req
+							.getParameter("st")));
+					salesEntry.setAgentProfitTotal(Float.parseFloat(req
+							.getParameter("profitValue")));
+					salesEntry.setTaxAmount(Float.parseFloat(req
+							.getParameter("taxAmount")));
+					salesEntry.setRoundOf(Float.parseFloat(req
+							.getParameter("roundvalue")));
+					salesEntry.setTotalCost(Float.parseFloat(req
+							.getParameter("gt")));
+					ejb.updateSalesEntry(salesEntry);
+
+					int paySize = ejb.getPaymentDetailsBySalesEntryId(
+							salesEntry.getId()).size();
+					PaymentDetails paymentDetails = ejb
+							.getPaymentDetailsBySalesEntryId(salesEntry.getId())
+							.get(paySize - 1);
+					if (paymentDetails.getPaymentStatus().getStatus()
+							.equals("Full Paid")) {
+						paymentDetails.setTotalAmount(Float.parseFloat(req
+								.getParameter("gt")));
+						paymentDetails.setPaidAmount(Float.parseFloat(req
+								.getParameter("gt")));
+					} else {
+						paymentDetails.setTotalAmount(Float.parseFloat(req
+								.getParameter("gt")));
+						VoucherDetails vd = ejb
+								.getAllVoucherDetailsBySalesEntryId(
+										salesEntry.getId()).get(0);
+						vd.setValue(Float.parseFloat(req.getParameter("gt"))
+								- paymentDetails.getPaidAmount());
+						ejb.updateVoucherDetails(vd);
+					}
+					ejb.updatePaymentDetails(paymentDetails);
+
+					// correcting voucherdetails totalcreditnote for the
+					// customer
+
+					VoucherAssign va = ejb
+							.getVoucherAssignByCustomerId(salesEntry
+									.getCustomer().getId());
+					float totCr = 0;
+					float totDb = 0;
+
+					for (int ind = 0; ind < ejb
+							.getAllVoucherDetailsByVoucherAssignId(va.getId())
+							.size(); ind++) {
+						VoucherDetails vd = ejb
+								.getAllVoucherDetailsByVoucherAssignId(
+										va.getId()).get(ind);
+						if (vd.isCredit()) {
+							totCr = totCr + vd.getValue();
+						} else {
+							totDb = totDb + vd.getValue();
+						}
+
+						vd.setTotalDebitNote(totDb - totCr);
+						ejb.updateVoucherDetails(vd);
+					}
+
+					// correcting voucherdetails totalcreditnote for the
+					// vendor
+
+					// correcting purchase entry payment details
+					int pSize = ejb.getPaymentDetailsBySalesEntryId(
+							salesEntry.getId()).size();
+					if (pSize > 0) {
+						float tot = ejb
+								.getPaymentDetailsBySalesEntryId(
+										salesEntry.getId()).get(pSize - 1)
+								.getTotalAmount();
+						for (int ind = ejb.getPaymentDetailsBySalesEntryId(
+								salesEntry.getId()).size() - 1; ind > -1; ind--) {
+							paymentDetails = ejb
+									.getPaymentDetailsBySalesEntryId(
+											salesEntry.getId()).get(ind);
+							paymentDetails.setTotalAmount(tot);
+							tot = tot - paymentDetails.getPaidAmount();
+							ejb.updatePaymentDetails(paymentDetails);
+						}
+					}
+					// correcting purchase entry payment details
+
 					generatorSE.writeStartObject().write("error", false)
 							.write("msg", "Successful").writeEnd().close();
 				} catch (Exception e) {

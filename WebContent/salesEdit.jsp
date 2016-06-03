@@ -561,47 +561,70 @@
 		var price = $("#trRemove" + a + " :nth-child(7) input[type=text]")
 				.val();
 		if (Number(qty) < Number(retQtyH)) {
-			//alert("Saling quantity can not be less than returning quantiry : " + retQtyH);
 			$("#trRemove" + a + " :nth-child(6) input[type=text]").val(
 					qtyH);
 			var qty=qtyH;
 			
 			$(f).prop("readonly", true);
 			$(f).attr("style", "background-color: grey;");	
-			sweetAlert('Oops...','Saling quantity can not be less than returning quantiry : ' + retQtyH, 'error');
-		}else{
-			$.ajax({
-				url:"updateSalesproduct",
-				dataType:"json",
-				data:{
-					id:a,
-					qty:qty
-				},
-				success:function(data1){
-					if(data1.error){
-						$("#trRemove"+a+" :nth-child(6) input[type=text]").val(qtyH);
-						qty=qtyH;
-						$(f).prop("readonly", true);
-						$(f).attr("style", "background-color: grey;");	
-						sweetAlert('Oops...', 'prodct update failed....', 'error');
-					}else{
-						$(f).prop("readonly", true);
-						$(f).attr("style", "background-color: pink;");	
-						$("#qtyH" + a).val(qty);
-						qtyH=qty;
-						
-						$("#trRemove" + a + " :nth-child(8) input[type=text]").val(
-								Number(qty) * Number(price));
-						var sum = 0;
-						$(".eachtotalvalue").each(function() {
-							sum += parseFloat(this.value);
-						});
-						$("#subtotalvalue").val(sum.toFixed(2));
-						gtot();
-						updateSalesEntry();
-					}
-				}
-			});
+			sweetAlert('Oops...','Saling quantity can not be less than returning quantity : ' + retQtyH, 'error');
+		} else if (Number(qty) > Number(qtyH)) {
+			$("#trRemove" + a + " :nth-child(6) input[type=text]").val(
+					qtyH);
+			var qty=qtyH;
+			
+			$(f).prop("readonly", true);
+			$(f).attr("style", "background-color: grey;");	
+			sweetAlert('Oops...','Saling quantity can not be greater than sold quantity : ' + qtyH, 'error');
+		} else{                
+                swal({
+                	title: "Are you sure?",
+                	text: "After changing the quantity, You can not increase the quantity, but you can decrease. Do you want to continue ?",   
+                	type: "warning",   
+                	showCancelButton: true,   
+                	confirmButtonColor: "#DD6B55" ,  
+                	confirmButtonText: "Yes" }, 
+                	function(isConfirm){
+                		if (isConfirm) {
+                		$.ajax({
+            				url:"updateSalesproduct",
+            				dataType:"json",
+            				data:{
+            					id:a,
+            					qty:qty
+            				},
+            				success:function(data1){
+            					if(data1.error){
+            						$("#trRemove"+a+" :nth-child(6) input[type=text]").val(qtyH);
+            						qty=qtyH;
+            						$(f).prop("readonly", true);
+            						$(f).attr("style", "background-color: grey;");	
+            						sweetAlert('Oops...', 'prodct update failed....', 'error');
+            					}else{
+            						$(f).prop("readonly", true);
+            						$(f).attr("style", "background-color: pink;");	
+            						$("#qtyH" + a).val(qty);
+            						qtyH=qty;
+            						
+            						$("#trRemove" + a + " :nth-child(8) input[type=text]").val(
+            								Number(Number(qty) * Number(price)).toFixed(2));
+            						var sum = 0;
+            						$(".eachtotalvalue").each(function() {
+            							sum += parseFloat(this.value);
+            						});
+            						$("#subtotalvalue").val(sum.toFixed(2));
+            						gtot();
+            						updateSalesEntry();
+            					}
+            				}
+            			});
+                		}else{
+                			$("#trRemove"+a+" :nth-child(6) input[type=text]").val(qtyH);
+    						qty=qtyH;
+    						$(f).prop("readonly", true);
+    						$(f).attr("style", "background-color: grey;");
+                		}
+                	});                            	             	
 		}		
 	}
 	function enable(f) {
@@ -627,7 +650,6 @@
 				gt:gt,
 				roundvalue:roundvalue,
 				st:st,
-				discountValue : $("#discountValue").val(),
 				taxAmount : $("#taxAmount").val(),
 				profitValue : $("#profitValue").val()
 			},
@@ -635,11 +657,10 @@
 				if (data.error) {					
 					sweetAlert('Oops...', data.msg, 'error')
 				} else {
-					alert(data.msg);
+					//alert(data.msg);
 					swal('Update', 'Data successfully saved!', 'success')
 				}
 			}
-
 		});
 	}
 	</script>
