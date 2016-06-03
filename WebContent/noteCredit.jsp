@@ -109,7 +109,8 @@
 																<td>${vendor.ph2}</td>
 																<td><fmt:formatNumber var="currentCredit"
 																		value="${sessionScope['ejb'].getLastVoucherDetailsByVendorId(vendor.id).getTotalCreditNote()}"
-																		maxFractionDigits="2" /> ${currentCredit}</td>
+																		maxFractionDigits="2" groupingUsed="false" />
+																	${currentCredit}</td>
 																<td>
 																	<form action="creditNoteByVendorName" method="post"
 																		id="cnView${vendor.id}">
@@ -154,7 +155,8 @@
 															<td>${vendor.ph2}</td>
 															<td><fmt:formatNumber var="currentCredit"
 																	value="${sessionScope['ejb'].getLastVoucherDetailsByVendorId(vendor.id).getTotalCreditNote()}"
-																	maxFractionDigits="2" /> ${currentCredit}</td>
+																	maxFractionDigits="2" groupingUsed="false" />
+																${currentCredit}</td>
 															<td>
 																<form action="creditNoteByAgentName" method="post"
 																	id="cnView${vendor.id}">
@@ -198,7 +200,8 @@
 															<td>${vendor.ph2}</td>
 															<td><fmt:formatNumber var="currentCredit"
 																	value="${sessionScope['ejb'].getLastVoucherDetailsByVendorId(vendor.id).getTotalCreditNote()}"
-																	maxFractionDigits="2" /> ${currentCredit}</td>
+																	maxFractionDigits="2" groupingUsed="false" />
+																${currentCredit}</td>
 															<td>
 																<form action="creditNoteByJobber" method="post"
 																	id="cnView${vendor.id}">

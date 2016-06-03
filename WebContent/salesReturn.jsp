@@ -527,7 +527,7 @@
 													</td>
 													<td><input type="text" class="form-control"
 														id="discount" name="discount" readonly="readonly"
-														value="<fmt:formatNumber value="${dis}" maxFractionDigits="2" />">
+														value="<fmt:formatNumber value="${dis}" maxFractionDigits="2" groupingUsed="false" />">
 													</td>
 												</tr>
 											</tbody>

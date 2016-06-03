@@ -147,7 +147,7 @@
 												<td>${purchaseProducts.cost}</td>
 												<td><fmt:formatNumber var="amount"
 														value="${purchaseProducts.quantity*purchaseProducts.cost}"
-														maxFractionDigits="2" />${amount}</td>
+														maxFractionDigits="2" groupingUsed="false" />${amount}</td>
 											</tr>
 										</tbody>
 										<c:set var="i" value="${i+1}" />

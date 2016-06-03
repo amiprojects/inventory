@@ -99,11 +99,9 @@
 															<c:if test="${proedPurDet.purchase_Entry!=null}">
 																<c:if
 																	test="${proedPurDet.purchase_Entry.vendor.name!='Production Vendor'}">
-																	<c:set var="totPurQty"
-																		value="${totPurQty+proedPurDet.quantity-proedPurDet.totalReturningQty}"></c:set>
-																	<%-- <fmt:formatNumber var="totPurQty"
-																	value="${totPurQty+proedPurDet.quantity-proedPurDet.totalReturningQty}"
-																	maxFractionDigits="2" /> --%>
+																	<fmt:formatNumber var="totPurQty"
+																		value="${totPurQty+proedPurDet.quantity-proedPurDet.totalReturningQty}"
+																		maxFractionDigits="2" groupingUsed="false" />
 																</c:if>
 															</c:if>
 														</c:forEach> ${totPurQty}</td>
@@ -151,7 +149,7 @@
 															<td>${vendor.ph2}</td>
 															<td><fmt:formatNumber var="totPurSub"
 																	value="${vendor.getTotPurchase()}"
-																	maxFractionDigits="2" /> ${totPurSub}</td>
+																	maxFractionDigits="2" groupingUsed="false" /> ${totPurSub}</td>
 															<td>
 																<form action="purchaseReportByVendorName" method="post"
 																	id="pView${vendor.id}">
@@ -194,7 +192,7 @@
 														<td>${vendor.ph1}</td>
 														<td>${vendor.ph2}</td>
 														<td><fmt:formatNumber var="totPurSubA"
-																value="${vendor.getTotPurchase()}" maxFractionDigits="2" />
+																value="${vendor.getTotPurchase()}" maxFractionDigits="2" groupingUsed="false" />
 															${totPurSubA}</td>
 														<td>
 															<form action="purchaseReportByAgentName" method="post"

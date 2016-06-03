@@ -263,8 +263,8 @@
 												<td>${salesRetProducts.salesProductDetails.salesPrice}</td>
 												<td><fmt:formatNumber var="amount"
 														value="${salesRetProducts.qtyReturn*salesRetProducts.salesProductDetails.salesPrice}"
-														maxFractionDigits="2" /> ${amount} <c:set var="subTotal"
-														value="${subTotal+amount}"></c:set></td>
+														maxFractionDigits="2" groupingUsed="false" /> ${amount} <c:set
+														var="subTotal" value="${subTotal+amount}"></c:set></td>
 											</tr>
 										</tbody>
 										<c:set var="i" value="${i+1}" />
@@ -317,7 +317,7 @@
 											<td><input type="number" class="form-control"
 												name="disValue" id="discount" placeholder=""
 												readonly="readonly"
-												value="<fmt:formatNumber value="${salesReturn.salesEntry.discountValue}" maxFractionDigits="2" />"></td>
+												value="<fmt:formatNumber value="${salesReturn.salesEntry.discountValue}" maxFractionDigits="2" groupingUsed="false" />"></td>
 										</tr>
 									</tbody>
 
@@ -380,7 +380,7 @@
 											<td colspan="2">Tax Amount :</td>
 											<td><input type="text" class="form-control"
 												readonly="readonly"
-												value="<fmt:formatNumber value="${(subTotal-dis)*salesReturn.salesEntry.tax_Type_Group.getTotalTaxValue()/100}" maxFractionDigits="2" />"
+												value="<fmt:formatNumber value="${(subTotal-dis)*salesReturn.salesEntry.tax_Type_Group.getTotalTaxValue()/100}" maxFractionDigits="2" groupingUsed="false" />"
 												id="taxAmount"></td>
 										</tr>
 									</tbody>

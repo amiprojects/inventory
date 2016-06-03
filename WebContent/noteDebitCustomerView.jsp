@@ -104,7 +104,8 @@
 											<th style="text-align: right;">Current Debit :</th>
 											<td><fmt:formatNumber var="currentDebit"
 													value="${sessionScope['ejb'].getLastVoucherDetailsByCustomerId(vendor.id).getTotalDebitNote()}"
-													maxFractionDigits="2" /> ${currentDebit}</td>
+													maxFractionDigits="2" groupingUsed="false" />
+												${currentDebit}</td>
 										</tr>
 									</thead>
 								</table>

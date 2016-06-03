@@ -109,7 +109,7 @@
 											<th style="text-align: right;">Current Credit :</th>
 											<td><fmt:formatNumber var="currentCredit"
 													value="${sessionScope['ejb'].getLastVoucherDetailsByVendorId(vendor.id).getTotalCreditNote()}"
-													maxFractionDigits="2" /> ${currentCredit}</td>
+													maxFractionDigits="2" groupingUsed="false" /> ${currentCredit}</td>
 										</tr>
 									</thead>
 								</table>

@@ -182,8 +182,12 @@ tfoot {
 																<td>Sales Payment</td>
 																<td>${sRepo.challanNumber}</td>
 																<td><fmt:formatNumber var="totalCost"
-																		value="${sRepo.totalCost}" maxFractionDigits="2" />
-																	${totalCost}<br> <br>0
+																		value="${sRepo.totalCost}" maxFractionDigits="2"
+																		groupingUsed="false" /> ${totalCost}<br> <br>0
+
+
+
+																
 																<td>0<br> <br> <c:set var="lastPayment"
 																		value="${sessionScope['ejb'].getPaymentDetailsBySalesEntryId(sRepo.id).get(0)}"></c:set>
 																	<c:set var="currentDue"
@@ -208,7 +212,8 @@ tfoot {
 																	<td>${pRepo.challanNumber}</td>
 																	<td>0<br> <br> <fmt:formatNumber
 																			var="totalCost" value="${pRepo.totalCost}"
-																			maxFractionDigits="2" /> ${totalCost}
+																			maxFractionDigits="2" groupingUsed="false" />
+																		${totalCost}
 																	</td>
 																	<td><c:set var="lastPayment"
 																			value="${sessionScope['ejb'].getPaymentDetailsByPurchaseEntryId(pRepo.id).get(0)}"></c:set>
@@ -234,11 +239,12 @@ tfoot {
 																<td>${srRepo.challanNumber}</td>
 																<td>0<br> <br> <fmt:formatNumber
 																		var="totalCost" value="${srRepo.totalReCost}"
-																		maxFractionDigits="2" /> ${totalCost}
+																		maxFractionDigits="2" groupingUsed="false" />
+																	${totalCost}
 																</td>
 																<td><fmt:formatNumber var="totalCost"
-																		value="${srRepo.totalReCost}" maxFractionDigits="2" />
-																	${totalCost}<br> <br>0</td>
+																		value="${srRepo.totalReCost}" maxFractionDigits="2"
+																		groupingUsed="false" /> ${totalCost}<br> <br>0</td>
 															</tr>
 															<c:set var="total5"
 																value="${total5 + srRepo.totalReCost}" />
@@ -256,11 +262,12 @@ tfoot {
 																<td>Purchase Return Payment</td>
 																<td>${prRepo.challanNumber}</td>
 																<td><fmt:formatNumber var="totalCost"
-																		value="${prRepo.totalReCost}" maxFractionDigits="2" />
-																	${totalCost}<br> <br>0</td>
+																		value="${prRepo.totalReCost}" maxFractionDigits="2"
+																		groupingUsed="false" /> ${totalCost}<br> <br>0</td>
 																<td>0<br> <br> <fmt:formatNumber
 																		var="totalCost" value="${prRepo.totalReCost}"
-																		maxFractionDigits="2" /> ${totalCost}
+																		maxFractionDigits="2" groupingUsed="false" />
+																	${totalCost}
 																</td>
 															</tr>
 															<c:set var="total7"
@@ -277,11 +284,11 @@ tfoot {
 															<th><h4>
 																	<fmt:formatNumber var="totalDebit"
 																		value="${total3+total1+total5+total7}"
-																		maxFractionDigits="2" />${totalDebit}</h4></th>
+																		maxFractionDigits="2" groupingUsed="false" />${totalDebit}</h4></th>
 															<th><h4>
 																	<fmt:formatNumber var="totalCredit"
 																		value="${total2+total4+total6+total8}"
-																		maxFractionDigits="2" />${totalCredit}</h4></th>
+																		maxFractionDigits="2" groupingUsed="false" />${totalCredit}</h4></th>
 
 														</tr>
 													</tfoot>
@@ -353,7 +360,10 @@ tfoot {
 
 													<tr>
 														<td><h2 style="color: #6a94ff;">Sales</h2></td>
-														<td>Quantity<br> <br>${spd-spd1}</td>
+														<td>Quantity<br> <br> <fmt:formatNumber
+																value="${spd-spd1}" var="quantity" maxFractionDigits="3"
+																groupingUsed="false" /> ${quantity}
+														</td>
 
 														<td>${totalSE-srta}<br> <br>&#8721; of
 															Grand total
@@ -392,8 +402,9 @@ tfoot {
 														</c:forEach>
 														<td colspan="2">Total Tax</td>
 														<td><fmt:formatNumber type="number" var="totalSE2"
-																maxFractionDigits="2" value="${totalSE2-rettaxtot}" />${totalSE2}<br>
-															<br>-&#8721; of Tax</td>
+																maxFractionDigits="2" groupingUsed="false"
+																value="${totalSE2-rettaxtot}" />${totalSE2}<br> <br>-&#8721;
+															of Tax</td>
 													</tr>
 
 
@@ -401,7 +412,7 @@ tfoot {
 													<tr>
 														<td colspan="2">Total:</td>
 														<td><fmt:formatNumber type="number"
-																maxFractionDigits="2"
+																maxFractionDigits="2" groupingUsed="false"
 																value="${totalSE-srta-totalSE3-totalSE2-totalSE1}" /></td>
 													</tr>
 
@@ -451,9 +462,11 @@ tfoot {
 														items="${sessionScope['ejb'].getAllPurchase_Product_Details()}">
 														<c:if
 															test="${purProDet.purchase_Entry.vendor.name!='Production Vendor'}">
-															<c:set value="${purProDet.quantity+ppd}" var="ppd" />
-															<c:set value="${purProDet.totalReturningQty+ppd1}"
-																var="ppd1" />
+															<fmt:formatNumber value="${purProDet.quantity+ppd}"
+																var="ppd" maxFractionDigits="3" groupingUsed="false" />
+															<fmt:formatNumber
+																value="${purProDet.totalReturningQty+ppd1}" var="ppd1"
+																maxFractionDigits="3" groupingUsed="false" />
 														</c:if>
 													</c:forEach>
 
@@ -473,7 +486,10 @@ tfoot {
 
 													<tr>
 														<td><h2 style="color: #6a94ff;">Purchase</h2></td>
-														<td>Quantity<br> <br>${ppd-ppd1}</td>
+														<td>Quantity<br> <br> <fmt:formatNumber
+																value="${ppd-ppd1}" var="quantity" maxFractionDigits="3"
+																groupingUsed="false" /> ${quantity}
+														</td>
 
 														<td>${totalPE-prta}<br> <br>&#8721; of Sub
 															total
@@ -511,13 +527,14 @@ tfoot {
 														</c:forEach>
 														<td colspan="2">Total Tax</td>
 														<td><fmt:formatNumber type="number" var="totalPE2"
-																maxFractionDigits="2" value="${totalPE2-rettaxtot}" />${totalPE2}<br>
-															<br>+&#8721; of Tax</td>
+																maxFractionDigits="2" groupingUsed="false"
+																value="${totalPE2-rettaxtot}" />${totalPE2}<br> <br>+&#8721;
+															of Tax</td>
 													</tr>
 													<tr>
 														<td colspan="2">Total:</td>
 														<td><fmt:formatNumber type="number"
-																maxFractionDigits="2"
+																maxFractionDigits="2" groupingUsed="false"
 																value="${totalPE-prta+totalPE3+totalPE2+totalPE1}" /></td>
 													</tr>
 
@@ -541,16 +558,16 @@ tfoot {
 													<tr>
 
 														<td><fmt:formatNumber type="number"
-																maxFractionDigits="2"
+																maxFractionDigits="2" groupingUsed="false"
 																value="${totalSE-srta-totalSE3-totalSE2-totalSE1-totalPE+prta-totalPE3-totalPE2-totalPE1}" /></td>
 														<td>&nbsp;</td>
 
 														<td><fmt:formatNumber type="number"
-																maxFractionDigits="2"
+																maxFractionDigits="2" groupingUsed="false"
 																value="${totalSE-srta-totalSE3-totalSE2-totalSE1}" /></td>
 														<td>&nbsp;</td>
 														<td><fmt:formatNumber type="number"
-																maxFractionDigits="2"
+																maxFractionDigits="2" groupingUsed="false"
 																value="${totalPE-prta+totalPE3+totalPE2+totalPE1}" /></td>
 													</tr>
 												</table>

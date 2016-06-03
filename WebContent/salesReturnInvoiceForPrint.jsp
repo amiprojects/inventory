@@ -172,13 +172,13 @@ page[size="A4"] {
 									${ppdet.salesProductDetails.purchase_Product_Details.productDetail.universalCode}
 								</td>
 								<td><fmt:formatNumber var="qty" value="${ppdet.qtyReturn}"
-										maxFractionDigits="3" />${qty}</td>
+										maxFractionDigits="3" groupingUsed="false" />${qty}</td>
 								<c:set value="${tqty+ppdet.qtyReturn}" var="tqty" />
 								<td>${ppdet.salesProductDetails.getSalesPrice()}</td>
 								<td>${ppdet.salesProductDetails.purchase_Product_Details.productDetail.qtyUnit.name}</td>
 								<td><fmt:formatNumber var="amount"
 										value="${ppdet.salesProductDetails.getSalesPrice()*ppdet.qtyReturn}"
-										maxFractionDigits="2" /> ${amount}</td>
+										maxFractionDigits="2" groupingUsed="false" /> ${amount}</td>
 								<c:set
 									value="${gtot+ppdet.salesProductDetails.getSalesPrice()*ppdet.qtyReturn}"
 									var="gtot" />
@@ -195,7 +195,7 @@ page[size="A4"] {
 									</td>
 									<td><c:set var="disVal"
 											value="${salesReturn.salesEntry.isFlatDiscount()?gtot*salesReturn.salesEntry.discountValue/salesReturn.salesEntry.subTotal:gtot*salesReturn.salesEntry.discountValue/100}" />
-										<fmt:formatNumber value="${disVal}" maxFractionDigits="2" />
+										<fmt:formatNumber value="${disVal}" maxFractionDigits="2" groupingUsed="false" />
 									</td>
 								</tr>
 							</c:if>
@@ -206,7 +206,7 @@ page[size="A4"] {
 										:</td>
 									<td><fmt:formatNumber
 											value="${(gtot-disVal)*salesReturn.salesEntry.tax_Type_Group.getTotalTaxValue()/100}"
-											maxFractionDigits="2" /></td>
+											maxFractionDigits="2" groupingUsed="false" /></td>
 								</tr>
 							</c:if>
 							<c:if test="${salesReturn.roundOff!=0}">
@@ -218,7 +218,7 @@ page[size="A4"] {
 							<tr>
 								<td colspan="2" align="right">Total Quantity :</td>
 								<td><fmt:formatNumber var="totalQ" value="${tqty}"
-										maxFractionDigits="3" />${totalQ}</td>
+										maxFractionDigits="3" groupingUsed="false" />${totalQ}</td>
 								<td colspan="2" align="right">Grand Total :</td>
 								<td><fmt:formatNumber var="grandT"
 										value="${salesReturn.totalReCost}" maxFractionDigits="2" />${grandT}

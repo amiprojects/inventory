@@ -225,7 +225,7 @@
 												<td>${purchaseProducts.cost}</td>
 												<td><fmt:formatNumber var="amount"
 														value="${purchaseProducts.quantity*purchaseProducts.cost}"
-														maxFractionDigits="2" />${amount}</td>
+														maxFractionDigits="2" groupingUsed="false" />${amount}</td>
 											</tr>
 										</tbody>
 										<c:set var="i" value="${i+1}" />
@@ -304,9 +304,9 @@
 												<td colspan="2">Sub Total :</td>
 												<td><fmt:formatNumber var="subt"
 														value="${purchaseSearchView.subTotal}"
-														maxFractionDigits="2" /> <input type="text"
-													class="form-control" id="subTotal" value="${subt}"
-													readonly="readonly"></td>
+														maxFractionDigits="2" groupingUsed="false" /> <input
+													type="text" class="form-control" id="subTotal"
+													value="${subt}" readonly="readonly"></td>
 											</tr>
 										</thead>
 										<tbody>
@@ -327,7 +327,7 @@
 												<td><input type="number" class="form-control"
 													name="disValue" id="discount" placeholder=""
 													readonly="readonly"
-													value="<fmt:formatNumber value="${purchaseSearchView.discountValue}" maxFractionDigits="2" />"></td>
+													value="<fmt:formatNumber value="${purchaseSearchView.discountValue}" maxFractionDigits="2" groupingUsed="false" />"></td>
 											</tr>
 										</tbody>
 										<tbody>
@@ -335,7 +335,7 @@
 												<td colspan="2" id="disc">Discount Value:</td>
 												<td><input type="number" class="form-control"
 													readonly="readonly" id="discountValue" name="discountValue"
-													value="<fmt:formatNumber value="${purchaseSearchView.discountTotal}" maxFractionDigits="2" />"></td>
+													value="<fmt:formatNumber value="${purchaseSearchView.discountTotal}" maxFractionDigits="2" groupingUsed="false" />"></td>
 											</tr>
 
 										</tbody>
@@ -354,9 +354,9 @@
 												<td colspan="2">Tax Amount :</td>
 												<td><fmt:formatNumber var="ta"
 														value="${purchaseSearchView.taxAmount}"
-														maxFractionDigits="2" /> <input type="text"
-													class="form-control" readonly="readonly" value="${ta}"
-													id="taxAmount"></td>
+														maxFractionDigits="2" groupingUsed="false" /> <input
+													type="text" class="form-control" readonly="readonly"
+													value="${ta}" id="taxAmount"></td>
 											</tr>
 										</tbody>
 										<c:choose>

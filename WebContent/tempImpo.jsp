@@ -86,7 +86,7 @@ JOBTYPE=480);
 	});
 </script>
 ------
-<fmt:formatNumber var="a" value="${val}" maxFractionDigits="2" />
+<fmt:formatNumber var="a" value="${val}" maxFractionDigits="2" groupingUsed="false" />
 ${a} ////////////////////////////
 <script src="js/numericInput.min.js"></script>
 <script>
@@ -237,7 +237,7 @@ $("#bankCity").autocomplete({
 </c:if>
 
 //
-<fmt:formatNumber var="" value="" maxFractionDigits="2" />
+<fmt:formatNumber var="" value="" maxFractionDigits="2" groupingUsed="false" />
 //
 <fmt:formatDate value="" pattern="dd-MM-yy" />
 

@@ -253,7 +253,8 @@
 														<c:set value="${totqty+proDet.qty}" var="totqty" />
 													</c:forEach>
 													<td width="10%"><fmt:formatNumber var="totalQ"
-															value="${totqty}" maxFractionDigits="3" />${totalQ}</td>
+															value="${totqty}" maxFractionDigits="3"
+															groupingUsed="false" />${totalQ}</td>
 													<td style="display: none;"><c:if
 															test="${sessionScope['ejb'].getPaymentDetailsByJobAssignId(jobAssignByDate.id).size()>0}">
 															<c:set
@@ -272,7 +273,7 @@
 																value="${totJobCost+jobp.totalJobCost}" />
 														</c:forEach> <fmt:formatNumber var="totJC"
 															value="${totJobCost+jobAssignByDate.surcharge}"
-															maxFractionDigits="2" />
+															maxFractionDigits="2" groupingUsed="false" />
 														<form action="" method="post"
 															id="jobPayment${jobAssignByDate.id}">
 															<a href="#"

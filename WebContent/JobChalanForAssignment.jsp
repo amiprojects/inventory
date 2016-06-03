@@ -255,13 +255,15 @@ Url = {
 							<tr>
 								<td colspan="6" align="right">Surcharger :</td>
 								<td colspan="2"><fmt:formatNumber var="totJC"
-										value="${jobAssi.surcharge}" maxFractionDigits="2" />${totJC}</td>
+										value="${jobAssi.surcharge}" maxFractionDigits="2"
+										groupingUsed="false" />${totJC}</td>
 							</tr>
 						</c:if>
 						<tr>
 							<td colspan="6" align="right">Total Job Cost :</td>
 							<td colspan="2"><fmt:formatNumber var="totJC"
-									value="${jobAssi.surcharge+totJobCost}" maxFractionDigits="2" />${totJC}</td>
+									value="${jobAssi.surcharge+totJobCost}" maxFractionDigits="2"
+									groupingUsed="false" />${totJC}</td>
 						</tr>
 					</tbody>
 				</table>

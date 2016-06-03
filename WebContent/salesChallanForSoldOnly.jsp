@@ -166,14 +166,14 @@ page[size="A4"] {
 									</td>
 									<td><fmt:formatNumber var="qty"
 											value="${ppdet.quantity-ppdet.salesReQty}"
-											maxFractionDigits="3" />${qty}</td>
+											maxFractionDigits="3" groupingUsed="false" />${qty}</td>
 									<c:set value="${tqty+ppdet.quantity-ppdet.salesReQty}"
 										var="tqty" />
 									<td>${ppdet.getSalesPrice()}</td>
 									<td>${ppdet.purchase_Product_Details.productDetail.qtyUnit.name}</td>
 									<td><fmt:formatNumber var="amount"
 											value="${ppdet.getSalesPrice()*(ppdet.quantity-ppdet.salesReQty)}"
-											maxFractionDigits="2" /> ${amount}</td>
+											maxFractionDigits="2" groupingUsed="false" /> ${amount}</td>
 									<c:set
 										value="${gtot+ppdet.getSalesPrice()*(ppdet.quantity-ppdet.salesReQty)}"
 										var="gtot" />
@@ -188,21 +188,18 @@ page[size="A4"] {
 											var="dis" value="${purEntry.isFlatDiscount()?'Flat':'%'}" />
 										(${purEntry.discountValue}(${dis})) :
 									</td>
-									<td>
-										<%-- <c:set var="disVal"
-											value="${purEntry.isFlatDiscount()?gtot*purEntry.discountValue/purEntry.subTotal:gtot*purEntry.discountValue/100}" /> --%>
-										<fmt:formatNumber var="disVal"
+									<td><fmt:formatNumber var="disVal"
 											value="${purEntry.isFlatDiscount()?gtot*purEntry.discountValue/purEntry.subTotal:gtot*purEntry.discountValue/100}"
-											maxFractionDigits="2" />${disVal}</td>
+											maxFractionDigits="2" groupingUsed="false" />${disVal}</td>
 								</tr>
 							</c:if>
 							<c:if test="${purEntry.taxAmount!=0}">
 								<tr>
 									<td colspan="5" align="right">Tax Amount
 										(${purEntry.tax_Type_Group.getTotalTaxValue()}%) :</td>
-									<td><c:set var="taxAmount"
-											value="${(gtot-disVal)*purEntry.tax_Type_Group.getTotalTaxValue()/100}" />
-										${taxAmount}</td>
+									<td><fmt:formatNumber var="taxAmount"
+											value="${(gtot-disVal)*purEntry.tax_Type_Group.getTotalTaxValue()/100}"
+											maxFractionDigits="2" groupingUsed="false" /> ${taxAmount}</td>
 								</tr>
 							</c:if>
 							<c:if test="${purEntry.transportcCharge!=0}">
@@ -221,22 +218,22 @@ page[size="A4"] {
 								value="${gtot-disVal+taxAmount+purEntry.transportcCharge+purEntry.surcharge}"></c:set>
 							<fmt:formatNumber var="roundValue"
 								value="${gtot-disVal+taxAmount+purEntry.transportcCharge+purEntry.surcharge}"
-								maxFractionDigits="0" />
+								maxFractionDigits="0" groupingUsed="false" />
 							<c:if test="${(roundValue-total)!=0}">
 								<tr>
 									<td colspan="5" align="right">RoundOf :</td>
 									<td><fmt:formatNumber var="roundOff"
-											value="${roundValue-total}" maxFractionDigits="2" />
-										${roundOff}</td>
+											value="${roundValue-total}" maxFractionDigits="2"
+											groupingUsed="false" /> ${roundOff}</td>
 								</tr>
 							</c:if>
 							<tr>
 								<td colspan="2" align="right">Total Quantity :</td>
 								<td><fmt:formatNumber var="totalQ" value="${tqty}"
-										maxFractionDigits="3" />${totalQ}</td>
+										maxFractionDigits="3" groupingUsed="false" />${totalQ}</td>
 								<td colspan="2" align="right">Grand Total :</td>
 								<td><fmt:formatNumber var="grandT" value="${roundValue}"
-										maxFractionDigits="2" />${grandT}</td>
+										maxFractionDigits="2" groupingUsed="false" />${grandT}</td>
 							</tr>
 						</c:if>
 					</table> <span style="float: right;"><c:if test="${i<qPage}">continued...</c:if></span>

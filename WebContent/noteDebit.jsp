@@ -87,7 +87,7 @@
 											<td>${vendor.city}</td>
 											<td><fmt:formatNumber var="currentDebit"
 													value="${sessionScope['ejb'].getLastVoucherDetailsByCustomerId(vendor.id).getTotalDebitNote()}"
-													maxFractionDigits="2" /> ${currentDebit}</td>
+													maxFractionDigits="2" groupingUsed="false" /> ${currentDebit}</td>
 											<td>
 												<form action="debitNoteByCustomer" method="post"
 													id="dnView${vendor.id}">

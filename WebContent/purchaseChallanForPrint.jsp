@@ -196,15 +196,14 @@ myWindow.print();
 								<td><b>${ppdet.productDetail.description}</b><br>Barcode
 									: ${ppdet.id}/${ppdet.lotNumber}/${ppdet.productDetail.code}<br>Design
 									No : ${ppdet.productDetail.universalCode}</td>
-								<td>
-									<%-- <fmt:formatNumber var="qty" value="${ppdet.quantity}"
-										maxFractionDigits="3" />${qty} --%>${ppdet.quantity}</td>
+								<td><fmt:formatNumber var="qty" value="${ppdet.quantity}"
+										maxFractionDigits="3" groupingUsed="false" />${qty}</td>
 								<c:set value="${ppdet.quantity+qty}" var="tqty" />
 								<td>${ppdet.cost}</td>
 								<td>${ppdet.productDetail.qtyUnit.name}</td>
 								<td><fmt:formatNumber var="amount"
-										value="${ppdet.cost*ppdet.quantity}" maxFractionDigits="2" />
-									${amount}</td>
+										value="${ppdet.cost*ppdet.quantity}" maxFractionDigits="2"
+										groupingUsed="false" /> ${amount}</td>
 								<c:set value="${gtot+ppdet.cost*ppdet.quantity}" var="gtot" />
 							</tr>
 							<c:set value="${sl+1}" var="sl" />
@@ -247,11 +246,11 @@ myWindow.print();
 							<tr>
 								<td colspan="2" align="right">Total Quantity :</td>
 								<td><fmt:formatNumber var="totalQ" value="${tqty}"
-										maxFractionDigits="3" />${totalQ}</td>
+										maxFractionDigits="3" groupingUsed="false" />${totalQ}</td>
 								<td colspan="2" align="right">Grand Total :</td>
 								<td><fmt:formatNumber var="grandT"
-										value="${purEntry.totalCost}" maxFractionDigits="2" />${grandT}
-								</td>
+										value="${purEntry.totalCost}" maxFractionDigits="2"
+										groupingUsed="false" />${grandT}</td>
 							</tr>
 						</c:if>
 					</table> <span style="float: right;"><c:if test="${i<qPage}">continued...</c:if></span>

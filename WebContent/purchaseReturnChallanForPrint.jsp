@@ -187,13 +187,13 @@ page[size="A4"] {
 									${ppdet.purchaseProductDetails.productDetail.universalCode}
 								</td>
 								<td><fmt:formatNumber var="qty" value="${ppdet.qtyReturn}"
-										maxFractionDigits="3" />${qty}</td>
+										maxFractionDigits="3" groupingUsed="false" />${qty}</td>
 								<c:set value="${tqty+ppdet.qtyReturn}" var="tqty" />
 								<td>${ppdet.purchaseProductDetails.cost}</td>
 								<td>${ppdet.purchaseProductDetails.productDetail.qtyUnit.name}</td>
 								<td><fmt:formatNumber var="amount"
 										value="${ppdet.purchaseProductDetails.cost*ppdet.qtyReturn}"
-										maxFractionDigits="2" /> ${amount}</td>
+										maxFractionDigits="2" groupingUsed="false" /> ${amount}</td>
 								<c:set
 									value="${ppdet.purchaseProductDetails.cost*ppdet.qtyReturn}"
 									var="gtot" />
@@ -207,9 +207,9 @@ page[size="A4"] {
 											value="${purEntry.purchaseEntry.isFlatDiscount()?'Flat':'%'}" />
 										(${purEntry.purchaseEntry.discountValue}(${dis})) :
 									</td>
-									<td><c:set var="disTot"
-											value="${gtot*purEntry.purchaseEntry.discountTotal/purEntry.purchaseEntry.subTotal}" />
-										${disTot}</td>
+									<td><fmt:formatNumber var="disTot"
+											value="${gtot*purEntry.purchaseEntry.discountTotal/purEntry.purchaseEntry.subTotal}"
+											maxFractionDigits="2" groupingUsed="false" /> ${disTot}</td>
 								</tr>
 							</c:if>
 							<c:if test="${purEntry.purchaseEntry.taxAmount!=0}">
@@ -217,11 +217,11 @@ page[size="A4"] {
 									<td colspan="5" align="right">Tax Amount
 										(${purEntry.purchaseEntry.tax_Type_Group.getTotalTaxValue()}%)
 										:</td>
-									<td>
-										${gtot*purEntry.purchaseEntry.taxAmount/purEntry.purchaseEntry.subTotal}
-									</td>
+									<td><fmt:formatNumber var="taxAmnt"
+											value="${gtot*purEntry.purchaseEntry.taxAmount/purEntry.purchaseEntry.subTotal}"
+											maxFractionDigits="2" groupingUsed="false" /> ${taxAmnt}</td>
 								</tr>
-							</c:if>							
+							</c:if>
 							<c:if test="${purEntry.roundOff!=0}">
 								<tr>
 									<td colspan="5" align="right">RoundOf :</td>
@@ -231,11 +231,11 @@ page[size="A4"] {
 							<tr>
 								<td colspan="2" align="right">Total Quantity :</td>
 								<td><fmt:formatNumber var="totalQ" value="${tqty}"
-										maxFractionDigits="3" />${totalQ}</td>
+										maxFractionDigits="3" groupingUsed="false" />${totalQ}</td>
 								<td colspan="2" align="right">Grand Total :</td>
 								<td><fmt:formatNumber var="grandT"
-										value="${purEntry.totalReCost}" maxFractionDigits="2" />${grandT}
-								</td>
+										value="${purEntry.totalReCost}" maxFractionDigits="2"
+										groupingUsed="false" />${grandT}</td>
 							</tr>
 						</c:if>
 					</table> <span style="float: right;"><c:if test="${i<qPage}">continued...</c:if></span>

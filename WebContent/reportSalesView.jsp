@@ -247,7 +247,7 @@
 														<td>${salesProducts.salesPrice}</td>
 														<td><fmt:formatNumber var="amount"
 																value="${salesProducts.quantity*salesProducts.salesPrice}"
-																maxFractionDigits="2" /> ${amount}</td>
+																maxFractionDigits="2" groupingUsed="false" /> ${amount}</td>
 														<%-- <c:set var="subTotal"
 															value="${subTotal+salesProducts.quantity*salesProducts.salesPrice}"></c:set> --%>
 													</c:when>
@@ -255,9 +255,7 @@
 														<td>${salesProducts.salesPrice}</td>
 														<td><fmt:formatNumber var="amount"
 																value="${salesProducts.quantity*salesProducts.salesPrice}"
-																maxFractionDigits="2" /> ${amount}</td>
-														<%-- <c:set var="subTotal"
-															value="${subTotal+salesProducts.quantity*salesProducts.salesPrice}"></c:set> --%>
+																maxFractionDigits="2" groupingUsed="false" /> ${amount}</td>
 													</c:otherwise>
 												</c:choose>
 											</tr>
@@ -366,7 +364,7 @@
 											<td><input type="number" class="form-control"
 												name="disValue" id="discount" placeholder=""
 												readonly="readonly"
-												value="<fmt:formatNumber value="${salesSearchView.discountValue}" maxFractionDigits="2" />"></td>
+												value="<fmt:formatNumber value="${salesSearchView.discountValue}" maxFractionDigits="2" groupingUsed="false" />"></td>
 										</tr>
 									</tbody>
 

@@ -257,7 +257,7 @@ Url = {
 						<%-- <tr>
 							<td colspan="6" align="right">Total Job Cost :</td>
 							<td colspan="2"><fmt:formatNumber var="totJC"
-									value="${totJobCost}" maxFractionDigits="2" />${totJC}</td>
+									value="${totJobCost}" maxFractionDigits="2" groupingUsed="false" />${totJC}</td>
 						</tr> --%>
 					</tbody>
 				</table>

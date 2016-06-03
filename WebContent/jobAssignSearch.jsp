@@ -257,7 +257,8 @@
 														<c:set value="${totqty+proDet.qty}" var="totqty" />
 													</c:forEach>
 													<td width="10%"><fmt:formatNumber var="totalQ"
-															value="${totqty}" maxFractionDigits="3" />${totalQ}</td>
+															value="${totqty}" maxFractionDigits="3"
+															groupingUsed="false" />${totalQ}</td>
 													<td width="10%"><c:set value="${0}" var="totREMqty" />
 														<c:forEach
 															items="${jobAssignByDate.jobAssignmentProducts}"

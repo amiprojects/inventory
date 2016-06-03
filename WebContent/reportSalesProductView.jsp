@@ -166,7 +166,7 @@
 													${disVal}</td>
 												<td><fmt:formatNumber var="taxAmount"
 														value="${(subot-disVal)*pEntryByD.tax_Type_Group.getTotalTaxValue()/100}"
-														maxFractionDigits="2" />${taxAmount}</td> --%>
+														maxFractionDigits="2" groupingUsed="false" />${taxAmount}</td> --%>
 												<td><form action="salesReportView" method="post"
 														id="pView${pEntryByD.id}">
 														<a href="#" onclick="purchaseViewF('${pEntryByD.id}');"><input

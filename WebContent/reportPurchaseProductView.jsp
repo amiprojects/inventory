@@ -104,7 +104,7 @@
 														</c:if>
 													</c:if>
 												</c:forEach> <fmt:formatNumber var="totPurQtyF" value="${totPurQty}"
-													maxFractionDigits="3" /> ${totPurQtyF}</td>
+													maxFractionDigits="3" groupingUsed="false" /> ${totPurQtyF}</td>
 										</tr>
 									</thead>
 								</table>

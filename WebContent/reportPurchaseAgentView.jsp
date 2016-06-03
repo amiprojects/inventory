@@ -101,7 +101,7 @@
 										<tr>
 											<th style="text-align: right;">Sub Total :</th>
 											<td><fmt:formatNumber var="totPurSubA"
-													value="${vendor.getTotPurchase()}" maxFractionDigits="2" />
+													value="${vendor.getTotPurchase()}" maxFractionDigits="2" groupingUsed="false" />
 												${totPurSubA}</td>
 										</tr>
 									</thead>

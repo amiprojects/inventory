@@ -174,12 +174,12 @@ page[size="A4"] {
 									: ${ppdet.id}/${ppdet.lotNumber}/${ppdet.productDetail.code}<br>Design
 									No : ${ppdet.productDetail.universalCode}</td>
 								<td><fmt:formatNumber var="qty" value="${ppdet.quantity}"
-										maxFractionDigits="3" />${qty}</td>
+										maxFractionDigits="3" groupingUsed="false" />${qty}</td>
 								<c:set value="${tqty+ppdet.quantity}" var="tqty" />
 								<td>${ppdet.cost}</td>
 								<td>${ppdet.productDetail.qtyUnit.name}</td>
 								<td><fmt:formatNumber var="amount"
-										value="${ppdet.cost*ppdet.quantity}" maxFractionDigits="2" />
+										value="${ppdet.cost*ppdet.quantity}" maxFractionDigits="2" groupingUsed="false" />
 									${amount}</td>
 								<c:set value="${gtot+ppdet.cost*ppdet.quantity}" var="gtot" />
 							</tr>
@@ -223,10 +223,10 @@ page[size="A4"] {
 							<tr>
 								<td colspan="2" align="right">Total Quantity :</td>
 								<td><fmt:formatNumber var="totalQ" value="${tqty}"
-										maxFractionDigits="3" />${totalQ}</td>
+										maxFractionDigits="3" groupingUsed="false" />${totalQ}</td>
 								<td colspan="2" align="right">Grand Total :</td>
 								<td><fmt:formatNumber var="grandT"
-										value="${purEntry.totalCost}" maxFractionDigits="2" />${grandT}
+										value="${purEntry.totalCost}" maxFractionDigits="2" groupingUsed="false" />${grandT}
 								</td>
 							</tr>
 						</c:if>
@@ -267,7 +267,7 @@ page[size="A4"] {
 							<td><c:forEach var="purchaseReturnProd"
 									items="${pret.purchaseReturnProductDetails}">
 									<fmt:formatNumber var="totalQ"
-										value="${purchaseReturnProd.qtyReturn}" maxFractionDigits="3" />${totalQ}
+										value="${purchaseReturnProd.qtyReturn}" maxFractionDigits="3" groupingUsed="false" />${totalQ}
 						<br>
 								</c:forEach></td>
 						</tr>

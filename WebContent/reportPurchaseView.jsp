@@ -289,9 +289,9 @@
 												<td>
 													<%-- <fmt:formatNumber var="subt"
 														value="${(100*(purchaseSearchView.totalCost-purchaseSearchView.sur_charge-purchaseSearchView.transport_cost-purchaseSearchView.roundOf))/(100+purchaseSearchView.tax_Type_Group.totalTaxValue)}"
-														maxFractionDigits="2" /> --%> <fmt:formatNumber var="subt"
+														maxFractionDigits="2" groupingUsed="false" /> --%> <fmt:formatNumber var="subt"
 														value="${purchaseSearchView.subTotal}"
-														maxFractionDigits="2" /> <input type="text"
+														maxFractionDigits="2" groupingUsed="false" /> <input type="text"
 													class="form-control" id="subTotal" value="${subt}"
 													readonly="readonly">
 												</td>
@@ -315,7 +315,7 @@
 												<td><input type="number" class="form-control"
 													name="disValue" id="discount" placeholder=""
 													readonly="readonly"
-													value="<fmt:formatNumber value="${purchaseSearchView.discountValue}" maxFractionDigits="2" />"></td>
+													value="<fmt:formatNumber value="${purchaseSearchView.discountValue}" maxFractionDigits="2" groupingUsed="false" />"></td>
 											</tr>
 										</tbody>
 										<tbody>
@@ -323,7 +323,7 @@
 												<td colspan="2" id="disc">Discount Value:</td>
 												<td><input type="number" class="form-control"
 													readonly="readonly" id="discountValue" name="discountValue"
-													value="<fmt:formatNumber value="${purchaseSearchView.discountTotal}" maxFractionDigits="2" />"></td>
+													value="<fmt:formatNumber value="${purchaseSearchView.discountTotal}" maxFractionDigits="2" groupingUsed="false" />"></td>
 											</tr>
 										</tbody>
 										<c:choose>
@@ -444,9 +444,9 @@
 												<td>
 													<%-- <fmt:formatNumber var="subt"
 														value="${((100*(purchaseSearchView.totalCost-purchaseSearchView.sur_charge-purchaseSearchView.transport_cost-purchaseSearchView.roundOf))/(100+purchaseSearchView.tax_Type_Group.totalTaxValue))*purchaseSearchView.tax_Type_Group.totalTaxValue/100}"
-														maxFractionDigits="2" /> --%> <fmt:formatNumber var="ta"
+														maxFractionDigits="2" groupingUsed="false" /> --%> <fmt:formatNumber var="ta"
 														value="${purchaseSearchView.taxAmount}"
-														maxFractionDigits="2" /> <input type="text"
+														maxFractionDigits="2" groupingUsed="false" /> <input type="text"
 													class="form-control" readonly="readonly" value="${ta}"
 													id="taxAmount">
 												</td>

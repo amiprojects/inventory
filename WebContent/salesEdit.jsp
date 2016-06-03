@@ -269,9 +269,9 @@
 													name="mrpQty" value="${salesProducts.salesPrice}"></td>
 												<td><fmt:formatNumber var="amount"
 														value="${salesProducts.quantity*salesProducts.salesPrice}"
-														maxFractionDigits="2" /><input readonly="readonly"
-													type="text" class="eachtotalvalue" name="eachtotalvalue"
-													value="${amount}"></td>
+														maxFractionDigits="2" groupingUsed="false" /><input
+													readonly="readonly" type="text" class="eachtotalvalue"
+													name="eachtotalvalue" value="${amount}"></td>
 											</tr>
 										</tbody>
 										<c:set var="i" value="${i+1}" />
@@ -310,7 +310,7 @@
 											<td><input type="number" class="form-control"
 												name="disValue" id="discount" placeholder=""
 												readonly="readonly"
-												value="<fmt:formatNumber value="${salesSearchView.discountValue}" maxFractionDigits="2" />"></td>
+												value="<fmt:formatNumber value="${salesSearchView.discountValue}" maxFractionDigits="2" groupingUsed="false" />"></td>
 										</tr>
 									</tbody>
 

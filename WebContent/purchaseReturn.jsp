@@ -379,13 +379,13 @@
 													<td>${purchaseProducts.productDetail.description}</td>
 													<td>${purchaseProducts.quantity}</td>
 													<td id="qty${purchaseProducts.id}"><fmt:formatNumber
-															type="number" maxFractionDigits="2"
+															type="number" maxFractionDigits="2" groupingUsed="false"
 															value="${purchaseProducts.quantity-purchaseProducts.totalReturningQty}" />
 													</td>
 													<td>${purchaseProducts.productDetail.qtyUnit.name}</td>
 													<td id="cost${purchaseProducts.id}">${purchaseProducts.cost}</td>
 													<td><fmt:formatNumber type="number"
-															maxFractionDigits="2"
+															maxFractionDigits="2" groupingUsed="false"
 															value="${purchaseProducts.quantity*purchaseProducts.cost}" />
 													</td>
 													<td><input type="text" class="form-control rQty"
@@ -492,7 +492,7 @@
 													</td>
 													<td><input type="text" class="form-control"
 														id="discount" name="discount" readonly="readonly"
-														value="<fmt:formatNumber value="${dis}" maxFractionDigits="2" />">
+														value="<fmt:formatNumber value="${dis}" maxFractionDigits="2" groupingUsed="false" />">
 													</td>
 												</tr>
 											</tbody>

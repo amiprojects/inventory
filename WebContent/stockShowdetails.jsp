@@ -297,8 +297,9 @@
 														<c:set var="total" value="${total+jppL.qty}" />
 													</c:forEach>
 													<c:forEach items="${sProduct}" var="sP">
-														<c:set var="sTotal"
-															value="${sTotal+sP.quantity-sP.salesReQty}" />
+														<fmt:formatNumber var="sTotal"
+															value="${sTotal+sP.quantity-sP.salesReQty}"
+															maxFractionDigits="3" groupingUsed="false" />
 													</c:forEach>
 													<tr style="width: 100%">
 														<td><b>Initial Inventory:</b> ${initialQty} <c:if
@@ -644,7 +645,8 @@
 
 																<td><b> <fmt:formatNumber var="amount"
 																			value="${sPro.salesPrice*sPro.quantity}"
-																			maxFractionDigits="2" /> ${amount}
+																			maxFractionDigits="2" groupingUsed="false" />
+																		${amount}
 																</b></td>
 																<!-- Amount -->
 

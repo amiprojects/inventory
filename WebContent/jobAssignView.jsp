@@ -195,7 +195,7 @@
 													<td>${jobp.productsForDesignCostSheet.productDetail.qtyUnit.name}</td>
 													<td><fmt:formatNumber var="totProAmount"
 															value="${jobp.jobPlanProducts.totalProductCost}"
-															maxFractionDigits="2" />${totProAmount}</td>
+															maxFractionDigits="2" groupingUsed="false" />${totProAmount}</td>
 													<td>${sessionScope['ejb'].getItmProductsForSampleByProductForDesignCostSheetId(jobp.productsForDesignCostSheet.id).itemDetails.name}</td>
 													<td><c:forEach items="${jobp.jobAssignmentJobDetails}"
 															var="jobProjob">
@@ -244,19 +244,19 @@
 												<td>Total Quantity:</td>
 												<td><h4>
 														<fmt:formatNumber var="totalQ" value="${total}"
-															maxFractionDigits="3" />${totalQ}</h4></td>
+															maxFractionDigits="3" groupingUsed="false" />${totalQ}</h4></td>
 												<td>Total Remaining:</td>
 												<td><h4>
 														<fmt:formatNumber var="totalRQ" value="${totalt}"
-															maxFractionDigits="3" />${totalRQ}</h4></td>
+															maxFractionDigits="3" groupingUsed="false" />${totalRQ}</h4></td>
 												<td colspan="2">Total Product Cost:</td>
 												<td><h4>
 														<fmt:formatNumber var="totPC" value="${totProCost}"
-															maxFractionDigits="2" />${totPC}</h4></td>
+															maxFractionDigits="2" groupingUsed="false" />${totPC}</h4></td>
 												<td colspan="2">Total Job Cost:</td>
 												<td><h4>
 														<fmt:formatNumber var="totJC" value="${totJobCost}"
-															maxFractionDigits="2" />${totJC}</h4></td>
+															maxFractionDigits="2" groupingUsed="false" />${totJC}</h4></td>
 											</tr>
 										</tbody>
 									</table>
