@@ -1,2 +1,6 @@
-maxFractionDigits
- groupingUsed="false"
+,
+						complete : function(data2) {
+							$.each(data2.responseJSON, function(index, item2) {
+								alert(item2.currentDebitNote)
+							});
+						}

@@ -567,7 +567,7 @@
 			
 			$(f).prop("readonly", true);
 			$(f).attr("style", "background-color: grey;");	
-			sweetAlert('Oops...','Saling quantity can not be less than returning quantity : ' + retQtyH, 'error');
+			sweetAlert('Oops...','Selling quantity can not be less than returning quantity : ' + retQtyH, 'error');
 		} else if (Number(qty) > Number(qtyH)) {
 			$("#trRemove" + a + " :nth-child(6) input[type=text]").val(
 					qtyH);
@@ -575,7 +575,7 @@
 			
 			$(f).prop("readonly", true);
 			$(f).attr("style", "background-color: grey;");	
-			sweetAlert('Oops...','Saling quantity can not be greater than sold quantity : ' + qtyH, 'error');
+			sweetAlert('Oops...','Selling quantity can not be greater than sold quantity : ' + qtyH, 'error');
 		} else{                
                 swal({
                 	title: "Are you sure?",

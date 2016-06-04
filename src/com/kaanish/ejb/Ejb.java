@@ -1294,7 +1294,7 @@ public class Ejb {
 		Set<Purchase_Entry> hs = new HashSet<>();
 		TypedQuery<Purchase_Product_Details> q = em
 				.createQuery(
-						"select c from Purchase_Product_Details c where UPPER(c.productDetail.code)=:name and c.purchase_Entry!=null ORDER BY c.id DESC",
+						"select c from Purchase_Product_Details c where UPPER(c.productDetail.code)=:name and c.purchase_Entry!=null ORDER BY c.purchase_Entry.id DESC",
 						Purchase_Product_Details.class);
 		q.setParameter("name", name.toUpperCase());
 
@@ -1494,6 +1494,18 @@ public class Ejb {
 		return lst;
 	}
 
+	public List<String> getAllFinancialForPurchaseReturn() {
+		List<String> lst = new ArrayList<String>();
+		HashSet<String> hash = new HashSet<String>();
+		for (PurchaseReturn pr : getAllPurchaseReturn()) {
+			lst.add(pr.getChallanNumber().split("/")[1]);
+		}
+		hash.addAll(lst);
+		lst.clear();
+		lst.addAll(hash);
+		return lst;
+	}
+
 	public List<String> getAllFinancialForPurchaseOrder() {
 		List<String> lst = new ArrayList<String>();
 		HashSet<String> hash = new HashSet<String>();
@@ -1577,6 +1589,13 @@ public class Ejb {
 		return em.find(PurchaseReturn.class, id);
 	}
 
+	public List<PurchaseReturn> getAllPurchaseReturnDesc() {
+		TypedQuery<PurchaseReturn> q = em.createQuery(
+				"select c from PurchaseReturn c order by c.id desc",
+				PurchaseReturn.class);
+		return q.getResultList();
+	}
+
 	public int getLastPurchaseReturnChallanNumber() {
 		TypedQuery<PurchaseReturn> q = em.createQuery(
 				"select c from PurchaseReturn c ORDER BY c.id DESC",
@@ -1614,6 +1633,71 @@ public class Ejb {
 						.getSufix());
 			}
 		}
+	}
+
+	public List<PurchaseReturn> getPurchaseReturnByDate(Date startDate,
+			Date endDate) {
+		TypedQuery<PurchaseReturn> q = em
+				.createQuery(
+						"select c from PurchaseReturn c WHERE c.returnDate BETWEEN :startDate AND :endDate ORDER BY c.id DESC",
+						PurchaseReturn.class);
+		q.setParameter("startDate", startDate);
+		q.setParameter("endDate", endDate);
+		return q.getResultList();
+	}
+
+	public List<PurchaseReturn> getPurchaseReturnByChallanNo(String chNo) {
+		TypedQuery<PurchaseReturn> q = em
+				.createQuery(
+						"select c from PurchaseReturn c where UPPER(c.challanNumber)=:chNo ORDER BY c.id DESC",
+						PurchaseReturn.class);
+		q.setParameter("chNo", chNo.toUpperCase());
+		return q.getResultList();
+	}
+
+	public List<PurchaseReturn> getPurchaseReturnByReferenceChallanNo(
+			String chNo) {
+		TypedQuery<PurchaseReturn> q = em
+				.createQuery(
+						"select c from PurchaseReturn c where UPPER(c.purchaseEntry.challanNumber)=:chNo ORDER BY c.id DESC",
+						PurchaseReturn.class);
+		q.setParameter("chNo", chNo.toUpperCase());
+		return q.getResultList();
+	}
+
+	public List<PurchaseReturn> getPurchaseReturnByProductCode(String name) {
+		List<PurchaseReturn> lst = new ArrayList<PurchaseReturn>();
+		Set<PurchaseReturn> hs = new HashSet<>();
+		TypedQuery<PurchaseReturnProductDetails> q = em
+				.createQuery(
+						"select c from PurchaseReturnProductDetails c where UPPER(c.purchaseProductDetails.productDetail.code)=:name ORDER BY c.purchaseReturn.id DESC",
+						PurchaseReturnProductDetails.class);
+		q.setParameter("name", name.toUpperCase());
+		for (PurchaseReturnProductDetails p : q.getResultList()) {
+			lst.add(p.getPurchaseReturn());
+		}
+		hs.addAll(lst);
+		lst.clear();
+		lst.addAll(hs);
+		return lst;
+	}
+
+	public List<PurchaseReturn> getPurchaseReturnByVendorName(String name) {
+		TypedQuery<PurchaseReturn> q = em
+				.createQuery(
+						"select c from PurchaseReturn c where c.purchaseEntry.vendor.vendorType.type='Vendor' and UPPER(c.purchaseEntry.vendor.name)=:name ORDER BY c.id DESC",
+						PurchaseReturn.class);
+		q.setParameter("name", name.toUpperCase());
+		return q.getResultList();
+	}
+
+	public List<PurchaseReturn> getPurchaseReturnByAgentName(String name) {
+		TypedQuery<PurchaseReturn> q = em
+				.createQuery(
+						"select c from PurchaseReturn c where c.purchaseEntry.vendor.vendorType.type='Purchase Agent' and UPPER(c.purchaseEntry.vendor.name)=:name ORDER BY c.id DESC",
+						PurchaseReturn.class);
+		q.setParameter("name", name.toUpperCase());
+		return q.getResultList();
 	}
 
 	/*****************

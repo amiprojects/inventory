@@ -45,6 +45,13 @@ public class BackupRestoreServlet extends HttpServlet {
 
 		case "restore":
 			Process proc1 = Runtime.getRuntime().exec("cmd /C start cat.bat");
+			// Process proc1 = Runtime.getRuntime().exec(
+			// "cmd /C start productionCat.bat");
+			// Process proc1 = Runtime.getRuntime().exec(
+			// "cmd /C start kaanishCat.bat");
+			// Process proc1 = Runtime.getRuntime().exec(
+			// "cmd /C start kainarCat.bat");
+
 			InputStream fis1 = proc1.getInputStream();
 			Properties pro1 = new Properties();
 			pro1.load(fis1);

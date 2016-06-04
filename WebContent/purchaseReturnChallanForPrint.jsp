@@ -195,7 +195,7 @@ page[size="A4"] {
 										value="${ppdet.purchaseProductDetails.cost*ppdet.qtyReturn}"
 										maxFractionDigits="2" groupingUsed="false" /> ${amount}</td>
 								<c:set
-									value="${ppdet.purchaseProductDetails.cost*ppdet.qtyReturn}"
+									value="${gtot+ppdet.purchaseProductDetails.cost*ppdet.qtyReturn}"
 									var="gtot" />
 							</tr>
 							<c:set value="${sl+1}" var="sl" />

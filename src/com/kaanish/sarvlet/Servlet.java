@@ -127,7 +127,10 @@ import com.kaanish.util.GetMacId;
 		"/salesRerturnSearchByDate", "/salesReturnSearchByChallanNo",
 		"/salesReturnSearchByRefChallanNo", "/salesReturnSearchByCustomerName",
 		"/salesReturnSearchByAgentName", "/salesReturnSearchByProductCode",
-		"/salesEdit" })
+		"/salesEdit", "/purchaseReturnSearchAll", "/purchaseReturnView",
+		"/purchaseReturnSearchByDate", "/purchaseRetSearchByRefChallanNo",
+		"/purchaseRetSearchByProductCode", "/purchaseRetSearchByVendorName",
+		"/purchaseRetSearchByAgentName", "/purchaseRetSearchByChallanNo" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -760,8 +763,8 @@ public class Servlet extends HttpServlet {
 
 						productDetail = ejb.getProductDetailsById(Integer
 								.parseInt(req.getParameter("productid")));
-						productDetail.setDescription(req
-								.getParameter("description123").toUpperCase());
+						productDetail.setDescription(req.getParameter(
+								"description123").toUpperCase());
 						productDetail.setQtyUnit(ejb.getQtyUnitById(Integer
 								.parseInt(req.getParameter("uom123"))));
 						ejb.updateProductDetail(productDetail);
@@ -2520,13 +2523,177 @@ public class Servlet extends HttpServlet {
 
 						break;
 
+					case "purchaseReturnView":
+						page = "purchaseReturnView.jsp";
+						req.setAttribute("prId", req.getParameter("prId"));
+						msg = "";
+						break;
+
 					case "purchaseProductionView":
 						page = "purchaseProductionView.jsp";
-
 						req.setAttribute("pId", req.getParameter("pId"));
-
 						msg = "";
+						break;
 
+					case "purchaseReturnSearchAll":
+						page = "purchaseReturnSearch.jsp";
+						List<PurchaseReturn> purRetA = ejb
+								.getAllPurchaseReturnDesc();
+						if (purRetA.size() > 0) {
+							msg = "All Purchase Return List";
+							req.setAttribute("purRetList", purRetA);
+						} else {
+							msg = "No result found...";
+						}
+						break;
+
+					case "purchaseReturnSearchByDate":
+						page = "purchaseReturnSearch.jsp";
+						List<PurchaseReturn> purRetD = ejb
+								.getPurchaseReturnByDate(DateConverter
+										.getDate(req.getParameter("fDate")),
+										DateConverter.getDate(req
+												.getParameter("lDate")));
+						req.setAttribute("purRetList", purRetD);
+						if (purRetD.size() > 0) {
+							msg = "Your search for dated "
+									+ req.getParameter("fDate") + " to "
+									+ req.getParameter("lDate");
+						} else {
+							msg = "No result found for dated "
+									+ req.getParameter("fDate") + " to "
+									+ req.getParameter("lDate") + "...";
+						}
+						break;
+
+					case "purchaseRetSearchByChallanNo":
+						page = "purchaseReturnSearch.jsp";
+						List<PurchaseReturn> purRetC = ejb
+								.getPurchaseReturnByChallanNo(req
+										.getParameter("companyInitial")
+										+ "/"
+										+ req.getParameter("fynYear")
+										+ "/"
+										+ req.getParameter("month")
+										+ "/"
+										+ req.getParameter("billType")
+										+ "/"
+										+ req.getParameter("autoNum")
+										+ "/"
+										+ req.getParameter("suffix"));
+
+						req.setAttribute("purRetList", purRetC);
+
+						if (purRetC.size() > 0) {
+							msg = "Your search for challan number : "
+									+ req.getParameter("companyInitial") + "/"
+									+ req.getParameter("fynYear") + "/"
+									+ req.getParameter("month") + "/"
+									+ req.getParameter("billType") + "/"
+									+ req.getParameter("autoNum") + "/"
+									+ req.getParameter("suffix");
+						} else {
+							msg = "No result found for challan number : "
+									+ req.getParameter("companyInitial") + "/"
+									+ req.getParameter("fynYear") + "/"
+									+ req.getParameter("month") + "/"
+									+ req.getParameter("billType") + "/"
+									+ req.getParameter("autoNum") + "/"
+									+ req.getParameter("suffix");
+						}
+						break;
+
+					case "purchaseRetSearchByRefChallanNo":
+						page = "purchaseReturnSearch.jsp";
+						List<PurchaseReturn> purRetRC = ejb
+								.getPurchaseReturnByReferenceChallanNo(req
+										.getParameter("companyInitial")
+										+ "/"
+										+ req.getParameter("fynYear")
+										+ "/"
+										+ req.getParameter("month")
+										+ "/"
+										+ req.getParameter("billType")
+										+ "/"
+										+ req.getParameter("autoNum")
+										+ "/"
+										+ req.getParameter("suffix"));
+
+						req.setAttribute("purRetList", purRetRC);
+
+						if (purRetRC.size() > 0) {
+							msg = "Your search for Reference challan number : "
+									+ req.getParameter("companyInitial") + "/"
+									+ req.getParameter("fynYear") + "/"
+									+ req.getParameter("month") + "/"
+									+ req.getParameter("billType") + "/"
+									+ req.getParameter("autoNum") + "/"
+									+ req.getParameter("suffix");
+						} else {
+							msg = "No result found for Reference challan number : "
+									+ req.getParameter("companyInitial")
+									+ "/"
+									+ req.getParameter("fynYear")
+									+ "/"
+									+ req.getParameter("month")
+									+ "/"
+									+ req.getParameter("billType")
+									+ "/"
+									+ req.getParameter("autoNum")
+									+ "/"
+									+ req.getParameter("suffix");
+						}
+						break;
+
+					case "purchaseRetSearchByProductCode":
+						page = "purchaseReturnSearch.jsp";
+						List<PurchaseReturn> purRetP = ejb
+								.getPurchaseReturnByProductCode(req
+										.getParameter("prodCode"));
+						req.setAttribute("purRetList", purRetP);
+						if (purRetP.size() > 0) {
+							msg = "Your search for Product code : "
+									+ req.getParameter("prodCode")
+											.toUpperCase();
+						} else {
+							msg = "No result found for product code : "
+									+ req.getParameter("prodCode")
+											.toUpperCase();
+						}
+						break;
+
+					case "purchaseRetSearchByVendorName":
+						page = "purchaseReturnSearch.jsp";
+						List<PurchaseReturn> purRetV = ejb
+								.getPurchaseReturnByVendorName(req
+										.getParameter("vendorName"));
+						req.setAttribute("purRetList", purRetV);
+						if (purRetV.size() > 0) {
+							msg = "Your search for Vendor name : "
+									+ req.getParameter("vendorName")
+											.toUpperCase();
+						} else {
+							msg = "No result found for Vendor name : "
+									+ req.getParameter("vendorName")
+											.toUpperCase();
+						}
+						break;
+
+					case "purchaseRetSearchByAgentName":
+						page = "purchaseReturnSearch.jsp";
+						List<PurchaseReturn> purRetAg = ejb
+								.getPurchaseReturnByAgentName(req
+										.getParameter("agentName"));
+						req.setAttribute("purRetList", purRetAg);
+						if (purRetAg.size() > 0) {
+							msg = "Your search for Agent name : "
+									+ req.getParameter("agentName")
+											.toUpperCase();
+						} else {
+							msg = "No result found for Agent name : "
+									+ req.getParameter("agentName")
+											.toUpperCase();
+						}
 						break;
 
 					case "purchaseEdit":

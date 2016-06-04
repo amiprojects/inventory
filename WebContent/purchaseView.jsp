@@ -337,27 +337,6 @@
 													readonly="readonly" id="discountValue" name="discountValue"
 													value="<fmt:formatNumber value="${purchaseSearchView.discountTotal}" maxFractionDigits="2" groupingUsed="false" />"></td>
 											</tr>
-
-										</tbody>
-										<tbody>
-											<tr>
-												<td>${purchaseSearchView.tax_Type_Group.name}</td>
-												<td>%</td>
-												<td><input type="text" class="form-control"
-													readonly="readonly"
-													value="${purchaseSearchView.tax_Type_Group.getTotalTaxValue()}"
-													id="taxTot"></td>
-											</tr>
-										</tbody>
-										<tbody>
-											<tr>
-												<td colspan="2">Tax Amount :</td>
-												<td><fmt:formatNumber var="ta"
-														value="${purchaseSearchView.taxAmount}"
-														maxFractionDigits="2" groupingUsed="false" /> <input
-													type="text" class="form-control" readonly="readonly"
-													value="${ta}" id="taxAmount"></td>
-											</tr>
 										</tbody>
 										<c:choose>
 											<c:when test="${purchaseSearchView.agentId==0}">
@@ -461,6 +440,26 @@
 												</tbody>
 											</c:otherwise>
 										</c:choose>
+										<tbody>
+											<tr>
+												<td>${purchaseSearchView.tax_Type_Group.name}</td>
+												<td>%</td>
+												<td><input type="text" class="form-control"
+													readonly="readonly"
+													value="${purchaseSearchView.tax_Type_Group.getTotalTaxValue()}"
+													id="taxTot"></td>
+											</tr>
+										</tbody>
+										<tbody>
+											<tr>
+												<td colspan="2">Tax Amount :</td>
+												<td><fmt:formatNumber var="ta"
+														value="${purchaseSearchView.taxAmount}"
+														maxFractionDigits="2" groupingUsed="false" /> <input
+													type="text" class="form-control" readonly="readonly"
+													value="${ta}" id="taxAmount"></td>
+											</tr>
+										</tbody>
 										<tbody>
 											<tr>
 												<td colspan="2">Transport charge :</td>
