@@ -78,9 +78,9 @@ public class InitS extends HttpServlet {
 	@Override
 	public void init() throws ServletException {
 		if (!ejb.isCompanyInfoExist()) {
-			String compName = "KK"; // Production House
-			// String compName="Kaanish Kouture"; //Kaanish Kouture
-			// String compName="Kainat Kreation"; //Kainat Kreation
+			// String compName = "KK"; // Production House
+			String compName = "Kaanish Kouture"; // Kaanish Kouture
+			// String compName = "Kainat Kreation"; // Kainat Kreation
 
 			companyInfo = new CompanyInfo();
 			companyInfo.setCompname(compName);
@@ -88,15 +88,15 @@ public class InitS extends HttpServlet {
 		}
 		if (ejb.getAllUsers().size() < 1) {
 			// Production House
-			String userId = "adminProduction";
-			String password = "productionKaanish";
-			String name = "Production Admin";
+			// String userId = "adminProduction";
+			// String password = "productionKaanish";
+			// String name = "Production Admin";
 			// Production House
 
 			// Kaanish Kouture
-			// String userId = "adminKaanish";
-			// String password = "admin";
-			// String name = "Kaanish Admin";
+			String userId = "adminKaanish";
+			String password = "admin";
+			String name = "Kaanish Admin";
 			// Kaanish Kouture
 
 			// Kainat Kreation
@@ -132,43 +132,44 @@ public class InitS extends HttpServlet {
 		// vendor type
 
 		// adding vendor- production house only
-		int flagV = 0;
-		for (Vendor v : ejb.getAllVendors()) {
-			if (v.getName().equals("Production Vendor")) {
-				flagV = 1;
-				break;
-			}
-		}
-		if (flagV == 0) {
-			dt = new Date();
-			vendor = new Vendor();
-			vendor.setName("Production Vendor");
-			vendor.setPh1("Production Phone");
-			vendor.setAddress("NA");
-			vendor.setAliseName("NA");
-			vendor.setCompanyName("NA");
-			vendor.setEmail("NA");
-			vendor.setPh2("NA");
-			vendor.setPinCode("NA");
-			vendor.setLastModifiedDate(dt);
-			vendor.setVendorType(ejb.getVendorTypeByName("Vendor"));
-			vendor.setUsers(ejb.getUserById("adminProduction"));
-			ejb.setVendor(vendor);
-
-			accountDetails = new AccountDetails();
-			accountDetails.setUsers(ejb.getUserById("adminProduction"));
-			accountDetails.setVendor(vendor);
-			ejb.setAccountDetails(accountDetails);
-		}
+		// int flagV = 0;
+		// for (Vendor v : ejb.getAllVendors()) {
+		// if (v.getName().equals("Production Vendor")) {
+		// flagV = 1;
+		// break;
+		// }
+		// }
+		// if (flagV == 0) {
+		// dt = new Date();
+		// vendor = new Vendor();
+		// vendor.setName("Production Vendor");
+		// vendor.setPh1("Production Phone");
+		// vendor.setAddress("NA");
+		// vendor.setAliseName("NA");
+		// vendor.setCompanyName("NA");
+		// vendor.setEmail("NA");
+		// vendor.setPh2("NA");
+		// vendor.setPinCode("NA");
+		// vendor.setLastModifiedDate(dt);
+		// vendor.setVendorType(ejb.getVendorTypeByName("Vendor"));
+		// vendor.setUsers(ejb.getUserById("adminProduction"));
+		// ejb.setVendor(vendor);
+		//
+		// accountDetails = new AccountDetails();
+		// accountDetails.setUsers(ejb.getUserById("adminProduction"));
+		// accountDetails.setVendor(vendor);
+		// ejb.setAccountDetails(accountDetails);
+		// }
 		// adding vendor- production house only
 
 		if (ejb.getAllBillSetup().size() < 8) {
 			// Production House
-			companyInfo = ejb.getUserById("adminProduction").getCompanyInfo();
+			// companyInfo =
+			// ejb.getUserById("adminProduction").getCompanyInfo();
 			// Production House
 
 			// Kaanish Kouture
-			// companyInfo = ejb.getUserById("adminKaanish").getCompanyInfo();
+			companyInfo = ejb.getUserById("adminKaanish").getCompanyInfo();
 			// Kaanish Kouture
 
 			// Kainat Kreation

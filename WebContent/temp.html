@@ -1,0 +1,16 @@
+<td class="tg-031e"><c:forEach var="purchaseReturnProd"
+		items="${pret.salesProductReturnDetail}">
+						${purchaseReturnProd.salesProductDetails.purchase_Product_Details.productDetail.code}
+						<br>
+	</c:forEach></td>
+<td class="tg-031e" colspan="2"><c:forEach var="purchaseReturnProd"
+		items="${pret.salesProductReturnDetail}">
+						${purchaseReturnProd.salesProductDetails.purchase_Product_Details.productDetail.description}
+						<br>
+	</c:forEach></td>
+<td class="tg-031e"><c:forEach var="purchaseReturnProd"
+		items="${pret.salesProductReturnDetail}">
+		<fmt:formatNumber var="totalQ" value="${purchaseReturnProd.qtyReturn}"
+			maxFractionDigits="3" groupingUsed="false" />${totalQ}
+						<br>
+	</c:forEach></td>
