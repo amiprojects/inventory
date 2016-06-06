@@ -60,9 +60,11 @@
 							title="">Search Purchase Entry</a></li>
 						<li><a id="sPurchRetSearch" href="purchaseReturnSearch.jsp"
 							title="">Search Purchase Return</a></li>
-						<li><a id="sProdPurchSearch"
-							href="purchasingProductionSearch.jsp" title="">Search Ready
-								Production</a></li>
+						<c:if test="${sessionScope['user']=='adminProduction'}">
+							<li><a id="sProdPurchSearch"
+								href="purchasingProductionSearch.jsp" title="">Search Ready
+									Production</a></li>
+						</c:if>
 					</ul>
 				</div>
 			</div>
@@ -104,29 +106,32 @@
 					</ul>
 				</div>
 			</div>
-			<div class="single-menu">
-				<h2 id="jobs">
-					<a title=""><span>Jobs Module</span></a>
-				</h2>
-				<div class="sub-menu">
-					<ul>
-						<li><a id="designCostSheet" href="jobDesignCostSheet.jsp"
-							title="">Sample Job CostSheet</a></li>
-						<li><a id="jAssign" href="jobAssign.jsp" title="">Job
-								Assignment</a></li>
-						<li><a id="jR" href="jobReceive.jsp" title="">Job Receive</a></li>
-						<li><a id="jobPayment" href="jobPayment.jsp" title="">Job
-								Payment</a></li>
-						<li><a id="designCostSheetSearch"
-							href="jobDesignCostSheetSearch.jsp" title="">SampleJobCostSheet
-								Search</a></li>
-						<li><a id="jobPlan" href="jobPlanSearch.jsp" title="">Job
-								Plan</a></li>
-						<li><a id="jSearch" href="jobAssignSearch.jsp" title="">Job
-								Assignment Search</a></li>
-					</ul>
+			<c:if test="${sessionScope['user']=='adminProduction'}">
+				<div class="single-menu">
+					<h2 id="jobs">
+						<a title=""><span>Jobs Module</span></a>
+					</h2>
+					<div class="sub-menu">
+						<ul>
+							<li><a id="designCostSheet" href="jobDesignCostSheet.jsp"
+								title="">Sample Job CostSheet</a></li>
+							<li><a id="jAssign" href="jobAssign.jsp" title="">Job
+									Assignment</a></li>
+							<li><a id="jR" href="jobReceive.jsp" title="">Job
+									Receive</a></li>
+							<li><a id="jobPayment" href="jobPayment.jsp" title="">Job
+									Payment</a></li>
+							<li><a id="designCostSheetSearch"
+								href="jobDesignCostSheetSearch.jsp" title="">SampleJobCostSheet
+									Search</a></li>
+							<li><a id="jobPlan" href="jobPlanSearch.jsp" title="">Job
+									Plan</a></li>
+							<li><a id="jSearch" href="jobAssignSearch.jsp" title="">Job
+									Assignment Search</a></li>
+						</ul>
+					</div>
 				</div>
-			</div>
+			</c:if>
 			<!-- <div class="single-menu">
 				<h2 id="debitCreditNote">
 					<a title=""><span>Debit/Credit Note</span></a>
@@ -161,11 +166,12 @@
 						<li><a id="sSetupBill" href="billSetup.jsp" title="">Bill
 								Setup</a></li>
 
-
-						<li><a id="jobSetup" href="jobSetup.jsp" title="">Job
-								Setup</a></li>
-						<li><a id="itemSetup" href="setupItem.jsp" title="">Item
-								Setup</a></li>
+						<c:if test="${sessionScope['user']=='adminProduction'}">
+							<li><a id="jobSetup" href="jobSetup.jsp" title="">Job
+									Setup</a></li>
+							<li><a id="itemSetup" href="setupItem.jsp" title="">Item
+									Setup</a></li>
+						</c:if>
 					</ul>
 				</div>
 			</div>

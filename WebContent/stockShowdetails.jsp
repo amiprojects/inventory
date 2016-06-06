@@ -146,8 +146,10 @@
 										<li><a data-toggle="tab" href="#Image">Image</a></li>
 										<li><a data-toggle="tab" href="#purchase">Purchase
 												Inventory</a></li>
-										<li><a data-toggle="tab" href="#purchaseProduction">Production
-												Inventory</a></li>
+										<c:if test="${sessionScope['user']=='adminProduction'}">
+											<li><a data-toggle="tab" href="#purchaseProduction">Production
+													Inventory</a></li>
+										</c:if>
 										<li><a data-toggle="tab" href="#Sales">Sales
 												Inventory</a></li>
 										<!-- <li><a data-toggle="tab" href="#jobber">Jobber
@@ -319,15 +321,20 @@
 																	onclick="window.open('barcodePurchasePrint.jsp?id=${requestScope['proid1']}','mywindow','width=1100,height=500')">
 																	<img alt="click to view" src="Capture.PNG" height="20">
 																</a>
-															</c:if> <br> <b>Production Inventory:</b>
+															</c:if> <br> <c:if
+																test="${sessionScope['user']=='adminProduction'}">
+																<b>Production Inventory:</b>
 															&nbsp;&nbsp;${purProductionQtyt}<c:if
-																test="${purProductionQtyt!=0}">
-																<a href="#"
-																	onclick="window.open('barcodeProductionInventoryPrint.jsp?id=${requestScope['proid1']}','mywindow','width=1100,height=500')">
-																	<img alt="click to view" src="Capture.PNG" height="20">
-																</a>
+																	test="${purProductionQtyt!=0}">
+																	<a href="#"
+																		onclick="window.open('barcodeProductionInventoryPrint.jsp?id=${requestScope['proid1']}','mywindow','width=1100,height=500')">
+																		<img alt="click to view" src="Capture.PNG" height="20">
+																	</a>
+																</c:if>
 															</c:if></td>
-														<td><b>In Jobwork:</b>&nbsp;&nbsp;${total}</td>
+														<c:if test="${sessionScope['user']=='adminProduction'}">
+															<td><b>In Jobwork:</b>&nbsp;&nbsp;${total}</td>
+														</c:if>
 													</tr>
 												</table>
 											</div>
@@ -461,98 +468,99 @@
 											<br>
 
 										</div>
-
-										<div id="purchaseProduction" class="tab-pane fade">
-											<div class="widget-area">
-
-
-												<div style="width: 100%; overflow-x: scroll">
-													<table class="table table-striped table-bordered">
-
-														<tr style="width: 100%;">
-															<td><b>Date</b></td>
+										<c:if test="${sessionScope['user']=='adminProduction'}">
+											<div id="purchaseProduction" class="tab-pane fade">
+												<div class="widget-area">
 
 
-															<td><b>Quantity</b></td>
+													<div style="width: 100%; overflow-x: scroll">
+														<table class="table table-striped table-bordered">
+
+															<tr style="width: 100%;">
+																<td><b>Date</b></td>
 
 
-
-															<td><b>UOM </b></td>
-
-
-															<td><b>Cost/unit</b></td>
-
-
-															<td><b>Amount</b></td>
-
-
-															<td><b>Vendor</b></td>
-
-
-															<td><b>Agent</b></td>
-
-
-															<td><b>Lot Number</b></td>
-
-
-															<td><b>Barcode</b></td>
-
-
-															<td><b>Purchase challan number</b></td>
-
-														</tr>
+																<td><b>Quantity</b></td>
 
 
 
-														<c:forEach items="${purchasePro}" var="purPro">
-															<c:if test="${!purPro.isInitialInventory()}">
-																<c:if
-																	test="${purPro.purchase_Entry.vendor.name=='Production Vendor'}">
-																	<tr>
-																		<td><b><fmt:formatDate
-																					value="${purPro.purchase_Entry.purchase_date}"
-																					pattern="dd-MM-yyyy" /></b></td>
+																<td><b>UOM </b></td>
 
 
-																		<td><b>${purPro.quantity}</b></td>
+																<td><b>Cost/unit</b></td>
+
+
+																<td><b>Amount</b></td>
+
+
+																<td><b>Vendor</b></td>
+
+
+																<td><b>Agent</b></td>
+
+
+																<td><b>Lot Number</b></td>
+
+
+																<td><b>Barcode</b></td>
+
+
+																<td><b>Purchase challan number</b></td>
+
+															</tr>
 
 
 
-																		<td><b>${purPro.productDetail.qtyUnit.name} </b></td>
+															<c:forEach items="${purchasePro}" var="purPro">
+																<c:if test="${!purPro.isInitialInventory()}">
+																	<c:if
+																		test="${purPro.purchase_Entry.vendor.name=='Production Vendor'}">
+																		<tr>
+																			<td><b><fmt:formatDate
+																						value="${purPro.purchase_Entry.purchase_date}"
+																						pattern="dd-MM-yyyy" /></b></td>
+
+
+																			<td><b>${purPro.quantity}</b></td>
 
 
 
-																		<td><b>${purPro.cost}</b></td>
+																			<td><b>${purPro.productDetail.qtyUnit.name}
+																			</b></td>
 
 
-																		<td><b>${purPro.quantity*purPro.cost}</b></td>
+
+																			<td><b>${purPro.cost}</b></td>
 
 
-																		<td><b>${purPro.purchase_Entry.vendor.name}</b></td>
+																			<td><b>${purPro.quantity*purPro.cost}</b></td>
 
 
-																		<td><b>${sessionScope['ejb'].getVendorById(purPro.purchase_Entry.agentId).name}
-																		</b></td>
-
-																		<td><b>${purPro.lotNumber}</b></td>
+																			<td><b>${purPro.purchase_Entry.vendor.name}</b></td>
 
 
-																		<td><b>${purPro.id}/${purPro.lotNumber}/${purPro.productDetail.code}</b></td>
+																			<td><b>${sessionScope['ejb'].getVendorById(purPro.purchase_Entry.agentId).name}
+																			</b></td>
+
+																			<td><b>${purPro.lotNumber}</b></td>
 
 
-																		<td>${purPro.purchase_Entry.challanNumber}</td>
-																	</tr>
+																			<td><b>${purPro.id}/${purPro.lotNumber}/${purPro.productDetail.code}</b></td>
+
+
+																			<td>${purPro.purchase_Entry.challanNumber}</td>
+																		</tr>
+																	</c:if>
 																</c:if>
-															</c:if>
-														</c:forEach>
+															</c:forEach>
 
-													</table>
+														</table>
+													</div>
+
 												</div>
-
+												<br>
 											</div>
-											<br>
-
-										</div>
+										</c:if>
 										<!-- .......................................**********************Sales****************************************************...................................... -->
 										<div id="Sales" class="tab-pane fade ">
 											<div class="widget-area">

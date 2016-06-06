@@ -217,7 +217,9 @@ public class Servlet extends HttpServlet {
 		} else {
 
 			if (!GetMacId
-					.getSerialNumberOfKaanishExternalHDD("USBSTORDISK&VEN_SEAGATE&PROD_EXPANSION&REV_0636NA49JMSK&0")) {
+					.getSerialNumberOfKaanishExternalHDD(
+							"USBSTORDISK&VEN_SEAGATE&PROD_EXPANSION&REV_0636NA49JMSK&0",
+							httpSession.getAttribute("user").toString())) {
 				page = "index.jsp";
 				httpSession.removeAttribute("user");
 				httpSession.removeAttribute("sip");

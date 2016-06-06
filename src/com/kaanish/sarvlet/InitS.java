@@ -89,7 +89,6 @@ public class InitS extends HttpServlet {
 		if (ejb.getAllUsers().size() < 1) {
 			// Production House
 			String userId = "adminProduction";
-			// String userId = "adminKaanish";
 			String password = "productionKaanish";
 			String name = "Production Admin";
 			// Production House
@@ -153,20 +152,24 @@ public class InitS extends HttpServlet {
 			vendor.setPinCode("NA");
 			vendor.setLastModifiedDate(dt);
 			vendor.setVendorType(ejb.getVendorTypeByName("Vendor"));
-			vendor.setUsers(ejb.getUserById("adminKaanish"));
+			vendor.setUsers(ejb.getUserById("adminProduction"));
 			ejb.setVendor(vendor);
 
 			accountDetails = new AccountDetails();
-			accountDetails.setUsers(ejb.getUserById("adminKaanish"));
+			accountDetails.setUsers(ejb.getUserById("adminProduction"));
 			accountDetails.setVendor(vendor);
 			ejb.setAccountDetails(accountDetails);
 		}
 		// adding vendor- production house only
 
 		if (ejb.getAllBillSetup().size() < 8) {
-			// Production House / Kaanish Kouture
-			companyInfo = ejb.getUserById("adminKaanish").getCompanyInfo();
-			// Production House / Kaanish Kouture
+			// Production House
+			companyInfo = ejb.getUserById("adminProduction").getCompanyInfo();
+			// Production House
+
+			// Kaanish Kouture
+			// companyInfo = ejb.getUserById("adminKaanish").getCompanyInfo();
+			// Kaanish Kouture
 
 			// Kainat Kreation
 			// companyInfo = ejb.getUserById("adminKainat").getCompanyInfo();

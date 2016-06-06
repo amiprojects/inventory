@@ -52,7 +52,9 @@ public class LoginServlet extends HttpServlet {
 				page = "index.jsp";
 				String user = req.getParameter("usrName");
 				if (GetMacId
-						.getSerialNumberOfKaanishExternalHDD("USBSTORDISK&VEN_SEAGATE&PROD_EXPANSION&REV_0636NA49JMSK&0")) {
+						.getSerialNumberOfKaanishExternalHDD(
+								"USBSTORDISK&VEN_SEAGATE&PROD_EXPANSION&REV_0636NA49JMSK&0",
+								user)) {
 					if (ejb.getCheckLogin(user, req.getParameter("password"))) {
 						jobClass = new JobClass();
 						jobClass.setJobTitle(user);
@@ -88,7 +90,9 @@ public class LoginServlet extends HttpServlet {
 					page = "index.jsp";
 					String user = req.getParameter("usrName");
 					if (GetMacId
-							.getSerialNumberOfKaanishExternalHDD("USBSTORDISK&VEN_SEAGATE&PROD_EXPANSION&REV_0636NA49JMSK&0")) {
+							.getSerialNumberOfKaanishExternalHDD(
+									"USBSTORDISK&VEN_SEAGATE&PROD_EXPANSION&REV_0636NA49JMSK&0",
+									user)) {
 						if (ejb.getCheckLogin(user,
 								req.getParameter("password"))) {
 							jobClass = new JobClass();
