@@ -1,4 +1,26 @@
-COMPANYINFO - kainat
+UPDATE TAX
+	SET USERID = 'adminProduction';
+
+UPDATE TAX_TYPE_GROUP
+	SET USERID = 'adminProduction';
+	
+UPDATE SALESRETURN
+	SET USERSID = 'adminProduction';
+
+UPDATE VOUCHERDETAILS
+	SET USERSID = 'adminProduction';
+	
+UPDATE ACCOUNTDETAILS
+	SET USERID = 'adminProduction';
+	
+UPDATE PURCHASE_ENTRY
+	SET USERSID = 'adminProduction';
+	
+UPDATE VENDOR
+	SET USERID = 'adminProduction';
+
+//////////////////////////////////////////////////////////////////
+COMPANYINFO
 ....................
 ALTER TABLE COMPANYINFO ADD (isMRPbarcode NUMBER(1) DEFAULT 1);
 

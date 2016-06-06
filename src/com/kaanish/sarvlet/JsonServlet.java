@@ -143,7 +143,8 @@ import com.kaanish.util.DepartmentCotractor;
 		"/testcase1", "/getLastPurchaseProductDetailsByProductId",
 		"/getProductByCategory", "/getAllCategoryByCategoryName",
 		"/getProductByDesignNo", "/validity", "/updateSalesproduct",
-		"/updateSalesEntry" })
+		"/updateSalesEntry", "/getCurrentDebitNoteByCustomerId",
+		"/getCurrentCreditNoteByVendorId" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -152,7 +153,6 @@ public class JsonServlet extends HttpServlet {
 	private QtyUnitType qtyUnitType;
 	private PrintWriter pw;
 	private String name;
-	private Purchase_Product_Details purchase_Product_Details;
 	private Purchase_Entry purchase_Entry;
 
 	@Override
@@ -408,6 +408,38 @@ public class JsonServlet extends HttpServlet {
 			case "getCustomerByName":
 				pw = resp.getWriter();
 				pw.print(ejb.getCustomerByName(req.getParameter("name")));
+				break;
+
+			case "getCurrentDebitNoteByCustomerId":
+				JsonGeneratorFactory factoryCDN = Json
+						.createGeneratorFactory(null);
+				JsonGenerator generatorCDN = factoryCDN.createGenerator(resp
+						.getOutputStream());
+				VoucherDetails voucherDetails = ejb
+						.getLastVoucherDetailsByCustomerId(Integer.parseInt(req
+								.getParameter("id")));
+				generatorCDN
+						.writeStartObject()
+						.write("vdId", voucherDetails.getId())
+						.write("currentDebitNote",
+								voucherDetails.getTotalDebitNote()).writeEnd();
+				generatorCDN.close();
+				break;
+
+			case "getCurrentCreditNoteByVendorId":
+				JsonGeneratorFactory factoryVDN = Json
+						.createGeneratorFactory(null);
+				JsonGenerator generatorVDN = factoryVDN.createGenerator(resp
+						.getOutputStream());
+				VoucherDetails voucherDet = ejb
+						.getLastVoucherDetailsByVendorId(Integer.parseInt(req
+								.getParameter("id")));
+				generatorVDN
+						.writeStartObject()
+						.write("vdId", voucherDet.getId())
+						.write("currentCreditNote",
+								voucherDet.getTotalCreditNote()).writeEnd();
+				generatorVDN.close();
 				break;
 
 			case "getSaleblePurchaseProductDetailsByProductCodeAndQuantity":

@@ -47,11 +47,11 @@
 		<c:redirect url="index.jsp" />
 	</c:if>
 	<c:if
-		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminKainat')}">
+		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminProduction' || sessionScope['user']=='adminKainat')}">
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
-			<c:if test="${page.name.equals('Dashboard')}">
+			<c:if test="${page.name.equals('Notifications')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
@@ -115,46 +115,45 @@
 
 														<c:set var="count" value="${count+1}" />
 
-											</c:forEach>
-									</div>
-								</div>
-								<!-- END -->
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- Content Sec -->
-	</div>
-	<!-- Page Container -->
+														</c:forEach>
+														</div>
+														</div>
+														<!-- END -->
+														</div>
+														</div>
+														</div>
+														</div>
+														</div>
+														</div>
+														<!-- Content Sec -->
+														</div>
+														<!-- Page Container -->
 
-	<!-- main -->
+														<!-- main -->
 
-	<!-- Script -->
-	<script type="text/javascript" src="js/modernizr.js"></script>
+														<!-- Script -->
+														<script type="text/javascript" src="js/modernizr.js"></script>
 
-	<script type="text/javascript" src="js/script.js"></script>
-	<script type="text/javascript" src="js/bootstrap.js"></script>
-	<script type="text/javascript" src="js/enscroll.js"></script>
-	<script type="text/javascript" src="js/grid-filter.js"></script>
-	<script src="js/jquery-ui/jquery-ui.js"></script>
+														<script type="text/javascript" src="js/script.js"></script>
+														<script type="text/javascript" src="js/bootstrap.js"></script>
+														<script type="text/javascript" src="js/enscroll.js"></script>
+														<script type="text/javascript" src="js/grid-filter.js"></script>
+														<script src="js/jquery-ui/jquery-ui.js"></script>
 
-	<script src="js/jquery.dataTables.min.js"></script>
-	<script src="js/dataTables.fixedHeader.min.js"></script>
-	<script src="js/buttons.flash.min.js"></script>
-	<script src="js/buttons.html5.min.js"></script>
-	<script src="js/buttons.print.min.js"></script>
-	<script src="js/dataTables.buttons.min.js"></script>
-	<script src="js/jszip.min.js"></script>
-	<script src="js/vfs_fonts.js"></script>
-	<script src="js/pdfmake.min.js"></script>
-	<script src="js/dataTables.searchHighlight.min.js"></script>
-	<script src="js/pdfmake.min.js"></script>
-	<script src="js/jquery.highlight.js"></script>
-	<script type="text/javascript" src="js/dist/sweetalert2.min.js"></script>
-
-
+														<script src="js/jquery.dataTables.min.js"></script>
+														<script src="js/dataTables.fixedHeader.min.js"></script>
+														<script src="js/buttons.flash.min.js"></script>
+														<script src="js/buttons.html5.min.js"></script>
+														<script src="js/buttons.print.min.js"></script>
+														<script src="js/dataTables.buttons.min.js"></script>
+														<script src="js/jszip.min.js"></script>
+														<script src="js/vfs_fonts.js"></script>
+														<script src="js/pdfmake.min.js"></script>
+														<script src="js/dataTables.searchHighlight.min.js"></script>
+														<script src="js/pdfmake.min.js"></script>
+														<script src="js/jquery.highlight.js"></script>
+														<script type="text/javascript"
+															src="js/dist/sweetalert2.min.js"></script>
 </body>
 <script>
 	$(document).ready(function() {

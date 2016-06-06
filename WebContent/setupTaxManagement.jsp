@@ -8,6 +8,21 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Panel</title>
+
+<c:set var="isAdmin" value="1"></c:set>
+<c:set var="canEdit" value="0" />
+<c:if
+	test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminProduction' || sessionScope['user']=='adminKainat')}">
+	<c:forEach
+		items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
+		var="page">
+		<c:if test="${page.name.equals('TaxManagement Edit')}">
+			<c:set var="canEdit" value="1" />
+		</c:if>
+	</c:forEach>
+	<c:set var="isAdmin" value="0"></c:set>
+</c:if>
+
 <link
 	href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700,900'
 	rel='stylesheet' type='text/css' />
@@ -53,7 +68,7 @@
 		<c:redirect url="index.jsp" />
 	</c:if>
 	<c:if
-		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminKainat')}">
+		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminProduction' || sessionScope['user']=='adminKainat')}">
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
@@ -351,23 +366,31 @@
 		}
 
 		function editTax(id, isactive) {
-			$('#id1').val(id);
-			/* $('#name1').val(taxnm);
-				$('#value1').val(taxval); */
-			if (isactive == 'true') {
-				$('#activeRadio').prop("checked", "checked");
+			if ("${isAdmin}" == 0 && "${canEdit}" == 0) {
+				alert("You have no permission to edit this!");
 			} else {
-				$('#inactiveRadio').prop("checked", "checked");
+				$('#id1').val(id);
+				/* $('#name1').val(taxnm);
+					$('#value1').val(taxval); */
+				if (isactive == 'true') {
+					$('#activeRadio').prop("checked", "checked");
+				} else {
+					$('#inactiveRadio').prop("checked", "checked");
+				}
+				$("#editTaxDiv").modal('show');
 			}
-			$("#editTaxDiv").modal('show');
 		}
 		function editTaxGroup(id, isactiveG) {
-			//alert(id);
-			$("#taxListEdit" + id).modal('show');
-			if (isactiveG == 'true') {
-				$('#activeRadioG').prop("checked", "checked");
+			if ("${isAdmin}" == 0 && "${canEdit}" == 0) {
+				alert("You have no permission to edit this!");
 			} else {
-				$('#inactiveRadioG').prop("checked", "checked");
+				//alert(id);
+				$("#taxListEdit" + id).modal('show');
+				if (isactiveG == 'true') {
+					$('#activeRadioG').prop("checked", "checked");
+				} else {
+					$('#inactiveRadioG').prop("checked", "checked");
+				}
 			}
 		}
 
@@ -401,7 +424,7 @@
 			return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8
 					|| k == 32 || (k >= 48 && k <= 57));
 		}
-		
+
 		$(function() {
 			$("#taxVal").numericInput({
 				allowFloat : true, // Accpets positive numbers (floating point)

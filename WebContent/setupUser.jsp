@@ -56,7 +56,7 @@
 		<c:redirect url="index.jsp" />
 	</c:if>
 	<c:if
-		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminKainat')}">
+		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminProduction' || sessionScope['user']=='adminKainat')}">
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
@@ -200,7 +200,7 @@
 												var="user">
 												<c:if test="${user.companyInfo.id == compInfo.id}">
 													<c:if
-														test="${!(user.userId=='adminKaanish'||user.userId=='adminKainat')}">
+														test="${!(user.userId=='adminKaanish' || user.userId=='adminProduction' || user.userId=='adminKainat')}">
 														<li><a href="#" onclick="userEdit('${user.userId}');">${user.name}</a></li>
 													</c:if>
 													<div id="edit${user.userId}" class="modal fade"

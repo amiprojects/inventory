@@ -8,7 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Purchase Agent's Credit Note Statement</title>
+<title>Customer's Debit Note Statement</title>
 
 <link
 	href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700,900'
@@ -42,7 +42,7 @@
 		<c:redirect url="index.jsp" />
 	</c:if>
 	<c:if
-		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminKainat')}">
+		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminProduction' || sessionScope['user']=='adminKainat')}">
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
@@ -72,46 +72,40 @@
 
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
-								<h3 style="margin-top: 11px;">Purchase Agent's Credit Note
+								<h3 style="margin-top: 11px;">Customer's Debit Note
 									Statement</h3>
 							</div>
 
 							<div class="widget-area">
 								<c:set var="vendor"
-									value="${sessionScope['ejb'].getVendorById(requestScope['paId'])}" />
+									value="${sessionScope['ejb'].getCustomerEntryById(requestScope['cId'])}" />
 								<table id="stream_table"
 									class="table table-striped table-bordered" style="width: 30%;">
 									<thead>
 										<tr>
-											<th style="text-align: right;">Vendor Name :</th>
+											<th style="text-align: right;">Customer Name :</th>
 											<td>${vendor.name}</td>
 										</tr>
 									</thead>
 									<thead>
 										<tr>
-											<th style="text-align: right;">Company Name :</th>
-											<td>${vendor.companyName}</td>
+											<th style="text-align: right;">Phone :</th>
+											<td>${vendor.mobile}</td>
 										</tr>
 									</thead>
 									<thead>
 										<tr>
-											<th style="text-align: right;">Phone1 :</th>
-											<td>${vendor.ph1}</td>
+											<th style="text-align: right;">City :</th>
+											<td>${vendor.city}</td>
 										</tr>
 									</thead>
 									<thead>
 										<tr>
-											<th style="text-align: right;">Phone2 :</th>
-											<td>${vendor.ph2}</td>
-										</tr>
-									</thead>
-									<thead>
-										<tr>
-											<th style="text-align: right;">Current Credit :</th>
-											<td><fmt:formatNumber var="currentCredit"
-													value="${sessionScope['ejb'].getLastVoucherDetailsByVendorId(vendor.id).getTotalCreditNote()}"
+											<th style="text-align: right;">Current Debit :</th>
+											<td><fmt:formatNumber var="currentDebit"
+													value="${sessionScope['ejb'].getLastVoucherDetailsByCustomerId(vendor.id).getTotalDebitNote()}"
 													maxFractionDigits="2" groupingUsed="false" />
-												${currentCredit}</td>
+												${currentDebit}</td>
 										</tr>
 									</thead>
 								</table>
@@ -120,52 +114,51 @@
 								<hr style="width: 100%;">
 								<br>
 
-								<div style="width: 100%; overflow: auto;">
-									<table id="statement" cellspacing="0" width="100%"
-										class="display">
-										<thead>
+
+								<table id="statement" cellspacing="0" width="100%"
+									class="display">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Date</th>
+											<th>Credit/Debit</th>
+											<th>Amount</th>
+											<th>Purpose</th>
+											<th>Reference No.</th>
+											<th>Due</th>
+										</tr>
+									</thead>
+									<tbody style="height: 300px;">
+										<c:set var="count" value="${1}" />
+										<c:forEach items="${requestScope['vouDetList']}"
+											var="vouDetList">
 											<tr>
-												<th>#</th>
-												<th>Date</th>
-												<th>Credit/Debit</th>
-												<th>Amount</th>
-												<th>Purpose</th>
-												<th>Reference No.</th>
-												<th>Balance</th>
+												<td>${count}</td>
+												<td><fmt:formatDate value="${vouDetList.voucherDate}"
+														pattern="dd-MM-yy" /></td>
+												<td><c:if test="${vouDetList.isCredit()}">Credit</c:if>
+													<c:if test="${!vouDetList.isCredit()}">Debit</c:if></td>
+												<td>${vouDetList.value}</td>
+												<td><c:if
+														test="${vouDetList.salesEntry!=null && vouDetList.salesReturn==null}">Sales Payment</c:if>
+													<c:if
+														test="${vouDetList.salesEntry!=null && vouDetList.salesReturn!=null}">Sales Return</c:if></td>
+												<td><c:if
+														test="${vouDetList.salesEntry!=null && vouDetList.salesReturn==null}">${vouDetList.salesEntry.challanNumber}</c:if>
+													<c:if
+														test="${vouDetList.salesEntry!=null && vouDetList.salesReturn!=null}">${vouDetList.salesReturn.challanNumber}</c:if></td>
+												<td>${vouDetList.totalDebitNote}</td>
 											</tr>
-										</thead>
-										<tbody style="height: 300px;">
-											<c:set var="count" value="${1}" />
-											<c:forEach items="${requestScope['vouDetList']}"
-												var="vouDetList">
-												<tr>
-													<td>${count}</td>
-													<td><fmt:formatDate value="${vouDetList.voucherDate}"
-															pattern="dd-MM-yy" /></td>
-													<td><c:if test="${vouDetList.isCredit()}">Credit</c:if>
-														<c:if test="${!vouDetList.isCredit()}">Debit</c:if></td>
-													<td>${vouDetList.value}</td>
-													<td><c:if
-															test="${vouDetList.purchase_Entry!=null && vouDetList.purchaseReturn==null}">Purchase Payment</c:if>
-														<c:if
-															test="${vouDetList.purchase_Entry!=null && vouDetList.purchaseReturn!=null}">Purchase Return</c:if></td>
-													<td><c:if
-															test="${vouDetList.purchase_Entry!=null && vouDetList.purchaseReturn==null}">${vouDetList.purchase_Entry.challanNumber}</c:if>
-														<c:if
-															test="${vouDetList.purchase_Entry!=null && vouDetList.purchaseReturn!=null}">${vouDetList.purchaseReturn.challanNumber}</c:if></td>
-													<td>${vouDetList.totalCreditNote}</td>
-												</tr>
-												<c:set var="count" value="${count+1}" />
-											</c:forEach>
-										</tbody>
-										<thead>
-											<tr>
-												<th colspan="7" style="text-align: left;">Current
-													Credit : ${currentCredit}</th>
-											</tr>
-										</thead>
-									</table>
-								</div>
+											<c:set var="count" value="${count+1}" />
+										</c:forEach>
+									</tbody>
+									<thead>
+										<tr>
+											<th colspan="7" style="text-align: left;">Current Debit
+												: ${currentDebit}</th>
+										</tr>
+									</thead>
+								</table>
 							</div>
 						</div>
 					</div>
@@ -188,7 +181,7 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#debitCreditNote").attr("id", "activeSubMenu");
-			$("#creditNote").attr("style", "color: #6a94ff;");
+			$("#debitNote").attr("style", "color: #6a94ff;");
 		});
 	</script>
 	<script src="js/jquery-ui/jquery-ui.js"></script>

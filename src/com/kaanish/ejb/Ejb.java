@@ -357,6 +357,10 @@ public class Ejb {
 		em.persist(users);
 	}
 
+	public void deleteUserById(String id) {
+		em.remove(getUserById(id));
+	}
+
 	public Users getUserById(String id) {
 		return em.find(Users.class, id);
 	}
@@ -3720,6 +3724,10 @@ public class Ejb {
 
 	public SalesReturn getSalesReturnDetailsById(int id) {
 		return em.find(SalesReturn.class, id);
+	}
+
+	public void updateSalesReturn(SalesReturn salesReturn) {
+		em.merge(salesReturn);
 	}
 
 	public List<SalesReturn> getAllSalesReturn() {

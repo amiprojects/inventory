@@ -35,7 +35,7 @@
 		<c:redirect url="index.jsp" />
 	</c:if>
 	<c:if
-		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminKainat')}">
+		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminProduction' || sessionScope['user']=='adminKainat')}">
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
@@ -149,7 +149,8 @@
 															<td>${vendor.ph2}</td>
 															<td><fmt:formatNumber var="totPurSub"
 																	value="${vendor.getTotPurchase()}"
-																	maxFractionDigits="2" groupingUsed="false" /> ${totPurSub}</td>
+																	maxFractionDigits="2" groupingUsed="false" />
+																${totPurSub}</td>
 															<td>
 																<form action="purchaseReportByVendorName" method="post"
 																	id="pView${vendor.id}">
@@ -192,8 +193,8 @@
 														<td>${vendor.ph1}</td>
 														<td>${vendor.ph2}</td>
 														<td><fmt:formatNumber var="totPurSubA"
-																value="${vendor.getTotPurchase()}" maxFractionDigits="2" groupingUsed="false" />
-															${totPurSubA}</td>
+																value="${vendor.getTotPurchase()}" maxFractionDigits="2"
+																groupingUsed="false" /> ${totPurSubA}</td>
 														<td>
 															<form action="purchaseReportByAgentName" method="post"
 																id="pView${vendor.id}">

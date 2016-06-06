@@ -58,7 +58,7 @@
 		<c:redirect url="index.jsp" />
 	</c:if>
 	<c:if
-		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminKainat')}">
+		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminProduction' || sessionScope['user']=='adminKainat')}">
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
@@ -767,7 +767,7 @@
 	
 	function payButtonOCF(){
 		$("#paymentModal").modal("show");
-		$.ajax({
+		/* $.ajax({
 			url : "getVendorByVendorId",
 			type : "post",
 			dataType : "json",
@@ -776,6 +776,19 @@
 			},
 			success : function(data) {
 				$("#totalCredit").val(data.currentCreditNote);
+			}
+		}); */
+		$.ajax({
+			type : "post",
+			url : "getCurrentCreditNoteByVendorId",
+			data : {
+				id : "${purchaseSearchView.vendor.id}"
+			},
+			dataType : "json",
+			success : function(data) {
+				$("#totalCredit")
+						.val(
+								data.currentCreditNote);
 			}
 		});
 	}

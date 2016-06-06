@@ -8,7 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jobber's Credit Note Statement</title>
+<title>Vendor's Credit Note Statement</title>
 
 <link
 	href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700,900'
@@ -41,7 +41,7 @@
 		<c:redirect url="index.jsp" />
 	</c:if>
 	<c:if
-		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminKainat')}">
+		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminProduction' || sessionScope['user']=='adminKainat')}">
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
@@ -71,13 +71,13 @@
 
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
-								<h3 style="margin-top: 11px;">Jobber's Credit Note
+								<h3 style="margin-top: 11px;">Vendor's Credit Note
 									Statement</h3>
 							</div>
 
 							<div class="widget-area">
 								<c:set var="vendor"
-									value="${sessionScope['ejb'].getVendorById(requestScope['jId'])}" />
+									value="${sessionScope['ejb'].getVendorById(requestScope['vId'])}" />
 								<table id="stream_table"
 									class="table table-striped table-bordered" style="width: 30%;">
 									<thead>
@@ -109,7 +109,8 @@
 											<th style="text-align: right;">Current Credit :</th>
 											<td><fmt:formatNumber var="currentCredit"
 													value="${sessionScope['ejb'].getLastVoucherDetailsByVendorId(vendor.id).getTotalCreditNote()}"
-													maxFractionDigits="2" groupingUsed="false" /> ${currentCredit}</td>
+													maxFractionDigits="2" groupingUsed="false" />
+												${currentCredit}</td>
 										</tr>
 									</thead>
 								</table>
@@ -143,10 +144,14 @@
 													<td><c:if test="${vouDetList.isCredit()}">Credit</c:if>
 														<c:if test="${!vouDetList.isCredit()}">Debit</c:if></td>
 													<td>${vouDetList.value}</td>
-													<td><c:if test="${vouDetList.jobAssignId!=0}">Job Payment</c:if>
-													</td>
-													<td><c:if test="${vouDetList.jobAssignId!=0}">${sessionScope['ejb'].getJobAssignmentDetailsByID(vouDetList.jobAssignId).getChallanNumber()}</c:if>
-													</td>
+													<td><c:if
+															test="${vouDetList.purchase_Entry!=null && vouDetList.purchaseReturn==null}">Purchase Payment</c:if>
+														<c:if
+															test="${vouDetList.purchase_Entry!=null && vouDetList.purchaseReturn!=null}">Purchase Return</c:if></td>
+													<td><c:if
+															test="${vouDetList.purchase_Entry!=null && vouDetList.purchaseReturn==null}">${vouDetList.purchase_Entry.challanNumber}</c:if>
+														<c:if
+															test="${vouDetList.purchase_Entry!=null && vouDetList.purchaseReturn!=null}">${vouDetList.purchaseReturn.challanNumber}</c:if></td>
 													<td>${vouDetList.totalCreditNote}</td>
 												</tr>
 												<c:set var="count" value="${count+1}" />

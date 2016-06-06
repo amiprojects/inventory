@@ -35,7 +35,7 @@
 		<c:redirect url="index.jsp" />
 	</c:if>
 	<c:if
-		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminKainat')}">
+		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminProduction' || sessionScope['user']=='adminKainat')}">
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
@@ -101,8 +101,8 @@
 										<tr>
 											<th style="text-align: right;">Sub Total :</th>
 											<td><fmt:formatNumber var="totPurSubA"
-													value="${vendor.getTotPurchase()}" maxFractionDigits="2" groupingUsed="false" />
-												${totPurSubA}</td>
+													value="${vendor.getTotPurchase()}" maxFractionDigits="2"
+													groupingUsed="false" /> ${totPurSubA}</td>
 										</tr>
 									</thead>
 								</table>

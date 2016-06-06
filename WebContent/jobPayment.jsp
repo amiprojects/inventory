@@ -37,7 +37,7 @@
 	</c:if>
 
 	<c:if
-		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminKainat')}">
+		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminProduction' || sessionScope['user']=='adminKainat')}">
 
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
@@ -706,7 +706,7 @@
 					$("#voucherDetailSize").val(data.voucherDetailSize);
 				}
 			});			
-			$.ajax({
+			/* $.ajax({
 				url : "getVendorByVendorId",
 				type : "post",
 				dataType : "json",
@@ -714,6 +714,18 @@
 					id : vendorId
 				},
 				success : function(data) {
+					$("#totalCredit").val(data.currentCreditNote);
+				}
+			}); */
+			$.ajax({
+				type : "post",
+				url : "getCurrentCreditNoteByVendorId",
+				data : {
+					id : vendorId
+				},
+				dataType : "json",
+				success : function(data) {
+					alert(data.currentCreditNote);
 					$("#totalCredit").val(data.currentCreditNote);
 				}
 			});

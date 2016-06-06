@@ -4290,6 +4290,9 @@ public class Servlet extends HttpServlet {
 							salesReturn
 									.setRetAgentProfitTotal(Float.parseFloat(req
 											.getParameter("profitValue")));
+							salesReturn.setUsers(ejb
+									.getUserById((String) httpSession
+											.getAttribute("user")));
 							ejb.setSalesReturn(salesReturn);
 
 							paymentDetails = new PaymentDetails();

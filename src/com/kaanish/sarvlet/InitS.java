@@ -88,7 +88,8 @@ public class InitS extends HttpServlet {
 		}
 		if (ejb.getAllUsers().size() < 1) {
 			// Production House
-			String userId = "adminKaanish";
+			String userId = "adminProduction";
+			// String userId = "adminKaanish";
 			String password = "productionKaanish";
 			String name = "Production Admin";
 			// Production House
@@ -564,6 +565,38 @@ public class InitS extends HttpServlet {
 		module = null;
 		// dashboard
 
+		// notification
+		int flagMnoti = 0;
+		for (Module m : ejb.getAllModule()) {
+			if (m.getName().equals("Notification")) {
+				flagMnoti = 1;
+				module = ejb.getModuleByName("Notification");
+				break;
+			}
+		}
+		if (flagMnoti == 0) {
+			module = new Module();
+			module.setName("Notification");
+			ejb.setModule(module);
+		}
+
+		int flagPnoti = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Notifications")) {
+				flagPnoti = 1;
+				break;
+			}
+		}
+		if (flagPnoti == 0) {
+			pageList = new PageList();
+			pageList.setName("Notifications");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+		module = null;
+		// notification
+
 		// reports
 		int flagMreport = 0;
 		for (Module m : ejb.getAllModule()) {
@@ -621,6 +654,20 @@ public class InitS extends HttpServlet {
 		if (flagPproduct == 0) {
 			pageList = new PageList();
 			pageList.setName("Product/Material");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+		int flagPproducte = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Edit Product/Material")) {
+				flagPproducte = 1;
+				break;
+			}
+		}
+		if (flagPproducte == 0) {
+			pageList = new PageList();
+			pageList.setName("Edit Product/Material");
 			pageList.setModule(module);
 			ejb.setPageList(pageList);
 			pageList = null;
@@ -703,6 +750,21 @@ public class InitS extends HttpServlet {
 			pageList = null;
 		}
 
+		int flagPprs = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Purchase Return Search")) {
+				flagPprs = 1;
+				break;
+			}
+		}
+		if (flagPprs == 0) {
+			pageList = new PageList();
+			pageList.setName("Purchase Return Search");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+
 		int flagPpedit = 0;
 		for (PageList p : ejb.getAllPageList()) {
 			if (p.getName().equals("Purchase Edit")) {
@@ -775,6 +837,36 @@ public class InitS extends HttpServlet {
 		if (flagPsr == 0) {
 			pageList = new PageList();
 			pageList.setName("Sales Return");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+
+		int flagPsrs = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Sales Return Search")) {
+				flagPsrs = 1;
+				break;
+			}
+		}
+		if (flagPsrs == 0) {
+			pageList = new PageList();
+			pageList.setName("Sales Return Search");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+
+		int flagPsed = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Sales Edit")) {
+				flagPsed = 1;
+				break;
+			}
+		}
+		if (flagPsed == 0) {
+			pageList = new PageList();
+			pageList.setName("Sales Edit");
 			pageList.setModule(module);
 			ejb.setPageList(pageList);
 			pageList = null;

@@ -59,7 +59,9 @@
 	function submitForm() {
 		if ($("#userName").val() == "") {
 			alert("Enter Your UserId...");
-		} else if ($("#userName").val() == "adminKaanish" || $("#userName").val() == "adminKainat") {
+		} else if ($("#userName").val() == "adminKaanish"
+				|| $("#userName").val() == "adminProduction"
+				|| $("#userName").val() == "adminKainat") {
 			alert("You can not reset password for admin!!!");
 			$("#userName").val("");
 		} else {

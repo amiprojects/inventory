@@ -77,6 +77,8 @@ page[size="A4"] {
 	<c:set value="${Math.ceil(proLength/6)}" var="qPage" />
 
 	<c:set value="${1}" var="sl" />
+	<c:set value="${0}" var="tqty" />
+	<c:set value="${0}" var="gtot" />
 	<c:forEach var="i" begin="1" end="${qPage}">
 		<page id="print1" size="A4">
 		<h3 align="center">
@@ -148,8 +150,6 @@ page[size="A4"] {
 							<th>Per</th>
 							<th>Amount</th>
 						</tr>
-						<c:set value="${0}" var="tqty" />
-						<c:set value="${0}" var="gtot" />
 						<c:forEach begin="${(i-1)*6}" end="${i*6-1}"
 							items="${purEntry.salesProductDetails}" var="ppdet">
 							<c:if test="${ppdet.quantity-ppdet.salesReQty>0}">

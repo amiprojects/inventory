@@ -66,7 +66,7 @@ page[size="A4"] {
 	<c:if test="${sessionScope['user']==null}">
 		<c:redirect url="index.jsp" />
 	</c:if>
-	
+
 	<c:set value="${sessionScope['ejb'].getCompanyInfo()}"
 		var="companyInfo" />
 	<c:set value="${sessionScope['ejb'].getSalesEntryById(param.id)}"
@@ -77,6 +77,8 @@ page[size="A4"] {
 	<c:set value="${Math.ceil(proLength/6)}" var="qPage" />
 
 	<c:set value="${1}" var="sl" />
+	<c:set value="${0}" var="tqty" />
+	<c:set value="${0}" var="gtot" />
 	<c:forEach var="i" begin="1" end="${qPage}">
 		<page id="print1" size="A4">
 		<h3 align="center">
@@ -148,8 +150,6 @@ page[size="A4"] {
 							<th>Per</th>
 							<th>Amount</th>
 						</tr>
-						<c:set value="${0}" var="tqty" />
-						<c:set value="${0}" var="gtot" />
 						<c:forEach begin="${(i-1)*6}" end="${i*6-1}"
 							items="${purEntry.salesProductDetails}" var="ppdet">
 							<tr>
@@ -219,8 +219,8 @@ page[size="A4"] {
 										maxFractionDigits="3" groupingUsed="false" />${totalQ}</td>
 								<td colspan="2" align="right">Grand Total :</td>
 								<td><fmt:formatNumber var="grandT"
-										value="${purEntry.totalCost}" maxFractionDigits="2" groupingUsed="false" />${grandT}
-								</td>
+										value="${purEntry.totalCost}" maxFractionDigits="2"
+										groupingUsed="false" />${grandT}</td>
 							</tr>
 						</c:if>
 					</table> <span style="float: right;"><c:if test="${i<qPage}">continued...</c:if></span>

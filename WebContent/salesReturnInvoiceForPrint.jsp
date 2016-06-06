@@ -78,6 +78,8 @@ page[size="A4"] {
 	<c:set value="${Math.ceil(proLength/6)}" var="qPage" />
 
 	<c:set value="${1}" var="sl" />
+	<c:set value="${0}" var="tqty" />
+	<c:set value="${0}" var="gtot" />
 	<c:forEach var="i" begin="1" end="${qPage}">
 		<page id="print1" size="A4">
 		<h3 align="center">
@@ -153,10 +155,6 @@ page[size="A4"] {
 							<th>Per</th>
 							<th>Amount</th>
 						</tr>
-
-						<c:set value="${0}" var="tqty" />
-						<c:set value="${0}" var="gtot" />
-
 						<c:forEach begin="${(i-1)*6}" end="${i*6-1}"
 							items="${salesReturn.salesProductReturnDetail}" var="ppdet">
 
@@ -195,8 +193,8 @@ page[size="A4"] {
 									</td>
 									<td><c:set var="disVal"
 											value="${salesReturn.salesEntry.isFlatDiscount()?gtot*salesReturn.salesEntry.discountValue/salesReturn.salesEntry.subTotal:gtot*salesReturn.salesEntry.discountValue/100}" />
-										<fmt:formatNumber value="${disVal}" maxFractionDigits="2" groupingUsed="false" />
-									</td>
+										<fmt:formatNumber value="${disVal}" maxFractionDigits="2"
+											groupingUsed="false" /></td>
 								</tr>
 							</c:if>
 							<c:if test="${salesReturn.salesEntry.taxAmount!=0}">

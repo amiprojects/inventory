@@ -86,6 +86,8 @@ page[size="A4"] {
 	<c:set value="${Math.ceil(proLength/6)}" var="qPage" />
 
 	<c:set value="${1}" var="sl" />
+	<c:set value="${0}" var="tqty" />
+	<c:set value="${0}" var="gtot" />
 	<c:forEach var="i" begin="1" end="${qPage}">
 		<page id="print1" size="A4">
 		<h3 align="center">
@@ -164,8 +166,6 @@ page[size="A4"] {
 							<th>Per</th>
 							<th>Amount</th>
 						</tr>
-						<c:set value="${0}" var="tqty" />
-						<c:set value="${0}" var="gtot" />
 						<c:forEach begin="${(i-1)*6}" end="${i*6-1}"
 							items="${purEntry.purchase_Product_Details}" var="ppdet">
 							<tr>
@@ -179,8 +179,8 @@ page[size="A4"] {
 								<td>${ppdet.cost}</td>
 								<td>${ppdet.productDetail.qtyUnit.name}</td>
 								<td><fmt:formatNumber var="amount"
-										value="${ppdet.cost*ppdet.quantity}" maxFractionDigits="2" groupingUsed="false" />
-									${amount}</td>
+										value="${ppdet.cost*ppdet.quantity}" maxFractionDigits="2"
+										groupingUsed="false" /> ${amount}</td>
 								<c:set value="${gtot+ppdet.cost*ppdet.quantity}" var="gtot" />
 							</tr>
 							<c:set value="${sl+1}" var="sl" />
@@ -201,7 +201,7 @@ page[size="A4"] {
 										(${purEntry.tax_Type_Group.getTotalTaxValue()}%) :</td>
 									<td>${purEntry.taxAmount}</td>
 								</tr>
-							</c:if>							
+							</c:if>
 							<c:if test="${purEntry.transport_cost!=0}">
 								<tr>
 									<td colspan="5" align="right">Transport Charge :</td>
@@ -226,8 +226,8 @@ page[size="A4"] {
 										maxFractionDigits="3" groupingUsed="false" />${totalQ}</td>
 								<td colspan="2" align="right">Grand Total :</td>
 								<td><fmt:formatNumber var="grandT"
-										value="${purEntry.totalCost}" maxFractionDigits="2" groupingUsed="false" />${grandT}
-								</td>
+										value="${purEntry.totalCost}" maxFractionDigits="2"
+										groupingUsed="false" />${grandT}</td>
 							</tr>
 						</c:if>
 					</table> <span style="float: right;"><c:if test="${i<qPage}">continued...</c:if></span>
@@ -267,7 +267,8 @@ page[size="A4"] {
 							<td><c:forEach var="purchaseReturnProd"
 									items="${pret.purchaseReturnProductDetails}">
 									<fmt:formatNumber var="totalQ"
-										value="${purchaseReturnProd.qtyReturn}" maxFractionDigits="3" groupingUsed="false" />${totalQ}
+										value="${purchaseReturnProd.qtyReturn}" maxFractionDigits="3"
+										groupingUsed="false" />${totalQ}
 						<br>
 								</c:forEach></td>
 						</tr>

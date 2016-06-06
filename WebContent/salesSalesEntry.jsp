@@ -70,7 +70,7 @@
 		<c:redirect url="index.jsp" />
 	</c:if>
 	<c:if
-		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminKainat')}">
+		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminProduction' || sessionScope['user']=='adminKainat')}">
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
@@ -1947,7 +1947,6 @@
 									address : item.address,
 									city : item.city,
 									vat_cst_no : item.vat_cst_no,
-									currentDebitNote : item.currentDebitNote
 								});
 							}));
 						}
@@ -1970,7 +1969,18 @@
 						} else {
 							$("#vatcst").val("");
 						}
-						$("#totalDebit").val(ui.item.currentDebitNote);
+						$.ajax({
+							type : "post",
+							url : "getCurrentDebitNoteByCustomerId",
+							data : {
+								id : ui.item.id
+							},
+							dataType : "json",
+							success : function(data) {
+								$("#totalDebit").val(data.currentDebitNote);
+							}
+						});
+						//$("#totalDebit").val(ui.item.currentDebitNote);
 					}
 				},
 				select : function(event, ui) {
@@ -2015,7 +2025,6 @@
 									address : item.address,
 									city : item.city,
 									vat_cst_no : item.vat_cst_no,
-									currentDebitNote : item.currentDebitNote
 								});
 							}));
 						}
@@ -2039,7 +2048,18 @@
 						} else {
 							$("#vatcst").val("");
 						}
-						$("#totalDebit").val(ui.item.currentDebitNote);
+						$.ajax({
+							type : "post",
+							url : "getCurrentDebitNoteByCustomerId",
+							data : {
+								id : ui.item.id
+							},
+							dataType : "json",
+							success : function(data) {
+								$("#totalDebit").val(data.currentDebitNote);
+							}
+						});
+						//$("#totalDebit").val(ui.item.currentDebitNote);
 					}
 				},
 				select : function(event, ui) {

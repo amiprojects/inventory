@@ -35,7 +35,7 @@
 		<c:redirect url="index.jsp" />
 	</c:if>
 	<c:if
-		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminKainat')}">
+		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminProduction' || sessionScope['user']=='adminKainat')}">
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
@@ -104,7 +104,8 @@
 														</c:if>
 													</c:if>
 												</c:forEach> <fmt:formatNumber var="totPurQtyF" value="${totPurQty}"
-													maxFractionDigits="3" groupingUsed="false" /> ${totPurQtyF}</td>
+													maxFractionDigits="3" groupingUsed="false" />
+												${totPurQtyF}</td>
 										</tr>
 									</thead>
 								</table>
