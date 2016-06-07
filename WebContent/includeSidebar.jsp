@@ -132,7 +132,7 @@
 					</div>
 				</div>
 			</c:if>
-			<!-- <div class="single-menu">
+			<div class="single-menu">
 				<h2 id="debitCreditNote">
 					<a title=""><span>Debit/Credit Note</span></a>
 				</h2>
@@ -144,7 +144,7 @@
 								Credit Note</a></li>
 					</ul>
 				</div>
-			</div> -->
+			</div>
 			<div class="single-menu">
 				<h2 id="setup">
 					<a title=""><span>Setup Module</span></a>

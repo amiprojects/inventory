@@ -214,8 +214,9 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			var table = $('#statement').DataTable({
-				"scrollY" : 200,
+				"scrollY" : 300,
 				"scrollX" : true,
+				"bPaginate": false,
 				dom : 'Bfrtip',
 				buttons : [ 'copy', 'excel', 'print' ]
 			});

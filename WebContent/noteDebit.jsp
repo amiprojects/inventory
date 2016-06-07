@@ -29,6 +29,13 @@
 <!-- Responsive -->
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+
+<link rel="stylesheet" href="css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="css/fixedHeader.dataTables.min.css">
+<link rel="stylesheet" href="css/buttons.dataTables.min.css">
+<link rel="stylesheet" href="css/dataTables.searchHighlight.css" />
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+<link rel="stylesheet" href="css/responsive.css" type="text/css" />
 </head>
 <body>
 	<c:if test="${sessionScope['user']==null}">
@@ -61,47 +68,56 @@
 				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
 				<div class="container">
 					<div class="row">
-						<div class="breadcrumbs" style="height: 50px; text-align: center;">
-							<h3 style="margin-top: 11px;">Debit Note</h3>
-						</div>
-						<div class="widget-area">
-							<table class="table">
-								<thead>
-									<tr>
-										<th>#</th>
-										<th>Customer Name</th>
-										<th>Phone</th>
-										<th>City</th>
-										<th>Current Debit</th>
-									</tr>
-								</thead>
-								<tbody style="height: 300px;">
-									<c:set var="count" value="${1}" />
-									<c:forEach
-										items="${sessionScope['ejb'].getAllCustomerEntryByAssendingMaxSale()}"
-										var="vendor">
-										<tr>
-											<td>${count}</td>
-											<td>${vendor.name}</td>
-											<td>${vendor.mobile}</td>
-											<td>${vendor.city}</td>
-											<td><fmt:formatNumber var="currentDebit"
-													value="${sessionScope['ejb'].getLastVoucherDetailsByCustomerId(vendor.id).getTotalDebitNote()}"
-													maxFractionDigits="2" groupingUsed="false" /> ${currentDebit}</td>
-											<td>
-												<form action="debitNoteByCustomer" method="post"
-													id="dnView${vendor.id}">
-													<a href="#" onclick="debitNoteViewF('${vendor.id}');"><input
-														type="hidden" value="${vendor.id}" name="cId"><input
-														type="hidden" value="${vendor.name}" name="custoName"><img
-														alt="" src="images/eye.png" height="25px"></a>
-												</form>
-											</td>
-										</tr>
-										<c:set var="count" value="${count+1}" />
-									</c:forEach>
-								</tbody>
-							</table>
+						<div class="masonary-grids">
+
+							<div class="breadcrumbs"
+								style="height: 50px; text-align: center;">
+								<h3 style="margin-top: 11px;">Debit Note</h3>
+							</div>
+
+							<div class="widget-area">
+								<div style="width: 100%; overflow: auto;">
+									<table id="note" cellspacing="0" width="100%" class="display">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>Customer Name</th>
+												<th>Phone</th>
+												<th>City</th>
+												<th>Current Debit</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody style="height: 300px;">
+											<c:set var="count" value="${1}" />
+											<c:forEach
+												items="${sessionScope['ejb'].getAllCustomerEntryByAssendingMaxSale()}"
+												var="customer">
+												<tr>
+													<td>${count}</td>
+													<td>${customer.name}</td>
+													<td>${customer.mobile}</td>
+													<td>${customer.city}</td>
+													<td><fmt:formatNumber var="currentDebit"
+															value="${sessionScope['ejb'].getLastVoucherDetailsByCustomerId(customer.id).getTotalDebitNote()}"
+															maxFractionDigits="2" groupingUsed="false" />
+														${currentDebit}</td>
+													<td>
+														<%-- <form action="debitNoteByCustomer" method="post"
+															id="dnView${customer.id}">
+															<a href="#" onclick="debitNoteViewF('${customer.id}');"><input
+																type="hidden" value="${customer.id}" name="cId"><input
+																type="hidden" value="${customer.name}" name="custoName"><img
+																alt="" src="images/eye.png" height="25px"></a>
+														</form> --%>
+													</td>
+												</tr>
+												<c:set var="count" value="${count+1}" />
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -110,6 +126,7 @@
 	</div>
 	<!-- Content Sec -->
 	<!-- Page Container -->
+
 	<!-- main -->
 
 	<!-- Script -->
@@ -130,6 +147,38 @@
 		function debitNoteViewF(id) {
 			$("#dnView" + id).submit();
 		}
+	</script>
+	<script src="js/jquery.dataTables.min.js"></script>
+	<script src="js/dataTables.fixedHeader.min.js"></script>
+	<script src="js/buttons.flash.min.js"></script>
+	<script src="js/buttons.html5.min.js"></script>
+	<script src="js/buttons.print.min.js"></script>
+	<script src="js/dataTables.buttons.min.js"></script>
+	<script src="js/jszip.min.js"></script>
+	<script src="js/vfs_fonts.js"></script>
+	<script src="js/pdfmake.min.js"></script>
+	<script src="js/pdfmake.min.js"></script>
+	<script src="js/dataTables.searchHighlight.min.js"></script>
+	<script src="js/pdfmake.min.js"></script>
+	<script src="js/jquery.highlight.js"></script>
+	<script type="text/javascript" src="js/dist/sweetalert2.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var table = $('#note').DataTable({
+				"scrollY" : 400,
+				"scrollX" : true,
+				"bPaginate" : false,
+				dom : 'Bfrtip',
+				buttons : [ 'copy', 'excel', 'print' ]
+			});
+
+			table.on('draw', function() {
+				var body = $(table.table().body());
+
+				body.unhighlight();
+				body.highlight(table.search());
+			});
+		});
 	</script>
 </body>
 

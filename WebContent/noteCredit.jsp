@@ -9,6 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Panel</title>
+
 <link
 	href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700,900'
 	rel='stylesheet' type='text/css' />
@@ -22,21 +23,19 @@
 <link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
 <!-- Bootstrap -->
 <link rel="stylesheet" href="css/style.css" type="text/css" />
+<link rel="stylesheet" href="css/scrollTable.css" type="text/css" />
 <!-- Style -->
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
 <!-- Responsive -->
-<style>
-.font {
-	color: #777777;
-	float: left;
-	font-family: Roboto;
-	font-size: 12px;
-	letter-spacing: 0.3px;
-	padding-right: 20px;
-}
-</style>
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+
+<link rel="stylesheet" href="css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="css/fixedHeader.dataTables.min.css">
+<link rel="stylesheet" href="css/buttons.dataTables.min.css">
+<link rel="stylesheet" href="css/dataTables.searchHighlight.css" />
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+<link rel="stylesheet" href="css/responsive.css" type="text/css" />
 </head>
 <body>
 	<c:if test="${sessionScope['user']==null}">
@@ -48,7 +47,7 @@
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
 
-			<c:if test="${page.name.equals('Discount')}">
+			<c:if test="${page.name.equals('Report')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
@@ -59,6 +58,8 @@
 			</script>
 		</c:if>
 	</c:if>
+	<c:set var="compInfo"
+		value="${sessionScope['ejb'].getUserById(sessionScope['user']).getCompanyInfo()}" />
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
@@ -67,7 +68,8 @@
 				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
 				<div class="container">
 					<div class="row">
-						<div class="row">
+						<div class="masonary-grids">
+
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
 								<h3 style="margin-top: 11px;">Credit Note</h3>
@@ -82,7 +84,8 @@
 								</ul>
 								<div class="tab-content">
 									<div id="byVendor" class="tab-pane fade active in">
-										<table class="table">
+										<br>
+										<table cellspacing="0" width="100%" class="display note">
 											<thead>
 												<tr>
 													<th>#</th>
@@ -91,11 +94,11 @@
 													<th>Phone1</th>
 													<th>Phone2</th>
 													<th>Current Credit</th>
+													<th></th>
 												</tr>
 											</thead>
 											<tbody style="height: 300px;">
 												<c:set var="count" value="${1}" />
-
 												<c:forEach
 													items="${sessionScope['ejb'].getAllVendorsByAssendingMaxPurchase('Vendor')}"
 													var="vendor">
@@ -112,14 +115,14 @@
 																		maxFractionDigits="2" groupingUsed="false" />
 																	${currentCredit}</td>
 																<td>
-																	<form action="creditNoteByVendorName" method="post"
+																	<%-- <form action="creditNoteByVendorName" method="post"
 																		id="cnView${vendor.id}">
 																		<a href="#" onclick="creditNoteViewF('${vendor.id}');"><input
 																			type="hidden" value="${vendor.id}" name="vId"><input
 																			type="hidden" value="${vendor.name}"
 																			name="vendorName"><img alt=""
 																			src="images/eye.png" height="25px"></a>
-																	</form>
+																	</form> --%>
 																</td>
 															</tr>
 														</c:if>
@@ -129,8 +132,9 @@
 											</tbody>
 										</table>
 									</div>
-									<div id="byAgent" class="tab-pane fade ">
-										<table class="table">
+									<div id="byAgent" class="tab-pane fade active">
+										<br>
+										<table cellspacing="0" width="100%" class="display note">
 											<thead>
 												<tr>
 													<th>#</th>
@@ -139,6 +143,7 @@
 													<th>Phone1</th>
 													<th>Phone2</th>
 													<th>Current Credit</th>
+													<th></th>
 												</tr>
 											</thead>
 											<tbody style="height: 300px;">
@@ -158,13 +163,13 @@
 																	maxFractionDigits="2" groupingUsed="false" />
 																${currentCredit}</td>
 															<td>
-																<form action="creditNoteByAgentName" method="post"
+																<%-- <form action="creditNoteByAgentName" method="post"
 																	id="cnView${vendor.id}">
 																	<a href="#" onclick="creditNoteViewF('${vendor.id}');"><input
 																		type="hidden" value="${vendor.id}" name="paId"><input
 																		type="hidden" value="${vendor.name}" name="agentName"><img
 																		alt="" src="images/eye.png" height="25px"></a>
-																</form>
+																</form> --%>
 															</td>
 														</tr>
 													</c:if>
@@ -173,8 +178,9 @@
 											</tbody>
 										</table>
 									</div>
-									<div id="byJobber" class="tab-pane fade">
-										<table class="table">
+									<div id="byJobber" class="tab-pane fade active">
+										<br>
+										<table cellspacing="0" width="100%" class="display note">
 											<thead>
 												<tr>
 													<th>#</th>
@@ -183,11 +189,11 @@
 													<th>Phone1</th>
 													<th>Phone2</th>
 													<th>Current Credit</th>
+													<th></th>
 												</tr>
 											</thead>
 											<tbody style="height: 300px;">
 												<c:set var="count" value="${1}" />
-
 												<c:forEach
 													items="${sessionScope['ejb'].getAllVendorsByType('Jobber')}"
 													var="vendor">
@@ -203,13 +209,13 @@
 																	maxFractionDigits="2" groupingUsed="false" />
 																${currentCredit}</td>
 															<td>
-																<form action="creditNoteByJobber" method="post"
+																<%-- <form action="creditNoteByJobber" method="post"
 																	id="cnView${vendor.id}">
 																	<a href="#" onclick="creditNoteViewF('${vendor.id}');"><input
 																		type="hidden" value="${vendor.id}" name="jId"><input
 																		type="hidden" value="${vendor.name}" name="jobberName"><img
 																		alt="" src="images/eye.png" height="25px"></a>
-																</form>
+																</form> --%>
 															</td>
 														</tr>
 													</c:if>
@@ -223,15 +229,17 @@
 						</div>
 					</div>
 				</div>
-				<!-- Content Sec -->
 			</div>
-			<!-- Page Container -->
 		</div>
 	</div>
+	<!-- Content Sec -->
+	<!-- Page Container -->
+
 	<!-- main -->
+
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
-
+	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 	<script type="text/javascript" src="js/script.js"></script>
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="js/enscroll.js"></script>
@@ -246,6 +254,38 @@
 		function creditNoteViewF(id) {
 			$("#cnView" + id).submit();
 		}
+	</script>
+	<script src="js/jquery.dataTables.min.js"></script>
+	<script src="js/dataTables.fixedHeader.min.js"></script>
+	<script src="js/buttons.flash.min.js"></script>
+	<script src="js/buttons.html5.min.js"></script>
+	<script src="js/buttons.print.min.js"></script>
+	<script src="js/dataTables.buttons.min.js"></script>
+	<script src="js/jszip.min.js"></script>
+	<script src="js/vfs_fonts.js"></script>
+	<script src="js/pdfmake.min.js"></script>
+	<script src="js/pdfmake.min.js"></script>
+	<script src="js/dataTables.searchHighlight.min.js"></script>
+	<script src="js/pdfmake.min.js"></script>
+	<script src="js/jquery.highlight.js"></script>
+	<script type="text/javascript" src="js/dist/sweetalert2.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var table = $('.note').DataTable({
+				"scrollY" : 300,
+				"scrollX" : true,
+				"bPaginate" : false,
+				dom : 'Bfrtip',
+				buttons : [ 'copy', 'excel', 'print' ]
+			});
+
+			/* table.on('draw', function() {
+				var body = $(table.table().body());
+
+				body.unhighlight();
+				body.highlight(table.search());
+			}); */
+		});
 	</script>
 </body>
 
