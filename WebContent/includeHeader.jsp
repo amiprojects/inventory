@@ -19,7 +19,7 @@
 			alt="" /></a>  -->
 		<!-- <a title="" class="toggle-menu"><i class="fa fa-bars"></i></a> -->
 	</div>
-	<div class="custom-dropdowns">
+	<%-- <div class="custom-dropdowns">
 		<div class="notification-list dropdown">
 			<a title=""> <c:if
 					test="${sessionScope['ejb'].getNotifications().size()>0}">
@@ -46,7 +46,7 @@
 			</div>
 		</div>
 		<!-- Notification List -->
-	</div>
+	</div> --%>
 	<!-- <a title="" class="slide-panel-btn"><i class="fa fa-gear fa-spin"></i></a> -->
 	<div class="dropdown profile">
 		<a title=""> <!--  <img src="images/resource/me.jpg" alt="" /> -->${sessionScope['ejb'].getUserById(sessionScope['user']).name}<i

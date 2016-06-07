@@ -864,6 +864,8 @@
 								<legend> Summary </legend>
 								<form action="completePlanAndProductSumaryProduction" id="fs"
 									method="Post" enctype="multipart/form-data">
+									<input type="hidden" name="uniqueNo"
+										value="${sessionScope['ejb'].getLastUniqueNoOfPayDet()+1}">
 									<input type="hidden" name="proImage1" id="proImage1" value="">
 									<input type="hidden" name="catagoryId" id="catagoryId" value="">
 									<h4>

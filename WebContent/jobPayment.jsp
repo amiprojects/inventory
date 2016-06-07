@@ -369,7 +369,9 @@
 								<div class="widget-area">
 									<div class="breadcrumbs">
 										<ul>
-											<li><a title="">Select Payment status : </a></li>
+											<li><a title="">Select Payment status : <input
+													type="hidden" name="uniqueNo"
+													value="${sessionScope['ejb'].getLastUniqueNoOfPayDet()+1}"></a></li>
 										</ul>
 									</div>
 									<br> <br> <br>
@@ -725,7 +727,6 @@
 				},
 				dataType : "json",
 				success : function(data) {
-					alert(data.currentCreditNote);
 					$("#totalCredit").val(data.currentCreditNote);
 				}
 			});
