@@ -640,7 +640,9 @@
 																<div id="payDetail">
 																	<div class="breadcrumbs">
 																		<ul>
-																			<li><a title="">Payment Details : </a></li>
+																			<li><a title="">Select Payment status : <input
+																					type="hidden" name="uniqueNo"
+																					value="${sessionScope['ejb'].getLastUniqueNoOfPayDet()+1}"></a></li>
 																		</ul>
 																	</div>
 																	<br> <br> <br>
