@@ -629,13 +629,6 @@
 	</div>
 	<form role="form" class="sec" method="post" id="paymentForm"
 		action="salesPayment">
-		<%-- <c:if test="${requestScope['recordPayment']!=null}">
-			<c:set value="${requestScope['recordPayment']}" var="record"></c:set>
-		</c:if>
-		<c:if test="${requestScope['recordPayment']==null}">
-			<c:set value="0" var="record"></c:set>
-		</c:if>
-		<input type="hidden" name="recordPayment" value="${record}"> --%>
 		<div id="paymentModal" class="modal fade" role="dialog"
 			style="top: 25px;">
 			<div class="modal-dialog modal-lg">

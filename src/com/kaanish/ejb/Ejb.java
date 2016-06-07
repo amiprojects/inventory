@@ -584,6 +584,20 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<PaymentDetails> getAllPaymentDetailsAsc() {
+		TypedQuery<PaymentDetails> q = em.createQuery(
+				"select c from PaymentDetails c order by c.id asc",
+				PaymentDetails.class);
+		return q.getResultList();
+	}
+
+	public int getLastUniqueNoOfPayDet() {
+		TypedQuery<PaymentDetails> q = em.createQuery(
+				"select c from PaymentDetails c order by c.id desc",
+				PaymentDetails.class);
+		return q.getResultList().get(0).getUniqueNo();
+	}
+
 	public void updatePaymentDetails(PaymentDetails paymentDetails) {
 		em.merge(paymentDetails);
 	}

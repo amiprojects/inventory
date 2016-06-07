@@ -28,7 +28,9 @@ public class PaymentDetails implements Serializable {
 	private float totalAmount;
 	private float paidAmount;
 	private int jobAssignId;
-	
+
+	private int uniqueNo;
+
 	@ManyToOne
 	@JoinColumn(name = "purchaseReturnId")
 	private PurchaseReturn purchaseReturn;
@@ -43,7 +45,7 @@ public class PaymentDetails implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "salesEntryId")
-	private SalesEntry salesEntry;	
+	private SalesEntry salesEntry;
 
 	@ManyToOne
 	@JoinColumn(name = "salesReEntryId")
@@ -152,13 +154,21 @@ public class PaymentDetails implements Serializable {
 	public void setJobAssignId(int jobAssignId) {
 		this.jobAssignId = jobAssignId;
 	}
-	
+
 	public SalesReturn getSalesReturn() {
 		return salesReturn;
 	}
 
 	public void setSalesReturn(SalesReturn salesReturn) {
 		this.salesReturn = salesReturn;
+	}
+
+	public int getUniqueNo() {
+		return uniqueNo;
+	}
+
+	public void setUniqueNo(int uniqueNo) {
+		this.uniqueNo = uniqueNo;
 	}
 
 }

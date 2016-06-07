@@ -1,3 +1,9 @@
+paymentdetails
+------------------
+uniqueNo 10,0
+
+testServ
+////////////////////////////////////////////////////////
 login servlet / inits, 
 //getmacid - production only
 
