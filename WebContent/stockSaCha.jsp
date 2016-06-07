@@ -223,15 +223,16 @@ page[size="A4"] {
 										groupingUsed="false" />${grandT}</td>
 							</tr>
 						</c:if>
-					</table> <span style="float: right;"><c:if test="${i<qPage}">continued...</c:if></span>
+					</table> <span style="float: right;"><c:if test="${i<qPage}">continued...</c:if>
+						<c:if test="${i==qPage && purEntry.salesReturn.size()>0}">continued...</c:if></span>
 				</td>
 			</tr>
 			<c:if test="${i==qPage}">
+				<tr style="height: 75px">
+					<td class="tg-031e" colspan="7"><span>Amount Chargeable
+							(in words)</span><br> <span>${sessionScope['ejb'].getNumberToWords(purEntry.totalCost)}</span></td>
+				</tr>
 				<c:if test="${purEntry.salesReturn.size()==0}">
-					<tr style="height: 75px">
-						<td class="tg-031e" colspan="7"><span>Amount
-								Chargeable (in words)</span><br> <span>${sessionScope['ejb'].getNumberToWords(purEntry.totalCost)}</span></td>
-					</tr>
 					<tr style="height: 75px">
 						<td class="tg-031e" colspan="4"><strong>Declaration:</strong><br>We
 							declare that this invoice shows the actual price of the goods
@@ -275,7 +276,7 @@ page[size="A4"] {
 						value="${purEntry.sales_date}" pattern="dd-MM-yyyy" /></td>
 			</tr>
 			<tr style="height: 50px">
-				<td class="tg-031e" colspan="3" rowspan="4"><strong>Customer
+				<td class="tg-031e" colspan="3" rowspan="3"><strong>Customer
 						Details:</strong> <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Name :</span>
 					${purEntry.customer.name} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>City
 						:</span> ${purEntry.customer.city} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Address
@@ -298,10 +299,6 @@ page[size="A4"] {
 					</c:choose></td>
 			</tr>
 			<tr style="height: 50px">
-				<td class="tg-031e" colspan="2"></td>
-				<td class="tg-031e" colspan="2"></td>
-			</tr>
-			<tr style="height: 50px">
 				<td class="tg-031e" colspan="4"></td>
 			</tr>
 			<tr style="height: 25px">
@@ -314,7 +311,7 @@ page[size="A4"] {
 						<tr style="height: 25px">
 							<th>#</th>
 							<th>Return Date</th>
-							<th>Purchase Return challan no.</th>
+							<th>Sales Return challan no.</th>
 							<th>Product Code</th>
 							<th colspan="2">Product Description</th>
 							<th>Returning Qty</th>
@@ -323,66 +320,44 @@ page[size="A4"] {
 						<c:forEach items="${purEntry.salesReturn}" var="pret">
 							<c:set value="${pret.salesProductReturnDetail.size()}"
 								var="proRetLength" />
-							<c:choose>
-								<c:when test="${proRetLength==1}">
-									<tr>
-										<td class="tg-031e" rowspan="${proRetLength}">${slno}</td>
-										<td class="tg-031e" rowspan="${proRetLength}"><fmt:formatDate
-												value="${pret.returnDate}" pattern="dd-MM-yy" /> <%-- ${pret.returnDate} --%></td>
-										<td class="tg-031e" rowspan="${proRetLength}">${pret.challanNumber}</td>
-										<c:set var="purchaseReturnProd"
-											value="${pret.salesProductReturnDetail.get(0)}" />
-										<td class="tg-031e">
-											${purchaseReturnProd.salesProductDetails.purchase_Product_Details.productDetail.code}
-										</td>
-										<td class="tg-031e" colspan="2">
-											${purchaseReturnProd.salesProductDetails.purchase_Product_Details.productDetail.description}</td>
-										<td class="tg-031e"><fmt:formatNumber var="totalQ"
-												value="${purchaseReturnProd.qtyReturn}"
-												maxFractionDigits="3" groupingUsed="false" />${totalQ}</td>
-									</tr>
-								</c:when>
-								<c:otherwise>
-									<tr>
-										<td class="tg-031e" rowspan="${proRetLength}">${slno}</td>
-										<td class="tg-031e" rowspan="${proRetLength}"><fmt:formatDate
-												value="${pret.returnDate}" pattern="dd-MM-yy" /> <%-- ${pret.returnDate} --%></td>
-										<td class="tg-031e" rowspan="${proRetLength}">${pret.challanNumber}</td>
-										<c:set var="purchaseReturnProd"
-											value="${pret.salesProductReturnDetail.get(0)}" />
-										<td class="tg-031e">
-											${purchaseReturnProd.salesProductDetails.purchase_Product_Details.productDetail.code}
-										</td>
-										<td class="tg-031e" colspan="2">
-											${purchaseReturnProd.salesProductDetails.purchase_Product_Details.productDetail.description}</td>
-										<td class="tg-031e"><fmt:formatNumber var="totalQ"
-												value="${purchaseReturnProd.qtyReturn}"
-												maxFractionDigits="3" groupingUsed="false" />${totalQ}</td>
-									</tr>
-									<c:forEach var="purchaseReturnProd" begin="${2}"
-										end="${proRetLength}" items="${pret.salesProductReturnDetail}">
-										<tr>
-											<td class="tg-031e">
-												${purchaseReturnProd.salesProductDetails.purchase_Product_Details.productDetail.code}
-											</td>
-											<td class="tg-031e" colspan="2">
-												${purchaseReturnProd.salesProductDetails.purchase_Product_Details.productDetail.description}</td>
-											<td class="tg-031e"><fmt:formatNumber var="totalQ"
-													value="${purchaseReturnProd.qtyReturn}"
-													maxFractionDigits="3" groupingUsed="false" />${totalQ}</td>
-										</tr>
-									</c:forEach>
-								</c:otherwise>
-							</c:choose>
+							<tr>
+								<td class="tg-031e" rowspan="${proRetLength}">${slno}</td>
+								<td class="tg-031e" rowspan="${proRetLength}"><fmt:formatDate
+										value="${pret.returnDate}" pattern="dd-MM-yy" /> <%-- ${pret.returnDate} --%></td>
+								<td class="tg-031e" rowspan="${proRetLength}">${pret.challanNumber}</td>
+								<c:set var="purchaseReturnProd"
+									value="${pret.salesProductReturnDetail.get(0)}" />
+								<td class="tg-031e">
+									${purchaseReturnProd.salesProductDetails.purchase_Product_Details.productDetail.code}
+								</td>
+								<td class="tg-031e" colspan="2">
+									${purchaseReturnProd.salesProductDetails.purchase_Product_Details.productDetail.description}</td>
+								<td class="tg-031e"><fmt:formatNumber var="totalQ"
+										value="${purchaseReturnProd.qtyReturn}" maxFractionDigits="3"
+										groupingUsed="false" />${totalQ}</td>
+							</tr>
+							<c:forEach var="purchaseReturnProd" begin="${1}"
+								end="${proRetLength}" items="${pret.salesProductReturnDetail}">
+								<tr>
+									<td class="tg-031e">
+										${purchaseReturnProd.salesProductDetails.purchase_Product_Details.productDetail.code}
+									</td>
+									<td class="tg-031e" colspan="2">
+										${purchaseReturnProd.salesProductDetails.purchase_Product_Details.productDetail.description}</td>
+									<td class="tg-031e"><fmt:formatNumber var="totalQ"
+											value="${purchaseReturnProd.qtyReturn}" maxFractionDigits="3"
+											groupingUsed="false" />${totalQ}</td>
+								</tr>
+							</c:forEach>
 							<c:set value="${slno+1}" var="slno" />
 						</c:forEach>
 					</table>
 				</td>
 			</tr>
-			<tr style="height: 75px">
+			<%-- <tr style="height: 75px">
 				<td class="tg-031e" colspan="7"><span>Amount Chargeable
 						(in words)</span><br> <span>${sessionScope['ejb'].getNumberToWords(purEntry.totalCost)}</span></td>
-			</tr>
+			</tr> --%>
 			<tr style="height: 75px">
 				<td class="tg-031e" colspan="4"><strong>Declaration:</strong><br>We
 					declare that this invoice shows the actual price of the goods

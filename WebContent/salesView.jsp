@@ -230,6 +230,7 @@
 											<th>Product code</th>
 											<th>Product Description</th>
 											<th>Lot No.</th>
+											<th>Returned Qty</th>
 											<th>Qty.</th>
 											<c:choose>
 												<c:when test="${salesSearchView.isMRP()==true}">
@@ -251,6 +252,7 @@
 												<td>${salesProducts.purchase_Product_Details.productDetail.code}</td>
 												<td>${salesProducts.purchase_Product_Details.productDetail.description}</td>
 												<td>${salesProducts.purchase_Product_Details.lotNumber}</td>
+												<td>${salesProducts.salesReQty}</td>
 												<td>${salesProducts.quantity}</td>
 												<c:choose>
 													<c:when test="${salesSearchView.isMRP()==true}">

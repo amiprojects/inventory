@@ -3544,6 +3544,22 @@ public class Ejb {
 		em.merge(salesProductDetails);
 	}
 
+	public List<SalesProductDetails> getSoldOnlySalesProductDetailsBySalesEntryId(
+			int id) {
+		TypedQuery<SalesProductDetails> q = em
+				.createQuery(
+						"select s from SalesProductDetails s where s.salesEntry.id=:Id",
+						SalesProductDetails.class);
+		q.setParameter("Id", id);
+		List<SalesProductDetails> lst = new ArrayList<SalesProductDetails>();
+		for (SalesProductDetails s : q.getResultList()) {
+			if (s.getQuantity() - s.getSalesReQty() > 0) {
+				lst.add(s);
+			}
+		}
+		return lst;
+	}
+
 	public List<SalesProductDetails> getSales_Product_DetailsByProId(int id) {
 		TypedQuery<SalesProductDetails> q = em
 				.createQuery(

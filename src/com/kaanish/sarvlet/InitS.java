@@ -77,169 +77,11 @@ public class InitS extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
-		if (!ejb.isCompanyInfoExist()) {
-			// String compName = "KK"; // Production House
-			String compName = "Kaanish Kouture"; // Kaanish Kouture
-			// String compName = "Kainat Kreation"; // Kainat Kreation
+		// here
 
-			companyInfo = new CompanyInfo();
-			companyInfo.setCompname(compName);
-			ejb.setCompanyInfo(companyInfo);
-		}
-		if (ejb.getAllUsers().size() < 1) {
-			// Production House
-			// String userId = "adminProduction";
-			// String password = "productionKaanish";
-			// String name = "Production Admin";
-			// Production House
-
-			// Kaanish Kouture
-			String userId = "adminKaanish";
-			String password = "admin";
-			String name = "Kaanish Admin";
-			// Kaanish Kouture
-
-			// Kainat Kreation
-			// String userId = "adminKainat";
-			// String password = "admin";
-			// String name = "Kainat Admin";
-			// Kainat Kreation
-
-			users = new Users();
-			users.setUserId(userId);
-			users.setPassword(password);
-			users.setName(name);
-			users.setPh("0");
-			users.setCompanyInfo(companyInfo);
-			ejb.setUser(users);
-		}
-
-		// vendor type
-		if (ejb.getAllVendorType().size() < 5) {
-			List<String> str = new ArrayList<>();
-			str.add("Vendor");
-			str.add("Sales Agent");
-			str.add("Purchase Agent");
-			str.add("Jobber");
-			str.add("Designer");
-
-			for (String s : str) {
-				vendorType = new VendorType();
-				vendorType.setType(s);
-				ejb.setVendorType(vendorType);
-			}
-		}
-		// vendor type
-
-		// adding vendor- production house only
-		// int flagV = 0;
-		// for (Vendor v : ejb.getAllVendors()) {
-		// if (v.getName().equals("Production Vendor")) {
-		// flagV = 1;
-		// break;
-		// }
-		// }
-		// if (flagV == 0) {
-		// dt = new Date();
-		// vendor = new Vendor();
-		// vendor.setName("Production Vendor");
-		// vendor.setPh1("Production Phone");
-		// vendor.setAddress("NA");
-		// vendor.setAliseName("NA");
-		// vendor.setCompanyName("NA");
-		// vendor.setEmail("NA");
-		// vendor.setPh2("NA");
-		// vendor.setPinCode("NA");
-		// vendor.setLastModifiedDate(dt);
-		// vendor.setVendorType(ejb.getVendorTypeByName("Vendor"));
-		// vendor.setUsers(ejb.getUserById("adminProduction"));
-		// ejb.setVendor(vendor);
-		//
-		// accountDetails = new AccountDetails();
-		// accountDetails.setUsers(ejb.getUserById("adminProduction"));
-		// accountDetails.setVendor(vendor);
-		// ejb.setAccountDetails(accountDetails);
-		// }
-		// adding vendor- production house only
-
-		if (ejb.getAllBillSetup().size() < 8) {
-			// Production House
-			// companyInfo =
-			// ejb.getUserById("adminProduction").getCompanyInfo();
-			// Production House
-
-			// Kaanish Kouture
-			companyInfo = ejb.getUserById("adminKaanish").getCompanyInfo();
-			// Kaanish Kouture
-
-			// Kainat Kreation
-			// companyInfo = ejb.getUserById("adminKainat").getCompanyInfo();
-			// Kainat Kreation
-
-			bill_setup = new Bill_setup();
-			bill_setup.setBillType("PUR");
-			bill_setup.setCompanyInitial("KK");
-			bill_setup.setSufix("000");
-			bill_setup.setCompanyInfo(companyInfo);
-			ejb.setBillSetup(bill_setup);
-			bill_setup = null;
-
-			bill_setup = new Bill_setup();
-			bill_setup.setBillType("RPUR");
-			bill_setup.setCompanyInitial("KK");
-			bill_setup.setSufix("000");
-			bill_setup.setCompanyInfo(companyInfo);
-			ejb.setBillSetup(bill_setup);
-			bill_setup = null;
-
-			bill_setup = new Bill_setup();
-			bill_setup.setBillType("PURO");
-			bill_setup.setCompanyInitial("KK");
-			bill_setup.setSufix("000");
-			bill_setup.setCompanyInfo(companyInfo);
-			ejb.setBillSetup(bill_setup);
-			bill_setup = null;
-
-			bill_setup = new Bill_setup();
-			bill_setup.setBillType("INV");
-			bill_setup.setCompanyInitial("KK");
-			bill_setup.setSufix("000");
-			bill_setup.setCompanyInfo(companyInfo);
-			ejb.setBillSetup(bill_setup);
-			bill_setup = null;
-
-			bill_setup = new Bill_setup();
-			bill_setup.setBillType("SRINV");
-			bill_setup.setCompanyInitial("KK");
-			bill_setup.setSufix("000");
-			bill_setup.setCompanyInfo(companyInfo);
-			ejb.setBillSetup(bill_setup);
-			bill_setup = null;
-
-			bill_setup = new Bill_setup();
-			bill_setup.setBillType("JOB");
-			bill_setup.setCompanyInitial("KK");
-			bill_setup.setSufix("000");
-			bill_setup.setCompanyInfo(companyInfo);
-			ejb.setBillSetup(bill_setup);
-			bill_setup = null;
-
-			bill_setup = new Bill_setup();
-			bill_setup.setBillType("JOBR");
-			bill_setup.setCompanyInitial("KK");
-			bill_setup.setSufix("000");
-			bill_setup.setCompanyInfo(companyInfo);
-			ejb.setBillSetup(bill_setup);
-			bill_setup = null;
-
-			bill_setup = new Bill_setup();
-			bill_setup.setBillType("ROAD");
-			bill_setup.setCompanyInitial("KK");
-			bill_setup.setSufix("000");
-			bill_setup.setCompanyInfo(companyInfo);
-			ejb.setBillSetup(bill_setup);
-			bill_setup = null;
-		}
+		// iKaanish();
+		// iKainat();
+		iProduction();
 
 		// ////////////////////////////////////////////////////////
 
@@ -1472,6 +1314,361 @@ public class InitS extends HttpServlet {
 			ejb.setStoct(stoct);
 		}
 
+	}
+
+	public void iProduction() {
+		if (!ejb.isCompanyInfoExist()) {
+			String compName = "KK";
+
+			companyInfo = new CompanyInfo();
+			companyInfo.setCompname(compName);
+			ejb.setCompanyInfo(companyInfo);
+		}
+		if (ejb.getAllUsers().size() < 1) {
+			String userId = "adminProduction";
+			String password = "productionKaanish";
+			String name = "Production Admin";
+
+			users = new Users();
+			users.setUserId(userId);
+			users.setPassword(password);
+			users.setName(name);
+			users.setPh("0");
+			users.setCompanyInfo(companyInfo);
+			ejb.setUser(users);
+		}
+
+		// vendor type
+		if (ejb.getAllVendorType().size() < 5) {
+			List<String> str = new ArrayList<>();
+			str.add("Vendor");
+			str.add("Sales Agent");
+			str.add("Purchase Agent");
+			str.add("Jobber");
+			str.add("Designer");
+
+			for (String s : str) {
+				vendorType = new VendorType();
+				vendorType.setType(s);
+				ejb.setVendorType(vendorType);
+			}
+		}
+		// vendor type
+
+		// adding vendor- production house only
+		int flagV = 0;
+		for (Vendor v : ejb.getAllVendors()) {
+			if (v.getName().equals("Production Vendor")) {
+				flagV = 1;
+				break;
+			}
+		}
+		if (flagV == 0) {
+			dt = new Date();
+			vendor = new Vendor();
+			vendor.setName("Production Vendor");
+			vendor.setPh1("Production Phone");
+			vendor.setAddress("NA");
+			vendor.setAliseName("NA");
+			vendor.setCompanyName("NA");
+			vendor.setEmail("NA");
+			vendor.setPh2("NA");
+			vendor.setPinCode("NA");
+			vendor.setLastModifiedDate(dt);
+			vendor.setVendorType(ejb.getVendorTypeByName("Vendor"));
+			vendor.setUsers(ejb.getUserById("adminProduction"));
+			ejb.setVendor(vendor);
+
+			accountDetails = new AccountDetails();
+			accountDetails.setUsers(ejb.getUserById("adminProduction"));
+			accountDetails.setVendor(vendor);
+			ejb.setAccountDetails(accountDetails);
+		}
+		// adding vendor- production house only
+
+		if (ejb.getAllBillSetup().size() < 8) {
+			companyInfo = ejb.getUserById("adminProduction").getCompanyInfo();
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("PUR");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfo);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("RPUR");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfo);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("PURO");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfo);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("INV");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfo);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("SRINV");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfo);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("JOB");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfo);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("JOBR");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfo);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("ROAD");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfo);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+		}
+	}
+
+	public void iKaanish() {
+		if (!ejb.isCompanyInfoExist()) {
+			String compName = "Kaanish Kouture";
+
+			companyInfo = new CompanyInfo();
+			companyInfo.setCompname(compName);
+			ejb.setCompanyInfo(companyInfo);
+		}
+		if (ejb.getAllUsers().size() < 1) {
+			String userId = "adminKaanish";
+			String password = "admin";
+			String name = "Kaanish Admin";
+
+			users = new Users();
+			users.setUserId(userId);
+			users.setPassword(password);
+			users.setName(name);
+			users.setPh("0");
+			users.setCompanyInfo(companyInfo);
+			ejb.setUser(users);
+		}
+
+		// vendor type
+		if (ejb.getAllVendorType().size() < 5) {
+			List<String> str = new ArrayList<>();
+			str.add("Vendor");
+			str.add("Sales Agent");
+			str.add("Purchase Agent");
+			str.add("Jobber");
+			str.add("Designer");
+
+			for (String s : str) {
+				vendorType = new VendorType();
+				vendorType.setType(s);
+				ejb.setVendorType(vendorType);
+			}
+		}
+		// vendor type
+
+		if (ejb.getAllBillSetup().size() < 8) {
+			companyInfo = ejb.getUserById("adminKaanish").getCompanyInfo();
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("PUR");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfo);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("RPUR");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfo);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("PURO");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfo);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("INV");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfo);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("SRINV");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfo);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("JOB");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfo);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("JOBR");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfo);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("ROAD");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfo);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+		}
+	}
+
+	public void iKainat() {
+		if (!ejb.isCompanyInfoExist()) {
+			String compName = "Kainat Kreation";
+
+			companyInfo = new CompanyInfo();
+			companyInfo.setCompname(compName);
+			ejb.setCompanyInfo(companyInfo);
+		}
+		if (ejb.getAllUsers().size() < 1) {
+			String userId = "adminKainat";
+			String password = "admin";
+			String name = "Kainat Admin";
+
+			users = new Users();
+			users.setUserId(userId);
+			users.setPassword(password);
+			users.setName(name);
+			users.setPh("0");
+			users.setCompanyInfo(companyInfo);
+			ejb.setUser(users);
+		}
+
+		// vendor type
+		if (ejb.getAllVendorType().size() < 5) {
+			List<String> str = new ArrayList<>();
+			str.add("Vendor");
+			str.add("Sales Agent");
+			str.add("Purchase Agent");
+			str.add("Jobber");
+			str.add("Designer");
+
+			for (String s : str) {
+				vendorType = new VendorType();
+				vendorType.setType(s);
+				ejb.setVendorType(vendorType);
+			}
+		}
+		// vendor type
+
+		if (ejb.getAllBillSetup().size() < 8) {
+			companyInfo = ejb.getUserById("adminKainat").getCompanyInfo();
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("PUR");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfo);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("RPUR");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfo);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("PURO");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfo);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("INV");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfo);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("SRINV");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfo);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("JOB");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfo);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("JOBR");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfo);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("ROAD");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfo);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+		}
 	}
 
 	@Override

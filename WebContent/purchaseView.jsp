@@ -204,6 +204,7 @@
 											<th>WSP</th>
 											<th>MRP</th>
 											<th>Qty</th>
+											<th>Returned Qty</th>
 											<th>UOM</th>
 											<th>Rate</th>
 											<th>Amount</th>
@@ -221,6 +222,7 @@
 												<td>${purchaseProducts.wsp}</td>
 												<td>${purchaseProducts.mrp}</td>
 												<td>${purchaseProducts.quantity}</td>
+												<td>${purchaseProducts.totalReturningQty}</td>
 												<td>${purchaseProducts.productDetail.qtyUnit.name}</td>
 												<td>${purchaseProducts.cost}</td>
 												<td><fmt:formatNumber var="amount"

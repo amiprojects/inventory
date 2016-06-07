@@ -88,6 +88,7 @@ page[size="A4"] {
 	<c:set value="${1}" var="sl" />
 	<c:set value="${0}" var="tqty" />
 	<c:set value="${0}" var="gtot" />
+	<c:set value="${0}" var="j" />
 	<c:forEach var="i" begin="1" end="${qPage}">
 		<page id="print1" size="A4">
 		<h3 align="center">
@@ -230,68 +231,159 @@ page[size="A4"] {
 										groupingUsed="false" />${grandT}</td>
 							</tr>
 						</c:if>
-					</table> <span style="float: right;"><c:if test="${i<qPage}">continued...</c:if></span>
+					</table> <span style="float: right;"><c:if test="${i<qPage}">continued...</c:if>
+						<c:if test="${i==qPage && purEntry.purchaseReturn.size()>0}">continued...</c:if></span>
 				</td>
 			</tr>
 			<c:if test="${i==qPage}">
-				<c:if test="${purEntry.purchaseReturn.size()!=0}">
-					<tr>
-						<td colspan="6" align="left">Return Details :</td>
-					</tr>
-					<tr>
-						<th>#</th>
-						<th>Return Date</th>
-						<th>Purchase Return challan no.</th>
-						<th>Product Code</th>
-						<th>Product Description</th>
-						<th>Returning Qty</th>
-					</tr>
-					<c:set value="${1}" var="slno" />
-					<c:forEach items="${purEntry.purchaseReturn}" var="pret">
-						<tr>
-							<td>${slno}</td>
-							<td><fmt:formatDate value="${pret.returnDate}"
-									pattern="dd-MM-yy" /> <%-- ${pret.returnDate} --%></td>
-
-							<td>${pret.challanNumber}</td>
-							<td><c:forEach var="purchaseReturnProd"
-									items="${pret.purchaseReturnProductDetails}">
-						${purchaseReturnProd.purchaseProductDetails.productDetail.code}
-						<br>
-								</c:forEach></td>
-							<td><c:forEach var="purchaseReturnProd"
-									items="${pret.purchaseReturnProductDetails}">
-						${purchaseReturnProd.purchaseProductDetails.productDetail.description}
-						<br>
-								</c:forEach></td>
-							<td><c:forEach var="purchaseReturnProd"
-									items="${pret.purchaseReturnProductDetails}">
-									<fmt:formatNumber var="totalQ"
-										value="${purchaseReturnProd.qtyReturn}" maxFractionDigits="3"
-										groupingUsed="false" />${totalQ}
-						<br>
-								</c:forEach></td>
-						</tr>
-						<c:set value="${slno+1}" var="slno" />
-					</c:forEach>
-				</c:if>
 				<tr style="height: 75px">
 					<td class="tg-031e" colspan="7"><span>Amount Chargeable
 							(in words)</span><br> <span>${sessionScope['ejb'].getNumberToWords(purEntry.totalCost)}</span></td>
 				</tr>
-				<tr style="height: 75px">
-					<td class="tg-031e" colspan="4"><strong>Declaration:</strong><br>We
-						declare that this invoice shows the actual price of the goods
-						describe and that all particular are true and correct.</td>
-					<td class="tg-031e" colspan="3" style="text-align: right;">for
-						<strong>${companyInfo.compname}</strong><br> <br>Authorised
-						Signatory
-					</td>
-				</tr>
+				<c:if test="${purEntry.purchaseReturn.size()==0}">
+					<tr style="height: 75px">
+						<td class="tg-031e" colspan="4"><strong>Declaration:</strong><br>We
+							declare that this invoice shows the actual price of the goods
+							describe and that all particular are true and correct.</td>
+						<td class="tg-031e" colspan="3" style="text-align: right;">for
+							<strong>${companyInfo.compname}</strong><br> <br>Authorised
+							Signatory
+						</td>
+					</tr>
+				</c:if>
 			</c:if>
 		</table>
 		<center>This is a Computer Generated Invoice</center>
 		</page>
+		<c:set value="${i+1}" var="j" />
 	</c:forEach>
+	<c:if test="${purEntry.purchaseReturn.size()!=0}">
+		<page id="print1" size="A4">
+		<h3 align="center">Purchase Challan (Page ${j})</h3>
+		<table class="tg"
+			style="border: 1px solid; height: 1050px; width: 750px">
+			<tr style="height: 50px">
+				<td class="tg-031e" colspan="3" rowspan="3" style="width: 50%">
+					<strong>${companyInfo.compname}</strong><br> <br> <br>
+					${companyInfo.addr}<br> EMail: ${companyInfo.email}<br>
+					Mobile: ${companyInfo.mobile}
+				</td>
+				<td class="tg-031e" colspan="2" style="width: 25%">Purchase
+					Challan no:</td>
+				<td class="tg-031e" colspan="2" style="width: 25%">${purEntry.challanNumber}</td>
+			</tr>
+			<tr style="height: 50px">
+				<td class="tg-031e" colspan="2">Dated:</td>
+				<td class="tg-031e" colspan="2"><fmt:formatDate
+						value="${sessionScope['ejb'].getCurrentDateTime()}"
+						pattern="dd-MM-yyyy" /></td>
+			</tr>
+			<tr style="height: 50px">
+				<td class="tg-031e" colspan="2">Purchase date:</td>
+				<td class="tg-031e" colspan="2"><fmt:formatDate
+						value="${purEntry.purchase_date}" pattern="dd-MM-yyyy" /></td>
+			</tr>
+			<tr style="height: 50px">
+				<td class="tg-031e" colspan="3" rowspan="3"><strong> <c:choose>
+							<c:when test="${purEntry.vendor.vendorType.type=='Vendor'}">Vendor
+					Details:</c:when>
+							<c:when
+								test="${purEntry.vendor.vendorType.type=='Purchase Agent'}">Vendor
+					Details:</c:when>
+							<c:otherwise>Vendor/Agent
+					Details:</c:otherwise>
+						</c:choose>
+				</strong> <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Name :</span>
+					${purEntry.vendor.name} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>City
+						:</span> ${purEntry.vendor.city.cityName} <br>
+					&nbsp;&nbsp;&nbsp;&nbsp;<span>Address :<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				</span> ${purEntry.vendor.address} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Ph1
+						:</span> ${purEntry.vendor.ph1} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Ph2
+						:</span> ${purEntry.vendor.ph2}</td>
+				<td class="tg-031e" colspan="2">Vendor bill No:</td>
+				<td class="tg-031e" colspan="2">${purEntry.vendor_bill_no}</td>
+			</tr>
+			<tr style="height: 50px">
+				<td class="tg-031e" colspan="2">Mode of payment :</td>
+				<td class="tg-031e" colspan="2"><c:choose>
+						<c:when
+							test="${purEntry.paymentDetails.get(0).paymentType.type!=null}">${purEntry.paymentDetails.get(0).paymentType.type}</c:when>
+						<c:otherwise>NA</c:otherwise>
+					</c:choose></td>
+			</tr>
+			<tr style="height: 50px">
+				<td class="tg-031e" colspan="4"></td>
+			</tr>
+			<tr style="height: 25px">
+				<td colspan="7" align="left">Return Details :</td>
+			</tr>
+			<tr>
+				<td class="tg-031e" colspan="7">
+					<table class="tg"
+						style="height: auto; width: 750px; border-color: white; margin-left: -6px; margin-right: -6px; margin-top: -11px;">
+						<tr style="height: 25px">
+							<th>#</th>
+							<th>Return Date</th>
+							<th>Purchase Return challan no.</th>
+							<th>Product Code</th>
+							<th colspan="2">Product Description</th>
+							<th>Returning Qty</th>
+						</tr>
+						<c:set value="${1}" var="slno" />
+						<c:forEach items="${purEntry.purchaseReturn}" var="pret">
+							<c:set value="${pret.purchaseReturnProductDetails.size()}"
+								var="proRetLength" />
+							<tr>
+								<td class="tg-031e" rowspan="${proRetLength}">${slno}</td>
+								<td class="tg-031e" rowspan="${proRetLength}"><fmt:formatDate
+										value="${pret.returnDate}" pattern="dd-MM-yy" /> <%-- ${pret.returnDate} --%></td>
+								<td class="tg-031e" rowspan="${proRetLength}">${pret.challanNumber}</td>
+								<c:set var="purchaseReturnProd"
+									value="${pret.purchaseReturnProductDetails.get(0)}" />
+								<td class="tg-031e">
+									${purchaseReturnProd.purchaseProductDetails.productDetail.code}
+								</td>
+								<td class="tg-031e" colspan="2">
+									${purchaseReturnProd.purchaseProductDetails.productDetail.description}</td>
+								<td class="tg-031e"><fmt:formatNumber var="totalQ"
+										value="${purchaseReturnProd.qtyReturn}" maxFractionDigits="3"
+										groupingUsed="false" />${totalQ}</td>
+							</tr>
+							<c:forEach var="purchaseReturnProd" begin="${1}"
+								end="${proRetLength}"
+								items="${pret.purchaseReturnProductDetails}">
+								<tr>
+									<td class="tg-031e">
+										${purchaseReturnProd.purchaseProductDetails.productDetail.code}
+									</td>
+									<td class="tg-031e" colspan="2">
+										${purchaseReturnProd.purchaseProductDetails.productDetail.description}</td>
+									<td class="tg-031e"><fmt:formatNumber var="totalQ"
+											value="${purchaseReturnProd.qtyReturn}" maxFractionDigits="3"
+											groupingUsed="false" />${totalQ}</td>
+								</tr>
+							</c:forEach>
+							<c:set value="${slno+1}" var="slno" />
+						</c:forEach>
+					</table>
+				</td>
+			</tr>
+			<%-- <tr style="height: 75px">
+				<td class="tg-031e" colspan="7"><span>Amount Chargeable
+						(in words)</span><br> <span>${sessionScope['ejb'].getNumberToWords(purEntry.totalCost)}</span></td>
+			</tr> --%>
+			<tr style="height: 75px">
+				<td class="tg-031e" colspan="4"><strong>Declaration:</strong><br>We
+					declare that this invoice shows the actual price of the goods
+					describe and that all particular are true and correct.</td>
+				<td class="tg-031e" colspan="3" style="text-align: right;">for
+					<strong>${companyInfo.compname}</strong><br> <br>Authorised
+					Signatory
+				</td>
+			</tr>
+		</table>
+		</page>
+	</c:if>
 </body>
 </html>

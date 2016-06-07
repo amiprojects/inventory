@@ -73,7 +73,9 @@ page[size="A4"] {
 		var="purEntry" />
 
 
-	<c:set value="${purEntry.salesProductDetails.size()}" var="proLength" />
+	<c:set
+		value="${sessionScope['ejb'].getSoldOnlySalesProductDetailsBySalesEntryId(purEntry.id).size()}"
+		var="proLength" />
 	<c:set value="${Math.ceil(proLength/6)}" var="qPage" />
 
 	<c:set value="${1}" var="sl" />
@@ -151,7 +153,8 @@ page[size="A4"] {
 							<th>Amount</th>
 						</tr>
 						<c:forEach begin="${(i-1)*6}" end="${i*6-1}"
-							items="${purEntry.salesProductDetails}" var="ppdet">
+							items="${sessionScope['ejb'].getSoldOnlySalesProductDetailsBySalesEntryId(purEntry.id)}"
+							var="ppdet">
 							<c:if test="${ppdet.quantity-ppdet.salesReQty>0}">
 								<tr>
 									<td>${sl}</td>
