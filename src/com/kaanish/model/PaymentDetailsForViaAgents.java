@@ -30,15 +30,14 @@ public class PaymentDetailsForViaAgents implements Serializable {
 	private int uniqueNo;
 
 	private int purchaseEntryId;
-	private int purchaseReturnId;
 	private int salesEntryId;
-	private int salesReturnId;
 
-	private int salesAgentId;
-	private int purchaseAgentId;
+	private int agentId;
 
 	private int paymentTypeId;
 	private int paymentStatusId;
+
+	private String userId;
 
 	public int getId() {
 		return id;
@@ -88,28 +87,12 @@ public class PaymentDetailsForViaAgents implements Serializable {
 		this.purchaseEntryId = purchaseEntryId;
 	}
 
-	public int getPurchaseReturnId() {
-		return purchaseReturnId;
-	}
-
-	public void setPurchaseReturnId(int purchaseReturnId) {
-		this.purchaseReturnId = purchaseReturnId;
-	}
-
 	public int getSalesEntryId() {
 		return salesEntryId;
 	}
 
 	public void setSalesEntryId(int salesEntryId) {
 		this.salesEntryId = salesEntryId;
-	}
-
-	public int getSalesReturnId() {
-		return salesReturnId;
-	}
-
-	public void setSalesReturnId(int salesReturnId) {
-		this.salesReturnId = salesReturnId;
 	}
 
 	public int getPaymentTypeId() {
@@ -128,27 +111,27 @@ public class PaymentDetailsForViaAgents implements Serializable {
 		this.paymentStatusId = paymentStatusId;
 	}
 
-	public int getSalesAgentId() {
-		return salesAgentId;
-	}
-
-	public void setSalesAgentId(int salesAgentId) {
-		this.salesAgentId = salesAgentId;
-	}
-
-	public int getPurchaseAgentId() {
-		return purchaseAgentId;
-	}
-
-	public void setPurchaseAgentId(int purchaseAgentId) {
-		this.purchaseAgentId = purchaseAgentId;
-	}
-
 	public Date getEntryDate() {
 		return entryDate;
 	}
 
 	public void setEntryDate(Date entryDate) {
 		this.entryDate = entryDate;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public int getAgentId() {
+		return agentId;
+	}
+
+	public void setAgentId(int agentId) {
+		this.agentId = agentId;
 	}
 }

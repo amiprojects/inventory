@@ -78,9 +78,11 @@
 							<div class="widget-area">
 								<ul class="nav nav-tabs">
 									<li class="active"><a data-toggle="tab" href="#byVendor">Vendor</a></li>
-									<li><a data-toggle="tab" href="#byAgent">Purchase
+									<li><a data-toggle="tab" href="#byDirectPAgent">Purchase
 											Agent (Direct)</a></li>
 									<li><a data-toggle="tab" href="#byJobber">Jobber</a></li>
+									<li><a data-toggle="tab" href="#bySalesAgent">Sales
+											Agent</a></li>
 								</ul>
 								<div class="tab-content">
 									<div id="byVendor" class="tab-pane fade active in">
@@ -132,7 +134,7 @@
 											</tbody>
 										</table>
 									</div>
-									<div id="byAgent" class="tab-pane fade active">
+									<div id="byDirectPAgent" class="tab-pane fade active">
 										<br>
 										<table cellspacing="0" width="100%" class="display note">
 											<thead>
@@ -170,6 +172,52 @@
 																		type="hidden" value="${vendor.name}" name="agentName"><img
 																		alt="" src="images/eye.png" height="25px"></a>
 																</form> --%>
+															</td>
+														</tr>
+													</c:if>
+													<c:set var="count" value="${count+1}" />
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
+									<div id="bySalesAgent" class="tab-pane fade active">
+										<br>
+										<table cellspacing="0" width="100%" class="display note">
+											<thead>
+												<tr>
+													<th>#</th>
+													<th>Agent Name</th>
+													<th>Company Name</th>
+													<th>Phone1</th>
+													<th>Phone2</th>
+													<th>Current Credit</th>
+													<th></th>
+												</tr>
+											</thead>
+											<tbody style="height: 300px;">
+												<c:set var="count" value="${1}" />
+												<c:forEach
+													items="${sessionScope['ejb'].getAllVendorsByAssendingMaxPurchase('Sales Agent')}"
+													var="vendor">
+													<c:if test="${vendor.vendorType.type=='Sales Agent'}">
+														<tr>
+															<td>${count}</td>
+															<td>${vendor.name}</td>
+															<td>${vendor.companyName}</td>
+															<td>${vendor.ph1}</td>
+															<td>${vendor.ph2}</td>
+															<td><fmt:formatNumber var="currentCredit"
+																	value="${sessionScope['ejb'].getCurrentCreditNote4ViaAgentByAgentId(vendor.id)}"
+																	maxFractionDigits="2" groupingUsed="false" />
+																${currentCredit}</td>
+															<td>
+																<form action="creditNoteBySalesAgentName" method="post"
+																	id="cnView${vendor.id}">
+																	<a href="#" onclick="creditNoteViewF('${vendor.id}');"><input
+																		type="hidden" value="${vendor.id}" name="saId"><input
+																		type="hidden" value="${vendor.name}" name="agentName"><img
+																		alt="" src="images/eye.png" height="25px"></a>
+																</form>
 															</td>
 														</tr>
 													</c:if>

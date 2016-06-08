@@ -27,12 +27,12 @@ public class VoucherDetailsForViaAgents implements Serializable {
 	private boolean isCredit;
 
 	private int purchaseEntryId;
-	private int purchaseReturnId;
 	private int salesEntryId;
-	private int salesReturnId;
 
 	private int voucherAssignId;
 	private int agentId;
+
+	private String userId;
 
 	public int getId() {
 		return id;
@@ -82,28 +82,12 @@ public class VoucherDetailsForViaAgents implements Serializable {
 		this.purchaseEntryId = purchaseEntryId;
 	}
 
-	public int getPurchaseReturnId() {
-		return purchaseReturnId;
-	}
-
-	public void setPurchaseReturnId(int purchaseReturnId) {
-		this.purchaseReturnId = purchaseReturnId;
-	}
-
 	public int getSalesEntryId() {
 		return salesEntryId;
 	}
 
 	public void setSalesEntryId(int salesEntryId) {
 		this.salesEntryId = salesEntryId;
-	}
-
-	public int getSalesReturnId() {
-		return salesReturnId;
-	}
-
-	public void setSalesReturnId(int salesReturnId) {
-		this.salesReturnId = salesReturnId;
 	}
 
 	public int getVoucherAssignId() {
@@ -120,6 +104,14 @@ public class VoucherDetailsForViaAgents implements Serializable {
 
 	public void setAgentId(int agentId) {
 		this.agentId = agentId;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 }

@@ -224,6 +224,8 @@
 												<th>Customer Name</th>
 												<th>Agent Name</th>
 												<th>Sales Date</th>
+												<th>Profit</th>
+												<th>(-)Profit</th>
 											</tr>
 										</thead>
 
@@ -247,10 +249,16 @@
 														</c:choose>
 														<td><fmt:formatDate value="${sEntryByD.sales_date}"
 																pattern="dd-MM-yy" /></td>
+														<td>${sEntryByD.agentProfitTotal}</td>
+														<td><c:set var="mProdit" value="${0}" /> <c:forEach
+																var="sReturn" items="${sEntryByD.salesReturn}">
+																<c:set var="mProdit"
+																	value="${mProdit+sReturn.retAgentProfitTotal}" />
+															</c:forEach>${mProdit}</td>
 														<td style="display: none;"><c:if
 																test="${sessionScope['ejb'].getPaymentDetails4ViaAgentBySalesEntryId(sEntryByD.id).size()>0}">
 																<c:set
-																	value="${sessionScope['ejb'].getPaymentStatusById(getPaymentDetails4ViaAgentBySalesEntryId(sEntryByD.id).get(0).paymentStatusId).status}"
+																	value="${sessionScope['ejb'].getPaymentStatusById(sessionScope['ejb'].getPaymentDetails4ViaAgentBySalesEntryId(sEntryByD.id).get(0).paymentStatusId).status}"
 																	var="Status"></c:set>
 															</c:if> <c:if
 																test="${sessionScope['ejb'].getPaymentDetails4ViaAgentBySalesEntryId(sEntryByD.id).size()==0}">
@@ -740,10 +748,10 @@
 							totalPaid=totalPaid+item.paymentAmount;
 					});
 					$("#dueAmount").html(Number(Number(totPC)-Number(totalPaid)).toFixed(2));
-					if(Number(Number(totPC)-Number(totalPaid))>0){
-						$("#payButton").removeAttr("disabled");
-					}else{
+					if(Number(Number(totPC)-Number(totalPaid))==0){
 						$("#payButton").attr("disabled","disabled");
+					}else{
+						$("#payButton").removeAttr("disabled");
 					}
 				},
 				error : function(a, b, c) {
@@ -751,6 +759,10 @@
 				}
 			});
 			$("#agentPayModal").modal("show");
+		}
+		function formatDate(d) {
+			var dateparts = d.split(" ");
+			return dateparts[2] + "-" + dateparts[1] + "-" + dateparts[5];
 		}
 	</script>
 	<script src="js/numericInput.min.js"></script>
