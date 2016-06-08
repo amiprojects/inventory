@@ -262,8 +262,8 @@
 									<div class="row">
 										<div class="col-md-10">
 											<div class="form-group">
-												<label for="" style="float: left;">Agent Name :</label> <input
-													type="" placeholder="Enter Agent Name" id="agentName"
+												<label for="" style="float: left;">Agent (Direct) Name :</label> <input
+													type="" placeholder="Enter Agent (Direct) Name" id="agentName"
 													name="agentName" class="form-control">
 											</div>
 										</div>

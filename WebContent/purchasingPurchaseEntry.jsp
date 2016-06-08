@@ -77,7 +77,7 @@
 			alert("please enter agent name");
 		} else if ($("#datepicker").val() == "") {
 			alert("please select Purchase entry date");
-		} else if (i == 1) {
+		} else if (k == 1) {
 			alert("please enter product to purchase");
 		} else {
 			//$("#datepicker2").val($("#datepicker").val());
@@ -5374,6 +5374,10 @@
 		}
 		$("#discount").change(function() {
 			$("#discount").val(Number($("#discount").val()).toFixed(2));
+			gtot();
+		});
+		$("#profitVal").change(function() {
+			$("#profitVal").val(Number($("#profitVal").val()).toFixed(2));
 			gtot();
 		});
 	</script>

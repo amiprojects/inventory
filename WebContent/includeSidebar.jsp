@@ -78,6 +78,9 @@
 								Entry</a></li>
 						<li><a id="sSalesReturn" href="salesReturn.jsp" title="">Sales
 								Return</a></li>
+						<li><a id="sSalesAgentProfitPayment"
+							href="salesAgentProfitPayment.jsp" title="">SalesAgentProfit
+								Payment</a></li>
 						<li><a id="sSalesSearch" href="salesSearch.jsp" title="">Sales
 								Search</a></li>
 						<li><a id="sSalesRetSearch" href="salesSearchReturn.jsp"

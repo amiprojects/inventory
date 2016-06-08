@@ -106,10 +106,17 @@
 									</thead>
 									<thead>
 										<tr>
+											<th style="text-align: right;">Address :</th>
+											<td>${vendor.address}</td>
+										</tr>
+									</thead>
+									<thead>
+										<tr>
 											<th style="text-align: right;">Current Credit :</th>
 											<td><fmt:formatNumber var="currentCredit"
 													value="${sessionScope['ejb'].getLastVoucherDetailsByVendorId(vendor.id).getTotalCreditNote()}"
-													maxFractionDigits="2" groupingUsed="false" /> ${currentCredit}</td>
+													maxFractionDigits="2" groupingUsed="false" />
+												${currentCredit}</td>
 										</tr>
 									</thead>
 								</table>
@@ -210,7 +217,7 @@
 			var table = $('#statement').DataTable({
 				"scrollY" : 300,
 				"scrollX" : true,
-				"bPaginate": false,
+				"bPaginate" : false,
 				dom : 'Bfrtip',
 				buttons : [ 'copy', 'excel', 'print' ]
 			});

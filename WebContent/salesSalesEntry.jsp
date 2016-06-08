@@ -1286,6 +1286,8 @@
 			} else if ($("#isAgent").val() == 'yes'
 					&& $("#agentName").val() == "") {
 				alert("please insert agent name");
+			} else if (k == 0) {
+				alert("please enter product to sale");
 			} else {
 				//$("#datepicker2").val($("#datepicker").val());
 				var d = $("#datepicker").datepicker('getDate');
@@ -1380,38 +1382,28 @@
 		});
 	</script>
 	<script>
-		$(document).ready(
+		$("#spPaymentAmount").change(
 				function() {
-					$("#spPaymentAmount").change(
-							function() {
-								$("#spPaymentAmount").val(
-										Number($("#spPaymentAmount").val())
-												.toFixed(2));
-								spPaymentAmountFunc();
-							});
-					$("#surcharge").change(
-							function() {
-								$("#surcharge").val(
-										Number($("#surcharge").val())
-												.toFixed(2));
-								surchargeF();
-							});
-					$("#transcharge").change(
-							function() {
-								$("#transcharge").val(
-										Number($("#transcharge").val())
-												.toFixed(2));
-								transchargeF();
-							});
-					$("#discount").change(
-							function() {
-								$("#discount")
-										.val(
-												Number($("#discount").val())
-														.toFixed(2));
-								gtot();
-							});
+					$("#spPaymentAmount").val(
+							Number($("#spPaymentAmount").val()).toFixed(2));
+					spPaymentAmountFunc();
 				});
+		$("#surcharge").change(function() {
+			$("#surcharge").val(Number($("#surcharge").val()).toFixed(2));
+			surchargeF();
+		});
+		$("#transcharge").change(function() {
+			$("#transcharge").val(Number($("#transcharge").val()).toFixed(2));
+			transchargeF();
+		});
+		$("#discount").change(function() {
+			$("#discount").val(Number($("#discount").val()).toFixed(2));
+			gtot();
+		});
+		$("#profitVal").change(function() {
+			$("#profitVal").val(Number($("#profitVal").val()).toFixed(2));
+			gtot();
+		});
 	</script>
 
 	<script>

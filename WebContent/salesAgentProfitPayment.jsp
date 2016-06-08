@@ -23,27 +23,23 @@
 <link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
 <!-- Bootstrap -->
 <link rel="stylesheet" href="css/style.css" type="text/css" />
-<link rel="stylesheet" href="css/scrollTable.css" type="text/css" />
 <!-- Style -->
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
 <!-- Responsive -->
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
-<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 </head>
 <body>
 	<c:if test="${sessionScope['user']==null}">
 		<c:redirect url="index.jsp" />
 	</c:if>
-
 	<c:if
 		test="${!(sessionScope['user']=='adminKaanish' || sessionScope['user']=='adminProduction' || sessionScope['user']=='adminKainat')}">
-
 		<c:forEach
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
 
-			<c:if test="${page.name.equals('Job Payment')}">
+			<c:if test="${page.name.equals('Sales Search')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
@@ -63,13 +59,14 @@
 				<div class="container">
 					<div class="row">
 						<div class="masonary-grids">
+
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
-								<h3 style="margin-top: 11px;">Job Payment</h3>
+								<h3 style="margin-top: 11px;">Sales Agent Profit Payment</h3>
 							</div>
-							<div class="col-md-12">
-								<div class="widget-area">
-									<form role="form" class="sec" action="jobSearchAllForPayment"
+							<div class="widget-area">
+								<div class="col-md-12">
+									<form role="form" class="sec" action="salesSearchAllForAgent"
 										method="post">
 										<div class="row">
 											<div class="col-md-12">
@@ -79,8 +76,8 @@
 										</div>
 									</form>
 									<form role="form" class="sec"
-										action="jobAssignSearchByDateForPayment" method="post"
-										id="jobSearchByDateId">
+										action="salesSearchByDateForAgent" method="post"
+										id="salesSearchByDateId">
 										<div class="row">
 											<div class="col-md-5">
 												<div class="form-group">
@@ -95,24 +92,24 @@
 												<div class="form-group">
 													<label for="">(End Date)<font color="red" size="4">*</font></label>
 													<input type="text" placeholder="Enter last date"
-														id="datepicker1" onchange="checkDate();"
-														class="form-control" name="lDate" autocomplete="off">
+														id="datepicker1" class="form-control" name="lDate"
+														autocomplete="off" onchange="checkDate();">
 												</div>
 											</div>
 											<div class="col-md-2">
 												<button class="btn green pull-left"
 													style="margin-top: 25px;" type="button"
-													onclick="jobSearchByDateSubmit();">Search</button>
+													onclick="salesSearchByDateSubmit();">Search</button>
 											</div>
 										</div>
 									</form>
 									<form role="form" class="sec"
-										action="jobSearchByJobChallanNoForPayment" method="post">
+										action="salesSearchBySalesChallanNoForAgent" method="post">
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
-													<label for="" style="float: left;">Job challan no.
-														:</label>
+													<label for="" style="float: left;">Sales challan
+														no. :</label>
 												</div>
 											</div>
 										</div>
@@ -121,12 +118,12 @@
 												style="margin-right: 0; padding-right: 0;">
 												<input type="text" class="form-control" readonly="readonly"
 													name="companyInitial"
-													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompany('JOB').companyInitial}">
+													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompany('INV').companyInitial}">
 											</div>
 											<div class="col-md-2" style="margin: 0; padding: 0;">
 												<select class="form-control" name="fynYear">
 													<c:forEach
-														items="${sessionScope['ejb'].getAllFinancialForJob()}"
+														items="${sessionScope['ejb'].getAllFinancialForSales()}"
 														var="fyr">
 														<option value="${fyr}">${fyr}</option>
 													</c:forEach>
@@ -152,7 +149,7 @@
 											<div class="col-md-1" style="margin: 0; padding: 0;">
 												<input type="text" class="form-control" readonly="readonly"
 													name="billType"
-													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompany('JOB').billType}">
+													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompany('INV').billType}">
 											</div>
 											<div class="col-md-2" style="margin: 0; padding: 0;">
 												<input type="text" class="form-control" name="autoNum">
@@ -167,12 +164,46 @@
 										</div>
 									</form>
 									<form role="form" class="sec"
-										action="jobSearchByProductCodeForPayment" method="post">
+										action="salesSearchByAgentNameForAgent" method="post">
 										<div class="row">
 											<div class="col-md-10">
 												<div class="form-group">
-													<label for="" style="float: left;">Product Code :</label> <input
-														type="" placeholder="Enter Product Code" id="prodCode"
+													<label for="" style="float: left;">Agent Name :</label> <input
+														type="" placeholder="Enter Agent Name" id="agentName"
+														name="agentName" class="form-control">
+												</div>
+											</div>
+											<div class="col-md-2">
+												<button class="btn green pull-left"
+													style="margin-top: 25px;" type="submit">Search</button>
+											</div>
+
+										</div>
+									</form>
+									<form role="form" class="sec"
+										action="salesSearchByCustomerNameForAgent" method="post">
+										<div class="row">
+											<div class="col-md-10">
+												<div class="form-group">
+													<label for="" style="float: left;">Customer Name :</label>
+													<input type="" placeholder="Enter Customer Name"
+														id="custoName" name="custoName" class="form-control">
+												</div>
+											</div>
+											<div class="col-md-2">
+												<button class="btn green pull-left"
+													style="margin-top: 25px;" type="submit">Search</button>
+											</div>
+
+										</div>
+									</form>
+									<form role="form" class="sec"
+										action="salesSearchByProductCodeForAgent" method="post">
+										<div class="row">
+											<div class="col-md-10">
+												<div class="form-group">
+													<label for="" style="float: left;">Product code :</label> <input
+														type="" placeholder="Enter Product code" id="prodCode"
 														name="prodCode" class="form-control" autocomplete="off">
 												</div>
 											</div>
@@ -182,120 +213,76 @@
 											</div>
 										</div>
 									</form>
-									<form role="form" class="sec"
-										action="jobSearchByJobberNameForPayment" method="post">
-										<div class="row">
-											<div class="col-md-10">
-												<div class="form-group">
-													<label for="" style="float: left;">Jobber Name :</label> <input
-														type="" placeholder="Enter Jober Name" id="jobberName"
-														name="jobberName" class="form-control">
-												</div>
-											</div>
-											<div class="col-md-2">
-												<button class="btn green pull-left"
-													style="margin-top: 25px;" type="submit">Search</button>
-											</div>
-
-										</div>
-									</form>
-									<form role="form" class="sec"
-										action="jobSearchByPlanNoForPayment" method="post"
-										id="jobSearchByPlanNoId">
-										<div class="row">
-											<div class="col-md-10">
-												<div class="form-group">
-													<label for="" style="float: left;">Plan Number :<font
-														color="red" size="4">*</font></label> <input type=""
-														placeholder="Enter Plan Number" id="planNo" name="planNo"
-														class="form-control">
-												</div>
-											</div>
-											<div class="col-md-2">
-												<button class="btn green pull-left"
-													style="margin-top: 25px;" type="button"
-													onclick="planNoF();">Search</button>
-											</div>
-
-										</div>
-									</form>
 									<br>
 									<h3 align="center" style="color: #6a94ff;">${requestScope['msg']}</h3>
 									<br>
-									<table class="table table-fixedheader">
+									<table class="table">
 										<thead>
 											<tr>
-												<th width="5%">#</th>
-												<th width="30%">Job Assigned No.</th>
-												<th width="15%">Assigned Date</th>
-												<th width="15%">Jobber Name</th>
-												<th width="12%">No. of Items</th>
-												<th width="10%">Quantity</th>
-												<!-- <th width="10%">Status</th> -->
+												<th>#</th>
+												<th>Sales challan no.</th>
+												<th>Customer Name</th>
+												<th>Agent Name</th>
+												<th>Sales Date</th>
 											</tr>
 										</thead>
-										<tbody style="height: 300px;">
-											<c:set var="count" value="${1}" />
-											<c:forEach items="${requestScope['jobAssignList']}"
-												var="jobAssignByDate">
 
-												<tr>
-													<td width="5%">${count}</td>
-													<td width="30%"><a href="#"
-														onclick="viewInvoice(${jobAssignByDate.id});"><b>${jobAssignByDate.challanNumber}</b></a></td>
-													<td width="15%"><fmt:formatDate
-															value="${jobAssignByDate.assignDate}" pattern="dd-MM-yy" /></td>
-													<td width="15%">${jobAssignByDate.vendor.name}</td>
-													<td width="12%">${jobAssignByDate.jobAssignmentProducts.size()}</td>
-													<c:set value="${0}" var="totqty" />
-													<c:forEach items="${jobAssignByDate.jobAssignmentProducts}"
-														var="proDet">
-														<c:set value="${totqty+proDet.qty}" var="totqty" />
-													</c:forEach>
-													<td width="10%"><fmt:formatNumber var="totalQ"
-															value="${totqty}" maxFractionDigits="3"
-															groupingUsed="false" />${totalQ}</td>
-													<td style="display: none;"><c:if
-															test="${sessionScope['ejb'].getPaymentDetailsByJobAssignId(jobAssignByDate.id).size()>0}">
-															<c:set
-																value="${sessionScope['ejb'].getPaymentDetailsByJobAssignId(jobAssignByDate.id).get(0).paymentStatus.status}"
-																var="Status"></c:set>
-														</c:if> <c:if
-															test="${sessionScope['ejb'].getPaymentDetailsByJobAssignId(jobAssignByDate.id).size()==0}">
-															<c:set value="Not Paid" var="Status"></c:set>
-														</c:if>
-														${sessionScope['ejb'].getPaymentDetailsByJobAssignId(jobAssignByDate.id).size()}
-														&nbsp; <span id="status${jobAssignByDate.id}">${Status}</span></td>
-													<td width="8%"><c:set var="totJobCost" value="${0}" />
-														<c:forEach var="jobp"
-															items="${jobAssignByDate.jobAssignmentProducts}">
-															<c:set var="totJobCost"
-																value="${totJobCost+jobp.totalJobCost}" />
-														</c:forEach> <fmt:formatNumber var="totJC"
-															value="${totJobCost+jobAssignByDate.surcharge}"
-															maxFractionDigits="2" groupingUsed="false" />
-														<form action="" method="post"
-															id="jobPayment${jobAssignByDate.id}">
-															<a href="#"
-																onclick="jobPaymentOCF('${jobAssignByDate.id}','${jobAssignByDate.challanNumber}','${totJC}','${jobAssignByDate.vendor.id}');"><input
-																type="hidden" value="${jobAssignByDate.challanNumber}"
-																name="joChallan"> <span style="color: #6a94ff;"><u>
-																		Payment</u></span></a>
-														</form></td>
-													<td width="5%">
-														<form action="goJobDetailShow" method="post"
-															id="JobDetails${jobAssignByDate.id}">
-															<a href="#"
-																onclick="jobShowDetails('${jobAssignByDate.id}');"><input
-																type="hidden" value="${jobAssignByDate.id}" name="joId"><img
-																alt="" src="images/eye.png" height="25px"></a>
-														</form>
-													</td>
-												</tr>
-
+										<c:set var="count" value="${1}" />
+										<c:forEach items="${requestScope['salesEntryLst']}"
+											var="sEntryByD">
+											<c:if test="${sEntryByD.vendor!=null}">
+												<tbody>
+													<tr>
+														<td>${count}</td>
+														<td><a href="#"
+															onclick="viewInvoiceS(${sEntryByD.id});"><b>${sEntryByD.challanNumber}</b></a></td>
+														<td>${sEntryByD.customer.name}</td>
+														<c:choose>
+															<c:when test="${sEntryByD.vendor==null}">
+																<td>NIL</td>
+															</c:when>
+															<c:otherwise>
+																<td>${sEntryByD.vendor.name}</td>
+															</c:otherwise>
+														</c:choose>
+														<td><fmt:formatDate value="${sEntryByD.sales_date}"
+																pattern="dd-MM-yy" /></td>
+														<td style="display: none;"><c:if
+																test="${sessionScope['ejb'].getPaymentDetails4ViaAgentBySalesEntryId(sEntryByD.id).size()>0}">
+																<c:set
+																	value="${sessionScope['ejb'].getPaymentStatusById(getPaymentDetails4ViaAgentBySalesEntryId(sEntryByD.id).get(0).paymentStatusId).status}"
+																	var="Status"></c:set>
+															</c:if> <c:if
+																test="${sessionScope['ejb'].getPaymentDetails4ViaAgentBySalesEntryId(sEntryByD.id).size()==0}">
+																<c:set value="Not Paid" var="Status"></c:set>
+															</c:if> <span id="status${sEntryByD.id}">${Status}</span></td>
+														<td><c:set var="totPaybleCost"
+																value="${sEntryByD.agentProfitTotal}" /> <c:forEach
+																var="salesRet" items="${sEntryByD.salesReturn}">
+																<c:set var="totPaybleCost"
+																	value="${totPaybleCost-salesRet.retAgentProfitTotal}" />
+															</c:forEach>
+															<form action="" method="post"
+																id="agentPayment${sEntryByD.id}">
+																<a href="#"
+																	onclick="agentPaymentOCF('${sEntryByD.id}','${sEntryByD.challanNumber}','${totPaybleCost}','${sEntryByD.vendor.id}');"><input
+																	type="hidden" value="${sEntryByD.challanNumber}"
+																	name="salesChallan"> <span
+																	style="color: #6a94ff;"><u> Payment</u></span></a>
+															</form></td>
+														<td>
+															<form action="salesView" method="post"
+																id="sView${sEntryByD.id}">
+																<a href="#" onclick="salesViewF('${sEntryByD.id}');"><input
+																	type="hidden" value="${sEntryByD.id}" name="sId"><img
+																	alt="" src="images/eye.png" height="25px"></a>
+															</form>
+														</td>
+													</tr>
+												</tbody>
 												<c:set var="count" value="${count+1}" />
-											</c:forEach>
-										</tbody>
+											</c:if>
+										</c:forEach>
 									</table>
 								</div>
 							</div>
@@ -309,14 +296,14 @@
 	</div>
 	<!-- main -->
 
-	<div id="jobPayModal" class="modal fade" role="dialog"
+	<div id="agentPayModal" class="modal fade" role="dialog"
 		style="top: 25px;">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">
-						Payment details for job : <span id="jobChallan"></span>
+						Agent Payment details for Sales : <span id="salesChallan"></span>
 					</h4>
 				</div>
 				<div class="modal-body">
@@ -326,15 +313,11 @@
 								<th>Payment date</th>
 								<th>Payment method</th>
 								<th>Payment description</th>
-								<th>Payable Amount</th>
 								<th>Paid Amount</th>
-								<!-- <th>Due Amount</th>
-								<th>Status</th> -->
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<td>-</td>
 								<td>-</td>
 								<td>-</td>
 								<td>-</td>
@@ -353,7 +336,7 @@
 		</div>
 	</div>
 	<form role="form" class="sec" method="post" id="paymentForm"
-		action="jobPayment">
+		action="salesAgentPayment">
 		<div id="paymentModal" class="modal fade" role="dialog"
 			style="top: 25px;">
 			<div class="modal-dialog modal-lg">
@@ -371,7 +354,7 @@
 										<ul>
 											<li><a title="">Select Payment status : <input
 													type="hidden" name="uniqueNo"
-													value="${sessionScope['ejb'].getLastUniqueNoOfPayDet()+1}"></a></li>
+													value="${sessionScope['ejb'].getLastUniqueNoOfPayDet4ViaAgent()+1}"></a></li>
 										</ul>
 									</div>
 									<br> <br> <br>
@@ -508,22 +491,22 @@
 				</div>
 			</div>
 		</div>
-		<input type="hidden" id="vId" name="vId"> <input type="hidden"
-			id="jaId" name="jaId"><input type="hidden"
+		<input type="hidden" id="aId" name="aId"> <input type="hidden"
+			id="seId" name="seId"><input type="hidden"
 			id="voucherDetailSize" name="voucherDetailSize">
 	</form>
 
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
-
+	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 	<script type="text/javascript" src="js/script.js"></script>
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="js/enscroll.js"></script>
 	<script type="text/javascript" src="js/grid-filter.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$("#jobs").attr("id", "activeSubMenu");
-			$("#jobPayment").attr("style", "color: #6a94ff;");
+			$("#sales").attr("id", "activeSubMenu");
+			$("#sSalesAgentProfitPayment").attr("style", "color: #6a94ff;");
 		});
 	</script>
 	<script src="js/jquery-ui/jquery-ui.js"></script>
@@ -540,28 +523,25 @@
 				dateFormat : "dd-mm-yy"
 			});
 		});
+		function salesViewF(id) {
+			$("#sView" + id).submit();
+		}
 		function dateSet() {
 			var dt = $("#datepicker").datepicker('getDate');
 			var dt1 = $("#datepicker1").datepicker('getDate');
-			if ($("#datepicker1").val() != "" && dt >= dt1) {
-				alert("Start date must be before than end date...");
+			if ($("#datepicker1").val() != "" && dt > dt1) {
+				alert("Start date must be can not be later than end date...");
 				$("#datepicker").val("");
 			}
 		}
 		function checkDate() {
 			var d = $("#datepicker").datepicker('getDate');
 			var d1 = $("#datepicker1").datepicker('getDate');
-			if ($("#datepicker").val() != "" && d >= d1) {
-				alert("End date must be later than start date...");
+			if ($("#datepicker").val() != "" && d > d1) {
+				alert("End date can not be before than start date...");
 				$("#datepicker1").val("");
 			}
 		}
-	</script>
-	<script type="text/javascript">
-		function jobShowDetails(id) {
-			//alert(id);
-			$("#JobDetails" + id).submit();
-		}					
 
 		$(function() {
 			$("#prodCode").autocomplete({
@@ -603,16 +583,17 @@
 					} else {
 						$("#prodCode").val(ui.item.code);
 					}
+
 				}
 			});
 		});
 
 		$(function() {
-			$("#jobberName").autocomplete({
+			$("#agentName").autocomplete({
 				source : function(req, resp) {
 					$.ajax({
 						type : "post",
-						url : "getVendorsByVendorTypeJobberAndName",
+						url : "getVendorsByVendorTypeSalesAgentAndName",
 						data : {
 							name : req.term
 						},
@@ -635,70 +616,86 @@
 				/* change : function(event, ui) {
 					if (ui.item == null) {
 						$(this).val("");
-						$("#jobberName").val("");
+						$("#agentName").val("");
 					} else {
-						$("#jobberName").val(ui.item.name);
+						$("#agentName").val(ui.item.name);
 					}
 				}, */
 				select : function(event, ui) {
 					if (ui.item == null) {
 						$(this).val("");
-						$("#jobberName").val("");
+						$("#agentName").val("");
 					} else {
-						$("#jobberName").val(ui.item.name);
+						$("#agentName").val(ui.item.name);
 					}
 
 				}
 			});
 		});
 
-		function jobSearchByDateSubmit() {
+		$(function() {
+			$("#custoName").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getCustomerByName",
+						data : {
+							name : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.name,
+									id : item.id
+								});
+							}));
+						},
+
+						error : function(a, b, c) {
+							alert(a + b + c);
+						}
+
+					});
+				},
+				/* change : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#custoName").val("");
+					} else {
+						$("#custoName").val(ui.item.name);
+					}
+				}, */
+				select : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#custoName").val("");
+					} else {
+						$("#custoName").val(ui.item.name);
+					}
+
+				}
+			});
+		});
+		
+		function salesSearchByDateSubmit() {
 			if ($("#datepicker").val() == "" || $("#datepicker1").val() == "") {
 				alert("Please enter start date and end date");
 			} else {
-				$("#jobSearchByDateId").submit();
+				$("#salesSearchByDateId").submit();
 			}
 		}
-	</script>
-	<script src="js/numericInput.min.js"></script>
-	<script>
-		$(function() {
-
-			$("#planNo").numericInput({
-
-				allowFloat : false, // Accpets positive numbers (floating point)
-
-				allowNegative : false,
-			// Accpets positive or negative integer
-
-			});
-
-		});
-
-		function planNoF() {
-			if ($("#planNo").val() == "") {
-				alert("Please enter plan number")
-			} else {
-				$("#jobSearchByPlanNoId").submit();
-			}
-		}
-		
-		function viewInvoice(id){
+		function viewInvoiceS(id){			
 			window
 			.open(
-					"JobChalanForAssignment.jsp?id="+id,
-					'name', 'width=900,height=700').print();			
+					"stockSaCha.jsp?id="+id,
+					'name', 'width=900,height=700').print();
 		}
-		function formatDate(d) {
-			var dateparts = d.split(" ");
-			return dateparts[2] + "-" + dateparts[1] + "-" + dateparts[5];
-		}
-		
-		function jobPaymentOCF(id, challanNo, totJC, vendorId) {
-			$("#vId").val(vendorId);
-			$("#jaId").val(id);
+		function agentPaymentOCF(id, challanNo, totPC, agentId) {			
+			$("#aId").val(agentId);
+			$("#seId").val(id);
 			$.ajax({
-				url : "getAllVoucherDetailsByJobAssignId",
+				url : "getAllVoucherDetails4ViaAgentBySalesEntryId",
 				type : "post",
 				dataType : "json",
 				data : {
@@ -707,23 +704,12 @@
 				success : function(data) {
 					$("#voucherDetailSize").val(data.voucherDetailSize);
 				}
-			});			
-			/* $.ajax({
-				url : "getVendorByVendorId",
-				type : "post",
-				dataType : "json",
-				data : {
-					id : vendorId
-				},
-				success : function(data) {
-					$("#totalCredit").val(data.currentCreditNote);
-				}
-			}); */
+			});
 			$.ajax({
 				type : "post",
-				url : "getCurrentCreditNoteByVendorId",
+				url : "getCurrentCreditNote4ViaAgentByAgentId",
 				data : {
-					id : vendorId
+					id : agentId
 				},
 				dataType : "json",
 				success : function(data) {
@@ -731,43 +717,43 @@
 				}
 			});
 			if($("#status"+id).html()=="Not Paid"){
-				$("#dueAmount").html(Number(totJC).toFixed(2));		
-				if(Number(totJC)>0){
+				$("#dueAmount").html(Number(totPC).toFixed(2));		
+				if(Number(totPC)>0){
 					$("#payButton").removeAttr("disabled");
 				}else{
 					$("#payButton").attr("disabled","disabled");
 				}
 			}			
-			$("#jobChallan").html(challanNo+" (Total Payable: "+Number(totJC).toFixed(2)+" Rs.)");				
+			$("#salesChallan").html(challanNo+" (Total Payable: "+Number(totPC).toFixed(2)+" Rs.)");				
 			$.ajax({
 				type : "post",
-				url : "getPaymentDetailsByJobAssignId",
+				url : "getPaymentDetails4ViaAgentBySalesEntryId",
 				data : {
 					id : id
 				},
 				dataType : "json",
 				success : function(data) {
 					$("#paymentDetailsTable tbody").empty();
+					var totalPaid=0;
 					$.each(data, function(index, item) {
-						//<td>'+Number(item.payTotalAmount-item.paymentAmount)+'</td><td>'+item.paymentStatus+'</td>
-							$("#paymentDetailsTable").append('<tbody><tr><td>'+formatDate(item.paymentDate)+'</td><td>'+item.paymentMethod+'</td><td>'+item.paymentDescription+'</td><td>'+item.payTotalAmount+'</td><td>'+item.paymentAmount+'</td></tr></tbody>');
-							if(index==0){
-								$("#dueAmount").html(Number(item.payTotalAmount-item.paymentAmount));
-								if(Number(item.payTotalAmount-item.paymentAmount)>0){
-									$("#payButton").removeAttr("disabled");
-								}else{
-									$("#payButton").attr("disabled","disabled");
-								}
-							}
+							$("#paymentDetailsTable").append('<tbody><tr><td>'+formatDate(item.paymentDate)+'</td><td>'+item.paymentMethod+'</td><td>'+item.paymentDescription+'</td><td>'+item.paymentAmount+'</td></tr></tbody>');							
+							totalPaid=totalPaid+item.paymentAmount;
 					});
+					$("#dueAmount").html(Number(Number(totPC)-Number(totalPaid)).toFixed(2));
+					if(Number(Number(totPC)-Number(totalPaid))>0){
+						$("#payButton").removeAttr("disabled");
+					}else{
+						$("#payButton").attr("disabled","disabled");
+					}
 				},
 				error : function(a, b, c) {
 					alert(a + b + c);
 				}
 			});
-			$("#jobPayModal").modal("show");
+			$("#agentPayModal").modal("show");
 		}
 	</script>
+	<script src="js/numericInput.min.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {
 		$("#payDetail").hide();

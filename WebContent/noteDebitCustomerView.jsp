@@ -77,33 +77,39 @@
 							</div>
 
 							<div class="widget-area">
-								<c:set var="vendor"
+								<c:set var="customer"
 									value="${sessionScope['ejb'].getCustomerEntryById(requestScope['cId'])}" />
 								<table id="stream_table"
 									class="table table-striped table-bordered" style="width: 30%;">
 									<thead>
 										<tr>
 											<th style="text-align: right;">Customer Name :</th>
-											<td>${vendor.name}</td>
+											<td>${customer.name}</td>
 										</tr>
 									</thead>
 									<thead>
 										<tr>
 											<th style="text-align: right;">Phone :</th>
-											<td>${vendor.mobile}</td>
+											<td>${customer.mobile}</td>
 										</tr>
 									</thead>
 									<thead>
 										<tr>
 											<th style="text-align: right;">City :</th>
-											<td>${vendor.city}</td>
+											<td>${customer.city}</td>
+										</tr>
+									</thead>
+									<thead>
+										<tr>
+											<th style="text-align: right;">Address :</th>
+											<td>${customer.address}</td>
 										</tr>
 									</thead>
 									<thead>
 										<tr>
 											<th style="text-align: right;">Current Debit :</th>
 											<td><fmt:formatNumber var="currentDebit"
-													value="${sessionScope['ejb'].getLastVoucherDetailsByCustomerId(vendor.id).getTotalDebitNote()}"
+													value="${sessionScope['ejb'].getLastVoucherDetailsByCustomerId(customer.id).getTotalDebitNote()}"
 													maxFractionDigits="2" groupingUsed="false" />
 												${currentDebit}</td>
 										</tr>

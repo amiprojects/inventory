@@ -51,6 +51,7 @@ import com.kaanish.model.NotificationDetails;
 import com.kaanish.model.NotificationView;
 import com.kaanish.model.PageList;
 import com.kaanish.model.PaymentDetails;
+import com.kaanish.model.PaymentDetailsForViaAgents;
 import com.kaanish.model.PaymentStatus;
 import com.kaanish.model.PaymentType;
 import com.kaanish.model.ProductDetail;
@@ -88,6 +89,7 @@ import com.kaanish.model.Vendor;
 import com.kaanish.model.VendorType;
 import com.kaanish.model.VoucherAssign;
 import com.kaanish.model.VoucherDetails;
+import com.kaanish.model.VoucherDetailsForViaAgents;
 import com.kaanish.util.DateConverter;
 import com.kaanish.util.DigitToWords;
 import com.kaanish.util.MRPtoLAXMIHOUSE;
@@ -527,6 +529,10 @@ public class Ejb {
 		em.persist(paymentStatus);
 	}
 
+	public PaymentStatus getPaymentStatusById(int id) {
+		return em.find(PaymentStatus.class, id);
+	}
+
 	public PaymentStatus getPaymentStatusByStatus(String status) {
 		TypedQuery<PaymentStatus> q = em.createQuery(
 				"select c from PaymentStatus c Where c.status=:status",
@@ -550,6 +556,10 @@ public class Ejb {
 		em.persist(paymentType);
 	}
 
+	public PaymentType getPaymentTypeById(int id) {
+		return em.find(PaymentType.class, id);
+	}
+
 	public PaymentType getPaymentTypeByType(String type) {
 		TypedQuery<PaymentType> q = em.createQuery(
 				"select c from PaymentType c Where c.type=:type",
@@ -567,6 +577,53 @@ public class Ejb {
 				"select c from PaymentType c", PaymentType.class);
 		return q.getResultList();
 	}
+
+	/************** for payment details for via agents ***************/
+	public void setPaymentDetails4ViaAgent(
+			PaymentDetailsForViaAgents paymentDetails) {
+		em.persist(paymentDetails);
+	}
+
+	public PaymentDetailsForViaAgents getPaymentDetails4ViaAgentById(int id) {
+		return em.find(PaymentDetailsForViaAgents.class, id);
+	}
+
+	public void updatePaymentDetails4ViaAgent(
+			PaymentDetailsForViaAgents paymentDetails) {
+		em.merge(paymentDetails);
+	}
+
+	public List<PaymentDetailsForViaAgents> getAllPaymentDetails4ViaAgent() {
+		TypedQuery<PaymentDetailsForViaAgents> q = em.createQuery(
+				"select c from PaymentDetailsForViaAgents c",
+				PaymentDetailsForViaAgents.class);
+
+		return q.getResultList();
+	}
+
+	public int getLastUniqueNoOfPayDet4ViaAgent() {
+		TypedQuery<PaymentDetailsForViaAgents> q = em
+				.createQuery(
+						"select c from PaymentDetailsForViaAgents c order by c.id desc",
+						PaymentDetailsForViaAgents.class);
+		if (q.getResultList().size() > 0) {
+			return q.getResultList().get(0).getUniqueNo();
+		} else {
+			return 0;
+		}
+	}
+
+	public List<PaymentDetailsForViaAgents> getPaymentDetails4ViaAgentBySalesEntryId(
+			int id) {
+		TypedQuery<PaymentDetailsForViaAgents> q = em
+				.createQuery(
+						"select c from PaymentDetailsForViaAgents c where c.salesEntryId=:id order by c.id desc",
+						PaymentDetailsForViaAgents.class);
+		q.setParameter("id", id);
+		return q.getResultList();
+	}
+
+	/************** for payment details for via agents ***************/
 
 	/************** for payment details ***************/
 	public void setPaymentDetails(PaymentDetails paymentDetails) {
@@ -595,7 +652,11 @@ public class Ejb {
 		TypedQuery<PaymentDetails> q = em.createQuery(
 				"select c from PaymentDetails c order by c.id desc",
 				PaymentDetails.class);
-		return q.getResultList().get(0).getUniqueNo();
+		if (q.getResultList().size() > 0) {
+			return q.getResultList().get(0).getUniqueNo();
+		} else {
+			return 0;
+		}
 	}
 
 	public void updatePaymentDetails(PaymentDetails paymentDetails) {
@@ -3870,6 +3931,68 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	/**************** VoucherDetails for via agents ***************************************/
+	public void setVoucherDetails4ViaAgent(
+			VoucherDetailsForViaAgents voucherDetails) {
+		em.persist(voucherDetails);
+	}
+
+	public VoucherDetailsForViaAgents getVoucherDetails4ViaAgentById(int id) {
+		return em.find(VoucherDetailsForViaAgents.class, id);
+	}
+
+	public void updateVoucherDetails4ViaAgent(
+			VoucherDetailsForViaAgents voucherd) {
+		em.merge(voucherd);
+	}
+
+	public List<VoucherDetailsForViaAgents> getAllVoucherDetails4ViaAgent() {
+		TypedQuery<VoucherDetailsForViaAgents> q = em.createQuery(
+				"select c from VoucherDetailsForViaAgents c",
+				VoucherDetailsForViaAgents.class);
+		return q.getResultList();
+	}
+
+	public List<VoucherDetailsForViaAgents> getAllVoucherDetails4ViaAgentBySalesEntryId(
+			int seId) {
+		TypedQuery<VoucherDetailsForViaAgents> q = em
+				.createQuery(
+						"select c from VoucherDetailsForViaAgents c where c.salesEntryId=:seId order by c.id ASC",
+						VoucherDetailsForViaAgents.class);
+		q.setParameter("seId", seId);
+		return q.getResultList();
+	}
+
+	public List<VoucherDetailsForViaAgents> getVoucherDetails4ViaAgentByAgentId(
+			int id) {
+		TypedQuery<VoucherDetailsForViaAgents> q = em
+				.createQuery(
+						"select c from VoucherDetailsForViaAgents c where c.agentId.id=:id order by c.id asc",
+						VoucherDetailsForViaAgents.class);
+		q.setParameter("id", id);
+		return q.getResultList();
+	}
+
+	public float getCurrentCreditNote4ViaAgentByAgentId(int id) {
+		TypedQuery<VoucherDetailsForViaAgents> q = em
+				.createQuery(
+						"select c from VoucherDetailsForViaAgents c where c.agentId.id=:id order by c.id asc",
+						VoucherDetailsForViaAgents.class);
+		q.setParameter("id", id);
+		float totCr = 0;
+		float totDb = 0;
+		for (VoucherDetailsForViaAgents vd : q.getResultList()) {
+			if (vd.isCredit()) {
+				totCr = totCr + vd.getValue();
+			} else {
+				totDb = totDb + vd.getValue();
+			}
+		}
+		return (totCr - totDb);
+	}
+
+	/**************** VoucherDetails for via agents *****************************************/
+
 	/**************** VoucherDetails ******************************************************************/
 	public void setVoucherDetails(VoucherDetails voucherDetails) {
 		em.persist(voucherDetails);
@@ -3881,6 +4004,12 @@ public class Ejb {
 
 	public void updateVoucherDetails(VoucherDetails voucherd) {
 		em.merge(voucherd);
+	}
+
+	public List<VoucherDetails> getAllVoucherDetails() {
+		TypedQuery<VoucherDetails> q = em.createQuery(
+				"select c from VoucherDetails c", VoucherDetails.class);
+		return q.getResultList();
 	}
 
 	public List<VoucherDetails> getVoucherDetailsByVendorId(int id) {
@@ -3925,12 +4054,6 @@ public class Ejb {
 		} else {
 			return null;
 		}
-	}
-
-	public List<VoucherDetails> getAllVoucherDetails() {
-		TypedQuery<VoucherDetails> q = em.createQuery(
-				"select c from VoucherDetails c", VoucherDetails.class);
-		return q.getResultList();
 	}
 
 	public List<VoucherDetails> getAllVoucherDetailsByVoucherAssignId(int vaId) {
