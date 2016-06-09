@@ -81,10 +81,10 @@
 									<li><a data-toggle="tab" href="#byDirectPAgent">Purchase
 											Agent (Direct)</a></li>
 									<li><a data-toggle="tab" href="#byJobber">Jobber</a></li>
-									<li><a data-toggle="tab" href="#bySalesAgent">Sales
+									<!-- <li><a data-toggle="tab" href="#bySalesAgent">Sales
 											Agent</a></li>
 									<li><a data-toggle="tab" href="#byViaPAgent">Purchase
-											Agent (Via)</a></li>
+											Agent (Via)</a></li> -->
 								</ul>
 								<div class="tab-content">
 									<div id="byVendor" class="tab-pane fade active in">
