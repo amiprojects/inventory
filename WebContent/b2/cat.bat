@@ -72,5 +72,6 @@ C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/kaanish FILE=d:/bac
 C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/kaanish FILE=d:/backup/exp.DMP BUFFER=10000000 IGNORE=Y CONSTRAINTS=Y GRANTS=Y TABLES=NOTIFICATIONVIEW
 C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/kaanish FILE=d:/backup/exp.DMP BUFFER=10000000 IGNORE=Y CONSTRAINTS=Y GRANTS=Y TABLES=PAGELIST_USERGROUP
 C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/kaanish FILE=d:/backup/exp.DMP BUFFER=10000000 IGNORE=Y CONSTRAINTS=Y GRANTS=Y TABLES=JOBCLASS
-
+C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/AMi@Kaanish1250000 FILE=d:/backup/exp.DMP BUFFER=10000000 IGNORE=Y CONSTRAINTS=Y GRANTS=Y TABLES=PAYMENTDETAILSFORVIAAGENTS
+C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/AMi@Kaanish1250000 FILE=d:/backup/exp.DMP BUFFER=10000000 IGNORE=Y CONSTRAINTS=Y GRANTS=Y TABLES=VOUCHERDETAILSFORVIAAGENTS
 exit

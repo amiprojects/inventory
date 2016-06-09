@@ -2,12 +2,20 @@ paymentdetails
 ------------------
 uniqueNo 10,0
 
-testServ
+/testServ
+/justclick
+
+delete databases other than ...
 ////////////////////////////////////////////////////////
 login servlet / inits, 
-//getmacid - production only
+getmacid - production only
+restore servlet
 
 
+
+
+
+//////////////////////////////////////////////
 
 //include sidebar 
 //(include- all, production entry- production only , job module- production only)

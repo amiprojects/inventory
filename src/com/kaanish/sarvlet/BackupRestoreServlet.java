@@ -2,6 +2,7 @@ package com.kaanish.sarvlet;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDateTime;
 import java.util.Properties;
 
 import javax.ejb.EJB;
@@ -29,37 +30,83 @@ public class BackupRestoreServlet extends HttpServlet {
 		switch (url) {
 
 		case "backup":
+			LocalDateTime ldt = LocalDateTime.now();
+			String prefixOfName = "" + ldt.getDayOfMonth()
+					+ ldt.getMonthValue() + ldt.getYear() + ldt.getHour()
+					+ ldt.getMinute();
+
+			// our machine
 			Process p = Runtime
 					.getRuntime()
-					.exec("cmd /C start C:/oraclexe/app/oracle/product/10.2.0/server/BIN/exp kaanish/kaanish BUFFER=10000000 FILE=d:/backup/backup/exp.DMP COMPRESS=Y GRANTS=Y CONSTRAINTS=Y");
+					.exec("cmd /C start C:/oraclexe/app/oracle/product/10.2.0/server/BIN/exp kaanish/kaanish BUFFER=10000000 FILE=d:/backup/backup/"
+							+ prefixOfName
+							+ "-"
+							+ "exp.DMP COMPRESS=Y GRANTS=Y CONSTRAINTS=Y");
+			// our machine
+
+			// kaanish
+			// Process p = Runtime
+			// .getRuntime()
+			// .exec("cmd /C start C:/oraclexe/app/oracle/product/10.2.0/server/BIN/exp kaanish/AMiKaanish1250000 BUFFER=10000000 FILE=d:/backup/backup/"
+			// + prefixOfName
+			// + "-"
+			// + "exp.DMP COMPRESS=Y GRANTS=Y CONSTRAINTS=Y");
+			// kaanish
+
+			// kainat
+			// Process p = Runtime
+			// .getRuntime()
+			// .exec("cmd /C start C:/oraclexe/app/oracle/product/10.2.0/server/BIN/exp kaanish/AMi@Kaanish1250000 BUFFER=10000000 FILE=d:/backup/backup/"
+			// + prefixOfName
+			// + "-"
+			// + "exp.DMP COMPRESS=Y GRANTS=Y CONSTRAINTS=Y");
+			// kainat
+
+			// production
+			// Process p = Runtime
+			// .getRuntime()
+			// .exec("cmd /C start C:/oraclexe/app/oracle/product/10.2.0/server/BIN/exp kAMi/AMiKaanish1250000 BUFFER=10000000 FILE=d:/backup/backup/"
+			// + prefixOfName
+			// + "-"
+			// + "exp.DMP COMPRESS=Y GRANTS=Y CONSTRAINTS=Y");
+			// production
+
 			InputStream fis = p.getInputStream();
 			Properties pro = new Properties();
 			pro.load(fis);
 			fis.close();
 
 			req.setAttribute("msg", "Backup successful");
-			req.setAttribute("msgdet",
-					"Backup saved in d:/backup/backup/exp.DMP");
+			req.setAttribute("msgdet", "Backup saved in d:/backup/backup/"
+					+ prefixOfName + "-" + "exp.DMP");
 			req.getRequestDispatcher("backup-restore.jsp").forward(req, resp);
 			break;
 
 		case "restore":
+			// our machine
 			Process proc1 = Runtime.getRuntime().exec("cmd /C start cat.bat");
+			// our machine
+
+			// kaanish
+			// Process proc1 =
+			// Runtime.getRuntime().exec("cmd /C start kaanishCat.bat");
+			// kaanish
+
+			// kainat
 			// Process proc1 = Runtime.getRuntime().exec(
-			// "cmd /C start productionCat.bat");
-			// Process proc1 = Runtime.getRuntime().exec(
-			// "cmd /C start kaanishCat.bat");
-			// Process proc1 = Runtime.getRuntime().exec(
-			// "cmd /C start kainarCat.bat");
+			// "cmd /C start kainatCat.bat");
+			// kainat
+
+			// production
+			// Process proc1 =
+			// Runtime.getRuntime().exec("cmd /C start productionCat.bat");
+			// production
 
 			InputStream fis1 = proc1.getInputStream();
 			Properties pro1 = new Properties();
 			pro1.load(fis1);
-			/*
-			 * byte[] buff=new byte[fis1.available()]; fis1.read(buff);
-			 */
 			fis1.close();
-			req.setAttribute("msg", "Restore successful");
+			req.setAttribute("msg", "Done...");
 
 			req.getRequestDispatcher("backup-restore.jsp").forward(req, resp);
 			break;
