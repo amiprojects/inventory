@@ -35,8 +35,8 @@ ALTER TABLE COMPANYINFO ADD (isMRPbarcode NUMBER(1) DEFAULT 1);
 
 
 
-<%@include file="includeHeaderMenu.jsp"%>
-		<div class="page-container wide">
+<%-- <%@include file="includeHeaderMenu.jsp"%>
+		<div class="page-container wide"> --%>
 
 
 <div class="responsive-logo">
