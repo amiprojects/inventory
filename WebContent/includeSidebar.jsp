@@ -56,6 +56,9 @@
 							title="">Purchase Entry</a></li>
 						<li><a id="sPurchReturn" href="purchaseReturn.jsp" title="">Purchase
 								Return</a></li>
+						<li><a id="sPurchaseAgentProfitPayment"
+							href="purchaseAgentProfitPayment.jsp" title="">PurchaseAgentProfit
+								Payment</a></li>
 						<li><a id="sPurchSearch" href="purchasingPurchaseSearch.jsp"
 							title="">Search Purchase Entry</a></li>
 						<li><a id="sPurchRetSearch" href="purchaseReturnSearch.jsp"
@@ -141,10 +144,10 @@
 				</h2>
 				<div class="sub-menu">
 					<ul>
-						<li><a id="debitNote" href="noteDebit.jsp" title="">Customer's
-								Debit Note</a></li>
-						<li><a id="creditNote" href="noteCredit.jsp" title="">Vendor's
-								Credit Note</a></li>
+						<li><a id="debitNote" href="noteDebit.jsp" title="">Debit
+								Note</a></li>
+						<li><a id="creditNote" href="noteCredit.jsp" title="">Credit
+								Note</a></li>
 					</ul>
 				</div>
 			</div>

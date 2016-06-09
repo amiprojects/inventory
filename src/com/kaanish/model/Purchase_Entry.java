@@ -39,7 +39,6 @@ public class Purchase_Entry implements Serializable {
 	private float roundOf;
 	private float subTotal;
 	private float taxAmount;
-	private int agentId;
 	private boolean isFlatDiscount;
 	private float discountValue;
 	private float discountTotal;
@@ -47,6 +46,8 @@ public class Purchase_Entry implements Serializable {
 	private boolean isEfectiveProfit;
 	private float agentProfitValue;
 	private float agentProfitTotal;
+
+	private int agentId;
 
 	@OneToMany(mappedBy = "purchase_Entry")
 	private List<NotificationDetails> notificationDetails;

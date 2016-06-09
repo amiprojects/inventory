@@ -204,8 +204,9 @@
 									<div class="row">
 										<div class="col-md-10">
 											<div class="form-group">
-												<label for="" style="float: left;">Agent (Direct) Name :</label> <input
-													type="" placeholder="Enter Agent (Direct) Name" id="agentName"
+												<label for="" style="float: left;">Agent (Direct)
+													Name :</label> <input type=""
+													placeholder="Enter Agent (Direct) Name" id="agentName"
 													name="agentName" class="form-control">
 											</div>
 										</div>
@@ -214,6 +215,25 @@
 												type="submit">Search</button>
 										</div>
 
+									</div>
+								</form>
+								<form role="form" class="sec"
+									action="purchaseSearchByViaAgentName"
+									id="purchaseSearchByAgentNameForm" method="post">
+									<div class="row">
+										<div class="col-md-10">
+											<div class="form-group">
+												<label for="" style="float: left;">Agent (Via) Name
+													:</label> <input type="text" placeholder="Enter Agent (Via) Name"
+													id="VagentName" name="VagentName" class="form-control"><input
+													type="hidden" id="VagentId" name="VagentId" value="0"
+													class="form-control">
+											</div>
+										</div>
+										<div class="col-md-2">
+											<button class="btn green pull-left" style="margin-top: 25px;"
+												type="button" onclick="purchaseSearchByViaAgentSubmit();">Search</button>
+										</div>
 									</div>
 								</form>
 								<br>
@@ -503,6 +523,61 @@
 					'name', 'width=900,height=700').print();
 			
 		}
+		function purchaseSearchByViaAgentSubmit() {
+			if ($("#VagentName").val() == "") {
+				alert("Please enter agent name!");
+			} else {
+				$("#purchaseSearchByAgentNameForm").submit();
+			}
+		}
+		$(function() {
+			$("#VagentName").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getVendorsByVendorTypePurchaseAgentAndName",
+						data : {
+							name : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.name,
+									id : item.id
+								});
+							}));
+						},
+
+						error : function(a, b, c) {
+							alert(a + b + c);
+						}
+
+					});
+				},
+				change : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#VagentName").val("");
+						$("#VagentId").val("");
+					} else {
+						$("#VagentName").val(ui.item.value);
+						$("#VagentId").val(ui.item.id);
+					}
+				},
+				select : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#VagentName").val("");
+						$("#VagentId").val(0);
+					} else {
+						$("#VagentName").val(ui.item.value);
+						$("#VagentId").val(ui.item.id);
+					}
+
+				}
+			});
+		});
 	</script>
 </body>
 

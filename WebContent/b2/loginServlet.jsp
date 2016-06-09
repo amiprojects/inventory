@@ -1,3 +1,13 @@
+// products for design cost sheet productId
+		for (JobPlanProductStock jpps : ejb.getAllJobPlanProductStock()) {
+			ProductsForDesignCostSheet productsForDesignCostSheet = jpps
+					.getProductsForDesignCostSheet();
+			productsForDesignCostSheet.setProductDetail(jpps
+					.getPurchase_Product_Details().getProductDetail());
+			ejb.updateProductsForDesignCostSheet(productsForDesignCostSheet);
+		}
+		// products for design cost sheet productId
+
 // not received assigns delete
 		// for (JobPlan jp : ejb.getAllJobPlan()) {
 		// for (JobAssignmentDetails jad : jp.getJobAssignmentDetails()) {

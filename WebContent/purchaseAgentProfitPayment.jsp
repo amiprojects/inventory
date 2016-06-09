@@ -23,6 +23,7 @@
 <link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
 <!-- Bootstrap -->
 <link rel="stylesheet" href="css/style.css" type="text/css" />
+<link rel="stylesheet" href="css/scrollTable.css" type="text/css" />
 <!-- Style -->
 <link rel="stylesheet" href="css/responsive.css" type="text/css" />
 <!-- Responsive -->
@@ -39,7 +40,7 @@
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
 
-			<c:if test="${page.name.equals('Sales Search')}">
+			<c:if test="${page.name.equals('Purchase Search')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
@@ -50,6 +51,8 @@
 			</script>
 		</c:if>
 	</c:if>
+	<c:set var="compInfo"
+		value="${sessionScope['ejb'].getUserById(sessionScope['user']).getCompanyInfo()}" />
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
@@ -62,241 +65,262 @@
 
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
-								<h3 style="margin-top: 11px;">Sales Agent Profit Payment</h3>
+								<h3 style="margin-top: 11px;">Purchase Agent (via) Profit
+									Payment</h3>
 							</div>
+
 							<div class="widget-area">
-								<div class="col-md-12">
-									<form role="form" class="sec" action="salesSearchAllForAgent"
-										method="post">
-										<div class="row">
-											<div class="col-md-12">
-												<button class="btn green pull-right" type="submit"
-													style="margin-right: 63px;">Show All</button>
+								<form role="form" class="sec"
+									action="purchaseSearchAllForViaPurchaseAgent" method="post">
+									<div class="row">
+										<div class="col-md-12">
+											<button class="btn green pull-right" type="submit"
+												style="margin-right: 63px;">Show All</button>
+										</div>
+									</div>
+								</form>
+								<form role="form" class="sec"
+									action="purchaseSearchByDateForViaPurchaseAgent" method="post"
+									id="purchaseSearchByDateId">
+									<div class="row">
+										<div class="col-md-5">
+											<div class="form-group">
+												<label for="" style="float: left;">Search between
+													two dates : (Start Date)<font color="red" size="4">*</font>
+												</label> <input type="text" placeholder="Enter First Date"
+													id="datepicker" class="form-control" name="fDate" value=""
+													autocomplete="off" onchange="dateSet();">
 											</div>
 										</div>
-									</form>
-									<form role="form" class="sec"
-										action="salesSearchByDateForAgent" method="post"
-										id="salesSearchByDateId">
-										<div class="row">
-											<div class="col-md-5">
-												<div class="form-group">
-													<label for="">Search between two dates : (Start
-														Date)<font color="red" size="4">*</font>
-													</label> <input type="text" placeholder="Enter First Date"
-														id="datepicker" class="form-control" name="fDate"
-														autocomplete="off" onchange="dateSet();">
-												</div>
-											</div>
-											<div class="col-md-5">
-												<div class="form-group">
-													<label for="">(End Date)<font color="red" size="4">*</font></label>
-													<input type="text" placeholder="Enter last date"
-														id="datepicker1" class="form-control" name="lDate"
-														autocomplete="off" onchange="checkDate();">
-												</div>
-											</div>
-											<div class="col-md-2">
-												<button class="btn green pull-left"
-													style="margin-top: 25px;" type="button"
-													onclick="salesSearchByDateSubmit();">Search</button>
-											</div>
-										</div>
-									</form>
-									<form role="form" class="sec"
-										action="salesSearchBySalesChallanNoForAgent" method="post">
-										<div class="row">
-											<div class="col-md-12">
-												<div class="form-group">
-													<label for="" style="float: left;">Sales challan
-														no. :</label>
-												</div>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-md-1"
-												style="margin-right: 0; padding-right: 0;">
-												<input type="text" class="form-control" readonly="readonly"
-													name="companyInitial"
-													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompany('INV').companyInitial}">
-											</div>
-											<div class="col-md-2" style="margin: 0; padding: 0;">
-												<select class="form-control" name="fynYear">
-													<c:forEach
-														items="${sessionScope['ejb'].getAllFinancialForSales()}"
-														var="fyr">
-														<option value="${fyr}">${fyr}</option>
-													</c:forEach>
-												</select>
-											</div>
-											<div class="col-md-2" style="margin: 0; padding: 0;">
-												<!-- <input type="text" class="form-control" name="month"> -->
-												<select name="month" class="form-control">
-													<option value="01">01</option>
-													<option value="02">02</option>
-													<option value="03">03</option>
-													<option value="04">04</option>
-													<option value="05">05</option>
-													<option value="06">06</option>
-													<option value="07">07</option>
-													<option value="08">08</option>
-													<option value="09">09</option>
-													<option value="10">10</option>
-													<option value="11">11</option>
-													<option value="12">12</option>
-												</select>
-											</div>
-											<div class="col-md-1" style="margin: 0; padding: 0;">
-												<input type="text" class="form-control" readonly="readonly"
-													name="billType"
-													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompany('INV').billType}">
-											</div>
-											<div class="col-md-2" style="margin: 0; padding: 0;">
-												<input type="text" class="form-control" name="autoNum">
-											</div>
-											<div class="col-md-2"
-												style="margin-left: 0; padding-left: 0;">
-												<input type="text" class="form-control" name="suffix">
-											</div>
-											<div class="col-md-2">
-												<button class="btn green pull-left" type="submit">Search</button>
-											</div>
-										</div>
-									</form>
-									<form role="form" class="sec"
-										action="salesSearchByAgentNameForAgent" method="post">
-										<div class="row">
-											<div class="col-md-10">
-												<div class="form-group">
-													<label for="" style="float: left;">Agent Name :</label> <input
-														type="" placeholder="Enter Agent Name" id="agentName"
-														name="agentName" class="form-control">
-												</div>
-											</div>
-											<div class="col-md-2">
-												<button class="btn green pull-left"
-													style="margin-top: 25px;" type="submit">Search</button>
-											</div>
 
+										<div class="col-md-5">
+											<div class="form-group">
+												<label for="" style="float: left;">(End Date)<font
+													color="red" size="4">*</font></label> <input type="text"
+													placeholder="Enter last date" id="datepicker1"
+													class="form-control" name="lDate" value=""
+													autocomplete="off" onchange="checkDate();">
+											</div>
 										</div>
-									</form>
-									<form role="form" class="sec"
-										action="salesSearchByCustomerNameForAgent" method="post">
-										<div class="row">
-											<div class="col-md-10">
-												<div class="form-group">
-													<label for="" style="float: left;">Customer Name :</label>
-													<input type="" placeholder="Enter Customer Name"
-														id="custoName" name="custoName" class="form-control">
-												</div>
-											</div>
-											<div class="col-md-2">
-												<button class="btn green pull-left"
-													style="margin-top: 25px;" type="submit">Search</button>
-											</div>
+										<div class="col-md-2">
+											<button class="btn green pull-left" style="margin-top: 25px;"
+												type="button" onclick="purchaseSearchByDateSubmit();">Search</button>
+										</div>
+									</div>
+								</form>
 
-										</div>
-									</form>
-									<form role="form" class="sec"
-										action="salesSearchByProductCodeForAgent" method="post">
-										<div class="row">
-											<div class="col-md-10">
-												<div class="form-group">
-													<label for="" style="float: left;">Product code :</label> <input
-														type="" placeholder="Enter Product code" id="prodCode"
-														name="prodCode" class="form-control" autocomplete="off">
-												</div>
-											</div>
-											<div class="col-md-2">
-												<button class="btn green pull-left"
-													style="margin-top: 25px;" type="submit">Search</button>
+								<form role="form" class="sec"
+									action="purchaseSearchByPurchaseChallanNoForViaPurchaseAgent"
+									method="post">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="form-group">
+												<label for="" style="float: left;">Purchase challan
+													no. :</label>
 											</div>
 										</div>
-									</form>
-									<br>
-									<h3 align="center" style="color: #6a94ff;">${requestScope['msg']}</h3>
-									<br>
-									<table class="table">
-										<thead>
-											<tr>
-												<th>#</th>
-												<th>Sales challan no.</th>
-												<th>Customer Name</th>
-												<th>Agent Name</th>
-												<th>Sales Date</th>
-												<th>Profit</th>
-												<th>(-)Profit</th>
-											</tr>
-										</thead>
+									</div>
+									<div class="row">
+										<div class="col-md-1"
+											style="margin-right: 0; padding-right: 0;">
+											<input type="text" class="form-control" readonly="readonly"
+												name="companyInitial"
+												value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompanyId('PUR', compInfo.id).companyInitial}">
+										</div>
+										<div class="col-md-2" style="margin: 0; padding: 0;">
+											<select class="form-control" name="fynYear">
+												<c:forEach
+													items="${sessionScope['ejb'].getAllFinancialForPurchase()}"
+													var="fyr">
+													<option value="${fyr}">${fyr}</option>
+												</c:forEach>
+											</select>
+										</div>
+										<div class="col-md-2" style="margin: 0; padding: 0;">
+											<!-- <input type="text" class="form-control" name="month"> -->
+											<select name="month" class="form-control">
+												<option value="01">01</option>
+												<option value="02">02</option>
+												<option value="03">03</option>
+												<option value="04">04</option>
+												<option value="05">05</option>
+												<option value="06">06</option>
+												<option value="07">07</option>
+												<option value="08">08</option>
+												<option value="09">09</option>
+												<option value="10">10</option>
+												<option value="11">11</option>
+												<option value="12">12</option>
+											</select>
+										</div>
+										<div class="col-md-1" style="margin: 0; padding: 0;">
+											<input type="text" class="form-control" readonly="readonly"
+												name="billType"
+												value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompanyId('PUR', compInfo.id).billType}">
+										</div>
+										<div class="col-md-2" style="margin: 0; padding: 0;">
+											<input type="text" class="form-control" name="autoNum">
+										</div>
+										<div class="col-md-2" style="margin-left: 0; padding-left: 0;">
+											<input type="text" class="form-control" name="suffix">
+										</div>
+										<div class="col-md-2">
+											<button class="btn green pull-left" type="submit">Search</button>
+										</div>
+									</div>
+								</form>
+								<form role="form" class="sec"
+									action="purchaseSearchByProductCodeForViaPurchaseAgent"
+									method="post">
+									<div class="row">
+										<div class="col-md-10">
+											<div class="form-group">
+												<label for="" style="float: left;">Product Code:</label> <input
+													type="" placeholder="Enter Product Code" id="prodCode"
+													name="prodCode" class="form-control" autocomplete="off">
+											</div>
+										</div>
+										<div class="col-md-2">
+											<button class="btn green pull-left" style="margin-top: 25px;"
+												type="submit">Search</button>
+										</div>
+									</div>
+								</form>
+								<form role="form" class="sec"
+									action="purchaseSearchByVendorNameForViaPurchaseAgent"
+									method="post">
+									<div class="row">
+										<div class="col-md-10">
+											<div class="form-group">
+												<label for="" style="float: left;">Vendor Name :</label> <input
+													type="" placeholder="Enter Vendor Name" id="vendorName"
+													name="vendorName" class="form-control">
+											</div>
+										</div>
+										<div class="col-md-2">
+											<button class="btn green pull-left" style="margin-top: 25px;"
+												type="submit">Search</button>
+										</div>
 
+									</div>
+								</form>
+								<form role="form" class="sec"
+									action="purchaseSearchByAgentNameForViaPurchaseAgent"
+									id="purchaseSearchByAgentNameForm" method="post">
+									<div class="row">
+										<div class="col-md-10">
+											<div class="form-group">
+												<label for="" style="float: left;">Agent (Via) Name
+													:</label> <input type="text" placeholder="Enter Agent (Via) Name"
+													id="VagentName" name="VagentName" class="form-control"><input
+													type="hidden" id="VagentId" name="VagentId" value="0"
+													class="form-control">
+											</div>
+										</div>
+										<div class="col-md-2">
+											<button class="btn green pull-left" style="margin-top: 25px;"
+												type="button" onclick="purchaseSearchByViaAgentSubmit();">Search</button>
+										</div>
+									</div>
+								</form>
+								<br>
+								<h3 align="center" style="color: #6a94ff;">${requestScope['msg']}</h3>
+								<br>
+								<div style=""></div>
+								<table class="table">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Purchase challan no.</th>
+											<th>Vendor Name</th>
+											<th>Agent Name</th>
+											<th>Vendor Bill no.</th>
+											<th>Purchase Date</th>
+											<th>Profit</th>
+											<th>(-)Profit</th>
+										</tr>
+									</thead>
+									<tbody>
 										<c:set var="count" value="${1}" />
-										<c:forEach items="${requestScope['salesEntryLst']}"
-											var="sEntryByD">
-											<c:if test="${sEntryByD.vendor!=null}">
-												<tbody>
+										<c:forEach items="${requestScope['purEntryList']}"
+											var="pEntryByD">
+											<c:if test="${pEntryByD.vendor.name!='Production Vendor'}">
+												<c:if test="${pEntryByD.agentId!=0}">
 													<tr>
 														<td>${count}</td>
 														<td><a href="#"
-															onclick="viewInvoiceS(${sEntryByD.id});"><b>${sEntryByD.challanNumber}</b></a></td>
-														<td>${sEntryByD.customer.name}</td>
+															onclick="viewInvoice(${pEntryByD.id});"><b>${pEntryByD.challanNumber}</b></a>
+														</td>
+														<c:if test="${pEntryByD.vendor.vendorType.type=='Vendor'}">
+															<td>${pEntryByD.vendor.name}</td>
+														</c:if>
+														<c:if test="${pEntryByD.vendor.vendorType.type!='Vendor'}">
+															<td>NIL</td>
+														</c:if>
 														<c:choose>
-															<c:when test="${sEntryByD.vendor==null}">
-																<td>NIL</td>
+															<c:when
+																test="${pEntryByD.vendor.vendorType.type=='Purchase Agent'}">
+																<td>${pEntryByD.vendor.name}</td>
+															</c:when>
+															<c:when test="${pEntryByD.agentId!=0}">
+																<td>${sessionScope['ejb'].getVendorById(pEntryByD.agentId).name}</td>
 															</c:when>
 															<c:otherwise>
-																<td>${sEntryByD.vendor.name}</td>
+																<td>NIL</td>
 															</c:otherwise>
 														</c:choose>
-														<td><fmt:formatDate value="${sEntryByD.sales_date}"
-																pattern="dd-MM-yy" /></td>
-														<td>${sEntryByD.agentProfitTotal}</td>
-														<td><fmt:formatNumber var="mProfit" value="${0}"
-																maxFractionDigits="2" groupingUsed="false" /> <c:forEach
-																var="sReturn" items="${sEntryByD.salesReturn}">
-																<c:set var="mProfit"
-																	value="${mProfit+sReturn.retAgentProfitTotal}" />
+														<td>${pEntryByD.vendor_bill_no}</td>
+														<td><fmt:formatDate
+																value="${pEntryByD.purchase_date}" pattern="dd-MM-yy" /></td>
+														<td>${pEntryByD.agentProfitTotal}</td>
+														<td><c:set var="mProfit" value="${0}" /> <c:forEach
+																var="pReturn" items="${pEntryByD.purchaseReturn}">
+																<fmt:formatNumber var="mProfit"
+																	value="${mProfit+pReturn.retAgentProfitTotal}"
+																	maxFractionDigits="2" groupingUsed="false" />
 															</c:forEach>${mProfit}</td>
 														<td style="display: none;"><c:if
-																test="${sessionScope['ejb'].getPaymentDetails4ViaAgentBySalesEntryId(sEntryByD.id).size()>0}">
+																test="${sessionScope['ejb'].getPaymentDetails4ViaAgentByPurchaseEntryId(pEntryByD.id).size()>0}">
 																<c:set
-																	value="${sessionScope['ejb'].getPaymentStatusById(sessionScope['ejb'].getPaymentDetails4ViaAgentBySalesEntryId(sEntryByD.id).get(0).paymentStatusId).status}"
+																	value="${sessionScope['ejb'].getPaymentStatusById(sessionScope['ejb'].getPaymentDetails4ViaAgentByPurchaseEntryId(pEntryByD.id).get(0).paymentStatusId).status}"
 																	var="Status"></c:set>
 															</c:if> <c:if
-																test="${sessionScope['ejb'].getPaymentDetails4ViaAgentBySalesEntryId(sEntryByD.id).size()==0}">
+																test="${sessionScope['ejb'].getPaymentDetails4ViaAgentByPurchaseEntryId(pEntryByD.id).size()==0}">
 																<c:set value="Not Paid" var="Status"></c:set>
-															</c:if> <span id="status${sEntryByD.id}">${Status}</span></td>
+															</c:if> <span id="status${pEntryByD.id}">${Status}</span></td>
 														<td><c:set var="totPaybleCost"
-																value="${sEntryByD.agentProfitTotal}" /> <c:forEach
-																var="salesRet" items="${sEntryByD.salesReturn}">
+																value="${pEntryByD.agentProfitTotal}" /> <c:forEach
+																var="purchaseRet" items="${pEntryByD.purchaseReturn}">
 																<c:set var="totPaybleCost"
-																	value="${totPaybleCost-salesRet.retAgentProfitTotal}" />
+																	value="${totPaybleCost-purchaseRet.retAgentProfitTotal}" />
 															</c:forEach>
 															<form action="" method="post"
-																id="agentPayment${sEntryByD.id}">
+																id="agentPayment${pEntryByD.id}">
 																<a href="#"
-																	onclick="agentPaymentOCF('${sEntryByD.id}','${sEntryByD.challanNumber}','${totPaybleCost}','${sEntryByD.vendor.id}');"><input
-																	type="hidden" value="${sEntryByD.challanNumber}"
-																	name="salesChallan"> <span
-																	style="color: #6a94ff;"><u> Payment</u></span></a>
+																	onclick="agentPaymentOCF('${pEntryByD.id}','${pEntryByD.challanNumber}','${totPaybleCost}','${pEntryByD.agentId}');">
+																	<input type="hidden" value="${pEntryByD.challanNumber}"
+																	name="pChallan"> <span style="color: #6a94ff;"><u>
+																			Payment</u></span>
+																</a>
 															</form></td>
 													</tr>
-												</tbody>
+												</c:if>
 												<c:set var="count" value="${count+1}" />
 											</c:if>
 										</c:forEach>
-									</table>
-								</div>
+									</tbody>
+								</table>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<!-- Content Sec -->
 		</div>
-		<!-- Page Container -->
 	</div>
-	<!-- main -->
+	<!-- Content Sec -->
+	<!-- Page Container -->
 
+	<!-- main -->
 	<div id="agentPayModal" class="modal fade" role="dialog"
 		style="top: 25px;">
 		<div class="modal-dialog modal-lg">
@@ -304,7 +328,7 @@
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">
-						Agent Payment details for Sales : <span id="salesChallan"></span>
+						Agent Payment details for Sales : <span id="pChallan"></span>
 					</h4>
 				</div>
 				<div class="modal-body">
@@ -337,7 +361,7 @@
 		</div>
 	</div>
 	<form role="form" class="sec" method="post" id="paymentForm"
-		action="salesAgentPayment">
+		action="purchaseAgentPayment">
 		<div id="paymentModal" class="modal fade" role="dialog"
 			style="top: 25px;">
 			<div class="modal-dialog modal-lg">
@@ -493,10 +517,9 @@
 			</div>
 		</div>
 		<input type="hidden" id="aId" name="aId"> <input type="hidden"
-			id="seId" name="seId"><input type="hidden"
+			id="peId" name="peId"><input type="hidden"
 			id="voucherDetailSize" name="voucherDetailSize">
 	</form>
-
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
 	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
@@ -506,40 +529,40 @@
 	<script type="text/javascript" src="js/grid-filter.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$("#sales").attr("id", "activeSubMenu");
-			$("#sSalesAgentProfitPayment").attr("style", "color: #6a94ff;");
+			$("#purch").attr("id", "activeSubMenu");
+			$("#sPurchaseAgentProfitPayment").attr("style", "color: #6a94ff;");
 		});
 	</script>
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 	<script>
 		$(function() {
 			$("#datepicker").datepicker({
-				dateFormat : "dd-mm-yy"
+				dateFormat : "dd-mm-yy",
+				maxDate : 0
+			});
+			$("#datepicker1").datepicker({
+				dateFormat : "dd-mm-yy",
+				maxDate : 0
 			});
 		});
 	</script>
 	<script>
-		$(function() {
-			$("#datepicker1").datepicker({
-				dateFormat : "dd-mm-yy"
-			});
-		});
-		function dateSet() {
-			var dt = $("#datepicker").datepicker('getDate');
-			var dt1 = $("#datepicker1").datepicker('getDate');
-			if ($("#datepicker1").val() != "" && dt > dt1) {
-				alert("Start date must be can not be later than end date...");
-				$("#datepicker").val("");
-			}
+	function dateSet() {
+		var dt = $("#datepicker").datepicker('getDate');
+		var dt1 = $("#datepicker1").datepicker('getDate');
+		if ($("#datepicker1").val() != "" && dt > dt1) {
+			alert("Start date must be can not be later than end date...");
+			$("#datepicker").val("");
 		}
-		function checkDate() {
-			var d = $("#datepicker").datepicker('getDate');
-			var d1 = $("#datepicker1").datepicker('getDate');
-			if ($("#datepicker").val() != "" && d > d1) {
-				alert("End date can not be before than start date...");
-				$("#datepicker1").val("");
-			}
+	}
+	function checkDate() {
+		var d = $("#datepicker").datepicker('getDate');
+		var d1 = $("#datepicker1").datepicker('getDate');
+		if ($("#datepicker").val() != "" && d > d1) {
+			alert("End date can not be before than start date...");
+			$("#datepicker1").val("");
 		}
+	}
 
 		$(function() {
 			$("#prodCode").autocomplete({
@@ -569,9 +592,9 @@
 				/* change : function(event, ui) {
 					if (ui.item == null) {
 						$(this).val("");
-						$("#prodCode").val("");						
+						$("#prodCode").val("");
 					} else {
-						$("#prodCode").val(ui.item.code);
+						$("#prodCode").val(ui.item.value);
 					}
 				}, */
 				select : function(event, ui) {
@@ -579,7 +602,52 @@
 						$(this).val("");
 						$("#prodCode").val("");
 					} else {
-						$("#prodCode").val(ui.item.code);
+						$("#prodCode").val(ui.item.value);
+					}
+
+				}
+			});
+		});
+
+		$(function() {
+			$("#vendorName").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getVendorsByVendorTypeVendorAndName",
+						data : {
+							name : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.name,
+									id : item.id
+								});
+							}));
+						},
+
+						error : function(a, b, c) {
+							alert(a + b + c);
+						}
+
+					});
+				},
+				/* change : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#vendorName").val("");
+					} else {
+						$("#vendorName").val(ui.item.value);
+					}
+				}, */
+				select : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#vendorName").val("");
+					} else {
+						$("#vendorName").val(ui.item.value);
 					}
 
 				}
@@ -591,7 +659,7 @@
 				source : function(req, resp) {
 					$.ajax({
 						type : "post",
-						url : "getVendorsByVendorTypeSalesAgentAndName",
+						url : "getVendorsByVendorTypePurchaseAgentAndName",
 						data : {
 							name : req.term
 						},
@@ -611,149 +679,167 @@
 
 					});
 				},
-				/* change : function(event, ui) {
+				change : function(event, ui) {
 					if (ui.item == null) {
 						$(this).val("");
 						$("#agentName").val("");
+						$("#agentId").val("");
 					} else {
-						$("#agentName").val(ui.item.name);
+						$("#agentName").val(ui.item.value);
+						$("#agentId").val(ui.item.id);
 					}
-				}, */
-				select : function(event, ui) {
-					if (ui.item == null) {
-						$(this).val("");
-						$("#agentName").val("");
-					} else {
-						$("#agentName").val(ui.item.name);
-					}
-
-				}
-			});
-		});
-
-		$(function() {
-			$("#custoName").autocomplete({
-				source : function(req, resp) {
-					$.ajax({
-						type : "post",
-						url : "getCustomerByName",
-						data : {
-							name : req.term
-						},
-						dataType : "json",
-						success : function(data) {
-							resp($.map(data, function(item) {
-								return ({
-									value : item.name,
-									id : item.id
-								});
-							}));
-						},
-
-						error : function(a, b, c) {
-							alert(a + b + c);
-						}
-
-					});
 				},
-				/* change : function(event, ui) {
-					if (ui.item == null) {
-						$(this).val("");
-						$("#custoName").val("");
-					} else {
-						$("#custoName").val(ui.item.name);
-					}
-				}, */
 				select : function(event, ui) {
 					if (ui.item == null) {
 						$(this).val("");
-						$("#custoName").val("");
+						$("#agentName").val("");
+						$("#agentId").val(0);
 					} else {
-						$("#custoName").val(ui.item.name);
+						$("#agentName").val(ui.item.value);
+						$("#agentId").val(ui.item.id);
 					}
 
 				}
 			});
 		});
-		
-		function salesSearchByDateSubmit() {
+
+		function purchaseSearchByDateSubmit() {
 			if ($("#datepicker").val() == "" || $("#datepicker1").val() == "") {
 				alert("Please enter start date and end date");
 			} else {
-				$("#salesSearchByDateId").submit();
+				$("#purchaseSearchByDateId").submit();
 			}
-		}
-		function viewInvoiceS(id){			
+		}		
+		
+		function viewInvoice(id){
 			window
 			.open(
-					"stockSaCha.jsp?id="+id,
+					"stockPurCha.jsp?id="+id,
 					'name', 'width=900,height=700').print();
+			
 		}
-		function agentPaymentOCF(id, challanNo, totPC, agentId) {			
-			$("#aId").val(agentId);
-			$("#seId").val(id);
-			$.ajax({
-				url : "getAllVoucherDetails4ViaAgentBySalesEntryId",
-				type : "post",
-				dataType : "json",
-				data : {
-					id : id
-				},
-				success : function(data) {
-					$("#voucherDetailSize").val(data.voucherDetailSize);
-				}
-			});
-			$.ajax({
-				type : "post",
-				url : "getCurrentCreditNote4ViaAgentByAgentId",
-				data : {
-					id : agentId
-				},
-				dataType : "json",
-				success : function(data) {
-					$("#totalCredit").val(data.currentCreditNote);
-				}
-			});
-			if($("#status"+id).html()=="Not Paid"){
-				$("#dueAmount").html(Number(totPC).toFixed(2));		
-				if(Number(totPC)>0){
-					$("#payButton").removeAttr("disabled");
-				}else{
-					$("#payButton").attr("disabled","disabled");
-				}
-			}			
-			$("#salesChallan").html(challanNo+" (Total Payable: "+Number(totPC).toFixed(2)+" Rs.)");				
-			$.ajax({
-				type : "post",
-				url : "getPaymentDetails4ViaAgentBySalesEntryId",
-				data : {
-					id : id
-				},
-				dataType : "json",
-				success : function(data) {
-					$("#paymentDetailsTable tbody").empty();
-					var totalPaid=0;
-					$.each(data, function(index, item) {
-							$("#paymentDetailsTable").append('<tbody><tr><td>'+formatDate(item.paymentDate)+'</td><td>'+item.paymentMethod+'</td><td>'+item.paymentDescription+'</td><td>'+Number(item.paymentAmount).toFixed(2)+'</td></tr></tbody>');							
-							totalPaid=totalPaid+item.paymentAmount;
+		$(function() {
+			$("#VagentName").autocomplete({
+				source : function(req, resp) {
+					$.ajax({
+						type : "post",
+						url : "getVendorsByVendorTypePurchaseAgentAndName",
+						data : {
+							name : req.term
+						},
+						dataType : "json",
+						success : function(data) {
+							resp($.map(data, function(item) {
+								return ({
+									value : item.name,
+									id : item.id
+								});
+							}));
+						},
+
+						error : function(a, b, c) {
+							alert(a + b + c);
+						}
+
 					});
-					$("#dueAmount").html(Number(Number(totPC)-Number(totalPaid).toFixed(2)).toFixed(2));
-					if(Number(Number(totPC)-Number(totalPaid).toFixed(2))==0){
-						$("#payButton").attr("disabled","disabled");
-					}else{
-						$("#payButton").removeAttr("disabled");
+				},
+				change : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#VagentName").val("");
+						$("#VagentId").val("");
+					} else {
+						$("#VagentName").val(ui.item.value);
+						$("#VagentId").val(ui.item.id);
 					}
 				},
-				error : function(a, b, c) {
-					alert(a + b + c);
+				select : function(event, ui) {
+					if (ui.item == null) {
+						$(this).val("");
+						$("#VagentName").val("");
+						$("#VagentId").val(0);
+					} else {
+						$("#VagentName").val(ui.item.value);
+						$("#VagentId").val(ui.item.id);
+					}
+
 				}
 			});
-			$("#agentPayModal").modal("show");
+		});
+		function purchaseSearchByViaAgentSubmit() {
+			if ($("#VagentName").val() == "") {
+				alert("Please enter agent name!");
+			} else {
+				$("#purchaseSearchByAgentNameForm").submit();
+			}
 		}
-		function formatDate(d) {
-			var dateparts = d.split(" ");
-			return dateparts[2] + "-" + dateparts[1] + "-" + dateparts[5];
-		}
+	</script>
+	<script type="text/javascript">
+	function agentPaymentOCF(id, challanNo, totPC, agentId) {
+		$("#aId").val(agentId);
+		$("#peId").val(id);
+		$.ajax({
+			url : "getAllVoucherDetails4ViaAgentByPurchaseEntryId",
+			type : "post",
+			dataType : "json",
+			data : {
+				id : id
+			},
+			success : function(data) {
+				$("#voucherDetailSize").val(data.voucherDetailSize);
+			}
+		});
+		$.ajax({
+			type : "post",
+			url : "getCurrentCreditNote4ViaAgentByAgentId",
+			data : {
+				id : agentId
+			},
+			dataType : "json",
+			success : function(data) {
+				$("#totalCredit").val(data.currentCreditNote);
+			}
+		});
+		if($("#status"+id).html()=="Not Paid"){
+			$("#dueAmount").html(Number(totPC).toFixed(2));		
+			if(Number(totPC)>0){
+				$("#payButton").removeAttr("disabled");
+			}else{
+				$("#payButton").attr("disabled","disabled");
+			}
+		}			
+		$("#pChallan").html(challanNo+" (Total Payable: "+Number(totPC).toFixed(2)+" Rs.)");				
+		$.ajax({
+			type : "post",
+			url : "getPaymentDetails4ViaAgentByPurchaseEntryId",
+			data : {
+				id : id
+			},
+			dataType : "json",
+			success : function(data) {
+				$("#paymentDetailsTable tbody").empty();
+				var totalPaid=0;
+				$.each(data, function(index, item) {
+						$("#paymentDetailsTable").append('<tbody><tr><td>'+formatDate(item.paymentDate)+'</td><td>'+item.paymentMethod+'</td><td>'+item.paymentDescription+'</td><td>'+Number(item.paymentAmount).toFixed(2)+'</td></tr></tbody>');							
+						totalPaid=totalPaid+item.paymentAmount;
+				});
+				$("#dueAmount").html(Number(Number(totPC)-Number(totalPaid)).toFixed(2));
+				if(Number(Number(totPC)-Number(totalPaid))==0){
+					$("#payButton").attr("disabled","disabled");
+				}else{
+					$("#payButton").removeAttr("disabled");
+				}
+			},
+			error : function(a, b, c) {
+				alert(a + b + c);
+			}
+		});
+		$("#agentPayModal").modal("show");
+	}
+	function formatDate(d) {
+		var dateparts = d.split(" ");
+		return dateparts[2] + "-" + dateparts[1] + "-" + dateparts[5];
+	}
 	</script>
 	<script src="js/numericInput.min.js"></script>
 	<script type="text/javascript">

@@ -9,3 +9,4 @@ jsp
 debit note
 credit note
 salesagentprofitpayment
+purchaseagentprofitpayment

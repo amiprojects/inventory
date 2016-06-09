@@ -164,16 +164,6 @@ public class InitS extends HttpServlet {
 		// ready goods stock table stock manage
 		// stock manage
 
-		// products for design cost sheet productId
-		for (JobPlanProductStock jpps : ejb.getAllJobPlanProductStock()) {
-			ProductsForDesignCostSheet productsForDesignCostSheet = jpps
-					.getProductsForDesignCostSheet();
-			productsForDesignCostSheet.setProductDetail(jpps
-					.getPurchase_Product_Details().getProductDetail());
-			ejb.updateProductsForDesignCostSheet(productsForDesignCostSheet);
-		}
-		// products for design cost sheet productId
-
 		// correcting lot number
 		for (ProductDetail pd : ejb.getAllProductDetail()) {
 			for (int i = 0; i < ejb.getPurchaseProductDetailsByProductIdAsc(
@@ -596,6 +586,21 @@ public class InitS extends HttpServlet {
 			pageList = null;
 		}
 
+		int flagPpapp = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("PurchaseAgentProfit Payment")) {
+				flagPpapp = 1;
+				break;
+			}
+		}
+		if (flagPpapp == 0) {
+			pageList = new PageList();
+			pageList.setName("PurchaseAgentProfit Payment");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+
 		int flagPprs = 0;
 		for (PageList p : ejb.getAllPageList()) {
 			if (p.getName().equals("Purchase Return Search")) {
@@ -683,6 +688,21 @@ public class InitS extends HttpServlet {
 		if (flagPsr == 0) {
 			pageList = new PageList();
 			pageList.setName("Sales Return");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+
+		int flagPsapp = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("SalesAgentProfit Payment")) {
+				flagPsapp = 1;
+				break;
+			}
+		}
+		if (flagPsapp == 0) {
+			pageList = new PageList();
+			pageList.setName("SalesAgentProfit Payment");
 			pageList.setModule(module);
 			ejb.setPageList(pageList);
 			pageList = null;
@@ -920,6 +940,53 @@ public class InitS extends HttpServlet {
 		}
 		module = null;
 		// job
+
+		// note
+		int flagMnote = 0;
+		for (Module m : ejb.getAllModule()) {
+			if (m.getName().equals("Debit/Credit Note")) {
+				flagMnote = 1;
+				module = ejb.getModuleByName("Debit/Credit Note");
+				break;
+			}
+		}
+		if (flagMnote == 0) {
+			module = new Module();
+			module.setName("Debit/Credit Note");
+			ejb.setModule(module);
+		}
+
+		int flagPdn = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Debit Note")) {
+				flagPdn = 1;
+				break;
+			}
+		}
+		if (flagPdn == 0) {
+			pageList = new PageList();
+			pageList.setName("Debit Note");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+
+		int flagPcn = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Credit Note")) {
+				flagPcn = 1;
+				break;
+			}
+		}
+		if (flagPcn == 0) {
+			pageList = new PageList();
+			pageList.setName("Credit Note");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+		module = null;
+		// note
 
 		// setup
 		int flagMsetup = 0;

@@ -103,13 +103,13 @@
 															maxFractionDigits="2" groupingUsed="false" />
 														${currentDebit}</td>
 													<td>
-														<%-- <form action="debitNoteByCustomer" method="post"
+														<form action="debitNoteByCustomer" method="post"
 															id="dnView${customer.id}">
 															<a href="#" onclick="debitNoteViewF('${customer.id}');"><input
 																type="hidden" value="${customer.id}" name="cId"><input
 																type="hidden" value="${customer.name}" name="custoName"><img
 																alt="" src="images/eye.png" height="25px"></a>
-														</form> --%>
+														</form>
 													</td>
 												</tr>
 												<c:set var="count" value="${count+1}" />

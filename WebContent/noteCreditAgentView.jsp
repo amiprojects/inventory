@@ -72,7 +72,7 @@
 
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
-								<h3 style="margin-top: 11px;">Purchase Agent's Credit Note
+								<h3 style="margin-top: 11px;">Purchase (Direct) Agent's Credit Note
 									Statement</h3>
 							</div>
 
@@ -137,7 +137,7 @@
 												<th>Amount</th>
 												<th>Purpose</th>
 												<th>Reference No.</th>
-												<th>Balance</th>
+												<!-- <th>Balance</th> -->
 											</tr>
 										</thead>
 										<tbody style="height: 300px;">
@@ -159,7 +159,7 @@
 															test="${vouDetList.purchase_Entry!=null && vouDetList.purchaseReturn==null}">${vouDetList.purchase_Entry.challanNumber}</c:if>
 														<c:if
 															test="${vouDetList.purchase_Entry!=null && vouDetList.purchaseReturn!=null}">${vouDetList.purchaseReturn.challanNumber}</c:if></td>
-													<td>${vouDetList.totalCreditNote}</td>
+													<%-- <td>${vouDetList.totalCreditNote}</td> --%>
 												</tr>
 												<c:set var="count" value="${count+1}" />
 											</c:forEach>

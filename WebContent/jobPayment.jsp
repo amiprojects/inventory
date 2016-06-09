@@ -326,7 +326,7 @@
 								<th>Payment date</th>
 								<th>Payment method</th>
 								<th>Payment description</th>
-								<th>Payable Amount</th>
+								<!-- <th>Payable Amount</th> -->
 								<th>Paid Amount</th>
 								<!-- <th>Due Amount</th>
 								<th>Status</th> -->
@@ -749,8 +749,8 @@
 				success : function(data) {
 					$("#paymentDetailsTable tbody").empty();
 					$.each(data, function(index, item) {
-						//<td>'+Number(item.payTotalAmount-item.paymentAmount)+'</td><td>'+item.paymentStatus+'</td>
-							$("#paymentDetailsTable").append('<tbody><tr><td>'+formatDate(item.paymentDate)+'</td><td>'+item.paymentMethod+'</td><td>'+item.paymentDescription+'</td><td>'+item.payTotalAmount+'</td><td>'+item.paymentAmount+'</td></tr></tbody>');
+						//<td>'+item.payTotalAmount+'</td><td>'+Number(item.payTotalAmount-item.paymentAmount)+'</td><td>'+item.paymentStatus+'</td>
+							$("#paymentDetailsTable").append('<tbody><tr><td>'+formatDate(item.paymentDate)+'</td><td>'+item.paymentMethod+'</td><td>'+item.paymentDescription+'</td><td>'+item.paymentAmount+'</td></tr></tbody>');
 							if(index==0){
 								$("#dueAmount").html(Number(item.payTotalAmount-item.paymentAmount));
 								if(Number(item.payTotalAmount-item.paymentAmount)>0){

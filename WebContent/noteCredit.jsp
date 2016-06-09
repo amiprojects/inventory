@@ -83,6 +83,8 @@
 									<li><a data-toggle="tab" href="#byJobber">Jobber</a></li>
 									<li><a data-toggle="tab" href="#bySalesAgent">Sales
 											Agent</a></li>
+									<li><a data-toggle="tab" href="#byViaPAgent">Purchase
+											Agent (Via)</a></li>
 								</ul>
 								<div class="tab-content">
 									<div id="byVendor" class="tab-pane fade active in">
@@ -117,14 +119,14 @@
 																		maxFractionDigits="2" groupingUsed="false" />
 																	${currentCredit}</td>
 																<td>
-																	<%-- <form action="creditNoteByVendorName" method="post"
+																	<form action="creditNoteByVendorName" method="post"
 																		id="cnView${vendor.id}">
 																		<a href="#" onclick="creditNoteViewF('${vendor.id}');"><input
 																			type="hidden" value="${vendor.id}" name="vId"><input
 																			type="hidden" value="${vendor.name}"
 																			name="vendorName"><img alt=""
 																			src="images/eye.png" height="25px"></a>
-																	</form> --%>
+																	</form>
 																</td>
 															</tr>
 														</c:if>
@@ -165,13 +167,59 @@
 																	maxFractionDigits="2" groupingUsed="false" />
 																${currentCredit}</td>
 															<td>
-																<%-- <form action="creditNoteByAgentName" method="post"
+																<form action="creditNoteByAgentName" method="post"
 																	id="cnView${vendor.id}">
 																	<a href="#" onclick="creditNoteViewF('${vendor.id}');"><input
 																		type="hidden" value="${vendor.id}" name="paId"><input
 																		type="hidden" value="${vendor.name}" name="agentName"><img
 																		alt="" src="images/eye.png" height="25px"></a>
-																</form> --%>
+																</form>
+															</td>
+														</tr>
+													</c:if>
+													<c:set var="count" value="${count+1}" />
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
+									<div id="byJobber" class="tab-pane fade active">
+										<br>
+										<table cellspacing="0" width="100%" class="display note">
+											<thead>
+												<tr>
+													<th>#</th>
+													<th>Jobber Name</th>
+													<th>Company Name</th>
+													<th>Phone1</th>
+													<th>Phone2</th>
+													<th>Current Credit</th>
+													<th></th>
+												</tr>
+											</thead>
+											<tbody style="height: 300px;">
+												<c:set var="count" value="${1}" />
+												<c:forEach
+													items="${sessionScope['ejb'].getAllVendorsByType('Jobber')}"
+													var="vendor">
+													<c:if test="${vendor.vendorType.type=='Jobber'}">
+														<tr>
+															<td>${count}</td>
+															<td>${vendor.name}</td>
+															<td>${vendor.companyName}</td>
+															<td>${vendor.ph1}</td>
+															<td>${vendor.ph2}</td>
+															<td><fmt:formatNumber var="currentCredit"
+																	value="${sessionScope['ejb'].getLastVoucherDetailsByVendorId(vendor.id).getTotalCreditNote()}"
+																	maxFractionDigits="2" groupingUsed="false" />
+																${currentCredit}</td>
+															<td>
+																<form action="creditNoteByJobber" method="post"
+																	id="cnView${vendor.id}">
+																	<a href="#" onclick="creditNoteViewF('${vendor.id}');"><input
+																		type="hidden" value="${vendor.id}" name="jId"><input
+																		type="hidden" value="${vendor.name}" name="jobberName"><img
+																		alt="" src="images/eye.png" height="25px"></a>
+																</form>
 															</td>
 														</tr>
 													</c:if>
@@ -226,13 +274,13 @@
 											</tbody>
 										</table>
 									</div>
-									<div id="byJobber" class="tab-pane fade active">
+									<div id="byViaPAgent" class="tab-pane fade active">
 										<br>
 										<table cellspacing="0" width="100%" class="display note">
 											<thead>
 												<tr>
 													<th>#</th>
-													<th>Jobber Name</th>
+													<th>Agent Name</th>
 													<th>Company Name</th>
 													<th>Phone1</th>
 													<th>Phone2</th>
@@ -243,9 +291,9 @@
 											<tbody style="height: 300px;">
 												<c:set var="count" value="${1}" />
 												<c:forEach
-													items="${sessionScope['ejb'].getAllVendorsByType('Jobber')}"
+													items="${sessionScope['ejb'].getAllVendorsByAssendingMaxPurchase('Purchase Agent')}"
 													var="vendor">
-													<c:if test="${vendor.vendorType.type=='Jobber'}">
+													<c:if test="${vendor.vendorType.type=='Purchase Agent'}">
 														<tr>
 															<td>${count}</td>
 															<td>${vendor.name}</td>
@@ -253,17 +301,18 @@
 															<td>${vendor.ph1}</td>
 															<td>${vendor.ph2}</td>
 															<td><fmt:formatNumber var="currentCredit"
-																	value="${sessionScope['ejb'].getLastVoucherDetailsByVendorId(vendor.id).getTotalCreditNote()}"
+																	value="${sessionScope['ejb'].getCurrentCreditNote4ViaAgentByAgentId(vendor.id)}"
 																	maxFractionDigits="2" groupingUsed="false" />
 																${currentCredit}</td>
 															<td>
-																<%-- <form action="creditNoteByJobber" method="post"
-																	id="cnView${vendor.id}">
-																	<a href="#" onclick="creditNoteViewF('${vendor.id}');"><input
-																		type="hidden" value="${vendor.id}" name="jId"><input
-																		type="hidden" value="${vendor.name}" name="jobberName"><img
+																<form action="creditNoteByViaPurchaseAgentName"
+																	method="post" id="cnViewVPA${vendor.id}">
+																	<a href="#"
+																		onclick="creditNoteViewFVPA('${vendor.id}');"><input
+																		type="hidden" value="${vendor.id}" name="paId"><input
+																		type="hidden" value="${vendor.name}" name="agentName"><img
 																		alt="" src="images/eye.png" height="25px"></a>
-																</form> --%>
+																</form>
 															</td>
 														</tr>
 													</c:if>
@@ -301,6 +350,9 @@
 		});
 		function creditNoteViewF(id) {
 			$("#cnView" + id).submit();
+		}
+		function creditNoteViewFVPA(id) {
+			$("#cnViewVPA" + id).submit();
 		}
 	</script>
 	<script src="js/jquery.dataTables.min.js"></script>

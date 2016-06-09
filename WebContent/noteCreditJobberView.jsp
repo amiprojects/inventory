@@ -136,7 +136,7 @@
 												<th>Amount</th>
 												<th>Purpose</th>
 												<th>Reference No.</th>
-												<th>Balance</th>
+												<!-- <th>Balance</th> -->
 											</tr>
 										</thead>
 										<tbody style="height: 300px;">
@@ -154,7 +154,7 @@
 													</td>
 													<td><c:if test="${vouDetList.jobAssignId!=0}">${sessionScope['ejb'].getJobAssignmentDetailsByID(vouDetList.jobAssignId).getChallanNumber()}</c:if>
 													</td>
-													<td>${vouDetList.totalCreditNote}</td>
+													<%-- <td>${vouDetList.totalCreditNote}</td> --%>
 												</tr>
 												<c:set var="count" value="${count+1}" />
 											</c:forEach>

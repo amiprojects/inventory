@@ -149,7 +149,9 @@ import com.kaanish.util.DepartmentCotractor;
 		"/getCurrentCreditNoteByVendorId",
 		"/getPaymentDetails4ViaAgentBySalesEntryId",
 		"/getAllVoucherDetails4ViaAgentBySalesEntryId",
-		"/getCurrentCreditNote4ViaAgentByAgentId" })
+		"/getCurrentCreditNote4ViaAgentByAgentId",
+		"/getAllVoucherDetails4ViaAgentByPurchaseEntryId",
+		"/getPaymentDetails4ViaAgentByPurchaseEntryId" })
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -971,6 +973,44 @@ public class JsonServlet extends HttpServlet {
 							.write("paymentMethod", pType).writeEnd();
 				}
 				generatorPD4VA.writeEnd().close();
+				break;
+
+			case "getPaymentDetails4ViaAgentByPurchaseEntryId":
+				JsonGeneratorFactory factoryPDPE = Json
+						.createGeneratorFactory(null);
+				JsonGenerator generatorPDPE = factoryPDPE.createGenerator(resp
+						.getOutputStream());
+				generatorPDPE.writeStartArray();
+				for (PaymentDetailsForViaAgents pd : ejb
+						.getPaymentDetails4ViaAgentByPurchaseEntryId(Integer
+								.parseInt(req.getParameter("id")))) {
+					String desc;
+					String pType;
+					if (pd.getDescription() != null) {
+						desc = pd.getDescription();
+					} else {
+						desc = "NA";
+					}
+					if (pd.getPaymentTypeId() != 0) {
+						pType = ejb.getPaymentTypeById(pd.getPaymentTypeId())
+								.getType();
+					} else {
+						pType = "NA";
+					}
+					generatorPDPE
+							.writeStartObject()
+							.write("paymentId", pd.getId())
+							.write("paymentDescription", desc)
+							.write("paymentAmount", pd.getPaidAmount())
+							.write("paymentDate",
+									pd.getPaymentDate().toString())
+							.write("paymentStatus",
+									ejb.getPaymentStatusById(
+											pd.getPaymentStatusId())
+											.getStatus())
+							.write("paymentMethod", pType).writeEnd();
+				}
+				generatorPDPE.writeEnd().close();
 				break;
 
 			case "getJobPlanProductsByPlanId":
@@ -1798,6 +1838,26 @@ public class JsonServlet extends HttpServlet {
 				}
 				jg4va.writeStartObject()
 						.write("voucherDetailSize", voucherDetSize).writeEnd()
+						.close();
+				break;
+
+			case "getAllVoucherDetails4ViaAgentByPurchaseEntryId":
+				JsonGeneratorFactory jgf4vap = Json
+						.createGeneratorFactory(null);
+				JsonGenerator jg4vap = jgf4vap.createGenerator(resp
+						.getOutputStream());
+				int vouDetSize = 0;
+				if (ejb.getAllVoucherDetails4ViaAgentByPurchaseEntryId(
+						Integer.parseInt(req.getParameter("id"))).size() == 0) {
+					vouDetSize = 0;
+				} else {
+					vouDetSize = ejb
+							.getAllVoucherDetails4ViaAgentByPurchaseEntryId(
+									Integer.parseInt(req.getParameter("id")))
+							.size();
+				}
+				jg4vap.writeStartObject()
+						.write("voucherDetailSize", vouDetSize).writeEnd()
 						.close();
 				break;
 
