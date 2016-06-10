@@ -526,7 +526,6 @@
 		qtySubtractionProd(g);
 	}
 	function qtySubtractionProd(g) {
-
 		if (Number($("#prodQtyRe" + g).val()) > Number($("#prodRemQty" + g).html())) {
 			$("#prodQtyRe" + g).val($("#prodRemQty" + g).html());
 			$("#sampleQtyRe" + g).val($("#remSampleQty").html());

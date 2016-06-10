@@ -4844,9 +4844,9 @@ public class Ejb {
 							qt = String.valueOf((int) ppd
 									.getRemaining_quantity());
 						}
-						n.setDescription(qt
+						n.setDescription(qt + " "
 								+ ppd.getProductDetail().getQtyUnit().getName()
-								+ " quantity of product code "
+								+ " of product code "
 								+ ppd.getProductDetail().getCode()
 								+ " of lot number " + ppd.getLotNumber()
 								+ " is in stock more than " + days + " days.");
@@ -4884,12 +4884,37 @@ public class Ejb {
 								+ " qty is remaing.");
 						n.setLink("jobReceiveFromSearch?joChallan="
 								+ jad.getChallanNumber());
-						n.setNotificationName("Job");
+						n.setNotificationName("Pending Job Receive");
 						details.add(n);
 						n = null;
 					}
 				}
 			}
+		}
+
+		for (SalesEntry se : getAllSalesEntries()) {
+			PaymentDetails pd = getPaymentDetailsBySalesEntryId(se.getId())
+					.get(0);
+			if (se.getSales_date().before(
+					Date.from(LocalDateTime.now().minusDays(90)
+							.toInstant(ZoneOffset.ofHoursMinutes(5, 30))))
+					&& (pd.getTotalAmount() - pd.getPaidAmount()) > 0) {
+				Notification n = new Notification();
+				int days = (int) ChronoUnit.DAYS.between(LocalDateTime
+						.ofInstant(se.getSales_date().toInstant(),
+								ZoneId.systemDefault()), dateTime);
+				n.setDescription("Purchase payment due for sales challan number "
+						+ se.getChallanNumber()
+						+ " and ammount is "
+						+ (pd.getTotalAmount() - pd.getPaidAmount())
+						+ " for "
+						+ days + " days.");
+				n.setLink("salesView?sId=" + se.getId());
+				n.setNotificationName("Sales payment due");
+				details.add(n);
+				n = null;
+			}
+
 		}
 
 		for (Purchase_Entry pe : getAllPurchaseEntry()) {
@@ -4917,32 +4942,6 @@ public class Ejb {
 				details.add(n);
 				n = null;
 			}
-
-		}
-
-		for (SalesEntry se : getAllSalesEntries()) {
-			PaymentDetails pd = getPaymentDetailsBySalesEntryId(se.getId())
-					.get(0);
-			if (se.getSales_date().before(
-					Date.from(LocalDateTime.now().minusDays(90)
-							.toInstant(ZoneOffset.ofHoursMinutes(5, 30))))
-					&& (pd.getTotalAmount() - pd.getPaidAmount()) > 0) {
-				Notification n = new Notification();
-				int days = (int) ChronoUnit.DAYS.between(LocalDateTime
-						.ofInstant(se.getSales_date().toInstant(),
-								ZoneId.systemDefault()), dateTime);
-				n.setDescription("Purchase payment due for purchase challan number "
-						+ se.getChallanNumber()
-						+ " and ammount is "
-						+ (pd.getTotalAmount() - pd.getPaidAmount())
-						+ " for "
-						+ days + " days.");
-				n.setLink("salesView?sId=" + se.getId());
-				n.setNotificationName("Sales payment due");
-				details.add(n);
-				n = null;
-			}
-
 		}
 
 		return details;
