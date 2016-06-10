@@ -4949,7 +4949,7 @@ public class Ejb {
 	}
 	
 	public URL getURL(){
-		TypedQuery<URL> q=em.createQuery("select c from URL order by c.id DESC",URL.class);		
+		TypedQuery<URL> q=em.createQuery("select c from URL c order by c.id DESC",URL.class);		
 		return q.getResultList().get(0);
 	}
 }

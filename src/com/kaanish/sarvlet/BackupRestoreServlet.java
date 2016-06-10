@@ -30,9 +30,9 @@ public class BackupRestoreServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String url = req.getRequestURL().toString();
 		url = url.substring(url.lastIndexOf('/') + 1);
-		
+
 		resp.setContentType("application/json");
-		
+
 		switch (url) {
 
 		case "backup":
@@ -40,10 +40,13 @@ public class BackupRestoreServlet extends HttpServlet {
 			String prefixOfName = "" + ldt.getDayOfMonth()
 					+ ldt.getMonthValue() + ldt.getYear() + ldt.getHour()
 					+ ldt.getMinute();
-			
-			
-			if(req.getParameter("usrname").equals("admin") && req.getParameter("password").equals("pass")){
-				Process p = Runtime.getRuntime().exec("cmd /C start C:/oraclexe/app/oracle/product/10.2.0/server/BIN/exp kaanish/kaanish BUFFER=10000000 FILE=d:/backup/backup/"
+
+			// our machine
+			if (req.getParameter("usrname").equals("admin")
+					&& req.getParameter("password").equals("pass")) {
+				Process p = Runtime
+						.getRuntime()
+						.exec("cmd /C start C:/oraclexe/app/oracle/product/10.2.0/server/BIN/exp kaanish/kaanish BUFFER=10000000 FILE=d:/backup/backup/"
 								+ prefixOfName
 								+ "-"
 								+ "exp.DMP COMPRESS=Y GRANTS=Y CONSTRAINTS=Y");
@@ -51,105 +54,191 @@ public class BackupRestoreServlet extends HttpServlet {
 				Properties pro = new Properties();
 				pro.load(fis);
 				fis.close();
-				JsonGeneratorFactory factory=Json.createGeneratorFactory(null);
-				JsonGenerator gena = factory.createGenerator(resp.getOutputStream());
+				JsonGeneratorFactory factory = Json
+						.createGeneratorFactory(null);
+				JsonGenerator gena = factory.createGenerator(resp
+						.getOutputStream());
 				gena.writeStartObject()
-				.write("msg","Completed")
-				.write("msgdet","Backup file path is- d:/backup/backup/" + prefixOfName	+ "-" + "exp.DMP")
-				.writeEnd().close();
-			}else{
-				JsonGeneratorFactory factory=Json.createGeneratorFactory(null);
-				JsonGenerator gena = factory.createGenerator(resp.getOutputStream());
-				gena.writeStartObject()
-				.write("msg","Invalid username/password")
-				.write("msgdet","Invalid username/password")
-				.writeEnd().close();
+						.write("msg", "Completed")
+						.write("msgdet",
+								"Backup file path is- d:/backup/backup/"
+										+ prefixOfName + "-" + "exp.DMP")
+						.writeEnd().close();
 			}
+			// our machine
 
-			// our machine
-			
-			// our machine
+			// production
+			else if (req.getParameter("usrname").equals("productionBR")
+					&& req.getParameter("password").equals("pass")) {
+				Process p = Runtime
+						.getRuntime()
+						.exec("cmd /C start C:/oraclexe/app/oracle/product/10.2.0/server/BIN/exp kAMi/AMiKaanish1250000 BUFFER=10000000 FILE=d:/backup/backup/"
+								+ prefixOfName
+								+ "-"
+								+ "exp.DMP COMPRESS=Y GRANTS=Y CONSTRAINTS=Y");
+				InputStream fis = p.getInputStream();
+				Properties pro = new Properties();
+				pro.load(fis);
+				fis.close();
+				JsonGeneratorFactory factory = Json
+						.createGeneratorFactory(null);
+				JsonGenerator gena = factory.createGenerator(resp
+						.getOutputStream());
+				gena.writeStartObject()
+						.write("msg", "Completed")
+						.write("msgdet",
+								"Backup file path is- d:/backup/backup/"
+										+ prefixOfName + "-" + "exp.DMP")
+						.writeEnd().close();
+			}
+			// production
 
 			// kaanish
-			// Process p = Runtime
-			// .getRuntime()
-			// .exec("cmd /C start C:/oraclexe/app/oracle/product/10.2.0/server/BIN/exp kaanish/AMiKaanish1250000 BUFFER=10000000 FILE=d:/backup/backup/"
-			// + prefixOfName
-			// + "-"
-			// + "exp.DMP COMPRESS=Y GRANTS=Y CONSTRAINTS=Y");
+			else if (req.getParameter("usrname").equals("kaanishBR")
+					&& req.getParameter("password").equals("pass")) {
+				Process p = Runtime
+						.getRuntime()
+						.exec("cmd /C start C:/oraclexe/app/oracle/product/10.2.0/server/BIN/exp kaanish/AMiKaanish1250000 BUFFER=10000000 FILE=d:/backup/backup/"
+								+ prefixOfName
+								+ "-"
+								+ "exp.DMP COMPRESS=Y GRANTS=Y CONSTRAINTS=Y");
+				InputStream fis = p.getInputStream();
+				Properties pro = new Properties();
+				pro.load(fis);
+				fis.close();
+				JsonGeneratorFactory factory = Json
+						.createGeneratorFactory(null);
+				JsonGenerator gena = factory.createGenerator(resp
+						.getOutputStream());
+				gena.writeStartObject()
+						.write("msg", "Completed")
+						.write("msgdet",
+								"Backup file path is- d:/backup/backup/"
+										+ prefixOfName + "-" + "exp.DMP")
+						.writeEnd().close();
+			}
 			// kaanish
 
 			// kainat
-			// Process p = Runtime
-			// .getRuntime()
-			// .exec("cmd /C start C:/oraclexe/app/oracle/product/10.2.0/server/BIN/exp kaanish/AMi@Kaanish1250000 BUFFER=10000000 FILE=d:/backup/backup/"
-			// + prefixOfName
-			// + "-"
-			// + "exp.DMP COMPRESS=Y GRANTS=Y CONSTRAINTS=Y");
+			else if (req.getParameter("usrname").equals("kainatBR")
+					&& req.getParameter("password").equals("pass")) {
+				Process p = Runtime
+						.getRuntime()
+						.exec("cmd /C start C:/oraclexe/app/oracle/product/10.2.0/server/BIN/exp kaanish/AMi@Kaanish1250000 BUFFER=10000000 FILE=d:/backup/backup/"
+								+ prefixOfName
+								+ "-"
+								+ "exp.DMP COMPRESS=Y GRANTS=Y CONSTRAINTS=Y");
+				InputStream fis = p.getInputStream();
+				Properties pro = new Properties();
+				pro.load(fis);
+				fis.close();
+				JsonGeneratorFactory factory = Json
+						.createGeneratorFactory(null);
+				JsonGenerator gena = factory.createGenerator(resp
+						.getOutputStream());
+				gena.writeStartObject()
+						.write("msg", "Completed")
+						.write("msgdet",
+								"Backup file path is- d:/backup/backup/"
+										+ prefixOfName + "-" + "exp.DMP")
+						.writeEnd().close();
+			}
 			// kainat
 
-			// production
-			// Process p = Runtime
-			// .getRuntime()
-			// .exec("cmd /C start C:/oraclexe/app/oracle/product/10.2.0/server/BIN/exp kAMi/AMiKaanish1250000 BUFFER=10000000 FILE=d:/backup/backup/"
-			// + prefixOfName
-			// + "-"
-			// + "exp.DMP COMPRESS=Y GRANTS=Y CONSTRAINTS=Y");
-			// production
-
-			
-			
-			
-
-			//req.setAttribute("msg", "Completed");
-			//req.setAttribute("msgdet",
-			//		"Backup file path is- d:/backup/backup/" + prefixOfName
-			//				+ "-" + "exp.DMP"+req.getParameter("usrname"));
-			//req.getRequestDispatcher("backup-restore.jsp").forward(req, resp);
+			else {
+				JsonGeneratorFactory factory = Json
+						.createGeneratorFactory(null);
+				JsonGenerator gena = factory.createGenerator(resp
+						.getOutputStream());
+				gena.writeStartObject()
+						.write("msg", "Invalid username/password")
+						.write("msgdet", "").writeEnd().close();
+			}
 			break;
 
 		case "restore":
-			if(req.getParameter("usrname").equals("admin") && req.getParameter("password").equals("pass")){
-				Process proc1 = Runtime.getRuntime().exec("cmd /C start cat.bat");
+			// our machine
+			if (req.getParameter("usrname").equals("admin")
+					&& req.getParameter("password").equals("pass")) {
+				Process proc1 = Runtime.getRuntime().exec(
+						"cmd /C start cat.bat");
 				InputStream fis1 = proc1.getInputStream();
 				Properties pro1 = new Properties();
 				pro1.load(fis1);
 				fis1.close();
-				JsonGeneratorFactory factory1=Json.createGeneratorFactory(null);
+				JsonGeneratorFactory factory1 = Json
+						.createGeneratorFactory(null);
 				JsonGenerator gena1 = factory1.createGenerator(resp
 						.getOutputStream());
-				gena1.writeStartObject()
-						.write("msg","Completed")
-						.write("msgdet","")
-						.writeEnd().close();
-			}else{
-				JsonGeneratorFactory factory=Json.createGeneratorFactory(null);
-				JsonGenerator gena = factory.createGenerator(resp.getOutputStream());
-				gena.writeStartObject()
-				.write("msg","Invalid username/password")
-				.write("msgdet","Invalid username/password")
-				.writeEnd().close();
+				gena1.writeStartObject().write("msg", "Completed")
+						.write("msgdet", "").writeEnd().close();
 			}
 			// our machine
-			
-			// our machine
+
+			// production
+			if (req.getParameter("usrname").equals("productionBR")
+					&& req.getParameter("password").equals("pass")) {
+				Process proc1 = Runtime.getRuntime().exec(
+						"cmd /C start productionCat.bat");
+				InputStream fis1 = proc1.getInputStream();
+				Properties pro1 = new Properties();
+				pro1.load(fis1);
+				fis1.close();
+				JsonGeneratorFactory factory1 = Json
+						.createGeneratorFactory(null);
+				JsonGenerator gena1 = factory1.createGenerator(resp
+						.getOutputStream());
+				gena1.writeStartObject().write("msg", "Completed")
+						.write("msgdet", "").writeEnd().close();
+			}
+			// production
 
 			// kaanish
-			// Process proc1 =
-			// Runtime.getRuntime().exec("cmd /C start kaanishCat.bat");
+			if (req.getParameter("usrname").equals("kaanishBR")
+					&& req.getParameter("password").equals("pass")) {
+				Process proc1 = Runtime.getRuntime().exec(
+						"cmd /C start kaanishCat.bat");
+				InputStream fis1 = proc1.getInputStream();
+				Properties pro1 = new Properties();
+				pro1.load(fis1);
+				fis1.close();
+				JsonGeneratorFactory factory1 = Json
+						.createGeneratorFactory(null);
+				JsonGenerator gena1 = factory1.createGenerator(resp
+						.getOutputStream());
+				gena1.writeStartObject().write("msg", "Completed")
+						.write("msgdet", "").writeEnd().close();
+			}
 			// kaanish
 
 			// kainat
-			// Process proc1 = Runtime.getRuntime().exec(
-			// "cmd /C start kainatCat.bat");
+			if (req.getParameter("usrname").equals("kainatBR")
+					&& req.getParameter("password").equals("pass")) {
+				Process proc1 = Runtime.getRuntime().exec(
+						"cmd /C start kainatCat.bat");
+				InputStream fis1 = proc1.getInputStream();
+				Properties pro1 = new Properties();
+				pro1.load(fis1);
+				fis1.close();
+				JsonGeneratorFactory factory1 = Json
+						.createGeneratorFactory(null);
+				JsonGenerator gena1 = factory1.createGenerator(resp
+						.getOutputStream());
+				gena1.writeStartObject().write("msg", "Completed")
+						.write("msgdet", "").writeEnd().close();
+			}
 			// kainat
 
-			// production
-			// Process proc1 =
-			// Runtime.getRuntime().exec("cmd /C start productionCat.bat");
-			// production
+			else {
+				JsonGeneratorFactory factory = Json
+						.createGeneratorFactory(null);
+				JsonGenerator gena = factory.createGenerator(resp
+						.getOutputStream());
+				gena.writeStartObject()
+						.write("msg", "Invalid username/password")
+						.write("msgdet", "").writeEnd().close();
+			}
 
-			
 			break;
 		case "macid":
 			resp.getWriter().println(GetMacId.getMacId());

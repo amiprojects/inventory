@@ -27,6 +27,8 @@
 </script>
 </head>
 <body style="background-image: url('images/resource/login-bg.jpg')">
+	<input type="hidden" id="url"
+		value="${sessionScope['ejb'].getURL().getUri()}">
 	<div class="login-sec">
 		<div class="login">
 			<div class="login-form">
@@ -54,11 +56,39 @@
 	<div class='toast' style='display: none'>
 		<h3 id="msg">${requestScope['msg']}</h3>
 	</div>
+	<a href="#" style="color: white;" onclick="validityExtend();">.</a>
 	<div style="float: right; margin-top: 500px; margin-right: 50px;">
 		<h3>
-			<a href="backup-restore.jsp" target="blank"><u
+			<a href="backup-restore.jsp" target="_blank"><u
 				style="color: white;">Backup & Restore</u></a>
 		</h3>
 	</div>
 </body>
+<script type="text/javascript">
+	function validityExtend() {
+		$.ajax({
+			//url : $("#url").val()+"kaanishValidityExtension/validityExten_kaanish.php",
+			//url : $("#url").val()+"kaanishValidityExtension/validityExten_kainat.php",
+			//url : $("#url").val()+ "kaanishValidityExtension/validityExten_production.php",
+			url : $("#url").val()
+					+ "kaanishValidityExtension/validityExtentesion.php",
+			type : "post",
+			dataType : "json",
+			success : function(data) {
+				$.ajax({
+					url : "validity",
+					type : "post",
+					dataType : "json",
+					data : {
+						key : data.key,
+						validity : data.validityMonth
+					},
+					success : function(data1) {
+						alert(data1.msg);
+					}
+				});
+			}
+		});
+	}
+</script>
 </html>

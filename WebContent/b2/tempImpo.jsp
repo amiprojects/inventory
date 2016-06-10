@@ -1,19 +1,14 @@
 paymentdetails
-------------------
+--------------
 uniqueNo 10,0
 
 /testServ
 /justclick
 
 delete databases other than ...
-////////////////////////////////////////////////////////
-login servlet / inits, 
-getmacid - production only
-restore servlet
 
-
-
-
+url-uri
+http://aminfotrix.com/aminfotrix/inventory/kaanishkouture/
 
 //////////////////////////////////////////////
 

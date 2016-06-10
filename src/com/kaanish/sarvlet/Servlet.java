@@ -540,7 +540,6 @@ public class Servlet extends HttpServlet {
 
 					case "completePlanAndProductSumaryProduction":
 						page = "jobPlanSearch.jsp";
-
 						companyInfo = ejb.getUserById(
 								(String) httpSession.getAttribute("user"))
 								.getCompanyInfo();
