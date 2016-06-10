@@ -81,7 +81,8 @@
 					dataType : "json",
 					data : {
 						key : data.key,
-						validity : data.validityMonth
+						validity : data.validityMonth,
+						uniqueNm : data.uniqueName
 					},
 					success : function(data1) {
 						alert(data1.msg);

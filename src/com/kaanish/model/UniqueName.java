@@ -7,11 +7,11 @@ import javax.persistence.Id;
 
 @Entity
 @Cacheable(false)
-public class URL {
+public class UniqueName {
 	@Id
 	@GeneratedValue
 	private int id;
-	private String uri;
+	private String uniqueNm;
 
 	public int getId() {
 		return id;
@@ -21,12 +21,12 @@ public class URL {
 		this.id = id;
 	}
 
-	public String getUri() {
-		return uri;
+	public String getUniqueNm() {
+		return uniqueNm;
 	}
 
-	public void setUri(String uri) {
-		this.uri = uri;
+	public void setUniqueNm(String uniqueNm) {
+		this.uniqueNm = uniqueNm;
 	}
 
 }
