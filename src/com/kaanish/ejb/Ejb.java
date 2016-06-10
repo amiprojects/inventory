@@ -83,6 +83,7 @@ import com.kaanish.model.Stoct;
 import com.kaanish.model.SubDepartment;
 import com.kaanish.model.Tax;
 import com.kaanish.model.Tax_Type_Group;
+import com.kaanish.model.URL;
 import com.kaanish.model.UserGroup;
 import com.kaanish.model.Users;
 import com.kaanish.model.Vendor;
@@ -4946,5 +4947,9 @@ public class Ejb {
 
 		return details;
 	}
-
+	
+	public URL getURL(){
+		TypedQuery<URL> q=em.createQuery("select c from URL order by c.id DESC",URL.class);		
+		return q.getResultList().get(0);
+	}
 }

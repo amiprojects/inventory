@@ -9,7 +9,7 @@ import javax.persistence.Id;
 public class URL {
 	@Id
 	private int id;
-	private String stateName;
+	private String uri;
 
 	public int getId() {
 		return id;
@@ -19,11 +19,12 @@ public class URL {
 		this.id = id;
 	}
 
-	public String getStateName() {
-		return stateName;
+	public String getUri() {
+		return uri;
 	}
 
-	public void setStateName(String stateName) {
-		this.stateName = stateName;
+	public void setUri(String uri) {
+		this.uri = uri;
 	}
+
 }
