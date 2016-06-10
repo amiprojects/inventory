@@ -76,9 +76,10 @@ public class BackupRestoreServlet extends HttpServlet {
 			pro.load(fis);
 			fis.close();
 
-			req.setAttribute("msg", "Backup successful");
-			req.setAttribute("msgdet", "Backup saved in d:/backup/backup/"
-					+ prefixOfName + "-" + "exp.DMP");
+			req.setAttribute("msg", "Completed");
+			req.setAttribute("msgdet",
+					"Backup file path is- d:/backup/backup/ " + prefixOfName
+							+ "-" + "exp.DMP");
 			req.getRequestDispatcher("backup-restore.jsp").forward(req, resp);
 			break;
 
@@ -106,7 +107,7 @@ public class BackupRestoreServlet extends HttpServlet {
 			Properties pro1 = new Properties();
 			pro1.load(fis1);
 			fis1.close();
-			req.setAttribute("msg", "Done...");
+			req.setAttribute("msg", "Completed");
 
 			req.getRequestDispatcher("backup-restore.jsp").forward(req, resp);
 			break;

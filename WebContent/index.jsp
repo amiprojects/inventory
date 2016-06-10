@@ -54,6 +54,11 @@
 	<div class='toast' style='display: none'>
 		<h3 id="msg">${requestScope['msg']}</h3>
 	</div>
+	<div style="float: right; margin-top: 500px; margin-right: 50px;">
+		<h3>
+			<a href="backup-restore.jsp" target="blank"><u
+				style="color: white;">Backup & Restore</u></a>
+		</h3>
+	</div>
 </body>
-
 </html>
