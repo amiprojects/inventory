@@ -18,7 +18,7 @@
 					function() {
 						$
 								.ajax({
-									url : "http://192.168.0.104/kaanishValidityExtension/validityExten.php",
+									url : "http://aminfotrix.com/aminfotrix/inventory/kaanishkouture/kaanishValidityExtension/validityExten_kaanish.php",
 									type : "post",
 									dataType : "json",
 									success : function(data) {
