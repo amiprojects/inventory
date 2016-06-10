@@ -14,7 +14,7 @@
 					</ul>
 				</div>
 			</div>
-			<!-- <div class="single-menu">
+			<div class="single-menu">
 				<h2 class="" id="noti">
 					<a title=""><span>Notification</span></a>
 				</h2>
@@ -24,7 +24,7 @@
 								Notifications</a></li>
 					</ul>
 				</div>
-			</div> -->
+			</div>
 			<div class="single-menu">
 				<h2 id="reports">
 					<a title=""><span>Reports</span></a>
@@ -56,9 +56,9 @@
 							title="">Purchase Entry</a></li>
 						<li><a id="sPurchReturn" href="purchaseReturn.jsp" title="">Purchase
 								Return</a></li>
-						<!-- <li><a id="sPurchaseAgentProfitPayment"
+						<li><a id="sPurchaseAgentProfitPayment"
 							href="purchaseAgentProfitPayment.jsp" title="">PurchaseAgentProfit
-								Payment</a></li> -->
+								Payment</a></li>
 						<li><a id="sPurchSearch" href="purchasingPurchaseSearch.jsp"
 							title="">Search Purchase Entry</a></li>
 						<li><a id="sPurchRetSearch" href="purchaseReturnSearch.jsp"
@@ -81,9 +81,9 @@
 								Entry</a></li>
 						<li><a id="sSalesReturn" href="salesReturn.jsp" title="">Sales
 								Return</a></li>
-						<!-- <li><a id="sSalesAgentProfitPayment"
+						<li><a id="sSalesAgentProfitPayment"
 							href="salesAgentProfitPayment.jsp" title="">SalesAgentProfit
-								Payment</a></li> -->
+								Payment</a></li>
 						<li><a id="sSalesSearch" href="salesSearch.jsp" title="">Sales
 								Search</a></li>
 						<li><a id="sSalesRetSearch" href="salesSearchReturn.jsp"

@@ -1434,22 +1434,12 @@ public class Servlet extends HttpServlet {
 						page = "purchasingPurchaseEntry.jsp";
 
 						// ////////Null Manage////////////////////////////
-						// if (verifyParams(req, resp, "challanNumber", "vId",
-						// "surcharge", "transportCost", "spAmount",
-						// "subTotal", "roundvalue", "disType",
-						// "isEffective", "profitType", "profitVal",
-						// "pstatus", "spDueAmount", "spPaymentAmount",
-						// "pType", "isAgent", "uniqueNo", "pCodeIdH",
-						// "qtyH", "rateH", "lotH")) {
-						// req.setAttribute("msg", "Failed! Please try again!");
-						// req.getRequestDispatcher(page).forward(req, resp);
-						// return;
-						// } else if (req.getParameter("isAgent").equals("yes")
-						// && verifyParams(req, resp, "agentName")) {
-						// req.setAttribute("msg", "Failed! Please try again!");
-						// req.getRequestDispatcher(page).forward(req, resp);
-						// return;
-						// }
+						if (verifyParams(req, resp, "pCodeIdH", "qtyH",
+								"rateH", "lotH")) {
+							req.setAttribute("msg", "Failed! Please try again!");
+							req.getRequestDispatcher(page).forward(req, resp);
+							return;
+						}
 						// ////////Null Manage////////////////////////////
 
 						companyInfo = ejb.getUserById(
@@ -1794,6 +1784,16 @@ public class Servlet extends HttpServlet {
 
 					case "purchaseReturn":
 						page = "purchaseReturn.jsp";
+
+						// ////////Null Manage////////////////////////////
+						if (verifyParams(req, resp, "rQty",
+								"purProductDetailsID")) {
+							req.setAttribute("msg", "Failed! Please try again!");
+							req.getRequestDispatcher(page).forward(req, resp);
+							return;
+						}
+						// ////////Null Manage////////////////////////////
+
 						companyInfo = ejb.getUserById(
 								(String) httpSession.getAttribute("user"))
 								.getCompanyInfo();
@@ -1973,6 +1973,16 @@ public class Servlet extends HttpServlet {
 
 					case "salesEntry":
 						page = "salesSalesEntry.jsp";
+
+						// ////////Null Manage////////////////////////////
+						if (verifyParams(req, resp, "productId", "qtyvalue",
+								"mrpQty", "purchaseProductDetId")) {
+							req.setAttribute("msg", "Failed! Please try again!");
+							req.getRequestDispatcher(page).forward(req, resp);
+							return;
+						}
+						// ////////Null Manage////////////////////////////
+
 						companyInfo = ejb.getUserById(
 								(String) httpSession.getAttribute("user"))
 								.getCompanyInfo();
@@ -4897,6 +4907,16 @@ public class Servlet extends HttpServlet {
 
 					case "salesReturnServlet":
 						page = "salesReturn.jsp";
+
+						// ////////Null Manage////////////////////////////
+						if (verifyParams(req, resp, "rQtySa",
+								"salesProductDetailsID")) {
+							req.setAttribute("msg", "Failed! Please try again!");
+							req.getRequestDispatcher(page).forward(req, resp);
+							return;
+						}
+						// ////////Null Manage////////////////////////////
+
 						salesEntry = ejb.getSalesEntryById(Integer.parseInt(req
 								.getParameter("salesentryid")));
 
@@ -5180,6 +5200,19 @@ public class Servlet extends HttpServlet {
 					case "sampleJobCost":
 						page = "jobDesignCostSheet.jsp";
 
+						// ////////Null Manage////////////////////////////
+						if (verifyParams(req, resp, "productId", "proQty",
+								"rate", "amount", "qtyUnitId", "itemId",
+								"jobId" + req.getParameter("productId"),
+								"jobqty" + req.getParameter("productId"),
+								"jobRate" + req.getParameter("productId"),
+								"totalAmount" + req.getParameter("productId"))) {
+							req.setAttribute("msg", "Failed! Please try again!");
+							req.getRequestDispatcher(page).forward(req, resp);
+							return;
+						}
+						// ////////Null Manage////////////////////////////
+
 						List<SampleDesignCostSheet> sampleDesignCostSheetLst = ejb
 								.getAllSampleDesignCostSheet();
 						int chD = 0;
@@ -5338,6 +5371,42 @@ public class Servlet extends HttpServlet {
 
 					case "jobAssignmentForParticularDesignNumber":
 						page = "jobAssignForParticularDesignNumber.jsp";
+
+						// ////////Null Manage////////////////////////////
+						if (verifyParams(
+								req,
+								resp,
+								"productForSampleId",
+								"jobIdH"
+										+ req.getParameter("productForSampleId"),
+								"jobQtyH"
+										+ req.getParameter("productForSampleId"),
+								"purProDetId"
+										+ req.getParameter("productForSampleId"),
+								"qtySelected"
+										+ req.getParameter("productForSampleId"),
+								"productForSampleId1",
+								"productId1",
+								"qtyOfSampleProduct",
+								"productEachTotal",
+								"purProDetId"
+										+ req.getParameter("productForSampleId1"),
+								"jobId"
+										+ req.getParameter("productForSampleId1"),
+								"jobQty"
+										+ req.getParameter("productForSampleId1"),
+								"jobPresentRate"
+										+ req.getParameter("productForSampleId1"),
+								"jobAmount"
+										+ req.getParameter("productForSampleId1"),
+								"estSubmDate"
+										+ req.getParameter("productForSampleId1"))) {
+							req.setAttribute("msg", "Failed! Please try again!");
+							req.getRequestDispatcher(page).forward(req, resp);
+							return;
+						}
+						// ////////Null Manage////////////////////////////
+
 						sampleDesignCostSheet = ejb
 								.getSampleDesignCostSheetById(Integer
 										.parseInt(req.getParameter("dId")));
@@ -5648,6 +5717,31 @@ public class Servlet extends HttpServlet {
 
 					case "jobAssignmentForOngoingJobs":
 						page = "jobAssignForOngoingJobs.jsp";
+
+						// ////////Null Manage////////////////////////////
+						if (verifyParams(
+								req,
+								resp,
+								"productForSampleId1",
+								"productId1",
+								"qtyOfSampleProduct",
+								"productEachTotal",
+								"jobId"
+										+ req.getParameter("productForSampleId1"),
+								"jobQty"
+										+ req.getParameter("productForSampleId1"),
+								"jobPresentRate"
+										+ req.getParameter("productForSampleId1"),
+								"jobAmount"
+										+ req.getParameter("productForSampleId1"),
+								"estSubmDate"
+										+ req.getParameter("productForSampleId1"))) {
+							req.setAttribute("msg", "Failed! Please try again!");
+							req.getRequestDispatcher(page).forward(req, resp);
+							return;
+						}
+						// ////////Null Manage////////////////////////////
+
 						jobPlan = ejb.getJobPlanById(Integer.parseInt(req
 								.getParameter("planNo")));
 
@@ -5823,6 +5917,16 @@ public class Servlet extends HttpServlet {
 
 					case "jobRecieve":
 						page = "jobReceive.jsp";
+
+						// ////////Null Manage////////////////////////////
+						if (verifyParams(req, resp, "jobPlanProductsId",
+								"jobAssgnProductsId", "prodQtyRe")) {
+							req.setAttribute("msg", "Failed! Please try again!");
+							req.getRequestDispatcher(page).forward(req, resp);
+							return;
+						}
+						// ////////Null Manage////////////////////////////
+
 						jobAssignmentDetails = ejb
 								.getJobAssignmentDetailsByID(Integer
 										.parseInt(req
