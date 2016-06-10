@@ -64,22 +64,76 @@
 						</div>
 						<div class="col-md-12">
 							<div class="widget-area">
-								<a href="#"><i class="fa fa-info-circle"
-									style="font-size: 16px; color: green;"></i><b>&nbsp;&nbsp;Product
-										code : 1234 is in stock more than 45 days!</b></a>
+								<h3>
+									<u>Product</u>
+								</h3>
 								<hr>
-								<a href="#"><i class="fa fa-info-circle"
-									style="font-size: 16px; color: green;"></i><b>&nbsp;&nbsp;Product
-										code : 1234 is in stock more than 45 days!</b></a>
+								<div style="height: 300px; overflow: auto;">
+									<a href="#"><i class="fa fa-info-circle"
+										style="font-size: 16px; color: green;"></i><b>&nbsp;&nbsp;Product
+											code : 1234 is in stock more than 45 days!</b></a>
+									<hr>
+									<a href="#"><i class="fa fa-info-circle"
+										style="font-size: 16px; color: green;"></i><b>&nbsp;&nbsp;Product
+											code : 1234 is in stock more than 45 days!</b></a>
+									<hr>
+									<a href="#"><i class="fa fa-info-circle"
+										style="font-size: 16px; color: green;"></i><b>&nbsp;&nbsp;Product
+											code : 1234 is in stock more than 45 days!</b></a>
+									<hr>
+									<a href="#"><i class="fa fa-info-circle"
+										style="font-size: 16px; color: green;"></i><b>&nbsp;&nbsp;Product
+											code : 1234 is in stock more than 45 days!</b></a>
+									<hr>
+									<a href="#"><i class="fa fa-info-circle"
+										style="font-size: 16px; color: green;"></i><b>&nbsp;&nbsp;Product
+											code : 1234 is in stock more than 45 days!</b></a>
+									<hr>
+									<a href="#"><i class="fa fa-info-circle"
+										style="font-size: 16px; color: green;"></i><b>&nbsp;&nbsp;Product
+											code : 1234 is in stock more than 45 days!</b></a>
+									<hr>
+									<a href="#"><i class="fa fa-info-circle"
+										style="font-size: 16px; color: green;"></i><b>&nbsp;&nbsp;Product
+											code : 1234 is in stock more than 45 days!</b></a>
+									<hr>
+								</div>
+							</div>
+							<div class="widget-area">
+								<h3>
+									<u>Job</u>
+								</h3>
 								<hr>
-								<a href="#"><i class="fa fa-info-circle"
-									style="font-size: 16px; color: green;"></i><b>&nbsp;&nbsp;Product
-										code : 1234 is in stock more than 45 days!</b></a>
-								<hr>
-								<a href="#"><i class="fa fa-info-circle"
-									style="font-size: 16px; color: green;"></i><b>&nbsp;&nbsp;Product
-										code : 1234 is in stock more than 45 days!</b></a>
-								<hr>
+								<div style="height: 300px; overflow: auto;">
+									<a href="#"><i class="fa fa-info-circle"
+										style="font-size: 16px; color: green;"></i><b>&nbsp;&nbsp;Product
+											code : 1234 is in stock more than 45 days!</b></a>
+									<hr>
+									<a href="#"><i class="fa fa-info-circle"
+										style="font-size: 16px; color: green;"></i><b>&nbsp;&nbsp;Product
+											code : 1234 is in stock more than 45 days!</b></a>
+									<hr>
+									<a href="#"><i class="fa fa-info-circle"
+										style="font-size: 16px; color: green;"></i><b>&nbsp;&nbsp;Product
+											code : 1234 is in stock more than 45 days!</b></a>
+									<hr>
+									<a href="#"><i class="fa fa-info-circle"
+										style="font-size: 16px; color: green;"></i><b>&nbsp;&nbsp;Product
+											code : 1234 is in stock more than 45 days!</b></a>
+									<hr>
+									<a href="#"><i class="fa fa-info-circle"
+										style="font-size: 16px; color: green;"></i><b>&nbsp;&nbsp;Product
+											code : 1234 is in stock more than 45 days!</b></a>
+									<hr>
+									<a href="#"><i class="fa fa-info-circle"
+										style="font-size: 16px; color: green;"></i><b>&nbsp;&nbsp;Product
+											code : 1234 is in stock more than 45 days!</b></a>
+									<hr>
+									<a href="#"><i class="fa fa-info-circle"
+										style="font-size: 16px; color: green;"></i><b>&nbsp;&nbsp;Product
+											code : 1234 is in stock more than 45 days!</b></a>
+									<hr>
+								</div>
 							</div>
 						</div>
 					</div>
