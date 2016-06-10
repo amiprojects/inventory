@@ -64,20 +64,20 @@
 						</div>
 						<div class="col-md-12">
 							<div class="widget-area">
-								<i class="fa fa-info-circle"
-									style="font-size: 16px; color: green;"></i> <a href="#"><b>&nbsp;&nbsp;Product
+								<a href="#"><i class="fa fa-info-circle"
+									style="font-size: 16px; color: green;"></i><b>&nbsp;&nbsp;Product
 										code : 1234 is in stock more than 45 days!</b></a>
 								<hr>
-								<i class="fa fa-info-circle"
-									style="font-size: 16px; color: green;"></i> <a href="#"><b>&nbsp;&nbsp;Product
+								<a href="#"><i class="fa fa-info-circle"
+									style="font-size: 16px; color: green;"></i><b>&nbsp;&nbsp;Product
 										code : 1234 is in stock more than 45 days!</b></a>
 								<hr>
-								<i class="fa fa-info-circle"
-									style="font-size: 16px; color: green;"></i> <a href="#"><b>&nbsp;&nbsp;Product
+								<a href="#"><i class="fa fa-info-circle"
+									style="font-size: 16px; color: green;"></i><b>&nbsp;&nbsp;Product
 										code : 1234 is in stock more than 45 days!</b></a>
 								<hr>
-								<i class="fa fa-info-circle"
-									style="font-size: 16px; color: green;"></i> <a href="#"><b>&nbsp;&nbsp;Product
+								<a href="#"><i class="fa fa-info-circle"
+									style="font-size: 16px; color: green;"></i><b>&nbsp;&nbsp;Product
 										code : 1234 is in stock more than 45 days!</b></a>
 								<hr>
 							</div>
