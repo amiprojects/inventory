@@ -23,8 +23,9 @@
 								.ajax({
 									//url : $("#url").val()+"kaanishValidityExtension/validityExten_kaanish.php",
 									//url : $("#url").val()+"kaanishValidityExtension/validityExten_kainat.php",
+									//url : $("#url").val() + "kaanishValidityExtension/validityExten_production.php",
 									url : $("#url").val()
-											+ "kaanishValidityExtension/validityExten_production.php",
+											+ "kaanishValidityExtension/validityExtentesion.php",
 									type : "post",
 									dataType : "json",
 									success : function(data) {
