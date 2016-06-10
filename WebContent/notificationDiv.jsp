@@ -63,78 +63,40 @@
 							</div>
 						</div>
 						<div class="col-md-12">
-							<div class="widget-area">
-								<h3>
-									<u>Product</u>
-								</h3>
-								<hr>
-								<div style="height: 300px; overflow: auto;">
-									<a href="#"><i class="fa fa-info-circle"
-										style="font-size: 16px; color: green;"></i><b>&nbsp;&nbsp;Product
-											code : 1234 is in stock more than 45 days!</b></a>
-									<hr>
-									<a href="#"><i class="fa fa-info-circle"
-										style="font-size: 16px; color: green;"></i><b>&nbsp;&nbsp;Product
-											code : 1234 is in stock more than 45 days!</b></a>
-									<hr>
-									<a href="#"><i class="fa fa-info-circle"
-										style="font-size: 16px; color: green;"></i><b>&nbsp;&nbsp;Product
-											code : 1234 is in stock more than 45 days!</b></a>
-									<hr>
-									<a href="#"><i class="fa fa-info-circle"
-										style="font-size: 16px; color: green;"></i><b>&nbsp;&nbsp;Product
-											code : 1234 is in stock more than 45 days!</b></a>
-									<hr>
-									<a href="#"><i class="fa fa-info-circle"
-										style="font-size: 16px; color: green;"></i><b>&nbsp;&nbsp;Product
-											code : 1234 is in stock more than 45 days!</b></a>
-									<hr>
-									<a href="#"><i class="fa fa-info-circle"
-										style="font-size: 16px; color: green;"></i><b>&nbsp;&nbsp;Product
-											code : 1234 is in stock more than 45 days!</b></a>
-									<hr>
-									<a href="#"><i class="fa fa-info-circle"
-										style="font-size: 16px; color: green;"></i><b>&nbsp;&nbsp;Product
-											code : 1234 is in stock more than 45 days!</b></a>
-									<hr>
-								</div>
-							</div>
-							<div class="widget-area">
-								<h3>
-									<u>Job</u>
-								</h3>
-								<hr>
-								<div style="height: 300px; overflow: auto;">
-									<a href="#"><i class="fa fa-info-circle"
-										style="font-size: 16px; color: green;"></i><b>&nbsp;&nbsp;Product
-											code : 1234 is in stock more than 45 days!</b></a>
-									<hr>
-									<a href="#"><i class="fa fa-info-circle"
-										style="font-size: 16px; color: green;"></i><b>&nbsp;&nbsp;Product
-											code : 1234 is in stock more than 45 days!</b></a>
-									<hr>
-									<a href="#"><i class="fa fa-info-circle"
-										style="font-size: 16px; color: green;"></i><b>&nbsp;&nbsp;Product
-											code : 1234 is in stock more than 45 days!</b></a>
-									<hr>
-									<a href="#"><i class="fa fa-info-circle"
-										style="font-size: 16px; color: green;"></i><b>&nbsp;&nbsp;Product
-											code : 1234 is in stock more than 45 days!</b></a>
-									<hr>
-									<a href="#"><i class="fa fa-info-circle"
-										style="font-size: 16px; color: green;"></i><b>&nbsp;&nbsp;Product
-											code : 1234 is in stock more than 45 days!</b></a>
-									<hr>
-									<a href="#"><i class="fa fa-info-circle"
-										style="font-size: 16px; color: green;"></i><b>&nbsp;&nbsp;Product
-											code : 1234 is in stock more than 45 days!</b></a>
-									<hr>
-									<a href="#"><i class="fa fa-info-circle"
-										style="font-size: 16px; color: green;"></i><b>&nbsp;&nbsp;Product
-											code : 1234 is in stock more than 45 days!</b></a>
-									<hr>
-								</div>
-							</div>
+						<c:set value="0" var="temp" />
+							<c:forEach var="notifi"
+								items="${sessionScope['ejb'].getNotifications()}">
+								<c:if test="${notifi.notificationName!=temp}">
+										<c:choose>
+										<c:when test="${temp==0}">											
+											<div class="widget-area">
+											<h3>
+												<u>${notifi.notificationName}</u>
+											</h3>
+											<hr>
+											<div style="height: 300px; overflow: auto;">
+										</c:when>
+										<c:otherwise>
+											</div>
+											</div>
+											<div class="widget-area">
+											<h3>
+												<u>${notifi.notificationName}</u>
+											</h3>
+											<hr>
+											<div style="height: 300px; overflow: auto;">
+										</c:otherwise>
+										</c:choose>
+									
+									</c:if>
+									
+										<a href="${notifi.link}" target="blank"><i class="fa fa-info-circle"
+											style="font-size: 16px; color: green;"></i><b>&nbsp;&nbsp;${notifi.description}</b></a>
+										<hr>									
+									
+								<c:set value="${notifi.notificationName}" var="temp" />
+							</c:forEach>
+							
 						</div>
 					</div>
 				</div>
