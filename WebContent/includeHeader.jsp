@@ -19,34 +19,34 @@
 			alt="" /></a>  -->
 		<!-- <a title="" class="toggle-menu"><i class="fa fa-bars"></i></a> -->
 	</div>
-	<%-- <div class="custom-dropdowns">
+	<div class="custom-dropdowns">
 		<div class="notification-list dropdown">
 			<a title=""> <c:if
-					test="${sessionScope['ejb'].getNotifications().size()>0}">
-					<span class="green" id="notification">${sessionScope['ejb'].getNotifications().size()}</span>
+					test="${sessionScope['ejb'].notificationsCount>0}">
+					<span class="green" id="notification">${sessionScope['ejb'].notificationsCount}</span>
 				</c:if><i class="fa fa-bell-o"></i></a>
 			<div class="notification drop-list">
 				<span id="notificationStatement">You have
-					${sessionScope['ejb'].getNotifications().size()} Notifications</span>
+					${sessionScope['ejb'].notificationsCount} Notifications</span>
 				<ul id="notificationDetails">
 
-					<c:forEach var="i"
+				<%-- 	<c:forEach var="i"
 						items="${sessionScope['ejb'].getNotifications()}"
 						end="${sessionScope['ejb'].getNotifications().size()>=5?4:sessionScope['ejb'].getNotifications().size()}"
 						begin="0">
 
 						<li><a href="${i.link}" title=""><span><i
 									class="fa fa-info green"></i></span>${i.description}</a></li>
-					</c:forEach>
+					</c:forEach> --%>
 
-					<c:if test="${sessionScope['ejb'].getNotifications().size()>0}">
+					<c:if test="${sessionScope['ejb'].notificationsCount>0}">
 						<li><a href="notification.jsp">See all</a></li>
 					</c:if>
 				</ul>
 			</div>
 		</div>
 		<!-- Notification List -->
-	</div> --%>
+	</div>
 	<!-- <a title="" class="slide-panel-btn"><i class="fa fa-gear fa-spin"></i></a> -->
 	<div class="dropdown profile">
 		<a title=""> <!--  <img src="images/resource/me.jpg" alt="" /> -->${sessionScope['ejb'].getUserById(sessionScope['user']).name}<i
