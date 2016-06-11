@@ -4379,7 +4379,7 @@ public class Ejb {
 				Notification n = new Notification();
 				int days = (int) ChronoUnit.DAYS.between(
 						LocalDateTime.ofInstant(se.getSales_date().toInstant(), ZoneId.systemDefault()), dateTime);
-				n.setDescription("Purchase payment due for sales challan number " + se.getChallanNumber()
+				n.setDescription("Sales payment due for sales challan number " + se.getChallanNumber()
 						+ " and amount is " + (pd.getTotalAmount() - pd.getPaidAmount()) + " since " + days + " days.");
 				n.setLink("salesView?sId=" + se.getId());
 				n.setNotificationName("Sales payment due");
