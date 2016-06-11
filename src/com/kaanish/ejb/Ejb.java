@@ -4494,4 +4494,93 @@ public class Ejb {
 		}
 		return details;
 	}
+	
+	
+	
+	public int getNotificationsCount() {
+		int i=0;
+
+		List<Purchase_Entry> purchase_Entries = getAllPurchaseEntry();
+		for (Purchase_Entry pe : purchase_Entries) {
+			if (pe.getPurchase_date().before(
+					Date.from(LocalDateTime.now().minusMonths(3).toInstant(ZoneOffset.ofHoursMinutes(5, 30))))) {
+				for (Purchase_Product_Details ppd : pe.getPurchase_Product_Details()) {
+					if (ppd.getRemaining_quantity() > 0) {
+						i++;
+					}
+				}
+			}
+		}
+
+		for (JobAssignmentDetails jad : getAllJobassignmentDetails()) {
+			for (JobAssignmentProducts jap : jad.getJobAssignmentProducts()) {
+				for (JobAssignmentJobDetails jaj : jap.getJobAssignmentJobDetails()) {
+					if (jaj.getEstimatedCompletionDate()
+							.before(Date.from(LocalDateTime.now().toInstant(ZoneOffset.ofHoursMinutes(5, 30))))
+							&& jap.getRemaninQty() > 0) {
+						i++;
+					}
+				}
+			}
+		}
+
+		for (SalesEntry se : getAllSalesEntries()) {
+			PaymentDetails pd = getPaymentDetailsBySalesEntryId(se.getId()).get(0);
+			if (se.getSales_date()
+					.before(Date.from(LocalDateTime.now().minusDays(90).toInstant(ZoneOffset.ofHoursMinutes(5, 30))))
+					&& (pd.getTotalAmount() - pd.getPaidAmount()) > 0) {
+				i++;
+			}
+
+		}
+
+		for (Purchase_Entry pe : getAllPurchaseEntry()) {
+			PaymentDetails pd = getPaymentDetailsByPurchaseEntryId(pe.getId()).get(0);
+			if (!pe.getVendor().getName().equals("Production Vendor")
+					&& pe.getPurchase_date()
+							.before(Date.from(
+									LocalDateTime.now().minusDays(90).toInstant(ZoneOffset.ofHoursMinutes(5, 30))))
+					&& (pd.getTotalAmount() - pd.getPaidAmount()) > 0) {
+				i++;
+			}
+		}
+
+		for (JobAssignmentDetails ja : getAllJobassignmentDetails()) {
+			List<PaymentDetails> pdLst = getPaymentDetailsByJobAsignId(ja.getId());
+			if (ja.getAssignDate()
+					.before(Date.from(LocalDateTime.now().minusDays(90).toInstant(ZoneOffset.ofHoursMinutes(5, 30))))) {
+				if (pdLst.size() > 0) {
+					PaymentDetails pd = getPaymentDetailsByJobAsignId(ja.getId()).get(0);
+					if ((pd.getTotalAmount() - pd.getPaidAmount()) > 0) {
+						i++;
+					}
+				} else {
+						i++;
+				}
+			}
+		}
+
+		for (SalesEntry se : getAllSalesEntries()) {
+			if (se.getVendor() != null) {
+				if (se.getSales_date().before(
+						Date.from(LocalDateTime.now().minusDays(90).toInstant(ZoneOffset.ofHoursMinutes(5, 30))))) {
+					List<PaymentDetailsForViaAgents> pdLst = getPaymentDetails4ViaAgentBySalesEntryId(se.getId());
+
+					float totPaybleCost = se.getAgentProfitTotal();
+					for (SalesReturn sr : se.getSalesReturn()) {
+						totPaybleCost = totPaybleCost - sr.getRetAgentProfitTotal();
+					}
+					if (pdLst.size() > 0) {
+						for (PaymentDetailsForViaAgents pd : getPaymentDetails4ViaAgentBySalesEntryId(se.getId())) {
+							totPaybleCost = totPaybleCost - pd.getPaidAmount();
+						}
+					}
+					if (totPaybleCost != 0) {
+						i++;
+					}
+				}
+			}
+		}
+		return i;
+	}
 }
