@@ -4380,7 +4380,7 @@ public class Ejb {
 				int days = (int) ChronoUnit.DAYS.between(
 						LocalDateTime.ofInstant(se.getSales_date().toInstant(), ZoneId.systemDefault()), dateTime);
 				n.setDescription("Purchase payment due for sales challan number " + se.getChallanNumber()
-						+ " and ammount is " + (pd.getTotalAmount() - pd.getPaidAmount()) + " for " + days + " days.");
+						+ " and amount is " + (pd.getTotalAmount() - pd.getPaidAmount()) + " since " + days + " days.");
 				n.setLink("salesView?sId=" + se.getId());
 				n.setNotificationName("Sales payment due");
 				details.add(n);
@@ -4400,7 +4400,7 @@ public class Ejb {
 				int days = (int) ChronoUnit.DAYS.between(
 						LocalDateTime.ofInstant(pe.getPurchase_date().toInstant(), ZoneId.systemDefault()), dateTime);
 				n.setDescription("Purchase payment due for purchase challan number " + pe.getChallanNumber()
-						+ " and ammount is " + (pd.getTotalAmount() - pd.getPaidAmount()) + " for " + days + " days.");
+						+ " and amount is " + (pd.getTotalAmount() - pd.getPaidAmount()) + " since " + days + " days.");
 				n.setLink("purchaseView?pId=" + pe.getId());
 				n.setNotificationName("Purchase payment due");
 				details.add(n);
@@ -4408,27 +4408,90 @@ public class Ejb {
 			}
 		}
 
-		// for (JobAssignmentDetails pe : getAllJobassignmentDetails()) {
-		// PaymentDetails pd = getPaymentDetailsByJobAsignId(pe.getId()).get(0);
-		// if (pe.getAssignDate()
-		// .before(Date.from(LocalDateTime.now().minusDays(90).toInstant(ZoneOffset.ofHoursMinutes(5,
-		// 30))))
-		// && (pd.getTotalAmount() - pd.getPaidAmount()) > 0) {
-		// Notification n = new Notification();
-		// int days = (int) ChronoUnit.DAYS.between(
-		// LocalDateTime.ofInstant(pe.getAssignDate().toInstant(),
-		// ZoneId.systemDefault()), dateTime);
-		// n.setDescription("Jobber payment due for job challan number " +
-		// pe.getChallanNumber()
-		// + " and ammount is " + (pd.getTotalAmount() - pd.getPaidAmount()) + "
-		// for " + days + " days.");
-		// n.setLink("jobAssignView?joId=" + pe.getId());
-		// n.setNotificationName("Jobber payment due");
-		// details.add(n);
-		// n = null;
-		// }
-		// }
+		for (JobAssignmentDetails ja : getAllJobassignmentDetails()) {
+			List<PaymentDetails> pdLst = getPaymentDetailsByJobAsignId(ja.getId());
+			if (ja.getAssignDate()
+					.before(Date.from(LocalDateTime.now().minusDays(90).toInstant(ZoneOffset.ofHoursMinutes(5, 30))))) {
+				if (pdLst.size() > 0) {
+					PaymentDetails pd = getPaymentDetailsByJobAsignId(ja.getId()).get(0);
+					if ((pd.getTotalAmount() - pd.getPaidAmount()) > 0) {
+						Notification n = new Notification();
+						int days = (int) ChronoUnit.DAYS.between(
+								LocalDateTime.ofInstant(ja.getAssignDate().toInstant(), ZoneId.systemDefault()),
+								dateTime);
+						n.setDescription(
+								"Job payment due for challan number " + ja.getChallanNumber() + " and amount is "
+										+ (pd.getTotalAmount() - pd.getPaidAmount()) + " since " + days + " days.");
+						n.setLink("jobSearchByJobChallanNoForPayment?companyInitial="
+								+ (ja.getChallanNumber().split("/")[0]) + "&fynYear="
+								+ (ja.getChallanNumber().split("/")[1]) + "&month="
+								+ (ja.getChallanNumber().split("/")[2]) + "&billType="
+								+ (ja.getChallanNumber().split("/")[3]) + "&autoNum="
+								+ (ja.getChallanNumber().split("/")[4]) + "&suffix="
+								+ (ja.getChallanNumber().split("/")[5]));
+						n.setNotificationName("Job payment due");
+						details.add(n);
+						n = null;
+					}
+				} else {
+					Notification n = new Notification();
+					int days = (int) ChronoUnit.DAYS.between(
+							LocalDateTime.ofInstant(ja.getAssignDate().toInstant(), ZoneId.systemDefault()), dateTime);
+					float totJobCost = 0;
+					for (JobAssignmentProducts jp : ja.getJobAssignmentProducts()) {
+						totJobCost = totJobCost + jp.getTotalJobCost();
+					}
+					n.setDescription("Job payment due for challan number " + ja.getChallanNumber() + " and amount is "
+							+ totJobCost + " since " + days + " days.");
+					n.setLink("jobSearchByJobChallanNoForPayment?companyInitial="
+							+ (ja.getChallanNumber().split("/")[0]) + "&fynYear="
+							+ (ja.getChallanNumber().split("/")[1]) + "&month=" + (ja.getChallanNumber().split("/")[2])
+							+ "&billType=" + (ja.getChallanNumber().split("/")[3]) + "&autoNum="
+							+ (ja.getChallanNumber().split("/")[4]) + "&suffix="
+							+ (ja.getChallanNumber().split("/")[5]));
+					n.setNotificationName("Job payment due");
+					details.add(n);
+					n = null;
+				}
+			}
+		}
 
+		for (SalesEntry se : getAllSalesEntries()) {
+			if (se.getVendor() != null) {
+				if (se.getSales_date().before(
+						Date.from(LocalDateTime.now().minusDays(90).toInstant(ZoneOffset.ofHoursMinutes(5, 30))))) {
+					List<PaymentDetailsForViaAgents> pdLst = getPaymentDetails4ViaAgentBySalesEntryId(se.getId());
+
+					float totPaybleCost = se.getAgentProfitTotal();
+					for (SalesReturn sr : se.getSalesReturn()) {
+						totPaybleCost = totPaybleCost - sr.getRetAgentProfitTotal();
+					}
+					if (pdLst.size() > 0) {
+						for (PaymentDetailsForViaAgents pd : getPaymentDetails4ViaAgentBySalesEntryId(se.getId())) {
+							totPaybleCost = totPaybleCost - pd.getPaidAmount();
+						}
+					}
+					if (totPaybleCost != 0) {
+						Notification n = new Notification();
+						int days = (int) ChronoUnit.DAYS.between(
+								LocalDateTime.ofInstant(se.getSales_date().toInstant(), ZoneId.systemDefault()),
+								dateTime);
+						n.setDescription("Sales Agent payment due for challan number " + se.getChallanNumber()
+								+ " and amount is " + totPaybleCost + " since " + days + " days.");
+						n.setLink("jobSearchByJobChallanNoForPayment?companyInitial="
+								+ (se.getChallanNumber().split("/")[0]) + "&fynYear="
+								+ (se.getChallanNumber().split("/")[1]) + "&month="
+								+ (se.getChallanNumber().split("/")[2]) + "&billType="
+								+ (se.getChallanNumber().split("/")[3]) + "&autoNum="
+								+ (se.getChallanNumber().split("/")[4]) + "&suffix="
+								+ (se.getChallanNumber().split("/")[5]));
+						n.setNotificationName("Sales agent payment due");
+						details.add(n);
+						n = null;
+					}
+				}
+			}
+		}
 		return details;
 	}
 }
