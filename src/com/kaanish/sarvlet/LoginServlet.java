@@ -137,7 +137,7 @@ public class LoginServlet extends HttpServlet {
 				}
 			} else {
 				page = "msg.jsp";
-				msg = "Software validity is over.";
+				msg = "Contact vendor.";
 			}
 
 		} else {
