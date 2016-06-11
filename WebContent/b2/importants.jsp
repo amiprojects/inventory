@@ -29,3 +29,8 @@ TeamViewer Kainat-> 502914157
 
 url table uri
 http://aminfotrix.com/aminfotrix/inventory/kaanishkouture/
+
+glassfish
+kaanish: f->new folder-> glassfish 4.1-> ...
+production: d->glass-> ...
+kainat: 
