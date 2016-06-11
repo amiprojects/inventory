@@ -1045,24 +1045,23 @@
 <script type="text/javascript">
 	function dNoKeyUp() {
 		$("#dNoCheck").val("");
-		$
-				.ajax({
-					url : "getSampleDesignCostSheetByDesignNumberForDuplicateCheck",
-					dataType : "json",
-					data : {
-						dNo : $("#designNo").val()
-					},
-					success : function(data) {
-						$.map(data, function(item) {
-							if (item.dNumber != "") {
-								$("#dNoCheck").val(item.dNumber);
-							} else {
-								$("#dNoCheck").val("");
-							}
-						});
+		$.ajax({
+			url : "getSampleDesignCostSheetByDesignNumberForDuplicateCheck",
+			dataType : "json",
+			data : {
+				dNo : $("#designNo").val()
+			},
+			success : function(data) {
+				$.map(data, function(item) {
+					if (item.dNumber != "") {
+						$("#dNoCheck").val(item.dNumber);
+					} else {
+						$("#dNoCheck").val("");
 					}
-
 				});
+			}
+
+		});
 
 	}
 

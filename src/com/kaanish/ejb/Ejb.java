@@ -4408,22 +4408,26 @@ public class Ejb {
 			}
 		}
 
-		for (JobAssignmentDetails pe : getAllJobassignmentDetails()) {
-			PaymentDetails pd = getPaymentDetailsByJobAsignId(pe.getId()).get(0);
-			if (pe.getAssignDate()
-					.before(Date.from(LocalDateTime.now().minusDays(90).toInstant(ZoneOffset.ofHoursMinutes(5, 30))))
-					&& (pd.getTotalAmount() - pd.getPaidAmount()) > 0) {
-				Notification n = new Notification();
-				int days = (int) ChronoUnit.DAYS.between(
-						LocalDateTime.ofInstant(pe.getAssignDate().toInstant(), ZoneId.systemDefault()), dateTime);
-				n.setDescription("Jobber payment due for job challan number " + pe.getChallanNumber()
-						+ " and ammount is " + (pd.getTotalAmount() - pd.getPaidAmount()) + " for " + days + " days.");
-				n.setLink("jobAssignView?pId=" + pe.getId());
-				n.setNotificationName("Jobber payment due");
-				details.add(n);
-				n = null;
-			}
-		}
+		// for (JobAssignmentDetails pe : getAllJobassignmentDetails()) {
+		// PaymentDetails pd = getPaymentDetailsByJobAsignId(pe.getId()).get(0);
+		// if (pe.getAssignDate()
+		// .before(Date.from(LocalDateTime.now().minusDays(90).toInstant(ZoneOffset.ofHoursMinutes(5,
+		// 30))))
+		// && (pd.getTotalAmount() - pd.getPaidAmount()) > 0) {
+		// Notification n = new Notification();
+		// int days = (int) ChronoUnit.DAYS.between(
+		// LocalDateTime.ofInstant(pe.getAssignDate().toInstant(),
+		// ZoneId.systemDefault()), dateTime);
+		// n.setDescription("Jobber payment due for job challan number " +
+		// pe.getChallanNumber()
+		// + " and ammount is " + (pd.getTotalAmount() - pd.getPaidAmount()) + "
+		// for " + days + " days.");
+		// n.setLink("jobAssignView?joId=" + pe.getId());
+		// n.setNotificationName("Jobber payment due");
+		// details.add(n);
+		// n = null;
+		// }
+		// }
 
 		return details;
 	}

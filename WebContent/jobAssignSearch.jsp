@@ -54,11 +54,6 @@
 			</script>
 		</c:if>
 	</c:if>
-
-
-
-
-
 	<div class="main" style="height: 664px;">
 		<%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
