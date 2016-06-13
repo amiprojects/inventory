@@ -19,7 +19,7 @@
 			alt="" /></a>  -->
 		<!-- <a title="" class="toggle-menu"><i class="fa fa-bars"></i></a> -->
 	</div>
-	<div class="custom-dropdowns">
+	<%-- <div class="custom-dropdowns">
 		<div class="notification-list dropdown">
 			<a title=""> <c:if
 					test="${sessionScope['ejb'].notificationsCount>0}">
@@ -30,14 +30,14 @@
 					${sessionScope['ejb'].notificationsCount} Notifications</span>
 				<ul id="notificationDetails">
 
-				<%-- 	<c:forEach var="i"
+					<c:forEach var="i"
 						items="${sessionScope['ejb'].getNotifications()}"
 						end="${sessionScope['ejb'].getNotifications().size()>=5?4:sessionScope['ejb'].getNotifications().size()}"
 						begin="0">
 
 						<li><a href="${i.link}" title=""><span><i
 									class="fa fa-info green"></i></span>${i.description}</a></li>
-					</c:forEach> --%>
+					</c:forEach>
 
 					<c:if test="${sessionScope['ejb'].notificationsCount>0}">
 						<li><a href="notification.jsp">See all</a></li>
@@ -46,7 +46,7 @@
 			</div>
 		</div>
 		<!-- Notification List -->
-	</div>
+	</div> --%>
 	<!-- <a title="" class="slide-panel-btn"><i class="fa fa-gear fa-spin"></i></a> -->
 	<div class="dropdown profile">
 		<a title=""> <!--  <img src="images/resource/me.jpg" alt="" /> -->${sessionScope['ejb'].getUserById(sessionScope['user']).name}<i
