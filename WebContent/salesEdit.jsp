@@ -255,7 +255,12 @@
 													id="retQtyH${salesProducts.id}"
 													value="${salesProducts.salesReQty}"><input
 													type="hidden" id="qtyH${salesProducts.id}"
-													value="${salesProducts.quantity}"></td>
+													value="${salesProducts.quantity}"> <input
+													type="hidden" id="wspH${salesProducts.id}"
+													value="${salesProducts.purchase_Product_Details.wsp}"><input
+													type="hidden" id="salesPriceH${salesProducts.id}"
+													value="${salesProducts.salesPrice}">
+												</td>
 												<td>${salesProducts.purchase_Product_Details.productDetail.code}</td>
 												<td>${salesProducts.purchase_Product_Details.productDetail.description}</td>
 												<td>${salesProducts.purchase_Product_Details.lotNumber}</td>
@@ -265,8 +270,12 @@
 													name="qtyvalue"
 													onchange="qtyvalueF(this,${salesProducts.id});"
 													ondblclick="enable(this);"></td>
-												<td><input readonly="readonly" type="text"
-													name="mrpQty" value="${salesProducts.salesPrice}"></td>
+												<td><input type="text"
+													value="${salesProducts.salesPrice}"
+													style="background-color: gray;" readonly="readonly"
+													name="mrpQty"
+													onchange="qtyvalueF(this,${salesProducts.id});"
+													ondblclick="enable(this);"></td>
 												<td><fmt:formatNumber var="amount"
 														value="${salesProducts.quantity*salesProducts.salesPrice}"
 														maxFractionDigits="2" groupingUsed="false" /><input
@@ -449,18 +458,22 @@
 									<tbody>
 										<tr>
 											<td colspan="2" id="trans">Transport charge :</td>
-											<td><input type="number" class="form-control"
-												value="${salesSearchView.transportcCharge}" id="transcharge"
-												name="transcharge" readonly="readonly"></td>
+											<td><input type="text" class="form-control"
+												name="transcharge" id="transcharge"
+												value="${salesSearchView.transportcCharge}"
+												style="background-color: gray;" readonly="readonly"
+												onchange="updateSe(this);" ondblclick="enable(this);"></td>
 										</tr>
 									</tbody>
 
 									<tbody>
 										<tr>
 											<td colspan="2" id="sur">Surcharge :</td>
-											<td><input type="number" class="form-control"
-												value="${salesSearchView.surcharge}" id="surcharge"
-												name="surcharge" readonly="readonly"></td>
+											<td><input type="text" class="form-control"
+												id="surcharge" name="surcharge"
+												value="${salesSearchView.surcharge}"
+												style="background-color: gray;" readonly="readonly"
+												onchange="updateSe(this);" ondblclick="enable(this);">
 										</tr>
 									</tbody>
 									<tbody>
@@ -558,6 +571,8 @@
 		var qtyH = $("#qtyH" + a).val();
 		var qty = $("#trRemove" + a + " :nth-child(6) input[type=text]")
 				.val();
+		var wspH = $("#wspH" + a).val();
+		var salesPriceH = $("#salesPriceH" + a).val();
 		var price = $("#trRemove" + a + " :nth-child(7) input[type=text]")
 				.val();
 		if (Number(qty) < Number(retQtyH)) {
@@ -576,10 +591,18 @@
 			$(f).prop("readonly", true);
 			$(f).attr("style", "background-color: grey;");	
 			sweetAlert('Oops...','Selling quantity can not be greater than sold quantity : ' + qtyH, 'error');
+		} else if (Number(price) < Number(wspH)) {
+			$("#trRemove" + a + " :nth-child(7) input[type=text]").val(
+					salesPriceH);
+			var price=salesPriceH;
+			
+			$(f).prop("readonly", true);
+			$(f).attr("style", "background-color: grey;");	
+			sweetAlert('Oops...','Selling price can not be less than wsp : ' + wspH, 'error');
 		} else{                
                 swal({
                 	title: "Are you sure?",
-                	text: "After changing the quantity, You can not increase the quantity, but you can decrease. Do you want to continue ?",   
+                	//text: "After changing , You can not increase the quantity, but you can decrease. Do you want to continue ?",   
                 	type: "warning",   
                 	showCancelButton: true,   
                 	confirmButtonColor: "#DD6B55" ,  
@@ -591,12 +614,15 @@
             				dataType:"json",
             				data:{
             					id:a,
-            					qty:qty
+            					qty:qty,
+            					price:price
             				},
             				success:function(data1){
             					if(data1.error){
             						$("#trRemove"+a+" :nth-child(6) input[type=text]").val(qtyH);
+            						$("#trRemove"+a+" :nth-child(7) input[type=text]").val(salesPriceH);
             						qty=qtyH;
+            						price=salesPriceH;
             						$(f).prop("readonly", true);
             						$(f).attr("style", "background-color: grey;");	
             						sweetAlert('Oops...', 'prodct update failed....', 'error');
@@ -604,7 +630,9 @@
             						$(f).prop("readonly", true);
             						$(f).attr("style", "background-color: pink;");	
             						$("#qtyH" + a).val(qty);
+            						$("#salesPriceH" + a).val(price);
             						qtyH=qty;
+            						salesPriceH=price;
             						
             						$("#trRemove" + a + " :nth-child(8) input[type=text]").val(
             								Number(Number(qty) * Number(price)).toFixed(2));
@@ -621,6 +649,8 @@
                 		}else{
                 			$("#trRemove"+a+" :nth-child(6) input[type=text]").val(qtyH);
     						qty=qtyH;
+    						$("#trRemove"+a+" :nth-child(7) input[type=text]").val(salesPriceH);
+    						price=salesPriceH;
     						$(f).prop("readonly", true);
     						$(f).attr("style", "background-color: grey;");
                 		}
@@ -662,6 +692,13 @@
 				}
 			}
 		});
+	}
+	
+	function updateSe(a) {
+		updateSalesEntry();
+
+		$(a).prop("readonly", true);
+		$(a).attr("style", "background-color: pink;");
 	}
 	</script>
 </body>

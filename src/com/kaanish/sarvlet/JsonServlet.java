@@ -1990,6 +1990,8 @@ public class JsonServlet extends HttpServlet {
 									.getParameter("id")));
 					salesProductDetails.setQuantity(Float.parseFloat(req
 							.getParameter("qty")));
+					salesProductDetails.setSalesPrice(Float.parseFloat(req
+							.getParameter("price")));
 					ejb.updateSalesProductDetails(salesProductDetails);
 
 					generatorSP
@@ -2025,6 +2027,10 @@ public class JsonServlet extends HttpServlet {
 							.getParameter("roundvalue")));
 					salesEntry.setTotalCost(Float.parseFloat(req
 							.getParameter("gt")));
+					salesEntry.setTransportcCharge(Float.parseFloat(req
+							.getParameter("trCharge")));
+					salesEntry.setSurcharge(Float.parseFloat(req
+							.getParameter("surCharge")));
 					ejb.updateSalesEntry(salesEntry);
 
 					int paySize = ejb.getPaymentDetailsBySalesEntryId(
@@ -2078,7 +2084,7 @@ public class JsonServlet extends HttpServlet {
 					// correcting voucherdetails totalcreditnote for the
 					// vendor
 
-					// correcting purchase entry payment details
+					// correcting sales entry payment details
 					int pSize = ejb.getPaymentDetailsBySalesEntryId(
 							salesEntry.getId()).size();
 					if (pSize > 0) {
@@ -2102,7 +2108,7 @@ public class JsonServlet extends HttpServlet {
 							.write("msg", "Successful").writeEnd().close();
 				} catch (Exception e) {
 					generatorSE.writeStartObject().write("error", true)
-							.write("msg", "Eror").writeEnd().close();
+							.write("msg", "Error").writeEnd().close();
 					e.printStackTrace();
 				}
 				break;
