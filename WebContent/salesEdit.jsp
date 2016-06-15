@@ -270,12 +270,16 @@
 													name="qtyvalue"
 													onchange="qtyvalueF(this,${salesProducts.id});"
 													ondblclick="enable(this);"></td>
-												<td><input type="text"
-													value="${salesProducts.salesPrice}"
-													style="background-color: gray;" readonly="readonly"
-													name="mrpQty"
-													onchange="qtyvalueF(this,${salesProducts.id});"
-													ondblclick="enable(this);"></td>
+												<td><c:if test="${salesProducts.salesReQty==0}">
+														<input type="text" value="${salesProducts.salesPrice}"
+															style="background-color: gray;" readonly="readonly"
+															name="mrpQty"
+															onchange="qtyvalueF(this,${salesProducts.id});"
+															ondblclick="enable(this);">
+													</c:if> <c:if test="${salesProducts.salesReQty!=0}">
+														<input type="text" value="${salesProducts.salesPrice}"
+															readonly="readonly" name="mrpQty">
+													</c:if></td>
 												<td><fmt:formatNumber var="amount"
 														value="${salesProducts.quantity*salesProducts.salesPrice}"
 														maxFractionDigits="2" groupingUsed="false" /><input
