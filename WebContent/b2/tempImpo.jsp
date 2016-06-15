@@ -1,14 +1,4 @@
-paymentdetails
---------------
-uniqueNo 10,0
 
-/testServ
-/justclick
-
-delete databases other than ...
-
-url-uri
-http://aminfotrix.com/aminfotrix/inventory/kaanishkouture/
 
 //////////////////////////////////////////////
 
