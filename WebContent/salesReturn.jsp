@@ -383,23 +383,33 @@
 															value="${srr.id}">
 														</td>
 														<td>${srr.purchase_Product_Details.productDetail.description}</td>
-														<td id="qtty${srr.id}">${srr.quantity}</td>
-														<td id="qtttyR${srr.id}">${srr.quantity-srr.salesReQty}</td>
+														<td id="qtty${srr.id}"><fmt:formatNumber
+																value="${srr.quantity}" maxFractionDigits="3"
+																groupingUsed="false" /></td>
+														<td id="qtttyR${srr.id}"><fmt:formatNumber
+																value="${srr.quantity-srr.salesReQty}"
+																maxFractionDigits="3" groupingUsed="false" /></td>
 														<td id="qttyC${srr.id}"><c:choose>
 																<c:when test="${salre.MRP}">
-																		${srr.salesPrice}
-																	</c:when>
+																	<fmt:formatNumber value="${srr.salesPrice}"
+																		maxFractionDigits="2" groupingUsed="false" />
+																</c:when>
 																<c:otherwise>
-																		${srr.salesPrice}
-																	</c:otherwise>
+																	<fmt:formatNumber value="${srr.salesPrice}"
+																		maxFractionDigits="2" groupingUsed="false" />
+																</c:otherwise>
 															</c:choose></td>
 														<td><c:choose>
-																<c:when test="${salre.MRP}">																		
-																			${srr.quantity*srr.salesPrice}
-																	</c:when>
+																<c:when test="${salre.MRP}">
+																	<fmt:formatNumber
+																		value="${srr.quantity*srr.salesPrice}"
+																		maxFractionDigits="2" groupingUsed="false" />
+																</c:when>
 																<c:otherwise>
-																		${srr.quantity*srr.salesPrice}
-																	</c:otherwise>
+																	<fmt:formatNumber
+																		value="${srr.quantity*srr.salesPrice}"
+																		maxFractionDigits="2" groupingUsed="false" />
+																</c:otherwise>
 															</c:choose></td>
 														<td style="padding: 4px"><input id="rQtySa${srr.id}"
 															value="0" type="text" class="form-control rQty"
