@@ -1510,7 +1510,7 @@ aside.fixed {
     font-family: Roboto;
     font-weight: normal;
     letter-spacing: 0.3px;
-    padding: 20px;
+    padding: 20px 10px;
     
 	-webkit-transition: all 0.4s ease 0s;
     -moz-transition: all 0.4s ease 0s;
@@ -1612,7 +1612,8 @@ aside.fixed {
 }
 .page-container.wide > .content-sec {
     padding-left: 0;
-    padding-top: 122px;
+    /* padding-top: 122px; */
+    padding-top: 68px;
 }
 
 /* Sidebar Right */

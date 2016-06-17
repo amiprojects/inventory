@@ -55,7 +55,7 @@
 }
 .horizontal-menu > ul > li > a {
     border: medium none;
-    padding: 20px 10px;
+    padding: 20px 5px;
 }
 .horizontal-menu > ul {
     border: medium none;
@@ -957,7 +957,8 @@
     margin-left: -105px;
 }
 .custom-dropdowns .dropdown:last-child > .drop-list:before {
-    left: 50%;
+    /* left: 50%; */
+    left: 18%;
 }
 .dropdown.profile > a {
     height: 38px;
@@ -1258,7 +1259,8 @@
     margin-left: -105px;
 }
 .custom-dropdowns .dropdown:last-child > .drop-list:before {
-    left: 50%;
+    /* left: 50%; */
+    left: 15%;
 }
 #panel-scroll {
     width: 240px !important;

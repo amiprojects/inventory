@@ -1,3 +1,14 @@
+<%-- <%@include file="includeHeader.jsp"%>
+<div class="page-container menu-left" style="height: 100%;">
+<%@include file="includeSidebar.jsp"%> --%>
+
+<%-- <%@include file="includeHeaderMenu.jsp"%>
+<div class="page-container wide"> --%>
+
+
+
+
+
 //every time on making .war
 ...................................
 loginservlet.java / inits.java,

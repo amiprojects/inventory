@@ -14,67 +14,49 @@
 }
 </style>
 <%-- <jsp:include page="include.jsp" /> --%>
-<header class="header">
+<header class="header" id="header">
 	<div class="responsive-header">
 		<span><i class="fa fa-align-justify"></i></span>
 		<%@include file="includeHeaderM.jsp"%>
+
+		<div class="dropdown profile"
+			style="display: block; float: left; margin-left: 21px;">
+			<a title="" style="width: 100%; font-size: 13px;"> <!--  <img src="images/resource/me.jpg" alt="" /> -->
+				${sessionScope['ejb'].getUserById(sessionScope['user']).name}<i
+				class="caret"></i>
+			</a>
+			<div class="profile drop-list">
+				<ul>
+					<li><a href="changePassword.jsp" title="")><i
+							class="fa fa-edit"></i>Change Password</a></li>
+					<li><a href="logout" title=""><i class="fa fa-info"></i>
+							Logout</a></li>
+				</ul>
+			</div>
+			<!-- Profile DropDown -->
+		</div>
 	</div>
 	<!--Responsive header-->
 
 	<nav class="horizontal-menu">
 		<%@include file="includeHeaderM.jsp"%>
-	</nav>
-	<div class="custom-dropdowns" style="margin-left: 180px;">
-		<div class="notification-list dropdown">
-			<a title=""> <c:if
-					test="${sessionScope['ejb'].getNotifications().size()>0}">
-					<span class="green" id="notification">${sessionScope['ejb'].getNotifications().size()}</span>
-				</c:if><i class="fa fa-bell-o"></i></a>
-			<div class="notification drop-list">
-				<span id="notificationStatement">You have
-					${sessionScope['ejb'].getNotifications().size()} Notifications</span>
-				<ul id="notificationDetails">
-					<c:forEach var="i"
-						items="${sessionScope['ejb'].getNotifications()}"
-						end="${sessionScope['ejb'].getNotifications().size()>=5?4:sessionScope['ejb'].getNotifications().size()}"
-						begin="0">
 
-						<li><a href="${i.link}" title=""><span><i
-									class="fa fa-info green"></i></span>${i.description}</a></li>
-					</c:forEach>
-
-					<c:if test="${sessionScope['ejb'].getNotifications().size()>0}">
-						<li><a href="notification.jsp">See all</a></li>
-					</c:if>
+		<div class="dropdown profile" style="float: right;">
+			<a title="" style="font-size: 14px; width: 100%;"> <!--  <img src="images/resource/me.jpg" alt="" /> -->${sessionScope['ejb'].getUserById(sessionScope['user']).name}<i
+				class="caret"></i>
+			</a>
+			<div class="profile drop-list">
+				<ul>
+					<li><a href="changePassword.jsp" title="")><i
+							class="fa fa-edit"></i>Change Password</a></li>
+					<li><a href="logout" title=""><i class="fa fa-info"></i>
+							Logout</a></li>
 				</ul>
 			</div>
+			<!-- Profile DropDown -->
 		</div>
-		<!-- Notification List -->
+	</nav>
 
-
-		<c:if test="${sessionScope['ejb'].is21Days()=='true'}">
-			<div style="color: #ff0000;">
-				<h6>Validity will be ended on
-					${sessionScope['ejb'].getAllStoct().get(0).getEndDate()} . Please
-					contact to your vendor...</h6>
-			</div>
-		</c:if>
-
-	</div>
-	<div class="dropdown profile">
-		<a title=""> <!--  <img src="images/resource/me.jpg" alt="" /> -->${sessionScope['ejb'].getUserById(sessionScope['user']).name}<i
-			class="caret"></i>
-		</a>
-		<div class="profile drop-list">
-			<ul>
-				<li><a href="changePassword.jsp" title="")><i
-						class="fa fa-edit"></i>Change Password</a></li>
-				<li><a href="logout" title=""><i class="fa fa-info"></i>
-						Logout</a></li>
-			</ul>
-		</div>
-		<!-- Profile DropDown -->
-	</div>
 </header>
 <!-- Header -->
 <!-- <script type="text/javascript">

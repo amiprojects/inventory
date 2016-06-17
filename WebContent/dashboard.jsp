@@ -59,9 +59,13 @@
 	</c:if>
 
 	<div class="main" style="height: 664px;">
-		<%@include file="includeHeader.jsp"%>
+		<%-- <%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
-			<%@include file="includeSidebar.jsp"%>
+			<%@include file="includeSidebar.jsp"%> --%>
+
+		<%@include file="includeHeaderMenu.jsp"%>
+		<div class="page-container wide">
+
 			<div class="content-sec"
 				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
 				<div class="row">
@@ -69,14 +73,24 @@
 						<div class="container">
 							<div class="title-date-range">
 								<div class="row">
-									<div class="col-md-6">
+									<div class="col-md-3">
 										<div class="main-title">
 											<h1>Dashboard</h1>
 											<h5>Welcome back</h5>
 											<span><i class="fa fa-map-marker"></i>India</span>
 										</div>
 									</div>
-									<div class="col-md-6">
+									<div class="col-md-6" style="margin-top: 33px;">
+										<c:if test="${sessionScope['ejb'].is21Days()=='true'}">
+											<!-- background-color: #ff0000; color: #F0F0F0; -->
+											<div style="color: #ff0000;">
+												<h4>Validity will be ended on
+													${sessionScope['ejb'].getAllStoct().get(0).getEndDate()} .
+													Please contact to your vendor...</h4>
+											</div>
+										</c:if>
+									</div>
+									<div class="col-md-3">
 										<div id="reportrange" class="date-range">20/0/116 -
 											12:24:6</div>
 									</div>
