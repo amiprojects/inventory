@@ -3,6 +3,10 @@ SalesEntry
 description null 4000
 
 //////////////////////////////////////////////
+//every time on making .war
+...................................
+loginservlet.java / inits.java,
+getmacid.java - production only,
 
 //include sidebar 
 //(include- all, production entry- production only , job module- production only)

@@ -13,7 +13,6 @@
 ...................................
 loginservlet.java / inits.java,
 getmacid.java - production only,
-validityExtension.jsp
 
 ////////////////////////////////////////
 glassfish-4.1\glassfish4\bin\asadmin.bat
