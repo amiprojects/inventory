@@ -231,6 +231,12 @@ page[size="A4"] {
 					<td class="tg-031e" colspan="7"><span>Amount Chargeable
 							(in words)</span><br> <span>${sessionScope['ejb'].getNumberToWords(purEntry.totalCost)}</span></td>
 				</tr>
+				<c:if test="${purEntry.description!=null}">
+					<tr style="height: 75px">
+						<td class="tg-031e" colspan="7"><strong>Description
+								: </strong><br> <span>${purEntry.description}</span></td>
+					</tr>
+				</c:if>
 				<tr style="height: 75px">
 					<td class="tg-031e" colspan="4"><strong>Declaration:</strong><br>We
 						declare that this invoice shows the actual price of the goods

@@ -105,7 +105,8 @@
 														<c:set var="totPurQty"
 															value="${totPurQty+proedPurDet.quantity-proedPurDet.salesReQty}"></c:set>
 													</c:if>
-												</c:forEach> ${totPurQty}</td>
+												</c:forEach> <fmt:formatNumber value="${totPurQty}"
+													maxFractionDigits="3" groupingUsed="false" /></td>
 										</tr>
 									</thead>
 								</table>
@@ -156,7 +157,9 @@
 															<c:set var="totPurQty"
 																value="${totPurQty+proedPurDet.quantity-proedPurDet.salesReQty}"></c:set>
 														</c:if>
-													</c:forEach> ${totPurQty}</td>
+													</c:forEach>
+													<fmt:formatNumber value="${totPurQty}"
+														maxFractionDigits="3" groupingUsed="false" /></td>
 												<td><c:set var="subot" value="${0}"></c:set> <c:forEach
 														var="proedPurDet" items="${pEntryByD.salesProductDetails}">
 														<c:if
@@ -164,7 +167,9 @@
 															<c:set var="subot"
 																value="${subot+(proedPurDet.quantity-proedPurDet.salesReQty)*proedPurDet.salesPrice}"></c:set>
 														</c:if>
-													</c:forEach> ${subot}</td>
+													</c:forEach>
+													<fmt:formatNumber value="${subot}" maxFractionDigits="2"
+														groupingUsed="false" /></td>
 												<%-- <td><c:set var="disVal"
 														value="${pEntryByD.isFlatDiscount()?subot*pEntryByD.discountValue/pEntryByD.subTotal:subot*pEntryByD.discountValue/100}" />
 													${disVal}</td>

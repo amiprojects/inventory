@@ -104,7 +104,8 @@
 																<c:set var="totPurQty"
 																	value="${totPurQty+proedPurDet.quantity-proedPurDet.salesReQty}"></c:set>
 															</c:if>
-														</c:forEach> ${totPurQty}</td>
+														</c:forEach> <fmt:formatNumber value="${totPurQty}"
+															maxFractionDigits="3" groupingUsed="false" /></td>
 													<td>${prod.qtyUnit.name}</td>
 													<td>
 														<form action="salesProductView" method="post"
@@ -142,7 +143,8 @@
 													<td>${vendor.name}</td>
 													<td>${vendor.mobile}</td>
 													<td>${vendor.city}</td>
-													<td>${vendor.getTotSale()}</td>
+													<td><fmt:formatNumber value="${vendor.getTotSale()}"
+															maxFractionDigits="2" groupingUsed="false" /></td>
 													<td>
 														<form action="salesReportByCustomerName" method="post"
 															id="pView${vendor.id}">
@@ -180,7 +182,8 @@
 														<td>${vendor.name}</td>
 														<td>${vendor.companyName}</td>
 														<td>${vendor.ph1}</td>
-														<td>${vendor.getTotSale()}</td>
+														<td><fmt:formatNumber value="${vendor.getTotSale()}"
+																maxFractionDigits="2" groupingUsed="false" /></td>
 														<td>
 															<form action="salesReportByAgentName" method="post"
 																id="pView${vendor.id}">

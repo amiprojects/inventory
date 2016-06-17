@@ -344,7 +344,19 @@
 
 							</div>
 							<div style="width: 60%; float: left;">
-								<table style="float: left; margin-top: 70%;">
+								<div class="widget-area"
+									style="margin-top: 21px; margin-bottom: 21px;">
+									<div class="form-group"">
+										<label style="font-size: 15px" class="font">Description
+											:</label>
+										<textarea rows="8" cols="" class="form-control"
+											name="salesDesc" id="salesDesc" style="text-align: left;"
+											readonly="readonly">
+											${salesSearchView.description}
+											</textarea>
+									</div>
+								</div>
+								<table>
 									<tr>
 										<td><input type="button" class="btn btn-primary large"
 											value="Print Sales Invoice"
@@ -648,8 +660,8 @@
 								<div class="widget-area">
 									<div class="breadcrumbs">
 										<ul>
-											<li><a title="">Select Payment status : <input type="hidden"
-													name="uniqueNo"
+											<li><a title="">Select Payment status : <input
+													type="hidden" name="uniqueNo"
 													value="${sessionScope['ejb'].getLastUniqueNoOfPayDet()+1}"></a></li>
 										</ul>
 									</div>

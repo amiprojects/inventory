@@ -97,7 +97,8 @@
 									<thead>
 										<tr>
 											<th style="text-align: right;">Sub Total :</th>
-											<td>${vendor.getTotSale()}</td>
+											<td><fmt:formatNumber value="${vendor.getTotSale()}"
+													maxFractionDigits="2" groupingUsed="false" /></td>
 										</tr>
 									</thead>
 								</table>
@@ -145,7 +146,9 @@
 															var="totCost" />
 														<c:set value="${totRetCost+ppd.salesReQty*ppd.salesPrice}"
 															var="totRetCost" />
-													</c:forEach> ${totCost-totRetCost}</td>
+													</c:forEach>
+													<fmt:formatNumber value="${totCost-totRetCost}"
+														maxFractionDigits="2" groupingUsed="false" /></td>
 												<td><form action="salesReportView" method="post"
 														id="pView${pEntryByD.id}">
 														<a href="#" onclick="purchaseViewF('${pEntryByD.id}');"><input

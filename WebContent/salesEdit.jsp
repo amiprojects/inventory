@@ -295,6 +295,20 @@
 									</c:forEach>
 								</table>
 							</div>
+							<div style="width: 60%; float: left;">
+								<div class="widget-area" style="margin-top: 21px;">
+									<div class="form-group"">
+										<label style="font-size: 15px" class="font">Description
+											:</label>
+										<textarea rows="8" cols="" class="form-control"
+											name="salesDesc" id="salesDesc" style="text-align: left;"
+											style="background-color: gray;" readonly="readonly"
+											onchange="updateSe(this);" ondblclick="enable(this);">
+											${salesSearchView.description}
+											</textarea>
+									</div>
+								</div>
+							</div>
 							<div style="width: 40%; float: right;">
 								<input type="hidden" id="totalvalue" name="totalvalue" value="0">
 								<table id="stream_table"
@@ -689,7 +703,8 @@
 				roundvalue:roundvalue,
 				st:st,
 				taxAmount : $("#taxAmount").val(),
-				profitValue : $("#profitValue").val()
+				profitValue : $("#profitValue").val(),
+				salesDesc : $("#salesDesc").val()
 			},
 			success : function(data) {
 				if (data.error) {					

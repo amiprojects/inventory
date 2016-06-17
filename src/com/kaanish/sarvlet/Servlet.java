@@ -2050,6 +2050,8 @@ public class Servlet extends HttpServlet {
 							salesEntry.setTotalCost(Float.parseFloat(req
 									.getParameter("grandtotal")));
 							salesEntry.setCompanyInfo(companyInfo);
+							salesEntry.setDescription(req.getParameter(
+									"salesDesc").toUpperCase());
 
 							if (!req.getParameter("aId").equals("")) {
 								salesEntry.setVendor(ejb.getVendorById(Integer

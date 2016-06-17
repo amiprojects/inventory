@@ -2031,6 +2031,8 @@ public class JsonServlet extends HttpServlet {
 							.getParameter("trCharge")));
 					salesEntry.setSurcharge(Float.parseFloat(req
 							.getParameter("surCharge")));
+					salesEntry.setDescription(req.getParameter("salesDesc")
+							.toUpperCase());
 					ejb.updateSalesEntry(salesEntry);
 
 					int paySize = ejb.getPaymentDetailsBySalesEntryId(

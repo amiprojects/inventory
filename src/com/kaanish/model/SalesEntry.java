@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -24,6 +25,8 @@ public class SalesEntry implements Serializable {
 	@Id
 	@GeneratedValue
 	private int id;
+	@Column(length = 4000)
+	private String description;
 	private int challanNo;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date entry_Date;
@@ -31,7 +34,7 @@ public class SalesEntry implements Serializable {
 	private Date sales_date;
 	private float surcharge;
 	private float transportcCharge;
-	private float totalCost; //grandtotal
+	private float totalCost; // grandtotal
 	private float roundOf;
 	private float subTotal;
 	private float taxAmount;
@@ -321,6 +324,14 @@ public class SalesEntry implements Serializable {
 
 	public void setAgentProfitTotal(float agentProfitTotal) {
 		this.agentProfitTotal = agentProfitTotal;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }
