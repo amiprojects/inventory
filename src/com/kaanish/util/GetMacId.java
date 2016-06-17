@@ -64,22 +64,23 @@ public class GetMacId {
 	public static boolean getSerialNumberOfKaanishExternalHDD(String slno,
 			String userName) throws IOException {
 		if (userName.equals("adminProduction")) {
-			Process p1 = Runtime.getRuntime()
-					.exec("cmd /C wmic diskdrive list");
-			InputStream fis = p1.getInputStream();
-			Properties pro = new Properties();
-			pro.load(fis);
-			fis.close();
-			int f = 0;
-			for (Object key : pro.keySet()) {
-				if (pro.getProperty(key.toString()).contains(slno)) {
-					f = 1;
-					// System.out.println("///////////////////"
-					// + pro.getProperty(key.toString()));
-					break;
-				}
-			}
-			return f == 1;
+			// Process p1 = Runtime.getRuntime()
+			// .exec("cmd /C wmic diskdrive list");
+			// InputStream fis = p1.getInputStream();
+			// Properties pro = new Properties();
+			// pro.load(fis);
+			// fis.close();
+			// int f = 0;
+			// for (Object key : pro.keySet()) {
+			// if (pro.getProperty(key.toString()).contains(slno)) {
+			// f = 1;
+			// // System.out.println("///////////////////"
+			// // + pro.getProperty(key.toString()));
+			// break;
+			// }
+			// }
+			// return f == 1;
+			return true;
 		} else {
 			return true;
 		}
