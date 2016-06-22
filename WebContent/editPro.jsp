@@ -1,7 +1,7 @@
-
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
@@ -139,7 +139,10 @@
 														value="${ppd.quantity}" name="qty" id="qty"
 														class="form-control" onchange="qtyOCF();"
 														onkeyup="qtyOKUF();"> <input type="hidden"
-														id="qtyH" value="${ppd.quantity}" name="qtyH"> <br>
+														id="qtyH"
+														value="<fmt:formatNumber value="${ppd.quantity}"
+														maxFractionDigits="3" groupingUsed="false" />"
+														name="qtyH"> <br>
 												</div>
 											</div>
 											<div class="col-md-4">
@@ -149,13 +152,16 @@
 														value="${ppd.remaining_quantity}" name="remQty"
 														id="remQty" class="form-control"><input
 														type="hidden" id="remQtyH" name="remQtyH"
-														value="${ppd.remaining_quantity}"><br>
+														value="<fmt:formatNumber value="${ppd.remaining_quantity}"
+														maxFractionDigits="3" groupingUsed="false" />"><br>
 												</div>
 											</div>
 											<div class="col-md-4">
 												<div class="form-group">
 													<label for="">Used Qty:</label> <input readonly="readonly"
-														type="text" value="${ppd.quantity-ppd.remaining_quantity}"
+														type="text"
+														value="<fmt:formatNumber value="${ppd.quantity-ppd.remaining_quantity}"
+														maxFractionDigits="3" groupingUsed="false" />"
 														name="usedQty" id="usedQty" class="form-control"><br>
 												</div>
 											</div>
@@ -164,36 +170,50 @@
 													<label for="">Cost:</label>
 													<c:choose>
 														<c:when test="${ppd.quantity==ppd.remaining_quantity}">
-															<input type="text" value="${ppd.cost}" name="cost"
-																id="cost" class="form-control" onkeyup="costOKUF();"
-																onchange="costOCF();">
+															<input type="text"
+																value="<fmt:formatNumber value="${ppd.cost}"
+																maxFractionDigits="2" groupingUsed="false" />"
+																name="cost" id="cost" class="form-control"
+																onkeyup="costOKUF();" onchange="costOCF();">
 														</c:when>
 														<c:otherwise>
 															<input type="text" readonly="readonly"
-																value="${ppd.cost}" name="cost" id="cost"
-																class="form-control" onkeyup="costOKUF();"
-																onchange="costOCF();">
+																value="<fmt:formatNumber value="${ppd.cost}"
+																maxFractionDigits="2" groupingUsed="false" />"
+																name="cost" id="cost" class="form-control"
+																onkeyup="costOKUF();" onchange="costOCF();">
 														</c:otherwise>
 													</c:choose>
-													<input type="hidden" id="costH" value="${ppd.cost}"
+													<input type="hidden" id="costH"
+														value="<fmt:formatNumber value="${ppd.cost}"
+																maxFractionDigits="2" groupingUsed="false" />"
 														name="costH"> <br>
 												</div>
 											</div>
 											<div class="col-md-4">
 												<div class="form-group">
 													<label for="">WSP:</label> <input type="text"
-														value="${ppd.wsp}" name="wsp" id="wsp"
-														class="form-control" onchange="wspOCF();"><input
-														type="hidden" id="wspH" value="${ppd.wsp}" name="wspH">
-													<br>
+														value="<fmt:formatNumber value="${ppd.wsp}"
+														maxFractionDigits="2" groupingUsed="false" />"
+														name="wsp" id="wsp" class="form-control"
+														onchange="wspOCF();"><input type="hidden"
+														id="wspH"
+														value="<fmt:formatNumber value="${ppd.wsp}"
+														maxFractionDigits="2" groupingUsed="false" />"
+														name="wspH"> <br>
 												</div>
 											</div>
 											<div class="col-md-4">
 												<div class="form-group">
 													<label for="">MRP:</label> <input type="text"
-														value="${ppd.mrp}" name="mrp" id="mrp"
-														class="form-control" onchange="mrpOCF();"><input
-														type="hidden" id="mrpH" value="${ppd.mrp}" name="mrpH"><br>
+														value="<fmt:formatNumber value="${ppd.mrp}"
+														maxFractionDigits="2" groupingUsed="false" />"
+														name="mrp" id="mrp" class="form-control"
+														onchange="mrpOCF();"><input type="hidden"
+														id="mrpH"
+														value="<fmt:formatNumber value="${ppd.mrp}"
+														maxFractionDigits="2" groupingUsed="false" />"
+														name="mrpH"><br>
 												</div>
 											</div>
 										</div>

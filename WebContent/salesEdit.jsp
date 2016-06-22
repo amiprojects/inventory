@@ -301,9 +301,10 @@
 										<label style="font-size: 15px" class="font">Description
 											:</label>
 										<textarea rows="8" cols="" class="form-control"
-											name="salesDesc" id="salesDesc" style="text-align: left;"
-											style="background-color: gray;" readonly="readonly"
-											onchange="updateSe(this);" ondblclick="enable(this);">
+											name="salesDesc" id="salesDesc"
+											style="background-color: gray; text-align: left;"
+											readonly="readonly" onchange="updateSe(this);"
+											ondblclick="enable(this);">
 											${salesSearchView.description}
 											</textarea>
 									</div>
@@ -324,24 +325,28 @@
 									<tbody>
 										<tr>
 											<td colspan="2">Discount &nbsp; <select name="disType"
-												id="disType" disabled="disabled">
+												id="disType">
 													<c:choose>
 														<c:when test="${salesSearchView.isFlatDiscount()==true}">
-															<option value="disFlat">Flat</option>
+															<option value="disFlat" selected="selected">Flat</option>
+															<option value="disPer">%</option>
 															<c:set var="dis" value="${salesSearchView.discountValue}"></c:set>
 														</c:when>
 														<c:otherwise>
-															<option value="disPer">%</option>
+															<option value="disPer" selected="selected">%</option>
+															<option value="disFlat">Flat</option>
 															<c:set var="dis"
 																value="${salesSearchView.subTotal*salesSearchView.discountValue/100}"></c:set>
 														</c:otherwise>
 													</c:choose>
 											</select>
 											</td>
-											<td><input type="number" class="form-control"
+											<td><input type="text" class="form-control"
 												name="disValue" id="discount" placeholder=""
-												readonly="readonly"
-												value="<fmt:formatNumber value="${salesSearchView.discountValue}" maxFractionDigits="2" groupingUsed="false" />"></td>
+												readonly="readonly" style="background-color: gray;"
+												onchange="updateSe(this);" ondblclick="enable(this);"
+												value="<fmt:formatNumber value="${salesSearchView.discountValue}" maxFractionDigits="2" groupingUsed="false" />">
+											</td>
 										</tr>
 									</tbody>
 
@@ -441,7 +446,7 @@
 													</select>
 													</td>
 													<td><input type="text"
-														value="${salesSearchView.agentProfitValue}"
+														value="<fmt:formatNumber value="${salesSearchView.agentProfitValue}" maxFractionDigits="2" groupingUsed="false" />"
 														class="form-control" name="profitVal" id="profitVal"
 														placeholder="" readonly="readonly"></td>
 												</tr>
@@ -451,7 +456,7 @@
 													<td colspan="2" id="disc">Agent Profit Value:</td>
 													<td><input type="text" class="form-control"
 														readonly="readonly" id="profitValue" name="profitValue"
-														value="${salesSearchView.agentProfitTotal}"></td>
+														value="<fmt:formatNumber value="${salesSearchView.agentProfitTotal}" maxFractionDigits="2" groupingUsed="false" />"></td>
 												</tr>
 											</tbody>
 										</c:otherwise>
@@ -459,13 +464,26 @@
 									<tbody>
 										<tr>
 											<td><select class="form-control" id="taxGroup"
-												name="taxGroup" disabled="disabled">
-													<option>${salesSearchView.tax_Type_Group.name}</option>
+												name="taxGroup" style="background-color: gray;"
+												onchange="updateSe(this);" ondblclick="enable(this);">
+													<c:choose>
+														<c:when test="${salesSearchView.tax_Type_Group!=null}">
+															<option>${salesSearchView.tax_Type_Group.name}</option>
+														</c:when>
+														<c:otherwise>
+															<option value="0">TAX type</option>
+														</c:otherwise>
+													</c:choose>
+													<c:forEach
+														items="${sessionScope['ejb'].getAllActiveTax_Type_Groups()}"
+														var="taxTypeGroup">
+														<option value="${taxTypeGroup.id}">${taxTypeGroup.name}</option>
+													</c:forEach>
 											</select></td>
 											<td>%</td>
 											<td><input type="text" class="form-control"
 												readonly="readonly"
-												value="${salesSearchView.tax_Type_Group.getTotalTaxValue()}"
+												value="<fmt:formatNumber value="${salesSearchView.tax_Type_Group.getTotalTaxValue()}" maxFractionDigits="2" groupingUsed="false" />"
 												id="taxTot"></td>
 										</tr>
 									</tbody>
@@ -473,7 +491,8 @@
 										<tr>
 											<td colspan="2">Tax Amount :</td>
 											<td><input type="text" class="form-control"
-												readonly="readonly" value="${salesSearchView.taxAmount}"
+												readonly="readonly"
+												value="<fmt:formatNumber value="${salesSearchView.taxAmount}" maxFractionDigits="2" groupingUsed="false" />"
 												id="taxAmount"></td>
 										</tr>
 									</tbody>
@@ -482,7 +501,7 @@
 											<td colspan="2" id="trans">Transport charge :</td>
 											<td><input type="text" class="form-control"
 												name="transcharge" id="transcharge"
-												value="${salesSearchView.transportcCharge}"
+												value="<fmt:formatNumber value="${salesSearchView.transportcCharge}" maxFractionDigits="2" groupingUsed="false" />"
 												style="background-color: gray;" readonly="readonly"
 												onchange="updateSe(this);" ondblclick="enable(this);"></td>
 										</tr>
@@ -493,9 +512,9 @@
 											<td colspan="2" id="sur">Surcharge :</td>
 											<td><input type="text" class="form-control"
 												id="surcharge" name="surcharge"
-												value="${salesSearchView.surcharge}"
+												value="<fmt:formatNumber value="${salesSearchView.surcharge}" maxFractionDigits="2" groupingUsed="false" />"
 												style="background-color: gray;" readonly="readonly"
-												onchange="updateSe(this);" ondblclick="enable(this);">
+												onchange="updateSe(this);" ondblclick="enable(this);"></td>
 										</tr>
 									</tbody>
 									<tbody>
@@ -503,7 +522,8 @@
 											<td colspan="2" id="round">Round Of :</td>
 											<td><input type="number" class="form-control"
 												placeholder="" readonly="readonly" id="roundvalue"
-												name="roundvalue" value="${salesSearchView.roundOf}"></td>
+												name="roundvalue"
+												value="<fmt:formatNumber value="${salesSearchView.roundOf}" maxFractionDigits="2" groupingUsed="false" />"></td>
 										</tr>
 									</tbody>
 									<thead>
@@ -511,7 +531,8 @@
 											<td colspan="2" id="grand">Grand Total :</td>
 											<td><input type="number" class="form-control"
 												placeholder="" readonly="readonly" id="grandtotal"
-												name="grandtotal" value="${salesSearchView.totalCost}"></td>
+												name="grandtotal"
+												value="<fmt:formatNumber value="${salesSearchView.totalCost}" maxFractionDigits="2" groupingUsed="false" />"></td>
 										</tr>
 									</thead>
 								</table>
@@ -702,6 +723,8 @@
 				gt:gt,
 				roundvalue:roundvalue,
 				st:st,
+				disType : $("#disType").val(),
+				discount : $("#discount").val(),
 				taxAmount : $("#taxAmount").val(),
 				profitValue : $("#profitValue").val(),
 				salesDesc : $("#salesDesc").val()

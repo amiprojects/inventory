@@ -2027,6 +2027,13 @@ public class JsonServlet extends HttpServlet {
 							.getParameter("roundvalue")));
 					salesEntry.setTotalCost(Float.parseFloat(req
 							.getParameter("gt")));
+					if (req.getParameter("disType").equals("disFlat")) {
+						salesEntry.setFlatDiscount(true);
+					} else {
+						salesEntry.setFlatDiscount(false);
+					}
+					salesEntry.setDiscountValue(Float.parseFloat(req
+							.getParameter("discount")));
 					salesEntry.setTransportcCharge(Float.parseFloat(req
 							.getParameter("trCharge")));
 					salesEntry.setSurcharge(Float.parseFloat(req
