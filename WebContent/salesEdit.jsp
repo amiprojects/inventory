@@ -325,7 +325,7 @@
 									<tbody>
 										<tr>
 											<td colspan="2">Discount &nbsp; <select name="disType"
-												id="disType">
+												id="disType" disabled="disabled">
 													<c:choose>
 														<c:when test="${salesSearchView.isFlatDiscount()==true}">
 															<option value="disFlat" selected="selected">Flat</option>
@@ -343,8 +343,7 @@
 											</td>
 											<td><input type="text" class="form-control"
 												name="disValue" id="discount" placeholder=""
-												readonly="readonly" style="background-color: gray;"
-												onchange="updateSe(this);" ondblclick="enable(this);"
+												readonly="readonly"
 												value="<fmt:formatNumber value="${salesSearchView.discountValue}" maxFractionDigits="2" groupingUsed="false" />">
 											</td>
 										</tr>
@@ -464,8 +463,7 @@
 									<tbody>
 										<tr>
 											<td><select class="form-control" id="taxGroup"
-												name="taxGroup" style="background-color: gray;"
-												onchange="updateSe(this);" ondblclick="enable(this);">
+												name="taxGroup" disabled="disabled">
 													<c:choose>
 														<c:when test="${salesSearchView.tax_Type_Group!=null}">
 															<option>${salesSearchView.tax_Type_Group.name}</option>
