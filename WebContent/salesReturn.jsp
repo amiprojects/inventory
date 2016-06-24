@@ -655,9 +655,9 @@
 											</thead>
 										</table>
 										<div style="float: right;">
-											<input type="button" class="btn btn-danger small"
-												value="Cancel" data-toggle="modal"> <input
-												type="button" class="btn btn-info btn-sm"
+											<!-- <input type="button" class="btn btn-danger small"
+												value="Cancel" data-toggle="modal"> -->
+											<input type="button" class="btn btn-info btn-sm"
 												data-toggle="modal" value="Save" onclick="paymentDate();">
 											<div id="saveSales" class="modal fade" role="dialog"
 												style="top: 25px;">
