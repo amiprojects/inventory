@@ -45,6 +45,8 @@ import com.kaanish.model.RawMaterialsStock;
 import com.kaanish.model.ReadyGoodsStock;
 import com.kaanish.model.SalesEntry;
 import com.kaanish.model.SalesProductDetails;
+import com.kaanish.model.SalesProductReturnDetail;
+import com.kaanish.model.SalesReturn;
 import com.kaanish.model.SampleDesignCostSheet;
 import com.kaanish.model.State;
 import com.kaanish.model.Stoct;
@@ -2064,6 +2066,42 @@ public class JsonServlet extends HttpServlet {
 						ejb.updateVoucherDetails(vd);
 					}
 					ejb.updatePaymentDetails(paymentDetails);
+
+					for (SalesReturn sr : ejb
+							.getSalesReturnBySalesEntryId(salesEntry.getId())) {
+						float subTotal = 0;
+						for (SalesProductReturnDetail sprd : sr
+								.getSalesProductReturnDetail()) {
+							subTotal = subTotal
+									+ (sprd.getQtyReturn() * sprd
+											.getSalesProductDetails()
+											.getSalesPrice());
+						}
+						float discount = 0;
+						if (sr.getSalesEntry().isFlatDiscount()) {
+							discount = subTotal
+									* sr.getSalesEntry().getDiscountValue()
+									/ sr.getSalesEntry().getSubTotal();
+						} else {
+							discount = subTotal
+									* sr.getSalesEntry().getDiscountValue()
+									/ 100;
+						}
+						float profit = 0;
+						if (sr.getSalesEntry().isFlatProfitAgent()) {
+							profit = subTotal
+									* sr.getSalesEntry().getAgentProfitValue()
+									/ sr.getSalesEntry().getSubTotal();
+						} else {
+							profit = (subTotal - discount)
+									* sr.getSalesEntry().getAgentProfitValue()
+									/ 100;
+						}
+						float tax=0;
+						if(sr.getSalesEntry().getTax_Type_Group()!=null){
+							//tax=
+						}
+					}
 
 					// correcting voucherdetails totalcreditnote for the
 					// customer

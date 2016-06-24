@@ -325,7 +325,7 @@
 									<tbody>
 										<tr>
 											<td colspan="2">Discount &nbsp; <select name="disType"
-												id="disType" disabled="disabled">
+												id="disType">
 													<c:choose>
 														<c:when test="${salesSearchView.isFlatDiscount()==true}">
 															<option value="disFlat" selected="selected">Flat</option>
@@ -343,7 +343,8 @@
 											</td>
 											<td><input type="text" class="form-control"
 												name="disValue" id="discount" placeholder=""
-												readonly="readonly"
+												readonly="readonly" style="background-color: gray;"
+												onchange="updateSe(this);" ondblclick="enable(this);"
 												value="<fmt:formatNumber value="${salesSearchView.discountValue}" maxFractionDigits="2" groupingUsed="false" />">
 											</td>
 										</tr>
@@ -464,19 +465,7 @@
 										<tr>
 											<td><select class="form-control" id="taxGroup"
 												name="taxGroup" disabled="disabled">
-													<c:choose>
-														<c:when test="${salesSearchView.tax_Type_Group!=null}">
-															<option>${salesSearchView.tax_Type_Group.name}</option>
-														</c:when>
-														<c:otherwise>
-															<option value="0">TAX type</option>
-														</c:otherwise>
-													</c:choose>
-													<c:forEach
-														items="${sessionScope['ejb'].getAllActiveTax_Type_Groups()}"
-														var="taxTypeGroup">
-														<option value="${taxTypeGroup.id}">${taxTypeGroup.name}</option>
-													</c:forEach>
+													<option>${salesSearchView.tax_Type_Group.name}</option>
 											</select></td>
 											<td>%</td>
 											<td><input type="text" class="form-control"

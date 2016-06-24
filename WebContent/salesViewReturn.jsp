@@ -296,7 +296,7 @@
 											<td colspan="2" id="sub">Sub Total :</td>
 											<td><input type="number" class="form-control"
 												readonly="readonly" id="subtotalvalue" name="subtotalvalue"
-												value="${subTotal}"></td>
+												value="<fmt:formatNumber value="${subTotal}" maxFractionDigits="2" groupingUsed="false" />"></td>
 										</tr>
 									</thead>
 									<tbody>
@@ -330,7 +330,7 @@
 											<td colspan="2" id="disc">Discount Value:</td>
 											<td><input type="number" class="form-control"
 												readonly="readonly" id="discountValue" name="discountValue"
-												value="${dis}"></td>
+												value="<fmt:formatNumber value="${dis}" maxFractionDigits="2" groupingUsed="false" />"></td>
 										</tr>
 									</tbody>
 									<c:if
@@ -352,7 +352,7 @@
 												</select>
 												</td>
 												<td><input type="text"
-													value="${salesReturn.salesEntry.agentProfitValue}"
+													value="<fmt:formatNumber value="${salesReturn.salesEntry.agentProfitValue}" maxFractionDigits="2" groupingUsed="false" />"
 													class="form-control" name="profitVal" id="profitVal"
 													placeholder="" readonly="readonly"></td>
 											</tr>
@@ -362,7 +362,7 @@
 												<td colspan="2" id="disc">Agent Profit Value:</td>
 												<td><input type="text" class="form-control"
 													readonly="readonly" id="profitValue" name="profitValue"
-													value="${salesReturn.retAgentProfitTotal}"></td>
+													value="<fmt:formatNumber value="${salesReturn.retAgentProfitTotal}" maxFractionDigits="2" groupingUsed="false" />"></td>
 											</tr>
 										</tbody>
 									</c:if>
@@ -375,7 +375,7 @@
 											<td>%</td>
 											<td><input type="text" class="form-control"
 												readonly="readonly"
-												value="${salesReturn.salesEntry.tax_Type_Group.getTotalTaxValue()}"
+												value="<fmt:formatNumber value="${salesReturn.salesEntry.tax_Type_Group.getTotalTaxValue()}" maxFractionDigits="2" groupingUsed="false" />"
 												id="taxTot"></td>
 										</tr>
 									</tbody>
@@ -393,7 +393,8 @@
 											<td colspan="2" id="round">Round Of :</td>
 											<td><input type="number" class="form-control"
 												placeholder="" readonly="readonly" id="roundvalue"
-												name="roundvalue" value="${salesReturn.roundOff}"></td>
+												name="roundvalue"
+												value="<fmt:formatNumber value="${salesReturn.roundOff}" maxFractionDigits="2" groupingUsed="false" />"></td>
 										</tr>
 									</tbody>
 									<thead>
@@ -401,7 +402,8 @@
 											<td colspan="2" id="grand">Grand Total :</td>
 											<td><input type="number" class="form-control"
 												placeholder="" readonly="readonly" id="grandtotal"
-												name="grandtotal" value="${salesReturn.totalReCost}"></td>
+												name="grandtotal"
+												value="<fmt:formatNumber value="${salesReturn.totalReCost}" maxFractionDigits="2" groupingUsed="false" />"></td>
 										</tr>
 									</thead>
 								</table>

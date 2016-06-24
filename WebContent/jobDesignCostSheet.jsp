@@ -242,7 +242,7 @@
 									<a href="#" onclick="addProduct();"><img src="img/add.png"
 										height="20px" style="float: right;"></a>
 									<h3>List of jobs</h3>
-									<table id="jobs" class="table table-striped table-bordered">
+									<table id="jobtable" class="table table-striped table-bordered">
 										<thead style="background-color: #F0F0F0;">
 											<tr>
 												<th>#</th>
@@ -563,7 +563,7 @@
 											"#jobRow" + $(this).val()
 													+ $("#proId").val()).length == 0) {
 
-										$("#jobs")
+										$("#jobtable")
 												.append(
 														'<tbody class="proTable'
 																+ $("#proId")
@@ -718,7 +718,7 @@
 						.each(
 								function() {
 
-									$("#jobs")
+									$("#jobtable")
 											.append(
 													'<tbody class="proTable'
 															+ $("#proId").val()
