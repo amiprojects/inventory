@@ -144,9 +144,9 @@
 				</h2>
 				<div class="sub-menu">
 					<ul>
-						<li><a id="debitNote" href="noteDebit.jsp" title="">Debit
+						<li><a id="debitNote" href="noteDebit.jsp" title="">Customer's
 								Note</a></li>
-						<li><a id="creditNote" href="noteCredit.jsp" title="">Credit
+						<li><a id="creditNote" href="noteCredit.jsp" title="">Vendor/Agent/Jobber's
 								Note</a></li>
 					</ul>
 				</div>

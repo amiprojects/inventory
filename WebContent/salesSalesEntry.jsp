@@ -2908,6 +2908,7 @@
 										$("#qty").val("");
 									} else {
 										alert("no more product remains in this lot");
+										$("#salesbar").val("");
 									}
 								} else {
 									alert("no product found for sale");

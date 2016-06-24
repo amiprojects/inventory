@@ -2097,10 +2097,34 @@ public class JsonServlet extends HttpServlet {
 									* sr.getSalesEntry().getAgentProfitValue()
 									/ 100;
 						}
-						float tax=0;
-						if(sr.getSalesEntry().getTax_Type_Group()!=null){
-							//tax=
+						float tax = 0;
+						if (sr.getSalesEntry().getTax_Type_Group() != null) {
+							tax = (subTotal - discount)
+									* sr.getSalesEntry().getTax_Type_Group()
+											.getTotalTaxValue() / 100;
 						}
+
+						float total = subTotal + tax - discount;
+						float round = Math.round(total);
+						float roundValue = round - total;
+						float grandtotal = round;
+
+						sr.setRoundOff(roundValue);
+						sr.setTotalReCost(grandtotal);
+						sr.setRetAgentProfitTotal(profit);
+						ejb.updateSalesReturn(sr);
+
+						PaymentDetails payDetails = ejb
+								.getPaymentDetailsBySalesReturnId(sr.getId())
+								.get(0);
+						payDetails.setPaidAmount(grandtotal);
+						VoucherDetails vd = ejb
+								.getAllVoucherDetailsBySalesReturnId(sr.getId())
+								.get(0);
+						vd.setValue(grandtotal);
+						ejb.updateVoucherDetails(vd);
+
+						ejb.updatePaymentDetails(payDetails);
 					}
 
 					// correcting voucherdetails totalcreditnote for the
@@ -2149,7 +2173,7 @@ public class JsonServlet extends HttpServlet {
 							ejb.updatePaymentDetails(paymentDetails);
 						}
 					}
-					// correcting purchase entry payment details
+					// correcting sales entry payment details
 
 					generatorSE.writeStartObject().write("error", false)
 							.write("msg", "Successful").writeEnd().close();

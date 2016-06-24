@@ -738,7 +738,7 @@
 												<div class="col-md-7">
 													<input type="text" class="form-control" value="0"
 														id="spPaymentAmount" name="spPaymentAmount"
-														onkeyup="spPaymentAmountFunc();" autocomplete="off"
+														autocomplete="off"
 														onchange="spPaymentAmountDecimalFixF();">
 												</div>
 											</div>

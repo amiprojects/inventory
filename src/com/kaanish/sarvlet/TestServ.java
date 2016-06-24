@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kaanish.ejb.Ejb;
-import com.kaanish.model.PaymentDetails;
+import com.kaanish.model.Dngr;
+import com.kaanish.model.PaymentDetailsForViaAgents;
+import com.kaanish.model.VoucherDetailsForViaAgents;
 
 @WebServlet({ "/testServ" })
 public class TestServ extends HttpServlet {
@@ -20,12 +22,25 @@ public class TestServ extends HttpServlet {
 	private Ejb ejb;
 
 	public void init() throws ServletException {
-		for (int i = 0; i < ejb.getAllPaymentDetailsAsc().size(); i++) {
-			PaymentDetails paymentDetails = ejb.getAllPaymentDetailsAsc()
-					.get(i);
-			int j = i + 1;
-			paymentDetails.setUniqueNo(j);
-			ejb.updatePaymentDetails(paymentDetails);
+		boolean toDeleteViaAgentPaymentAndVoucher = true;
+		for (Dngr dng : ejb.getAllDngr()) {
+			if (dng.getWhatDone().equals("deletedViaAgentPaymentAndVoucher")) {
+				toDeleteViaAgentPaymentAndVoucher = false;
+				break;
+			}
+		}
+		if (toDeleteViaAgentPaymentAndVoucher) {
+			for (PaymentDetailsForViaAgents pd : ejb
+					.getAllPaymentDetails4ViaAgent()) {
+				ejb.deletePaymentDetails4ViaAgent(pd.getId());
+			}
+			for (VoucherDetailsForViaAgents vd : ejb
+					.getAllVoucherDetails4ViaAgent()) {
+				ejb.deleteVoucherDetails4ViaAgentById(vd.getId());
+			}
+			Dngr dngr = new Dngr();
+			dngr.setWhatDone("deletedViaAgentPaymentAndVoucher");
+			ejb.setDngr(dngr);
 		}
 	}
 

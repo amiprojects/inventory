@@ -30,6 +30,7 @@ import com.kaanish.model.Country;
 import com.kaanish.model.CustomerEntry;
 import com.kaanish.model.Department;
 import com.kaanish.model.DesignImage;
+import com.kaanish.model.Dngr;
 import com.kaanish.model.ItemDetails;
 import com.kaanish.model.ItmProductsForSample;
 import com.kaanish.model.JobAssignmentDetails;
@@ -136,6 +137,22 @@ public class Ejb {
 	public String getNumberToWords(int number) {
 		return DigitToWords.convertNumberToWords(number);
 	}
+
+	/*********** for dngr ***************/
+	public void setDngr(Dngr dngr) {
+		em.persist(dngr);
+	}
+
+	public Dngr getDngrById(String id) {
+		return em.find(Dngr.class, id);
+	}
+
+	public List<Dngr> getAllDngr() {
+		TypedQuery<Dngr> q = em.createQuery("select c from Dngr c", Dngr.class);
+		return q.getResultList();
+	}
+
+	/*********** for dngr ***************/
 
 	/****************** for security *********************/
 	public List<JobClass> getAllJobClasses() {
@@ -635,6 +652,10 @@ public class Ejb {
 	public void setPaymentDetails4ViaAgent(
 			PaymentDetailsForViaAgents paymentDetails) {
 		em.persist(paymentDetails);
+	}
+
+	public void deletePaymentDetails4ViaAgent(int id) {
+		em.remove(getPaymentDetails4ViaAgentById(id));
 	}
 
 	public PaymentDetailsForViaAgents getPaymentDetails4ViaAgentById(int id) {
@@ -4040,6 +4061,10 @@ public class Ejb {
 	public void setVoucherDetails4ViaAgent(
 			VoucherDetailsForViaAgents voucherDetails) {
 		em.persist(voucherDetails);
+	}
+
+	public void deleteVoucherDetails4ViaAgentById(int id) {
+		em.remove(getVoucherDetails4ViaAgentById(id));
 	}
 
 	public VoucherDetailsForViaAgents getVoucherDetails4ViaAgentById(int id) {

@@ -186,7 +186,7 @@
 										</tbody>
 									</table>
 									<h3>List of jobs</h3>
-									<table id="jobs" class="table table-striped table-bordered">
+									<table id="jobtable" class="table table-striped table-bordered">
 										<thead style="background-color: #F0F0F0;">
 											<tr>
 												<th>#</th>

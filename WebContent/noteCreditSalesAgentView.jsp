@@ -8,7 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Purchase Agent's Credit Note Statement</title>
+<title>Admin Panel</title>
 
 <link
 	href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700,900'
@@ -76,8 +76,7 @@
 
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
-								<h3 style="margin-top: 11px;">Sales Agent's Credit Note
-									Statement</h3>
+								<h3 style="margin-top: 11px;">Sales Agent's Note Statement</h3>
 							</div>
 
 							<div class="widget-area">

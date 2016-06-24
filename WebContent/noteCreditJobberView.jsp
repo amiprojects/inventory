@@ -75,8 +75,7 @@
 
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
-								<h3 style="margin-top: 11px;">Jobber's Credit Note
-									Statement</h3>
+								<h3 style="margin-top: 11px;">Jobber's Note Statement</h3>
 							</div>
 
 							<div class="widget-area">
