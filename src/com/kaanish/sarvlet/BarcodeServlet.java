@@ -41,9 +41,11 @@ public class BarcodeServlet extends HttpServlet {
 		resp.setContentType("application/pdf");
 		try {
 			Document document = new Document();
-			document.setMargins(15, 0, 10, 0);
-			Rectangle rec = new Rectangle((float) (3.8 * 72),
-					(float) (2.0 * 72));
+			document.setMargins(5, 5, 5, 5);
+//			Rectangle rec = new Rectangle((float) (3.8 * 72),
+//					(float) (2.0 * 72));
+			Rectangle rec = new Rectangle((float) (3.5 * 30),
+					(float) (1.8 * 30));
 			document.setPageSize(rec);
 			PdfWriter wr = PdfWriter.getInstance(document,
 					resp.getOutputStream());
@@ -83,28 +85,32 @@ public class BarcodeServlet extends HttpServlet {
 					// + "     "
 					// + ejb.getMRPlh(float price)));
 
-					document.add(new Paragraph(new Phrase(10F, barcodeHeader,
-							FontFactory.getFont(FontFactory.TIMES, 20f))));
-					document.add(new Paragraph(new Phrase(20F, purProdDetLst
+					document.add(new Paragraph(new Phrase(7F, barcodeHeader,
+							FontFactory.getFont(FontFactory.TIMES, 6f))));
+					
+					document.add(new Paragraph(new Phrase(5F, purProdDetLst
 							.get(i).getProductDetail().getUniversalCode()
 							+ "     " + ejb.getMRPlh(price), FontFactory
-							.getFont(FontFactory.TIMES, 20f))));
+							.getFont(FontFactory.TIMES, 6f))));
+					
 					String code = purProdDetLst.get(i).getId() + "/"
 							+ purProdDetLst.get(i).getLotNumber() + "/"
 							+ purProdDetLst.get(i).getProductDetail().getCode();
 
 					Barcode128 code128 = new Barcode128();
-					code128.setBaseline(15);
-					code128.setSize(17);
-					// code128.setX(1.7F);
-					code128.setBarHeight(50F);
+					code128.setBaseline(8);
+					code128.setSize(6);
+					//code128.setX(.5F);
+					code128.setBarHeight(25F);
 
-					code128.setCode(code);
+					code128.setCode(code.trim());
 					code128.setCodeType(Barcode128.CODE128);
 					Image code128Image = code128.createImageWithBarcode(cb,
 							null, null);
+					code128Image.setAbsolutePosition(5,3);
+			        code128Image.scalePercent(75);
 
-					code128Image.setScaleToFitLineWhenOverflow(true);
+					//code128Image.setScaleToFitLineWhenOverflow(true);
 					document.add(code128Image);
 
 					// PdfPTable table = new PdfPTable(1);
