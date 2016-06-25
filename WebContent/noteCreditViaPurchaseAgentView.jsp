@@ -154,8 +154,14 @@
 													<td><c:if test="${vouDetList.isCredit()}">Credit</c:if>
 														<c:if test="${!vouDetList.isCredit()}">Debit</c:if></td>
 													<td>${vouDetList.value}</td>
-													<td><c:if test="${vouDetList.purchaseEntryId!=0}">Purchase Payment</c:if></td>
-													<td><c:if test="${vouDetList.purchaseEntryId!=0}">${sessionScope['ejb'].getPurchaseEntryById(vouDetList.purchaseEntryId).challanNumber}</c:if>
+													<td><c:if
+															test="${vouDetList.purchaseEntryId!=0 && vouDetList.purchaseReturnId==0}">Purchase Payment</c:if>
+														<c:if
+															test="${vouDetList.purchaseEntryId!=0 && vouDetList.purchaseReturnId!=0}">Purchase Return</c:if></td>
+													<td><c:if
+															test="${vouDetList.purchaseEntryId!=0 && vouDetList.purchaseReturnId==0}">${sessionScope['ejb'].getPurchaseEntryById(vouDetList.purchaseEntryId).challanNumber}</c:if>
+														<c:if
+															test="${vouDetList.purchaseEntryId!=0 && vouDetList.purchaseReturnId!=0}">${sessionScope['ejb'].getPurchaseEntryById(vouDetList.purchaseEntryId).challanNumber}<br>(${sessionScope['ejb'].getPurchaseReturnById(vouDetList.purchaseReturnId).challanNumber})</c:if>
 													</td>
 												</tr>
 												<c:set var="count" value="${count+1}" />
