@@ -888,7 +888,7 @@
 	$(function() {		
 		$("#spPaymentAmount").numericInput({
 			allowFloat : true,
-			allowNegative : false,
+			allowNegative : true,
 		});
 	});
 	function submit() {

@@ -214,6 +214,7 @@ public class Servlet extends HttpServlet {
 	private ItmProductsForSample itmProductsForSample;
 	private VoucherDetailsForViaAgents voucherDetForViaAgent;
 	private PaymentDetailsForViaAgents payDetForViaAgent;
+	int uniqueNo;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -1725,6 +1726,71 @@ public class Servlet extends HttpServlet {
 								req.setAttribute("print", 0);
 							}
 
+							// new to check
+							// if (purchaseEntry.getAgentId() != 0) {
+							// uniqueNo = ejb
+							// .getLastUniqueNoOfPayDet4ViaAgent() + 1;
+							// if (ejb.getVoucherAssignByVendorId(
+							// purchaseEntry.getAgentId()).size() == 0) {
+							// voucherAssign = new VoucherAssign();
+							// vendor = ejb.getVendorById(purchaseEntry
+							// .getAgentId());
+							// voucherAssign.setVendor(vendor);
+							// voucherAssign
+							// .setVoucherDetailsNumber(vendor
+							// .getPh1());
+							// ejb.setVoucherAssign(voucherAssign);
+							// } else {
+							// voucherAssign = ejb
+							// .getVoucherAssignByVendorId(
+							// purchaseEntry.getAgentId())
+							// .get(0);
+							// }
+							//
+							// voucherDetForViaAgent = new
+							// VoucherDetailsForViaAgents();
+							// voucherDetForViaAgent
+							// .setVoucherAssignId(voucherAssign
+							// .getId());
+							// voucherDetForViaAgent.setAgentId(purchaseEntry
+							// .getAgentId());
+							// voucherDetForViaAgent
+							// .setPurchaseEntryId(purchaseEntry
+							// .getId());
+							// voucherDetForViaAgent.setCredit(true);
+							// voucherDetForViaAgent.setValue(purchaseEntry
+							// .getAgentProfitTotal());
+							// voucherDetForViaAgent
+							// .setVoucherDate(purchaseEntry
+							// .getPurchase_date());
+							// voucherDetForViaAgent.setEntryDate(new Date());
+							// voucherDetForViaAgent
+							// .setUserId((String) httpSession
+							// .getAttribute("user"));
+							// ejb.setVoucherDetails4ViaAgent(voucherDetForViaAgent);
+							//
+							// payDetForViaAgent = new
+							// PaymentDetailsForViaAgents();
+							// payDetForViaAgent.setPaymentDate(purchaseEntry
+							// .getPurchase_date());
+							// payDetForViaAgent.setEntryDate(new Date());
+							// payDetForViaAgent.setPaidAmount(0);
+							// payDetForViaAgent
+							// .setPurchaseEntryId(purchaseEntry
+							// .getId());
+							// payDetForViaAgent.setAgentId(purchaseEntry
+							// .getAgentId());
+							// payDetForViaAgent.setPaymentStatusId(ejb
+							// .getPaymentStatusByStatus("Not Paid")
+							// .getId());
+							// payDetForViaAgent.setUniqueNo(uniqueNo);
+							// payDetForViaAgent
+							// .setUserId((String) httpSession
+							// .getAttribute("user"));
+							// ejb.setPaymentDetails4ViaAgent(payDetForViaAgent);
+							// }
+							// new to check
+
 							req.setAttribute("purDetIdforPC",
 									purchaseEntry.getId());
 							purchaseEntry = null;
@@ -1961,6 +2027,68 @@ public class Servlet extends HttpServlet {
 									}
 								}
 							}
+
+							// new to check
+							// if (purchaseEntry.getAgentId() != 0
+							// && purchaseEntry.isEfectiveProfit()) {
+							// uniqueNo = ejb
+							// .getLastUniqueNoOfPayDet4ViaAgent() + 1;
+							//
+							// voucherDetForViaAgent = new
+							// VoucherDetailsForViaAgents();
+							// voucherDetForViaAgent.setVoucherAssignId(ejb
+							// .getVoucherAssignByVendorId(
+							// purchaseEntry.getAgentId())
+							// .get(0).getId());
+							// voucherDetForViaAgent.setAgentId(purchaseEntry
+							// .getAgentId());
+							// voucherDetForViaAgent
+							// .setPurchaseEntryId(purchaseEntry
+							// .getId());
+							// voucherDetForViaAgent
+							// .setPurchaseReturnId(purchaseReturn
+							// .getId());
+							// voucherDetForViaAgent.setCredit(false);
+							// voucherDetForViaAgent.setValue(purchaseReturn
+							// .getRetAgentProfitTotal());
+							// voucherDetForViaAgent
+							// .setVoucherDate(purchaseReturn
+							// .getReturnDate());
+							// voucherDetForViaAgent.setEntryDate(new Date());
+							// voucherDetForViaAgent
+							// .setUserId((String) httpSession
+							// .getAttribute("user"));
+							// ejb.setVoucherDetails4ViaAgent(voucherDetForViaAgent);
+							//
+							// payDetForViaAgent = new
+							// PaymentDetailsForViaAgents();
+							// payDetForViaAgent.setPaymentDate(purchaseReturn
+							// .getReturnDate());
+							// payDetForViaAgent.setEntryDate(new Date());
+							// payDetForViaAgent.setPaidAmount(purchaseReturn
+							// .getRetAgentProfitTotal());
+							// payDetForViaAgent
+							// .setPurchaseEntryId(purchaseEntry
+							// .getId());
+							// payDetForViaAgent
+							// .setPurchaseReturnId(purchaseReturn
+							// .getId());
+							// payDetForViaAgent.setAgentId(purchaseEntry
+							// .getAgentId());
+							// payDetForViaAgent.setPaymentTypeId(ejb
+							// .getPaymentTypeByType("Credit Note")
+							// .getId());
+							// payDetForViaAgent.setPaymentStatusId(ejb
+							// .getPaymentStatusByStatus("Semi Paid")
+							// .getId());
+							// payDetForViaAgent.setUniqueNo(uniqueNo);
+							// payDetForViaAgent
+							// .setUserId((String) httpSession
+							// .getAttribute("user"));
+							// ejb.setPaymentDetails4ViaAgent(payDetForViaAgent);
+							// }
+							// new to check
+
 							req.setAttribute("purRetIdforPC",
 									purchaseReturn.getId());
 							msg = "Purchase Return Succeessful";
@@ -2240,6 +2368,66 @@ public class Servlet extends HttpServlet {
 								purchaseProductDetails = null;
 								salesProductDetails = null;
 							}
+
+							// new to check
+							if (salesEntry.getVendor() != null) {
+								uniqueNo = ejb
+										.getLastUniqueNoOfPayDet4ViaAgent() + 1;
+								if (ejb.getVoucherAssignByVendorId(
+										salesEntry.getVendor().getId()).size() == 0) {
+									voucherAssign = new VoucherAssign();
+									vendor = ejb.getVendorById(salesEntry
+											.getVendor().getId());
+									voucherAssign.setVendor(vendor);
+									voucherAssign
+											.setVoucherDetailsNumber(vendor
+													.getPh1());
+									ejb.setVoucherAssign(voucherAssign);
+								} else {
+									voucherAssign = ejb
+											.getVoucherAssignByVendorId(
+													salesEntry.getVendor()
+															.getId()).get(0);
+								}
+
+								voucherDetForViaAgent = new VoucherDetailsForViaAgents();
+								voucherDetForViaAgent
+										.setVoucherAssignId(voucherAssign
+												.getId());
+								voucherDetForViaAgent.setAgentId(salesEntry
+										.getVendor().getId());
+								voucherDetForViaAgent
+										.setSalesEntryId(salesEntry.getId());
+								voucherDetForViaAgent.setCredit(true);
+								voucherDetForViaAgent.setValue(salesEntry
+										.getAgentProfitTotal());
+								voucherDetForViaAgent.setVoucherDate(salesEntry
+										.getSales_date());
+								voucherDetForViaAgent.setEntryDate(new Date());
+								voucherDetForViaAgent
+										.setUserId((String) httpSession
+												.getAttribute("user"));
+								ejb.setVoucherDetails4ViaAgent(voucherDetForViaAgent);
+
+								payDetForViaAgent = new PaymentDetailsForViaAgents();
+								payDetForViaAgent.setPaymentDate(salesEntry
+										.getSales_date());
+								payDetForViaAgent.setEntryDate(new Date());
+								payDetForViaAgent.setPaidAmount(0);
+								payDetForViaAgent.setSalesEntryId(salesEntry
+										.getId());
+								payDetForViaAgent.setAgentId(salesEntry
+										.getVendor().getId());
+								payDetForViaAgent.setPaymentStatusId(ejb
+										.getPaymentStatusByStatus("Not Paid")
+										.getId());
+								payDetForViaAgent.setUniqueNo(uniqueNo);
+								payDetForViaAgent
+										.setUserId((String) httpSession
+												.getAttribute("user"));
+								ejb.setPaymentDetails4ViaAgent(payDetForViaAgent);
+							}
+							// new to check
 
 							req.setAttribute("purDetIdforPC",
 									salesEntry.getId());
@@ -5089,10 +5277,64 @@ public class Servlet extends HttpServlet {
 									}
 								}
 							}
-							salesReturn.setSalesEntry(salesEntry);
+
+							// new to check
+							if (salesEntry.getVendor() != null
+									&& salesEntry.isEfectiveProfit()) {
+								uniqueNo = ejb
+										.getLastUniqueNoOfPayDet4ViaAgent() + 1;
+
+								voucherDetForViaAgent = new VoucherDetailsForViaAgents();
+								voucherDetForViaAgent.setVoucherAssignId(ejb
+										.getVoucherAssignByVendorId(
+												salesEntry.getVendor().getId())
+										.get(0).getId());
+								voucherDetForViaAgent.setAgentId(salesEntry
+										.getVendor().getId());
+								voucherDetForViaAgent
+										.setSalesEntryId(salesEntry.getId());
+								voucherDetForViaAgent
+										.setSalesReturnId(salesReturn.getId());
+								voucherDetForViaAgent.setCredit(false);
+								voucherDetForViaAgent.setValue(salesReturn
+										.getRetAgentProfitTotal());
+								voucherDetForViaAgent
+										.setVoucherDate(salesReturn
+												.getReturnDate());
+								voucherDetForViaAgent.setEntryDate(new Date());
+								voucherDetForViaAgent
+										.setUserId((String) httpSession
+												.getAttribute("user"));
+								ejb.setVoucherDetails4ViaAgent(voucherDetForViaAgent);
+
+								payDetForViaAgent = new PaymentDetailsForViaAgents();
+								payDetForViaAgent.setPaymentDate(salesReturn
+										.getReturnDate());
+								payDetForViaAgent.setEntryDate(new Date());
+								payDetForViaAgent.setPaidAmount(salesReturn
+										.getRetAgentProfitTotal());
+								payDetForViaAgent.setSalesEntryId(salesEntry
+										.getId());
+								payDetForViaAgent.setSalesReturnId(salesReturn
+										.getId());
+								payDetForViaAgent.setAgentId(salesEntry
+										.getVendor().getId());
+								payDetForViaAgent.setPaymentTypeId(ejb
+										.getPaymentTypeByType("Credit Note")
+										.getId());
+								payDetForViaAgent.setPaymentStatusId(ejb
+										.getPaymentStatusByStatus("Semi Paid")
+										.getId());
+								payDetForViaAgent.setUniqueNo(uniqueNo);
+								payDetForViaAgent
+										.setUserId((String) httpSession
+												.getAttribute("user"));
+								ejb.setPaymentDetails4ViaAgent(payDetForViaAgent);
+							}
+							// new to check
+
 							req.setAttribute("salRetDetIdforPC",
 									salesReturn.getId());
-
 							msg = "sales Return Succeessful";
 						} else {
 							msg = "Duplicate Entry! Not Allowed!";

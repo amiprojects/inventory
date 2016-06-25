@@ -153,8 +153,14 @@
 													<td><c:if test="${vouDetList.isCredit()}">Credit</c:if>
 														<c:if test="${!vouDetList.isCredit()}">Debit</c:if></td>
 													<td>${vouDetList.value}</td>
-													<td><c:if test="${vouDetList.salesEntryId!=0}">Sales Payment</c:if></td>
-													<td><c:if test="${vouDetList.salesEntryId!=0}">${sessionScope['ejb'].getSalesEntryById(vouDetList.salesEntryId).challanNumber}</c:if>
+													<td><c:if
+															test="${vouDetList.salesEntryId!=0 && vouDetList.salesReturnId==0}">Sales Payment</c:if>
+														<c:if
+															test="${vouDetList.salesEntryId!=0 && vouDetList.salesReturnId!=0}">Sales Return</c:if></td>
+													<td><c:if
+															test="${vouDetList.salesEntryId!=0 && vouDetList.salesReturnId==0}">${sessionScope['ejb'].getSalesEntryById(vouDetList.salesEntryId).challanNumber}</c:if>
+														<c:if
+															test="${vouDetList.salesEntryId!=0 && vouDetList.salesReturnId!=0}">${sessionScope['ejb'].getSalesEntryById(vouDetList.salesEntryId).challanNumber}<br>(${sessionScope['ejb'].getSalesReturnDetailsById(vouDetList.salesReturnId).challanNumber})</c:if>
 													</td>
 												</tr>
 												<c:set var="count" value="${count+1}" />

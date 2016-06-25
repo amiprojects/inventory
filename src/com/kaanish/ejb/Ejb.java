@@ -697,6 +697,16 @@ public class Ejb {
 		return q.getResultList();
 	}
 
+	public List<PaymentDetailsForViaAgents> getPaymentDetails4ViaAgentBySalesReturnId(
+			int id) {
+		TypedQuery<PaymentDetailsForViaAgents> q = em
+				.createQuery(
+						"select c from PaymentDetailsForViaAgents c where c.salesReturnId=:id order by c.id desc",
+						PaymentDetailsForViaAgents.class);
+		q.setParameter("id", id);
+		return q.getResultList();
+	}
+
 	public List<PaymentDetailsForViaAgents> getPaymentDetails4ViaAgentByPurchaseEntryId(
 			int id) {
 		TypedQuery<PaymentDetailsForViaAgents> q = em
@@ -1755,6 +1765,10 @@ public class Ejb {
 	/***************** for Purchase Return ***********************/
 	public void setPurchaseReturn(PurchaseReturn purchaseReturn) {
 		em.persist(purchaseReturn);
+	}
+
+	public void updatePurchaseReturn(PurchaseReturn purchaseReturn) {
+		em.merge(purchaseReturn);
 	}
 
 	public PurchaseReturn getPurchaseReturnById(int id) {
@@ -4090,6 +4104,16 @@ public class Ejb {
 						"select c from VoucherDetailsForViaAgents c where c.salesEntryId=:seId order by c.id ASC",
 						VoucherDetailsForViaAgents.class);
 		q.setParameter("seId", seId);
+		return q.getResultList();
+	}
+
+	public List<VoucherDetailsForViaAgents> getAllVoucherDetails4ViaAgentBySalesReturnId(
+			int srId) {
+		TypedQuery<VoucherDetailsForViaAgents> q = em
+				.createQuery(
+						"select c from VoucherDetailsForViaAgents c where c.salesReturnId=:srId order by c.id ASC",
+						VoucherDetailsForViaAgents.class);
+		q.setParameter("srId", srId);
 		return q.getResultList();
 	}
 

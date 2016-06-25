@@ -2,6 +2,16 @@ SalesEntry
 ...........
 description null 4000
 
+VoucherDetailsForViaAgents
+............................
+purchaseReturnId 10,0
+salesReturnId 10,0
+
+PaymentDetailsForViaAgents
+............................
+purchaseReturnId 10,0
+salesReturnId 10,0
+
 //////////////////////////////////////////////
 //every time on making .war
 ...................................

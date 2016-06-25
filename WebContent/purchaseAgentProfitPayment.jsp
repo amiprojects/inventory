@@ -277,12 +277,12 @@
 														<td><fmt:formatDate
 																value="${pEntryByD.purchase_date}" pattern="dd-MM-yy" /></td>
 														<td>${pEntryByD.agentProfitTotal}</td>
-														<td><c:set var="mProfit" value="${0}" /> <c:forEach
+														<%-- <td><c:set var="mProfit" value="${0}" /> <c:forEach
 																var="pReturn" items="${pEntryByD.purchaseReturn}">
 																<fmt:formatNumber var="mProfit"
 																	value="${mProfit+pReturn.retAgentProfitTotal}"
 																	maxFractionDigits="2" groupingUsed="false" />
-															</c:forEach>${mProfit}</td>
+															</c:forEach>${mProfit}</td> --%>
 														<td style="display: none;"><c:if
 																test="${sessionScope['ejb'].getPaymentDetails4ViaAgentByPurchaseEntryId(pEntryByD.id).size()>0}">
 																<c:set
@@ -295,8 +295,8 @@
 														<td><c:set var="totPaybleCost"
 																value="${pEntryByD.agentProfitTotal}" /> <c:forEach
 																var="purchaseRet" items="${pEntryByD.purchaseReturn}">
-																<c:set var="totPaybleCost"
-																	value="${totPaybleCost-purchaseRet.retAgentProfitTotal}" />
+																<%-- <c:set var="totPaybleCost"
+																	value="${totPaybleCost-purchaseRet.retAgentProfitTotal}" /> --%>
 															</c:forEach>
 															<form action="" method="post"
 																id="agentPayment${pEntryByD.id}">
@@ -962,7 +962,7 @@
 	$(function() {		
 		$("#spPaymentAmount").numericInput({
 			allowFloat : true,
-			allowNegative : false,
+			allowNegative : true,
 		});
 	});
 	function submit() {

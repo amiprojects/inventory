@@ -31,6 +31,8 @@ public class PaymentDetailsForViaAgents implements Serializable {
 
 	private int purchaseEntryId;
 	private int salesEntryId;
+	private int purchaseReturnId;
+	private int salesReturnId;
 
 	private int agentId;
 
@@ -133,5 +135,21 @@ public class PaymentDetailsForViaAgents implements Serializable {
 
 	public void setAgentId(int agentId) {
 		this.agentId = agentId;
+	}
+
+	public int getPurchaseReturnId() {
+		return purchaseReturnId;
+	}
+
+	public void setPurchaseReturnId(int purchaseReturnId) {
+		this.purchaseReturnId = purchaseReturnId;
+	}
+
+	public int getSalesReturnId() {
+		return salesReturnId;
+	}
+
+	public void setSalesReturnId(int salesReturnId) {
+		this.salesReturnId = salesReturnId;
 	}
 }

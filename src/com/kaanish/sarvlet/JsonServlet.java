@@ -36,6 +36,8 @@ import com.kaanish.model.PaymentDetailsForViaAgents;
 import com.kaanish.model.ProductDetail;
 import com.kaanish.model.ProductImage;
 import com.kaanish.model.ProductsForDesignCostSheet;
+import com.kaanish.model.PurchaseReturn;
+import com.kaanish.model.PurchaseReturnProductDetails;
 import com.kaanish.model.Purchase_Entry;
 import com.kaanish.model.Purchase_Product_Details;
 import com.kaanish.model.QtyUnit;
@@ -163,6 +165,8 @@ public class JsonServlet extends HttpServlet {
 	private PrintWriter pw;
 	private String name;
 	private Purchase_Entry purchase_Entry;
+	private VoucherDetailsForViaAgents voucherDetForViaAgent;
+	private PaymentDetailsForViaAgents payDetForViaAgent;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -956,8 +960,14 @@ public class JsonServlet extends HttpServlet {
 						desc = "NA";
 					}
 					if (pd.getPaymentTypeId() != 0) {
-						pType = ejb.getPaymentTypeById(pd.getPaymentTypeId())
-								.getType();
+						if (pd.getSalesReturnId() != 0) {
+							pType = ejb.getPaymentTypeById(
+									pd.getPaymentTypeId()).getType()
+									+ " (Return Value)";
+						} else {
+							pType = ejb.getPaymentTypeById(
+									pd.getPaymentTypeId()).getType();
+						}
 					} else {
 						pType = "NA";
 					}
@@ -2067,6 +2077,16 @@ public class JsonServlet extends HttpServlet {
 					}
 					ejb.updatePaymentDetails(paymentDetails);
 
+					// new to check
+					if (salesEntry.getVendor() != null) {
+						voucherDetForViaAgent = ejb
+								.getAllVoucherDetails4ViaAgentBySalesEntryId(
+										salesEntry.getId()).get(0);
+						voucherDetForViaAgent.setValue(Float.parseFloat(req
+								.getParameter("profitValue")));
+						ejb.updateVoucherDetails4ViaAgent(voucherDetForViaAgent);
+					}
+
 					for (SalesReturn sr : ejb
 							.getSalesReturnBySalesEntryId(salesEntry.getId())) {
 						float subTotal = 0;
@@ -2125,7 +2145,23 @@ public class JsonServlet extends HttpServlet {
 						ejb.updateVoucherDetails(vd);
 
 						ejb.updatePaymentDetails(payDetails);
+
+						if (salesEntry.getVendor() != null
+								&& salesEntry.isEfectiveProfit()) {
+							voucherDetForViaAgent = ejb
+									.getAllVoucherDetails4ViaAgentBySalesReturnId(
+											sr.getId()).get(0);
+							voucherDetForViaAgent.setValue(profit);
+							ejb.updateVoucherDetails4ViaAgent(voucherDetForViaAgent);
+
+							payDetForViaAgent = ejb
+									.getPaymentDetails4ViaAgentBySalesReturnId(
+											sr.getId()).get(0);
+							payDetForViaAgent.setPaidAmount(profit);
+							ejb.updatePaymentDetails4ViaAgent(payDetForViaAgent);
+						}
 					}
+					// new to check
 
 					// correcting voucherdetails totalcreditnote for the
 					// customer
@@ -2276,6 +2312,93 @@ public class JsonServlet extends HttpServlet {
 						ejb.updateVoucherDetails(vd);
 					}
 					ejb.updatePaymentDetails(paymentDetails);
+
+					// new to check
+					// if (purchase_Entry.getAgentId() != 0) {
+					// voucherDetForViaAgent = ejb
+					// .getAllVoucherDetails4ViaAgentByPurchaseEntryId(
+					// purchase_Entry.getId()).get(0);
+					// voucherDetForViaAgent.setValue(Float.parseFloat(req
+					// .getParameter("profitValue")));
+					// ejb.updateVoucherDetails4ViaAgent(voucherDetForViaAgent);
+					// }
+					//
+					// for (PurchaseReturn pr :
+					// purchase_Entry.getPurchaseReturn()) {
+					// float subTotal = 0;
+					// for (PurchaseReturnProductDetails sprd : pr
+					// .getPurchaseReturnProductDetails()) {
+					// subTotal = subTotal
+					// + (sprd.getQtyReturn() * sprd
+					// .getPurchaseProductDetails()
+					// .getCost());
+					// }
+					// float discount = 0;
+					// if (pr.getPurchaseEntry().isFlatDiscount()) {
+					// discount = subTotal
+					// * pr.getPurchaseEntry().getDiscountValue()
+					// / pr.getPurchaseEntry().getSubTotal();
+					// } else {
+					// discount = subTotal
+					// * pr.getPurchaseEntry().getDiscountValue()
+					// / 100;
+					// }
+					// float profit = 0;
+					// if (pr.getPurchaseEntry().isFlatProfitAgent()) {
+					// profit = subTotal
+					// * pr.getPurchaseEntry()
+					// .getAgentProfitValue()
+					// / pr.getPurchaseEntry().getSubTotal();
+					// } else {
+					// profit = (subTotal - discount)
+					// * pr.getPurchaseEntry()
+					// .getAgentProfitValue() / 100;
+					// }
+					// float tax = 0;
+					// if (pr.getPurchaseEntry().getTax_Type_Group() != null) {
+					// tax = (subTotal - discount)
+					// * pr.getPurchaseEntry().getTax_Type_Group()
+					// .getTotalTaxValue() / 100;
+					// }
+					//
+					// float total = subTotal + tax - discount;
+					// float round = Math.round(total);
+					// float roundValue = round - total;
+					// float grandtotal = round;
+					//
+					// pr.setRoundOff(roundValue);
+					// pr.setTotalReCost(grandtotal);
+					// pr.setRetAgentProfitTotal(profit);
+					// ejb.updatePurchaseReturn(pr);
+					//
+					// PaymentDetails payDetails = ejb
+					// .getPaymentDetailsBySalesReturnId(pr.getId())
+					// .get(0);
+					// payDetails.setPaidAmount(grandtotal);
+					// VoucherDetails vd = ejb
+					// .getAllVoucherDetailsBySalesReturnId(pr.getId())
+					// .get(0);
+					// vd.setValue(grandtotal);
+					// ejb.updateVoucherDetails(vd);
+					//
+					// ejb.updatePaymentDetails(payDetails);
+					//
+					// if (purchase_Entry.getVendor() != null
+					// && purchase_Entry.isEfectiveProfit()) {
+					// voucherDetForViaAgent = ejb
+					// .getAllVoucherDetails4ViaAgentBySalesReturnId(
+					// pr.getId()).get(0);
+					// voucherDetForViaAgent.setValue(profit);
+					// ejb.updateVoucherDetails4ViaAgent(voucherDetForViaAgent);
+					//
+					// payDetForViaAgent = ejb
+					// .getPaymentDetails4ViaAgentBySalesReturnId(
+					// pr.getId()).get(0);
+					// payDetForViaAgent.setPaidAmount(profit);
+					// ejb.updatePaymentDetails4ViaAgent(payDetForViaAgent);
+					// }
+					// }
+					// new to check
 
 					// correcting voucherdetails totalcreditnote for the
 					// vendor
