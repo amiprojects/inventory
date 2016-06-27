@@ -34,8 +34,6 @@ public class PaymentDetailsForViaAgents implements Serializable {
 	private int purchaseReturnId;
 	private int salesReturnId;
 
-	private int agentId;
-
 	private int paymentTypeId;
 	private int paymentStatusId;
 
@@ -127,14 +125,6 @@ public class PaymentDetailsForViaAgents implements Serializable {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
-	}
-
-	public int getAgentId() {
-		return agentId;
-	}
-
-	public void setAgentId(int agentId) {
-		this.agentId = agentId;
 	}
 
 	public int getPurchaseReturnId() {

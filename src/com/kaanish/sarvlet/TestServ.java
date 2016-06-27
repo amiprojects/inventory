@@ -102,7 +102,6 @@ public class TestServ extends HttpServlet {
 					payDetForViaAgent.setEntryDate(new Date());
 					payDetForViaAgent.setPaidAmount(0);
 					payDetForViaAgent.setSalesEntryId(se.getId());
-					payDetForViaAgent.setAgentId(se.getVendor().getId());
 					payDetForViaAgent.setPaymentStatusId(ejb
 							.getPaymentStatusByStatus("Not Paid").getId());
 					payDetForViaAgent.setUniqueNo(uniqueNo);
@@ -137,8 +136,6 @@ public class TestServ extends HttpServlet {
 									.getRetAgentProfitTotal());
 							payDetForViaAgent.setSalesEntryId(se.getId());
 							payDetForViaAgent.setSalesReturnId(sr.getId());
-							payDetForViaAgent
-									.setAgentId(se.getVendor().getId());
 							payDetForViaAgent.setPaymentTypeId(ejb
 									.getPaymentTypeByType("Credit Note")
 									.getId());
@@ -204,7 +201,6 @@ public class TestServ extends HttpServlet {
 					payDetForViaAgent.setEntryDate(new Date());
 					payDetForViaAgent.setPaidAmount(0);
 					payDetForViaAgent.setPurchaseEntryId(pe.getId());
-					payDetForViaAgent.setAgentId(pe.getAgentId());
 					payDetForViaAgent.setPaymentStatusId(ejb
 							.getPaymentStatusByStatus("Not Paid").getId());
 					payDetForViaAgent.setUniqueNo(uniqueNo);
@@ -240,7 +236,6 @@ public class TestServ extends HttpServlet {
 									.getRetAgentProfitTotal());
 							payDetForViaAgent.setPurchaseEntryId(pe.getId());
 							payDetForViaAgent.setPurchaseReturnId(pr.getId());
-							payDetForViaAgent.setAgentId(pe.getAgentId());
 							payDetForViaAgent.setPaymentTypeId(ejb
 									.getPaymentTypeByType("Credit Note")
 									.getId());

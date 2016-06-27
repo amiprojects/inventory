@@ -1823,6 +1823,11 @@
 				$("#isEffectiveTR").attr("style", "display: none;");
 				$("#profitTypeTR").attr("style", "display: none;");
 				$("#profitValueTR").attr("style", "display: none;");
+
+				$("#isEffective").val("efectiveYes");
+				$("#profitType").val("profitFlat");
+				$("#profitVal").val(0);
+				$("#profitValue").val(0);
 			}
 		}
 		$(function() {

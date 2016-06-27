@@ -118,7 +118,9 @@
 												<td>Name :</td>
 												<td><input type="text" name="custName" id="custName"
 													style="align: center;" readonly="readonly"
-													value="${salesSearchView.customer.name}"></input></td>
+													value="${salesSearchView.customer.name}"></input><input
+													type="hidden" name="existingCustId"
+													value="${salesSearchView.customer.id}" id="existingCustId"></td>
 											</tr>
 
 											<tr>
@@ -157,11 +159,21 @@
 														</c:when>
 														<c:otherwise>
 															<input type="checkbox" onclick="isAgentF();" id="agent"
-																name="agent" disabled="disabled">&nbsp; Via Agent :</c:otherwise>
+																name="agent" disabled="disabled"
+																style="background-color: grey;">&nbsp; Via Agent :</c:otherwise>
 													</c:choose></td>
 												<td><input type="text" name="agentName" id="agentName"
-													style="length: 40px;" readonly="readonly"
-													value="${salesSearchView.vendor.name}"></input></td>
+													style="length: 40px; text-transform: uppercase; background-color: grey;"
+													readonly="readonly" value="${salesSearchView.vendor.name}" />
+													<input type="hidden" name="aId" id="aId">
+													<div style="float: right; text-align: left;">
+														<input type="image" src="img/edit.png"
+															style="width: 20px;" id="editImgAgent"
+															onclick="enableAgent();"><input type="image"
+															src="img/save.png" id="saveImgAgent"
+															style="width: 20px; display: none;"
+															onclick="updateSeAgent();">
+													</div></td>
 											</tr>
 											<tr id="aDetailsDiv">
 												<td>Agent details :</td>
@@ -195,7 +207,7 @@
 										<div class="form-group">
 											<label style="font-size: 15px" class="font">Date :</label> <input
 												class="form-control" type="text" name="salesDate"
-												id="datepicker" readonly="readonly"
+												id="datepicker" readonly="readonly" disabled="disabled"
 												value='<fmt:formatDate value="${salesSearchView.sales_date}" pattern="dd-MM-yyyy"/>'>
 
 										</div>
@@ -325,23 +337,33 @@
 									</thead>
 									<tbody>
 										<tr>
-											<td colspan="2">Discount &nbsp; <select name="disType"
-												id="disType">
-													<c:choose>
-														<c:when test="${salesSearchView.isFlatDiscount()==true}">
-															<option value="disFlat" selected="selected">Flat</option>
-															<option value="disPer">%</option>
-															<c:set var="dis" value="${salesSearchView.discountValue}"></c:set>
-														</c:when>
-														<c:otherwise>
-															<option value="disPer" selected="selected">%</option>
-															<option value="disFlat">Flat</option>
-															<c:set var="dis"
-																value="${salesSearchView.subTotal*salesSearchView.discountValue/100}"></c:set>
-														</c:otherwise>
-													</c:choose>
-											</select>
-											</td>
+											<td colspan="2"><div style="width: 70%; float: left;">
+													Discount &nbsp; <select name="disType" id="disType"
+														style="background-color: gray;" disabled="disabled">
+														<c:choose>
+															<c:when test="${salesSearchView.isFlatDiscount()==true}">
+																<option value="disFlat" selected="selected">Flat</option>
+																<option value="disPer">%</option>
+																<c:set var="dis"
+																	value="${salesSearchView.discountValue}"></c:set>
+															</c:when>
+															<c:otherwise>
+																<option value="disPer" selected="selected">%</option>
+																<option value="disFlat">Flat</option>
+																<c:set var="dis"
+																	value="${salesSearchView.subTotal*salesSearchView.discountValue/100}"></c:set>
+															</c:otherwise>
+														</c:choose>
+													</select>
+												</div>
+												<div style="width: 30%; float: left; text-align: left;">
+													&nbsp; <input type="image" src="img/edit.png"
+														style="width: 20px;" id="editImgDiscount"
+														onclick="enableIsFlatDiscount();"><input
+														type="image" src="img/save.png" id="saveImgDiscount"
+														style="width: 20px; display: none;"
+														onclick="updateSeIsFlatDiscount();">
+												</div></td>
 											<td><input type="text" class="form-control"
 												name="disValue" id="discount" placeholder=""
 												readonly="readonly" style="background-color: gray;"
@@ -362,97 +384,151 @@
 									</tbody>
 									<c:choose>
 										<c:when test="${salesSearchView.vendor==null}">
-											<tbody style="display: none;">
+											<tbody id="isEffectiveTR" style="display: none;">
 												<tr>
 													<td colspan="2">Agent Profit:</td>
-													<td>Is Effective On Return:&nbsp; <select
-														name="isEffective" id="isEffective" disabled="disabled">
-															<c:choose>
-																<c:when
-																	test="${salesSearchView.isEfectiveProfit()==true}">
-																	<option>Yes</option>
-																</c:when>
-																<c:otherwise>
-																	<option>No</option>
-																</c:otherwise>
-															</c:choose>
-													</select>
+													<td>
+														<div style="width: 70%; float: left;">
+															Is Effective On Return:&nbsp; <select name="isEffective"
+																id="isEffective" disabled="disabled"
+																style="background-color: gray;">
+																<c:choose>
+																	<c:when
+																		test="${salesSearchView.isEfectiveProfit()==true}">
+																		<option value="efectiveYes" selected="selected">Yes</option>
+																		<option value="efectiveNo">No</option>
+																	</c:when>
+																	<c:otherwise>
+																		<option value="efectiveNo" selected="selected">No</option>
+																		<option value="efectiveYes">Yes</option>
+																	</c:otherwise>
+																</c:choose>
+															</select>
+														</div>
+														<div style="width: 30%; float: left; text-align: left;">
+															&nbsp; <input type="image" src="img/edit.png"
+																style="width: 20px;" id="editImgEffective"
+																onclick="enableIsEffective();"><input
+																type="image" src="img/save.png" id="saveImgEffective"
+																style="width: 20px; display: none;"
+																onclick="updateSeIsEffective();">
+														</div>
 													</td>
 												</tr>
 											</tbody>
-											<tbody style="display: none;">
+											<tbody id="profitTypeTR" style="display: none;">
 												<tr>
-													<td colspan="2">Agent Profit: &nbsp; <select
-														name="profitType" id="profitType"
-														onchange="profitTypeF();" disabled="disabled">
-															<c:choose>
-																<c:when
-																	test="${salesSearchView.isFlatProfitAgent()==true}">
-																	<option value="profitFlat">Flat</option>
-																</c:when>
-																<c:otherwise>
-																	<option value="profitPer">%</option>
-																</c:otherwise>
-															</c:choose>
-													</select>
-													</td>
+													<td colspan="2"><div style="width: 70%; float: left;">
+															Agent Profit: &nbsp; <select name="profitType"
+																id="profitType" style="background-color: gray;"
+																disabled="disabled">
+																<c:choose>
+																	<c:when
+																		test="${salesSearchView.isFlatProfitAgent()==true}">
+																		<option value="profitFlat" selected="selected">Flat</option>
+																		<option value="profitPer">%</option>
+																	</c:when>
+																	<c:otherwise>
+																		<option value="profitPer" selected="selected">%</option>
+																		<option value="profitFlat">Flat</option>
+																	</c:otherwise>
+																</c:choose>
+															</select>
+														</div>
+														<div style="width: 30%; float: left; text-align: left;">
+															&nbsp; <input type="image" src="img/edit.png"
+																style="width: 20px;" id="editImgProfit"
+																onclick="enableIsFlatProfit();"><input
+																type="image" src="img/save.png" id="saveImgProfit"
+																style="width: 20px; display: none;"
+																onclick="updateSeIsFlatProfit();">
+														</div></td>
 													<td><input type="text"
-														value="${salesSearchView.agentProfitValue}"
+														value="<fmt:formatNumber value="${salesSearchView.agentProfitValue}" maxFractionDigits="2" groupingUsed="false" />"
 														class="form-control" name="profitVal" id="profitVal"
-														placeholder="" readonly="readonly"></td>
+														placeholder="" readonly="readonly"
+														style="background-color: gray;" onchange="updateSe(this);"
+														ondblclick="enable(this);"></td>
 												</tr>
 											</tbody>
-											<tbody style="display: none;">
+											<tbody id="profitValueTR" style="display: none;">
 												<tr>
 													<td colspan="2" id="disc">Agent Profit Value:</td>
 													<td><input type="text" class="form-control"
 														readonly="readonly" id="profitValue" name="profitValue"
-														value="${salesSearchView.agentProfitTotal}"></td>
+														value="<fmt:formatNumber value="${salesSearchView.agentProfitTotal}" maxFractionDigits="2" groupingUsed="false" />"></td>
 												</tr>
 											</tbody>
 										</c:when>
 										<c:otherwise>
-											<tbody>
+											<tbody id="isEffectiveTR">
 												<tr>
 													<td colspan="2">Agent Profit:</td>
-													<td>Is Effective On Return:&nbsp; <select
-														name="isEffective" id="isEffective" disabled="disabled">
-															<c:choose>
-																<c:when
-																	test="${salesSearchView.isEfectiveProfit()==true}">
-																	<option>Yes</option>
-																</c:when>
-																<c:otherwise>
-																	<option>No</option>
-																</c:otherwise>
-															</c:choose>
-													</select>
+													<td>
+														<div style="width: 70%; float: left;">
+															Is Effective On Return:&nbsp; <select name="isEffective"
+																id="isEffective" disabled="disabled"
+																style="background-color: gray;">
+																<c:choose>
+																	<c:when
+																		test="${salesSearchView.isEfectiveProfit()==true}">
+																		<option value="efectiveYes" selected="selected">Yes</option>
+																		<option value="efectiveNo">No</option>
+																	</c:when>
+																	<c:otherwise>
+																		<option value="efectiveNo" selected="selected">No</option>
+																		<option value="efectiveYes">Yes</option>
+																	</c:otherwise>
+																</c:choose>
+															</select>
+														</div>
+														<div style="width: 30%; float: left; text-align: left;">
+															&nbsp; <input type="image" src="img/edit.png"
+																style="width: 20px;" id="editImgEffective"
+																onclick="enableIsEffective();"><input
+																type="image" src="img/save.png" id="saveImgEffective"
+																style="width: 20px; display: none;"
+																onclick="updateSeIsEffective();">
+														</div>
 													</td>
 												</tr>
 											</tbody>
-											<tbody>
+											<tbody id="profitTypeTR">
 												<tr>
-													<td colspan="2">Agent Profit: &nbsp; <select
-														name="profitType" id="profitType"
-														onchange="profitTypeF();" disabled="disabled">
-															<c:choose>
-																<c:when
-																	test="${salesSearchView.isFlatProfitAgent()==true}">
-																	<option value="profitFlat">Flat</option>
-																</c:when>
-																<c:otherwise>
-																	<option value="profitPer">%</option>
-																</c:otherwise>
-															</c:choose>
-													</select>
-													</td>
+													<td colspan="2"><div style="width: 70%; float: left;">
+															Agent Profit: &nbsp; <select name="profitType"
+																id="profitType" style="background-color: gray;"
+																disabled="disabled">
+																<c:choose>
+																	<c:when
+																		test="${salesSearchView.isFlatProfitAgent()==true}">
+																		<option value="profitFlat" selected="selected">Flat</option>
+																		<option value="profitPer">%</option>
+																	</c:when>
+																	<c:otherwise>
+																		<option value="profitPer" selected="selected">%</option>
+																		<option value="profitFlat">Flat</option>
+																	</c:otherwise>
+																</c:choose>
+															</select>
+														</div>
+														<div style="width: 30%; float: left; text-align: left;">
+															&nbsp; <input type="image" src="img/edit.png"
+																style="width: 20px;" id="editImgProfit"
+																onclick="enableIsFlatProfit();"><input
+																type="image" src="img/save.png" id="saveImgProfit"
+																style="width: 20px; display: none;"
+																onclick="updateSeIsFlatProfit();">
+														</div></td>
 													<td><input type="text"
 														value="<fmt:formatNumber value="${salesSearchView.agentProfitValue}" maxFractionDigits="2" groupingUsed="false" />"
 														class="form-control" name="profitVal" id="profitVal"
-														placeholder="" readonly="readonly"></td>
+														placeholder="" readonly="readonly"
+														style="background-color: gray;" onchange="updateSe(this);"
+														ondblclick="enable(this);"></td>
 												</tr>
 											</tbody>
-											<tbody>
+											<tbody id="profitValueTR">
 												<tr>
 													<td colspan="2" id="disc">Agent Profit Value:</td>
 													<td><input type="text" class="form-control"
@@ -531,6 +607,171 @@
 			</div>
 		</div>
 	</div>
+
+	<div id="saveSales" class="modal fade" role="dialog" style="top: 25px;">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						onclick="closePayment();">&times;</button>
+					<h4 class="modal-title">Payment Details</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<c:set var="payDet"
+							value="${sessionScope['ejb'].getPaymentDetailsBySalesEntryId(salesSearchView.id).get(sessionScope['ejb'].getPaymentDetailsBySalesEntryId(salesSearchView.id).size()-1)}" />
+						<div class="col-md-6">
+							<div class="widget-area">
+								<div class="breadcrumbs">
+									<ul>
+										<li><a title="">Payment status : <input type="hidden"
+												name="uniqueNo"
+												value="${sessionScope['ejb'].getLastUniqueNoOfPayDet()+1}"></a></li>
+									</ul>
+								</div>
+								<br> <br> <br>
+								<div class="row">
+									<div class="col-md-5">Payment status :</div>
+									<div class="col-md-7">
+										<div class="sec">
+
+											<select class="form-control" id="pstatus" name="pstatus"
+												onchange="pStatusDiv()">
+												<option value="${payDet.getPaymentStatus().getStatus()}"
+													selected="selected">${payDet.getPaymentStatus().getStatus()}</option>
+												<c:forEach
+													items="${sessionScope['ejb'].getAllPaymentStatus()}"
+													var="payStatus">
+													<c:if
+														test="${payStatus.status!=payDet.getPaymentStatus().getStatus()}">
+														<option value="${payStatus.status}">${payStatus.status}</option>
+													</c:if>
+												</c:forEach>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div id="payDetail">
+									<div class="breadcrumbs">
+										<ul>
+											<li><a title="">Payment Details : </a></li>
+										</ul>
+									</div>
+									<br> <br> <br>
+									<div class="row">
+										<div class="sec" id="pTypeDiv">
+											<div class="col-md-5">Payment type :</div>
+											<div class="col-md-7">
+												<select class="form-control" id="pstatus" name="pType"
+													onchange="pTypeFunc()">
+													<c:choose>
+														<c:when test="${payDet.getPaymentType()!=null}">
+															<option value="${payDet.getPaymentType().getType()}"
+																selected="selected">${payDet.getPaymentType().getType()}</option>
+														</c:when>
+														<c:otherwise>
+															<option value="-" selected="selected">---</option>
+														</c:otherwise>
+													</c:choose>
+													<c:forEach
+														items="${sessionScope['ejb'].getAllPaymentType()}"
+														var="payType">
+														<c:if
+															test="${payType.getType()!='Debit Note' && payType.getType()!='Credit Note' && payType.getType()!=payDet.getPaymentType().getType()}">
+															<option value="${payType.getType()}">${payType.getType()}</option>
+														</c:if>
+													</c:forEach>
+												</select>
+											</div>
+										</div>
+										<div id="pDate">
+											<div class="col-md-5">Payment Date :</div>
+											<div class="col-md-7">
+												<input type="text" id="datepicker2" class="form-control"
+													readonly="readonly" name="payDate"
+													value="<fmt:formatDate value="${payDet.paymentDate}" pattern="dd-MM-yyyy"/>">
+											</div>
+										</div>
+										<div id="pAmount">
+											<div class="col-md-5">Full Amount :</div>
+											<div class="col-md-7">
+												<input type="text" class="form-control" readonly="readonly"
+													id="spAmount" name="spAmount">
+											</div>
+										</div>
+										<div id="pPayAmount">
+											<div class="col-md-5">Payment Amount :</div>
+											<div class="col-md-7">
+												<input type="text" class="form-control" id="spPaymentAmount"
+													name="spPaymentAmount" onkeyup="spPaymentAmountFunc();"
+													autocomplete="off"><input type="hidden"
+													value="${payDet.paidAmount}" id="spPaymentAmountH"
+													name="spPaymentAmountH">
+											</div>
+										</div>
+										<div id="pDueAmount">
+											<div class="col-md-5">Due Amount :</div>
+											<div class="col-md-7">
+												<input type="text" class="form-control" value="0"
+													readonly="readonly" id="spDueAmount" name="spDueAmount">
+											</div>
+										</div>
+										<!-- <div id="AMi2">
+											<div>
+												<div class="col-md-5">Current Debit Note :</div>
+												<div class="col-md-7">
+													<input type="text" id="totalDebit" name="totalDebit"
+														class="form-control" readonly="readonly" value="0">
+												</div>
+											</div>
+											<div>
+												<div class="col-md-5">
+													<span id="dORc">Final Debit Note :</span>
+												</div>
+												<div class="col-md-7">
+													<input type="text" class="form-control" id="finalDC"
+														name="finalDC" readonly="readonly" value="0">
+												</div>
+											</div>
+										</div> -->
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-6" style="float: right;" id="description">
+							<div class="widget-area">
+								<div class="breadcrumbs">
+									<ul>
+										<li><a title="">Description : </a></li>
+									</ul>
+								</div>
+								<br> <br> <br>
+								<div class="row">
+									<div class="col-md-12">Description :</div>
+									<div class="col-md-12">
+										<textarea rows="8" cols="" class="form-control" id="desc"
+											name="desc" style="text-align: left;">
+											${payDet.description}
+										</textarea>
+									</div>
+								</div>
+								<br> <input type="hidden" name="isAgent" id="isAgent">
+								<div class="breadcrumbs">
+									<button type="button" class="btn green pull-right"
+										onclick="paymentDetailsF();">Update</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
 	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
@@ -694,6 +935,27 @@
 	}
 	function updateSalesEntry() {
 		gtot();
+		
+		
+		$("#datepicker").datepicker({
+			dateFormat : "dd-mm-yy",
+			minDate : 0,
+			maxDate : 0
+		});
+		var d = $("#datepicker").datepicker('getDate');
+		var n = d.getFullYear();
+		var m = d.getMonth();
+		var dt = d.getDate();
+		$("#datepicker2").datepicker({
+			dateFormat : "dd-mm-yy",
+			minDate : new Date(n, m, dt),
+			maxDate : 0
+		});
+		pStatusDiv();
+		spPaymentAmountFunc();
+		//$("#saveSales").modal("show");
+		
+		
 		var st = $("#subtotalvalue").val();
 		st = st.replace(",", "");
 		var scharge = $("#surcharge").val();
@@ -706,6 +968,7 @@
 			dataType : "json",
 			data : {
 				id : $("#seId").val(),
+				aId : $("#aId").val(),
 				surCharge : scharge,
 				trCharge : tcharge,
 				gt:gt,
@@ -714,8 +977,15 @@
 				disType : $("#disType").val(),
 				discount : $("#discount").val(),
 				taxAmount : $("#taxAmount").val(),
+				isEffective : $("#isEffective").val(),
+				profitType : $("#profitType").val(),
+				profitVal : $("#profitVal").val(),
 				profitValue : $("#profitValue").val(),
-				salesDesc : $("#salesDesc").val()
+				salesDesc : $("#salesDesc").val(),
+				pstatus : $("#pstatus").val(),
+				spDueAmount : $("#spDueAmount").val(),
+				payDate : $("#datepicker2").val(),
+				existingCustId : $("#existingCustId").val()
 			},
 			success : function(data) {
 				if (data.error) {					
@@ -726,13 +996,293 @@
 				}
 			}
 		});
-	}
-	
+	}	
 	function updateSe(a) {
 		updateSalesEntry();
 
 		$(a).prop("readonly", true);
 		$(a).attr("style", "background-color: pink;");
+	}
+	function enableIsEffective() {
+		$("#isEffective").removeAttr("disabled");
+		$("#isEffective").attr("style", "background-color: white;");
+		
+		$("#editImgEffective").attr("style", "width: 20px; display: none;");
+		$("#saveImgEffective").attr("style", "width: 20px;");
+	}
+	function updateSeIsEffective() {
+		updateSalesEntry();
+
+		$("#isEffective").attr("disabled", "disabled");
+		$("#isEffective").attr("style", "background-color: pink;");
+		
+		$("#saveImgEffective").attr("style", "width: 20px; display: none;");
+		$("#editImgEffective").attr("style", "width: 20px;");
+	}
+	function enableIsFlatDiscount() {
+		$("#disType").removeAttr("disabled");
+		$("#disType").attr("style", "background-color: white;");
+		
+		$("#editImgDiscount").attr("style", "width: 20px; display: none;");
+		$("#saveImgDiscount").attr("style", "width: 20px;");
+	}
+	function updateSeIsFlatDiscount() {
+		updateSalesEntry();
+
+		$("#disType").attr("disabled", "disabled");
+		$("#disType").attr("style", "background-color: pink;");
+		
+		$("#saveImgDiscount").attr("style", "width: 20px; display: none;");
+		$("#editImgDiscount").attr("style", "width: 20px;");
+	}
+	function enableIsFlatProfit() {
+		$("#profitType").removeAttr("disabled");
+		$("#profitType").attr("style", "background-color: white;");
+		
+		$("#editImgProfit").attr("style", "width: 20px; display: none;");
+		$("#saveImgProfit").attr("style", "width: 20px;");
+	}
+	function updateSeIsFlatProfit() {
+		updateSalesEntry();
+
+		$("#profitType").attr("disabled", "disabled");
+		$("#profitType").attr("style", "background-color: pink;");
+		
+		$("#saveImgProfit").attr("style", "width: 20px; display: none;");
+		$("#editImgProfit").attr("style", "width: 20px;");
+	}
+	function enableAgent() {
+		$("#agent").removeAttr("disabled");
+		$("#agentName").removeAttr("readonly");
+		$("#agentName").attr("style", "background-color: white;");
+		
+		$("#editImgAgent").attr("style", "width: 20px; display: none;");
+		$("#saveImgAgent").attr("style", "width: 20px;");
+	}
+	function updateSeAgent() {
+		updateSalesEntry();
+
+		$("#agent").attr("disabled","disabled");
+		$("#agentName").attr("readonly", "readonly");
+		$("#agentName").attr("style", "background-color: pink;");
+		
+		$("#saveImgAgent").attr("style", "width: 20px; display: none;");
+		$("#editImgAgent").attr("style", "width: 20px;");
+	}
+	function isAgentF() {
+		if ($('#agent').is(":checked")) {
+			$("#isAgent").val('yes');
+			$("#agentName").prop("readonly", false);
+
+			$("#aNameStar").html(
+					"Via Agent :<font color='red' size='4'>*</font>");
+
+			$("#isEffectiveTR").removeAttr("style");
+			$("#profitTypeTR").removeAttr("style");
+			$("#profitValueTR").removeAttr("style");
+		} else {
+			$("#isAgent").val('no');
+			$("#agentName").prop("readonly", true);
+			$("#aDetailsDiv").hide();
+			$("#agentName").val("");
+
+			$("#aNameStar").html("Via Agent :");
+
+			$("#isEffectiveTR").attr("style", "display: none;");
+			$("#profitTypeTR").attr("style", "display: none;");
+			$("#profitValueTR").attr("style", "display: none;");
+			
+			$("#isEffective").val("efectiveYes");
+			$("#profitType").val("profitFlat");
+			$("#profitVal").val(0);
+			$("#profitValue").val(0);
+		}
+	}
+	$(function() {
+		$("#agentName")
+				.autocomplete(
+						{
+							source : function(req, resp) {
+								$
+										.ajax({
+											type : "post",
+											url : "getVendorsByVendorTypeSalesAgentAndName",
+											data : {
+												name : req.term
+											},
+											dataType : "json",
+											success : function(data) {
+												resp($.map(data, function(
+														item) {
+													return ({
+														value : item.name,
+														id : item.id
+													});
+												}));
+											},
+
+											error : function(a, b, c) {
+												alert(a + b + c);
+											}
+
+										});
+							},
+							change : function(event, ui) {
+								if (ui.item == null) {
+									$(this).val("");
+									$("#aName").val("");
+									$("#aId").val("");
+								} else {
+									$("#aId").val(ui.item.id);
+								}
+							},
+							select : function(event, ui) {
+								if (ui.item != null) {
+									$("#aId").val(ui.item.id);
+									$.ajax({
+										url : 'getSalesAgentDetailsById',
+										type : 'post',
+										dataType : "json",
+										data : {
+											id : ui.item.id
+										},
+										success : function(data) {
+											$("#aDetailsDiv").show();
+											$("#aDetail").val(
+													"Address :\n\t"
+															+ data.address
+															+ "\nPh1 : "
+															+ data.ph1
+															+ "\nPh2 : "
+															+ data.ph2);
+										},
+										error : function(a, b, c) {
+											alert(b + ": " + c);
+										}
+									});
+								} else {
+									$(this).val("");
+									$("#aId").val("");
+									$("#aName").val("");
+								}
+
+							}
+						});
+	});
+	</script>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		$("#payDetail").hide();
+		$("#description").hide();
+		$("#isAgent").val('no');
+		$("#isExistingCust").val(0);
+		$("#AMi2").hide();
+
+	});
+	function closePayment() {
+		/* $("#payDetail").hide();
+		$("#description").hide();
+		$("#pstatus").val('-');
+		$("#pType").val('-');
+		$("#AMi2").hide(); */
+	}
+	function pStatusDiv() {
+		var val = $('[name="pstatus"]').val();
+		$("#payDetail").show();
+		//alert(val);
+		if (val == '-') {
+			alert('Please select Payment status...');
+			$("#payDetail").hide();
+			$("#description").hide();
+			$("#AMi2").hide();
+			$("#pType").val("-");
+		} else if (val == 'Not Paid') {
+			$("#pPayAmount").hide();
+			$("#pAmount").hide();
+			$("#pDate").hide();
+			$("#pTypeDiv").hide();
+			$("#pDueAmount").show();
+			$("#description").show();
+			$("#spAmount").val(Number($("#grandtotal").val()));
+			$("#spPaymentAmount").val(Number(0));
+			$("#spDueAmount").val(
+					Number($("#spAmount").val())
+							- Number($("#spPaymentAmount").val()));
+
+			$("#AMi2").show();
+			$("#finalDC").val(
+					Math.round((Number($("#spDueAmount").val()) + Number($(
+							"#totalDebit").val())) * 100) / 100);
+		} else if (val == 'Full Paid') {
+			$("#pPayAmount").hide();
+			$("#pDueAmount").hide();
+			$("#pAmount").show();
+			$("#pDate").show();
+			$("#pTypeDiv").show();
+			$("#description").hide();
+			$("#AMi2").hide();
+			$("#spAmount").val(Number($("#grandtotal").val()));
+			$("#spPaymentAmount").val(Number($("#grandtotal").val()));
+			$("#spDueAmount").val(
+					Number($("#spAmount").val())
+							- Number($("#spPaymentAmount").val()));
+		} else if (val == 'Semi Paid') {
+			$("#pPayAmount").show();
+			$("#pDueAmount").show();
+			$("#pAmount").show();
+			$("#pDate").show();
+			$("#pTypeDiv").show();
+			$("#description").hide();
+			$("#spAmount").val(Number($("#grandtotal").val()));
+			$("#spPaymentAmount").val(Number($("#spPaymentAmountH").val()));
+			$("#spDueAmount").val(
+					Number($("#spAmount").val())
+							- Number($("#spPaymentAmount").val()));
+
+			$("#AMi2").show();
+			$("#finalDC").val(
+					Math.round((Number($("#spDueAmount").val()) + Number($(
+							"#totalDebit").val())) * 100) / 100);
+		}
+	}
+	/* function spPaymentAmountFunc() {
+		$("#spDueAmount").val(
+				Number($("#spAmount").val())
+						- Number($("#spPaymentAmount").val()));
+	} */
+
+	function spPaymentAmountFunc() {
+		if (Number($("#spPaymentAmount").val()) > Number($("#spAmount")
+				.val())) {
+			alert("Payment amount can not be greater than full amount...");
+			$("#spPaymentAmount").val(Number($("#gt").val()));
+			$("#spDueAmount").val(
+					Math.round((Number($("#spAmount").val()) - Number($(
+							"#spPaymentAmount").val())) * 100) / 100);
+			$("#finalDC").val(
+					Math.round((Number($("#spDueAmount").val()) + Number($(
+							"#totalDebit").val())) * 100) / 100);
+		} else {
+			$("#spDueAmount").val(
+					Math.round((Number($("#spAmount").val()) - Number($(
+							"#spPaymentAmount").val())) * 100) / 100);
+			$("#finalDC").val(
+					Math.round((Number($("#spDueAmount").val()) + Number($(
+							"#totalDebit").val())) * 100) / 100);
+		}
+	}
+
+	function pTypeFunc() {
+		$("#description").show();
+		var val = $('[name="pType"]').val();
+		if (val == '-') {
+			alert('Please select Payment Type...');
+			$("#description").hide();
+		}
+	}
+	
+	function paymentDetailsF(){
+		alert("Hello!");
 	}
 	</script>
 </body>
