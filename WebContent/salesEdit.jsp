@@ -662,7 +662,7 @@
 										<div class="sec" id="pTypeDiv">
 											<div class="col-md-5">Payment type :</div>
 											<div class="col-md-7">
-												<select class="form-control" id="pstatus" name="pType"
+												<select class="form-control" id="pType" name="pType"
 													onchange="pTypeFunc()">
 													<c:choose>
 														<c:when test="${payDet.getPaymentType()!=null}">
@@ -756,7 +756,7 @@
 										</textarea>
 									</div>
 								</div>
-								<br> <input type="hidden" name="isAgent" id="isAgent">
+								<br>
 								<div class="breadcrumbs">
 									<button type="button" class="btn green pull-right"
 										onclick="paymentDetailsF();">Update</button>
@@ -981,11 +981,11 @@
 				profitType : $("#profitType").val(),
 				profitVal : $("#profitVal").val(),
 				profitValue : $("#profitValue").val(),
-				salesDesc : $("#salesDesc").val(),
+				salesDesc : $("#salesDesc").val()/* ,
 				pstatus : $("#pstatus").val(),
 				spDueAmount : $("#spDueAmount").val(),
 				payDate : $("#datepicker2").val(),
-				existingCustId : $("#existingCustId").val()
+				pType : $("#pType").val() */
 			},
 			success : function(data) {
 				if (data.error) {					
@@ -1071,7 +1071,6 @@
 	}
 	function isAgentF() {
 		if ($('#agent').is(":checked")) {
-			$("#isAgent").val('yes');
 			$("#agentName").prop("readonly", false);
 
 			$("#aNameStar").html(
@@ -1081,7 +1080,6 @@
 			$("#profitTypeTR").removeAttr("style");
 			$("#profitValueTR").removeAttr("style");
 		} else {
-			$("#isAgent").val('no');
 			$("#agentName").prop("readonly", true);
 			$("#aDetailsDiv").hide();
 			$("#agentName").val("");
@@ -1132,6 +1130,11 @@
 									$(this).val("");
 									$("#aName").val("");
 									$("#aId").val("");
+									
+									$("#isEffective").val("efectiveYes");
+									$("#profitType").val("profitFlat");
+									$("#profitVal").val(0);
+									$("#profitValue").val(0);
 								} else {
 									$("#aId").val(ui.item.id);
 								}
@@ -1164,6 +1167,11 @@
 									$(this).val("");
 									$("#aId").val("");
 									$("#aName").val("");
+									
+									$("#isEffective").val("efectiveYes");
+									$("#profitType").val("profitFlat");
+									$("#profitVal").val(0);
+									$("#profitValue").val(0);
 								}
 
 							}
@@ -1174,8 +1182,6 @@
 	$(document).ready(function() {
 		$("#payDetail").hide();
 		$("#description").hide();
-		$("#isAgent").val('no');
-		$("#isExistingCust").val(0);
 		$("#AMi2").hide();
 
 	});

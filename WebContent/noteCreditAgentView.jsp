@@ -154,7 +154,8 @@
 															pattern="dd-MM-yy" /></td>
 													<td><c:if test="${vouDetList.isCredit()}">Credit</c:if>
 														<c:if test="${!vouDetList.isCredit()}">Debit</c:if></td>
-													<td>${vouDetList.value}</td>
+													<td><fmt:formatNumber value="${vouDetList.value}"
+															maxFractionDigits="2" groupingUsed="false" /></td>
 													<td><c:if
 															test="${vouDetList.purchase_Entry!=null && vouDetList.purchaseReturn==null}">Purchase Payment</c:if>
 														<c:if
