@@ -25,6 +25,8 @@ import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.Barcode128.Barcode128CodeSet;
+import com.itextpdf.text.pdf.Barcode39;
 import com.kaanish.ejb.Ejb;
 import com.kaanish.model.Purchase_Product_Details;
 
@@ -55,6 +57,7 @@ public class BarcodeServlet extends HttpServlet {
 			String purProdDetIdLst[] = req.getParameterValues("prodCheck");
 			String qtyLst[] = req.getParameterValues("qtyProd");
 			List<Purchase_Product_Details> purProdDetLst = new ArrayList<Purchase_Product_Details>();
+			
 			for (int q = 0; q < purProdDetIdLst.length; q++) {
 				if (!qtyLst[q].equals(null) || !qtyLst[q].equals("")) {
 					Purchase_Product_Details ppd = ejb
@@ -85,26 +88,30 @@ public class BarcodeServlet extends HttpServlet {
 					// + "     "
 					// + ejb.getMRPlh(float price)));
 
-					document.add(new Paragraph(new Phrase(7F, barcodeHeader,
-							FontFactory.getFont(FontFactory.TIMES, 6f))));
+					document.add(new Paragraph(new Phrase(9F, barcodeHeader,
+							FontFactory.getFont(FontFactory.TIMES, 8f))));
 					
-					document.add(new Paragraph(new Phrase(5F, purProdDetLst
+					document.add(new Paragraph(new Phrase(7F, purProdDetLst
 							.get(i).getProductDetail().getUniversalCode()
 							+ "     " + ejb.getMRPlh(price), FontFactory
-							.getFont(FontFactory.TIMES, 6f))));
+							.getFont(FontFactory.TIMES, 7f))));
 					
-					String code = purProdDetLst.get(i).getId() + "/"
+					/*String code = purProdDetLst.get(i).getId() + "/"
 							+ purProdDetLst.get(i).getLotNumber() + "/"
-							+ purProdDetLst.get(i).getProductDetail().getCode();
+							+ purProdDetLst.get(i).getProductDetail().getCode();*/
+					String code = String.valueOf(purProdDetLst.get(i).getId());
 
 					Barcode128 code128 = new Barcode128();
-					code128.setBaseline(8);
-					code128.setSize(6);
+					//Barcode39 code128 = new Barcode39 ();
+					code128.setBaseline(9);
+					code128.setSize(7);
 					//code128.setX(.5F);
-					code128.setBarHeight(25F);
+					code128.setBarHeight(27F);
 
 					code128.setCode(code.trim());
+					//code128.setCode("1234567890123456789012");
 					code128.setCodeType(Barcode128.CODE128);
+					//code128.setCodeSet(Barcode128.Barcode128CodeSet.B);
 					Image code128Image = code128.createImageWithBarcode(cb,
 							null, null);
 					code128Image.setAbsolutePosition(5,3);
