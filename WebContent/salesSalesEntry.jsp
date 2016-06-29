@@ -505,7 +505,7 @@
 																			<div class="sec" id="pTypeDiv">
 																				<div class="col-md-5">Payment type :</div>
 																				<div class="col-md-7">
-																					<select class="form-control" id="pstatus"
+																					<select class="form-control" id="pType"
 																						name="pType" onchange="pTypeFunc()">
 																						<option value="-" selected="selected">---</option>
 																						<c:forEach
@@ -1823,6 +1823,11 @@
 				$("#isEffectiveTR").attr("style", "display: none;");
 				$("#profitTypeTR").attr("style", "display: none;");
 				$("#profitValueTR").attr("style", "display: none;");
+
+				$("#isEffective").val("efectiveYes");
+				$("#profitType").val("profitFlat");
+				$("#profitVal").val(0);
+				$("#profitValue").val(0);
 			}
 		}
 		$(function() {
@@ -2908,6 +2913,7 @@
 										$("#qty").val("");
 									} else {
 										alert("no more product remains in this lot");
+										$("#salesbar").val("");
 									}
 								} else {
 									alert("no product found for sale");

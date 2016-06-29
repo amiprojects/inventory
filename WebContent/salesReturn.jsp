@@ -655,11 +655,10 @@
 											</thead>
 										</table>
 										<div style="float: right;">
-											<input type="button" onclick="cancelF();"
-												class="btn btn-danger small" value="Cancel"
-												data-toggle="modal"> <input type="button"
-												class="btn btn-info btn-sm" data-toggle="modal" value="Save"
-												onclick="paymentDate();">
+											<!-- <input type="button" class="btn btn-danger small"
+												value="Cancel" data-toggle="modal"> -->
+											<input type="button" class="btn btn-info btn-sm"
+												data-toggle="modal" value="Save" onclick="paymentDate();">
 											<div id="saveSales" class="modal fade" role="dialog"
 												style="top: 25px;">
 												<div class="modal-dialog modal-lg">
@@ -907,11 +906,6 @@
 			var round = Math.round(tot);
 			$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
 			$("#grandtotal").val(Math.round((round) * 100) / 100);
-		}
-
-		function cancelF() {
-
-			alert(Math.floor(2.9));
 		}
 	</script>
 

@@ -8,7 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Purchase Agent's Credit Note Statement</title>
+<title>Admin Panel</title>
 
 <link
 	href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700,900'
@@ -76,8 +76,8 @@
 
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
-								<h3 style="margin-top: 11px;">Purchase (Via) Agent's Credit
-									Note Statement</h3>
+								<h3 style="margin-top: 11px;">Purchase (Via) Agent's Note
+									Statement</h3>
 							</div>
 
 							<div class="widget-area">
@@ -153,9 +153,16 @@
 															pattern="dd-MM-yy" /></td>
 													<td><c:if test="${vouDetList.isCredit()}">Credit</c:if>
 														<c:if test="${!vouDetList.isCredit()}">Debit</c:if></td>
-													<td>${vouDetList.value}</td>
-													<td><c:if test="${vouDetList.purchaseEntryId!=0}">Purchase Payment</c:if></td>
-													<td><c:if test="${vouDetList.purchaseEntryId!=0}">${sessionScope['ejb'].getPurchaseEntryById(vouDetList.purchaseEntryId).challanNumber}</c:if>
+													<td><fmt:formatNumber value="${vouDetList.value}"
+															maxFractionDigits="2" groupingUsed="false" /></td>
+													<td><c:if
+															test="${vouDetList.purchaseEntryId!=0 && vouDetList.purchaseReturnId==0}">Purchase Payment</c:if>
+														<c:if
+															test="${vouDetList.purchaseEntryId!=0 && vouDetList.purchaseReturnId!=0}">Purchase Return</c:if></td>
+													<td><c:if
+															test="${vouDetList.purchaseEntryId!=0 && vouDetList.purchaseReturnId==0}">${sessionScope['ejb'].getPurchaseEntryById(vouDetList.purchaseEntryId).challanNumber}</c:if>
+														<c:if
+															test="${vouDetList.purchaseEntryId!=0 && vouDetList.purchaseReturnId!=0}">${sessionScope['ejb'].getPurchaseEntryById(vouDetList.purchaseEntryId).challanNumber}<br>(${sessionScope['ejb'].getPurchaseReturnById(vouDetList.purchaseReturnId).challanNumber})</c:if>
 													</td>
 												</tr>
 												<c:set var="count" value="${count+1}" />

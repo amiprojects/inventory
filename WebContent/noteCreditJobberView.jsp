@@ -75,8 +75,7 @@
 
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
-								<h3 style="margin-top: 11px;">Jobber's Credit Note
-									Statement</h3>
+								<h3 style="margin-top: 11px;">Jobber's Note Statement</h3>
 							</div>
 
 							<div class="widget-area">
@@ -153,7 +152,8 @@
 															pattern="dd-MM-yy" /></td>
 													<td><c:if test="${vouDetList.isCredit()}">Credit</c:if>
 														<c:if test="${!vouDetList.isCredit()}">Debit</c:if></td>
-													<td>${vouDetList.value}</td>
+													<td><fmt:formatNumber value="${vouDetList.value}"
+															maxFractionDigits="2" groupingUsed="false" /></td>
 													<td><c:if test="${vouDetList.jobAssignId!=0}">Job Payment</c:if>
 													</td>
 													<td><c:if test="${vouDetList.jobAssignId!=0}">${sessionScope['ejb'].getJobAssignmentDetailsByID(vouDetList.jobAssignId).getChallanNumber()}</c:if>

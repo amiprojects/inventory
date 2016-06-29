@@ -8,7 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Purchase Agent's Credit Note Statement</title>
+<title>Admin Panel</title>
 
 <link
 	href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700,900'
@@ -76,8 +76,7 @@
 
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
-								<h3 style="margin-top: 11px;">Sales Agent's Credit Note
-									Statement</h3>
+								<h3 style="margin-top: 11px;">Sales Agent's Note Statement</h3>
 							</div>
 
 							<div class="widget-area">
@@ -153,9 +152,16 @@
 															pattern="dd-MM-yy" /></td>
 													<td><c:if test="${vouDetList.isCredit()}">Credit</c:if>
 														<c:if test="${!vouDetList.isCredit()}">Debit</c:if></td>
-													<td>${vouDetList.value}</td>
-													<td><c:if test="${vouDetList.salesEntryId!=0}">Sales Payment</c:if></td>
-													<td><c:if test="${vouDetList.salesEntryId!=0}">${sessionScope['ejb'].getSalesEntryById(vouDetList.salesEntryId).challanNumber}</c:if>
+													<td><fmt:formatNumber value="${vouDetList.value}"
+															maxFractionDigits="2" groupingUsed="false" /></td>
+													<td><c:if
+															test="${vouDetList.salesEntryId!=0 && vouDetList.salesReturnId==0}">Sales Payment</c:if>
+														<c:if
+															test="${vouDetList.salesEntryId!=0 && vouDetList.salesReturnId!=0}">Sales Return</c:if></td>
+													<td><c:if
+															test="${vouDetList.salesEntryId!=0 && vouDetList.salesReturnId==0}">${sessionScope['ejb'].getSalesEntryById(vouDetList.salesEntryId).challanNumber}</c:if>
+														<c:if
+															test="${vouDetList.salesEntryId!=0 && vouDetList.salesReturnId!=0}">${sessionScope['ejb'].getSalesEntryById(vouDetList.salesEntryId).challanNumber}<br>(${sessionScope['ejb'].getSalesReturnDetailsById(vouDetList.salesReturnId).challanNumber})</c:if>
 													</td>
 												</tr>
 												<c:set var="count" value="${count+1}" />

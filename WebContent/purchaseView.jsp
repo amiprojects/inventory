@@ -499,7 +499,9 @@
 												<td colspan="2">Grand Total :</td>
 												<td><input type="text" class="form-control" id="gt"
 													placeholder="0" readonly="readonly"
-													value="${purchaseSearchView.totalCost}"></td>
+													value="<fmt:formatNumber var="subt"
+														value="${purchaseSearchView.totalCost}"
+														maxFractionDigits="2" groupingUsed="false" />"></td>
 											</tr>
 										</thead>
 									</table>
@@ -674,7 +676,7 @@
 												<div class="col-md-7">
 													<input type="text" class="form-control" value="0"
 														id="spPaymentAmount" name="spPaymentAmount"
-														onkeyup="spPaymentAmountFunc();" autocomplete="off"
+														autocomplete="off"
 														onchange="spPaymentAmountDecimalFixF();">
 												</div>
 											</div>

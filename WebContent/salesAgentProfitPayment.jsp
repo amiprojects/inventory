@@ -229,7 +229,7 @@
 												<th>Agent Name</th>
 												<th>Sales Date</th>
 												<th>Profit</th>
-												<th>(-)Profit</th>
+												<!-- <th>(-)Profit</th> -->
 											</tr>
 										</thead>
 
@@ -254,12 +254,12 @@
 														<td><fmt:formatDate value="${sEntryByD.sales_date}"
 																pattern="dd-MM-yy" /></td>
 														<td>${sEntryByD.agentProfitTotal}</td>
-														<td><fmt:formatNumber var="mProfit" value="${0}"
+														<%-- <td><fmt:formatNumber var="mProfit" value="${0}"
 																maxFractionDigits="2" groupingUsed="false" /> <c:forEach
 																var="sReturn" items="${sEntryByD.salesReturn}">
 																<c:set var="mProfit"
 																	value="${mProfit+sReturn.retAgentProfitTotal}" />
-															</c:forEach>${mProfit}</td>
+															</c:forEach>${mProfit}</td> --%>
 														<td style="display: none;"><c:if
 																test="${sessionScope['ejb'].getPaymentDetails4ViaAgentBySalesEntryId(sEntryByD.id).size()>0}">
 																<c:set
@@ -272,8 +272,8 @@
 														<td><c:set var="totPaybleCost"
 																value="${sEntryByD.agentProfitTotal}" /> <c:forEach
 																var="salesRet" items="${sEntryByD.salesReturn}">
-																<c:set var="totPaybleCost"
-																	value="${totPaybleCost-salesRet.retAgentProfitTotal}" />
+																<%-- <c:set var="totPaybleCost"
+																	value="${totPaybleCost-salesRet.retAgentProfitTotal}" /> --%>
 															</c:forEach>
 															<form action="" method="post"
 																id="agentPayment${sEntryByD.id}">
@@ -876,7 +876,7 @@
 	$(function() {		
 		$("#spPaymentAmount").numericInput({
 			allowFloat : true,
-			allowNegative : false,
+			allowNegative : true,
 		});
 	});
 	function submit() {

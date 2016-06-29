@@ -59,6 +59,17 @@ public class TestServ extends HttpServlet {
 			ejb.updateVendor(vendor);
 		}
 		ejb.deleteUserById("adminKaanish");
+		
+		
+		public void init() throws ServletException {
+		for (int i = 0; i < ejb.getAllPaymentDetailsAsc().size(); i++) {
+			PaymentDetails paymentDetails = ejb.getAllPaymentDetailsAsc()
+					.get(i);
+			int j = i + 1;
+			paymentDetails.setUniqueNo(j);
+			ejb.updatePaymentDetails(paymentDetails);
+		}
+	}
 	}
 
 	@Override

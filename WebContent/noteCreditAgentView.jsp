@@ -76,8 +76,8 @@
 
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
-								<h3 style="margin-top: 11px;">Purchase (Direct) Agent's Credit Note
-									Statement</h3>
+								<h3 style="margin-top: 11px;">Purchase (Direct) Agent's
+									Note Statement</h3>
 							</div>
 
 							<div class="widget-area">
@@ -154,7 +154,8 @@
 															pattern="dd-MM-yy" /></td>
 													<td><c:if test="${vouDetList.isCredit()}">Credit</c:if>
 														<c:if test="${!vouDetList.isCredit()}">Debit</c:if></td>
-													<td>${vouDetList.value}</td>
+													<td><fmt:formatNumber value="${vouDetList.value}"
+															maxFractionDigits="2" groupingUsed="false" /></td>
 													<td><c:if
 															test="${vouDetList.purchase_Entry!=null && vouDetList.purchaseReturn==null}">Purchase Payment</c:if>
 														<c:if
@@ -162,7 +163,7 @@
 													<td><c:if
 															test="${vouDetList.purchase_Entry!=null && vouDetList.purchaseReturn==null}">${vouDetList.purchase_Entry.challanNumber}</c:if>
 														<c:if
-															test="${vouDetList.purchase_Entry!=null && vouDetList.purchaseReturn!=null}">${vouDetList.purchaseReturn.challanNumber}</c:if></td>
+															test="${vouDetList.purchase_Entry!=null && vouDetList.purchaseReturn!=null}">${vouDetList.purchase_Entry.challanNumber}<br>(${vouDetList.purchaseReturn.challanNumber})</c:if></td>
 													<%-- <td>${vouDetList.totalCreditNote}</td> --%>
 												</tr>
 												<c:set var="count" value="${count+1}" />

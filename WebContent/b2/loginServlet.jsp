@@ -1,3 +1,20 @@
+// job assignment job details jobPlanJobStockId
+		for (JobAssignmentJobDetails jajd : ejb.getAllJobAssignmentJobDetails()) {
+			JobPlanJobStock jobPlanJobStock = ejb.getJobPlanJobStockByJobPlanProductIdAndJobTypeId(
+					jajd.getAssignmentProducts().getJobPlanProducts().getId(), jajd.getJobType().getId());
+			jajd.setJobPlanJobStock(jobPlanJobStock);
+			ejb.updateJobAssignmentJobDetails(jajd);
+		}
+		// job assignment job details jobPlanJobStockId
+
+		// job plan product stock cost
+		for (JobPlanProductStock pd : ejb.getAllJobPlanProductStock()) {
+			pd.setCost(pd.getPurchase_Product_Details().getCost());
+			ejb.updateJobPlanProductStock(pd);
+		}
+		// job plan product stock cost
+
+
 // products for design cost sheet productId
 		for (JobPlanProductStock jpps : ejb.getAllJobPlanProductStock()) {
 			ProductsForDesignCostSheet productsForDesignCostSheet = jpps

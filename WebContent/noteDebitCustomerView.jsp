@@ -8,7 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Customer's Debit Note Statement</title>
+<title>Admin Panel</title>
 
 <link
 	href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700,900'
@@ -76,8 +76,7 @@
 
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
-								<h3 style="margin-top: 11px;">Customer's Debit Note
-									Statement</h3>
+								<h3 style="margin-top: 11px;">Customer's Note Statement</h3>
 							</div>
 
 							<div class="widget-area">
@@ -148,7 +147,8 @@
 														pattern="dd-MM-yy" /></td>
 												<td><c:if test="${vouDetList.isCredit()}">Credit</c:if>
 													<c:if test="${!vouDetList.isCredit()}">Debit</c:if></td>
-												<td>${vouDetList.value}</td>
+												<td><fmt:formatNumber value="${vouDetList.value}"
+														maxFractionDigits="2" groupingUsed="false" /></td>
 												<td><c:if
 														test="${vouDetList.salesEntry!=null && vouDetList.salesReturn==null}">Sales Payment</c:if>
 													<c:if
@@ -156,7 +156,7 @@
 												<td><c:if
 														test="${vouDetList.salesEntry!=null && vouDetList.salesReturn==null}">${vouDetList.salesEntry.challanNumber}</c:if>
 													<c:if
-														test="${vouDetList.salesEntry!=null && vouDetList.salesReturn!=null}">${vouDetList.salesReturn.challanNumber}</c:if></td>
+														test="${vouDetList.salesEntry!=null && vouDetList.salesReturn!=null}">${vouDetList.salesEntry.challanNumber}<br>(${vouDetList.salesReturn.challanNumber})</c:if></td>
 												<%-- <td>${vouDetList.totalDebitNote}</td> --%>
 											</tr>
 											<c:set var="count" value="${count+1}" />

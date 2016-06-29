@@ -4,7 +4,9 @@
 		<ul>
 			<li><a id="sDash" href="dashboard.jsp" title="">Dashboard</a></li>
 		</ul> <!-- Drop Down --></li>
-	<li><a href="#" title="">Notification<i class="fa fa-exclamation-triangle" style="color: red;" aria-hidden="true"></i></a>
+	<li><a href="#" title="">Notification<i
+			class="fa fa-exclamation-triangle" style="color: red;"
+			aria-hidden="true"></i></a>
 		<ul>
 			<li><a id="sNoti" href="notification.jsp" title="">All
 					Notifications</a></li>
@@ -80,9 +82,9 @@
 	</c:if>
 	<li><a href="#" title="">Debit/Credit Note</a>
 		<ul>
-			<li><a id="debitNote" href="noteDebit.jsp" title="">Debit
+			<li><a id="debitNote" href="noteDebit.jsp" title="">Customer's
 					Note</a></li>
-			<li><a id="creditNote" href="noteCredit.jsp" title="">Credit
+			<li><a id="creditNote" href="noteCredit.jsp" title="">Vendor/Agent/Jobber's
 					Note</a></li>
 		</ul></li>
 	<li><a href="#" title="">Setup</a>

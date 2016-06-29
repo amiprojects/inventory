@@ -2047,7 +2047,7 @@
 
 		function codeChange() {
 			if ($("#pcodeCheck").val() != "") {
-				alert("this Product Code: already exist.");
+				alert("this Product Code already exist.");
 				$("#pcodeCheck").val("");
 				$("#productCode").val("");
 			}

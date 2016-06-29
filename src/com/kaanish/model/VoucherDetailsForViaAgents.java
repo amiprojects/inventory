@@ -28,6 +28,8 @@ public class VoucherDetailsForViaAgents implements Serializable {
 
 	private int purchaseEntryId;
 	private int salesEntryId;
+	private int purchaseReturnId;
+	private int salesReturnId;
 
 	private int voucherAssignId;
 	private int agentId;
@@ -112,6 +114,22 @@ public class VoucherDetailsForViaAgents implements Serializable {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public int getPurchaseReturnId() {
+		return purchaseReturnId;
+	}
+
+	public void setPurchaseReturnId(int purchaseReturnId) {
+		this.purchaseReturnId = purchaseReturnId;
+	}
+
+	public int getSalesReturnId() {
+		return salesReturnId;
+	}
+
+	public void setSalesReturnId(int salesReturnId) {
+		this.salesReturnId = salesReturnId;
 	}
 
 }

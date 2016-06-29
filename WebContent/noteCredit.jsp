@@ -76,7 +76,7 @@
 
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
-								<h3 style="margin-top: 11px;">Credit Note</h3>
+								<h3 style="margin-top: 11px;">Vendor/Agent/Jobber's Note</h3>
 							</div>
 
 							<div class="widget-area">

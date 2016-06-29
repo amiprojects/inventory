@@ -76,7 +76,7 @@
 
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
-								<h3 style="margin-top: 11px;">Debit Note</h3>
+								<h3 style="margin-top: 11px;">Customer's Note</h3>
 							</div>
 
 							<div class="widget-area">
