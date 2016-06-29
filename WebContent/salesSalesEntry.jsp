@@ -1483,6 +1483,7 @@
 				$("#pAmount").hide();
 				$("#pDate").hide();
 				$("#pTypeDiv").hide();
+				$("#pType").val("-");
 				$("#pDueAmount").show();
 				$("#description").show();
 				$("#spAmount").val(Number($("#grandtotal").val()));

@@ -241,7 +241,7 @@
 											<th>Vendor Bill no.</th>
 											<th>Purchase Date</th>
 											<th>Profit</th>
-											<th>(-)Profit</th>
+											<!-- <th>(-)Profit</th> -->
 										</tr>
 									</thead>
 									<tbody>
@@ -880,6 +880,7 @@
 			$("#pAmount").hide();
 			$("#pDate").hide();
 			$("#pTypeDiv").hide();
+			$("#pType").val("-");
 			$("#pDueAmount").show();
 			$("#description").show();
 			$("#spAmount").val(Number($("#dueAmount").html()));

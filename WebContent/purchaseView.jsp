@@ -499,7 +499,7 @@
 												<td colspan="2">Grand Total :</td>
 												<td><input type="text" class="form-control" id="gt"
 													placeholder="0" readonly="readonly"
-													value="<fmt:formatNumber var="subt"
+													value="<fmt:formatNumber
 														value="${purchaseSearchView.totalCost}"
 														maxFractionDigits="2" groupingUsed="false" />"></td>
 											</tr>
@@ -826,6 +826,7 @@
 			$("#pAmount").hide();
 			$("#pDate").hide();
 			$("#pTypeDiv").hide();
+			$("#pType").val("-");
 			$("#pDueAmount").show();
 			$("#description").show();
 			$("#spAmount").val(Number($("#dueAmount").html()));

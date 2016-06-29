@@ -147,7 +147,8 @@ import com.kaanish.util.GetMacId;
 		"/purchaseSearchByVendorNameForViaPurchaseAgent",
 		"/purchaseSearchByAgentNameForViaPurchaseAgent",
 		"/purchaseSearchByViaAgentName", "/purchaseRetSearchByViaAgentNamet",
-		"/purchaseAgentPayment", "/creditNoteByViaPurchaseAgentName" })
+		"/purchaseAgentPayment", "/creditNoteByViaPurchaseAgentName",
+		"/jobSearchByDesignNo", "/jobSearchByDesignNoForPayment" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -1944,7 +1945,7 @@ public class Servlet extends HttpServlet {
 									.getTotalAmount()
 									- ejb.getPaymentDetailsByPurchaseEntryId(
 											purchaseEntry.getId()).get(0)
-											.getPaidAmount() > Float
+											.getPaidAmount() != Float
 										.parseFloat(req
 												.getParameter("spAmount"))) {
 								paymentDetails.setPaymentStatus(ejb
@@ -4069,6 +4070,21 @@ public class Servlet extends HttpServlet {
 						}
 						break;
 
+					case "jobSearchByDesignNo":
+						page = "jobAssignSearch.jsp";
+						List<JobAssignmentDetails> jobAssignListByDN = ejb
+								.getJobAssignByDesignNumber(req
+										.getParameter("dNo"));
+						req.setAttribute("jobAssignList", jobAssignListByDN);
+						if (jobAssignListByDN.size() > 0) {
+							msg = "Your search for Design No : "
+									+ req.getParameter("dNo").toUpperCase();
+						} else {
+							msg = "No result found for Design No : "
+									+ req.getParameter("dNo").toUpperCase();
+						}
+						break;
+
 					case "jobSearchByProductCode":
 						page = "jobAssignSearch.jsp";
 						List<JobAssignmentDetails> jobAssignList3 = ejb
@@ -4100,6 +4116,21 @@ public class Servlet extends HttpServlet {
 							msg = "No result found for product code : "
 									+ req.getParameter("prodCode")
 											.toUpperCase();
+						}
+						break;
+
+					case "jobSearchByDesignNoForPayment":
+						page = "jobPayment.jsp";
+						List<JobAssignmentDetails> jobAssignListByDNP = ejb
+								.getJobAssignByDesignNumber(req
+										.getParameter("dNo"));
+						req.setAttribute("jobAssignList", jobAssignListByDNP);
+						if (jobAssignListByDNP.size() > 0) {
+							msg = "Your search for Design No : "
+									+ req.getParameter("dNo").toUpperCase();
+						} else {
+							msg = "No result found for Design No : "
+									+ req.getParameter("dNo").toUpperCase();
 						}
 						break;
 
@@ -5145,7 +5176,7 @@ public class Servlet extends HttpServlet {
 									salesEntry.getId()).get(0).getTotalAmount()
 									- ejb.getPaymentDetailsBySalesEntryId(
 											salesEntry.getId()).get(0)
-											.getPaidAmount() > Float
+											.getPaidAmount() != Float
 										.parseFloat(req.getParameter("tbv"))) {
 								paymentDetails.setPaymentStatus(ejb
 										.getPaymentStatusByStatus("Semi Paid"));

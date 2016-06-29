@@ -171,6 +171,22 @@
 										</div>
 									</form>
 									<form role="form" class="sec"
+										action="jobSearchByDesignNoForPayment" method="post">
+										<div class="row">
+											<div class="col-md-10">
+												<div class="form-group">
+													<label for="" style="float: left;">Design No :</label> <input
+														type="" placeholder="Enter Design No." id="dNo" name="dNo"
+														class="form-control" autocomplete="off">
+												</div>
+											</div>
+											<div class="col-md-2">
+												<button class="btn green pull-left"
+													style="margin-top: 25px;" type="submit">Search</button>
+											</div>
+										</div>
+									</form>
+									<form role="form" class="sec"
 										action="jobSearchByProductCodeForPayment" method="post">
 										<div class="row">
 											<div class="col-md-10">
@@ -806,6 +822,7 @@
 			$("#pAmount").hide();
 			$("#pDate").hide();
 			$("#pTypeDiv").hide();
+			$("#pType").val("-");
 			$("#pDueAmount").show();
 			$("#description").show();
 			$("#spAmount").val(Number($("#dueAmount").html()));
@@ -906,6 +923,38 @@
 			dateFormat : "dd-mm-yy"
 		});
 		$("#datepicker2").datepicker('setDate', new Date());
+	});
+	
+	$(function() {
+		$("#dNo").autocomplete({
+			source : function(req, resp) {
+				$.ajax({
+					type : "post",
+					url : "getSampleDesignCostSheetByDesignNumber",
+					data : {
+						dNo : req.term
+					},
+					dataType : "json",
+					success : function(data) {
+						resp($.map(data, function(item) {
+							return ({
+								value : item.dNumber.toUpperCase(),
+								id : item.dId
+							});
+						}));
+					}
+
+				});
+			},
+			select : function(event, ui) {
+				if (ui.item == null) {
+					$(this).val("");
+					$("#dNo").val("");
+				} else {
+					$("#dNo").val($(this).val());
+				}
+			}
+		});
 	});
 	</script>
 </body>
