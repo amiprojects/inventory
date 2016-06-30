@@ -518,7 +518,7 @@
 									</thead>
 									<c:set var="j" value="${1}"></c:set>
 									<c:forEach var="paymentDetails"
-										items="${purchaseSearchView.paymentDetails}">
+										items="${sessionScope['ejb'].getPaymentDetailsByPurchaseEntryId(purchaseSearchView.id)}">
 										<tbody>
 											<tr>
 												<td>${j}</td>

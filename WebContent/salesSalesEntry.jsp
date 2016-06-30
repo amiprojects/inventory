@@ -1959,7 +1959,7 @@
 									name : item.name,
 									address : item.address,
 									city : item.city,
-									vat_cst_no : item.vat_cst_no,
+									vat_cst_no : item.vat_cst_no
 								});
 							}));
 						}

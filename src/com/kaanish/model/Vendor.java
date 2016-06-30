@@ -81,8 +81,7 @@ public class Vendor implements Serializable {
 		float totPur = 0F;
 		float totRet = 0F;
 		for (Purchase_Entry purEntry : getPurchaseEntry()) {
-			for (Purchase_Product_Details ppd : purEntry
-					.getPurchase_Product_Details()) {
+			for (Purchase_Product_Details ppd : purEntry.getPurchase_Product_Details()) {
 				totPur = totPur + ppd.getQuantity() * ppd.getCost();
 				totRet = totRet + ppd.getTotalReturningQty() * ppd.getCost();
 			}
@@ -229,8 +228,7 @@ public class Vendor implements Serializable {
 		return jobAssignmentDetails;
 	}
 
-	public void setJobAssignmentDetails(
-			List<JobAssignmentDetails> jobAssignmentDetails) {
+	public void setJobAssignmentDetails(List<JobAssignmentDetails> jobAssignmentDetails) {
 		this.jobAssignmentDetails = jobAssignmentDetails;
 	}
 
@@ -238,8 +236,7 @@ public class Vendor implements Serializable {
 		return jobAssignmentProducts;
 	}
 
-	public void setJobAssignmentProducts(
-			List<JobAssignmentProducts> jobAssignmentProducts) {
+	public void setJobAssignmentProducts(List<JobAssignmentProducts> jobAssignmentProducts) {
 		this.jobAssignmentProducts = jobAssignmentProducts;
 	}
 
@@ -261,36 +258,34 @@ public class Vendor implements Serializable {
 		}
 		if (voucherAssign != null) {
 			if (voucherAssign.getVoucherDetails().size() != 0) {
-				return "{\"id\":\""
-						+ id
-						+ "\", "
-						+ "\"currentCreditNote\":\""
-						+ voucherAssign
-								.getVoucherDetails()
-								.get(voucherAssign.getVoucherDetails().size() - 1)
-								.getTotalCreditNote() + "\", " + "\"name\":\""
-						+ name + "\", " + "\"companyName\":\"" + companyName
-						+ "\", " + "\"ph1\":\"" + ph1 + "\", " + "\"ph2\":\""
-						+ ph2 + "\", " + "\"address\":\"" + address + "\", "
-						+ "\"pinCode\":\"" + pinCode + "\", " + "\"email\":\""
-						+ email + "\", " + "\"city\":\"" + cityName + "\"}";
+				// return "{\"id\":\""
+				// + id
+				// + "\", "
+				// + "\"currentCreditNote\":\""
+				// + voucherAssign
+				// .getVoucherDetails()
+				// .get(voucherAssign.getVoucherDetails().size() - 1)
+				// .getTotalCreditNote() + "\", " + "\"name\":\""
+				// + name + "\", " + "\"companyName\":\"" + companyName
+				// + "\", " + "\"ph1\":\"" + ph1 + "\", " + "\"ph2\":\""
+				// + ph2 + "\", " + "\"address\":\"" + address + "\", "
+				// + "\"pinCode\":\"" + pinCode + "\", " + "\"email\":\""
+				// + email + "\", " + "\"city\":\"" + cityName + "\"}";
+				return "{\"id\":\"" + id + "\"" + "\"name\":\"" + name + "\", " + "\"companyName\":\"" + companyName
+						+ "\", " + "\"ph1\":\"" + ph1 + "\", " + "\"ph2\":\"" + ph2 + "\", " + "\"address\":\""
+						+ address + "\", " + "\"pinCode\":\"" + pinCode + "\", " + "\"email\":\"" + email + "\", "
+						+ "\"city\":\"" + cityName + "\"}";
 			} else {
-				return "{\"id\":\"" + id + "\", " + "\"currentCreditNote\":\""
-						+ 0 + "\", " + "\"name\":\"" + name + "\", "
-						+ "\"companyName\":\"" + companyName + "\", "
-						+ "\"ph1\":\"" + ph1 + "\", " + "\"ph2\":\"" + ph2
-						+ "\", " + "\"address\":\"" + address + "\", "
-						+ "\"pinCode\":\"" + pinCode + "\", " + "\"email\":\""
-						+ email + "\", " + "\"city\":\"" + cityName + "\"}";
+				return "{\"id\":\"" + id + "\", " + "\"currentCreditNote\":\"" + 0 + "\", " + "\"name\":\"" + name
+						+ "\", " + "\"companyName\":\"" + companyName + "\", " + "\"ph1\":\"" + ph1 + "\", "
+						+ "\"ph2\":\"" + ph2 + "\", " + "\"address\":\"" + address + "\", " + "\"pinCode\":\"" + pinCode
+						+ "\", " + "\"email\":\"" + email + "\", " + "\"city\":\"" + cityName + "\"}";
 			}
 		} else {
-			return "{\"id\":\"" + id + "\", " + "\"currentCreditNote\":\"" + 0
-					+ "\", " + "\"name\":\"" + name + "\", "
-					+ "\"companyName\":\"" + companyName + "\", "
-					+ "\"ph1\":\"" + ph1 + "\", " + "\"ph2\":\"" + ph2 + "\", "
-					+ "\"address\":\"" + address + "\", " + "\"pinCode\":\""
-					+ pinCode + "\", " + "\"email\":\"" + email + "\", "
-					+ "\"city\":\"" + cityName + "\"}";
+			return "{\"id\":\"" + id + "\", " + "\"currentCreditNote\":\"" + 0 + "\", " + "\"name\":\"" + name + "\", "
+					+ "\"companyName\":\"" + companyName + "\", " + "\"ph1\":\"" + ph1 + "\", " + "\"ph2\":\"" + ph2
+					+ "\", " + "\"address\":\"" + address + "\", " + "\"pinCode\":\"" + pinCode + "\", "
+					+ "\"email\":\"" + email + "\", " + "\"city\":\"" + cityName + "\"}";
 		}
 
 	}
@@ -299,8 +294,7 @@ public class Vendor implements Serializable {
 		return sampleDesignCostSheets;
 	}
 
-	public void setSampleDesignCostSheets(
-			List<SampleDesignCostSheet> sampleDesignCostSheets) {
+	public void setSampleDesignCostSheets(List<SampleDesignCostSheet> sampleDesignCostSheets) {
 		this.sampleDesignCostSheets = sampleDesignCostSheets;
 	}
 
@@ -308,8 +302,7 @@ public class Vendor implements Serializable {
 		return jobsForDesignCostSheets;
 	}
 
-	public void setJobsForDesignCostSheets(
-			List<JobsForDesignCostSheet> jobsForDesignCostSheets) {
+	public void setJobsForDesignCostSheets(List<JobsForDesignCostSheet> jobsForDesignCostSheets) {
 		this.jobsForDesignCostSheets = jobsForDesignCostSheets;
 	}
 
@@ -325,8 +318,7 @@ public class Vendor implements Serializable {
 		return purchaseOrderEntry;
 	}
 
-	public void setPurchaseOrderEntry(
-			List<PurchaseOrderEntry> purchaseOrderEntry) {
+	public void setPurchaseOrderEntry(List<PurchaseOrderEntry> purchaseOrderEntry) {
 		this.purchaseOrderEntry = purchaseOrderEntry;
 	}
 

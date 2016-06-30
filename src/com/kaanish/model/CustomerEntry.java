@@ -116,30 +116,30 @@ public class CustomerEntry implements Serializable {
 	public String toString() {
 		if (voucherAssign != null) {
 			if (voucherAssign.getVoucherDetails().size() != 0) {
-				return "{\"id\":\""
-						+ id
-						+ "\", "
-						+ "\"currentDebitNote\":\""
-						+ voucherAssign
-								.getVoucherDetails()
-								.get(voucherAssign.getVoucherDetails().size() - 1)
-								.getTotalDebitNote() + "\","
-						+ "\"vat_cst_no\":\"" + vat_cst_no + "\","
-						+ "\"address\":\"" + address + "\"," + "\"city\":\""
-						+ city + "\"," + "\"mobile\":\"" + mobile
-						+ "\", \"name\":\"" + name + "\"}";
+				// return "{\"id\":\""
+				// + id
+				// + "\", "
+				// + "\"currentDebitNote\":\""
+				// + voucherAssign
+				// .getVoucherDetails()
+				// .get(voucherAssign.getVoucherDetails().size() - 1)
+				// .getTotalDebitNote() + "\","
+				// + "\"vat_cst_no\":\"" + vat_cst_no + "\","
+				// + "\"address\":\"" + address + "\"," + "\"city\":\""
+				// + city + "\"," + "\"mobile\":\"" + mobile
+				// + "\", \"name\":\"" + name + "\"}";
+				return "{\"id\":\"" + id + "\"," + "\"vat_cst_no\":\"" + vat_cst_no + "\"," + "\"address\":\"" + address
+						+ "\"," + "\"city\":\"" + city + "\"," + "\"mobile\":\"" + mobile + "\", \"name\":\"" + name
+						+ "\"}";
 			} else {
-				return "{\"id\":\"" + id + "\"," + "\"vat_cst_no\":\""
-						+ vat_cst_no + "\"," + "\"address\":\"" + address
-						+ "\"," + "\"city\":\"" + city + "\","
-						+ "\"mobile\":\"" + mobile + "\", \"name\":\"" + name
+				return "{\"id\":\"" + id + "\"," + "\"vat_cst_no\":\"" + vat_cst_no + "\"," + "\"address\":\"" + address
+						+ "\"," + "\"city\":\"" + city + "\"," + "\"mobile\":\"" + mobile + "\", \"name\":\"" + name
 						+ "\"}";
 			}
 		} else {
-			return "{\"id\":\"" + id + "\"," + "\"vat_cst_no\":\"" + vat_cst_no
-					+ "\"," + "\"address\":\"" + address + "\","
-					+ "\"city\":\"" + city + "\"," + "\"mobile\":\"" + mobile
-					+ "\", \"name\":\"" + name + "\"}";
+			return "{\"id\":\"" + id + "\"," + "\"vat_cst_no\":\"" + vat_cst_no + "\"," + "\"address\":\"" + address
+					+ "\"," + "\"city\":\"" + city + "\"," + "\"mobile\":\"" + mobile + "\", \"name\":\"" + name
+					+ "\"}";
 		}
 	}
 }

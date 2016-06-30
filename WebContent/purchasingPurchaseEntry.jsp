@@ -4012,8 +4012,7 @@
 																				addr : item.address,
 																				id : item.id,
 																				ph1 : item.ph1,
-																				ph2 : item.ph2,
-																				currentCreditNote : item.currentCreditNote
+																				ph2 : item.ph2
 																			});
 																		}
 																	}));

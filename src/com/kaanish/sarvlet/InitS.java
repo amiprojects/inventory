@@ -211,27 +211,29 @@ public class InitS extends HttpServlet {
 			}
 		}
 		// sales id
-		for (VoucherAssign va : ejb.getAllVoucherAssign()) {
-			float totCr = 0;
-			float totDb = 0;
-
-			for (int i = 0; i < ejb.getAllVoucherDetailsByVoucherAssignId(va.getId()).size(); i++) {
-				VoucherDetails vd = ejb.getAllVoucherDetailsByVoucherAssignId(va.getId()).get(i);
-				if (vd.isCredit()) {
-					totCr = totCr + vd.getValue();
-				} else {
-					totDb = totDb + vd.getValue();
-				}
-
-				if (vd.getVoucherAssign().getVendor() != null) {
-					vd.setTotalCreditNote(totCr - totDb);
-					ejb.updateVoucherDetails(vd);
-				} else if (vd.getVoucherAssign().getCustomerEntry() != null) {
-					vd.setTotalDebitNote(totDb - totCr);
-					ejb.updateVoucherDetails(vd);
-				}
-			}
-		}
+		// for (VoucherAssign va : ejb.getAllVoucherAssign()) {
+		// float totCr = 0;
+		// float totDb = 0;
+		//
+		// for (int i = 0; i <
+		// ejb.getAllVoucherDetailsByVoucherAssignId(va.getId()).size(); i++) {
+		// VoucherDetails vd =
+		// ejb.getAllVoucherDetailsByVoucherAssignId(va.getId()).get(i);
+		// if (vd.isCredit()) {
+		// totCr = totCr + vd.getValue();
+		// } else {
+		// totDb = totDb + vd.getValue();
+		// }
+		//
+		// if (vd.getVoucherAssign().getVendor() != null) {
+		// vd.setTotalCreditNote(totCr - totDb);
+		// ejb.updateVoucherDetails(vd);
+		// } else if (vd.getVoucherAssign().getCustomerEntry() != null) {
+		// vd.setTotalDebitNote(totDb - totCr);
+		// ejb.updateVoucherDetails(vd);
+		// }
+		// }
+		// }
 		// correcting voucher details
 
 		// correcting purchase entry payment details

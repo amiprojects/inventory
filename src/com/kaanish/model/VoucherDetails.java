@@ -23,8 +23,8 @@ public class VoucherDetails implements Serializable {
 	@GeneratedValue
 	private int id;
 	private float value;
-	private float totalDebitNote;
-	private float totalCreditNote;
+	// private float totalDebitNote;
+	// private float totalCreditNote;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date voucherDate;
 	private boolean isCredit;
@@ -41,7 +41,7 @@ public class VoucherDetails implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "purchase_EntryId")
 	private Purchase_Entry purchase_Entry;
-	
+
 	@OneToOne
 	@JoinColumn(name = "purchaseOrderEntryId")
 	private PurchaseOrderEntry purchaseOrderEntry;
@@ -138,21 +138,21 @@ public class VoucherDetails implements Serializable {
 		this.users = users;
 	}
 
-	public float getTotalDebitNote() {
-		return totalDebitNote;
-	}
-
-	public void setTotalDebitNote(float totalDebitNote) {
-		this.totalDebitNote = totalDebitNote;
-	}
-
-	public float getTotalCreditNote() {
-		return totalCreditNote;
-	}
-
-	public void setTotalCreditNote(float totalCreditNote) {
-		this.totalCreditNote = totalCreditNote;
-	}
+	// public float getTotalDebitNote() {
+	// return totalDebitNote;
+	// }
+	//
+	// public void setTotalDebitNote(float totalDebitNote) {
+	// this.totalDebitNote = totalDebitNote;
+	// }
+	//
+	// public float getTotalCreditNote() {
+	// return totalCreditNote;
+	// }
+	//
+	// public void setTotalCreditNote(float totalCreditNote) {
+	// this.totalCreditNote = totalCreditNote;
+	// }
 
 	public PurchaseOrderEntry getPurchaseOrderEntry() {
 		return purchaseOrderEntry;
