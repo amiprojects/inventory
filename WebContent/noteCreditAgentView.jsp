@@ -118,10 +118,15 @@
 									<thead>
 										<tr>
 											<th style="text-align: right;">Current Credit :</th>
-											<td><fmt:formatNumber var="currentCredit"
+											<td>
+												<%-- <fmt:formatNumber var="currentCredit"
 													value="${sessionScope['ejb'].getLastVoucherDetailsByVendorId(vendor.id).getTotalCreditNote()}"
+													maxFractionDigits="2" groupingUsed="false" /> --%> <fmt:formatNumber
+													var="currentCredit"
+													value="${sessionScope['ejb'].getCurrentCreditNoteByVendorId(vendor.id)}"
 													maxFractionDigits="2" groupingUsed="false" />
-												${currentCredit}</td>
+												${currentCredit}
+											</td>
 										</tr>
 									</thead>
 								</table>

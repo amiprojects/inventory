@@ -111,10 +111,15 @@
 									<thead>
 										<tr>
 											<th style="text-align: right;">Current Debit :</th>
-											<td><fmt:formatNumber var="currentDebit"
+											<td>
+												<%-- <fmt:formatNumber var="currentDebit"
 													value="${sessionScope['ejb'].getLastVoucherDetailsByCustomerId(customer.id).getTotalDebitNote()}"
+													maxFractionDigits="2" groupingUsed="false" /> --%> <fmt:formatNumber
+													var="currentDebit"
+													value="${sessionScope['ejb'].getCurrentDebitNoteByCustomerId(customer.id)}"
 													maxFractionDigits="2" groupingUsed="false" />
-												${currentDebit}</td>
+												${currentDebit}
+											</td>
 										</tr>
 									</thead>
 								</table>

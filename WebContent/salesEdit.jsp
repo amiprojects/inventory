@@ -903,6 +903,7 @@
 			$("#profitTypeTR").attr("style", "display: none;");
 			$("#profitValueTR").attr("style", "display: none;");
 			
+			$("#aId").val("");
 			$("#isEffective").val("efectiveYes");
 			$("#profitType").val("profitFlat");
 			$("#profitVal").val(0);

@@ -102,10 +102,15 @@
 													<td>${customer.name}</td>
 													<td>${customer.mobile}</td>
 													<td>${customer.city}</td>
-													<td><fmt:formatNumber var="currentDebit"
+													<td>
+														<%-- <fmt:formatNumber var="currentDebit"
 															value="${sessionScope['ejb'].getLastVoucherDetailsByCustomerId(customer.id).getTotalDebitNote()}"
+															maxFractionDigits="2" groupingUsed="false" /> --%> <fmt:formatNumber
+															var="currentDebit"
+															value="${sessionScope['ejb'].getCurrentDebitNoteByCustomerId(customer.id)}"
 															maxFractionDigits="2" groupingUsed="false" />
-														${currentDebit}</td>
+														${currentDebit}
+													</td>
 													<td>
 														<form action="debitNoteByCustomer" method="post"
 															id="dnView${customer.id}">

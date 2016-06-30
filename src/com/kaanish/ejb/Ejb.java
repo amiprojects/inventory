@@ -4249,32 +4249,6 @@ public class Ejb {
 		return q.getResultList();
 	}
 
-	public VoucherDetails getLastVoucherDetailsByVendorId(int id) {
-		TypedQuery<VoucherDetails> q = em
-				.createQuery(
-						"select c from VoucherDetails c where c.voucherAssign.vendor.id=:id order by c.id desc",
-						VoucherDetails.class);
-		q.setParameter("id", id);
-		if (q.getResultList().size() > 0) {
-			return q.getResultList().get(0);
-		} else {
-			return null;
-		}
-	}
-
-	public VoucherDetails getLastVoucherDetailsByCustomerId(int id) {
-		TypedQuery<VoucherDetails> q = em
-				.createQuery(
-						"select c from VoucherDetails c where c.voucherAssign.customerEntry.id=:id order by c.id desc",
-						VoucherDetails.class);
-		q.setParameter("id", id);
-		if (q.getResultList().size() > 0) {
-			return q.getResultList().get(0);
-		} else {
-			return null;
-		}
-	}
-
 	public List<VoucherDetails> getAllVoucherDetailsByVoucherAssignId(int vaId) {
 		TypedQuery<VoucherDetails> q = em
 				.createQuery(
@@ -4327,6 +4301,68 @@ public class Ejb {
 						VoucherDetails.class);
 		q.setParameter("srId", srId);
 		return q.getResultList();
+	}
+
+	public VoucherDetails getLastVoucherDetailsByVendorId(int id) {
+		TypedQuery<VoucherDetails> q = em
+				.createQuery(
+						"select c from VoucherDetails c where c.voucherAssign.vendor.id=:id order by c.id desc",
+						VoucherDetails.class);
+		q.setParameter("id", id);
+		if (q.getResultList().size() > 0) {
+			return q.getResultList().get(0);
+		} else {
+			return null;
+		}
+	}
+
+	public VoucherDetails getLastVoucherDetailsByCustomerId(int id) {
+		TypedQuery<VoucherDetails> q = em
+				.createQuery(
+						"select c from VoucherDetails c where c.voucherAssign.customerEntry.id=:id order by c.id desc",
+						VoucherDetails.class);
+		q.setParameter("id", id);
+		if (q.getResultList().size() > 0) {
+			return q.getResultList().get(0);
+		} else {
+			return null;
+		}
+	}
+
+	public float getCurrentCreditNoteByVendorId(int id) {
+		TypedQuery<VoucherDetails> q = em
+				.createQuery(
+						"select c from VoucherDetails c where c.voucherAssign.vendor.id=:id order by c.id asc",
+						VoucherDetails.class);
+		q.setParameter("id", id);
+		float totCr = 0;
+		float totDb = 0;
+		for (VoucherDetails vd : q.getResultList()) {
+			if (vd.isCredit()) {
+				totCr = totCr + vd.getValue();
+			} else {
+				totDb = totDb + vd.getValue();
+			}
+		}
+		return (totCr - totDb);
+	}
+
+	public float getCurrentDebitNoteByCustomerId(int id) {
+		TypedQuery<VoucherDetails> q = em
+				.createQuery(
+						"select c from VoucherDetails c where c.voucherAssign.customerEntry.id=:id order by c.id asc",
+						VoucherDetails.class);
+		q.setParameter("id", id);
+		float totCr = 0;
+		float totDb = 0;
+		for (VoucherDetails vd : q.getResultList()) {
+			if (vd.isCredit()) {
+				totCr = totCr + vd.getValue();
+			} else {
+				totDb = totDb + vd.getValue();
+			}
+		}
+		return (totDb - totCr);
 	}
 
 	/**************** VoucherAssign ******************************************************************/

@@ -120,10 +120,15 @@
 																<td>${vendor.companyName}</td>
 																<td>${vendor.ph1}</td>
 																<td>${vendor.ph2}</td>
-																<td><fmt:formatNumber var="currentCredit"
+																<td>
+																	<%-- <fmt:formatNumber var="currentCredit"
 																		value="${sessionScope['ejb'].getLastVoucherDetailsByVendorId(vendor.id).getTotalCreditNote()}"
+																		maxFractionDigits="2" groupingUsed="false" /> --%> <fmt:formatNumber
+																		var="currentCredit"
+																		value="${sessionScope['ejb'].getCurrentCreditNoteByVendorId(vendor.id)}"
 																		maxFractionDigits="2" groupingUsed="false" />
-																	${currentCredit}</td>
+																	${currentCredit}
+																</td>
 																<td>
 																	<form action="creditNoteByVendorName" method="post"
 																		id="cnView${vendor.id}">
@@ -168,10 +173,15 @@
 															<td>${vendor.companyName}</td>
 															<td>${vendor.ph1}</td>
 															<td>${vendor.ph2}</td>
-															<td><fmt:formatNumber var="currentCredit"
+															<td>
+																<%-- <fmt:formatNumber var="currentCredit"
 																	value="${sessionScope['ejb'].getLastVoucherDetailsByVendorId(vendor.id).getTotalCreditNote()}"
+																	maxFractionDigits="2" groupingUsed="false" /> --%> <fmt:formatNumber
+																	var="currentCredit"
+																	value="${sessionScope['ejb'].getCurrentCreditNoteByVendorId(vendor.id)}"
 																	maxFractionDigits="2" groupingUsed="false" />
-																${currentCredit}</td>
+																${currentCredit}
+															</td>
 															<td>
 																<form action="creditNoteByAgentName" method="post"
 																	id="cnView${vendor.id}">
@@ -215,10 +225,15 @@
 																<td>${vendor.companyName}</td>
 																<td>${vendor.ph1}</td>
 																<td>${vendor.ph2}</td>
-																<td><fmt:formatNumber var="currentCredit"
+																<td>
+																	<%-- <fmt:formatNumber var="currentCredit"
 																		value="${sessionScope['ejb'].getLastVoucherDetailsByVendorId(vendor.id).getTotalCreditNote()}"
+																		maxFractionDigits="2" groupingUsed="false" /> --%> <fmt:formatNumber
+																		var="currentCredit"
+																		value="${sessionScope['ejb'].getCurrentCreditNoteByVendorId(vendor.id)}"
 																		maxFractionDigits="2" groupingUsed="false" />
-																	${currentCredit}</td>
+																	${currentCredit}
+																</td>
 																<td>
 																	<form action="creditNoteByJobber" method="post"
 																		id="cnView${vendor.id}">

@@ -8,7 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vendor's Credit Note Statement</title>
+<title>Admin Panel</title>
 
 <link
 	href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700,900'
@@ -116,10 +116,15 @@
 									<thead>
 										<tr>
 											<th style="text-align: right;">Current Credit :</th>
-											<td><fmt:formatNumber var="currentCredit"
+											<td>
+												<%-- <fmt:formatNumber var="currentCredit"
 													value="${sessionScope['ejb'].getLastVoucherDetailsByVendorId(vendor.id).getTotalCreditNote()}"
+													maxFractionDigits="2" groupingUsed="false" /> --%> <fmt:formatNumber
+													var="currentCredit"
+													value="${sessionScope['ejb'].getCurrentCreditNoteByVendorId(vendor.id)}"
 													maxFractionDigits="2" groupingUsed="false" />
-												${currentCredit}</td>
+												${currentCredit}
+											</td>
 										</tr>
 									</thead>
 								</table>
