@@ -13,7 +13,7 @@
 ...................................
 loginservlet.java / inits.java,
 getmacid.java - production only,
-
+testServ
 ////////////////////////////////////////
 glassfish-4.1\glassfish4\bin\asadmin.bat
 
