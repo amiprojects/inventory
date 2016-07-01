@@ -24,7 +24,11 @@ page[size="A4"] {
 
 @media print {
 	body, page[size="A4"] {
-		margin: 0;
+		/* margin: 0;
+		box-shadow: 0; */
+		padding-left: 1.0cm;
+		padding-right: 1.0cm;
+		page-break-after: always;
 		box-shadow: 0;
 	}
 }
@@ -97,9 +101,9 @@ page[size="A4"] {
 		</h3>
 		<table class="tg"
 			style="border: 1px solid; height: 1050px; width: 750px">
-			<tr style="height: 50px">
+			<tr style="height: 40px">
 				<td class="tg-031e" colspan="3" rowspan="3" style="width: 50%">
-					<strong>${companyInfo.compname}</strong><br> <br> <br>
+					<strong>${companyInfo.compname}</strong><br> <br>
 					${companyInfo.addr}<br> EMail: ${companyInfo.email}<br>
 					Mobile: ${companyInfo.mobile}
 				</td>
@@ -107,19 +111,19 @@ page[size="A4"] {
 					Challan no:</td>
 				<td class="tg-031e" colspan="2" style="width: 25%">${purEntry.challanNumber}</td>
 			</tr>
-			<tr style="height: 50px">
-				<td class="tg-031e" colspan="2">Dated:</td>
+			<tr style="height: 40px">
+				<td class="tg-031e" colspan="2">System Date:</td>
 				<td class="tg-031e" colspan="2"><fmt:formatDate
 						value="${sessionScope['ejb'].getCurrentDateTime()}"
 						pattern="dd-MM-yyyy" /></td>
 			</tr>
-			<tr style="height: 50px">
+			<tr style="height: 40px">
 				<td class="tg-031e" colspan="2">Purchase date:</td>
 				<td class="tg-031e" colspan="2"><fmt:formatDate
 						value="${purEntry.purchase_date}" pattern="dd-MM-yyyy" /></td>
 			</tr>
-			<tr style="height: 50px">
-				<td class="tg-031e" colspan="3" rowspan="4"><strong> <c:choose>
+			<tr style="height: 40px">
+				<td class="tg-031e" colspan="3" rowspan="3"><strong> <c:choose>
 							<c:when test="${purEntry.vendor.vendorType.type=='Vendor'}">Vendor
 					Details:</c:when>
 							<c:when
@@ -133,26 +137,17 @@ page[size="A4"] {
 						:</span> ${purEntry.vendor.city.cityName} <br>
 					&nbsp;&nbsp;&nbsp;&nbsp;<span>Address :<br>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				</span> ${purEntry.vendor.address} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Ph1
-						:</span> ${purEntry.vendor.ph1} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Ph2
-						:</span> ${purEntry.vendor.ph2}</td>
+				</span> ${purEntry.vendor.address} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Ph
+						:</span> ${purEntry.vendor.ph1}</td>
 				<td class="tg-031e" colspan="2">Vendor bill No:</td>
 				<td class="tg-031e" colspan="2">${purEntry.vendor_bill_no}</td>
 			</tr>
-			<tr style="height: 50px">
-				<td class="tg-031e" colspan="2">Mode of payment :</td>
-				<td class="tg-031e" colspan="2"><c:choose>
-						<c:when
-							test="${purEntry.paymentDetails.get(0).paymentType.type!=null}">${purEntry.paymentDetails.get(0).paymentType.type}</c:when>
-						<c:otherwise>NA</c:otherwise>
-					</c:choose></td>
-			</tr>
-			<tr style="height: 50px">
+			<tr style="height: 40px">
 				<td class="tg-031e" colspan="2">Supplier reference(Agent Alias
 					name):</td>
 				<td class="tg-031e" colspan="2">${purEntry.vendor.aliseName}</td>
 			</tr>
-			<tr style="height: 50px">
+			<tr style="height: 40px">
 				<td class="tg-031e" colspan="4"></td>
 			</tr>
 			<tr>
@@ -262,7 +257,7 @@ page[size="A4"] {
 		<h3 align="center">Purchase Challan (Page ${j})</h3>
 		<table class="tg"
 			style="border: 1px solid; height: 1050px; width: 750px">
-			<tr style="height: 50px">
+			<tr style="height: 40px">
 				<td class="tg-031e" colspan="3" rowspan="3" style="width: 50%">
 					<strong>${companyInfo.compname}</strong><br> <br> <br>
 					${companyInfo.addr}<br> EMail: ${companyInfo.email}<br>
@@ -272,18 +267,18 @@ page[size="A4"] {
 					Challan no:</td>
 				<td class="tg-031e" colspan="2" style="width: 25%">${purEntry.challanNumber}</td>
 			</tr>
-			<tr style="height: 50px">
-				<td class="tg-031e" colspan="2">Dated:</td>
+			<tr style="height: 40px">
+				<td class="tg-031e" colspan="2">System Date:</td>
 				<td class="tg-031e" colspan="2"><fmt:formatDate
 						value="${sessionScope['ejb'].getCurrentDateTime()}"
 						pattern="dd-MM-yyyy" /></td>
 			</tr>
-			<tr style="height: 50px">
+			<tr style="height: 40px">
 				<td class="tg-031e" colspan="2">Purchase date:</td>
 				<td class="tg-031e" colspan="2"><fmt:formatDate
 						value="${purEntry.purchase_date}" pattern="dd-MM-yyyy" /></td>
 			</tr>
-			<tr style="height: 50px">
+			<tr style="height: 40px">
 				<td class="tg-031e" colspan="3" rowspan="3"><strong> <c:choose>
 							<c:when test="${purEntry.vendor.vendorType.type=='Vendor'}">Vendor
 					Details:</c:when>
@@ -298,21 +293,17 @@ page[size="A4"] {
 						:</span> ${purEntry.vendor.city.cityName} <br>
 					&nbsp;&nbsp;&nbsp;&nbsp;<span>Address :<br>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				</span> ${purEntry.vendor.address} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Ph1
-						:</span> ${purEntry.vendor.ph1} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Ph2
-						:</span> ${purEntry.vendor.ph2}</td>
+				</span> ${purEntry.vendor.address} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Ph
+						:</span> ${purEntry.vendor.ph1}</td>
 				<td class="tg-031e" colspan="2">Vendor bill No:</td>
 				<td class="tg-031e" colspan="2">${purEntry.vendor_bill_no}</td>
 			</tr>
-			<tr style="height: 50px">
-				<td class="tg-031e" colspan="2">Mode of payment :</td>
-				<td class="tg-031e" colspan="2"><c:choose>
-						<c:when
-							test="${purEntry.paymentDetails.get(0).paymentType.type!=null}">${purEntry.paymentDetails.get(0).paymentType.type}</c:when>
-						<c:otherwise>NA</c:otherwise>
-					</c:choose></td>
+			<tr style="height: 40px">
+				<td class="tg-031e" colspan="2">Supplier reference(Agent Alias
+					name):</td>
+				<td class="tg-031e" colspan="2">${purEntry.vendor.aliseName}</td>
 			</tr>
-			<tr style="height: 50px">
+			<tr style="height: 40px">
 				<td class="tg-031e" colspan="4"></td>
 			</tr>
 			<tr style="height: 25px">
@@ -383,6 +374,7 @@ page[size="A4"] {
 				</td>
 			</tr>
 		</table>
+		<center>This is a Computer Generated Invoice</center>
 		</page>
 	</c:if>
 </body>

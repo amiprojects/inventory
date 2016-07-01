@@ -24,8 +24,12 @@ page[size="A4"] {
 
 @media print {
 	body, page[size="A4"] {
-		margin: 0;
+		/* margin: 0;
+		box-shadow: 0; */
+		padding-left: 1.0cm; padding-right : 1.0cm; page-break-after : always;
 		box-shadow: 0;
+		padding-right: 1.0cm;
+		page-break-after: always;
 	}
 }
 
@@ -171,7 +175,7 @@ Url = {
 		</tr>
 
 	</table>
-
+	<center>This is a Computer Generated Invoice</center>
 	</page>
 	<page size="A4">
 	<h2 align="center">Job Challan (Page-2)</h2>
@@ -285,7 +289,7 @@ Url = {
 		</tr>
 
 	</table>
-
+	<center>This is a Computer Generated Invoice</center>
 	</page>
 </body>
 </html>

@@ -24,7 +24,11 @@ page[size="A4"] {
 
 @media print {
 	body, page[size="A4"] {
-		margin: 0;
+		/* margin: 0;
+		box-shadow: 0; */
+		padding-left: 1.0cm;
+		padding-right: 1.0cm;
+		page-break-after: always;
 		box-shadow: 0;
 	}
 }

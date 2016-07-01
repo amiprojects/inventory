@@ -2918,11 +2918,13 @@
 									}
 								} else {
 									alert("no product found for sale");
+									$("#salesbar").val("");
 								}
 
 							},
 							error : function(a, b, c) {
 								alert('invalid barcode');
+								$("#salesbar").val("");
 							}
 
 						});
