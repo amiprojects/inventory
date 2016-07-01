@@ -443,7 +443,8 @@ public class TestServ extends HttpServlet {
 					ejb.setVoucherDetails(voucherDetails);
 
 					out.println("<h1>" + "Successfull..."
-							+ ja.getChallanNumber() + "</h1>");
+							+ ja.getChallanNumber() + ", "
+							+ voucherDetails.getId() + "</h1>");
 				}
 			}
 		}

@@ -308,19 +308,25 @@
 															maxFractionDigits="3" groupingUsed="false" />
 													</c:forEach>
 													<tr style="width: 100%">
-														<td><b>Initial Inventory:</b> ${initialQty} <c:if
-																test="${initialQty!=0}">
+														<td><b>Initial Inventory:</b> <fmt:formatNumber
+																value="${initialQty}" maxFractionDigits="3"
+																groupingUsed="false" /> <c:if test="${initialQty!=0}">
 																<a href="#"
 																	onclick="window.open('barcodeInitialPrint.jsp?id=${requestScope['proid1']}','mywindow','width=1100,height=500')">
 																	<img alt="click to view" src="Capture.PNG" height="20">
 																</a>
 															</c:if></td>
-														<td><b>Total Sold:</b> &nbsp;&nbsp;${sTotal}</td>
-														<td><b>In Stock:</b> &nbsp;&nbsp;${qty}</td>
+														<td><b>Total Sold:</b> &nbsp;&nbsp;<fmt:formatNumber
+																value="${sTotal}" maxFractionDigits="3"
+																groupingUsed="false" /></td>
+														<td><b>In Stock:</b> &nbsp;&nbsp;<fmt:formatNumber
+																value="${qty}" maxFractionDigits="3"
+																groupingUsed="false" /></td>
 													</tr>
 													<tr>
-														<td><b>Total Purchased:</b> &nbsp;&nbsp;${purQtyt} <c:if
-																test="${purQtyt!=0}">
+														<td><b>Total Purchased:</b> &nbsp;&nbsp;<fmt:formatNumber
+																value="${purQtyt}" maxFractionDigits="3"
+																groupingUsed="false" /> <c:if test="${purQtyt!=0}">
 																<a href="#"
 																	onclick="window.open('barcodePurchasePrint.jsp?id=${requestScope['proid1']}','mywindow','width=1100,height=500')">
 																	<img alt="click to view" src="Capture.PNG" height="20">
@@ -328,8 +334,10 @@
 															</c:if> <br> <c:if
 																test="${sessionScope['user']=='adminProduction'}">
 																<b>Production Inventory:</b>
-															&nbsp;&nbsp;${purProductionQtyt}<c:if
-																	test="${purProductionQtyt!=0}">
+															&nbsp;&nbsp;<fmt:formatNumber
+																	value="${purProductionQtyt}" maxFractionDigits="3"
+																	groupingUsed="false" />
+																<c:if test="${purProductionQtyt!=0}">
 																	<a href="#"
 																		onclick="window.open('barcodeProductionInventoryPrint.jsp?id=${requestScope['proid1']}','mywindow','width=1100,height=500')">
 																		<img alt="click to view" src="Capture.PNG" height="20">
@@ -337,7 +345,9 @@
 																</c:if>
 															</c:if></td>
 														<c:if test="${sessionScope['user']=='adminProduction'}">
-															<td><b>In Jobwork:</b>&nbsp;&nbsp;${total}</td>
+															<td><b>In Jobwork:</b>&nbsp;&nbsp;<fmt:formatNumber
+																	value="${total}" maxFractionDigits="3"
+																	groupingUsed="false" /></td>
 														</c:if>
 													</tr>
 												</table>
@@ -355,7 +365,10 @@
 												<tr>
 													<td><b>Available for sale:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 														<c:choose>
-															<c:when test="${p.isSaleble()}">${qty}</c:when>
+															<c:when test="${p.isSaleble()}">
+																<fmt:formatNumber value="${qty}" maxFractionDigits="3"
+																	groupingUsed="false" />
+															</c:when>
 															<c:otherwise>0</c:otherwise>
 														</c:choose></td>
 												</tr>
