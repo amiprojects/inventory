@@ -93,7 +93,7 @@ page[size="A4"] {
 		</h3>
 		<table class="tg"
 			style="border: 1px solid; height: 1050px; width: 750px">
-			<tr style="height: 50px">
+			<tr style="height: 40px">
 				<td class="tg-031e" colspan="3" rowspan="3" style="width: 50%">
 					<strong>${companyInfo.compname}</strong><br> <br> <br>
 					${companyInfo.addr}<br> EMail: ${companyInfo.email}<br>
@@ -103,33 +103,25 @@ page[size="A4"] {
 					Invoice no:</td>
 				<td class="tg-031e" colspan="2" style="width: 25%">${purEntry.challanNumber}</td>
 			</tr>
-			<tr style="height: 50px">
-				<td class="tg-031e" colspan="2">Dated:</td>
+			<tr style="height: 40px">
+				<td class="tg-031e" colspan="2">System Date:</td>
 				<td class="tg-031e" colspan="2"><fmt:formatDate
 						value="${sessionScope['ejb'].getCurrentDateTime()}"
 						pattern="dd-MM-yyyy" /></td>
 			</tr>
-			<tr style="height: 50px">
+			<tr style="height: 40px">
 				<td class="tg-031e" colspan="2">Sales date :</td>
 				<td class="tg-031e" colspan="2"><fmt:formatDate
 						value="${purEntry.sales_date}" pattern="dd-MM-yyyy" /></td>
 			</tr>
-			<tr style="height: 50px">
-				<td class="tg-031e" colspan="3" rowspan="4"><strong>Customer
+			<tr style="height: 40px">
+				<td class="tg-031e" colspan="3" rowspan="2"><strong>Customer
 						Details:</strong> <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Name :</span>
 					${purEntry.customer.name} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>City
 						:</span> ${purEntry.customer.city} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Address
 						:<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				</span> ${purEntry.customer.address} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Ph
 						:</span> ${purEntry.customer.mobile}</td>
-				<td class="tg-031e" colspan="2">Mode of payment :</td>
-				<td class="tg-031e" colspan="2"><c:choose>
-						<c:when
-							test="${purEntry.paymentDetails.get(0).paymentType.type!=null}">${purEntry.paymentDetails.get(0).paymentType.type}</c:when>
-						<c:otherwise>NA</c:otherwise>
-					</c:choose></td>
-			</tr>
-			<tr style="height: 50px">
 				<td class="tg-031e" colspan="2">Supplier reference(Agent Alias
 					name):</td>
 				<td class="tg-031e" colspan="2"><c:choose>
@@ -137,12 +129,9 @@ page[size="A4"] {
 						<c:otherwise>NA</c:otherwise>
 					</c:choose></td>
 			</tr>
-			<tr style="height: 50px">
+			<tr style="height: 40px">
 				<td class="tg-031e" colspan="2"></td>
 				<td class="tg-031e" colspan="2"></td>
-			</tr>
-			<tr style="height: 50px">
-				<td class="tg-031e" colspan="4"></td>
 			</tr>
 			<tr>
 				<td class="tg-031e" colspan="7">
