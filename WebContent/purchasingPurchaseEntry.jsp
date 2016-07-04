@@ -239,9 +239,13 @@
 
 	<c:if test="${requestScope['purDetIdforPC']!=null}">
 		<script type="text/javascript">
-			var myWindow = window
+			/* var myWindow = window
 					.open(
 							"purchaseChallanForPrint.jsp?id=${requestScope['purDetIdforPC']}&print=${requestScope['print']}",
+							'name', 'width=600,height=400'); */
+			var myWindow = window
+					.open(
+							"stockPurCha.jsp?id=${requestScope['purDetIdforPC']}&print=${requestScope['print']}",
 							'name', 'width=600,height=400');
 			myWindow.print();
 		</script>
@@ -3986,89 +3990,75 @@
 		}
 
 		$(function() {
-			$("#vName")
-					.autocomplete(
-							{
-								source : function(req, resp) {
-									$
-											.ajax({
-												url : "getVendorByVendorType",
-												dataType : "json",
-												data : {
-													id : $(
-															'[name="vendorType"]')
-															.val(),
-													term : req.term
-												},
-												success : function(data) {
-													resp($
-															.map(
-																	data,
-																	function(
-																			item) {
-																		if (item.name != 'Production Vendor') {
-																			return ({
-																				value : item.name,
-																				addr : item.address,
-																				id : item.id,
-																				ph1 : item.ph1,
-																				ph2 : item.ph2
-																			});
-																		}
-																	}));
-												}
+			$("#vName").autocomplete(
+					{
+						source : function(req, resp) {
+							$.ajax({
+								url : "getVendorByVendorType",
+								dataType : "json",
+								data : {
+									id : $('[name="vendorType"]').val(),
+									term : req.term
+								},
+								success : function(data) {
+									resp($.map(data, function(item) {
+										if (item.name != 'Production Vendor') {
+											return ({
+												value : item.name,
+												addr : item.address,
+												id : item.id,
+												ph1 : item.ph1,
+												ph2 : item.ph2
 											});
-								},
-								change : function(event, ui) {
-
-									if (ui.item == null) {
-										$("#vName").val("");
-										$("#vDetail").val("");
-										$("#totalCredit").val('0');
-									} else {
-										$("#vId").val(ui.item.id)
-										$("#vDetail").val(
-												"Address : \n\t" + ui.item.addr
-														+ "\nPhone1 : "
-														+ ui.item.ph1
-														+ "\nPhone2 : "
-														+ ui.item.ph2);
-
-										$
-												.ajax({
-													type : "post",
-													url : "getCurrentCreditNoteByVendorId",
-													data : {
-														id : ui.item.id
-													},
-													dataType : "json",
-													success : function(data) {
-														$("#totalCredit")
-																.val(
-																		data.currentCreditNote);
-													}
-												});
-										/* $("#totalCredit").val(
-												ui.item.currentCreditNote); */
-									}
-
-								},
-								select : function(event, ui) {
-
-									if (ui.item == null) {
-										$("#vName").val("");
-
-									} else {
-										$("#vId").val(ui.item.id)
-										$("#vDetail").val(
-												"Address : \n\t" + ui.item.addr
-														+ "\nPhone1 : "
-														+ ui.item.ph1
-														+ "\nPhone2 : "
-														+ ui.item.ph2);
-									}
+										}
+									}));
 								}
 							});
+						},
+						change : function(event, ui) {
+
+							if (ui.item == null) {
+								$("#vName").val("");
+								$("#vDetail").val("");
+								$("#totalCredit").val('0');
+							} else {
+								$("#vId").val(ui.item.id)
+								$("#vDetail").val(
+										"Address : \n\t" + ui.item.addr
+												+ "\nPhone1 : " + ui.item.ph1
+												+ "\nPhone2 : " + ui.item.ph2);
+
+								$.ajax({
+									type : "post",
+									url : "getCurrentCreditNoteByVendorId",
+									data : {
+										id : ui.item.id
+									},
+									dataType : "json",
+									success : function(data) {
+										$("#totalCredit").val(
+												data.currentCreditNote);
+									}
+								});
+								/* $("#totalCredit").val(
+										ui.item.currentCreditNote); */
+							}
+
+						},
+						select : function(event, ui) {
+
+							if (ui.item == null) {
+								$("#vName").val("");
+
+							} else {
+								$("#vId").val(ui.item.id)
+								$("#vDetail").val(
+										"Address : \n\t" + ui.item.addr
+												+ "\nPhone1 : " + ui.item.ph1
+												+ "\nPhone2 : " + ui.item.ph2);
+							}
+						}
+					});
 		});
 		function decimalFixF() {
 			$("#transportCost").val(

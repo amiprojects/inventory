@@ -64,7 +64,30 @@ page[size="A4"] {
 }
 </style>
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
-<c:if test="${param.print==1}">
+<script type="text/javascript">
+Url = {
+	    get get(){
+	        var vars= {};
+	        if(window.location.search.length!==0)
+	            window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value){
+	                key=decodeURIComponent(key);
+	                if(typeof vars[key]==="undefined") {vars[key]= decodeURIComponent(value);}
+	                else {vars[key]= [].concat(vars[key], decodeURIComponent(value));}
+	            });
+	        return vars;
+	    }
+	};
+$(document).ready(function(){
+	if(Url.get.print==1){
+		var myWindow = window
+		.open(
+				"purchaseBarcodePrint.jsp?id=${param.id}",
+				'name', 'width=600,height=400');
+myWindow.print();
+	}
+});
+</script>
+<%-- <c:if test="${param.print==1}">
 	<script type="text/javascript">
 		var myWindow = window
 				.open(
@@ -72,7 +95,7 @@ page[size="A4"] {
 						'name', 'width=600,height=400');
 		myWindow.print();
 	</script>
-</c:if>
+</c:if> --%>
 </head>
 <body>
 	<c:if test="${sessionScope['user']==null}">
@@ -87,7 +110,7 @@ page[size="A4"] {
 
 	<c:set value="${purEntry.purchase_Product_Details.size()}"
 		var="proLength" />
-	<c:set value="${Math.ceil(proLength/6)}" var="qPage" />
+	<c:set value="${Math.ceil(proLength/8)}" var="qPage" />
 
 	<c:set value="${1}" var="sl" />
 	<c:set value="${0}" var="tqty" />
@@ -100,10 +123,10 @@ page[size="A4"] {
 			<c:if test="${i>1}">(Page ${i})</c:if>
 		</h3>
 		<table class="tg"
-			style="border: 1px solid; height: 1050px; width: 750px">
-			<tr style="height: 40px">
+			style="border: 1px solid; height: 1080px; width: 750px">
+			<tr style="height: 10px">
 				<td class="tg-031e" colspan="3" rowspan="3" style="width: 50%">
-					<strong>${companyInfo.compname}</strong><br> <br>
+					<strong>${companyInfo.compname}</strong><br>
 					${companyInfo.addr}<br> EMail: ${companyInfo.email}<br>
 					Mobile: ${companyInfo.mobile}
 				</td>
@@ -111,19 +134,19 @@ page[size="A4"] {
 					Challan no:</td>
 				<td class="tg-031e" colspan="2" style="width: 25%">${purEntry.challanNumber}</td>
 			</tr>
-			<tr style="height: 40px">
+			<tr style="height: 10px">
 				<td class="tg-031e" colspan="2">System Date:</td>
 				<td class="tg-031e" colspan="2"><fmt:formatDate
 						value="${sessionScope['ejb'].getCurrentDateTime()}"
 						pattern="dd-MM-yyyy" /></td>
 			</tr>
-			<tr style="height: 40px">
+			<tr style="height: 10px">
 				<td class="tg-031e" colspan="2">Purchase date:</td>
 				<td class="tg-031e" colspan="2"><fmt:formatDate
 						value="${purEntry.purchase_date}" pattern="dd-MM-yyyy" /></td>
 			</tr>
-			<tr style="height: 40px">
-				<td class="tg-031e" colspan="3" rowspan="3"><strong> <c:choose>
+			<tr style="height: 10px">
+				<td class="tg-031e" colspan="3" rowspan="2"><strong> <c:choose>
 							<c:when test="${purEntry.vendor.vendorType.type=='Vendor'}">Vendor
 					Details:</c:when>
 							<c:when
@@ -142,13 +165,10 @@ page[size="A4"] {
 				<td class="tg-031e" colspan="2">Vendor bill No:</td>
 				<td class="tg-031e" colspan="2">${purEntry.vendor_bill_no}</td>
 			</tr>
-			<tr style="height: 40px">
+			<tr style="height: 10px">
 				<td class="tg-031e" colspan="2">Supplier reference(Agent Alias
 					name):</td>
 				<td class="tg-031e" colspan="2">${purEntry.vendor.aliseName}</td>
-			</tr>
-			<tr style="height: 40px">
-				<td class="tg-031e" colspan="4"></td>
 			</tr>
 			<tr>
 				<td class="tg-031e" colspan="7">
@@ -162,58 +182,71 @@ page[size="A4"] {
 							<th>Per</th>
 							<th>Amount</th>
 						</tr>
-						<c:forEach begin="${(i-1)*6}" end="${i*6-1}"
+						<c:forEach begin="${(i-1)*8}" end="${i*8-1}"
 							items="${purEntry.purchase_Product_Details}" var="ppdet">
 							<tr>
-								<td>${sl}</td>
-								<td><b>${ppdet.productDetail.description}</b><br>Barcode
-									: ${ppdet.id}/${ppdet.lotNumber}/${ppdet.productDetail.code}<br>Design
-									No : ${ppdet.productDetail.universalCode}</td>
-								<td><fmt:formatNumber var="qty" value="${ppdet.quantity}"
-										maxFractionDigits="3" groupingUsed="false" />${qty}</td>
+								<td style="border-bottom: none; border-top: none;">${sl}</td>
+								<td style="border-bottom: none; border-top: none;"><b
+									style="font-size: 12px;">${ppdet.productDetail.description}</b><br>
+									<span style="font-size: 10px;">Barcode : ${ppdet.id}<br>Design
+										No : ${ppdet.productDetail.universalCode}
+								</span></td>
+								<td style="border-bottom: none; border-top: none;"><fmt:formatNumber
+										var="qty" value="${ppdet.quantity}" maxFractionDigits="3"
+										groupingUsed="false" />${qty}</td>
 								<c:set value="${tqty+ppdet.quantity}" var="tqty" />
-								<td>${ppdet.cost}</td>
-								<td>${ppdet.productDetail.qtyUnit.name}</td>
-								<td><fmt:formatNumber var="amount"
-										value="${ppdet.cost*ppdet.quantity}" maxFractionDigits="2"
-										groupingUsed="false" /> ${amount}</td>
+								<td style="border-bottom: none; border-top: none;">${ppdet.cost}</td>
+								<td style="border-bottom: none; border-top: none;">${ppdet.productDetail.qtyUnit.name}</td>
+								<td style="border-bottom: none; border-top: none;"><fmt:formatNumber
+										var="amount" value="${ppdet.cost*ppdet.quantity}"
+										maxFractionDigits="2" groupingUsed="false" /> ${amount}</td>
 								<c:set value="${gtot+ppdet.cost*ppdet.quantity}" var="gtot" />
 							</tr>
 							<c:set value="${sl+1}" var="sl" />
 						</c:forEach>
+						<c:if test="${i!=qPage}">
+							<tr style="height: 0px;">
+								<td colspan="7" style="border-bottom: none;"></td>
+							</tr>
+						</c:if>
 						<c:if test="${i==qPage}">
-							<c:if test="${purEntry.discountTotal!=0}">
-								<tr>
-									<td colspan="5" align="right">Discount <c:set var="dis"
-											value="${purEntry.isFlatDiscount()?'Flat':'%'}" />
-										(${purEntry.discountValue}(${dis})) :
-									</td>
-									<td>${purEntry.discountTotal}</td>
-								</tr>
-							</c:if>
+							<%-- <c:if test="${purEntry.discountTotal!=0}"> --%>
+							<tr>
+								<td style="border-bottom: none;" colspan="5" align="right">Discount
+									<c:set var="dis"
+										value="${purEntry.isFlatDiscount()?'Flat':'%'}" />
+									(${purEntry.discountValue}(${dis})) :
+								</td>
+								<td style="border-bottom: none;">${purEntry.discountTotal}</td>
+							</tr>
+							<%-- </c:if> --%>
 							<c:if test="${purEntry.taxAmount!=0}">
 								<tr>
-									<td colspan="5" align="right">Tax Amount
+									<td style="border-bottom: none; border-top: none;" colspan="5"
+										align="right">Tax Amount
 										(${purEntry.tax_Type_Group.getTotalTaxValue()}%) :</td>
-									<td>${purEntry.taxAmount}</td>
+									<td style="border-bottom: none; border-top: none;">${purEntry.taxAmount}</td>
 								</tr>
 							</c:if>
 							<c:if test="${purEntry.transport_cost!=0}">
 								<tr>
-									<td colspan="5" align="right">Transport Charge :</td>
-									<td>${purEntry.transport_cost}</td>
+									<td style="border-bottom: none; border-top: none;" colspan="5"
+										align="right">Transport Charge :</td>
+									<td style="border-bottom: none; border-top: none;">${purEntry.transport_cost}</td>
 								</tr>
 							</c:if>
 							<c:if test="${purEntry.sur_charge!=0}">
 								<tr>
-									<td colspan="5" align="right">Surcharge :</td>
-									<td>${purEntry.sur_charge}</td>
+									<td style="border-bottom: none; border-top: none;" colspan="5"
+										align="right">Surcharge :</td>
+									<td style="border-bottom: none; border-top: none;">${purEntry.sur_charge}</td>
 								</tr>
 							</c:if>
 							<c:if test="${purEntry.roundOf!=0}">
 								<tr>
-									<td colspan="5" align="right">RoundOf :</td>
-									<td>${purEntry.roundOf}</td>
+									<td style="border-bottom: none; border-top: none;" colspan="5"
+										align="right">RoundOf :</td>
+									<td style="border-bottom: none; border-top: none;">${purEntry.roundOf}</td>
 								</tr>
 							</c:if>
 							<tr>
@@ -231,12 +264,12 @@ page[size="A4"] {
 				</td>
 			</tr>
 			<c:if test="${i==qPage}">
-				<tr style="height: 75px">
+				<tr style="height: 10px;">
 					<td class="tg-031e" colspan="7"><span>Amount Chargeable
 							(in words)</span><br> <span>${sessionScope['ejb'].getNumberToWords(purEntry.totalCost)}</span></td>
 				</tr>
 				<c:if test="${purEntry.purchaseReturn.size()==0}">
-					<tr style="height: 75px">
+					<tr style="height: 10px;">
 						<td class="tg-031e" colspan="4"><strong>Declaration:</strong><br>We
 							declare that this invoice shows the actual price of the goods
 							describe and that all particular are true and correct.</td>
@@ -256,8 +289,8 @@ page[size="A4"] {
 		<page id="print1" size="A4">
 		<h3 align="center">Purchase Challan (Page ${j})</h3>
 		<table class="tg"
-			style="border: 1px solid; height: 1050px; width: 750px">
-			<tr style="height: 40px">
+			style="border: 1px solid; height: 1080px; width: 750px">
+			<tr style="height: 10px">
 				<td class="tg-031e" colspan="3" rowspan="3" style="width: 50%">
 					<strong>${companyInfo.compname}</strong><br> <br> <br>
 					${companyInfo.addr}<br> EMail: ${companyInfo.email}<br>
@@ -267,19 +300,19 @@ page[size="A4"] {
 					Challan no:</td>
 				<td class="tg-031e" colspan="2" style="width: 25%">${purEntry.challanNumber}</td>
 			</tr>
-			<tr style="height: 40px">
+			<tr style="height: 10px">
 				<td class="tg-031e" colspan="2">System Date:</td>
 				<td class="tg-031e" colspan="2"><fmt:formatDate
 						value="${sessionScope['ejb'].getCurrentDateTime()}"
 						pattern="dd-MM-yyyy" /></td>
 			</tr>
-			<tr style="height: 40px">
+			<tr style="height: 10px">
 				<td class="tg-031e" colspan="2">Purchase date:</td>
 				<td class="tg-031e" colspan="2"><fmt:formatDate
 						value="${purEntry.purchase_date}" pattern="dd-MM-yyyy" /></td>
 			</tr>
-			<tr style="height: 40px">
-				<td class="tg-031e" colspan="3" rowspan="3"><strong> <c:choose>
+			<tr style="height: 10px">
+				<td class="tg-031e" colspan="3" rowspan="2"><strong> <c:choose>
 							<c:when test="${purEntry.vendor.vendorType.type=='Vendor'}">Vendor
 					Details:</c:when>
 							<c:when
@@ -298,22 +331,19 @@ page[size="A4"] {
 				<td class="tg-031e" colspan="2">Vendor bill No:</td>
 				<td class="tg-031e" colspan="2">${purEntry.vendor_bill_no}</td>
 			</tr>
-			<tr style="height: 40px">
+			<tr style="height: 10px;">
 				<td class="tg-031e" colspan="2">Supplier reference(Agent Alias
 					name):</td>
 				<td class="tg-031e" colspan="2">${purEntry.vendor.aliseName}</td>
 			</tr>
-			<tr style="height: 40px">
-				<td class="tg-031e" colspan="4"></td>
-			</tr>
-			<tr style="height: 25px">
+			<tr style="height: 10px">
 				<td colspan="7" align="left">Return Details :</td>
 			</tr>
 			<tr>
 				<td class="tg-031e" colspan="7">
 					<table class="tg"
 						style="height: auto; width: 750px; border-color: white; margin-left: -6px; margin-right: -6px; margin-top: -11px;">
-						<tr style="height: 25px">
+						<tr style="height: 10px">
 							<th>#</th>
 							<th>Return Date</th>
 							<th>Purchase Return challan no.</th>
@@ -335,7 +365,7 @@ page[size="A4"] {
 								<td class="tg-031e">
 									${purchaseReturnProd.purchaseProductDetails.productDetail.code}
 								</td>
-								<td class="tg-031e" colspan="2">
+								<td class="tg-031e" colspan="2" style="font-size: 10px;">
 									${purchaseReturnProd.purchaseProductDetails.productDetail.description}</td>
 								<td class="tg-031e"><fmt:formatNumber var="totalQ"
 										value="${purchaseReturnProd.qtyReturn}" maxFractionDigits="3"
@@ -360,11 +390,11 @@ page[size="A4"] {
 					</table>
 				</td>
 			</tr>
-			<%-- <tr style="height: 75px">
+			<%-- <tr style="height: 10px">
 				<td class="tg-031e" colspan="7"><span>Amount Chargeable
 						(in words)</span><br> <span>${sessionScope['ejb'].getNumberToWords(purEntry.totalCost)}</span></td>
 			</tr> --%>
-			<tr style="height: 75px">
+			<tr style="height: 10px;">
 				<td class="tg-031e" colspan="4"><strong>Declaration:</strong><br>We
 					declare that this invoice shows the actual price of the goods
 					describe and that all particular are true and correct.</td>

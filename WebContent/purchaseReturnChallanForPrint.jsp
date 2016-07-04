@@ -96,8 +96,8 @@ page[size="A4"] {
 			<c:if test="${i>1}">(Page ${i})</c:if>
 		</h3>
 		<table class="tg"
-			style="border: 1px solid; height: 1050px; width: 750px">
-			<tr style="height: 40px">
+			style="border: 1px solid; height: 1080px; width: 750px">
+			<tr style="height: 10px">
 				<td class="tg-031e" colspan="3" rowspan="3" style="width: 50%">
 					<strong>${companyInfo.compname}</strong><br> <br> <br>
 					${companyInfo.addr}<br> EMail: ${companyInfo.email}<br>
@@ -109,16 +109,16 @@ page[size="A4"] {
 						value="${sessionScope['ejb'].getCurrentDateTime()}"
 						pattern="dd-MM-yyyy" /></td>
 			</tr>
-			<tr style="height: 40px">
+			<tr style="height: 10px">
 				<td class="tg-031e" colspan="2">Refference Challan No.:</td>
 				<td class="tg-031e" colspan="2">${purEntry.referencePurchaseChallan}</td>
 			</tr>
-			<tr style="height: 40px">
+			<tr style="height: 10px">
 				<td class="tg-031e" colspan="2">Return date:</td>
 				<td class="tg-031e" colspan="2"><fmt:formatDate
 						value="${purEntry.returnDate}" pattern="dd-MM-yyyy" /></td>
 			</tr>
-			<tr style="height: 40px">
+			<tr style="height: 10px">
 				<td class="tg-031e" colspan="3" rowspan="3"><strong> <c:choose>
 							<c:when
 								test="${purEntry.purchaseEntry.vendor.vendorType.type=='Vendor'}">Vendor
@@ -143,12 +143,12 @@ page[size="A4"] {
 				<td class="tg-031e" colspan="2">Vendor bill No:</td>
 				<td class="tg-031e" colspan="2">${purEntry.purchaseEntry.vendor_bill_no}</td>
 			</tr>
-			<tr style="height: 40px">
+			<tr style="height: 10px">
 				<td class="tg-031e" colspan="2">Supplier reference(Agent Alias
 					name):</td>
 				<td class="tg-031e" colspan="2">${purEntry.purchaseEntry.vendor.aliseName}</td>
 			</tr>
-			<tr style="height: 40px">
+			<tr style="height: 10px">
 				<td class="tg-031e" colspan="4"></td>
 			</tr>
 			<tr>

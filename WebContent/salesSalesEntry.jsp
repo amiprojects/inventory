@@ -89,10 +89,13 @@
 
 	<c:if test="${requestScope['purDetIdforPC']!=null}">
 		<script type="text/javascript">
-			var myWindow = window
+			var myWindow = window.open(
+					"stockSaCha.jsp?id=${requestScope['purDetIdforPC']}",
+					'name', 'width=600,height=400');
+			/* var myWindow = window
 					.open(
 							"salesInvoiceForPrint.jsp?id=${requestScope['purDetIdforPC']}",
-							'name', 'width=600,height=400');
+							'name', 'width=600,height=400'); */
 			myWindow.print();
 		</script>
 	</c:if>

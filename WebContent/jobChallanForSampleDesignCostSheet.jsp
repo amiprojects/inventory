@@ -91,8 +91,8 @@ Url = {
 	<h2 align="center">Sample Design Cost Sheet Challan</h2>
 
 	<table class="tg"
-		style="border: 1px solid; height: 1050px; width: 750px">
-		<tr style="height: 50px">
+		style="border: 1px solid; height: 1080px; width: 750px">
+		<tr style="height: 10px">
 			<td class="tg-031e" style="width: 60%"><span
 				style="padding-left: 20px"><strong>Company Name</strong></span> <span
 				style="padding-left: 05px"><strong> :
@@ -126,13 +126,13 @@ Url = {
 			</td>
 		</tr>
 
-		<tr style="height: 50px">
+		<tr style="height: 10px">
 			<td class="tg-031e" colspan="2"><img
 				src="data:image/jpeg;base64,${sampleJCS.designImages.get(0).getImageAsString()}"
 				width="300px"></td>
 		</tr>
 
-		<tr style="height: 50px">
+		<tr style="height: 10px">
 			<td class="tg-031e" colspan="2"><strong>List of Items :</strong><br>
 				<c:set var="i" value="1"></c:set> <c:forEach var="itmProd"
 					items="${sessionScope['ejb'].getItemsForSampleBySampleId(sampleJCS.id)}">
@@ -202,8 +202,8 @@ Url = {
 	<h2 align="center">Sample Design Cost Sheet Challan(Page-2)</h2>
 
 	<table class="tg"
-		style="border: 1px solid; height: 1050px; width: 750px">
-		<tr style="height: 50px">
+		style="border: 1px solid; height: 1080px; width: 750px">
+		<tr style="height: 10px">
 
 			<td class="tg-031e" style="width: 60%"><span
 				style="padding-left: 20px"><strong>Company Name</strong></span> <span

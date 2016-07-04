@@ -97,6 +97,7 @@ myWindow.print();
 		myWindow.print();
 	</script>
 </c:if> --%>
+
 </head>
 <body>
 	<c:if test="${sessionScope['user']==null}">
@@ -123,7 +124,7 @@ myWindow.print();
 		</h3>
 		<table class="tg"
 			style="border: 1px solid; height: 1050px; width: 750px">
-			<tr style="height: 50px">
+			<tr style="height: 40px">
 				<td class="tg-031e" colspan="3" rowspan="3" style="width: 50%">
 					<strong>${companyInfo.compname}</strong><br> <br> <br>
 					${companyInfo.addr}<br> EMail: ${companyInfo.email}<br>
@@ -133,19 +134,19 @@ myWindow.print();
 					Challan no:</td>
 				<td class="tg-031e" colspan="2" style="width: 25%">${purEntry.challanNumber}</td>
 			</tr>
-			<tr style="height: 50px">
-				<td class="tg-031e" colspan="2">Dated:</td>
+			<tr style="height: 40px">
+				<td class="tg-031e" colspan="2">System Date:</td>
 				<td class="tg-031e" colspan="2"><fmt:formatDate
 						value="${sessionScope['ejb'].getCurrentDateTime()}"
 						pattern="dd-MM-yyyy" /></td>
 			</tr>
-			<tr style="height: 50px">
+			<tr style="height: 40px">
 				<td class="tg-031e" colspan="2">Purchase date:</td>
 				<td class="tg-031e" colspan="2"><fmt:formatDate
 						value="${purEntry.purchase_date}" pattern="dd-MM-yyyy" /></td>
 			</tr>
-			<tr style="height: 50px">
-				<td class="tg-031e" colspan="3" rowspan="4"><strong> <c:choose>
+			<tr style="height: 40px">
+				<td class="tg-031e" colspan="3" rowspan="3"><strong> <c:choose>
 							<c:when test="${purEntry.vendor.vendorType.type=='Vendor'}">Vendor
 					Details:</c:when>
 							<c:when
@@ -165,20 +166,12 @@ myWindow.print();
 				<td class="tg-031e" colspan="2">Vendor bill No:</td>
 				<td class="tg-031e" colspan="2">${purEntry.vendor_bill_no}</td>
 			</tr>
-			<tr style="height: 50px">
-				<td class="tg-031e" colspan="2">Mode of payment :</td>
-				<td class="tg-031e" colspan="2"><c:choose>
-						<c:when
-							test="${purEntry.paymentDetails.get(0).paymentType.type!=null}">${purEntry.paymentDetails.get(0).paymentType.type}</c:when>
-						<c:otherwise>NA</c:otherwise>
-					</c:choose></td>
-			</tr>
-			<tr style="height: 50px">
+			<tr style="height: 40px">
 				<td class="tg-031e" colspan="2">Supplier reference(Agent Alias
 					name):</td>
 				<td class="tg-031e" colspan="2">${purEntry.vendor.aliseName}</td>
 			</tr>
-			<tr style="height: 50px">
+			<tr style="height: 40px">
 				<td class="tg-031e" colspan="4"></td>
 			</tr>
 			<tr>

@@ -94,8 +94,8 @@ Url = {
 	<h2 align="center">Job Receive Challan</h2>
 
 	<table class="tg"
-		style="border: 1px solid; height: 1050px; width: 750px">
-		<tr style="height: 50px">
+		style="border: 1px solid; height: 1080px; width: 750px">
+		<tr style="height: 10px">
 			<td class="tg-031e" style="width: 60%"><span
 				style="padding-left: 20px"><strong>Company Name</strong></span> <span
 				style="padding-left: 05px"><strong> :
@@ -180,8 +180,8 @@ Url = {
 	<page size="A4">
 	<h2 align="center">Job Receive Challan (Page-2)</h2>
 	<table class="tg"
-		style="border: 1px solid; height: 1050px; width: 750px">
-		<tr style="height: 50px">
+		style="border: 1px solid; height: 1080px; width: 750px">
+		<tr style="height: 10px">
 			<td class="tg-031e" style="width: 60%"><span
 				style="padding-left: 20px"><strong>Company Name</strong></span> <span
 				style="padding-left: 05px"><strong> :

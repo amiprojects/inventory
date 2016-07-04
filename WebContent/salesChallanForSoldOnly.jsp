@@ -92,8 +92,8 @@ page[size="A4"] {
 			<c:if test="${i>1}">(Page ${i})</c:if>
 		</h3>
 		<table class="tg"
-			style="border: 1px solid; height: 1050px; width: 750px">
-			<tr style="height: 40px">
+			style="border: 1px solid; height: 1080px; width: 750px">
+			<tr style="height: 10px">
 				<td class="tg-031e" colspan="3" rowspan="3" style="width: 50%">
 					<strong>${companyInfo.compname}</strong><br> <br> <br>
 					${companyInfo.addr}<br> EMail: ${companyInfo.email}<br>
@@ -103,18 +103,18 @@ page[size="A4"] {
 					Invoice no:</td>
 				<td class="tg-031e" colspan="2" style="width: 25%">${purEntry.challanNumber}</td>
 			</tr>
-			<tr style="height: 40px">
+			<tr style="height: 10px">
 				<td class="tg-031e" colspan="2">System Date:</td>
 				<td class="tg-031e" colspan="2"><fmt:formatDate
 						value="${sessionScope['ejb'].getCurrentDateTime()}"
 						pattern="dd-MM-yyyy" /></td>
 			</tr>
-			<tr style="height: 40px">
+			<tr style="height: 10px">
 				<td class="tg-031e" colspan="2">Sales date :</td>
 				<td class="tg-031e" colspan="2"><fmt:formatDate
 						value="${purEntry.sales_date}" pattern="dd-MM-yyyy" /></td>
 			</tr>
-			<tr style="height: 40px">
+			<tr style="height: 10px">
 				<td class="tg-031e" colspan="3" rowspan="2"><strong>Customer
 						Details:</strong> <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Name :</span>
 					${purEntry.customer.name} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>City
@@ -129,7 +129,7 @@ page[size="A4"] {
 						<c:otherwise>NA</c:otherwise>
 					</c:choose></td>
 			</tr>
-			<tr style="height: 40px">
+			<tr style="height: 10px">
 				<td class="tg-031e" colspan="2"></td>
 				<td class="tg-031e" colspan="2"></td>
 			</tr>

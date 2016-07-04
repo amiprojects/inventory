@@ -1365,12 +1365,6 @@ public class Servlet extends HttpServlet {
 								}
 								purchaseProductDetails = null;
 							}
-							if (req.getParameter("isBarPrint").equals("yes")) {
-								req.setAttribute("print", 1);
-								req.setAttribute("purDet", purchaseEntry.getId());
-							} else {
-								req.setAttribute("print", 0);
-							}
 
 							// new to check
 							if (purchaseEntry.getAgentId() != 0) {
@@ -1407,6 +1401,13 @@ public class Servlet extends HttpServlet {
 								ejb.setPaymentDetails4ViaAgent(payDetForViaAgent);
 							}
 							// new to check
+							
+							if (req.getParameter("isBarPrint").equals("yes")) {
+								req.setAttribute("print", 1);
+								req.setAttribute("purDet", purchaseEntry.getId());
+							} else {
+								req.setAttribute("print", 0);
+							}
 
 							req.setAttribute("purDetIdforPC", purchaseEntry.getId());
 							purchaseEntry = null;
