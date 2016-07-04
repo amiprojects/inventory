@@ -93,11 +93,9 @@ page[size="A4"] {
 		<table class="tg"
 			style="border: 1px solid; height: 1080px; width: 750px">
 			<tr style="height: 10px">
-				<td class="tg-031e" colspan="3" rowspan="3" style="width: 50%">
-					<strong>${companyInfo.compname}</strong><br> <br>
+				<td class="tg-031e" colspan="3" style="width: 50%"><strong>${companyInfo.compname}</strong><br>
 					${companyInfo.addr}<br> EMail: ${companyInfo.email}<br>
-					Mobile: ${companyInfo.mobile}
-				</td>
+					Mobile: ${companyInfo.mobile}</td>
 				<td class="tg-031e" colspan="2" style="width: 25%">Sales Return
 					Invoice no:<br> ${salesReturn.challanNumber}
 				</td>
@@ -106,6 +104,16 @@ page[size="A4"] {
 				</td>
 			</tr>
 			<tr style="height: 10px">
+				<td class="tg-031e" colspan="3" rowspan="3"><strong>Customer
+						Details:</strong> <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Name :</span>
+					${salesReturn.salesEntry.customer.name} <br>
+					&nbsp;&nbsp;&nbsp;&nbsp;<span>City :</span>
+					${salesReturn.salesEntry.customer.city} <br>
+					&nbsp;&nbsp;&nbsp;&nbsp;<span>Address :<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				</span> ${salesReturn.salesEntry.customer.address} <br>
+					&nbsp;&nbsp;&nbsp;&nbsp;<span>Ph :</span>
+					${salesReturn.salesEntry.customer.mobile}</td>
 				<td class="tg-031e" colspan="2">System Date:</td>
 				<td class="tg-031e" colspan="2"><fmt:formatDate
 						value="${sessionScope['ejb'].getCurrentDateTime()}"
@@ -117,25 +125,12 @@ page[size="A4"] {
 						value="${salesReturn.returnDate}" pattern="dd-MM-yyyy" /></td>
 			</tr>
 			<tr style="height: 10px">
-				<td class="tg-031e" colspan="3" rowspan="2"><strong>Customer
-						Details:</strong> <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Name :</span>
-					${salesReturn.salesEntry.customer.name} <br>
-					&nbsp;&nbsp;&nbsp;&nbsp;<span>City :</span>
-					${salesReturn.salesEntry.customer.city} <br>
-					&nbsp;&nbsp;&nbsp;&nbsp;<span>Address :<br>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				</span> ${salesReturn.salesEntry.customer.address} <br>
-					&nbsp;&nbsp;&nbsp;&nbsp;<span>Ph :</span>
-					${salesReturn.salesEntry.customer.mobile}</td>
 				<td class="tg-031e" colspan="2">Supplier reference(Agent Alias
 					name):</td>
 				<td class="tg-031e" colspan="2"><c:choose>
 						<c:when test="${salesReturn.salesEntry.vendor!=null}">${salesReturn.salesEntry.vendor.aliseName}</c:when>
 						<c:otherwise>NA</c:otherwise>
 					</c:choose></td>
-			</tr>
-			<tr style="height: 10px">
-				<td class="tg-031e" colspan="4"></td>
 			</tr>
 			<tr>
 				<td class="tg-031e" colspan="7">
@@ -185,12 +180,12 @@ page[size="A4"] {
 						<c:if test="${i==qPage}">
 							<%-- <c:if test="${salesReturn.salesEntry.discountValue!=0}"> --%>
 							<tr>
-								<td colspan="5" align="right">Discount Value <c:set
-										var="dis"
+								<td style="border-bottom: none;" colspan="5" align="right">Discount
+									Value <c:set var="dis"
 										value="${salesReturn.salesEntry.isFlatDiscount()?'Flat':'%'}" />
 									(${salesReturn.salesEntry.discountValue}(${dis})) :
 								</td>
-								<td><c:set var="disVal"
+								<td style="border-bottom: none;"><c:set var="disVal"
 										value="${salesReturn.salesEntry.isFlatDiscount()?gtot*salesReturn.salesEntry.discountValue/salesReturn.salesEntry.subTotal:gtot*salesReturn.salesEntry.discountValue/100}" />
 									<fmt:formatNumber value="${disVal}" maxFractionDigits="2"
 										groupingUsed="false" /></td>
@@ -198,18 +193,20 @@ page[size="A4"] {
 							<%-- </c:if> --%>
 							<c:if test="${salesReturn.salesEntry.taxAmount!=0}">
 								<tr>
-									<td colspan="5" align="right">Tax Amount
+									<td style="border-bottom: none; border-top: none;" colspan="5"
+										align="right">Tax Amount
 										(${salesReturn.salesEntry.tax_Type_Group.getTotalTaxValue()}%)
 										:</td>
-									<td><fmt:formatNumber
+									<td style="border-bottom: none; border-top: none;"><fmt:formatNumber
 											value="${(gtot-disVal)*salesReturn.salesEntry.tax_Type_Group.getTotalTaxValue()/100}"
 											maxFractionDigits="2" groupingUsed="false" /></td>
 								</tr>
 							</c:if>
 							<c:if test="${salesReturn.roundOff!=0}">
 								<tr>
-									<td colspan="5" align="right">RoundOf :</td>
-									<td>${salesReturn.roundOff}</td>
+									<td style="border-bottom: none; border-top: none;" colspan="5"
+										align="right">RoundOf :</td>
+									<td style="border-bottom: none; border-top: none;">${salesReturn.roundOff}</td>
 								</tr>
 							</c:if>
 							<tr>
