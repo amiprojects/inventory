@@ -167,15 +167,12 @@ page[size="A4"] {
 							items="${purEntry.purchaseReturnProductDetails}" var="ppdet">
 							<tr>
 								<td>${sl}</td>
-								<td>
-									<%-- ${ppdet.purchaseProductDetails.productDetail.description} --%>
-
-									<b>${ppdet.purchaseProductDetails.productDetail.description}</b><br>Barcode
-									:
-									${ppdet.purchaseProductDetails.id}/${ppdet.purchaseProductDetails.lotNumber}/${ppdet.purchaseProductDetails.productDetail.code}<br>Design
-									No :
-									${ppdet.purchaseProductDetails.productDetail.universalCode}
-								</td>
+								<td><b style="font-size: 12px;">${ppdet.purchaseProductDetails.productDetail.description}</b><br>
+								<span style="font-size: 10px;">Barcode :
+										${ppdet.purchaseProductDetails.id}<br>Design
+										No :
+										${ppdet.purchaseProductDetails.productDetail.universalCode}
+								</span></td>
 								<td><fmt:formatNumber var="qty" value="${ppdet.qtyReturn}"
 										maxFractionDigits="3" groupingUsed="false" />${qty}</td>
 								<c:set value="${tqty+ppdet.qtyReturn}" var="tqty" />
@@ -232,11 +229,11 @@ page[size="A4"] {
 				</td>
 			</tr>
 			<c:if test="${i==qPage}">
-				<tr style="height: 75px">
+				<tr style="height: 10px;">
 					<td class="tg-031e" colspan="7"><span>Amount Chargeable
 							(in words)</span><br> <span>${sessionScope['ejb'].getNumberToWords(purEntry.totalReCost)}</span></td>
 				</tr>
-				<tr style="height: 75px">
+				<tr style="height: 10px;">
 					<td class="tg-031e" colspan="4"><strong>Declaration:</strong><br>We
 						declare that this invoice shows the actual price of the goods
 						describe and that all particular are true and correct.</td>

@@ -378,7 +378,7 @@ myWindow.print();
 									<td class="tg-031e">
 										${purchaseReturnProd.purchaseProductDetails.productDetail.code}
 									</td>
-									<td class="tg-031e" colspan="2">
+									<td class="tg-031e" colspan="2" style="font-size: 10px;">
 										${purchaseReturnProd.purchaseProductDetails.productDetail.description}</td>
 									<td class="tg-031e"><fmt:formatNumber var="totalQ"
 											value="${purchaseReturnProd.qtyReturn}" maxFractionDigits="3"

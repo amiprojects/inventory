@@ -184,7 +184,7 @@ Url = {
 				</table> <span style="float: right;">Continued...</span>
 			</td>
 		</tr>
-		<tr style="height: 75px">
+		<tr style="height: 10px;">
 			<td class="tg-031e" style="width: 60%"><strong>Declaration:</strong><br>We
 				declare that this invoice shows the actual price of the goods
 				describe and that all particular are true and correct.</td>
@@ -297,11 +297,11 @@ Url = {
 			</td>
 		</tr>
 
-		<tr style="height: 75px">
+		<tr style="height: 10px;">
 			<td class="tg-031e" colspan="2"><span>Est. Amount (in
 					words)</span><br> <span>${sessionScope['ejb'].getNumberToWords(sampleJCS.grandTotal)}</span></td>
 		</tr>
-		<tr style="height: 75px">
+		<tr style="height: 10px;">
 			<td class="tg-031e" style="width: 60%"><strong>Declaration:</strong><br>We
 				declare that this invoice shows the actual price of the goods
 				describe and that all particular are true and correct.</td>

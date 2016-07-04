@@ -269,7 +269,7 @@ Url = {
 			</td>
 		</tr>
 
-		<%-- <tr style="height: 75px">
+		<%-- <tr style="height: 10px;">
 			<td class="tg-031e" colspan="2"><span>Amount Chargeable
 					(in words)</span><br> <span>${sessionScope['ejb'].getNumberToWords(totJobCost)}</span></td>
 		</tr> --%>

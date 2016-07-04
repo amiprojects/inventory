@@ -79,7 +79,7 @@ page[size="A4"] {
 
 	<c:set value="${salesReturn.salesProductReturnDetail.size()}"
 		var="proLength" />
-	<c:set value="${Math.ceil(proLength/6)}" var="qPage" />
+	<c:set value="${Math.ceil(proLength/8)}" var="qPage" />
 
 	<c:set value="${1}" var="sl" />
 	<c:set value="${0}" var="tqty" />
@@ -149,26 +149,26 @@ page[size="A4"] {
 							<th>Per</th>
 							<th>Amount</th>
 						</tr>
-						<c:forEach begin="${(i-1)*6}" end="${i*6-1}"
+						<c:forEach begin="${(i-1)*8}" end="${i*8-1}"
 							items="${salesReturn.salesProductReturnDetail}" var="ppdet">
 
 							<tr>
-								<td>${sl}</td>
-								<td>
-									<%-- ${ppdet.salesProductDetails.purchase_Product_Details.productDetail.description} --%>
-
-									<b>${ppdet.salesProductDetails.purchase_Product_Details.productDetail.description}</b><br>Barcode
-									:
-									${ppdet.salesProductDetails.purchase_Product_Details.id}/${ppdet.salesProductDetails.purchase_Product_Details.lotNumber}/${ppdet.salesProductDetails.purchase_Product_Details.productDetail.code}<br>Design
-									No :
-									${ppdet.salesProductDetails.purchase_Product_Details.productDetail.universalCode}
-								</td>
-								<td><fmt:formatNumber var="qty" value="${ppdet.qtyReturn}"
-										maxFractionDigits="3" groupingUsed="false" />${qty}</td>
+								<td style="border-bottom: none; border-top: none;">${sl}</td>
+								<td style="border-bottom: none; border-top: none;"><b
+									style="font-size: 12px;">${ppdet.salesProductDetails.purchase_Product_Details.productDetail.description}</b><br>
+									<span style="font-size: 10px;">Barcode :
+										${ppdet.salesProductDetails.purchase_Product_Details.id}/${ppdet.salesProductDetails.purchase_Product_Details.lotNumber}/${ppdet.salesProductDetails.purchase_Product_Details.productDetail.code}<br>Design
+										No :
+										${ppdet.salesProductDetails.purchase_Product_Details.productDetail.universalCode}
+								</span></td>
+								<td style="border-bottom: none; border-top: none;"><fmt:formatNumber
+										var="qty" value="${ppdet.qtyReturn}" maxFractionDigits="3"
+										groupingUsed="false" />${qty}</td>
 								<c:set value="${tqty+ppdet.qtyReturn}" var="tqty" />
-								<td>${ppdet.salesProductDetails.getSalesPrice()}</td>
-								<td>${ppdet.salesProductDetails.purchase_Product_Details.productDetail.qtyUnit.name}</td>
-								<td><fmt:formatNumber var="amount"
+								<td style="border-bottom: none; border-top: none;">${ppdet.salesProductDetails.getSalesPrice()}</td>
+								<td style="border-bottom: none; border-top: none;">${ppdet.salesProductDetails.purchase_Product_Details.productDetail.qtyUnit.name}</td>
+								<td style="border-bottom: none; border-top: none;"><fmt:formatNumber
+										var="amount"
 										value="${ppdet.salesProductDetails.getSalesPrice()*ppdet.qtyReturn}"
 										maxFractionDigits="2" groupingUsed="false" /> ${amount}</td>
 								<c:set
@@ -177,20 +177,25 @@ page[size="A4"] {
 							</tr>
 							<c:set value="${sl+1}" var="sl" />
 						</c:forEach>
+						<c:if test="${i!=qPage}">
+							<tr style="height: 0px;">
+								<td colspan="7" style="border-bottom: none;"></td>
+							</tr>
+						</c:if>
 						<c:if test="${i==qPage}">
-							<c:if test="${salesReturn.salesEntry.discountValue!=0}">
-								<tr>
-									<td colspan="5" align="right">Discount Value <c:set
-											var="dis"
-											value="${salesReturn.salesEntry.isFlatDiscount()?'Flat':'%'}" />
-										(${salesReturn.salesEntry.discountValue}(${dis})) :
-									</td>
-									<td><c:set var="disVal"
-											value="${salesReturn.salesEntry.isFlatDiscount()?gtot*salesReturn.salesEntry.discountValue/salesReturn.salesEntry.subTotal:gtot*salesReturn.salesEntry.discountValue/100}" />
-										<fmt:formatNumber value="${disVal}" maxFractionDigits="2"
-											groupingUsed="false" /></td>
-								</tr>
-							</c:if>
+							<%-- <c:if test="${salesReturn.salesEntry.discountValue!=0}"> --%>
+							<tr>
+								<td colspan="5" align="right">Discount Value <c:set
+										var="dis"
+										value="${salesReturn.salesEntry.isFlatDiscount()?'Flat':'%'}" />
+									(${salesReturn.salesEntry.discountValue}(${dis})) :
+								</td>
+								<td><c:set var="disVal"
+										value="${salesReturn.salesEntry.isFlatDiscount()?gtot*salesReturn.salesEntry.discountValue/salesReturn.salesEntry.subTotal:gtot*salesReturn.salesEntry.discountValue/100}" />
+									<fmt:formatNumber value="${disVal}" maxFractionDigits="2"
+										groupingUsed="false" /></td>
+							</tr>
+							<%-- </c:if> --%>
 							<c:if test="${salesReturn.salesEntry.taxAmount!=0}">
 								<tr>
 									<td colspan="5" align="right">Tax Amount
@@ -221,11 +226,11 @@ page[size="A4"] {
 				</td>
 			</tr>
 			<c:if test="${i==qPage}">
-				<tr style="height: 75px">
+				<tr style="height: 10px;">
 					<td class="tg-031e" colspan="7"><span>Amount Chargeable
 							(in words)</span><br> <span>${sessionScope['ejb'].getNumberToWords(salesReturn.totalReCost)}</span></td>
 				</tr>
-				<tr style="height: 75px">
+				<tr style="height: 10px;">
 					<td class="tg-031e" colspan="4"><strong>Declaration:</strong><br>We
 						declare that this invoice shows the actual price of the goods
 						describe and that all particular are true and correct.</td>
