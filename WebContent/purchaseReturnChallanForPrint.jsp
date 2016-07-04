@@ -84,7 +84,7 @@ page[size="A4"] {
 		var="purEntry" />
 	<c:set value="${purEntry.purchaseReturnProductDetails.size()}"
 		var="proLength" />
-	<c:set value="${Math.ceil(proLength/6)}" var="qPage" />
+	<c:set value="${Math.ceil(proLength/8)}" var="qPage" />
 
 	<c:set value="${1}" var="sl" />
 	<c:set value="${0}" var="tqty" />
@@ -163,7 +163,7 @@ page[size="A4"] {
 							<th>Per</th>
 							<th>Amount</th>
 						</tr>
-						<c:forEach begin="${(i-1)*6}" end="${i*6-1}"
+						<c:forEach begin="${(i-1)*8}" end="${i*8-1}"
 							items="${purEntry.purchaseReturnProductDetails}" var="ppdet">
 							<tr>
 								<td>${sl}</td>
