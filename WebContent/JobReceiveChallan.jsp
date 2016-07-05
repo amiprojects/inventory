@@ -152,15 +152,18 @@ Url = {
 						<c:set var="i" value="1"></c:set>
 						<c:forEach var="jobp" items="${jobAssi.jobRecieveProductsDetails}">
 							<tr>
-								<td>${i}</td>
-								<td>${jobp.jobPlanProducts.productsForDesignCostSheet.productDetail.code}</td>
-								<td>${jobp.jobPlanProducts.productsForDesignCostSheet.productDetail.description}</td>
-								<td>${sessionScope['ejb'].getItmProductsForSampleByProductForDesignCostSheetId(jobp.jobPlanProducts.productsForDesignCostSheet.id).itemDetails.name}</td>
-								<td>${jobp.qtyReturn}</td>
-								<td>${jobp.jobPlanProducts.productsForDesignCostSheet.productDetail.qtyUnit.name}</td>
+								<td style="border-bottom: none; border-top: none;">${i}</td>
+								<td style="border-bottom: none; border-top: none;">${jobp.jobPlanProducts.productsForDesignCostSheet.productDetail.code}</td>
+								<td style="border-bottom: none; border-top: none;">${jobp.jobPlanProducts.productsForDesignCostSheet.productDetail.description}</td>
+								<td style="border-bottom: none; border-top: none;">${sessionScope['ejb'].getItmProductsForSampleByProductForDesignCostSheetId(jobp.jobPlanProducts.productsForDesignCostSheet.id).itemDetails.name}</td>
+								<td style="border-bottom: none; border-top: none;">${jobp.qtyReturn}</td>
+								<td style="border-bottom: none; border-top: none;">${jobp.jobPlanProducts.productsForDesignCostSheet.productDetail.qtyUnit.name}</td>
 							</tr>
 							<c:set var="i" value="${i+1}"></c:set>
 						</c:forEach>
+						<tr style="height: 0px;">
+							<td colspan="8" style="border-bottom: none;"></td>
+						</tr>
 					</tbody>
 				</table> <span style="float: right;">continued...</span>
 			</td>
@@ -242,15 +245,16 @@ Url = {
 						<c:forEach var="jobp" items="${jobAssi.jobRecieveProductsDetails}">
 							<c:forEach items="${jobp.jobReceiveJobDetails}" var="jobProjob">
 								<tr>
-									<td>${i}</td>
-									<td>${jobProjob.jobPlanJobStock.jobsForDesignCostSheet.jobTypes.jobName}</td>
-									<td>${jobProjob.jobRecieveProductsDetails.jobPlanProducts.productsForDesignCostSheet.productDetail.code}</td>
-									<td>${jobProjob.qtyDone}</td>
-									<td>${jobProjob.jobRecieveProductsDetails.jobPlanProducts.productsForDesignCostSheet.productDetail.qtyUnit.name}</td>
-									<td><c:set var="rate"
+									<td style="border-bottom: none; border-top: none;">${i}</td>
+									<td style="border-bottom: none; border-top: none;">${jobProjob.jobPlanJobStock.jobsForDesignCostSheet.jobTypes.jobName}</td>
+									<td style="border-bottom: none; border-top: none;">${jobProjob.jobRecieveProductsDetails.jobPlanProducts.productsForDesignCostSheet.productDetail.code}</td>
+									<td style="border-bottom: none; border-top: none;">${jobProjob.qtyDone}</td>
+									<td style="border-bottom: none; border-top: none;">${jobProjob.jobRecieveProductsDetails.jobPlanProducts.productsForDesignCostSheet.productDetail.qtyUnit.name}</td>
+									<td style="border-bottom: none; border-top: none;"><c:set
+											var="rate"
 											value="${sessionScope['ejb'].getJobAssignmentJobDetailsByJobPlanJobIdAndJobAssignmentId(jobProjob.jobPlanJobStock.id, jobAssi.jobAssignmentDetails.id).rate}"></c:set>${rate}</td>
-									<td>${sessionScope['ejb'].getJobAssignmentJobDetailsByJobPlanJobIdAndJobAssignmentId(jobProjob.jobPlanJobStock.id, jobAssi.jobAssignmentDetails.id).ammount}</td>
-									<td><fmt:formatDate
+									<td style="border-bottom: none; border-top: none;">${sessionScope['ejb'].getJobAssignmentJobDetailsByJobPlanJobIdAndJobAssignmentId(jobProjob.jobPlanJobStock.id, jobAssi.jobAssignmentDetails.id).ammount}</td>
+									<td style="border-bottom: none; border-top: none;"><fmt:formatDate
 											value="${jobProjob.jobRecieveProductsDetails.jobRecievedDetails.recievingDate}"
 											pattern="dd-MM-yyyy" /></td>
 								</tr>
@@ -259,6 +263,9 @@ Url = {
 									value="${totJobCost+(jobProjob.qtyDone*rate)}" />
 							</c:forEach>
 						</c:forEach>
+						<tr style="height: 0px;">
+							<td colspan="8" style="border-bottom: none;"></td>
+						</tr>
 						<%-- <tr>
 							<td colspan="6" align="right">Total Job Cost :</td>
 							<td colspan="2"><fmt:formatNumber var="totJC"
@@ -273,7 +280,7 @@ Url = {
 			<td class="tg-031e" colspan="2"><span>Amount Chargeable
 					(in words)</span><br> <span>${sessionScope['ejb'].getNumberToWords(totJobCost)}</span></td>
 		</tr> --%>
-		<tr style="height: 100px">
+		<tr style="height: 10px">
 			<td class="tg-031e" style="width: 60%"><strong>Declaration:</strong><br>We
 				declare that this invoice shows the actual price of the goods
 				describe and that all particular are true and correct.</td>

@@ -94,7 +94,7 @@ page[size="A4"] {
 			style="border: 1px solid; height: 1080px; width: 750px">
 			<tr style="height: 10px">
 				<td class="tg-031e" colspan="3" style="width: 50%"><strong>${companyInfo.compname}</strong><br>
-					${companyInfo.addr}<br> EMail: ${companyInfo.email}<br>
+					${companyInfo.addr}<br> Email: ${companyInfo.email}<br>
 					Mobile: ${companyInfo.mobile}</td>
 				<td class="tg-031e" colspan="2" style="width: 25%">Sales Return
 					Invoice no:<br> ${salesReturn.challanNumber}

@@ -26,10 +26,10 @@ page[size="A4"] {
 	body, page[size="A4"] {
 		/* margin: 0;
 		box-shadow: 0; */
-		padding-left: 1.0cm; padding-right : 1.0cm; page-break-after : always;
-		box-shadow: 0;
+		padding-left: 1.0cm;
 		padding-right: 1.0cm;
 		page-break-after: always;
+		box-shadow: 0;
 	}
 }
 
@@ -150,20 +150,23 @@ Url = {
 						<c:set var="i" value="1"></c:set>
 						<c:forEach var="jobp" items="${jobAssi.jobAssignmentProducts}">
 							<tr>
-								<td>${i}</td>
-								<td>${jobp.productsForDesignCostSheet.productDetail.code}</td>
-								<td>${jobp.productsForDesignCostSheet.productDetail.description}</td>
-								<td>${sessionScope['ejb'].getItmProductsForSampleByProductForDesignCostSheetId(jobp.productsForDesignCostSheet.id).itemDetails.name}</td>
-								<td>${jobp.qty}</td>
-								<td>${jobp.productsForDesignCostSheet.productDetail.qtyUnit.name}</td>
+								<td style="border-bottom: none; border-top: none;">${i}</td>
+								<td style="border-bottom: none; border-top: none;">${jobp.productsForDesignCostSheet.productDetail.code}</td>
+								<td style="border-bottom: none; border-top: none;">${jobp.productsForDesignCostSheet.productDetail.description}</td>
+								<td style="border-bottom: none; border-top: none;">${sessionScope['ejb'].getItmProductsForSampleByProductForDesignCostSheetId(jobp.productsForDesignCostSheet.id).itemDetails.name}</td>
+								<td style="border-bottom: none; border-top: none;">${jobp.qty}</td>
+								<td style="border-bottom: none; border-top: none;">${jobp.productsForDesignCostSheet.productDetail.qtyUnit.name}</td>
 							</tr>
 							<c:set var="i" value="${i+1}"></c:set>
 						</c:forEach>
+						<tr style="height: 0px;">
+							<td colspan="7" style="border-bottom: none;"></td>
+						</tr>
 					</tbody>
 				</table> <span style="float: right;">continued...</span>
 			</td>
 		</tr>
-		<tr style="height: 100px">
+		<tr style="height: 10px">
 			<td class="tg-031e" style="width: 60%"><strong>Declaration:</strong><br>We
 				declare that this invoice shows the actual price of the goods
 				describe and that all particular are true and correct.</td>
@@ -240,14 +243,14 @@ Url = {
 							<c:forEach items="${jobp.jobAssignmentJobDetails}"
 								var="jobProjob">
 								<tr>
-									<td>${i}</td>
-									<td>${jobProjob.jobType.jobName}</td>
-									<td>${jobProjob.assignmentProducts.productsForDesignCostSheet.productDetail.code}</td>
-									<td>${jobProjob.qty}</td>
-									<td>${jobProjob.assignmentProducts.productsForDesignCostSheet.productDetail.qtyUnit.name}</td>
-									<td>${jobProjob.rate}</td>
-									<td>${jobProjob.ammount}</td>
-									<td><fmt:formatDate
+									<td style="border-bottom: none; border-top: none;">${i}</td>
+									<td style="border-bottom: none; border-top: none;">${jobProjob.jobType.jobName}</td>
+									<td style="border-bottom: none; border-top: none;">${jobProjob.assignmentProducts.productsForDesignCostSheet.productDetail.code}</td>
+									<td style="border-bottom: none; border-top: none;">${jobProjob.qty}</td>
+									<td style="border-bottom: none; border-top: none;">${jobProjob.assignmentProducts.productsForDesignCostSheet.productDetail.qtyUnit.name}</td>
+									<td style="border-bottom: none; border-top: none;">${jobProjob.rate}</td>
+									<td style="border-bottom: none; border-top: none;">${jobProjob.ammount}</td>
+									<td style="border-bottom: none; border-top: none;"><fmt:formatDate
 											value="${jobProjob.estimatedCompletionDate}"
 											pattern="dd-MM-yyyy" /></td>
 								</tr>

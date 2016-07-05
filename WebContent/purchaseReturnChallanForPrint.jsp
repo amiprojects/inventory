@@ -98,25 +98,22 @@ page[size="A4"] {
 		<table class="tg"
 			style="border: 1px solid; height: 1080px; width: 750px">
 			<tr style="height: 10px">
-				<td class="tg-031e" colspan="3" rowspan="3" style="width: 50%">
-					<strong>${companyInfo.compname}</strong><br> <br> <br>
-					${companyInfo.addr}<br> EMail: ${companyInfo.email}<br>
+				<td class="tg-031e" colspan="3" rowspan="2" style="width: 50%">
+					<strong>${companyInfo.compname}</strong><br>
+					${companyInfo.addr}<br> Email: ${companyInfo.email}<br>
 					Mobile: ${companyInfo.mobile}
 				</td>
 				<td class="tg-031e" colspan="2" style="width: 25%">Purchase
 					Return Challan no: <br>${purEntry.challanNumber}</td>
-				<td class="tg-031e" colspan="2" style="width: 25%">System: <fmt:formatDate
+				<td class="tg-031e" colspan="2" style="width: 25%">Refference
+					Challan No.: <br>${purEntry.referencePurchaseChallan}
+				</td>
+			</tr>
+			<tr style="height: 10px">
+				<td class="tg-031e" colspan="2">System Date:</td>
+				<td class="tg-031e" colspan="2"><fmt:formatDate
 						value="${sessionScope['ejb'].getCurrentDateTime()}"
 						pattern="dd-MM-yyyy" /></td>
-			</tr>
-			<tr style="height: 10px">
-				<td class="tg-031e" colspan="2">Refference Challan No.:</td>
-				<td class="tg-031e" colspan="2">${purEntry.referencePurchaseChallan}</td>
-			</tr>
-			<tr style="height: 10px">
-				<td class="tg-031e" colspan="2">Return date:</td>
-				<td class="tg-031e" colspan="2"><fmt:formatDate
-						value="${purEntry.returnDate}" pattern="dd-MM-yyyy" /></td>
 			</tr>
 			<tr style="height: 10px">
 				<td class="tg-031e" colspan="3" rowspan="3"><strong> <c:choose>
@@ -140,6 +137,11 @@ page[size="A4"] {
 					${purEntry.purchaseEntry.vendor.ph1} <br>
 					&nbsp;&nbsp;&nbsp;&nbsp;<span>Ph2 :</span>
 					${purEntry.purchaseEntry.vendor.ph2}</td>
+				<td class="tg-031e" colspan="2">Return date:</td>
+				<td class="tg-031e" colspan="2"><fmt:formatDate
+						value="${purEntry.returnDate}" pattern="dd-MM-yyyy" /></td>
+			</tr>
+			<tr style="height: 10px">
 				<td class="tg-031e" colspan="2">Vendor bill No:</td>
 				<td class="tg-031e" colspan="2">${purEntry.purchaseEntry.vendor_bill_no}</td>
 			</tr>
@@ -147,9 +149,6 @@ page[size="A4"] {
 				<td class="tg-031e" colspan="2">Supplier reference(Agent Alias
 					name):</td>
 				<td class="tg-031e" colspan="2">${purEntry.purchaseEntry.vendor.aliseName}</td>
-			</tr>
-			<tr style="height: 10px">
-				<td class="tg-031e" colspan="4"></td>
 			</tr>
 			<tr>
 				<td class="tg-031e" colspan="7">
@@ -166,19 +165,21 @@ page[size="A4"] {
 						<c:forEach begin="${(i-1)*8}" end="${i*8-1}"
 							items="${purEntry.purchaseReturnProductDetails}" var="ppdet">
 							<tr>
-								<td>${sl}</td>
-								<td><b style="font-size: 12px;">${ppdet.purchaseProductDetails.productDetail.description}</b><br>
-								<span style="font-size: 10px;">Barcode :
-										${ppdet.purchaseProductDetails.id}<br>Design
-										No :
+								<td style="border-bottom: none; border-top: none;">${sl}</td>
+								<td style="border-bottom: none; border-top: none;"><b
+									style="font-size: 12px;">${ppdet.purchaseProductDetails.productDetail.description}</b><br>
+									<span style="font-size: 10px;">Barcode :
+										${ppdet.purchaseProductDetails.id}<br>Design No :
 										${ppdet.purchaseProductDetails.productDetail.universalCode}
 								</span></td>
-								<td><fmt:formatNumber var="qty" value="${ppdet.qtyReturn}"
-										maxFractionDigits="3" groupingUsed="false" />${qty}</td>
+								<td style="border-bottom: none; border-top: none;"><fmt:formatNumber
+										var="qty" value="${ppdet.qtyReturn}" maxFractionDigits="3"
+										groupingUsed="false" />${qty}</td>
 								<c:set value="${tqty+ppdet.qtyReturn}" var="tqty" />
-								<td>${ppdet.purchaseProductDetails.cost}</td>
-								<td>${ppdet.purchaseProductDetails.productDetail.qtyUnit.name}</td>
-								<td><fmt:formatNumber var="amount"
+								<td style="border-bottom: none; border-top: none;">${ppdet.purchaseProductDetails.cost}</td>
+								<td style="border-bottom: none; border-top: none;">${ppdet.purchaseProductDetails.productDetail.qtyUnit.name}</td>
+								<td style="border-bottom: none; border-top: none;"><fmt:formatNumber
+										var="amount"
 										value="${ppdet.purchaseProductDetails.cost*ppdet.qtyReturn}"
 										maxFractionDigits="2" groupingUsed="false" /> ${amount}</td>
 								<c:set
@@ -187,32 +188,42 @@ page[size="A4"] {
 							</tr>
 							<c:set value="${sl+1}" var="sl" />
 						</c:forEach>
+						<c:if test="${i!=qPage}">
+							<tr style="height: 0px;">
+								<td colspan="7" style="border-bottom: none;"></td>
+							</tr>
+						</c:if>
 						<c:if test="${i==qPage}">
-							<c:if test="${purEntry.purchaseEntry.discountTotal!=0}">
-								<tr>
-									<td colspan="5" align="right">Discount <c:set var="dis"
-											value="${purEntry.purchaseEntry.isFlatDiscount()?'Flat':'%'}" />
-										(${purEntry.purchaseEntry.discountValue}(${dis})) :
-									</td>
-									<td><fmt:formatNumber var="disTot"
-											value="${gtot*purEntry.purchaseEntry.discountTotal/purEntry.purchaseEntry.subTotal}"
-											maxFractionDigits="2" groupingUsed="false" /> ${disTot}</td>
-								</tr>
-							</c:if>
+							<%-- <c:if test="${purEntry.purchaseEntry.discountTotal!=0}"> --%>
+							<tr>
+								<td style="border-bottom: none;" colspan="5" align="right">Discount
+									<c:set var="dis"
+										value="${purEntry.purchaseEntry.isFlatDiscount()?'Flat':'%'}" />
+									(${purEntry.purchaseEntry.discountValue}(${dis})) :
+								</td>
+								<td style="border-bottom: none;"><fmt:formatNumber
+										var="disTot"
+										value="${gtot*purEntry.purchaseEntry.discountTotal/purEntry.purchaseEntry.subTotal}"
+										maxFractionDigits="2" groupingUsed="false" /> ${disTot}</td>
+							</tr>
+							<%-- </c:if> --%>
 							<c:if test="${purEntry.purchaseEntry.taxAmount!=0}">
 								<tr>
-									<td colspan="5" align="right">Tax Amount
+									<td style="border-bottom: none; border-top: none;" colspan="5"
+										align="right">Tax Amount
 										(${purEntry.purchaseEntry.tax_Type_Group.getTotalTaxValue()}%)
 										:</td>
-									<td><fmt:formatNumber var="taxAmnt"
+									<td style="border-bottom: none; border-top: none;"><fmt:formatNumber
+											var="taxAmnt"
 											value="${gtot*purEntry.purchaseEntry.taxAmount/purEntry.purchaseEntry.subTotal}"
 											maxFractionDigits="2" groupingUsed="false" /> ${taxAmnt}</td>
 								</tr>
 							</c:if>
 							<c:if test="${purEntry.roundOff!=0}">
 								<tr>
-									<td colspan="5" align="right">RoundOf :</td>
-									<td>${purEntry.roundOff}</td>
+									<td style="border-bottom: none; border-top: none;" colspan="5"
+										align="right">RoundOf :</td>
+									<td style="border-bottom: none; border-top: none;">${purEntry.roundOff}</td>
 								</tr>
 							</c:if>
 							<tr>

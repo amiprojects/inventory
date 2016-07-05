@@ -168,18 +168,20 @@ Url = {
 						<c:forEach var="jobp"
 							items="${sampleJCS.productsForDesignCostSheets}">
 							<tr>
-								<td>${i}</td>
-								<td>${jobp.productDetail.code}</td>
-								<td>${jobp.productDetail.description}</td>
-								<td>${sessionScope['ejb'].getItmProductsForSampleByProductForDesignCostSheetId(jobp.id).itemDetails.name}</td>
-								<td>${jobp.qty}</td>
-								<td>${jobp.qtyUnit.name}</td>
-								<td>${jobp.rate}</td>
-								<td>${jobp.ammount}</td>
-
+								<td style="border-bottom: none; border-top: none;">${i}</td>
+								<td style="border-bottom: none; border-top: none;">${jobp.productDetail.code}</td>
+								<td style="border-bottom: none; border-top: none;">${jobp.productDetail.description}</td>
+								<td style="border-bottom: none; border-top: none;">${sessionScope['ejb'].getItmProductsForSampleByProductForDesignCostSheetId(jobp.id).itemDetails.name}</td>
+								<td style="border-bottom: none; border-top: none;">${jobp.qty}</td>
+								<td style="border-bottom: none; border-top: none;">${jobp.qtyUnit.name}</td>
+								<td style="border-bottom: none; border-top: none;">${jobp.rate}</td>
+								<td style="border-bottom: none; border-top: none;">${jobp.ammount}</td>
 							</tr>
 							<c:set var="i" value="${i+1}"></c:set>
 						</c:forEach>
+						<tr style="height: 0px;">
+							<td colspan="8" style="border-bottom: none;"></td>
+						</tr>
 					</tbody>
 				</table> <span style="float: right;">Continued...</span>
 			</td>
@@ -264,29 +266,24 @@ Url = {
 							items="${sampleJCS.productsForDesignCostSheets}">
 							<c:forEach var="jobj" items="${jobp.jobsForDesignCostSheets}">
 								<tr>
-									<td>${i}</td>
-									<td>${jobj.jobTypes.jobName}</td>
-									<td>${jobp.productDetail.code}</td>
-									<td>${jobj.qty}</td>
-									<td>${jobj.qtyUnit.name}</td>
-									<td>${jobj.rate}</td>
-									<td>${jobj.ammount}</td>
+									<td style="border-bottom: none; border-top: none;">${i}</td>
+									<td style="border-bottom: none; border-top: none;">${jobj.jobTypes.jobName}</td>
+									<td style="border-bottom: none; border-top: none;">${jobp.productDetail.code}</td>
+									<td style="border-bottom: none; border-top: none;">${jobj.qty}</td>
+									<td style="border-bottom: none; border-top: none;">${jobj.qtyUnit.name}</td>
+									<td style="border-bottom: none; border-top: none;">${jobj.rate}</td>
+									<td style="border-bottom: none; border-top: none;">${jobj.ammount}</td>
 								</tr>
 							</c:forEach>
 							<c:set var="i" value="${i+1}"></c:set>
 						</c:forEach>
 					</tbody>
-
-					<tr>
-						<td colspan="6" align="right">Total :</td>
-						<td>${sampleJCS.grandTotal-sampleJCS.surcharge}</td>
-					</tr>
-
-					<tr>
-						<td colspan="6" align="right">SurCharge :</td>
-						<td>${sampleJCS.surcharge}</td>
-					</tr>
-
+					<c:if test="${sampleJCS.surcharge>0}">
+						<tr>
+							<td colspan="6" align="right">SurCharge :</td>
+							<td>${sampleJCS.surcharge}</td>
+						</tr>
+					</c:if>
 					<tr>
 						<td colspan="6" align="right">Grand Total :</td>
 						<td>${sampleJCS.grandTotal}</td>
