@@ -299,8 +299,9 @@ page[size="A4"] {
 			items="${sessionScope['ejb'].getAllSalesProductReturnDetailBySalesEntryId(purEntry.id)}">
 			<c:set value="${qPage+1}" var="qPage" />
 		</c:forEach>
-		<c:set value="${Math.ceil(qPage/8)}" var="qPage" />
+		<c:set value="${Math.ceil(qPage/15)}" var="qPage" />
 		<c:set value="${1}" var="slno" />
+		<c:set var="idlist" value="" />
 		<c:set value="${j}" var="k" />
 		<c:forEach var="j" begin="${j}" end="${qPage+j-1}">
 			<page id="print1" size="A4">
@@ -425,28 +426,66 @@ page[size="A4"] {
 								</c:forEach>
 								<c:set value="${slno+1}" var="slno" />
 							</c:forEach> --%>
-							<c:set var="salesReturnFlag" value="0" />
-							<c:forEach begin="${(j-k)*8}" end="${(j-k+1)*8-1}"
+							<c:forEach begin="${(j-k)*15}" end="${(j-k+1)*15-1}"
 								var="purchaseReturnProd"
 								items="${sessionScope['ejb'].getAllSalesProductReturnDetailBySalesEntryId(purEntry.id)}">
+								<c:choose>
+									<c:when test="${idlist==''}">
+										<c:set var="idFlag" value="${0}" />
+									</c:when>
+									<c:otherwise>
+										<c:set var="idFlag" value="${0}" />
+										<c:set var="isBreaked" value="${0}" />
+										<c:if test="${isBreaked==0}">
+											<c:forTokens items="${idlist}" delims="," var="id">
+												<c:if test="${purchaseReturnProd.salesReturn.id==id}">
+													<c:set var="idFlag" value="${1}" />
+													<c:set var="isBreaked" value="${1}" />
+												</c:if>
+											</c:forTokens>
+										</c:if>
+									</c:otherwise>
+								</c:choose>
+								<c:set
+									value="${purchaseReturnProd.salesReturn.salesProductReturnDetail.size()}"
+									var="proRetLength" />
 								<tr>
-									<td class="tg-031e">${slno}</td>
-									<td class="tg-031e"><fmt:formatDate
-											value="${purchaseReturnProd.salesReturn.returnDate}"
-											pattern="dd-MM-yy" /></td>
-									<td class="tg-031e">
-										${purchaseReturnProd.salesReturn.challanNumber}</td>
-									<td class="tg-031e">
+									<c:if test="${idFlag!=1}">
+										<c:set var="idlist"
+											value="${idlist},${purchaseReturnProd.salesReturn.id}" />
+										<td style="border-bottom: none; border-top: none;"
+											class="tg-031e">${slno}</td>
+										<c:set value="${slno+1}" var="slno" />
+										<td style="border-bottom: none; border-top: none;"
+											class="tg-031e"><fmt:formatDate
+												value="${purchaseReturnProd.salesReturn.returnDate}"
+												pattern="dd-MM-yy" /></td>
+										<td style="border-bottom: none; border-top: none;"
+											class="tg-031e">
+											${purchaseReturnProd.salesReturn.challanNumber}</td>
+									</c:if>
+									<c:if test="${idFlag==1}">
+										<td style="border-bottom: none; border-top: none;"></td>
+										<td style="border-bottom: none; border-top: none;"></td>
+										<td style="border-bottom: none; border-top: none;"></td>
+									</c:if>
+									<td style="border-bottom: none; border-top: none;"
+										class="tg-031e">
 										${purchaseReturnProd.salesProductDetails.purchase_Product_Details.productDetail.code}
 									</td>
-									<td class="tg-031e" colspan="2" style="font-size: 10px;">
-										${purchaseReturnProd.salesProductDetails.purchase_Product_Details.productDetail.description}</td>
-									<td class="tg-031e"><fmt:formatNumber var="totalQ"
+									<td style="border-bottom: none; border-top: none;"
+										class="tg-031e" colspan="2"><span
+										style="font-size: 10px;">
+											${purchaseReturnProd.salesProductDetails.purchase_Product_Details.productDetail.description}</span></td>
+									<td style="border-bottom: none; border-top: none;"
+										class="tg-031e"><fmt:formatNumber var="totalQ"
 											value="${purchaseReturnProd.qtyReturn}" maxFractionDigits="3"
 											groupingUsed="false" />${totalQ}</td>
 								</tr>
-								<c:set value="${slno+1}" var="slno" />
 							</c:forEach>
+							<tr style="height: 0px;">
+								<td colspan="7" style="border-bottom: none;"></td>
+							</tr>
 						</table>
 					</td>
 				</tr>

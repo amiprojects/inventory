@@ -1921,6 +1921,16 @@ public class Ejb {
 			PurchaseReturnProductDetails purchaseReturnProductDetails) {
 		em.persist(purchaseReturnProductDetails);
 	}
+	
+	public List<PurchaseReturnProductDetails> getAllPurchaseReturnProductDetailsByPurchaseEntryId(
+			int id) {
+		TypedQuery<PurchaseReturnProductDetails> q = em
+				.createQuery(
+						"select c from PurchaseReturnProductDetails c where c.purchaseReturn.purchaseEntry.id=:id order by c.id asc",
+						PurchaseReturnProductDetails.class);
+		q.setParameter("id", id);
+		return q.getResultList();
+	}
 
 	/***************** for Job Assignment ***********************/
 	public void setJobAssignment(JobAssignmentDetails jobAssignmentDetails) {
