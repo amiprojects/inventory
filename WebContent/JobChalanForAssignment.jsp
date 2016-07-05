@@ -152,7 +152,8 @@ Url = {
 							<tr>
 								<td style="border-bottom: none; border-top: none;">${i}</td>
 								<td style="border-bottom: none; border-top: none;">${jobp.productsForDesignCostSheet.productDetail.code}</td>
-								<td style="border-bottom: none; border-top: none;">${jobp.productsForDesignCostSheet.productDetail.description}</td>
+								<td style="border-bottom: none; border-top: none;"><span
+									style="font-size: 10px;">${jobp.productsForDesignCostSheet.productDetail.description}</span></td>
 								<td style="border-bottom: none; border-top: none;">${sessionScope['ejb'].getItmProductsForSampleByProductForDesignCostSheetId(jobp.productsForDesignCostSheet.id).itemDetails.name}</td>
 								<td style="border-bottom: none; border-top: none;">${jobp.qty}</td>
 								<td style="border-bottom: none; border-top: none;">${jobp.productsForDesignCostSheet.productDetail.qtyUnit.name}</td>
@@ -167,11 +168,11 @@ Url = {
 			</td>
 		</tr>
 		<tr style="height: 10px">
-			<td class="tg-031e" style="width: 60%"><strong>Declaration:</strong><br>We
-				declare that this invoice shows the actual price of the goods
-				describe and that all particular are true and correct.</td>
+			<td class="tg-031e" style="width: 70%"><strong>Declaration:</strong><br>Finished
+				goods must be returned within submission date. Check all the raw
+				materials provided, before leaving the counter.</td>
 
-			<td class="tg-031e" style="width: 40%; text-align: right;">for <strong>${companyInfo.compname}</strong><br>
+			<td class="tg-031e" style="width: 30%; text-align: right;">for <strong>${companyInfo.compname}</strong><br>
 				<br>Authorised Signatory
 			</td>
 
@@ -278,15 +279,16 @@ Url = {
 		</tr>
 
 		<tr style="height: 10px;">
-			<td class="tg-031e" colspan="2"><span>Amount Chargeable
-					(in words)</span><br> <span>${sessionScope['ejb'].getNumberToWords(jobAssi.surcharge+totJobCost)}</span></td>
+			<td class="tg-031e" colspan="2"><span> <strong>Amount
+						Chargeable (in words)</strong></span><br> <span>${sessionScope['ejb'].getNumberToWords(totJC)}
+					only.</span></td>
 		</tr>
 		<tr style="height: 10px;">
-			<td class="tg-031e" style="width: 60%"><strong>Declaration:</strong><br>We
-				declare that this invoice shows the actual price of the goods
-				describe and that all particular are true and correct.</td>
+			<td class="tg-031e" style="width: 70%"><strong>Declaration:</strong><br>Finished
+				goods must be returned within submission date. Check all the raw
+				materials provided, before leaving the counter.</td>
 
-			<td class="tg-031e" style="width: 40%; text-align: right;">for <strong>${companyInfo.compname}</strong><br>
+			<td class="tg-031e" style="width: 30%; text-align: right;">for <strong>${companyInfo.compname}</strong><br>
 				<br>Authorised Signatory
 			</td>
 		</tr>

@@ -1,17 +1,7 @@
-SalesEntry
-...........
-description null 4000
-
-VoucherDetailsForViaAgents
-............................
-purchaseReturnId 10,0
-salesReturnId 10,0
-
-PaymentDetailsForViaAgents
-............................
-purchaseReturnId 10,0
-salesReturnId 10,0
-
+COMPANYINFO
+....................
+ALTER TABLE COMPANYINFO ADD (isSalesAgentShow NUMBER(1) DEFAULT 1);
+ALTER TABLE COMPANYINFO ADD (isPurchaseAgentShow NUMBER(1) DEFAULT 0);
 //////////////////////////////////////////////
 //every time on making .war
 ...................................

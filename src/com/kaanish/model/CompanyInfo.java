@@ -44,13 +44,15 @@ public class CompanyInfo implements Serializable {
 	private String servtaxdate;
 
 	private int changeCount;
-	
+
 	private String barcodeHeader;
 	private boolean isMRPbarcode;
+	private boolean isPurchaseAgentShow;
+	private boolean isSalesAgentShow;
 
 	@OneToMany(mappedBy = "companyInfo")
 	private List<Purchase_Product_Details> purchase_Product_Details;
-	
+
 	@OneToMany(mappedBy = "companyInfo")
 	private List<PurchaseOrderProductdetails> purchaseOrderProductdetails;
 
@@ -65,7 +67,7 @@ public class CompanyInfo implements Serializable {
 
 	@OneToMany(mappedBy = "companyInfo")
 	private List<SalesEntry> salesEntry;
-	
+
 	@OneToMany(mappedBy = "companyInfo")
 	private List<PurchaseOrderEntry> purchaseOrderEntry;
 
@@ -310,7 +312,8 @@ public class CompanyInfo implements Serializable {
 		return purchase_Product_Details;
 	}
 
-	public void setPurchase_Product_Details(List<Purchase_Product_Details> purchase_Product_Details) {
+	public void setPurchase_Product_Details(
+			List<Purchase_Product_Details> purchase_Product_Details) {
 		this.purchase_Product_Details = purchase_Product_Details;
 	}
 
@@ -318,7 +321,8 @@ public class CompanyInfo implements Serializable {
 		return purchaseOrderEntry;
 	}
 
-	public void setPurchaseOrderEntry(List<PurchaseOrderEntry> purchaseOrderEntry) {
+	public void setPurchaseOrderEntry(
+			List<PurchaseOrderEntry> purchaseOrderEntry) {
 		this.purchaseOrderEntry = purchaseOrderEntry;
 	}
 
@@ -326,7 +330,8 @@ public class CompanyInfo implements Serializable {
 		return purchaseOrderProductdetails;
 	}
 
-	public void setPurchaseOrderProductdetails(List<PurchaseOrderProductdetails> purchaseOrderProductdetails) {
+	public void setPurchaseOrderProductdetails(
+			List<PurchaseOrderProductdetails> purchaseOrderProductdetails) {
 		this.purchaseOrderProductdetails = purchaseOrderProductdetails;
 	}
 
@@ -344,6 +349,22 @@ public class CompanyInfo implements Serializable {
 
 	public void setMRPbarcode(boolean isMRPbarcode) {
 		this.isMRPbarcode = isMRPbarcode;
+	}
+
+	public boolean isPurchaseAgentShow() {
+		return isPurchaseAgentShow;
+	}
+
+	public void setPurchaseAgentShow(boolean isPurchaseAgentShow) {
+		this.isPurchaseAgentShow = isPurchaseAgentShow;
+	}
+
+	public boolean isSalesAgentShow() {
+		return isSalesAgentShow;
+	}
+
+	public void setSalesAgentShow(boolean isSalesAgentShow) {
+		this.isSalesAgentShow = isSalesAgentShow;
 	}
 
 }

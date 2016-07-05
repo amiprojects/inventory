@@ -215,6 +215,42 @@
 																		</c:otherwise>
 																	</c:choose>
 																</div>
+																<div>
+																	<label for="">Purchase Supplier Ref. (Agent)
+																		name to be shown on challan:</label>&nbsp;
+																	<c:choose>
+																		<c:when test="${compInfo.isPurchaseAgentShow()}">
+																			<input type="radio" name="isPurchaseAgentShow"
+																				value="yes" checked="checked">Yes
+																	&nbsp;<input type="radio" name="isPurchaseAgentShow"
+																				value="no">No<br>
+																		</c:when>
+																		<c:otherwise>
+																			<input type="radio" name="isPurchaseAgentShow"
+																				value="yes">Yes
+																	&nbsp;<input type="radio" name="isPurchaseAgentShow"
+																				value="no" checked="checked">No<br>
+																		</c:otherwise>
+																	</c:choose>
+																</div>
+																<div>
+																	<label for="">Sales Supplier Ref. (Agent) name
+																		to be shown on invoice:</label>&nbsp;
+																	<c:choose>
+																		<c:when test="${compInfo.isSalesAgentShow()}">
+																			<input type="radio" name="isSalesAgentShow"
+																				value="yes" checked="checked">Yes
+																	&nbsp;<input type="radio" name="isSalesAgentShow"
+																				value="no">No<br>
+																		</c:when>
+																		<c:otherwise>
+																			<input type="radio" name="isSalesAgentShow"
+																				value="yes">Yes
+																	&nbsp;<input type="radio" name="isSalesAgentShow"
+																				value="no" checked="checked">No<br>
+																		</c:otherwise>
+																	</c:choose>
+																</div>
 															</div>
 														</div>
 														<div class="col-md-12">

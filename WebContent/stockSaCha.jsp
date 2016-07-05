@@ -91,41 +91,74 @@ page[size="A4"] {
 		</h3>
 		<table class="tg"
 			style="border: 1px solid; height: 1080px; width: 750px">
-			<tr style="height: 10px">
-				<td class="tg-031e" colspan="3" rowspan="2" style="width: 50%">
-					<strong>${companyInfo.compname}</strong> ${companyInfo.addr}<br>
-					Email: ${companyInfo.email}<br> Mobile: ${companyInfo.mobile}
-				</td>
-				<td class="tg-031e" colspan="2" style="width: 25%">Sales
-					Invoice no:</td>
-				<td class="tg-031e" colspan="2" style="width: 25%">${purEntry.challanNumber}</td>
-			</tr>
-			<tr style="height: 10px">
-				<td class="tg-031e" colspan="2">System Date:</td>
-				<td class="tg-031e" colspan="2"><fmt:formatDate
-						value="${sessionScope['ejb'].getCurrentDateTime()}"
-						pattern="dd-MM-yyyy" /></td>
-			</tr>
-			<tr style="height: 10px">
-				<td class="tg-031e" colspan="3" rowspan="2"><strong>Customer
-						Details:</strong> <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Name :</span>
-					${purEntry.customer.name} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>City
-						:</span> ${purEntry.customer.city} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Address
-						:<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				</span> ${purEntry.customer.address} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Ph
-						:</span> ${purEntry.customer.mobile}</td>
-				<td class="tg-031e" colspan="2">Sales date :</td>
-				<td class="tg-031e" colspan="2"><fmt:formatDate
-						value="${purEntry.sales_date}" pattern="dd-MM-yyyy" /></td>
-			</tr>
-			<tr style="height: 10px">
-				<td class="tg-031e" colspan="2">Supplier reference (Agent Alias
-					name):</td>
-				<td class="tg-031e" colspan="2"><c:choose>
-						<c:when test="${purEntry.vendor!=null}">${purEntry.vendor.aliseName}</c:when>
-						<c:otherwise>NA</c:otherwise>
-					</c:choose></td>
-			</tr>
+			<c:choose>
+				<c:when test="${companyInfo.isSalesAgentShow()}">
+					<tr style="height: 10px">
+						<td class="tg-031e" colspan="3" rowspan="2" style="width: 50%">
+							<strong>${companyInfo.compname}</strong> ${companyInfo.addr}<br>
+							Email: ${companyInfo.email}<br> Mobile:
+							${companyInfo.mobile}
+						</td>
+						<td class="tg-031e" colspan="2" style="width: 25%">Sales
+							Invoice no:</td>
+						<td class="tg-031e" colspan="2" style="width: 25%">${purEntry.challanNumber}</td>
+					</tr>
+					<tr style="height: 10px">
+						<td class="tg-031e" colspan="2">System Date:</td>
+						<td class="tg-031e" colspan="2"><fmt:formatDate
+								value="${sessionScope['ejb'].getCurrentDateTime()}"
+								pattern="dd-MM-yyyy" /></td>
+					</tr>
+					<tr style="height: 10px">
+						<td class="tg-031e" colspan="3" rowspan="2"><strong>Customer
+								Details:</strong> <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Name :</span>
+							${purEntry.customer.name} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>City
+								:</span> ${purEntry.customer.city} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Address
+								:<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						</span> ${purEntry.customer.address} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Ph
+								:</span> ${purEntry.customer.mobile}</td>
+						<td class="tg-031e" colspan="2">Sales date :</td>
+						<td class="tg-031e" colspan="2"><fmt:formatDate
+								value="${purEntry.sales_date}" pattern="dd-MM-yyyy" /></td>
+					</tr>
+					<tr style="height: 10px">
+						<td class="tg-031e" colspan="2">Supplier reference (Agent
+							name):</td>
+						<td class="tg-031e" colspan="2"><c:choose>
+								<c:when test="${purEntry.vendor!=null}">${purEntry.vendor.name}</c:when>
+								<c:otherwise>NA</c:otherwise>
+							</c:choose></td>
+					</tr>
+				</c:when>
+				<c:otherwise>
+					<tr style="height: 10px">
+						<td class="tg-031e" colspan="3" style="width: 50%"><strong>${companyInfo.compname}</strong>
+							${companyInfo.addr}<br> Email: ${companyInfo.email}<br>
+							Mobile: ${companyInfo.mobile}</td>
+						<td class="tg-031e" colspan="2" style="width: 25%">Sales
+							Invoice no:</td>
+						<td class="tg-031e" colspan="2" style="width: 25%">${purEntry.challanNumber}</td>
+					</tr>
+					<tr style="height: 10px">
+						<td class="tg-031e" colspan="3" rowspan="2"><strong>Customer
+								Details:</strong> <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Name :</span>
+							${purEntry.customer.name} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>City
+								:</span> ${purEntry.customer.city} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Address
+								:<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						</span> ${purEntry.customer.address} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Ph
+								:</span> ${purEntry.customer.mobile}</td>
+						<td class="tg-031e" colspan="2">System Date:</td>
+						<td class="tg-031e" colspan="2"><fmt:formatDate
+								value="${sessionScope['ejb'].getCurrentDateTime()}"
+								pattern="dd-MM-yyyy" /></td>
+					</tr>
+					<tr style="height: 10px">
+						<td class="tg-031e" colspan="2">Sales date :</td>
+						<td class="tg-031e" colspan="2"><fmt:formatDate
+								value="${purEntry.sales_date}" pattern="dd-MM-yyyy" /></td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
 			<tr>
 				<td class="tg-031e" colspan="7">
 					<table class="tg"
@@ -227,7 +260,8 @@ page[size="A4"] {
 				<c:if test="${purEntry.description==null}">
 					<tr style="height: 10px">
 						<td class="tg-031e" colspan="7"><span><strong>Amount
-									Chargeable (in words)</strong></span><br> <span>${sessionScope['ejb'].getNumberToWords(purEntry.totalCost)}</span></td>
+									Chargeable (in words)</strong></span><br> <span>${sessionScope['ejb'].getNumberToWords(purEntry.totalCost)}
+								only.</span></td>
 					</tr>
 				</c:if>
 				<c:if test="${purEntry.description!=null}">
@@ -236,15 +270,18 @@ page[size="A4"] {
 								: </strong><br> <span>${purEntry.description}</span></td>
 						<td class="tg-031e" colspan="4"><span><strong>Amount
 									Chargeable (in words)</strong></span><br> <span>${sessionScope['ejb'].getNumberToWords(purEntry.totalCost)}
-								only</span></td>
+								only.</span></td>
 					</tr>
 				</c:if>
 				<c:if test="${purEntry.salesReturn.size()==0}">
 					<tr style="height: 10px">
-						<td class="tg-031e" colspan="4"><strong>Declaration:</strong><br>We
+						<td class="tg-031e" colspan="5"><strong>Declaration:</strong><br>We
 							declare that this invoice shows the actual price of the goods
-							describe and that all particular are true and correct.</td>
-						<td class="tg-031e" colspan="3" style="text-align: right;">for
+							described and all particulars are true and correct. Payment must
+							be cleared within 30 days. Goods once sold can not be taken back
+							or exchanged. No Guarantee for colour Jari and Slippage of
+							Fabric. Dry clean only.</td>
+						<td class="tg-031e" colspan="2" style="text-align: right;">for
 							<strong>${companyInfo.compname}</strong><br> <br>Authorised
 							Signatory
 						</td>
@@ -257,84 +294,113 @@ page[size="A4"] {
 		<c:set value="${i+1}" var="j" />
 	</c:forEach>
 	<c:if test="${purEntry.salesReturn.size()!=0}">
-		<page id="print1" size="A4">
-		<h3 align="center">Sales Invoice (Page ${j})</h3>
-		<table class="tg"
-			style="border: 1px solid; height: 1080px; width: 750px">
-			<tr style="height: 10px">
-				<td class="tg-031e" colspan="3" rowspan="2" style="width: 50%">
-					<strong>${companyInfo.compname}</strong><br>
-					${companyInfo.addr}<br> Email: ${companyInfo.email}<br>
-					Mobile: ${companyInfo.mobile}
-				</td>
-				<td class="tg-031e" colspan="2" style="width: 25%">Sales
-					Invoice no:</td>
-				<td class="tg-031e" colspan="2" style="width: 25%">${purEntry.challanNumber}</td>
-			</tr>
-			<tr style="height: 10px">
-				<td class="tg-031e" colspan="2">System Date:</td>
-				<td class="tg-031e" colspan="2"><fmt:formatDate
-						value="${sessionScope['ejb'].getCurrentDateTime()}"
-						pattern="dd-MM-yyyy" /></td>
-			</tr>
-			<tr style="height: 10px">
-				<td class="tg-031e" colspan="3" rowspan="2"><strong>Customer
-						Details:</strong> <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Name :</span>
-					${purEntry.customer.name} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>City
-						:</span> ${purEntry.customer.city} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Address
-						:<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				</span> ${purEntry.customer.address} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Ph
-						:</span> ${purEntry.customer.mobile}</td>
-				<td class="tg-031e" colspan="2">Sales date :</td>
-				<td class="tg-031e" colspan="2"><fmt:formatDate
-						value="${purEntry.sales_date}" pattern="dd-MM-yyyy" /></td>
-			</tr>
-			<tr style="height: 10px">
-				<td class="tg-031e" colspan="2">Supplier reference (Agent Alias
-					name):</td>
-				<td class="tg-031e" colspan="2"><c:choose>
-						<c:when test="${purEntry.vendor!=null}">${purEntry.vendor.aliseName}</c:when>
-						<c:otherwise>NA</c:otherwise>
-					</c:choose></td>
-			</tr>
-			<tr style="height: 10px">
-				<td colspan="7" align="left">Return Details :</td>
-			</tr>
-			<tr>
-				<td class="tg-031e" colspan="7">
-					<table class="tg"
-						style="height: auto; width: 750px; border-color: white; margin-left: -6px; margin-right: -6px; margin-top: -11px;">
+		<c:set value="${0}" var="qPage" />
+		<c:forEach var="purchaseReturnProd"
+			items="${sessionScope['ejb'].getAllSalesProductReturnDetailBySalesEntryId(purEntry.id)}">
+			<c:set value="${qPage+1}" var="qPage" />
+		</c:forEach>
+		<c:set value="${Math.ceil(qPage/8)}" var="qPage" />
+		<c:set value="${1}" var="slno" />
+		<c:set value="${j}" var="k" />
+		<c:forEach var="j" begin="${j}" end="${qPage+j-1}">
+			<page id="print1" size="A4">
+			<h3 align="center">Sales Invoice (Page ${j})</h3>
+			<table class="tg"
+				style="border: 1px solid; height: 1080px; width: 750px">
+				<c:choose>
+					<c:when test="${companyInfo.isSalesAgentShow()}">
 						<tr style="height: 10px">
-							<th>#</th>
-							<th>Return Date</th>
-							<th>Sales Return challan no.</th>
-							<th>Product Code</th>
-							<th colspan="2">Product Description</th>
-							<th>Returning Qty</th>
+							<td class="tg-031e" colspan="3" rowspan="2" style="width: 50%">
+								<strong>${companyInfo.compname}</strong> ${companyInfo.addr}<br>
+								Email: ${companyInfo.email}<br> Mobile:
+								${companyInfo.mobile}
+							</td>
+							<td class="tg-031e" colspan="2" style="width: 25%">Sales
+								Invoice no:</td>
+							<td class="tg-031e" colspan="2" style="width: 25%">${purEntry.challanNumber}</td>
 						</tr>
-						<c:set value="${1}" var="slno" />
-						<c:forEach items="${purEntry.salesReturn}" var="pret">
-							<c:set value="${pret.salesProductReturnDetail.size()}"
-								var="proRetLength" />
-							<tr>
-								<td class="tg-031e" rowspan="${proRetLength}">${slno}</td>
-								<td class="tg-031e" rowspan="${proRetLength}"><fmt:formatDate
-										value="${pret.returnDate}" pattern="dd-MM-yy" /> <%-- ${pret.returnDate} --%></td>
-								<td class="tg-031e" rowspan="${proRetLength}">${pret.challanNumber}</td>
-								<c:set var="purchaseReturnProd"
-									value="${pret.salesProductReturnDetail.get(0)}" />
-								<td class="tg-031e">
-									${purchaseReturnProd.salesProductDetails.purchase_Product_Details.productDetail.code}
-								</td>
-								<td class="tg-031e" colspan="2" style="font-size: 10px;">
-									${purchaseReturnProd.salesProductDetails.purchase_Product_Details.productDetail.description}</td>
-								<td class="tg-031e"><fmt:formatNumber var="totalQ"
-										value="${purchaseReturnProd.qtyReturn}" maxFractionDigits="3"
-										groupingUsed="false" />${totalQ}</td>
+						<tr style="height: 10px">
+							<td class="tg-031e" colspan="2">System Date:</td>
+							<td class="tg-031e" colspan="2"><fmt:formatDate
+									value="${sessionScope['ejb'].getCurrentDateTime()}"
+									pattern="dd-MM-yyyy" /></td>
+						</tr>
+						<tr style="height: 10px">
+							<td class="tg-031e" colspan="3" rowspan="2"><strong>Customer
+									Details:</strong> <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Name :</span>
+								${purEntry.customer.name} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>City
+									:</span> ${purEntry.customer.city} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Address
+									:<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							</span> ${purEntry.customer.address} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Ph
+									:</span> ${purEntry.customer.mobile}</td>
+							<td class="tg-031e" colspan="2">Sales date :</td>
+							<td class="tg-031e" colspan="2"><fmt:formatDate
+									value="${purEntry.sales_date}" pattern="dd-MM-yyyy" /></td>
+						</tr>
+						<tr style="height: 10px">
+							<td class="tg-031e" colspan="2">Supplier reference (Agent
+								name):</td>
+							<td class="tg-031e" colspan="2"><c:choose>
+									<c:when test="${purEntry.vendor!=null}">${purEntry.vendor.name}</c:when>
+									<c:otherwise>NA</c:otherwise>
+								</c:choose></td>
+						</tr>
+					</c:when>
+					<c:otherwise>
+						<tr style="height: 10px">
+							<td class="tg-031e" colspan="3" style="width: 50%"><strong>${companyInfo.compname}</strong>
+								${companyInfo.addr}<br> Email: ${companyInfo.email}<br>
+								Mobile: ${companyInfo.mobile}</td>
+							<td class="tg-031e" colspan="2" style="width: 25%">Sales
+								Invoice no:</td>
+							<td class="tg-031e" colspan="2" style="width: 25%">${purEntry.challanNumber}</td>
+						</tr>
+						<tr style="height: 10px">
+							<td class="tg-031e" colspan="3" rowspan="2"><strong>Customer
+									Details:</strong> <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Name :</span>
+								${purEntry.customer.name} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>City
+									:</span> ${purEntry.customer.city} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Address
+									:<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							</span> ${purEntry.customer.address} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Ph
+									:</span> ${purEntry.customer.mobile}</td>
+							<td class="tg-031e" colspan="2">System Date:</td>
+							<td class="tg-031e" colspan="2"><fmt:formatDate
+									value="${sessionScope['ejb'].getCurrentDateTime()}"
+									pattern="dd-MM-yyyy" /></td>
+						</tr>
+						<tr style="height: 10px">
+							<td class="tg-031e" colspan="2">Sales date :</td>
+							<td class="tg-031e" colspan="2"><fmt:formatDate
+									value="${purEntry.sales_date}" pattern="dd-MM-yyyy" /></td>
+						</tr>
+					</c:otherwise>
+				</c:choose>
+				<tr style="height: 10px">
+					<td colspan="7" align="left">Return Details :</td>
+				</tr>
+				<tr>
+					<td class="tg-031e" colspan="7">
+						<table class="tg"
+							style="height: auto; width: 750px; border-color: white; margin-left: -6px; margin-right: -6px; margin-top: -11px;">
+							<tr style="height: 10px">
+								<th>#</th>
+								<th>Return Date</th>
+								<th>Sales Return challan no.</th>
+								<th>Product Code</th>
+								<th colspan="2">Product Description</th>
+								<th>Returning Qty</th>
 							</tr>
-							<c:forEach var="purchaseReturnProd" begin="${1}"
-								end="${proRetLength}" items="${pret.salesProductReturnDetail}">
+							<%-- <c:set value="${1}" var="slno" />
+							<c:forEach items="${purEntry.salesReturn}" var="pret">
+								<c:set value="${pret.salesProductReturnDetail.size()}"
+									var="proRetLength" />
 								<tr>
+									<td class="tg-031e" rowspan="${proRetLength}">${slno}</td>
+									<td class="tg-031e" rowspan="${proRetLength}"><fmt:formatDate
+											value="${pret.returnDate}" pattern="dd-MM-yy" /> ${pret.returnDate}</td>
+									<td class="tg-031e" rowspan="${proRetLength}">${pret.challanNumber}</td>
+									<c:set var="purchaseReturnProd"
+										value="${pret.salesProductReturnDetail.get(0)}" />
 									<td class="tg-031e">
 										${purchaseReturnProd.salesProductDetails.purchase_Product_Details.productDetail.code}
 									</td>
@@ -344,28 +410,66 @@ page[size="A4"] {
 											value="${purchaseReturnProd.qtyReturn}" maxFractionDigits="3"
 											groupingUsed="false" />${totalQ}</td>
 								</tr>
+								<c:forEach var="purchaseReturnProd" begin="${1}"
+									end="${proRetLength}" items="${pret.salesProductReturnDetail}">
+									<tr>
+										<td class="tg-031e">
+											${purchaseReturnProd.salesProductDetails.purchase_Product_Details.productDetail.code}
+										</td>
+										<td class="tg-031e" colspan="2" style="font-size: 10px;">
+											${purchaseReturnProd.salesProductDetails.purchase_Product_Details.productDetail.description}</td>
+										<td class="tg-031e"><fmt:formatNumber var="totalQ"
+												value="${purchaseReturnProd.qtyReturn}"
+												maxFractionDigits="3" groupingUsed="false" />${totalQ}</td>
+									</tr>
+								</c:forEach>
+								<c:set value="${slno+1}" var="slno" />
+							</c:forEach> --%>
+							<c:set var="salesReturnFlag" value="0" />
+							<c:forEach begin="${(j-k)*8}" end="${(j-k+1)*8-1}"
+								var="purchaseReturnProd"
+								items="${sessionScope['ejb'].getAllSalesProductReturnDetailBySalesEntryId(purEntry.id)}">
+								<tr>
+									<td class="tg-031e">${slno}</td>
+									<td class="tg-031e"><fmt:formatDate
+											value="${purchaseReturnProd.salesReturn.returnDate}"
+											pattern="dd-MM-yy" /></td>
+									<td class="tg-031e">
+										${purchaseReturnProd.salesReturn.challanNumber}</td>
+									<td class="tg-031e">
+										${purchaseReturnProd.salesProductDetails.purchase_Product_Details.productDetail.code}
+									</td>
+									<td class="tg-031e" colspan="2" style="font-size: 10px;">
+										${purchaseReturnProd.salesProductDetails.purchase_Product_Details.productDetail.description}</td>
+									<td class="tg-031e"><fmt:formatNumber var="totalQ"
+											value="${purchaseReturnProd.qtyReturn}" maxFractionDigits="3"
+											groupingUsed="false" />${totalQ}</td>
+								</tr>
+								<c:set value="${slno+1}" var="slno" />
 							</c:forEach>
-							<c:set value="${slno+1}" var="slno" />
-						</c:forEach>
-					</table>
-				</td>
-			</tr>
-			<%-- <tr style="height: 10px">
-				<td class="tg-031e" colspan="7"><span>Amount Chargeable
-						(in words)</span><br> <span>${sessionScope['ejb'].getNumberToWords(purEntry.totalCost)}</span></td>
+						</table>
+					</td>
+				</tr>
+				<%-- <tr style="height: 10px">
+				<td class="tg-031e" colspan="7"><span><strong>Amount Chargeable
+						(in words)</strong></span><br> <span>${sessionScope['ejb'].getNumberToWords(purEntry.totalCost)} only.</span></td>
 			</tr> --%>
-			<tr style="height: 10px">
-				<td class="tg-031e" colspan="4"><strong>Declaration:</strong><br>We
-					declare that this invoice shows the actual price of the goods
-					describe and that all particular are true and correct.</td>
-				<td class="tg-031e" colspan="3" style="text-align: right;">for
-					<strong>${companyInfo.compname}</strong><br> <br>Authorised
-					Signatory
-				</td>
-			</tr>
-		</table>
-		<center>This is a Computer Generated Invoice</center>
-		</page>
+				<tr style="height: 10px">
+					<td class="tg-031e" colspan="5"><strong>Declaration:</strong><br>We
+						declare that this invoice shows the actual price of the goods
+						described and all particulars are true and correct. Payment must
+						be cleared within 30 days. Goods once sold can not be taken back
+						or exchanged. No Guarantee for colour Jari and Slippage of Fabric.
+						Dry clean only.</td>
+					<td class="tg-031e" colspan="2" style="text-align: right;">for
+						<strong>${companyInfo.compname}</strong><br> <br>Authorised
+						Signatory
+					</td>
+				</tr>
+			</table>
+			<center>This is a Computer Generated Invoice</center>
+			</page>
+		</c:forEach>
 	</c:if>
 </body>
 </html>

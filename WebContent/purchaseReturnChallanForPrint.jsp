@@ -97,59 +97,118 @@ page[size="A4"] {
 		</h3>
 		<table class="tg"
 			style="border: 1px solid; height: 1080px; width: 750px">
-			<tr style="height: 10px">
-				<td class="tg-031e" colspan="3" rowspan="2" style="width: 50%">
-					<strong>${companyInfo.compname}</strong><br>
-					${companyInfo.addr}<br> Email: ${companyInfo.email}<br>
-					Mobile: ${companyInfo.mobile}
-				</td>
-				<td class="tg-031e" colspan="2" style="width: 25%">Purchase
-					Return Challan no: <br>${purEntry.challanNumber}</td>
-				<td class="tg-031e" colspan="2" style="width: 25%">Refference
-					Challan No.: <br>${purEntry.referencePurchaseChallan}
-				</td>
-			</tr>
-			<tr style="height: 10px">
-				<td class="tg-031e" colspan="2">System Date:</td>
-				<td class="tg-031e" colspan="2"><fmt:formatDate
-						value="${sessionScope['ejb'].getCurrentDateTime()}"
-						pattern="dd-MM-yyyy" /></td>
-			</tr>
-			<tr style="height: 10px">
-				<td class="tg-031e" colspan="3" rowspan="3"><strong> <c:choose>
-							<c:when
-								test="${purEntry.purchaseEntry.vendor.vendorType.type=='Vendor'}">Vendor
+			<c:choose>
+				<c:when test="${companyInfo.isPurchaseAgentShow()}">
+					<tr style="height: 10px">
+						<td class="tg-031e" colspan="3" rowspan="2" style="width: 50%">
+							<strong>${companyInfo.compname}</strong><br>
+							${companyInfo.addr}<br> Email: ${companyInfo.email}<br>
+							Mobile: ${companyInfo.mobile}
+						</td>
+						<td class="tg-031e" colspan="2" style="width: 25%">Purchase
+							Return Challan no: <br>${purEntry.challanNumber}</td>
+						<td class="tg-031e" colspan="2" style="width: 25%">Refference
+							Challan No.: <br>${purEntry.referencePurchaseChallan}
+						</td>
+					</tr>
+					<tr style="height: 10px">
+						<td class="tg-031e" colspan="2">Vendor bill No:</td>
+						<td class="tg-031e" colspan="2">${purEntry.purchaseEntry.vendor_bill_no}</td>
+					</tr>
+					<tr style="height: 10px">
+						<td class="tg-031e" colspan="3" rowspan="3"><strong>
+								<c:choose>
+									<c:when
+										test="${purEntry.purchaseEntry.vendor.vendorType.type=='Vendor'}">Vendor
 					Details:</c:when>
-							<c:when
-								test="${purEntry.purchaseEntry.vendor.vendorType.type=='Purchase Agent'}">Vendor
+									<c:when
+										test="${purEntry.purchaseEntry.vendor.vendorType.type=='Purchase Agent'}">Vendor
 					Details:</c:when>
-							<c:otherwise>Vendor/Agent
+									<c:otherwise>Vendor/Agent
 					Details:</c:otherwise>
-						</c:choose>
-				</strong> <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Name :</span>
-					${purEntry.purchaseEntry.vendor.name} <br>
-					&nbsp;&nbsp;&nbsp;&nbsp;<span>City :</span>
-					${purEntry.purchaseEntry.vendor.city.cityName} <br>
-					&nbsp;&nbsp;&nbsp;&nbsp;<span>Address :<br>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				</span> ${purEntry.purchaseEntry.vendor.address} <br>
-					&nbsp;&nbsp;&nbsp;&nbsp;<span>Ph1 :</span>
-					${purEntry.purchaseEntry.vendor.ph1} <br>
-					&nbsp;&nbsp;&nbsp;&nbsp;<span>Ph2 :</span>
-					${purEntry.purchaseEntry.vendor.ph2}</td>
-				<td class="tg-031e" colspan="2">Return date:</td>
-				<td class="tg-031e" colspan="2"><fmt:formatDate
-						value="${purEntry.returnDate}" pattern="dd-MM-yyyy" /></td>
-			</tr>
-			<tr style="height: 10px">
-				<td class="tg-031e" colspan="2">Vendor bill No:</td>
-				<td class="tg-031e" colspan="2">${purEntry.purchaseEntry.vendor_bill_no}</td>
-			</tr>
-			<tr style="height: 10px">
-				<td class="tg-031e" colspan="2">Supplier reference(Agent Alias
-					name):</td>
-				<td class="tg-031e" colspan="2">${purEntry.purchaseEntry.vendor.aliseName}</td>
-			</tr>
+								</c:choose>
+						</strong> <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Name :</span>
+							${purEntry.purchaseEntry.vendor.name} <br>
+							&nbsp;&nbsp;&nbsp;&nbsp;<span>City :</span>
+							${purEntry.purchaseEntry.vendor.city.cityName} <br>
+							&nbsp;&nbsp;&nbsp;&nbsp;<span>Address :<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						</span> ${purEntry.purchaseEntry.vendor.address} <br>
+							&nbsp;&nbsp;&nbsp;&nbsp;<span>Ph1 :</span>
+							${purEntry.purchaseEntry.vendor.ph1} <br>
+							&nbsp;&nbsp;&nbsp;&nbsp;<span>Ph2 :</span>
+							${purEntry.purchaseEntry.vendor.ph2}</td>
+						<td class="tg-031e" colspan="2">System Date:</td>
+						<td class="tg-031e" colspan="2"><fmt:formatDate
+								value="${sessionScope['ejb'].getCurrentDateTime()}"
+								pattern="dd-MM-yyyy" /></td>
+					</tr>
+					<tr style="height: 10px">
+						<td class="tg-031e" colspan="2">Return date:</td>
+						<td class="tg-031e" colspan="2"><fmt:formatDate
+								value="${purEntry.returnDate}" pattern="dd-MM-yyyy" /></td>
+					</tr>
+					<tr style="height: 10px">
+						<td class="tg-031e" colspan="2">Supplier reference (Agent
+							name):</td>
+						<td class="tg-031e" colspan="2"><c:choose>
+								<c:when test="${purEntry.purchaseEntry.agentId!=0}">${sessionScope['ejb'].getVendorById(purEntry.purchaseEntry.agentId).name}</c:when>
+								<c:otherwise>NA</c:otherwise>
+							</c:choose></td>
+					</tr>
+				</c:when>
+				<c:otherwise>
+					<tr style="height: 10px">
+						<td class="tg-031e" colspan="3" rowspan="2" style="width: 50%">
+							<strong>${companyInfo.compname}</strong><br>
+							${companyInfo.addr}<br> Email: ${companyInfo.email}<br>
+							Mobile: ${companyInfo.mobile}
+						</td>
+						<td class="tg-031e" colspan="2" style="width: 25%">Purchase
+							Return Challan no: <br>${purEntry.challanNumber}</td>
+						<td class="tg-031e" colspan="2" style="width: 25%">Refference
+							Challan No.: <br>${purEntry.referencePurchaseChallan}
+						</td>
+					</tr>
+					<tr style="height: 10px">
+						<td class="tg-031e" colspan="2">Vendor bill No:</td>
+						<td class="tg-031e" colspan="2">${purEntry.purchaseEntry.vendor_bill_no}</td>
+					</tr>
+					<tr style="height: 10px">
+						<td class="tg-031e" colspan="3" rowspan="2"><strong>
+								<c:choose>
+									<c:when
+										test="${purEntry.purchaseEntry.vendor.vendorType.type=='Vendor'}">Vendor
+					Details:</c:when>
+									<c:when
+										test="${purEntry.purchaseEntry.vendor.vendorType.type=='Purchase Agent'}">Vendor
+					Details:</c:when>
+									<c:otherwise>Vendor/Agent
+					Details:</c:otherwise>
+								</c:choose>
+						</strong> <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Name :</span>
+							${purEntry.purchaseEntry.vendor.name} <br>
+							&nbsp;&nbsp;&nbsp;&nbsp;<span>City :</span>
+							${purEntry.purchaseEntry.vendor.city.cityName} <br>
+							&nbsp;&nbsp;&nbsp;&nbsp;<span>Address :<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						</span> ${purEntry.purchaseEntry.vendor.address} <br>
+							&nbsp;&nbsp;&nbsp;&nbsp;<span>Ph1 :</span>
+							${purEntry.purchaseEntry.vendor.ph1} <br>
+							&nbsp;&nbsp;&nbsp;&nbsp;<span>Ph2 :</span>
+							${purEntry.purchaseEntry.vendor.ph2}</td>
+						<td class="tg-031e" colspan="2">System Date:</td>
+						<td class="tg-031e" colspan="2"><fmt:formatDate
+								value="${sessionScope['ejb'].getCurrentDateTime()}"
+								pattern="dd-MM-yyyy" /></td>
+					</tr>
+					<tr style="height: 10px">
+						<td class="tg-031e" colspan="2">Return date:</td>
+						<td class="tg-031e" colspan="2"><fmt:formatDate
+								value="${purEntry.returnDate}" pattern="dd-MM-yyyy" /></td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
 			<tr>
 				<td class="tg-031e" colspan="7">
 					<table class="tg"
@@ -241,14 +300,15 @@ page[size="A4"] {
 			</tr>
 			<c:if test="${i==qPage}">
 				<tr style="height: 10px;">
-					<td class="tg-031e" colspan="7"><span>Amount Chargeable
-							(in words)</span><br> <span>${sessionScope['ejb'].getNumberToWords(purEntry.totalReCost)}</span></td>
+					<td class="tg-031e" colspan="7"><span><strong>Amount
+								Chargeable (in words)</strong></span><br> <span>${sessionScope['ejb'].getNumberToWords(purEntry.totalReCost)}
+							only.</span></td>
 				</tr>
 				<tr style="height: 10px;">
-					<td class="tg-031e" colspan="4"><strong>Declaration:</strong><br>We
+					<td class="tg-031e" colspan="5"><strong>Declaration:</strong><br>We
 						declare that this invoice shows the actual price of the goods
-						describe and that all particular are true and correct.</td>
-					<td class="tg-031e" colspan="3" style="text-align: right;">for
+						described and all particulars are true and correct.</td>
+					<td class="tg-031e" colspan="2" style="text-align: right;">for
 						<strong>${companyInfo.compname}</strong><br> <br>Authorised
 						Signatory
 					</td>

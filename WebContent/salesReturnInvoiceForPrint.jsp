@@ -92,46 +92,84 @@ page[size="A4"] {
 		</h3>
 		<table class="tg"
 			style="border: 1px solid; height: 1080px; width: 750px">
-			<tr style="height: 10px">
-				<td class="tg-031e" colspan="3" style="width: 50%"><strong>${companyInfo.compname}</strong><br>
-					${companyInfo.addr}<br> Email: ${companyInfo.email}<br>
-					Mobile: ${companyInfo.mobile}</td>
-				<td class="tg-031e" colspan="2" style="width: 25%">Sales Return
-					Invoice no:<br> ${salesReturn.challanNumber}
-				</td>
-				<td class="tg-031e" colspan="2" style="width: 25%">Reference
-					Invoice No:<br>${salesReturn.referenceSalesChallan}
-				</td>
-			</tr>
-			<tr style="height: 10px">
-				<td class="tg-031e" colspan="3" rowspan="3"><strong>Customer
-						Details:</strong> <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Name :</span>
-					${salesReturn.salesEntry.customer.name} <br>
-					&nbsp;&nbsp;&nbsp;&nbsp;<span>City :</span>
-					${salesReturn.salesEntry.customer.city} <br>
-					&nbsp;&nbsp;&nbsp;&nbsp;<span>Address :<br>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				</span> ${salesReturn.salesEntry.customer.address} <br>
-					&nbsp;&nbsp;&nbsp;&nbsp;<span>Ph :</span>
-					${salesReturn.salesEntry.customer.mobile}</td>
-				<td class="tg-031e" colspan="2">System Date:</td>
-				<td class="tg-031e" colspan="2"><fmt:formatDate
-						value="${sessionScope['ejb'].getCurrentDateTime()}"
-						pattern="dd-MM-yyyy" /></td>
-			</tr>
-			<tr style="height: 10px">
-				<td class="tg-031e" colspan="2">Sales Return date :</td>
-				<td class="tg-031e" colspan="2"><fmt:formatDate
-						value="${salesReturn.returnDate}" pattern="dd-MM-yyyy" /></td>
-			</tr>
-			<tr style="height: 10px">
-				<td class="tg-031e" colspan="2">Supplier reference(Agent Alias
-					name):</td>
-				<td class="tg-031e" colspan="2"><c:choose>
-						<c:when test="${salesReturn.salesEntry.vendor!=null}">${salesReturn.salesEntry.vendor.aliseName}</c:when>
-						<c:otherwise>NA</c:otherwise>
-					</c:choose></td>
-			</tr>
+			<c:choose>
+				<c:when test="${companyInfo.isSalesAgentShow()}">
+					<tr style="height: 10px">
+						<td class="tg-031e" colspan="3" style="width: 50%"><strong>${companyInfo.compname}</strong><br>
+							${companyInfo.addr}<br> Email: ${companyInfo.email}<br>
+							Mobile: ${companyInfo.mobile}</td>
+						<td class="tg-031e" colspan="2" style="width: 25%">Sales
+							Return Invoice no:<br> ${salesReturn.challanNumber}
+						</td>
+						<td class="tg-031e" colspan="2" style="width: 25%">Reference
+							Invoice No:<br>${salesReturn.referenceSalesChallan}
+						</td>
+					</tr>
+					<tr style="height: 10px">
+						<td class="tg-031e" colspan="3" rowspan="3"><strong>Customer
+								Details:</strong> <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Name :</span>
+							${salesReturn.salesEntry.customer.name} <br>
+							&nbsp;&nbsp;&nbsp;&nbsp;<span>City :</span>
+							${salesReturn.salesEntry.customer.city} <br>
+							&nbsp;&nbsp;&nbsp;&nbsp;<span>Address :<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						</span> ${salesReturn.salesEntry.customer.address} <br>
+							&nbsp;&nbsp;&nbsp;&nbsp;<span>Ph :</span>
+							${salesReturn.salesEntry.customer.mobile}</td>
+						<td class="tg-031e" colspan="2">System Date:</td>
+						<td class="tg-031e" colspan="2"><fmt:formatDate
+								value="${sessionScope['ejb'].getCurrentDateTime()}"
+								pattern="dd-MM-yyyy" /></td>
+					</tr>
+					<tr style="height: 10px">
+						<td class="tg-031e" colspan="2">Sales Return date :</td>
+						<td class="tg-031e" colspan="2"><fmt:formatDate
+								value="${salesReturn.returnDate}" pattern="dd-MM-yyyy" /></td>
+					</tr>
+					<tr style="height: 10px">
+						<td class="tg-031e" colspan="2">Supplier reference (Agent
+							name):</td>
+						<td class="tg-031e" colspan="2"><c:choose>
+								<c:when test="${salesReturn.salesEntry.vendor!=null}">${salesReturn.salesEntry.vendor.name}</c:when>
+								<c:otherwise>NA</c:otherwise>
+							</c:choose></td>
+					</tr>
+				</c:when>
+				<c:otherwise>
+					<tr style="height: 10px">
+						<td class="tg-031e" colspan="3" style="width: 50%"><strong>${companyInfo.compname}</strong><br>
+							${companyInfo.addr}<br> Email: ${companyInfo.email}<br>
+							Mobile: ${companyInfo.mobile}</td>
+						<td class="tg-031e" colspan="2" style="width: 25%">Sales
+							Return Invoice no:<br> ${salesReturn.challanNumber}
+						</td>
+						<td class="tg-031e" colspan="2" style="width: 25%">Reference
+							Invoice No:<br>${salesReturn.referenceSalesChallan}
+						</td>
+					</tr>
+					<tr style="height: 10px">
+						<td class="tg-031e" colspan="3" rowspan="2"><strong>Customer
+								Details:</strong> <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Name :</span>
+							${salesReturn.salesEntry.customer.name} <br>
+							&nbsp;&nbsp;&nbsp;&nbsp;<span>City :</span>
+							${salesReturn.salesEntry.customer.city} <br>
+							&nbsp;&nbsp;&nbsp;&nbsp;<span>Address :<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						</span> ${salesReturn.salesEntry.customer.address} <br>
+							&nbsp;&nbsp;&nbsp;&nbsp;<span>Ph :</span>
+							${salesReturn.salesEntry.customer.mobile}</td>
+						<td class="tg-031e" colspan="2">System Date:</td>
+						<td class="tg-031e" colspan="2"><fmt:formatDate
+								value="${sessionScope['ejb'].getCurrentDateTime()}"
+								pattern="dd-MM-yyyy" /></td>
+					</tr>
+					<tr style="height: 10px">
+						<td class="tg-031e" colspan="2">Sales Return date :</td>
+						<td class="tg-031e" colspan="2"><fmt:formatDate
+								value="${salesReturn.returnDate}" pattern="dd-MM-yyyy" /></td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
 			<tr>
 				<td class="tg-031e" colspan="7">
 					<table class="tg"
@@ -224,14 +262,17 @@ page[size="A4"] {
 			</tr>
 			<c:if test="${i==qPage}">
 				<tr style="height: 10px;">
-					<td class="tg-031e" colspan="7"><span>Amount Chargeable
-							(in words)</span><br> <span>${sessionScope['ejb'].getNumberToWords(salesReturn.totalReCost)}</span></td>
+					<td class="tg-031e" colspan="7"><span><strong>Amount
+									Chargeable (in words)</strong></span><br> <span>${sessionScope['ejb'].getNumberToWords(salesReturn.totalReCost)} only.</span></td>
 				</tr>
 				<tr style="height: 10px;">
-					<td class="tg-031e" colspan="4"><strong>Declaration:</strong><br>We
+					<td class="tg-031e" colspan="5"><strong>Declaration:</strong><br>We
 						declare that this invoice shows the actual price of the goods
-						describe and that all particular are true and correct.</td>
-					<td class="tg-031e" colspan="3" style="text-align: right;">for
+						described and all particulars are true and correct. Payment must
+						be cleared within 30 days. Goods once sold can not be taken back
+						or exchanged. No Guarantee for colour Jari and Slippage of Fabric.
+						Dry clean only.</td>
+					<td class="tg-031e" colspan="2" style="text-align: right;">for
 						<strong>${companyInfo.compname}</strong><br> <br>Authorised
 						Signatory
 					</td>
