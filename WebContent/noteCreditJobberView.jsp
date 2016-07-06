@@ -8,7 +8,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jobber's Credit Note Statement</title>
+<c:set var="vendor"
+	value="${sessionScope['ejb'].getVendorById(requestScope['jId'])}" />
+<title>&nbsp; Note statement for jobber : ${vendor.name} <br>&nbsp;(Curent
+	Credit : <fmt:formatNumber
+		value="${sessionScope['ejb'].getCurrentCreditNoteByVendorId(vendor.id)}"
+		maxFractionDigits="2" groupingUsed="false" />)
+</title>
 
 <link
 	href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700,900'
@@ -79,8 +85,6 @@
 							</div>
 
 							<div class="widget-area">
-								<c:set var="vendor"
-									value="${sessionScope['ejb'].getVendorById(requestScope['jId'])}" />
 								<table id="stream_table"
 									class="table table-striped table-bordered" style="width: 30%;">
 									<thead>

@@ -267,7 +267,6 @@ td {
 																	<fmt:formatNumber var="mrp"
 																		value="${purSizeq>0?amiProStock1.purchase_Product_Details.get(purSizeq-1).mrp:'nill'}"
 																		maxFractionDigits="2" groupingUsed="false" /> ${mrp}
-																	${purSizeq>0?amiProStock1.purchase_Product_Details.get(purSizeq-1).mrp:'nill'}
 																</td>
 															</tr>
 															<c:set var="count" value="${count+1}" />

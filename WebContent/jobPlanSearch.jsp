@@ -1554,7 +1554,14 @@
 																							+ '</td><th style="text-align: right;">'
 																							+ "Total Amount:"
 																							+ '</th><td>'
-																							+ "<input type='text' class='form-control' id='productEachTotal"+item2.ProductForSampleId+"' readonly='readonly' value='"+item2.ProductTotalAmount+"'>"
+																							+ "<input type='text' class='form-control' id='productEachTotal"
+																							+ item2.ProductForSampleId
+																							+ "' readonly='readonly' value='"
+																							+ Number(
+																									item2.ProductTotalAmount)
+																									.toFixed(
+																											2)
+																							+ "'>"
 																							+ '</td><td>'
 																							+ "<b>Status: </b>"
 																							+ Assigned
@@ -1617,7 +1624,12 @@
 																							+ '</td><th style="text-align: right;">'
 																							+ "Total Amount:"
 																							+ '</th><td>'
-																							+ "<input type='text' class='form-control' id='productEachTotal"+item2.ProductForSampleId+"' readonly='readonly' value='"+item2.ProductTotalAmount+"'>"
+																							+ "<input type='text' class='form-control' id='productEachTotal"
+																							+ item2.ProductForSampleId
+																							+ "' readonly='readonly' value='"
+																							+ (item2.ProductTotalAmount)
+																									.toFixed(2)
+																							+ "'>"
 																							+ '</td><td>'
 																							+ "<b>Status: </b>"
 																							+ Assigned
@@ -1904,7 +1916,7 @@
 		}
 	</script>
 
-	//product entry scripts
+	<!-- product entry scripts -->
 
 	<script src="js/jquery-ui/jquery-ui.js"></script>
 	<script type="text/javascript" src="js/abixTreeList.min.js"></script>

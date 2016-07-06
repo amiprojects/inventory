@@ -137,20 +137,20 @@
 											<c:set var="count" value="${1}" />
 											<c:forEach
 												items="${sessionScope['ejb'].getAllCustomerEntryByAssendingMaxSale()}"
-												var="vendor">
+												var="customer">
 												<tr>
 													<td>${count}</td>
-													<td>${vendor.name}</td>
-													<td>${vendor.mobile}</td>
-													<td>${vendor.city}</td>
-													<td><fmt:formatNumber value="${vendor.getTotSale()}"
+													<td>${customer.name}</td>
+													<td>${customer.mobile}</td>
+													<td>${customer.city}</td>
+													<td><fmt:formatNumber value="${customer.getTotSale()}"
 															maxFractionDigits="2" groupingUsed="false" /></td>
 													<td>
 														<form action="salesReportByCustomerName" method="post"
-															id="pView${vendor.id}">
-															<a href="#" onclick="purchaseViewF('${vendor.id}');"><input
-																type="hidden" value="${vendor.id}" name="pId"><input
-																type="hidden" value="${vendor.name}" name="custoName"><img
+															id="pView${customer.id}">
+															<a href="#" onclick="purchaseViewF('${customer.id}');"><input
+																type="hidden" value="${customer.id}" name="pId"><input
+																type="hidden" value="${customer.name}" name="custoName"><img
 																alt="" src="images/eye.png" height="25px"></a>
 														</form>
 													</td>

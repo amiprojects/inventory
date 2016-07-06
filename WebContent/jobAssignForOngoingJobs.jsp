@@ -165,8 +165,9 @@
 											</div>
 											<div class="col-md-12" style="margin-bottom: 5px;"></div>
 											<div class="col-md-12">
-												<b class="font">Sample Quantity :</b> <input readonly="readonly" type="text"
-													class="form-control" id="sampleQty" name="sampleQty">
+												<b class="font">Sample Quantity :</b> <input
+													readonly="readonly" type="text" class="form-control"
+													id="sampleQty" name="sampleQty">
 											</div>
 										</div>
 										<div class="col-md-6">
@@ -945,7 +946,14 @@
 																							+ '</td><th style="text-align: right;">'
 																							+ "Total Amount:"
 																							+ '</th><td>'
-																							+ "<input type='text' class='form-control' id='productEachTotal"+item2.ProductForSampleId+"' readonly='readonly' value='"+item2.ProductTotalAmount+"'>"
+																							+ "<input type='text' class='form-control' id='productEachTotal"
+																							+ item2.ProductForSampleId
+																							+ "' readonly='readonly' value='"
+																							+ Number(
+																									item2.ProductTotalAmount)
+																									.toFixed(
+																											2)
+																							+ "'>"
 																							+ '</td><td>'
 																							+ "<b>Status: </b>"
 																							+ Assigned
@@ -1008,7 +1016,13 @@
 																							+ '</td><th style="text-align: right;">'
 																							+ "Total Amount:"
 																							+ '</th><td>'
-																							+ "<input type='text' class='form-control' id='productEachTotal"+item2.ProductForSampleId+"' readonly='readonly' value='"+item2.ProductTotalAmount+"'>"
+																							+ "<input type='text' class='form-control' id='productEachTotal"
+																							+ item2.ProductForSampleId
+																							+ "' readonly='readonly' value='"
+																							+ Number(
+																									item2.ProductTotalAmount)
+																									.toFixed(2)
+																							+ "'>"
 																							+ '</td><td>'
 																							+ "<b>Status: </b>"
 																							+ Assigned

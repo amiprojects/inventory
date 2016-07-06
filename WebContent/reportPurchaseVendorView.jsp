@@ -166,7 +166,9 @@
 															<c:set
 																value="${totRetCost+ppd.totalReturningQty*ppd.cost}"
 																var="totRetCost" />
-														</c:forEach> ${totCost-totRetCost}</td>
+														</c:forEach>
+														<fmt:formatNumber value="${totCost-totRetCost}"
+															maxFractionDigits="2" groupingUsed="false" /></td>
 													<td><form action="purchaseReportView" method="post"
 															id="pView${pEntryByD.id}">
 															<a href="#" onclick="purchaseViewF('${pEntryByD.id}');"><input

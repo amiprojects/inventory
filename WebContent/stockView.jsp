@@ -7,7 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Panel</title>
+<title>Stock details</title>
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 <link
 	href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700,900'
@@ -363,7 +363,7 @@
 
 				"scrollY" : 300,
 				"scrollX" : true,
-				"bPaginate": false,
+				"bPaginate" : false,
 				dom : 'Bfrtip',
 				buttons : [ 'copy', 'excel', 'print' ]
 			});

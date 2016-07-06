@@ -1921,7 +1921,7 @@ public class Ejb {
 			PurchaseReturnProductDetails purchaseReturnProductDetails) {
 		em.persist(purchaseReturnProductDetails);
 	}
-	
+
 	public List<PurchaseReturnProductDetails> getAllPurchaseReturnProductDetailsByPurchaseEntryId(
 			int id) {
 		TypedQuery<PurchaseReturnProductDetails> q = em
@@ -5105,7 +5105,7 @@ public class Ejb {
 			PaymentDetails pd = getPaymentDetailsBySalesEntryId(se.getId())
 					.get(0);
 			if (se.getSales_date().before(
-					Date.from(LocalDateTime.now().minusDays(90)
+					Date.from(LocalDateTime.now().minusDays(30)
 							.toInstant(ZoneOffset.ofHoursMinutes(5, 30))))
 					&& (pd.getTotalAmount() - pd.getPaidAmount()) > 0) {
 				Notification n = new Notification();
@@ -5124,194 +5124,199 @@ public class Ejb {
 
 		}
 
-		for (Purchase_Entry pe : getAllPurchaseEntry()) {
-			PaymentDetails pd = getPaymentDetailsByPurchaseEntryId(pe.getId())
-					.get(0);
-			if (!pe.getVendor().getName().equals("Production Vendor")
-					&& pe.getPurchase_date()
-							.before(Date.from(LocalDateTime
-									.now()
-									.minusDays(90)
-									.toInstant(ZoneOffset.ofHoursMinutes(5, 30))))
-					&& (pd.getTotalAmount() - pd.getPaidAmount()) > 0) {
-				Notification n = new Notification();
-				int days = (int) ChronoUnit.DAYS.between(LocalDateTime
-						.ofInstant(pe.getPurchase_date().toInstant(),
-								ZoneId.systemDefault()), dateTime);
-				n.setDescription("Purchase payment due for purchase challan number "
-						+ pe.getChallanNumber()
-						+ " and amount is "
-						+ (pd.getTotalAmount() - pd.getPaidAmount())
-						+ " since " + days + " days.");
-				n.setLink("purchaseView?pId=" + pe.getId());
-				n.setNotificationName("Purchase payment due");
-				details.add(n);
-				n = null;
-			}
-		}
+		// for (Purchase_Entry pe : getAllPurchaseEntry()) {
+		// PaymentDetails pd = getPaymentDetailsByPurchaseEntryId(pe.getId())
+		// .get(0);
+		// if (!pe.getVendor().getName().equals("Production Vendor")
+		// && pe.getPurchase_date()
+		// .before(Date.from(LocalDateTime
+		// .now()
+		// .minusDays(90)
+		// .toInstant(ZoneOffset.ofHoursMinutes(5, 30))))
+		// && (pd.getTotalAmount() - pd.getPaidAmount()) > 0) {
+		// Notification n = new Notification();
+		// int days = (int) ChronoUnit.DAYS.between(LocalDateTime
+		// .ofInstant(pe.getPurchase_date().toInstant(),
+		// ZoneId.systemDefault()), dateTime);
+		// n.setDescription("Purchase payment due for purchase challan number "
+		// + pe.getChallanNumber()
+		// + " and amount is "
+		// + (pd.getTotalAmount() - pd.getPaidAmount())
+		// + " since " + days + " days.");
+		// n.setLink("purchaseView?pId=" + pe.getId());
+		// n.setNotificationName("Purchase payment due");
+		// details.add(n);
+		// n = null;
+		// }
+		// }
 
-		for (JobAssignmentDetails ja : getAllJobassignmentDetails()) {
-			List<PaymentDetails> pdLst = getPaymentDetailsByJobAsignId(ja
-					.getId());
-			if (ja.getAssignDate().before(
-					Date.from(LocalDateTime.now().minusDays(90)
-							.toInstant(ZoneOffset.ofHoursMinutes(5, 30))))) {
-				if (pdLst.size() > 0) {
-					PaymentDetails pd = getPaymentDetailsByJobAsignId(
-							ja.getId()).get(0);
-					if ((pd.getTotalAmount() - pd.getPaidAmount()) > 0) {
-						Notification n = new Notification();
-						int days = (int) ChronoUnit.DAYS.between(LocalDateTime
-								.ofInstant(ja.getAssignDate().toInstant(),
-										ZoneId.systemDefault()), dateTime);
-						n.setDescription("Job payment due for challan number "
-								+ ja.getChallanNumber() + " and amount is "
-								+ (pd.getTotalAmount() - pd.getPaidAmount())
-								+ " since " + days + " days.");
-						n.setLink("jobSearchByJobChallanNoForPayment?companyInitial="
-								+ (ja.getChallanNumber().split("/")[0])
-								+ "&fynYear="
-								+ (ja.getChallanNumber().split("/")[1])
-								+ "&month="
-								+ (ja.getChallanNumber().split("/")[2])
-								+ "&billType="
-								+ (ja.getChallanNumber().split("/")[3])
-								+ "&autoNum="
-								+ (ja.getChallanNumber().split("/")[4])
-								+ "&suffix="
-								+ (ja.getChallanNumber().split("/")[5]));
-						n.setNotificationName("Job payment due");
-						details.add(n);
-						n = null;
-					}
-				} else {
-					Notification n = new Notification();
-					int days = (int) ChronoUnit.DAYS.between(LocalDateTime
-							.ofInstant(ja.getAssignDate().toInstant(),
-									ZoneId.systemDefault()), dateTime);
-					float totJobCost = 0;
-					for (JobAssignmentProducts jp : ja
-							.getJobAssignmentProducts()) {
-						totJobCost = totJobCost + jp.getTotalJobCost();
-					}
-					n.setDescription("Job payment due for challan number "
-							+ ja.getChallanNumber() + " and amount is "
-							+ totJobCost + " since " + days + " days.");
-					n.setLink("jobSearchByJobChallanNoForPayment?companyInitial="
-							+ (ja.getChallanNumber().split("/")[0])
-							+ "&fynYear="
-							+ (ja.getChallanNumber().split("/")[1])
-							+ "&month="
-							+ (ja.getChallanNumber().split("/")[2])
-							+ "&billType="
-							+ (ja.getChallanNumber().split("/")[3])
-							+ "&autoNum="
-							+ (ja.getChallanNumber().split("/")[4])
-							+ "&suffix="
-							+ (ja.getChallanNumber().split("/")[5]));
-					n.setNotificationName("Job payment due");
-					details.add(n);
-					n = null;
-				}
-			}
-		}
+		// for (JobAssignmentDetails ja : getAllJobassignmentDetails()) {
+		// List<PaymentDetails> pdLst = getPaymentDetailsByJobAsignId(ja
+		// .getId());
+		// if (ja.getAssignDate().before(
+		// Date.from(LocalDateTime.now().minusDays(90)
+		// .toInstant(ZoneOffset.ofHoursMinutes(5, 30))))) {
+		// if (pdLst.size() > 0) {
+		// PaymentDetails pd = getPaymentDetailsByJobAsignId(
+		// ja.getId()).get(0);
+		// if ((pd.getTotalAmount() - pd.getPaidAmount()) > 0) {
+		// Notification n = new Notification();
+		// int days = (int) ChronoUnit.DAYS.between(LocalDateTime
+		// .ofInstant(ja.getAssignDate().toInstant(),
+		// ZoneId.systemDefault()), dateTime);
+		// n.setDescription("Job payment due for challan number "
+		// + ja.getChallanNumber() + " and amount is "
+		// + (pd.getTotalAmount() - pd.getPaidAmount())
+		// + " since " + days + " days.");
+		// n.setLink("jobSearchByJobChallanNoForPayment?companyInitial="
+		// + (ja.getChallanNumber().split("/")[0])
+		// + "&fynYear="
+		// + (ja.getChallanNumber().split("/")[1])
+		// + "&month="
+		// + (ja.getChallanNumber().split("/")[2])
+		// + "&billType="
+		// + (ja.getChallanNumber().split("/")[3])
+		// + "&autoNum="
+		// + (ja.getChallanNumber().split("/")[4])
+		// + "&suffix="
+		// + (ja.getChallanNumber().split("/")[5]));
+		// n.setNotificationName("Job payment due");
+		// details.add(n);
+		// n = null;
+		// }
+		// } else {
+		// Notification n = new Notification();
+		// int days = (int) ChronoUnit.DAYS.between(LocalDateTime
+		// .ofInstant(ja.getAssignDate().toInstant(),
+		// ZoneId.systemDefault()), dateTime);
+		// float totJobCost = 0;
+		// for (JobAssignmentProducts jp : ja
+		// .getJobAssignmentProducts()) {
+		// totJobCost = totJobCost + jp.getTotalJobCost();
+		// }
+		// n.setDescription("Job payment due for challan number "
+		// + ja.getChallanNumber() + " and amount is "
+		// + totJobCost + " since " + days + " days.");
+		// n.setLink("jobSearchByJobChallanNoForPayment?companyInitial="
+		// + (ja.getChallanNumber().split("/")[0])
+		// + "&fynYear="
+		// + (ja.getChallanNumber().split("/")[1])
+		// + "&month="
+		// + (ja.getChallanNumber().split("/")[2])
+		// + "&billType="
+		// + (ja.getChallanNumber().split("/")[3])
+		// + "&autoNum="
+		// + (ja.getChallanNumber().split("/")[4])
+		// + "&suffix="
+		// + (ja.getChallanNumber().split("/")[5]));
+		// n.setNotificationName("Job payment due");
+		// details.add(n);
+		// n = null;
+		// }
+		// }
+		// }
 
-		for (SalesEntry se : getAllSalesEntries()) {
-			if (se.getVendor() != null) {
-				if (se.getSales_date().before(
-						Date.from(LocalDateTime.now().minusDays(90)
-								.toInstant(ZoneOffset.ofHoursMinutes(5, 30))))) {
-					List<PaymentDetailsForViaAgents> pdLst = getPaymentDetails4ViaAgentBySalesEntryId(se
-							.getId());
+		// for (SalesEntry se : getAllSalesEntries()) {
+		// if (se.getVendor() != null) {
+		// if (se.getSales_date().before(
+		// Date.from(LocalDateTime.now().minusDays(90)
+		// .toInstant(ZoneOffset.ofHoursMinutes(5, 30))))) {
+		// List<PaymentDetailsForViaAgents> pdLst =
+		// getPaymentDetails4ViaAgentBySalesEntryId(se
+		// .getId());
+		//
+		// float totPaybleCost = se.getAgentProfitTotal();
+		// for (SalesReturn sr : se.getSalesReturn()) {
+		// totPaybleCost = totPaybleCost
+		// - sr.getRetAgentProfitTotal();
+		// }
+		// if (pdLst.size() > 0) {
+		// for (PaymentDetailsForViaAgents pd :
+		// getPaymentDetails4ViaAgentBySalesEntryId(se
+		// .getId())) {
+		// totPaybleCost = totPaybleCost - pd.getPaidAmount();
+		// }
+		// }
+		// totPaybleCost = Math.round(totPaybleCost * 100) / 100;
+		// if (totPaybleCost != 0) {
+		// Notification n = new Notification();
+		// int days = (int) ChronoUnit.DAYS.between(LocalDateTime
+		// .ofInstant(se.getSales_date().toInstant(),
+		// ZoneId.systemDefault()), dateTime);
+		// n.setDescription("Sales Agent payment due for challan number "
+		// + se.getChallanNumber()
+		// + " and amount is "
+		// + totPaybleCost + " since " + days + " days.");
+		// n.setLink("salesSearchBySalesChallanNoForAgent?companyInitial="
+		// + (se.getChallanNumber().split("/")[0])
+		// + "&fynYear="
+		// + (se.getChallanNumber().split("/")[1])
+		// + "&month="
+		// + (se.getChallanNumber().split("/")[2])
+		// + "&billType="
+		// + (se.getChallanNumber().split("/")[3])
+		// + "&autoNum="
+		// + (se.getChallanNumber().split("/")[4])
+		// + "&suffix="
+		// + (se.getChallanNumber().split("/")[5]));
+		// n.setNotificationName("Sales agent payment due");
+		// details.add(n);
+		// n = null;
+		// }
+		// }
+		// }
+		// }
 
-					float totPaybleCost = se.getAgentProfitTotal();
-					for (SalesReturn sr : se.getSalesReturn()) {
-						totPaybleCost = totPaybleCost
-								- sr.getRetAgentProfitTotal();
-					}
-					if (pdLst.size() > 0) {
-						for (PaymentDetailsForViaAgents pd : getPaymentDetails4ViaAgentBySalesEntryId(se
-								.getId())) {
-							totPaybleCost = totPaybleCost - pd.getPaidAmount();
-						}
-					}
-					totPaybleCost = Math.round(totPaybleCost * 100) / 100;
-					if (totPaybleCost != 0) {
-						Notification n = new Notification();
-						int days = (int) ChronoUnit.DAYS.between(LocalDateTime
-								.ofInstant(se.getSales_date().toInstant(),
-										ZoneId.systemDefault()), dateTime);
-						n.setDescription("Sales Agent payment due for challan number "
-								+ se.getChallanNumber()
-								+ " and amount is "
-								+ totPaybleCost + " since " + days + " days.");
-						n.setLink("salesSearchBySalesChallanNoForAgent?companyInitial="
-								+ (se.getChallanNumber().split("/")[0])
-								+ "&fynYear="
-								+ (se.getChallanNumber().split("/")[1])
-								+ "&month="
-								+ (se.getChallanNumber().split("/")[2])
-								+ "&billType="
-								+ (se.getChallanNumber().split("/")[3])
-								+ "&autoNum="
-								+ (se.getChallanNumber().split("/")[4])
-								+ "&suffix="
-								+ (se.getChallanNumber().split("/")[5]));
-						n.setNotificationName("Sales agent payment due");
-						details.add(n);
-						n = null;
-					}
-				}
-			}
-		}
-		for (Purchase_Entry se : getAllPurchaseEntry()) {
-			if (se.getAgentId() != 0) {
-				if (se.getPurchase_date().before(
-						Date.from(LocalDateTime.now().minusDays(90)
-								.toInstant(ZoneOffset.ofHoursMinutes(5, 30))))) {
-					List<PaymentDetailsForViaAgents> pdLst = getPaymentDetails4ViaAgentByPurchaseEntryId(se
-							.getId());
-
-					float totPaybleCost = se.getAgentProfitTotal();
-					for (PurchaseReturn sr : se.getPurchaseReturn()) {
-						totPaybleCost = totPaybleCost
-								- sr.getRetAgentProfitTotal();
-					}
-					if (pdLst.size() > 0) {
-						for (PaymentDetailsForViaAgents pd : getPaymentDetails4ViaAgentByPurchaseEntryId(se
-								.getId())) {
-							totPaybleCost = totPaybleCost - pd.getPaidAmount();
-						}
-					}
-					totPaybleCost = Math.round(totPaybleCost * 100) / 100;
-					if (totPaybleCost != 0) {
-						Notification n = new Notification();
-						int days = (int) ChronoUnit.DAYS.between(LocalDateTime
-								.ofInstant(se.getPurchase_date().toInstant(),
-										ZoneId.systemDefault()), dateTime);
-						n.setDescription("Purchase Agent (via) payment due for challan number "
-								+ se.getChallanNumber()
-								+ " and amount is "
-								+ totPaybleCost + " since " + days + " days.");
-						n.setLink("purchaseSearchByPurchaseChallanNoForViaPurchaseAgent?companyInitial="
-								+ (se.getChallanNumber().split("/")[0])
-								+ "&fynYear="
-								+ (se.getChallanNumber().split("/")[1])
-								+ "&month="
-								+ (se.getChallanNumber().split("/")[2])
-								+ "&billType="
-								+ (se.getChallanNumber().split("/")[3])
-								+ "&autoNum="
-								+ (se.getChallanNumber().split("/")[4])
-								+ "&suffix="
-								+ (se.getChallanNumber().split("/")[5]));
-						n.setNotificationName("Purchase agent (via) payment due");
-						details.add(n);
-						n = null;
-					}
-				}
-			}
-		}
+		// for (Purchase_Entry se : getAllPurchaseEntry()) {
+		// if (se.getAgentId() != 0) {
+		// if (se.getPurchase_date().before(
+		// Date.from(LocalDateTime.now().minusDays(90)
+		// .toInstant(ZoneOffset.ofHoursMinutes(5, 30))))) {
+		// List<PaymentDetailsForViaAgents> pdLst =
+		// getPaymentDetails4ViaAgentByPurchaseEntryId(se
+		// .getId());
+		//
+		// float totPaybleCost = se.getAgentProfitTotal();
+		// for (PurchaseReturn sr : se.getPurchaseReturn()) {
+		// totPaybleCost = totPaybleCost
+		// - sr.getRetAgentProfitTotal();
+		// }
+		// if (pdLst.size() > 0) {
+		// for (PaymentDetailsForViaAgents pd :
+		// getPaymentDetails4ViaAgentByPurchaseEntryId(se
+		// .getId())) {
+		// totPaybleCost = totPaybleCost - pd.getPaidAmount();
+		// }
+		// }
+		// totPaybleCost = Math.round(totPaybleCost * 100) / 100;
+		// if (totPaybleCost != 0) {
+		// Notification n = new Notification();
+		// int days = (int) ChronoUnit.DAYS.between(LocalDateTime
+		// .ofInstant(se.getPurchase_date().toInstant(),
+		// ZoneId.systemDefault()), dateTime);
+		// n.setDescription("Purchase Agent (via) payment due for challan number "
+		// + se.getChallanNumber()
+		// + " and amount is "
+		// + totPaybleCost + " since " + days + " days.");
+		// n.setLink("purchaseSearchByPurchaseChallanNoForViaPurchaseAgent?companyInitial="
+		// + (se.getChallanNumber().split("/")[0])
+		// + "&fynYear="
+		// + (se.getChallanNumber().split("/")[1])
+		// + "&month="
+		// + (se.getChallanNumber().split("/")[2])
+		// + "&billType="
+		// + (se.getChallanNumber().split("/")[3])
+		// + "&autoNum="
+		// + (se.getChallanNumber().split("/")[4])
+		// + "&suffix="
+		// + (se.getChallanNumber().split("/")[5]));
+		// n.setNotificationName("Purchase agent (via) payment due");
+		// details.add(n);
+		// n = null;
+		// }
+		// }
+		// }
+		// }
 		return details;
 	}
 

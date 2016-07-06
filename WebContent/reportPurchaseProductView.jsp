@@ -171,7 +171,8 @@
 																<c:set var="totPurQty"
 																	value="${totPurQty+proedPurDet.quantity-proedPurDet.totalReturningQty}"></c:set>
 															</c:if>
-														</c:forEach> ${totPurQty}</td>
+														</c:forEach> <fmt:formatNumber value="${totPurQty}"
+															maxFractionDigits="3" groupingUsed="false" /></td>
 													<td><c:set var="subot" value="${0}"></c:set> <c:forEach
 															var="proedPurDet"
 															items="${pEntryByD.purchase_Product_Details}">
@@ -180,7 +181,8 @@
 																<c:set var="subot"
 																	value="${subot+(proedPurDet.quantity-proedPurDet.totalReturningQty)*proedPurDet.cost}"></c:set>
 															</c:if>
-														</c:forEach> ${subot}</td>
+														</c:forEach> <fmt:formatNumber value="${subot}" maxFractionDigits="2"
+															groupingUsed="false" /></td>
 													<td><c:if
 															test="${pEntryByD.vendor.name!='Production Vendor'}">
 															<form action="purchaseReportView" method="post"

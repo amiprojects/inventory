@@ -74,7 +74,7 @@
 								<li class="active"><a data-toggle="tab" href="#byProd">By
 										Product</a></li>
 								<li><a data-toggle="tab" href="#byVendor">By Vendor</a></li>
-								<li><a data-toggle="tab" href="#byAgent">By Agent</a></li>
+								<!-- <li><a data-toggle="tab" href="#byAgent">By Agent</a></li> -->
 							</ul>
 							<div class="tab-content">
 								<div id="byProd" class="tab-pane fade active in">
@@ -172,7 +172,7 @@
 										</tbody>
 									</table>
 								</div>
-								<div id="byAgent" class="tab-pane fade ">
+								<%-- <div id="byAgent" class="tab-pane fade ">
 									<table class="table">
 										<thead>
 											<tr>
@@ -214,7 +214,7 @@
 											</c:forEach>
 										</tbody>
 									</table>
-								</div>
+								</div> --%>
 							</div>
 						</div>
 					</div>

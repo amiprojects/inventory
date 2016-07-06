@@ -191,6 +191,8 @@ tfoot {
 
 
 
+
+
 																
 																<td>0<br> <br> <c:set var="lastPayment"
 																		value="${sessionScope['ejb'].getPaymentDetailsBySalesEntryId(sRepo.id).get(0)}"></c:set>
