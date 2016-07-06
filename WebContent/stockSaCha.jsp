@@ -197,7 +197,7 @@ page[size="A4"] {
 						</c:forEach>
 						<c:if test="${i!=qPage}">
 							<tr style="height: 0px;">
-								<td colspan="7" style="border-bottom: none;"></td>
+								<td colspan="6" style="border-bottom: none;"></td>
 							</tr>
 						</c:if>
 						<c:if test="${i==qPage}">
@@ -303,7 +303,7 @@ page[size="A4"] {
 		<c:set value="${1}" var="slno" />
 		<c:set var="idlist" value="" />
 		<c:set value="${j}" var="k" />
-		<c:forEach var="j" begin="${j}" end="${qPage+j-1}">
+		<c:forEach var="j" begin="${j}" end="${qPage+k-1}">
 			<page id="print1" size="A4">
 			<h3 align="center">Sales Invoice (Page ${j})</h3>
 			<table class="tg"
@@ -486,7 +486,7 @@ page[size="A4"] {
 							<tr style="height: 0px;">
 								<td colspan="7" style="border-bottom: none;"></td>
 							</tr>
-						</table>
+						</table> <span style="float: right;"><c:if test="${j<(qPage+k-1)}">continued...</c:if></span>
 					</td>
 				</tr>
 				<%-- <tr style="height: 10px">

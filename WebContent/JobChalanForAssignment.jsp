@@ -161,7 +161,7 @@ Url = {
 							<c:set var="i" value="${i+1}"></c:set>
 						</c:forEach>
 						<tr style="height: 0px;">
-							<td colspan="7" style="border-bottom: none;"></td>
+							<td colspan="6" style="border-bottom: none;"></td>
 						</tr>
 					</tbody>
 				</table> <span style="float: right;">continued...</span>

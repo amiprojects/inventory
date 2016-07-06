@@ -205,7 +205,7 @@ page[size="A4"] {
 						</c:forEach>
 						<c:if test="${i!=qPage}">
 							<tr style="height: 0px;">
-								<td colspan="7" style="border-bottom: none;"></td>
+								<td colspan="6" style="border-bottom: none;"></td>
 							</tr>
 						</c:if>
 						<c:if test="${i==qPage}">
