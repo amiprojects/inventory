@@ -2040,7 +2040,7 @@
 	</script>
 	<script type="text/javascript">
 		function codeKeyUp() {
-			$("#pcodeCheck").val("");
+			/* $("#pcodeCheck").val("");
 			$.ajax({
 				url : "checkPcode",
 				dataType : "json",
@@ -2054,15 +2054,32 @@
 						$("#pcodeCheck").val("");
 					}
 				}
-			});
+			}); */
 		}
 
 		function codeChange() {
-			if ($("#pcodeCheck").val() != "") {
-				alert("this Product Code already exist.");
-				$("#pcodeCheck").val("");
-				$("#productCode").val("");
-			}
+			$("#pcodeCheck").val("");
+			$.ajax({
+				url : "checkPcode",
+				dataType : "json",
+				data : {
+					productCode4 : $("#productCode").val()
+				},
+				success : function(data) {
+					if (data.code != "") {
+						$("#pcodeCheck").val(data.code);
+					} else {
+						$("#pcodeCheck").val("");
+					}
+				},
+				complete : function() {
+					if ($("#pcodeCheck").val() != "") {
+						alert("this Product Code already exist.");
+						$("#pcodeCheck").val("");
+						$("#productCode").val("");
+					}
+				}
+			});
 		}
 	</script>
 	<script type="text/javascript">
@@ -2385,7 +2402,7 @@
 	</script>
 	<script type="text/javascript">
 		function lotNoKeyUp() {
-			$("#lotNoCheck").val("");
+			/* $("#lotNoCheck").val("");
 			$.ajax({
 				url : "getPurchaseProductDetailsByLotNumber",
 				dataType : "json",
@@ -2399,16 +2416,32 @@
 						$("#lotNoCheck").val("");
 					}
 				}
-
-			});
+			}); */
 		}
 
 		function lotNoChange() {
-			if ($("#lotNoCheck").val() != "") {
-				alert("Duplicate Lot Number");
-				$("#lotNoCheck").val("");
-				$("#lotnO").val("");
-			}
+			$("#lotNoCheck").val("");
+			$.ajax({
+				url : "getPurchaseProductDetailsByLotNumber",
+				dataType : "json",
+				data : {
+					lotNo : $("#lotnO").val()
+				},
+				success : function(data) {
+					if (data.lotNumber != "") {
+						$("#lotNoCheck").val(data.lotNumber);
+					} else {
+						$("#lotNoCheck").val("");
+					}
+				},
+				complete : function() {
+					if ($("#lotNoCheck").val() != "") {
+						alert("Duplicate Lot Number");
+						$("#lotNoCheck").val("");
+						$("#lotnO").val("");
+					}
+				}
+			});
 		}
 	</script>
 </body>

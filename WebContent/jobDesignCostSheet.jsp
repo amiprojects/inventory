@@ -1048,7 +1048,7 @@
 
 <script type="text/javascript">
 	function dNoKeyUp() {
-		$("#dNoCheck").val("");
+		/* $("#dNoCheck").val("");
 		$.ajax({
 			url : "getSampleDesignCostSheetByDesignNumberForDuplicateCheck",
 			dataType : "json",
@@ -1064,17 +1064,34 @@
 					}
 				});
 			}
-
-		});
-
+		}); */
 	}
 
 	function dNoChange() {
-		if ($("#dNoCheck").val() != "") {
-			alert("Duplicate Design Number");
-			$("#dNoCheck").val("");
-			$("#designNo").val("");
-		}
+		$("#dNoCheck").val("");
+		$.ajax({
+			url : "getSampleDesignCostSheetByDesignNumberForDuplicateCheck",
+			dataType : "json",
+			data : {
+				dNo : $("#designNo").val()
+			},
+			success : function(data) {
+				$.map(data, function(item) {
+					if (item.dNumber != "") {
+						$("#dNoCheck").val(item.dNumber);
+					} else {
+						$("#dNoCheck").val("");
+					}
+				});
+			},
+			complete : function() {
+				if ($("#dNoCheck").val() != "") {
+					alert("Duplicate Design Number");
+					$("#dNoCheck").val("");
+					$("#designNo").val("");
+				}
+			}
+		});
 	}
 
 	function designCostSheetSubmit() {

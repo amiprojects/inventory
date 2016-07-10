@@ -1,13 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stock details</title>
+<title><c:set var="totQty" value="${0}" /> <c:forEach
+		items="${requestScope['ami']}" var="amiProStock1">
+		<c:set var="totQty"
+			value="${!amiProStock1.isRaw()?totQty+sessionScope['ejb'].getReadyGoodsStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty:totQty+sessionScope['ejb'].getRawMaterialStocktDetailByProductIdAndCompany(amiProStock1.id).remainingQty}" />
+	</c:forEach>&nbsp; Stock details (${requestScope['searchBy']} :
+	${requestScope['searchVal']}) <br>&nbsp; Total quantity : <fmt:formatNumber
+		value="${totQty}" maxFractionDigits="3" groupingUsed="false" /></title>
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 <link
 	href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700,900'
@@ -124,13 +131,20 @@
 											<tr>
 												<th>#</th>
 												<th>Product code:</th>
-												<th>Product Description:</th>
+												<th>Description</th>
+												<th>Category</th>
 												<th>UOM</th>
 												<th>Quantity</th>
 												<th>WSP</th>
 												<th>MRP</th>
 												<th>view</th>
-
+											</tr>
+										</thead>
+										<thead>
+											<tr>
+												<th colspan="9">Total quantity : <fmt:formatNumber
+														value="${totQty}" maxFractionDigits="3"
+														groupingUsed="false" /></th>
 											</tr>
 										</thead>
 										<tbody>
@@ -145,6 +159,7 @@
 															<td style="color: red;">${count}</td>
 															<td style="color: red;">${amiProStock.code}</td>
 															<td style="color: red;">${amiProStock.description}</td>
+															<td style="color: red;">${amiProStock.category.name}</td>
 															<td style="color: red;">${amiProStock.qtyUnit.name}</td>
 															<td style="color: red;">${qty}</td>
 															<c:set var="purSize"
@@ -165,6 +180,7 @@
 															<td>${count}</td>
 															<td>${amiProStock.code}</td>
 															<td>${amiProStock.description}</td>
+															<td>${amiProStock.category.name}</td>
 															<td>${amiProStock.qtyUnit.name}</td>
 															<td>${qty}</td>
 															<c:set var="purSize"

@@ -2174,7 +2174,7 @@
 			}
 		} */
 		function dNoKeyUp() {
-			$("#dNoCheck").val("");
+			/* $("#dNoCheck").val("");
 			$.ajax({
 				url : "getProductByDesignNo",
 				dataType : "json",
@@ -2188,21 +2188,36 @@
 						$("#dNoCheck").val("");
 					}
 				}
-
-			});
-
+			}); */
 		}
 
 		function dNoChange() {
-			if ($("#dNoCheck").val() != "") {
-				alert("Duplicate Design Number");
-				$("#dNoCheck").val("");
-				$("#universalProductCode").val("");
-			}
+			$("#dNoCheck").val("");
+			$.ajax({
+				url : "getProductByDesignNo",
+				dataType : "json",
+				data : {
+					dNo : $("#universalProductCode").val()
+				},
+				success : function(data) {
+					if (data.universalCode != "") {
+						$("#dNoCheck").val(data.universalCode);
+					} else {
+						$("#dNoCheck").val("");
+					}
+				},
+				complete : function() {
+					if ($("#dNoCheck").val() != "") {
+						alert("Duplicate Design Number");
+						$("#dNoCheck").val("");
+						$("#universalProductCode").val("");
+					}
+				}
+			});
 		}
 
 		function codeKeyUp() {
-			$("#pcodeCheck").val("");
+			/* $("#pcodeCheck").val("");
 			$.ajax({
 				url : "checkPcode",
 				dataType : "json",
@@ -2216,20 +2231,37 @@
 						$("#pcodeCheck").val("");
 					}
 				}
-			});
+			}); */
 		}
 
 		function codeChange() {
-			if ($("#pcodeCheck").val() != "") {
-				alert("this Product Code: already exist.");
-				$("#pcodeCheck").val("");
-				$("#productCode").val("");
-			}
+			$("#pcodeCheck").val("");
+			$.ajax({
+				url : "checkPcode",
+				dataType : "json",
+				data : {
+					productCode4 : $("#productCode").val()
+				},
+				success : function(data) {
+					if (data.code != "") {
+						$("#pcodeCheck").val(data.code);
+					} else {
+						$("#pcodeCheck").val("");
+					}
+				},
+				complete : function() {
+					if ($("#pcodeCheck").val() != "") {
+						alert("this Product Code: already exist.");
+						$("#pcodeCheck").val("");
+						$("#productCode").val("");
+					}
+				}
+			});
 		}
 	</script>
 	<script type="text/javascript">
 		function lotNoKeyUp() {
-			$("#lotNoCheck").val("");
+			/* $("#lotNoCheck").val("");
 			$.ajax({
 				url : "getPurchaseProductDetailsByLotNumber",
 				dataType : "json",
@@ -2244,15 +2276,32 @@
 					}
 				}
 
-			});
+			}); */
 		}
 
 		function lotNoChange() {
-			if ($("#lotNoCheck").val() != "") {
-				alert("Duplicate Lot Number");
-				$("#lotNoCheck").val("");
-				$("#lotnO").val("");
-			}
+			$("#lotNoCheck").val("");
+			$.ajax({
+				url : "getPurchaseProductDetailsByLotNumber",
+				dataType : "json",
+				data : {
+					lotNo : $("#lotnO").val()
+				},
+				success : function(data) {
+					if (data.lotNumber != "") {
+						$("#lotNoCheck").val(data.lotNumber);
+					} else {
+						$("#lotNoCheck").val("");
+					}
+				},
+				complete : function() {
+					if ($("#lotNoCheck").val() != "") {
+						alert("Duplicate Lot Number");
+						$("#lotNoCheck").val("");
+						$("#lotnO").val("");
+					}
+				}
+			});
 		}
 
 		$(function() {
