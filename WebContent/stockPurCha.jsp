@@ -562,23 +562,24 @@ myWindow.print();
 							<tr style="height: 0px;">
 								<td colspan="7" style="border-bottom: none;"></td>
 							</tr>
-						</table>
-						<span style="float: right;"><c:if test="${j<(qPage+k-1)}">continued...</c:if></span>
+						</table> <span style="float: right;"><c:if test="${j<(qPage+k-1)}">continued...</c:if></span>
 					</td>
 				</tr>
 				<%-- <tr style="height: 10px">
 				<td class="tg-031e" colspan="7"><span><strong>Amount Chargeable
 						(in words)</strong></span><br> <span>${sessionScope['ejb'].getNumberToWords(purEntry.totalCost)} only.</span></td>
 			</tr> --%>
-				<tr style="height: 10px;">
-					<td class="tg-031e" colspan="5"><strong>Declaration:</strong><br>We
-						declare that this invoice shows the actual price of the goods
-						described and all particulars are true and correct.</td>
-					<td class="tg-031e" colspan="2" style="text-align: right;">for
-						<strong>${companyInfo.compname}</strong><br> <br>Authorised
-						Signatory
-					</td>
-				</tr>
+				<c:if test="${j==(qPage+k-1)}">
+					<tr style="height: 10px;">
+						<td class="tg-031e" colspan="5"><strong>Declaration:</strong><br>We
+							declare that this invoice shows the actual price of the goods
+							described and all particulars are true and correct.</td>
+						<td class="tg-031e" colspan="2" style="text-align: right;">for
+							<strong>${companyInfo.compname}</strong><br> <br>Authorised
+							Signatory
+						</td>
+					</tr>
+				</c:if>
 			</table>
 			<center>This is a Computer Generated Invoice</center>
 			</page>

@@ -493,18 +493,20 @@ page[size="A4"] {
 				<td class="tg-031e" colspan="7"><span><strong>Amount Chargeable
 						(in words)</strong></span><br> <span>${sessionScope['ejb'].getNumberToWords(purEntry.totalCost)} only.</span></td>
 			</tr> --%>
-				<tr style="height: 10px">
-					<td class="tg-031e" colspan="5"><strong>Declaration:</strong><br>We
-						declare that this invoice shows the actual price of the goods
-						described and all particulars are true and correct. Payment must
-						be cleared within 30 days. Goods once sold can not be taken back
-						or exchanged. No Guarantee for colour Jari and Slippage of Fabric.
-						Dry clean only.</td>
-					<td class="tg-031e" colspan="2" style="text-align: right;">for
-						<strong>${companyInfo.compname}</strong><br> <br>Authorised
-						Signatory
-					</td>
-				</tr>
+				<c:if test="${j==(qPage+k-1)}">
+					<tr style="height: 10px">
+						<td class="tg-031e" colspan="5"><strong>Declaration:</strong><br>We
+							declare that this invoice shows the actual price of the goods
+							described and all particulars are true and correct. Payment must
+							be cleared within 30 days. Goods once sold can not be taken back
+							or exchanged. No Guarantee for colour Jari and Slippage of
+							Fabric. Dry clean only.</td>
+						<td class="tg-031e" colspan="2" style="text-align: right;">for
+							<strong>${companyInfo.compname}</strong><br> <br>Authorised
+							Signatory
+						</td>
+					</tr>
+				</c:if>
 			</table>
 			<center>This is a Computer Generated Invoice</center>
 			</page>
