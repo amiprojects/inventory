@@ -7,7 +7,7 @@ ALTER TABLE COMPANYINFO ADD (isPurchaseAgentShow NUMBER(1) DEFAULT 0);
 ...................................
 loginservlet.java / inits.java,
 getmacid.java - production only,
-
+testServ
 //include sidebar 
 //(include- all, production entry- production only , job module- production only)
 //dashboard (job assignment) - kainat and kaanish
