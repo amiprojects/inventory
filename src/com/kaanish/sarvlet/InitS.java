@@ -81,8 +81,8 @@ public class InitS extends HttpServlet {
 		// here
 
 		// iKaanish();
-		iKainat();
-		// iProduction();
+		// iKainat();
+		iProduction();
 
 		// ////////////////////////////////////////////////////////
 
@@ -108,7 +108,8 @@ public class InitS extends HttpServlet {
 		// total sales product return qty on salesproductdetails table
 		for (SalesProductDetails spd : ejb.getAllSalesProductDetails()) {
 			float qtyReturn = 0;
-			for (SalesProductReturnDetail sprd : spd.getSalesProductReturnDetail()) {
+			for (SalesProductReturnDetail sprd : spd
+					.getSalesProductReturnDetail()) {
 				qtyReturn = qtyReturn + sprd.getQtyReturn();
 			}
 			spd.setSalesReQty(qtyReturn);
@@ -117,10 +118,12 @@ public class InitS extends HttpServlet {
 		// total sales product return qty on salesproductdetails table
 
 		// purchase product details table stock manage
-		for (Purchase_Product_Details ppd : ejb.getAllPurchase_Product_Details()) {
+		for (Purchase_Product_Details ppd : ejb
+				.getAllPurchase_Product_Details()) {
 			// total purchase product return qty on purchaseproductdetails table
 			float qtyReturn = 0;
-			for (PurchaseReturnProductDetails prpd : ppd.getPurchaseReturnProductDetails()) {
+			for (PurchaseReturnProductDetails prpd : ppd
+					.getPurchaseReturnProductDetails()) {
 				qtyReturn = qtyReturn + prpd.getQtyReturn();
 			}
 			ppd.setTotalReturningQty(qtyReturn);
@@ -133,7 +136,8 @@ public class InitS extends HttpServlet {
 			for (JobPlanProductStock jpps : ppd.getJobPlanProductStocks()) {
 				qtyJobPlanProdStock = qtyJobPlanProdStock + jpps.getQty();
 			}
-			ppd.setRemaining_quantity(ppd.getQuantity() - qtyReturn - qtySold - qtyJobPlanProdStock);
+			ppd.setRemaining_quantity(ppd.getQuantity() - qtyReturn - qtySold
+					- qtyJobPlanProdStock);
 			ejb.updatePurchaseProductDetails(ppd);
 		}
 		// purchase product details table stock manage
@@ -141,7 +145,8 @@ public class InitS extends HttpServlet {
 		// raw materials stock table stock manage
 		for (RawMaterialsStock rms : ejb.getAllRawMaterialStockDetail()) {
 			float remQty = 0;
-			for (Purchase_Product_Details ppd : rms.getProductDetail().getPurchase_Product_Details()) {
+			for (Purchase_Product_Details ppd : rms.getProductDetail()
+					.getPurchase_Product_Details()) {
 				remQty = remQty + ppd.getRemaining_quantity();
 			}
 			rms.setRemainingQty(remQty);
@@ -153,7 +158,8 @@ public class InitS extends HttpServlet {
 		// ready goods stock table stock manage
 		for (ReadyGoodsStock rgs : ejb.getAllReadyGoodStockDetails()) {
 			float remQty = 0;
-			for (Purchase_Product_Details ppd : rgs.getProductDetail().getPurchase_Product_Details()) {
+			for (Purchase_Product_Details ppd : rgs.getProductDetail()
+					.getPurchase_Product_Details()) {
 				remQty = remQty + ppd.getRemaining_quantity();
 			}
 			rgs.setRemainingQty(remQty);
@@ -164,9 +170,11 @@ public class InitS extends HttpServlet {
 
 		// correcting lot number
 		for (ProductDetail pd : ejb.getAllProductDetail()) {
-			for (int i = 0; i < ejb.getPurchaseProductDetailsByProductIdAsc(pd.getId()).size(); i++) {
+			for (int i = 0; i < ejb.getPurchaseProductDetailsByProductIdAsc(
+					pd.getId()).size(); i++) {
 				Purchase_Product_Details purchase_Product_Details = ejb
-						.getPurchaseProductDetailsByProductIdAsc(pd.getId()).get(i);
+						.getPurchaseProductDetailsByProductIdAsc(pd.getId())
+						.get(i);
 				int j = i + 1;
 				purchase_Product_Details.setLotNumber("" + j);
 				ejb.updatePurchaseProductDetails(purchase_Product_Details);
@@ -176,7 +184,8 @@ public class InitS extends HttpServlet {
 
 		// correcting payment details unique number
 		for (int i = 0; i < ejb.getAllPaymentDetailsAsc().size(); i++) {
-			PaymentDetails paymentDetails = ejb.getAllPaymentDetailsAsc().get(i);
+			PaymentDetails paymentDetails = ejb.getAllPaymentDetailsAsc()
+					.get(i);
 			int j = i + 1;
 			paymentDetails.setUniqueNo(j);
 			ejb.updatePaymentDetails(paymentDetails);
@@ -186,17 +195,26 @@ public class InitS extends HttpServlet {
 		// correcting voucher details
 		// purchase id
 		for (PurchaseReturn pr : ejb.getAllPurchaseReturn()) {
-			for (int i = 0; i < ejb.getAllVoucherDetailsByPurchaseReturnId(pr.getId()).size(); i++) {
-				VoucherDetails vd = ejb.getAllVoucherDetailsByPurchaseReturnId(pr.getId()).get(i);
+			for (int i = 0; i < ejb.getAllVoucherDetailsByPurchaseReturnId(
+					pr.getId()).size(); i++) {
+				VoucherDetails vd = ejb.getAllVoucherDetailsByPurchaseReturnId(
+						pr.getId()).get(i);
 				vd.setPurchase_Entry(pr.getPurchaseEntry());
 				ejb.updateVoucherDetails(vd);
 			}
-			int paySize = ejb.getPaymentDetailsByPurchaseEntryId(pr.getId()).size();
+			int paySize = ejb.getPaymentDetailsByPurchaseEntryId(pr.getId())
+					.size();
 			if (paySize > 0) {
-				PaymentDetails paymentDetails = ejb.getPaymentDetailsByPurchaseEntryId(pr.getId()).get(paySize - 1);
-				if (!paymentDetails.getPaymentStatus().getStatus().equals("Full Paid")) {
-					VoucherDetails vd = ejb.getAllVoucherDetailsByPurchaseEntryId(pr.getId()).get(0);
-					vd.setValue(paymentDetails.getTotalAmount() - paymentDetails.getPaidAmount());
+				PaymentDetails paymentDetails = ejb
+						.getPaymentDetailsByPurchaseEntryId(pr.getId()).get(
+								paySize - 1);
+				if (!paymentDetails.getPaymentStatus().getStatus()
+						.equals("Full Paid")) {
+					VoucherDetails vd = ejb
+							.getAllVoucherDetailsByPurchaseEntryId(pr.getId())
+							.get(0);
+					vd.setValue(paymentDetails.getTotalAmount()
+							- paymentDetails.getPaidAmount());
 					ejb.updateVoucherDetails(vd);
 				}
 			}
@@ -204,8 +222,10 @@ public class InitS extends HttpServlet {
 		// purchase id
 		// sales id
 		for (SalesReturn sr : ejb.getAllSalesReturn()) {
-			for (int i = 0; i < ejb.getAllVoucherDetailsBySalesReturnId(sr.getId()).size(); i++) {
-				VoucherDetails vd = ejb.getAllVoucherDetailsBySalesReturnId(sr.getId()).get(i);
+			for (int i = 0; i < ejb.getAllVoucherDetailsBySalesReturnId(
+					sr.getId()).size(); i++) {
+				VoucherDetails vd = ejb.getAllVoucherDetailsBySalesReturnId(
+						sr.getId()).get(i);
 				vd.setSalesEntry(sr.getSalesEntry());
 				ejb.updateVoucherDetails(vd);
 			}
@@ -238,18 +258,25 @@ public class InitS extends HttpServlet {
 
 		// correcting purchase entry payment details
 		for (PurchaseReturn pr : ejb.getAllPurchaseReturn()) {
-			for (int i = 0; i < ejb.getPaymentDetailsByPurchaseReturnId(pr.getId()).size(); i++) {
-				PaymentDetails paymentDetails = ejb.getPaymentDetailsByPurchaseReturnId(pr.getId()).get(i);
+			for (int i = 0; i < ejb.getPaymentDetailsByPurchaseReturnId(
+					pr.getId()).size(); i++) {
+				PaymentDetails paymentDetails = ejb
+						.getPaymentDetailsByPurchaseReturnId(pr.getId()).get(i);
 				paymentDetails.setPurchase_Entry(pr.getPurchaseEntry());
 				ejb.updatePaymentDetails(paymentDetails);
 			}
 		}
 		for (Purchase_Entry pe : ejb.getAllPurchaseEntry()) {
-			int pSize = ejb.getPaymentDetailsByPurchaseEntryId(pe.getId()).size();
+			int pSize = ejb.getPaymentDetailsByPurchaseEntryId(pe.getId())
+					.size();
 			if (pSize > 0) {
-				float tot = ejb.getPaymentDetailsByPurchaseEntryId(pe.getId()).get(pSize - 1).getTotalAmount();
-				for (int i = ejb.getPaymentDetailsByPurchaseEntryId(pe.getId()).size() - 1; i > -1; i--) {
-					PaymentDetails paymentDetails = ejb.getPaymentDetailsByPurchaseEntryId(pe.getId()).get(i);
+				float tot = ejb.getPaymentDetailsByPurchaseEntryId(pe.getId())
+						.get(pSize - 1).getTotalAmount();
+				for (int i = ejb.getPaymentDetailsByPurchaseEntryId(pe.getId())
+						.size() - 1; i > -1; i--) {
+					PaymentDetails paymentDetails = ejb
+							.getPaymentDetailsByPurchaseEntryId(pe.getId())
+							.get(i);
 					paymentDetails.setTotalAmount(tot);
 					tot = tot - paymentDetails.getPaidAmount();
 					ejb.updatePaymentDetails(paymentDetails);
@@ -257,12 +284,17 @@ public class InitS extends HttpServlet {
 			}
 		}
 		for (PurchaseReturn pr : ejb.getAllPurchaseReturn()) {
-			for (int i = 0; i < ejb.getPaymentDetailsByPurchaseReturnId(pr.getId()).size(); i++) {
-				PaymentDetails paymentDetails = ejb.getPaymentDetailsByPurchaseReturnId(pr.getId()).get(i);
-				if (paymentDetails.getTotalAmount() > paymentDetails.getPaidAmount()) {
-					paymentDetails.setPaymentStatus(ejb.getPaymentStatusByStatus("Semi Paid"));
+			for (int i = 0; i < ejb.getPaymentDetailsByPurchaseReturnId(
+					pr.getId()).size(); i++) {
+				PaymentDetails paymentDetails = ejb
+						.getPaymentDetailsByPurchaseReturnId(pr.getId()).get(i);
+				if (paymentDetails.getTotalAmount() > paymentDetails
+						.getPaidAmount()) {
+					paymentDetails.setPaymentStatus(ejb
+							.getPaymentStatusByStatus("Semi Paid"));
 				} else {
-					paymentDetails.setPaymentStatus(ejb.getPaymentStatusByStatus("Full Paid"));
+					paymentDetails.setPaymentStatus(ejb
+							.getPaymentStatusByStatus("Full Paid"));
 				}
 				ejb.updatePaymentDetails(paymentDetails);
 			}
@@ -271,8 +303,10 @@ public class InitS extends HttpServlet {
 
 		// correcting sales entry payment details
 		for (SalesReturn sr : ejb.getAllSalesReturn()) {
-			for (int i = 0; i < ejb.getPaymentDetailsBySalesReturnId(sr.getId()).size(); i++) {
-				PaymentDetails paymentDetails = ejb.getPaymentDetailsBySalesReturnId(sr.getId()).get(i);
+			for (int i = 0; i < ejb
+					.getPaymentDetailsBySalesReturnId(sr.getId()).size(); i++) {
+				PaymentDetails paymentDetails = ejb
+						.getPaymentDetailsBySalesReturnId(sr.getId()).get(i);
 				paymentDetails.setSalesEntry(sr.getSalesEntry());
 				ejb.updatePaymentDetails(paymentDetails);
 			}
@@ -280,9 +314,12 @@ public class InitS extends HttpServlet {
 		for (SalesEntry se : ejb.getAllSalesEntries()) {
 			int pSize = ejb.getPaymentDetailsBySalesEntryId(se.getId()).size();
 			if (pSize > 0) {
-				float tot = ejb.getPaymentDetailsBySalesEntryId(se.getId()).get(pSize - 1).getTotalAmount();
-				for (int i = ejb.getPaymentDetailsBySalesEntryId(se.getId()).size() - 1; i > -1; i--) {
-					PaymentDetails paymentDetails = ejb.getPaymentDetailsBySalesEntryId(se.getId()).get(i);
+				float tot = ejb.getPaymentDetailsBySalesEntryId(se.getId())
+						.get(pSize - 1).getTotalAmount();
+				for (int i = ejb.getPaymentDetailsBySalesEntryId(se.getId())
+						.size() - 1; i > -1; i--) {
+					PaymentDetails paymentDetails = ejb
+							.getPaymentDetailsBySalesEntryId(se.getId()).get(i);
 					paymentDetails.setTotalAmount(tot);
 					tot = tot - paymentDetails.getPaidAmount();
 					ejb.updatePaymentDetails(paymentDetails);
@@ -290,12 +327,17 @@ public class InitS extends HttpServlet {
 			}
 		}
 		for (SalesReturn sr : ejb.getAllSalesReturn()) {
-			for (int i = 0; i < ejb.getPaymentDetailsBySalesReturnId(sr.getId()).size(); i++) {
-				PaymentDetails paymentDetails = ejb.getPaymentDetailsBySalesReturnId(sr.getId()).get(i);
-				if (paymentDetails.getTotalAmount() > paymentDetails.getPaidAmount()) {
-					paymentDetails.setPaymentStatus(ejb.getPaymentStatusByStatus("Semi Paid"));
+			for (int i = 0; i < ejb
+					.getPaymentDetailsBySalesReturnId(sr.getId()).size(); i++) {
+				PaymentDetails paymentDetails = ejb
+						.getPaymentDetailsBySalesReturnId(sr.getId()).get(i);
+				if (paymentDetails.getTotalAmount() > paymentDetails
+						.getPaidAmount()) {
+					paymentDetails.setPaymentStatus(ejb
+							.getPaymentStatusByStatus("Semi Paid"));
 				} else {
-					paymentDetails.setPaymentStatus(ejb.getPaymentStatusByStatus("Full Paid"));
+					paymentDetails.setPaymentStatus(ejb
+							.getPaymentStatusByStatus("Full Paid"));
 				}
 				ejb.updatePaymentDetails(paymentDetails);
 			}
@@ -306,9 +348,12 @@ public class InitS extends HttpServlet {
 		for (JobAssignmentDetails ja : ejb.getAllJobassignmentDetails()) {
 			int pSize = ejb.getPaymentDetailsByJobAsignId(ja.getId()).size();
 			if (pSize > 0) {
-				float tot = ejb.getPaymentDetailsByJobAsignId(ja.getId()).get(pSize - 1).getTotalAmount();
-				for (int ind = ejb.getPaymentDetailsByJobAsignId(ja.getId()).size() - 1; ind > -1; ind--) {
-					PaymentDetails paymentDetails = ejb.getPaymentDetailsByJobAsignId(ja.getId()).get(ind);
+				float tot = ejb.getPaymentDetailsByJobAsignId(ja.getId())
+						.get(pSize - 1).getTotalAmount();
+				for (int ind = ejb.getPaymentDetailsByJobAsignId(ja.getId())
+						.size() - 1; ind > -1; ind--) {
+					PaymentDetails paymentDetails = ejb
+							.getPaymentDetailsByJobAsignId(ja.getId()).get(ind);
 					paymentDetails.setTotalAmount(tot);
 					tot = tot - paymentDetails.getPaidAmount();
 					ejb.updatePaymentDetails(paymentDetails);
@@ -1252,62 +1297,74 @@ public class InitS extends HttpServlet {
 
 		if (ejb.getAllSecurityQuestions().size() < 10) {
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("First"));
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("First"));
 			securityQuestions.setQuestion("What is the place you borned?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("First"));
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("First"));
 			securityQuestions.setQuestion("What is your first friend's name?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("First"));
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("First"));
 			securityQuestions.setQuestion("What is your first teacher's name?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("First"));
-			securityQuestions.setQuestion("What is the name of your first school?");
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("First"));
+			securityQuestions
+					.setQuestion("What is the name of your first school?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("First"));
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("First"));
 			securityQuestions.setQuestion("What is your pet's name?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("Favourite"));
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("Favourite"));
 			securityQuestions.setQuestion("What is your favourite food?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("Favourite"));
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("Favourite"));
 			securityQuestions.setQuestion("What is your favourite movie?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("Favourite"));
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("Favourite"));
 			securityQuestions.setQuestion("Who is your favourite person?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("Favourite"));
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("Favourite"));
 			securityQuestions.setQuestion("Who is your favourite player?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 
 			securityQuestions = new SequrityQuestions();
-			securityQuestions.setSecurityQuestionGroup(ejb.getSecurityQueGroupByGroupName("Favourite"));
-			securityQuestions.setQuestion("Who is your favourite Actor/Actress?");
+			securityQuestions.setSecurityQuestionGroup(ejb
+					.getSecurityQueGroupByGroupName("Favourite"));
+			securityQuestions
+					.setQuestion("Who is your favourite Actor/Actress?");
 			ejb.setSecurityQue(securityQuestions);
 			securityQuestions = null;
 		}
@@ -1315,13 +1372,16 @@ public class InitS extends HttpServlet {
 		if (ejb.getAllStoct().size() < 1) {
 			LocalDateTime afterThreeMonths = currentDateTime.plusMonths(3);
 			stoct = new Stoct();
-			stoct.setStartDate(Date.from(currentDateTime.toInstant(ZoneOffset.ofHoursMinutes(5, 30))));
-			stoct.setEndDate(Date.from(afterThreeMonths.toInstant(ZoneOffset.ofHoursMinutes(5, 30))));
+			stoct.setStartDate(Date.from(currentDateTime.toInstant(ZoneOffset
+					.ofHoursMinutes(5, 30))));
+			stoct.setEndDate(Date.from(afterThreeMonths.toInstant(ZoneOffset
+					.ofHoursMinutes(5, 30))));
 			try {
 				stoct.setStockNumber(GetMacId.getMacId());
 			} catch (IOException e) {
 				e.printStackTrace();
-				System.out.println("Error in getting HDD serial number: " + e.getMessage());
+				System.out.println("Error in getting HDD serial number: "
+						+ e.getMessage());
 			}
 			ejb.setStoct(stoct);
 		}
@@ -1714,7 +1774,8 @@ public class InitS extends HttpServlet {
 	}
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 		resp.setContentType("text/html");
 
 		PrintWriter out = resp.getWriter();
@@ -1722,7 +1783,8 @@ public class InitS extends HttpServlet {
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 		doGet(req, resp);
 	}
 }
