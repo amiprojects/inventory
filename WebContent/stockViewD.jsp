@@ -151,53 +151,58 @@
 											<c:set var="count" value="${1}" />
 
 											<c:forEach items="${requestScope['ami']}" var="amiProStock">
-												<c:set var="qty"
-													value="${!amiProStock.isRaw()?sessionScope['ejb'].getReadyGoodsStocktDetailByProductIdAndCompany(amiProStock.id).remainingQty:sessionScope['ejb'].getRawMaterialStocktDetailByProductIdAndCompany(amiProStock.id).remainingQty}" />
-												<c:choose>
-													<c:when test="${qty==0}">
-														<tr>
-															<td style="color: red;">${count}</td>
-															<td style="color: red;">${amiProStock.code}</td>
-															<td style="color: red;">${amiProStock.description}</td>
-															<td style="color: red;">${amiProStock.category.name}</td>
-															<td style="color: red;">${amiProStock.qtyUnit.name}</td>
-															<td style="color: red;">${qty}</td>
-															<c:set var="purSize"
-																value="${amiProStock.purchase_Product_Details.size()}" />
-															<td style="color: red;">${purSize>0?amiProStock.purchase_Product_Details.get(purSize-1).wsp:'nill'}</td>
-															<td style="color: red;">${purSize>0?amiProStock.purchase_Product_Details.get(purSize-1).mrp:'nill'}</td>
-															<td style="color: red;"><form
-																	action="stockDetailShow" method="post"
-																	id="StockDetails${amiProStock.id}">
-																	<a href="#" onclick="showDetails('${amiProStock.id}');"><input
-																		type="hidden" value="${amiProStock.id}" name="proId"><img
-																		alt="" src="images/eye.png" height="25px"></a>
-																</form></td>
-														</tr>
-													</c:when>
-													<c:otherwise>
-														<tr>
-															<td>${count}</td>
-															<td>${amiProStock.code}</td>
-															<td>${amiProStock.description}</td>
-															<td>${amiProStock.category.name}</td>
-															<td>${amiProStock.qtyUnit.name}</td>
-															<td>${qty}</td>
-															<c:set var="purSize"
-																value="${amiProStock.purchase_Product_Details.size()}" />
-															<td>${purSize>0?amiProStock.purchase_Product_Details.get(purSize-1).wsp:'nill'}</td>
-															<td>${purSize>0?amiProStock.purchase_Product_Details.get(purSize-1).mrp:'nill'}</td>
-															<td><form action="stockDetailShow" method="post"
-																	id="StockDetails${amiProStock.id}">
-																	<a href="#" onclick="showDetails('${amiProStock.id}');"><input
-																		type="hidden" value="${amiProStock.id}" name="proId"><img
-																		alt="" src="images/eye.png" height="25px"></a>
-																</form></td>
-														</tr>
+												<c:if
+													test="${amiProStock.purchase_Product_Details.size()>0}">
+													<c:set var="qty"
+														value="${!amiProStock.isRaw()?sessionScope['ejb'].getReadyGoodsStocktDetailByProductIdAndCompany(amiProStock.id).remainingQty:sessionScope['ejb'].getRawMaterialStocktDetailByProductIdAndCompany(amiProStock.id).remainingQty}" />
+													<c:choose>
+														<c:when test="${qty==0}">
+															<tr>
+																<td style="color: red;">${count}</td>
+																<td style="color: red;">${amiProStock.code}</td>
+																<td style="color: red;">${amiProStock.description}</td>
+																<td style="color: red;">${amiProStock.category.name}</td>
+																<td style="color: red;">${amiProStock.qtyUnit.name}</td>
+																<td style="color: red;">${qty}</td>
+																<c:set var="purSize"
+																	value="${amiProStock.purchase_Product_Details.size()}" />
+																<td style="color: red;">${purSize>0?amiProStock.purchase_Product_Details.get(purSize-1).wsp:'nill'}</td>
+																<td style="color: red;">${purSize>0?amiProStock.purchase_Product_Details.get(purSize-1).mrp:'nill'}</td>
+																<td style="color: red;"><form
+																		action="stockDetailShow" method="post"
+																		id="StockDetails${amiProStock.id}">
+																		<a href="#"
+																			onclick="showDetails('${amiProStock.id}');"><input
+																			type="hidden" value="${amiProStock.id}" name="proId"><img
+																			alt="" src="images/eye.png" height="25px"></a>
+																	</form></td>
+															</tr>
+														</c:when>
+														<c:otherwise>
+															<tr>
+																<td>${count}</td>
+																<td>${amiProStock.code}</td>
+																<td>${amiProStock.description}</td>
+																<td>${amiProStock.category.name}</td>
+																<td>${amiProStock.qtyUnit.name}</td>
+																<td>${qty}</td>
+																<c:set var="purSize"
+																	value="${amiProStock.purchase_Product_Details.size()}" />
+																<td>${purSize>0?amiProStock.purchase_Product_Details.get(purSize-1).wsp:'nill'}</td>
+																<td>${purSize>0?amiProStock.purchase_Product_Details.get(purSize-1).mrp:'nill'}</td>
+																<td><form action="stockDetailShow" method="post"
+																		id="StockDetails${amiProStock.id}">
+																		<a href="#"
+																			onclick="showDetails('${amiProStock.id}');"><input
+																			type="hidden" value="${amiProStock.id}" name="proId"><img
+																			alt="" src="images/eye.png" height="25px"></a>
+																	</form></td>
+															</tr>
 
-													</c:otherwise>
-												</c:choose>
-												<c:set var="count" value="${count+1}" />
+														</c:otherwise>
+													</c:choose>
+													<c:set var="count" value="${count+1}" />
+												</c:if>
 											</c:forEach>
 										</tbody>
 									</table>
