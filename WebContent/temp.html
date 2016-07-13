@@ -1,0 +1,10 @@
+						$.ajax({
+							url : "addUOMjson",
+							dataType : "json",
+							data : dataa2,
+							type : "post",
+							success : function(data2) {
+								alert(data2.result);
+								$("#addUoM").modal('hide');
+							}
+						});
