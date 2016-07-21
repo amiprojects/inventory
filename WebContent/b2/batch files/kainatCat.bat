@@ -1,5 +1,6 @@
 @echo off
 C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/AMi@Kaanish1250000 FILE=d:/backup/exp.DMP BUFFER=10000000 IGNORE=Y CONSTRAINTS=Y GRANTS=Y TABLES=SEQUENCE
+C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/AMi@Kaanish1250000 FILE=d:/backup/exp.DMP BUFFER=10000000 IGNORE=Y CONSTRAINTS=Y GRANTS=Y TABLES=DNGR
 C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/AMi@Kaanish1250000 FILE=d:/backup/exp.DMP BUFFER=10000000 IGNORE=Y CONSTRAINTS=Y GRANTS=Y TABLES=STOCT
 C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/AMi@Kaanish1250000 FILE=d:/backup/exp.DMP BUFFER=10000000 IGNORE=Y CONSTRAINTS=Y GRANTS=Y TABLES=COMPANYINFO
 C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/AMi@Kaanish1250000 FILE=d:/backup/exp.DMP BUFFER=10000000 IGNORE=Y CONSTRAINTS=Y GRANTS=Y TABLES=USERGROUP

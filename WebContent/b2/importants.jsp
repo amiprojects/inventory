@@ -34,7 +34,7 @@ AMi@Oracle 1250000 X
 Ph-8229940690 , Land-03340710001
 
 TeamViewer Production-> 975668774
-TeamViewer Kaanish-> 290278776
+TeamViewer Kaanish-> 727393476
 TeamViewer Kainat-> 502914157
 
 url table uri
