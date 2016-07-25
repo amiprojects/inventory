@@ -1,8 +1,3 @@
-COMPANYINFO
-....................
-ALTER TABLE COMPANYINFO ADD (isSalesAgentShow NUMBER(1) DEFAULT 1);
-ALTER TABLE COMPANYINFO ADD (isPurchaseAgentShow NUMBER(1) DEFAULT 0);
-//////////////////////////////////////////////
 //every time on making .war
 ...................................
 loginservlet.java / inits.java,
