@@ -114,7 +114,7 @@ public class JsonServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String url = req.getRequestURL().toString();
 		url = url.substring(url.lastIndexOf('/') + 1);
-		resp.setContentType("application/json");
+		resp.setContentType("application/json; charset=utf-8");
 		HttpSession httpSession = req.getSession();
 
 		try {
