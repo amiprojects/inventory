@@ -4618,6 +4618,10 @@ public class Ejb {
 	public void updateDesignImage(DesignImage sample) {
 		em.merge(sample);
 	}
+	
+	public void removeSampleCostSheetImageById(int id) {
+		em.remove(getDesignImageById(id));
+	}
 
 	public DesignImage getDesignImageById(int id) {
 		return em.find(DesignImage.class, id);
