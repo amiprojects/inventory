@@ -426,7 +426,7 @@
 															name="rQtyAm" readonly="readonly"></td>
 
 														<td style="padding: 4px"><input type="text"
-															id="drabackIid" class="form-control" name="rQtyDe"
+															class="form-control drabacks" name="rQtyDe"
 															style="width: 120px"></td>
 
 														<c:set value="${tota+srr.quantity*srr.salesPrice}"
@@ -517,7 +517,7 @@
 											class="table table-striped table-bordered">
 											<thead>
 												<tr>
-													<td colspan="2" id="sub">Subb Total :</td>
+													<td colspan="2" id="sub">Sub Total :</td>
 													<td><input type="text" class="form-control"
 														readonly="readonly" id="subtotalvalue"
 														name="subtotalvalue" value="0"></td>
@@ -919,11 +919,18 @@
 					chk = chk + 1;
 				}
 			});
+			
+			var chkDrawback = 0;
+			$(".drabacks").each(function() {
+				if (this.value != "") {
+					chkDrawback = chkDrawback + 1;
+				}
+			});
 
 			if (count < 1 || chk < 1) {
 				alert("No product found to return.");
-			} else if ($("#drabackIid").val() == "") {
-				alert("please enter the draw back");
+			} else if (chkDrawback < 1) {
+				alert("please enter the drawback");
 			} else {
 				$("#saveSales").modal("show");
 				$("#tbv").val($("#grandtotal").val());

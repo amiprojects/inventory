@@ -300,7 +300,7 @@
 													<td><input type="text" id="codevalue"
 														readonly="readonly"><input type="text"
 														id="productId" readonly="readonly"><input
-														readonly="readonly" type="text" id="wspH" name="wspH"></td>
+														readonly="readonly" type="text" id="costH" name="costH"></td>
 													<td><input type="text" id="descvalue"
 														readonly="readonly"></td>
 													<td><input readonly="readonly" type="text" id="lotH"
@@ -2755,7 +2755,7 @@
 										$("#descvalue").val(data.productDesc);
 										$("#qtyvalue").val(Number(1));
 										$("#lotH").val(data.lotNumber);
-										$("#wspH").val(data.wsp);
+										$("#costH").val(data.cost);
 										if ($("#wspORmrp").val() == 'mrpVal') {
 											$("#mrpQty").val(data.mrp);
 											$("#eachtotalvalue")
@@ -2797,12 +2797,12 @@
 																	+ $(
 																			"#salesbarH")
 																			.val()
-																	+ '\'><input readonly="readonly" type="hidden" id="wspForCheck'
+																	+ '\'><input readonly="readonly" type="hidden" id="costForCheck'
 																	+ $(
 																			"#salesbarH")
 																			.val()
 																	+ '" value=\''
-																	+ $("#wspH")
+																	+ $("#costH")
 																			.val()
 																	+ '\'><input readonly="readonly" type="hidden" id="selectedCost'
 																	+ $(
@@ -2963,7 +2963,7 @@
 								$("#descvalue").val(data.productDesc);
 								$("#qtyvalue").val(Number(qty));
 								$("#lotH").val(data.lotNumber);
-								$("#wspH").val(data.wsp);
+								$("#costH").val(data.cost);
 								if ($("#wspORmrp").val() == 'mrpVal') {
 									$("#mrpQty").val(data.mrp);
 									$("#eachtotalvalue")
@@ -3003,11 +3003,11 @@
 													+ '\'><input readonly="readonly" type="hidden" name="purchaseProductDetId" value=\''
 															+ $("#salesbarH")
 																	.val()
-															+ '\'><input readonly="readonly" type="hidden" id="wspForCheck'
+															+ '\'><input readonly="readonly" type="hidden" id="costForCheck'
 															+ $("#salesbarH")
 																	.val()
 															+ '" value=\''
-															+ $("#wspH").val()
+															+ $("#costH").val()
 															+ '\'><input readonly="readonly" type="hidden" id="selectedCost'
 															+ $("#salesbarH")
 																	.val()
@@ -3202,14 +3202,14 @@
 		}
 
 		function mrpQtyF(a) {
-			var wsp = $("#wspForCheck" + a).val();
+			var cost = $("#costForCheck" + a).val();
 			var selectedCost = $("#selectedCost" + a).val();
 			var qty = $("#trRemove" + a + " :nth-child(5) input[type=text]")
 					.val();
 			var price = $("#trRemove" + a + " :nth-child(6) input[type=text]")
 					.val();
-			if (Number(price) < Number(wsp)) {
-				alert("Saling price can not be less than WSP : Rs. " + wsp);
+			if (Number(price) < Number(cost)) {
+				alert("Saling price can not be less than Cost : Rs. " + cost);
 				$("#trRemove" + a + " :nth-child(6) input[type=text]").val(
 						selectedCost);
 				var price = selectedCost;

@@ -1332,6 +1332,9 @@
 			</div>
 		</div>
 	</div>
+
+	<%@include file="zoomImage.jsp"%>
+
 	<!-- Script -->
 
 	<script type="text/javascript">
@@ -1404,7 +1407,7 @@
 					if ((data.attrNmae1) != 'null') {
 						$("#sa1").html(data.attrNmae1);
 						$("#starNcolonsa1").html(
-								":<font color='red' size='4'>*</font>");
+								":_$tag______________________*_$tag__");
 						$("#summaryA1").html(data.attrNmae1);
 						$("#a10").prop("disabled", false);
 					} else {
@@ -1416,7 +1419,7 @@
 					if ((data.attrNmae2) != 'null') {
 						$("#sa2").html(data.attrNmae2);
 						$("#starNcolonsa2").html(
-								":<font color='red' size='4'>*</font>");
+								":_$tag______________________*_$tag__");
 						$("#summaryA2").html(data.attrNmae2);
 						$("#a20").prop("disabled", false);
 					} else {
@@ -1428,7 +1431,7 @@
 					if ((data.attrNmae3) != 'null') {
 						$("#sa3").html(data.attrNmae3);
 						$("#starNcolonsa3").html(
-								":<font color='red' size='4'>*</font>");
+								":_$tag______________________*_$tag__");
 						$("#summaryA3").html(data.attrNmae3);
 						$("#a30").prop("disabled", false);
 					} else {
@@ -1440,7 +1443,7 @@
 					if ((data.attrNmae4) != 'null') {
 						$("#sa4").html(data.attrNmae4);
 						$("#starNcolonsa4").html(
-								":<font color='red' size='4'>*</font>");
+								":_$tag______________________*_$tag__");
 						$("#summaryA4").html(data.attrNmae4);
 						$("#a40").prop("disabled", false);
 					} else {
@@ -1452,7 +1455,7 @@
 					if ((data.attrNmae5) != 'null') {
 						$("#sa5").html(data.attrNmae5);
 						$("#starNcolonsa5").html(
-								":<font color='red' size='4'>*</font>");
+								":_$tag______________________*_$tag__");
 						$("#summaryA5").html(data.attrNmae5);
 						$("#a50").prop("disabled", false);
 					} else {
@@ -1465,7 +1468,7 @@
 						$("#sa6").html(data.attrNmae6);
 						$("#summaryA6").html(data.attrNmae6);
 						$("#starNcolonsa6").html(
-								":<font color='red' size='4'>*</font>");
+								":_$tag______________________*_$tag__");
 						$("#a60").prop("disabled", false);
 					} else {
 						$("#sa6").html("Attribute6:");
@@ -1569,7 +1572,11 @@
 															function(item) {
 																//alert(item.image);
 																img = img
-																		+ '<img width="100" height="100" style="" alt="" src="data:image/jpeg;base64,'+item.image+'">';
+																		+ '<img onclick="zoomPicture(\'data:image/jpeg;base64,'
+																		+ item.image
+																		+ '\');" width="100" height="100" style="" alt="" src="data:image/jpeg;base64,'
+																		+ item.image
+																		+ '">';
 															});
 											$("#peoImg").html(img);
 										}
@@ -2412,6 +2419,12 @@
 				}
 			});
 		});
+	</script>
+	<script type="text/javascript">
+		function zoomPicture(img) {
+			$("#zoomImg").attr("src", img);
+			$("#zoomPictureModal").modal("show");
+		}
 	</script>
 </body>
 

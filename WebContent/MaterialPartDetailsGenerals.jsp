@@ -1329,6 +1329,9 @@
 			</div>
 		</div>
 	</div>
+
+	<%@include file="zoomImage.jsp"%>
+
 	<!-- Script -->
 
 	<script type="text/javascript">
@@ -1566,7 +1569,11 @@
 															function(item) {
 																//alert(item.image);
 																img = img
-																		+ '<img width="100" height="100" style="" alt="" src="data:image/jpeg;base64,'+item.image+'">';
+																		+ '<img onclick="zoomPicture(\'data:image/jpeg;base64,'
+																		+ item.image
+																		+ '\');" width="100" height="100" style="" alt="" src="data:image/jpeg;base64,'
+																		+ item.image
+																		+ '">';
 															});
 											$("#peoImg").html(img);
 										}
@@ -2409,6 +2416,12 @@
 				}
 			});
 		});
+	</script>
+	<script type="text/javascript">
+		function zoomPicture(img) {
+			$("#zoomImg").attr("src", img);
+			$("#zoomPictureModal").modal("show");
+		}
 	</script>
 </body>
 

@@ -57,9 +57,13 @@
 		</c:if>
 	</c:if>
 	<div class="main" style="height: 664px;">
-		<%@include file="includeHeader.jsp"%>
+		<%-- <%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
-			<%@include file="includeSidebar.jsp"%>
+			<%@include file="includeSidebar.jsp"%> --%>
+
+		<%@include file="includeHeaderMenu.jsp"%>
+		<div class="page-container wide">
+
 			<div class="content-sec"
 				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
 				<div class="container">
@@ -100,7 +104,7 @@
 												<!-- Sanp -->
 												<div style="width: 40%; float: right;">
 													<div align="right">
-														<h5>Upload From Web Camp</h5>
+														<h5>Upload From Web Cam</h5>
 														<br>
 														<center>
 															<a href="javascript:void(take_snapshot())">
@@ -144,7 +148,9 @@
 													items="${sessionScope['ejb'].getAllProductImageByProductId(param.id)}"
 													var="img">
 													<div style="float: left;">
-														<img width="100" height="100" style="" alt=""
+														<img
+															onclick="zoomPicture('data:image/jpeg;base64,${img.getImageAsString()}');"
+															width="100" height="100" style="" alt=""
 															src="data:image/jpeg;base64,${img.getImageAsString()}"><br>
 														<c:if
 															test="${sessionScope['ejb'].getAllProductImageByProductId(param.id).size()>1}">
@@ -173,6 +179,8 @@
 
 
 	<!-- main -->
+
+	<%@include file="zoomImage.jsp"%>
 
 	<!-- Script -->
 	<script type="text/javascript" src="js/modernizr.js"></script>
@@ -227,7 +235,12 @@
 		}
 	</script>
 
-
+	<script type="text/javascript">
+		function zoomPicture(img) {
+			$("#zoomImg").attr("src", img);
+			$("#zoomPictureModal").modal("show");
+		}
+	</script>
 </body>
 
 <!-- Mirrored from forest.themenum.com/azan/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Jul 2015 06:40:29 GMT -->

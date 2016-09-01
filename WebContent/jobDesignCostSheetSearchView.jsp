@@ -276,6 +276,7 @@
 	<!-- main -->
 
 </body>
+<%@include file="zoomImage.jsp"%>
 <!-- Script -->
 <script type="text/javascript" src="js/modernizr.js"></script>
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
@@ -303,7 +304,9 @@
 									function(item) {
 										//alert(item.image);
 										img = img
-												+ '<img width="100" height="100" style="" alt="" src="data:image/jpeg;base64,'+item.image+'">';
+												+ '<img onclick="zoomPicture(\'data:image/jpeg;base64,'
+												+ item.image
+												+ '\');" width="100" height="100" style="" alt="" src="data:image/jpeg;base64,'+item.image+'">';
 									});
 					$("#image").html(img);
 				}
@@ -314,4 +317,10 @@
 				'width=900,height=700').print();
 	}
 </script>
+<script type="text/javascript">
+		function zoomPicture(img) {
+			$("#zoomImg").attr("src", img);
+			$("#zoomPictureModal").modal("show");
+		}
+	</script>
 </html>

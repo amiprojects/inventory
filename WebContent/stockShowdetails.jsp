@@ -81,6 +81,12 @@
 				'name', 'width=900,height=700').print();
 	}
 </script>
+<script type="text/javascript">
+		function zoomPicture(img) {
+			$("#zoomImg").attr("src", img);
+			$("#zoomPictureModal").modal("show");
+		}
+	</script>
 <link rel="stylesheet" href="js/jquery-ui/jquery-ui.css" type="text/css" />
 <script src="js/jquery-ui/jquery-ui.js"></script>
 
@@ -204,7 +210,9 @@
 												<b>Image:</b>
 												<div>
 													<c:if test="${pImage.size()>0}">
-														<img width="100" height="100" style=""
+														<img
+															onclick="zoomPicture('data:image/jpeg;base64,${pImage.get(0).getImageAsString()}');"
+															width="100" height="100" style=""
 															alt="Product Image here"
 															src="data:image/jpeg;base64,${pImage.get(0).getImageAsString()}">
 													</c:if>
@@ -386,7 +394,7 @@
 											<br> <br>
 											<div style="width: 927px; height: 176px; overflow: scroll;">
 												<c:forEach items="${pImage}" var="image">
-													<img width="100" height="100" style="" alt="ProductImage"
+													<img onclick="zoomPicture('data:image/jpeg;base64,${image.getImageAsString()}');" width="100" height="100" style="" alt="ProductImage"
 														src="data:image/jpeg;base64,${image.getImageAsString()}">
 												</c:forEach>
 											</div>
@@ -907,5 +915,5 @@
 	</div>
 	<!-- main -->
 </body>
-
+<%@include file="zoomImage.jsp"%>
 </html>
