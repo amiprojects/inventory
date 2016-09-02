@@ -22,6 +22,10 @@ import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpSession;
 
 import com.kaanish.model.AccountDetails;
+import com.kaanish.model.ApprovalEntry;
+import com.kaanish.model.ApprovalProductDetails;
+import com.kaanish.model.ApprovalReturn;
+import com.kaanish.model.ApprovalReturnProductDetails;
 import com.kaanish.model.Bill_setup;
 import com.kaanish.model.Category;
 import com.kaanish.model.City;
@@ -4618,7 +4622,7 @@ public class Ejb {
 	public void updateDesignImage(DesignImage sample) {
 		em.merge(sample);
 	}
-	
+
 	public void removeSampleCostSheetImageById(int id) {
 		em.remove(getDesignImageById(id));
 	}
@@ -4844,6 +4848,105 @@ public class Ejb {
 
 	public NotificationView getNotificationViewById(int id) {
 		return em.find(NotificationView.class, id);
+	}
+
+	/***************** for ApprovalEntry **********************/
+	public void setApprovalEntry(ApprovalEntry approvalEntry) {
+		em.persist(approvalEntry);
+	}
+
+	public void deleteApprovalEntryById(String id) {
+		em.remove(getApprovalEntryById(id));
+	}
+
+	public ApprovalEntry getApprovalEntryById(String id) {
+		return em.find(ApprovalEntry.class, id);
+	}
+
+	public List<ApprovalEntry> getAllApprovalEntry() {
+		TypedQuery<ApprovalEntry> q = em.createQuery(
+				"select c from ApprovalEntry c", ApprovalEntry.class);
+		return q.getResultList();
+	}
+
+	public void updateApprovalEntry(ApprovalEntry approvalEntry) {
+		em.merge(approvalEntry);
+	}
+
+	/***************** for ApprovalProductDetails **********************/
+	public void setApprovalProductDetails(
+			ApprovalProductDetails approvalProductDetails) {
+		em.persist(approvalProductDetails);
+	}
+
+	public void deleteApprovalProductDetailsById(String id) {
+		em.remove(getApprovalProductDetailsById(id));
+	}
+
+	public ApprovalProductDetails getApprovalProductDetailsById(String id) {
+		return em.find(ApprovalProductDetails.class, id);
+	}
+
+	public List<ApprovalProductDetails> getAllApprovalProductDetails() {
+		TypedQuery<ApprovalProductDetails> q = em.createQuery(
+				"select c from ApprovalProductDetails c",
+				ApprovalProductDetails.class);
+		return q.getResultList();
+	}
+
+	public void updateApprovalProductDetails(
+			ApprovalProductDetails approvalProductDetails) {
+		em.merge(approvalProductDetails);
+	}
+
+	/***************** for ApprovalReturn **********************/
+	public void setApprovalReturn(ApprovalReturn approvalReturn) {
+		em.persist(approvalReturn);
+	}
+
+	public void deleteApprovalReturnById(String id) {
+		em.remove(getApprovalReturnById(id));
+	}
+
+	public ApprovalReturn getApprovalReturnById(String id) {
+		return em.find(ApprovalReturn.class, id);
+	}
+
+	public List<ApprovalReturn> getAllApprovalReturn() {
+		TypedQuery<ApprovalReturn> q = em.createQuery(
+				"select c from ApprovalReturn c", ApprovalReturn.class);
+		return q.getResultList();
+	}
+
+	public void updateApprovalReturn(ApprovalReturn approvalReturn) {
+		em.merge(approvalReturn);
+	}
+
+	/***************** for ApprovalReturnProductDetails **********************/
+	public void setApprovalReturnProductDetails(
+			ApprovalReturnProductDetails approvalReturnProductDetails) {
+		em.persist(approvalReturnProductDetails);
+	}
+
+	public void deleteApprovalReturnProductDetailsById(String id) {
+		em.remove(getApprovalReturnProductDetailsById(id));
+	}
+
+	public ApprovalReturnProductDetails getApprovalReturnProductDetailsById(
+			String id) {
+		return em.find(ApprovalReturnProductDetails.class, id);
+	}
+
+	public List<ApprovalReturnProductDetails> getAllApprovalReturnProductDetails() {
+		TypedQuery<ApprovalReturnProductDetails> q = em.createQuery(
+				"select c from ApprovalReturnProductDetails c",
+				ApprovalReturnProductDetails.class);
+		return q.getResultList();
+	}
+
+	public void updateApprovalReturnProductDetails(
+			ApprovalReturnProductDetails approvalReturnProductDetails) {
+		em.merge(approvalReturnProductDetails);
 	}
 
 	/******** alertNotificationforQuantity *******************/
