@@ -118,7 +118,7 @@
 						</div>
 
 						<div class="col-md-12" style="height: 800px;">
-							<form class="sec" action="salesEntry" method="post">
+							<form class="sec" action="salesEntry" id="salesForm" method="post">
 								<div class="row">
 									<div class="col-md-6">
 										<div class="widget-area"
@@ -1567,7 +1567,7 @@
 			}
 		}
 		function submit() {
-			document.getElementById("purchaseForm").submit();
+			document.getElementById("salesForm").submit();
 		}
 		$(function() {
 			$("#pCode")

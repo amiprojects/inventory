@@ -943,8 +943,55 @@ public class InitS extends HttpServlet {
 			ejb.setPageList(pageList);
 			pageList = null;
 		}
+
+		int flagEditSampleCostSheet = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Edit Sample Job CostSheet")) {
+				flagEditSampleCostSheet = 1;
+				break;
+			}
+		}
+		if (flagEditSampleCostSheet == 0) {
+			pageList = new PageList();
+			pageList.setName("Edit Sample Job CostSheet");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
 		module = null;
 		// job
+
+		// approval
+		int flagMapproval = 0;
+		for (Module m : ejb.getAllModule()) {
+			if (m.getName().equals("Approval")) {
+				flagMapproval = 1;
+				module = ejb.getModuleByName("Approval");
+				break;
+			}
+		}
+		if (flagMapproval == 0) {
+			module = new Module();
+			module.setName("Approval");
+			ejb.setModule(module);
+		}
+
+		int flagApprovalEntry = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Approval Entry")) {
+				flagApprovalEntry = 1;
+				break;
+			}
+		}
+		if (flagApprovalEntry == 0) {
+			pageList = new PageList();
+			pageList.setName("Approval Entry");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+		module = null;
+		// approval
 
 		// note
 		int flagMnote = 0;
@@ -1468,9 +1515,10 @@ public class InitS extends HttpServlet {
 		}
 		// adding vendor- production house only
 
-		if (ejb.getAllBillSetup().size() < 8) {
-			companyInfo = ejb.getUserById("adminProduction").getCompanyInfo();
+		// bill setup
+		companyInfo = ejb.getUserById("adminProduction").getCompanyInfo();
 
+		if (ejb.getLastBillSetupBySufix("PUR") == null) {
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("PUR");
 			bill_setup.setCompanyInitial("KK");
@@ -1478,7 +1526,9 @@ public class InitS extends HttpServlet {
 			bill_setup.setCompanyInfo(companyInfo);
 			ejb.setBillSetup(bill_setup);
 			bill_setup = null;
+		}
 
+		if (ejb.getLastBillSetupBySufix("RPUR") == null) {
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("RPUR");
 			bill_setup.setCompanyInitial("KK");
@@ -1486,7 +1536,9 @@ public class InitS extends HttpServlet {
 			bill_setup.setCompanyInfo(companyInfo);
 			ejb.setBillSetup(bill_setup);
 			bill_setup = null;
+		}
 
+		if (ejb.getLastBillSetupBySufix("PURO") == null) {
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("PURO");
 			bill_setup.setCompanyInitial("KK");
@@ -1494,7 +1546,9 @@ public class InitS extends HttpServlet {
 			bill_setup.setCompanyInfo(companyInfo);
 			ejb.setBillSetup(bill_setup);
 			bill_setup = null;
+		}
 
+		if (ejb.getLastBillSetupBySufix("INV") == null) {
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("INV");
 			bill_setup.setCompanyInitial("KK");
@@ -1502,7 +1556,9 @@ public class InitS extends HttpServlet {
 			bill_setup.setCompanyInfo(companyInfo);
 			ejb.setBillSetup(bill_setup);
 			bill_setup = null;
+		}
 
+		if (ejb.getLastBillSetupBySufix("SRINV") == null) {
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("SRINV");
 			bill_setup.setCompanyInitial("KK");
@@ -1510,7 +1566,9 @@ public class InitS extends HttpServlet {
 			bill_setup.setCompanyInfo(companyInfo);
 			ejb.setBillSetup(bill_setup);
 			bill_setup = null;
+		}
 
+		if (ejb.getLastBillSetupBySufix("JOB") == null) {
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("JOB");
 			bill_setup.setCompanyInitial("KK");
@@ -1518,7 +1576,9 @@ public class InitS extends HttpServlet {
 			bill_setup.setCompanyInfo(companyInfo);
 			ejb.setBillSetup(bill_setup);
 			bill_setup = null;
+		}
 
+		if (ejb.getLastBillSetupBySufix("JOBR") == null) {
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("JOBR");
 			bill_setup.setCompanyInitial("KK");
@@ -1526,7 +1586,9 @@ public class InitS extends HttpServlet {
 			bill_setup.setCompanyInfo(companyInfo);
 			ejb.setBillSetup(bill_setup);
 			bill_setup = null;
+		}
 
+		if (ejb.getLastBillSetupBySufix("ROAD") == null) {
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("ROAD");
 			bill_setup.setCompanyInitial("KK");
@@ -1535,6 +1597,17 @@ public class InitS extends HttpServlet {
 			ejb.setBillSetup(bill_setup);
 			bill_setup = null;
 		}
+
+		if (ejb.getLastBillSetupBySufix("APPROVAL") == null) {
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("APPROVAL");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfo);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+		}
+		// bill setup
 	}
 
 	public void iKaanish() {
@@ -1586,9 +1659,10 @@ public class InitS extends HttpServlet {
 		}
 		// vendor type
 
-		if (ejb.getAllBillSetup().size() < 8) {
-			companyInfo = ejb.getUserById("adminKaanish").getCompanyInfo();
+		// bill setup
+		companyInfo = ejb.getUserById("adminKaanish").getCompanyInfo();
 
+		if (ejb.getLastBillSetupBySufix("PUR") == null) {
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("PUR");
 			bill_setup.setCompanyInitial("KK");
@@ -1596,7 +1670,9 @@ public class InitS extends HttpServlet {
 			bill_setup.setCompanyInfo(companyInfo);
 			ejb.setBillSetup(bill_setup);
 			bill_setup = null;
+		}
 
+		if (ejb.getLastBillSetupBySufix("RPUR") == null) {
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("RPUR");
 			bill_setup.setCompanyInitial("KK");
@@ -1604,7 +1680,9 @@ public class InitS extends HttpServlet {
 			bill_setup.setCompanyInfo(companyInfo);
 			ejb.setBillSetup(bill_setup);
 			bill_setup = null;
+		}
 
+		if (ejb.getLastBillSetupBySufix("PURO") == null) {
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("PURO");
 			bill_setup.setCompanyInitial("KK");
@@ -1612,7 +1690,9 @@ public class InitS extends HttpServlet {
 			bill_setup.setCompanyInfo(companyInfo);
 			ejb.setBillSetup(bill_setup);
 			bill_setup = null;
+		}
 
+		if (ejb.getLastBillSetupBySufix("INV") == null) {
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("INV");
 			bill_setup.setCompanyInitial("KK");
@@ -1620,7 +1700,9 @@ public class InitS extends HttpServlet {
 			bill_setup.setCompanyInfo(companyInfo);
 			ejb.setBillSetup(bill_setup);
 			bill_setup = null;
+		}
 
+		if (ejb.getLastBillSetupBySufix("SRINV") == null) {
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("SRINV");
 			bill_setup.setCompanyInitial("KK");
@@ -1628,7 +1710,9 @@ public class InitS extends HttpServlet {
 			bill_setup.setCompanyInfo(companyInfo);
 			ejb.setBillSetup(bill_setup);
 			bill_setup = null;
+		}
 
+		if (ejb.getLastBillSetupBySufix("JOB") == null) {
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("JOB");
 			bill_setup.setCompanyInitial("KK");
@@ -1636,7 +1720,9 @@ public class InitS extends HttpServlet {
 			bill_setup.setCompanyInfo(companyInfo);
 			ejb.setBillSetup(bill_setup);
 			bill_setup = null;
+		}
 
+		if (ejb.getLastBillSetupBySufix("JOBR") == null) {
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("JOBR");
 			bill_setup.setCompanyInitial("KK");
@@ -1644,7 +1730,9 @@ public class InitS extends HttpServlet {
 			bill_setup.setCompanyInfo(companyInfo);
 			ejb.setBillSetup(bill_setup);
 			bill_setup = null;
+		}
 
+		if (ejb.getLastBillSetupBySufix("ROAD") == null) {
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("ROAD");
 			bill_setup.setCompanyInitial("KK");
@@ -1653,6 +1741,17 @@ public class InitS extends HttpServlet {
 			ejb.setBillSetup(bill_setup);
 			bill_setup = null;
 		}
+
+		if (ejb.getLastBillSetupBySufix("APPROVAL") == null) {
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("APPROVAL");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfo);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+		}
+		// bill setup
 	}
 
 	public void iKainat() {
@@ -1704,9 +1803,10 @@ public class InitS extends HttpServlet {
 		}
 		// vendor type
 
-		if (ejb.getAllBillSetup().size() < 8) {
-			companyInfo = ejb.getUserById("adminKainat").getCompanyInfo();
+		// bill setup
+		companyInfo = ejb.getUserById("adminKainat").getCompanyInfo();
 
+		if (ejb.getLastBillSetupBySufix("PUR") == null) {
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("PUR");
 			bill_setup.setCompanyInitial("KK");
@@ -1714,7 +1814,9 @@ public class InitS extends HttpServlet {
 			bill_setup.setCompanyInfo(companyInfo);
 			ejb.setBillSetup(bill_setup);
 			bill_setup = null;
+		}
 
+		if (ejb.getLastBillSetupBySufix("RPUR") == null) {
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("RPUR");
 			bill_setup.setCompanyInitial("KK");
@@ -1722,7 +1824,9 @@ public class InitS extends HttpServlet {
 			bill_setup.setCompanyInfo(companyInfo);
 			ejb.setBillSetup(bill_setup);
 			bill_setup = null;
+		}
 
+		if (ejb.getLastBillSetupBySufix("PURO") == null) {
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("PURO");
 			bill_setup.setCompanyInitial("KK");
@@ -1730,7 +1834,9 @@ public class InitS extends HttpServlet {
 			bill_setup.setCompanyInfo(companyInfo);
 			ejb.setBillSetup(bill_setup);
 			bill_setup = null;
+		}
 
+		if (ejb.getLastBillSetupBySufix("INV") == null) {
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("INV");
 			bill_setup.setCompanyInitial("KK");
@@ -1738,7 +1844,9 @@ public class InitS extends HttpServlet {
 			bill_setup.setCompanyInfo(companyInfo);
 			ejb.setBillSetup(bill_setup);
 			bill_setup = null;
+		}
 
+		if (ejb.getLastBillSetupBySufix("SRINV") == null) {
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("SRINV");
 			bill_setup.setCompanyInitial("KK");
@@ -1746,7 +1854,9 @@ public class InitS extends HttpServlet {
 			bill_setup.setCompanyInfo(companyInfo);
 			ejb.setBillSetup(bill_setup);
 			bill_setup = null;
+		}
 
+		if (ejb.getLastBillSetupBySufix("JOB") == null) {
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("JOB");
 			bill_setup.setCompanyInitial("KK");
@@ -1754,7 +1864,9 @@ public class InitS extends HttpServlet {
 			bill_setup.setCompanyInfo(companyInfo);
 			ejb.setBillSetup(bill_setup);
 			bill_setup = null;
+		}
 
+		if (ejb.getLastBillSetupBySufix("JOBR") == null) {
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("JOBR");
 			bill_setup.setCompanyInitial("KK");
@@ -1762,7 +1874,9 @@ public class InitS extends HttpServlet {
 			bill_setup.setCompanyInfo(companyInfo);
 			ejb.setBillSetup(bill_setup);
 			bill_setup = null;
+		}
 
+		if (ejb.getLastBillSetupBySufix("ROAD") == null) {
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("ROAD");
 			bill_setup.setCompanyInitial("KK");
@@ -1771,6 +1885,17 @@ public class InitS extends HttpServlet {
 			ejb.setBillSetup(bill_setup);
 			bill_setup = null;
 		}
+
+		if (ejb.getLastBillSetupBySufix("APPROVAL") == null) {
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("APPROVAL");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfo);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+		}
+		// bill setup
 	}
 
 	@Override

@@ -273,8 +273,8 @@
 													value="${salesProducts.salesReQty}"><input
 													type="hidden" id="qtyH${salesProducts.id}"
 													value="${salesProducts.quantity}"> <input
-													type="hidden" id="wspH${salesProducts.id}"
-													value="${salesProducts.purchase_Product_Details.wsp}"><input
+													type="hidden" id="costH${salesProducts.id}"
+													value="${salesProducts.purchase_Product_Details.cost}"><input
 													type="hidden" id="salesPriceH${salesProducts.id}"
 													value="${salesProducts.salesPrice}">
 												</td>
@@ -680,7 +680,7 @@
 		var qtyH = $("#qtyH" + a).val();
 		var qty = $("#trRemove" + a + " :nth-child(6) input[type=text]")
 				.val();
-		var wspH = $("#wspH" + a).val();
+		var costH = $("#costH" + a).val();
 		var salesPriceH = $("#salesPriceH" + a).val();
 		var price = $("#trRemove" + a + " :nth-child(7) input[type=text]")
 				.val();
@@ -700,14 +700,14 @@
 			$(f).prop("readonly", true);
 			$(f).attr("style", "background-color: grey;");	
 			sweetAlert('Oops...','Selling quantity can not be greater than sold quantity : ' + qtyH, 'error');
-		} else if (Number(price) < Number(wspH)) {
+		} else if (Number(price) < Number(costH)) {
 			$("#trRemove" + a + " :nth-child(7) input[type=text]").val(
 					salesPriceH);
 			var price=salesPriceH;
 			
 			$(f).prop("readonly", true);
 			$(f).attr("style", "background-color: grey;");	
-			sweetAlert('Oops...','Selling price can not be less than wsp : ' + wspH, 'error');
+			sweetAlert('Oops...','Selling price can not be less than cost : ' + costH, 'error');
 		} else{                
                 swal({
                 	title: "Are you sure?",

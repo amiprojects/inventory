@@ -53,6 +53,11 @@
 			<li><a id="sSalesRetSearch" href="salesSearchReturn.jsp"
 				title="">Sales Return Search</a></li>
 		</ul></li>
+	<li><a href="#" title="">Approval</a>
+		<ul>
+			<li><a id="approvalEntry" href="approvalEntry.jsp" title="">Approval
+					Entry</a></li>
+		</ul></li>
 	<li><a href="#" title="">Vendor</a>
 		<ul>
 			<li><a id="vVendor" href="purchasingVendor.jsp" title="">Vendor/Agent/Jobber/Designer</a></li>

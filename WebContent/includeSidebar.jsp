@@ -92,6 +92,17 @@
 				</div>
 			</div>
 			<div class="single-menu">
+				<h2 id="approval">
+					<a title=""><span>Approval Module</span></a>
+				</h2>
+				<div class="sub-menu">
+					<ul>
+						<li><a id="approvalEntry" href="approvalEntry.jsp" title="">Approval
+								Entry</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="single-menu">
 				<h2 id="vendor">
 					<a title=""><span>Vendor Module</span></a>
 				</h2>

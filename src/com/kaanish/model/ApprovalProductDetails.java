@@ -21,14 +21,13 @@ public class ApprovalProductDetails implements Serializable {
 	@GeneratedValue
 	private int id;
 	private float quantity;
-	private float salesPrice;
-	private float salesReQty;
+	private float price;
+	private float approvalRetQty;
 
 	@ManyToOne
 	@JoinColumn(name = "approvalEntryId")
 	private ApprovalEntry approvalEntry;
 	private int purchaseProductDetailsId;
-
 	@OneToMany(mappedBy = "approvalProductDetails")
 	private List<ApprovalReturnProductDetails> approvalReturnProductDetail;
 
@@ -46,22 +45,6 @@ public class ApprovalProductDetails implements Serializable {
 
 	public void setQuantity(float quantity) {
 		this.quantity = quantity;
-	}
-
-	public float getSalesPrice() {
-		return salesPrice;
-	}
-
-	public void setSalesPrice(float salesPrice) {
-		this.salesPrice = salesPrice;
-	}
-
-	public float getSalesReQty() {
-		return salesReQty;
-	}
-
-	public void setSalesReQty(float salesReQty) {
-		this.salesReQty = salesReQty;
 	}
 
 	public ApprovalEntry getApprovalEntry() {
@@ -87,5 +70,21 @@ public class ApprovalProductDetails implements Serializable {
 	public void setApprovalReturnProductDetail(
 			List<ApprovalReturnProductDetails> approvalReturnProductDetail) {
 		this.approvalReturnProductDetail = approvalReturnProductDetail;
+	}
+
+	public float getPrice() {
+		return price;
+	}
+
+	public void setPrice(float price) {
+		this.price = price;
+	}
+
+	public float getApprovalRetQty() {
+		return approvalRetQty;
+	}
+
+	public void setApprovalRetQty(float approvalRetQty) {
+		this.approvalRetQty = approvalRetQty;
 	}
 }

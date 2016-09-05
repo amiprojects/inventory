@@ -19,12 +19,14 @@ public class ApprovalReturnProductDetails implements Serializable {
 	@GeneratedValue
 	private int id;
 	private float qtyReturn;
+	
+	// xxxxxxxxxxxxxxxx
 	private String fault;
+	// xxxxxxxxxxxxxxxx
 
 	@ManyToOne
 	@JoinColumn(name = "approvalProductDetailsID")
 	private ApprovalProductDetails approvalProductDetails;
-
 	@ManyToOne
 	@JoinColumn(name = "approvalReturnsID")
 	private ApprovalReturn approvalReturn;

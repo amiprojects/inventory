@@ -75,7 +75,7 @@
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
 
-			<c:if test="${page.name.equals('Sales Entry')}">
+			<c:if test="${page.name.equals('Approval Entry')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
@@ -114,11 +114,12 @@
 					<div class="masonary-grids">
 
 						<div class="breadcrumbs" style="height: 50px; text-align: center;">
-							<h3 style="margin-top: 11px;">Sales Entry</h3>
+							<h3 style="margin-top: 11px;">Approval Entry</h3>
 						</div>
 
 						<div class="col-md-12" style="height: 800px;">
-							<form class="sec" action="salesEntry" method="post">
+							<form class="sec" action="approvalEntry" id="entryForm"
+								method="post">
 								<div class="row">
 									<div class="col-md-6">
 										<div class="widget-area"
@@ -189,19 +190,19 @@
 										<div class="widget-area"
 											style="height: 270px; padding: 5px 3px;">
 											<div style="background-color: lightgrey; padding: 3px 3px;"">
-												<span class="head_style">Invoice Details:</span>
+												<span class="head_style">Approval Bill Details:</span>
 											</div>
 
 											<div class="form-group" style="padding-top: 18px;">
-												<label style="font-size: 15px" class="font">Sales
-													challan no. :</label>
+												<label style="font-size: 15px" class="font">Approval
+													bill no. :</label>
 												<c:set var="fy"
 													value="${sessionScope['ejb'].getCurrentFinancialYear()}" />
 												<c:set var="cno"
-													value="${sessionScope['ejb'].getLastSalesChallanNumberByCompany()+1}" />
+													value="${sessionScope['ejb'].getLastApprovalChallanNumber()+1}" />
 												<c:set var="csuf"
-													value="${sessionScope['ejb'].getLastSalesChallanSuffixByCompany()+1}" />
-												<c:set var="suf" value="INV" />
+													value="${sessionScope['ejb'].getLastApprovalChallanSuffix()+1}" />
+												<c:set var="suf" value="APPROVAL" />
 												<c:set var="bs"
 													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompany(suf)}" />
 												<fmt:formatNumber value="${cno}" var="lastChNo"
@@ -321,7 +322,7 @@
 										<div class="form-group"">
 											<label style="font-size: 15px" class="font">Description
 												(if any) :</label>
-											<textarea rows="8" cols="" class="form-control"
+											<textarea rows="5" cols="" class="form-control"
 												name="salesDesc"></textarea>
 										</div>
 									</div>
@@ -339,7 +340,7 @@
 													value="0"></td>
 											</tr>
 										</thead>
-										<tbody>
+										<tbody style="display: none;">
 											<tr>
 												<td colspan="2">Discount &nbsp; <select name="disType"
 													id="disType" onchange="disTypeF();">
@@ -355,7 +356,7 @@
 											</tr>
 										</tbody>
 
-										<tbody>
+										<tbody style="display: none;">
 											<tr>
 												<td colspan="2" id="disc">Discount Value:</td>
 												<td><input type="text" class="form-control"
@@ -395,7 +396,7 @@
 													value="0"></td>
 											</tr>
 										</tbody>
-										<tbody>
+										<tbody style="display: none;">
 											<tr>
 												<td><select class="form-control" id="taxGroup"
 													name="taxGroup" onchange="selectedTaxGroup();">
@@ -411,7 +412,7 @@
 													readonly="readonly" value="0" id="taxTot"></td>
 											</tr>
 										</tbody>
-										<tbody>
+										<tbody style="display: none;">
 											<tr>
 												<td colspan="2">Tax Amount :</td>
 												<td><input type="text" class="form-control"
@@ -419,7 +420,7 @@
 													name="taxAmount"></td>
 											</tr>
 										</tbody>
-										<tbody>
+										<tbody style="display: none;">
 											<tr>
 												<td colspan="2" id="trans">Transport charge :</td>
 												<td><input type="text" class="form-control" value="0"
@@ -428,7 +429,7 @@
 											</tr>
 										</tbody>
 
-										<tbody>
+										<tbody style="display: none;">
 											<tr>
 												<td colspan="2" id="sur">Surcharge :</td>
 												<td><input type="text" class="form-control" value="0"
@@ -600,7 +601,7 @@
 																		id="isAgent">
 																	<div class="breadcrumbs">
 																		<button type="button" class="btn green pull-right"
-																			onclick="submit();">Save</button>
+																			onclick="submitForm();">Save</button>
 																	</div>
 																</div>
 															</div>
@@ -1303,10 +1304,9 @@
 					&& $("#agentName").val() == "") {
 				alert("please insert agent name");
 			} else if (k == 0) {
-				alert("please enter product to sale");
+				alert("No product found");
 			} else {
-				//$("#datepicker2").val($("#datepicker").val());
-				var d = $("#datepicker").datepicker('getDate');
+				/* var d = $("#datepicker").datepicker('getDate');
 				var n = d.getFullYear();
 				var m = d.getMonth();
 				var dt = d.getDate();
@@ -1316,7 +1316,9 @@
 					maxDate : 0
 				});
 				$("#datepicker2").datepicker('setDate', new Date());
-				$("#saveSales").modal("show");
+				$("#saveSales").modal("show"); */
+
+				submitForm();
 			}
 		}
 	</script>
@@ -1566,8 +1568,8 @@
 				$("#description").hide();
 			}
 		}
-		function submit() {
-			document.getElementById("purchaseForm").submit();
+		function submitForm() {
+			document.getElementById("entryForm").submit();
 		}
 		$(function() {
 			$("#pCode")
@@ -1813,9 +1815,9 @@
 				$("#aNameStar").html(
 						"Via Agent :<font color='red' size='4'>*</font>");
 
-				$("#isEffectiveTR").removeAttr("style");
+				/* $("#isEffectiveTR").removeAttr("style");
 				$("#profitTypeTR").removeAttr("style");
-				$("#profitValueTR").removeAttr("style");
+				$("#profitValueTR").removeAttr("style"); */
 			} else {
 				$("#isAgent").val('no');
 				$("#agentName").prop("readonly", true);
@@ -1824,9 +1826,9 @@
 
 				$("#aNameStar").html("Via Agent :");
 
-				$("#isEffectiveTR").attr("style", "display: none;");
+				/* $("#isEffectiveTR").attr("style", "display: none;");
 				$("#profitTypeTR").attr("style", "display: none;");
-				$("#profitValueTR").attr("style", "display: none;");
+				$("#profitValueTR").attr("style", "display: none;"); */
 
 				$("#isEffective").val("efectiveYes");
 				$("#profitType").val("profitFlat");
@@ -2802,7 +2804,8 @@
 																			"#salesbarH")
 																			.val()
 																	+ '" value=\''
-																	+ $("#costH")
+																	+ $(
+																			"#costH")
 																			.val()
 																	+ '\'><input readonly="readonly" type="hidden" id="selectedCost'
 																	+ $(

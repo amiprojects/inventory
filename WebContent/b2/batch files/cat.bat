@@ -75,4 +75,8 @@ C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/kaanish FILE=d:/bac
 C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/kaanish FILE=d:/backup/exp.DMP BUFFER=10000000 IGNORE=Y CONSTRAINTS=Y GRANTS=Y TABLES=VOUCHERDETAILSFORVIAAGENTS
 C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/kaanish FILE=d:/backup/exp.DMP BUFFER=10000000 IGNORE=Y CONSTRAINTS=Y GRANTS=Y TABLES=UNIQUENAME
 C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/kaanish FILE=d:/backup/exp.DMP BUFFER=10000000 IGNORE=Y CONSTRAINTS=Y GRANTS=Y TABLES=URL
+C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/kaanish FILE=d:/backup/exp.DMP BUFFER=10000000 IGNORE=Y CONSTRAINTS=Y GRANTS=Y TABLES=APPROVALENTRY
+C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/kaanish FILE=d:/backup/exp.DMP BUFFER=10000000 IGNORE=Y CONSTRAINTS=Y GRANTS=Y TABLES=APPROVALPRODUCTDETAILS
+C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/kaanish FILE=d:/backup/exp.DMP BUFFER=10000000 IGNORE=Y CONSTRAINTS=Y GRANTS=Y TABLES=APPROVALRETURN
+C:/oraclexe/app/oracle/product/10.2.0/server/BIN/imp kaanish/kaanish FILE=d:/backup/exp.DMP BUFFER=10000000 IGNORE=Y CONSTRAINTS=Y GRANTS=Y TABLES=APPROVALRETURNPRODUCTDETAILS
 exit

@@ -20,6 +20,8 @@ import org.omg.PortableInterceptor.INACTIVE;
 
 import com.kaanish.ejb.Ejb;
 import com.kaanish.model.AccountDetails;
+import com.kaanish.model.ApprovalEntry;
+import com.kaanish.model.ApprovalProductDetails;
 import com.kaanish.model.Bill_setup;
 import com.kaanish.model.Category;
 import com.kaanish.model.City;
@@ -149,7 +151,8 @@ import com.kaanish.util.GetMacId;
 		"/purchaseSearchByViaAgentName", "/purchaseRetSearchByViaAgentNamet",
 		"/purchaseAgentPayment", "/creditNoteByViaPurchaseAgentName",
 		"/jobSearchByDesignNo", "/jobSearchByDesignNoForPayment",
-		"/uploadSampleCostSheetImage", "/deleteSampleCostSheetImage" })
+		"/uploadSampleCostSheetImage", "/deleteSampleCostSheetImage",
+		"/approvalEntry" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -217,6 +220,8 @@ public class Servlet extends HttpServlet {
 	private VoucherDetailsForViaAgents voucherDetForViaAgent;
 	private PaymentDetailsForViaAgents payDetForViaAgent;
 	int uniqueNo;
+	private ApprovalEntry approvalEntry;
+	private ApprovalProductDetails approvalProductDetails;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -2103,6 +2108,173 @@ public class Servlet extends HttpServlet {
 
 						break;
 
+					case "approvalEntry":
+						page = "approvalEntry.jsp";
+
+						// ////////Null Manage////////////////////////////
+						if (verifyParams(req, resp, "productId", "qtyvalue",
+								"mrpQty", "purchaseProductDetId")) {
+							req.setAttribute("msg", "Failed! Please try again!");
+							req.getRequestDispatcher(page).forward(req, resp);
+							return;
+						}
+						// ////////Null Manage////////////////////////////
+
+						List<ApprovalEntry> entries = ejb.getAllApprovalEntry();
+						int flagForApprovalBill = 0;
+						for (ApprovalEntry entry : entries) {
+							if (entry.getChallanNumber().equals(
+									req.getParameter("challanNumber"))) {
+								flagForApprovalBill = 1;
+								break;
+							}
+						}
+						if (flagForApprovalBill == 0) {
+							if (req.getParameter("isExistingCust").equals("0")) {
+								customerEntry = new CustomerEntry();
+								customerEntry.setName(req.getParameter(
+										"custName").toUpperCase());
+								customerEntry.setAddress(req.getParameter(
+										"addr").toUpperCase());
+								customerEntry.setCity(req.getParameter("city")
+										.toUpperCase());
+								customerEntry.setMobile(req
+										.getParameter("phone"));
+								customerEntry.setVat_cst_no(req.getParameter(
+										"vatcst").toUpperCase());
+								ejb.setCustomerEntry(customerEntry);
+
+								voucherAssign = new VoucherAssign();
+								voucherAssign.setCustomerEntry(customerEntry);
+								voucherAssign
+										.setVoucherDetailsNumber(customerEntry
+												.getMobile());
+								ejb.setVoucherAssign(voucherAssign);
+
+							} else {
+								voucherAssign = ejb
+										.getVoucherAssignByCustomerId(Integer.parseInt(req
+												.getParameter("existingCustId")));
+							}
+
+							approvalEntry = new ApprovalEntry();
+							dt = new Date();
+							approvalEntry.setChallanNumber(req
+									.getParameter("challanNumber"));
+							approvalEntry.setChallanNo(Integer.parseInt(req
+									.getParameter("challanNo")));
+							approvalEntry.setChallanSuffix(Integer.parseInt(req
+									.getParameter("challanSuffix")));
+							approvalEntry.setEntry_Date(dt);
+							approvalEntry.setApprovalDate(DateConverter
+									.getDate(req.getParameter("salesDate")));
+							approvalEntry.setSubTotal(Float.parseFloat(req
+									.getParameter("subtotalvalue")));
+							approvalEntry.setRoundOf(Float.parseFloat(req
+									.getParameter("roundvalue")));
+							approvalEntry.setTotalCost(Float.parseFloat(req
+									.getParameter("grandtotal")));
+							approvalEntry.setDescription(req.getParameter(
+									"salesDesc").toUpperCase());
+
+							if (!req.getParameter("aId").equals("")) {
+								approvalEntry.setSalesAgentId(Integer
+										.parseInt(req.getParameter("aId")));
+							}
+
+							if (req.getParameter("wspORmrp").equals("mrpVal")) {
+								approvalEntry.setMRP(true);
+							} else {
+								approvalEntry.setMRP(false);
+							}
+
+							if (req.getParameter("isExistingCust").equals("0")) {
+								approvalEntry.setCustomerId(customerEntry
+										.getId());
+							} else {
+								approvalEntry
+										.setCustomerId(Integer.parseInt(req
+												.getParameter("existingCustId")));
+							}
+							approvalEntry.setUsersId((String) httpSession
+									.getAttribute("user"));
+							ejb.setApprovalEntry(approvalEntry);
+
+							String productId[] = req
+									.getParameterValues("productId");
+							String qtyvalue[] = req
+									.getParameterValues("qtyvalue");
+							String mrpQty[] = req.getParameterValues("mrpQty");
+							String purchaseProductDetId[] = req
+									.getParameterValues("purchaseProductDetId");
+
+							for (int l = 0; l < productId.length; l++) {
+								approvalProductDetails = new ApprovalProductDetails();
+								approvalProductDetails
+										.setApprovalEntry(approvalEntry);
+								approvalProductDetails.setPrice(Float
+										.parseFloat(mrpQty[l]));
+								approvalProductDetails.setQuantity(Float
+										.parseFloat(qtyvalue[l]));
+								approvalProductDetails
+										.setPurchaseProductDetailsId(Integer
+												.parseInt(purchaseProductDetId[l]));
+								ejb.setApprovalProductDetails(approvalProductDetails);
+
+								purchaseProductDetails = ejb
+										.getPurchaseProductDetailsById(Integer
+												.parseInt(purchaseProductDetId[l]));
+								purchaseProductDetails
+										.setRemaining_quantity(purchaseProductDetails
+												.getRemaining_quantity()
+												- Float.parseFloat(qtyvalue[l]));
+								ejb.updatePurchaseProductDetails(purchaseProductDetails);
+
+								if (purchaseProductDetails.getProductDetail()
+										.isRaw()) {
+									rawMaterialsStock = ejb
+											.getRawMeterialStoctByProductId(
+													purchaseProductDetails
+															.getProductDetail()
+															.getId());
+
+									rawMaterialsStock
+											.setRemainingQty(rawMaterialsStock
+													.getRemainingQty()
+													- Float.parseFloat(qtyvalue[l]));
+
+									ejb.updateRawMaterialStockDetail(rawMaterialsStock);
+								} else {
+									readyGoodsStock = ejb
+											.getReadyGoodsStoctByProductId(
+													purchaseProductDetails
+															.getProductDetail()
+															.getId());
+
+									readyGoodsStock
+											.setRemainingQty(readyGoodsStock
+													.getRemainingQty()
+													- Float.parseFloat(qtyvalue[l]));
+
+									ejb.updateReadyGoodsStockDetail(readyGoodsStock);
+								}
+
+								rawMaterialsStock = null;
+								readyGoodsStock = null;
+								purchaseProductDetails = null;
+								approvalProductDetails = null;
+							}
+
+							req.setAttribute("purDetIdforPC",
+									approvalEntry.getId());
+							approvalEntry = null;
+							msg = "Successfull...";
+						} else {
+							msg = "Duplicate entry! Not allowed!";
+						}
+
+						break;
+
 					case "salesEntry":
 						page = "salesSalesEntry.jsp";
 
@@ -2359,6 +2531,7 @@ public class Servlet extends HttpServlet {
 									ejb.updateReadyGoodsStockDetail(readyGoodsStock);
 								}
 
+								rawMaterialsStock = null;
 								readyGoodsStock = null;
 								purchaseProductDetails = null;
 								salesProductDetails = null;

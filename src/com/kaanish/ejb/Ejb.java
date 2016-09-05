@@ -1590,7 +1590,7 @@ public class Ejb {
 				Purchase_Entry.class);
 		if (q.getResultList().size() > 0) {
 			int s = q.getResultList().get(0).getChallanSuffix();
-			if (getLastBillSetupBySufix("PUR").equals(null)) {
+			if (getLastBillSetupBySufix("PUR") == null) {
 				return s;
 			} else {
 				if (Integer.parseInt(getLastBillSetupBySufix("PUR").getSufix()) < s) {
@@ -1601,7 +1601,7 @@ public class Ejb {
 				}
 			}
 		} else {
-			if (getLastBillSetupBySufix("PUR").equals(null)) {
+			if (getLastBillSetupBySufix("PUR") == null) {
 				return 0;
 			} else {
 				return Integer.parseInt(getLastBillSetupBySufix("PUR")
@@ -1618,7 +1618,7 @@ public class Ejb {
 		q.setParameter("cId", cId);
 		if (q.getResultList().size() > 0) {
 			int s = q.getResultList().get(0).getChallanSuffix();
-			if (getLastBillSetupBySufixAndCompanyId("PUR", cId).equals(null)) {
+			if (getLastBillSetupBySufixAndCompanyId("PUR", cId) == null) {
 				return s;
 			} else {
 				if (Integer.parseInt(getLastBillSetupBySufixAndCompanyId("PUR",
@@ -1631,7 +1631,7 @@ public class Ejb {
 				}
 			}
 		} else {
-			if (getLastBillSetupBySufixAndCompanyId("PUR", cId).equals(null)) {
+			if (getLastBillSetupBySufixAndCompanyId("PUR", cId) == null) {
 				return 0;
 			} else {
 				return Integer.parseInt(getLastBillSetupBySufixAndCompanyId(
@@ -1648,7 +1648,7 @@ public class Ejb {
 		q.setParameter("cId", cId);
 		if (q.getResultList().size() > 0) {
 			int s = q.getResultList().get(0).getChallanSuffix();
-			if (getLastBillSetupBySufixAndCompanyId("PURO", cId).equals(null)) {
+			if (getLastBillSetupBySufixAndCompanyId("PURO", cId) == null) {
 				return s;
 			} else {
 				if (Integer.parseInt(getLastBillSetupBySufixAndCompanyId(
@@ -1661,7 +1661,7 @@ public class Ejb {
 				}
 			}
 		} else {
-			if (getLastBillSetupBySufixAndCompanyId("PURO", cId).equals(null)) {
+			if (getLastBillSetupBySufixAndCompanyId("PURO", cId) == null) {
 				return 0;
 			} else {
 				return Integer.parseInt(getLastBillSetupBySufixAndCompanyId(
@@ -1823,7 +1823,7 @@ public class Ejb {
 				PurchaseReturn.class);
 		if (q.getResultList().size() > 0) {
 			int s = q.getResultList().get(0).getChallanSuffix();
-			if (getLastBillSetupBySufix("RPUR").equals(null)) {
+			if (getLastBillSetupBySufix("RPUR") == null) {
 				return s;
 			} else {
 				if (Integer
@@ -1835,7 +1835,7 @@ public class Ejb {
 				}
 			}
 		} else {
-			if (getLastBillSetupBySufix("RPUR").equals(null)) {
+			if (getLastBillSetupBySufix("RPUR") == null) {
 				return 0;
 			} else {
 				return Integer.parseInt(getLastBillSetupBySufix("RPUR")
@@ -1990,7 +1990,7 @@ public class Ejb {
 				JobAssignmentDetails.class);
 		if (q.getResultList().size() > 0) {
 			int s = q.getResultList().get(0).getChallanSuffix();
-			if (getLastBillSetupBySufix("JOB").equals(null)) {
+			if (getLastBillSetupBySufix("JOB") == null) {
 				return s;
 			} else {
 				if (Integer.parseInt(getLastBillSetupBySufix("JOB").getSufix()) < s) {
@@ -2001,7 +2001,7 @@ public class Ejb {
 				}
 			}
 		} else {
-			if (getLastBillSetupBySufix("JOB").equals(null)) {
+			if (getLastBillSetupBySufix("JOB") == null) {
 				return 0;
 			} else {
 				return Integer.parseInt(getLastBillSetupBySufix("JOB")
@@ -2020,7 +2020,7 @@ public class Ejb {
 		q.setParameter("cId", cId);
 		if (q.getResultList().size() > 0) {
 			int s = q.getResultList().get(0).getChallanSuffix();
-			if (getLastBillSetupBySufixAndCompany("JOB").equals(null)) {
+			if (getLastBillSetupBySufixAndCompany("JOB") == null) {
 				return s;
 			} else {
 				if (Integer.parseInt(getLastBillSetupBySufixAndCompany("JOB")
@@ -2032,7 +2032,7 @@ public class Ejb {
 				}
 			}
 		} else {
-			if (getLastBillSetupBySufixAndCompany("JOB").equals(null)) {
+			if (getLastBillSetupBySufixAndCompany("JOB") == null) {
 				return 0;
 			} else {
 				return Integer
@@ -2717,7 +2717,7 @@ public class Ejb {
 				JobRecievedDetails.class);
 		if (q.getResultList().size() > 0) {
 			int s = q.getResultList().get(0).getChallanSuffix();
-			if (getLastBillSetupBySufix("JOBR").equals(null)) {
+			if (getLastBillSetupBySufix("JOBR") == null) {
 				return s;
 			} else {
 				if (Integer
@@ -2729,7 +2729,7 @@ public class Ejb {
 				}
 			}
 		} else {
-			if (getLastBillSetupBySufix("JOBR").equals(null)) {
+			if (getLastBillSetupBySufix("JOBR") == null) {
 				return 0;
 			} else {
 				return Integer.parseInt(getLastBillSetupBySufix("JOBR")
@@ -3444,7 +3444,7 @@ public class Ejb {
 
 		if (q.getResultList().size() > 0) {
 			int s = q.getResultList().get(0).getChallanSuffix();
-			if (getLastBillSetupBySufix("SRINV").equals(null)) {
+			if (getLastBillSetupBySufix("SRINV") == null) {
 				return s;
 			} else {
 				if (Integer.parseInt(getLastBillSetupBySufix("SRINV")
@@ -3456,7 +3456,7 @@ public class Ejb {
 				}
 			}
 		} else {
-			if (getLastBillSetupBySufix("SRINV").equals(null)) {
+			if (getLastBillSetupBySufix("SRINV") == null) {
 				return 0;
 			} else {
 				return Integer.parseInt(getLastBillSetupBySufix("SRINV")
@@ -3491,6 +3491,17 @@ public class Ejb {
 		}
 	}
 
+	public int getLastApprovalChallanNumber() {
+		TypedQuery<ApprovalEntry> q = em.createQuery(
+				"select c from ApprovalEntry c ORDER BY c.id DESC",
+				ApprovalEntry.class);
+		if (q.getResultList().size() > 0) {
+			return q.getResultList().get(0).getChallanNo();
+		} else {
+			return 0;
+		}
+	}
+
 	public int getLastSalesChallanSuffix() {
 		TypedQuery<SalesEntry> q = em.createQuery(
 				"select c from SalesEntry c ORDER BY c.id DESC",
@@ -3498,7 +3509,7 @@ public class Ejb {
 
 		if (q.getResultList().size() > 0) {
 			int s = q.getResultList().get(0).getChallanSuffix();
-			if (getLastBillSetupBySufix("INV").equals(null)) {
+			if (getLastBillSetupBySufix("INV") == null) {
 				return s;
 			} else {
 				if (Integer.parseInt(getLastBillSetupBySufix("INV").getSufix()) < s) {
@@ -3509,7 +3520,7 @@ public class Ejb {
 				}
 			}
 		} else {
-			if (getLastBillSetupBySufix("INV").equals(null)) {
+			if (getLastBillSetupBySufix("INV") == null) {
 				return 0;
 			} else {
 				return Integer.parseInt(getLastBillSetupBySufix("INV")
@@ -3529,7 +3540,7 @@ public class Ejb {
 
 		if (q.getResultList().size() > 0) {
 			int s = q.getResultList().get(0).getChallanSuffix();
-			if (getLastBillSetupBySufixAndCompanyId("INV", cId).equals(null)) {
+			if (getLastBillSetupBySufixAndCompanyId("INV", cId) == null) {
 				return s;
 			} else {
 				if (Integer.parseInt(getLastBillSetupBySufixAndCompanyId("INV",
@@ -3542,11 +3553,40 @@ public class Ejb {
 				}
 			}
 		} else {
-			if (getLastBillSetupBySufixAndCompanyId("INV", cId).equals(null)) {
+			if (getLastBillSetupBySufixAndCompanyId("INV", cId) == null) {
 				return 0;
 			} else {
 				return Integer.parseInt(getLastBillSetupBySufixAndCompanyId(
 						"INV", cId).getSufix());
+			}
+		}
+	}
+
+	public int getLastApprovalChallanSuffix() {
+		TypedQuery<ApprovalEntry> q = em.createQuery(
+				"select c from ApprovalEntry c ORDER BY c.id DESC",
+				ApprovalEntry.class);
+
+		if (q.getResultList().size() > 0) {
+			int s = q.getResultList().get(0).getChallanSuffix();
+			if (getLastBillSetupBySufixAndCompanyId("APPROVAL", cId) == null) {
+				return s;
+			} else {
+				if (Integer.parseInt(getLastBillSetupBySufixAndCompanyId(
+						"APPROVAL", cId).getSufix()) < s) {
+					return s;
+				} else {
+					return Integer
+							.parseInt(getLastBillSetupBySufixAndCompanyId(
+									"APPROVAL", cId).getSufix());
+				}
+			}
+		} else {
+			if (getLastBillSetupBySufixAndCompanyId("APPROVAL", cId) == null) {
+				return 0;
+			} else {
+				return Integer.parseInt(getLastBillSetupBySufixAndCompanyId(
+						"APPROVAL", cId).getSufix());
 			}
 		}
 	}

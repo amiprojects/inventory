@@ -45,7 +45,7 @@
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
 
-			<c:if test="${page.name.equals('Sample Job CostSheet Search')}">
+			<c:if test="${page.name.equals('Edit Sample Job CostSheet')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
