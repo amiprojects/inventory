@@ -27,7 +27,11 @@ public class ApprovalProductDetails implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "approvalEntryId")
 	private ApprovalEntry approvalEntry;
-	private int purchaseProductDetailsId;
+	
+	@ManyToOne
+	@JoinColumn(name = "purchaseProductDetailsId")
+	private Purchase_Product_Details purchase_Product_Details;
+	
 	@OneToMany(mappedBy = "approvalProductDetails")
 	private List<ApprovalReturnProductDetails> approvalReturnProductDetail;
 
@@ -55,14 +59,6 @@ public class ApprovalProductDetails implements Serializable {
 		this.approvalEntry = approvalEntry;
 	}
 
-	public int getPurchaseProductDetailsId() {
-		return purchaseProductDetailsId;
-	}
-
-	public void setPurchaseProductDetailsId(int purchaseProductDetailsId) {
-		this.purchaseProductDetailsId = purchaseProductDetailsId;
-	}
-
 	public List<ApprovalReturnProductDetails> getApprovalReturnProductDetail() {
 		return approvalReturnProductDetail;
 	}
@@ -86,5 +82,14 @@ public class ApprovalProductDetails implements Serializable {
 
 	public void setApprovalRetQty(float approvalRetQty) {
 		this.approvalRetQty = approvalRetQty;
+	}
+
+	public Purchase_Product_Details getPurchase_Product_Details() {
+		return purchase_Product_Details;
+	}
+
+	public void setPurchase_Product_Details(
+			Purchase_Product_Details purchase_Product_Details) {
+		this.purchase_Product_Details = purchase_Product_Details;
 	}
 }

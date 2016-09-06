@@ -39,7 +39,7 @@
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
 
-			<c:if test="${page.name.equals('Sales Search')}">
+			<c:if test="${page.name.equals('Approval Search')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
@@ -66,11 +66,11 @@
 
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
-								<h3 style="margin-top: 11px;">Sales Search</h3>
+								<h3 style="margin-top: 11px;">Approval Search</h3>
 							</div>
 							<div class="widget-area">
 								<div class="col-md-12">
-									<form role="form" class="sec" action="salesSearchAll"
+									<form role="form" class="sec" action="approvalSearchAll"
 										method="post">
 										<div class="row">
 											<div class="col-md-12">
@@ -79,8 +79,8 @@
 											</div>
 										</div>
 									</form>
-									<form role="form" class="sec" action="salesSearchByDate"
-										method="post" id="salesSearchByDateId">
+									<form role="form" class="sec" action="approvalSearchByDate"
+										method="post" id="searchByDateId">
 										<div class="row">
 											<div class="col-md-5">
 												<div class="form-group">
@@ -102,16 +102,16 @@
 											<div class="col-md-2">
 												<button class="btn green pull-left"
 													style="margin-top: 25px;" type="button"
-													onclick="salesSearchByDateSubmit();">Search</button>
+													onclick="searchByDateSubmit();">Search</button>
 											</div>
 										</div>
 									</form>
 									<form role="form" class="sec"
-										action="salesSearchBySalesChallanNo" method="post">
+										action="approvalSearchByChallanNumber" method="post">
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
-													<label for="" style="float: left;">Sales challan
+													<label for="" style="float: left;">Approval bill
 														no. :</label>
 												</div>
 											</div>
@@ -121,12 +121,12 @@
 												style="margin-right: 0; padding-right: 0;">
 												<input type="text" class="form-control" readonly="readonly"
 													name="companyInitial"
-													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompany('INV').companyInitial}">
+													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompany('APPROVAL').companyInitial}">
 											</div>
 											<div class="col-md-2" style="margin: 0; padding: 0;">
 												<select class="form-control" name="fynYear">
 													<c:forEach
-														items="${sessionScope['ejb'].getAllFinancialForSales()}"
+														items="${sessionScope['ejb'].getAllFinancialForApproval()}"
 														var="fyr">
 														<option value="${fyr}">${fyr}</option>
 													</c:forEach>
@@ -152,7 +152,7 @@
 											<div class="col-md-1" style="margin: 0; padding: 0;">
 												<input type="text" class="form-control" readonly="readonly"
 													name="billType"
-													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompany('INV').billType}">
+													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompany('APPROVAL').billType}">
 											</div>
 											<div class="col-md-2" style="margin: 0; padding: 0;">
 												<input type="text" class="form-control" name="autoNum">
@@ -166,8 +166,8 @@
 											</div>
 										</div>
 									</form>
-									<form role="form" class="sec" action="salesSearchByAgentName"
-										method="post">
+									<form role="form" class="sec"
+										action="approvalSearchByAgentName" method="post">
 										<div class="row">
 											<div class="col-md-10">
 												<div class="form-group">
@@ -184,7 +184,7 @@
 										</div>
 									</form>
 									<form role="form" class="sec"
-										action="salesSearchByCustomerName" method="post">
+										action="approvalSearchByCustomerName" method="post">
 										<div class="row">
 											<div class="col-md-10">
 												<div class="form-group">
@@ -200,8 +200,8 @@
 
 										</div>
 									</form>
-									<form role="form" class="sec" action="salesSearchByProductCode"
-										method="post">
+									<form role="form" class="sec"
+										action="approvalSearchByProductCode" method="post">
 										<div class="row">
 											<div class="col-md-10">
 												<div class="form-group">
@@ -232,37 +232,31 @@
 										</thead>
 
 										<c:set var="count" value="${1}" />
-										<c:forEach items="${requestScope['salesEntryLst']}"
-											var="sEntryByD">
+										<c:forEach items="${requestScope['approvalEntryLst']}"
+											var="approvalEntry">
 											<tbody>
 												<tr>
 													<td>${count}</td>
 													<td><a href="#"
-														onclick="viewInvoiceS(${sEntryByD.id});"><b>${sEntryByD.challanNumber}</b></a></td>
-													<td>${sEntryByD.customer.name}</td>
+														onclick="viewInvoice(${approvalEntry.id});"><b>${approvalEntry.challanNumber}</b></a></td>
+													<td>${approvalEntry.customer.name}</td>
 													<c:choose>
-														<c:when test="${sEntryByD.vendor==null}">
+														<c:when test="${approvalEntry.vendor==null}">
 															<td>NIL</td>
 														</c:when>
 														<c:otherwise>
-															<td>${sEntryByD.vendor.name}</td>
+															<td>${approvalEntry.vendor.name}</td>
 														</c:otherwise>
 													</c:choose>
-													<td><fmt:formatDate value="${sEntryByD.sales_date}"
-															pattern="dd-MM-yy" /></td>
-													<td>${sEntryByD.totalCost}</td>
-													<td><a href="#"
-														onclick="viewInvoiceSoldOnly(${sEntryByD.id});"><b>Challan
-																for sold only</b></a></td>
-													<td><form action="salesEdit" method="post">
-															<input type="hidden" value="${sEntryByD.id}" name="sId">
-															<input type="image" src="img/edit.png">
-														</form></td>
+													<td><fmt:formatDate
+															value="${approvalEntry.approvalDate}" pattern="dd-MM-yy" /></td>
+													<td>${approvalEntry.totalCost}</td>
 													<td>
-														<form action="salesView" method="post"
-															id="sView${sEntryByD.id}">
-															<a href="#" onclick="salesViewF('${sEntryByD.id}');"><input
-																type="hidden" value="${sEntryByD.id}" name="sId"><img
+														<form action="approvalView" method="post"
+															id="view${approvalEntry.id}">
+															<a href="#"
+																onclick="approvaolViewF('${approvalEntry.id}');"><input
+																type="hidden" value="${approvalEntry.id}" name="id"><img
 																alt="" src="images/eye.png" height="25px"></a>
 														</form>
 													</td>
@@ -292,8 +286,8 @@
 	<script type="text/javascript" src="js/grid-filter.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$("#sales").attr("id", "activeSubMenu");
-			$("#sSalesSearch").attr("style", "color: #6a94ff;");
+			$("#approval").attr("id", "activeSubMenu");
+			$("#approvalSearch").attr("style", "color: #6a94ff;");
 		});
 	</script>
 	<script src="js/jquery-ui/jquery-ui.js"></script>
@@ -310,8 +304,8 @@
 				dateFormat : "dd-mm-yy"
 			});
 		});
-		function salesViewF(id) {
-			$("#sView" + id).submit();
+		function approvaolViewF(id) {
+			$("#view" + id).submit();
 		}
 		function dateSet() {
 			var dt = $("#datepicker").datepicker('getDate');
@@ -465,23 +459,17 @@
 			});
 		});
 		
-		function salesSearchByDateSubmit() {
+		function searchByDateSubmit() {
 			if ($("#datepicker").val() == "" || $("#datepicker1").val() == "") {
 				alert("Please enter start date and end date");
 			} else {
-				$("#salesSearchByDateId").submit();
+				$("#searchByDateId").submit();
 			}
 		}
-		function viewInvoiceS(id){			
+		function viewInvoice(id){			
 			window
 			.open(
-					"stockSaCha1.jsp?id="+id,
-					'name', 'width=900,height=700').print();
-		}
-		function viewInvoiceSoldOnly(id){		
-			window
-			.open(
-					"salesChallanForSoldOnly.jsp?id="+id,
+					"approvalBillForPrint.jsp?id="+id,
 					'name', 'width=900,height=700').print();
 		}
 	</script>

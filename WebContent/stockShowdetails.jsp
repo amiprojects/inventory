@@ -352,11 +352,26 @@
 																	</a>
 																</c:if>
 															</c:if></td>
-														<c:if test="${sessionScope['user']=='adminProduction'}">
-															<td><b>In Jobwork:</b>&nbsp;&nbsp;<fmt:formatNumber
+
+
+														<c:set var="totalSentForApproval" value="${0}" />
+														<c:forEach items="${sessionScope['ejb'].getApprovalProductDetailsByProductId(requestScope['proid1'])}" var="approvalProds">
+															<fmt:formatNumber var="totalSentForApproval"
+																value="${totalSentForApproval+approvalProds.quantity-approvalProds.approvalRetQty}"
+																maxFractionDigits="3" groupingUsed="false" />
+														</c:forEach>
+
+
+														<td><c:if
+																test="${sessionScope['user']=='adminProduction'}">
+																<b>In Jobwork:</b>&nbsp;&nbsp;<fmt:formatNumber
 																	value="${total}" maxFractionDigits="3"
-																	groupingUsed="false" /></td>
-														</c:if>
+																	groupingUsed="false" />
+																<br>
+															</c:if><b>Sent for Approval:</b>&nbsp;&nbsp;<fmt:formatNumber
+																value="${totalSentForApproval}" maxFractionDigits="3"
+																groupingUsed="false" /></td>
+
 													</tr>
 												</table>
 											</div>
@@ -394,7 +409,9 @@
 											<br> <br>
 											<div style="width: 927px; height: 176px; overflow: scroll;">
 												<c:forEach items="${pImage}" var="image">
-													<img onclick="zoomPicture('data:image/jpeg;base64,${image.getImageAsString()}');" width="100" height="100" style="" alt="ProductImage"
+													<img
+														onclick="zoomPicture('data:image/jpeg;base64,${image.getImageAsString()}');"
+														width="100" height="100" style="" alt="ProductImage"
 														src="data:image/jpeg;base64,${image.getImageAsString()}">
 												</c:forEach>
 											</div>

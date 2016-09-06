@@ -72,11 +72,12 @@ page[size="A4"] {
 	</c:if>
 	<c:set value="${sessionScope['ejb'].getCompanyInfo()}"
 		var="companyInfo" />
-	<c:set value="${sessionScope['ejb'].getSalesEntryById(param.id)}"
-		var="purEntry" />
+	<c:set value="${sessionScope['ejb'].getApprovalEntryById(param.id)}"
+		var="approvalEntry" />
 
 
-	<c:set value="${purEntry.salesProductDetails.size()}" var="proLength" />
+	<c:set value="${approvalEntry.approvalProductDetails.size()}"
+		var="proLength" />
 	<c:set value="${Math.ceil(proLength/8)}" var="qPage" />
 
 	<c:set value="${1}" var="sl" />
@@ -86,12 +87,12 @@ page[size="A4"] {
 	<c:forEach var="i" begin="1" end="${qPage}">
 		<page id="print1" size="A4">
 		<h3 align="center">
-			Sales Invoice
+			Approval Bill
 			<c:if test="${i>1}">(Page ${i})</c:if>
 		</h3>
 		<table class="tg"
 			style="border: 1px solid; height: 1080px; width: 750px">
-			<c:choose>
+			<%-- <c:choose>
 				<c:when test="${companyInfo.isSalesAgentShow()}">
 					<tr style="height: 10px">
 						<td class="tg-031e" colspan="3" rowspan="2" style="width: 50%">
@@ -99,9 +100,9 @@ page[size="A4"] {
 							Email: ${companyInfo.email}<br> Mobile:
 							${companyInfo.mobile}
 						</td>
-						<td class="tg-031e" colspan="2" style="width: 25%">Sales
-							Invoice no:</td>
-						<td class="tg-031e" colspan="2" style="width: 25%">${purEntry.challanNumber}</td>
+						<td class="tg-031e" colspan="2" style="width: 25%">Approval
+							bill no:</td>
+						<td class="tg-031e" colspan="2" style="width: 25%">${approvalEntry.challanNumber}</td>
 					</tr>
 					<tr style="height: 10px">
 						<td class="tg-031e" colspan="2">System Date:</td>
@@ -112,53 +113,57 @@ page[size="A4"] {
 					<tr style="height: 10px">
 						<td class="tg-031e" colspan="3" rowspan="2"><strong>Customer
 								Details:</strong> <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Name :</span>
-							${purEntry.customer.name} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>City
-								:</span> ${purEntry.customer.city} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Address
-								:<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						</span> ${purEntry.customer.address} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Ph
-								:</span> ${purEntry.customer.mobile}</td>
+							${approvalEntry.customer.name} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>City
+								:</span> ${approvalEntry.customer.city} <br>
+							&nbsp;&nbsp;&nbsp;&nbsp;<span>Address :<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						</span> ${approvalEntry.customer.address} <br>
+							&nbsp;&nbsp;&nbsp;&nbsp;<span>Ph :</span>
+							${approvalEntry.customer.mobile}</td>
 						<td class="tg-031e" colspan="2">Sales date :</td>
 						<td class="tg-031e" colspan="2"><fmt:formatDate
-								value="${purEntry.sales_date}" pattern="dd-MM-yyyy" /></td>
+								value="${approvalEntry.approvalDate}" pattern="dd-MM-yyyy" /></td>
 					</tr>
 					<tr style="height: 10px">
 						<td class="tg-031e" colspan="2">Supplier reference (Agent
 							name):</td>
 						<td class="tg-031e" colspan="2"><c:choose>
-								<c:when test="${purEntry.vendor!=null}">${purEntry.vendor.name}</c:when>
+								<c:when test="${approvalEntry.vendor!=null}">${approvalEntry.vendor.name}</c:when>
 								<c:otherwise>NA</c:otherwise>
 							</c:choose></td>
 					</tr>
 				</c:when>
-				<c:otherwise>
-					<tr style="height: 10px">
-						<td class="tg-031e" colspan="3" style="width: 50%"><strong>${companyInfo.compname}</strong>
-							${companyInfo.addr}<br> Email: ${companyInfo.email}<br>
-							Mobile: ${companyInfo.mobile}</td>
-						<td class="tg-031e" colspan="2" style="width: 25%">Sales
-							Invoice no:</td>
-						<td class="tg-031e" colspan="2" style="width: 25%">${purEntry.challanNumber}</td>
-					</tr>
-					<tr style="height: 10px">
-						<td class="tg-031e" colspan="3" rowspan="2"><strong>Customer
-								Details:</strong> <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Name :</span>
-							${purEntry.customer.name} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>City
-								:</span> ${purEntry.customer.city} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Address
-								:<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						</span> ${purEntry.customer.address} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Ph
-								:</span> ${purEntry.customer.mobile}</td>
-						<td class="tg-031e" colspan="2">System Date:</td>
-						<td class="tg-031e" colspan="2"><fmt:formatDate
-								value="${sessionScope['ejb'].getCurrentDateTime()}"
-								pattern="dd-MM-yyyy" /></td>
-					</tr>
-					<tr style="height: 10px">
-						<td class="tg-031e" colspan="2">Sales date :</td>
-						<td class="tg-031e" colspan="2"><fmt:formatDate
-								value="${purEntry.sales_date}" pattern="dd-MM-yyyy" /></td>
-					</tr>
-				</c:otherwise>
-			</c:choose>
+				<c:otherwise> --%>
+			<tr style="height: 10px">
+				<td class="tg-031e" colspan="3" style="width: 50%"><strong>${companyInfo.compname}</strong>
+					${companyInfo.addr}<br> Email: ${companyInfo.email}<br>
+					Mobile: ${companyInfo.mobile}</td>
+				<td class="tg-031e" colspan="2" style="width: 25%">Approval
+					Bill no:</td>
+				<td class="tg-031e" colspan="2" style="width: 25%">${approvalEntry.challanNumber}</td>
+			</tr>
+			<tr style="height: 10px">
+				<td class="tg-031e" colspan="3" rowspan="2"><strong>Customer
+						Details:</strong> <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Name :</span>
+					${approvalEntry.customer.name} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>City
+						:</span> ${approvalEntry.customer.city} <br>
+					&nbsp;&nbsp;&nbsp;&nbsp;<span>Address :<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				</span> ${approvalEntry.customer.address} <br>
+					&nbsp;&nbsp;&nbsp;&nbsp;<span>Ph :</span>
+					${approvalEntry.customer.mobile}</td>
+				<td class="tg-031e" colspan="2">System Date:</td>
+				<td class="tg-031e" colspan="2"><fmt:formatDate
+						value="${sessionScope['ejb'].getCurrentDateTime()}"
+						pattern="dd-MM-yyyy" /></td>
+			</tr>
+			<tr style="height: 10px">
+				<td class="tg-031e" colspan="2">Approval date :</td>
+				<td class="tg-031e" colspan="2"><fmt:formatDate
+						value="${approvalEntry.approvalDate}" pattern="dd-MM-yyyy" /></td>
+			</tr>
+			<%-- </c:otherwise>
+			</c:choose> --%>
 			<tr>
 				<td class="tg-031e" colspan="7">
 					<table class="tg"
@@ -172,7 +177,7 @@ page[size="A4"] {
 							<th>Amount</th>
 						</tr>
 						<c:forEach begin="${(i-1)*8}" end="${i*8-1}"
-							items="${purEntry.salesProductDetails}" var="ppdet">
+							items="${approvalEntry.approvalProductDetails}" var="ppdet">
 							<tr>
 								<td style="border-bottom: none; border-top: none;">${sl}</td>
 								<td style="border-bottom: none; border-top: none;"><b
@@ -181,31 +186,16 @@ page[size="A4"] {
 										${ppdet.purchase_Product_Details.id}<br>Design No :
 										${ppdet.purchase_Product_Details.productDetail.universalCode}
 								</span></td>
-								<td style="border-bottom: none; border-top: none;"><span
-									style="font-size: 10px;"><fmt:formatNumber var="qty"
-											value="${ppdet.quantity}" maxFractionDigits="3"
-											groupingUsed="false" />${qty}<br>- <fmt:formatNumber
-											var="reQty" value="${ppdet.salesReQty}" maxFractionDigits="3"
-											groupingUsed="false" />${reQty} (Returned)<br>= </span> <fmt:formatNumber
-										var="fqty" value="${ppdet.quantity-ppdet.salesReQty}"
-										maxFractionDigits="3" groupingUsed="false" />${fqty}</td>
-								<c:set value="${tqty+ppdet.quantity-ppdet.salesReQty}"
-									var="tqty" />
-								<td style="border-bottom: none; border-top: none;">${ppdet.getSalesPrice()}</td>
+								<td style="border-bottom: none; border-top: none;"><fmt:formatNumber
+										var="qty" value="${ppdet.quantity}" maxFractionDigits="3"
+										groupingUsed="false" />${qty}</td>
+								<c:set value="${tqty+ppdet.quantity}" var="tqty" />
+								<td style="border-bottom: none; border-top: none;">${ppdet.getPrice()}</td>
 								<td style="border-bottom: none; border-top: none;">${ppdet.purchase_Product_Details.productDetail.qtyUnit.name}</td>
-								<td style="border-bottom: none; border-top: none;"><span
-									style="font-size: 10px;"><fmt:formatNumber var="amount"
-											value="${ppdet.getSalesPrice()*ppdet.quantity}"
-											maxFractionDigits="2" groupingUsed="false" /> ${amount}<br>-
-										<fmt:formatNumber var="amountReturned"
-											value="${ppdet.getSalesPrice()*ppdet.salesReQty}"
-											maxFractionDigits="2" groupingUsed="false" />
-										${amountReturned} (Returned)<br>= </span> <fmt:formatNumber
-										var="amountF"
-										value="${ppdet.getSalesPrice()*(ppdet.quantity-ppdet.salesReQty)}"
-										maxFractionDigits="2" groupingUsed="false" /> ${amountF}</td>
-								<c:set
-									value="${gtot+ppdet.getSalesPrice()*(ppdet.quantity-ppdet.salesReQty)}"
+								<td style="border-bottom: none; border-top: none;"><fmt:formatNumber
+										var="amount" value="${ppdet.getPrice()*ppdet.quantity}"
+										maxFractionDigits="2" groupingUsed="false" /> ${amount}</td>
+								<c:set value="${gtot+ppdet.getPrice()*ppdet.quantity}"
 									var="gtot" />
 							</tr>
 							<c:set value="${sl+1}" var="sl" />
@@ -216,56 +206,45 @@ page[size="A4"] {
 							</tr>
 						</c:if>
 						<c:if test="${i==qPage}">
-							<%-- <c:if test="${purEntry.discountValue!=0}"> --%>
-							<tr>
-								<td style="border-bottom: none;" colspan="5" align="right">Discount
-									Value <c:set var="dis"
-										value="${purEntry.isFlatDiscount()?'Flat':'%'}" />
-									(${purEntry.discountValue}(${dis})) :
-								</td>
-								<td style="border-bottom: none;"><fmt:formatNumber
-										var="disVal"
-										value="${purEntry.isFlatDiscount()?gtot*purEntry.discountValue/purEntry.subTotal:gtot*purEntry.discountValue/100}"
-										maxFractionDigits="2" groupingUsed="false" />${disVal}</td>
-							</tr>
-							<%-- </c:if> --%>
-							<c:if test="${purEntry.taxAmount!=0}">
+							<c:if test="${approvalEntry.discountValue!=0}">
+								<tr>
+									<td style="border-bottom: none;" colspan="5" align="right">Discount
+										Value <c:set var="dis"
+											value="${approvalEntry.isFlatDiscount()?'Flat':'%'}" />
+										(${approvalEntry.discountValue}(${dis})) :
+									</td>
+									<td style="border-bottom: none;"><c:set var="disVal"
+											value="${approvalEntry.isFlatDiscount()?approvalEntry.discountValue:approvalEntry.subTotal*approvalEntry.discountValue/100}" />
+										${disVal}</td>
+								</tr>
+							</c:if>
+							<c:if test="${approvalEntry.taxAmount!=0}">
 								<tr>
 									<td style="border-bottom: none; border-top: none;" colspan="5"
 										align="right">Tax Amount
-										(${purEntry.tax_Type_Group.getTotalTaxValue()}%) :</td>
-									<td style="border-bottom: none; border-top: none;"><fmt:formatNumber
-											var="taxAmount"
-											value="${(gtot-disVal)*purEntry.tax_Type_Group.getTotalTaxValue()/100}"
-											maxFractionDigits="2" groupingUsed="false" /> ${taxAmount}</td>
+										(${approvalEntry.tax_Type_Group.getTotalTaxValue()}%) :</td>
+									<td style="border-bottom: none; border-top: none;">${approvalEntry.taxAmount}</td>
 								</tr>
 							</c:if>
-							<c:if test="${purEntry.transportcCharge!=0}">
+							<c:if test="${approvalEntry.transportcCharge!=0}">
 								<tr>
 									<td style="border-bottom: none; border-top: none;" colspan="5"
 										align="right">Transport Charge :</td>
-									<td style="border-bottom: none; border-top: none;">${purEntry.transportcCharge}</td>
+									<td style="border-bottom: none; border-top: none;">${approvalEntry.transportcCharge}</td>
 								</tr>
 							</c:if>
-							<c:if test="${purEntry.surcharge!=0}">
+							<c:if test="${approvalEntry.surcharge!=0}">
 								<tr>
 									<td style="border-bottom: none; border-top: none;" colspan="5"
 										align="right">Surcharge :</td>
-									<td style="border-bottom: none; border-top: none;">${purEntry.surcharge}</td>
+									<td style="border-bottom: none; border-top: none;">${approvalEntry.surcharge}</td>
 								</tr>
 							</c:if>
-							<c:set var="total"
-								value="${gtot-disVal+taxAmount+purEntry.transportcCharge+purEntry.surcharge}"></c:set>
-							<fmt:formatNumber var="roundValue"
-								value="${gtot-disVal+taxAmount+purEntry.transportcCharge+purEntry.surcharge}"
-								maxFractionDigits="0" groupingUsed="false" />
-							<c:if test="${(roundValue-total)!=0}">
+							<c:if test="${approvalEntry.roundOf!=0}">
 								<tr>
 									<td style="border-bottom: none; border-top: none;" colspan="5"
 										align="right">RoundOf :</td>
-									<td style="border-bottom: none; border-top: none;"><fmt:formatNumber
-											var="roundOff" value="${roundValue-total}"
-											maxFractionDigits="2" groupingUsed="false" /> ${roundOff}</td>
+									<td style="border-bottom: none; border-top: none;">${approvalEntry.roundOf}</td>
 								</tr>
 							</c:if>
 							<tr>
@@ -273,39 +252,37 @@ page[size="A4"] {
 								<td><fmt:formatNumber var="totalQ" value="${tqty}"
 										maxFractionDigits="3" groupingUsed="false" />${totalQ}</td>
 								<td colspan="2" align="right">Grand Total :</td>
-								<td><fmt:formatNumber var="grandT" value="${roundValue}"
-										maxFractionDigits="2" groupingUsed="false" />${grandT}</td>
+								<td><fmt:formatNumber var="grandT"
+										value="${approvalEntry.totalCost}" maxFractionDigits="2"
+										groupingUsed="false" />${grandT}</td>
 							</tr>
 						</c:if>
 					</table> <span style="float: right;"><c:if test="${i<qPage}">continued...</c:if>
-						<c:if test="${i==qPage && purEntry.salesReturn.size()>0}">continued...</c:if></span>
+						<c:if test="${i==qPage && approvalEntry.approvalReturn.size()>0}">continued...</c:if></span>
 				</td>
 			</tr>
 			<c:if test="${i==qPage}">
-				<c:if test="${purEntry.description==null}">
+				<c:if test="${approvalEntry.description==null}">
 					<tr style="height: 10px">
-						<td class="tg-031e" colspan="7"><span><strong>Amount
-									Chargeable (in words)</strong></span><br> <span>${sessionScope['ejb'].getNumberToWords(grandT)}
+						<td class="tg-031e" colspan="7"><span><strong>Total
+									Amount (in words)</strong></span><br> <span>${sessionScope['ejb'].getNumberToWords(approvalEntry.totalCost)}
 								only.</span></td>
 					</tr>
 				</c:if>
-				<c:if test="${purEntry.description!=null}">
+				<c:if test="${approvalEntry.description!=null}">
 					<tr style="height: 10px">
 						<td class="tg-031e" colspan="3"><strong>Description
-								: </strong><br> <span>${purEntry.description}</span></td>
-						<td class="tg-031e" colspan="4"><span><strong>Amount
-									Chargeable (in words)</strong></span><br> <span>${sessionScope['ejb'].getNumberToWords(grandT)}
+								: </strong><br> <span>${approvalEntry.description}</span></td>
+						<td class="tg-031e" colspan="4"><span><strong>Total
+									Amount (in words)</strong></span><br> <span>${sessionScope['ejb'].getNumberToWords(approvalEntry.totalCost)}
 								only.</span></td>
 					</tr>
 				</c:if>
-				<c:if test="${purEntry.salesReturn.size()==0}">
+				<c:if test="${approvalEntry.approvalReturn.size()==0}">
 					<tr style="height: 10px">
 						<td class="tg-031e" colspan="5"><strong>Declaration:</strong><br>We
 							declare that this invoice shows the actual price of the goods
-							described and all particulars are true and correct. Payment must
-							be cleared within 30 days. Goods once sold can not be taken back
-							or exchanged. No Guarantee for colour Jari and Slippage of
-							Fabric. Dry clean only.</td>
+							described and all particulars are true and correct.</td>
 						<td class="tg-031e" colspan="2" style="text-align: right;">for
 							<strong>${companyInfo.compname}</strong><br> <br>Authorised
 							Signatory
@@ -318,10 +295,10 @@ page[size="A4"] {
 		</page>
 		<c:set value="${i+1}" var="j" />
 	</c:forEach>
-	<c:if test="${purEntry.salesReturn.size()!=0}">
+	<c:if test="${approvalEntry.approvalReturn.size()!=0}">
 		<c:set value="${0}" var="qPage" />
 		<c:forEach var="purchaseReturnProd"
-			items="${sessionScope['ejb'].getAllSalesProductReturnDetailBySalesEntryId(purEntry.id)}">
+			items="${sessionScope['ejb'].getAllSalesProductReturnDetailBySalesEntryId(approvalEntry.id)}">
 			<c:set value="${qPage+1}" var="qPage" />
 		</c:forEach>
 		<c:set value="${Math.ceil(qPage/15)}" var="qPage" />
@@ -343,7 +320,7 @@ page[size="A4"] {
 							</td>
 							<td class="tg-031e" colspan="2" style="width: 25%">Sales
 								Invoice no:</td>
-							<td class="tg-031e" colspan="2" style="width: 25%">${purEntry.challanNumber}</td>
+							<td class="tg-031e" colspan="2" style="width: 25%">${approvalEntry.challanNumber}</td>
 						</tr>
 						<tr style="height: 10px">
 							<td class="tg-031e" colspan="2">System Date:</td>
@@ -354,20 +331,23 @@ page[size="A4"] {
 						<tr style="height: 10px">
 							<td class="tg-031e" colspan="3" rowspan="2"><strong>Customer
 									Details:</strong> <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Name :</span>
-								${purEntry.customer.name} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>City
-									:</span> ${purEntry.customer.city} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Address
-									:<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							</span> ${purEntry.customer.address} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Ph
-									:</span> ${purEntry.customer.mobile}</td>
+								${approvalEntry.customer.name} <br>
+								&nbsp;&nbsp;&nbsp;&nbsp;<span>City :</span>
+								${approvalEntry.customer.city} <br>
+								&nbsp;&nbsp;&nbsp;&nbsp;<span>Address :<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							</span> ${approvalEntry.customer.address} <br>
+								&nbsp;&nbsp;&nbsp;&nbsp;<span>Ph :</span>
+								${approvalEntry.customer.mobile}</td>
 							<td class="tg-031e" colspan="2">Sales date :</td>
 							<td class="tg-031e" colspan="2"><fmt:formatDate
-									value="${purEntry.sales_date}" pattern="dd-MM-yyyy" /></td>
+									value="${approvalEntry.approvalDate}" pattern="dd-MM-yyyy" /></td>
 						</tr>
 						<tr style="height: 10px">
 							<td class="tg-031e" colspan="2">Supplier reference (Agent
 								name):</td>
 							<td class="tg-031e" colspan="2"><c:choose>
-									<c:when test="${purEntry.vendor!=null}">${purEntry.vendor.name}</c:when>
+									<c:when test="${approvalEntry.vendor!=null}">${approvalEntry.vendor.name}</c:when>
 									<c:otherwise>NA</c:otherwise>
 								</c:choose></td>
 						</tr>
@@ -379,16 +359,19 @@ page[size="A4"] {
 								Mobile: ${companyInfo.mobile}</td>
 							<td class="tg-031e" colspan="2" style="width: 25%">Sales
 								Invoice no:</td>
-							<td class="tg-031e" colspan="2" style="width: 25%">${purEntry.challanNumber}</td>
+							<td class="tg-031e" colspan="2" style="width: 25%">${approvalEntry.challanNumber}</td>
 						</tr>
 						<tr style="height: 10px">
 							<td class="tg-031e" colspan="3" rowspan="2"><strong>Customer
 									Details:</strong> <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Name :</span>
-								${purEntry.customer.name} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>City
-									:</span> ${purEntry.customer.city} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Address
-									:<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							</span> ${purEntry.customer.address} <br> &nbsp;&nbsp;&nbsp;&nbsp;<span>Ph
-									:</span> ${purEntry.customer.mobile}</td>
+								${approvalEntry.customer.name} <br>
+								&nbsp;&nbsp;&nbsp;&nbsp;<span>City :</span>
+								${approvalEntry.customer.city} <br>
+								&nbsp;&nbsp;&nbsp;&nbsp;<span>Address :<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							</span> ${approvalEntry.customer.address} <br>
+								&nbsp;&nbsp;&nbsp;&nbsp;<span>Ph :</span>
+								${approvalEntry.customer.mobile}</td>
 							<td class="tg-031e" colspan="2">System Date:</td>
 							<td class="tg-031e" colspan="2"><fmt:formatDate
 									value="${sessionScope['ejb'].getCurrentDateTime()}"
@@ -397,7 +380,7 @@ page[size="A4"] {
 						<tr style="height: 10px">
 							<td class="tg-031e" colspan="2">Sales date :</td>
 							<td class="tg-031e" colspan="2"><fmt:formatDate
-									value="${purEntry.sales_date}" pattern="dd-MM-yyyy" /></td>
+									value="${approvalEntry.approvalDate}" pattern="dd-MM-yyyy" /></td>
 						</tr>
 					</c:otherwise>
 				</c:choose>
@@ -418,7 +401,7 @@ page[size="A4"] {
 							</tr>
 							<c:forEach begin="${(j-k)*15}" end="${(j-k+1)*15-1}"
 								var="purchaseReturnProd"
-								items="${sessionScope['ejb'].getAllSalesProductReturnDetailBySalesEntryId(purEntry.id)}">
+								items="${sessionScope['ejb'].getAllSalesProductReturnDetailBySalesEntryId(approvalEntry.id)}">
 								<c:choose>
 									<c:when test="${idlist==''}">
 										<c:set var="idFlag" value="${0}" />
@@ -428,7 +411,7 @@ page[size="A4"] {
 										<c:set var="isBreaked" value="${0}" />
 										<c:if test="${isBreaked==0}">
 											<c:forTokens items="${idlist}" delims="," var="id">
-												<c:if test="${purchaseReturnProd.salesReturn.id==id}">
+												<c:if test="${purchaseReturnProd.approvalReturn.id==id}">
 													<c:set var="idFlag" value="${1}" />
 													<c:set var="isBreaked" value="${1}" />
 												</c:if>
@@ -437,22 +420,22 @@ page[size="A4"] {
 									</c:otherwise>
 								</c:choose>
 								<c:set
-									value="${purchaseReturnProd.salesReturn.salesProductReturnDetail.size()}"
+									value="${purchaseReturnProd.approvalReturn.salesProductReturnDetail.size()}"
 									var="proRetLength" />
 								<tr>
 									<c:if test="${idFlag!=1}">
 										<c:set var="idlist"
-											value="${idlist},${purchaseReturnProd.salesReturn.id}" />
+											value="${idlist},${purchaseReturnProd.approvalReturn.id}" />
 										<td style="border-bottom: none; border-top: none;"
 											class="tg-031e">${slno}</td>
 										<c:set value="${slno+1}" var="slno" />
 										<td style="border-bottom: none; border-top: none;"
 											class="tg-031e"><fmt:formatDate
-												value="${purchaseReturnProd.salesReturn.returnDate}"
+												value="${purchaseReturnProd.approvalReturn.returnDate}"
 												pattern="dd-MM-yy" /></td>
 										<td style="border-bottom: none; border-top: none;"
 											class="tg-031e">
-											${purchaseReturnProd.salesReturn.challanNumber}</td>
+											${purchaseReturnProd.approvalReturn.challanNumber}</td>
 									</c:if>
 									<c:if test="${idFlag==1}">
 										<td style="border-bottom: none; border-top: none;"></td>
@@ -461,12 +444,12 @@ page[size="A4"] {
 									</c:if>
 									<td style="border-bottom: none; border-top: none;"
 										class="tg-031e">
-										${purchaseReturnProd.salesProductDetails.purchase_Product_Details.productDetail.code}
+										${purchaseReturnProd.approvalProductDetails.purchase_Product_Details.productDetail.code}
 									</td>
 									<td style="border-bottom: none; border-top: none;"
 										class="tg-031e" colspan="2"><span
 										style="font-size: 10px;">
-											${purchaseReturnProd.salesProductDetails.purchase_Product_Details.productDetail.description}</span></td>
+											${purchaseReturnProd.approvalProductDetails.purchase_Product_Details.productDetail.description}</span></td>
 									<td style="border-bottom: none; border-top: none;"
 										class="tg-031e"><fmt:formatNumber var="totalQ"
 											value="${purchaseReturnProd.qtyReturn}" maxFractionDigits="3"
@@ -483,10 +466,7 @@ page[size="A4"] {
 					<tr style="height: 10px">
 						<td class="tg-031e" colspan="5"><strong>Declaration:</strong><br>We
 							declare that this invoice shows the actual price of the goods
-							described and all particulars are true and correct. Payment must
-							be cleared within 30 days. Goods once sold can not be taken back
-							or exchanged. No Guarantee for colour Jari and Slippage of
-							Fabric. Dry clean only.</td>
+							described and all particulars are true and correct.</td>
 						<td class="tg-031e" colspan="2" style="text-align: right;">for
 							<strong>${companyInfo.compname}</strong><br> <br>Authorised
 							Signatory

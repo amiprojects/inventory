@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.kaanish.ejb.Ejb;
 import com.kaanish.model.AccountDetails;
+import com.kaanish.model.ApprovalProductDetails;
+import com.kaanish.model.ApprovalReturnProductDetails;
 import com.kaanish.model.Bill_setup;
 import com.kaanish.model.CompanyInfo;
 import com.kaanish.model.JobAssignmentDetails;
@@ -117,6 +119,18 @@ public class InitS extends HttpServlet {
 		}
 		// total sales product return qty on salesproductdetails table
 
+		// total sales product return qty on salesproductdetails table
+		for (ApprovalProductDetails apd : ejb.getAllApprovalProductDetails()) {
+			float qtyReturn = 0;
+			for (ApprovalReturnProductDetails aprd : apd
+					.getApprovalReturnProductDetail()) {
+				qtyReturn = qtyReturn + aprd.getQtyReturn();
+			}
+			apd.setApprovalRetQty(qtyReturn);
+			ejb.updateApprovalProductDetails(apd);
+		}
+		// total sales product return qty on salesproductdetails table
+
 		// purchase product details table stock manage
 		for (Purchase_Product_Details ppd : ejb
 				.getAllPurchase_Product_Details()) {
@@ -132,12 +146,17 @@ public class InitS extends HttpServlet {
 			for (SalesProductDetails spd : ppd.getSalesProductDetails()) {
 				qtySold = qtySold + spd.getQuantity() - spd.getSalesReQty();
 			}
+			float qtyApproved = 0;
+			for (ApprovalProductDetails apd : ppd.getApprovalProductDetails()) {
+				qtyApproved = qtyApproved + apd.getQuantity()
+						- apd.getApprovalRetQty();
+			}
 			float qtyJobPlanProdStock = 0;
 			for (JobPlanProductStock jpps : ppd.getJobPlanProductStocks()) {
 				qtyJobPlanProdStock = qtyJobPlanProdStock + jpps.getQty();
 			}
 			ppd.setRemaining_quantity(ppd.getQuantity() - qtyReturn - qtySold
-					- qtyJobPlanProdStock);
+					- qtyApproved - qtyJobPlanProdStock);
 			ejb.updatePurchaseProductDetails(ppd);
 		}
 		// purchase product details table stock manage
@@ -986,6 +1005,38 @@ public class InitS extends HttpServlet {
 		if (flagApprovalEntry == 0) {
 			pageList = new PageList();
 			pageList.setName("Approval Entry");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+		module = null;
+
+		int flagApprovalSearch = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Approval Search")) {
+				flagApprovalSearch = 1;
+				break;
+			}
+		}
+		if (flagApprovalSearch == 0) {
+			pageList = new PageList();
+			pageList.setName("Approval Search");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+		module = null;
+		
+		int flagApprovalReturn = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Approval Return")) {
+				flagApprovalReturn = 1;
+				break;
+			}
+		}
+		if (flagApprovalReturn == 0) {
+			pageList = new PageList();
+			pageList.setName("Approval Return");
 			pageList.setModule(module);
 			ejb.setPageList(pageList);
 			pageList = null;

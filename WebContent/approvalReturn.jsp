@@ -53,9 +53,8 @@
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("#sales").attr("id", "activeSubMenu");
-		$("#sSalesReturn").attr("style", "color: #6a94ff;");
-
+		$("#approval").attr("id", "activeSubMenu");
+		$("#approvalReturn").attr("style", "color: #6a94ff;");
 	});
 </script>
 <link rel="stylesheet" href="css/toast.css" type="text/css" />
@@ -72,7 +71,7 @@
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
 
-			<c:if test="${page.name.equals('Sales Return')}">
+			<c:if test="${page.name.equals('Approval Return')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
@@ -84,11 +83,11 @@
 		</c:if>
 	</c:if>
 
-	<c:if test="${requestScope['salRetDetIdforPC']!=null}">
+	<c:if test="${requestScope['returnIdforPC']!=null}">
 		<script type="text/javascript">
 			var myWindow = window
 					.open(
-							"salesReturnInvoiceForPrint.jsp?id=${requestScope['salRetDetIdforPC']}",
+							"approvalReturnBillForPrint.jsp?id=${requestScope['returnIdforPC']}",
 							'name', 'width=600,height=400');
 			myWindow.print();
 		</script>
@@ -112,41 +111,19 @@
 					<div class="masonary-grids">
 
 						<div class="breadcrumbs" style="height: 50px; text-align: center;">
-							<h3 style="margin-top: 11px;">Sales Return</h3>
+							<h3 style="margin-top: 11px;">Approval Return</h3>
 
 						</div>
 
 
 						<div class="col-md-12" style="height: 800px;">
-							<%-- <br> <br>
-							<div align="center" class="col-md-12">
-								<form method="get" action="goSalesReturn" id="sReturnF">
-									<table>
-										<tr>
-											<td><h4>Enter Sales Challan Id:</h4></td>
-											<td>&nbsp;&nbsp;</td>
-											<td width="380px"><input class="form-control"
-												type="text" id="challanNumber" name="challanNumber"></td>
-											<td>&nbsp;&nbsp;&nbsp;</td>
-											<td><button type="button" class="btn btn-info btn-sm"
-													onclick="sReturn()">Go</button></td>
-										</tr>
-									</table>
-								</form>
-
-								<div class='toast' style='display: none'>
-									<h3 id="msg">${requestScope['msg']}</h3>
-								</div>
-							</div> --%>
-
-
 							<div class="col-md-12">
-								<form role="form" class="sec" action="goSalesReturn"
+								<form role="form" class="sec" action="approvalSearchForReturn"
 									method="post">
 									<div class="row">
 										<div class="col-md-12">
 											<div class="form-group">
-												<label for="" style="float: left;">Sales challan
+												<label for="" style="float: left;">Approval bill
 													no.:</label>
 
 											</div>
@@ -157,12 +134,12 @@
 											style="margin-right: 0; padding-right: 0;">
 											<input type="text" class="form-control" readonly="readonly"
 												name="companyInitial"
-												value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompanyId('INV', compInfo.id).companyInitial}">
+												value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompanyId('APPROVAL', compInfo.id).companyInitial}">
 										</div>
 										<div class="col-md-2" style="margin: 0; padding: 0;">
 											<select class="form-control" name="fynYear">
 												<c:forEach
-													items="${sessionScope['ejb'].getAllFinancialForSales()}"
+													items="${sessionScope['ejb'].getAllFinancialForApproval()}"
 													var="fyr">
 													<option value="${fyr}">${fyr}</option>
 												</c:forEach>
@@ -188,7 +165,7 @@
 										<div class="col-md-1" style="margin: 0; padding: 0;">
 											<input type="text" class="form-control" readonly="readonly"
 												name="billType"
-												value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompanyId('INV', compInfo.id).billType}">
+												value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompanyId('APPROVAL', compInfo.id).billType}">
 										</div>
 										<div class="col-md-2" style="margin: 0; padding: 0;">
 											<input type="text" class="form-control" name="autoNum">
@@ -208,12 +185,12 @@
 								<hr width="100%">
 							</div>
 
-							<%-- <c:if test="${requestScope['amS']!=null}"> --%>
+							<%-- <c:if test="${requestScope['approvalEntry']!=null}"> --%>
 
 							<div id="show">
 
-								<form action="salesReturnServlet" method="post"
-									id="salesReturnForm">
+								<form action="approvalReturn" method="post"
+									id="approvalReturnForm">
 
 									<div class="row">
 										<div class="col-md-6">
@@ -224,7 +201,8 @@
 												</div>
 												<table>
 
-													<c:set value="${requestScope['amS']}" var="salre" />
+													<c:set value="${requestScope['approvalEntry']}"
+														var="approvalEntry" />
 
 
 													<tr>
@@ -235,7 +213,8 @@
 														<td>&nbsp;</td>
 														<td><input type="text" name="custName" id="custName"
 															readonly="readonly" class="form-control"
-															value="${salre.customer.name}" style="align: center;"></td>
+															value="${approvalEntry.customer.name}"
+															style="align: center;"></td>
 													</tr>
 													<tr>
 														<td>&nbsp;</td>
@@ -245,8 +224,8 @@
 														<td>&nbsp;</td>
 														<td><input type="text" name="addr" id="addr"
 															readonly="readonly" class="form-control"
-															value="${salre.customer.mobile}" style="length: 40px;"
-															style="align:center;"></td>
+															value="${approvalEntry.customer.mobile}"
+															style="length: 40px;" style="align:center;"></td>
 													</tr>
 													<tr>
 														<td>&nbsp;</td>
@@ -255,7 +234,7 @@
 														<td>Agent Name :</td>
 														<td>&nbsp;</td>
 														<td><input type="text" name="city" id="city"
-															value="${salre.vendor.name}" readonly="readonly"
+															value="${approvalEntry.vendor.name}" readonly="readonly"
 															class="form-control" style="length: 40px;"></td>
 													</tr>
 													<tr>
@@ -266,7 +245,7 @@
 														<td>&nbsp;</td>
 														<td><input type="text" name="phone" id="phone"
 															readonly="readonly" class="form-control"
-															value="${salre.vendor.ph1}" style="length: 40px;"></input></td>
+															value="${approvalEntry.vendor.ph1}" style="length: 40px;"></input></td>
 													</tr>
 												</table>
 											</div>
@@ -283,7 +262,7 @@
 
 												<!-- ************************************************Bill Generator************************************** -->
 												<div class="form-group" style="padding-top: 18px;">
-													<label style="font-size: 15px" class="font">Sales
+													<label style="font-size: 15px" class="font">Approval
 														return Voucher no. :</label>
 													<c:set var="fy"
 														value="${sessionScope['ejb'].getCurrentFinancialYear()}" />
@@ -309,21 +288,22 @@
 														name="challanSuffix" value="${lastSuf}">
 												</div>
 
-												<!-- ********************************************value="${salre.challanNumber}***************************************************************** -->
+												<!-- ********************************************value="${approvalEntry.challanNumber}***************************************************************** -->
 
 												<div class="form-group">
 													<label style="font-size: 15px" class="font">
 														Reference Number:</label> <input class="form-control" type="text"
-														value="${salre.challanNumber}" name="saslesRChallanRId"
-														id="saslesChallanId" readonly="readonly">
+														value="${approvalEntry.challanNumber}"
+														name="saslesRChallanRId" id="saslesChallanId"
+														readonly="readonly">
 
 												</div>
 
 
 												<div class="form-group" style="width: 50%; float: left">
-													<label style="font-size: 15px" class="font">Sale
+													<label style="font-size: 15px" class="font">Approval
 														Date :</label> <input class="form-control" type="text"
-														value='<fmt:formatDate value="${salre.sales_date}" pattern="dd-MM-yyyy"/>'
+														value='<fmt:formatDate value="${approvalEntry.approvalDate}" pattern="dd-MM-yyyy"/>'
 														name="salesDate" id="datepickerQu" readonly="readonly">
 
 												</div>
@@ -331,7 +311,7 @@
 												<div class="form-group" style="width: 50%; float: left">
 													<label style="font-size: 15px" class="font">Return
 														Date :</label> <input class="form-control" type="text"
-														name="salesReturnDate" id="datepicker22"
+														name="approvalReturnDate" id="datepicker22"
 														readonly="readonly">
 
 												</div>
@@ -346,8 +326,8 @@
 
 
 
-										<input type="hidden" value="${requestScope['amS'].id}"
-											name="salesReID">
+										<input type="hidden"
+											value="${requestScope['approvalEntry'].id}" name="salesReID">
 										<table class="table table-striped table-bordered" id="example"
 											cellspacing="0" width="100%">
 
@@ -359,7 +339,7 @@
 													<th>Quantity</th>
 													<th>Remaining Quantity</th>
 													<th><c:choose>
-															<c:when test="${salre.MRP}">
+															<c:when test="${approvalEntry.MRP}">
 																<b> MRP</b>
 															</c:when>
 															<c:otherwise>
@@ -369,68 +349,66 @@
 													<th>Total Price</th>
 													<th>Quantity Return</th>
 													<th>Amount Return</th>
-													<th>Drawback</th>
+													<th>Comment (If any)</th>
 
 
 												</tr>
 											</thead>
 											<c:set var="count" value="${1}" />
 											<c:set value="${0}" var="tota" />
-											<c:forEach items="${salre.salesProductDetails}" var="srr">
+											<c:forEach items="${approvalEntry.approvalProductDetails}"
+												var="apprProdDet">
 												<tbody>
 													<tr>
-
 														<td>${count}</td>
-														<td>${srr.purchase_Product_Details.productDetail.code}
+														<td>${apprProdDet.purchase_Product_Details.productDetail.code}
 
-															<input type="hidden" name="salesProductDetailsID"
-															value="${srr.id}">
+															<input type="hidden" name="approvalProductDetailsID"
+															value="${apprProdDet.id}">
 														</td>
-														<td>${srr.purchase_Product_Details.productDetail.description}</td>
-														<td id="qtty${srr.id}"><fmt:formatNumber
-																value="${srr.quantity}" maxFractionDigits="3"
+														<td>${apprProdDet.purchase_Product_Details.productDetail.description}</td>
+														<td id="qtty${apprProdDet.id}"><fmt:formatNumber
+																value="${apprProdDet.quantity}" maxFractionDigits="3"
 																groupingUsed="false" /></td>
-														<td id="qtttyR${srr.id}"><fmt:formatNumber
-																value="${srr.quantity-srr.salesReQty}"
+														<td id="qtttyR${apprProdDet.id}"><fmt:formatNumber
+																value="${apprProdDet.quantity-apprProdDet.approvalRetQty}"
 																maxFractionDigits="3" groupingUsed="false" /></td>
-														<td id="qttyC${srr.id}"><c:choose>
-																<c:when test="${salre.MRP}">
-																	<fmt:formatNumber value="${srr.salesPrice}"
+														<td id="qttyC${apprProdDet.id}"><c:choose>
+																<c:when test="${approvalEntry.MRP}">
+																	<fmt:formatNumber value="${apprProdDet.price}"
 																		maxFractionDigits="2" groupingUsed="false" />
 																</c:when>
 																<c:otherwise>
-																	<fmt:formatNumber value="${srr.salesPrice}"
+																	<fmt:formatNumber value="${apprProdDet.price}"
 																		maxFractionDigits="2" groupingUsed="false" />
 																</c:otherwise>
 															</c:choose></td>
 														<td><c:choose>
-																<c:when test="${salre.MRP}">
-																	<fmt:formatNumber
-																		value="${srr.quantity*srr.salesPrice}"
+																<c:when test="${approvalEntry.MRP}">
+																	<fmt:formatNumber value="${apprProdDet.quantity*apprProdDet.price}"
 																		maxFractionDigits="2" groupingUsed="false" />
 																</c:when>
 																<c:otherwise>
-																	<fmt:formatNumber
-																		value="${srr.quantity*srr.salesPrice}"
+																	<fmt:formatNumber value="${apprProdDet.quantity*apprProdDet.price}"
 																		maxFractionDigits="2" groupingUsed="false" />
 																</c:otherwise>
 															</c:choose></td>
-														<td style="padding: 4px"><input id="rQtySa${srr.id}"
-															value="0" type="text" class="form-control rQty"
-															style="width: 120px" name="rQtySa"
-															onchange="qtySubtraction('${srr.id}')"></td>
+														<td style="padding: 4px"><input
+															id="returningQty${apprProdDet.id}" value="0" type="text"
+															class="form-control rQty" style="width: 120px"
+															name="returningQty"
+															onchange="qtySubtraction('${apprProdDet.id}')"></td>
 
 
-														<td><input type="text" id="rQtyAm${srr.id}" value="0"
+														<td><input type="text" id="rQtyAm${apprProdDet.id}" value="0"
 															class="form-control rQtyAm" style="width: 120px"
 															name="rQtyAm" readonly="readonly"></td>
 
 														<td style="padding: 4px"><input type="text"
-															class="form-control drabacks" name="rQtyDe"
+															class="form-control drabacks" name="cmmnt"
 															style="width: 120px"></td>
 
-														<c:set value="${tota+srr.quantity*srr.salesPrice}"
-															var="tota" />
+														<c:set value="${tota+apprProdDet.quantity*apprProdDet.price}" var="tota" />
 													</tr>
 												</tbody>
 
@@ -444,7 +422,7 @@
 
 
 
-										<table class="table table-striped table-bordered" id="example"
+										<%-- <table class="table table-striped table-bordered" id="example"
 											cellspacing="0" width="100%">
 
 											<thead>
@@ -460,43 +438,43 @@
 											</thead>
 
 											<c:set var="j" value="${1}"></c:set>
-											<c:forEach var="salesReturn" items="${salre.salesReturn}">
+											<c:forEach var="approvalReturn" items="${approvalEntry.approvalReturn}">
 
 												<tbody>
 													<tr>
 														<td>${j}</td>
-														<td><fmt:formatDate value="${salesReturn.returnDate}"
+														<td><fmt:formatDate value="${approvalReturn.returnDate}"
 																pattern="dd-MM-yy" /></td>
 														<td><a href="#"
-															onclick="viewInvoiceS(${salesReturn.id});"><b>${salesReturn.challanNumber}</b><br>
+															onclick="viewInvoiceS(${approvalReturn.id});"><b>${approvalReturn.challanNumber}</b><br>
 																<input type="button" class="btn btn-primary small"
 																value="Print"></a></td>
-														<td><c:forEach var="salesReturnProd"
-																items="${salesReturn.salesProductReturnDetail}">
+														<td><c:forEach var="approvalReturnProd"
+																items="${approvalReturn.salesProductReturnDetail}">
 														
-													${salesReturnProd.salesProductDetails.purchase_Product_Details.productDetail.code}
+													${approvalReturnProd.approvalProductDetails.purchase_Product_Details.productDetail.code}
 														<hr>
 
 															</c:forEach></td>
-														<td><c:forEach var="salesReturnProd"
-																items="${salesReturn.salesProductReturnDetail}">
+														<td><c:forEach var="approvalReturnProd"
+																items="${approvalReturn.salesProductReturnDetail}">
 														
-													${salesReturnProd.salesProductDetails.purchase_Product_Details.productDetail.description}
+													${approvalReturnProd.approvalProductDetails.purchase_Product_Details.productDetail.description}
 														<hr>
 
 															</c:forEach></td>
 
-														<td><c:forEach var="salesReturnProd"
-																items="${salesReturn.salesProductReturnDetail}">
+														<td><c:forEach var="approvalReturnProd"
+																items="${approvalReturn.salesProductReturnDetail}">
 														
-													${salesReturnProd.qtyReturn}
+													${approvalReturnProd.qtyReturn}
 														<hr>
 
 															</c:forEach></td>
-														<td><c:forEach var="salesReturnProd"
-																items="${salesReturn.salesProductReturnDetail}">
+														<td><c:forEach var="approvalReturnProd"
+																items="${approvalReturn.salesProductReturnDetail}">
 														
-													${salesReturnProd.fault}
+													${approvalReturnProd.fault}
 														<hr>
 
 															</c:forEach></td>
@@ -505,7 +483,7 @@
 												<c:set var="j" value="${j+1}" />
 											</c:forEach>
 
-										</table>
+										</table> --%>
 
 
 
@@ -523,18 +501,18 @@
 														name="subtotalvalue" value="0"></td>
 												</tr>
 											</thead>
-											<tbody>
+											<tbody style="display: none;">
 												<tr>
 													<td colspan="2">Discount &nbsp; <select name="disType"
 														id="disType" disabled="disabled">
 															<c:choose>
-																<c:when test="${salre.isFlatDiscount()==true}">
+																<c:when test="${approvalEntry.isFlatDiscount()==true}">
 																	<option value="disFlat">Flat</option>
-																	<c:set var="dis" value="${salre.discountValue}"></c:set>
+																	<c:set var="dis" value="${approvalEntry.discountValue}"></c:set>
 																</c:when>
 																<c:otherwise>
 																	<option value="disPer">%</option>
-																	<c:set var="dis" value="${salre.discountValue}"></c:set>
+																	<c:set var="dis" value="${approvalEntry.discountValue}"></c:set>
 																</c:otherwise>
 															</c:choose>
 													</select>
@@ -545,7 +523,7 @@
 													</td>
 												</tr>
 											</tbody>
-											<tbody>
+											<tbody style="display: none;">
 												<tr>
 													<td colspan="2" id="disc">Discount Value:</td>
 													<td><input type="text" class="form-control"
@@ -555,14 +533,15 @@
 											</tbody>
 											<c:choose>
 												<c:when
-													test="${salre.isEfectiveProfit()==true && salre.vendor!=null}">
-													<tbody>
+													test="${approvalEntry.isEfectiveProfit()==true && approvalEntry.vendor!=null}">
+													<tbody style="display: none;">
 														<tr>
 															<td colspan="2">Agent Profit: &nbsp; <select
 																name="profitType" id="profitType"
 																onchange="profitTypeF();" disabled="disabled">
 																	<c:choose>
-																		<c:when test="${salre.isFlatProfitAgent()==true}">
+																		<c:when
+																			test="${approvalEntry.isFlatProfitAgent()==true}">
 																			<option value="profitFlat">Flat</option>
 																		</c:when>
 																		<c:otherwise>
@@ -572,12 +551,12 @@
 															</select>
 															</td>
 															<td><input type="text"
-																value="${salre.agentProfitValue}" class="form-control"
-																name="profitVal" id="profitVal" placeholder=""
-																readonly="readonly"></td>
+																value="${approvalEntry.agentProfitValue}"
+																class="form-control" name="profitVal" id="profitVal"
+																placeholder="" readonly="readonly"></td>
 														</tr>
 													</tbody>
-													<tbody>
+													<tbody style="display: none;">
 														<tr>
 															<td colspan="2" id="disc">Agent Profit Value:</td>
 															<td><input type="text" class="form-control"
@@ -593,7 +572,8 @@
 																name="profitType" id="profitType"
 																onchange="profitTypeF();" disabled="disabled">
 																	<c:choose>
-																		<c:when test="${salre.isFlatProfitAgent()==true}">
+																		<c:when
+																			test="${approvalEntry.isFlatProfitAgent()==true}">
 																			<option value="profitFlat">Flat</option>
 																		</c:when>
 																		<c:otherwise>
@@ -617,20 +597,20 @@
 													</tbody>
 												</c:otherwise>
 											</c:choose>
-											<tbody>
+											<tbody style="display: none;">
 												<tr>
 													<td><select class="form-control" id="taxGroup"
 														name="taxGroup" disabled="disabled">
-															<option>${salre.tax_Type_Group.name}</option>
+															<option>${approvalEntry.tax_Type_Group.name}</option>
 													</select></td>
 													<td>%</td>
 													<td><input type="text" class="form-control"
 														readonly="readonly"
-														value="${salre.tax_Type_Group.getTotalTaxValue()}"
+														value="${approvalEntry.tax_Type_Group.getTotalTaxValue()}"
 														id="taxTot"></td>
 												</tr>
 											</tbody>
-											<tbody>
+											<tbody style="display: none;">
 												<tr>
 													<td colspan="2">Tax Amount :</td>
 													<td><input type="text" class="form-control"
@@ -708,7 +688,7 @@
 																					<c:set value="${0}" var="totCr" />
 																					<c:set value="${0}" var="totDb" />
 																					<c:forEach
-																						items="${salre.customer.voucherAssign.voucherDetails}"
+																						items="${approvalEntry.customer.voucherAssign.voucherDetails}"
 																						var="k">
 																						<c:choose>
 																							<c:when test="${k.isCredit().equals(true)}">
@@ -795,10 +775,9 @@
 											</div>
 										</div>
 									</div>
-									<input type="hidden" name="salesentryid" value="${salre.id}">
-
-									<input type="hidden" name="customerId"
-										value="${salre.customer.id}">
+									<input type="hidden" name="approvalEntryId"
+										value="${approvalEntry.id}"> <input type="hidden"
+										name="customerId" value="${approvalEntry.customer.id}">
 								</form>
 							</div>
 							<%-- </c:if> --%>
@@ -842,17 +821,17 @@
 	<script type="text/javascript">
 		function qtySubtraction(g) {
 
-			if (Number($("#rQtySa" + g).val()) <= Number($("#qtttyR" + g)
+			if (Number($("#returningQty" + g).val()) <= Number($("#qtttyR" + g)
 					.html())) {
 				$("#rQtyAm" + g).val(
-						Number($("#rQtySa" + g).val())
-								* Number($("#qttyC" + g).html()));				
+						Number($("#returningQty" + g).val())
+								* Number($("#qttyC" + g).html()));
 			}
 
 			else {
 
 				alert("returning quanty is less than sasles quantity");
-				$("#rQtySa" + g).val("0");
+				$("#returningQty" + g).val("0");
 				$("#rQtyAm" + g).val("0");
 
 			}
@@ -876,32 +855,34 @@
 			}
 			if ($("#profitType option:selected").val() == 'profitPer') {
 				$("#profitValue")
-				.val(
-						Math
-								.round((Number(Number($("#subtotalvalue")
-										.val())
-										- Number($("#discountValue2")
-												.val()))
-										* Number($("#profitVal").val()) / 100) * 100) / 100);
+						.val(
+								Math
+										.round((Number(Number($(
+												"#subtotalvalue").val())
+												- Number($("#discountValue2")
+														.val()))
+												* Number($("#profitVal").val()) / 100) * 100) / 100);
 			} else {
 				$("#profitValue").val(
 						(Number($("#subtotalvalue").val())
 								* Number($("#profitVal").val()) / Number($(
 								"#totalCostSales").val())).toFixed(2));
 			}
-			$("#taxAmount2").val(
-					Number($("#taxTot").val())
-							* Number(Number($("#subtotalvalue").val())
-									- Number($("#discountValue2").val())) / 100);
+			$("#taxAmount2")
+					.val(
+							Number($("#taxTot").val())
+									* Number(Number($("#subtotalvalue").val())
+											- Number($("#discountValue2").val()))
+									/ 100);
 			var r = Number($("#subtotalvalue").val())
 					+ Number($("#taxAmount2").val())
 					- Number($("#discountValue2").val());
-			
+
 			/* $("#grandtotal").val(Math.floor(r));
 			var va = Math.floor(r);
 			var vi = (r - va).toFixed(2);
-			$("#roundvalue").val(vi); */			
-			
+			$("#roundvalue").val(vi); */
+
 			var tot = r;
 			var round = Math.round(tot);
 			$("#roundvalue").val(Math.round((round - tot) * 100) / 100);
@@ -919,7 +900,7 @@
 					chk = chk + 1;
 				}
 			});
-			
+
 			var chkDrawback = 0;
 			$(".drabacks").each(function() {
 				if (this.value != "") {
@@ -929,10 +910,11 @@
 
 			if (count < 1 || chk < 1) {
 				alert("No product found to return.");
-			} else if (chkDrawback < 1) {
-				alert("please enter the drawback");
-			} else {
-				$("#saveSales").modal("show");
+			} /* else if (chkDrawback < 1) {
+												alert("please enter the drawback");
+											}  */
+			else {
+				/* $("#saveSales").modal("show");
 				$("#tbv").val($("#grandtotal").val());
 				//$("#aDed").val(Number($("#tbv").val()) - Number($("#tcn").val()));
 				if (Number($("#tcn").val()) > Number($("#tbv").val())) {
@@ -945,7 +927,9 @@
 					$("#aDed").val(
 							(Number($("#tbv").val()) - Number($("#tcn").val()))
 									.toFixed(2));
-				}
+				} */
+
+				submitRet();
 			}
 		}
 	</script>
@@ -962,7 +946,7 @@
 
 	<script type="text/javascript">
 		function submitRet() {
-			$("#salesReturnForm").submit();
+			$("#approvalReturnForm").submit();
 		}
 	</script>
 
@@ -1016,11 +1000,9 @@
 				$("#datepickerA").datepicker('setDate', new Date());
 			}
 		});
-		function viewInvoiceS(id){		
-			window
-			.open(
-					"salesReturnInvoiceForPrint.jsp?id="+id,
-					'name', 'width=900,height=700').print();
+		function viewInvoiceS(id) {
+			window.open("approvalReturnBillForPrint.jsp?id=" + id, 'name',
+					'width=900,height=700').print();
 		}
 	</script>
 

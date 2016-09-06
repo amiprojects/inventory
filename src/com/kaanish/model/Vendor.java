@@ -63,6 +63,9 @@ public class Vendor implements Serializable {
 
 	@OneToMany(mappedBy = "vendor")
 	private List<SalesEntry> salesEntry;
+	
+	@OneToMany(mappedBy = "vendor")
+	private List<ApprovalEntry> approvalEntry;
 
 	@OneToMany(mappedBy = "vendor")
 	private List<AccountDetails> accountDetails;
@@ -335,6 +338,14 @@ public class Vendor implements Serializable {
 	public void setPurchaseOrderEntry(
 			List<PurchaseOrderEntry> purchaseOrderEntry) {
 		this.purchaseOrderEntry = purchaseOrderEntry;
+	}
+
+	public List<ApprovalEntry> getApprovalEntry() {
+		return approvalEntry;
+	}
+
+	public void setApprovalEntry(List<ApprovalEntry> approvalEntry) {
+		this.approvalEntry = approvalEntry;
 	}
 
 }

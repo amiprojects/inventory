@@ -31,6 +31,9 @@ public class CustomerEntry implements Serializable {
 	@OneToMany(mappedBy = "customer")
 	private List<SalesEntry> salesEntries;
 
+	@OneToMany(mappedBy = "customer")
+	private List<ApprovalEntry> approvalEntries;
+
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "customerEntry")
 	private VoucherAssign voucherAssign;
 
@@ -128,18 +131,31 @@ public class CustomerEntry implements Serializable {
 				// + "\"address\":\"" + address + "\"," + "\"city\":\""
 				// + city + "\"," + "\"mobile\":\"" + mobile
 				// + "\", \"name\":\"" + name + "\"}";
-				return "{\"id\":\"" + id + "\"," + "\"vat_cst_no\":\"" + vat_cst_no + "\"," + "\"address\":\"" + address
-						+ "\"," + "\"city\":\"" + city + "\"," + "\"mobile\":\"" + mobile + "\", \"name\":\"" + name
+				return "{\"id\":\"" + id + "\"," + "\"vat_cst_no\":\""
+						+ vat_cst_no + "\"," + "\"address\":\"" + address
+						+ "\"," + "\"city\":\"" + city + "\","
+						+ "\"mobile\":\"" + mobile + "\", \"name\":\"" + name
 						+ "\"}";
 			} else {
-				return "{\"id\":\"" + id + "\"," + "\"vat_cst_no\":\"" + vat_cst_no + "\"," + "\"address\":\"" + address
-						+ "\"," + "\"city\":\"" + city + "\"," + "\"mobile\":\"" + mobile + "\", \"name\":\"" + name
+				return "{\"id\":\"" + id + "\"," + "\"vat_cst_no\":\""
+						+ vat_cst_no + "\"," + "\"address\":\"" + address
+						+ "\"," + "\"city\":\"" + city + "\","
+						+ "\"mobile\":\"" + mobile + "\", \"name\":\"" + name
 						+ "\"}";
 			}
 		} else {
-			return "{\"id\":\"" + id + "\"," + "\"vat_cst_no\":\"" + vat_cst_no + "\"," + "\"address\":\"" + address
-					+ "\"," + "\"city\":\"" + city + "\"," + "\"mobile\":\"" + mobile + "\", \"name\":\"" + name
-					+ "\"}";
+			return "{\"id\":\"" + id + "\"," + "\"vat_cst_no\":\"" + vat_cst_no
+					+ "\"," + "\"address\":\"" + address + "\","
+					+ "\"city\":\"" + city + "\"," + "\"mobile\":\"" + mobile
+					+ "\", \"name\":\"" + name + "\"}";
 		}
+	}
+
+	public List<ApprovalEntry> getApprovalEntries() {
+		return approvalEntries;
+	}
+
+	public void setApprovalEntries(List<ApprovalEntry> approvalEntries) {
+		this.approvalEntries = approvalEntries;
 	}
 }

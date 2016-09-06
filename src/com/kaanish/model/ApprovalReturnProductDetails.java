@@ -19,10 +19,7 @@ public class ApprovalReturnProductDetails implements Serializable {
 	@GeneratedValue
 	private int id;
 	private float qtyReturn;
-	
-	// xxxxxxxxxxxxxxxx
-	private String fault;
-	// xxxxxxxxxxxxxxxx
+	private String comments;
 
 	@ManyToOne
 	@JoinColumn(name = "approvalProductDetailsID")
@@ -47,14 +44,6 @@ public class ApprovalReturnProductDetails implements Serializable {
 		this.qtyReturn = qtyReturn;
 	}
 
-	public String getFault() {
-		return fault;
-	}
-
-	public void setFault(String fault) {
-		this.fault = fault;
-	}
-
 	public ApprovalProductDetails getApprovalProductDetails() {
 		return approvalProductDetails;
 	}
@@ -70,5 +59,13 @@ public class ApprovalReturnProductDetails implements Serializable {
 
 	public void setApprovalReturn(ApprovalReturn approvalReturn) {
 		this.approvalReturn = approvalReturn;
+	}
+
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
 	}
 }

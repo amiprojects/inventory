@@ -10,6 +10,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -48,16 +50,28 @@ public class ApprovalEntry implements Serializable {
 	private float agentProfitTotal;
 	// xxxxxxxxxxxxxxxx
 
-	private int salesAgentId; // vendor
+	@ManyToOne
+	@JoinColumn(name = "salesAgentId")
+	private Vendor vendor; // vendor
+
 	@OneToMany(mappedBy = "approvalEntry")
 	private List<ApprovalReturn> approvalReturn;
-	private int customerId;
+
+	@ManyToOne
+	@JoinColumn(name = "customerId")
+	private CustomerEntry customer;
+
 	@OneToMany(mappedBy = "approvalEntry", cascade = CascadeType.ALL)
 	private List<ApprovalProductDetails> approvalProductDetails;
-	private String usersId;
+
+	@ManyToOne
+	@JoinColumn(name = "usersId")
+	private Users user;
 
 	// xxxxxxxxxxxxxxxx
-	private int taxtypeId;
+	@ManyToOne
+	@JoinColumn(name = "taxtypeId")
+	private Tax_Type_Group tax_Type_Group;
 
 	// xxxxxxxxxxxxxxxx
 
@@ -221,12 +235,12 @@ public class ApprovalEntry implements Serializable {
 		this.agentProfitTotal = agentProfitTotal;
 	}
 
-	public int getSalesAgentId() {
-		return salesAgentId;
+	public Vendor getVendor() {
+		return vendor;
 	}
 
-	public void setSalesAgentId(int salesAgentId) {
-		this.salesAgentId = salesAgentId;
+	public void setVendor(Vendor vendor) {
+		this.vendor = vendor;
 	}
 
 	public List<ApprovalReturn> getApprovalReturn() {
@@ -235,14 +249,6 @@ public class ApprovalEntry implements Serializable {
 
 	public void setApprovalReturn(List<ApprovalReturn> approvalReturn) {
 		this.approvalReturn = approvalReturn;
-	}
-
-	public int getCustomerId() {
-		return customerId;
-	}
-
-	public void setCustomerId(int customerId) {
-		this.customerId = customerId;
 	}
 
 	public List<ApprovalProductDetails> getApprovalProductDetails() {
@@ -254,20 +260,28 @@ public class ApprovalEntry implements Serializable {
 		this.approvalProductDetails = approvalProductDetails;
 	}
 
-	public int getTaxtypeId() {
-		return taxtypeId;
+	public CustomerEntry getCustomer() {
+		return customer;
 	}
 
-	public void setTaxtypeId(int taxtypeId) {
-		this.taxtypeId = taxtypeId;
+	public void setCustomer(CustomerEntry customer) {
+		this.customer = customer;
 	}
 
-	public String getUsersId() {
-		return usersId;
+	public Users getUser() {
+		return user;
 	}
 
-	public void setUsersId(String usersId) {
-		this.usersId = usersId;
+	public void setUser(Users user) {
+		this.user = user;
+	}
+
+	public Tax_Type_Group getTax_Type_Group() {
+		return tax_Type_Group;
+	}
+
+	public void setTax_Type_Group(Tax_Type_Group tax_Type_Group) {
+		this.tax_Type_Group = tax_Type_Group;
 	}
 
 }

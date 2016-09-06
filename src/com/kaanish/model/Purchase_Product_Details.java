@@ -42,6 +42,9 @@ public class Purchase_Product_Details implements Serializable {
 	@Transient
 	private int numberForBarcodePrint;
 
+	@OneToMany(mappedBy = "purchase_Product_Details", cascade = CascadeType.ALL)
+	private List<ApprovalProductDetails> approvalProductDetails;
+	
 	@OneToMany(mappedBy = "purchaseProductDetails")
 	private List<PurchaseReturnProductDetails> purchaseReturnProductDetails; 
 	
@@ -332,6 +335,14 @@ public class Purchase_Product_Details implements Serializable {
 
 	public void setFlat(boolean isFlat) {
 		this.isFlat = isFlat;
+	}
+
+	public List<ApprovalProductDetails> getApprovalProductDetails() {
+		return approvalProductDetails;
+	}
+
+	public void setApprovalProductDetails(List<ApprovalProductDetails> approvalProductDetails) {
+		this.approvalProductDetails = approvalProductDetails;
 	}
 
 }

@@ -99,6 +99,10 @@
 					<ul>
 						<li><a id="approvalEntry" href="approvalEntry.jsp" title="">Approval
 								Entry</a></li>
+						<li><a id="approvalSearch" href="approvalSearch.jsp" title="">Approval
+								Search</a></li>
+						<li><a id="approvalReturn" href="approvalReturn.jsp" title="">Approval
+								Return</a></li>
 					</ul>
 				</div>
 			</div>

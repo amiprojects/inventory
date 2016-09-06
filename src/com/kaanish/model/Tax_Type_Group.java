@@ -29,11 +29,14 @@ public class Tax_Type_Group implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "userId")
 	private Users users;
-	@OneToMany(mappedBy = "tax_Type_Group",cascade=CascadeType.PERSIST)
+	@OneToMany(mappedBy = "tax_Type_Group", cascade = CascadeType.PERSIST)
 	private List<AccountDetails> accountDetails;
 	@OneToMany(mappedBy = "tax_Type_Group")
 	private List<SalesEntry> salesEntry;
-	
+
+	@OneToMany(mappedBy = "tax_Type_Group")
+	private List<ApprovalEntry> approvalEntries;
+
 	@OneToMany(mappedBy = "tax_Type_Group")
 	private List<PurchaseOrderEntry> purchaseOrderEntry;
 
@@ -98,8 +101,8 @@ public class Tax_Type_Group implements Serializable {
 
 	@Override
 	public String toString() {
-		return "{\"name\":\"" + name + "\", " + "\"id\":\"" + id + "\", " + "\"taxtot\":\"" + getTotalTaxValue()
-				+ "\"}";
+		return "{\"name\":\"" + name + "\", " + "\"id\":\"" + id + "\", "
+				+ "\"taxtot\":\"" + getTotalTaxValue() + "\"}";
 	}
 
 	public boolean isActive() {
@@ -122,8 +125,17 @@ public class Tax_Type_Group implements Serializable {
 		return purchaseOrderEntry;
 	}
 
-	public void setPurchaseOrderEntry(List<PurchaseOrderEntry> purchaseOrderEntry) {
+	public void setPurchaseOrderEntry(
+			List<PurchaseOrderEntry> purchaseOrderEntry) {
 		this.purchaseOrderEntry = purchaseOrderEntry;
+	}
+
+	public List<ApprovalEntry> getApprovalEntries() {
+		return approvalEntries;
+	}
+
+	public void setApprovalEntries(List<ApprovalEntry> approvalEntries) {
+		this.approvalEntries = approvalEntries;
 	}
 
 }

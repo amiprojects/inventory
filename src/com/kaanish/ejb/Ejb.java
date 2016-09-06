@@ -147,7 +147,7 @@ public class Ejb {
 		em.persist(dngr);
 	}
 
-	public Dngr getDngrById(String id) {
+	public Dngr getDngrById(int id) {
 		return em.find(Dngr.class, id);
 	}
 
@@ -210,11 +210,11 @@ public class Ejb {
 		em.persist(url);
 	}
 
-	public void deleteURLById(String id) {
+	public void deleteURLById(int id) {
 		em.remove(getURLById(id));
 	}
 
-	public URL getURLById(String id) {
+	public URL getURLById(int id) {
 		return em.find(URL.class, id);
 	}
 
@@ -238,11 +238,11 @@ public class Ejb {
 		em.persist(u);
 	}
 
-	public void deleteUniqueNameById(String id) {
+	public void deleteUniqueNameById(int id) {
 		em.remove(getUniqueNameById(id));
 	}
 
-	public UniqueName getUniqueNameById(String id) {
+	public UniqueName getUniqueNameById(int id) {
 		return em.find(UniqueName.class, id);
 	}
 
@@ -4895,11 +4895,11 @@ public class Ejb {
 		em.persist(approvalEntry);
 	}
 
-	public void deleteApprovalEntryById(String id) {
+	public void deleteApprovalEntryById(int id) {
 		em.remove(getApprovalEntryById(id));
 	}
 
-	public ApprovalEntry getApprovalEntryById(String id) {
+	public ApprovalEntry getApprovalEntryById(int id) {
 		return em.find(ApprovalEntry.class, id);
 	}
 
@@ -4913,17 +4913,94 @@ public class Ejb {
 		em.merge(approvalEntry);
 	}
 
+	public List<ApprovalEntry> getApprovalEntryByDate(Date startDate,
+			Date endDate) {
+		TypedQuery<ApprovalEntry> q = em
+				.createQuery(
+						"select c from ApprovalEntry c WHERE c.approvalDate BETWEEN :startDate AND :endDate order by c.id desc",
+						ApprovalEntry.class);
+		q.setParameter("startDate", startDate);
+		q.setParameter("endDate", endDate);
+		return q.getResultList();
+	}
+
+	public List<String> getAllFinancialForApproval() {
+		List<String> lst = new ArrayList<String>();
+		HashSet<String> hash = new HashSet<String>();
+		for (ApprovalEntry ae : getAllApprovalEntry()) {
+			lst.add(ae.getChallanNumber().split("/")[1]);
+		}
+		hash.addAll(lst);
+		lst.clear();
+		lst.addAll(hash);
+		return lst;
+	}
+
+	public List<ApprovalEntry> getApprovalEntryByChallanNo(String chNo) {
+		TypedQuery<ApprovalEntry> q = em
+				.createQuery(
+						"select c from ApprovalEntry c where UPPER(c.challanNumber)=:chNo ORDER BY c.id DESC",
+						ApprovalEntry.class);
+		q.setParameter("chNo", chNo.toUpperCase());
+		return q.getResultList();
+	}
+
+	public List<ApprovalEntry> getApprovalEntryByAgentName(String name) {
+		TypedQuery<ApprovalEntry> q = em
+				.createQuery(
+						"select c from ApprovalEntry c where UPPER(c.vendor.name)=:name order by c.id desc",
+						ApprovalEntry.class);
+		q.setParameter("name", name.toUpperCase());
+		return q.getResultList();
+	}
+
+	public List<ApprovalEntry> getApprovalEntryByCustomerName(String name) {
+		TypedQuery<ApprovalEntry> q = em
+				.createQuery(
+						"select c from ApprovalEntry c where UPPER(c.customer.name)=:name order by c.id desc",
+						ApprovalEntry.class);
+		q.setParameter("name", name.toUpperCase());
+		return q.getResultList();
+	}
+
+	public List<ApprovalEntry> getApprovalEntriesByProductCode(String code) {
+		List<ApprovalEntry> lst = new ArrayList<ApprovalEntry>();
+		HashSet<ApprovalEntry> hs = new HashSet<ApprovalEntry>();
+		TypedQuery<ApprovalProductDetails> q = em
+				.createQuery(
+						"select c from ApprovalProductDetails c where UPPER(c.purchase_Product_Details.productDetail.code)=:code ORDER BY c.approvalEntry.id DESC",
+						ApprovalProductDetails.class);
+
+		q.setParameter("code", code.toUpperCase());
+		for (ApprovalProductDetails s : q.getResultList()) {
+			lst.add(s.getApprovalEntry());
+		}
+		hs.addAll(lst);
+		lst.clear();
+		lst.addAll(hs);
+		return lst;
+	}
+	
+	public List<ApprovalEntry> getApprovalEntryDByChallanNo(String chNo) {
+		TypedQuery<ApprovalEntry> q = em
+				.createQuery(
+						"select c from ApprovalEntry c where UPPER(c.challanNumber)=:chNo ORDER BY c.id DESC",
+						ApprovalEntry.class);
+		q.setParameter("chNo", chNo.toUpperCase());
+		return q.getResultList();
+	}
+
 	/***************** for ApprovalProductDetails **********************/
 	public void setApprovalProductDetails(
 			ApprovalProductDetails approvalProductDetails) {
 		em.persist(approvalProductDetails);
 	}
 
-	public void deleteApprovalProductDetailsById(String id) {
+	public void deleteApprovalProductDetailsById(int id) {
 		em.remove(getApprovalProductDetailsById(id));
 	}
 
-	public ApprovalProductDetails getApprovalProductDetailsById(String id) {
+	public ApprovalProductDetails getApprovalProductDetailsById(int id) {
 		return em.find(ApprovalProductDetails.class, id);
 	}
 
@@ -4939,16 +5016,26 @@ public class Ejb {
 		em.merge(approvalProductDetails);
 	}
 
+	public List<ApprovalProductDetails> getApprovalProductDetailsByProductId(
+			int id) {
+		TypedQuery<ApprovalProductDetails> q = em
+				.createQuery(
+						"select s from ApprovalProductDetails s where s.purchase_Product_Details.productDetail.id=:Id ORDER BY s.approvalEntry.approvalDate DESC ",
+						ApprovalProductDetails.class);
+		q.setParameter("Id", id);
+		return q.getResultList();
+	}
+
 	/***************** for ApprovalReturn **********************/
 	public void setApprovalReturn(ApprovalReturn approvalReturn) {
 		em.persist(approvalReturn);
 	}
 
-	public void deleteApprovalReturnById(String id) {
+	public void deleteApprovalReturnById(int id) {
 		em.remove(getApprovalReturnById(id));
 	}
 
-	public ApprovalReturn getApprovalReturnById(String id) {
+	public ApprovalReturn getApprovalReturnById(int id) {
 		return em.find(ApprovalReturn.class, id);
 	}
 
@@ -4968,12 +5055,12 @@ public class Ejb {
 		em.persist(approvalReturnProductDetails);
 	}
 
-	public void deleteApprovalReturnProductDetailsById(String id) {
+	public void deleteApprovalReturnProductDetailsById(int id) {
 		em.remove(getApprovalReturnProductDetailsById(id));
 	}
 
 	public ApprovalReturnProductDetails getApprovalReturnProductDetailsById(
-			String id) {
+			int id) {
 		return em.find(ApprovalReturnProductDetails.class, id);
 	}
 

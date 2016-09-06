@@ -30,17 +30,21 @@ public class ApprovalReturn implements Serializable {
 	private String challanNumber;
 	private int challanSuffix;
 	private String referenceApprovalChallan;
-	
+
 	// xxxxxxxxxxxxxxxx
 	private float retAgentProfitTotal;
 	// xxxxxxxxxxxxxxxx
 
 	@OneToMany(mappedBy = "approvalReturn")
 	private List<ApprovalReturnProductDetails> approvalReturnProductDetail;
+
 	@ManyToOne
 	@JoinColumn(name = "approvalEntryID")
 	private ApprovalEntry approvalEntry;
-	private String usersId;
+
+	@ManyToOne
+	@JoinColumn(name = "usersId")
+	private Users user;
 
 	public int getId() {
 		return id;
@@ -131,11 +135,11 @@ public class ApprovalReturn implements Serializable {
 		this.approvalEntry = approvalEntry;
 	}
 
-	public String getUsersId() {
-		return usersId;
+	public Users getUser() {
+		return user;
 	}
 
-	public void setUsersId(String usersId) {
-		this.usersId = usersId;
+	public void setUser(Users user) {
+		this.user = user;
 	}
 }

@@ -25,13 +25,17 @@ public class Users implements Serializable {
 	private String ph;
 	private String password;
 
+	@OneToMany(mappedBy = "user")
+	private List<ApprovalEntry> approvalEntries;
+
+	@OneToMany(mappedBy = "user")
+	private List<ApprovalReturn> approvalReturns;
+
 	@OneToMany(mappedBy = "users")
-	private
-	List<SecurityAnswers> securityAnswers;
+	private List<SecurityAnswers> securityAnswers;
 
 	@OneToMany(mappedBy = "users")
 	private List<NotificationView> notificationView;
-	
 
 	@ManyToOne
 	@JoinColumn(name = "companyInfoId")
@@ -43,20 +47,19 @@ public class Users implements Serializable {
 	List<Tax_Type_Group> tax_Type_Groups;
 	@OneToMany(mappedBy = "users")
 	private List<Vendor> vendors;
-	@OneToMany(mappedBy = "users",cascade=CascadeType.PERSIST)
+	@OneToMany(mappedBy = "users", cascade = CascadeType.PERSIST)
 	private List<AccountDetails> accountDetails;
 	@OneToMany(mappedBy = "users")
 	private List<Purchase_Entry> purchase_Entries;
-	
+
 	@OneToMany(mappedBy = "users")
 	private List<PurchaseOrderEntry> purchaseOrderEntry;
-	
+
 	@OneToMany(mappedBy = "users")
 	private List<VoucherDetails> voucherDetails;
-	
+
 	@OneToMany(mappedBy = "users")
 	private List<SalesReturn> SalesReturn;
-	
 
 	@ManyToOne
 	@JoinColumn(name = "userGroupId")
@@ -157,6 +160,7 @@ public class Users implements Serializable {
 	public void setSecurityAnswers(List<SecurityAnswers> securityAnswers) {
 		this.securityAnswers = securityAnswers;
 	}
+
 	public List<VoucherDetails> getVoucherDetails() {
 		return voucherDetails;
 	}
@@ -185,8 +189,25 @@ public class Users implements Serializable {
 		return purchaseOrderEntry;
 	}
 
-	public void setPurchaseOrderEntry(List<PurchaseOrderEntry> purchaseOrderEntry) {
+	public void setPurchaseOrderEntry(
+			List<PurchaseOrderEntry> purchaseOrderEntry) {
 		this.purchaseOrderEntry = purchaseOrderEntry;
 	}
-	
+
+	public List<ApprovalEntry> getApprovalEntries() {
+		return approvalEntries;
+	}
+
+	public void setApprovalEntries(List<ApprovalEntry> approvalEntries) {
+		this.approvalEntries = approvalEntries;
+	}
+
+	public List<ApprovalReturn> getApprovalReturns() {
+		return approvalReturns;
+	}
+
+	public void setApprovalReturns(List<ApprovalReturn> approvalReturns) {
+		this.approvalReturns = approvalReturns;
+	}
+
 }

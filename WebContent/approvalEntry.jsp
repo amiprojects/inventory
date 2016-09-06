@@ -49,8 +49,8 @@
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("#sales").attr("id", "activeSubMenu");
-		$("#sSalesEntry").attr("style", "color: #6a94ff;");
+		$("#approval").attr("id", "activeSubMenu");
+		$("#approvalEntry").attr("style", "color: #6a94ff;");
 		$("#wspORmrp").val('mrpVal');
 		$("#aDetailsDiv").hide();
 	});
@@ -87,15 +87,11 @@
 		</c:if>
 	</c:if>
 
-	<c:if test="${requestScope['purDetIdforPC']!=null}">
+	<c:if test="${requestScope['idforPC']!=null}">
 		<script type="text/javascript">
 			var myWindow = window.open(
-					"stockSaCha.jsp?id=${requestScope['purDetIdforPC']}",
+					"approvalBillForPrint.jsp?id=${requestScope['idforPC']}",
 					'name', 'width=600,height=400');
-			/* var myWindow = window
-					.open(
-							"salesInvoiceForPrint.jsp?id=${requestScope['purDetIdforPC']}",
-							'name', 'width=600,height=400'); */
 			myWindow.print();
 		</script>
 	</c:if>
@@ -233,7 +229,7 @@
 										<h3 id="msg">${requestScope['msg']}</h3>
 									</div>
 									<div style="background-color: lightgrey; padding: 3px 3px;">
-										<span class="head_style">Sale Product at:</span>
+										<span class="head_style">Product at:</span>
 									</div>
 									<input type="radio" class="chk" name="saleAt" value="mrp"
 										id="mrp" style="display: none;" checked="checked"><label
