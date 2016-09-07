@@ -1009,7 +1009,6 @@ public class InitS extends HttpServlet {
 			ejb.setPageList(pageList);
 			pageList = null;
 		}
-		module = null;
 
 		int flagApprovalSearch = 0;
 		for (PageList p : ejb.getAllPageList()) {
@@ -1025,8 +1024,7 @@ public class InitS extends HttpServlet {
 			ejb.setPageList(pageList);
 			pageList = null;
 		}
-		module = null;
-		
+
 		int flagApprovalReturn = 0;
 		for (PageList p : ejb.getAllPageList()) {
 			if (p.getName().equals("Approval Return")) {
@@ -1037,6 +1035,21 @@ public class InitS extends HttpServlet {
 		if (flagApprovalReturn == 0) {
 			pageList = new PageList();
 			pageList.setName("Approval Return");
+			pageList.setModule(module);
+			ejb.setPageList(pageList);
+			pageList = null;
+		}
+
+		int flagApprovalReturnSearch = 0;
+		for (PageList p : ejb.getAllPageList()) {
+			if (p.getName().equals("Approval Return Search")) {
+				flagApprovalReturnSearch = 1;
+				break;
+			}
+		}
+		if (flagApprovalReturnSearch == 0) {
+			pageList = new PageList();
+			pageList.setName("Approval Return Search");
 			pageList.setModule(module);
 			ejb.setPageList(pageList);
 			pageList = null;
@@ -1658,6 +1671,16 @@ public class InitS extends HttpServlet {
 			ejb.setBillSetup(bill_setup);
 			bill_setup = null;
 		}
+
+		if (ejb.getLastBillSetupBySufix("APPROVALRETURN") == null) {
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("APPROVALRETURN");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfo);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+		}
 		// bill setup
 	}
 
@@ -1802,6 +1825,16 @@ public class InitS extends HttpServlet {
 			ejb.setBillSetup(bill_setup);
 			bill_setup = null;
 		}
+
+		if (ejb.getLastBillSetupBySufix("APPROVALRETURN") == null) {
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("APPROVALRETURN");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfo);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+		}
 		// bill setup
 	}
 
@@ -1940,6 +1973,16 @@ public class InitS extends HttpServlet {
 		if (ejb.getLastBillSetupBySufix("APPROVAL") == null) {
 			bill_setup = new Bill_setup();
 			bill_setup.setBillType("APPROVAL");
+			bill_setup.setCompanyInitial("KK");
+			bill_setup.setSufix("000");
+			bill_setup.setCompanyInfo(companyInfo);
+			ejb.setBillSetup(bill_setup);
+			bill_setup = null;
+		}
+
+		if (ejb.getLastBillSetupBySufix("APPROVALRETURN") == null) {
+			bill_setup = new Bill_setup();
+			bill_setup.setBillType("APPROVALRETURN");
 			bill_setup.setCompanyInitial("KK");
 			bill_setup.setSufix("000");
 			bill_setup.setCompanyInfo(companyInfo);

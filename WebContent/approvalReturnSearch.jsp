@@ -39,7 +39,7 @@
 			items="${sessionScope['ejb'].getUserById(sessionScope['user']).userGroup.pageLists}"
 			var="page">
 
-			<c:if test="${page.name.equals('Sales Search')}">
+			<c:if test="${page.name.equals('Approval Return Search')}">
 				<c:set var="i" value="5" />
 			</c:if>
 		</c:forEach>
@@ -66,11 +66,11 @@
 
 							<div class="breadcrumbs"
 								style="height: 50px; text-align: center;">
-								<h3 style="margin-top: 11px;">Sales Search</h3>
+								<h3 style="margin-top: 11px;">Approval Return Search</h3>
 							</div>
 							<div class="widget-area">
 								<div class="col-md-12">
-									<form role="form" class="sec" action="salesSearchAll"
+									<form role="form" class="sec" action="approvalReturnSearchAll"
 										method="post">
 										<div class="row">
 											<div class="col-md-12">
@@ -79,7 +79,7 @@
 											</div>
 										</div>
 									</form>
-									<form role="form" class="sec" action="salesSearchByDate"
+									<form role="form" class="sec" action="approvalRerturnSearchByDate"
 										method="post" id="salesSearchByDateId">
 										<div class="row">
 											<div class="col-md-5">
@@ -107,12 +107,12 @@
 										</div>
 									</form>
 									<form role="form" class="sec"
-										action="salesSearchBySalesChallanNo" method="post">
+										action="approvalReturnSearchByBillNo" method="post">
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
-													<label for="" style="float: left;">Sales challan
-														no. :</label>
+													<label for="" style="float: left;">Approval Return
+														bill no. :</label>
 												</div>
 											</div>
 										</div>
@@ -121,12 +121,12 @@
 												style="margin-right: 0; padding-right: 0;">
 												<input type="text" class="form-control" readonly="readonly"
 													name="companyInitial"
-													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompany('INV').companyInitial}">
+													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompany('APPROVALRETURN').companyInitial}">
 											</div>
 											<div class="col-md-2" style="margin: 0; padding: 0;">
 												<select class="form-control" name="fynYear">
 													<c:forEach
-														items="${sessionScope['ejb'].getAllFinancialForSales()}"
+														items="${sessionScope['ejb'].getAllFinancialForApprovalReturn()}"
 														var="fyr">
 														<option value="${fyr}">${fyr}</option>
 													</c:forEach>
@@ -152,7 +152,7 @@
 											<div class="col-md-1" style="margin: 0; padding: 0;">
 												<input type="text" class="form-control" readonly="readonly"
 													name="billType"
-													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompany('INV').billType}">
+													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompany('APPROVALRETURN').billType}">
 											</div>
 											<div class="col-md-2" style="margin: 0; padding: 0;">
 												<input type="text" class="form-control" name="autoNum">
@@ -166,8 +166,68 @@
 											</div>
 										</div>
 									</form>
-									<form role="form" class="sec" action="salesSearchByAgentName"
-										method="post">
+									<form role="form" class="sec"
+										action="approvalReturnSearchByRefBillNo" method="post">
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label for="" style="float: left;">Reference
+														bill no. :</label>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-1"
+												style="margin-right: 0; padding-right: 0;">
+												<input type="text" class="form-control" readonly="readonly"
+													name="companyInitial"
+													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompany('APPROVAL').companyInitial}">
+											</div>
+											<div class="col-md-2" style="margin: 0; padding: 0;">
+												<select class="form-control" name="fynYear">
+													<c:forEach
+														items="${sessionScope['ejb'].getAllFinancialForApproval()}"
+														var="fyr">
+														<option value="${fyr}">${fyr}</option>
+													</c:forEach>
+												</select>
+											</div>
+											<div class="col-md-2" style="margin: 0; padding: 0;">
+												<!-- <input type="text" class="form-control" name="month"> -->
+												<select name="month" class="form-control">
+													<option value="01">01</option>
+													<option value="02">02</option>
+													<option value="03">03</option>
+													<option value="04">04</option>
+													<option value="05">05</option>
+													<option value="06">06</option>
+													<option value="07">07</option>
+													<option value="08">08</option>
+													<option value="09">09</option>
+													<option value="10">10</option>
+													<option value="11">11</option>
+													<option value="12">12</option>
+												</select>
+											</div>
+											<div class="col-md-1" style="margin: 0; padding: 0;">
+												<input type="text" class="form-control" readonly="readonly"
+													name="billType"
+													value="${sessionScope['ejb'].getLastBillSetupBySufixAndCompany('APPROVAL').billType}">
+											</div>
+											<div class="col-md-2" style="margin: 0; padding: 0;">
+												<input type="text" class="form-control" name="autoNum">
+											</div>
+											<div class="col-md-2"
+												style="margin-left: 0; padding-left: 0;">
+												<input type="text" class="form-control" name="suffix">
+											</div>
+											<div class="col-md-2">
+												<button class="btn green pull-left" type="submit">Search</button>
+											</div>
+										</div>
+									</form>
+									<form role="form" class="sec"
+										action="approvalReturnSearchByAgentName" method="post">
 										<div class="row">
 											<div class="col-md-10">
 												<div class="form-group">
@@ -184,7 +244,7 @@
 										</div>
 									</form>
 									<form role="form" class="sec"
-										action="salesSearchByCustomerName" method="post">
+										action="approvalReturnSearchByCustomerName" method="post">
 										<div class="row">
 											<div class="col-md-10">
 												<div class="form-group">
@@ -200,8 +260,8 @@
 
 										</div>
 									</form>
-									<form role="form" class="sec" action="salesSearchByProductCode"
-										method="post">
+									<form role="form" class="sec"
+										action="approvalReturnSearchByProductCode" method="post">
 										<div class="row">
 											<div class="col-md-10">
 												<div class="form-group">
@@ -223,46 +283,44 @@
 										<thead>
 											<tr>
 												<th>#</th>
-												<th>Sales challan no.</th>
+												<th>Return bill no.</th>
+												<th>Reference bill no.</th>
 												<th>Customer Name</th>
 												<th>Agent Name</th>
-												<th>Sales Date</th>
-												<th>Total Amount</th>
+												<th>Approval Date</th>
+												<th>Return Date</th>
 											</tr>
 										</thead>
 
 										<c:set var="count" value="${1}" />
-										<c:forEach items="${requestScope['salesEntryLst']}"
-											var="sEntryByD">
+										<c:forEach items="${requestScope['approvalRetLst']}"
+											var="approvalReturn">
 											<tbody>
 												<tr>
 													<td>${count}</td>
 													<td><a href="#"
-														onclick="viewInvoiceS(${sEntryByD.id});"><b>${sEntryByD.challanNumber}</b></a></td>
-													<td>${sEntryByD.customer.name}</td>
+														onclick="viewReturnBill(${approvalReturn.id});"><b>${approvalReturn.challanNumber}</b></a></td>
+													<td><a href="#"
+														onclick="viewBill(${approvalReturn.approvalEntry.id});"><b>${approvalReturn.approvalEntry.challanNumber}</b></a></td>
+													<td>${approvalReturn.approvalEntry.customer.name}</td>
 													<c:choose>
-														<c:when test="${sEntryByD.vendor==null}">
+														<c:when test="${approvalReturn.approvalEntry.vendor==null}">
 															<td>NIL</td>
 														</c:when>
 														<c:otherwise>
-															<td>${sEntryByD.vendor.name}</td>
+															<td>${approvalReturn.approvalEntry.vendor.name}</td>
 														</c:otherwise>
 													</c:choose>
-													<td><fmt:formatDate value="${sEntryByD.sales_date}"
+													<td><fmt:formatDate
+															value="${approvalReturn.approvalEntry.approvalDate}"
 															pattern="dd-MM-yy" /></td>
-													<td>${sEntryByD.totalCost}</td>
-													<td><a href="#"
-														onclick="viewInvoiceSoldOnly(${sEntryByD.id});"><b>Challan
-																for sold only</b></a></td>
-													<td><form action="salesEdit" method="post">
-															<input type="hidden" value="${sEntryByD.id}" name="sId">
-															<input type="image" src="img/edit.png">
-														</form></td>
+													<td><fmt:formatDate value="${approvalReturn.returnDate}"
+															pattern="dd-MM-yy" /></td>
 													<td>
-														<form action="salesView" method="post"
-															id="sView${sEntryByD.id}">
-															<a href="#" onclick="salesViewF('${sEntryByD.id}');"><input
-																type="hidden" value="${sEntryByD.id}" name="sId"><img
+														<form action="approvalReturnView" method="post"
+															id="view${approvalReturn.id}">
+															<a href="#" onclick="approvalViewF('${approvalReturn.id}');"><input
+																type="hidden" value="${approvalReturn.id}" name="id"><img
 																alt="" src="images/eye.png" height="25px"></a>
 														</form>
 													</td>
@@ -292,8 +350,8 @@
 	<script type="text/javascript" src="js/grid-filter.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$("#sales").attr("id", "activeSubMenu");
-			$("#sSalesSearch").attr("style", "color: #6a94ff;");
+			$("#approval").attr("id", "activeSubMenu");
+			$("#approvalReturnSearch").attr("style", "color: #6a94ff;");
 		});
 	</script>
 	<script src="js/jquery-ui/jquery-ui.js"></script>
@@ -310,8 +368,8 @@
 				dateFormat : "dd-mm-yy"
 			});
 		});
-		function salesViewF(id) {
-			$("#sView" + id).submit();
+		function approvalViewF(id) {
+			$("#view" + id).submit();
 		}
 		function dateSet() {
 			var dt = $("#datepicker").datepicker('getDate');
@@ -472,16 +530,16 @@
 				$("#salesSearchByDateId").submit();
 			}
 		}
-		function viewInvoiceS(id){			
+		function viewBill(id){			
 			window
 			.open(
-					"stockSaCha.jsp?id="+id,
+					"approvalBillForPrint.jsp?id="+id,
 					'name', 'width=900,height=700').print();
 		}
-		function viewInvoiceSoldOnly(id){		
+		function viewReturnBill(id){		
 			window
 			.open(
-					"salesChallanForSoldOnly.jsp?id="+id,
+					"approvalReturnBillForPrint.jsp?id="+id,
 					'name', 'width=900,height=700').print();
 		}
 	</script>

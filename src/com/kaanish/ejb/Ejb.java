@@ -4980,7 +4980,7 @@ public class Ejb {
 		lst.addAll(hs);
 		return lst;
 	}
-	
+
 	public List<ApprovalEntry> getApprovalEntryDByChallanNo(String chNo) {
 		TypedQuery<ApprovalEntry> q = em
 				.createQuery(
@@ -5049,6 +5049,123 @@ public class Ejb {
 		em.merge(approvalReturn);
 	}
 
+	public List<ApprovalReturn> getApprovalReturnByDate(Date startDate,
+			Date endDate) {
+		TypedQuery<ApprovalReturn> q = em
+				.createQuery(
+						"select c from ApprovalReturn c WHERE c.returnDate BETWEEN :startDate AND :endDate order by c.id desc",
+						ApprovalReturn.class);
+		q.setParameter("startDate", startDate);
+		q.setParameter("endDate", endDate);
+		return q.getResultList();
+	}
+
+	public List<ApprovalReturn> getApprovalReturnByChallanNo(String chNo) {
+		TypedQuery<ApprovalReturn> q = em
+				.createQuery(
+						"select c from ApprovalReturn c where UPPER(c.challanNumber)=:chNo ORDER BY c.id DESC",
+						ApprovalReturn.class);
+		q.setParameter("chNo", chNo.toUpperCase());
+		return q.getResultList();
+	}
+
+	public List<ApprovalReturn> getApprovalReturnByRefChallanNo(String chNo) {
+		TypedQuery<ApprovalReturn> q = em
+				.createQuery(
+						"select c from ApprovalReturn c where UPPER(c.approvalEntry.challanNumber)=:chNo ORDER BY c.id DESC",
+						ApprovalReturn.class);
+		q.setParameter("chNo", chNo.toUpperCase());
+		return q.getResultList();
+	}
+
+	public List<ApprovalReturn> getApprovalReturnByAgentName(String name) {
+		TypedQuery<ApprovalReturn> q = em
+				.createQuery(
+						"select c from ApprovalReturn c where UPPER(c.approvalEntry.vendor.name)=:name order by c.id desc",
+						ApprovalReturn.class);
+		q.setParameter("name", name.toUpperCase());
+		return q.getResultList();
+	}
+
+	public List<ApprovalReturn> getApprovalReturnByCustomerName(String name) {
+		TypedQuery<ApprovalReturn> q = em
+				.createQuery(
+						"select c from ApprovalReturn c where UPPER(c.approvalEntry.customer.name)=:name order by c.id desc",
+						ApprovalReturn.class);
+		q.setParameter("name", name.toUpperCase());
+		return q.getResultList();
+	}
+
+	public List<ApprovalReturn> getApprovalReturnByProductCode(String code) {
+		List<ApprovalReturn> lst = new ArrayList<ApprovalReturn>();
+		HashSet<ApprovalReturn> hs = new HashSet<ApprovalReturn>();
+		TypedQuery<ApprovalReturnProductDetails> q = em
+				.createQuery(
+						"select c from ApprovalReturnProductDetails c where UPPER(c.approvalProductDetails.purchase_Product_Details.productDetail.code)=:code ORDER BY c.approvalReturn.id DESC",
+						ApprovalReturnProductDetails.class);
+
+		q.setParameter("code", code.toUpperCase());
+		for (ApprovalReturnProductDetails s : q.getResultList()) {
+			lst.add(s.getApprovalReturn());
+		}
+		hs.addAll(lst);
+		lst.clear();
+		lst.addAll(hs);
+		return lst;
+	}
+
+	public List<String> getAllFinancialForApprovalReturn() {
+		List<String> lst = new ArrayList<String>();
+		HashSet<String> hash = new HashSet<String>();
+		for (ApprovalReturn ar : getAllApprovalReturn()) {
+			lst.add(ar.getChallanNumber().split("/")[1]);
+		}
+		hash.addAll(lst);
+		lst.clear();
+		lst.addAll(hash);
+		return lst;
+	}
+
+	public int getLastApprovalReturnChallanNumber() {
+		TypedQuery<ApprovalReturn> q = em.createQuery(
+				"select c from ApprovalReturn c ORDER BY c.id DESC",
+				ApprovalReturn.class);
+		if (q.getResultList().size() > 0) {
+			return q.getResultList().get(0).getChallanNo();
+		} else {
+			return 0;
+		}
+
+	}
+
+	public int getLastApprovalReturnChallanSuffix() {
+		TypedQuery<ApprovalReturn> q = em.createQuery(
+				"select c from ApprovalReturn c ORDER BY c.id DESC",
+				ApprovalReturn.class);
+
+		if (q.getResultList().size() > 0) {
+			int s = q.getResultList().get(0).getChallanSuffix();
+			if (getLastBillSetupBySufix("APPROVALRETURN") == null) {
+				return s;
+			} else {
+				if (Integer.parseInt(getLastBillSetupBySufix("APPROVALRETURN")
+						.getSufix()) < s) {
+					return s;
+				} else {
+					return Integer.parseInt(getLastBillSetupBySufix(
+							"APPROVALRETURN").getSufix());
+				}
+			}
+		} else {
+			if (getLastBillSetupBySufix("APPROVALRETURN") == null) {
+				return 0;
+			} else {
+				return Integer.parseInt(getLastBillSetupBySufix(
+						"APPROVALRETURN").getSufix());
+			}
+		}
+	}
+
 	/***************** for ApprovalReturnProductDetails **********************/
 	public void setApprovalReturnProductDetails(
 			ApprovalReturnProductDetails approvalReturnProductDetails) {
@@ -5074,6 +5191,16 @@ public class Ejb {
 	public void updateApprovalReturnProductDetails(
 			ApprovalReturnProductDetails approvalReturnProductDetails) {
 		em.merge(approvalReturnProductDetails);
+	}
+
+	public List<ApprovalReturnProductDetails> getAllApprovalReturnProductDetailsByApprovalEntryId(
+			int id) {
+		TypedQuery<ApprovalReturnProductDetails> q = em
+				.createQuery(
+						"select c from ApprovalReturnProductDetails c where c.approvalReturn.approvalEntry.id=:id order by c.id asc",
+						ApprovalReturnProductDetails.class);
+		q.setParameter("id", id);
+		return q.getResultList();
 	}
 
 	/******** alertNotificationforQuantity *******************/

@@ -26,8 +26,12 @@ page[size="A4"] {
 	body, page[size="A4"] {
 		/* margin: 0;
 		box-shadow: 0; */
-		padding-left: 1.0cm;
-		padding-right: 1.0cm;
+		display: block;
+		margin-top: -20px;
+		margin-left: 20px;
+		margin-right: 0px;
+		/* padding-left: 1.0cm;
+		padding-right: 1.0cm; */
 		page-break-after: always;
 		box-shadow: 0;
 	}
@@ -61,6 +65,9 @@ page[size="A4"] {
 
 .tg .tg-031e {
 	vertical-align: top
+}
+table {
+	table-layout: fixed;
 }
 </style>
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>

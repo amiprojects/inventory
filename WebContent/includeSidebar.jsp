@@ -103,6 +103,8 @@
 								Search</a></li>
 						<li><a id="approvalReturn" href="approvalReturn.jsp" title="">Approval
 								Return</a></li>
+						<li><a id="approvalReturnSearch" href="approvalReturnSearch.jsp" title="">Approval
+								Return Search</a></li>
 					</ul>
 				</div>
 			</div>

@@ -157,7 +157,12 @@ import com.kaanish.util.GetMacId;
 		"/approvalEntry", "/approvalSearchAll", "/approvalSearchByDate",
 		"/approvalSearchByChallanNumber", "/approvalSearchByAgentName",
 		"/approvalSearchByCustomerName", "/approvalSearchByProductCode",
-		"/approvalView", "/approvalSearchForReturn", "/approvalReturn" })
+		"/approvalView", "/approvalSearchForReturn", "/approvalReturn",
+		"/approvalReturnSearchAll", "/approvalRerturnSearchByDate",
+		"/approvalReturnSearchByBillNo", "/approvalReturnSearchByRefBillNo",
+		"/approvalReturnSearchByAgentName",
+		"/approvalReturnSearchByCustomerName",
+		"/approvalReturnSearchByProductCode", "/approvalReturnView" })
 public class Servlet extends HttpServlet {
 	static final long serialVersionUID = 1L;
 
@@ -6807,11 +6812,181 @@ public class Servlet extends HttpServlet {
 
 							req.setAttribute("returnIdforPC",
 									approvalReturn.getId());
-							msg = "sales Return Succeessful";
+							msg = "Succeessful...";
 						} else {
 							msg = "Duplicate Entry! Not Allowed!";
 						}
 
+						break;
+
+					case "approvalReturnSearchAll":
+						page = "approvalReturnSearch.jsp";
+						List<ApprovalReturn> approvalRetLstA = ejb
+								.getAllApprovalReturn();
+						req.setAttribute("approvalRetLst", approvalRetLstA);
+						if (approvalRetLstA.size() > 0) {
+							msg = "All Return List";
+						} else {
+							msg = "No result found...";
+						}
+						break;
+
+					case "approvalRerturnSearchByDate":
+						page = "approvalReturnSearch.jsp";
+
+						List<ApprovalReturn> approvalRetLstDt = ejb
+								.getApprovalReturnByDate(DateConverter
+										.getDate(req.getParameter("fDate")),
+										DateConverter.getDate(req
+												.getParameter("lDate")));
+						req.setAttribute("approvalRetLst", approvalRetLstDt);
+
+						if (approvalRetLstDt.size() > 0) {
+							msg = "Your search for dated "
+									+ req.getParameter("fDate") + " to "
+									+ req.getParameter("lDate");
+						} else {
+							msg = "No result found for dated "
+									+ req.getParameter("fDate") + " to "
+									+ req.getParameter("lDate") + "...";
+						}
+
+						break;
+
+					case "approvalReturnSearchByBillNo":
+						page = "approvalReturnSearch.jsp";
+
+						List<ApprovalReturn> approvalRetLstBlNo = ejb
+								.getApprovalReturnByChallanNo(req
+										.getParameter("companyInitial")
+										+ "/"
+										+ req.getParameter("fynYear")
+										+ "/"
+										+ req.getParameter("month")
+										+ "/"
+										+ req.getParameter("billType")
+										+ "/"
+										+ req.getParameter("autoNum")
+										+ "/"
+										+ req.getParameter("suffix"));
+						req.setAttribute("approvalRetLst", approvalRetLstBlNo);
+
+						if (approvalRetLstBlNo.size() > 0) {
+							msg = "Your search for bill number : "
+									+ req.getParameter("companyInitial") + "/"
+									+ req.getParameter("fynYear") + "/"
+									+ req.getParameter("month") + "/"
+									+ req.getParameter("billType") + "/"
+									+ req.getParameter("autoNum") + "/"
+									+ req.getParameter("suffix");
+						} else {
+							msg = "No result found for bill number : "
+									+ req.getParameter("companyInitial") + "/"
+									+ req.getParameter("fynYear") + "/"
+									+ req.getParameter("month") + "/"
+									+ req.getParameter("billType") + "/"
+									+ req.getParameter("autoNum") + "/"
+									+ req.getParameter("suffix");
+						}
+						break;
+
+					case "approvalReturnSearchByRefBillNo":
+						page = "approvalReturnSearch.jsp";
+
+						List<ApprovalReturn> approvalRetLstRfBlNo = ejb
+								.getApprovalReturnByRefChallanNo(req
+										.getParameter("companyInitial")
+										+ "/"
+										+ req.getParameter("fynYear")
+										+ "/"
+										+ req.getParameter("month")
+										+ "/"
+										+ req.getParameter("billType")
+										+ "/"
+										+ req.getParameter("autoNum")
+										+ "/"
+										+ req.getParameter("suffix"));
+						req.setAttribute("approvalRetLst", approvalRetLstRfBlNo);
+
+						if (approvalRetLstRfBlNo.size() > 0) {
+							msg = "Your search for reference bill number : "
+									+ req.getParameter("companyInitial") + "/"
+									+ req.getParameter("fynYear") + "/"
+									+ req.getParameter("month") + "/"
+									+ req.getParameter("billType") + "/"
+									+ req.getParameter("autoNum") + "/"
+									+ req.getParameter("suffix");
+						} else {
+							msg = "No result found for reference bill number : "
+									+ req.getParameter("companyInitial")
+									+ "/"
+									+ req.getParameter("fynYear")
+									+ "/"
+									+ req.getParameter("month")
+									+ "/"
+									+ req.getParameter("billType")
+									+ "/"
+									+ req.getParameter("autoNum")
+									+ "/"
+									+ req.getParameter("suffix");
+						}
+						break;
+
+					case "approvalReturnSearchByAgentName":
+						page = "approvalReturnSearch.jsp";
+						List<ApprovalReturn> approvalRetLstAg = ejb
+								.getApprovalReturnByAgentName(req
+										.getParameter("agentName"));
+						req.setAttribute("approvalRetLst", approvalRetLstAg);
+						if (approvalRetLstAg.size() > 0) {
+							msg = "Your search for Agent name : "
+									+ req.getParameter("agentName")
+											.toUpperCase();
+						} else {
+							msg = "No result found for Agent name : "
+									+ req.getParameter("agentName")
+											.toUpperCase();
+						}
+						break;
+
+					case "approvalReturnSearchByCustomerName":
+						page = "approvalReturnSearch.jsp";
+						List<ApprovalReturn> approvalRetLstCsNm = ejb
+								.getApprovalReturnByCustomerName(req
+										.getParameter("custoName"));
+						req.setAttribute("approvalRetLst", approvalRetLstCsNm);
+						if (approvalRetLstCsNm.size() > 0) {
+							msg = "Your search for Customer name : "
+									+ req.getParameter("custoName")
+											.toUpperCase();
+						} else {
+							msg = "No result found for Customer name : "
+									+ req.getParameter("custoName")
+											.toUpperCase();
+						}
+						break;
+
+					case "approvalReturnSearchByProductCode":
+						page = "approvalReturnSearch.jsp";
+						List<ApprovalReturn> approvalRetLstPrCd = ejb
+								.getApprovalReturnByProductCode(req
+										.getParameter("prodCode"));
+						req.setAttribute("approvalRetLst", approvalRetLstPrCd);
+						if (approvalRetLstPrCd.size() > 0) {
+							msg = "Your search for Product code : "
+									+ req.getParameter("prodCode")
+											.toUpperCase();
+						} else {
+							msg = "No result found for product code : "
+									+ req.getParameter("prodCode")
+											.toUpperCase();
+						}
+						break;
+
+					case "approvalReturnView":
+						page = "approvalReturnView.jsp";
+						req.setAttribute("id", req.getParameter("id"));
+						msg = "";
 						break;
 
 					default:

@@ -43,7 +43,7 @@ public class BarcodeServlet extends HttpServlet {
 		resp.setContentType("application/pdf");
 		try {
 			Document document = new Document();
-			document.setMargins(5, 5, 5, 5);
+			document.setMargins(10, 5, 5, 5);
 //			Rectangle rec = new Rectangle((float) (3.8 * 72),
 //					(float) (2.0 * 72));
 			Rectangle rec = new Rectangle((float) (3.5 * 30),
@@ -114,7 +114,7 @@ public class BarcodeServlet extends HttpServlet {
 					//code128.setCodeSet(Barcode128.Barcode128CodeSet.B);
 					Image code128Image = code128.createImageWithBarcode(cb,
 							null, null);
-					code128Image.setAbsolutePosition(5,3);
+					code128Image.setAbsolutePosition(10,3);
 			        code128Image.scalePercent(75);
 
 					//code128Image.setScaleToFitLineWhenOverflow(true);

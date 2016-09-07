@@ -267,10 +267,10 @@
 													<c:set var="fy"
 														value="${sessionScope['ejb'].getCurrentFinancialYear()}" />
 													<c:set var="cno"
-														value="${sessionScope['ejb'].getLastSalesReturnChallanNumber()+1}" />
+														value="${sessionScope['ejb'].getLastApprovalReturnChallanNumber()+1}" />
 													<c:set var="csuf"
-														value="${sessionScope['ejb'].getLastSalesRChallanSuffix()+1}" />
-													<c:set var="suf" value="SRINV" />
+														value="${sessionScope['ejb'].getLastApprovalReturnChallanSuffix()+1}" />
+													<c:set var="suf" value="APPROVALRETURN" />
 													<c:set var="bs"
 														value="${sessionScope['ejb'].getLastBillSetupBySufix(suf)}" />
 													<fmt:formatNumber value="${cno}" var="lastChNo"
@@ -446,7 +446,7 @@
 														<td><fmt:formatDate value="${approvalReturn.returnDate}"
 																pattern="dd-MM-yy" /></td>
 														<td><a href="#"
-															onclick="viewInvoiceS(${approvalReturn.id});"><b>${approvalReturn.challanNumber}</b><br>
+															onclick="viewReturnBill(${approvalReturn.id});"><b>${approvalReturn.challanNumber}</b><br>
 																<input type="button" class="btn btn-primary small"
 																value="Print"></a></td>
 														<td><c:forEach var="approvalReturnProd"
@@ -830,7 +830,7 @@
 
 			else {
 
-				alert("returning quanty is less than sasles quantity");
+				alert("returning quanty is less than remaining approval quantity");
 				$("#returningQty" + g).val("0");
 				$("#rQtyAm" + g).val("0");
 
@@ -1000,7 +1000,7 @@
 				$("#datepickerA").datepicker('setDate', new Date());
 			}
 		});
-		function viewInvoiceS(id) {
+		function viewReturnBill(id) {
 			window.open("approvalReturnBillForPrint.jsp?id=" + id, 'name',
 					'width=900,height=700').print();
 		}

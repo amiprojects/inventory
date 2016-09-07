@@ -26,8 +26,12 @@ page[size="A4"] {
 	body, page[size="A4"] {
 		/* margin: 0;
 		box-shadow: 0; */
-		padding-left: 1.0cm;
-		padding-right: 1.0cm;
+		display: block;
+		margin-top: -20px;
+		margin-left: 20px;
+		margin-right: 0px;
+		/* padding-left: 1.0cm;
+		padding-right: 1.0cm; */
 		page-break-after: always;
 		box-shadow: 0;
 	}
@@ -61,6 +65,10 @@ page[size="A4"] {
 
 .tg .tg-031e {
 	vertical-align: top
+}
+
+table {
+	table-layout: fixed;
 }
 </style>
 <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
@@ -277,7 +285,8 @@ page[size="A4"] {
 				<c:if test="${purEntry.description==null}">
 					<tr style="height: 10px">
 						<td class="tg-031e" colspan="7"><span><strong>Amount
-									Chargeable (in words)</strong></span><br> <span>${sessionScope['ejb'].getNumberToWords(grandT)} only.</span></td>
+									Chargeable (in words)</strong></span><br> <span>${sessionScope['ejb'].getNumberToWords(grandT)}
+								only.</span></td>
 					</tr>
 				</c:if>
 				<c:if test="${purEntry.description!=null}">
@@ -285,7 +294,8 @@ page[size="A4"] {
 						<td class="tg-031e" colspan="3"><strong>Description
 								: </strong><br> <span>${purEntry.description}</span></td>
 						<td class="tg-031e" colspan="4"><span><strong>Amount
-									Chargeable (in words)</strong></span><br> <span>${sessionScope['ejb'].getNumberToWords(grandT)} only.</span></td>
+									Chargeable (in words)</strong></span><br> <span>${sessionScope['ejb'].getNumberToWords(grandT)}
+								only.</span></td>
 					</tr>
 				</c:if>
 				<tr style="height: 10px;">
