@@ -5430,10 +5430,14 @@ public class Servlet extends HttpServlet {
 						// ////////Null Manage////////////////////////////
 						if (verifyParams(req, resp, "productId", "proQty",
 								"rate", "amount", "qtyUnitId", "itemId",
-								"jobId" + req.getParameter("productId"),
-								"jobqty" + req.getParameter("productId"),
-								"jobRate" + req.getParameter("productId"),
-								"totalAmount" + req.getParameter("productId"))) {
+								"jobId" + req.getParameter("productId") + ""
+										+ req.getParameter("itemId"), "jobqty"
+										+ req.getParameter("productId") + ""
+										+ req.getParameter("itemId"), "jobRate"
+										+ req.getParameter("productId") + ""
+										+ req.getParameter("itemId"),
+								"totalAmount" + req.getParameter("productId")
+										+ "" + req.getParameter("itemId"))) {
 							req.setAttribute("msg", "Failed! Please try again!");
 							req.getRequestDispatcher(page).forward(req, resp);
 							return;
@@ -5539,16 +5543,19 @@ public class Servlet extends HttpServlet {
 								prototal = prototal
 										+ Float.parseFloat(prorate[lc]);
 								String[] jobid = req.getParameterValues("jobId"
-										+ productid[lc]);
+										+ productid[lc] + "" + itemId[lc]);
 								String[] jobqty = req
 										.getParameterValues("jobqty"
-												+ productid[lc]);
+												+ productid[lc] + ""
+												+ itemId[lc]);
 								String[] jobrate = req
 										.getParameterValues("jobRate"
-												+ productid[lc]);
+												+ productid[lc] + ""
+												+ itemId[lc]);
 								String[] jobamount = req
 										.getParameterValues("totalAmount"
-												+ productid[lc]);
+												+ productid[lc] + ""
+												+ itemId[lc]);
 
 								for (int lc1 = 0; lc1 < jobid.length; lc1++) {
 									jobsForDesignCostSheet = new JobsForDesignCostSheet();
@@ -5857,9 +5864,9 @@ public class Servlet extends HttpServlet {
 												+ productForSampleId1[l1]);
 								for (int l2 = 0; l2 < purProDetId1.length; l2++) {
 									jobPlanProductStock = ejb
-											.getJobPlanProductStockByPurchaseProductDetailsIdAndJobPlanId(
+											.getJobPlanProductStockByPurchaseProductDetailsIdAndJobPlanProductId(
 													Integer.parseInt(purProDetId1[l2]),
-													jobPlan.getId());
+													jobPlanProducts.getId());
 									jobPlanProductStock
 											.setJobAssignmentProducts(jobAssignmentProducts);
 									ejb.updateJobPlanProductStock(jobPlanProductStock);

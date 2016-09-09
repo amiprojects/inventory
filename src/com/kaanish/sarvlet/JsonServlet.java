@@ -139,7 +139,7 @@ import com.kaanish.util.DepartmentCotractor;
 		"/getAllJobPlans",
 		"/setPurchaseProduct",
 		"/getSampleDesignCostSheetByDesignNumberForDuplicateCheck",
-		"/getItmProductsForSampleByProductId",
+		"/getItmProductsForSampleByProductIdAndProductForDesignId",
 		"/getJobPlanProductsByPlanId",
 		"/getAllDesignNoFromSampleDesignCostSheetAndProductsByDesignNumberForDuplicateCheck",
 		"/getProductDetailByDesignNumber",
@@ -228,10 +228,14 @@ public class JsonServlet extends HttpServlet {
 						.writeEnd().close();
 				break;
 
-			case "getItmProductsForSampleByProductId":
-				resp.getWriter().print(
-						ejb.getItmProductsForSampleByProductId(Integer
-								.parseInt(req.getParameter("id"))));
+			case "getItmProductsForSampleByProductIdAndProductForDesignId":
+				resp.getWriter()
+						.print(ejb
+								.getItmProductsForSampleByProductIdAndProductForDesignId(
+										Integer.parseInt(req
+												.getParameter("pId")),
+										Integer.parseInt(req
+												.getParameter("pdcsId"))));
 				break;
 
 			case "getProductDetailByDesignNumber":
@@ -553,7 +557,16 @@ public class JsonServlet extends HttpServlet {
 							.write("ProductRateForSample", pdcs.getRate())
 							.write("ProductAmountForSample", pdcs.getAmmount())
 							.write("ProductForSampleId", pdcs.getId())
-							.writeEnd();
+							.write("itemId",
+									ejb.getItmProductsForSampleByProductIdAndProductForDesignId(
+											pdcs.getProductDetail().getId(),
+											pdcs.getId()).getItemDetails()
+											.getId())
+							.write("itemNm",
+									ejb.getItmProductsForSampleByProductIdAndProductForDesignId(
+											pdcs.getProductDetail().getId(),
+											pdcs.getId()).getItemDetails()
+											.getName()).writeEnd();
 				}
 				generator3.writeEnd().close();
 				break;

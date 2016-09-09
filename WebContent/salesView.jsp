@@ -363,7 +363,7 @@
 											onclick="viewInvoice(${salesSearchView.id});"></td>
 										<td><input type="button" style="margin-left: 15px;"
 											class="btn btn-primary large"
-											value="Print Invoice for Sold Only"
+											value="Print Invoice for All Details"
 											onclick="viewInvoiceSoldOnly(${salesSearchView.id});"></td>
 									</tr>
 								</table>
@@ -845,13 +845,13 @@
 	function viewInvoice(id){			
 		window
 		.open(
-				"stockSaCha.jsp?id="+id,
+				"salesChallanForSoldOnly.jsp?id="+id,
 				'name', 'width=900,height=700').print();
 	}
 	function viewInvoiceSoldOnly(id){			
 		window
 		.open(
-				"salesChallanForSoldOnly.jsp?id="+id,
+				"stockSaCha.jsp?id="+id,
 				'name', 'width=900,height=700').print();
 	}
 	</script>

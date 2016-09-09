@@ -533,7 +533,7 @@
 		function viewInvoiceS(id){			
 			window
 			.open(
-					"stockSaCha.jsp?id="+id,
+					"salesChallanForSoldOnly.jsp?id="+id,
 					'name', 'width=900,height=700').print();
 		}
 		function viewInvoiceR(id){		

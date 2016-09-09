@@ -253,7 +253,7 @@
 													<td>${sEntryByD.totalCost}</td>
 													<td><a href="#"
 														onclick="viewInvoiceSoldOnly(${sEntryByD.id});"><b>Challan
-																for sold only</b></a></td>
+																for All Details</b></a></td>
 													<td><form action="salesEdit" method="post">
 															<input type="hidden" value="${sEntryByD.id}" name="sId">
 															<input type="image" src="img/edit.png">
@@ -475,13 +475,13 @@
 		function viewInvoiceS(id){			
 			window
 			.open(
-					"stockSaCha.jsp?id="+id,
+					"salesChallanForSoldOnly.jsp?id="+id,
 					'name', 'width=900,height=700').print();
 		}
 		function viewInvoiceSoldOnly(id){		
 			window
 			.open(
-					"salesChallanForSoldOnly.jsp?id="+id,
+					"stockSaCha.jsp?id="+id,
 					'name', 'width=900,height=700').print();
 		}
 	</script>

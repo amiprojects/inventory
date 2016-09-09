@@ -324,11 +324,12 @@ public class Ejb {
 		return q.getResultList().get(0);
 	}
 
-	public ItmProductsForSample getItmProductsForSampleByProductId(int id) {
+	public ItmProductsForSample getItmProductsForSampleByProductIdAndProductForDesignId(int pId, int pdcsId) {
 		TypedQuery<ItmProductsForSample> q = em.createQuery(
-				"select c from ItmProductsForSample c where c.productId=:id",
+				"select c from ItmProductsForSample c where c.productId=:pId and c.productForDesignCostSheetId=:pdcsId",
 				ItmProductsForSample.class);
-		q.setParameter("id", id);
+		q.setParameter("pId", pId);
+		q.setParameter("pdcsId", pdcsId);
 		return q.getResultList().get(0);
 	}
 
@@ -4830,11 +4831,11 @@ public class Ejb {
 		return em.find(JobPlanProductStock.class, id);
 	}
 
-	public JobPlanProductStock getJobPlanProductStockByPurchaseProductDetailsIdAndJobPlanId(
+	public JobPlanProductStock getJobPlanProductStockByPurchaseProductDetailsIdAndJobPlanProductId(
 			int ppdId, int jpId) {
 		TypedQuery<JobPlanProductStock> q = em
 				.createQuery(
-						"select c from JobPlanProductStock c where c.jobPlan.id=:jpId AND c.purchase_Product_Details.id=:ppdId",
+						"select c from JobPlanProductStock c where c.jobPlanProducts.id=:jpId AND c.purchase_Product_Details.id=:ppdId",
 						JobPlanProductStock.class);
 		q.setParameter("jpId", jpId);
 		q.setParameter("ppdId", ppdId);

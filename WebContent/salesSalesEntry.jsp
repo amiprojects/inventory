@@ -89,13 +89,10 @@
 
 	<c:if test="${requestScope['purDetIdforPC']!=null}">
 		<script type="text/javascript">
-			var myWindow = window.open(
-					"stockSaCha.jsp?id=${requestScope['purDetIdforPC']}",
-					'name', 'width=600,height=400');
-			/* var myWindow = window
+			var myWindow = window
 					.open(
-							"salesInvoiceForPrint.jsp?id=${requestScope['purDetIdforPC']}",
-							'name', 'width=600,height=400'); */
+							"salesChallanForSoldOnly.jsp?id=${requestScope['purDetIdforPC']}",
+							'name', 'width=600,height=400');
 			myWindow.print();
 		</script>
 	</c:if>
@@ -118,7 +115,8 @@
 						</div>
 
 						<div class="col-md-12" style="height: 800px;">
-							<form class="sec" action="salesEntry" id="salesForm" method="post">
+							<form class="sec" action="salesEntry" id="salesForm"
+								method="post">
 								<div class="row">
 									<div class="col-md-6">
 										<div class="widget-area"
@@ -2802,7 +2800,8 @@
 																			"#salesbarH")
 																			.val()
 																	+ '" value=\''
-																	+ $("#costH")
+																	+ $(
+																			"#costH")
 																			.val()
 																	+ '\'><input readonly="readonly" type="hidden" id="selectedCost'
 																	+ $(

@@ -248,6 +248,7 @@
 												<th>#</th>
 												<th>Job Name</th>
 												<th>Product Code</th>
+												<th>Item</th>
 												<th>Qty<font color="red" size="4">*</font></th>
 												<th>UOM</th>
 												<th>Rate<font color="red" size="4">*</font></th>
@@ -442,67 +443,71 @@
 <script>
 	/******************for products*************/
 	function addProduct() {
+		$("#itemId").val("");
 		$("#addProduct").modal("show");
 	}
-	$("#proCode").autocomplete(
-			{
-				source : function(req, resp) {
-					$.ajax({
-						type : "post",
-						url : "getProductbyProductCode",
-						data : {
-							code : req.term
+	$("#proCode")
+			.autocomplete(
+					{
+						source : function(req, resp) {
+							$.ajax({
+								type : "post",
+								url : "getProductbyProductCode",
+								data : {
+									code : req.term
+								},
+								dataType : "json",
+								success : function(data) {
+									resp($.map(data, function(item) {
+										return ({
+											value : item.code,
+											id : item.id,
+											description : item.description,
+											qtyUnitId : item.qtyUnitId,
+											qtyUnitName : item.qtyUnit,
+											latestCost : item.latestCost
+										});
+									}));
+								}
+							});
 						},
-						dataType : "json",
-						success : function(data) {
-							resp($.map(data, function(item) {
-								return ({
-									value : item.code,
-									id : item.id,
-									description : item.description,
-									qtyUnitId : item.qtyUnitId,
-									qtyUnitName : item.qtyUnit,
-									latestCost : item.latestCost
-								});
-							}));
-						}
-					});
-				},
-				change : function(evt, ui) {
-					if (ui.item == null) {
-						$("#proCode").val("");
-						$("#proId").val("");
-						$("#proDesc").val("");
-						$("#proUOM").val("");
-						$("#UOMid").val("");
-						$("#rate").val("");
-					}
-				},
-				select : function(evt, ui) {
-					$("#rate").prop("readonly", false);
-					if ($(document).find("#proTable" + ui.item.id).length > 0) {
-						$("#rate")
-								.val(
+						change : function(evt, ui) {
+							if (ui.item == null) {
+								$("#proCode").val("");
+								$("#proId").val("");
+								$("#proDesc").val("");
+								$("#proUOM").val("");
+								$("#UOMid").val("");
+								$("#rate").val("");
+							}
+						},
+						select : function(evt, ui) {
+							$("#rate").prop("readonly", false);
+							if ($(document).find(
+									"#proTable" + ui.item.id + ""
+											+ $("#itemId").val()).length > 0) {
+								$("#rate").val(
 										$(
-												"#proTable" + ui.item.id
+												"#proTable" + ui.item.id + ""
+														+ $("#itemId").val()
 														+ " td:nth-child(6)")
 												.html());
-						//$("#rate").prop("readonly", true);
-						$("#proQty")
-								.val(
+								//$("#rate").prop("readonly", true);
+								$("#proQty").val(
 										$(
-												"#proTable" + ui.item.id
+												"#proTable" + ui.item.id + ""
+														+ $("#itemId").val()
 														+ " td:nth-child(4)")
 												.html());
-					}
-					$("#proId").val(ui.item.id);
-					$("#proDesc").val(ui.item.description);
-					$("#proUOM").val(ui.item.qtyUnitName);
-					$("#UOMid").val(ui.item.qtyUnitId);
-					$("#rate").val(ui.item.latestCost);
-					$("#rateDesc").removeAttr("style");
-				}
-			});
+							}
+							$("#proId").val(ui.item.id);
+							$("#proDesc").val(ui.item.description);
+							$("#proUOM").val(ui.item.qtyUnitName);
+							$("#UOMid").val(ui.item.qtyUnitId);
+							$("#rate").val(ui.item.latestCost);
+							$("#rateDesc").removeAttr("style");
+						}
+					});
 
 	function addProductRow() {
 		var i = 0;
@@ -532,45 +537,67 @@
 			//error
 
 			$("#addProduct").modal("hide");
-			if ($(document).find("#proTable" + $("#proId").val()).length > 0) {
+			if ($(document).find(
+					"#proTable" + $("#proId").val() + "" + $("#itemId").val()).length > 0) {
 				$("#gt").val(
 						Number($("#gt").val())
 								- $(
-										"#proTable" + $("#proId").val()
+										"#proTable" + $("#proId").val() + ""
+												+ $("#itemId").val()
 												+ " td:nth-child(7)").html()
 								+ Number(Number($("#proQty").val())
 										* Number($("#rate").val())));
-				$("#proTable" + $("#proId").val() + " td:nth-child(4)").html(
-						Number($("#proQty").val()));
-				$("#proQtyH" + $("#proId").val()).val(
-						Number($("#proQty").val()));
-				$("#proTable" + $("#proId").val() + " td:nth-child(6)").html(
-						$("#rate").val());
-				$("#rateH" + $("#proId").val()).val(Number($("#rate").val()));
-				$("#proTable" + $("#proId").val() + " td:nth-child(7)").html(
-						Number($("#proQty").val()) * Number($("#rate").val()));
-				$("#amountH" + $("#proId").val()).val(
-						Number($("#proQty").val()) * Number($("#rate").val()));
-				$("#proTable" + $("#proId").val() + " td:nth-child(8)").html(
-						$("#itemName").val());
-				$("#itemIdH" + $("#proId").val()).val(
-						Number($("#itemId").val()));
+				$(
+						"#proTable" + $("#proId").val() + ""
+								+ $("#itemId").val() + " td:nth-child(4)")
+						.html(Number($("#proQty").val()));
+				$("#proQtyH" + $("#proId").val() + "" + $("#itemId").val())
+						.val(Number($("#proQty").val()));
+				$(
+						"#proTable" + $("#proId").val() + ""
+								+ $("#itemId").val() + " td:nth-child(6)")
+						.html($("#rate").val());
+				$("#rateH" + $("#proId").val() + "" + $("#itemId").val()).val(
+						Number($("#rate").val()));
+				$(
+						"#proTable" + $("#proId").val() + ""
+								+ $("#itemId").val() + " td:nth-child(7)")
+						.html(
+								Number($("#proQty").val())
+										* Number($("#rate").val()));
+				$("#amountH" + $("#proId").val() + "" + $("#itemId").val())
+						.val(
+								Number($("#proQty").val())
+										* Number($("#rate").val()));
+				$(
+						"#proTable" + $("#proId").val() + ""
+								+ $("#itemId").val() + " td:nth-child(8)")
+						.html($("#itemName").val());
+				$("#itemIdH" + $("#proId").val() + "" + $("#itemId").val())
+						.val(Number($("#itemId").val()));
 
 				$('[name="jobName"]:checked')
 						.each(
 								function() {
 									if ($(document).find(
 											"#jobRow" + $(this).val()
-													+ $("#proId").val()).length == 0) {
+													+ $("#proId").val() + ""
+													+ $("#itemId").val()).length == 0) {
 
 										$("#jobtable")
 												.append(
 														'<tbody class="proTable'
 																+ $("#proId")
 																		.val()
+																+ ''
+																+ $("#itemId")
+																		.val()
 																+ '" id="jobRow'
 																+ $(this).val()
 																+ $("#proId")
+																		.val()
+																+ ''
+																+ $("#itemId")
 																		.val()
 																+ '"><tr>'
 																+ '<td>#<input type="hidden" value="'
@@ -580,6 +607,9 @@
 																+ $(this).val()
 																+ '" name="jobId'
 																+ $("#proId")
+																		.val()
+																+ ''
+																+ $("#itemId")
 																		.val()
 																+ '"></td>'
 																+ '<td>'
@@ -594,16 +624,29 @@
 																+ $("#proCode")
 																		.val()
 																+ '</td>'
+																+ '<td>'
+																+ $("#itemName")
+																		.val()
+																+ '</td>'
 																+ '<td><input type="text" class="numChk" id="rate1'
 																+ $(this).val()
 																+ $("#proId")
+																		.val()
+																+ ''
+																+ $("#itemId")
 																		.val()
 																+ '" onchange="calAnount(\''
 																+ $(this).val()
 																+ $("#proId")
 																		.val()
+																+ ''
+																+ $("#itemId")
+																		.val()
 																+ '\');" value="1" name="jobqty'
 																+ $("#proId")
+																		.val()
+																+ ''
+																+ $("#itemId")
 																		.val()
 																+ '"></td>'
 																+ '<td>'
@@ -614,28 +657,49 @@
 																+ $(this).val()
 																+ $("#proId")
 																		.val()
+																+ ''
+																+ $("#itemId")
+																		.val()
 																+ '" onchange="calAnount(\''
 																+ $(this).val()
 																+ $("#proId")
 																		.val()
+																+ ''
+																+ $("#itemId")
+																		.val()
 																+ '\');" value="0" name="jobRate'
 																+ $("#proId")
+																		.val()
+																+ ''
+																+ $("#itemId")
 																		.val()
 																+ '"></td>'
 																+ '<td><input type="text" value="0" name="totalAmount'
 																+ $("#proId")
 																		.val()
+																+ ''
+																+ $("#itemId")
+																		.val()
 																+ '" readonly="readonly" class="eachtotalvalue" id="amount'
 																+ $(this).val()
 																+ $("#proId")
+																		.val()
+																+ ''
+																+ $("#itemId")
 																		.val()
 																+ '"></td>'
 																+ '<td><a href="#" onclick="removeJobRow(\''
 																+ $(this).val()
 																+ $("#proId")
 																		.val()
+																+ ''
+																+ $("#itemId")
+																		.val()
 																+ '\',\''
 																+ $("#proId")
+																		.val()
+																+ ''
+																+ $("#itemId")
 																		.val()
 																+ '\');"><font color="red"><u>remove</u></font></a></td>'
 																+ '</tr>'
@@ -656,6 +720,8 @@
 						.append(
 								'<tbody id="proTable'
 										+ $("#proId").val()
+										+ ''
+										+ $("#itemId").val()
 										+ '">'
 										+ '<tr>'
 										+ '<td>#</td>'
@@ -664,18 +730,26 @@
 										+ $("#proId").val()
 										+ '"><input type="hidden" name="itemId" id="itemIdH'
 										+ $("#proId").val()
+										+ ''
+										+ $("#itemId").val()
 										+ '" value="'
 										+ $("#itemId").val()
 										+ '"><input type="hidden" name="proQty" id="proQtyH'
 										+ $("#proId").val()
+										+ ''
+										+ $("#itemId").val()
 										+ '" value="'
 										+ $("#proQty").val()
 										+ '"><input type="hidden" name="rate" id="rateH'
 										+ $("#proId").val()
+										+ ''
+										+ $("#itemId").val()
 										+ '" value="'
 										+ $("#rate").val()
 										+ '"><input type="hidden" name="amount" id="amountH'
 										+ $("#proId").val()
+										+ ''
+										+ $("#itemId").val()
 										+ '" value="'
 										+ Number(
 												Number($("#proQty").val())
@@ -711,6 +785,8 @@
 										+ '</td>'
 										+ '<td><a href="#" onclick="removeProductRow(\''
 										+ $("#proId").val()
+										+ ''
+										+ $("#itemId").val()
 										+ '\');"><font color="red"><u>remove</u></font></a></td>'
 										+ '</tr>' + '</tbody>');
 
@@ -722,9 +798,15 @@
 											.append(
 													'<tbody class="proTable'
 															+ $("#proId").val()
+															+ ''
+															+ $("#itemId")
+																	.val()
 															+ '" id="jobRow'
 															+ $(this).val()
 															+ $("#proId").val()
+															+ ''
+															+ $("#itemId")
+																	.val()
 															+ '"><tr>'
 															+ '<td>#<input type="hidden" value="'
 															+ $("#proId").val()
@@ -732,6 +814,9 @@
 															+ $(this).val()
 															+ '" name="jobId'
 															+ $("#proId").val()
+															+ ''
+															+ $("#itemId")
+																	.val()
 															+ '"></td>'
 															+ '<td>'
 															+ $(
@@ -745,14 +830,27 @@
 															+ $("#proCode")
 																	.val()
 															+ '</td>'
+															+ '<td>'
+															+ $("#itemName")
+																	.val()
+															+ '</td>'
 															+ '<td><input type="text" class="numChk" id="rate1'
 															+ $(this).val()
 															+ $("#proId").val()
+															+ ''
+															+ $("#itemId")
+																	.val()
 															+ '" onchange="calAnount(\''
 															+ $(this).val()
 															+ $("#proId").val()
+															+ ''
+															+ $("#itemId")
+																	.val()
 															+ '\');" value="1" name="jobqty'
 															+ $("#proId").val()
+															+ ''
+															+ $("#itemId")
+																	.val()
 															+ '"></td>'
 															+ '<td>'
 															+ $("#proUOM")
@@ -761,23 +859,44 @@
 															+ '<td><input type="text" class="numChk" id="qtu1'
 															+ $(this).val()
 															+ $("#proId").val()
+															+ ''
+															+ $("#itemId")
+																	.val()
 															+ '" onchange="calAnount(\''
 															+ $(this).val()
 															+ $("#proId").val()
+															+ ''
+															+ $("#itemId")
+																	.val()
 															+ '\');" value="0" name="jobRate'
 															+ $("#proId").val()
+															+ ''
+															+ $("#itemId")
+																	.val()
 															+ '"></td>'
 															+ '<td><input type="text" value="0" name="totalAmount'
 															+ $("#proId").val()
+															+ ''
+															+ $("#itemId")
+																	.val()
 															+ '" readonly="readonly" class="eachtotalvalue" id="amount'
 															+ $(this).val()
 															+ $("#proId").val()
+															+ ''
+															+ $("#itemId")
+																	.val()
 															+ '"></td>'
 															+ '<td><a href="#" onclick="removeJobRow(\''
 															+ $(this).val()
 															+ $("#proId").val()
+															+ ''
+															+ $("#itemId")
+																	.val()
 															+ '\',\''
 															+ $("#proId").val()
+															+ ''
+															+ $("#itemId")
+																	.val()
 															+ '\');"><font color="red"><u>remove</u></font></a></td>'
 															+ '</tr>'
 															+ '</tbody>');

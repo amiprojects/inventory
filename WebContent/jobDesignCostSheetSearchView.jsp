@@ -198,6 +198,7 @@
 										<th>#</th>
 										<th>Job Name</th>
 										<th>Product Code</th>
+										<th>Item</th>
 										<th>Qty</th>
 										<th>UOM</th>
 										<th>Rate</th>
@@ -212,6 +213,7 @@
 												<td>#</td>
 												<td>${jobj.jobTypes.jobName}</td>
 												<td>${jobp.productDetail.code}</td>
+												<td>${sessionScope['ejb'].getItmProductsForSampleByProductForDesignCostSheetId(jobp.id).itemDetails.name}</td>
 												<td>${jobj.qty}</td>
 												<td>${jobj.qtyUnit.name}</td>
 												<td>${jobj.rate}</td>

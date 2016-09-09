@@ -110,12 +110,12 @@
 		</script>
 	</c:if>
 	<div class="main" style="height: 664px;">
-		<%@include file="includeHeader.jsp"%>
+		<%-- <%@include file="includeHeader.jsp"%>
 		<div class="page-container menu-left" style="height: 100%;">
-			<%@include file="includeSidebar.jsp"%>
+			<%@include file="includeSidebar.jsp"%> --%>
 
-		<%-- <%@include file="includeHeaderMenu.jsp"%>
-		<div class="page-container wide"> --%>
+		<%@include file="includeHeaderMenu.jsp"%>
+		<div class="page-container wide">
 
 			<div class="content-sec"
 				style="height: 100%; overflow-y: scroll; overflow-x: hidden;">
@@ -242,7 +242,7 @@
 									<a href="#" onclick="addProduct();"><img src="img/add.png"
 										height="20px" style="float: right;"></a>
 									<h3>List of jobs</h3>
-									<table id="jobs" class="table table-striped table-bordered">
+									<table id="jobtable" class="table table-striped table-bordered">
 										<thead style="background-color: #F0F0F0;">
 											<tr>
 												<th>#</th>
@@ -563,7 +563,7 @@
 											"#jobRow" + $(this).val()
 													+ $("#proId").val()).length == 0) {
 
-										$("#jobs")
+										$("#jobtable")
 												.append(
 														'<tbody class="proTable'
 																+ $("#proId")
@@ -718,7 +718,7 @@
 						.each(
 								function() {
 
-									$("#jobs")
+									$("#jobtable")
 											.append(
 													'<tbody class="proTable'
 															+ $("#proId").val()
@@ -1048,7 +1048,7 @@
 
 <script type="text/javascript">
 	function dNoKeyUp() {
-		$("#dNoCheck").val("");
+		/* $("#dNoCheck").val("");
 		$.ajax({
 			url : "getSampleDesignCostSheetByDesignNumberForDuplicateCheck",
 			dataType : "json",
@@ -1064,17 +1064,34 @@
 					}
 				});
 			}
-
-		});
-
+		}); */
 	}
 
 	function dNoChange() {
-		if ($("#dNoCheck").val() != "") {
-			alert("Duplicate Design Number");
-			$("#dNoCheck").val("");
-			$("#designNo").val("");
-		}
+		$("#dNoCheck").val("");
+		$.ajax({
+			url : "getSampleDesignCostSheetByDesignNumberForDuplicateCheck",
+			dataType : "json",
+			data : {
+				dNo : $("#designNo").val()
+			},
+			success : function(data) {
+				$.map(data, function(item) {
+					if (item.dNumber != "") {
+						$("#dNoCheck").val(item.dNumber);
+					} else {
+						$("#dNoCheck").val("");
+					}
+				});
+			},
+			complete : function() {
+				if ($("#dNoCheck").val() != "") {
+					alert("Duplicate Design Number");
+					$("#dNoCheck").val("");
+					$("#designNo").val("");
+				}
+			}
+		});
 	}
 
 	function designCostSheetSubmit() {

@@ -400,6 +400,7 @@
 								<th>#</th>
 								<th>Product code</th>
 								<th>Product Description</th>
+								<th>Item</th>
 								<th>UOM</th>
 								<th>Quantity</th>
 								<th>rate</th>
@@ -444,12 +445,17 @@
 									id="pDescModal" class="form-control"></td>
 							</tr>
 							<tr>
+								<th>Item :</th>
+								<td colspan="2"><input type="text" readonly="readonly"
+									id="pItemModal" class="form-control"><input
+									type="hidden" id="pItemId" class="form-control"></td>
+							</tr>
+							<tr>
 								<th>UOM :</th>
 								<td colspan="2"><input type="text" readonly="readonly"
 									id="pUOMModal" class="form-control"><input
 									type="hidden" id="pIdModal"><input value=""
-									type="hidden" id="pForSampleIdModal"><input value=""
-									type="hidden" id="pItemModal"></td>
+									type="hidden" id="pForSampleIdModal"></td>
 							</tr>
 							<tr>
 								<th>Required Quantity :</th>
@@ -694,10 +700,16 @@
 																	.append(
 																			"<tbody id='prod"
 																					+ item2.ProductId
+																					+ ""
+																					+ item2.itemId
 																					+ "' onclick='selectProduct(\""
 																					+ item2.ProductCode
 																					+ "\",\""
 																					+ item2.ProductDesc
+																					+ "\",\""
+																					+ item2.itemNm
+																					+ "\",\""
+																					+ item2.itemId
 																					+ "\",\""
 																					+ item2.ProductUOMName
 																					+ "\",\""
@@ -714,6 +726,9 @@
 																					+ "</td>"
 																					+ "<td>"
 																					+ item2.ProductDesc
+																					+ "</td>"
+																					+ "<td>"
+																					+ item2.itemNm
 																					+ "</td>"
 																					+ "<td>"
 																					+ item2.ProductUOMName
@@ -772,16 +787,20 @@
 				}
 			}
 		}
-		function selectProduct(code, desc, uom, ProductForSampleId, id) {
+		function selectProduct(code, desc, itemNm, itemId, uom,
+				ProductForSampleId, id) {
 			if ($(document).find("#pDetTable" + ProductForSampleId).length == 0) {
 				$("#purchaseDetails").modal("show");
 				$("#pCodeModal").val(code);
 				$("#pDescModal").val(desc);
 				$("#pUOMModal").val(uom);
 				$("#pIdModal").val(id);
-				$("#reqQtyModal").val(
-						$("#prod" + $("#pIdModal").val() + " :nth-child(5)")
-								.html());
+				$("#pItemModal").val(itemNm);
+				$("#pItemId").val(itemId);
+				$("#reqQtyModal")
+						.val(
+								$("#prod" + id + "" + itemId + " :nth-child(6)")
+										.html());
 				$("#pForSampleIdModal").val(ProductForSampleId);
 				$
 						.ajax({
@@ -805,28 +824,6 @@
 										.map(
 												data,
 												function(item2) {
-													$
-															.ajax({
-																url : 'getItmProductsForSampleByProductId',
-																type : 'post',
-																dataType : "json",
-																data : {
-																	id : item2.productId
-																},
-																success : function(
-																		data) {
-																	$(
-																			"#pItemModal")
-																			.val(
-																					data.itemName);
-																},
-																error : function(
-																		a, b, c) {
-																	alert(b
-																			+ ": "
-																			+ c);
-																}
-															});
 													if (item2.purchaseDate != 'Initial Inventory') {
 														$(
 																"#purchaseDetailsTable")
@@ -904,7 +901,6 @@
 		}
 
 		function selectedQtyF(id, prodId) {
-			//alert($("#prod" + prodId + " :nth-child(5)").html());
 			if (Number($("#viewAttr" + id + " :nth-child(4)").html()) < Number($(
 					"#viewAttr" + id + " :nth-child(5) input[type=text]").val())) {
 				alert("You can not select more than remaining quantity!");
@@ -940,11 +936,10 @@
 					sum += parseFloat(this.value);
 				}
 			});
-			if (Number(sum) != Number($(
-					"#prod" + $("#pIdModal").val() + " :nth-child(5)").html())) {
+
+			if (Number(sum) != Number($("#reqQtyModal").val())) {
 				alert("Selected Quantity can not be more than or less than Required Quantity! Total required quantity is : "
-						+ $("#prod" + $("#pIdModal").val() + " :nth-child(5)")
-								.html()
+						+ $("#reqQtyModal").val()
 						+ ". You selected : "
 						+ sum
 						+ ". PLease select valid quantity...");
@@ -960,10 +955,7 @@
 										+ "Pcode:"
 										+ '</th><td>'
 										+ "<input type='text' class='form-control' readonly='readonly' value='"
-										+ $(
-												"#prod" + $("#pIdModal").val()
-														+ " :nth-child(2)")
-												.html()
+										+ $("#pCodeModal").val()
 										+ "'>"
 										+ "<input type='hidden' class='form-control' readonly='readonly' id='productForSampleId"
 										+ $("#pForSampleIdModal").val()
@@ -979,10 +971,7 @@
 										+ "Description:"
 										+ '</th><td>'
 										+ "<input type='text' class='form-control' readonly='readonly' value='"
-										+ $(
-												"#prod" + $("#pIdModal").val()
-														+ " :nth-child(3)")
-												.html()
+										+ $("#pDescModal").val()
 										+ "'>"
 										+ '</td><th style="text-align: right;">'
 										+ "Qty:"
@@ -990,10 +979,7 @@
 										+ "<input type='text' id='qtyOfSampleProduct"
 										+ $("#pForSampleIdModal").val()
 										+ "' class='form-control' readonly='readonly' value='"
-										+ $(
-												"#prod" + $("#pIdModal").val()
-														+ " :nth-child(5)")
-												.html()
+										+ $("#reqQtyModal").val()
 										+ "'>"
 										+ '</td><th style="text-align: right;">'
 										+ "Total Amount:"
@@ -1154,6 +1140,8 @@
 										+ "<input type='text' class='form-control' readonly='readonly' value='"
 										+ $(
 												"#prod" + $("#pIdModal").val()
+														+ ""
+														+ $("#pItemId").val()
 														+ " :nth-child(2)")
 												.html()
 										+ "'>"
@@ -1173,6 +1161,8 @@
 										+ "<input type='text' class='form-control' readonly='readonly' value='"
 										+ $(
 												"#prod" + $("#pIdModal").val()
+														+ ""
+														+ $("#pItemId").val()
 														+ " :nth-child(3)")
 												.html()
 										+ "'>"
@@ -1184,6 +1174,8 @@
 										+ "' class='form-control' readonly='readonly' value='"
 										+ $(
 												"#prod" + $("#pIdModal").val()
+														+ ""
+														+ $("#pItemId").val()
 														+ " :nth-child(5)")
 												.html()
 										+ "'>"
@@ -1313,6 +1305,8 @@
 										+ "<input type='text' class='form-control' readonly='readonly' name='productCode' value='"
 										+ $(
 												"#prod" + $("#pIdModal").val()
+														+ ""
+														+ $("#pItemId").val()
 														+ " :nth-child(2)")
 												.html()
 										+ "'>"
@@ -1400,7 +1394,10 @@
 				$(".estSubmDate").trigger("click");
 				$(".estSubmDate").trigger("click");
 
-				$("#prod" + $("#pIdModal").val() + " :nth-child(8)").html("");
+				$(
+						"#prod" + $("#pIdModal").val() + ""
+								+ $("#pItemId").val() + " :nth-child(9)").html(
+						"");
 			}
 		}
 		function prodDetOkF() {

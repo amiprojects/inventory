@@ -66,6 +66,7 @@ page[size="A4"] {
 .tg .tg-031e {
 	vertical-align: top
 }
+
 table {
 	table-layout: fixed;
 }
@@ -262,6 +263,7 @@ Url = {
 						<th>#</th>
 						<th>Job Name :</th>
 						<th>P.Code</th>
+						<th>Item</th>
 						<th>Quantity</th>
 						<th>UOM</th>
 						<th>Rate</th>
@@ -277,6 +279,9 @@ Url = {
 									<td style="border-bottom: none; border-top: none;">${i}</td>
 									<td style="border-bottom: none; border-top: none;">${jobj.jobTypes.jobName}</td>
 									<td style="border-bottom: none; border-top: none;">${jobp.productDetail.code}</td>
+									<td style="border-bottom: none; border-top: none;">
+										${sessionScope['ejb'].getItmProductsForSampleByProductForDesignCostSheetId(jobp.id).itemDetails.name}
+									</td>
 									<td style="border-bottom: none; border-top: none;">${jobj.qty}</td>
 									<td style="border-bottom: none; border-top: none;">${jobj.qtyUnit.name}</td>
 									<td style="border-bottom: none; border-top: none;">${jobj.rate}</td>
@@ -288,12 +293,12 @@ Url = {
 					</tbody>
 					<c:if test="${sampleJCS.surcharge>0}">
 						<tr>
-							<td colspan="6" align="right">SurCharge :</td>
+							<td colspan="7" align="right">SurCharge :</td>
 							<td>${sampleJCS.surcharge}</td>
 						</tr>
 					</c:if>
 					<tr>
-						<td colspan="6" align="right">Grand Total :</td>
+						<td colspan="7" align="right">Grand Total :</td>
 						<td>${sampleJCS.grandTotal}</td>
 					</tr>
 
