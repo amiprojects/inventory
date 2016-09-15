@@ -66,6 +66,7 @@ page[size="A4"] {
 .tg .tg-031e {
 	vertical-align: top
 }
+
 table {
 	table-layout: fixed;
 }
@@ -237,6 +238,7 @@ Url = {
 						<th>#</th>
 						<th>Job Name :</th>
 						<th>P.Code</th>
+						<th>Item</th>
 						<th>Quantity</th>
 						<th>UOM</th>
 						<th>Rate</th>
@@ -254,6 +256,9 @@ Url = {
 									<td style="border-bottom: none; border-top: none;">${i}</td>
 									<td style="border-bottom: none; border-top: none;">${jobProjob.jobType.jobName}</td>
 									<td style="border-bottom: none; border-top: none;">${jobProjob.assignmentProducts.productsForDesignCostSheet.productDetail.code}</td>
+									<td style="border-bottom: none; border-top: none;">
+										${sessionScope['ejb'].getItmProductsForSampleByProductForDesignCostSheetId(jobp.productsForDesignCostSheet.id).itemDetails.name}
+									</td>
 									<td style="border-bottom: none; border-top: none;">${jobProjob.qty}</td>
 									<td style="border-bottom: none; border-top: none;">${jobProjob.assignmentProducts.productsForDesignCostSheet.productDetail.qtyUnit.name}</td>
 									<td style="border-bottom: none; border-top: none;">${jobProjob.rate}</td>
@@ -268,14 +273,14 @@ Url = {
 						</c:forEach>
 						<c:if test="${jobAssi.surcharge>0}">
 							<tr>
-								<td colspan="6" align="right">Surcharger :</td>
+								<td colspan="7" align="right">Surcharger :</td>
 								<td colspan="2"><fmt:formatNumber var="totJC"
 										value="${jobAssi.surcharge}" maxFractionDigits="2"
 										groupingUsed="false" />${totJC}</td>
 							</tr>
 						</c:if>
 						<tr>
-							<td colspan="6" align="right">Total Job Cost :</td>
+							<td colspan="7" align="right">Total Job Cost :</td>
 							<td colspan="2"><fmt:formatNumber var="totJC"
 									value="${jobAssi.surcharge+totJobCost}" maxFractionDigits="2"
 									groupingUsed="false" />${totJC}</td>

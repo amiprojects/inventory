@@ -675,7 +675,7 @@
 					$("#jobPresentRate" + jobId).val()
 							* $("#jobQty" + jobId).val());
 
-			//error
+			
 			var sum = 0;
 			$(".eachtotalvalue").each(function() {
 				sum += parseFloat(this.value);
@@ -696,7 +696,7 @@
 						$("#jobPresentRate" + jobId).val()
 								* $("#jobQty" + jobId).val());
 
-				//error
+				
 				var sum = 0;
 				$(".eachtotalvalue").each(function() {
 					sum += parseFloat(this.value);
@@ -711,7 +711,7 @@
 			}
 		}
 		function profitTypeF() {
-			//error
+			
 			$("#profitVal").val("0.00");
 			$("#totProfit").val("0.00");
 			var sum = 0;
@@ -725,7 +725,7 @@
 					Number($("#gtot").val()) + Number($("#totProfit").val()));
 		}
 		function profitValF() {
-			//error
+			
 			if ($("#profitType").val() == 'profitPer') {
 				$("#totProfit")
 						.val(
@@ -759,7 +759,7 @@
 			}
 		}
 		function surchargeF() {
-			//error
+			
 			var sum = 0;
 			$(".eachtotalvalue").each(function() {
 				sum += parseFloat(this.value);
@@ -830,7 +830,7 @@
 				$("#jobAmount" + jobId).attr("class", "form-control");
 			}
 
-			//error
+			
 			var sm = 0;
 			$(".productEachTotal").each(function() {
 				sm += parseFloat(this.value);
@@ -895,11 +895,12 @@
 											function(index, item2) {
 												$
 														.ajax({
-															url : 'getItmProductsForSampleByProductId',
+															url : 'getItmProductsForSampleByProductIdAndProductForDesignId',
 															type : 'post',
 															dataType : "json",
 															data : {
-																id : item2.ProductId
+																pId : item2.ProductId,
+																pdcsId : item2.ProductForSampleId
 															},
 															success : function(
 																	data) {

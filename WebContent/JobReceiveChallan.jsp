@@ -66,6 +66,7 @@ page[size="A4"] {
 .tg .tg-031e {
 	vertical-align: top
 }
+
 table {
 	table-layout: fixed;
 }
@@ -241,6 +242,7 @@ Url = {
 						<th>#</th>
 						<th>Job Name :</th>
 						<th>P.Code</th>
+						<th>Item</th>
 						<th>Quantity</th>
 						<th>UOM</th>
 						<th>Rate</th>
@@ -256,6 +258,9 @@ Url = {
 									<td style="border-bottom: none; border-top: none;">${i}</td>
 									<td style="border-bottom: none; border-top: none;">${jobProjob.jobPlanJobStock.jobsForDesignCostSheet.jobTypes.jobName}</td>
 									<td style="border-bottom: none; border-top: none;">${jobProjob.jobRecieveProductsDetails.jobPlanProducts.productsForDesignCostSheet.productDetail.code}</td>
+									<td style="border-bottom: none; border-top: none;">
+										${sessionScope['ejb'].getItmProductsForSampleByProductForDesignCostSheetId(jobp.jobPlanProducts.productsForDesignCostSheet.id).itemDetails.name}
+									</td>
 									<td style="border-bottom: none; border-top: none;">${jobProjob.qtyDone}</td>
 									<td style="border-bottom: none; border-top: none;">${jobProjob.jobRecieveProductsDetails.jobPlanProducts.productsForDesignCostSheet.productDetail.qtyUnit.name}</td>
 									<td style="border-bottom: none; border-top: none;"><c:set
@@ -272,7 +277,7 @@ Url = {
 							</c:forEach>
 						</c:forEach>
 						<tr style="height: 0px;">
-							<td colspan="8" style="border-bottom: none;"></td>
+							<td colspan="9" style="border-bottom: none;"></td>
 						</tr>
 						<%-- <tr>
 							<td colspan="6" align="right">Total Job Cost :</td>

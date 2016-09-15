@@ -273,11 +273,11 @@
 											<hr width="100%">
 											<br> <br> <input type="hidden"
 												value="${requestScope['amj'].id}" name="jobAssignID">
-											<table cellspacing="0" cellpadding="0" border="0" width="975">
+											<table cellspacing="0" cellpadding="0" border="0" width="100%">
 												<tr>
 													<td>
 														<table cellspacing="0" cellpadding="1" border="1"
-															width="900">
+															width="100%">
 															<tr style="color: black; background-color: #f4f4f0">
 																<th width="34%" style="text-align: center">Design
 																	No. :
@@ -295,7 +295,7 @@
 												<tr>
 													<td>
 														<table cellspacing="0" cellpadding="1" border="1"
-															width="900">
+															width="100%">
 															<tr style="color: black; background-color: #f4f4f0">
 																<th style="text-align: center" width="4%">#</th>
 
@@ -324,9 +324,9 @@
 												</tr>
 												<tr>
 													<td>
-														<div style="width: 960px; height: 360px; overflow: auto;">
+														<div style="width: 100%; height: 360px; overflow: auto;">
 															<table cellspacing="0" cellpadding="1" border="1"
-																width="900">
+																width="100%">
 
 																<c:set var="count" value="${1}" />
 
